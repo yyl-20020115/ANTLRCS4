@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LeftRecursiveRule extends Rule {
+public class LeftRecursiveRule : Rule {
 	public List<LeftRecursiveRuleAltInfo> recPrimaryAlts;
 	public OrderedHashMap<Integer, LeftRecursiveRuleAltInfo> recOpAlts;
 	public RuleAST originalAST;

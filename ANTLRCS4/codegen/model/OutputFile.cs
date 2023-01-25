@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public abstract class OutputFile extends OutputModelObject {
+public abstract class OutputFile : OutputModelObject {
 	public final String fileName;
 	public final String grammarFileName;
 	public final String ANTLRVersion;

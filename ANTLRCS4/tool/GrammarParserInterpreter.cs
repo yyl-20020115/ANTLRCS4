@@ -41,7 +41,7 @@ import java.util.List;
  * @since 4.5.1
  *
  */
-public class GrammarParserInterpreter extends ParserInterpreter {
+public class GrammarParserInterpreter : ParserInterpreter {
 	/** The grammar associated with this interpreter. Unlike the
 	 *  {@link ParserInterpreter} from the standard distribution,
 	 *  this can reference Grammar, which is in the tools area not
@@ -392,9 +392,9 @@ public class GrammarParserInterpreter extends ParserInterpreter {
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
 		if (originalParser instanceof ParserInterpreter) {
-			Class<? extends ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter.class);
+			Class<? : ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter.class);
 			try {
-				Constructor<? extends ParserInterpreter> ctor = c.getConstructor(Grammar.class, ATN.class, TokenStream.class);
+				Constructor<? : ParserInterpreter> ctor = c.getConstructor(Grammar.class, ATN.class, TokenStream.class);
 				parser = ctor.newInstance(g, originalParser.getATN(), originalParser.getTokenStream());
 			}
 			catch (Exception e) {
@@ -428,7 +428,7 @@ public class GrammarParserInterpreter extends ParserInterpreter {
 	 *  and let it fall out of the rule to finish constructing trees. For
 	 *  recovery in line, we throw InputMismatchException to engage recover().
 	 */
-	public static class BailButConsumeErrorStrategy extends DefaultErrorStrategy {
+	public static class BailButConsumeErrorStrategy : DefaultErrorStrategy {
 		public int firstErrorTokenIndex = -1;
 		@Override
 		public void recover(Parser recognizer, RecognitionException e) {

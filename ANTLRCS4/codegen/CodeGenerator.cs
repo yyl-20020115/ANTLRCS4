@@ -48,8 +48,8 @@ public class CodeGenerator {
 	public static CodeGenerator create(Tool tool, Grammar g, String language) {
 		String targetName = "org.antlr.v4.codegen.target."+language+"Target";
 		try {
-			Class<? extends Target> c = Class.forName(targetName).asSubclass(Target.class);
-			Constructor<? extends Target> ctor = c.getConstructor(CodeGenerator.class);
+			Class<? : Target> c = Class.forName(targetName).asSubclass(Target.class);
+			Constructor<? : Target> ctor = c.getConstructor(CodeGenerator.class);
 			CodeGenerator codeGenerator = new CodeGenerator(tool, g, language);
 			codeGenerator.target = ctor.newInstance(codeGenerator);
 			return codeGenerator;

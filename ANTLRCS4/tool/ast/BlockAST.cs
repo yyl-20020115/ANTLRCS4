@@ -11,7 +11,7 @@ import org.antlr.runtime.Token;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlockAST extends GrammarASTWithOptions implements RuleElementAST {
+public class BlockAST : GrammarASTWithOptions implements RuleElementAST {
     // TODO: maybe I need a Subrule object like Rule so these options mov to that?
     /** What are the default options for a subrule? */
     public static final Map<String, String> defaultBlockOptions =

@@ -6,15 +6,8 @@
 
 namespace org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.ModelElement;
-import org.antlr.v4.codegen.model.SrcOp;
-import org.antlr.v4.runtime.misc.OrderedHashSet;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class CodeBlock extends SrcOp {
+public class CodeBlock : SrcOp {
 	public int codeBlockLevel;
 	public int treeLevel;
 

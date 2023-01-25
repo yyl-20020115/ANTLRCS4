@@ -11,7 +11,7 @@ import org.antlr.v4.codegen.OutputModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser extends Recognizer {
+public class Parser : Recognizer {
 	public ParserFile file;
 
 	@ModelElement public List<RuleFunction> funcs = new ArrayList<RuleFunction>();

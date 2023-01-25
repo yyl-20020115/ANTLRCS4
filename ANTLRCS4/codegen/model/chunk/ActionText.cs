@@ -8,11 +8,12 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 
 /** */
-public class ActionText extends ActionChunk {
-	public String text;
+public class ActionText : ActionChunk
+{
+    public String text;
 
-	public ActionText(StructDecl ctx, String text) {
-		super(ctx);
-		this.text = text;
-	}
+    public ActionText(StructDecl ctx, String text) : base(ctx)
+    {
+        this.text = text;
+    }
 }

@@ -19,7 +19,7 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.tool.Grammar;
 
 public class ParserInterpreterForTesting {
-	public static class DummyParser extends Parser {
+	public static class DummyParser : Parser {
 		public final ATN atn;
 		public final DFA[] decisionToDFA; // not shared for interp
 		public final PredictionContextCache sharedContextCache =

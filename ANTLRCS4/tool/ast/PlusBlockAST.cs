@@ -8,7 +8,7 @@ package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
 
-public class PlusBlockAST extends GrammarAST implements RuleElementAST, QuantifierAST {
+public class PlusBlockAST : GrammarAST implements RuleElementAST, QuantifierAST {
 	private final boolean _greedy;
 
 	public PlusBlockAST(PlusBlockAST node) {

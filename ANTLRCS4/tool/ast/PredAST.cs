@@ -8,7 +8,7 @@ package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
 
-public class PredAST extends ActionAST {
+public class PredAST : ActionAST {
 	public PredAST(PredAST node) {
 		super(node);
 	}

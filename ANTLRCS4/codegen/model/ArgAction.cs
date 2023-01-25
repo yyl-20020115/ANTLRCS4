@@ -7,7 +7,7 @@
 namespace org.antlr.v4.codegen.model;
 
 
-public class ArgAction extends Action {
+public class ArgAction : Action {
 	/** Context type of invoked rule */
 	public String ctxType;
 	public ArgAction(OutputModelFactory factory, ActionAST ast, String ctxType) {

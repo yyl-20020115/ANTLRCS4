@@ -53,7 +53,7 @@ public class OutputModelWalker {
 
 	public ST walk(OutputModelObject omo, boolean header) {
 		// CREATE TEMPLATE FOR THIS OUTPUT OBJECT
-		Class<? extends OutputModelObject> cl = omo.getClass();
+		Class<? : OutputModelObject> cl = omo.getClass();
 		String templateName = cl.getSimpleName();
 		if ( templateName == null ) {
 			tool.errMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.getSimpleName());

@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GrammarAST extends CommonTree {
+public class GrammarAST : CommonTree {
 	/** For error msgs, nice to know which grammar this AST lives in */
 	// TODO: try to remove
 	public Grammar g;
@@ -129,7 +129,7 @@ public class GrammarAST extends CommonTree {
 	 *  If not a rule element, just returns null.
 	 */
 	public String getAltLabel() {
-		List<? extends Tree> ancestors = this.getAncestors();
+		List<? : Tree> ancestors = this.getAncestors();
 		if ( ancestors==null ) return null;
 		for (int i=ancestors.size()-1; i>=0; i--) {
 			GrammarAST p = (GrammarAST)ancestors.get(i);

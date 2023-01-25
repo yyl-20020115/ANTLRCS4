@@ -6,7 +6,7 @@
 namespace org.antlr.v4.codegen.model;
 
 
-public class BaseVisitorFile extends VisitorFile {
+public class BaseVisitorFile : VisitorFile {
 	public BaseVisitorFile(OutputModelFactory factory, String fileName) {
 		super(factory, fileName);
 	}

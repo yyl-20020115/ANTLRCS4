@@ -10,7 +10,7 @@ import org.antlr.v4.codegen.OutputModelFactory;
 
 import java.util.Map;
 
-public class LexerFile extends OutputFile {
+public class LexerFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line
 	public boolean genListener; // from -listener cmd-line

@@ -12,7 +12,7 @@ import org.antlr.v4.tool.Alternative;
  *  Sometimes we might want to treat them differently in the
  *  code generation.
  */
-public class CodeBlockForOuterMostAlt extends CodeBlockForAlt {
+public class CodeBlockForOuterMostAlt : CodeBlockForAlt {
 	/**
 	 * The label for the alternative; or null if the alternative is not labeled.
 	 */

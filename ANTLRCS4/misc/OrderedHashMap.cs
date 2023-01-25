@@ -24,8 +24,8 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+	public void putAll(Map<? : K, ? : V> m) {
+		for (Map.Entry<? : K, ? : V> entry : m.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
 	}

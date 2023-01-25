@@ -12,7 +12,7 @@ import org.antlr.v4.codegen.model.decl.TokenTypeDecl;
 import org.antlr.v4.runtime.atn.SetTransition;
 import org.antlr.v4.tool.ast.GrammarAST;
 
-public class MatchSet extends MatchToken {
+public class MatchSet : MatchToken {
 	@ModelElement public TestSetInline expr;
 	@ModelElement public CaptureNextTokenType capture;
 

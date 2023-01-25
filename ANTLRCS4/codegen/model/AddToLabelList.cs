@@ -8,7 +8,7 @@ namespace org.antlr.v4.codegen.model;
 
 
 /** */
-public class AddToLabelList extends SrcOp {
+public class AddToLabelList : SrcOp {
 	public final Decl label;
 	public final String listName;
 

@@ -14,7 +14,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 import java.util.List;
 
 /** (A B C)? */
-public class LL1OptionalBlockSingleAlt extends LL1Choice {
+public class LL1OptionalBlockSingleAlt : LL1Choice {
 	@ModelElement public SrcOp expr;
 	@ModelElement public List<SrcOp> followExpr; // might not work in template if size>1
 

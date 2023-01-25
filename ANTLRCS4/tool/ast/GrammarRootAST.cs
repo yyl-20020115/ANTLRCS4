@@ -13,7 +13,7 @@ import org.antlr.runtime.tree.Tree;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GrammarRootAST extends GrammarASTWithOptions {
+public class GrammarRootAST : GrammarASTWithOptions {
 	public static final Map<String, String> defaultOptions = new HashMap<String, String>();
 	static {
 		defaultOptions.put("language","Java");

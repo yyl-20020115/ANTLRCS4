@@ -8,7 +8,7 @@ namespace org.antlr.v4.codegen.model.decl;
 
 
 /** */
-public class AttributeDecl extends Decl {
+public class AttributeDecl : Decl {
 	public String type;
 	public String initValue;
 	public AttributeDecl(OutputModelFactory factory, Attribute a) {

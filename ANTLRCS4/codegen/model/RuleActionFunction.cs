@@ -11,7 +11,7 @@ import org.antlr.v4.tool.Rule;
 
 import java.util.LinkedHashMap;
 
-public class RuleActionFunction extends OutputModelObject {
+public class RuleActionFunction : OutputModelObject {
 	public final String name;
 	public final String escapedName;
 	public final String ctxType;

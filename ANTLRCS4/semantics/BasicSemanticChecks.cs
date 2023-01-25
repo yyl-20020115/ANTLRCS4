@@ -33,7 +33,7 @@ namespace org.antlr.v4.semantics;
  * REPEATED_PREQUEL
  * TOKEN_NAMES_MUST_START_UPPER
  */
-public class BasicSemanticChecks extends GrammarTreeVisitor {
+public class BasicSemanticChecks : GrammarTreeVisitor {
 	/** Set of valid imports.  Maps delegate to set of delegator grammar types.
 	 *  validDelegations.get(LEXER) gives list of the kinds of delegators
 	 *  that can import lexers.

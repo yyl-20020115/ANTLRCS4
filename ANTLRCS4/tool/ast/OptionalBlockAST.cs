@@ -8,7 +8,7 @@ package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
 
-public class OptionalBlockAST extends GrammarAST implements RuleElementAST, QuantifierAST {
+public class OptionalBlockAST : GrammarAST implements RuleElementAST, QuantifierAST {
 	private final boolean _greedy;
 
 	public OptionalBlockAST(OptionalBlockAST node) {

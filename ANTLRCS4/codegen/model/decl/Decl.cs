@@ -6,40 +6,31 @@
 
 namespace org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.SrcOp;
-
 /** */
-public class Decl extends SrcOp {
-	public final String name;
-	public final String escapedName;
-	public final String decl; 	// whole thing if copied from action
-	public boolean isLocal; // if local var (not in RuleContext struct)
+public class Decl : SrcOp {
+	public readonly string name;
+	public readonly string escapedName;
+	public readonly string decl; 	// whole thing if copied from action
+	public bool isLocal; // if local var (not in RuleContext struct)
 	public StructDecl ctx;  // which context contains us? set by addDecl
 
-	public Decl(OutputModelFactory factory, String name) {
-		this(factory, name, null);
-	}
-
-	public Decl(OutputModelFactory factory, String name, String decl) {
-		super(factory);
+	public Decl(OutputModelFactory factory, string name, string decl = null):base(factory)
+    {
 		this.name = name;
 		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(name);
 		this.decl = decl;
 	}
 
-	@Override
-	public int hashCode() {
-		return name.hashCode();
+	public override int GetHashCode() {
+		return name.GetHashCode();
 	}
 
 	/** If same name, can't redefine, unless it's a getter */
-	@Override
-	public boolean equals(Object obj) {
+	public override bool Equals(Object obj) {
 		if ( this==obj ) return true;
-		if ( !(obj instanceof Decl) ) return false;
+		if ( obj is not Decl ) return false;
 		// A() and label A are different
-		if ( obj instanceof ContextGetterDecl ) return false;
-		return name.equals(((Decl) obj).name);
+		if ( obj is ContextGetterDecl ) return false;
+		return name.Equals(((Decl) obj).name);
 	}
 }

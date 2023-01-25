@@ -4,17 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.decl;
+using System.Xml.Linq;
 
-import org.antlr.v4.codegen.OutputModelFactory;
+namespace org.antlr.v4.codegen.model.decl;
 
 /** */
-public class RuleContextDecl extends Decl {
-	public String ctxName;
-	public boolean isImplicit;
+public class RuleContextDecl : Decl {
+	public string ctxName;
+	public bool isImplicit;
 
-	public RuleContextDecl(OutputModelFactory factory, String name, String ctxName) {
-		super(factory, name);
+	public RuleContextDecl(OutputModelFactory factory, string name, string ctxName):base(factory, name)
+    {
 		this.ctxName = ctxName;
 	}
 }

@@ -29,7 +29,7 @@ import java.util.List;
  *  objects such as RuleFunction that surround elements in rule
  *  functions.
  */
-public abstract class DefaultOutputModelFactory extends BlankOutputModelFactory {
+public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 	// Interface to outside world
 
 	public final Grammar g;
@@ -107,7 +107,7 @@ public abstract class DefaultOutputModelFactory extends BlankOutputModelFactory 
 	}
 
 
-	public static List<SrcOp> list(Collection<? extends SrcOp> values) {
+	public static List<SrcOp> list(Collection<? : SrcOp> values) {
 		return new ArrayList<SrcOp>(values);
 	}
 }

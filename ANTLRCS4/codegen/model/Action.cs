@@ -9,7 +9,7 @@ namespace org.antlr.v4.codegen.model;
 
 
 /** */
-public class Action extends RuleElement {
+public class Action : RuleElement {
 	@ModelElement public List<ActionChunk> chunks;
 
 	public Action(OutputModelFactory factory, ActionAST ast) {

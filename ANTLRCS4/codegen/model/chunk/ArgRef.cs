@@ -8,8 +8,9 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 
 /** */
-public class ArgRef extends LocalRef {
-	public ArgRef(StructDecl ctx, String name, String escapedName) {
-		super(ctx, name, escapedName);
-	}
+public class ArgRef : LocalRef
+{
+    public ArgRef(StructDecl ctx, String name, String escapedName) : base(ctx, name, escapedName)
+    {
+    }
 }

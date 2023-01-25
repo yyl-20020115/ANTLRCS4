@@ -11,7 +11,7 @@ import org.antlr.runtime.TokenStream;
 import org.antlr.runtime.tree.CommonErrorNode;
 
 /** A node representing erroneous token range in token stream */
-public class GrammarASTErrorNode extends GrammarAST {
+public class GrammarASTErrorNode : GrammarAST {
     CommonErrorNode delegate;
     public GrammarASTErrorNode(TokenStream input, Token start, Token stop,
                                org.antlr.runtime.RecognitionException e)

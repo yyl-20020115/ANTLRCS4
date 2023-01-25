@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** */
-public class MatchToken extends RuleElement implements LabeledOp {
+public class MatchToken : RuleElement implements LabeledOp {
 	public final String name;
 	public final String escapedName;
 	public final int ttype;

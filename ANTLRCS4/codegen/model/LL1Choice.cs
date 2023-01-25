@@ -11,7 +11,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 
 import java.util.List;
 
-public abstract class LL1Choice extends Choice {
+public abstract class LL1Choice : Choice {
 	/** Token names for each alt 0..n-1 */
 	public List<TokenInfo[]> altLook;
 	@ModelElement public ThrowNoViableAlt error;

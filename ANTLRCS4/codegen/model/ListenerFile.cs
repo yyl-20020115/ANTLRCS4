@@ -21,7 +21,7 @@ import java.util.Set;
 /** A model object representing a parse tree listener file.
  *  These are the rules specific events triggered by a parse tree visitor.
  */
-public class ListenerFile extends OutputFile {
+public class ListenerFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String accessLevel; // from -DaccessLevel cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line

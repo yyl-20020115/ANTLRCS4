@@ -8,7 +8,7 @@ namespace org.antlr.v4.codegen.model;
 
 
 
-public class AltBlock extends Choice {
+public class AltBlock : Choice {
 //	@ModelElement public ThrowNoViableAlt error;
 
 	public AltBlock(OutputModelFactory factory,

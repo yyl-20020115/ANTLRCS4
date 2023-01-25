@@ -12,7 +12,7 @@ import org.antlr.runtime.Token;
 /** A problem with the syntax of your antlr grammar such as
  *  "The '{' came as a complete surprise to me at this point in your program"
  */
-public class GrammarSyntaxMessage extends ANTLRMessage {
+public class GrammarSyntaxMessage : ANTLRMessage {
 	public GrammarSyntaxMessage(ErrorType etype,
 								String fileName,
 								Token offendingToken,

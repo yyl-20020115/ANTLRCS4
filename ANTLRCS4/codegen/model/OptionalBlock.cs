@@ -12,7 +12,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 import java.util.List;
 
 /** */
-public class OptionalBlock extends AltBlock {
+public class OptionalBlock : AltBlock {
 	public OptionalBlock(OutputModelFactory factory,
 						 GrammarAST questionAST,
 						 List<CodeBlockForAlt> alts)

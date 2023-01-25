@@ -14,7 +14,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 
 import java.util.List;
 
-public class PlusBlock extends Loop {
+public class PlusBlock : Loop {
 	@ModelElement public ThrowNoViableAlt error;
 
 	public PlusBlock(OutputModelFactory factory,

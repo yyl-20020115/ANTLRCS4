@@ -13,7 +13,7 @@ import org.antlr.v4.tool.ast.QuantifierAST;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Loop extends Choice {
+public class Loop : Choice {
 	public int blockStartStateNumber;
 	public int loopBackStateNumber;
 	public final int exitAlt;

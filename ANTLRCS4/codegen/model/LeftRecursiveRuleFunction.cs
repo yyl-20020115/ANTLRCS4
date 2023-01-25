@@ -17,7 +17,7 @@ import org.antlr.v4.tool.LeftRecursiveRule;
 import org.antlr.v4.tool.Rule;
 import org.antlr.v4.tool.ast.GrammarAST;
 
-public class LeftRecursiveRuleFunction extends RuleFunction {
+public class LeftRecursiveRuleFunction : RuleFunction {
 	public LeftRecursiveRuleFunction(OutputModelFactory factory, LeftRecursiveRule r) {
 		super(factory, r);
 

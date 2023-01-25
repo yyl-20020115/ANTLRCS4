@@ -23,7 +23,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 import java.util.List;
 
 /** */
-public class InvokeRule extends RuleElement implements LabeledOp {
+public class InvokeRule : RuleElement implements LabeledOp {
 	public final String name;
 	public final String escapedName;
 	public final OrderedHashSet<Decl> labels = new OrderedHashSet<Decl>(); // TODO: should need just 1

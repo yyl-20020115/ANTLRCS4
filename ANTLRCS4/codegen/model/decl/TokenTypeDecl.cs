@@ -3,14 +3,10 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-
-package org.antlr.v4.codegen.model.decl;
-
-import org.antlr.v4.codegen.OutputModelFactory;
+namespace org.antlr.v4.codegen.model.decl;
 
 /** */
-public class TokenTypeDecl extends Decl {
-	public TokenTypeDecl(OutputModelFactory factory, String name) {
-		super(factory, name);
-	}
+public class TokenTypeDecl : Decl
+{
+    public TokenTypeDecl(OutputModelFactory factory, String name) : base(factory, name) { }
 }

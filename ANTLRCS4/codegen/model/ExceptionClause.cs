@@ -9,7 +9,7 @@ namespace org.antlr.v4.codegen.model;
 import org.antlr.v4.codegen.OutputModelFactory;
 import org.antlr.v4.tool.ast.ActionAST;
 
-public class ExceptionClause extends SrcOp {
+public class ExceptionClause : SrcOp {
 	@ModelElement public Action catchArg;
 	@ModelElement public Action catchAction;
 

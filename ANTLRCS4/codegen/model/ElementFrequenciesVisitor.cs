@@ -20,7 +20,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
 
-public class ElementFrequenciesVisitor extends GrammarTreeVisitor {
+public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	/**
 	 * This special value means "no set", and is used by {@link #minFrequencies}
 	 * to ensure that {@link #combineMin} doesn't merge an empty set (all zeros)

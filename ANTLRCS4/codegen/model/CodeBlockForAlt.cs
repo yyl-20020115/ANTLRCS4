@@ -10,7 +10,7 @@ import org.antlr.v4.codegen.OutputModelFactory;
 import org.antlr.v4.codegen.model.decl.CodeBlock;
 
 /** Contains Rewrite block (usually as last op) */
-public class CodeBlockForAlt extends CodeBlock {
+public class CodeBlockForAlt : CodeBlock {
 
 	public CodeBlockForAlt(OutputModelFactory factory) {
 		super(factory);

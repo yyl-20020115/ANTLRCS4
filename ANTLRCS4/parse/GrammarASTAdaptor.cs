@@ -14,7 +14,7 @@ import org.antlr.v4.tool.ast.GrammarASTErrorNode;
 import org.antlr.v4.tool.ast.RuleAST;
 import org.antlr.v4.tool.ast.TerminalAST;
 
-public class GrammarASTAdaptor extends CommonTreeAdaptor {
+public class GrammarASTAdaptor : CommonTreeAdaptor {
     org.antlr.runtime.CharStream input; // where we can find chars ref'd by tokens in tree
     public GrammarASTAdaptor() { }
     public GrammarASTAdaptor(org.antlr.runtime.CharStream input) { this.input = input; }

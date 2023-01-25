@@ -32,7 +32,7 @@ public class Interpreter {
 			"Rule","Invocations", "Time (ms)", "Total k", "Max k", "Ambiguities", "DFA cache miss"
 	};
 
-	protected static class IgnoreTokenVocabGrammar extends Grammar {
+	protected static class IgnoreTokenVocabGrammar : Grammar {
 		public IgnoreTokenVocabGrammar(String fileName,
 									   String grammarText,
 									   Grammar tokenVocabSource,

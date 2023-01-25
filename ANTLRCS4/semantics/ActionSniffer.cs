@@ -11,7 +11,7 @@ namespace org.antlr.v4.semantics;
 /** Find token and rule refs plus refs to them in actions;
  *  side-effect: update Alternatives
  */
-public class ActionSniffer extends BlankActionSplitterListener {
+public class ActionSniffer : BlankActionSplitterListener {
 	public Grammar g;
 	public Rule r;          // null if action outside of rule
 	public Alternative alt; // null if action outside of alt; could be in rule

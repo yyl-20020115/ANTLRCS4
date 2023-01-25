@@ -8,7 +8,7 @@ package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
 
-public class RangeAST extends GrammarAST implements RuleElementAST {
+public class RangeAST : GrammarAST implements RuleElementAST {
 
 	public RangeAST(RangeAST node) {
 		super(node);

@@ -4,11 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+namespace org.antlr.v4.codegen.model.chunk;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
-
-public class NonLocalAttrRef extends SymbolRefChunk {
+public class NonLocalAttrRef : SymbolRefChunk {
 	public String ruleName;
 	public int ruleIndex;
 

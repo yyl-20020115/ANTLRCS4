@@ -10,8 +10,8 @@ namespace org.antlr.v4.codegen;
 
 /** */
 public class ActionTranslator implements ActionSplitterListener {
-	public static final Map<String, Class<? extends RulePropertyRef>> thisRulePropToModelMap =
-		new HashMap<String, Class<? extends RulePropertyRef>>();
+	public static final Map<String, Class<? : RulePropertyRef>> thisRulePropToModelMap =
+		new HashMap<String, Class<? : RulePropertyRef>>();
 	static {
 		thisRulePropToModelMap.put("start", ThisRulePropertyRef_start.class);
 		thisRulePropToModelMap.put("stop",  ThisRulePropertyRef_stop.class);
@@ -20,8 +20,8 @@ public class ActionTranslator implements ActionSplitterListener {
 		thisRulePropToModelMap.put("parser",  ThisRulePropertyRef_parser.class);
 	}
 
-	public static final Map<String, Class<? extends RulePropertyRef>> rulePropToModelMap =
-		new HashMap<String, Class<? extends RulePropertyRef>>();
+	public static final Map<String, Class<? : RulePropertyRef>> rulePropToModelMap =
+		new HashMap<String, Class<? : RulePropertyRef>>();
 	static {
 		rulePropToModelMap.put("start", RulePropertyRef_start.class);
 		rulePropToModelMap.put("stop",  RulePropertyRef_stop.class);
@@ -30,8 +30,8 @@ public class ActionTranslator implements ActionSplitterListener {
 		rulePropToModelMap.put("parser",  RulePropertyRef_parser.class);
 	}
 
-	public static final Map<String, Class<? extends TokenPropertyRef>> tokenPropToModelMap =
-		new HashMap<String, Class<? extends TokenPropertyRef>>();
+	public static final Map<String, Class<? : TokenPropertyRef>> tokenPropToModelMap =
+		new HashMap<String, Class<? : TokenPropertyRef>>();
 	static {
 		tokenPropToModelMap.put("text",  TokenPropertyRef_text.class);
 		tokenPropToModelMap.put("type",  TokenPropertyRef_type.class);
@@ -215,8 +215,8 @@ public class ActionTranslator implements ActionSplitterListener {
 
 	TokenPropertyRef getTokenPropertyRef(Token x, Token y) {
 		try {
-			Class<? extends TokenPropertyRef> c = tokenPropToModelMap.get(y.getText());
-			Constructor<? extends TokenPropertyRef> ctor = c.getConstructor(StructDecl.class, String.class);
+			Class<? : TokenPropertyRef> c = tokenPropToModelMap.get(y.getText());
+			Constructor<? : TokenPropertyRef> ctor = c.getConstructor(StructDecl.class, String.class);
 			return ctor.newInstance(nodeContext, getTokenLabel(x.getText()));
 		}
 		catch (Exception e) {
@@ -227,8 +227,8 @@ public class ActionTranslator implements ActionSplitterListener {
 
 	RulePropertyRef getRulePropertyRef(Token x, Token prop) {
 		try {
-			Class<? extends RulePropertyRef> c = (x != null ? rulePropToModelMap : thisRulePropToModelMap).get(prop.getText());
-			Constructor<? extends RulePropertyRef> ctor = c.getConstructor(StructDecl.class, String.class);
+			Class<? : RulePropertyRef> c = (x != null ? rulePropToModelMap : thisRulePropToModelMap).get(prop.getText());
+			Constructor<? : RulePropertyRef> ctor = c.getConstructor(StructDecl.class, String.class);
 			return ctor.newInstance(nodeContext, getRuleLabel((x != null ? x : prop).getText()));
 		}
 		catch (Exception e) {

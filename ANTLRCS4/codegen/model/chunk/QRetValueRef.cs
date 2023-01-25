@@ -4,13 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
-
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class QRetValueRef extends RetValueRef {
-	public final String dict;
+public class QRetValueRef : RetValueRef {
+	public readonly String dict;
 
 	public QRetValueRef(StructDecl ctx, String dict, String name, String escapedName) {
 		super(ctx, name, escapedName);

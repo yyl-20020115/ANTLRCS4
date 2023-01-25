@@ -15,7 +15,7 @@ import org.antlr.v4.tool.ast.GrammarAST;
 import java.util.List;
 
 /** */
-public class LL1PlusBlockSingleAlt extends LL1Loop {
+public class LL1PlusBlockSingleAlt : LL1Loop {
 	public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts) {
 		super(factory, plusRoot, alts);
 

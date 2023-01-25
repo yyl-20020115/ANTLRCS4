@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** */
-public abstract class LL1Loop extends Choice {
+public abstract class LL1Loop : Choice {
 	/** The state associated wih the (A|B|...) block not loopback, which
 	 *  is super.stateNumber
 	 */

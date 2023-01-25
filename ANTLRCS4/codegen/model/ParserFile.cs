@@ -14,7 +14,7 @@ import org.antlr.v4.tool.Grammar;
 import java.util.Map;
 
 /** */
-public class ParserFile extends OutputFile {
+public class ParserFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line
 	public boolean genListener; // from -listener cmd-line

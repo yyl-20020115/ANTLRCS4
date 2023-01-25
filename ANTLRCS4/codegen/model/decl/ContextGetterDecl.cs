@@ -6,10 +6,7 @@
 
 namespace org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.MurmurHash;
-
-public abstract class ContextGetterDecl extends Decl {
+public abstract class ContextGetterDecl : Decl {
 	public ContextGetterDecl(OutputModelFactory factory, String name) {
 		super(factory, name);
 	}

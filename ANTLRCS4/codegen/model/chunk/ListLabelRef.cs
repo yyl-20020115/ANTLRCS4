@@ -4,10 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+namespace org.antlr.v4.codegen.model.chunk;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
-
-public class ListLabelRef extends LabelRef {
+public class ListLabelRef : LabelRef {
 	public ListLabelRef(StructDecl ctx, String name, String escapedName) { super(ctx, name, escapedName); }
 }

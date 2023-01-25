@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class Recognizer extends OutputModelObject {
+public abstract class Recognizer : OutputModelObject {
 	public String name;
 	public String grammarName;
 	public String grammarFileName;

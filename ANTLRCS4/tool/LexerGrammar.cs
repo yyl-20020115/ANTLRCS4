@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.misc.MultiMap;
 import org.antlr.v4.tool.ast.GrammarRootAST;
 
 /** */
-public class LexerGrammar extends Grammar {
+public class LexerGrammar : Grammar {
 	public static final String DEFAULT_MODE_NAME = "DEFAULT_MODE";
 
 	/** The grammar from which this lexer grammar was derived (if implicit) */

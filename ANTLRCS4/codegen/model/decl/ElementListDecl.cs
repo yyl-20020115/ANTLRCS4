@@ -4,12 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using System.Xml.Linq;
+
 namespace org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-
-public class ElementListDecl extends Decl {
-	public ElementListDecl(OutputModelFactory factory, String name) {
-		super(factory, name);
-	}
+public class ElementListDecl : Decl
+{
+    public ElementListDecl(OutputModelFactory factory, string name) : base(factory, name) { }
 }

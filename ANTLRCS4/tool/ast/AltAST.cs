@@ -8,7 +8,7 @@ namespace org.antlr.v4.tool.ast;
 
 
 /** Any ALT (which can be child of ALT_REWRITE node) */
-public class AltAST extends GrammarASTWithOptions {
+public class AltAST : GrammarASTWithOptions {
 	public Alternative alt;
 
 	/** If we transformed this alt from a left-recursive one, need info on it */

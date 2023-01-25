@@ -4,22 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
 /** */
-public abstract class OutputModelObject {
-	public OutputModelFactory factory;
-	public GrammarAST ast;
+public abstract class OutputModelObject
+{
+    public OutputModelFactory? factory;
+    public GrammarAST? ast;
 
-	public OutputModelObject() {}
-
-	public OutputModelObject(OutputModelFactory factory) { this(factory, null); }
-
-	public OutputModelObject(OutputModelFactory factory, GrammarAST ast) {
-		this.factory = factory;
-		this.ast = ast;
-	}
+    public OutputModelObject(OutputModelFactory? factory = null, GrammarAST? ast = null)
+    {
+        this.factory = factory;
+        this.ast = ast;
+    }
 }

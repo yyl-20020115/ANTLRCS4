@@ -54,7 +54,7 @@ import org.antlr.v4.tool.ast.TerminalAST;
 import java.util.List;
 
 /** */
-public class ParserFactory extends DefaultOutputModelFactory {
+public class ParserFactory : DefaultOutputModelFactory {
 	public ParserFactory(CodeGenerator gen) { super(gen); }
 
 	@Override

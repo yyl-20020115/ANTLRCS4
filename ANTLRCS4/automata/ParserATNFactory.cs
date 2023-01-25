@@ -656,7 +656,7 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	public <T extends ATNState> T newState(Class<T> nodeType, GrammarAST node) {
+	public <T : ATNState> T newState(Class<T> nodeType, GrammarAST node) {
 		Exception cause;
 		try {
 			Constructor<T> ctor = nodeType.getConstructor();

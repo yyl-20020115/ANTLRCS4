@@ -29,7 +29,7 @@ import java.util.List;
  *  think it makes sense to factor code using super constructors because
  *  it has too much work to do.
  */
-public abstract class Choice extends RuleElement {
+public abstract class Choice : RuleElement {
 	public int decision = -1;
 	public Decl label;
 

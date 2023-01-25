@@ -4,28 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.decl;
-
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.DispatchMethod;
-import org.antlr.v4.codegen.model.ListenerDispatchMethod;
-import org.antlr.v4.codegen.model.ModelElement;
-import org.antlr.v4.codegen.model.OutputModelObject;
-import org.antlr.v4.codegen.model.VisitorDispatchMethod;
-import org.antlr.v4.runtime.misc.OrderedHashSet;
-import org.antlr.v4.tool.Attribute;
-import org.antlr.v4.tool.Rule;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+namespace org.antlr.v4.codegen.model.decl;
 
 /** This object models the structure holding all of the parameters,
  *  return values, local variables, and labels associated with a rule.
  */
-public class StructDecl extends Decl {
+public class StructDecl : Decl {
 	public String derivedFromName; // rule name or label name
-	public boolean provideCopyFrom;
+	public bool provideCopyFrom;
 	@ModelElement public OrderedHashSet<Decl> attrs = new OrderedHashSet<Decl>();
 	@ModelElement public OrderedHashSet<Decl> getters = new OrderedHashSet<Decl>();
 	@ModelElement public Collection<AttributeDecl> ctorAttrs;
@@ -71,26 +57,26 @@ public class StructDecl extends Decl {
 	public void addDecl(Decl d) {
 		d.ctx = this;
 
-		if ( d instanceof ContextGetterDecl ) getters.add(d);
+		if ( d is ContextGetterDecl ) getters.add(d);
 		else attrs.add(d);
 
 		// add to specific "lists"
-		if ( d instanceof TokenTypeDecl ) {
+		if ( d is TokenTypeDecl ) {
 			tokenTypeDecls.add(d);
 		}
-		else if ( d instanceof TokenListDecl ) {
+		else if ( d is TokenListDecl ) {
 			tokenListDecls.add(d);
 		}
-		else if ( d instanceof TokenDecl ) {
+		else if ( d is TokenDecl ) {
 			tokenDecls.add(d);
 		}
-		else if ( d instanceof RuleContextListDecl ) {
+		else if ( d is RuleContextListDecl ) {
 			ruleContextListDecls.add(d);
 		}
-		else if ( d instanceof RuleContextDecl ) {
+		else if ( d is RuleContextDecl ) {
 			ruleContextDecls.add(d);
 		}
-		else if ( d instanceof AttributeDecl ) {
+		else if ( d is AttributeDecl ) {
 			attributeDecls.add(d);
 		}
 	}
@@ -99,25 +85,25 @@ public class StructDecl extends Decl {
 		addDecl(new AttributeDecl(factory, a));
 	}
 
-	public void addDecls(Collection<Attribute> attrList) {
-		for (Attribute a : attrList) addDecl(a);
+	public void addDecls(ICollection<Attribute> attrList) {
+		foreach (Attribute a in attrList) addDecl(a);
 	}
 
 	public void implementInterface(OutputModelObject value) {
 		if (interfaces == null) {
-			interfaces = new ArrayList<OutputModelObject>();
+			interfaces = new ();
 		}
 
-		interfaces.add(value);
+		interfaces.Add(value);
 	}
 
 	public void addExtensionMember(OutputModelObject member) {
 		if (extensionMembers == null) {
-			extensionMembers = new ArrayList<OutputModelObject>();
+			extensionMembers = new ();
 		}
 
-		extensionMembers.add(member);
+		extensionMembers.Add(member);
 	}
 
-	public boolean isEmpty() { return attrs.isEmpty(); }
+	public bool isEmpty() { return attrs.isEmpty(); }
 }

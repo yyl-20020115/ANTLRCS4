@@ -11,7 +11,7 @@ import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.parse.ANTLRParser;
 import org.antlr.v4.tool.Grammar;
 
-public class RuleAST extends GrammarASTWithOptions {
+public class RuleAST : GrammarASTWithOptions {
 	public RuleAST(RuleAST node) {
 		super(node);
 	}

@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
  *  @see GrammarParserInterpreter
  *  @since 4.5.1
  */
-public class GrammarInterpreterRuleContext extends InterpreterRuleContext {
+public class GrammarInterpreterRuleContext : InterpreterRuleContext {
 	protected int outerAltNum = 1;
 
 	public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex) {

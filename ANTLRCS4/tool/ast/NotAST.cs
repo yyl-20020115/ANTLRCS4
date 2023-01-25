@@ -8,7 +8,7 @@ package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
 
-public class NotAST extends GrammarAST implements RuleElementAST {
+public class NotAST : GrammarAST implements RuleElementAST {
 
 	public NotAST(NotAST node) {
 		super(node);

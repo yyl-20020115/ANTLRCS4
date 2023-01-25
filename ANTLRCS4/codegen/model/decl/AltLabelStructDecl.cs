@@ -9,7 +9,7 @@ namespace org.antlr.v4.codegen.model.decl;
 
 
 /** A StructDecl to handle a -&gt; label on alt */
-public class AltLabelStructDecl extends StructDecl {
+public class AltLabelStructDecl : StructDecl {
 	public int altNum;
 	public String parentRule;
 	public AltLabelStructDecl(OutputModelFactory factory, Rule r,
@@ -40,7 +40,7 @@ public class AltLabelStructDecl extends StructDecl {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public bool equals(Object obj) {
 		if ( obj == this ) return true;
 		if (!(obj instanceof AltLabelStructDecl)) return false;
 

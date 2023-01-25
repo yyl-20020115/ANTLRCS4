@@ -14,7 +14,7 @@ import org.antlr.v4.tool.Rule;
 
 import java.util.*;
 
-public class Lexer extends Recognizer {
+public class Lexer : Recognizer {
 	public final Collection<String> channelNames;
 	public final Map<String, Integer> escapedChannels;
 	public final LexerFile file;

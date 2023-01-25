@@ -12,7 +12,7 @@ import java.io.File;
  *
  * @author Sam Harwell
  */
-public class JFileChooserConfirmOverwrite extends JFileChooser {
+public class JFileChooserConfirmOverwrite : JFileChooser {
 
 	public JFileChooserConfirmOverwrite() {
 		setMultiSelectionEnabled(false);

@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GrammarASTWithOptions extends GrammarAST {
+public abstract class GrammarASTWithOptions : GrammarAST {
     protected Map<String, GrammarAST> options;
 
 	public GrammarASTWithOptions(GrammarASTWithOptions node) {
