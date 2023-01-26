@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /** An ATN transition between any two ATN states.  Subclasses define
@@ -86,7 +88,7 @@ public abstract class Transition {
 	}
 
 
-	public IntervalSet label() { return null; }
+	public virtual IntervalSet label() { return null; }
 
 	public abstract bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol);
 }

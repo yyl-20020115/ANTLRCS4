@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 package org.antlr.v4.runtime;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;

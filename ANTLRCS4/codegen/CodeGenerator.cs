@@ -4,38 +4,24 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.codegen;
-
-import org.antlr.v4.Tool;
-import org.antlr.v4.codegen.model.OutputModelObject;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.stringtemplate.v4.AutoIndentWriter;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STWriter;
-
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /** General controller for code gen.  Can instantiate sub generator(s).
  */
 public class CodeGenerator {
-	public static final String TEMPLATE_ROOT = "org/antlr/v4/tool/templates/codegen";
-	public static final String VOCAB_FILE_EXTENSION = ".tokens";
-	public static final String vocabFilePattern =
+	public static readonly String TEMPLATE_ROOT = "org/antlr/v4/tool/templates/codegen";
+	public static readonly String VOCAB_FILE_EXTENSION = ".tokens";
+	public static readonly String vocabFilePattern =
 		"<tokens.keys:{t | <t>=<tokens.(t)>\n}>" +
 		"<literals.keys:{t | <t>=<literals.(t)>\n}>";
 
-	public final Grammar g;
+	public readonly Grammar g;
 
-	public final Tool tool;
+	public readonly Tool tool;
 
-	public final String language;
+	public readonly String language;
 
 	private Target target;
 
@@ -48,8 +34,8 @@ public class CodeGenerator {
 	public static CodeGenerator create(Tool tool, Grammar g, String language) {
 		String targetName = "org.antlr.v4.codegen.target."+language+"Target";
 		try {
-			Class<? : Target> c = Class.forName(targetName).asSubclass(Target.class);
-			Constructor<? : Target> ctor = c.getConstructor(CodeGenerator.class);
+			Class<? : Target> c = Class.forName(targetName).asSubclass(Target);
+			Constructor<? : Target> ctor = c.getConstructor(CodeGenerator);
 			CodeGenerator codeGenerator = new CodeGenerator(tool, g, language);
 			codeGenerator.target = ctor.newInstance(codeGenerator);
 			return codeGenerator;

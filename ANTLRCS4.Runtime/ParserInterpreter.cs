@@ -4,28 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.ActionTransition;
-import org.antlr.v4.runtime.atn.AtomTransition;
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.atn.LoopEndState;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PrecedencePredicateTransition;
-import org.antlr.v4.runtime.atn.PredicateTransition;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
-import org.antlr.v4.runtime.atn.RuleStartState;
-import org.antlr.v4.runtime.atn.RuleTransition;
-import org.antlr.v4.runtime.atn.StarLoopEntryState;
-import org.antlr.v4.runtime.atn.Transition;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.Pair;
+namespace org.antlr.v4.runtime;
 
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
 
 /** A parser simulator that mimics what ANTLR's generated
  *  parser code does. A ParserATNSimulator is used to make
@@ -40,18 +23,18 @@ import java.util.Deque;
  *
  *  See TestParserInterpreter for examples.
  */
-public class ParserInterpreter extends Parser {
-	protected final String grammarFileName;
-	protected final ATN atn;
+public class ParserInterpreter : Parser {
+	protected readonly String grammarFileName;
+	protected readonly ATN atn;
 
-	protected final DFA[] decisionToDFA; // not shared like it is for generated parsers
-	protected final PredictionContextCache sharedContextCache = new PredictionContextCache();
+	protected readonly DFA[] decisionToDFA; // not shared like it is for generated parsers
+	protected readonly PredictionContextCache sharedContextCache = new PredictionContextCache();
 
-	@Deprecated
-	protected final String[] tokenNames;
-	protected final String[] ruleNames;
+	//@Deprecated
+	protected readonly String[] tokenNames;
+	protected readonly String[] ruleNames;
 
-	private final Vocabulary vocabulary;
+	private readonly Vocabulary vocabulary;
 
 	/** This stack corresponds to the _parentctx, _parentState pair of locals
 	 *  that would exist on call stack frames with a recursive descent parser;
@@ -66,7 +49,7 @@ public class ParserInterpreter extends Parser {
 	 *  Those values are used to create new recursive rule invocation contexts
 	 *  associated with left operand of an alt like "expr '*' expr".
 	 */
-	protected final Deque<Pair<ParserRuleContext, Integer>> _parentContextStack =
+	protected readonly Deque<Pair<ParserRuleContext, Integer>> _parentContextStack =
 		new ArrayDeque<Pair<ParserRuleContext, Integer>>();
 
 	/** We need a map from (decision,inputIndex)->forced alt for computing ambiguous
@@ -75,7 +58,7 @@ public class ParserInterpreter extends Parser {
 	protected int overrideDecision = -1;
 	protected int overrideDecisionInputIndex = -1;
 	protected int overrideDecisionAlt = -1;
-	protected boolean overrideDecisionReached = false; // latch and only override once; error might trigger infinite loop
+	protected bool overrideDecisionReached = false; // latch and only override once; error might trigger infinite loop
 
 	/** What is the current context when we override a decisions?  This tells
 	 *  us what the root of the parse tree is when using override
@@ -89,7 +72,7 @@ public class ParserInterpreter extends Parser {
 	/**
 	 * @deprecated Use {@link #ParserInterpreter(String, Vocabulary, Collection, ATN, TokenStream)} instead.
 	 */
-	@Deprecated
+	//@Deprecated
 	public ParserInterpreter(String grammarFileName, Collection<String> tokenNames,
 							 Collection<String> ruleNames, ATN atn, TokenStream input) {
 		this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.toArray(new String[0])), ruleNames, atn, input);

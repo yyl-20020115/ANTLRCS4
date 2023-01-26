@@ -3,7 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
 /**
  * This class extends {@link ParserRuleContext} by allowing the value of
@@ -17,7 +17,7 @@ package org.antlr.v4.runtime;
  * parser, this class (with slightly more memory overhead per node) is used to
  * provide equivalent functionality.</p>
  */
-public class InterpreterRuleContext extends ParserRuleContext {
+public class InterpreterRuleContext : ParserRuleContext {
 	/** This is the backing field for {@link #getRuleIndex}. */
 	protected int ruleIndex = -1;
 
@@ -34,12 +34,12 @@ public class InterpreterRuleContext extends ParserRuleContext {
 	public InterpreterRuleContext(ParserRuleContext parent,
 								  int invokingStateNumber,
 								  int ruleIndex)
-	{
-		super(parent, invokingStateNumber);
+		:base(parent, invokingStateNumber)
+    {
 		this.ruleIndex = ruleIndex;
 	}
 
-	@Override
+	//@Override
 	public int getRuleIndex() {
 		return ruleIndex;
 	}

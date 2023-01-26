@@ -6,18 +6,6 @@
 
 namespace org.antlr.v4.codegen.model;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.Target;
-import org.antlr.v4.codegen.model.decl.Decl;
-import org.antlr.v4.codegen.model.decl.TokenTypeDecl;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** The class hierarchy underneath SrcOp is pretty deep but makes sense that,
  *  for example LL1StarBlock is a kind of LL1Loop which is a kind of Choice.
@@ -33,8 +21,10 @@ public abstract class Choice : RuleElement {
 	public int decision = -1;
 	public Decl label;
 
-	@ModelElement public List<CodeBlockForAlt> alts;
-	@ModelElement public List<SrcOp> preamble = new ArrayList<SrcOp>();
+	//@ModelElement 
+	public List<CodeBlockForAlt> alts;
+	//@ModelElement
+	public List<SrcOp> preamble = new ArrayList<SrcOp>();
 
 	public Choice(OutputModelFactory factory,
 				  GrammarAST blkOrEbnfRootAST,

@@ -22,7 +22,7 @@ namespace org.antlr.v4.runtime;
  * token. Keep lexing until you get a valid one. Just report errors and keep
  * going, looking for a valid token.</p>
  */
-public interface TokenSource<T> {
+public interface TokenSource {
 	/**
 	 * Return a {@link Token} object from your input stream (usually a
 	 * {@link CharStream}). Do not fail/return upon lexing error; keep chewing
@@ -72,7 +72,7 @@ public interface TokenSource<T> {
 	 *
 	 * @param factory The {@link TokenFactory} to use for creating tokens.
 	 */
-	public void setTokenFactory(TokenFactory<T> factory);
+	public void setTokenFactory(TokenFactory factory);
 
 	/**
 	 * Gets the {@link TokenFactory} this token source is currently using for
@@ -80,5 +80,5 @@ public interface TokenSource<T> {
 	 *
 	 * @return The {@link TokenFactory} currently used by this token source.
 	 */
-	public TokenFactory<T> getTokenFactory();
+	public TokenFactory getTokenFactory();
 }

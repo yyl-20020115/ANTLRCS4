@@ -4,18 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNType;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
-import org.antlr.v4.runtime.dfa.DFA;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-public class LexerInterpreter extends Lexer {
+public class LexerInterpreter : Lexer {
 	protected final String grammarFileName;
 	protected final ATN atn;
 

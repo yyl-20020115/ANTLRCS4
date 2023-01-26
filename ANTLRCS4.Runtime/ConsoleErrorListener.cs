@@ -3,17 +3,17 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
 /**
  *
  * @author Sam Harwell
  */
-public class ConsoleErrorListener extends BaseErrorListener {
+public class ConsoleErrorListener : BaseErrorListener {
 	/**
 	 * Provides a default instance of {@link ConsoleErrorListener}.
 	 */
-	public static final ConsoleErrorListener INSTANCE = new ConsoleErrorListener();
+	public static readonly ConsoleErrorListener INSTANCE = new ConsoleErrorListener();
 
 	/**
 	 * {@inheritDoc}
@@ -27,15 +27,15 @@ public class ConsoleErrorListener extends BaseErrorListener {
 	 * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
 	 * </pre>
 	 */
-	@Override
-	public void syntaxError(Recognizer<?, ?> recognizer,
+	//@Override
+	public override void syntaxError(Recognizer<T1, T2> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,
 							String msg,
 							RecognitionException e)
 	{
-		System.err.println("line " + line + ":" + charPositionInLine + " " + msg);
+		Console.Error.WriteLine("line " + line + ":" + charPositionInLine + " " + msg);
 	}
 
 }

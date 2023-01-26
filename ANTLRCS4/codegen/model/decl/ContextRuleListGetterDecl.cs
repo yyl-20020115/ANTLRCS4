@@ -11,8 +11,8 @@ namespace org.antlr.v4.codegen.model.decl;
  */
 public class ContextRuleListGetterDecl : ContextGetterDecl {
 	public String ctxName;
-	public ContextRuleListGetterDecl(OutputModelFactory factory, String name, String ctxName) {
-		super(factory, name);
+	public ContextRuleListGetterDecl(OutputModelFactory factory, String name, String ctxName) : base(factory, name)
+    {
 		this.ctxName = ctxName;
 	}
 }

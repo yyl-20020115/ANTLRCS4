@@ -7,8 +7,8 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 public class ContextTokenListIndexedGetterDecl : ContextTokenListGetterDecl {
-	public ContextTokenListIndexedGetterDecl(OutputModelFactory factory, String name) {
-		super(factory, name);
+	public ContextTokenListIndexedGetterDecl(OutputModelFactory factory, String name): base(factory, name)
+    {
 	}
 
 	

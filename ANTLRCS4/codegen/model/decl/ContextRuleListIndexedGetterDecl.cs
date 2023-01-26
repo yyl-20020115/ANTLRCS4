@@ -7,12 +7,11 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 public class ContextRuleListIndexedGetterDecl : ContextRuleListGetterDecl {
-	public ContextRuleListIndexedGetterDecl(OutputModelFactory factory, String name, String ctxName) {
-		super(factory, name, ctxName);
+	public ContextRuleListIndexedGetterDecl(OutputModelFactory factory, String name, String ctxName) : base(factory, name, ctxName)
+    {
 	}
 
-	@Override
-	public String getArgType() {
+	public override String getArgType() {
 		return "int";
 	}
 }

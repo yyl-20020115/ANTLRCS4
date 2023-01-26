@@ -5,16 +5,6 @@
  */
 using org.antlr.v4.runtime;
 
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.misc.Interval;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Arrays;
-
 /**
  * Vacuum all input from a {@link Reader}/{@link InputStream} and then treat it
  * like a {@code char[]} buffer. Can also pass in a {@link String} or

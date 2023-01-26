@@ -11,7 +11,7 @@ namespace org.antlr.v4.runtime;
 /**
  * An {@link IntStream} whose symbols are {@link Token} instances.
  */
-public interface TokenStream<T> : IntStream {
+public interface TokenStream : IntStream {
 	/**
 	 * Get the {@link Token} instance associated with the value returned by
 	 * {@link #LA LA(k)}. This method has the same pre- and post-conditions as
@@ -47,7 +47,7 @@ public interface TokenStream<T> : IntStream {
 	 * Gets the underlying {@link TokenSource} which provides tokens for this
 	 * stream.
 	 */
-	public TokenSource<T> getTokenSource();
+	public TokenSource getTokenSource();
 
 	/**
 	 * Return the text of all tokens within the specified {@code interval}. This

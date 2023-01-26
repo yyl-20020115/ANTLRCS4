@@ -102,7 +102,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return null;
 	}
 
-	protected final int getBucket(T o) {
+	protected  int getBucket(T o) {
 		int hash = comparator.hashCode(o);
 		int b = hash & (buckets.length-1); // assumes len is power of 2
 		return b;

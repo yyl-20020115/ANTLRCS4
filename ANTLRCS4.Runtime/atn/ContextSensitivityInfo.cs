@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.TokenStream;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This class represents profiling event information for a context sensitivity.
@@ -27,7 +24,7 @@ import org.antlr.v4.runtime.TokenStream;
  *
  * @since 4.3
  */
-public class ContextSensitivityInfo extends DecisionEventInfo {
+public class ContextSensitivityInfo : DecisionEventInfo {
 	/**
 	 * Constructs a new instance of the {@link ContextSensitivityInfo} class
 	 * with the specified detailed context sensitivity information.
@@ -43,7 +40,7 @@ public class ContextSensitivityInfo extends DecisionEventInfo {
 	public ContextSensitivityInfo(int decision,
 								  ATNConfigSet configs,
 								  TokenStream input, int startIndex, int stopIndex)
-	{
-		super( decision, configs, input, startIndex, stopIndex, true);
+		:base(decision, configs, input, startIndex, stopIndex, true)
+    {
 	}
 }

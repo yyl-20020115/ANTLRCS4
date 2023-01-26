@@ -6,23 +6,6 @@
 
 namespace org.antlr.v4.codegen;
 
-import org.antlr.v4.codegen.model.Action;
-import org.antlr.v4.codegen.model.CodeBlockForOuterMostAlt;
-import org.antlr.v4.codegen.model.OutputModelObject;
-import org.antlr.v4.codegen.model.RuleFunction;
-import org.antlr.v4.codegen.model.SrcOp;
-import org.antlr.v4.codegen.model.decl.CodeBlock;
-import org.antlr.v4.codegen.model.decl.Decl;
-import org.antlr.v4.tool.Alternative;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /** Create output objects for elements *within* rule functions except
  *  buildOutputModel() which builds outer/root model object and any
@@ -32,9 +15,9 @@ import java.util.List;
 public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 	// Interface to outside world
 
-	public final Grammar g;
+	public readonly Grammar g;
 
-	public final CodeGenerator gen;
+	public readonly CodeGenerator gen;
 
 	public OutputModelController controller;
 

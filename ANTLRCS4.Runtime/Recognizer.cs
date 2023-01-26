@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
 namespace org.antlr.v4.runtime;
 
@@ -12,16 +13,16 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 {
 	public static readonly int EOF=-1;
 
-	private static readonly Map<Vocabulary, Map<String, Integer>> tokenTypeMapCache =
-		new WeakHashMap<Vocabulary, Map<String, Integer>>();
-	private static readonly Map<String[], Map<String, Integer>> ruleIndexMapCache =
-		new WeakHashMap<String[], Map<String, Integer>>();
+	private static readonly Dictionary<Vocabulary, Dictionary<String, int>> tokenTypeMapCache =
+		new ();
+	private static readonly Dictionary<String[], Dictionary<String, int>> ruleIndexMapCache =
+		new ();
 
 
-	private List<ANTLRErrorListener> _listeners =
-		new CopyOnWriteArrayList<ANTLRErrorListener>() {{
-			add(ConsoleErrorListener.INSTANCE);
-		}};
+	private List<ANTLRErrorListener> _listeners = new List<ANTLRErrorListener>() { ConsoleErrorListener.INSTANCE };
+		//new CopyOnWriteArrayList<ANTLRErrorListener>() {{
+		//	add(ConsoleErrorListener.INSTANCE);
+		//}};
 
 	protected ATNInterpreter _interp;
 
@@ -57,9 +58,9 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	public Dictionary<String, int> getTokenTypeMap() {
 		Vocabulary vocabulary = getVocabulary();
 		lock (tokenTypeMapCache) {
-			Map<String, Integer> result = tokenTypeMapCache.get(vocabulary);
+			Dictionary<String, int> result = tokenTypeMapCache.get(vocabulary);
 			if (result == null) {
-				result = new HashMap<String, Integer>();
+				result = new ();
 				for (int i = 0; i <= getATN().maxTokenType; i++) {
 					String literalName = vocabulary.getLiteralName(i);
 					if (literalName != null) {
@@ -93,7 +94,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 		}
 
 		lock (ruleIndexMapCache) {
-			Map<String, Integer> result = ruleIndexMapCache.get(ruleNames);
+			var result = ruleIndexMapCache.get(ruleNames);
 			if (result == null) {
 				result = Collections.unmodifiableMap(Utils.toMap(ruleNames));
 				ruleIndexMapCache.put(ruleNames, result);
@@ -104,7 +105,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	}
 
 	public int getTokenType(String tokenName) {
-		Integer ttype = getTokenTypeMap().get(tokenName);
+		int ttype = getTokenTypeMap().get(tokenName);
 		if ( ttype!=null ) return ttype;
 		return Token.INVALID_TYPE;
 	}
@@ -180,7 +181,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	 * feature when necessary. For example, see
 	 * {@link DefaultErrorStrategy#getTokenErrorDisplay}.
 	 */
-	@Deprecated
+	//@Deprecated
 	public String getTokenErrorDisplay(Token t) {
 		if ( t==null ) return "<no token>";
 		String s = t.getText();
@@ -192,9 +193,9 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 				s = "<"+t.getType()+">";
 			}
 		}
-		s = s.replace("\n","\\n");
-		s = s.replace("\r","\\r");
-		s = s.replace("\t","\\t");
+		s = s.Replace("\n","\\n");
+		s = s.Replace("\r","\\r");
+		s = s.Replace("\t","\\t");
 		return "'"+s+"'";
 	}
 
@@ -228,18 +229,18 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 
 	// subclass needs to override these if there are sempreds or actions
 	// that the ATN interp needs to execute
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int actionIndex) {
+	public bool sempred(RuleContext _localctx, int ruleIndex, int actionIndex) {
 		return true;
 	}
 
-	public boolean precpred(RuleContext localctx, int precedence) {
+	public bool precpred(RuleContext localctx, int precedence) {
 		return true;
 	}
 
 	public void action(RuleContext _localctx, int ruleIndex, int actionIndex) {
 	}
 
-	public final int getState() {
+	public int getState() {
 		return _stateNumber;
 	}
 
@@ -250,7 +251,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	 *  invoking rules. Combine this and we have complete ATN
 	 *  configuration information.
 	 */
-	public final void setState(int atnState) {
+	public void setState(int atnState) {
 //		System.err.println("setState "+atnState);
 		_stateNumber = atnState;
 //		if ( traceATNStates ) _ctx.trace(atnState);
@@ -261,7 +262,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	public abstract void setInputStream(IntStream input);
 
 
-	public abstract TokenFactory<?> getTokenFactory();
+	public abstract TokenFactory getTokenFactory();
 
-	public abstract void setTokenFactory(TokenFactory<?> input);
+	public abstract void setTokenFactory(TokenFactory input);
 }

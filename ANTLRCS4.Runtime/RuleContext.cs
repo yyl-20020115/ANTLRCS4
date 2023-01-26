@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using System.Text;
@@ -127,7 +128,7 @@ public class RuleContext : RuleNode {
 
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < getChildCount(); i++) {
-			builder.append(getChild(i).getText());
+			builder.Append(getChild(i).getText());
 		}
 
 		return builder.ToString();
@@ -242,4 +243,24 @@ public class RuleContext : RuleNode {
 		buf.Append(']');
 		return buf.ToString();
 	}
+
+    ParseTree ParseTree.getParent()
+    {
+        throw new NotImplementedException();
+    }
+
+    Tree Tree.getParent()
+    {
+        throw new NotImplementedException();
+    }
+
+    object Tree.getPayload()
+    {
+        throw new NotImplementedException();
+    }
+
+    Tree Tree.getChild(int i)
+    {
+        throw new NotImplementedException();
+    }
 }

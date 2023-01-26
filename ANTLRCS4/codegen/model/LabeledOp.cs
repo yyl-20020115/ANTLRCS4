@@ -4,11 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.decl.Decl;
+namespace org.antlr.v4.codegen.model;
 
-import java.util.List;
 
 /** All the rule elements we can label like tokens, rules, sets, wildcard. */
 public interface LabeledOp {

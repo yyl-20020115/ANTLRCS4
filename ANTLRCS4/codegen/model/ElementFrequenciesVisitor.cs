@@ -6,19 +6,6 @@
 
 namespace org.antlr.v4.codegen.model;
 
-import org.antlr.runtime.tree.TreeNodeStream;
-import org.antlr.v4.misc.FrequencySet;
-import org.antlr.v4.misc.MutableInt;
-import org.antlr.v4.parse.GrammarTreeVisitor;
-import org.antlr.v4.tool.ErrorManager;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.AltAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.TerminalAST;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Map;
 
 public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	/**

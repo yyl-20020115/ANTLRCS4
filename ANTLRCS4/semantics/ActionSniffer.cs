@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.semantics;
 
 
@@ -30,37 +34,37 @@ public class ActionSniffer : BlankActionSplitterListener {
 
 	public void examineAction() {
 		//System.out.println("examine "+actionToken);
-		ANTLRStringStream in = new ANTLRStringStream(actionToken.getText());
-		in.setLine(actionToken.getLine());
-		in.setCharPositionInLine(actionToken.getCharPositionInLine());
-		ActionSplitter splitter = new ActionSplitter(in, this);
+		ANTLRStringStream @in = new ANTLRStringStream(actionToken.getText());
+        @in.setLine(actionToken.getLine());
+        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+		ActionSplitter splitter = new ActionSplitter(@in, this);
 		// forces eval, triggers listener methods
 		node.chunks = splitter.getActionTokens();
 	}
 
 	public void processNested(Token actionToken) {
-		ANTLRStringStream in = new ANTLRStringStream(actionToken.getText());
-		in.setLine(actionToken.getLine());
-		in.setCharPositionInLine(actionToken.getCharPositionInLine());
-		ActionSplitter splitter = new ActionSplitter(in, this);
+		ANTLRStringStream @in = new ANTLRStringStream(actionToken.getText());
+        @in.setLine(actionToken.getLine());
+        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+		ActionSplitter splitter = new ActionSplitter(@in, this);
 		// forces eval, triggers listener methods
 		splitter.getActionTokens();
 	}
 
 
-	@Override
+	//@Override
 	public void attr(String expr, Token x) { trackRef(x); }
 
-	@Override
+	//@Override
 	public void qualifiedAttr(String expr, Token x, Token y) { trackRef(x); }
 
-	@Override
+	//@Override
 	public void setAttr(String expr, Token x, Token rhs) {
 		trackRef(x);
 		processNested(rhs);
 	}
 
-	@Override
+	//@Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		processNested(rhs);
 	}

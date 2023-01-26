@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
 using System.Collections.Generic;
 
 namespace org.antlr.v4.automata;
@@ -19,7 +20,7 @@ public class ATNVisitor {
 		visit_(s, new HashSet<int>());
 	}
 
-	public void visit_(ATNState s, Set<int> visited) {
+	public void visit_(ATNState s, HashSet<int> visited) {
 		if ( !visited.add(s.stateNumber) ) return;
 		visited.add(s.stateNumber);
 

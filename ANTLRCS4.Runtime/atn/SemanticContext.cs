@@ -4,21 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using static org.antlr.v4.runtime.atn.SemanticContext;
 
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.misc.MurmurHash;
-import org.antlr.v4.runtime.misc.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+namespace org.antlr.v4.runtime.atn;
 
 /** A tree structure used to record the semantic context in which
  *  an ATN configuration is valid.  It's either a single predicate,
@@ -65,23 +53,23 @@ public abstract class SemanticContext {
 		return this;
 	}
 
-	public static class Empty extends SemanticContext {
+	public class Empty : SemanticContext {
 		/**
 		 * The default {@link SemanticContext}, which is semantically equivalent to
 		 * a predicate of the form {@code {true}?}.
 		 */
-		public static final Empty Instance = new Empty();
+		public static readonly Empty Instance = new Empty();
 
 		@Override
-		public boolean eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public bool eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			return false;
 		}
 	}
 
-    public static class Predicate extends SemanticContext {
-        public final int ruleIndex;
-       	public final int predIndex;
-       	public final boolean isCtxDependent;  // e.g., $i ref in pred
+    public class Predicate : SemanticContext {
+        public readonly int ruleIndex;
+       	public readonly int predIndex;
+       	public readonly bool isCtxDependent;  // e.g., $i ref in pred
 
         protected Predicate() {
             this.ruleIndex = -1;
@@ -127,7 +115,7 @@ public abstract class SemanticContext {
         }
     }
 
-	public static class PrecedencePredicate extends SemanticContext implements Comparable<PrecedencePredicate> {
+	public static class PrecedencePredicate : SemanticContext implements Comparable<PrecedencePredicate> {
 		public final int precedence;
 
 		protected PrecedencePredicate() {
@@ -192,7 +180,7 @@ public abstract class SemanticContext {
 	 *
 	 * @since 4.3
 	 */
-	public static abstract class Operator extends SemanticContext {
+	public static abstract class Operator : SemanticContext {
 		/**
 		 * Gets the operands for the semantic context operator.
 		 *
@@ -209,7 +197,7 @@ public abstract class SemanticContext {
 	 * A semantic context which is true whenever none of the contained contexts
 	 * is false.
 	 */
-    public static class AND extends Operator {
+    public static class AND : Operator {
 		public final SemanticContext[] opnds;
 
 		public AND(SemanticContext a, SemanticContext b) {
@@ -306,7 +294,7 @@ public abstract class SemanticContext {
 	 * A semantic context which is true whenever at least one of the contained
 	 * contexts is true.
 	 */
-    public static class OR extends Operator {
+    public static class OR : Operator {
 		public final SemanticContext[] opnds;
 
 		public OR(SemanticContext a, SemanticContext b) {
@@ -426,9 +414,9 @@ public abstract class SemanticContext {
 		return result;
 	}
 
-	private static List<PrecedencePredicate> filterPrecedencePredicates(Collection<? extends SemanticContext> collection) {
+	private static List<PrecedencePredicate> filterPrecedencePredicates(Collection<? : SemanticContext> collection) {
 		ArrayList<PrecedencePredicate> result = null;
-		for (Iterator<? extends SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
+		for (Iterator<? : SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
 			SemanticContext context = iterator.next();
 			if (context is PrecedencePredicate) {
 				if (result == null) {

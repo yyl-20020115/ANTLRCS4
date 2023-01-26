@@ -25,13 +25,13 @@ public class ANTLRFileStream : ANTLRInputStream {
 	}
 
 	public void load(String fileName, String encoding)
-		throws IOException
+		
 	{
 		data = Utils.readFile(fileName, encoding);
 		this.n = data.length;
 	}
 
-	@Override
+	//@Override
 	public String getSourceName() {
 		return fileName;
 	}

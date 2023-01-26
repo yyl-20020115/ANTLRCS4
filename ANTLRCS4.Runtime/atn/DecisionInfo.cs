@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This class contains profiling gathered for a particular decision.
@@ -26,7 +23,7 @@ public class DecisionInfo {
 	/**
 	 * The decision number, which is an index into {@link ATN#decisionToState}.
 	 */
-	public final int decision;
+	public readonly int decision;
 
 	/**
 	 * The total number of times {@link ParserATNSimulator#adaptivePredict} was
@@ -115,7 +112,7 @@ public class DecisionInfo {
 	 *
 	 * @see ContextSensitivityInfo
 	 */
-	public final List<ContextSensitivityInfo> contextSensitivities = new ArrayList<ContextSensitivityInfo>();
+	public readonly List<ContextSensitivityInfo> contextSensitivities = new ();
 
 	/**
 	 * A collection of {@link ErrorInfo} instances describing the parse errors
@@ -124,7 +121,7 @@ public class DecisionInfo {
 	 *
 	 * @see ErrorInfo
 	 */
-	public final List<ErrorInfo> errors = new ArrayList<ErrorInfo>();
+	public readonly List<ErrorInfo> errors = new ();
 
 	/**
 	 * A collection of {@link AmbiguityInfo} instances describing the
@@ -132,7 +129,7 @@ public class DecisionInfo {
 	 *
 	 * @see AmbiguityInfo
 	 */
-	public final List<AmbiguityInfo> ambiguities = new ArrayList<AmbiguityInfo>();
+	public readonly List<AmbiguityInfo> ambiguities = new ();
 
 	/**
 	 * A collection of {@link PredicateEvalInfo} instances describing the
@@ -141,7 +138,7 @@ public class DecisionInfo {
 	 *
 	 * @see PredicateEvalInfo
 	 */
-	public final List<PredicateEvalInfo> predicateEvals = new ArrayList<PredicateEvalInfo>();
+	public readonly List<PredicateEvalInfo> predicateEvals = new ();
 
 	/**
 	 * The total number of ATN transitions required during SLL prediction for
@@ -226,13 +223,12 @@ public class DecisionInfo {
 		this.decision = decision;
 	}
 
-	@Override
-	public String toString() {
+	public override String ToString() {
 		return "{" +
 			   "decision=" + decision +
-			   ", contextSensitivities=" + contextSensitivities.size() +
-			   ", errors=" + errors.size() +
-			   ", ambiguities=" + ambiguities.size() +
+			   ", contextSensitivities=" + contextSensitivities.Count +
+			   ", errors=" + errors.Count +
+			   ", ambiguities=" + ambiguities.Count +
 			   ", SLL_lookahead=" + SLL_TotalLook +
 			   ", SLL_ATNTransitions=" + SLL_ATNTransitions +
 			   ", SLL_DFATransitions=" + SLL_DFATransitions +

@@ -22,15 +22,14 @@ public class ArrayPredictionContext : PredictionContext {
 
 	public ArrayPredictionContext(SingletonPredictionContext a): this(new PredictionContext[] { a.parent }, new int[] { a.returnState })
     {
-		;
 	}
 
-	public ArrayPredictionContext(PredictionContext[] parents, int[] returnStates) {
-		super(calculateHashCode(parents, returnStates));
-		assert parents!=null && parents.length>0;
-		assert returnStates!=null && returnStates.length>0;
-//		System.err.println("CREATE ARRAY: "+Arrays.toString(parents)+", "+Arrays.toString(returnStates));
-		this.parents = parents;
+	public ArrayPredictionContext(PredictionContext[] parents, int[] returnStates) : base(calculateHashCode(parents, returnStates))
+    {
+        //assert parents!=null && parents.length>0;
+        //assert returnStates!=null && returnStates.length>0;
+        //		System.err.println("CREATE ARRAY: "+Arrays.toString(parents)+", "+Arrays.toString(returnStates));
+        this.parents = parents;
 		this.returnStates = returnStates;
 	}
 
@@ -61,7 +60,7 @@ public class ArrayPredictionContext : PredictionContext {
 		if (this == o) {
 			return true;
 		}
-		else if ( !(o is ArrayPredictionContext) ) {
+		else if ( o is not ArrayPredictionContext ) {
 			return false;
 		}
 
@@ -70,8 +69,8 @@ public class ArrayPredictionContext : PredictionContext {
 		}
 
 		ArrayPredictionContext a = (ArrayPredictionContext)o;
-		return Arrays.equals(returnStates, a.returnStates) &&
-		       Arrays.equals(parents, a.parents);
+		return Enumerable.SequenceEqual(returnStates, a.returnStates) &&
+               Enumerable.SequenceEqual(parents, a.parents);
 	}
 
 	public override String ToString() {

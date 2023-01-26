@@ -14,9 +14,9 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 	public Tool tool;
 	public String ruleName;
-	public LinkedHashMap<Integer, LeftRecursiveRuleAltInfo> binaryAlts = new LinkedHashMap<Integer, LeftRecursiveRuleAltInfo>();
-	public LinkedHashMap<Integer, LeftRecursiveRuleAltInfo> ternaryAlts = new LinkedHashMap<Integer, LeftRecursiveRuleAltInfo>();
-	public LinkedHashMap<Integer, LeftRecursiveRuleAltInfo> suffixAlts = new LinkedHashMap<Integer, LeftRecursiveRuleAltInfo>();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> binaryAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> ternaryAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> suffixAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
 	public List<LeftRecursiveRuleAltInfo> prefixAndOtherAlts = new ArrayList<LeftRecursiveRuleAltInfo>();
 
 	/** Pointer to ID node of ^(= ID element) */
@@ -188,7 +188,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		ruleST.add("setResultAction", setResultST);
 		ruleST.add("userRetvals", retvals);
 
-		LinkedHashMap<Integer, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new LinkedHashMap<Integer, LeftRecursiveRuleAltInfo>();
+		LinkedHashMap<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
 		opPrecRuleAlts.putAll(binaryAlts);
 		opPrecRuleAlts.putAll(ternaryAlts);
 		opPrecRuleAlts.putAll(suffixAlts);

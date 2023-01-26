@@ -4,13 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
+
 namespace org.antlr.v4.codegen.model;
 
 
 /** */
 public class AddToLabelList : SrcOp {
-	public final Decl label;
-	public final String listName;
+	public readonly Decl label;
+	public readonly String listName;
 
 	public AddToLabelList(OutputModelFactory factory, String listName, Decl label) {
 		super(factory);

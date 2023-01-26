@@ -6,9 +6,6 @@
 
 namespace org.antlr.v4.codegen.model;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.decl.CodeBlock;
-
 /** Contains Rewrite block (usually as last op) */
 public class CodeBlockForAlt : CodeBlock {
 

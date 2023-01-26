@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 public abstract class PredictionContext {
@@ -74,7 +76,7 @@ public abstract class PredictionContext {
 	public abstract int getReturnState(int index);
 
 	/** This means only the {@link EmptyPredictionContext#Instance} (wildcard? not sure) context is in set. */
-	public bool isEmpty() {
+	public virtual bool isEmpty() {
 		return this == EmptyPredictionContext.Instance;
 	}
 
@@ -83,13 +85,11 @@ public abstract class PredictionContext {
 		return getReturnState(size() - 1) == EMPTY_RETURN_STATE;
 	}
 
-	@Override
-	public final int hashCode() {
+	public override int GetHashCode() {
 		return cachedHashCode;
 	}
 
-	@Override
-	public abstract bool equals(Object obj);
+	public abstract bool Equals(Object obj);
 
 	protected static int calculateEmptyHashCode() {
 		int hash = MurmurHash.initialize(INITIAL_HASH);

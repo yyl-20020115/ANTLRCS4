@@ -4,32 +4,23 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.ActionTranslator;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.codegen.ParserFactory;
-import org.antlr.v4.codegen.Target;
-import org.antlr.v4.codegen.model.chunk.ActionChunk;
-import org.antlr.v4.codegen.model.decl.Decl;
-import org.antlr.v4.codegen.model.decl.RuleContextDecl;
-import org.antlr.v4.codegen.model.decl.RuleContextListDecl;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.misc.OrderedHashSet;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 /** */
-public class InvokeRule : RuleElement implements LabeledOp {
-	public final String name;
-	public final String escapedName;
-	public final OrderedHashSet<Decl> labels = new OrderedHashSet<Decl>(); // TODO: should need just 1
-	public final String ctxName;
+public class InvokeRule : RuleElement , LabeledOp {
+	public readonly String name;
+	public readonly String escapedName;
+	public readonly OrderedHashSet<Decl> labels = new OrderedHashSet<Decl>(); // TODO: should need just 1
+	public readonly String ctxName;
 
-	@ModelElement public List<ActionChunk> argExprsChunks;
+	//@ModelElement
+	public List<ActionChunk> argExprsChunks;
 
 	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST) {
 		super(factory, ast);

@@ -3,23 +3,18 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.AbstractPredicateTransition;
-import org.antlr.v4.runtime.atn.PredicateTransition;
-
-import java.util.Locale;
 
 /** A semantic predicate failed during validation.  Validation of predicates
  *  occurs when normally parsing the alternative just like matching a token.
  *  Disambiguating predicate evaluation occurs when we test a predicate during
  *  prediction.
  */
-public class FailedPredicateException extends RecognitionException {
-	private final int ruleIndex;
-	private final int predicateIndex;
-	private final String predicate;
+public class FailedPredicateException : RecognitionException {
+	private readonly int ruleIndex;
+	private readonly int predicateIndex;
+	private readonly String predicate;
 
 	public FailedPredicateException(Parser recognizer) {
 		this(recognizer, null);

@@ -4,14 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.atn.ATNConfig;
-import org.antlr.v4.runtime.atn.ATNConfigSet;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.Interval;
-
-import java.util.BitSet;
+namespace org.antlr.v4.runtime;
 
 /**
  * This implementation of {@link ANTLRErrorListener} can be used to identify

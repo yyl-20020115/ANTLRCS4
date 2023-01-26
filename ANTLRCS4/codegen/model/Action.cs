@@ -4,13 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.codegen.model;
 
 
 
 /** */
 public class Action : RuleElement {
-	@ModelElement public List<ActionChunk> chunks;
+	//@ModelElement
+	public List<ActionChunk> chunks;
 
 	public Action(OutputModelFactory factory, ActionAST ast) {
 		super(factory,ast);
@@ -19,7 +25,7 @@ public class Action : RuleElement {
 			chunks = ActionTranslator.translateAction(factory, rf, ast.token, ast);
 		}
 		else {
-			chunks = new ArrayList<ActionChunk>();
+			chunks = new ();
 		}
 		//System.out.println("actions="+chunks);
 	}
@@ -33,14 +39,14 @@ public class Action : RuleElement {
 			chunks = ActionTranslator.translateActionChunk(factory, rf, action, ast);
 		}
 		else {
-			chunks = new ArrayList<ActionChunk>();
+			chunks = new ();
 			chunks.add(new ActionText(ctx, action));
 		}
 	}
 
 	public Action(OutputModelFactory factory, StructDecl ctx, ST actionST) {
 		super(factory, null);
-		chunks = new ArrayList<ActionChunk>();
+		chunks = new ();
 		chunks.add(new ActionTemplate(ctx, actionST));
 	}
 

@@ -3,16 +3,15 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.atn.ATNConfigSet;
 
 /** Indicates that the parser could not decide which of two or more paths
  *  to take based upon the remaining input. It tracks the starting token
  *  of the offending input and also knows where the parser was
  *  in the various paths when the error. Reported by reportNoViableAlternative()
  */
-public class NoViableAltException extends RecognitionException {
+public class NoViableAltException : RecognitionException {
 	/** Which configurations did we try at input.index() that couldn't match input.LT(1)? */
 
 	private final ATNConfigSet deadEndConfigs;

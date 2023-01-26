@@ -4,11 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.atn;
-
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.TokenStream;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This is the base class for gathering detailed information about prediction

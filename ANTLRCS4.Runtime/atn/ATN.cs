@@ -94,10 +94,10 @@ public class ATN
 	public void addState(ATNState state) {
 		if (state != null) {
 			state.atn = this;
-			state.stateNumber = states.size();
+			state.stateNumber = states.Count;
 		}
 
-		states.add(state);
+		states.Add(state);
 	}
 
 	public void removeState(ATNState state) {
@@ -105,8 +105,8 @@ public class ATN
 	}
 
 	public int defineDecisionState(DecisionState s) {
-		decisionToState.add(s);
-		s.decision = decisionToState.size()-1;
+		decisionToState.Add(s);
+		s.decision = decisionToState.Count-1;
 		return s.decision;
 	}
 
@@ -118,7 +118,7 @@ public class ATN
     }
 
 	public int getNumberOfDecisions() {
-		return decisionToState.size();
+		return decisionToState.Count;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ATN
 	 * number {@code stateNumber}
 	 */
 	public IntervalSet getExpectedTokens(int stateNumber, RuleContext context) {
-		if (stateNumber < 0 || stateNumber >= states.size()) {
+		if (stateNumber < 0 || stateNumber >= states.Count) {
 			throw new ArgumentException(null,nameof(stateNumber));
 		}
 

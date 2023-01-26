@@ -16,7 +16,7 @@ namespace org.antlr.v4.runtime;
  */
 public class RecognitionException<T1,T2> : RuntimeException {
 	/** The {@link Recognizer} where this exception originated. */
-	private readonly Recognizer<T1, T2> recognizer;
+	private readonly Recognizer recognizer;
 
 	private readonly RuleContext ctx;
 
@@ -31,7 +31,7 @@ public class RecognitionException<T1,T2> : RuntimeException {
 
 	private int offendingState = -1;
 
-	public RecognitionException(Recognizer<T1, T2> recognizer,
+	public RecognitionException(Recognizer recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 	{

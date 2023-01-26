@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /**  The start of a regular {@code (...)} block. */
 public abstract class BlockStartState : DecisionState {

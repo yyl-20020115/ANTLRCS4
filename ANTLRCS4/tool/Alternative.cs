@@ -4,13 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.tool;
 
 
 
 
 /** An outermost alternative for a rule.  We don't track inner alternatives. */
-public class Alternative implements AttributeResolver {
+public class Alternative : AttributeResolver {
     public Rule rule;
 
 	public AltAST ast;
@@ -43,11 +46,11 @@ public class Alternative implements AttributeResolver {
 	 *
 	 *  This tracks per alt
      */
-    public List<ActionAST> actions = new ArrayList<ActionAST>();
+    public List<ActionAST> actions = new ();
 
     public Alternative(Rule r, int altNum) { this.rule = r; this.altNum = altNum; }
 
-	@Override
+	//@Override
 	public bool resolvesToToken(String x, ActionAST node) {
 		if ( tokenRefs.get(x)!=null ) return true;
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
@@ -55,8 +58,8 @@ public class Alternative implements AttributeResolver {
 		return false;
 	}
 
-	@Override
-	public bool resolvesToAttributeDict(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToAttributeDict(String x, ActionAST node) {
 		if ( resolvesToToken(x, node) ) return true;
         if ( ruleRefs.get(x)!=null ) return true; // rule ref in this alt?
         LabelElementPair anyLabelDef = getAnyLabelDef(x);
@@ -64,18 +67,18 @@ public class Alternative implements AttributeResolver {
 		return false;
 	}
 
-	/**  $x		Attribute: rule arguments, return values, predefined rule prop.
+    /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-	@Override
-	public Attribute resolveToAttribute(String x, ActionAST node) {
+    //@Override
+    public Attribute resolveToAttribute(String x, ActionAST node) {
 		return rule.resolveToAttribute(x, node); // reuse that code
 	}
 
-	/** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
+    /** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
 	 *  attr in that dictionary.  Can't see args on rule refs.
 	 */
-	@Override
-	public Attribute resolveToAttribute(String x, String y, ActionAST node) {
+    //@Override
+    public Attribute resolveToAttribute(String x, String y, ActionAST node) {
         if ( tokenRefs.get(x)!=null ) { // token ref in this alt?
             return rule.getPredefinedScope(LabelType.TOKEN_LABEL).get(y);
         }
@@ -98,16 +101,16 @@ public class Alternative implements AttributeResolver {
 		return null;
 	}
 
-	@Override
-	public bool resolvesToLabel(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.TOKEN_LABEL ||
 				anyLabelDef.type==LabelType.RULE_LABEL);
 	}
 
-	@Override
-	public bool resolvesToListLabel(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToListLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.RULE_LIST_LABEL ||

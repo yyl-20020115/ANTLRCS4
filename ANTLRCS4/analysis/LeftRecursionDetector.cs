@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool;
+using Rule = org.antlr.v4.tool.Rule;
+
 namespace org.antlr.v4.analysis;
 public class LeftRecursionDetector {
 	Grammar g;

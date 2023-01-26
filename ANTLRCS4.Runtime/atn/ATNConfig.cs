@@ -74,8 +74,8 @@ public class ATNConfig {
 	public ATNConfig(ATNState state,
 					 int alt,
 					 PredictionContext context)
-	{
-		this(state, alt, context, SemanticContext.Empty.Instance);
+		: this(state, alt, context, SemanticContext.Empty.Instance)
+    {
 	}
 
 	public ATNConfig(ATNState state,

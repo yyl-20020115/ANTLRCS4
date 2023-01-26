@@ -4,9 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 
-import org.antlr.v4.runtime.atn.ATN;
+namespace org.antlr.v4.runtime;
+
 
 /** A handy class for use with
  *
@@ -18,13 +19,14 @@ import org.antlr.v4.runtime.atn.ATN;
  *  I'm only putting into Java runtime as I'm certain I'm the only one that
  *  will really every use this.
  */
-public class RuleContextWithAltNum extends ParserRuleContext {
+public class RuleContextWithAltNum : ParserRuleContext {
 	public int altNum;
 	public RuleContextWithAltNum() { altNum = ATN.INVALID_ALT_NUMBER; }
 
-	public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber) {
-		super(parent, invokingStateNumber);
+	public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber):base(parent, invokingStateNumber)
+    {
+		;
 	}
-	@Override public int getAltNumber() { return altNum; }
-	@Override public void setAltNumber(int altNum) { this.altNum = altNum; }
+		public override int getAltNumber() { return altNum; }
+		public override void setAltNumber(int altNum) { this.altNum = altNum; }
 }

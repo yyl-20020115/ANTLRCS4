@@ -4,23 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-
-import static org.antlr.v4.runtime.atn.ATNDeserializer.encodeIntsWith16BitWords;
-import static org.antlr.v4.runtime.atn.ATNDeserializer.decodeIntsEncodedAs16BitWords;
-import static org.antlr.v4.test.tool.ToolTestUtils.createATN;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestATNSerialization {
 	[TestMethod] public void testSimpleNoBlock(){
 		Grammar g = new Grammar(

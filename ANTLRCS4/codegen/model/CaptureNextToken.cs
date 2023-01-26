@@ -6,8 +6,6 @@
 
 namespace org.antlr.v4.codegen.model;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-
 public class CaptureNextToken : SrcOp {
 	public String varName;
 	public CaptureNextToken(OutputModelFactory factory, String varName) {

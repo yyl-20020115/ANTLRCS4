@@ -22,7 +22,7 @@ public class BaseErrorListener : ANTLRErrorListener {
 							int line,
 							int charPositionInLine,
 							String msg,
-							RecognitionException e)
+							RecognitionException<T1,T2> e)
 	{
 	}
 

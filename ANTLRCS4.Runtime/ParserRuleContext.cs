@@ -3,6 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
+
 namespace org.antlr.v4.runtime;
 
 
@@ -150,7 +153,7 @@ public class ParserRuleContext : RuleContext {
 	 *  {@link Parser#createTerminalNode(ParserRuleContext, Token)}. I'm leaving this
      *  in for compatibility but the parser doesn't use this anymore.
 	 */
-	@Deprecated
+	//@Deprecated
 	public TerminalNode addChild(Token matchedToken) {
 		TerminalNodeImpl t = new TerminalNodeImpl(matchedToken);
 		addAnyChild(t);
@@ -158,13 +161,13 @@ public class ParserRuleContext : RuleContext {
 		return t;
 	}
 
-	/** Add a child to this node based upon badToken.  It
+    /** Add a child to this node based upon badToken.  It
 	 *  creates a ErrorNodeImpl rather than using
 	 *  {@link Parser#createErrorNode(ParserRuleContext, Token)}. I'm leaving this
 	 *  in for compatibility but the parser doesn't use this anymore.
 	 */
-	@Deprecated
-	public ErrorNode addErrorNode(Token badToken) {
+    //@Deprecated
+    public ErrorNode addErrorNode(Token badToken) {
 		ErrorNodeImpl t = new ErrorNodeImpl(badToken);
 		addAnyChild(t);
 		t.setParent(this);
@@ -186,18 +189,18 @@ public class ParserRuleContext : RuleContext {
 		}
 	}
 
-	@Override
-	/** Override to make type more specific */
-	public ParserRuleContext getParent() {
+    ////@Override
+    /** Override to make type more specific */
+    public ParserRuleContext getParent() {
 		return (ParserRuleContext)super.getParent();
 	}
 
-	@Override
-	public ParseTree getChild(int i) {
+    ////@Override
+    public ParseTree getChild(int i) {
 		return children!=null && i>=0 && i<children.size() ? children.get(i) : null;
 	}
 
-	public <T : ParseTree> T getChild(Class<? : T> ctxType, int i) {
+	public T getChild<T>(Type ctxType, int i) where T:ParseTree {
 		if ( children==null || i < 0 || i >= children.size() ) {
 			return null;
 		}
@@ -262,11 +265,12 @@ public class ParserRuleContext : RuleContext {
 		return tokens;
 	}
 
-	public <T : ParserRuleContext> T getRuleContext(Class<? : T> ctxType, int i) {
+	public T getRuleContext<T>(Type ctxType, int i) where T: ParserRuleContext
+    {
 		return getChild(ctxType, i);
 	}
 
-	public <T : ParserRuleContext> List<T> getRuleContexts(Class<? : T> ctxType) {
+	public List<T> getRuleContexts<T>(Type ctxType) {
 		if ( children==null ) {
 			return Collections.emptyList();
 		}
@@ -289,10 +293,10 @@ public class ParserRuleContext : RuleContext {
 		return contexts;
 	}
 
-	@Override
+	//@Override
 	public int getChildCount() { return children!=null ? children.size() : 0; }
 
-	@Override
+	//@Override
 	public Interval getSourceInterval() {
 		if ( start == null ) {
 			return Interval.INVALID;
@@ -319,7 +323,7 @@ public class ParserRuleContext : RuleContext {
 	/** Used for rule context info debugging during parse-time, not so much for ATN debugging */
 	public String toInfoString(Parser recognizer) {
 		List<String> rules = recognizer.getRuleInvocationStack(this);
-		Collections.reverse(rules);
+		rules.Reverse();
 		return "ParserRuleContext"+rules+"{" +
 			"start=" + start +
 			", stop=" + stop +

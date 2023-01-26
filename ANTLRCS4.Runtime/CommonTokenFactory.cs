@@ -4,16 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.misc.Pair;
+namespace org.antlr.v4.runtime;
 
 /**
  * This default implementation of {@link TokenFactory} creates
  * {@link CommonToken} objects.
  */
-public class CommonTokenFactory implements TokenFactory<CommonToken> {
+public class CommonTokenFactory : TokenFactory<CommonToken> {
 	/**
 	 * The default {@link CommonTokenFactory} instance.
 	 *
@@ -21,7 +21,7 @@ public class CommonTokenFactory implements TokenFactory<CommonToken> {
 	 * This token factory does not explicitly copy token text when constructing
 	 * tokens.</p>
 	 */
-	public static final TokenFactory<CommonToken> DEFAULT = new CommonTokenFactory();
+	public static readonly TokenFactory<CommonToken> DEFAULT = new CommonTokenFactory();
 
 	/**
 	 * Indicates whether {@link CommonToken#setText} should be called after
@@ -38,7 +38,7 @@ public class CommonTokenFactory implements TokenFactory<CommonToken> {
 	 * The default value is {@code false} to avoid the performance and memory
 	 * overhead of copying text for every token unless explicitly requested.</p>
 	 */
-	protected final bool copyText;
+	protected readonly bool copyText;
 
 	/**
 	 * Constructs a {@link CommonTokenFactory} with the specified value for
@@ -62,7 +62,7 @@ public class CommonTokenFactory implements TokenFactory<CommonToken> {
 	 */
 	public CommonTokenFactory() { this(false); }
 
-	@Override
+	//@Override
 	public CommonToken create(Pair<TokenSource, CharStream> source, int type, String text,
 							  int channel, int start, int stop,
 							  int line, int charPositionInLine)

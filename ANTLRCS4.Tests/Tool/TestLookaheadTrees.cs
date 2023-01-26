@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;

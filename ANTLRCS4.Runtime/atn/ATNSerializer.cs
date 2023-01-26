@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
@@ -75,7 +76,7 @@ public class ATNSerializer {
 		data.add(ATNDeserializer.SERIALIZED_VERSION);
 
 		// convert grammar type to ATN const to avoid dependence on ANTLRParser
-		data.add(atn.grammarType.ordinal());
+		data.add(atn.grammarType);
 		data.add(atn.maxTokenType);
 	}
 
@@ -83,7 +84,7 @@ public class ATNSerializer {
 		if (atn.grammarType == ATNType.LEXER) {
 			data.add(atn.lexerActions.Length);
 			foreach (LexerAction action in atn.lexerActions) {
-				data.add(action.getActionType().ordinal());
+				data.add(action.getActionType());
 				switch (action.getActionType()) {
 				case CHANNEL:
 					int channel = ((LexerChannelAction)action).getChannel();

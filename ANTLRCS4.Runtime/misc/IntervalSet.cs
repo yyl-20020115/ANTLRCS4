@@ -3,6 +3,10 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.tree.pattern;
+using System.Text;
+
 namespace org.antlr.v4.runtime.misc;
 
 /**
@@ -75,7 +79,7 @@ public class IntervalSet : IntSet {
     /** Add a single element to the set.  An isolated element is stored
      *  as a range el..el.
      */
-    @Override
+    //@Override
     public void add(int el) {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
         add(el,el);
@@ -146,7 +150,7 @@ public class IntervalSet : IntSet {
 		return r;
 	}
 
-	@Override
+	//@Override
 	public IntervalSet addAll(IntSet set) {
 		if ( set==null ) {
 			return this;
@@ -175,7 +179,7 @@ public class IntervalSet : IntSet {
     }
 
     /** {@inheritDoc} */
-    @Override
+    //@Override
     public IntervalSet complement(IntSet vocabulary) {
 		if ( vocabulary==null || vocabulary.isNil() ) {
 			return null; // nothing in common with null set
@@ -193,7 +197,7 @@ public class IntervalSet : IntSet {
 		return vocabularyIS.subtract(this);
     }
 
-	@Override
+	//@Override
 	public IntervalSet subtract(IntSet a) {
 		if (a == null || a.isNil()) {
 			return new IntervalSet(this);
@@ -290,7 +294,7 @@ public class IntervalSet : IntSet {
 		return result;
 	}
 
-	@Override
+	//@Override
 	public IntervalSet or(IntSet a) {
 		IntervalSet o = new IntervalSet();
 		o.addAll(this);
@@ -299,7 +303,7 @@ public class IntervalSet : IntSet {
 	}
 
     /** {@inheritDoc} */
-	@Override
+	//@Override
 	public IntervalSet and(IntSet other) {
 		if ( other==null ) { //|| !(other is IntervalSet) ) {
 			return null; // nothing in common with null set
@@ -369,7 +373,7 @@ public class IntervalSet : IntSet {
 	}
 
     /** {@inheritDoc} */
-    @Override
+    ////@Override
     public bool contains(int el) {
 		int n = intervals.size();
 		int l = 0;
@@ -393,7 +397,7 @@ public class IntervalSet : IntSet {
     }
 
     /** {@inheritDoc} */
-    @Override
+    //@Override
     public bool isNil() {
         return intervals==null || intervals.isEmpty();
     }
@@ -431,7 +435,7 @@ public class IntervalSet : IntSet {
         return intervals;
     }
 
-	@Override
+	////@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		for (Interval I : intervals) {
@@ -448,7 +452,7 @@ public class IntervalSet : IntSet {
      *  to make sure they are the same.  Interval.equals() is used
      *  by the List.equals() method to check the ranges.
      */
-    @Override
+    ////@Override
     public bool equals(Object obj) {
         if ( obj==null || !(obj is IntervalSet) ) {
             return false;
@@ -457,7 +461,7 @@ public class IntervalSet : IntSet {
 		return this.intervals.equals(other.intervals);
 	}
 
-	@Override
+	////@Override
 	public String toString() { return toString(false); }
 
 	public String toString(bool elemAreChar) {
@@ -495,7 +499,7 @@ public class IntervalSet : IntSet {
 	/**
 	 * @deprecated Use {@link #toString(Vocabulary)} instead.
 	 */
-	@Deprecated
+	//@Deprecated
 	public String toString(String[] tokenNames) {
 		return toString(VocabularyImpl.fromTokenNames(tokenNames));
 	}
@@ -535,7 +539,7 @@ public class IntervalSet : IntSet {
 	/**
 	 * @deprecated Use {@link #elementName(Vocabulary, int)} instead.
 	 */
-	@Deprecated
+	//@Deprecated
 	protected String elementName(String[] tokenNames, int a) {
 		return elementName(VocabularyImpl.fromTokenNames(tokenNames), a);
 	}
@@ -553,7 +557,7 @@ public class IntervalSet : IntSet {
 		}
 	}
 
-    @Override
+    ////@Override
     public int size() {
 		int n = 0;
 		int numIntervals = intervals.size();
@@ -582,9 +586,9 @@ public class IntervalSet : IntSet {
 		return values;
 	}
 
-    @Override
-    public List<Integer> toList() {
-		List<Integer> values = new ArrayList<Integer>();
+    ////@Override
+    public List<int> toList() {
+		List<int> values = new ();
 		int n = intervals.size();
 		for (int i = 0; i < n; i++) {
 			Interval I = intervals.get(i);
@@ -597,8 +601,8 @@ public class IntervalSet : IntSet {
 		return values;
 	}
 
-	public Set<Integer> toSet() {
-		Set<Integer> s = new HashSet<Integer>();
+	public HashSet<int> toSet() {
+        HashSet<int> s = new HashSet<int> ();
 		for (Interval I : intervals) {
 			int a = I.a;
 			int b = I.b;
@@ -634,9 +638,9 @@ public class IntervalSet : IntSet {
 		return toIntegerList().toArray();
 	}
 
-	@Override
+	//@Override
 	public void remove(int el) {
-        if ( readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
+        if ( @readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
         int n = intervals.size();
         for (int i = 0; i < n; i++) {
             Interval I = intervals.get(i);
@@ -670,11 +674,36 @@ public class IntervalSet : IntSet {
     }
 
     public bool isReadonly() {
-        return readonly;
+        return @readonly;
     }
 
-    public void setReadonly(bool readonly) {
-        if ( this.readonly && !readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
-        this.readonly = readonly;
+    public void setReadonly(bool @readonly) {
+        if ( this.@readonly && !@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
+        this.@readonly = @readonly;
+    }
+
+    IntSet IntSet.addAll(IntSet set)
+    {
+        throw new NotImplementedException();
+    }
+
+    IntSet IntSet.and(IntSet a)
+    {
+        throw new NotImplementedException();
+    }
+
+    IntSet IntSet.complement(IntSet elements)
+    {
+        throw new NotImplementedException();
+    }
+
+    IntSet IntSet.or(IntSet a)
+    {
+        throw new NotImplementedException();
+    }
+
+    IntSet IntSet.subtract(IntSet a)
+    {
+        throw new NotImplementedException();
     }
 }

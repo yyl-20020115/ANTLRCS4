@@ -4,15 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  *
  * @author Sam Harwell
  */
-public final class BasicBlockStartState : BlockStartState {
-	@Override
-	public int getStateType() {
+public class BasicBlockStartState : BlockStartState {
+	//@Override
+	public override int getStateType() {
 		return BLOCK_START;
 	}
 }

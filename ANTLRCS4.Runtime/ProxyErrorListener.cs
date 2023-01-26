@@ -3,13 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.atn.ATNConfigSet;
-import org.antlr.v4.runtime.dfa.DFA;
-
-import java.util.BitSet;
-import java.util.Collection;
+namespace org.antlr.v4.runtime;
 
 /**
  * This implementation of {@link ANTLRErrorListener} dispatches all calls to a
@@ -18,10 +12,10 @@ import java.util.Collection;
  *
  * @author Sam Harwell
  */
-public class ProxyErrorListener implements ANTLRErrorListener {
-	private final Collection<? extends ANTLRErrorListener> delegates;
+public class ProxyErrorListener : ANTLRErrorListener {
+	private readonly ICollection<ANTLRErrorListener> delegates;
 
-	public ProxyErrorListener(Collection<? extends ANTLRErrorListener> delegates) {
+	public ProxyErrorListener(ICollection<ANTLRErrorListener> delegates) {
 		if (delegates == null) {
 			throw new NullPointerException("delegates");
 		}
@@ -29,7 +23,7 @@ public class ProxyErrorListener implements ANTLRErrorListener {
 		this.delegates = delegates;
 	}
 
-	@Override
+	//@Override
 	public void syntaxError(Recognizer<?, ?> recognizer,
 							Object offendingSymbol,
 							int line,
@@ -42,7 +36,7 @@ public class ProxyErrorListener implements ANTLRErrorListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
@@ -56,7 +50,7 @@ public class ProxyErrorListener implements ANTLRErrorListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
@@ -69,7 +63,7 @@ public class ProxyErrorListener implements ANTLRErrorListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,

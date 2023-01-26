@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.atn;
@@ -20,7 +22,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	 * the number of objects associated with ATNConfigs. The other solution is to
 	 * use a hash table that lets us specify the equals/hashcode operation.
 	 */
-	public static class ConfigHashSet : AbstractConfigHashSet {
+	public class ConfigHashSet : AbstractConfigHashSet {
 		public ConfigHashSet() {
 			super(ConfigEqualityComparator.INSTANCE);
 		}
@@ -32,7 +34,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		private ConfigEqualityComparator() {
 		}
 
-		@Override
+		//@Override
 		public int hashCode(ATNConfig o) {
 			int hashCode = 7;
 			hashCode = 31 * hashCode + o.state.stateNumber;
@@ -41,7 +43,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	        return hashCode;
 		}
 
-		@Override
+		//@Override
 		public bool equals(ATNConfig a, ATNConfig b) {
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;
@@ -66,7 +68,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	public AbstractConfigHashSet configLookup;
 
 	/** Track the elements as they are added to the set; supports get(i) */
-	public readonly ArrayList<ATNConfig> configs = new ArrayList<ATNConfig>(7);
+	public readonly List<ATNConfig> configs = new ArrayList<ATNConfig>(7);
 
 	// TODO: these fields make me pretty uncomfortable but nice to pack up info together, saves recomputation
 	// TODO: can we track conflicts as they are added to save scanning configs later?
@@ -106,7 +108,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		this.dipsIntoOuterContext = old.dipsIntoOuterContext;
 	}
 
-	@Override
+	//@Override
 	public bool add(ATNConfig config) {
 		return add(config, null);
 	}
@@ -125,7 +127,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		ATNConfig config,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
-		if ( readonly ) throw new IllegalStateException("This set is readonly");
+		if ( @readonly ) throw new IllegalStateException("This set is readonly");
 		if ( config.semanticContext != SemanticContext.Empty.Instance ) {
 			hasSemanticContext = true;
 		}
@@ -209,13 +211,13 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		}
 	}
 
-	@Override
+	//@Override
 	public bool addAll(Collection<? : ATNConfig> coll) {
 		for (ATNConfig c : coll) add(c);
 		return false;
 	}
 
-	@Override
+	//@Override
 	public bool equals(Object o) {
 		if (o == this) {
 			return true;
@@ -238,7 +240,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return same;
 	}
 
-	@Override
+	//@Override
 	public int hashCode() {
 		if (isReadonly()) {
 			if (cachedHashCode == -1) {
@@ -251,17 +253,17 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return configs.hashCode();
 	}
 
-	@Override
+	//@Override
 	public int size() {
 		return configs.size();
 	}
 
-	@Override
+	//@Override
 	public bool isEmpty() {
 		return configs.isEmpty();
 	}
 
-	@Override
+	//@Override
 	public bool contains(Object o) {
 		if (configLookup == null) {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
@@ -278,12 +280,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return configLookup.containsFast(obj);
 	}
 
-	@Override
+	//@Override
 	public Iterator<ATNConfig> iterator() {
 		return configs.iterator();
 	}
 
-	@Override
+	//@Override
 	public void clear() {
 		if ( readonly ) throw new IllegalStateException("This set is readonly");
 		configs.clear();
@@ -295,12 +297,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return readonly;
 	}
 
-	public void setReadonly(bool readonly) {
-		this.readonly = readonly;
+	public void setReadonly(bool @readonly) {
+		this.@readonly = @readonly;
 		configLookup = null; // can't mod, no need for lookup cache
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		StringBuilder buf = new StringBuilder();
 		buf.append(elements().toString());
@@ -313,32 +315,32 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	// satisfy interface
 
-	@Override
+	//@Override
 	public ATNConfig[] toArray() {
 		return configLookup.toArray();
 	}
 
-	@Override
-	public <T> T[] toArray(T[] a) {
+	//@Override
+	public  T[] toArray<T>(T[] a) {
 		return configLookup.toArray(a);
 	}
 
-	@Override
+	//@Override
 	public bool remove(Object o) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+	//@Override
 	public bool containsAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+	//@Override
 	public bool retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+	//@Override
 	public bool removeAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
@@ -353,7 +355,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			super(comparator, initialCapacity, initialBucketCapacity);
 		}
 
-		@Override
+		//@Override
 		protected ATNConfig asElementType(Object o) {
 			if (!(o is ATNConfig)) {
 				return null;
@@ -362,13 +364,13 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			return (ATNConfig)o;
 		}
 
-		@Override
+		//@Override
 		protected ATNConfig[][] createBuckets(int capacity) {
 			return new ATNConfig[capacity][];
 		}
 
-		@Override
-		protected final ATNConfig[] createBucket(int capacity) {
+		//@Override
+		protected ATNConfig[] createBucket(int capacity) {
 			return new ATNConfig[capacity];
 		}
 
