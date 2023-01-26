@@ -11,8 +11,8 @@ public class ContextTokenListIndexedGetterDecl : ContextTokenListGetterDecl {
 		super(factory, name);
 	}
 
-	@Override
-	public String getArgType() {
+	
+	public override String getArgType() {
 		return "int";
 	}
 }

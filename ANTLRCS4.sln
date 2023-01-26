@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTLRCS4", "ANTLRCS4\ANTLRC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTLRCS4.Tests", "ANTLRCS4.Tests\ANTLRCS4.Tests.csproj", "{92BA479D-6EC2-4234-B191-E6F46F86D618}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTLRCS4.Runtime", "ANTLRCS4.Runtime\ANTLRCS4.Runtime.csproj", "{B5A401ED-0695-4BAA-8B7D-76B3CF531922}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{92BA479D-6EC2-4234-B191-E6F46F86D618}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92BA479D-6EC2-4234-B191-E6F46F86D618}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92BA479D-6EC2-4234-B191-E6F46F86D618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A401ED-0695-4BAA-8B7D-76B3CF531922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A401ED-0695-4BAA-8B7D-76B3CF531922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A401ED-0695-4BAA-8B7D-76B3CF531922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A401ED-0695-4BAA-8B7D-76B3CF531922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

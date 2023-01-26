@@ -7,17 +7,14 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 public abstract class ContextGetterDecl : Decl {
-	public ContextGetterDecl(OutputModelFactory factory, String name) {
-		super(factory, name);
-	}
-
+	public ContextGetterDecl(OutputModelFactory factory, String name): base(factory, name) { }
+    
 	/** Not used for output; just used to distinguish between decl types
 	 *  to avoid dups.
 	 */
-	public String getArgType() { return ""; }; // assume no args
+	public virtual String getArgType() => ""; // assume no args
 
-	@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, name);
 		hash = MurmurHash.update(hash, getArgType());
@@ -30,7 +27,7 @@ public abstract class ContextGetterDecl : Decl {
 	 *  two X() with diff args as different.
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public bool equals(Object obj) {
 		if ( this==obj ) return true;
 		// A() and label A are different
 		if ( !(obj instanceof ContextGetterDecl) ) return false;

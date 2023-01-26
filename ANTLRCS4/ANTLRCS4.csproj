@@ -17,4 +17,8 @@
     <Folder Include="Resources\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ANTLRCS4.Runtime\ANTLRCS4.Runtime.csproj" />
+  </ItemGroup>
+
 </Project>

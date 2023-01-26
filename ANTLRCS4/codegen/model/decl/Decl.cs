@@ -21,16 +21,10 @@ public class Decl : SrcOp {
 		this.decl = decl;
 	}
 
-	public override int GetHashCode() {
-		return name.GetHashCode();
-	}
+    public override int GetHashCode() => name.GetHashCode();
 
-	/** If same name, can't redefine, unless it's a getter */
-	public override bool Equals(Object obj) {
-		if ( this==obj ) return true;
-		if ( obj is not Decl ) return false;
-		// A() and label A are different
-		if ( obj is ContextGetterDecl ) return false;
-		return name.Equals(((Decl) obj).name);
-	}
+    /** If same name, can't redefine, unless it's a getter */
+    public override bool Equals(object? obj) =>
+        // A() and label A are different
+        this == obj || (obj is Decl decl && obj is not ContextGetterDecl && name.Equals(decl.name, StringComparison.Ordinal));
 }
