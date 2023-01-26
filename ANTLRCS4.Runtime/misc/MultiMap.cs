@@ -9,19 +9,18 @@ namespace org.antlr.v4.runtime.misc;
 public class MultiMap<K, V> : Dictionary<K, List<V>>
 {
 	public void map(K key, V value) {
-		List<V> elementsForKey = get(key);
-		if ( elementsForKey==null ) {
+		if (!this.TryGetValue(key, out var elementsForKey)) {
 			elementsForKey = new ();
-			super.put(key, elementsForKey);
+			base.Add(key, elementsForKey);
 		}
-		elementsForKey.add(value);
+		elementsForKey.Add(value);
 	}
 
 	public List<Pair<K,V>> getPairs() {
 		List<Pair<K,V>> pairs = new ();
-		for (K key : keySet()) {
-			for (V value : get(key)) {
-				pairs.add(new Pair<K,V>(key, value));
+		foreach (K key in this.Keys) {
+			foreach (V value in this[key]) {
+				pairs.Add(new Pair<K,V>(key, value));
 			}
 		}
 		return pairs;

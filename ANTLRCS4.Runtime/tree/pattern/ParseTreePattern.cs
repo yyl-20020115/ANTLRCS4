@@ -95,7 +95,7 @@ public class ParseTreePattern {
 		foreach (ParseTree t in subtrees) {
 			ParseTreeMatch match = match(t);
 			if ( match.succeeded() ) {
-				matches.add(match);
+				matches.Add(match);
 			}
 		}
 		return matches;

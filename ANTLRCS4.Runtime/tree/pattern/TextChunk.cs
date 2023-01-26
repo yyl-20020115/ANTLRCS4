@@ -48,7 +48,7 @@ class TextChunk : Chunk {
 	 * {@link #getText()} in single quotes.</p>
 	 */
 	//@Override
-	public String ToString() {
+	public override String ToString() {
 		return "'"+text+"'";
 	}
 }

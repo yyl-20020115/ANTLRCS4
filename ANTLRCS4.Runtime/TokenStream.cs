@@ -4,14 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.runtime;
 
 /**
  * An {@link IntStream} whose symbols are {@link Token} instances.
  */
-public interface TokenStream extends IntStream {
+public interface TokenStream<T> : IntStream {
 	/**
 	 * Get the {@link Token} instance associated with the value returned by
 	 * {@link #LA LA(k)}. This method has the same pre- and post-conditions as
@@ -47,7 +47,7 @@ public interface TokenStream extends IntStream {
 	 * Gets the underlying {@link TokenSource} which provides tokens for this
 	 * stream.
 	 */
-	public TokenSource getTokenSource();
+	public TokenSource<T> getTokenSource();
 
 	/**
 	 * Return the text of all tokens within the specified {@code interval}. This

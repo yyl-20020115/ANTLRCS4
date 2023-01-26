@@ -19,17 +19,15 @@ public class ParseCancellationException : CancellationException {
 	public ParseCancellationException() {
 	}
 
-	public ParseCancellationException(String message) {
-		super(message);
+	public ParseCancellationException(String message):base(message) {
 	}
 
-	public ParseCancellationException(Exception cause) {
-		initCause(cause);
+	public ParseCancellationException(Exception cause):base(cause.Message,cause) {
+		//initCause(cause);
 	}
 
-	public ParseCancellationException(String message, Exception cause) {
-		super(message);
-		initCause(cause);
+	public ParseCancellationException(String message, Exception cause) :base(message,cause){
+		//initCause(cause);
 	}
 
 }

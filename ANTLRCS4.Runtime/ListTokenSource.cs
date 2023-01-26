@@ -4,11 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Pair;
-
-import java.util.List;
+namespace org.antlr.v4.runtime;
 
 /**
  * Provides an implementation of {@link TokenSource} as a wrapper around a list
@@ -18,11 +17,11 @@ import java.util.List;
  * as the EOF token for every call to {@link #nextToken} after the end of the
  * list is reached. Otherwise, an EOF token will be created.</p>
  */
-public class ListTokenSource implements TokenSource {
+public class ListTokenSource<T> : TokenSource<T> {
 	/**
 	 * The wrapped collection of {@link Token} objects to return.
 	 */
-	protected final List<? extends Token> tokens;
+	protected readonly List<Token> tokens;
 
 	/**
 	 * The name of the input source. If this value is {@code null}, a call to
@@ -30,7 +29,7 @@ public class ListTokenSource implements TokenSource {
 	 * the next token in {@link #tokens} (or the previous token if the end of
 	 * the input has been reached).
 	 */
-	private final String sourceName;
+	private readonly String sourceName;
 
 	/**
 	 * The index into {@link #tokens} of token to return by the next call to
@@ -48,7 +47,7 @@ public class ListTokenSource implements TokenSource {
 	 * This is the backing field for {@link #getTokenFactory} and
 	 * {@link setTokenFactory}.
 	 */
-	private TokenFactory<?> _factory = CommonTokenFactory.DEFAULT;
+	private TokenFactory<T> _factory = CommonTokenFactory.DEFAULT;
 
 	/**
 	 * Constructs a new {@link ListTokenSource} instance from the specified
@@ -58,8 +57,8 @@ public class ListTokenSource implements TokenSource {
 	 * {@link TokenSource}.
 	 * @exception NullPointerException if {@code tokens} is {@code null}
 	 */
-	public ListTokenSource(List<? extends Token> tokens) {
-		this(tokens, null);
+	public ListTokenSource(List<Token> tokens): this(tokens, null)
+    {
 	}
 
 	/**
@@ -75,9 +74,9 @@ public class ListTokenSource implements TokenSource {
 	 *
 	 * @exception NullPointerException if {@code tokens} is {@code null}
 	 */
-	public ListTokenSource(List<? extends Token> tokens, String sourceName) {
+	public ListTokenSource(List<Token> tokens, String sourceName) {
 		if (tokens == null) {
-			throw new NullPointerException("tokens cannot be null");
+			throw new NullReferenceException("tokens cannot be null");
 		}
 
 		this.tokens = tokens;
@@ -87,7 +86,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//@Override
 	public int getCharPositionInLine() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getCharPositionInLine();
@@ -118,7 +117,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//@Override
 	public Token nextToken() {
 		if (i >= tokens.size()) {
 			if (eofToken == null) {
@@ -149,7 +148,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//@Override
 	public int getLine() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getLine();
@@ -184,7 +183,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//@Override
 	public CharStream getInputStream() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getInputStream();
@@ -203,7 +202,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//@Override
 	public String getSourceName() {
 		if (sourceName != null) {
 			return sourceName;
@@ -220,16 +219,16 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public void setTokenFactory(TokenFactory<?> factory) {
+	//@Override
+	public void setTokenFactory(TokenFactory<T> factory) {
 		this._factory = factory;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public TokenFactory<?> getTokenFactory() {
+	//@Override
+	public TokenFactory<T> getTokenFactory() {
 		return _factory;
 	}
 }

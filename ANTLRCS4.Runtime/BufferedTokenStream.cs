@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+using System.Text;
+
 package org.antlr.v4.runtime;
 
 import org.antlr.v4.runtime.misc.Interval;
@@ -25,18 +29,18 @@ import java.util.Set;
  * {@link Token#HIDDEN_CHANNEL}, use a filtering token stream such a
  * {@link CommonTokenStream}.</p>
  */
-public class BufferedTokenStream implements TokenStream {
+public class BufferedTokenStream<T> : TokenStream<T> {
 	/**
 	 * The {@link TokenSource} from which tokens for this stream are fetched.
 	 */
-    protected TokenSource tokenSource;
+    protected TokenSource<T> tokenSource;
 
 	/**
 	 * A collection of all tokens fetched from the token source. The list is
 	 * considered a complete view of the input once {@link #fetchedEOF} is set
 	 * to {@code true}.
 	 */
-    protected List<Token> tokens = new ArrayList<Token>(100);
+    protected List<Token> tokens = new (100);
 
 	/**
 	 * The index into {@link #tokens} of the current token (next token to
@@ -66,51 +70,51 @@ public class BufferedTokenStream implements TokenStream {
 	 */
 	protected bool fetchedEOF;
 
-    public BufferedTokenStream(TokenSource tokenSource) {
+    public BufferedTokenStream(TokenSource<T> tokenSource) {
 		if (tokenSource == null) {
-			throw new NullPointerException("tokenSource cannot be null");
+			throw new NullReferenceException("tokenSource cannot be null");
 		}
         this.tokenSource = tokenSource;
     }
 
-    @Override
-    public TokenSource getTokenSource() { return tokenSource; }
+    //@Override
+    public TokenSource<T> getTokenSource() { return tokenSource; }
 
-	@Override
-	public int index() { return p; }
+    //@Override
+    public int index() { return p; }
 
-    @Override
+    //@Override
     public int mark() {
 		return 0;
 	}
 
-	@Override
-	public void release(int marker) {
+    //@Override
+    public void release(int marker) {
 		// no resources to release
 	}
 
-	/**
+    /**
 	 * This method resets the token stream back to the first token in the
 	 * buffer. It is equivalent to calling {@link #seek}{@code (0)}.
 	 *
 	 * @see #setTokenSource(TokenSource)
 	 * @deprecated Use {@code seek(0)} instead.
 	 */
-	@Deprecated
+    //@Deprecated
     public void reset() {
         seek(0);
     }
 
-    @Override
+    //@Override
     public void seek(int index) {
         lazyInit();
         p = adjustSeekIndex(index);
     }
 
-    @Override
+    //@Override
     public int size() { return tokens.size(); }
 
-    @Override
+    //@Override
     public void consume() {
 		bool skipEofCheck;
 		if (p >= 0) {
@@ -180,7 +184,7 @@ public class BufferedTokenStream implements TokenStream {
 		return n;
     }
 
-    @Override
+    //@Override
     public Token get(int i) {
         if ( i < 0 || i >= tokens.size() ) {
             throw new IndexOutOfBoundsException("token index "+i+" out of range 0.."+(tokens.size()-1));
@@ -192,7 +196,7 @@ public class BufferedTokenStream implements TokenStream {
 	public List<Token> get(int start, int stop) {
 		if ( start<0 || stop<0 ) return null;
 		lazyInit();
-		List<Token> subset = new ArrayList<Token>();
+		List<Token> subset = new ();
 		if ( stop>=tokens.size() ) stop = tokens.size()-1;
 		for (int i = start; i <= stop; i++) {
 			Token t = tokens.get(i);
@@ -202,8 +206,8 @@ public class BufferedTokenStream implements TokenStream {
 		return subset;
 	}
 
-	@Override
-	public int LA(int i) { return LT(i).getType(); }
+    //@Override
+    public int LA(int i) { return LT(i).getType(); }
 
     protected Token LB(int k) {
         if ( (p-k)<0 ) return null;
@@ -211,7 +215,7 @@ public class BufferedTokenStream implements TokenStream {
     }
 
 
-    @Override
+    //@Override
     public Token LT(int k) {
         lazyInit();
         if ( k==0 ) return null;
@@ -244,7 +248,7 @@ public class BufferedTokenStream implements TokenStream {
 		return i;
 	}
 
-	protected final void lazyInit() {
+	protected void lazyInit() {
 		if (p == -1) {
 			setup();
 		}
@@ -256,7 +260,7 @@ public class BufferedTokenStream implements TokenStream {
 	}
 
     /** Reset this token stream by setting its token source. */
-    public void setTokenSource(TokenSource tokenSource) {
+    public void setTokenSource(TokenSource<T> tokenSource) {
         this.tokenSource = tokenSource;
         tokens.clear();
         p = -1;
@@ -273,12 +277,12 @@ public class BufferedTokenStream implements TokenStream {
      *  the token type BitSet.  Return null if no tokens were found.  This
      *  method looks at both on and off channel tokens.
      */
-    public List<Token> getTokens(int start, int stop, Set<Integer> types) {
+    public List<Token> getTokens(int start, int stop, HashSet<int> types) {
         lazyInit();
 		if ( start<0 || stop>=tokens.size() ||
 			 stop<0  || start>=tokens.size() )
 		{
-			throw new IndexOutOfBoundsException("start "+start+" or stop "+stop+
+			throw new IndexOutOfRangeException("start "+start+" or stop "+stop+
 												" not in 0.."+(tokens.size()-1));
 		}
         if ( start>stop ) return null;
@@ -298,7 +302,7 @@ public class BufferedTokenStream implements TokenStream {
     }
 
     public List<Token> getTokens(int start, int stop, int ttype) {
-		HashSet<Integer> s = new HashSet<Integer>(ttype);
+		HashSet<int> s = new HashSet<int>(ttype);
 		s.add(ttype);
 		return getTokens(start,stop, s);
     }
@@ -365,7 +369,7 @@ public class BufferedTokenStream implements TokenStream {
 	public List<Token> getHiddenTokensToRight(int tokenIndex, int channel) {
 		lazyInit();
 		if ( tokenIndex<0 || tokenIndex>=tokens.size() ) {
-			throw new IndexOutOfBoundsException(tokenIndex+" not in 0.."+(tokens.size()-1));
+			throw new IndexOutOfRangeException(tokenIndex+" not in 0.."+(tokens.size()-1));
 		}
 
 		int nextOnChannel =
@@ -394,7 +398,7 @@ public class BufferedTokenStream implements TokenStream {
 	public List<Token> getHiddenTokensToLeft(int tokenIndex, int channel) {
 		lazyInit();
 		if ( tokenIndex<0 || tokenIndex>=tokens.size() ) {
-			throw new IndexOutOfBoundsException(tokenIndex+" not in 0.."+(tokens.size()-1));
+			throw new IndexOutOfRangeException(tokenIndex+" not in 0.."+(tokens.size()-1));
 		}
 
 		if (tokenIndex == 0) {
@@ -420,7 +424,7 @@ public class BufferedTokenStream implements TokenStream {
 	}
 
 	protected List<Token> filterForChannel(int from, int to, int channel) {
-		List<Token> hidden = new ArrayList<Token>();
+		List<Token> hidden = new ();
 		for (int i=from; i<=to; i++) {
 			Token t = tokens.get(i);
 			if ( channel==-1 ) {
@@ -434,17 +438,17 @@ public class BufferedTokenStream implements TokenStream {
 		return hidden;
 	}
 
-	@Override
+	//@Override
     public String getSourceName() {	return tokenSource.getSourceName();	}
 
 	/** Get the text of all tokens in this buffer. */
 
-	@Override
+	//@Override
 	public String getText() {
 		return getText(Interval.of(0,size()-1));
 	}
 
-	@Override
+	//@Override
 	public String getText(Interval interval) {
 		int start = interval.a;
 		int stop = interval.b;
@@ -462,13 +466,13 @@ public class BufferedTokenStream implements TokenStream {
     }
 
 
-	@Override
+	//@Override
 	public String getText(RuleContext ctx) {
 		return getText(ctx.getSourceInterval());
 	}
 
 
-    @Override
+    //@Override
     public String getText(Token start, Token stop) {
         if ( start!=null && stop!=null ) {
             return getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()));
@@ -480,7 +484,7 @@ public class BufferedTokenStream implements TokenStream {
     /** Get all tokens from lexer until EOF */
     public void fill() {
         lazyInit();
-		final int blockSize = 1000;
+		int blockSize = 1000;
 		while (true) {
 			int fetched = fetch(blockSize);
 			if (fetched < blockSize) {

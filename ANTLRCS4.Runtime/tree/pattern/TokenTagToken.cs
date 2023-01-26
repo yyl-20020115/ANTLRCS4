@@ -16,12 +16,12 @@ public class TokenTagToken : CommonToken {
 	 * This is the backing field for {@link #getTokenName}.
 	 */
 
-	private final String tokenName;
+	private readonly String tokenName;
 	/**
 	 * This is the backing field for {@link #getLabel}.
 	 */
 
-	private final String label;
+	private readonly String label;
 
 	/**
 	 * Constructs a new instance of {@link TokenTagToken} for an unlabeled tag
@@ -30,8 +30,7 @@ public class TokenTagToken : CommonToken {
 	 * @param tokenName The token name.
 	 * @param type The token type.
 	 */
-	public TokenTagToken(String tokenName, int type) {
-		this(tokenName, type, null);
+	public TokenTagToken(String tokenName, int type):this(tokenName,type,null) {
 	}
 
 	/**
@@ -43,8 +42,7 @@ public class TokenTagToken : CommonToken {
 	 * @param label The label associated with the token tag, or {@code null} if
 	 * the token tag is unlabeled.
 	 */
-	public TokenTagToken(String tokenName, int type, String label) {
-		super(type);
+	public TokenTagToken(String tokenName, int type, String label):base(type) {
 		this.tokenName = tokenName;
 		this.label = label;
 	}
@@ -54,7 +52,7 @@ public class TokenTagToken : CommonToken {
 	 * @return The token name.
 	 */
 
-	public final String getTokenName() {
+	public  String getTokenName() {
 		return tokenName;
 	}
 
@@ -65,7 +63,7 @@ public class TokenTagToken : CommonToken {
 	 * {@code null} if this is an unlabeled rule tag.
 	 */
 
-	public final String getLabel() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -75,7 +73,7 @@ public class TokenTagToken : CommonToken {
 	 * <p>The implementation for {@link TokenTagToken} returns the token tag
 	 * formatted with {@code <} and {@code >} delimiters.</p>
 	 */
-	@Override
+	//@Override
 	public String getText() {
 		if (label != null) {
 			return "<" + label + ":" + tokenName + ">";
@@ -90,8 +88,8 @@ public class TokenTagToken : CommonToken {
 	 * <p>The implementation for {@link TokenTagToken} returns a string of the form
 	 * {@code tokenName:type}.</p>
 	 */
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return tokenName + ":" + type;
 	}
 }

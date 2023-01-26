@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
@@ -47,15 +49,15 @@ public class ParseTreeMatch {
 	 */
 	public ParseTreeMatch(ParseTree tree, ParseTreePattern pattern, MultiMap<String, ParseTree> labels, ParseTree mismatchedNode) {
 		if (tree == null) {
-			throw new IllegalArgumentException("tree cannot be null");
+			throw new ArgumentException("tree cannot be null",nameof(tree));
 		}
 
 		if (pattern == null) {
-			throw new IllegalArgumentException("pattern cannot be null");
+			throw new ArgumentException("pattern cannot be null",nameof(pattern));
 		}
 
 		if (labels == null) {
-			throw new IllegalArgumentException("labels cannot be null");
+			throw new ArgumentException("labels cannot be null",nameof(labels));
 		}
 
 		this.tree = tree;
@@ -117,7 +119,7 @@ public class ParseTreeMatch {
 	public List<ParseTree> getAll(String label) {
 		List<ParseTree> nodes = labels.get(label);
 		if ( nodes==null ) {
-			return Collections.emptyList();
+			return new List<ParseTree>();
 		}
 
 		return nodes;
@@ -185,6 +187,6 @@ public class ParseTreeMatch {
 	//@Override
 	public override String ToString() {
 		return
-			$"Match {(succeeded() ? "succeeded" : "failed")}; found {getLabels().size()} labels";
+			$"Match {(succeeded() ? "succeeded" : "failed")}; found {getLabels().Count} labels";
 	}
 }

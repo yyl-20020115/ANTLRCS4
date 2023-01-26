@@ -3,7 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime;
+
+namespace org.antlr.v4.runtime;
 
 /**
  * A source of tokens must provide a sequence of tokens via {@link #nextToken()}
@@ -20,7 +22,7 @@ package org.antlr.v4.runtime;
  * token. Keep lexing until you get a valid one. Just report errors and keep
  * going, looking for a valid token.</p>
  */
-public interface TokenSource {
+public interface TokenSource<T> {
 	/**
 	 * Return a {@link Token} object from your input stream (usually a
 	 * {@link CharStream}). Do not fail/return upon lexing error; keep chewing
@@ -70,7 +72,7 @@ public interface TokenSource {
 	 *
 	 * @param factory The {@link TokenFactory} to use for creating tokens.
 	 */
-	public void setTokenFactory(TokenFactory<?> factory);
+	public void setTokenFactory(TokenFactory<T> factory);
 
 	/**
 	 * Gets the {@link TokenFactory} this token source is currently using for
@@ -78,5 +80,5 @@ public interface TokenSource {
 	 *
 	 * @return The {@link TokenFactory} currently used by this token source.
 	 */
-	public TokenFactory<?> getTokenFactory();
+	public TokenFactory<T> getTokenFactory();
 }

@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.tree.pattern;
@@ -66,14 +67,14 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * {@code \<} and {@code \>}.</p>
  */
 public class ParseTreePatternMatcher {
-	public static class CannotInvokeStartRule : RuntimeException {
+	public class CannotInvokeStartRule : RuntimeException {
 		public CannotInvokeStartRule(Exception e):base(e.Message,e) {
 		}
 	}
 
 	// Fixes https://github.com/antlr/antlr4/issues/413
 	// "Tree pattern compilation doesn't check for a complete parse"
-	public static class StartRuleDoesNotConsumeFullPattern extends RuntimeException {
+	public class StartRuleDoesNotConsumeFullPattern : RuntimeException {
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class ParseTreePatternMatcher {
 	/** Does {@code pattern} matched as rule patternRuleIndex match tree? Pass in a
 	 *  compiled pattern instead of a string representation of a tree pattern.
 	 */
-	public boolean matches(ParseTree tree, ParseTreePattern pattern) {
+	public bool matches(ParseTree tree, ParseTreePattern pattern) {
 		MultiMap<String, ParseTree> labels = new MultiMap<String, ParseTree>();
 		ParseTree mismatchedNode = matchImpl(tree, pattern.getPatternTree(), labels);
 		return mismatchedNode == null;
@@ -169,7 +170,7 @@ public class ParseTreePatternMatcher {
 	 * {@link ParseTreePattern} using this method.
 	 */
 	public ParseTreePattern compile(String pattern, int patternRuleIndex) {
-		List<? extends Token> tokenList = tokenize(pattern);
+		List<Token> tokenList = tokenize(pattern);
 		ListTokenSource tokenSrc = new ListTokenSource(tokenList);
 		CommonTokenStream tokens = new CommonTokenStream(tokenSrc);
 
@@ -238,11 +239,11 @@ public class ParseTreePatternMatcher {
 								  MultiMap<String, ParseTree> labels)
 	{
 		if (tree == null) {
-			throw new IllegalArgumentException("tree cannot be null");
+			throw new ArgumentException("tree cannot be null",nameof(tree));
 		}
 
 		if (patternTree == null) {
-			throw new IllegalArgumentException("patternTree cannot be null");
+			throw new ArgumentException("patternTree cannot be null",nameof(patternTree));
 		}
 
 		// x and <ID>, x and y, or x and x; or could be mismatched types
@@ -260,7 +261,7 @@ public class ParseTreePatternMatcher {
 						labels.map(tokenTagToken.getLabel(), tree);
 					}
 				}
-				else if ( t1.getText().equals(t2.getText()) ) {
+				else if ( t1.getText().Equals(t2.getText()) ) {
 					// x and x
 				}
 				else {

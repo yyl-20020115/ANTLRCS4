@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 package org.antlr.v4.runtime;
 
 /**
@@ -30,7 +32,7 @@ package org.antlr.v4.runtime;
  * such a rule will not be available as part of the token stream, regardless of
  * channel.</p>we
  */
-public class CommonTokenStream extends BufferedTokenStream {
+public class CommonTokenStream<T> : BufferedTokenStream<T> {
 	/**
 	 * Specifies the channel to use for filtering tokens.
 	 *
@@ -46,8 +48,7 @@ public class CommonTokenStream extends BufferedTokenStream {
 	 *
 	 * @param tokenSource The token source.
 	 */
-    public CommonTokenStream(TokenSource tokenSource) {
-        super(tokenSource);
+    public CommonTokenStream(TokenSource<T> tokenSource):base(tokenSource) {
     }
 
 	/**
@@ -60,17 +61,16 @@ public class CommonTokenStream extends BufferedTokenStream {
 	 * @param tokenSource The token source.
 	 * @param channel The channel to use for filtering tokens.
 	 */
-    public CommonTokenStream(TokenSource tokenSource, int channel) {
-        this(tokenSource);
+    public CommonTokenStream(TokenSource<T> tokenSource, int channel):this(tokenSource) {
         this.channel = channel;
     }
 
-	@Override
+	//@Override
 	protected int adjustSeekIndex(int i) {
 		return nextTokenOnChannel(i, channel);
 	}
 
-    @Override
+    //@Override
     protected Token LB(int k) {
         if ( k==0 || (p-k)<0 ) return null;
 
@@ -86,7 +86,7 @@ public class CommonTokenStream extends BufferedTokenStream {
         return tokens.get(i);
     }
 
-    @Override
+    //@Override
     public Token LT(int k) {
         //System.out.println("enter LT("+k+")");
         lazyInit();
