@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+namespace org.antlr.v4.runtime.tree;
 
-public interface ErrorNode extends TerminalNode {
+public interface ErrorNode : TerminalNode {
 }

@@ -4,23 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.xpath;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerNoViableAltException;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
+namespace org.antlr.v4.runtime.tree.xpath;
 
 /**
  * Represent a subset of XPath XML path syntax for use in identifying nodes in
@@ -66,8 +50,8 @@ import java.util.List;
  * Whitespace is not allowed.</p>
  */
 public class XPath {
-	public static final String WILDCARD = "*"; // word not operator/separator
-	public static final String NOT = "!"; 	   // word for invert operator
+	public static readonly String WILDCARD = "*"; // word not operator/separator
+	public static readonly String NOT = "!"; 	   // word for invert operator
 
 	protected String path;
 	protected XPathElement[] elements;
@@ -82,18 +66,27 @@ public class XPath {
 
 	// TODO: check for invalid token/rule names, bad syntax
 
-	public XPathElement[] split(String path) {
-		ANTLRInputStream in;
+	public class XPathLexerWithoutRecovery : XPathLexer
+	{
+		public XPathLexerWithoutRecovery(ANTLRInputStream stream)
+			:base(stream)
+		{
+
+		}
+        public void recover(LexerNoViableAltException e) { throw e; }
+
+    }
+
+    public XPathElement[] split(String path) {
+		ANTLRInputStream @in;
 		try {
-			in = new ANTLRInputStream(new StringReader(path));
+			@in = new ANTLRInputStream(new StringReader(path));
 		}
 		catch (IOException ioe) {
 			throw new IllegalArgumentException("Could not read path: "+path, ioe);
 		}
-		XPathLexer lexer = new XPathLexer(in) {
-			@Override
-			public void recover(LexerNoViableAltException e) { throw e;	}
-		};
+		XPathLexer lexer = new XPathLexerWithoutRecovery(@in);
+
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(new XPathLexerErrorListener());
 		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -118,10 +111,10 @@ loop:
 			switch ( el.getType() ) {
 				case XPathLexer.ROOT :
 				case XPathLexer.ANYWHERE :
-					boolean anywhere = el.getType() == XPathLexer.ANYWHERE;
+					bool anywhere = el.getType() == XPathLexer.ANYWHERE;
 					i++;
 					next = tokens.get(i);
-					boolean invert = next.getType()==XPathLexer.BANG;
+					bool invert = next.getType()==XPathLexer.BANG;
 					if ( invert ) {
 						i++;
 						next = tokens.get(i);
@@ -154,7 +147,7 @@ loop:
 	 * element. {@code anywhere} is {@code true} if {@code //} precedes the
 	 * word.
 	 */
-	protected XPathElement getXPathElement(Token wordToken, boolean anywhere) {
+	protected XPathElement getXPathElement(Token wordToken, bool anywhere) {
 		if ( wordToken.getType()==Token.EOF ) {
 			throw new IllegalArgumentException("Missing path element at end of path");
 		}
@@ -191,7 +184,7 @@ loop:
 	}
 
 
-	public static Collection<ParseTree> findAll(ParseTree tree, String xpath, Parser parser) {
+	public static ICollection<ParseTree> findAll(ParseTree tree, String xpath, Parser parser) {
 		XPath p = new XPath(parser, xpath);
 		return p.evaluate(tree);
 	}
@@ -201,15 +194,15 @@ loop:
 	 * path. The root {@code /} is relative to the node passed to
 	 * {@link #evaluate}.
 	 */
-	public Collection<ParseTree> evaluate(final ParseTree t) {
+	public ICollection<ParseTree> evaluate(ParseTree t) {
 		ParserRuleContext dummyRoot = new ParserRuleContext();
 		dummyRoot.children = Collections.singletonList(t); // don't set t's parent.
 
-		Collection<ParseTree> work = Collections.<ParseTree>singleton(dummyRoot);
+        ICollection<ParseTree> work = Collections.<ParseTree>singleton(dummyRoot);
 
 		int i = 0;
 		while ( i < elements.length ) {
-			Collection<ParseTree> next = new LinkedHashSet<ParseTree>();
+            ICollection<ParseTree> next = new LinkedHashSet<ParseTree>();
 			for (ParseTree node : work) {
 				if ( node.getChildCount()>0 ) {
 					// only try to match next element if it has children

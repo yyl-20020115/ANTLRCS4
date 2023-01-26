@@ -1,13 +1,13 @@
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
-public abstract class SymbolRefChunk extends ActionChunk {
-	public final String name;
-	public final String escapedName;
 
-	public SymbolRefChunk(StructDecl ctx, String name, String escapedName) {
-		super(ctx);
+public abstract class SymbolRefChunk : ActionChunk {
+	public readonly String name;
+	public readonly String escapedName;
+
+	public SymbolRefChunk(StructDecl ctx, String name, String escapedName) :base(ctx){
 		this.name = name;
 		this.escapedName = escapedName;
 	}

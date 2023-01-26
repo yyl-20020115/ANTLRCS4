@@ -4,14 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
+
 namespace org.antlr.v4.codegen.model.chunk;
 
 
 public class ActionTemplate : ActionChunk {
 	public ST st;
 
-	public ActionTemplate(StructDecl ctx, ST st) {
-		super(ctx);
+	public ActionTemplate(StructDecl ctx, ST st):base(ctx)
+    {
+		
 		this.st = st;
 	}
 }

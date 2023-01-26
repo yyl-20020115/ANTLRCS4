@@ -3,19 +3,18 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.misc.Pair;
+namespace org.antlr.v4.runtime;
 
-import java.io.Serializable;
 
-public class CommonToken implements WritableToken, Serializable {
+public class CommonToken : WritableToken /*Serializable*/ 
+{
 	/**
 	 * An empty {@link Pair} which is used as the default value of
 	 * {@link #source} for tokens that do not have a source.
 	 */
-	protected static final Pair<TokenSource, CharStream> EMPTY_SOURCE =
+	protected static readonly Pair<TokenSource, CharStream> EMPTY_SOURCE =
 		new Pair<TokenSource, CharStream>(null, null);
 
 	/**
@@ -38,7 +37,7 @@ public class CommonToken implements WritableToken, Serializable {
 	 * This is the backing field for {@link #getChannel} and
 	 * {@link #setChannel}.
 	 */
-	protected int channel=DEFAULT_CHANNEL;
+	protected int channel=Token.DEFAULT_CHANNEL;
 
 	/**
 	 * This is the backing field for {@link #getTokenSource} and
@@ -110,7 +109,7 @@ public class CommonToken implements WritableToken, Serializable {
 	 */
 	public CommonToken(int type, String text) {
 		this.type = type;
-		this.channel = DEFAULT_CHANNEL;
+		this.channel = Token.DEFAULT_CHANNEL;
 		this.text = text;
 		this.source = EMPTY_SOURCE;
 	}
@@ -147,18 +146,18 @@ public class CommonToken implements WritableToken, Serializable {
 		}
 	}
 
-	@Override
+	//@Override
 	public int getType() {
 		return type;
 	}
 
-	@Override
-	public void setLine(int line) {
+    //@Override
+    public void setLine(int line) {
 		this.line = line;
 	}
 
-	@Override
-	public String getText() {
+    //@Override
+    public String getText() {
 		if ( text!=null ) {
 			return text;
 		}
@@ -174,7 +173,7 @@ public class CommonToken implements WritableToken, Serializable {
 		}
 	}
 
-	/**
+    /**
 	 * Explicitly set the text for this token. If {code text} is not
 	 * {@code null}, then {@link #getText} will return this value rather than
 	 * extracting the text from the input.
@@ -183,43 +182,43 @@ public class CommonToken implements WritableToken, Serializable {
 	 * should be obtained from the input along with the start and stop indexes
 	 * of the token.
 	 */
-	@Override
-	public void setText(String text) {
+    //@Override
+    public void setText(String text) {
 		this.text = text;
 	}
 
-	@Override
-	public int getLine() {
+    //@Override
+    public int getLine() {
 		return line;
 	}
 
-	@Override
-	public int getCharPositionInLine() {
+    //@Override
+    public int getCharPositionInLine() {
 		return charPositionInLine;
 	}
 
-	@Override
-	public void setCharPositionInLine(int charPositionInLine) {
+    //@Override
+    public void setCharPositionInLine(int charPositionInLine) {
 		this.charPositionInLine = charPositionInLine;
 	}
 
-	@Override
-	public int getChannel() {
+    //@Override
+    public int getChannel() {
 		return channel;
 	}
 
-	@Override
-	public void setChannel(int channel) {
+    //@Override
+    public void setChannel(int channel) {
 		this.channel = channel;
 	}
 
-	@Override
-	public void setType(int type) {
+    //@Override
+    public void setType(int type) {
 		this.type = type;
 	}
 
-	@Override
-	public int getStartIndex() {
+    //@Override
+    public int getStartIndex() {
 		return start;
 	}
 
@@ -227,8 +226,8 @@ public class CommonToken implements WritableToken, Serializable {
 		this.start = start;
 	}
 
-	@Override
-	public int getStopIndex() {
+    //@Override
+    public int getStopIndex() {
 		return stop;
 	}
 
@@ -236,32 +235,32 @@ public class CommonToken implements WritableToken, Serializable {
 		this.stop = stop;
 	}
 
-	@Override
-	public int getTokenIndex() {
+    //@Override
+    public int getTokenIndex() {
 		return index;
 	}
 
-	@Override
-	public void setTokenIndex(int index) {
+    //@Override
+    public void setTokenIndex(int index) {
 		this.index = index;
 	}
 
-	@Override
-	public TokenSource getTokenSource() {
+    //@Override
+    public TokenSource getTokenSource() {
 		return source.a;
 	}
 
-	@Override
-	public CharStream getInputStream() {
+    //@Override
+    public CharStream getInputStream() {
 		return source.b;
 	}
 
-	@Override
-	public String toString() {
+    //@Override
+    public override String ToString() {
 		return toString(null);
 	}
 
-	public String toString(Recognizer<?, ?> r) {
+	public String toString<T1, T2>(Recognizer<T1, T2> r) {
 		String channelStr = "";
 		if ( channel>0 ) {
 			channelStr=",channel="+channel;

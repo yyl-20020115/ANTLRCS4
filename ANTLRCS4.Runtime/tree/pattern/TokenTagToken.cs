@@ -4,17 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
-
-import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.Token;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A {@link Token} object representing a token of a particular type; e.g.,
  * {@code <ID>}. These tokens are created for {@link TagChunk} chunks where the
  * tag corresponds to a lexer rule or token type.
  */
-public class TokenTagToken extends CommonToken {
+public class TokenTagToken : CommonToken {
 	/**
 	 * This is the backing field for {@link #getTokenName}.
 	 */

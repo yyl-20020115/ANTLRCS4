@@ -4,22 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.xpath;
+namespace org.antlr.v4.runtime.tree.xpath;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.Trees;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-public class XPathWildcardAnywhereElement extends XPathElement {
-	public XPathWildcardAnywhereElement() {
-		super(XPath.WILDCARD);
+public class XPathWildcardAnywhereElement : XPathElement {
+	public XPathWildcardAnywhereElement():base(XPath.WILDCARD)
+    {
 	}
 
-	@Override
-	public Collection<ParseTree> evaluate(ParseTree t) {
-		if ( invert ) return new ArrayList<ParseTree>(); // !* is weird but valid (empty)
+	public override ICollection<ParseTree> evaluate(ParseTree t) {
+		if ( invert ) return new List<ParseTree>(); // !* is weird but valid (empty)
 		return Trees.getDescendants(t);
 	}
 }

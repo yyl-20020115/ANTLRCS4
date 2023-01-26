@@ -3,12 +3,11 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
-import org.antlr.v4.runtime.atn.ATNConfigSet;
-import org.antlr.v4.runtime.dfa.DFA;
-
-import java.util.BitSet;
+namespace org.antlr.v4.runtime;
 
 /**
  * Provides an empty default implementation of {@link ANTLRErrorListener}. The
@@ -17,9 +16,8 @@ import java.util.BitSet;
  *
  * @author Sam Harwell
  */
-public class BaseErrorListener implements ANTLRErrorListener {
-	@Override
-	public void syntaxError(Recognizer<?, ?> recognizer,
+public class BaseErrorListener : ANTLRErrorListener {
+	public virtual void syntaxError<T1, T2>(Recognizer<T1, T2> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,
@@ -28,8 +26,7 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
-	public void reportAmbiguity(Parser recognizer,
+	public virtual void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
 								int stopIndex,
@@ -39,8 +36,8 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
-	public void reportAttemptingFullContext(Parser recognizer,
+	
+	public virtual void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
 											int stopIndex,
@@ -49,8 +46,8 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
-	public void reportContextSensitivity(Parser recognizer,
+	
+	public virtual void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,
 										 int stopIndex,

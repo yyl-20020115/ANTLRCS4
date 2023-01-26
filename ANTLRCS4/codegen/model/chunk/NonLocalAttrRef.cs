@@ -4,14 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
+
 namespace org.antlr.v4.codegen.model.chunk;
 
 public class NonLocalAttrRef : SymbolRefChunk {
 	public String ruleName;
 	public int ruleIndex;
 
-	public NonLocalAttrRef(StructDecl ctx, String ruleName, String name, String escapedName, int ruleIndex) {
-		super(ctx, name, escapedName);
+	public NonLocalAttrRef(StructDecl ctx, String ruleName, String name, String escapedName, int ruleIndex) : base(ctx, name, escapedName)
+    {
 		this.ruleName = ruleName;
 		this.ruleIndex = ruleIndex;
 	}

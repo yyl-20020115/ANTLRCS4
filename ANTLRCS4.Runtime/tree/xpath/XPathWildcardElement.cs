@@ -4,27 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.xpath;
+namespace org.antlr.v4.runtime.tree.xpath;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.Tree;
-import org.antlr.v4.runtime.tree.Trees;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-public class XPathWildcardElement extends XPathElement {
-	public XPathWildcardElement() {
-		super(XPath.WILDCARD);
+public class XPathWildcardElement : XPathElement {
+	public XPathWildcardElement() : base(XPath.WILDCARD)
+    {
 	}
 
-	@Override
-	public Collection<ParseTree> evaluate(final ParseTree t) {
-		if ( invert ) return new ArrayList<ParseTree>(); // !* is weird but valid (empty)
-		List<ParseTree> kids = new ArrayList<ParseTree>();
-		for (Tree c : Trees.getChildren(t)) {
-			kids.add((ParseTree)c);
+	public override ICollection<ParseTree> evaluate( ParseTree t) {
+		if ( invert ) return new List<ParseTree>(); // !* is weird but valid (empty)
+		List<ParseTree> kids = new ();
+		foreach (Tree c in Trees.getChildren(t)) {
+			kids.Add((ParseTree)c);
 		}
 		return kids;
 	}

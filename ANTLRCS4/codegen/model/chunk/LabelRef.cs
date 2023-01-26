@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
+
 namespace org.antlr.v4.codegen.model.chunk;
 
 

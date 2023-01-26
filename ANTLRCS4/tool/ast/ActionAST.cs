@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool.ast;
 
 
@@ -19,12 +21,11 @@ public class ActionAST : GrammarASTWithOptions , RuleElementAST {
 		this.chunks = node.chunks;
 	}
 
-	public ActionAST(Token t) { super(t); }
-    public ActionAST(int type) { super(type); }
-    public ActionAST(int type, Token t) { super(type, t); }
+	public ActionAST(Token t):base(t) {  }
+    public ActionAST(int type):base(type) {  }
+    public ActionAST(int type, Token t):base(type,t) {  }
 
-	@Override
-	public ActionAST dupNode() { return new ActionAST(this); }
+	public override ActionAST dupNode() { return new ActionAST(this); }
 
 	@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }

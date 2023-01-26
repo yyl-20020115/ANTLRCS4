@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+
 package org.antlr.v4.runtime;
 
 import org.antlr.v4.runtime.misc.Interval;
@@ -22,10 +24,10 @@ import java.util.Arrays;
  *
  * @deprecated as of 4.7 Please use {@link CharStreams} interface.
  */
-@Deprecated
-public class ANTLRInputStream implements CharStream {
-    public static final int READ_BUFFER_SIZE = 1024;
-   	public static final int INITIAL_BUFFER_SIZE = 1024;
+//@Deprecated
+public class ANTLRInputStream : CharStream {
+    public static readonly int READ_BUFFER_SIZE = 1024;
+   	public static readonly int INITIAL_BUFFER_SIZE = 1024;
 
 	/** The data being scanned */
 	protected char[] data;
@@ -43,8 +45,8 @@ public class ANTLRInputStream implements CharStream {
 
 	/** Copy data in string to a local char array */
 	public ANTLRInputStream(String input) {
-		this.data = input.toCharArray();
-		this.n = input.length();
+		this.data = input.ToCharArray();
+		this.n = input.Length;
 	}
 
 	/** This is the preferred constructor for strings as no data is copied */
@@ -53,32 +55,31 @@ public class ANTLRInputStream implements CharStream {
 		this.n = numberOfActualCharsInArray;
 	}
 
-    public ANTLRInputStream(Reader r) throws IOException {
+    public ANTLRInputStream(TextReader r) {
         this(r, INITIAL_BUFFER_SIZE, READ_BUFFER_SIZE);
     }
 
-    public ANTLRInputStream(Reader r, int initialSize) throws IOException {
+    public ANTLRInputStream(TextReader r, int initialSize){
         this(r, initialSize, READ_BUFFER_SIZE);
     }
 
-    public ANTLRInputStream(Reader r, int initialSize, int readChunkSize) throws IOException {
+    public ANTLRInputStream(TextReader r, int initialSize, int readChunkSize) {
         load(r, initialSize, readChunkSize);
     }
 
-	public ANTLRInputStream(InputStream input) throws IOException {
-		this(new InputStreamReader(input), INITIAL_BUFFER_SIZE);
+	public ANTLRInputStream(Stream input) {
+		this(new StreamReader(input), INITIAL_BUFFER_SIZE);
 	}
 
-	public ANTLRInputStream(InputStream input, int initialSize) throws IOException {
-		this(new InputStreamReader(input), initialSize);
+	public ANTLRInputStream(Stream input, int initialSize) {
+		this(new StreamReader(input), initialSize);
 	}
 
-	public ANTLRInputStream(InputStream input, int initialSize, int readChunkSize) throws IOException {
-		this(new InputStreamReader(input), initialSize, readChunkSize);
+	public ANTLRInputStream(Stream input, int initialSize, int readChunkSize) {
+		this(new StreamReader(input), initialSize, readChunkSize);
 	}
 
-	public void load(Reader r, int size, int readChunkSize)
-		throws IOException
+	public void load(TextReader r, int size, int readChunkSize)
 	{
 		if ( r==null ) {
 			return;
@@ -97,11 +98,11 @@ public class ANTLRInputStream implements CharStream {
    			int numRead=0;
    			int p = 0;
    			do {
-   				if ( p+readChunkSize > data.length ) { // overflow?
+   				if ( p+readChunkSize > data.Length ) { // overflow?
    					// System.out.println("### overflow p="+p+", data.length="+data.length);
    					data = Arrays.copyOf(data, data.length * 2);
    				}
-   				numRead = r.read(data, p, readChunkSize);
+   				numRead = r.Read(data, p, readChunkSize);
    				// System.out.println("read "+numRead+" chars; p was "+p+" is now "+(p+numRead));
    				p += numRead;
    			} while (numRead!=-1); // while not EOF
@@ -111,7 +112,7 @@ public class ANTLRInputStream implements CharStream {
    			//System.out.println("n="+n);
    		}
    		finally {
-   			r.close();
+   			r.Close();
    		}
    	}
 
@@ -123,7 +124,7 @@ public class ANTLRInputStream implements CharStream {
 		p = 0;
 	}
 
-    @Override
+    //@Override
     public void consume() {
 		if (p >= n) {
 			assert LA(1) == IntStream.EOF;
@@ -137,7 +138,7 @@ public class ANTLRInputStream implements CharStream {
         }
     }
 
-    @Override
+    //@Override
     public int LA(int i) {
 		if ( i==0 ) {
 			return 0; // undefined
@@ -166,30 +167,30 @@ public class ANTLRInputStream implements CharStream {
      *  last symbol has been read.  The index is the index of char to
 	 *  be returned from LA(1).
      */
-    @Override
+    //@Override
     public int index() {
         return p;
     }
 
-	@Override
+	//@Override
 	public int size() {
 		return n;
 	}
 
     /** mark/release do nothing; we have entire buffer */
-	@Override
+	//@Override
 	public int mark() {
 		return -1;
     }
 
-	@Override
+	//@Override
 	public void release(int marker) {
 	}
 
 	/** consume() ahead until p==index; can't just set p=index as we must
 	 *  update line and charPositionInLine. If we seek backwards, just set p
 	 */
-	@Override
+	//@Override
 	public void seek(int index) {
 		if ( index<=p ) {
 			p = index; // just jump; don't update stream state (line, ...)
@@ -202,7 +203,7 @@ public class ANTLRInputStream implements CharStream {
 		}
 	}
 
-	@Override
+	//@Override
 	public String getText(Interval interval) {
 		int start = interval.a;
 		int stop = interval.b;
@@ -215,7 +216,7 @@ public class ANTLRInputStream implements CharStream {
 		return new String(data, start, count);
 	}
 
-	@Override
+	//@Override
 	public String getSourceName() {
 		if (name == null || name.isEmpty()) {
 			return UNKNOWN_SOURCE_NAME;
@@ -224,6 +225,6 @@ public class ANTLRInputStream implements CharStream {
 		return name;
 	}
 
-    @Override
-    public String toString() { return new String(data); }
+    //@Override
+    public override String ToString() { return new String(data); }
 }

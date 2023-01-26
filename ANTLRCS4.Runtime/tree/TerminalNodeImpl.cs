@@ -4,68 +4,80 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.runtime.tree;
 
-public class TerminalNodeImpl implements TerminalNode {
+public class TerminalNodeImpl : TerminalNode {
 	public Token symbol;
 	public ParseTree parent;
 
 	public TerminalNodeImpl(Token symbol) {	this.symbol = symbol;	}
 
-	@Override
+	//@Override
 	public ParseTree getChild(int i) {return null;}
 
-	@Override
+	//@Override
 	public Token getSymbol() {return symbol;}
 
-	@Override
+	//@Override
 	public ParseTree getParent() { return parent; }
 
-	@Override
+	//@Override
 	public void setParent(RuleContext parent) {
 		this.parent = parent;
 	}
 
-	@Override
+	//@Override
 	public Token getPayload() { return symbol; }
 
-	@Override
-	public Interval getSourceInterval() {
+    //@Override
+    public Interval getSourceInterval() {
 		if ( symbol ==null ) return Interval.INVALID;
 
 		int tokenIndex = symbol.getTokenIndex();
 		return new Interval(tokenIndex, tokenIndex);
 	}
 
-	@Override
-	public int getChildCount() { return 0; }
+    //@Override
+    public int getChildCount() { return 0; }
 
-	@Override
-	public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+    //@Override
+    public  T accept<T>(ParseTreeVisitor<T> visitor) {
 		return visitor.visitTerminal(this);
+    }
+
+	//@Override
+    public String getText() { return symbol.getText(); }
+
+    //@Override
+    public String toStringTree(Parser parser) {
+		return ToString();
 	}
 
-	@Override
-	public String getText() { return symbol.getText(); }
-
-	@Override
-	public String toStringTree(Parser parser) {
-		return toString();
-	}
-
-	@Override
-	public String toString() {
+    //@Override
+    public override String ToString() {
 			if ( symbol.getType() == Token.EOF ) return "<EOF>";
 			return symbol.getText();
 	}
 
-	@Override
-	public String toStringTree() {
-		return toString();
+    //@Override
+    public String toStringTree() {
+		return ToString();
 	}
+
+    Tree Tree.getParent()
+    {
+        return this.getParent();
+    }
+
+    object Tree.getPayload()
+    {
+		return this.getPayload();
+    }
+
+    Tree Tree.getChild(int i)
+    {
+		return this.getChild(i);	
+    }
 }

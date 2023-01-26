@@ -4,38 +4,29 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.xpath;
+namespace org.antlr.v4.runtime.tree.xpath;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.runtime.tree.Tree;
-import org.antlr.v4.runtime.tree.Trees;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-public class XPathTokenElement extends XPathElement {
+public class XPathTokenElement : XPathElement {
 	protected int tokenType;
-	public XPathTokenElement(String tokenName, int tokenType) {
-		super(tokenName);
+	public XPathTokenElement(String tokenName, int tokenType) :base(tokenName){
 		this.tokenType = tokenType;
 	}
 
-	@Override
-	public Collection<ParseTree> evaluate(ParseTree t) {
+	//@Override
+	public override ICollection<ParseTree> evaluate(ParseTree t) {
 		// return all children of t that match nodeName
-		List<ParseTree> nodes = new ArrayList<ParseTree>();
-		for (Tree c : Trees.getChildren(t)) {
-			if ( c is TerminalNode ) {
-				TerminalNode tnode = (TerminalNode)c;
-				if ( (tnode.getSymbol().getType() == tokenType && !invert) ||
-					 (tnode.getSymbol().getType() != tokenType && invert) )
-				{
-					nodes.add(tnode);
-				}
-			}
-		}
+		List<ParseTree> nodes = new ();
+		foreach (Tree c in Trees.getChildren(t)) {
+            if (c is TerminalNode tnode)
+            {
+                if ((tnode.getSymbol().getType() == tokenType && !invert) ||
+                     (tnode.getSymbol().getType() != tokenType && invert))
+                {
+                    nodes.Add(tnode);
+                }
+            }
+        }
 		return nodes;
 	}
 }

@@ -4,28 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
+using System.Text;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BailErrorStrategy;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.ListTokenSource;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.misc.MultiMap;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.RuleNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A tree pattern matching mechanism for ANTLR {@link ParseTree}s.
@@ -85,9 +66,8 @@ import java.util.List;
  * {@code \<} and {@code \>}.</p>
  */
 public class ParseTreePatternMatcher {
-	public static class CannotInvokeStartRule extends RuntimeException {
-		public CannotInvokeStartRule(Throwable e) {
-			super(e);
+	public static class CannotInvokeStartRule : RuntimeException {
+		public CannotInvokeStartRule(Exception e):base(e.Message,e) {
 		}
 	}
 
@@ -99,12 +79,12 @@ public class ParseTreePatternMatcher {
 	/**
 	 * This is the backing field for {@link #getLexer()}.
 	 */
-	private final Lexer lexer;
+	private readonly Lexer lexer;
 
 	/**
 	 * This is the backing field for {@link #getParser()}.
 	 */
-	private final Parser parser;
+	private readonly Parser parser;
 
 	protected String start = "<";
 	protected String stop = ">";
@@ -147,7 +127,7 @@ public class ParseTreePatternMatcher {
 	}
 
 	/** Does {@code pattern} matched as rule {@code patternRuleIndex} match {@code tree}? */
-	public boolean matches(ParseTree tree, String pattern, int patternRuleIndex) {
+	public bool matches(ParseTree tree, String pattern, int patternRuleIndex) {
 		ParseTreePattern p = compile(pattern, patternRuleIndex);
 		return matches(tree, p);
 	}
@@ -362,12 +342,12 @@ public class ParseTreePatternMatcher {
 		return null;
 	}
 
-	public List<? extends Token> tokenize(String pattern) {
+	public List<T> tokenize<T>(String pattern) where T:Token {
 		// split pattern into chunks: sea (raw input) and islands (<ID>, <expr>)
 		List<Chunk> chunks = split(pattern);
 
 		// create token stream from text and tags
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ();
 		for (Chunk chunk : chunks) {
 			if ( chunk is TagChunk ) {
 				TagChunk tagChunk = (TagChunk)chunk;

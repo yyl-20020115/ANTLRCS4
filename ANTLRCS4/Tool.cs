@@ -4,84 +4,36 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 
-import org.antlr.runtime.ANTLRFileStream;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.ParserRuleReturnScope;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.v4.analysis.AnalysisPipeline;
-import org.antlr.v4.automata.ATNFactory;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.codegen.CodeGenPipeline;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.misc.Graph;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.GrammarASTAdaptor;
-import org.antlr.v4.parse.GrammarTreeVisitor;
-import org.antlr.v4.parse.ToolANTLRLexer;
-import org.antlr.v4.parse.ToolANTLRParser;
-import org.antlr.v4.runtime.RuntimeMetaData;
-import org.antlr.v4.runtime.misc.LogManager;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.semantics.SemanticPipeline;
-import org.antlr.v4.tool.ANTLRMessage;
-import org.antlr.v4.tool.ANTLRToolListener;
-import org.antlr.v4.tool.BuildDependencyGenerator;
-import org.antlr.v4.tool.DOTGenerator;
-import org.antlr.v4.tool.DefaultToolListener;
-import org.antlr.v4.tool.ErrorManager;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.GrammarTransformPipeline;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.GrammarASTErrorNode;
-import org.antlr.v4.tool.ast.GrammarRootAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.antlr.v4.tool.ast.TerminalAST;
-import org.stringtemplate.v4.STGroup;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
+namespace org.antlr.v4;
 
 public class Tool {
-	public static final String VERSION;
-	static {
+	public static readonly String VERSION;
+	static Tool()
+	{
 		// Assigned in a static{} block to prevent the field from becoming a
 		// compile-time constant
 		VERSION = RuntimeMetaData.VERSION;
 	}
 
-	public static final String GRAMMAR_EXTENSION = ".g4";
-	public static final String LEGACY_GRAMMAR_EXTENSION = ".g";
+	public static readonly String GRAMMAR_EXTENSION = ".g4";
+	public static readonly String LEGACY_GRAMMAR_EXTENSION = ".g";
 
-	public static final List<String> ALL_GRAMMAR_EXTENSIONS =
-		Collections.unmodifiableList(Arrays.asList(GRAMMAR_EXTENSION, LEGACY_GRAMMAR_EXTENSION));
+	public static readonly List<String> ALL_GRAMMAR_EXTENSIONS =
+		new List<string>() { GRAMMAR_EXTENSION, LEGACY_GRAMMAR_EXTENSION };
 
-	public static enum OptionArgType { NONE, STRING } // NONE implies boolean
-	public static class Option {
+	public enum OptionArgType { NONE, STRING } // NONE implies boolean
+	public class Option {
 		String fieldName;
 		String name;
 		OptionArgType argType;
 		String description;
 
-		public Option(String fieldName, String name, String description) {
-			this(fieldName, name, OptionArgType.NONE, description);
+		public Option(String fieldName, String name, String description)
+		: this(fieldName, name, OptionArgType.NONE, description)
+        {
 		}
 
 		public Option(String fieldName, String name, OptionArgType argType, String description) {
@@ -94,26 +46,26 @@ public class Tool {
 
 	// fields set by option manager
 
-	public File inputDirectory; // used by mvn plugin but not set by tool itself.
+	public string inputDirectory; // used by mvn plugin but not set by tool itself.
 	public String outputDirectory;
 	public String libDirectory;
-	public boolean generate_ATN_dot = false;
+	public bool generate_ATN_dot = false;
 	public String grammarEncoding = null; // use default locale's encoding
 	public String msgFormat = "antlr";
-	public boolean launch_ST_inspector = false;
-	public boolean ST_inspector_wait_for_close = false;
-    public boolean force_atn = false;
-    public boolean log = false;
-	public boolean gen_listener = true;
-	public boolean gen_visitor = false;
-	public boolean gen_dependencies = false;
+	public bool launch_ST_inspector = false;
+	public bool ST_inspector_wait_for_close = false;
+    public bool force_atn = false;
+    public bool log = false;
+	public bool gen_listener = true;
+	public bool gen_visitor = false;
+	public bool gen_dependencies = false;
 	public String genPackage = null;
-	public Map<String, String> grammarOptions = null;
-	public boolean warnings_are_errors = false;
-	public boolean longMessages = false;
-	public boolean exact_output_dir = false;
+	public Dictionary<String, String> grammarOptions = null;
+	public bool warnings_are_errors = false;
+	public bool longMessages = false;
+	public bool exact_output_dir = false;
 
-    public final static Option[] optionDefs = {
+    public readonly static Option[] optionDefs = {
 		new Option("outputDirectory",             "-o", OptionArgType.STRING, "specify output directory where all output is generated"),
 		new Option("libDirectory",                "-lib", OptionArgType.STRING, "specify location of grammars, tokens files"),
 		new Option("generate_ATN_dot",            "-atn", "generate rule augmented transition network diagrams"),
@@ -136,16 +88,16 @@ public class Tool {
 	};
 
 	// helper vars for option management
-	protected boolean haveOutputDir = false;
-	protected boolean return_dont_exit = false;
+	protected bool haveOutputDir = false;
+	protected bool return_dont_exit = false;
 
 
-	public final String[] args;
+	public readonly String[] args;
 
-	protected List<String> grammarFiles = new ArrayList<String>();
+	protected List<String> grammarFiles = new ();
 
 	public ErrorManager errMgr;
-    public LogManager logMgr = new LogManager();
+    public LogManager logMgr = new ();
 
 	List<ANTLRToolListener> listeners = new CopyOnWriteArrayList<ANTLRToolListener>();
 
@@ -154,9 +106,9 @@ public class Tool {
 	 */
 	DefaultToolListener defaultListener = new DefaultToolListener(this);
 
-	public static void main(String[] args) {
+	public static void Main(String[] args) {
         Tool antlr = new Tool(args);
-        if ( args.length == 0 ) { antlr.help(); antlr.exit(0); }
+        if ( args.Length == 0 ) { antlr.help(); antlr.exit(0); }
 
         try {
             antlr.processGrammarsOnCommandLine();

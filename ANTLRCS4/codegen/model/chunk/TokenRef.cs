@@ -4,13 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class TokenRef extends SymbolRefChunk {
-	public TokenRef(StructDecl ctx, String name, String escapedName) {
-		super(ctx, name, escapedName);
-	}
+public class TokenRef : SymbolRefChunk {
+	public TokenRef(StructDecl ctx, String name, String escapedName)
+	: base(ctx, name, escapedName) { }
 }

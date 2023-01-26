@@ -4,13 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
-
-import org.antlr.v4.runtime.misc.MultiMap;
-import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.util.Collections;
-import java.util.List;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * Represents the result of matching a {@link ParseTree} against a tree pattern.
@@ -19,22 +13,22 @@ public class ParseTreeMatch {
 	/**
 	 * This is the backing field for {@link #getTree()}.
 	 */
-	private final ParseTree tree;
+	private readonly ParseTree tree;
 
 	/**
 	 * This is the backing field for {@link #getPattern()}.
 	 */
-	private final ParseTreePattern pattern;
+	private readonly ParseTreePattern pattern;
 
 	/**
 	 * This is the backing field for {@link #getLabels()}.
 	 */
-	private final MultiMap<String, ParseTree> labels;
+	private readonly MultiMap<String, ParseTree> labels;
 
 	/**
 	 * This is the backing field for {@link #getMismatchedNode()}.
 	 */
-	private final ParseTree mismatchedNode;
+	private readonly ParseTree mismatchedNode;
 
 	/**
 	 * Constructs a new instance of {@link ParseTreeMatch} from the specified
@@ -161,7 +155,7 @@ public class ParseTreeMatch {
 	 * @return {@code true} if the match operation succeeded; otherwise,
 	 * {@code false}.
 	 */
-	public boolean succeeded() {
+	public bool succeeded() {
 		return mismatchedNode == null;
 	}
 
@@ -188,11 +182,9 @@ public class ParseTreeMatch {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public String toString() {
-		return String.format(
-			"Match %s; found %d labels",
-			succeeded() ? "succeeded" : "failed",
-			getLabels().size());
+	//@Override
+	public override String ToString() {
+		return
+			$"Match {(succeeded() ? "succeeded" : "failed")}; found {getLabels().size()} labels";
 	}
 }

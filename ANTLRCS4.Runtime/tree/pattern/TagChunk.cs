@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * Represents a placeholder tag in a tree pattern. A tag can have any of the
@@ -20,15 +20,15 @@ package org.antlr.v4.runtime.tree.pattern;
  * This class does not perform any validation on the tag or label names aside
  * from ensuring that the tag is a non-null, non-empty string.
  */
-class TagChunk extends Chunk {
+class TagChunk : Chunk {
 	/**
 	 * This is the backing field for {@link #getTag}.
 	 */
-	private final String tag;
+	private readonly String tag;
 	/**
 	 * This is the backing field for {@link #getLabel}.
 	 */
-	private final String label;
+	private readonly String label;
 
 	/**
 	 * Construct a new instance of {@link TagChunk} using the specified tag and
@@ -40,8 +40,8 @@ class TagChunk extends Chunk {
 	 * @exception IllegalArgumentException if {@code tag} is {@code null} or
 	 * empty.
 	 */
-	public TagChunk(String tag) {
-		this(null, tag);
+	public TagChunk(String tag): this(null, tag)
+    {
 	}
 
 	/**
@@ -57,8 +57,8 @@ class TagChunk extends Chunk {
 	 * empty.
 	 */
 	public TagChunk(String label, String tag) {
-		if (tag == null || tag.isEmpty()) {
-			throw new IllegalArgumentException("tag cannot be null or empty");
+		if (string.IsNullOrEmpty(tag)) {
+			throw new ArgumentException("tag cannot be null or empty",nameof(tag));
 		}
 
 		this.label = label;
@@ -71,7 +71,7 @@ class TagChunk extends Chunk {
 	 * @return The tag for the chunk.
 	 */
 
-	public final String getTag() {
+	public String getTag() {
 		return tag;
 	}
 
@@ -82,7 +82,7 @@ class TagChunk extends Chunk {
 	 * assigned to the chunk.
 	 */
 
-	public final String getLabel() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -91,8 +91,8 @@ class TagChunk extends Chunk {
 	 * are returned in the form {@code label:tag}, and unlabeled tags are
 	 * returned as just the tag name.
 	 */
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		if (label != null) {
 			return label + ":" + tag;
 		}

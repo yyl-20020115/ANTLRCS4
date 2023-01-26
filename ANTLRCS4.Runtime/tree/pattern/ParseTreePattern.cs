@@ -4,14 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
-
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.xpath.XPath;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A pattern like {@code <ID> = <expr>;} converted to a {@link ParseTree} by
@@ -21,25 +14,25 @@ public class ParseTreePattern {
 	/**
 	 * This is the backing field for {@link #getPatternRuleIndex()}.
 	 */
-	private final int patternRuleIndex;
+	private readonly int patternRuleIndex;
 
 	/**
 	 * This is the backing field for {@link #getPattern()}.
 	 */
 
-	private final String pattern;
+	private readonly String pattern;
 
 	/**
 	 * This is the backing field for {@link #getPatternTree()}.
 	 */
 
-	private final ParseTree patternTree;
+	private readonly ParseTree patternTree;
 
 	/**
 	 * This is the backing field for {@link #getMatcher()}.
 	 */
 
-	private final ParseTreePatternMatcher matcher;
+	private readonly ParseTreePatternMatcher matcher;
 
 	/**
 	 * Construct a new instance of the {@link ParseTreePattern} class.
@@ -80,7 +73,7 @@ public class ParseTreePattern {
 	 * @return {@code true} if {@code tree} is a match for the current tree
 	 * pattern; otherwise, {@code false}.
 	 */
-	public boolean matches(ParseTree tree) {
+	public bool matches(ParseTree tree) {
 		return matcher.match(tree, this).succeeded();
 	}
 
@@ -97,9 +90,9 @@ public class ParseTreePattern {
 	 */
 
 	public List<ParseTreeMatch> findAll(ParseTree tree, String xpath) {
-		Collection<ParseTree> subtrees = XPath.findAll(tree, xpath, matcher.getParser());
-		List<ParseTreeMatch> matches = new ArrayList<ParseTreeMatch>();
-		for (ParseTree t : subtrees) {
+		ICollection<ParseTree> subtrees = XPath.findAll(tree, xpath, matcher.getParser());
+		List<ParseTreeMatch> matches = new ();
+		foreach (ParseTree t in subtrees) {
 			ParseTreeMatch match = match(t);
 			if ( match.succeeded() ) {
 				matches.add(match);

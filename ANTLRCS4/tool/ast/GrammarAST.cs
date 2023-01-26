@@ -4,24 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+
 namespace org.antlr.v4.tool.ast;
-
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonToken;
-import org.antlr.runtime.Token;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.CommonTreeNodeStream;
-import org.antlr.runtime.tree.Tree;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.GrammarASTAdaptor;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.Grammar;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class GrammarAST : CommonTree {
 	/** For error msgs, nice to know which grammar this AST lives in */
@@ -34,14 +20,13 @@ public class GrammarAST : CommonTree {
 	public String textOverride;
 
     public GrammarAST() {}
-    public GrammarAST(Token t) { super(t); }
-    public GrammarAST(GrammarAST node) {
-		super(node);
+    public GrammarAST(Token t):base(t) { ; }
+    public GrammarAST(GrammarAST node):base(node) {
 		this.g = node.g;
 		this.atnState = node.atnState;
 		this.textOverride = node.textOverride;
 	}
-    public GrammarAST(int type) { super(new CommonToken(type, ANTLRParser.tokenNames[type])); }
+    public GrammarAST(int type) :base(new CommonToken(type, ANTLRParser.tokenNames[type])){}
     public GrammarAST(int type, Token t) {
 		this(new CommonToken(t));
 		token.setType(type);

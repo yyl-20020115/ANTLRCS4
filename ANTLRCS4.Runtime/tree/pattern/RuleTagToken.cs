@@ -4,31 +4,27 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
-
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenSource;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A {@link Token} object representing an entire subtree matched by a parser
  * rule; e.g., {@code <expr>}. These tokens are created for {@link TagChunk}
  * chunks where the tag corresponds to a parser rule.
  */
-public class RuleTagToken implements Token {
+public class RuleTagToken : Token {
 	/**
 	 * This is the backing field for {@link #getRuleName}.
 	 */
-	private final String ruleName;
+	private readonly String ruleName;
 	/**
 	 * The token type for the current token. This is the token type assigned to
 	 * the bypass alternative for the rule during ATN deserialization.
 	 */
-	private final int bypassTokenType;
+	private readonly int bypassTokenType;
 	/**
 	 * This is the backing field for {@link #getLabel}.
 	 */
-	private final String label;
+	private readonly String label;
 
 	/**
 	 * Constructs a new instance of {@link RuleTagToken} with the specified rule
@@ -40,8 +36,8 @@ public class RuleTagToken implements Token {
 	 * @exception IllegalArgumentException if {@code ruleName} is {@code null}
 	 * or empty.
 	 */
-	public RuleTagToken(String ruleName, int bypassTokenType) {
-		this(ruleName, bypassTokenType, null);
+	public RuleTagToken(String ruleName, int bypassTokenType): this(ruleName, bypassTokenType, null)
+    {
 	}
 
 	/**
@@ -57,8 +53,8 @@ public class RuleTagToken implements Token {
 	 * or empty.
 	 */
 	public RuleTagToken(String ruleName, int bypassTokenType, String label) {
-		if (ruleName == null || ruleName.isEmpty()) {
-			throw new IllegalArgumentException("ruleName cannot be null or empty.");
+		if (string.IsNullOrEmpty(ruleName)) {
+			throw new ArgumentException("ruleName cannot be null or empty.",nameof(ruleName));
 		}
 
 		this.ruleName = ruleName;
@@ -72,7 +68,7 @@ public class RuleTagToken implements Token {
 	 * @return The name of the parser rule associated with this rule tag.
 	 */
 
-	public final String getRuleName() {
+	public String getRuleName() {
 		return ruleName;
 	}
 
@@ -83,7 +79,7 @@ public class RuleTagToken implements Token {
 	 * {@code null} if this is an unlabeled rule tag.
 	 */
 
-	public final String getLabel() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -92,9 +88,9 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>Rule tag tokens are always placed on the {@link #DEFAULT_CHANNEL}.</p>
 	 */
-	@Override
+	//@Override
 	public int getChannel() {
-		return DEFAULT_CHANNEL;
+		return Token.DEFAULT_CHANNEL;
 	}
 
 	/**
@@ -103,7 +99,7 @@ public class RuleTagToken implements Token {
 	 * <p>This method returns the rule tag formatted with {@code <} and {@code >}
 	 * delimiters.</p>
 	 */
-	@Override
+	//@Override
 	public String getText() {
 		if (label != null) {
 			return "<" + label + ":" + ruleName + ">";
@@ -118,7 +114,7 @@ public class RuleTagToken implements Token {
 	 * <p>Rule tag tokens have types assigned according to the rule bypass
 	 * transitions created during ATN deserialization.</p>
 	 */
-	@Override
+	//@Override
 	public int getType() {
 		return bypassTokenType;
 	}
@@ -128,7 +124,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns 0.</p>
 	 */
-	@Override
+	//@Override
 	public int getLine() {
 		return 0;
 	}
@@ -138,7 +134,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	@Override
+	//@Override
 	public int getCharPositionInLine() {
 		return -1;
 	}
@@ -148,7 +144,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	@Override
+	//@Override
 	public int getTokenIndex() {
 		return -1;
 	}
@@ -158,7 +154,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	@Override
+	//@Override
 	public int getStartIndex() {
 		return -1;
 	}
@@ -168,7 +164,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	@Override
+	//@Override
 	public int getStopIndex() {
 		return -1;
 	}
@@ -178,7 +174,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns {@code null}.</p>
 	 */
-	@Override
+	//@Override
 	public TokenSource getTokenSource() {
 		return null;
 	}
@@ -188,7 +184,7 @@ public class RuleTagToken implements Token {
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns {@code null}.</p>
 	 */
-	@Override
+	//@Override
 	public CharStream getInputStream() {
 		return null;
 	}
@@ -199,8 +195,8 @@ public class RuleTagToken implements Token {
 	 * <p>The implementation for {@link RuleTagToken} returns a string of the form
 	 * {@code ruleName:bypassTokenType}.</p>
 	 */
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return ruleName + ":" + bypassTokenType;
 	}
 }

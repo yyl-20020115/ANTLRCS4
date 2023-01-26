@@ -4,16 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class TokenPropertyRef extends ActionChunk {
+public class TokenPropertyRef : ActionChunk {
 	public String label;
 
-	public TokenPropertyRef(StructDecl ctx, String label) {
-		super(ctx);
+	public TokenPropertyRef(StructDecl ctx, String label) :base(ctx)
+	{
 		this.label = label;
 	}
 }

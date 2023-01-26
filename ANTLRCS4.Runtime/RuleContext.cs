@@ -3,17 +3,12 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
+using System.Text;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
-import org.antlr.v4.runtime.tree.RuleNode;
-import org.antlr.v4.runtime.tree.Trees;
+namespace org.antlr.v4.runtime;
 
-import java.util.Arrays;
-import java.util.List;
 
 /** A rule context is a record of a single rule invocation.
  *
@@ -97,35 +92,35 @@ public class RuleContext : RuleNode {
 	/** A context is empty if there is no invoking state; meaning nobody called
 	 *  current context.
 	 */
-	public boolean isEmpty() {
+	public bool isEmpty() {
 		return invokingState == -1;
 	}
 
 	// satisfy the ParseTree / SyntaxTree interface
 
-	@Override
+	//@Override
 	public Interval getSourceInterval() {
 		return Interval.INVALID;
 	}
 
-	@Override
+	//@Override
 	public RuleContext getRuleContext() { return this; }
 
-	@Override
-	public RuleContext getParent() { return parent; }
+    //@Override
+    public RuleContext getParent() { return parent; }
 
-	@Override
-	public RuleContext getPayload() { return this; }
+    //@Override
+    public RuleContext getPayload() { return this; }
 
-	/** Return the combined text of all child nodes. This method only considers
+    /** Return the combined text of all child nodes. This method only considers
 	 *  tokens which have been added to the parse tree.
 	 *  <p>
 	 *  Since tokens on hidden channels (e.g. whitespace or comments) are not
 	 *  added to the parse trees, they will not appear in the output of this
 	 *  method.
 	 */
-	@Override
-	public String getText() {
+    //@Override
+    public String getText() {
 		if (getChildCount() == 0) {
 			return "";
 		}
@@ -135,7 +130,7 @@ public class RuleContext : RuleNode {
 			builder.append(getChild(i).getText());
 		}
 
-		return builder.toString();
+		return builder.ToString();
 	}
 
 	public int getRuleIndex() { return -1; }
@@ -162,30 +157,30 @@ public class RuleContext : RuleNode {
 	public void setAltNumber(int altNumber) { }
 
 	/** @since 4.7. {@see ParseTree#setParent} comment */
-	@Override
+	//@Override
 	public void setParent(RuleContext parent) {
 		this.parent = parent;
 	}
 
-	@Override
+	//@Override
 	public ParseTree getChild(int i) {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public int getChildCount() {
 		return 0;
 	}
 
-	@Override
-	public <T> T accept(ParseTreeVisitor<? extends T> visitor) { return visitor.visitChildren(this); }
+    //@Override
+    public  T accept<T>(ParseTreeVisitor<T> visitor) { return visitor.visitChildren(this); }
 
 	/** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 *  We have to know the recognizer so we can get rule names.
 	 */
-	@Override
-	public String toStringTree(Parser recog) {
+	//@Override
+    public String toStringTree(Parser recog) {
 		return Trees.toStringTree(this, recog);
 	}
 
@@ -196,26 +191,26 @@ public class RuleContext : RuleNode {
 		return Trees.toStringTree(this, ruleNames);
 	}
 
-	@Override
+	//@Override
 	public String toStringTree() {
 		return toStringTree((List<String>)null);
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return toString((List<String>)null, (RuleContext)null);
 	}
 
-	public final String toString(Recognizer<?,?> recog) {
+	public String toString<T1,T2>(Recognizer<T1, T2> recog) {
 		return toString(recog, ParserRuleContext.EMPTY);
 	}
 
-	public final String toString(List<String> ruleNames) {
+	public String toString(List<String> ruleNames) {
 		return toString(ruleNames, null);
 	}
 
 	// recog null unless ParserRuleContext, in which case we use subclass toString(...)
-	public String toString(Recognizer<?,?> recog, RuleContext stop) {
+	public String toString<T1, T2>(Recognizer<T1, T2> recog, RuleContext stop) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
 		List<String> ruleNamesList = ruleNames != null ? Arrays.asList(ruleNames) : null;
 		return toString(ruleNamesList, stop);
@@ -224,27 +219,27 @@ public class RuleContext : RuleNode {
 	public String toString(List<String> ruleNames, RuleContext stop) {
 		StringBuilder buf = new StringBuilder();
 		RuleContext p = this;
-		buf.append("[");
+		buf.Append('[');
 		while (p != null && p != stop) {
 			if (ruleNames == null) {
 				if (!p.isEmpty()) {
-					buf.append(p.invokingState);
+					buf.Append(p.invokingState);
 				}
 			}
 			else {
 				int ruleIndex = p.getRuleIndex();
 				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.size() ? ruleNames.get(ruleIndex) : Integer.toString(ruleIndex);
-				buf.append(ruleName);
+				buf.Append(ruleName);
 			}
 
 			if (p.parent != null && (ruleNames != null || !p.parent.isEmpty())) {
-				buf.append(" ");
+				buf.Append(' ');
 			}
 
 			p = p.parent;
 		}
 
-		buf.append("]");
-		return buf.toString();
+		buf.Append(']');
+		return buf.ToString();
 	}
 }

@@ -4,12 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
+namespace org.antlr.v4.codegen.model.chunk;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
 
-public class ThisRulePropertyRef_ctx extends RulePropertyRef {
-    public ThisRulePropertyRef_ctx(StructDecl ctx, String label) {
-        super(ctx, label);
+public class ThisRulePropertyRef_ctx : RulePropertyRef {
+    public ThisRulePropertyRef_ctx(StructDecl ctx, String label) 
+        :base(ctx, label)
+    {
+        
     }
 }

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime;
 
 /** How to emit recognition errors. */
@@ -41,7 +44,7 @@ public interface ANTLRErrorListener {
 	 *        the parser was able to recover in line without exiting the
 	 *        surrounding rule.
 	 */
-	public void syntaxError(Recognizer<?, ?> recognizer,
+	public void syntaxError<T1,T2>(Recognizer<T1, T2> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

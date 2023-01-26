@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A chunk is either a token tag, a rule tag, or a span of literal text within a

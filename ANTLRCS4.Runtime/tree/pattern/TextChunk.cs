@@ -4,18 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.pattern;
+namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * Represents a span of raw text (concrete syntax) between tags in a tree
  * pattern string.
  */
-class TextChunk extends Chunk {
+class TextChunk : Chunk {
 	/**
 	 * This is the backing field for {@link #getText}.
 	 */
 
-	private final String text;
+	private readonly String text;
 
 	/**
 	 * Constructs a new instance of {@link TextChunk} with the specified text.
@@ -25,7 +25,7 @@ class TextChunk extends Chunk {
 	 */
 	public TextChunk(String text) {
 		if (text == null) {
-			throw new IllegalArgumentException("text cannot be null");
+			throw new ArgumentException("text cannot be null",nameof(text));
 		}
 
 		this.text = text;
@@ -37,7 +37,7 @@ class TextChunk extends Chunk {
 	 * @return The text of the chunk.
 	 */
 
-	public final String getText() {
+	public String getText() {
 		return text;
 	}
 
@@ -47,8 +47,8 @@ class TextChunk extends Chunk {
 	 * <p>The implementation for {@link TextChunk} returns the result of
 	 * {@link #getText()} in single quotes.</p>
 	 */
-	@Override
-	public String toString() {
+	//@Override
+	public String ToString() {
 		return "'"+text+"'";
 	}
 }

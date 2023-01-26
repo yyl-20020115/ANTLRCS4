@@ -4,13 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
+using System.Xml.Linq;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
 public class RetValueRef : SymbolRefChunk {
-	public RetValueRef(StructDecl ctx, String name, String escapedName) {
-		super(ctx, name, escapedName);
+	public RetValueRef(StructDecl ctx, String name, String escapedName) :base(ctx, name, escapedName)
+    {
+		
 	}
 }

@@ -4,15 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree.xpath;
-
-import org.antlr.v4.runtime.tree.ParseTree;
-
-import java.util.Collection;
+namespace org.antlr.v4.runtime.tree.xpath;
 
 public abstract class XPathElement {
 	protected String nodeName;
-	protected boolean invert;
+	protected bool invert;
 
 	/** Construct element like {@code /ID} or {@code ID} or {@code /*} etc...
 	 *  op is null if just node
@@ -25,11 +21,10 @@ public abstract class XPathElement {
 	 * Given tree rooted at {@code t} return all nodes matched by this path
 	 * element.
 	 */
-	public abstract Collection<ParseTree> evaluate(ParseTree t);
+	public abstract ICollection<ParseTree> evaluate(ParseTree t);
 
-	@Override
-	public String toString() {
+	public override String ToString() {
 		String inv = invert ? "!" : "";
-		return getClass().getSimpleName()+"["+inv+nodeName+"]";
+		return GetType().Name+"["+inv+nodeName+"]";
 	}
 }

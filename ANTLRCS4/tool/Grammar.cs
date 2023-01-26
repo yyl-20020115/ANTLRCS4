@@ -4,53 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.analysis.LeftRecursiveRuleTransformer;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.misc.CharSupport;
-import org.antlr.v4.misc.OrderedHashMap;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.GrammarASTAdaptor;
-import org.antlr.v4.parse.GrammarTreeVisitor;
-import org.antlr.v4.parse.TokenVocabParser;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.VocabularyImpl;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.atn.SemanticContext;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.GrammarASTWithOptions;
-import org.antlr.v4.tool.ast.GrammarRootAST;
-import org.antlr.v4.tool.ast.PredAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.antlr.v4.tool.ast.TerminalAST;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-public class Grammar implements AttributeResolver {
-	public static final String GRAMMAR_FROM_STRING_NAME = "<string>";
+public class Grammar : AttributeResolver {
+	public static readonly String GRAMMAR_FROM_STRING_NAME = "<string>";
 	/**
 	 * This value is used in the following situations to indicate that a token
 	 * type does not have an associated name which can be directly referenced in
@@ -64,17 +27,17 @@ public class Grammar implements AttributeResolver {
 	 * representation of the token type as an integer.</li>
 	 * </ul>
 	 */
-	public static final String INVALID_TOKEN_NAME = "<INVALID>";
+	public static readonly String INVALID_TOKEN_NAME = "<INVALID>";
 	/**
 	 * This value is used as the name for elements in the array returned by
 	 * {@link #getRuleNames} for indexes not associated with a rule.
 	 */
-	public static final String INVALID_RULE_NAME = "<invalid>";
+	public static readonly String INVALID_RULE_NAME = "<invalid>";
 
-	public static final String caseInsensitiveOptionName = "caseInsensitive";
+	public static readonly String caseInsensitiveOptionName = "caseInsensitive";
 
-	public static final Set<String> parserOptions = new HashSet<String>();
-	static {
+	public static readonly HashSet<String> parserOptions = new HashSet<String>();
+	static Grammar() {
 		parserOptions.add("superClass");
 		parserOptions.add("contextSuperClass");
 		parserOptions.add("TokenLabelType");
@@ -83,65 +46,53 @@ public class Grammar implements AttributeResolver {
 		parserOptions.add("accessLevel");
 		parserOptions.add("exportMacro");
 		parserOptions.add(caseInsensitiveOptionName);
-	}
+        lexerRuleOptions.add(caseInsensitiveOptionName);
+        ruleRefOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
+        ruleRefOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
+        tokenOptions.add("assoc");
+        tokenOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
+        semPredOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
+        semPredOptions.add("fail");
+        doNotCopyOptionsToLexer.add("superClass");
+        doNotCopyOptionsToLexer.add("TokenLabelType");
+        doNotCopyOptionsToLexer.add("tokenVocab");
 
-	public static final Set<String> lexerOptions = parserOptions;
+        grammarAndLabelRefTypeToScope.put("parser:RULE_LABEL", Rule.predefinedRulePropertiesDict);
+        grammarAndLabelRefTypeToScope.put("parser:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
+        grammarAndLabelRefTypeToScope.put("combined:RULE_LABEL", Rule.predefinedRulePropertiesDict);
+        grammarAndLabelRefTypeToScope.put("combined:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
+    }
 
-	public static final Set<String> lexerRuleOptions = new ();
-	static {
-		lexerRuleOptions.add(caseInsensitiveOptionName);
-	}
+    public static readonly HashSet<String> lexerOptions = parserOptions;
 
-	public static final Set<String> parseRuleOptions = new ();
+	public static readonly HashSet<String> lexerRuleOptions = new ();
+	
+	public static readonly HashSet<String> parseRuleOptions = new ();
 
-	public static final Set<String> parserBlockOptions = new HashSet<String>();
+	public static readonly HashSet<String> parserBlockOptions = new HashSet<String>();
 
-	public static final Set<String> lexerBlockOptions = new HashSet<String>();
+	public static readonly HashSet<String> lexerBlockOptions = new HashSet<String>();
 
 	/** Legal options for rule refs like id&lt;key=value&gt; */
-	public static final Set<String> ruleRefOptions = new HashSet<String>();
-	static {
-		ruleRefOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
-		ruleRefOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
-	}
-
+	public static readonly HashSet<String> ruleRefOptions = new HashSet<String>();
 	/** Legal options for terminal refs like ID&lt;assoc=right&gt; */
-	public static final Set<String> tokenOptions = new HashSet<String>();
-	static {
-		tokenOptions.add("assoc");
-		tokenOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
-	}
+	public static readonly HashSet<String> tokenOptions = new HashSet<String>();
 
-	public static final Set<String> actionOptions = new HashSet<String>();
+	public static readonly HashSet<String> actionOptions = new HashSet<String>();
 
-	public static final Set<String> semPredOptions = new HashSet<String>();
-	static {
-		semPredOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
-		semPredOptions.add("fail");
-	}
+	public static readonly HashSet<String> semPredOptions = new HashSet<String>();
 
-	public static final Set<String> doNotCopyOptionsToLexer = new HashSet<String>();
-	static {
-		doNotCopyOptionsToLexer.add("superClass");
-		doNotCopyOptionsToLexer.add("TokenLabelType");
-		doNotCopyOptionsToLexer.add("tokenVocab");
-	}
+	public static readonly HashSet<String> doNotCopyOptionsToLexer = new HashSet<String>();
 
-	public static final Map<String, AttributeDict> grammarAndLabelRefTypeToScope =
+	public static readonly Map<String, AttributeDict> grammarAndLabelRefTypeToScope =
 		new HashMap<String, AttributeDict>();
-	static {
-		grammarAndLabelRefTypeToScope.put("parser:RULE_LABEL", Rule.predefinedRulePropertiesDict);
-		grammarAndLabelRefTypeToScope.put("parser:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
-		grammarAndLabelRefTypeToScope.put("combined:RULE_LABEL", Rule.predefinedRulePropertiesDict);
-		grammarAndLabelRefTypeToScope.put("combined:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
-	}
 
 	public String name;
     public GrammarRootAST ast;
 
 	/** Track token stream used to create this grammar */
 
-	public final org.antlr.runtime.TokenStream tokenStream;
+	public readonly TokenStream tokenStream;
 
 	/** If we transform grammar, track original unaltered token stream.
 	 *  This is set to the same value as tokenStream when tokenStream is
@@ -151,7 +102,7 @@ public class Grammar implements AttributeResolver {
 	 *  the grammar.
 	 */
 
-	public org.antlr.runtime.TokenStream originalTokenStream;
+	public TokenStream originalTokenStream;
 
     public String text; // testing only
     public String fileName;
@@ -182,13 +133,13 @@ public class Grammar implements AttributeResolver {
 	 */
 	public ATN atn;
 
-	public Map<Integer, Interval> stateToGrammarRegionMap;
+	public Dictionary<int, Interval> stateToGrammarRegionMap;
 
-	public Map<Integer, DFA> decisionDFAs = new HashMap<Integer, DFA>();
+	public Dictionary<int, DFA> decisionDFAs = new ();
 
 	public List<IntervalSet[]> decisionLOOK;
 
-	public final Tool tool;
+	public readonly Tool tool;
 
 	/** Token names and literal tokens like "void" are uniquely indexed.
 	 *  with -1 implying EOF.  Characters are different; they go from

@@ -4,19 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.ModelElement;
-import org.antlr.v4.codegen.model.decl.StructDecl;
-
-import java.util.List;
+namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class SetAttr extends SymbolRefChunk {
-	@ModelElement public List<ActionChunk> rhsChunks;
+public class SetAttr : SymbolRefChunk {
+	//@ModelElement 
+	public List<ActionChunk> rhsChunks;
 
-	public SetAttr(StructDecl ctx, String name, String escapedName, List<ActionChunk> rhsChunks) {
-		super(ctx, name, escapedName);
+	public SetAttr(StructDecl ctx, String name, String escapedName, List<ActionChunk> rhsChunks)
+		:base(ctx, name, escapedName)
+    {
 		this.rhsChunks = rhsChunks;
 	}
 }

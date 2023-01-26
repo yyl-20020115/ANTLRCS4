@@ -3,10 +3,10 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree.pattern;
 
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.misc.IntervalSet;
+namespace org.antlr.v4.runtime;
 
 /** The root of the ANTLR exception hierarchy. In general, ANTLR tracks just
  *  3 kinds of errors: prediction errors, failed predicate errors, and
@@ -14,13 +14,13 @@ import org.antlr.v4.runtime.misc.IntervalSet;
  *  in the input, where it is in the ATN, the rule invocation stack,
  *  and what kind of problem occurred.
  */
-public class RecognitionException extends RuntimeException {
+public class RecognitionException : RuntimeException {
 	/** The {@link Recognizer} where this exception originated. */
-	private final Recognizer<?, ?> recognizer;
+	private readonly Recognizer<T1, T2> recognizer;
 
-	private final RuleContext ctx;
+	private readonly RuleContext ctx;
 
-	private final IntStream input;
+	private readonly IntStream input;
 
 	/**
 	 * The current {@link Token} when an error occurred. Since not all streams
@@ -31,7 +31,7 @@ public class RecognitionException extends RuntimeException {
 
 	private int offendingState = -1;
 
-	public RecognitionException(Recognizer<?, ?> recognizer,
+	public RecognitionException(Recognizer<T1, T2> recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 	{
@@ -42,11 +42,12 @@ public class RecognitionException extends RuntimeException {
 	}
 
 	public RecognitionException(String message,
-								Recognizer<?, ?> recognizer,
+								Recognizer<T1, T2> recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
+		: base(message) 
 	{
-		super(message);
+		;
 		this.recognizer = recognizer;
 		this.input = input;
 		this.ctx = ctx;
@@ -66,7 +67,7 @@ public class RecognitionException extends RuntimeException {
 		return offendingState;
 	}
 
-	protected final void setOffendingState(int offendingState) {
+	protected void setOffendingState(int offendingState) {
 		this.offendingState = offendingState;
 	}
 
@@ -119,7 +120,7 @@ public class RecognitionException extends RuntimeException {
 		return offendingToken;
 	}
 
-	protected final void setOffendingToken(Token offendingToken) {
+	protected void setOffendingToken(Token offendingToken) {
 		this.offendingToken = offendingToken;
 	}
 
@@ -131,7 +132,7 @@ public class RecognitionException extends RuntimeException {
 	 * @return The recognizer where this exception occurred, or {@code null} if
 	 * the recognizer is not available.
 	 */
-	public Recognizer<?, ?> getRecognizer() {
+	public Recognizer<T1, T2> getRecognizer() {
 		return recognizer;
 	}
 }

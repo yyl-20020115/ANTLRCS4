@@ -4,26 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.misc;
+using System.Text;
 
-import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.misc.Predicate;
-import org.antlr.v4.runtime.misc.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+namespace org.antlr.v4.runtime.tree;
 
 /** A set of utility routines useful for all kinds of ANTLR trees. */
-public class Trees {
+public static class Trees 
+{
 	/** Print out a whole tree in LISP form. {@link #getNodeText} is used on the
 	 *  node payloads to get the text for the nodes.  Detect
 	 *  parse trees and extract data appropriately.
@@ -45,7 +33,7 @@ public class Trees {
 	/** Print out a whole tree in LISP form. {@link #getNodeText} is used on the
 	 *  node payloads to get the text for the nodes.
 	 */
-	public static String toStringTree(final Tree t, final List<String> ruleNames) {
+	public static String toStringTree(Tree t, List<String> ruleNames) {
 		String s = Utils.escapeWhitespace(getNodeText(t, ruleNames), false);
 		if ( t.getChildCount()==0 ) return s;
 		StringBuilder buf = new StringBuilder();
@@ -111,7 +99,7 @@ public class Trees {
 	 *
 	 *  @since 4.5.1
 	 */
-	public static List<? extends Tree> getAncestors(Tree t) {
+	public static List<T> getAncestors<T>(Tree t) where T: Tree {
 		if ( t.getParent()==null ) return Collections.emptyList();
 		List<Tree> ancestors = new ArrayList<Tree>();
 		t = t.getParent();
@@ -127,7 +115,7 @@ public class Trees {
 	 *
 	 *  @since 4.5.1
 	 */
-	public static boolean isAncestorOf(Tree t, Tree u) {
+	public static bool isAncestorOf(Tree t, Tree u) {
 		if ( t==null || u==null || t.getParent()==null ) return false;
 		Tree p = u.getParent();
 		while ( p!=null ) {
@@ -137,11 +125,11 @@ public class Trees {
 		return false;
 	}
 
-	public static Collection<ParseTree> findAllTokenNodes(ParseTree t, int ttype) {
+	public static ICollection<ParseTree> findAllTokenNodes(ParseTree t, int ttype) {
 		return findAllNodes(t, ttype, true);
 	}
 
-	public static Collection<ParseTree> findAllRuleNodes(ParseTree t, int ruleIndex) {
+	public static ICollection<ParseTree> findAllRuleNodes(ParseTree t, int ruleIndex) {
 		return findAllNodes(t, ruleIndex, false);
 	}
 
@@ -151,9 +139,9 @@ public class Trees {
 		return nodes;
 	}
 
-	public static void _findAllNodes(ParseTree t, int index, boolean findTokens,
-									 List<? super ParseTree> nodes)
-	{
+	public static void _findAllNodes<T>(ParseTree t, int index, bool findTokens,
+									 List<T> nodes) where T : ParseTree
+    {
 		// check this node (the root) first
 		if ( findTokens && t is TerminalNode ) {
 			TerminalNode tnode = (TerminalNode)t;
@@ -174,7 +162,7 @@ public class Trees {
 	 * @since 4.5.1
  	 */
 	public static List<ParseTree> getDescendants(ParseTree t) {
-		List<ParseTree> nodes = new ArrayList<ParseTree>();
+		List<ParseTree> nodes = new ();
 		nodes.add(t);
 
 		int n = t.getChildCount();
@@ -185,7 +173,7 @@ public class Trees {
 	}
 
 	/** @deprecated */
-  @Deprecated
+	//@Deprecated
 	public static List<ParseTree> descendants(ParseTree t) {
 		return getDescendants(t);
 	}
@@ -247,7 +235,7 @@ public class Trees {
 	 *
  	 *  @since 4.5.1
 	 */
-	public static Tree findNodeSuchThat(Tree t, Predicate<Tree> pred) {
+	public static Tree findNodeSuchThat(Tree t, misc.Predicate<Tree> pred) {
 		if ( pred.test(t) ) return t;
 
 		if ( t==null ) return null;
@@ -260,6 +248,4 @@ public class Trees {
 		return null;
 	}
 
-	private Trees() {
-	}
 }

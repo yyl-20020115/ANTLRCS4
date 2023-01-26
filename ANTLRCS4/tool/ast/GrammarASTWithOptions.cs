@@ -4,31 +4,24 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.Token;
-import org.antlr.v4.misc.CharSupport;
-import org.antlr.v4.tool.ErrorType;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class GrammarASTWithOptions : GrammarAST {
-    protected Map<String, GrammarAST> options;
+    protected Dictionary<String, GrammarAST> options;
 
-	public GrammarASTWithOptions(GrammarASTWithOptions node) {
-		super(node);
+	public GrammarASTWithOptions(GrammarASTWithOptions node):base(node) {
 		this.options = node.options;
 	}
 
-	public GrammarASTWithOptions(Token t) { super(t); }
-    public GrammarASTWithOptions(int type) { super(type); }
-    public GrammarASTWithOptions(int type, Token t) { super(type, t); }
-    public GrammarASTWithOptions(int type, Token t, String text) { super(type,t,text); }
+	public GrammarASTWithOptions(Token t):base(t) {  }
+    public GrammarASTWithOptions(int type):base(type) {  }
+    public GrammarASTWithOptions(int type, Token t):base(type,t) {  }
+    public GrammarASTWithOptions(int type, Token t, String text):base(type,t,text) {  }
 
     public void setOption(String key, GrammarAST node) {
-        if ( options==null ) options = new HashMap<String, GrammarAST>();
+        if ( options==null ) options = new ();
         options.put(key, node);
     }
 
@@ -63,13 +56,13 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 		return options==null ? 0 : options.size();
 	}
 
-	@Override
+	//@Override
 	public abstract GrammarASTWithOptions dupNode();
 
 
-	public Map<String, GrammarAST> getOptions() {
+	public Dictionary<String, GrammarAST> getOptions() {
 		if (options == null) {
-			return Collections.emptyMap();
+			return new();// Collections.emptyMap();
 		}
 
 		return options;

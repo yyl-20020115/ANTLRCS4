@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.unicode;
 
 
@@ -197,7 +199,7 @@ public abstract class UnicodeDataTemplateController {
 		}
 	}
 
-	private static void addTR35ExtendedPictographicPropertyCodesToCodePointRanges(Map<String, IntervalSet> propertyCodePointRanges) {
+	private static void addTR35ExtendedPictographicPropertyCodesToCodePointRanges(Dictionary<String, IntervalSet> propertyCodePointRanges) {
 		IntervalSet set = new IntervalSet();
 		// Generated using scripts/parse-extended-pictographic/parse.py
 		set.add(0x1F774, 0x1F77F);
@@ -340,7 +342,7 @@ public abstract class UnicodeDataTemplateController {
 		propertyCodePointRanges.put("EmojiNRK", emojiNRKIntervalSet);
 	}
 
-	private static void addEmojiPresentationPropertyCodesToCodePointRanges(Map<String, IntervalSet> propertyCodePointRanges) {
+	private static void addEmojiPresentationPropertyCodesToCodePointRanges(Dictionary<String, IntervalSet> propertyCodePointRanges) {
 		UnicodeSet emojiDefaultUnicodeSet = new UnicodeSet("[[\\p{Emoji=Yes}]&[\\p{Emoji_Presentation=Yes}]]");
 		IntervalSet emojiDefaultIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(emojiDefaultUnicodeSet, emojiDefaultIntervalSet);
@@ -357,7 +359,7 @@ public abstract class UnicodeDataTemplateController {
 		propertyCodePointRanges.put("EmojiPresentation=Text", textIntervalSet);
         }
 
-	private static void addIntPropertyAliases(int property, String namePrefix, Map<String, String> propertyAliases) {
+	private static void addIntPropertyAliases(int property, String namePrefix, Dictionary<String, String> propertyAliases) {
 		String propertyName = getShortPropertyName(property);
 		for (int propertyValue = UCharacter.getIntPropertyMinValue(property);
 		     propertyValue <= UCharacter.getIntPropertyMaxValue(property);
@@ -379,15 +381,15 @@ public abstract class UnicodeDataTemplateController {
 		}
 	}
 
-	private static void addUnicodeScriptCodesToNames(Map<String, String> propertyAliases) {
+	private static void addUnicodeScriptCodesToNames(Dictionary<String, String> propertyAliases) {
 		addIntPropertyAliases(UProperty.SCRIPT, "", propertyAliases);
 	}
 
-	private static void addUnicodeBlocksToNames(Map<String, String> propertyAliases) {
+	private static void addUnicodeBlocksToNames(Dictionary<String, String> propertyAliases) {
 		addIntPropertyAliases(UProperty.BLOCK, "In", propertyAliases);
 	}
 
-	private static void addUnicodeIntPropertyCodesToNames(Map<String, String> propertyAliases) {
+	private static void addUnicodeIntPropertyCodesToNames(Dictionary<String, String> propertyAliases) {
 		for (int property = UProperty.INT_START;
 		     property < UProperty.INT_LIMIT;
 		     property++) {

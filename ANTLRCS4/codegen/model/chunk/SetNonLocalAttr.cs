@@ -4,21 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.codegen.model.decl;
 
-import org.antlr.v4.codegen.model.decl.StructDecl;
+namespace org.antlr.v4.codegen.model.chunk;
 
-import java.util.List;
-
-public class SetNonLocalAttr extends SetAttr {
+public class SetNonLocalAttr : SetAttr {
 	public String ruleName;
 	public int ruleIndex;
 
 	public SetNonLocalAttr(StructDecl ctx,
 						   String ruleName, String name, String escapedName, int ruleIndex,
 						   List<ActionChunk> rhsChunks)
-	{
-		super(ctx, name, escapedName, rhsChunks);
+        : base(ctx, name, escapedName, rhsChunks)
+    {
 		this.ruleName = ruleName;
 		this.ruleIndex = ruleIndex;
 	}
