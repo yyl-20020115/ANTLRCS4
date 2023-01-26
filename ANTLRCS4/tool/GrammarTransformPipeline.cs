@@ -4,36 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.CommonToken;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.CommonTreeNodeStream;
-import org.antlr.runtime.tree.Tree;
-import org.antlr.runtime.tree.TreeVisitor;
-import org.antlr.runtime.tree.TreeVisitorAction;
-import org.antlr.v4.Tool;
-import org.antlr.v4.analysis.LeftRecursiveRuleTransformer;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.BlockSetTransformer;
-import org.antlr.v4.parse.GrammarASTAdaptor;
-import org.antlr.v4.parse.GrammarToken;
-import org.antlr.v4.runtime.misc.DoubleKeyMap;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.ast.AltAST;
-import org.antlr.v4.tool.ast.BlockAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.GrammarASTWithOptions;
-import org.antlr.v4.tool.ast.GrammarRootAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.antlr.v4.tool.ast.TerminalAST;
+namespace org.antlr.v4.tool;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /** Handle left-recursion and block-set transforms */
 public class GrammarTransformPipeline {
@@ -106,7 +80,7 @@ public class GrammarTransformPipeline {
 		});
 	}
 
-	public static void augmentTokensWithOriginalPosition(final Grammar g, GrammarAST tree) {
+	public static void augmentTokensWithOriginalPosition( Grammar g, GrammarAST tree) {
 		if ( tree==null ) return;
 
 		List<GrammarAST> optionsSubTrees = tree.getNodesWithType(ANTLRParser.ELEMENT_OPTIONS);
@@ -114,7 +88,7 @@ public class GrammarTransformPipeline {
 			GrammarAST t = optionsSubTrees.get(i);
 			CommonTree elWithOpt = t.parent;
 			if ( elWithOpt is GrammarASTWithOptions ) {
-				Map<String, GrammarAST> options = ((GrammarASTWithOptions) elWithOpt).getOptions();
+				Dictionary<String, GrammarAST> options = ((GrammarASTWithOptions) elWithOpt).getOptions();
 				if ( options.containsKey(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME) ) {
 					GrammarToken newTok = new GrammarToken(g, elWithOpt.getToken());
 					newTok.originalTokenIndex = Integer.valueOf(options.get(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME).getText());
@@ -343,7 +317,7 @@ public class GrammarTransformPipeline {
 				// https://github.com/antlr/antlr4/issues/707
 
 				boolean hasNewOption = false;
-				for (Map.Entry<String, GrammarAST> option : imp.ast.getOptions().entrySet()) {
+				for (Dictionary.Entry<String, GrammarAST> option : imp.ast.getOptions().entrySet()) {
 					String importOption = imp.ast.getOptionString(option.getKey());
 					if (importOption == null) {
 						continue;

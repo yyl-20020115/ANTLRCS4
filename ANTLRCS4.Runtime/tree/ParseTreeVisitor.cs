@@ -4,9 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.tree;
-
-package org.antlr.v4.runtime.tree;
+namespace org.antlr.v4.runtime.tree;
 
 /**
  * This interface defines the basic notion of a parse tree visitor. Generated

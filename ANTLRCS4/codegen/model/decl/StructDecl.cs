@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.codegen.model.decl;
 
 /** This object models the structure holding all of the parameters,
@@ -12,12 +15,18 @@ namespace org.antlr.v4.codegen.model.decl;
 public class StructDecl : Decl {
 	public String derivedFromName; // rule name or label name
 	public bool provideCopyFrom;
-	@ModelElement public OrderedHashSet<Decl> attrs = new OrderedHashSet<Decl>();
-	@ModelElement public OrderedHashSet<Decl> getters = new OrderedHashSet<Decl>();
-	@ModelElement public Collection<AttributeDecl> ctorAttrs;
-	@ModelElement public List<? super DispatchMethod> dispatchMethods;
-	@ModelElement public List<OutputModelObject> interfaces;
-	@ModelElement public List<OutputModelObject> extensionMembers;
+    //@ModelElement 
+    public OrderedHashSet<Decl> attrs = new OrderedHashSet<Decl>();
+    //@ModelElement 
+    public OrderedHashSet<Decl> getters = new OrderedHashSet<Decl>();
+    //@ModelElement 
+    public ICollection<AttributeDecl> ctorAttrs;
+    //@ModelElement 
+    public List<DispatchMethod> dispatchMethods;
+    //@ModelElement 
+    public List<OutputModelObject> interfaces;
+    //@ModelElement 
+    public List<OutputModelObject> extensionMembers;
 
 	// Track these separately; Go target needs to generate getters/setters
 	// Do not make them templates; we only need the Decl object not the ST

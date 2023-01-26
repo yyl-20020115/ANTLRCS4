@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.codegen.model.decl;
 
 
@@ -14,9 +17,9 @@ public class AltLabelStructDecl : StructDecl {
 	public String parentRule;
 	public AltLabelStructDecl(OutputModelFactory factory, Rule r,
 							  int altNum, String label)
-	{
+		: base(factory, r, factory.getGenerator().getTarget().getAltLabelContextStructName(label))
+    {
 		// override name set in super to the label ctx
-		super(factory, r, factory.getGenerator().getTarget().getAltLabelContextStructName(label));
 		this.altNum = altNum;
 		this.parentRule = r.name;
 		derivedFromName = label;
@@ -24,7 +27,7 @@ public class AltLabelStructDecl : StructDecl {
 
 	//@Override
 	public void addDispatchMethods(Rule r) {
-		dispatchMethods = new ArrayList<DispatchMethod>();
+		dispatchMethods = new ();
 		if ( factory.getGrammar().tool.gen_listener ) {
 			dispatchMethods.add(new ListenerDispatchMethod(factory, true));
 			dispatchMethods.add(new ListenerDispatchMethod(factory, false));
@@ -35,15 +38,15 @@ public class AltLabelStructDecl : StructDecl {
 	}
 
 	//@Override
-	public int hashCode() {
-		return name.hashCode();
+	public override int GetHashCode() {
+		return name.GetHashCode();
 	}
 
 	//@Override
-	public bool equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		if ( obj == this ) return true;
 		if (!(obj is AltLabelStructDecl)) return false;
 
-		return name.equals(((AltLabelStructDecl)obj).name);
+		return name.Equals(((AltLabelStructDecl)obj).name);
 	}
 }

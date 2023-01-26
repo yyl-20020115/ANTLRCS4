@@ -4,6 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
+using org.antlr.v4.codegen;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
+using System.Reflection.Metadata;
+using System.Text;
+
 namespace org.antlr.v4.automata;
 
 
@@ -34,11 +42,11 @@ public class LexerATNFactory : ParserATNFactory {
 	/**
 	 * Maps from an action index to a {@link LexerAction} object.
 	 */
-	protected Map<Integer, LexerAction> indexToActionMap = new HashMap<Integer, LexerAction>();
+	protected Dictionary<int, LexerAction> indexToActionMap = new Dictionary<int, LexerAction>();
 	/**
 	 * Maps from a {@link LexerAction} object to the action index.
 	 */
-	protected Map<LexerAction, Integer> actionToIndexMap = new HashMap<LexerAction, Integer>();
+	protected Dictionary<LexerAction, int> actionToIndexMap = new Dictionary<LexerAction, int>();
 
 	public LexerATNFactory(LexerGrammar g) {
 		this(g, null);
@@ -50,18 +58,18 @@ public class LexerATNFactory : ParserATNFactory {
 		codegenTemplates = (codeGenerator == null ? CodeGenerator.create(g) : codeGenerator).getTemplates();
 	}
 
-	public static Set<String> getCommonConstants() {
+	public static HashSet<String> getCommonConstants() {
 		return COMMON_CONSTANTS.keySet();
 	}
 
-	@Override
+	//@Override
 	public ATN createATN() {
 		// BUILD ALL START STATES (ONE PER MODE)
 		Set<String> modes = ((LexerGrammar) g).modes.keySet();
 		for (String modeName : modes) {
 			// create s0, start state; implied Tokens rule node
 			TokensStartState startState =
-				newState(TokensStartState.class, null);
+				newState(typeof(TokensStartState), null);
 			atn.modeNameToStartState.put(modeName, startState);
 			atn.modeToStartState.add(startState);
 			atn.defineDecisionState(startState);
@@ -113,7 +121,7 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	protected int getLexerActionIndex(LexerAction lexerAction) {
-		Integer lexerActionIndex = actionToIndexMap.get(lexerAction);
+		int lexerActionIndex = actionToIndexMap.get(lexerAction);
 		if (lexerActionIndex == null) {
 			lexerActionIndex = actionToIndexMap.size();
 			actionToIndexMap.put(lexerAction, lexerActionIndex);
@@ -123,7 +131,7 @@ public class LexerATNFactory : ParserATNFactory {
 		return lexerActionIndex;
 	}
 
-	@Override
+	//@Override
 	public Handle action(String action) {
 		if (action.trim().isEmpty()) {
 			ATNState left = newState(null);
@@ -151,20 +159,20 @@ public class LexerATNFactory : ParserATNFactory {
 		return h;
 	}
 
-	@Override
+	//@Override
 	public Handle lexerAltCommands(Handle alt, Handle cmds) {
 		Handle h = new Handle(alt.left, cmds.right);
 		epsilon(alt.right, cmds.left);
 		return h;
 	}
 
-	@Override
+	//@Override
 	public Handle lexerCallCommand(GrammarAST ID, GrammarAST arg) {
 		return lexerCallCommandOrCommand(ID, arg);
 	}
 
-	@Override
-	public Handle lexerCommand(GrammarAST ID) {
+    //@Override
+    public Handle lexerCommand(GrammarAST ID) {
 		return lexerCallCommandOrCommand(ID, null);
 	}
 
@@ -545,7 +553,7 @@ public class LexerATNFactory : ParserATNFactory {
 						}
 						else {
 							StringBuilder sb = new StringBuilder();
-							for (Object child : rootAst.getChildren()) {
+							foreach (Object child in rootAst.getChildren()) {
 								if (child is RangeAST) {
 									sb.append(((RangeAST) child).getChild(0).getText());
 									sb.append("..");
@@ -591,7 +599,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 	}
 
-	@Override
+	//@Override
 	public Handle tokenRef(TerminalAST node) {
 		// Ref to EOF in lexer yields char transition on -1
 		if (node.getText().equals("EOF") ) {

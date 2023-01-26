@@ -4,55 +4,43 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
+using System.Text;
 
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.AltAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.PredAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.stringtemplate.v4.misc.MultiMap;
+namespace org.antlr.v4.tool;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class Rule implements AttributeResolver {
+public class Rule : AttributeResolver {
 	/** Rule refs have a predefined set of attributes as well as
      *  the return values and args.
      *
      *  These must be consistent with ActionTranslator.rulePropToModelMap, ...
      */
-	public static final AttributeDict predefinedRulePropertiesDict =
+	public static readonly AttributeDict predefinedRulePropertiesDict =
 		new AttributeDict(AttributeDict.DictType.PREDEFINED_RULE);
-	static {
+	static Rule() {
 		predefinedRulePropertiesDict.add(new Attribute("parser"));
 		predefinedRulePropertiesDict.add(new Attribute("text"));
 		predefinedRulePropertiesDict.add(new Attribute("start"));
 		predefinedRulePropertiesDict.add(new Attribute("stop"));
 		predefinedRulePropertiesDict.add(new Attribute("ctx"));
-	}
+        // CALLS
+        validLexerCommands.add("mode");
+        validLexerCommands.add("pushMode");
+        validLexerCommands.add("type");
+        validLexerCommands.add("channel");
 
-	public static final Set<String> validLexerCommands = new HashSet<String>();
-	static {
-		// CALLS
-		validLexerCommands.add("mode");
-		validLexerCommands.add("pushMode");
-		validLexerCommands.add("type");
-		validLexerCommands.add("channel");
+        // ACTIONS
+        validLexerCommands.add("popMode");
+        validLexerCommands.add("skip");
+        validLexerCommands.add("more");
 
-		// ACTIONS
-		validLexerCommands.add("popMode");
-		validLexerCommands.add("skip");
-		validLexerCommands.add("more");
-	}
+    }
 
-	public final String name;
+    public static readonly HashSet<String> validLexerCommands = new HashSet<String>();
+
+	public readonly String name;
 	public List<GrammarAST> modifiers;
 
 	public RuleAST ast;
@@ -61,26 +49,26 @@ public class Rule implements AttributeResolver {
 	public AttributeDict locals;
 
 	/** In which grammar does this rule live? */
-	public final Grammar g;
+	public readonly Grammar g;
 
 	/** If we're in a lexer grammar, we might be in a mode */
-	public final String mode;
+	public readonly String mode;
 
 	/** If null then use value from global option that is false by default */
-	public final boolean caseInsensitive;
+	public readonly bool caseInsensitive;
 
     /** Map a name to an action for this rule like @init {...}.
      *  The code generator will use this to fill holes in the rule template.
      *  I track the AST node for the action in case I need the line number
      *  for errors.
      */
-    public Map<String, ActionAST> namedActions =
-        new HashMap<String, ActionAST>();
+    public Dictionary<String, ActionAST> namedActions =
+        new ();
 
     /** Track exception handlers; points at "catch" node of (catch exception action)
 	 *  don't track finally action
 	 */
-    public List<GrammarAST> exceptions = new ArrayList<GrammarAST>();
+    public List<GrammarAST> exceptions = new ();
 
 	/** Track all executable actions other than named actions like @init
 	 *  and catch/finally (not in an alt). Also tracks predicates, rewrite actions.
@@ -89,13 +77,13 @@ public class Rule implements AttributeResolver {
 	 *
 	 *  This tracks per rule; Alternative objs also track per alt.
 	 */
-	public List<ActionAST> actions = new ArrayList<ActionAST>();
+	public List<ActionAST> actions = new ();
 
 	public ActionAST finallyAction;
 
-	public final int numberOfAlts;
+	public readonly int numberOfAlts;
 
-	public boolean isStartRule = true; // nobody calls us
+	public bool isStartRule = true; // nobody calls us
 
 	/** 1..n alts */
 	public Alternative[] alt;
@@ -153,16 +141,16 @@ public class Rule implements AttributeResolver {
 		return d.get(y);
 	}
 
-	public Set<String> getTokenRefs() {
-        Set<String> refs = new HashSet<String>();
+	public HashSet<String> getTokenRefs() {
+        HashSet<String> refs = new HashSet<String>();
 		for (int i=1; i<=numberOfAlts; i++) {
 			refs.addAll(alt[i].tokenRefs.keySet());
 		}
 		return refs;
     }
 
-    public Set<String> getElementLabelNames() {
-        Set<String> refs = new HashSet<String>();
+    public HashSet<String> getElementLabelNames() {
+        HashSet<String> refs = new HashSet<String>();
         for (int i=1; i<=numberOfAlts; i++) {
             refs.addAll(alt[i].labelDefs.keySet());
         }
@@ -183,7 +171,7 @@ public class Rule implements AttributeResolver {
         return defs;
     }
 
-	public boolean hasAltSpecificContexts() {
+	public bool hasAltSpecificContexts() {
 		return getAltLabels()!=null;
 	}
 
@@ -198,8 +186,8 @@ public class Rule implements AttributeResolver {
 	 * (alternative number and {@link AltAST}) identifying the alternatives with
 	 * this label. Unlabeled alternatives are not included in the result.
 	 */
-	public Map<String, List<Pair<Integer, AltAST>>> getAltLabels() {
-		Map<String, List<Pair<Integer, AltAST>>> labels = new LinkedHashMap<String, List<Pair<Integer, AltAST>>>();
+	public Dictionary<String, List<Pair<int, AltAST>>> getAltLabels() {
+        Dictionary<String, List<Pair<int, AltAST>>> labels = new ();
 		for (int i=1; i<=numberOfAlts; i++) {
 			GrammarAST altLabel = alt[i].ast.altLabel;
 			if ( altLabel!=null ) {
@@ -228,7 +216,7 @@ public class Rule implements AttributeResolver {
 
 	/**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-	@Override
+	//@Override
 	public Attribute resolveToAttribute(String x, ActionAST node) {
 		if ( args!=null ) {
 			Attribute a = args.get(x);   	if ( a!=null ) return a;
@@ -243,9 +231,9 @@ public class Rule implements AttributeResolver {
 		return properties.get(x);
 	}
 
-	/** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
-	@Override
-	public Attribute resolveToAttribute(String x, String y, ActionAST node) {
+    /** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
+    //@Override
+    public Attribute resolveToAttribute(String x, String y, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null ) {
 			if ( anyLabelDef.type==LabelType.RULE_LABEL ) {
@@ -264,31 +252,31 @@ public class Rule implements AttributeResolver {
 
 	}
 
-	@Override
-	public boolean resolvesToLabel(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.RULE_LABEL ||
 				anyLabelDef.type==LabelType.TOKEN_LABEL);
 	}
 
-	@Override
-	public boolean resolvesToListLabel(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToListLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.RULE_LIST_LABEL ||
 				anyLabelDef.type==LabelType.TOKEN_LIST_LABEL);
 	}
 
-	@Override
-	public boolean resolvesToToken(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToToken(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
 		return false;
 	}
 
-	@Override
-	public boolean resolvesToAttributeDict(String x, ActionAST node) {
+    //@Override
+    public bool resolvesToAttributeDict(String x, ActionAST node) {
 		if ( resolvesToToken(x, node) ) return true;
 		return false;
 	}
@@ -313,19 +301,19 @@ public class Rule implements AttributeResolver {
         return Grammar.grammarAndLabelRefTypeToScope.get(grammarLabelKey);
     }
 
-	public boolean isFragment() {
+	public bool isFragment() {
 		if ( modifiers==null ) return false;
-		for (GrammarAST a : modifiers) {
+		foreach (GrammarAST a in modifiers) {
 			if ( a.getText().equals("fragment") ) return true;
 		}
 		return false;
 	}
 
-	@Override
-	public int hashCode() { return name.hashCode(); }
+    //@Override
+    public override int GetHashCode() { return name.GetHashCode(); }
 
-	@Override
-	public boolean equals(Object obj) {
+    //@Override
+    public override bool Equals(Object? obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -334,16 +322,16 @@ public class Rule implements AttributeResolver {
 			return false;
 		}
 
-		return name.equals(((Rule)obj).name);
+		return name.Equals(((Rule)obj).name);
 	}
 
-	@Override
-    public String toString() {
+    //@Override
+    public String ToString() {
 		StringBuilder buf = new StringBuilder();
-		buf.append("Rule{name=").append(name);
-		if ( args!=null ) buf.append(", args=").append(args);
-		if ( retvals!=null ) buf.append(", retvals=").append(retvals);
-		buf.append("}");
-		return buf.toString();
+		buf.Append("Rule{name=").Append(name);
+		if ( args!=null ) buf.Append(", args=").Append(args);
+		if ( retvals!=null ) buf.Append(", retvals=").Append(retvals);
+		buf.Append('}');
+		return buf.ToString();
     }
 }

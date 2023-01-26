@@ -5,7 +5,6 @@
  */
 
 using org.antlr.v4.codegen.model.decl;
-using System.Xml.Linq;
 
 namespace org.antlr.v4.codegen.model.chunk;
 

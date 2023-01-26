@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.tool;
 
 
@@ -24,8 +26,8 @@ public class AttributeDict {
      *  of predefined attributes.  I keep this out of the {@link Token}
      *  interface to avoid a runtime type leakage.
      */
-    public static final AttributeDict predefinedTokenDict = new AttributeDict(DictType.TOKEN);
-    static {
+    public static readonly AttributeDict predefinedTokenDict = new (DictType.TOKEN);
+    static AttributeDict(){
         predefinedTokenDict.add(new Attribute("text"));
         predefinedTokenDict.add(new Attribute("type"));
         predefinedTokenDict.add(new Attribute("line"));
@@ -42,8 +44,8 @@ public class AttributeDict {
 
     /** The list of {@link Attribute} objects. */
 
-    public final LinkedHashMap<String, Attribute> attributes =
-        new LinkedHashMap<String, Attribute>();
+    public readonly Dictionary<String, Attribute> attributes =
+        new ();
 
 	public AttributeDict() {}
 	public AttributeDict(DictType type) { this.type = type; }
@@ -61,18 +63,18 @@ public class AttributeDict {
      *  {@code this} and {@code other}.
      */
 
-    public Set<String> intersection(AttributeDict other) {
+    public HashSet<String> intersection(AttributeDict other) {
         if ( other==null || other.size()==0 || size()==0 ) {
             return Collections.emptySet();
         }
 
-		Set<String> result = new HashSet<String>(attributes.keySet());
+        HashSet<String> result = new HashSet<String>(attributes.keySet());
 		result.retainAll(other.attributes.keySet());
 		return result;
     }
 
-    @Override
-    public String toString() {
+    //@Override
+    public override String ToString() {
         return getName()+":"+attributes;
     }
 }

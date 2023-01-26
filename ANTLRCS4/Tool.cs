@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4;
 
@@ -369,7 +370,7 @@ public class Tool {
 	 * definitions of the same rule or a reference to an undefined rule or
 	 * parser rule ref in lexer rule.
 	 */
-	public boolean checkForRuleIssues(final Grammar g) {
+	public bool checkForRuleIssues( Grammar g) {
 		// check for redefined rules
 		GrammarAST RULES = (GrammarAST)g.ast.getFirstChildWithType(ANTLRParser.RULES);
 		List<GrammarAST> rules = new ArrayList<GrammarAST>(RULES.getAllChildrenWithType(ANTLRParser.RULE));
@@ -377,8 +378,8 @@ public class Tool {
 			rules.addAll(mode.getAllChildrenWithType(ANTLRParser.RULE));
 		}
 
-		boolean redefinition = false;
-		final Map<String, RuleAST> ruleToAST = new HashMap<String, RuleAST>();
+		bool redefinition = false;
+		 Map<String, RuleAST> ruleToAST = new HashMap<String, RuleAST>();
 		for (GrammarAST r : rules) {
 			RuleAST ruleAST = (RuleAST)r;
 			GrammarAST ID = (GrammarAST)ruleAST.getChild(0);
@@ -398,7 +399,7 @@ public class Tool {
 		}
 
 		// check for undefined rules
-		class UndefChecker extends GrammarTreeVisitor {
+		class UndefChecker : GrammarTreeVisitor {
 			public boolean badref = false;
 			@Override
 			public void tokenRef(TerminalAST ref) {

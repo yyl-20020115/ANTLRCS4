@@ -13,7 +13,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * <p>The default implementation calls {@link ParseTree#accept} on the
 	 * specified tree.</p>
 	 */
-	@Override
+	//@Override
 	public T visit(ParseTree tree) {
 		return tree.accept(this);
 	}
@@ -33,7 +33,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * the tree structure. Visitors that modify the tree should override this
 	 * method to behave properly in respect to the specific algorithm in use.</p>
 	 */
-	@Override
+	//@Override
 	public T visitChildren(RuleNode node) {
 		T result = defaultResult();
 		int n = node.getChildCount();
@@ -56,7 +56,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-	@Override
+	//@Override
 	public T visitTerminal(TerminalNode node) {
 		return defaultResult();
 	}
@@ -67,7 +67,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-	@Override
+	//@Override
 	public T visitErrorNode(ErrorNode node) {
 		return defaultResult();
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * @return The default value returned by visitor methods.
 	 */
 	protected T defaultResult() {
-		return null;
+		return default;
 	}
 
 	/**

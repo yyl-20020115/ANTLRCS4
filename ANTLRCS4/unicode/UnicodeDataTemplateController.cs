@@ -28,10 +28,9 @@ public abstract class UnicodeDataTemplateController {
 			String categoryName,
 			int start,
 			int finish) {
-		IntervalSet intervalSet = categoryMap.get(categoryName);
-		if (intervalSet == null) {
+		if (!categoryMap.TryGetValue(categoryName,out var intervalSet)) {
 			intervalSet = new IntervalSet();
-			categoryMap.put(categoryName, intervalSet);
+			categoryMap.Add(categoryName, intervalSet);
 		}
 		intervalSet.add(start, finish);
 	}
@@ -45,11 +44,11 @@ public abstract class UnicodeDataTemplateController {
 			String alias;
 			try {
 				alias = UCharacter.getPropertyName(property, nameChoice);
-			} catch (IllegalArgumentException e) {
+			} catch (ArgumentException e) {
 				// No more aliases.
 				break;
 			}
-			assert alias != null;
+			//assert alias != null;
 			addPropertyAlias(propertyAliases, alias, propertyName);
 			nameChoice++;
 		}

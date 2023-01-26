@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool.ast;
 
@@ -72,7 +73,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public List<GrammarAST> getNodesWithTypePreorderDFS(IntervalSet types) {
-		ArrayList<GrammarAST> nodes = new ArrayList<GrammarAST>();
+		List<GrammarAST> nodes = new ();
 		getNodesWithTypePreorderDFS_(nodes, types);
 		return nodes;
 	}
@@ -114,7 +115,7 @@ public class GrammarAST : CommonTree {
 	 *  If not a rule element, just returns null.
 	 */
 	public String getAltLabel() {
-		List<? : Tree> ancestors = this.getAncestors();
+		List<Tree> ancestors = this.getAncestors();
 		if ( ancestors==null ) return null;
 		for (int i=ancestors.size()-1; i>=0; i--) {
 			GrammarAST p = (GrammarAST)ancestors.get(i);

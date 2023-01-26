@@ -27,8 +27,8 @@ public class ActionAST : GrammarASTWithOptions , RuleElementAST {
 
 	public override ActionAST dupNode() { return new ActionAST(this); }
 
-	@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+	//@Override
+	public  Object visit(GrammarASTVisitor v) { return v.visit(this); }
 
 	public void setScope(GrammarAST scope) {
 		this.scope = scope;

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool.ast;
 
 
@@ -19,21 +22,19 @@ public class AltAST : GrammarASTWithOptions {
 	 */
 	public GrammarAST altLabel;
 
-	public AltAST(AltAST node) {
-		super(node);
+	public AltAST(AltAST node) :base(node){
 		this.alt = node.alt;
 		this.altLabel = node.altLabel;
 		this.leftRecursiveAltInfo = node.leftRecursiveAltInfo;
 	}
 
-	public AltAST(Token t) { super(t); }
-	public AltAST(int type) { super(type); }
-	public AltAST(int type, Token t) { super(type, t); }
-	public AltAST(int type, Token t, String text) { super(type,t,text); }
+	public AltAST(Token t):base(t) {  }
+	public AltAST(int type):base(type) {}
+	public AltAST(int type, Token t):base(type,t) {}
+	public AltAST(int type, Token t, String text):base(type,t,text) {}
 
-	@Override
-	public AltAST dupNode() { return new AltAST(this); }
+	public override AltAST dupNode() { return new AltAST(this); }
 
-	@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+	//@Override
+	public  Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }
