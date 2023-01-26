@@ -4,13 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-public class SingletonPredictionContext extends PredictionContext {
-	public final PredictionContext parent;
-	public final int returnState;
+public class SingletonPredictionContext : PredictionContext {
+	public readonly PredictionContext parent;
+	public readonly int returnState;
 
-	SingletonPredictionContext(PredictionContext parent, int returnState) {
+	public SingletonPredictionContext(PredictionContext parent, int returnState) {
 		super(parent != null ? calculateHashCode(parent, returnState) : calculateEmptyHashCode());
 		assert returnState!=ATNState.INVALID_STATE_NUMBER;
 		this.parent = parent;
@@ -25,24 +25,24 @@ public class SingletonPredictionContext extends PredictionContext {
 		return new SingletonPredictionContext(parent, returnState);
 	}
 
-	@Override
+	//Override
 	public int size() {
 		return 1;
 	}
 
-	@Override
+	//Override
 	public PredictionContext getParent(int index) {
 		assert index == 0;
 		return parent;
 	}
 
-	@Override
+	//Override
 	public int getReturnState(int index) {
 		assert index == 0;
 		return returnState;
 	}
 
-	@Override
+	//Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -60,7 +60,7 @@ public class SingletonPredictionContext extends PredictionContext {
 			(parent!=null && parent.equals(s.parent));
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		String up = parent!=null ? parent.toString() : "";
 		if ( up.length()==0 ) {

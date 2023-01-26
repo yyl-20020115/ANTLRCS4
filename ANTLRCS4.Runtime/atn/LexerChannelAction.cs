@@ -41,7 +41,7 @@ public final class LexerChannelAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#CHANNEL}.
 	 */
-	@Override
+	//Override
 	public LexerActionType getActionType() {
 		return LexerActionType.CHANNEL;
 	}
@@ -50,7 +50,7 @@ public final class LexerChannelAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
+	//Override
 	public boolean isPositionDependent() {
 		return false;
 	}
@@ -61,12 +61,12 @@ public final class LexerChannelAction implements LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#setChannel} with the
 	 * value provided by {@link #getChannel}.</p>
 	 */
-	@Override
+	//Override
 	public void execute(Lexer lexer) {
 		lexer.setChannel(channel);
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
@@ -74,7 +74,7 @@ public final class LexerChannelAction implements LexerAction {
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
+	//Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -86,7 +86,7 @@ public final class LexerChannelAction implements LexerAction {
 		return channel == ((LexerChannelAction)obj).channel;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return String.format("channel(%d)", channel);
 	}

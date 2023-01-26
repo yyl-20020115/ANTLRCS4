@@ -92,7 +92,7 @@ public class TestScopeParsing {
 			this.output = output;
 		}
 
-		@Override
+		//Override
 		public String toString() {
 			return input;
 		}

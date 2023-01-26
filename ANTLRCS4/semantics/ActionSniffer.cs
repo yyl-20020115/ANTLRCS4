@@ -48,19 +48,19 @@ public class ActionSniffer : BlankActionSplitterListener {
 	}
 
 
-	@Override
+	//Override
 	public void attr(String expr, Token x) { trackRef(x); }
 
-	@Override
+	//Override
 	public void qualifiedAttr(String expr, Token x, Token y) { trackRef(x); }
 
-	@Override
+	//Override
 	public void setAttr(String expr, Token x, Token rhs) {
 		trackRef(x);
 		processNested(rhs);
 	}
 
-	@Override
+	//Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		processNested(rhs);
 	}

@@ -41,6 +41,6 @@ public class MatchToken : RuleElement implements LabeledOp {
 		escapedName = null;
 	}
 
-	@Override
+	//Override
 	public List<Decl> getLabels() { return labels; }
 }

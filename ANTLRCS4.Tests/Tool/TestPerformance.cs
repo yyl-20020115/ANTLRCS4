@@ -440,7 +440,7 @@ public class TestPerformance {
 
 		List<Future<?>> passResults = new ArrayList<Future<?>>();
 		passResults.add(executorService.submit(new Runnable() {
-			@Override
+			//Override
 			public void run() {
 				try {
 					parse1(0, factory, sources, SHUFFLE_FILES_AT_START);
@@ -452,7 +452,7 @@ public class TestPerformance {
         for (int i = 0; i < PASSES - 1; i++) {
             final int currentPass = i + 1;
 			passResults.add(executorService.submit(new Runnable() {
-				@Override
+				//Override
 				public void run() {
 					if (CLEAR_DFA) {
 						int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
@@ -796,7 +796,7 @@ public class TestPerformance {
             inputSize += input.size();
 			inputCount++;
 			Future<FileParseResult> futureChecksum = executorService.submit(new Callable<FileParseResult>() {
-				@Override
+				//Override
 				public FileParseResult call() {
 					// this incurred a great deal of overhead and was causing significant variations in performance results.
 					//System.out.format("Parsing file %s\n", input.getSourceName());
@@ -1140,7 +1140,7 @@ public class TestPerformance {
 
             return new ParserFactory() {
 
-				@Override
+				//Override
                 public FileParseResult parseFile(CharStream input, int currentPass, int thread) {
 					final MurmurHashChecksum checksum = new MurmurHashChecksum();
 
@@ -1456,13 +1456,13 @@ public class TestPerformance {
 			super(recog, atn, decisionToDFA, sharedContextCache);
 		}
 
-		@Override
+		//Override
 		protected DFAState getExistingTargetState(DFAState s, int t) {
 			totalTransitions++;
 			return super.getExistingTargetState(s, t);
 		}
 
-		@Override
+		//Override
 		protected DFAState computeTargetState(CharStream input, DFAState s, int t) {
 			computedTransitions++;
 			return super.computeTargetState(input, s, t);
@@ -1500,7 +1500,7 @@ public class TestPerformance {
 			fullContextTransitions = new long[atn.decisionToState.size()];
 		}
 
-		@Override
+		//Override
 		public int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext) {
 			try {
 				this.decision = decision;
@@ -1512,25 +1512,25 @@ public class TestPerformance {
 			}
 		}
 
-		@Override
+		//Override
 		protected int execATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext) {
 			fullContextFallback[decision]++;
 			return super.execATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
 		}
 
-		@Override
+		//Override
 		protected DFAState getExistingTargetState(DFAState previousD, int t) {
 			totalTransitions[decision]++;
 			return super.getExistingTargetState(previousD, t);
 		}
 
-		@Override
+		//Override
 		protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
 			computedTransitions[decision]++;
 			return super.computeTargetState(dfa, previousD, t);
 		}
 
-		@Override
+		//Override
 		protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, boolean fullCtx) {
 			if (fullCtx) {
 				totalTransitions[decision]++;
@@ -1545,7 +1545,7 @@ public class TestPerformance {
 	private static class DescriptiveErrorListener extends BaseErrorListener {
 		public final static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
 
-		@Override
+		//Override
 		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
 								int line, int charPositionInLine,
 								String msg, RecognitionException e)
@@ -1568,7 +1568,7 @@ public class TestPerformance {
 		private BitSet _sllConflict;
 		private ATNConfigSet _sllConfigs;
 
-		@Override
+		//Override
 		public void reportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, boolean exact, BitSet ambigAlts, ATNConfigSet configs) {
 			if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS) {
 				BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
@@ -1592,7 +1592,7 @@ public class TestPerformance {
 			recognizer.notifyErrorListeners(String.format(format, decision, rule, ambigAlts, input));
 		}
 
-		@Override
+		//Override
 		public void reportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs) {
 			_sllConflict = conflictingAlts;
 			_sllConfigs = configs;
@@ -1609,7 +1609,7 @@ public class TestPerformance {
 			recognizer.notifyErrorListeners(String.format(format, decision, rule, input, representedAlts));
 		}
 
-		@Override
+		//Override
 		public void reportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs) {
 			if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS) {
 				BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
@@ -1636,7 +1636,7 @@ public class TestPerformance {
 	protected static final class FilenameFilters {
 		public static final FilenameFilter ALL_FILES = new FilenameFilter() {
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				return true;
 			}
@@ -1692,7 +1692,7 @@ public class TestPerformance {
 				this.caseSensitive = caseSensitive;
 			}
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				if (caseSensitive) {
 					return name.endsWith(extension);
@@ -1712,7 +1712,7 @@ public class TestPerformance {
 				this.caseSensitive = caseSensitive;
 			}
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				if (caseSensitive) {
 					return name.equals(filename);
@@ -1730,7 +1730,7 @@ public class TestPerformance {
 				this.filters = filters;
 			}
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				for (FilenameFilter filter : filters) {
 					if (!filter.accept(dir, name)) {
@@ -1750,7 +1750,7 @@ public class TestPerformance {
 				this.filters = filters;
 			}
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				for (FilenameFilter filter : filters) {
 					if (filter.accept(dir, name)) {
@@ -1770,7 +1770,7 @@ public class TestPerformance {
 				this.filter = filter;
 			}
 
-			@Override
+			//Override
 			public boolean accept(File dir, String name) {
 				return !filter.accept(dir, name);
 			}
@@ -1794,7 +1794,7 @@ public class TestPerformance {
 	protected static class NumberedThreadFactory implements ThreadFactory {
 		private final AtomicInteger nextThread = new AtomicInteger();
 
-		@Override
+		//Override
 		public Thread newThread(Runnable r) {
 			int threadNumber = nextThread.getAndIncrement();
 			assert threadNumber < NUMBER_OF_THREADS;
@@ -1810,7 +1810,7 @@ public class TestPerformance {
 			this.threadNumber = threadNumber;
 		}
 
-		@Override
+		//Override
 		public Thread newThread(Runnable r) {
 			assert threadNumber < NUMBER_OF_THREADS;
 			return new NumberedThread(r, threadNumber);
@@ -1829,26 +1829,26 @@ public class TestPerformance {
 			this.checksum = checksum;
 		}
 
-		@Override
+		//Override
 		public void visitTerminal(TerminalNode node) {
 			checksum.update(VISIT_TERMINAL);
 			updateChecksum(checksum, node.getSymbol());
 		}
 
-		@Override
+		//Override
 		public void visitErrorNode(ErrorNode node) {
 			checksum.update(VISIT_ERROR_NODE);
 			updateChecksum(checksum, node.getSymbol());
 		}
 
-		@Override
+		//Override
 		public void enterEveryRule(ParserRuleContext ctx) {
 			checksum.update(ENTER_RULE);
 			updateChecksum(checksum, ctx.getRuleIndex());
 			updateChecksum(checksum, ctx.getStart());
 		}
 
-		@Override
+		//Override
 		public void exitEveryRule(ParserRuleContext ctx) {
 			checksum.update(EXIT_RULE);
 			updateChecksum(checksum, ctx.getRuleIndex());
@@ -1910,7 +1910,7 @@ public class TestPerformance {
 			this.referent = referent;
 		}
 
-		@Override
+		//Override
 		public T get() {
 			return referent;
 		}

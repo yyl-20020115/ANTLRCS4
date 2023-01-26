@@ -20,13 +20,13 @@ public class ToolANTLRLexer extends ANTLRLexer {
 		this.tool = tool;
 	}
 
-	@Override
+	//Override
 	public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
 		String msg = getErrorMessage(e, tokenNames);
 		tool.errMgr.syntaxError(ErrorType.SYNTAX_ERROR, getSourceName(), e.token, e, msg);
 	}
 
-	@Override
+	//Override
 	public void grammarError(ErrorType etype, Token token, Object... args) {
 		tool.errMgr.grammarError(etype, getSourceName(), token, args);
 	}

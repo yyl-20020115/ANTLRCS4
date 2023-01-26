@@ -4,16 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.runtime.tree;
 
 /** A tree that knows about an interval in a token stream
  *  is some kind of syntax tree. Subinterfaces distinguish
  *  between parse trees and other kinds of syntax trees we might want to create.
  */
-public interface SyntaxTree extends Tree {
+public interface SyntaxTree : Tree {
 	/**
 	 * Return an {@link Interval} indicating the index in the
 	 * {@link TokenStream} of the first and last token associated with this

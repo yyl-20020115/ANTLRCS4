@@ -175,12 +175,12 @@ public class LexerActionExecutor {
 		}
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		return this.hashCode;
 	}
 
-	@Override
+	//Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;

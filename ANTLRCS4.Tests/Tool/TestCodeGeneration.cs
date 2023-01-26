@@ -74,7 +74,7 @@ public class TestCodeGeneration {
 			myErrMgrCopy = errMgr;
 		}
 
-		@Override
+		//Override
 		protected int writeObject(STWriter out, InstanceScope scope, Object o, String[] options) {
 			if ( o is ST ) {
 				String name = ((ST)o).getName();
@@ -95,7 +95,7 @@ public class TestCodeGeneration {
 			return super.writeObject(out, scope, o, options);
 		}
 
-		@Override
+		//Override
 		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options) throws IOException {
 			Class<?> type = o.getClass();
 			String name = type.getSimpleName();

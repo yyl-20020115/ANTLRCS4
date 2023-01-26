@@ -75,7 +75,7 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		fill(1); // prime the pump
 	}
 
-	@Override
+	//Override
 	public Token get(int i) { // get absolute index
 		int bufferStartIndex = getBufferStartIndex();
 		if (i < bufferStartIndex || i >= bufferStartIndex + n) {
@@ -85,7 +85,7 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		return tokens[i - bufferStartIndex];
 	}
 
-	@Override
+	//Override
 	public Token LT(int i) {
 		if ( i==-1 ) {
 			return lastToken;
@@ -105,35 +105,35 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		return tokens[index];
 	}
 
-	@Override
+	//Override
 	public int LA(int i) {
 		return LT(i).getType();
 	}
 
-	@Override
+	//Override
 	public TokenSource getTokenSource() {
 		return tokenSource;
 	}
 
 
-	@Override
+	//Override
 	public String getText() {
 		return "";
 	}
 
 
-	@Override
+	//Override
 	public String getText(RuleContext ctx) {
 		return getText(ctx.getSourceInterval());
 	}
 
 
-	@Override
+	//Override
 	public String getText(Token start, Token stop) {
 		return getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()));
 	}
 
-	@Override
+	//Override
 	public void consume() {
 		if (LA(1) == Token.EOF) {
 			throw new IllegalStateException("cannot consume EOF");
@@ -202,7 +202,7 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 	 * protection against misuse where {@code seek()} is called on a mark or
 	 * {@code release()} is called in the wrong order.</p>
 	 */
-	@Override
+	//Override
 	public int mark() {
 		if (numMarkers == 0) {
 			lastTokenBufferStart = lastToken;
@@ -213,7 +213,7 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		return mark;
 	}
 
-	@Override
+	//Override
 	public void release(int marker) {
 		int expectedMark = -numMarkers;
 		if ( marker!=expectedMark ) {
@@ -234,12 +234,12 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		}
 	}
 
-	@Override
+	//Override
 	public int index() {
 		return currentTokenIndex;
 	}
 
-	@Override
+	//Override
 	public void seek(int index) { // seek to absolute index
 		if (index == currentTokenIndex) {
 			return;
@@ -270,18 +270,18 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 		}
 	}
 
-	@Override
+	//Override
 	public int size() {
 		throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 	}
 
-	@Override
+	//Override
 	public String getSourceName() {
 		return tokenSource.getSourceName();
 	}
 
 
-	@Override
+	//Override
 	public String getText(Interval interval) {
 		int bufferStartIndex = getBufferStartIndex();
 		int bufferStopIndex = bufferStartIndex + tokens.length - 1;

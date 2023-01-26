@@ -16,11 +16,11 @@ public class NotAST : GrammarAST implements RuleElementAST {
 
 	public NotAST(int type, Token t) { super(type, t); }
 
-	@Override
+	//Override
 	public NotAST dupNode() {
 		return new NotAST(this);
 	}
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

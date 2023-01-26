@@ -322,11 +322,11 @@ public class Grammar implements AttributeResolver {
 		this.fileName = fileName;
 		this.tool = new Tool();
 		ANTLRToolListener hush = new ANTLRToolListener() {
-			@Override
+			//Override
 			public void info(String msg) { }
-			@Override
+			//Override
 			public void error(ANTLRMessage msg) { }
-			@Override
+			//Override
 			public void warning(ANTLRMessage msg) { }
 		};
 		tool.addListener(hush); // we want to hush errors/warnings
@@ -350,9 +350,9 @@ public class Grammar implements AttributeResolver {
 		final Grammar thiz = this;
 		org.antlr.runtime.tree.TreeVisitor v = new org.antlr.runtime.tree.TreeVisitor(new GrammarASTAdaptor());
 		v.visit(ast, new org.antlr.runtime.tree.TreeVisitorAction() {
-			@Override
+			//Override
 			public Object pre(Object t) { ((GrammarAST)t).g = thiz; return t; }
-			@Override
+			//Override
 			public Object post(Object t) { return t; }
 		});
 		initTokenSymbolTables();
@@ -1098,27 +1098,27 @@ public class Grammar implements AttributeResolver {
 	}
 
 	// no isolated attr at grammar action level
-	@Override
+	//Override
 	public Attribute resolveToAttribute(String x, ActionAST node) {
 		return null;
 	}
 
 	// no $x.y makes sense here
-	@Override
+	//Override
 	public Attribute resolveToAttribute(String x, String y, ActionAST node) {
 		return null;
 	}
 
-	@Override
+	//Override
 	public bool resolvesToLabel(String x, ActionAST node) { return false; }
 
-	@Override
+	//Override
 	public bool resolvesToListLabel(String x, ActionAST node) { return false; }
 
-	@Override
+	//Override
 	public bool resolvesToToken(String x, ActionAST node) { return false; }
 
-	@Override
+	//Override
 	public bool resolvesToAttributeDict(String x, ActionAST node) {
 		return false;
 	}
@@ -1256,11 +1256,11 @@ public class Grammar implements AttributeResolver {
 	public Set<String> getStringLiterals() {
 		final Set<String> strings = new LinkedHashSet<String>();
 		GrammarTreeVisitor collector = new GrammarTreeVisitor() {
-			@Override
+			//Override
 			public void stringRef(TerminalAST ref) {
 				strings.add(ref.getText());
 			}
-			@Override
+			//Override
 			public ErrorManager getErrorManager() { return tool.errMgr; }
 		};
 		collector.visitGrammar(ast);

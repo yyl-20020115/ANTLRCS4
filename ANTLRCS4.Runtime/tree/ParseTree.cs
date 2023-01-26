@@ -4,11 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
-
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.Token;
+namespace org.antlr.v4.runtime.tree;
 
 /** An interface to access the tree of {@link RuleContext} objects created
  *  during a parse that makes the data structure look like a simple parse tree.
@@ -17,11 +13,11 @@ import org.antlr.v4.runtime.Token;
  *
  *  <p>The payload is either a {@link Token} or a {@link RuleContext} object.</p>
  */
-public interface ParseTree extends SyntaxTree {
+public interface ParseTree : SyntaxTree {
 	// the following methods narrow the return type; they are not additional methods
-	@Override
+	//Override
 	ParseTree getParent();
-	@Override
+	//Override
 	ParseTree getChild(int i);
 
 
@@ -43,7 +39,7 @@ public interface ParseTree extends SyntaxTree {
 	void setParent(RuleContext parent);
 
 	/** The {@link ParseTreeVisitor} needs a double dispatch method. */
-	<T> T accept(ParseTreeVisitor<? extends T> visitor);
+	T accept<T>(ParseTreeVisitor<T> visitor);
 
 	/** Return the combined text of all leaf nodes. Does not get any
 	 *  off-channel tokens (if any) so won't return whitespace and

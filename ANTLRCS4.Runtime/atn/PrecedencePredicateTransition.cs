@@ -18,17 +18,17 @@ public final class PrecedencePredicateTransition extends AbstractPredicateTransi
 		this.precedence = precedence;
 	}
 
-	@Override
+	//Override
 	public int getSerializationType() {
 		return PRECEDENCE;
 	}
 
-	@Override
+	//Override
 	public boolean isEpsilon() {
 		return true;
 	}
 
-	@Override
+	//Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
@@ -37,7 +37,7 @@ public final class PrecedencePredicateTransition extends AbstractPredicateTransi
 		return new SemanticContext.PrecedencePredicate(precedence);
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return precedence + " >= _p";
 	}

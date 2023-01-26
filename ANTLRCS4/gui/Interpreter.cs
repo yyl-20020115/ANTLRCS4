@@ -42,7 +42,7 @@ public class Interpreter {
 			super(fileName, grammarText, tokenVocabSource, listener);
 		}
 
-		@Override
+		//Override
 		public void importTokensFromTokensFile() {
 			// don't try to import tokens files; must give me both grammars if split
 		}

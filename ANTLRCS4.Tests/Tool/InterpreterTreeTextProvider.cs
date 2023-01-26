@@ -18,7 +18,7 @@ public class InterpreterTreeTextProvider implements TreeTextProvider {
 	public List<String> ruleNames;
 	public InterpreterTreeTextProvider(String[] ruleNames) {this.ruleNames = Arrays.asList(ruleNames);}
 
-	@Override
+	//Override
 	public String getText(Tree node) {
 		if ( node==null ) return "null";
 		String nodeText = Trees.getNodeText(node, ruleNames);

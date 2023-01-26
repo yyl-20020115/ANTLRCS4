@@ -37,7 +37,7 @@ public class LexerGrammar : Grammar {
 		super(fileName, grammarText, listener);
 	}
 
-	@Override
+	//Override
 	public bool defineRule(Rule r) {
 		if (!super.defineRule(r)) {
 			return false;
@@ -48,7 +48,7 @@ public class LexerGrammar : Grammar {
 		return true;
 	}
 
-	@Override
+	//Override
 	public bool undefineRule(Rule r) {
 		if (!super.undefineRule(r)) {
 			return false;

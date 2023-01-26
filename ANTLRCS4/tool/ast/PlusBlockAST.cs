@@ -21,14 +21,14 @@ public class PlusBlockAST : GrammarAST implements RuleElementAST, QuantifierAST 
 		_greedy = nongreedy == null;
 	}
 
-	@Override
+	//Override
 	public bool isGreedy() {
 		return _greedy;
 	}
 
-	@Override
+	//Override
 	public PlusBlockAST dupNode() { return new PlusBlockAST(this); }
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

@@ -27,7 +27,7 @@ public abstract class XPathElement {
 	 */
 	public abstract Collection<ParseTree> evaluate(ParseTree t);
 
-	@Override
+	//Override
 	public String toString() {
 		String inv = invert ? "!" : "";
 		return getClass().getSimpleName()+"["+inv+nodeName+"]";

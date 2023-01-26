@@ -31,20 +31,20 @@ public final class EpsilonTransition extends Transition {
 		return outermostPrecedenceReturn;
 	}
 
-	@Override
+	//Override
 	public int getSerializationType() {
 		return EPSILON;
 	}
 
-	@Override
+	//Override
 	public bool isEpsilon() { return true; }
 
-	@Override
+	//Override
 	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
-	@Override
+	//Override
 
 	public String toString() {
 		return "epsilon";

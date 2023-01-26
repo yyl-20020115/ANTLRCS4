@@ -72,7 +72,7 @@ public abstract class SemanticContext {
 		 */
 		public static final Empty Instance = new Empty();
 
-		@Override
+		//Override
 		public boolean eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			return false;
 		}
@@ -95,13 +95,13 @@ public abstract class SemanticContext {
             this.isCtxDependent = isCtxDependent;
         }
 
-        @Override
+        //Override
         public boolean eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
             RuleContext localctx = isCtxDependent ? parserCallStack : null;
             return parser.sempred(localctx, ruleIndex, predIndex);
         }
 
-		@Override
+		//Override
 		public int hashCode() {
 			int hashCode = MurmurHash.initialize();
 			hashCode = MurmurHash.update(hashCode, ruleIndex);
@@ -111,7 +111,7 @@ public abstract class SemanticContext {
 			return hashCode;
 		}
 
-		@Override
+		//Override
 		public boolean equals(Object obj) {
 			if ( !(obj is Predicate) ) return false;
 			if ( this == obj ) return true;
@@ -121,7 +121,7 @@ public abstract class SemanticContext {
 				   this.isCtxDependent == p.isCtxDependent;
 		}
 
-		@Override
+		//Override
 		public String toString() {
             return "{"+ruleIndex+":"+predIndex+"}?";
         }
@@ -138,12 +138,12 @@ public abstract class SemanticContext {
 			this.precedence = precedence;
 		}
 
-		@Override
+		//Override
 		public boolean eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			return parser.precpred(parserCallStack, precedence);
 		}
 
-		@Override
+		//Override
 		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			if (parser.precpred(parserCallStack, precedence)) {
 				return Empty.Instance;
@@ -153,19 +153,19 @@ public abstract class SemanticContext {
 			}
 		}
 
-		@Override
+		//Override
 		public int compareTo(PrecedencePredicate o) {
 			return precedence - o.precedence;
 		}
 
-		@Override
+		//Override
 		public int hashCode() {
 			int hashCode = 1;
 			hashCode = 31 * hashCode + precedence;
 			return hashCode;
 		}
 
-		@Override
+		//Override
 		public boolean equals(Object obj) {
 			if (!(obj is PrecedencePredicate)) {
 				return false;
@@ -179,7 +179,7 @@ public abstract class SemanticContext {
 			return this.precedence == other.precedence;
 		}
 
-		@Override
+		//Override
 		// precedence >= _precedenceStack.peek()
 		public String toString() {
 			return "{"+precedence+">=prec}?";
@@ -229,12 +229,12 @@ public abstract class SemanticContext {
 			opnds = operands.toArray(new SemanticContext[0]);
         }
 
-		@Override
+		//Override
 		public Collection<SemanticContext> getOperands() {
 			return Arrays.asList(opnds);
 		}
 
-		@Override
+		//Override
 		public boolean equals(Object obj) {
 			if ( this==obj ) return true;
 			if ( !(obj is AND) ) return false;
@@ -242,7 +242,7 @@ public abstract class SemanticContext {
 			return Arrays.equals(this.opnds, other.opnds);
 		}
 
-		@Override
+		//Override
 		public int hashCode() {
 			return MurmurHash.hashCode(opnds, AND.class.hashCode());
 		}
@@ -254,7 +254,7 @@ public abstract class SemanticContext {
 		 * The evaluation of predicates by this context is short-circuiting, but
 		 * unordered.</p>
 		 */
-		@Override
+		//Override
 		public boolean eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
 			for (SemanticContext opnd : opnds) {
 				if ( !opnd.eval(parser, parserCallStack) ) return false;
@@ -262,7 +262,7 @@ public abstract class SemanticContext {
 			return true;
         }
 
-		@Override
+		//Override
 		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			boolean differs = false;
 			List<SemanticContext> operands = new ArrayList<SemanticContext>();
@@ -296,7 +296,7 @@ public abstract class SemanticContext {
 			return result;
 		}
 
-		@Override
+		//Override
 		public String toString() {
 			return Utils.join(Arrays.asList(opnds).iterator(), "&&");
         }
@@ -326,12 +326,12 @@ public abstract class SemanticContext {
 			this.opnds = operands.toArray(new SemanticContext[0]);
         }
 
-		@Override
+		//Override
 		public Collection<SemanticContext> getOperands() {
 			return Arrays.asList(opnds);
 		}
 
-		@Override
+		//Override
 		public boolean equals(Object obj) {
 			if ( this==obj ) return true;
 			if ( !(obj is OR) ) return false;
@@ -339,7 +339,7 @@ public abstract class SemanticContext {
 			return Arrays.equals(this.opnds, other.opnds);
 		}
 
-		@Override
+		//Override
 		public int hashCode() {
 			return MurmurHash.hashCode(opnds, OR.class.hashCode());
 		}
@@ -351,7 +351,7 @@ public abstract class SemanticContext {
 		 * The evaluation of predicates by this context is short-circuiting, but
 		 * unordered.</p>
 		 */
-		@Override
+		//Override
         public boolean eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
 			for (SemanticContext opnd : opnds) {
 				if ( opnd.eval(parser, parserCallStack) ) return true;
@@ -359,7 +359,7 @@ public abstract class SemanticContext {
 			return false;
         }
 
-		@Override
+		//Override
 		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
 			boolean differs = false;
 			List<SemanticContext> operands = new ArrayList<SemanticContext>();
@@ -393,7 +393,7 @@ public abstract class SemanticContext {
 			return result;
 		}
 
-        @Override
+        //Override
         public String toString() {
 			return Utils.join(Arrays.asList(opnds).iterator(), "||");
         }

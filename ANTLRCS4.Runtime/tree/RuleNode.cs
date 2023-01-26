@@ -4,10 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+namespace org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.runtime.RuleContext;
-
-public interface RuleNode extends ParseTree {
+public interface RuleNode : ParseTree {
 	RuleContext getRuleContext();
 }

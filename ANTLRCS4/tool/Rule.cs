@@ -228,7 +228,7 @@ public class Rule implements AttributeResolver {
 
 	/**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-	@Override
+	//Override
 	public Attribute resolveToAttribute(String x, ActionAST node) {
 		if ( args!=null ) {
 			Attribute a = args.get(x);   	if ( a!=null ) return a;
@@ -244,7 +244,7 @@ public class Rule implements AttributeResolver {
 	}
 
 	/** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
-	@Override
+	//Override
 	public Attribute resolveToAttribute(String x, String y, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null ) {
@@ -264,7 +264,7 @@ public class Rule implements AttributeResolver {
 
 	}
 
-	@Override
+	//Override
 	public boolean resolvesToLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
@@ -272,7 +272,7 @@ public class Rule implements AttributeResolver {
 				anyLabelDef.type==LabelType.TOKEN_LABEL);
 	}
 
-	@Override
+	//Override
 	public boolean resolvesToListLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
@@ -280,14 +280,14 @@ public class Rule implements AttributeResolver {
 				anyLabelDef.type==LabelType.TOKEN_LIST_LABEL);
 	}
 
-	@Override
+	//Override
 	public boolean resolvesToToken(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
 		return false;
 	}
 
-	@Override
+	//Override
 	public boolean resolvesToAttributeDict(String x, ActionAST node) {
 		if ( resolvesToToken(x, node) ) return true;
 		return false;
@@ -321,10 +321,10 @@ public class Rule implements AttributeResolver {
 		return false;
 	}
 
-	@Override
+	//Override
 	public int hashCode() { return name.hashCode(); }
 
-	@Override
+	//Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -337,7 +337,7 @@ public class Rule implements AttributeResolver {
 		return name.equals(((Rule)obj).name);
 	}
 
-	@Override
+	//Override
     public String toString() {
 		StringBuilder buf = new StringBuilder();
 		buf.append("Rule{name=").append(name);

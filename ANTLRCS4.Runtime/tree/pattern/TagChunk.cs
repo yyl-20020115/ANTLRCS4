@@ -91,7 +91,7 @@ class TagChunk extends Chunk {
 	 * are returned in the form {@code label:tag}, and unlabeled tags are
 	 * returned as just the tag name.
 	 */
-	@Override
+	//Override
 	public String toString() {
 		if (label != null) {
 			return label + ":" + tag;

@@ -146,7 +146,7 @@ public class DFA {
 		List<DFAState> result = new (states.keySet());
 		result.Sort((x, y) => x.stateNumber - y.stateNumber);
 		//Collections.sort(result, new Comparator<DFAState>() {
-		//	@Override
+		//	//Override
 		//	public int compare(DFAState o1, DFAState o2) {
 		//		return o1.stateNumber - o2.stateNumber;
 		//	}

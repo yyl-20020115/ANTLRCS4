@@ -16,11 +16,11 @@ public class SetAST extends GrammarAST implements RuleElementAST {
 
 	public SetAST(int type, Token t, String text) { super(type,t,text); }
 
-	@Override
+	//Override
 	public SetAST dupNode() {
 		return new SetAST(this);
 	}
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

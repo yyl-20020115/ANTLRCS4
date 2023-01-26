@@ -19,7 +19,7 @@ public class RuleRefAST extends GrammarASTWithOptions implements RuleElementAST 
     public RuleRefAST(int type, Token t) { super(type, t); }
 
 	/** Dup token too since we overwrite during LR rule transform */
-	@Override
+	//Override
 	public RuleRefAST dupNode() {
 		RuleRefAST r = new RuleRefAST(this);
 		// In LR transform, we alter original token stream to make e -> e[n]
@@ -31,6 +31,6 @@ public class RuleRefAST extends GrammarASTWithOptions implements RuleElementAST 
 		return r;
 	}
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

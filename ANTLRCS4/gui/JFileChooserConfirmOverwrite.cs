@@ -18,7 +18,7 @@ public class JFileChooserConfirmOverwrite : JFileChooser {
 		setMultiSelectionEnabled(false);
 	}
 
-	@Override
+	//Override
 	public void approveSelection() {
 		File selectedFile = getSelectedFile();
 

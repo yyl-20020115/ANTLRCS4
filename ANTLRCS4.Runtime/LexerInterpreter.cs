@@ -68,38 +68,38 @@ public class LexerInterpreter extends Lexer {
 		this._interp = new LexerATNSimulator(this,atn,_decisionToDFA,_sharedContextCache);
 	}
 
-	@Override
+	//Override
 	public ATN getATN() {
 		return atn;
 	}
 
-	@Override
+	//Override
 	public String getGrammarFileName() {
 		return grammarFileName;
 	}
 
-	@Override
+	//Override
 	@Deprecated
 	public String[] getTokenNames() {
 		return tokenNames;
 	}
 
-	@Override
+	//Override
 	public String[] getRuleNames() {
 		return ruleNames;
 	}
 
-	@Override
+	//Override
 	public String[] getChannelNames() {
 		return channelNames;
 	}
 
-	@Override
+	//Override
 	public String[] getModeNames() {
 		return modeNames;
 	}
 
-	@Override
+	//Override
 	public Vocabulary getVocabulary() {
 		if (vocabulary != null) {
 			return vocabulary;

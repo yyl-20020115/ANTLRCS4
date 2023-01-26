@@ -29,9 +29,9 @@ public class BlockAST : GrammarASTWithOptions implements RuleElementAST {
     public BlockAST(int type, Token t) { super(type, t); }
 	public BlockAST(int type, Token t, String text) { super(type,t,text); }
 
-	@Override
+	//Override
 	public BlockAST dupNode() { return new BlockAST(this); }
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

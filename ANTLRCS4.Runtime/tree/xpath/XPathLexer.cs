@@ -57,27 +57,27 @@ public class XPathLexer extends Lexer {
 		}
 	}
 
-	@Override
+	//Override
 	public String getGrammarFileName() { return "XPathLexer.g4"; }
 
-	@Override
+	//Override
 	public String[] getRuleNames() { return ruleNames; }
 
-	@Override
+	//Override
 	public String[] getModeNames() { return modeNames; }
 
-	@Override
+	//Override
 	@Deprecated
 	public String[] getTokenNames() {
 		return tokenNames;
 	}
 
-	@Override
+	//Override
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
 
-	@Override
+	//Override
 	public ATN getATN() {
 		return null;
 	}
@@ -89,7 +89,7 @@ public class XPathLexer extends Lexer {
 		super(input);
 	}
 
-	@Override
+	//Override
 	public Token nextToken() {
 		_tokenStartCharIndex = _input.index();
 		CommonToken t = null;
@@ -149,7 +149,7 @@ public class XPathLexer extends Lexer {
 		_input.consume();
 	}
 
-	@Override
+	//Override
 	public int getCharPositionInLine() {
 		return charPositionInLine;
 	}

@@ -67,7 +67,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	@Override
+	//Override
 	public String getOptionString(String key) {
 		if ( cmdLineOptions!=null && cmdLineOptions.containsKey(key) ) {
 			return cmdLineOptions.get(key);
@@ -79,9 +79,9 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		return value;
 	}
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 
-	@Override
+	//Override
 	public GrammarRootAST dupNode() { return new GrammarRootAST(this); }
 }

@@ -1,13 +1,4 @@
-package org.antlr.v4.test.tool;
-
-import org.antlr.runtime.Token;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+namespace org.antlr.v4.test.tool;
 
 public class TestUtils {
 	@Test
@@ -59,7 +50,7 @@ public class TestUtils {
 		strings.add("bar");
 
 		Utils.Func1<String, String> func1 = new Utils.Func1() {
-			@Override
+			//Override
 			public Object exec(Object arg1) {
 				return "baz";
 			}
@@ -89,7 +80,7 @@ public class TestUtils {
 		strings.add("foo");
 		strings.add("bar");
 		Utils.Filter filter = new Utils.Filter() {
-			@Override
+			//Override
 			public boolean select(Object o) {
 				return true;
 			}
@@ -104,7 +95,7 @@ public class TestUtils {
 		strings.add("foo");
 		strings.add("bar");
 		Utils.Filter filter = new Utils.Filter() {
-			@Override
+			//Override
 			public boolean select(Object o) {
 				return true;
 			}

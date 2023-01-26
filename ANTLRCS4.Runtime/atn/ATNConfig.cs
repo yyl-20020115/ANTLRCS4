@@ -148,7 +148,7 @@ public class ATNConfig {
      *  the same state, they predict the same alternative, and
      *  syntactic/semantic contexts are the same.
      */
-    @Override
+    //Override
     public bool equals(Object o) {
 		if (!(o is ATNConfig)) {
 			return false;
@@ -172,7 +172,7 @@ public class ATNConfig {
 			&& this.isPrecedenceFilterSuppressed() == other.isPrecedenceFilterSuppressed();
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		int hashCode = MurmurHash.initialize(7);
 		hashCode = MurmurHash.update(hashCode, state.stateNumber);
@@ -183,7 +183,7 @@ public class ATNConfig {
 		return hashCode;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return toString(null, true);
 	}

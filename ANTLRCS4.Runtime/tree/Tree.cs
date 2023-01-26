@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
-
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.Token;
+namespace org.antlr.v4.runtime.tree;
 
 /** The basic notion of a tree has a parent, a payload, and a list of children.
  *  It is the most abstract interface for all the trees used by ANTLR.

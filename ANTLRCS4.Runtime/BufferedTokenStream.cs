@@ -73,18 +73,18 @@ public class BufferedTokenStream implements TokenStream {
         this.tokenSource = tokenSource;
     }
 
-    @Override
+    //Override
     public TokenSource getTokenSource() { return tokenSource; }
 
-	@Override
+	//Override
 	public int index() { return p; }
 
-    @Override
+    //Override
     public int mark() {
 		return 0;
 	}
 
-	@Override
+	//Override
 	public void release(int marker) {
 		// no resources to release
 	}
@@ -101,16 +101,16 @@ public class BufferedTokenStream implements TokenStream {
         seek(0);
     }
 
-    @Override
+    //Override
     public void seek(int index) {
         lazyInit();
         p = adjustSeekIndex(index);
     }
 
-    @Override
+    //Override
     public int size() { return tokens.size(); }
 
-    @Override
+    //Override
     public void consume() {
 		bool skipEofCheck;
 		if (p >= 0) {
@@ -180,7 +180,7 @@ public class BufferedTokenStream implements TokenStream {
 		return n;
     }
 
-    @Override
+    //Override
     public Token get(int i) {
         if ( i < 0 || i >= tokens.size() ) {
             throw new IndexOutOfBoundsException("token index "+i+" out of range 0.."+(tokens.size()-1));
@@ -202,7 +202,7 @@ public class BufferedTokenStream implements TokenStream {
 		return subset;
 	}
 
-	@Override
+	//Override
 	public int LA(int i) { return LT(i).getType(); }
 
     protected Token LB(int k) {
@@ -211,7 +211,7 @@ public class BufferedTokenStream implements TokenStream {
     }
 
 
-    @Override
+    //Override
     public Token LT(int k) {
         lazyInit();
         if ( k==0 ) return null;
@@ -434,17 +434,17 @@ public class BufferedTokenStream implements TokenStream {
 		return hidden;
 	}
 
-	@Override
+	//Override
     public String getSourceName() {	return tokenSource.getSourceName();	}
 
 	/** Get the text of all tokens in this buffer. */
 
-	@Override
+	//Override
 	public String getText() {
 		return getText(Interval.of(0,size()-1));
 	}
 
-	@Override
+	//Override
 	public String getText(Interval interval) {
 		int start = interval.a;
 		int stop = interval.b;
@@ -462,13 +462,13 @@ public class BufferedTokenStream implements TokenStream {
     }
 
 
-	@Override
+	//Override
 	public String getText(RuleContext ctx) {
 		return getText(ctx.getSourceInterval());
 	}
 
 
-    @Override
+    //Override
     public String getText(Token start, Token stop) {
         if ( start!=null && stop!=null ) {
             return getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()));

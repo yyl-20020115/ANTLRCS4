@@ -17,7 +17,7 @@ public class XPathWildcardAnywhereElement extends XPathElement {
 		super(XPath.WILDCARD);
 	}
 
-	@Override
+	//Override
 	public Collection<ParseTree> evaluate(ParseTree t) {
 		if ( invert ) return new ArrayList<ParseTree>(); // !* is weird but valid (empty)
 		return Trees.getDescendants(t);

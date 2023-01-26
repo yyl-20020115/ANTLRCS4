@@ -117,7 +117,7 @@ public class TokenStreamRewriter {
 			return index;
 		}
 
-		@Override
+		//Override
 		public String toString() {
 			String opName = getClass().getName();
 			int $index = opName.indexOf('$');
@@ -132,7 +132,7 @@ public class TokenStreamRewriter {
 			super(index,text);
 		}
 
-		@Override
+		//Override
 		public int execute(StringBuilder buf) {
 			buf.append(text);
 			if ( tokens.get(index).getType()!=Token.EOF ) {
@@ -161,14 +161,14 @@ public class TokenStreamRewriter {
 			super(from,text);
 			lastIndex = to;
 		}
-		@Override
+		//Override
 		public int execute(StringBuilder buf) {
 			if ( text!=null ) {
 				buf.append(text);
 			}
 			return lastIndex+1;
 		}
-		@Override
+		//Override
 		public String toString() {
 			if ( text==null ) {
 				return "<DeleteOp@"+tokens.get(index)+

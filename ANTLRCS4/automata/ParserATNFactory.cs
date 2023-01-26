@@ -42,7 +42,7 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public ATN createATN() {
 		_createATN(g.rules.values());
 		assert atn.maxTokenType == g.getMaxTokenType();
@@ -112,19 +112,19 @@ public class ParserATNFactory : ATNFactory {
 		}
 	}
 
-	@Override
+	//Override
 	public void setCurrentRuleName(String name) {
 		this.currentRule = g.getRule(name);
 	}
 
-	@Override
+	//Override
 	public void setCurrentOuterAlt(int alt) {
 		currentOuterAlt = alt;
 	}
 
 	/* start->ruleblock->end */
 
-	@Override
+	//Override
 	public Handle rule(GrammarAST ruleAST, String name, Handle blk) {
 		Rule r = g.getRule(name);
 		RuleStartState start = atn.ruleToStartState[r.index];
@@ -140,7 +140,7 @@ public class ParserATNFactory : ATNFactory {
 
 	/** From label {@code A} build graph {@code o-A->o}. */
 
-	@Override
+	//Override
 	public Handle tokenRef(TerminalAST node) {
 		ATNState left = newState(node);
 		ATNState right = newState(node);
@@ -155,7 +155,7 @@ public class ParserATNFactory : ATNFactory {
 	 *  This also handles {@code ~A}, converted to {@code ~{A}} set.
      */
 
-	@Override
+	//Override
 	public Handle set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert) {
 		ATNState left = newState(associatedAST);
 		ATNState right = newState(associatedAST);
@@ -176,7 +176,7 @@ public class ParserATNFactory : ATNFactory {
 
 	/** Not valid for non-lexers. */
 
-	@Override
+	//Override
 	public Handle range(GrammarAST a, GrammarAST b) {
 		g.tool.errMgr.grammarError(ErrorType.TOKEN_RANGE_IN_PARSER, g.fileName,
 		                           a.getToken(),
@@ -199,14 +199,14 @@ public class ParserATNFactory : ATNFactory {
 
 	/** For a non-lexer, just build a simple token reference atom. */
 
-	@Override
+	//Override
 	public Handle stringLiteral(TerminalAST stringLiteralAST) {
 		return tokenRef(stringLiteralAST);
 	}
 
 	/** {@code [Aa]} char sets not allowed in parser */
 
-	@Override
+	//Override
 	public Handle charSetLiteral(GrammarAST charSetAST) {
 		return null;
 	}
@@ -223,7 +223,7 @@ public class ParserATNFactory : ATNFactory {
 	 * {@link RuleTransition#followState}).
 	 */
 
-	@Override
+	//Override
 	public Handle ruleRef(GrammarAST node) {
 		Handle h = _ruleRef(node);
 		return h;
@@ -259,7 +259,7 @@ public class ParserATNFactory : ATNFactory {
 
 	/** From an empty alternative build {@code o-e->o}. */
 
-	@Override
+	//Override
 	public Handle epsilon(GrammarAST node) {
 		ATNState left = newState(node);
 		ATNState right = newState(node);
@@ -273,7 +273,7 @@ public class ParserATNFactory : ATNFactory {
 	 *  the {@link ANTLRParser#SEMPRED} token.
 	 */
 
-	@Override
+	//Override
 	public Handle sempred(PredAST pred) {
 		//System.out.println("sempred: "+ pred);
 		ATNState left = newState(pred);
@@ -299,7 +299,7 @@ public class ParserATNFactory : ATNFactory {
 	 *  if {@link ActionTransition#actionIndex actionIndex}{@code <0}.
 	 */
 
-	@Override
+	//Override
 	public Handle action(ActionAST action) {
 		//System.out.println("action: "+action);
 		ATNState left = newState(action);
@@ -311,7 +311,7 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public Handle action(String action) {
 		throw new UnsupportedOperationException("This element is not valid in parsers.");
 	}
@@ -341,7 +341,7 @@ public class ParserATNFactory : ATNFactory {
 	 * TODO: Set alt number (1..n) in the states?
 	 */
 
-	@Override
+	//Override
 	public Handle block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts) {
 		if ( ebnfRoot==null ) {
 			if ( alts.size()==1 ) {
@@ -395,7 +395,7 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public Handle alt(List<Handle> els) {
 		return elemList(els);
 	}
@@ -458,7 +458,7 @@ public class ParserATNFactory : ATNFactory {
 	 * block
 	 */
 
-	@Override
+	//Override
 	public Handle optional(GrammarAST optAST, Handle blk) {
 		BlockStartState blkStart = (BlockStartState)blk.left;
 		ATNState blkEnd = blk.right;
@@ -485,7 +485,7 @@ public class ParserATNFactory : ATNFactory {
 	 * start.
 	 */
 
-	@Override
+	//Override
 	public Handle plus(GrammarAST plusAST, Handle blk) {
 		PlusBlockStartState blkStart = (PlusBlockStartState)blk.left;
 		BlockEndState blkEnd = (BlockEndState)blk.right;
@@ -535,7 +535,7 @@ public class ParserATNFactory : ATNFactory {
 	 * {@code (A|B)*} is not the same thing as {@code (A|B|)+}.
 	 */
 
-	@Override
+	//Override
 	public Handle star(GrammarAST starAST, Handle elem) {
 		StarBlockStartState blkStart = (StarBlockStartState)elem.left;
 		BlockEndState blkEnd = (BlockEndState)elem.right;
@@ -572,7 +572,7 @@ public class ParserATNFactory : ATNFactory {
 
 	/** Build an atom with all possible values in its label. */
 
-	@Override
+	//Override
 	public Handle wildcard(GrammarAST node) {
 		ATNState left = newState(node);
 		ATNState right = newState(node);
@@ -644,13 +644,13 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public Handle label(Handle t) {
 		return t;
 	}
 
 
-	@Override
+	//Override
 	public Handle listLabel(Handle t) {
 		return t;
 	}
@@ -692,7 +692,7 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public ATNState newState() { return newState(null); }
 
 	public bool expectNonGreedy(BlockAST blkAST) {
@@ -721,19 +721,19 @@ public class ParserATNFactory : ATNFactory {
 	}
 
 
-	@Override
+	//Override
 	public Handle lexerAltCommands(Handle alt, Handle cmds) {
 		throw new UnsupportedOperationException("This element is not allowed in parsers.");
 	}
 
 
-	@Override
+	//Override
 	public Handle lexerCallCommand(GrammarAST ID, GrammarAST arg) {
 		throw new UnsupportedOperationException("This element is not allowed in parsers.");
 	}
 
 
-	@Override
+	//Override
 	public Handle lexerCommand(GrammarAST ID) {
 		throw new UnsupportedOperationException("This element is not allowed in parsers.");
 	}

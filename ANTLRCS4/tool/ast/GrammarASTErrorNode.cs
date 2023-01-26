@@ -19,14 +19,14 @@ public class GrammarASTErrorNode : GrammarAST {
         delegate = new CommonErrorNode(input,start,stop,e);
     }
 
-    @Override
+    //Override
     public bool isNil() { return delegate.isNil(); }
 
-    @Override
+    //Override
     public int getType() { return delegate.getType(); }
 
-    @Override
+    //Override
     public String getText() { return delegate.getText(); }
-    @Override
+    //Override
     public String toString() { return delegate.toString(); }
 }

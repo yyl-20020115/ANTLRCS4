@@ -67,7 +67,7 @@ public class GraphicsSupport {
 				FileOutputStream out = new FileOutputStream(fileName);
 				PrintService service = factories[0].getPrintService(out);
 				SimpleDoc doc = new SimpleDoc(new Printable() {
-					@Override
+					//Override
 					public int print(Graphics g, PageFormat pf, int page) {
 						if (page >= 1) return Printable.NO_SUCH_PAGE;
 						else {

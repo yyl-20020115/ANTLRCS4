@@ -37,23 +37,23 @@ import java.util.WeakHashMap;
 /** This is all the parsing support code essentially; most of it is error recovery stuff. */
 public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 	public class TraceListener implements ParseTreeListener {
-		@Override
+		//Override
 		public void enterEveryRule(ParserRuleContext ctx) {
 			System.out.println("enter   " + getRuleNames()[ctx.getRuleIndex()] +
 							   ", LT(1)=" + _input.LT(1).getText());
 		}
 
-		@Override
+		//Override
 		public void visitTerminal(TerminalNode node) {
 			System.out.println("consume "+node.getSymbol()+" rule "+
 							   getRuleNames()[_ctx.getRuleIndex()]);
 		}
 
-		@Override
+		//Override
 		public void visitErrorNode(ErrorNode node) {
 		}
 
-		@Override
+		//Override
 		public void exitEveryRule(ParserRuleContext ctx) {
 			System.out.println("exit    "+getRuleNames()[ctx.getRuleIndex()]+
 							   ", LT(1)="+_input.LT(1).getText());
@@ -63,16 +63,16 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 	public static class TrimToSizeListener implements ParseTreeListener {
 		public static final TrimToSizeListener INSTANCE = new TrimToSizeListener();
 
-		@Override
+		//Override
 		public void enterEveryRule(ParserRuleContext ctx) { }
 
-		@Override
+		//Override
 		public void visitTerminal(TerminalNode node) { }
 
-		@Override
+		//Override
 		public void visitErrorNode(ErrorNode node) {	}
 
-		@Override
+		//Override
 		public void exitEveryRule(ParserRuleContext ctx) {
 			if (ctx.children is ArrayList) {
 				((ArrayList<?>)ctx.children).trimToSize();
@@ -422,13 +422,13 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 		return _syntaxErrors;
 	}
 
-	@Override
+	//Override
 	public TokenFactory<?> getTokenFactory() {
 		return _input.getTokenSource().getTokenFactory();
 	}
 
 	/** Tell our token source and error strategy about a new way to create tokens. */
-	@Override
+	//Override
 	public void setTokenFactory(TokenFactory<?> factory) {
 		_input.getTokenSource().setTokenFactory(factory);
 	}
@@ -500,10 +500,10 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 		this._errHandler = handler;
 	}
 
-	@Override
+	//Override
 	public TokenStream getInputStream() { return getTokenStream(); }
 
-	@Override
+	//Override
 	public final void setInputStream(IntStream input) {
 		setTokenStream((TokenStream)input);
 	}
@@ -753,7 +753,7 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 		_ctx = ctx;
 	}
 
-	@Override
+	//Override
 	public boolean precpred(RuleContext localctx, int precedence) {
 		return precedence >= _precedenceStack.peek();
 	}
@@ -898,7 +898,7 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 		return _input.getSourceName();
 	}
 
-	@Override
+	//Override
 	public ParseInfo getParseInfo() {
 		ParserATNSimulator interp = getInterpreter();
 		if (interp is ProfilingATNSimulator) {

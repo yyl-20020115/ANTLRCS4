@@ -34,7 +34,7 @@ public final class LexerMoreAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#MORE}.
 	 */
-	@Override
+	//Override
 	public LexerActionType getActionType() {
 		return LexerActionType.MORE;
 	}
@@ -43,7 +43,7 @@ public final class LexerMoreAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
+	//Override
 	public boolean isPositionDependent() {
 		return false;
 	}
@@ -53,25 +53,25 @@ public final class LexerMoreAction implements LexerAction {
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#more}.</p>
 	 */
-	@Override
+	//Override
 	public void execute(Lexer lexer) {
 		lexer.more();
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
 		return MurmurHash.finish(hash, 1);
 	}
 
-	@Override
+	//Override
 	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {
 		return obj == this;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return "more";
 	}

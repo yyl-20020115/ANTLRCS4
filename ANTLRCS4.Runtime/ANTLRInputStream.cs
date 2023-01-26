@@ -123,7 +123,7 @@ public class ANTLRInputStream implements CharStream {
 		p = 0;
 	}
 
-    @Override
+    //Override
     public void consume() {
 		if (p >= n) {
 			assert LA(1) == IntStream.EOF;
@@ -137,7 +137,7 @@ public class ANTLRInputStream implements CharStream {
         }
     }
 
-    @Override
+    //Override
     public int LA(int i) {
 		if ( i==0 ) {
 			return 0; // undefined
@@ -166,30 +166,30 @@ public class ANTLRInputStream implements CharStream {
      *  last symbol has been read.  The index is the index of char to
 	 *  be returned from LA(1).
      */
-    @Override
+    //Override
     public int index() {
         return p;
     }
 
-	@Override
+	//Override
 	public int size() {
 		return n;
 	}
 
     /** mark/release do nothing; we have entire buffer */
-	@Override
+	//Override
 	public int mark() {
 		return -1;
     }
 
-	@Override
+	//Override
 	public void release(int marker) {
 	}
 
 	/** consume() ahead until p==index; can't just set p=index as we must
 	 *  update line and charPositionInLine. If we seek backwards, just set p
 	 */
-	@Override
+	//Override
 	public void seek(int index) {
 		if ( index<=p ) {
 			p = index; // just jump; don't update stream state (line, ...)
@@ -202,7 +202,7 @@ public class ANTLRInputStream implements CharStream {
 		}
 	}
 
-	@Override
+	//Override
 	public String getText(Interval interval) {
 		int start = interval.a;
 		int stop = interval.b;
@@ -215,7 +215,7 @@ public class ANTLRInputStream implements CharStream {
 		return new String(data, start, count);
 	}
 
-	@Override
+	//Override
 	public String getSourceName() {
 		if (name == null || name.isEmpty()) {
 			return UNKNOWN_SOURCE_NAME;
@@ -224,6 +224,6 @@ public class ANTLRInputStream implements CharStream {
 		return name;
 	}
 
-    @Override
+    //Override
     public String toString() { return new String(data); }
 }

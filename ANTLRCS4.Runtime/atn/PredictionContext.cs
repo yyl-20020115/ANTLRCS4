@@ -83,12 +83,12 @@ public abstract class PredictionContext {
 		return getReturnState(size() - 1) == EMPTY_RETURN_STATE;
 	}
 
-	@Override
+	//Override
 	public final int hashCode() {
 		return cachedHashCode;
 	}
 
-	@Override
+	//Override
 	public abstract bool equals(Object obj);
 
 	protected static int calculateEmptyHashCode() {
@@ -470,7 +470,7 @@ public abstract class PredictionContext {
 
 		List<PredictionContext> nodes = getAllContextNodes(context);
 		Collections.sort(nodes, new Comparator<PredictionContext>() {
-			@Override
+			//Override
 			public int compare(PredictionContext o1, PredictionContext o2) {
 				return o1.id - o2.id;
 			}

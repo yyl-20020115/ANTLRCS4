@@ -87,7 +87,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public int getCharPositionInLine() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getCharPositionInLine();
@@ -118,7 +118,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public Token nextToken() {
 		if (i >= tokens.size()) {
 			if (eofToken == null) {
@@ -149,7 +149,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public int getLine() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getLine();
@@ -184,7 +184,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public CharStream getInputStream() {
 		if (i < tokens.size()) {
 			return tokens.get(i).getInputStream();
@@ -203,7 +203,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public String getSourceName() {
 		if (sourceName != null) {
 			return sourceName;
@@ -220,7 +220,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public void setTokenFactory(TokenFactory<?> factory) {
 		this._factory = factory;
 	}
@@ -228,7 +228,7 @@ public class ListTokenSource implements TokenSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	//Override
 	public TokenFactory<?> getTokenFactory() {
 		return _factory;
 	}

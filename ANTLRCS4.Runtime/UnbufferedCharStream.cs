@@ -117,7 +117,7 @@ public class UnbufferedCharStream implements CharStream {
 		fill(1); // prime
 	}
 
-	@Override
+	//Override
 	public void consume() {
 		if (LA(1) == IntStream.EOF) {
 			throw new IllegalStateException("cannot consume EOF");
@@ -217,7 +217,7 @@ public class UnbufferedCharStream implements CharStream {
         data[n++] = c;
     }
 
-    @Override
+    //Override
     public int LA(int i) {
 		if ( i==-1 ) return lastChar; // special case
         sync(i);
@@ -234,7 +234,7 @@ public class UnbufferedCharStream implements CharStream {
 	 * protection against misuse where {@code seek()} is called on a mark or
 	 * {@code release()} is called in the wrong order.</p>
 	 */
-    @Override
+    //Override
     public int mark() {
 		if (numMarkers == 0) {
 			lastCharBufferStart = lastChar;
@@ -248,7 +248,7 @@ public class UnbufferedCharStream implements CharStream {
 	/** Decrement number of markers, resetting buffer if we hit 0.
 	 * @param marker
 	 */
-    @Override
+    //Override
     public void release(int marker) {
 		int expectedMark = -numMarkers;
 		if ( marker!=expectedMark ) {
@@ -266,7 +266,7 @@ public class UnbufferedCharStream implements CharStream {
 		}
     }
 
-    @Override
+    //Override
     public int index() {
 		return currentCharIndex;
     }
@@ -274,7 +274,7 @@ public class UnbufferedCharStream implements CharStream {
 	/** Seek to absolute character index, which might not be in the current
 	 *  sliding window.  Move {@code p} to {@code index-bufferStartIndex}.
 	 */
-    @Override
+    //Override
     public void seek(int index) {
 		if (index == currentCharIndex) {
 			return;
@@ -305,12 +305,12 @@ public class UnbufferedCharStream implements CharStream {
 		}
     }
 
-    @Override
+    //Override
     public int size() {
         throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
     }
 
-    @Override
+    //Override
     public String getSourceName() {
 		if (name == null || name.isEmpty()) {
 			return UNKNOWN_SOURCE_NAME;
@@ -319,7 +319,7 @@ public class UnbufferedCharStream implements CharStream {
 		return name;
 	}
 
-	@Override
+	//Override
 	public String getText(Interval interval) {
 		if (interval.a < 0 || interval.b < interval.a - 1) {
 			throw new IllegalArgumentException("invalid interval");

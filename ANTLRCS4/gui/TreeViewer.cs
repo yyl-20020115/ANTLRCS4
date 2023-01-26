@@ -60,7 +60,7 @@ public class TreeViewer extends JComponent {
 			this.ruleNames = ruleNames;
 		}
 
-		@Override
+		//Override
 		public String getText(Tree node) {
 			return String.valueOf(Trees.getNodeText(node, ruleNames));
 		}
@@ -71,7 +71,7 @@ public class TreeViewer extends JComponent {
 		public VariableExtentProvide(TreeViewer viewer) {
 			this.viewer = viewer;
 		}
-		@Override
+		//Override
 		public double getWidth(Tree tree) {
 			FontMetrics fontMetrics = viewer.getFontMetrics(viewer.font);
 			String s = viewer.getText(tree);
@@ -79,7 +79,7 @@ public class TreeViewer extends JComponent {
 			return w;
 		}
 
-		@Override
+		//Override
 		public double getHeight(Tree tree) {
 			FontMetrics fontMetrics = viewer.getFontMetrics(viewer.font);
 			int h = fontMetrics.getHeight() + viewer.nodeHeightPadding*2;
@@ -216,7 +216,7 @@ public class TreeViewer extends JComponent {
 		g.drawString(s, x, y);
 	}
 
-	@Override
+	//Override
 	public void paint(Graphics g) {
 		super.paint(g);
 
@@ -311,7 +311,7 @@ public class TreeViewer extends JComponent {
 		}
 	}
 
-	@Override
+	//Override
 	protected Graphics getComponentGraphics(Graphics g) {
 		Graphics2D g2d=(Graphics2D)g;
 		g2d.scale(scale, scale);
@@ -353,7 +353,7 @@ public class TreeViewer extends JComponent {
 		JButton ok = new JButton("OK");
 		ok.addActionListener(
 			new ActionListener() {
-				@Override
+				//Override
 				public void actionPerformed(ActionEvent e) {
                     dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
 				}
@@ -365,7 +365,7 @@ public class TreeViewer extends JComponent {
 		JButton png = new JButton("Export as PNG");
 		png.addActionListener(
 			new ActionListener() {
-				@Override
+				//Override
 				public void actionPerformed(ActionEvent e) {
 					generatePNGFile(viewer, dialog);
 				}
@@ -377,7 +377,7 @@ public class TreeViewer extends JComponent {
 		JButton svg = new JButton("Export as SVG");
 		svg.addActionListener(
 			new ActionListener() {
-			@Override
+			//Override
 			public void actionPerformed(ActionEvent e) {
 				generateSVGFile(viewer, dialog);
 			}
@@ -396,7 +396,7 @@ public class TreeViewer extends JComponent {
 
 		scaleSlider.addChangeListener(
 			new ChangeListener() {
-				@Override
+				//Override
 				public void stateChanged(ChangeEvent e) {
 					int v = scaleSlider.getValue();
 					viewer.setScale(v / 1000.0 + 1.0);
@@ -422,7 +422,7 @@ public class TreeViewer extends JComponent {
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
-			@Override
+			//Override
 			public void valueChanged(TreeSelectionEvent e) {
 
 				JTree selectedTree = (JTree) e.getSource();
@@ -448,7 +448,7 @@ public class TreeViewer extends JComponent {
 
 		// make viz
         WindowListener exitListener = new WindowAdapter() {
-	        @Override
+	        //Override
             public void windowClosing(WindowEvent e) {
                 prefs.putInt(DIALOG_WIDTH_PREFS_KEY, (int) dialog.getSize().getWidth());
                 prefs.putInt(DIALOG_HEIGHT_PREFS_KEY, (int) dialog.getSize().getHeight());
@@ -533,7 +533,7 @@ public class TreeViewer extends JComponent {
 		fileChooser.setSelectedFile(suggestedFile);
 		FileFilter filter = new FileFilter() {
 
-			@Override
+			//Override
 			public boolean accept(File pathname) {
 				if (pathname.isFile()) {
 					return pathname.getName().toLowerCase().endsWith(fileEnding);
@@ -542,7 +542,7 @@ public class TreeViewer extends JComponent {
 				return true;
 			}
 
-			@Override
+			//Override
 			public String getDescription() {
 				return description+" (*"+fileEnding+")";
 			}
@@ -638,10 +638,10 @@ public class TreeViewer extends JComponent {
 		Callable<JFrame> callable = new Callable<JFrame>() {
 			JFrame result;
 
-			@Override
+			//Override
 			public JFrame call() throws Exception {
 				SwingUtilities.invokeAndWait(new Runnable() {
-					@Override
+					//Override
 					public void run() {
 						result = showInDialog(viewer);
 					}
@@ -733,12 +733,12 @@ public class TreeViewer extends JComponent {
 		return -1;
 	}
 
-	@Override
+	//Override
 	public Font getFont() {
 		return font;
 	}
 
-	@Override
+	//Override
 	public void setFont(Font font) {
 		this.font = font;
 	}
@@ -836,7 +836,7 @@ public class TreeViewer extends JComponent {
 			this.viewer = viewer;
 		}
 
-		@Override
+		//Override
 		public String toString() {
 			return viewer.getText((Tree) this.getUserObject());
 		}
@@ -844,17 +844,17 @@ public class TreeViewer extends JComponent {
 
 	private static class EmptyIcon implements Icon {
 
-		@Override
+		//Override
 		public int getIconWidth() {
 			return 0;
 		}
 
-		@Override
+		//Override
 		public int getIconHeight() {
 			return 0;
 		}
 
-		@Override
+		//Override
 		public void paintIcon(Component c, Graphics g, int x, int y) {
 			/* Do nothing. */
 		}

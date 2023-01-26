@@ -31,9 +31,9 @@ public class AltAST : GrammarASTWithOptions {
 	public AltAST(int type, Token t) { super(type, t); }
 	public AltAST(int type, Token t, String text) { super(type,t,text); }
 
-	@Override
+	//Override
 	public AltAST dupNode() { return new AltAST(this); }
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

@@ -89,7 +89,7 @@ public class ANTLRMessage {
         return e;
     }
 
-	@Override
+	//Override
 	public String toString() {
 		return "Message{" +
 			   "errorType=" + getErrorType() +

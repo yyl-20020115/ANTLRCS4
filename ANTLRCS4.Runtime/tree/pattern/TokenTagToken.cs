@@ -78,7 +78,7 @@ public class TokenTagToken extends CommonToken {
 	 * <p>The implementation for {@link TokenTagToken} returns the token tag
 	 * formatted with {@code <} and {@code >} delimiters.</p>
 	 */
-	@Override
+	//Override
 	public String getText() {
 		if (label != null) {
 			return "<" + label + ":" + tokenName + ">";
@@ -93,7 +93,7 @@ public class TokenTagToken extends CommonToken {
 	 * <p>The implementation for {@link TokenTagToken} returns a string of the form
 	 * {@code tokenName:type}.</p>
 	 */
-	@Override
+	//Override
 	public String toString() {
 		return tokenName + ":" + type;
 	}

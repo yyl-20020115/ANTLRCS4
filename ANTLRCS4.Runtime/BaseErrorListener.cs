@@ -18,7 +18,7 @@ import java.util.BitSet;
  * @author Sam Harwell
  */
 public class BaseErrorListener implements ANTLRErrorListener {
-	@Override
+	//Override
 	public void syntaxError(Recognizer<?, ?> recognizer,
 							Object offendingSymbol,
 							int line,
@@ -28,7 +28,7 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
+	//Override
 	public void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
@@ -39,7 +39,7 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
+	//Override
 	public void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
@@ -49,7 +49,7 @@ public class BaseErrorListener implements ANTLRErrorListener {
 	{
 	}
 
-	@Override
+	//Override
 	public void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,

@@ -21,13 +21,13 @@ import java.util.List;
 
 public class TreePostScriptGenerator {
 	public class VariableExtentProvide implements NodeExtentProvider<Tree> {
-		@Override
+		//Override
 		public double getWidth(Tree tree) {
 			String s = getText(tree);
 			return doc.getWidth(s) + nodeWidthPadding*2;
 		}
 
-		@Override
+		//Override
 		public double getHeight(Tree tree) {
 			String s = getText(tree);
 			double h =

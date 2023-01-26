@@ -29,7 +29,7 @@ public class GrammarSyntaxMessage : ANTLRMessage {
 	}
 
     @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-    @Override
+    //Override
     public RecognitionException getCause() {
         return (RecognitionException)super.getCause();
     }

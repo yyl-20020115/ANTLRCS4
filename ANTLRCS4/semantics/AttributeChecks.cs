@@ -73,7 +73,7 @@ public class AttributeChecks implements ActionSplitterListener {
     // LISTENER METHODS
 
 	// $x.y
-	@Override
+	//Override
 	public void qualifiedAttr(String expr, Token x, Token y) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -109,7 +109,7 @@ public class AttributeChecks implements ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//Override
 	public void setAttr(String expr, Token x, Token rhs) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -129,7 +129,7 @@ public class AttributeChecks implements ActionSplitterListener {
 		new AttributeChecks(g, r, alt, node, rhs).examineAction();
 	}
 
-	@Override
+	//Override
     public void attr(String expr, Token x) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -153,7 +153,7 @@ public class AttributeChecks implements ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//Override
 	public void nonLocalAttr(String expr, Token x, Token y) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
@@ -167,7 +167,7 @@ public class AttributeChecks implements ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
@@ -181,7 +181,7 @@ public class AttributeChecks implements ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//Override
 	public void text(String text) { }
 
 	// don't care

@@ -23,10 +23,10 @@ public class ActionAST : GrammarASTWithOptions , RuleElementAST {
     public ActionAST(int type) { super(type); }
     public ActionAST(int type, Token t) { super(type, t); }
 
-	@Override
+	//Override
 	public ActionAST dupNode() { return new ActionAST(this); }
 
-	@Override
+	//Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 
 	public void setScope(GrammarAST scope) {

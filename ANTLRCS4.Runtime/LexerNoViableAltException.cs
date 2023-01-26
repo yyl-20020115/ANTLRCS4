@@ -37,12 +37,12 @@ public class LexerNoViableAltException extends RecognitionException {
 		return deadEndConfigs;
 	}
 
-	@Override
+	//Override
 	public CharStream getInputStream() {
 		return (CharStream)super.getInputStream();
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		String symbol = "";
 		if (startIndex >= 0 && startIndex < getInputStream().size()) {

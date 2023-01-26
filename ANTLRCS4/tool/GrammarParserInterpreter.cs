@@ -78,7 +78,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		stateToAltsMap = new int[g.atn.states.size()][];
 	}
 
-	@Override
+	//Override
 	protected InterpreterRuleContext createInterpreterRuleContext(ParserRuleContext parent,
 																  int invokingStateNumber,
 																  int ruleIndex)
@@ -86,7 +86,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		return new GrammarInterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
 	}
 
-	@Override
+	//Override
 	public void reset() {
 		super.reset();
 		overrideDecisionRoot = null;
@@ -159,7 +159,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  We use stateToAltsMap as a cache to avoid expensive calls to
 	 *  getRecursiveOpAlts().
 	 */
-	@Override
+	//Override
 	protected int visitDecisionState(DecisionState p) {
 		int predictedAlt = super.visitDecisionState(p);
 		if( p.getNumberOfTransitions() > 1) {
@@ -430,7 +430,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 */
 	public static class BailButConsumeErrorStrategy : DefaultErrorStrategy {
 		public int firstErrorTokenIndex = -1;
-		@Override
+		//Override
 		public void recover(Parser recognizer, RecognitionException e) {
 			int errIndex = recognizer.getInputStream().index();
 			if ( firstErrorTokenIndex == -1 ) {
@@ -443,7 +443,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			}
 		}
 
-		@Override
+		//Override
 		public Token recoverInline(Parser recognizer) throws RecognitionException {
 			int errIndex = recognizer.getInputStream().index();
 			if ( firstErrorTokenIndex == -1 ) {
@@ -456,7 +456,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			throw e;
 		}
 
-		@Override
+		//Override
 		public void sync(Parser recognizer) { } // don't consume anything; let it fail later
 	}
 }

@@ -99,7 +99,7 @@ public enum PredictionMode {
 		 * The hash code is only a function of the {@link ATNState#stateNumber}
 		 * and {@link ATNConfig#context}.
 		 */
-		@Override
+		//Override
 		public int hashCode(ATNConfig o) {
 			int hashCode = MurmurHash.initialize(7);
 			hashCode = MurmurHash.update(hashCode, o.state.stateNumber);
@@ -108,7 +108,7 @@ public enum PredictionMode {
 	        return hashCode;
 		}
 
-		@Override
+		//Override
 		public boolean equals(ATNConfig a, ATNConfig b) {
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;

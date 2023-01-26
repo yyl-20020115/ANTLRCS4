@@ -59,7 +59,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		this.exactOnly = exactOnly;
 	}
 
-	@Override
+	//Override
 	public void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
@@ -80,7 +80,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	@Override
+	//Override
 	public void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
@@ -95,7 +95,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	@Override
+	//Override
 	public void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,

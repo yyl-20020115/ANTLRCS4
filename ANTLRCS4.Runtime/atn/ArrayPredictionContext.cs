@@ -20,8 +20,9 @@ public class ArrayPredictionContext : PredictionContext {
  	 */
 	public readonly int[] returnStates;
 
-	public ArrayPredictionContext(SingletonPredictionContext a) {
-		this(new PredictionContext[] {a.parent}, new int[] {a.returnState});
+	public ArrayPredictionContext(SingletonPredictionContext a): this(new PredictionContext[] { a.parent }, new int[] { a.returnState })
+    {
+		;
 	}
 
 	public ArrayPredictionContext(PredictionContext[] parents, int[] returnStates) {
@@ -51,7 +52,7 @@ public class ArrayPredictionContext : PredictionContext {
 		return returnStates[index];
 	}
 
-//	@Override
+//	//Override
 //	public int findReturnState(int returnState) {
 //		return Arrays.binarySearch(returnStates, returnState);
 //	}

@@ -31,13 +31,13 @@ public class GrammarInterpreterRuleContext : InterpreterRuleContext {
 		this.outerAltNum = outerAltNum;
 	}
 
-	@Override
+	//Override
 	public int getAltNumber() {
 		// override here and called old functionality; makes it backward compatible vs changing names
 		return getOuterAltNum();
 	}
 
-	@Override
+	//Override
 	public void setAltNumber(int altNumber) {
 		setOuterAltNum(altNumber);
 	}

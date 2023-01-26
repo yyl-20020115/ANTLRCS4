@@ -18,7 +18,7 @@ public class XPathTokenAnywhereElement extends XPathElement {
 		this.tokenType = tokenType;
 	}
 
-	@Override
+	//Override
 	public Collection<ParseTree> evaluate(ParseTree t) {
 		return Trees.findAllTokenNodes(t, tokenType);
 	}

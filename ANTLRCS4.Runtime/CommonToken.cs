@@ -147,17 +147,17 @@ public class CommonToken implements WritableToken, Serializable {
 		}
 	}
 
-	@Override
+	//Override
 	public int getType() {
 		return type;
 	}
 
-	@Override
+	//Override
 	public void setLine(int line) {
 		this.line = line;
 	}
 
-	@Override
+	//Override
 	public String getText() {
 		if ( text!=null ) {
 			return text;
@@ -183,42 +183,42 @@ public class CommonToken implements WritableToken, Serializable {
 	 * should be obtained from the input along with the start and stop indexes
 	 * of the token.
 	 */
-	@Override
+	//Override
 	public void setText(String text) {
 		this.text = text;
 	}
 
-	@Override
+	//Override
 	public int getLine() {
 		return line;
 	}
 
-	@Override
+	//Override
 	public int getCharPositionInLine() {
 		return charPositionInLine;
 	}
 
-	@Override
+	//Override
 	public void setCharPositionInLine(int charPositionInLine) {
 		this.charPositionInLine = charPositionInLine;
 	}
 
-	@Override
+	//Override
 	public int getChannel() {
 		return channel;
 	}
 
-	@Override
+	//Override
 	public void setChannel(int channel) {
 		this.channel = channel;
 	}
 
-	@Override
+	//Override
 	public void setType(int type) {
 		this.type = type;
 	}
 
-	@Override
+	//Override
 	public int getStartIndex() {
 		return start;
 	}
@@ -227,7 +227,7 @@ public class CommonToken implements WritableToken, Serializable {
 		this.start = start;
 	}
 
-	@Override
+	//Override
 	public int getStopIndex() {
 		return stop;
 	}
@@ -236,27 +236,27 @@ public class CommonToken implements WritableToken, Serializable {
 		this.stop = stop;
 	}
 
-	@Override
+	//Override
 	public int getTokenIndex() {
 		return index;
 	}
 
-	@Override
+	//Override
 	public void setTokenIndex(int index) {
 		this.index = index;
 	}
 
-	@Override
+	//Override
 	public TokenSource getTokenSource() {
 		return source.a;
 	}
 
-	@Override
+	//Override
 	public CharStream getInputStream() {
 		return source.b;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return toString(null);
 	}

@@ -22,7 +22,7 @@ public class XPathTokenElement extends XPathElement {
 		this.tokenType = tokenType;
 	}
 
-	@Override
+	//Override
 	public Collection<ParseTree> evaluate(ParseTree t) {
 		// return all children of t that match nodeName
 		List<ParseTree> nodes = new ArrayList<ParseTree>();

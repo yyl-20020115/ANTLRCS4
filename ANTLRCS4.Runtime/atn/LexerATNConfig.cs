@@ -69,7 +69,7 @@ public class LexerATNConfig extends ATNConfig {
 		return passedThroughNonGreedyDecision;
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		int hashCode = MurmurHash.initialize(7);
 		hashCode = MurmurHash.update(hashCode, state.stateNumber);
@@ -82,7 +82,7 @@ public class LexerATNConfig extends ATNConfig {
 		return hashCode;
 	}
 
-	@Override
+	//Override
 	public boolean equals(ATNConfig other) {
 		if (this == other) {
 			return true;

@@ -19,7 +19,7 @@ public class ErrorNodeImpl extends TerminalNodeImpl implements ErrorNode {
 		super(token);
 	}
 
-	@Override
+	//Override
 	public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 		return visitor.visitErrorNode(this);
 	}

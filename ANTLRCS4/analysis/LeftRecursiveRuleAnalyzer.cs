@@ -62,12 +62,12 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		codegenTemplates = CodeGenerator.create(tool, null, language).getTemplates();
 	}
 
-	@Override
+	//Override
 	public void setReturnValues(GrammarAST t) {
 		retvals = t;
 	}
 
-	@Override
+	//Override
 	public void setAltAssoc(AltAST t, int alt) {
 		ASSOC assoc = ASSOC.left;
 		if ( t.getOptions()!=null ) {
@@ -93,7 +93,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 //		System.out.println("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
 	}
 
-	@Override
+	//Override
 	public void binaryAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
@@ -123,7 +123,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		//System.out.println("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//Override
 	public void prefixAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		stripAltLabel(altTree);
@@ -141,7 +141,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		//System.out.println("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//Override
 	public void suffixAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
@@ -163,7 +163,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 //		System.out.println("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//Override
 	public void otherAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		stripAltLabel(altTree);
@@ -383,7 +383,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		return p+1;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return "PrecRuleOperatorCollector{" +
 			   "binaryAlts=" + binaryAlts +

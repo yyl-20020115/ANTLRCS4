@@ -65,7 +65,7 @@ public final class LexerCustomAction implements LexerAction {
 	 *
 	 * @return This method returns {@link LexerActionType#CUSTOM}.
 	 */
-	@Override
+	//Override
 	public LexerActionType getActionType() {
 		return LexerActionType.CUSTOM;
 	}
@@ -81,7 +81,7 @@ public final class LexerCustomAction implements LexerAction {
 	 *
 	 * @return This method returns {@code true}.
 	 */
-	@Override
+	//Override
 	public boolean isPositionDependent() {
 		return true;
 	}
@@ -92,12 +92,12 @@ public final class LexerCustomAction implements LexerAction {
 	 * <p>Custom actions are implemented by calling {@link Lexer#action} with the
 	 * appropriate rule and action indexes.</p>
 	 */
-	@Override
+	//Override
 	public void execute(Lexer lexer) {
 		lexer.action(null, ruleIndex, actionIndex);
 	}
 
-	@Override
+	//Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
@@ -106,7 +106,7 @@ public final class LexerCustomAction implements LexerAction {
 		return MurmurHash.finish(hash, 3);
 	}
 
-	@Override
+	//Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;

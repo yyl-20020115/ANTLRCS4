@@ -14,7 +14,7 @@ package org.antlr.v4.runtime.atn;
 public final class PlusBlockStartState extends BlockStartState {
 	public PlusLoopbackState loopBackState;
 
-	@Override
+	//Override
 	public int getStateType() {
 		return PLUS_BLOCK_START;
 	}

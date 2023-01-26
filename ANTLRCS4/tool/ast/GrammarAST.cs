@@ -187,7 +187,7 @@ public class GrammarAST : CommonTree {
 		token.setType(type);
 	}
 //
-//	@Override
+//	//Override
 //	public String getText() {
 //		if ( textOverride!=null ) return textOverride;
 //        if ( token!=null ) {
@@ -201,12 +201,12 @@ public class GrammarAST : CommonTree {
 		token.setText(text); // we delete surrounding tree, so ok to alter
 	}
 
-//	@Override
+//	//Override
 //	public bool equals(Object obj) {
 //		return super.equals(obj);
 //	}
 
-	@Override
+	//Override
     public GrammarAST dupNode() {
         return new GrammarAST(this);
     }

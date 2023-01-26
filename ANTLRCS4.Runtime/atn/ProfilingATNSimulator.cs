@@ -52,7 +52,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		}
 	}
 
-	@Override
+	//Override
 	public int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext) {
 		try {
 			this._sllStopIndex = -1;
@@ -91,7 +91,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		}
 	}
 
-	@Override
+	//Override
 	protected DFAState getExistingTargetState(DFAState previousD, int t) {
 		// this method is called after each time the input position advances
 		// during SLL prediction
@@ -111,14 +111,14 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		return existingTargetState;
 	}
 
-	@Override
+	//Override
 	protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
 		DFAState state = super.computeTargetState(dfa, previousD, t);
 		currentState = state;
 		return state;
 	}
 
-	@Override
+	//Override
 	protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, boolean fullCtx) {
 		if (fullCtx) {
 			// this method is called after each time the input position advances
@@ -151,7 +151,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		return reachConfigs;
 	}
 
-	@Override
+	//Override
 	protected boolean evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, boolean fullCtx) {
 		boolean result = super.evalSemanticContext(pred, parserCallStack, alt, fullCtx);
 		if (!(pred is SemanticContext.PrecedencePredicate)) {
@@ -165,7 +165,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		return result;
 	}
 
-	@Override
+	//Override
 	protected void reportAttemptingFullContext(DFA dfa, BitSet conflictingAlts, ATNConfigSet configs, int startIndex, int stopIndex) {
 		if ( conflictingAlts!=null ) {
 			conflictingAltResolvedBySLL = conflictingAlts.nextSetBit(0);
@@ -177,7 +177,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		super.reportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
 	}
 
-	@Override
+	//Override
 	protected void reportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex) {
 		if ( prediction != conflictingAltResolvedBySLL ) {
 			decisions[currentDecision].contextSensitivities.add(
@@ -187,7 +187,7 @@ public class ProfilingATNSimulator extends ParserATNSimulator {
 		super.reportContextSensitivity(dfa, prediction, configs, startIndex, stopIndex);
 	}
 
-	@Override
+	//Override
 	protected void reportAmbiguity(DFA dfa, DFAState D, int startIndex, int stopIndex, boolean exact,
 								   BitSet ambigAlts, ATNConfigSet configs)
 	{

@@ -10,7 +10,7 @@ package org.antlr.v4.runtime.atn;
 public final class BlockEndState extends ATNState {
 	public BlockStartState startState;
 
-	@Override
+	//Override
 	public int getStateType() {
 		return BLOCK_END;
 	}

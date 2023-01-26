@@ -11,7 +11,7 @@ package org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  */
 public final class BasicBlockStartState extends BlockStartState {
-	@Override
+	//Override
 	public int getStateType() {
 		return BLOCK_START;
 	}

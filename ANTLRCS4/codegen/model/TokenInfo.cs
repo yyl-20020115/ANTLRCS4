@@ -9,7 +9,7 @@ public class TokenInfo {
 		this.name = name;
 	}
 
-	@Override
+	//Override
 	public String toString() {
 		return "TokenInfo{" +
 				"type=" + type +
