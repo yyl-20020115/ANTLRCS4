@@ -4,28 +4,29 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.IntervalSet;
+namespace org.antlr.v4.runtime.atn;
 
-public final class NotSetTransition extends SetTransition {
+
+public class NotSetTransition : SetTransition {
 	public NotSetTransition(ATNState target, IntervalSet set) {
 		super(target, set);
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return NOT_SET;
 	}
 
-	@Override
+	//@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol
 			&& symbol <= maxVocabSymbol
 			&& !super.matches(symbol, minVocabSymbol, maxVocabSymbol);
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return '~'+super.toString();
 	}

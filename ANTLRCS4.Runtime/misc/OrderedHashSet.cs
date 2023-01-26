@@ -66,7 +66,7 @@ public class OrderedHashSet<T> : HashSet<T> {
 		}
 
 //		System.out.print("equals " + this + ", " + o+" = ");
-		bool same = elements!=null && elements.equals(((OrderedHashSet<?>)o).elements);
+		bool same = elements!=null && elements.equals(((OrderedHashSet<T>)o).elements);
 //		System.out.println(same);
 		return same;
 	}

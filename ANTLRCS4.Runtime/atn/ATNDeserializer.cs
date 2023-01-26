@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /** Deserialize ATNs for JavaTarget; it's complicated by the fact that java requires
@@ -19,10 +22,10 @@ public class ATNDeserializer {
 		SERIALIZED_VERSION = 4;
 	}
 
-	private final ATNDeserializationOptions deserializationOptions;
+	private readonly ATNDeserializationOptions deserializationOptions;
 
-	public ATNDeserializer() {
-		this(ATNDeserializationOptions.getDefaultOptions());
+	public ATNDeserializer(): this(ATNDeserializationOptions.getDefaultOptions())
+    {
 	}
 
 	public ATNDeserializer(ATNDeserializationOptions deserializationOptions) {
@@ -52,8 +55,8 @@ public class ATNDeserializer {
 		//
 		// STATES
 		//
-		List<Pair<LoopEndState, Integer>> loopBackStateNumbers = new ArrayList<Pair<LoopEndState, Integer>>();
-		List<Pair<BlockStartState, Integer>> endStateNumbers = new ArrayList<Pair<BlockStartState, Integer>>();
+		List<Pair<LoopEndState, int>> loopBackStateNumbers = new ();
+		List<Pair<BlockStartState, int>> endStateNumbers = new ();
 		int nstates = data[p++];
 		for (int i=0; i<nstates; i++) {
 			int stype = data[p++];
@@ -67,21 +70,21 @@ public class ATNDeserializer {
 			ATNState s = stateFactory(stype, ruleIndex);
 			if ( stype == ATNState.LOOP_END ) { // special case
 				int loopBackStateNumber = data[p++];
-				loopBackStateNumbers.add(new Pair<LoopEndState, Integer>((LoopEndState)s, loopBackStateNumber));
+				loopBackStateNumbers.add(new Pair<LoopEndState, int>((LoopEndState)s, loopBackStateNumber));
 			}
 			else if (s is BlockStartState) {
 				int endStateNumber = data[p++];
-				endStateNumbers.add(new Pair<BlockStartState, Integer>((BlockStartState)s, endStateNumber));
+				endStateNumbers.add(new Pair<BlockStartState, int>((BlockStartState)s, endStateNumber));
 			}
 			atn.addState(s);
 		}
 
 		// delay the assignment of loop back and end states until we know all the state instances have been initialized
-		for (Pair<LoopEndState, Integer> pair : loopBackStateNumbers) {
+		foreach (Pair<LoopEndState, int> pair in loopBackStateNumbers) {
 			pair.a.loopBackState = atn.states.get(pair.b);
 		}
 
-		for (Pair<BlockStartState, Integer> pair : endStateNumbers) {
+		foreach (Pair<BlockStartState, int> pair in endStateNumbers) {
 			pair.a.endState = (BlockEndState)atn.states.get(pair.b);
 		}
 
@@ -139,7 +142,7 @@ public class ATNDeserializer {
 		//
 		// SETS
 		//
-		List<IntervalSet> sets = new ArrayList<IntervalSet>();
+		List<IntervalSet> sets = new ();
 		p = deserializeSets(data, p, sets);
 
 		//
@@ -164,7 +167,7 @@ public class ATNDeserializer {
 		}
 
 		// edges for rule stop states can be derived, so they aren't serialized
-		for (ATNState state : atn.states) {
+		foreach (ATNState state in atn.states) {
 			for (int i = 0; i < state.getNumberOfTransitions(); i++) {
 				Transition t = state.transition(i);
 				if (!(t is RuleTransition)) {
@@ -184,7 +187,7 @@ public class ATNDeserializer {
 			}
 		}
 
-		for (ATNState state : atn.states) {
+		foreach (ATNState state in atn.states) {
 			if (state is BlockStartState) {
 				// we need to know the end state to set its start state
 				if (((BlockStartState)state).endState == null) {
@@ -226,7 +229,7 @@ public class ATNDeserializer {
 		for (int i=1; i<=ndecisions; i++) {
 			int s = data[p++];
 			DecisionState decState = (DecisionState)atn.states.get(s);
-			atn.decisionToState.add(decState);
+			atn.decisionToState.Add(decState);
 			decState.decision = i-1;
 		}
 
@@ -235,7 +238,7 @@ public class ATNDeserializer {
 		//
 		if (atn.grammarType == ATNType.LEXER) {
 			atn.lexerActions = new LexerAction[data[p++]];
-			for (int i = 0; i < atn.lexerActions.length; i++) {
+			for (int i = 0; i < atn.lexerActions.Length; i++) {
 				LexerActionType actionType = LexerActionType.values()[data[p++]];
 				int data1 = data[p++];
 				int data2 = data[p++];
@@ -277,7 +280,7 @@ public class ATNDeserializer {
 				if (atn.ruleToStartState[i].isLeftRecursiveRule) {
 					// wrap from the beginning of the rule to the StarLoopEntryState
 					endState = null;
-					for (ATNState state : atn.states) {
+					foreach (ATNState state in atn.states) {
 						if (state.ruleIndex != i) {
 							continue;
 						}
@@ -308,8 +311,8 @@ public class ATNDeserializer {
 				}
 
 				// all non-excluded transitions that currently target end state need to target blockEnd instead
-				for (ATNState state : atn.states) {
-					for (Transition transition : state.transitions) {
+				foreach (ATNState state in atn.states) {
+					foreach (Transition transition in state.transitions) {
 						if (transition == excludeTransition) {
 							continue;
 						}
@@ -351,7 +354,7 @@ public class ATNDeserializer {
 			int nintervals = data[p];
 			p++;
 			IntervalSet set = new IntervalSet();
-			sets.add(set);
+			sets.Add(set);
 
 			bool containsEof = data[p++] != 0;
 			if (containsEof) {
@@ -397,7 +400,7 @@ public class ATNDeserializer {
 
 	protected void verifyATN(ATN atn) {
 		// verify assumptions
-		for (ATNState state : atn.states) {
+		foreach (ATNState state in atn.states) {
 			if (state == null) {
 				continue;
 			}
@@ -517,7 +520,7 @@ public class ATNDeserializer {
 			case Transition.WILDCARD : return new WildcardTransition(target);
 		}
 
-		throw new IllegalArgumentException("The specified transition type is not valid.");
+		throw new ArgumentException("The specified transition type is not valid.");
 	}
 
 	protected ATNState stateFactory(int type, int ruleIndex) {
@@ -547,28 +550,28 @@ public class ATNDeserializer {
 
 	protected LexerAction lexerActionFactory(LexerActionType type, int data1, int data2) {
 		switch (type) {
-		case CHANNEL:
+		case LexerActionType.CHANNEL:
 			return new LexerChannelAction(data1);
 
-		case CUSTOM:
+		case LexerActionType.CUSTOM:
 			return new LexerCustomAction(data1, data2);
 
-		case MODE:
+		case LexerActionType.MODE:
 			return new LexerModeAction(data1);
 
-		case MORE:
+		case LexerActionType.MORE:
 			return LexerMoreAction.INSTANCE;
 
-		case POP_MODE:
+		case LexerActionType.POP_MODE:
 			return LexerPopModeAction.INSTANCE;
 
-		case PUSH_MODE:
+		case LexerActionType.PUSH_MODE:
 			return new LexerPushModeAction(data1);
 
-		case SKIP:
+		case LexerActionType.SKIP:
 			return LexerSkipAction.INSTANCE;
 
-		case TYPE:
+		case LexerActionType.TYPE:
 			return new LexerTypeAction(data1);
 
 		default:

@@ -4,12 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
-import org.antlr.v4.runtime.dfa.DFA;
+namespace org.antlr.v4.runtime.atn;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class provides access to specific and aggregate statistics gathered
@@ -18,7 +16,7 @@ import java.util.List;
  * @since 4.3
  */
 public class ParseInfo {
-	protected final ProfilingATNSimulator atnSimulator;
+	protected readonly ProfilingATNSimulator atnSimulator;
 
 	public ParseInfo(ProfilingATNSimulator atnSimulator) {
 		this.atnSimulator = atnSimulator;
@@ -43,12 +41,12 @@ public class ParseInfo {
 	 * @return A list of decision numbers which required one or more
 	 * full-context predictions during parsing.
 	 */
-	public List<Integer> getLLDecisions() {
+	public List<int> getLLDecisions() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
-		List<Integer> LL = new ArrayList<Integer>();
-		for (int i=0; i<decisions.length; i++) {
+		List<int> LL = new ();
+		for (int i=0; i<decisions.Length; i++) {
 			long fallBack = decisions[i].LL_Fallback;
-			if ( fallBack>0 ) LL.add(i);
+			if ( fallBack>0 ) LL.Add(i);
 		}
 		return LL;
 	}
@@ -61,7 +59,7 @@ public class ParseInfo {
 	public long getTotalTimeInPrediction() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long t = 0;
-		for (int i=0; i<decisions.length; i++) {
+		for (int i=0; i<decisions.Length; i++) {
 			t += decisions[i].timeInPrediction;
 		}
 		return t;
@@ -75,7 +73,7 @@ public class ParseInfo {
 	public long getTotalSLLLookaheadOps() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long k = 0;
-		for (int i = 0; i < decisions.length; i++) {
+		for (int i = 0; i < decisions.Length; i++) {
 			k += decisions[i].SLL_TotalLook;
 		}
 		return k;
@@ -89,7 +87,7 @@ public class ParseInfo {
 	public long getTotalLLLookaheadOps() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long k = 0;
-		for (int i = 0; i < decisions.length; i++) {
+		for (int i = 0; i < decisions.Length; i++) {
 			k += decisions[i].LL_TotalLook;
 		}
 		return k;
@@ -102,7 +100,7 @@ public class ParseInfo {
 	public long getTotalSLLATNLookaheadOps() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long k = 0;
-		for (int i = 0; i < decisions.length; i++) {
+		for (int i = 0; i < decisions.Length; i++) {
 			k += decisions[i].SLL_ATNTransitions;
 		}
 		return k;
@@ -115,7 +113,7 @@ public class ParseInfo {
 	public long getTotalLLATNLookaheadOps() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long k = 0;
-		for (int i = 0; i < decisions.length; i++) {
+		for (int i = 0; i < decisions.Length; i++) {
 			k += decisions[i].LL_ATNTransitions;
 		}
 		return k;
@@ -132,7 +130,7 @@ public class ParseInfo {
 	public long getTotalATNLookaheadOps() {
 		DecisionInfo[] decisions = atnSimulator.getDecisionInfo();
 		long k = 0;
-		for (int i = 0; i < decisions.length; i++) {
+		for (int i = 0; i < decisions.Length; i++) {
 			k += decisions[i].SLL_ATNTransitions;
 			k += decisions[i].LL_ATNTransitions;
 		}
@@ -146,7 +144,7 @@ public class ParseInfo {
 	public int getDFASize() {
 		int n = 0;
 		DFA[] decisionToDFA = atnSimulator.decisionToDFA;
-		for (int i = 0; i < decisionToDFA.length; i++) {
+		for (int i = 0; i < decisionToDFA.Length; i++) {
 			n += getDFASize(i);
 		}
 		return n;

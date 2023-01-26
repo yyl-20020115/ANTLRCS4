@@ -44,7 +44,7 @@ public class InterpreterDataReader {
 		InterpreterData result = new InterpreterData();
 		result.ruleNames = new ArrayList<String>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+		using (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 		    String line;
 		  	List<String> literalNames = new ArrayList<String>();
 		  	List<String> symbolicNames = new ArrayList<String>();
@@ -112,7 +112,7 @@ public class InterpreterDataReader {
 		  	ATNDeserializer deserializer = new ATNDeserializer();
 		  	result.atn = deserializer.deserialize(serializedATN);
 		}
-		catch (java.io.IOException e) {
+		catch (IOException e) {
 			// We just swallow the error and return empty objects instead.
 		}
 

@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 /**
  * Vacuum all input from a {@link Reader}/{@link InputStream} and then treat it
@@ -45,28 +47,31 @@ public class ANTLRInputStream : CharStream {
 		this.n = numberOfActualCharsInArray;
 	}
 
-    public ANTLRInputStream(TextReader r) {
-        this(r, INITIAL_BUFFER_SIZE, READ_BUFFER_SIZE);
+    public ANTLRInputStream(TextReader r) :this(r, INITIAL_BUFFER_SIZE, READ_BUFFER_SIZE){
     }
 
-    public ANTLRInputStream(TextReader r, int initialSize){
-        this(r, initialSize, READ_BUFFER_SIZE);
+    public ANTLRInputStream(TextReader r, int initialSize): this(r, initialSize, READ_BUFFER_SIZE)
+    {
+        ;
     }
 
     public ANTLRInputStream(TextReader r, int initialSize, int readChunkSize) {
         load(r, initialSize, readChunkSize);
     }
 
-	public ANTLRInputStream(Stream input) {
-		this(new StreamReader(input), INITIAL_BUFFER_SIZE);
+	public ANTLRInputStream(Stream input): this(new StreamReader(input), INITIAL_BUFFER_SIZE)
+    {
+		;
 	}
 
-	public ANTLRInputStream(Stream input, int initialSize) {
-		this(new StreamReader(input), initialSize);
+	public ANTLRInputStream(Stream input, int initialSize) : this(new StreamReader(input), initialSize)
+    {
+		;
 	}
 
-	public ANTLRInputStream(Stream input, int initialSize, int readChunkSize) {
-		this(new StreamReader(input), initialSize, readChunkSize);
+	public ANTLRInputStream(Stream input, int initialSize, int readChunkSize): this(new StreamReader(input), initialSize, readChunkSize)
+    {
+		;
 	}
 
 	public void load(TextReader r, int size, int readChunkSize)
@@ -90,7 +95,7 @@ public class ANTLRInputStream : CharStream {
    			do {
    				if ( p+readChunkSize > data.Length ) { // overflow?
    					// System.out.println("### overflow p="+p+", data.length="+data.length);
-   					data = Arrays.copyOf(data, data.length * 2);
+   					data = Arrays.copyOf(data, data.Length * 2);
    				}
    				numRead = r.Read(data, p, readChunkSize);
    				// System.out.println("read "+numRead+" chars; p was "+p+" is now "+(p+numRead));
@@ -117,7 +122,8 @@ public class ANTLRInputStream : CharStream {
     //@Override
     public void consume() {
 		if (p >= n) {
-			assert LA(1) == IntStream.EOF;
+			if( LA(1) == IntStream.EOF)
+
 			throw new IllegalStateException("cannot consume EOF");
 		}
 
@@ -187,7 +193,7 @@ public class ANTLRInputStream : CharStream {
 			return;
 		}
 		// seek forward, consume until p hits index or n (whichever comes first)
-		index = Math.min(index, n);
+		index = Math.Min(index, n);
 		while ( p<index ) {
 			consume();
 		}
@@ -208,8 +214,8 @@ public class ANTLRInputStream : CharStream {
 
 	//@Override
 	public String getSourceName() {
-		if (name == null || name.isEmpty()) {
-			return UNKNOWN_SOURCE_NAME;
+		if (string.IsNullOrEmpty(name)) {
+			return IntStream.UNKNOWN_SOURCE_NAME;
 		}
 
 		return name;
@@ -217,4 +223,5 @@ public class ANTLRInputStream : CharStream {
 
     //@Override
     public override String ToString() { return new String(data); }
+
 }

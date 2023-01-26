@@ -4,32 +4,35 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime;
 
 
 public class LexerInterpreter : Lexer {
-	protected final String grammarFileName;
-	protected final ATN atn;
+	protected String grammarFileName;
+	protected ATN atn;
 
-	@Deprecated
-	protected final String[] tokenNames;
-	protected final String[] ruleNames;
-	protected final String[] channelNames;
-	protected final String[] modeNames;
+	//@Deprecated
+	protected String[] tokenNames;
+	protected String[] ruleNames;
+	protected String[] channelNames;
+	protected String[] modeNames;
 
 
-	private final Vocabulary vocabulary;
+	private Vocabulary vocabulary;
 
-	protected final DFA[] _decisionToDFA;
-	protected final PredictionContextCache _sharedContextCache =
+	protected DFA[] _decisionToDFA;
+	protected PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 
-	@Deprecated
-	public LexerInterpreter(String grammarFileName, Collection<String> tokenNames, Collection<String> ruleNames, Collection<String> modeNames, ATN atn, CharStream input) {
+	//@Deprecated
+	public LexerInterpreter(String grammarFileName, ICollection<String> tokenNames, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) {
 		this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.toArray(new String[0])), ruleNames, new ArrayList<String>(), modeNames, atn, input);
 	}
 
-	@Deprecated
+	//@Deprecated
 	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, Collection<String> ruleNames, Collection<String> modeNames, ATN atn, CharStream input) {
 		this(grammarFileName, vocabulary, ruleNames, new ArrayList<String>(), modeNames, atn, input);
 	}
@@ -60,43 +63,43 @@ public class LexerInterpreter : Lexer {
 		this._interp = new LexerATNSimulator(this,atn,_decisionToDFA,_sharedContextCache);
 	}
 
-	@Override
+	//@Override
 	public ATN getATN() {
 		return atn;
 	}
 
-	@Override
-	public String getGrammarFileName() {
+    //@Override
+    public String getGrammarFileName() {
 		return grammarFileName;
 	}
 
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
+    //@Override
+    //@Deprecated
+    public String[] getTokenNames() {
 		return tokenNames;
 	}
 
-	@Override
-	public String[] getRuleNames() {
+    //@Override
+    public String[] getRuleNames() {
 		return ruleNames;
 	}
 
-	@Override
-	public String[] getChannelNames() {
+    //@Override
+    public String[] getChannelNames() {
 		return channelNames;
 	}
 
-	@Override
-	public String[] getModeNames() {
+    //@Override
+    public String[] getModeNames() {
 		return modeNames;
 	}
 
-	@Override
-	public Vocabulary getVocabulary() {
+    //@Override
+    public Vocabulary getVocabulary() {
 		if (vocabulary != null) {
 			return vocabulary;
 		}
 
-		return super.getVocabulary();
+		return base.getVocabulary();
 	}
 }

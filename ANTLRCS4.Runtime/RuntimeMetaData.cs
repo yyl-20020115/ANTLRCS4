@@ -68,7 +68,7 @@ public class RuntimeMetaData
 	 * omitted.</li>
 	 * </ul>
 	 */
-    public static final String VERSION = "4.11.1";
+    public static readonly String VERSION = "4.11.1";
 
 	/**
 	 * Gets the currently executing version of the ANTLR 4 runtime library.
@@ -146,28 +146,28 @@ public class RuntimeMetaData
     public static void checkVersion(String generatingToolVersion, String compileTimeVersion)
     {
         String runtimeVersion = VERSION;
-        boolean runtimeConflictsWithGeneratingTool = false;
-        boolean runtimeConflictsWithCompileTimeTool = false;
+        bool runtimeConflictsWithGeneratingTool = false;
+        bool runtimeConflictsWithCompileTimeTool = false;
 
         if (generatingToolVersion != null)
         {
             runtimeConflictsWithGeneratingTool =
-                !runtimeVersion.equals(generatingToolVersion) &&
-                !getMajorMinorVersion(runtimeVersion).equals(getMajorMinorVersion(generatingToolVersion));
+                !runtimeVersion.Equals(generatingToolVersion) &&
+                !getMajorMinorVersion(runtimeVersion).Equals(getMajorMinorVersion(generatingToolVersion));
         }
 
         runtimeConflictsWithCompileTimeTool =
-            !runtimeVersion.equals(compileTimeVersion) &&
-            !getMajorMinorVersion(runtimeVersion).equals(getMajorMinorVersion(compileTimeVersion));
+            !runtimeVersion.Equals(compileTimeVersion) &&
+            !getMajorMinorVersion(runtimeVersion).Equals(getMajorMinorVersion(compileTimeVersion));
 
         if (runtimeConflictsWithGeneratingTool)
         {
-            System.err.printf("ANTLR Tool version %s used for code generation does not match the current runtime version %s%n",
+            Console.Error.printf("ANTLR Tool version %s used for code generation does not match the current runtime version %s%n",
                               generatingToolVersion, runtimeVersion);
         }
         if (runtimeConflictsWithCompileTimeTool)
         {
-            System.err.printf("ANTLR Runtime version %s used for parser compilation does not match the current runtime version %s%n",
+            Console.Error.printf("ANTLR Runtime version %s used for parser compilation does not match the current runtime version %s%n",
                               compileTimeVersion, runtimeVersion);
         }
     }
@@ -183,18 +183,18 @@ public class RuntimeMetaData
 	 */
     public static String getMajorMinorVersion(String version)
     {
-        int firstDot = version.indexOf('.');
-        int secondDot = firstDot >= 0 ? version.indexOf('.', firstDot + 1) : -1;
-        int firstDash = version.indexOf('-');
-        int referenceLength = version.length();
+        int firstDot = version.IndexOf('.');
+        int secondDot = firstDot >= 0 ? version.IndexOf('.', firstDot + 1) : -1;
+        int firstDash = version.IndexOf('-');
+        int referenceLength = version.Length;
         if (secondDot >= 0)
         {
-            referenceLength = Math.min(referenceLength, secondDot);
+            referenceLength = Math.Min(referenceLength, secondDot);
         }
 
         if (firstDash >= 0)
         {
-            referenceLength = Math.min(referenceLength, firstDash);
+            referenceLength = Math.Min(referenceLength, firstDash);
         }
 
         return version.substring(0, referenceLength);

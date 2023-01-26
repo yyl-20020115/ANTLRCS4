@@ -4,18 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.MurmurHash;
-import org.antlr.v4.runtime.misc.ObjectEqualityComparator;
+namespace org.antlr.v4.runtime.atn;
 
-public class LexerATNConfig extends ATNConfig {
+public class LexerATNConfig : ATNConfig {
 	/**
 	 * This is the backing field for {@link #getLexerActionExecutor}.
 	 */
-	private final LexerActionExecutor lexerActionExecutor;
+	private readonly LexerActionExecutor lexerActionExecutor;
 
-	private final boolean passedThroughNonGreedyDecision;
+	private readonly bool passedThroughNonGreedyDecision;
 
 	public LexerATNConfig(ATNState state,
 						  int alt,
@@ -61,15 +60,15 @@ public class LexerATNConfig extends ATNConfig {
 	 * Gets the {@link LexerActionExecutor} capable of executing the embedded
 	 * action(s) for the current configuration.
 	 */
-	public final LexerActionExecutor getLexerActionExecutor() {
+	public LexerActionExecutor getLexerActionExecutor() {
 		return lexerActionExecutor;
 	}
 
-	public final boolean hasPassedThroughNonGreedyDecision() {
+	public bool hasPassedThroughNonGreedyDecision() {
 		return passedThroughNonGreedyDecision;
 	}
 
-	@Override
+	//@Override
 	public int hashCode() {
 		int hashCode = MurmurHash.initialize(7);
 		hashCode = MurmurHash.update(hashCode, state.stateNumber);
@@ -82,8 +81,8 @@ public class LexerATNConfig extends ATNConfig {
 		return hashCode;
 	}
 
-	@Override
-	public boolean equals(ATNConfig other) {
+	//@Override
+	public bool Equals(ATNConfig other) {
 		if (this == other) {
 			return true;
 		}
@@ -96,14 +95,14 @@ public class LexerATNConfig extends ATNConfig {
 			return false;
 		}
 
-		if (!ObjectEqualityComparator.INSTANCE.equals(lexerActionExecutor, lexerOther.lexerActionExecutor)) {
+		if (!ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor)) {
 			return false;
 		}
 
-		return super.equals(other);
+		return base.Equals(other);
 	}
 
-	private static boolean checkNonGreedyDecision(LexerATNConfig source, ATNState target) {
+	private static bool checkNonGreedyDecision(LexerATNConfig source, ATNState target) {
 		return source.passedThroughNonGreedyDecision
 			|| target is DecisionState && ((DecisionState)target).nonGreedy;
 	}

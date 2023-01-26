@@ -4,11 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.misc.ParseCancellationException;
+namespace org.antlr.v4.runtime;
 
 /**
  * This implementation of {@link ANTLRErrorStrategy} responds to syntax errors
@@ -44,7 +42,7 @@ public class BailErrorStrategy : DefaultErrorStrategy {
      *  rule function catches.  Use {@link Exception#getCause()} to get the
 	 *  original {@link RecognitionException}.
      */
-    @Override
+    //@Override
     public void recover(Parser recognizer, RecognitionException e) {
 		for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.getParent()) {
 			context.exception = e;
@@ -56,9 +54,8 @@ public class BailErrorStrategy : DefaultErrorStrategy {
     /** Make sure we don't attempt to recover inline; if the parser
      *  successfully recovers, it won't throw an exception.
      */
-    @Override
+    //@Override
     public Token recoverInline(Parser recognizer)
-        throws RecognitionException
     {
 		InputMismatchException e = new InputMismatchException(recognizer);
 		for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.getParent()) {
@@ -69,6 +66,6 @@ public class BailErrorStrategy : DefaultErrorStrategy {
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */
-    @Override
+    //@Override
     public void sync(Parser recognizer) { }
 }

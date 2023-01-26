@@ -4,9 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.runtime;
 
 /** A source of characters for an ANTLR lexer. */
 public interface CharStream : IntStream {

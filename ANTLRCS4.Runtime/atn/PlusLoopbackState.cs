@@ -4,15 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /** Decision state for {@code A+} and {@code (A|B)+}.  It has two transitions:
  *  one to the loop back to start of the block and one to exit.
  */
-public final class PlusLoopbackState extends DecisionState {
+public class PlusLoopbackState : DecisionState {
 
-	@Override
-	public int getStateType() {
+	public override int getStateType() {
 		return PLUS_LOOP_BACK;
 	}
 }

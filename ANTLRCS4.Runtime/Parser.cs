@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.runtime;
@@ -13,13 +14,13 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	public class TraceListener : ParseTreeListener {
 		//@Override
 		public void enterEveryRule(ParserRuleContext ctx) {
-			System.out.println("enter   " + getRuleNames()[ctx.getRuleIndex()] +
+			Console.Out.println("enter   " + getRuleNames()[ctx.getRuleIndex()] +
 							   ", LT(1)=" + _input.LT(1).getText());
 		}
 
 		//@Override
 		public void visitTerminal(TerminalNode node) {
-			System.out.println("consume "+node.getSymbol()+" rule "+
+			Console.Out.println("consume "+node.getSymbol()+" rule "+
 							   getRuleNames()[_ctx.getRuleIndex()]);
 		}
 
@@ -29,7 +30,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
-			System.out.println("exit    "+getRuleNames()[ctx.getRuleIndex()]+
+			Console.Out.println("exit    "+getRuleNames()[ctx.getRuleIndex()]+
 							   ", LT(1)="+_input.LT(1).getText());
 		}
 	}
@@ -82,11 +83,11 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 */
 	protected TokenStream _input;
 
-	protected readonly IntegerStack _precedenceStack;
-	{
-		_precedenceStack = new IntegerStack();
-		_precedenceStack.push(0);
-	}
+	protected readonly IntegerStack _precedenceStack = new IntegerStack();
+	//{
+	//	_precedenceStack = new IntegerStack();
+	//	_precedenceStack.push(0);
+	//}
 
 	/**
 	 * The {@link ParserRuleContext} object for the currently executing rule.
@@ -131,7 +132,9 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	protected bool matchedEOF;
 
 	public Parser(TokenStream input) {
-		setInputStream(input);
+		_precedenceStack.push(0);
+
+        setInputStream(input);
 	}
 
 	/** reset the parser's state */
@@ -397,7 +400,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	//@Override
-	public TokenFactory<?> getTokenFactory() {
+	public TokenFactory getTokenFactory() {
 		return _input.getTokenSource().getTokenFactory();
 	}
 
@@ -421,7 +424,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 			throw new UnsupportedOperationException("The current parser does not support an ATN with bypass alternatives.");
 		}
 
-		synchronized (this) {
+		lock (this) {
 			if ( bypassAltsAtnCache!=null ) {
 				return bypassAltsAtnCache;
 			}
@@ -478,7 +481,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	public TokenStream getInputStream() { return getTokenStream(); }
 
 	//@Override
-	public final void setInputStream(IntStream input) {
+	public void setInputStream(IntStream input) {
 		setTokenStream((TokenStream)input);
 	}
 
@@ -650,7 +653,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * @deprecated Use
 	 * {@link #enterRecursionRule(ParserRuleContext, int, int, int)} instead.
 	 */
-	@Deprecated
+	//@Deprecated
 	public void enterRecursionRule(ParserRuleContext localctx, int ruleIndex) {
 		enterRecursionRule(localctx, getATN().ruleToStartState[ruleIndex].stateNumber, ruleIndex, 0);
 	}
@@ -760,7 +763,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
         if (following.contains(symbol)) {
             return true;
         }
-//        System.out.println("following "+s+"="+following);
+//        Console.Out.println("following "+s+"="+following);
         if ( !following.contains(Token.EPSILON) ) return false;
 
         while ( ctx!=null && ctx.invokingState>=0 && following.contains(Token.EPSILON) ) {
@@ -849,7 +852,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
     }
 
 	public void dumpDFA() {
-		dumpDFA(System.out);
+		dumpDFA(Console.Out);
 	}
 
 	/** For debugging and other purposes. */

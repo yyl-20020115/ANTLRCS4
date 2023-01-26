@@ -4,11 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This implementation of {@link LexerAction} is used for tracking input offsets
@@ -23,9 +21,9 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerIndexedCustomAction implements LexerAction {
-	private final int offset;
-	private final LexerAction action;
+public class LexerIndexedCustomAction : LexerAction {
+	private readonly int offset;
+	private readonly LexerAction action;
 
 	/**
 	 * Constructs a new indexed custom action by associating a character offset
@@ -72,7 +70,7 @@ public final class LexerIndexedCustomAction implements LexerAction {
 	 * @return This method returns the result of calling {@link #getActionType}
 	 * on the {@link LexerAction} returned by {@link #getAction}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return action.getActionType();
 	}
@@ -81,8 +79,8 @@ public final class LexerIndexedCustomAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code true}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+	//@Override
+	public bool isPositionDependent() {
 		return true;
 	}
 
@@ -92,22 +90,22 @@ public final class LexerIndexedCustomAction implements LexerAction {
 	 * <p>This method calls {@link #execute} on the result of {@link #getAction}
 	 * using the provided {@code lexer}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		// assume the input stream position was properly set by the calling code
 		action.execute(lexer);
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, offset);
 		hash = MurmurHash.update(hash, action);
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	//@Override
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -117,7 +115,7 @@ public final class LexerIndexedCustomAction implements LexerAction {
 
 		LexerIndexedCustomAction other = (LexerIndexedCustomAction)obj;
 		return offset == other.offset
-			&& action.equals(other.action);
+			&& action.Equals(other.action);
 	}
 
 }

@@ -68,7 +68,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	public AbstractConfigHashSet configLookup;
 
 	/** Track the elements as they are added to the set; supports get(i) */
-	public readonly List<ATNConfig> configs = new ArrayList<ATNConfig>(7);
+	public readonly List<ATNConfig> configs = new (7);
 
 	// TODO: these fields make me pretty uncomfortable but nice to pack up info together, saves recomputation
 	// TODO: can we track conflicts as they are added to save scanning configs later?
@@ -162,10 +162,10 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	/** Return a List holding list of configs */
     public List<ATNConfig> elements() { return configs; }
 
-	public Set<ATNState> getStates() {
-		Set<ATNState> states = new HashSet<ATNState>();
-		for (ATNConfig c : configs) {
-			states.add(c.state);
+	public HashSet<ATNState> getStates() {
+        HashSet<ATNState> states = new HashSet<ATNState>();
+		foreach (ATNConfig c in configs) {
+			states.Add(c.state);
 		}
 		return states;
 	}
@@ -181,7 +181,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	public BitSet getAlts() {
 		BitSet alts = new BitSet();
-		for (ATNConfig config : configs) {
+		foreach (ATNConfig config in configs) {
 			alts.set(config.alt);
 		}
 		return alts;
@@ -189,7 +189,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	public List<SemanticContext> getPredicates() {
 		List<SemanticContext> preds = new ArrayList<SemanticContext>();
-		for (ATNConfig c : configs) {
+		foreach (ATNConfig c in configs) {
 			if ( c.semanticContext!=SemanticContext.Empty.Instance ) {
 				preds.add(c.semanticContext);
 			}
@@ -200,10 +200,10 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	public ATNConfig get(int i) { return configs.get(i); }
 
 	public void optimizeConfigs(ATNSimulator interpreter) {
-		if ( readonly ) throw new IllegalStateException("This set is readonly");
+		if ( @readonly ) throw new IllegalStateException("This set is readonly");
 		if ( configLookup.isEmpty() ) return;
 
-		for (ATNConfig config : configs) {
+		foreach (ATNConfig config in configs) {
 //			int before = PredictionContext.getAllContextNodes(config.context).size();
 			config.context = interpreter.getCachedContext(config.context);
 //			int after = PredictionContext.getAllContextNodes(config.context).size();
@@ -212,8 +212,8 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public bool addAll(Collection<? : ATNConfig> coll) {
-		for (ATNConfig c : coll) add(c);
+	public bool addAll(ICollection<ATNConfig> coll) {
+		foreach (ATNConfig c in coll) add(c);
 		return false;
 	}
 
@@ -287,14 +287,14 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	//@Override
 	public void clear() {
-		if ( readonly ) throw new IllegalStateException("This set is readonly");
+		if ( @readonly ) throw new IllegalStateException("This set is readonly");
 		configs.clear();
 		cachedHashCode = -1;
 		configLookup.clear();
 	}
 
 	public bool isReadonly() {
-		return readonly;
+		return @readonly;
 	}
 
 	public void setReadonly(bool @readonly) {
@@ -331,12 +331,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public bool containsAll(Collection<?> c) {
+	public bool containsAll(ICollection<T> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	//@Override
-	public bool retainAll(Collection<?> c) {
+	public bool retainAll(ICollection<T> c) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -345,7 +345,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		throw new UnsupportedOperationException();
 	}
 
-	public static abstract class AbstractConfigHashSet : Array2DHashSet<ATNConfig> {
+	public abstract class AbstractConfigHashSet : Array2DHashSet<ATNConfig> {
 
 		public AbstractConfigHashSet(AbstractEqualityComparator<? super ATNConfig> comparator) {
 			this(comparator, 16, 2);

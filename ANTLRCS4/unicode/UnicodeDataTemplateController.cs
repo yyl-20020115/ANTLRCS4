@@ -128,7 +128,7 @@ public abstract class UnicodeDataTemplateController {
 					// No more aliases.
 					break;
 				}
-				assert alias != null;
+				//assert alias != null;
 				addPropertyAlias(propertyAliases, alias, categoryName);
 				nameChoice++;
 			}

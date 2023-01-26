@@ -4,23 +4,23 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.ObjectEqualityComparator;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  *
  * @author Sam Harwell
  */
-public class OrderedATNConfigSet extends ATNConfigSet {
+public class OrderedATNConfigSet : ATNConfigSet {
 
 	public OrderedATNConfigSet() {
 		this.configLookup = new LexerConfigHashSet();
 	}
 
-	public static class LexerConfigHashSet extends AbstractConfigHashSet {
-		public LexerConfigHashSet() {
-			super(ObjectEqualityComparator.INSTANCE);
+	public class LexerConfigHashSet : AbstractConfigHashSet {
+		public LexerConfigHashSet():base(ObjectEqualityComparator.INSTANCE)
+        {
 		}
 	}
 }

@@ -4,16 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.runtime.RecognitionException;
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.misc.MultiMap;
-import org.antlr.v4.tool.ast.GrammarRootAST;
+namespace org.antlr.v4.tool;
 
 /** */
 public class LexerGrammar : Grammar {
-	public static final String DEFAULT_MODE_NAME = "DEFAULT_MODE";
+	public static readonly String DEFAULT_MODE_NAME = "DEFAULT_MODE";
 
 	/** The grammar from which this lexer grammar was derived (if implicit) */
     public Grammar implicitLexerOwner;
@@ -25,19 +22,19 @@ public class LexerGrammar : Grammar {
 		super(tool, ast);
 	}
 
-	public LexerGrammar(String grammarText) throws RecognitionException {
+	public LexerGrammar(String grammarText) {
 		super(grammarText);
 	}
 
-	public LexerGrammar(String grammarText, ANTLRToolListener listener) throws RecognitionException {
+	public LexerGrammar(String grammarText, ANTLRToolListener listener) {
 		super(grammarText, listener);
 	}
 
-	public LexerGrammar(String fileName, String grammarText, ANTLRToolListener listener) throws RecognitionException {
+	public LexerGrammar(String fileName, String grammarText, ANTLRToolListener listener)  {
 		super(fileName, grammarText, listener);
 	}
 
-	@Override
+	//@Override
 	public bool defineRule(Rule r) {
 		if (!super.defineRule(r)) {
 			return false;
@@ -48,14 +45,14 @@ public class LexerGrammar : Grammar {
 		return true;
 	}
 
-	@Override
+	//@Override
 	public bool undefineRule(Rule r) {
 		if (!super.undefineRule(r)) {
 			return false;
 		}
 
 		bool removed = modes.get(r.mode).remove(r);
-		assert removed;
+		//assert removed;
 		return true;
 	}
 }

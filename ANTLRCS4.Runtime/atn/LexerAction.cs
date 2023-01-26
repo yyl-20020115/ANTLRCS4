@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Lexer;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Represents a single action which can be executed following the successful
@@ -39,7 +36,7 @@ public interface LexerAction {
 	 * position of the input {@link CharStream} at the time it is executed;
 	 * otherwise, {@code false}.
 	 */
-	boolean isPositionDependent();
+	bool isPositionDependent();
 
 	/**
 	 * Execute the lexer action in the context of the specified {@link Lexer}.

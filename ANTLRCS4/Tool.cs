@@ -4,7 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
+using org.antlr.v4.automata;
+using org.antlr.v4.codegen;
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -100,7 +106,7 @@ public class Tool {
 	public ErrorManager errMgr;
     public LogManager logMgr = new ();
 
-	List<ANTLRToolListener> listeners = new CopyOnWriteArrayList<ANTLRToolListener>();
+	List<ANTLRToolListener> listeners = new List<ANTLRToolListener>();// CopyOnWriteArrayList<ANTLRToolListener>();
 
 	/** Track separately so if someone adds a listener, it's the only one
 	 *  instead of it and the default stderr listener.
@@ -315,7 +321,7 @@ public class Tool {
 	public void processNonCombinedGrammar(Grammar g, boolean gencode) {
 		if ( g.ast==null || g.ast.hasErrors ) return;
 
-		boolean ruleFail = checkForRuleIssues(g);
+		bool ruleFail = checkForRuleIssues(g);
 		if ( ruleFail ) return;
 
 		int prevErrors = errMgr.getNumErrors();

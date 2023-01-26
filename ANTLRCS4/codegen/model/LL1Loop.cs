@@ -4,14 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 /** */
 public abstract class LL1Loop : Choice {
@@ -21,8 +17,10 @@ public abstract class LL1Loop : Choice {
 	public int blockStartStateNumber;
 	public int loopBackStateNumber;
 
-	@ModelElement public OutputModelObject loopExpr;
-	@ModelElement public List<SrcOp> iteration;
+	//@ModelElement 
+	public OutputModelObject loopExpr;
+	//@ModelElement
+	public List<SrcOp> iteration;
 
 	public LL1Loop(OutputModelFactory factory,
 				   GrammarAST blkAST,
@@ -32,7 +30,7 @@ public abstract class LL1Loop : Choice {
 	}
 
 	public void addIterationOp(SrcOp op) {
-		if ( iteration==null ) iteration = new ArrayList<SrcOp>();
+		if ( iteration==null ) iteration = new ();
 		iteration.add(op);
 	}
 

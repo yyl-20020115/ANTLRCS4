@@ -4,12 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Executes a custom lexer action by calling {@link Recognizer#action} with the
@@ -24,9 +21,9 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerCustomAction implements LexerAction {
-	private final int ruleIndex;
-	private final int actionIndex;
+public class LexerCustomAction : LexerAction {
+	private readonly int ruleIndex;
+	private readonly int actionIndex;
 
 	/**
 	 * Constructs a custom lexer action with the specified rule and action
@@ -65,12 +62,12 @@ public final class LexerCustomAction implements LexerAction {
 	 *
 	 * @return This method returns {@link LexerActionType#CUSTOM}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.CUSTOM;
 	}
 
-	/**
+    /**
 	 * Gets whether the lexer action is position-dependent. Position-dependent
 	 * actions may have different semantics depending on the {@link CharStream}
 	 * index at the time the action is executed.
@@ -81,33 +78,33 @@ public final class LexerCustomAction implements LexerAction {
 	 *
 	 * @return This method returns {@code true}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+    //@Override
+    public bool isPositionDependent() {
 		return true;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>Custom actions are implemented by calling {@link Lexer#action} with the
 	 * appropriate rule and action indexes.</p>
 	 */
-	@Override
-	public void execute(Lexer lexer) {
+    //@Override
+    public void execute(Lexer lexer) {
 		lexer.action(null, ruleIndex, actionIndex);
 	}
 
-	@Override
-	public int hashCode() {
+    //@Override
+    public int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, ruleIndex);
 		hash = MurmurHash.update(hash, actionIndex);
 		return MurmurHash.finish(hash, 3);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+    //@Override
+    public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}

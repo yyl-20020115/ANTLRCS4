@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.atn;
@@ -89,26 +90,27 @@ public class ATNConfig {
 		this.semanticContext = semanticContext;
 	}
 
-    public ATNConfig(ATNConfig c, ATNState state) {
-   		this(c, state, c.context, c.semanticContext);
+    public ATNConfig(ATNConfig c, ATNState state): this(c, state, c.context, c.semanticContext)
+    {
+   		;
    	}
 
 	public ATNConfig(ATNConfig c, ATNState state,
-		 SemanticContext semanticContext)
-{
-		this(c, state, c.context, semanticContext);
+		 SemanticContext semanticContext): this(c, state, c.context, semanticContext)
+    {
+		;
 	}
 
 	public ATNConfig(ATNConfig c,
-					 SemanticContext semanticContext)
-	{
-		this(c, c.state, c.context, semanticContext);
+					 SemanticContext semanticContext): this(c, c.state, c.context, semanticContext)
+    {
+		;
 	}
 
     public ATNConfig(ATNConfig c, ATNState state,
-					 PredictionContext context)
-	{
-        this(c, state, context, c.semanticContext);
+					 PredictionContext context): this(c, state, context, c.semanticContext)
+    {
+        ;
     }
 
 	public ATNConfig(ATNConfig c, ATNState state,
@@ -127,15 +129,15 @@ public class ATNConfig {
 	 * as it existed prior to the introduction of the
 	 * {@link #isPrecedenceFilterSuppressed} method.
 	 */
-	public final int getOuterContextDepth() {
+	public int getOuterContextDepth() {
 		return reachesIntoOuterContext & ~SUPPRESS_PRECEDENCE_FILTER;
 	}
 
-	public final bool isPrecedenceFilterSuppressed() {
+	public bool isPrecedenceFilterSuppressed() {
 		return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
 	}
 
-	public final void setPrecedenceFilterSuppressed(bool value) {
+	public void setPrecedenceFilterSuppressed(bool value) {
 		if (value) {
 			this.reachesIntoOuterContext |= 0x40000000;
 		}
@@ -148,16 +150,16 @@ public class ATNConfig {
      *  the same state, they predict the same alternative, and
      *  syntactic/semantic contexts are the same.
      */
-    @Override
-    public bool equals(Object o) {
+    //@Override
+    public override bool Equals(Object? o) {
 		if (!(o is ATNConfig)) {
 			return false;
 		}
 
-		return this.equals((ATNConfig)o);
+		return this.Equals((ATNConfig)o);
 	}
 
-	public bool equals(ATNConfig other) {
+	public bool Equals(ATNConfig other) {
 		if (this == other) {
 			return true;
 		}
@@ -172,8 +174,8 @@ public class ATNConfig {
 			&& this.isPrecedenceFilterSuppressed() == other.isPrecedenceFilterSuppressed();
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hashCode = MurmurHash.initialize(7);
 		hashCode = MurmurHash.update(hashCode, state.stateNumber);
 		hashCode = MurmurHash.update(hashCode, alt);
@@ -183,36 +185,36 @@ public class ATNConfig {
 		return hashCode;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return toString(null, true);
 	}
 
-	public String toString(Recognizer<?, ?> recog, bool showAlt) {
+	public String toString(Recognizer<Token, ATNSimulator> recog, bool showAlt) {
 		StringBuilder buf = new StringBuilder();
 //		if ( state.ruleIndex>=0 ) {
 //			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");
 //			else buf.append(state.ruleIndex+":");
 //		}
-		buf.append('(');
-		buf.append(state);
+		buf.Append('(');
+		buf.Append(state);
 		if ( showAlt ) {
-            buf.append(",");
-            buf.append(alt);
+            buf.Append(",");
+            buf.Append(alt);
         }
         if ( context!=null ) {
-            buf.append(",[");
-            buf.append(context.toString());
-			buf.append("]");
+            buf.Append(",[");
+            buf.Append(context.ToString());
+			buf.Append("]");
         }
         if ( semanticContext!=null && semanticContext != SemanticContext.Empty.Instance ) {
-            buf.append(",");
-            buf.append(semanticContext);
+            buf.Append(",");
+            buf.Append(semanticContext);
         }
         if ( getOuterContextDepth()>0 ) {
-            buf.append(",up=").append(getOuterContextDepth());
+            buf.Append(",up=").Append(getOuterContextDepth());
         }
-		buf.append(')');
-		return buf.toString();
+		buf.Append(')');
+		return buf.ToString();
     }
 }

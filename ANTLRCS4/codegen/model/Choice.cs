@@ -4,6 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.codegen.model;
 
 
@@ -24,38 +29,38 @@ public abstract class Choice : RuleElement {
 	//@ModelElement 
 	public List<CodeBlockForAlt> alts;
 	//@ModelElement
-	public List<SrcOp> preamble = new ArrayList<SrcOp>();
+	public List<SrcOp> preamble = new ();
 
 	public Choice(OutputModelFactory factory,
 				  GrammarAST blkOrEbnfRootAST,
 				  List<CodeBlockForAlt> alts)
-	{
-		super(factory, blkOrEbnfRootAST);
+		: base(factory, blkOrEbnfRootAST)
+    {
 		this.alts = alts;
 	}
 
 	public void addPreambleOp(SrcOp op) {
-		preamble.add(op);
+		preamble.Add(op);
 	}
 
 	public List<TokenInfo[]> getAltLookaheadAsStringLists(IntervalSet[] altLookSets) {
-		List<TokenInfo[]> altLook = new ArrayList<>();
+		List<TokenInfo[]> altLook = new ();
 		Target target = factory.getGenerator().getTarget();
 		Grammar grammar = factory.getGrammar();
-		for (IntervalSet s : altLookSets) {
+		foreach (IntervalSet s in altLookSets) {
 			IntegerList list = s.toIntegerList();
 			TokenInfo[] info = new TokenInfo[list.size()];
-			for (int i = 0; i < info.length; i++) {
+			for (int i = 0; i < info.Length; i++) {
 				info[i] = new TokenInfo(list.get(i), target.getTokenTypeAsTargetLabel(grammar, list.get(i)));
 			}
-			altLook.add(info);
+			altLook.Add(info);
 		}
 		return altLook;
 	}
 
 	public TestSetInline addCodeForLookaheadTempVar(IntervalSet look) {
 		List<SrcOp> testOps = factory.getLL1Test(look, ast);
-		TestSetInline expr = Utils.find(testOps, TestSetInline.class);
+		TestSetInline expr = Utils.find(testOps, typeof(TestSetInline));
 		if (expr != null) {
 			Decl d = new TokenTypeDecl(factory, expr.varName);
 			factory.getCurrentRuleFunction().addLocalDecl(d);

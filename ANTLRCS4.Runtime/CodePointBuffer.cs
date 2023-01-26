@@ -1,14 +1,12 @@
 /*
  * Copyright (c) 2012-2017 The ANTLR Project. All rights reserved.
  * Use of this file is governed by the BSD 3-clause license that
- * can be found in the LICENSE.txt file in the project root.
+ * can be found @In the LICENSE.txt file @In the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
 
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.IntBuffer;
+namespace org.antlr.v4.runtime;
 
 /**
  * Wrapper for {@link ByteBuffer} / {@link CharBuffer} / {@link IntBuffer}.
@@ -22,10 +20,10 @@ public class CodePointBuffer {
 			CHAR,
 			INT
 	}
-	private final Type type;
-	private final ByteBuffer byteBuffer;
-	private final CharBuffer charBuffer;
-	private final IntBuffer intBuffer;
+	private readonly Type type;
+	private readonly ByteBuffer byteBuffer;
+	private readonly CharBuffer charBuffer;
+	private readonly IntBuffer intBuffer;
 
 	private CodePointBuffer(Type type, ByteBuffer byteBuffer, CharBuffer charBuffer, IntBuffer intBuffer) {
 		this.type = type;
@@ -48,11 +46,11 @@ public class CodePointBuffer {
 
 	public int position() {
 		switch (type) {
-			case BYTE:
+			case Type.BYTE:
 				return byteBuffer.position();
-			case CHAR:
+			case Type.CHAR:
 				return charBuffer.position();
-			case INT:
+			case Type.INT:
 				return intBuffer.position();
 		}
 		throw new UnsupportedOperationException("Not reached");
@@ -60,13 +58,13 @@ public class CodePointBuffer {
 
 	public void position(int newPosition) {
 		switch (type) {
-			case BYTE:
+			case Type.BYTE:
 				byteBuffer.position(newPosition);
 				break;
-			case CHAR:
+			case Type.CHAR:
 				charBuffer.position(newPosition);
 				break;
-			case INT:
+			case Type.INT:
 				intBuffer.position(newPosition);
 				break;
 		}
@@ -74,11 +72,11 @@ public class CodePointBuffer {
 
 	public int remaining() {
 		switch (type) {
-			case BYTE:
+			case Type.BYTE:
 				return byteBuffer.remaining();
-			case CHAR:
+			case Type.CHAR:
 				return charBuffer.remaining();
-			case INT:
+			case Type.INT:
 				return intBuffer.remaining();
 		}
 		throw new UnsupportedOperationException("Not reached");
@@ -102,29 +100,29 @@ public class CodePointBuffer {
 
 	int arrayOffset() {
 		switch (type) {
-			case BYTE:
+			case Type.BYTE:
 				return byteBuffer.arrayOffset();
-			case CHAR:
+			case Type.CHAR:
 				return charBuffer.arrayOffset();
-			case INT:
+			case Type.INT:
 				return intBuffer.arrayOffset();
 		}
 		throw new UnsupportedOperationException("Not reached");
 	}
 
 	byte[] byteArray() {
-		assert type == Type.BYTE;
+		//assert type == Type.BYTE;
 		return byteBuffer.array();
 	}
 
 	char[] charArray() {
-		assert type == Type.CHAR;
-		return charBuffer.array();
+        //assert type == Type.CHAR;
+        return charBuffer.array();
 	}
 
 	int[] intArray() {
-		assert type == Type.INT;
-		return intBuffer.array();
+        //assert type == Type.INT;
+        return intBuffer.array();
 	}
 
 	public static Builder builder(int initialBufferSize) {
@@ -179,12 +177,12 @@ public class CodePointBuffer {
 
 		private static int roundUpToNextPowerOfTwo(int i) {
 			int nextPowerOfTwo = 32 - Integer.numberOfLeadingZeros(i - 1);
-			return (int) Math.pow(2, nextPowerOfTwo);
+			return (int) Math.Pow(2, nextPowerOfTwo);
 		}
 
 		public void ensureRemaining(int remainingNeeded) {
 			switch (type) {
-				case BYTE:
+				case Type.BYTE:
 					if (byteBuffer.remaining() < remainingNeeded) {
 						int newCapacity = roundUpToNextPowerOfTwo(byteBuffer.capacity() + remainingNeeded);
 						ByteBuffer newBuffer = ByteBuffer.allocate(newCapacity);
@@ -193,7 +191,7 @@ public class CodePointBuffer {
 						byteBuffer = newBuffer;
 					}
 					break;
-				case CHAR:
+				case Type.CHAR:
 					if (charBuffer.remaining() < remainingNeeded) {
 						int newCapacity = roundUpToNextPowerOfTwo(charBuffer.capacity() + remainingNeeded);
 						CharBuffer newBuffer = CharBuffer.allocate(newCapacity);
@@ -202,7 +200,7 @@ public class CodePointBuffer {
 						charBuffer = newBuffer;
 					}
 					break;
-				case INT:
+				case Type.INT:
 					if (intBuffer.remaining() < remainingNeeded) {
 						int newCapacity = roundUpToNextPowerOfTwo(intBuffer.capacity() + remainingNeeded);
 						IntBuffer newBuffer = IntBuffer.allocate(newCapacity);
@@ -241,9 +239,9 @@ public class CodePointBuffer {
 		}
 
 		private void appendArrayByte(CharBuffer utf16In) {
-			assert prevHighSurrogate == -1;
+			//assert prevHighSurrogate == -1;
 
-			char[] in = utf16In.array();
+			char[] @In = utf16In.array();
 			int inOffset = utf16In.arrayOffset() + utf16In.position();
 			int inLimit = utf16In.arrayOffset() + utf16In.limit();
 
@@ -251,7 +249,7 @@ public class CodePointBuffer {
 			int outOffset = byteBuffer.arrayOffset() + byteBuffer.position();
 
 			while (inOffset < inLimit) {
-				char c = in[inOffset];
+				char c = @In[inOffset];
 				if (c <= 0xFF) {
 					outByte[outOffset] = (byte)(c & 0xFF);
 				} else {
@@ -278,7 +276,7 @@ public class CodePointBuffer {
 		private void appendArrayChar(CharBuffer utf16In) {
 			assert prevHighSurrogate == -1;
 
-			char[] in = utf16In.array();
+			char[] @In = utf16In.array();
 			int inOffset = utf16In.arrayOffset() + utf16In.position();
 			int inLimit = utf16In.arrayOffset() + utf16In.limit();
 
@@ -286,7 +284,7 @@ public class CodePointBuffer {
 			int outOffset = charBuffer.arrayOffset() + charBuffer.position();
 
 			while (inOffset < inLimit) {
-				char c = in[inOffset];
+				char c = @In[inOffset];
 				if (!Character.isHighSurrogate(c)) {
 					outChar[outOffset] = c;
 				} else {
@@ -305,7 +303,7 @@ public class CodePointBuffer {
 		}
 
 		private void appendArrayInt(CharBuffer utf16In) {
-			char[] in = utf16In.array();
+			char[] @In = utf16In.array();
 			int inOffset = utf16In.arrayOffset() + utf16In.position();
 			int inLimit = utf16In.arrayOffset() + utf16In.limit();
 
@@ -313,7 +311,7 @@ public class CodePointBuffer {
 			int outOffset = intBuffer.arrayOffset() + intBuffer.position();
 
 			while (inOffset < inLimit) {
-				char c = in[inOffset];
+				char c = @In[inOffset];
 				inOffset++;
 				if (prevHighSurrogate != -1) {
 					if (Character.isLowSurrogate(c)) {
@@ -377,7 +375,7 @@ public class CodePointBuffer {
 		private void charToIntBuffer(int toAppend) {
 			charBuffer.flip();
 			// IntBuffers hold two times as much per unit as ByteBuffers, so start with one half the capacity.
-			IntBuffer newBuffer = IntBuffer.allocate(Math.max(charBuffer.remaining() + toAppend, charBuffer.capacity() / 2));
+			IntBuffer newBuffer = IntBuffer.allocate(Math.Max(charBuffer.remaining() + toAppend, charBuffer.capacity() / 2));
 			while (charBuffer.hasRemaining()) {
 				newBuffer.put(charBuffer.get() & 0xFFFF);
 			}

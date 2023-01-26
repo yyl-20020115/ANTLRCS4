@@ -4,21 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
 /** */
-public class ThrowRecognitionException extends SrcOp {
+public class ThrowRecognitionException : SrcOp {
 	public int decision;
 	public String grammarFile;
 	public int grammarLine;
 	public int grammarCharPosInLine;
 
-	public ThrowRecognitionException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting) {
-		super(factory, ast);
+	public ThrowRecognitionException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting): base(factory, ast)
+    {
 		//this.decision = ((BlockStartState)ast.ATNState).decision;
 		grammarLine = ast.getLine();
 		grammarLine = ast.getCharPositionInLine();

@@ -4,17 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.AbstractEqualityComparator;
-import org.antlr.v4.runtime.misc.FlexibleHashMap;
-import org.antlr.v4.runtime.misc.MurmurHash;
-
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This enumeration defines the prediction modes available in ANTLR 4 along with
@@ -83,14 +75,14 @@ public enum PredictionMode {
 	LL_EXACT_AMBIG_DETECTION;
 
 	/** A Map that uses just the state and the stack context as the key. */
-	static class AltAndContextMap extends FlexibleHashMap<ATNConfig,BitSet> {
+ class AltAndContextMap : FlexibleHashMap<ATNConfig,BitSet> {
 		public AltAndContextMap() {
 			super(AltAndContextConfigEqualityComparator.INSTANCE);
 		}
 	}
 
-	private static final class AltAndContextConfigEqualityComparator extends AbstractEqualityComparator<ATNConfig> {
-		public static final AltAndContextConfigEqualityComparator INSTANCE = new AltAndContextConfigEqualityComparator();
+	private  class AltAndContextConfigEqualityComparator : AbstractEqualityComparator<ATNConfig> {
+		public static readonly AltAndContextConfigEqualityComparator INSTANCE = new AltAndContextConfigEqualityComparator();
 
 		private AltAndContextConfigEqualityComparator() {
 		}
@@ -99,7 +91,7 @@ public enum PredictionMode {
 		 * The hash code is only a function of the {@link ATNState#stateNumber}
 		 * and {@link ATNConfig#context}.
 		 */
-		@Override
+		//@Override
 		public int hashCode(ATNConfig o) {
 			int hashCode = MurmurHash.initialize(7);
 			hashCode = MurmurHash.update(hashCode, o.state.stateNumber);
@@ -108,8 +100,8 @@ public enum PredictionMode {
 	        return hashCode;
 		}
 
-		@Override
-		public boolean equals(ATNConfig a, ATNConfig b) {
+		//@Override
+		public bool equals(ATNConfig a, ATNConfig b) {
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;
 			return a.state.stateNumber==b.state.stateNumber
@@ -209,7 +201,7 @@ public enum PredictionMode {
 	 * the configurations to strip out all of the predicates so that a standard
 	 * {@link ATNConfigSet} will merge everything ignoring predicates.</p>
 	 */
-	public static boolean hasSLLConflictTerminatingPrediction(PredictionMode mode, ATNConfigSet configs) {
+	public static bool hasSLLConflictTerminatingPrediction(PredictionMode mode, ATNConfigSet configs) {
 		/* Configs in rule stop states indicate reaching the end of the decision
 		 * rule (local context) or end of start rule (full context). If all
 		 * configs meet this condition, then none of the configurations is able
@@ -238,8 +230,8 @@ public enum PredictionMode {
 
 		// pure SLL or combined SLL+LL mode parsing
 
-		Collection<BitSet> altsets = getConflictingAltSubsets(configs);
-		boolean heuristic =
+		ICollection<BitSet> altsets = getConflictingAltSubsets(configs);
+		bool heuristic =
 			hasConflictingAltSet(altsets) && !hasStateAssociatedWithOneAlt(configs);
 		return heuristic;
 	}
@@ -254,7 +246,7 @@ public enum PredictionMode {
 	 * @return {@code true} if any configuration in {@code configs} is in a
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
-	public static boolean hasConfigInRuleStopState(ATNConfigSet configs) {
+	public static bool hasConfigInRuleStopState(ATNConfigSet configs) {
 		for (ATNConfig c : configs) {
 			if (c.state is RuleStopState) {
 				return true;
@@ -274,7 +266,7 @@ public enum PredictionMode {
 	 * @return {@code true} if all configurations in {@code configs} are in a
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
-	public static boolean allConfigsInRuleStopStates(ATNConfigSet configs) {
+	public static bool allConfigsInRuleStopStates(ATNConfigSet configs) {
 		for (ATNConfig config : configs) {
 			if (!(config.state is RuleStopState)) {
 				return false;
@@ -425,7 +417,7 @@ public enum PredictionMode {
 	 * we need exact ambiguity detection when the sets look like
 	 * {@code A={{1,2}}} or {@code {{1,2},{1,2}}}, etc...</p>
 	 */
-	public static int resolvesToJustOneViableAlt(Collection<BitSet> altsets) {
+	public static int resolvesToJustOneViableAlt(ICollection<BitSet> altsets) {
 		return getSingleViableAlt(altsets);
 	}
 
@@ -437,7 +429,7 @@ public enum PredictionMode {
 	 * @return {@code true} if every {@link BitSet} in {@code altsets} has
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
-	public static boolean allSubsetsConflict(Collection<BitSet> altsets) {
+	public static bool allSubsetsConflict(ICollection<BitSet> altsets) {
 		return !hasNonConflictingAltSet(altsets);
 	}
 
@@ -449,7 +441,7 @@ public enum PredictionMode {
 	 * @return {@code true} if {@code altsets} contains a {@link BitSet} with
 	 * {@link BitSet#cardinality cardinality} 1, otherwise {@code false}
 	 */
-	public static boolean hasNonConflictingAltSet(Collection<BitSet> altsets) {
+	public static bool hasNonConflictingAltSet(ICollection<BitSet> altsets) {
 		for (BitSet alts : altsets) {
 			if ( alts.cardinality()==1 ) {
 				return true;
@@ -466,7 +458,7 @@ public enum PredictionMode {
 	 * @return {@code true} if {@code altsets} contains a {@link BitSet} with
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
-	public static boolean hasConflictingAltSet(Collection<BitSet> altsets) {
+	public static bool hasConflictingAltSet(ICollection<BitSet> altsets) {
 		for (BitSet alts : altsets) {
 			if ( alts.cardinality()>1 ) {
 				return true;
@@ -482,7 +474,7 @@ public enum PredictionMode {
 	 * @return {@code true} if every member of {@code altsets} is equal to the
 	 * others, otherwise {@code false}
 	 */
-	public static boolean allSubsetsEqual(Collection<BitSet> altsets) {
+	public static bool allSubsetsEqual(ICollection<BitSet> altsets) {
 		Iterator<BitSet> it = altsets.iterator();
 		BitSet first = it.next();
 		while ( it.hasNext() ) {
@@ -499,7 +491,7 @@ public enum PredictionMode {
 	 *
 	 * @param altsets a collection of alternative subsets
 	 */
-	public static int getUniqueAlt(Collection<BitSet> altsets) {
+	public static int getUniqueAlt(ICollection<BitSet> altsets) {
 		BitSet all = getAlts(altsets);
 		if ( all.cardinality()==1 ) return all.nextSetBit(0);
 		return ATN.INVALID_ALT_NUMBER;
@@ -513,7 +505,7 @@ public enum PredictionMode {
 	 * @param altsets a collection of alternative subsets
 	 * @return the set of represented alternatives in {@code altsets}
 	 */
-	public static BitSet getAlts(Collection<BitSet> altsets) {
+	public static BitSet getAlts(ICollection<BitSet> altsets) {
 		BitSet all = new BitSet();
 		for (BitSet alts : altsets) {
 			all.or(alts);
@@ -543,7 +535,7 @@ public enum PredictionMode {
 	 * alt and not pred
 	 * </pre>
 	 */
-	public static Collection<BitSet> getConflictingAltSubsets(ATNConfigSet configs) {
+	public static ICollection<BitSet> getConflictingAltSubsets(ATNConfigSet configs) {
 		AltAndContextMap configToAlts = new AltAndContextMap();
 		for (ATNConfig c : configs) {
 			BitSet alts = configToAlts.get(c);
@@ -577,7 +569,7 @@ public enum PredictionMode {
 		return m;
 	}
 
-	public static boolean hasStateAssociatedWithOneAlt(ATNConfigSet configs) {
+	public static bool hasStateAssociatedWithOneAlt(ATNConfigSet configs) {
 		Map<ATNState, BitSet> x = getStateToAltMap(configs);
 		for (BitSet alts : x.values()) {
 			if ( alts.cardinality()==1 ) return true;
@@ -585,7 +577,7 @@ public enum PredictionMode {
 		return false;
 	}
 
-	public static int getSingleViableAlt(Collection<BitSet> altsets) {
+	public static int getSingleViableAlt(ICollection<BitSet> altsets) {
 		BitSet viableAlts = new BitSet();
 		for (BitSet alts : altsets) {
 			int minAlt = alts.nextSetBit(0);

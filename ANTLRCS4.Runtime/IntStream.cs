@@ -27,7 +27,7 @@ public interface IntStream {
 	 * The value returned by {@link #LA LA()} when the end of the stream is
 	 * reached.
 	 */
-	public static readonly int EOF = -1;
+	public const int EOF = -1;
 
 	/**
 	 * The value returned by {@link #getSourceName} when the actual name of the

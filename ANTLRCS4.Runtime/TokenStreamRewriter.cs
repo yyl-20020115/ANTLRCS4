@@ -1,8 +1,10 @@
 /*
  * Copyright (c) 2012-2017 The ANTLR Project. All rights reserved.
- * Use of this file is governed by the BSD 3-clause license that
+ * Use of this file @is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime;
@@ -14,12 +16,12 @@ namespace org.antlr.v4.runtime;
  * <p>
  * You can insert stuff, replace, and delete chunks. Note that the operations
  * are done lazily--only if you convert the buffer to a {@link String} with
- * {@link TokenStream#getText()}. This is very efficient because you are not
- * moving data around all the time. As the buffer of tokens is converted to
+ * {@link TokenStream#getText()}. This @is very efficient because you are not
+ * moving data around all the time. As the buffer of tokens @is converted to
  * strings, the {@link #getText()} method(s) scan the input token stream and
- * check to see if there is an operation at the current index. If so, the
- * operation is done and then normal {@link String} rendering continues on the
- * buffer. This is like having multiple Turing machine instruction streams
+ * check to see if there @is an operation at the current index. If so, the
+ * operation @is done and then normal {@link String} rendering continues on the
+ * buffer. This @is like having multiple Turing machine instruction streams
  * (programs) operating on a single input tape. :)</p>
  *
  * <p>
@@ -36,7 +38,7 @@ namespace org.antlr.v4.runtime;
  *
  * <p>
  * Since the operations are done lazily at {@link #getText}-time, operations do
- * not screw up the token index values. That is, an insert operation at token
+ * not screw up the token index values. That @is, an insert operation at token
  * index {@code i} does not change the index values for tokens
  * {@code i}+1..n-1.</p>
  *
@@ -44,7 +46,7 @@ namespace org.antlr.v4.runtime;
  * Because operations never actually alter the buffer, you may always get the
  * original token stream back without undoing anything. Since the instructions
  * are queued up, you can easily simulate transactions and roll back any changes
- * if there is an error just by removing instructions. For example,</p>
+ * if there @is an error just by removing instructions. For example,</p>
  *
  * <pre>
  * CharStream input = new ANTLRFileStream("input");
@@ -56,7 +58,7 @@ namespace org.antlr.v4.runtime;
  * </pre>
  *
  * <p>
- * Then in the rules, you can execute (assuming rewriter is visible):</p>
+ * Then in the rules, you can execute (assuming rewriter @is visible):</p>
  *
  * <pre>
  * Token t,u;
@@ -80,7 +82,7 @@ namespace org.antlr.v4.runtime;
  * </pre>
  *
  * <p>
- * If you don't use named rewrite streams, a "default" stream is used as the
+ * If you don't use named rewrite streams, a "default" stream @is used as the
  * first example shows.</p>
  */
 public class TokenStreamRewriter {
@@ -115,14 +117,14 @@ public class TokenStreamRewriter {
 		//@Override
 		public String toString() {
 			String opName = getClass().getName();
-			int $index = opName.indexOf('$');
-			opName = opName.substring($index+1, opName.length());
+			int index = opName.indexOf('$');
+			opName = opName.substring(index+1, opName.length());
 			return "<"+opName+"@"+tokens.get(index)+
 					":\""+text+"\">";
 		}
 	}
 
-	class InsertBeforeOp extends RewriteOperation {
+	class InsertBeforeOp : RewriteOperation {
 		public InsertBeforeOp(int index, Object text) {
 			super(index,text);
 		}
@@ -139,11 +141,11 @@ public class TokenStreamRewriter {
 
 	/** Distinguish between insert after/before to do the "insert afters"
 	 *  first and then the "insert befores" at same index. Implementation
-	 *  of "insert after" is "insert before index+1".
+	 *  of "insert after" @is "insert before index+1".
 	 */
-    class InsertAfterOp extends InsertBeforeOp {
+    class InsertAfterOp : InsertBeforeOp {
         public InsertAfterOp(int index, Object text) {
-            super(index+1, text); // insert after is insert before index+1
+            super(index+1, text); // insert after @is insert before index+1
         }
     }
 
@@ -175,16 +177,16 @@ public class TokenStreamRewriter {
 	}
 
 	/** Our source stream */
-	protected final TokenStream tokens;
+	protected readonly TokenStream tokens;
 
 	/** You may have multiple, named streams of rewrite operations.
 	 *  I'm calling these things "programs."
 	 *  Maps String (name) &rarr; rewrite (List)
 	 */
-	protected final Map<String, List<RewriteOperation>> programs;
+	protected readonly Directory<String, List<RewriteOperation>> programs;
 
 	/** Map String (program name) &rarr; Integer index */
-	protected final Map<String, Integer> lastRewriteTokenIndexes;
+	protected readonly Dictionary<String, int> lastRewriteTokenIndexes;
 
 	public TokenStreamRewriter(TokenStream tokens) {
 		this.tokens = tokens;
@@ -203,13 +205,13 @@ public class TokenStreamRewriter {
 	}
 
 	/** Rollback the instruction stream for a program so that
-	 *  the indicated instruction (via instructionIndex) is no
+	 *  the indicated instruction (via instructionIndex) @is no
 	 *  longer in the stream. UNTESTED!
 	 */
 	public void rollback(String programName, int instructionIndex) {
-		List<RewriteOperation> is = programs.get(programName);
-		if ( is!=null ) {
-			programs.put(programName, is.subList(MIN_TOKEN_INDEX,instructionIndex));
+		List<RewriteOperation> @is = programs.get(programName);
+		if ( @is!=null ) {
+			programs.put(programName, @is.subList(MIN_TOKEN_INDEX,instructionIndex));
 		}
 	}
 
@@ -335,17 +337,17 @@ public class TokenStreamRewriter {
 	}
 
 	protected List<RewriteOperation> getProgram(String name) {
-		List<RewriteOperation> is = programs.get(name);
-		if ( is==null ) {
-			is = initializeProgram(name);
+		List<RewriteOperation> @is = programs.get(name);
+		if ( @is==null ) {
+			@is = initializeProgram(name);
 		}
-		return is;
+		return @is;
 	}
 
 	private List<RewriteOperation> initializeProgram(String name) {
-		List<RewriteOperation> is = new ArrayList<RewriteOperation>(PROGRAM_INIT_SIZE);
-		programs.put(name, is);
-		return is;
+		List<RewriteOperation> @is = new (PROGRAM_INIT_SIZE);
+		programs.put(name, @is);
+		return @is;
 	}
 
 	/** Return the text from the original tokens altered per the
@@ -369,7 +371,7 @@ public class TokenStreamRewriter {
 	 *  and intervals are still consistent. Includes any operations done
 	 *  to the first and last token in the interval. So, if you did an
 	 *  insertBefore on the first token, you would get that insertion.
-	 *  The same is true if you do an insertAfter the stop token.
+	 *  The same @is true if you do an insertAfter the stop token.
  	 */
 	public String getText(Interval interval) {
 		return getText(DEFAULT_PROGRAM_NAME, interval);
@@ -449,7 +451,7 @@ public class TokenStreamRewriter {
 	 *  First we need to examine replaces. For any replace op:
 	 *
 	 * 		1. wipe out any insertions before op within that range.
-	 *		2. Drop any replace op before that is contained completely within
+	 *		2. Drop any replace op before that @is contained completely within
 	 *	 that range.
 	 *		3. Throw exception upon boundary overlap with any previous replace.
 	 *
@@ -470,7 +472,7 @@ public class TokenStreamRewriter {
 	 *
 	 *  Return a map from token index to operation.
 	 */
-	protected Map<Integer, RewriteOperation> reduceToSingleOperationPerIndex(List<RewriteOperation> rewrites) {
+	protected Dictionary<int, RewriteOperation> reduceToSingleOperationPerIndex(List<RewriteOperation> rewrites) {
 //		System.out.println("rewrites="+rewrites);
 
 		// WALK REPLACES
@@ -480,7 +482,7 @@ public class TokenStreamRewriter {
 			if ( !(op is ReplaceOp) ) continue;
 			ReplaceOp rop = (ReplaceOp)rewrites.get(i);
 			// Wipe prior inserts within range
-			List<? extends InsertBeforeOp> inserts = getKindOfOps(rewrites, InsertBeforeOp.class, i);
+			List<? extends InsertBeforeOp> inserts = getKindOfOps(rewrites, InsertBeforeOp, i);
 			for (InsertBeforeOp iop : inserts) {
 				if ( iop.index == rop.index ) {
 					// E.g., insert before 2, delete 2..2; update replace
@@ -494,7 +496,7 @@ public class TokenStreamRewriter {
 				}
 			}
 			// Drop any prior replaces contained within
-			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp.class, i);
+			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp, i);
 			for (ReplaceOp prevRop : prevReplaces) {
 				if ( prevRop.index>=rop.index && prevRop.lastIndex <= rop.lastIndex ) {
 					// delete replace as it's a no-op.
@@ -526,14 +528,14 @@ public class TokenStreamRewriter {
 			if ( !(op is InsertBeforeOp) ) continue;
 			InsertBeforeOp iop = (InsertBeforeOp)rewrites.get(i);
 			// combine current insert with prior if any at same index
-			List<? extends InsertBeforeOp> prevInserts = getKindOfOps(rewrites, InsertBeforeOp.class, i);
+			List<? extends InsertBeforeOp> prevInserts = getKindOfOps(rewrites, InsertBeforeOp, i);
 			for (InsertBeforeOp prevIop : prevInserts) {
 				if ( prevIop.index==iop.index ) {
-					if ( InsertAfterOp.class.isInstance(prevIop) ) {
+					if ( InsertAfterOp.isInstance(prevIop) ) {
 						iop.text = catOpText(prevIop.text, iop.text);
 						rewrites.set(prevIop.instructionIndex, null);
 					}
-					else if ( InsertBeforeOp.class.isInstance(prevIop) ) { // combine objects
+					else if ( InsertBeforeOp.isInstance(prevIop) ) { // combine objects
 						// convert to strings...we're in process of toString'ing
 						// whole token buffer so no lazy eval issue with any templates
 						iop.text = catOpText(iop.text, prevIop.text);
@@ -542,8 +544,8 @@ public class TokenStreamRewriter {
 					}
 				}
 			}
-			// look for replaces where iop.index is in range; error
-			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp.class, i);
+			// look for replaces where iop.index @is in range; error
+			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp, i);
 			for (ReplaceOp rop : prevReplaces) {
 				if ( iop.index == rop.index ) {
 					rop.text = catOpText(iop.text,rop.text);

@@ -4,14 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.IntervalSet;
+namespace org.antlr.v4.runtime.atn;
+
 
 /** A transition containing a set of values. */
-public class SetTransition extends Transition {
-	public final IntervalSet set;
+public class SetTransition : Transition {
+	public readonly IntervalSet set;
 
 	// TODO (sam): should we really allow null here?
 	public SetTransition(ATNState target, IntervalSet set) {
@@ -20,21 +20,21 @@ public class SetTransition extends Transition {
 		this.set = set;
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return SET;
 	}
 
-	@Override
+	//@Override
 
 	public IntervalSet label() { return set; }
 
-	@Override
-	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	//@Override
+	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return set.contains(symbol);
 	}
 
-	@Override
+	//@Override
 
 	public String toString() {
 		return set.toString();

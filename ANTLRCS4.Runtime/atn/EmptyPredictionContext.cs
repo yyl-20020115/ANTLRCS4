@@ -11,37 +11,38 @@ public class EmptyPredictionContext : SingletonPredictionContext {
 	 * Represents {@code $} in local context prediction, which means wildcard.
 	 * {@code *+x = *}.
 	 */
-	public static readonly EmptyPredictionContext Instance = new EmptyPredictionContext();
+	public static readonly EmptyPredictionContext Instance = new ();
 
-	private EmptyPredictionContext() {
-		super(null, EMPTY_RETURN_STATE);
+	private EmptyPredictionContext() :base(null, EMPTY_RETURN_STATE)
+    {
+		;
 	}
 
-	@Override
+	//@Override
 	public bool isEmpty() { return true; }
 
-	@Override
+	//@Override
 	public int size() {
 		return 1;
 	}
 
-	@Override
+	//@Override
 	public PredictionContext getParent(int index) {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public int getReturnState(int index) {
 		return returnState;
 	}
 
-	@Override
+	//@Override
 	public bool equals(Object o) {
 		return this == o;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return "$";
 	}
 }

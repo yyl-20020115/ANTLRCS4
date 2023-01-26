@@ -133,13 +133,14 @@ loop:
 					break;
 
 				case Token.EOF :
-					break loop;
+					goto exit_loop;
 
 				default :
-					throw new IllegalArgumentException("Unknowth path element "+el);
+					throw new ArgumentException("Unknowth path element "+el);
 			}
 		}
-		return elements.toArray(new XPathElement[0]);
+exit_loop:
+		return elements.ToArray();
 	}
 
 	/**
@@ -201,14 +202,14 @@ loop:
         ICollection<ParseTree> work = Collections.<ParseTree>singleton(dummyRoot);
 
 		int i = 0;
-		while ( i < elements.length ) {
-            ICollection<ParseTree> next = new LinkedHashSet<ParseTree>();
+		while ( i < elements.Length ) {
+            ICollection<ParseTree> next = new HashSet<ParseTree>();
 			for (ParseTree node : work) {
 				if ( node.getChildCount()>0 ) {
 					// only try to match next element if it has children
 					// e.g., //func/*/stat might have a token node for which
 					// we can't go looking for stat nodes.
-					Collection<? extends ParseTree> matching = elements[i].evaluate(node);
+					ICollection<ParseTree> matching = elements[i].evaluate(node);
 					next.addAll(matching);
 				}
 			}

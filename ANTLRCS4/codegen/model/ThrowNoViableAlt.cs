@@ -4,17 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
+
 
 /** */
-public class ThrowNoViableAlt extends ThrowRecognitionException {
+public class ThrowNoViableAlt : ThrowRecognitionException {
 	public ThrowNoViableAlt(OutputModelFactory factory, GrammarAST blkOrEbnfRootAST,
 							IntervalSet expecting)
+        : base(factory, blkOrEbnfRootAST, expecting)
 	{
-		super(factory, blkOrEbnfRootAST, expecting);
 	}
 }

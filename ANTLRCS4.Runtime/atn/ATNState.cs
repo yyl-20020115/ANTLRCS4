@@ -70,23 +70,23 @@ namespace org.antlr.v4.runtime.atn;
  * <embed src="images/OptionalNonGreedy.svg" type="image/svg+xml"/>
  */
 public abstract class ATNState {
-	public static readonly int INITIAL_NUM_TRANSITIONS = 4;
+	public const int INITIAL_NUM_TRANSITIONS = 4;
 
 	// constants for serialization
-	public static readonly int INVALID_TYPE = 0;
-	public static readonly int BASIC = 1;
-	public static readonly int RULE_START = 2;
-	public static readonly int BLOCK_START = 3;
-	public static readonly int PLUS_BLOCK_START = 4;
-	public static readonly int STAR_BLOCK_START = 5;
-	public static readonly int TOKEN_START = 6;
-	public static readonly int RULE_STOP = 7;
-	public static readonly int BLOCK_END = 8;
-	public static readonly int STAR_LOOP_BACK = 9;
-	public static readonly int STAR_LOOP_ENTRY = 10;
-	public static readonly int PLUS_LOOP_BACK = 11;
-	public static readonly int LOOP_END = 12;
-
+	public const int INVALID_TYPE = 0;
+	public const int BASIC = 1;
+	public const int RULE_START = 2;
+	public const int BLOCK_START = 3;
+	public const int PLUS_BLOCK_START = 4;
+	public const int STAR_BLOCK_START = 5;
+	public const int TOKEN_START = 6;
+	public const int RULE_STOP = 7;
+	public const int BLOCK_END = 8;
+	public const int STAR_LOOP_BACK = 9;
+	public const int STAR_LOOP_ENTRY = 10;
+	public const int PLUS_LOOP_BACK = 11;
+	public const int LOOP_END = 12;
+		
 	public static readonly List<String> serializationNames = new ()
 		{
 			"INVALID",
@@ -104,7 +104,7 @@ public abstract class ATNState {
 			"LOOP_END"
 	};
 
-	public static readonly int INVALID_STATE_NUMBER = -1;
+	public const int INVALID_STATE_NUMBER = -1;
 
     /** Which ATN are we in? */
    	public ATN atn = null;
@@ -155,7 +155,7 @@ public abstract class ATNState {
 			epsilonOnlyTransitions = e.isEpsilon();
 		}
 		else if (epsilonOnlyTransitions != e.isEpsilon()) {
-			System.err.format(Locale.getDefault(), "ATN state %d has both epsilon and non-epsilon transitions.\n", stateNumber);
+			Console.Error.format(Locale.getDefault(), "ATN state %d has both epsilon and non-epsilon transitions.\n", stateNumber);
 			epsilonOnlyTransitions = false;
 		}
 
@@ -163,12 +163,12 @@ public abstract class ATNState {
 		foreach (Transition t in transitions) {
 			if ( t.target.stateNumber == e.target.stateNumber ) {
 				if ( t.label()!=null && e.label()!=null && t.label().equals(e.label()) ) {
-//					System.err.println("Repeated transition upon "+e.label()+" from "+stateNumber+"->"+t.target.stateNumber);
+//					Console.Error.println("Repeated transition upon "+e.label()+" from "+stateNumber+"->"+t.target.stateNumber);
 					alreadyPresent = true;
 					break;
 				}
 				else if ( t.isEpsilon() && e.isEpsilon() ) {
-//					System.err.println("Repeated epsilon transition from "+stateNumber+"->"+t.target.stateNumber);
+//					Console.Error.println("Repeated epsilon transition from "+stateNumber+"->"+t.target.stateNumber);
 					alreadyPresent = true;
 					break;
 				}

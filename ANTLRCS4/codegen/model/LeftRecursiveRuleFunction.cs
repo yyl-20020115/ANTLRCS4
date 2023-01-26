@@ -4,18 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.decl.RuleContextDecl;
-import org.antlr.v4.codegen.model.decl.RuleContextListDecl;
-import org.antlr.v4.codegen.model.decl.StructDecl;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.LeftRecursiveRule;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
 public class LeftRecursiveRuleFunction : RuleFunction {
 	public LeftRecursiveRuleFunction(OutputModelFactory factory, LeftRecursiveRule r) {

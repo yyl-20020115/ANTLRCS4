@@ -5,17 +5,12 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.misc.Interval;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * This implementation of {@link TokenStream} loads tokens from a
@@ -29,11 +24,11 @@ import java.util.Set;
  * {@link Token#HIDDEN_CHANNEL}, use a filtering token stream such a
  * {@link CommonTokenStream}.</p>
  */
-public class BufferedTokenStream<T> : TokenStream<T> {
+public class BufferedTokenStream : TokenStream {
 	/**
 	 * The {@link TokenSource} from which tokens for this stream are fetched.
 	 */
-    protected TokenSource<T> tokenSource;
+    protected TokenSource tokenSource;
 
 	/**
 	 * A collection of all tokens fetched from the token source. The list is
@@ -70,7 +65,7 @@ public class BufferedTokenStream<T> : TokenStream<T> {
 	 */
 	protected bool fetchedEOF;
 
-    public BufferedTokenStream(TokenSource<T> tokenSource) {
+    public BufferedTokenStream(TokenSource tokenSource) {
 		if (tokenSource == null) {
 			throw new NullReferenceException("tokenSource cannot be null");
 		}
@@ -78,7 +73,7 @@ public class BufferedTokenStream<T> : TokenStream<T> {
     }
 
     //@Override
-    public TokenSource<T> getTokenSource() { return tokenSource; }
+    public TokenSource getTokenSource() { return tokenSource; }
 
     //@Override
     public int index() { return p; }
@@ -187,7 +182,7 @@ public class BufferedTokenStream<T> : TokenStream<T> {
     //@Override
     public Token get(int i) {
         if ( i < 0 || i >= tokens.size() ) {
-            throw new IndexOutOfBoundsException("token index "+i+" out of range 0.."+(tokens.size()-1));
+            throw new IndexOutOfRangeException("token index "+i+" out of range 0.."+(tokens.size()-1));
         }
         return tokens.get(i);
     }
@@ -260,7 +255,7 @@ public class BufferedTokenStream<T> : TokenStream<T> {
 	}
 
     /** Reset this token stream by setting its token source. */
-    public void setTokenSource(TokenSource<T> tokenSource) {
+    public void setTokenSource(TokenSource tokenSource) {
         this.tokenSource = tokenSource;
         tokens.clear();
         p = -1;
@@ -288,7 +283,7 @@ public class BufferedTokenStream<T> : TokenStream<T> {
         if ( start>stop ) return null;
 
         // list = tokens[start:stop]:{T t, t.getType() in types}
-        List<Token> filteredTokens = new ArrayList<Token>();
+        List<Token> filteredTokens = new ();
         for (int i=start; i<=stop; i++) {
             Token t = tokens.get(i);
             if ( types==null || types.contains(t.getType()) ) {

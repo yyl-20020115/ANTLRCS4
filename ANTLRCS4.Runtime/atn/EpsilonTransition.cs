@@ -31,22 +31,22 @@ public class EpsilonTransition : Transition {
 		return outermostPrecedenceReturn;
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return EPSILON;
 	}
 
-	@Override
-	public bool isEpsilon() { return true; }
+    //@Override
+    public bool isEpsilon() { return true; }
 
-	@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    //@Override
+    public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
-	@Override
+    //@Override
 
-	public String toString() {
+    public override String ToString() {
 		return "epsilon";
 	}
 }

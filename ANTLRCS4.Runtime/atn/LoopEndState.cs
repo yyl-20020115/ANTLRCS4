@@ -4,14 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /** Mark the end of a * or + loop. */
-public final class LoopEndState extends ATNState {
+public class LoopEndState : ATNState {
 	public ATNState loopBackState;
 
-	@Override
-	public int getStateType() {
+	public override int getStateType() {
 		return LOOP_END;
 	}
 }

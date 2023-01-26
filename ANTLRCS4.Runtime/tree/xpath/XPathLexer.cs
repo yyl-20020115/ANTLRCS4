@@ -11,7 +11,7 @@ namespace org.antlr.v4.runtime.tree.xpath;
 
 /** Mimic the old XPathLexer from .g4 file */
 public class XPathLexer : Lexer {
-	public static readonly int
+	public const int
 		TOKEN_REF=1, 
 		RULE_REF=2, 
 		ANYWHERE=3, 

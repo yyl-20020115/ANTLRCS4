@@ -4,11 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Implements the {@code channel} lexer action by calling
@@ -17,8 +15,8 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerChannelAction implements LexerAction {
-	private final int channel;
+public class LexerChannelAction : LexerAction {
+	private readonly int channel;
 
 	/**
 	 * Constructs a new {@code channel} action with the specified channel value.
@@ -41,17 +39,17 @@ public final class LexerChannelAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#CHANNEL}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.CHANNEL;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+    //@Override
+    public bool isPositionDependent() {
 		return false;
 	}
 
@@ -61,21 +59,21 @@ public final class LexerChannelAction implements LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#setChannel} with the
 	 * value provided by {@link #getChannel}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		lexer.setChannel(channel);
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, channel);
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	//@Override
+	public override bool Equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -86,8 +84,8 @@ public final class LexerChannelAction implements LexerAction {
 		return channel == ((LexerChannelAction)obj).channel;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return String.format("channel(%d)", channel);
 	}
 }

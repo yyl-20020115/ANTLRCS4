@@ -4,13 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
 
 /**
  * This class represents profiling event information for a syntax error
@@ -41,8 +36,7 @@ public class ErrorInfo : DecisionEventInfo {
 	public ErrorInfo(int decision,
 					 ATNConfigSet configs,
 					 TokenStream input, int startIndex, int stopIndex,
-					 bool fullCtx)
-	{
-		super(decision, configs, input, startIndex, stopIndex, fullCtx);
+					 bool fullCtx):base(decision, configs, input, startIndex, stopIndex, fullCtx)
+    {
 	}
 }

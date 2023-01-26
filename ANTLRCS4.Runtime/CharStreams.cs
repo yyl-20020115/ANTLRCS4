@@ -1,26 +1,12 @@
 /*
  * Copyright (c) 2012-2017 The ANTLR Project. All rights reserved.
- * Use of this file is governed by the BSD 3-clause license that
+ * Use of this file @is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using System.Text;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CoderResult;
-import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+namespace org.antlr.v4.runtime;
 
 /** This class represents the primary interface for creating {@link CharStream}s
  *  from a variety of sources as of 4.7.  The motivation was to support
@@ -32,11 +18,11 @@ import java.nio.file.Paths;
  *  NEW:        {@code CharStreams.fromFileName("myinputfile")}
  *
  *  WARNING: If you use both the deprecated and the new streams, you will see
- *  a nontrivial performance degradation. This speed hit is because the
+ *  a nontrivial performance degradation. This speed hit @is because the
  *  {@link Lexer}'s internal code goes from a monomorphic to megamorphic
  *  dynamic dispatch to get characters from the input stream. Java's
- *  on-the-fly compiler (JIT) is unable to perform the same optimizations
- *  so stick with either the old or the new streams, if performance is
+ *  on-the-fly compiler (JIT) @is unable to perform the same optimizations
+ *  so stick with either the old or the new streams, if performance @is
  *  a primary concern. See the extreme debugging and spelunking
  *  needed to identify this issue in our timing rig:
  *
@@ -60,8 +46,8 @@ import java.nio.file.Paths;
  *
  *  @since 4.7
  */
-public final class CharStreams {
-	private static final int DEFAULT_BUFFER_SIZE = 4096;
+public class CharStreams {
+	private static int DEFAULT_BUFFER_SIZE = 4096;
 
 	// Utility class; do not construct.
 	private CharStreams() { }
@@ -72,8 +58,8 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(Path path){
-		return fromPath(path, StandardCharsets.UTF_8);
+	public static CharStream fromPath(string path){
+		return fromPath(path, Encoding.UTF_8);
 	}
 
 	/**
@@ -82,9 +68,9 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(Path path, Charset charset){
+	public static CharStream fromPath(Path path, Encoding charset){
 		long size = Files.size(path);
-		try (ReadableByteChannel channel = Files.newByteChannel(path)) {
+		using (ReadableByteChannel channel = Files.newByteChannel(path)) {
 			return fromChannel(
 				channel,
 				charset,
@@ -112,7 +98,7 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromFileName(String fileName, Charset charset){
+	public static CharStream fromFileName(String fileName, Encoding charset){
 		return fromPath(Paths.get(fileName), charset);
 	}
 
@@ -124,8 +110,8 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream is){
-		return fromStream(is, StandardCharsets.UTF_8);
+	public static CharStream fromStream(InputStream @is){
+		return fromStream(@is, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -135,12 +121,12 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream is, Charset charset){
-		return fromStream(is, charset, -1);
+	public static CharStream fromStream(InputStream @is, Encoding charset){
+		return fromStream(@is, charset, -1);
 	}
 
-	public static CharStream fromStream(InputStream is, Charset charset, long inputSize){
-		try (ReadableByteChannel channel = Channels.newChannel(is)) {
+	public static CharStream fromStream(InputStream @is, Encoding charset, long inputSize){
+		using (ReadableByteChannel channel = Channels.newChannel(@is)) {
 			return fromChannel(
 				channel,
 				charset,
@@ -169,7 +155,7 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CharStream fromChannel(ReadableByteChannel channel, Charset charset){
+	public static CharStream fromChannel(ReadableByteChannel channel, Encoding charset){
 		return fromChannel(
 			channel,
 			DEFAULT_BUFFER_SIZE,
@@ -241,19 +227,19 @@ public final class CharStreams {
 		int bufferSize,
 		CodingErrorAction decodingErrorAction,
 		String sourceName)
-		throws IOException
+		
 	{
 		return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
 	}
 
 	public static CodePointCharStream fromChannel(
 		ReadableByteChannel channel,
-		Charset charset,
+		Encoding charset,
 		int bufferSize,
 		CodingErrorAction decodingErrorAction,
 		String sourceName,
 		long inputSize)
-		throws IOException
+		
 	{
 		try {
 			ByteBuffer utf8BytesIn = ByteBuffer.allocate(bufferSize);

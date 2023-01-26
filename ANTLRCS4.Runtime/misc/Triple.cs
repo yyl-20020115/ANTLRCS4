@@ -21,15 +21,16 @@ public class Triple<A,B,C> {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj is Triple<?, ?, ?>)) {
+		else if (obj is Triple<A, B, C> other) {
+            return ObjectEqualityComparator.INSTANCE.Equals(a, other.a)
+                && ObjectEqualityComparator.INSTANCE.Equals(b, other.b)
+                && ObjectEqualityComparator.INSTANCE.Equals(c, other.c);
+        }
+        else
+		{
 			return false;
-		}
-
-		Triple<?, ?, ?> other = (Triple<?, ?, ?>)obj;
-		return ObjectEqualityComparator.INSTANCE.equals(a, other.a)
-			&& ObjectEqualityComparator.INSTANCE.equals(b, other.b)
-			&& ObjectEqualityComparator.INSTANCE.equals(c, other.c);
-	}
+        }
+    }
 
 	
 	public override int GetHashCode() {

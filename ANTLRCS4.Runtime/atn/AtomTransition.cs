@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /** TODO: make all transitions sets? no, should remove set edges */
@@ -16,21 +18,21 @@ public class AtomTransition : Transition {
 		this.label = label;
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return ATOM;
 	}
 
-	@Override
+	//@Override
 
 	public IntervalSet label() { return IntervalSet.of(label); }
 
-	@Override
+	//@Override
 	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return label == symbol;
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return String.valueOf(label);
 	}

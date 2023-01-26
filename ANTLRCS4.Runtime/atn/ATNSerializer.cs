@@ -86,47 +86,47 @@ public class ATNSerializer {
 			foreach (LexerAction action in atn.lexerActions) {
 				data.add(action.getActionType());
 				switch (action.getActionType()) {
-				case CHANNEL:
+				case LexerActionType.CHANNEL:
 					int channel = ((LexerChannelAction)action).getChannel();
 					data.add(channel);
 					data.add(0);
 					break;
 
-				case CUSTOM:
+				case LexerActionType.CUSTOM:
 					int ruleIndex = ((LexerCustomAction)action).getRuleIndex();
 					int actionIndex = ((LexerCustomAction)action).getActionIndex();
 					data.add(ruleIndex);
 					data.add(actionIndex);
 					break;
 
-				case MODE:
+				case LexerActionType.MODE:
 					int mode = ((LexerModeAction)action).getMode();
 					data.add(mode);
 					data.add(0);
 					break;
 
-				case MORE:
+				case LexerActionType.MORE:
 					data.add(0);
 					data.add(0);
 					break;
 
-				case POP_MODE:
+				case LexerActionType.POP_MODE:
 					data.add(0);
 					data.add(0);
 					break;
 
-				case PUSH_MODE:
+				case LexerActionType.PUSH_MODE:
 					mode = ((LexerPushModeAction)action).getMode();
 					data.add(mode);
 					data.add(0);
 					break;
 
-				case SKIP:
+				case LexerActionType.SKIP:
 					data.add(0);
 					data.add(0);
 					break;
 
-				case TYPE:
+				case LexerActionType.TYPE:
 					int type = ((LexerTypeAction)action).getType();
 					data.add(type);
 					data.add(0);
@@ -134,7 +134,7 @@ public class ATNSerializer {
 
 				default:
 					String message = String.format(Locale.getDefault(), "The specified lexer action type %s is not valid.", action.getActionType());
-					throw new IllegalArgumentException(message);
+					throw new ArgumentException(message);
 				}
 			}
 		}
@@ -143,14 +143,14 @@ public class ATNSerializer {
 	private void addDecisionStartStates() {
 		int ndecisions = atn.decisionToState.size();
 		data.add(ndecisions);
-		for (DecisionState decStartState in atn.decisionToState) {
+		foreach (DecisionState decStartState in atn.decisionToState) {
 			data.add(decStartState.stateNumber);
 		}
 	}
 
 	private void addEdges(int nedges, Dictionary<IntervalSet, int> setIndices) {
 		data.add(nedges);
-		for (ATNState s : atn.states) {
+		foreach (ATNState s in atn.states) {
 			if ( s==null ) {
 				// might be optimized away
 				continue;
@@ -231,11 +231,11 @@ public class ATNSerializer {
 		}
 	}
 
-	private Dictionary<IntervalSet, Integer> addSets() {
+	private Dictionary<IntervalSet, int> addSets() {
 		serializeSets(data,	sets.keySet());
         Dictionary<IntervalSet, int> setIndices = new ();
 		int setIndex = 0;
-		for (IntervalSet s : sets.keySet()) {
+		foreach (IntervalSet s in sets.keySet()) {
 			setIndices.put(s, setIndex++);
 		}
 		return setIndices;
@@ -245,7 +245,7 @@ public class ATNSerializer {
 		int nmodes = atn.modeToStartState.size();
 		data.add(nmodes);
 		if ( nmodes>0 ) {
-			for (ATNState modeStartState : atn.modeToStartState) {
+			foreach (ATNState modeStartState in atn.modeToStartState) {
 				data.add(modeStartState.stateNumber);
 			}
 		}
@@ -281,7 +281,7 @@ public class ATNSerializer {
 	private int addEdges() {
 		int nedges = 0;
 		data.add(atn.states.size());
-		for (ATNState s : atn.states) {
+		foreach (ATNState s in atn.states) {
 			if ( s==null ) { // might be optimized away
 				data.add(ATNState.INVALID_TYPE);
 				continue;

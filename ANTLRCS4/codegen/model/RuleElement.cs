@@ -4,17 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
-public class RuleElement extends SrcOp {
+public class RuleElement : SrcOp {
 	/** Associated ATN state for this rule elements (action, token, ruleref, ...) */
 	public int stateNumber;
 
-	public RuleElement(OutputModelFactory factory, GrammarAST ast) {
-		super(factory, ast);
+	public RuleElement(OutputModelFactory factory, GrammarAST ast): base(factory, ast)
+    {
 		if ( ast != null && ast.atnState!=null ) stateNumber = ast.atnState.stateNumber;
 	}
 

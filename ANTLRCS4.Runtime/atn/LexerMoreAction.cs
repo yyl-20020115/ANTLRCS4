@@ -4,10 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
+
 
 /**
  * Implements the {@code more} lexer action by calling {@link Lexer#more}.
@@ -18,11 +18,11 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerMoreAction implements LexerAction {
+public class LexerMoreAction : LexerAction {
 	/**
 	 * Provides a singleton instance of this parameterless lexer action.
 	 */
-	public static final LexerMoreAction INSTANCE = new LexerMoreAction();
+	public static readonly LexerMoreAction INSTANCE = new LexerMoreAction();
 
 	/**
 	 * Constructs the singleton instance of the lexer {@code more} command.
@@ -34,7 +34,7 @@ public final class LexerMoreAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#MORE}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.MORE;
 	}
@@ -43,8 +43,8 @@ public final class LexerMoreAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+	//@Override
+	public bool isPositionDependent() {
 		return false;
 	}
 
@@ -53,26 +53,26 @@ public final class LexerMoreAction implements LexerAction {
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#more}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		lexer.more();
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		return MurmurHash.finish(hash, 1);
 	}
 
-	@Override
-	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-	public boolean equals(Object obj) {
+	//@Override
+	//@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+	public override bool Equals(Object? obj) {
 		return obj == this;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return "more";
 	}
 }

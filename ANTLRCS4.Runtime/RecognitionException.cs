@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 
@@ -14,9 +15,9 @@ namespace org.antlr.v4.runtime;
  *  in the input, where it is in the ATN, the rule invocation stack,
  *  and what kind of problem occurred.
  */
-public class RecognitionException<T1,T2> : RuntimeException {
+public class RecognitionException : RuntimeException {
 	/** The {@link Recognizer} where this exception originated. */
-	private readonly Recognizer recognizer;
+	private readonly Recognizer<Token, ATNSimulator> recognizer;
 
 	private readonly RuleContext ctx;
 
@@ -31,7 +32,7 @@ public class RecognitionException<T1,T2> : RuntimeException {
 
 	private int offendingState = -1;
 
-	public RecognitionException(Recognizer recognizer,
+	public RecognitionException(Recognizer<Token, ATNSimulator> recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 	{
@@ -42,7 +43,7 @@ public class RecognitionException<T1,T2> : RuntimeException {
 	}
 
 	public RecognitionException(String message,
-								Recognizer<T1, T2> recognizer,
+								Recognizer<Token, ATNSimulator> recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 		: base(message) 
@@ -132,7 +133,7 @@ public class RecognitionException<T1,T2> : RuntimeException {
 	 * @return The recognizer where this exception occurred, or {@code null} if
 	 * the recognizer is not available.
 	 */
-	public Recognizer<T1, T2> getRecognizer() {
+	public Recognizer<Token, ATNSimulator> getRecognizer() {
 		return recognizer;
 	}
 }

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime;
 
 /**
@@ -52,7 +55,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 		this.exactOnly = exactOnly;
 	}
 
-	@Override
+	////@Override
 	public void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
@@ -73,7 +76,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	@Override
+	//@Override
 	public void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
@@ -88,7 +91,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	@Override
+	//@Override
 	public void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,
@@ -137,7 +140,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 		}
 
 		BitSet result = new BitSet();
-		for (ATNConfig config : configs) {
+		foreach (ATNConfig config in configs) {
 			result.set(config.alt);
 		}
 

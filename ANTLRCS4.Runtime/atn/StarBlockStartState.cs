@@ -4,13 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /** The block that begins a closure loop. */
-public final class StarBlockStartState extends BlockStartState {
+public class StarBlockStartState : BlockStartState {
 
-	@Override
-	public int getStateType() {
+	
+	public override int getStateType() {
 		return STAR_BLOCK_START;
 	}
 }

@@ -68,7 +68,7 @@ public class LogManager {
         return defaultFilename;
     }
 
-    @Override
+    //@Override
     public String toString() {
         if ( records==null ) return "";
         String nl = System.getProperty("line.separator");
@@ -80,11 +80,11 @@ public class LogManager {
         return buf.toString();
     }
 
-    public static void main(String[] args){
+    public static void TestMain(String[] args){
         LogManager mgr = new LogManager();
         mgr.log("atn", "test msg");
         mgr.log("dfa", "test msg 2");
-        System.out.println(mgr);
+        Console.WriteLine(mgr);
         mgr.save();
     }
 }

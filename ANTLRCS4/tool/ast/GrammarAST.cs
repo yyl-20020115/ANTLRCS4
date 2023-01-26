@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool.ast;
@@ -39,7 +40,7 @@ public class GrammarAST : CommonTree {
     }
 
 	public GrammarAST[] getChildrenAsArray() {
-		return children.toArray(new GrammarAST[0]);
+		return children.ToArray();
 	}
 
 	public List<GrammarAST> getNodesWithType(int ttype) {

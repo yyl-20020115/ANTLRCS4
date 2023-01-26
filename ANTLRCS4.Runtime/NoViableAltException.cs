@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
+
 namespace org.antlr.v4.runtime;
 
 
@@ -14,7 +16,7 @@ namespace org.antlr.v4.runtime;
 public class NoViableAltException : RecognitionException {
 	/** Which configurations did we try at input.index() that couldn't match input.LT(1)? */
 
-	private final ATNConfigSet deadEndConfigs;
+	private readonly ATNConfigSet deadEndConfigs;
 
 	/** The token object at the start index; the input stream might
 	 * 	not be buffering tokens so get a reference to it. (At the
@@ -22,7 +24,7 @@ public class NoViableAltException : RecognitionException {
 	 *  buffer all of the tokens but later we might not have access to those.)
 	 */
 
-	private final Token startToken;
+	private readonly Token startToken;
 
 	public NoViableAltException(Parser recognizer) { // LL(1) error
 		this(recognizer,

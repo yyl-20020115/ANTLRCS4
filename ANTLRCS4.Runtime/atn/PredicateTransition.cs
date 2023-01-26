@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /** TODO: this is old comment:
  *  A tree of semantic predicates from the grammar AST if label==SEMPRED.
@@ -12,28 +12,28 @@ package org.antlr.v4.runtime.atn;
  *  may have to combine a bunch of them as it collects predicates from
  *  multiple ATN configurations into a single DFA state.
  */
-public final class PredicateTransition extends AbstractPredicateTransition {
-	public final int ruleIndex;
-	public final int predIndex;
-	public final boolean isCtxDependent;  // e.g., $i ref in pred
+public class PredicateTransition : AbstractPredicateTransition {
+	public readonly int ruleIndex;
+	public readonly int predIndex;
+	public readonly bool isCtxDependent;  // e.g., $i ref in pred
 
-	public PredicateTransition(ATNState target, int ruleIndex, int predIndex, boolean isCtxDependent) {
+	public PredicateTransition(ATNState target, int ruleIndex, int predIndex, bool isCtxDependent) {
 		super(target);
 		this.ruleIndex = ruleIndex;
 		this.predIndex = predIndex;
 		this.isCtxDependent = isCtxDependent;
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return PREDICATE;
 	}
 
-	@Override
-	public boolean isEpsilon() { return true; }
+	//@Override
+	public bool isEpsilon() { return true; }
 
-	@Override
-	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	//@Override
+	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
@@ -41,7 +41,7 @@ public final class PredicateTransition extends AbstractPredicateTransition {
    		return new SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent);
    	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return "pred_"+ruleIndex+":"+predIndex;
 	}

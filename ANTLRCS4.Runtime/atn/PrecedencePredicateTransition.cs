@@ -4,32 +4,32 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  *
  * @author Sam Harwell
  */
-public final class PrecedencePredicateTransition extends AbstractPredicateTransition {
-	public final int precedence;
+public class PrecedencePredicateTransition : AbstractPredicateTransition {
+	public readonly int precedence;
 
 	public PrecedencePredicateTransition(ATNState target, int precedence) {
 		super(target);
 		this.precedence = precedence;
 	}
 
-	@Override
+	//@Override
 	public int getSerializationType() {
 		return PRECEDENCE;
 	}
 
-	@Override
+	//@Override
 	public boolean isEpsilon() {
 		return true;
 	}
 
-	@Override
-	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	//@Override
+	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
@@ -37,7 +37,7 @@ public final class PrecedencePredicateTransition extends AbstractPredicateTransi
 		return new SemanticContext.PrecedencePredicate(precedence);
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return precedence + " >= _p";
 	}

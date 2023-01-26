@@ -4,15 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.IntStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
-import java.util.Arrays;
 
 /**
  * Represents an executor for a sequence of lexer actions which traversed during
@@ -27,12 +22,12 @@ import java.util.Arrays;
  */
 public class LexerActionExecutor {
 
-	private final LexerAction[] lexerActions;
+	private readonly LexerAction[] lexerActions;
 	/**
 	 * Caches the result of {@link #hashCode} since the hash code is an element
 	 * of the performance-critical {@link LexerATNConfig#hashCode} operation.
 	 */
-	private final int hashCode;
+	private readonly int hashCode;
 
 	/**
 	 * Constructs an executor for a sequence of {@link LexerAction} actions.
@@ -42,11 +37,11 @@ public class LexerActionExecutor {
 		this.lexerActions = lexerActions;
 
 		int hash = MurmurHash.initialize();
-		for (LexerAction lexerAction : lexerActions) {
+		foreach (LexerAction lexerAction in lexerActions) {
 			hash = MurmurHash.update(hash, lexerAction);
 		}
 
-		this.hashCode = MurmurHash.finish(hash, lexerActions.length);
+		this.hashCode = MurmurHash.finish(hash, lexerActions.Length);
 	}
 
 	/**
@@ -105,7 +100,7 @@ public class LexerActionExecutor {
 	 */
 	public LexerActionExecutor fixOffsetBeforeMatch(int offset) {
 		LexerAction[] updatedLexerActions = null;
-		for (int i = 0; i < lexerActions.length; i++) {
+		for (int i = 0; i < lexerActions.Length; i++) {
 			if (lexerActions[i].isPositionDependent() && !(lexerActions[i] is LexerIndexedCustomAction)) {
 				if (updatedLexerActions == null) {
 					updatedLexerActions = lexerActions.clone();
@@ -150,10 +145,10 @@ public class LexerActionExecutor {
 	 * of the token.
 	 */
 	public void execute(Lexer lexer, CharStream input, int startIndex) {
-		boolean requiresSeek = false;
+		bool requiresSeek = false;
 		int stopIndex = input.index();
 		try {
-			for (LexerAction lexerAction : lexerActions) {
+			foreach (LexerAction lexerAction in lexerActions) {
 				if (lexerAction is LexerIndexedCustomAction) {
 					int offset = ((LexerIndexedCustomAction)lexerAction).getOffset();
 					input.seek(startIndex + offset);

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
+using System.Text;
+
 namespace org.antlr.v4.runtime.misc;
 
 /** {@link Set} implementation with closed hashing (open addressing). */
@@ -27,15 +30,17 @@ public class Array2DHashSet<T> : HashSet<T> {
 	protected readonly int initialCapacity;
 	protected readonly int initialBucketCapacity;
 
-	public Array2DHashSet() {
-		this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY);
+	public Array2DHashSet(): this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
+    {
+		;
 	}
 
-	public Array2DHashSet(AbstractEqualityComparator<? super T> comparator) {
-		this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY);
+	public Array2DHashSet(AbstractEqualityComparator<T> comparator) : this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
+    {
+		;
 	}
 
-	public Array2DHashSet(AbstractEqualityComparator<? super T> comparator, int initialCapacity, int initialBucketCapacity) {
+	public Array2DHashSet(AbstractEqualityComparator<T> comparator, int initialCapacity, int initialBucketCapacity) {
 		if (comparator == null) {
 			comparator = ObjectEqualityComparator.INSTANCE;
 		}
@@ -44,7 +49,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		this.initialCapacity = initialCapacity;
 		this.initialBucketCapacity = initialBucketCapacity;
 		this.buckets = createBuckets(initialCapacity);
-		this.threshold = (int)Math.floor(initialCapacity * LOAD_FACTOR);
+		this.threshold = (int)Math.Floor(initialCapacity * LOAD_FACTOR);
 	}
 
 	/**
@@ -71,19 +76,19 @@ public class Array2DHashSet<T> : HashSet<T> {
 		}
 
 		// LOOK FOR IT IN BUCKET
-		for (int i=0; i<bucket.length; i++) {
+		for (int i=0; i<bucket.Length; i++) {
 			T existing = bucket[i];
 			if ( existing==null ) { // empty slot; not there, add.
 				bucket[i] = o;
 				n++;
 				return o;
 			}
-			if ( comparator.equals(existing, o) ) return existing; // found existing, quit
+			if ( comparator.Equals(existing, o) ) return existing; // found existing, quit
 		}
 
 		// FULL BUCKET, expand and add to end
-		int oldLength = bucket.length;
-		bucket = Arrays.copyOf(bucket, bucket.length * 2);
+		int oldLength = bucket.Length;
+		bucket = Arrays.copyOf(bucket, bucket.Length * 2);
 		buckets[b] = bucket;
 		bucket[oldLength] = o; // add to end
 		n++;
@@ -94,28 +99,28 @@ public class Array2DHashSet<T> : HashSet<T> {
 		if ( o==null ) return o;
 		int b = getBucket(o);
 		T[] bucket = buckets[b];
-		if ( bucket==null ) return null; // no bucket
-		for (T e : bucket) {
-			if ( e==null ) return null; // empty slot; not there
-			if ( comparator.equals(e, o) ) return e;
+		if ( bucket==null ) return default; // no bucket
+		foreach (T e in bucket) {
+			if ( e==null ) return default; // empty slot; not there
+			if ( comparator.Equals(e, o) ) return e;
 		}
-		return null;
+		return default;
 	}
 
 	protected  int getBucket(T o) {
-		int hash = comparator.hashCode(o);
-		int b = hash & (buckets.length-1); // assumes len is power of 2
+		int hash = comparator.GetHashCode(o);
+		int b = hash & (buckets.Length-1); // assumes len is power of 2
 		return b;
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if ( bucket==null ) continue;
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( o==null ) break;
-				hash = MurmurHash.update(hash, comparator.hashCode(o));
+				hash = MurmurHash.update(hash, comparator.GetHashCode(o));
 			}
 		}
 
@@ -123,11 +128,11 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return hash;
 	}
 
-	@Override
-	public bool equals(Object o) {
+	//@Override
+	public bool Equals(Object o) {
 		if (o == this) return true;
-		if ( !(o is Array2DHashSet) ) return false;
-		Array2DHashSet<?> other = (Array2DHashSet<?>)o;
+		if ( !(o is Array2DHashSet<T>) ) return false;
+		Array2DHashSet<T> other = (Array2DHashSet<T>)o;
 		if ( other.size() != size() ) return false;
 		bool same = this.containsAll(other);
 		return same;
@@ -136,20 +141,20 @@ public class Array2DHashSet<T> : HashSet<T> {
 	protected void expand() {
 		T[][] old = buckets;
 		currentPrime += 4;
-		int newCapacity = buckets.length * 2;
+		int newCapacity = buckets.Length * 2;
 		T[][] newTable = createBuckets(newCapacity);
-		int[] newBucketLengths = new int[newTable.length];
+		int[] newBucketLengths = new int[newTable.Length];
 		buckets = newTable;
 		threshold = (int)(newCapacity * LOAD_FACTOR);
 //		System.out.println("new size="+newCapacity+", thres="+threshold);
 		// rehash all existing entries
 		int oldSize = size();
-		for (T[] bucket : old) {
+		foreach (T[] bucket in old) {
 			if ( bucket==null ) {
 				continue;
 			}
 
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( o==null ) {
 					break;
 				}
@@ -164,9 +169,9 @@ public class Array2DHashSet<T> : HashSet<T> {
 				}
 				else {
 					newBucket = newTable[b];
-					if (bucketLength == newBucket.length) {
+					if (bucketLength == newBucket.Length) {
 						// expand
-						newBucket = Arrays.copyOf(newBucket, newBucket.length * 2);
+						newBucket = Arrays.copyOf(newBucket, newBucket.Length * 2);
 						newTable[b] = newBucket;
 					}
 				}
@@ -176,27 +181,27 @@ public class Array2DHashSet<T> : HashSet<T> {
 			}
 		}
 
-		assert n == oldSize;
+		//assert n == oldSize;
 	}
 
-	@Override
-	public final bool add(T t) {
+	//@Override
+	public bool add(T t) {
 		T existing = getOrAdd(t);
-		return existing==t;
+		return existing.Equals(t);
 	}
 
-	@Override
-	public final int size() {
+	//@Override
+	public int size() {
 		return n;
 	}
 
-	@Override
-	public final bool isEmpty() {
+	//@Override
+	public bool isEmpty() {
 		return n==0;
 	}
 
-	@Override
-	public final bool contains(Object o) {
+	//@Override
+	public bool contains(Object o) {
 		return containsFast(asElementType(o));
 	}
 
@@ -208,21 +213,21 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return get(obj) != null;
 	}
 
-	@Override
+	//@Override
 	public Iterator<T> iterator() {
 		return new SetIterator(toArray());
 	}
 
-	@Override
+	//@Override
 	public T[] toArray() {
 		T[] a = createBucket(size());
 		int i = 0;
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if ( bucket==null ) {
 				continue;
 			}
 
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( o==null ) {
 					break;
 				}
@@ -234,33 +239,33 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return a;
 	}
 
-	@Override
-	public <U> U[] toArray(U[] a) {
-		if (a.length < size()) {
+	//@Override
+	public T[] toArray(T[] a) {
+		if (a.Length < size()) {
 			a = Arrays.copyOf(a, size());
 		}
 
 		int i = 0;
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if ( bucket==null ) {
 				continue;
 			}
 
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( o==null ) {
 					break;
 				}
 
-				@SuppressWarnings("unchecked") // array store will check this
-				U targetElement = (U)o;
+				//@SuppressWarnings("unchecked") // array store will check this
+				T targetElement = (T)o;
 				a[i++] = targetElement;
 			}
 		}
 		return a;
 	}
 
-	@Override
-	public final bool remove(Object o) {
+	//@Override
+	public bool remove(Object o) {
 		return removeFast(asElementType(o));
 	}
 
@@ -276,17 +281,17 @@ public class Array2DHashSet<T> : HashSet<T> {
 			return false;
 		}
 
-		for (int i=0; i<bucket.length; i++) {
+		for (int i=0; i<bucket.Length; i++) {
 			T e = bucket[i];
 			if ( e==null ) {
 				// empty slot; not there
 				return false;
 			}
 
-			if ( comparator.equals(e, obj) ) {          // found it
+			if ( comparator.Equals(e, obj) ) {          // found it
 				// shift all elements to the right down one
-				System.arraycopy(bucket, i+1, bucket, i, bucket.length-i-1);
-				bucket[bucket.length - 1] = null;
+				System.arraycopy(bucket, i+1, bucket, i, bucket.Length-i-1);
+				bucket[bucket.Length - 1] = default;
 				n--;
 				return true;
 			}
@@ -295,52 +300,52 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return false;
 	}
 
-	@Override
-	public bool containsAll(Collection<?> collection) {
-		if ( collection is Array2DHashSet ) {
-			Array2DHashSet<?> s = (Array2DHashSet<?>)collection;
-			for (Object[] bucket : s.buckets) {
+	//@Override
+	public bool containsAll(ICollection<T> collection) {
+		if ( collection is Array2DHashSet<T> ) {
+			Array2DHashSet<T> s = (Array2DHashSet<T>)collection;
+			foreach (T[] bucket in s.buckets) {
 				if ( bucket==null ) continue;
-				for (Object o : bucket) {
+				foreach (Object o in bucket) {
 					if ( o==null ) break;
 					if ( !this.containsFast(asElementType(o)) ) return false;
 				}
 			}
 		}
 		else {
-			for (Object o : collection) {
+			foreach (Object o in collection) {
 				if ( !this.containsFast(asElementType(o)) ) return false;
 			}
 		}
 		return true;
 	}
 
-	@Override
-	public bool addAll(Collection<? : T> c) {
+	//@Override
+	public bool addAll(ICollection<T> c) {
 		bool changed = false;
-		for (T o : c) {
+		foreach (T o in c) {
 			T existing = getOrAdd(o);
 			if ( existing!=o ) changed=true;
 		}
 		return changed;
 	}
 
-	@Override
-	public bool retainAll(Collection<?> c) {
+	//@Override
+	public bool retainAll(ICollection<T> c) {
 		int newsize = 0;
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if (bucket == null) {
 				continue;
 			}
 
 			int i;
 			int j;
-			for (i = 0, j = 0; i < bucket.length; i++) {
+			for (i = 0, j = 0; i < bucket.Length; i++) {
 				if (bucket[i] == null) {
 					break;
 				}
 
-				if (!c.contains(bucket[i])) {
+				if (!c.Contains(bucket[i])) {
 					// removed
 					continue;
 				}
@@ -367,61 +372,61 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return changed;
 	}
 
-	@Override
-	public bool removeAll(Collection<?> c) {
+	//@Override
+	public bool removeAll(ICollection<T> c) {
 		bool changed = false;
-		for (Object o : c) {
+		foreach (var o in c) {
 			changed |= removeFast(asElementType(o));
 		}
 
 		return changed;
 	}
 
-	@Override
+	//@Override
 	public void clear() {
 		n = 0;
 		buckets = createBuckets(this.initialCapacity);
-		threshold = (int)Math.floor(this.initialCapacity * LOAD_FACTOR);
+		threshold = (int)Math.Floor(this.initialCapacity * LOAD_FACTOR);
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		if ( size()==0 ) return "{}";
 
 		StringBuilder buf = new StringBuilder();
-		buf.append('{');
+		buf.Append('{');
 		bool first = true;
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if ( bucket==null ) continue;
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( o==null ) break;
 				if ( first ) first=false;
-				else buf.append(", ");
-				buf.append(o.toString());
+				else buf.Append(", ");
+				buf.Append(o.ToString());
 			}
 		}
-		buf.append('}');
-		return buf.toString();
+		buf.Append('}');
+		return buf.ToString();
 	}
 
 	public String toTableString() {
 		StringBuilder buf = new StringBuilder();
-		for (T[] bucket : buckets) {
+		foreach (T[] bucket in buckets) {
 			if ( bucket==null ) {
-				buf.append("null\n");
+				buf.Append("null\n");
 				continue;
 			}
-			buf.append('[');
+			buf.Append('[');
 			bool first = true;
-			for (T o : bucket) {
+			foreach (T o in bucket) {
 				if ( first ) first=false;
-				else buf.append(" ");
-				if ( o==null ) buf.append("_");
-				else buf.append(o.toString());
+				else buf.Append(" ");
+				if ( o==null ) buf.Append("_");
+				else buf.Append(o.ToString());
 			}
-			buf.append("]\n");
+			buf.Append("]\n");
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	/**
@@ -437,35 +442,35 @@ public class Array2DHashSet<T> : HashSet<T> {
 	 * @return {@code o} if it could be an instance of {@code T}, otherwise
 	 * {@code null}.
 	 */
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	protected T asElementType(Object o) {
 		return (T)o;
 	}
 
 	/**
-	 * Return an array of {@code T[]} with length {@code capacity}.
+	 * Return an array of {@code T[]} with Length {@code capacity}.
 	 *
-	 * @param capacity the length of the array to return
+	 * @param capacity the Length of the array to return
 	 * @return the newly constructed array
 	 */
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	protected T[][] createBuckets(int capacity) {
 		return (T[][])new Object[capacity][];
 	}
 
 	/**
-	 * Return an array of {@code T} with length {@code capacity}.
+	 * Return an array of {@code T} with Length {@code capacity}.
 	 *
-	 * @param capacity the length of the array to return
+	 * @param capacity the Length of the array to return
 	 * @return the newly constructed array
 	 */
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	protected T[] createBucket(int capacity) {
 		return (T[])new Object[capacity];
 	}
 
-	protected class SetIterator implements Iterator<T> {
-		final T[] data;
+	protected class SetIterator : Iterator<T> {
+		readonly T[] data;
 		int nextIndex = 0;
 		bool removed = true;
 
@@ -473,12 +478,12 @@ public class Array2DHashSet<T> : HashSet<T> {
 			this.data = data;
 		}
 
-		@Override
+		//@Override
 		public bool hasNext() {
-			return nextIndex < data.length;
+			return nextIndex < data.Length;
 		}
 
-		@Override
+		//@Override
 		public T next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
@@ -488,7 +493,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 			return data[nextIndex++];
 		}
 
-		@Override
+		//@Override
 		public void remove() {
 			if (removed) {
 				throw new IllegalStateException();

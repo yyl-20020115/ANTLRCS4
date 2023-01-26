@@ -4,12 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.TokenStream;
 
 /**
  * This class represents profiling event information for semantic predicate
@@ -19,22 +15,22 @@ import org.antlr.v4.runtime.TokenStream;
  *
  * @since 4.3
  */
-public class PredicateEvalInfo extends DecisionEventInfo {
+public class PredicateEvalInfo : DecisionEventInfo {
 	/**
 	 * The semantic context which was evaluated.
 	 */
-	public final SemanticContext semctx;
+	public readonly SemanticContext semctx;
 	/**
 	 * The alternative number for the decision which is guarded by the semantic
 	 * context {@link #semctx}. Note that other ATN
 	 * configurations may predict the same alternative which are guarded by
 	 * other semantic contexts and/or {@link SemanticContext#NONE}.
 	 */
-	public final int predictedAlt;
+	public readonly int predictedAlt;
 	/**
 	 * The result of evaluating the semantic context {@link #semctx}.
 	 */
-	public final boolean evalResult;
+	public readonly bool evalResult;
 
 	/**
 	 * Constructs a new instance of the {@link PredicateEvalInfo} class with the
@@ -61,11 +57,12 @@ public class PredicateEvalInfo extends DecisionEventInfo {
 	public PredicateEvalInfo(int decision,
 							 TokenStream input, int startIndex, int stopIndex,
 							 SemanticContext semctx,
-							 boolean evalResult,
+							 bool evalResult,
 							 int predictedAlt,
-							 boolean fullCtx)
+							 bool fullCtx)
+
+        :base(decision, new ATNConfigSet(), input, startIndex, stopIndex, fullCtx)
 	{
-		super(decision, new ATNConfigSet(), input, startIndex, stopIndex, fullCtx);
 		this.semctx = semctx;
 		this.evalResult = evalResult;
 		this.predictedAlt = predictedAlt;

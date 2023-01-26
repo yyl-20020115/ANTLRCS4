@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Implements the {@code mode} lexer action by calling {@link Lexer#mode} with
@@ -16,8 +13,8 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerModeAction implements LexerAction {
-	private final int mode;
+public  class LexerModeAction : LexerAction {
+	private readonly int mode;
 
 	/**
 	 * Constructs a new {@code mode} action with the specified mode value.
@@ -40,41 +37,41 @@ public final class LexerModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#MODE}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.MODE;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+    //@Override
+    public bool isPositionDependent() {
 		return false;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#mode} with the
 	 * value provided by {@link #getMode}.</p>
 	 */
-	@Override
-	public void execute(Lexer lexer) {
+    //@Override
+    public void execute(Lexer lexer) {
 		lexer.mode(mode);
 	}
 
-	@Override
-	public int hashCode() {
+    //@Override
+    public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
 		hash = MurmurHash.update(hash, mode);
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+    //@Override
+    public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -85,8 +82,8 @@ public final class LexerModeAction implements LexerAction {
 		return mode == ((LexerModeAction)obj).mode;
 	}
 
-	@Override
-	public String toString() {
+    //@Override
+    public String toString() {
 		return String.format("mode(%d)", mode);
 	}
 }
