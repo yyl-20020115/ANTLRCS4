@@ -4,15 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-import org.antlr.v4.unicode.UnicodeData;
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+namespace org.antlr.v4.test.tool;
+[TestClass]
 public class TestUnicodeData {
-	@Test
+	[TestMethod]
 	public void testUnicodeGeneralCategoriesLatin() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Lu").contains('X'));
 		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains('x'));
@@ -24,7 +19,7 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Z").contains(' '));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeGeneralCategoriesBMP() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Lu").contains('\u1E3A'));
 		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains('\u1E3B'));
@@ -38,7 +33,7 @@ public class TestUnicodeData {
 		assertFalse(UnicodeData.getPropertyCodePoints("Z").contains('\u1E3A'));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeGeneralCategoriesSMP() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Lu").contains(0x1D5D4));
 		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains(0x1D770));
@@ -50,7 +45,7 @@ public class TestUnicodeData {
 		assertFalse(UnicodeData.getPropertyCodePoints("N").contains(0x1D5D4));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeCategoryAliases() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Lowercase_Letter").contains('x'));
 		assertFalse(UnicodeData.getPropertyCodePoints("Lowercase_Letter").contains('X'));
@@ -60,7 +55,7 @@ public class TestUnicodeData {
 		assertFalse(UnicodeData.getPropertyCodePoints("Enclosing_Mark").contains('x'));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeBinaryProperties() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Emoji").contains(0x1F4A9));
 		assertFalse(UnicodeData.getPropertyCodePoints("Emoji").contains('X'));
@@ -71,7 +66,7 @@ public class TestUnicodeData {
 		assertFalse(UnicodeData.getPropertyCodePoints("Hex").contains('Q'));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeBinaryPropertyAliases() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Ideo").contains('\u611B'));
 		assertFalse(UnicodeData.getPropertyCodePoints("Ideo").contains('X'));
@@ -81,7 +76,7 @@ public class TestUnicodeData {
 		assertFalse(UnicodeData.getPropertyCodePoints("Noncharacter_Code_Point").contains('X'));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeScripts() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Zyyy").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("Latn").contains('X'));
@@ -89,7 +84,7 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Cyrl").contains(0x0404));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeScriptEquals() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Script=Zyyy").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("Script=Latn").contains('X'));
@@ -97,7 +92,7 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Script=Cyrl").contains(0x0404));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeScriptAliases() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Common").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("Latin").contains('X'));
@@ -105,7 +100,7 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Cyrillic").contains(0x0404));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeBlocks() {
 		assertTrue(UnicodeData.getPropertyCodePoints("InASCII").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("InCJK").contains(0x4E04));
@@ -113,7 +108,7 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("InMisc_Pictographs").contains(0x1F4A9));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeBlockEquals() {
 		assertTrue(UnicodeData.getPropertyCodePoints("Block=ASCII").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("Block=CJK").contains(0x4E04));
@@ -121,13 +116,13 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Block=Misc_Pictographs").contains(0x1F4A9));
 	}
 
-	@Test
+	[TestMethod]
 	public void testUnicodeBlockAliases() {
 		assertTrue(UnicodeData.getPropertyCodePoints("InBasic_Latin").contains('0'));
 		assertTrue(UnicodeData.getPropertyCodePoints("InMiscellaneous_Mathematical_Symbols_B").contains(0x29BE));
 	}
 
-	@Test
+	[TestMethod]
 	public void testEnumeratedPropertyEquals() {
 		assertFalse(
 				UnicodeData.getPropertyCodePoints("Grapheme_Cluster_Break=E_Base").contains(0x1F47E),
@@ -146,7 +141,7 @@ public class TestUnicodeData {
 				"U+00A2 CENT SIGN does not have ambiguous East Asian Width");
 	}
 
-        @Test
+        [TestMethod]
         public void extendedPictographic() {
 		assertTrue(
 				UnicodeData.getPropertyCodePoints("Extended_Pictographic").contains(0x1F588),
@@ -156,7 +151,7 @@ public class TestUnicodeData {
 				"0 is not in Extended Pictographic");
         }
 
-        @Test
+        [TestMethod]
         public void emojiPresentation() {
 		assertTrue(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=EmojiDefault").contains(0x1F4A9),
@@ -178,7 +173,7 @@ public class TestUnicodeData {
 				"A is not in EmojiPresentation=TextDefault");
         }
 
-	@Test
+	[TestMethod]
 	public void testPropertyCaseInsensitivity() {
 		assertTrue(UnicodeData.getPropertyCodePoints("l").contains('x'));
 		assertFalse(UnicodeData.getPropertyCodePoints("l").contains('0'));
@@ -186,14 +181,14 @@ public class TestUnicodeData {
 		assertTrue(UnicodeData.getPropertyCodePoints("Alnum").contains('0'));
 	}
 
-	@Test
+	[TestMethod]
 	public void testPropertyDashSameAsUnderscore() {
 		assertTrue(UnicodeData.getPropertyCodePoints("InLatin-1").contains('\u00F0'));
 	}
 
-	@Test
+	[TestMethod]
 	public void modifyingUnicodeDataShouldThrow() {
-		IllegalStateException exception = assertThrows(IllegalStateException.class, () -> UnicodeData.getPropertyCodePoints("L").add(0x12345));
+		IllegalStateException exception = assertThrows(IllegalStateException, () -> UnicodeData.getPropertyCodePoints("L").add(0x12345));
 		assertEquals("can't alter readonly IntervalSet", exception.getMessage());
 	}
 }

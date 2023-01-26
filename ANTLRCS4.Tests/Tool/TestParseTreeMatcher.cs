@@ -4,48 +4,30 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.tree.pattern;
 
-import org.antlr.v4.runtime.InputMismatchException;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.NoViableAltException;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.runtime.tree.pattern.ParseTreeMatch;
-import org.antlr.v4.runtime.tree.pattern.ParseTreePattern;
-import org.antlr.v4.runtime.tree.pattern.ParseTreePatternMatcher;
-import org.antlr.v4.test.runtime.RunOptions;
-import org.antlr.v4.test.runtime.Stage;
-import org.antlr.v4.test.runtime.java.JavaRunner;
-import org.antlr.v4.test.runtime.states.JavaCompiledState;
-import org.antlr.v4.test.runtime.states.JavaExecutedState;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.List;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.createOptionsForJavaToolTests;
-import static org.junit.jupiter.api.Assertions.*;
-
+[TestClass]
 public class TestParseTreeMatcher {
-	@Test public void testChunking() {
+	[TestMethod] public void testChunking() {
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
-		assertEquals("[ID, ' = ', expr, ' ;']", m.split("<ID> = <expr> ;").toString());
-		assertEquals("[' ', ID, ' = ', expr]", m.split(" <ID> = <expr>").toString());
-		assertEquals("[ID, ' = ', expr]", m.split("<ID> = <expr>").toString());
-		assertEquals("[expr]", m.split("<expr>").toString());
-		assertEquals("['<x> foo']", m.split("\\<x\\> foo").toString());
-		assertEquals("['foo <x> bar ', tag]", m.split("foo \\<x\\> bar <tag>").toString());
+		assertEquals("[ID, ' = ', expr, ' ;']", m.split("<ID> = <expr> ;").ToString());
+		assertEquals("[' ', ID, ' = ', expr]", m.split(" <ID> = <expr>").ToString());
+		assertEquals("[ID, ' = ', expr]", m.split("<ID> = <expr>").ToString());
+		assertEquals("[expr]", m.split("<expr>").ToString());
+		assertEquals("['<x> foo']", m.split("\\<x\\> foo").ToString());
+		assertEquals("['foo <x> bar ', tag]", m.split("foo \\<x\\> bar <tag>").ToString());
 	}
 
-	@Test public void testDelimiters() {
+	[TestMethod] public void testDelimiters() {
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
 		m.setDelimiters("<<", ">>", "$");
-		String result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").toString();
+		String result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
 		assertEquals("[ID, ' = ', expr, ' ;<< ick >>']", result);
 	}
 
-	@Test public void testInvertedTags() throws Exception {
+	[TestMethod] public void testInvertedTags(){
 		ParseTreePatternMatcher m= new ParseTreePatternMatcher(null, null);
 		String result = null;
 		try {
@@ -58,7 +40,7 @@ public class TestParseTreeMatcher {
 		assertEquals(expected, result);
 	}
 
-	@Test public void testUnclosedTag() throws Exception {
+	[TestMethod] public void testUnclosedTag(){
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
 		String result = null;
 		try {
@@ -71,7 +53,7 @@ public class TestParseTreeMatcher {
 		assertEquals(expected, result);
 	}
 
-	@Test public void testExtraClose() throws Exception {
+	[TestMethod] public void testExtraClose(){
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
 		String result = null;
 		try {
@@ -84,7 +66,7 @@ public class TestParseTreeMatcher {
 		assertEquals(expected, result);
 	}
 
-	@Test public void testTokenizingPattern() throws Exception {
+	[TestMethod] public void testTokenizingPattern(){
 		String grammar =
 			"grammar X1;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -95,11 +77,11 @@ public class TestParseTreeMatcher {
 		ParseTreePatternMatcher m = getPatternMatcher("X1.g4", grammar, "X1Parser", "X1Lexer", "s");
 
 		List<? extends Token> tokens = m.tokenize("<ID> = <expr> ;");
-		assertEquals("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.toString());
+		assertEquals("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.ToString());
 	}
 
-	@Test
-	public void testCompilingPattern() throws Exception {
+	[TestMethod]
+	public void testCompilingPattern(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -113,8 +95,8 @@ public class TestParseTreeMatcher {
 		assertEquals("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
 	}
 
-	@Test
-	public void testCompilingPatternConsumesAllTokens() throws Exception {
+	[TestMethod]
+	public void testCompilingPatternConsumesAllTokens(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -134,8 +116,8 @@ public class TestParseTreeMatcher {
 		assertTrue(failed);
 	}
 
-	@Test
-	public void testPatternMatchesStartRule() throws Exception {
+	[TestMethod]
+	public void testPatternMatchesStartRule(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -155,8 +137,8 @@ public class TestParseTreeMatcher {
 		assertTrue(failed);
 	}
 
-	@Test
-	public void testPatternMatchesStartRule2() throws Exception {
+	[TestMethod]
+	public void testPatternMatchesStartRule2(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' expr ';' | expr ';' ;\n" +
@@ -176,8 +158,8 @@ public class TestParseTreeMatcher {
 		assertTrue(failed);
 	}
 
-	@Test
-	public void testHiddenTokensNotSeenByTreePatternParser() throws Exception {
+	[TestMethod]
+	public void testHiddenTokensNotSeenByTreePatternParser(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -191,8 +173,8 @@ public class TestParseTreeMatcher {
 		assertEquals("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
 	}
 
-	@Test
-	public void testCompilingMultipleTokens() throws Exception {
+	[TestMethod]
+	public void testCompilingMultipleTokens(){
 		String grammar =
 			"grammar X2;\n" +
 			"s : ID '=' ID ';' ;\n" +
@@ -206,7 +188,7 @@ public class TestParseTreeMatcher {
 		assertEquals(expected, results);
 	}
 
-	@Test public void testIDNodeMatches() throws Exception {
+	[TestMethod] public void testIDNodeMatches(){
 		String grammar =
 			"grammar X3;\n" +
 			"s : ID ';' ;\n" +
@@ -218,7 +200,7 @@ public class TestParseTreeMatcher {
 		checkPatternMatch(grammar, "s", input, pattern, "X3");
 	}
 
-	@Test public void testIDNodeWithLabelMatches() throws Exception {
+	[TestMethod] public void testIDNodeWithLabelMatches(){
 		String grammar =
 			"grammar X8;\n" +
 			"s : ID ';' ;\n" +
@@ -228,19 +210,19 @@ public class TestParseTreeMatcher {
 		String input = "x ;";
 		String pattern = "<id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X8");
-		assertEquals("{ID=[x], id=[x]}", m.getLabels().toString());
+		assertEquals("{ID=[x], id=[x]}", m.getLabels().ToString());
 		assertNotNull(m.get("id"));
 		assertNotNull(m.get("ID"));
 		assertEquals("x", m.get("id").getText());
 		assertEquals("x", m.get("ID").getText());
-		assertEquals("[x]", m.getAll("id").toString());
-		assertEquals("[x]", m.getAll("ID").toString());
+		assertEquals("[x]", m.getAll("id").ToString());
+		assertEquals("[x]", m.getAll("ID").ToString());
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").toString());
+		assertEquals("[]", m.getAll("undefined").ToString());
 	}
 
-	@Test public void testLabelGetsLastIDNode() throws Exception {
+	[TestMethod] public void testLabelGetsLastIDNode(){
 		String grammar =
 			"grammar X9;\n" +
 			"s : ID ID ';' ;\n" +
@@ -250,19 +232,19 @@ public class TestParseTreeMatcher {
 		String input = "x y;";
 		String pattern = "<id:ID> <id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X9");
-		assertEquals("{ID=[x, y], id=[x, y]}", m.getLabels().toString());
+		assertEquals("{ID=[x, y], id=[x, y]}", m.getLabels().ToString());
 		assertNotNull(m.get("id"));
 		assertNotNull(m.get("ID"));
 		assertEquals("y", m.get("id").getText());
 		assertEquals("y", m.get("ID").getText());
-		assertEquals("[x, y]", m.getAll("id").toString());
-		assertEquals("[x, y]", m.getAll("ID").toString());
+		assertEquals("[x, y]", m.getAll("id").ToString());
+		assertEquals("[x, y]", m.getAll("ID").ToString());
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").toString());
+		assertEquals("[]", m.getAll("undefined").ToString());
 	}
 
-	@Test public void testIDNodeWithMultipleLabelMatches() throws Exception {
+	[TestMethod] public void testIDNodeWithMultipleLabelMatches(){
 		String grammar =
 			"grammar X7;\n" +
 			"s : ID ID ID ';' ;\n" +
@@ -272,24 +254,24 @@ public class TestParseTreeMatcher {
 		String input = "x y z;";
 		String pattern = "<a:ID> <b:ID> <a:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X7");
-		assertEquals("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().toString());
+		assertEquals("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().ToString());
 		assertNotNull(m.get("a")); // get first
 		assertNotNull(m.get("b"));
 		assertNotNull(m.get("ID"));
 		assertEquals("z", m.get("a").getText());
 		assertEquals("y", m.get("b").getText());
 		assertEquals("z", m.get("ID").getText()); // get last
-		assertEquals("[x, z]", m.getAll("a").toString());
-		assertEquals("[y]", m.getAll("b").toString());
-		assertEquals("[x, y, z]", m.getAll("ID").toString()); // ordered
+		assertEquals("[x, z]", m.getAll("a").ToString());
+		assertEquals("[y]", m.getAll("b").ToString());
+		assertEquals("[x, y, z]", m.getAll("ID").ToString()); // ordered
 
 		assertEquals("xyz;", m.getTree().getText()); // whitespace stripped by lexer
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").toString());
+		assertEquals("[]", m.getAll("undefined").ToString());
 	}
 
-	@Test public void testTokenAndRuleMatch() throws Exception {
+	[TestMethod] public void testTokenAndRuleMatch(){
 		String grammar =
 			"grammar X4;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -303,7 +285,7 @@ public class TestParseTreeMatcher {
 		checkPatternMatch(grammar, "s", input, pattern, "X4");
 	}
 
-	@Test public void testTokenTextMatch() throws Exception {
+	[TestMethod] public void testTokenTextMatch(){
 		String grammar =
 			"grammar X4;\n" +
 			"s : ID '=' expr ';' ;\n" +
@@ -333,7 +315,7 @@ public class TestParseTreeMatcher {
 		checkPatternMatch(grammar, "s", input, pattern, "X4", invertMatch);
 	}
 
-	@Test public void testAssign() throws Exception {
+	[TestMethod] public void testAssign(){
 		String grammar =
 			"grammar X5;\n" +
 			"s   : expr ';'\n" +
@@ -354,7 +336,7 @@ public class TestParseTreeMatcher {
 		checkPatternMatch(grammar, "s", input, pattern, "X5");
 	}
 
-	@Test public void testLRecursiveExpr() throws Exception {
+	[TestMethod] public void testLRecursiveExpr(){
 		String grammar =
 			"grammar X6;\n" +
 			"s   : expr ';'\n" +
@@ -377,7 +359,7 @@ public class TestParseTreeMatcher {
 	private static ParseTreeMatch checkPatternMatch(String grammar, String startRule,
 											String input, String pattern,
 											String grammarName)
-		throws Exception
+		
 	{
 		return checkPatternMatch(grammar, startRule, input, pattern, grammarName, false);
 	}
@@ -385,7 +367,7 @@ public class TestParseTreeMatcher {
 	private static ParseTreeMatch checkPatternMatch(String grammar, String startRule,
 											String input, String pattern,
 											String grammarName, boolean invertMatch)
-		throws Exception
+		
 	{
 		String grammarFileName = grammarName+".g4";
 		String parserName = grammarName+"Parser";
@@ -410,7 +392,7 @@ public class TestParseTreeMatcher {
 
 	private static ParseTreePatternMatcher getPatternMatcher(
 			String grammarFileName, String grammar, String parserName, String lexerName, String startRule
-	) throws Exception {
+	){
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, null,
 				false, false, Stage.Compile, false);

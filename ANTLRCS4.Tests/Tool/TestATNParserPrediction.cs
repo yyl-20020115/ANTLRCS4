@@ -4,38 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.NoViableAltException;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.tool.DOTGenerator;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LeftRecursiveRule;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
 // NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
 // NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
-
+[TestClass]
 public class TestATNParserPrediction {
-	@Test public void testAorB() throws Exception {
+	[TestMethod] public void testAorB(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -66,7 +46,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testEmptyInput() throws Exception {
+	[TestMethod] public void testEmptyInput(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -93,7 +73,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testPEGAchillesHeel() throws Exception {
+	[TestMethod] public void testPEGAchillesHeel(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -126,7 +106,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, 0, inputs, dfa);
 	}
 
-	@Test public void testRuleRefxory() throws Exception {
+	[TestMethod] public void testRuleRefxory(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -159,7 +139,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testOptionalRuleChasesGlobalFollow() throws Exception {
+	[TestMethod] public void testOptionalRuleChasesGlobalFollow(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -200,7 +180,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testLL1Ambig() throws Exception {
+	[TestMethod] public void testLL1Ambig(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -234,7 +214,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testLL2Ambig() throws Exception {
+	[TestMethod] public void testLL2Ambig(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -271,7 +251,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testRecursiveLeftPrefix() throws Exception {
+	[TestMethod] public void testRecursiveLeftPrefix(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -330,7 +310,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testRecursiveLeftPrefixWithAorABIssue() throws Exception {
+	[TestMethod] public void testRecursiveLeftPrefixWithAorABIssue(){
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
 		"A : 'a' ;\n" +
@@ -393,7 +373,7 @@ public class TestATNParserPrediction {
 		checkDFAConstruction(lg, g, decision, inputs, dfa);
 	}
 
-	@Test public void testContinuePrediction() throws Exception {
+	[TestMethod] public void testContinuePrediction(){
 		// Sam found prev def of ambiguity was too restrictive.
 		// E.g., (13, 1, []), (13, 2, []), (12, 2, []) should not
 		// be declared ambig since (12, 2, []) can take us to
@@ -413,7 +393,7 @@ public class TestATNParserPrediction {
 		checkPredictedAlt(lg, g, decision, "ab;", 2);
 	}
 
-	@Test public void testContinuePrediction2() throws Exception {
+	[TestMethod] public void testContinuePrediction2(){
 		// ID is ambig for first two alts, but ID SEMI lets us move forward with alt 3
 		LexerGrammar lg = new LexerGrammar(
 		"lexer grammar L;\n" +
@@ -430,7 +410,7 @@ public class TestATNParserPrediction {
 		checkPredictedAlt(lg, g, decision, "a;", 3);
 	}
 
-	@Test public void testAltsForLRRuleComputation() throws Exception {
+	[TestMethod] public void testAltsForLRRuleComputation(){
 		Grammar g = new Grammar(
 		"grammar T;\n" +
 		"e : e '*' e\n" +
@@ -444,11 +424,11 @@ public class TestATNParserPrediction {
 		Rule e = g.getRule("e");
 		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 2, 4]", Arrays.toString(lr.getPrimaryAlts()));
-		assertEquals("[0, 1, 3]", Arrays.toString(lr.getRecursiveOpAlts()));
+		assertEquals("[0, 2, 4]", Arrays.ToString(lr.getPrimaryAlts()));
+		assertEquals("[0, 1, 3]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
-	@Test public void testAltsForLRRuleComputation2() throws Exception {
+	[TestMethod] public void testAltsForLRRuleComputation2(){
 		Grammar g = new Grammar(
 		"grammar T;\n" +
 		"e : INT\n" +
@@ -461,11 +441,11 @@ public class TestATNParserPrediction {
 		Rule e = g.getRule("e");
 		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 1, 3]", Arrays.toString(lr.getPrimaryAlts()));
-		assertEquals("[0, 2]", Arrays.toString(lr.getRecursiveOpAlts()));
+		assertEquals("[0, 1, 3]", Arrays.ToString(lr.getPrimaryAlts()));
+		assertEquals("[0, 2]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
-	@Test public void testAltsForLRRuleComputation3() throws Exception {
+	[TestMethod] public void testAltsForLRRuleComputation3(){
 		Grammar g = new Grammar(
 		"grammar T;\n" +
 		"random : 'blort';\n" + // should have no effect
@@ -481,8 +461,8 @@ public class TestATNParserPrediction {
 		Rule e = g.getRule("e");
 		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 1, 5]", Arrays.toString(lr.getPrimaryAlts()));
-		assertEquals("[0, 2, 3, 4]", Arrays.toString(lr.getRecursiveOpAlts()));
+		assertEquals("[0, 1, 5]", Arrays.ToString(lr.getPrimaryAlts()));
+		assertEquals("[0, 2, 3, 4]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
 	/** first check that the ATN predicts right alt.
@@ -560,7 +540,7 @@ public class TestATNParserPrediction {
 				nvae.printStackTrace(System.err);
 			}
 			DFA dfa = interp.parser.decisionToDFA[decision];
-			assertEquals(dfaString[i], dfa.toString(g.getVocabulary()));
+			assertEquals(dfaString[i], dfa.ToString(g.getVocabulary()));
 		}
 	}
 }

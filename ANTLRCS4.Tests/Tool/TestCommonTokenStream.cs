@@ -4,74 +4,72 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime;
+using System.Threading.Channels;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.IntStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenFactory;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.WritableToken;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public class TestCommonTokenStream extends TestBufferedTokenStream {
+public class TestCommonTokenStream : TestBufferedTokenStream {
 	@Override
 	protected TokenStream createTokenStream(TokenSource src) {
 		return new CommonTokenStream(src);
 	}
 
-	@Test public void testOffChannel() throws Exception {
-        TokenSource lexer = // simulate input " x =34  ;\n"
-            new TokenSource() {
-                int i = 0;
-                @SuppressWarnings("serial")
-				WritableToken[] tokens = {
-                    new CommonToken(1," ") {{channel = Lexer.HIDDEN;}},
+	public class CHTokenSource<T>:
+        TokenSource<T>
+    {
+        int i = 0;
+
+
+		public WritableToken[] tokens = new WritableToken[]{
+                    new CommonToken(1," ") {{channel = Lexer.HIDDEN; }},
                     new CommonToken(1,"x"),
-                    new CommonToken(1," ") {{channel = Lexer.HIDDEN;}},
+                    new CommonToken(1," ") { { channel = Lexer.HIDDEN; } },
                     new CommonToken(1,"="),
                     new CommonToken(1,"34"),
-                    new CommonToken(1," ") {{channel = Lexer.HIDDEN;}},
-                    new CommonToken(1," ") {{channel = Lexer.HIDDEN;}},
+                    new CommonToken(1," ") { { channel = Lexer.HIDDEN; } },
+                    new CommonToken(1," ") { { channel = Lexer.HIDDEN; } },
                     new CommonToken(1,";"),
-                    new CommonToken(1,"\n") {{channel = Lexer.HIDDEN;}},
+                    new CommonToken(1,"\n") { { channel = Lexer.HIDDEN; } },
                     new CommonToken(Token.EOF,"")
                 };
-                @Override
-                public Token nextToken() {
-                    return tokens[i++];
-                }
-                @Override
-                public String getSourceName() { return "test"; }
-				@Override
-				public int getCharPositionInLine() {
-					return 0;
-				}
-				@Override
-				public int getLine() {
-					return 0;
-				}
-				@Override
-				public CharStream getInputStream() {
-					return null;
-				}
+//@Override
+                public Token nextToken()
+{
+    return tokens[i++];
+}
+//@Override
+public String getSourceName() { return "test"; }
+//@Override
+public int getCharPositionInLine()
+{
+    return 0;
+}
+//@Override
+public int getLine()
+{
+    return 0;
+}
+//@Override
+public CharStream getInputStream()
+{
+    return null;
+}
 
-				@Override
-				public void setTokenFactory(TokenFactory<?> factory) {
-				}
+//@Override
+public void setTokenFactory(TokenFactory<T> factory)
+{
+}
 
-				@Override
-				public TokenFactory<?> getTokenFactory() {
-					return null;
-				}
-			};
+//@Override
+public TokenFactory<?> getTokenFactory()
+{
+    return null;
+}
+			}
+	[TestMethod] public void testOffChannel(){
+        TokenSource lexer = // simulate input " x =34  ;\n"
+            new ;
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
@@ -97,7 +95,7 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
         assertEquals("x", tokens.LT(-4).getText());
     }
 
-	@Test public void testFetchOffChannel() throws Exception {
+	[TestMethod] public void testFetchOffChannel(){
 		TokenSource lexer = // simulate input " x =34  ; \n"
 		                    // token indexes   01234 56789
 			new TokenSource() {
@@ -151,45 +149,45 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 		assertEquals(null, tokens.getHiddenTokensToRight(0));
 
 		assertEquals("[[@0,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToLeft(1).toString());
+					 tokens.getHiddenTokensToLeft(1).ToString());
 		assertEquals("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToRight(1).toString());
+					 tokens.getHiddenTokensToRight(1).ToString());
 
 		assertEquals(null, tokens.getHiddenTokensToLeft(2));
 		assertEquals(null, tokens.getHiddenTokensToRight(2));
 
 		assertEquals("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToLeft(3).toString());
+					 tokens.getHiddenTokensToLeft(3).ToString());
 		assertEquals(null, tokens.getHiddenTokensToRight(3));
 
 		assertEquals(null, tokens.getHiddenTokensToLeft(4));
 		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToRight(4).toString());
+					 tokens.getHiddenTokensToRight(4).ToString());
 
 		assertEquals(null, tokens.getHiddenTokensToLeft(5));
 		assertEquals("[[@6,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToRight(5).toString());
+					 tokens.getHiddenTokensToRight(5).ToString());
 
 		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToLeft(6).toString());
+					 tokens.getHiddenTokensToLeft(6).ToString());
 		assertEquals(null, tokens.getHiddenTokensToRight(6));
 
 		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToLeft(7).toString());
+					 tokens.getHiddenTokensToLeft(7).ToString());
 		assertEquals("[[@8,0:0=' ',<1>,channel=1,0:-1], [@9,0:0='\\n',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToRight(7).toString());
+					 tokens.getHiddenTokensToRight(7).ToString());
 
 		assertEquals(null, tokens.getHiddenTokensToLeft(8));
 		assertEquals("[[@9,0:0='\\n',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToRight(8).toString());
+					 tokens.getHiddenTokensToRight(8).ToString());
 
 		assertEquals("[[@8,0:0=' ',<1>,channel=1,0:-1]]",
-					 tokens.getHiddenTokensToLeft(9).toString());
+					 tokens.getHiddenTokensToLeft(9).ToString());
 		assertEquals(null, tokens.getHiddenTokensToRight(9));
 	}
 
-	@Test
-	public void testSingleEOF() throws Exception {
+	[TestMethod]
+	public void testSingleEOF(){
 		TokenSource lexer = new TokenSource() {
 
 			@Override
@@ -236,7 +234,7 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 		assertEquals(1, tokens.size());
 	}
 
-	@Test
+	[TestMethod]
 	public void testCannotConsumeEOF() {
 		TokenSource lexer = new TokenSource() {
 
@@ -282,6 +280,6 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 		assertEquals(Token.EOF, tokens.LA(1));
 		assertEquals(0, tokens.index());
 		assertEquals(1, tokens.size());
-		assertThrows(IllegalStateException.class, tokens::consume);
+		assertThrows(IllegalStateException, tokens::consume);
 	}
 }

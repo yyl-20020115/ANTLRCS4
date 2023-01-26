@@ -4,24 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.ScopeParser;
-import org.antlr.v4.tool.Attribute;
-import org.antlr.v4.tool.Grammar;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+namespace org.antlr.v4.test.tool;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestScopeParsing {
-    final static String[] argPairs = {
+    readonly static String[] argPairs = {
 			"", "",
 			" ", "",
 			"int i", "i:int",
@@ -58,22 +47,22 @@ public class TestScopeParsing {
 			"map[string]int x", "x:map[string]int",
 	};
 
-    @ParameterizedTest
-	@MethodSource("getAllTestDescriptors")
-    public void testArgs(Parameter parameter) throws Exception {
+    //@ParameterizedTest
+    //@MethodSource("getAllTestDescriptors")
+    public void testArgs(Parameter parameter){
 		Grammar dummy = new Grammar("grammar T; a:'a';");
 
 		LinkedHashMap<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
 		List<String> out = new ArrayList<>();
 		for (String arg : attributes.keySet()) {
 			Attribute attr = attributes.get(arg);
-			out.add(attr.toString());
+			out.add(attr.ToString());
 		}
 		String actual = Utils.join(out.toArray(), ", ");
 		assertEquals(parameter.output, actual);
 	}
 
-	private static Collection<Parameter> getAllTestDescriptors() {
+	private static ICollection<Parameter> getAllTestDescriptors() {
 		List<Parameter> tests = new ArrayList<>();
 		for (int i = 0; i < argPairs.length; i+=2) {
 			String arg = argPairs[i];
@@ -83,17 +72,17 @@ public class TestScopeParsing {
 		return tests;
 	}
 
-	static class Parameter {
-		public final String input;
-		public final String output;
+	public class Parameter {
+		public readonly String input;
+		public readonly String output;
 
 		public Parameter(String input, String output) {
 			this.input = input;
 			this.output = output;
 		}
 
-		@Override
-		public String toString() {
+		//@Override
+		public override String ToString() {
 			return input;
 		}
 	}

@@ -1,23 +1,15 @@
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.runtime.Token;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+[TestClass]
 public class TestUtils {
-	@Test
+	[TestMethod]
 	public void testStripFileExtension() {
 		assertNull(Utils.stripFileExtension(null));
 		assertEquals("foo", Utils.stripFileExtension("foo"));
 		assertEquals("foo", Utils.stripFileExtension("foo.txt"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testJoin() {
 		assertEquals("foobbar",
 			Utils.join(new String[]{"foo", "bar"}, "b"));
@@ -25,13 +17,13 @@ public class TestUtils {
 			Utils.join(new String[]{"foo", "bar"}, ","));
 	}
 
-	@Test
+	[TestMethod]
 	public void testSortLinesInString() {
 		assertEquals("bar\nbaz\nfoo\n",
 			Utils.sortLinesInString("foo\nbar\nbaz"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testNodesToStrings() {
 		ArrayList<GrammarAST> values = new ArrayList<>();
 		values.add(new GrammarAST(Token.EOR_TOKEN_TYPE));
@@ -42,17 +34,17 @@ public class TestUtils {
 		assertNotNull(Utils.nodesToStrings(values));
 	}
 
-	@Test
+	[TestMethod]
 	public void testCapitalize() {
 		assertEquals("Foo", Utils.capitalize("foo"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testDecapitalize() {
 		assertEquals("fOO", Utils.decapitalize("FOO"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testSelect() {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");
@@ -73,17 +65,17 @@ public class TestUtils {
 		assertNull(Utils.select(null, null));
 	}
 
-	@Test
+	[TestMethod]
 	public void testFind() {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");
 		strings.add("bar");
-		assertEquals("foo", Utils.find(strings, String.class));
+		assertEquals("foo", Utils.find(strings, String));
 
-		assertNull(Utils.find(new ArrayList<>(), String.class));
+		assertNull(Utils.find(new ArrayList<>(), String));
 	}
 
-	@Test
+	[TestMethod]
 	public void testIndexOf() {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");
@@ -98,7 +90,7 @@ public class TestUtils {
 		assertEquals(-1, Utils.indexOf(new ArrayList<>(), null));
 	}
 
-	@Test
+	[TestMethod]
 	public void testLastIndexOf() {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");
@@ -113,7 +105,7 @@ public class TestUtils {
 		assertEquals(-1, Utils.lastIndexOf(new ArrayList<>(), null));
 	}
 
-	@Test
+	[TestMethod]
 	public void testSetSize() {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");

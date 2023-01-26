@@ -4,18 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-
-import org.antlr.v4.tool.ErrorType;
-import org.junit.jupiter.api.Test;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.testErrors;
+namespace org.antlr.v4.test.tool;
 
 /** */
 public class TestLeftRecursionToolIssues {
-	protected boolean debug = false;
+	protected bool debug = false;
 
-	@Test public void testCheckForNonLeftRecursiveRule() throws Exception {
+	[TestMethod] public void testCheckForNonLeftRecursiveRule(){
 		String grammar =
 			"grammar T;\n" +
 			"s @after {System.out.println($ctx.toStringTree(this));} : a ;\n" +
@@ -28,7 +23,7 @@ public class TestLeftRecursionToolIssues {
 		testErrors(new String[] { grammar, expected }, false);
 	}
 
-	@Test public void testCheckForLeftRecursiveEmptyFollow() throws Exception {
+	[TestMethod] public void testCheckForLeftRecursiveEmptyFollow(){
 		String grammar =
 			"grammar T;\n" +
 			"s @after {System.out.println($ctx.toStringTree(this));} : a ;\n" +
@@ -43,7 +38,7 @@ public class TestLeftRecursionToolIssues {
 	}
 
 	/** Reproduces https://github.com/antlr/antlr4/issues/855 */
-	@Test public void testLeftRecursiveRuleRefWithArg() throws Exception {
+	[TestMethod] public void testLeftRecursiveRuleRefWithArg(){
 		String grammar =
 			"grammar T;\n" +
 			"statement\n" +
@@ -63,7 +58,7 @@ public class TestLeftRecursionToolIssues {
 	}
 
 	/** Reproduces https://github.com/antlr/antlr4/issues/855 */
-	@Test public void testLeftRecursiveRuleRefWithArg2() throws Exception {
+	[TestMethod] public void testLeftRecursiveRuleRefWithArg2(){
 		String grammar =
 			"grammar T;\n" +
 			"a[int i] : 'x'\n" +
@@ -75,7 +70,7 @@ public class TestLeftRecursionToolIssues {
 	}
 
 	/** Reproduces https://github.com/antlr/antlr4/issues/855 */
-	@Test public void testLeftRecursiveRuleRefWithArg3() throws Exception {
+	[TestMethod] public void testLeftRecursiveRuleRefWithArg3(){
 		String grammar =
 			"grammar T;\n" +
 			"a : 'x'\n" +
@@ -87,7 +82,7 @@ public class TestLeftRecursionToolIssues {
 	}
 
 	/** Reproduces https://github.com/antlr/antlr4/issues/822 */
-	@Test public void testIsolatedLeftRecursiveRuleRef() throws Exception {
+	[TestMethod] public void testIsolatedLeftRecursiveRuleRef(){
 		String grammar =
 			"grammar T;\n" +
 			"a : a | b ;\n" +
@@ -98,7 +93,7 @@ public class TestLeftRecursionToolIssues {
 	}
 
 	/** Reproduces https://github.com/antlr/antlr4/issues/773 */
-	@Test public void testArgOnPrimaryRuleInLeftRecursiveRule() throws Exception {
+	[TestMethod] public void testArgOnPrimaryRuleInLeftRecursiveRule(){
 		String grammar =
 			"grammar T;\n" +
 			"val: dval[1]\n" +

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestATNSerialization {
-	@Test public void testSimpleNoBlock() throws Exception {
+	[TestMethod] public void testSimpleNoBlock(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A B ;");
@@ -42,7 +42,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testEOF() throws Exception {
+	[TestMethod] public void testEOF(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n"+
 						"a : A EOF ;");
@@ -62,7 +62,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testEOFInSet() throws Exception {
+	[TestMethod] public void testEOFInSet(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : (A|EOF) ;");
@@ -81,7 +81,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testNot() throws Exception {
+	[TestMethod] public void testNot(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"tokens {A, B, C}\n" +
@@ -104,7 +104,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testWildcard() throws Exception {
+	[TestMethod] public void testWildcard(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"tokens {A, B, C}\n" +
@@ -123,7 +123,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testPEGAchillesHeel() throws Exception {
+	[TestMethod] public void testPEGAchillesHeel(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A | A B ;");
@@ -149,7 +149,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void test3Alts() throws Exception {
+	[TestMethod] public void test3Alts(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A | A B | A B C ;");
@@ -182,7 +182,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testSimpleLoop() throws Exception {
+	[TestMethod] public void testSimpleLoop(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A+ B ;");
@@ -212,7 +212,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testRuleRef() throws Exception {
+	[TestMethod] public void testRuleRef(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : e ;\n" +
@@ -239,7 +239,7 @@ public class TestATNSerialization {
 		checkResults(g, expecting);
 	}
 
-	@Test public void testLexerTwoRules() throws Exception {
+	[TestMethod] public void testLexerTwoRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n" +
@@ -273,7 +273,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeSMPLiteralSerializedToSet() throws Exception {
+	[TestMethod] public void testLexerUnicodeSMPLiteralSerializedToSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '\\u{1F4A9}' ;");
@@ -297,7 +297,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeSMPRangeSerializedToSet() throws Exception {
+	[TestMethod] public void testLexerUnicodeSMPRangeSerializedToSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : ('a'..'\\u{1F4A9}') ;");
@@ -321,7 +321,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeSMPAndBMPSetSerialized() throws Exception {
+	[TestMethod] public void testLexerUnicodeSMPAndBMPSetSerialized(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n"+
 						"SMP : ('\\u{1F4A9}' | '\\u{1F4AF}') ;\n"+
@@ -357,7 +357,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerWith0xFFFCInSet() throws Exception {
+	[TestMethod] public void testLexerWith0xFFFCInSet(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 						"ID : ([A-Z_]|'Ā'..'\\uFFFC') ([A-Z_0-9]|'Ā'..'\\uFFFC')*; // FFFD+ are not valid char\n");
@@ -401,7 +401,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerNotLiteral() throws Exception {
+	[TestMethod] public void testLexerNotLiteral(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : ~'a' ;");
@@ -426,7 +426,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerRange() throws Exception {
+	[TestMethod] public void testLexerRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '0'..'9' ;\n");
@@ -450,7 +450,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerEOF() throws Exception {
+	[TestMethod] public void testLexerEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : 'a' EOF ;\n");
@@ -476,7 +476,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerEOFInSet() throws Exception {
+	[TestMethod] public void testLexerEOFInSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : 'a' (EOF|'\\n') ;\n");
@@ -506,7 +506,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerLoops() throws Exception {
+	[TestMethod] public void testLexerLoops(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '0'..'9'+ ;\n");
@@ -538,7 +538,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerAction() throws Exception {
+	[TestMethod] public void testLexerAction(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' {a} ;\n" +
@@ -586,7 +586,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerNotSet() throws Exception {
+	[TestMethod] public void testLexerNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
@@ -608,7 +608,7 @@ public class TestATNSerialization {
 		checkResults(lg, expecting);
 	}
 
-	@Test public void testLexerSetWithRange() throws Exception {
+	[TestMethod] public void testLexerSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('a'|'b'|'e'|'p'..'t')\n ;");
@@ -633,7 +633,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerNotSetWithRange() throws Exception {
+	[TestMethod] public void testLexerNotSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b'|'e'|'p'..'t')\n ;");
@@ -658,7 +658,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeUnescapedBMPNotSet() throws Exception {
+	[TestMethod] public void testLexerUnicodeUnescapedBMPNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\u4E9C'|'\u4E9D')\n ;");
@@ -683,7 +683,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeUnescapedBMPSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeUnescapedBMPSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\u4E9C'|'\u4E9D'|'\u6C5F'|'\u305F'..'\u307B')\n ;");
@@ -708,7 +708,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeUnescapedBMPNotSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeUnescapedBMPNotSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\u4E9C'|'\u4E9D'|'\u6C5F'|'\u305F'..'\u307B')\n ;");
@@ -733,7 +733,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedBMPNotSet() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedBMPNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u4E9C'|'\\u4E9D')\n ;");
@@ -758,7 +758,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedBMPSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedBMPSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\\u4E9C'|'\\u4E9D'|'\\u6C5F'|'\\u305F'..'\\u307B')\n ;");
@@ -783,7 +783,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedBMPNotSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedBMPNotSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u4E9C'|'\\u4E9D'|'\\u6C5F'|'\\u305F'..'\\u307B')\n ;");
@@ -808,7 +808,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedSMPNotSet() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedSMPNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
@@ -833,7 +833,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedSMPSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedSMPSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\\u{1F4A9}'|'\\u{1F4AA}'|'\\u{1F441}'|'\\u{1D40F}'..'\\u{1D413}')\n ;");
@@ -858,7 +858,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerUnicodeEscapedSMPNotSetWithRange() throws Exception {
+	[TestMethod] public void testLexerUnicodeEscapedSMPNotSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u{1F4A9}'|'\\u{1F4AA}'|'\\u{1F441}'|'\\u{1D40F}'..'\\u{1D413}')\n ;");
@@ -883,7 +883,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerWildcardWithMode() throws Exception {
+	[TestMethod] public void testLexerWildcardWithMode(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : 'a'..'z'+ ;\n"+
@@ -947,7 +947,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLexerNotSetWithRange2() throws Exception {
+	[TestMethod] public void testLexerNotSetWithRange2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b') ~('e'|'p'..'t')\n ;");
@@ -975,7 +975,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testModeInLexer() throws Exception {
+	[TestMethod] public void testModeInLexer(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a'\n ;\n" +
@@ -1033,7 +1033,7 @@ public class TestATNSerialization {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void test2ModesInLexer() throws Exception {
+	[TestMethod] public void test2ModesInLexer(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a'\n ;\n" +

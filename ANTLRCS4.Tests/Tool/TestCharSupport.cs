@@ -4,17 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.misc.CharSupport;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+[TestClass]
 public class TestCharSupport {
-	@Test
+	[TestMethod]
 	public void testGetANTLRCharLiteralForChar() {
 		assertEquals("'<INVALID>'",
 			CharSupport.getANTLRCharLiteralForChar(-1));
@@ -32,7 +26,7 @@ public class TestCharSupport {
 			CharSupport.getANTLRCharLiteralForChar(0x10FFFF));
 	}
 
-	@Test
+	[TestMethod]
 	public void testGetCharValueFromGrammarCharLiteral() {
 		assertEquals(-1,
 			CharSupport.getCharValueFromGrammarCharLiteral(null));
@@ -44,7 +38,7 @@ public class TestCharSupport {
 			CharSupport.getCharValueFromGrammarCharLiteral("foo"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testGetStringFromGrammarStringLiteral() {
 		assertNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\u{bbb"));
@@ -59,7 +53,7 @@ public class TestCharSupport {
 			.getStringFromGrammarStringLiteral("foo\\u{bb}bb"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testGetCharValueFromCharInGrammarLiteral() {
 		assertEquals(102,
 			CharSupport.getCharValueFromCharInGrammarLiteral("f"));
@@ -86,7 +80,7 @@ public class TestCharSupport {
 			CharSupport.getCharValueFromCharInGrammarLiteral("foo"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testParseHexValue() {
 		assertEquals(-1, CharSupport.parseHexValue("foobar", -1, 3));
 		assertEquals(-1, CharSupport.parseHexValue("foobar", 1, -1));
@@ -94,12 +88,12 @@ public class TestCharSupport {
 		assertEquals(35, CharSupport.parseHexValue("123456", 1, 3));
 	}
 
-	@Test
+	[TestMethod]
 	public void testCapitalize() {
 		assertEquals("Foo", CharSupport.capitalize("foo"));
 	}
 
-	@Test
+	[TestMethod]
 	public void testGetIntervalSetEscapedString() {
 		assertEquals("",
 			CharSupport.getIntervalSetEscapedString(new IntervalSet()));
@@ -109,7 +103,7 @@ public class TestCharSupport {
 			CharSupport.getIntervalSetEscapedString(new IntervalSet(3, 1, 2)));
 	}
 
-	@Test
+	[TestMethod]
 	public void testGetRangeEscapedString() {
 		assertEquals("'\\u0002'..'\\u0004'",
 			CharSupport.getRangeEscapedString(2, 4));

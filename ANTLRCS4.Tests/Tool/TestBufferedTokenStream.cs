@@ -23,7 +23,7 @@ public class TestBufferedTokenStream {
 		return new BufferedTokenStream(src);
 	}
 
-	@Test public void testFirstToken() throws Exception {
+	[TestMethod] public void testFirstToken(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -44,7 +44,7 @@ public class TestBufferedTokenStream {
         assertEquals(expecting, result);
     }
 
-    @Test public void test2ndToken() throws Exception {
+    [TestMethod] public void test2ndToken(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -65,7 +65,7 @@ public class TestBufferedTokenStream {
         assertEquals(expecting, result);
     }
 
-    @Test public void testCompleteBuffer() throws Exception {
+    [TestMethod] public void testCompleteBuffer(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -95,7 +95,7 @@ public class TestBufferedTokenStream {
         assertEquals(expecting, result);
     }
 
-    @Test public void testCompleteBufferAfterConsuming() throws Exception {
+    [TestMethod] public void testCompleteBufferAfterConsuming(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -122,7 +122,7 @@ public class TestBufferedTokenStream {
         assertEquals(expecting, result);
     }
 
-    @Test public void testLookback() throws Exception {
+    [TestMethod] public void testLookback(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +

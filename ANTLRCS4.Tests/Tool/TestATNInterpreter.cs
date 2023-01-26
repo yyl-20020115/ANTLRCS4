@@ -4,35 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.NoViableAltException;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.BlockStartState;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.tool.DOTGenerator;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import static org.antlr.v4.test.tool.ToolTestUtils.createATN;
-import static org.antlr.v4.test.tool.ToolTestUtils.getTokenTypesViaATN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
-	// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
-	// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
-	// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
-
+// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
+// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
+// NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
+[TestClass]
 public class TestATNInterpreter {
-	@Test public void testSimpleNoBlock() throws Exception {
+	[TestMethod] public void testSimpleNoBlock(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -44,7 +25,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "ab", 1);
 	}
 
-	@Test public void testSet() throws Exception {
+	[TestMethod] public void testSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -57,7 +38,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "b", 1);
 	}
 
-	@Test public void testPEGAchillesHeel() throws Exception {
+	[TestMethod] public void testPEGAchillesHeel(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -71,7 +52,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abc", 2);
 	}
 
-	@Test public void testMustTrackPreviousGoodAlt() throws Exception {
+	[TestMethod] public void testMustTrackPreviousGoodAlt(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -88,8 +69,8 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abc", 2);
 	}
 
-	@Test
-	public void testMustTrackPreviousGoodAltWithEOF() throws Exception {
+	[TestMethod]
+	public void testMustTrackPreviousGoodAltWithEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -112,7 +93,7 @@ public class TestATNInterpreter {
 		}
 	}
 
-	@Test public void testMustTrackPreviousGoodAlt2() throws Exception {
+	[TestMethod] public void testMustTrackPreviousGoodAlt2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -132,8 +113,8 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abcd", 3);
 	}
 
-	@Test
-	public void testMustTrackPreviousGoodAlt2WithEOF() throws Exception {
+	[TestMethod]
+	public void testMustTrackPreviousGoodAlt2WithEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -158,7 +139,7 @@ public class TestATNInterpreter {
 		}
 	}
 
-	@Test public void testMustTrackPreviousGoodAlt3() throws Exception {
+	[TestMethod] public void testMustTrackPreviousGoodAlt3(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -178,8 +159,8 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abcd", 3);
 	}
 
-	@Test
-	public void testMustTrackPreviousGoodAlt3WithEOF() throws Exception {
+	[TestMethod]
+	public void testMustTrackPreviousGoodAlt3WithEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -204,7 +185,7 @@ public class TestATNInterpreter {
 		}
 	}
 
-	@Test public void testAmbigAltChooseFirst() throws Exception {
+	[TestMethod] public void testAmbigAltChooseFirst(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -218,7 +199,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abc", 1);
 	}
 
-	@Test public void testAmbigAltChooseFirstWithFollowingToken() throws Exception {
+	[TestMethod] public void testAmbigAltChooseFirstWithFollowingToken(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -232,7 +213,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abcd", 1);
 	}
 
-	@Test public void testAmbigAltChooseFirstWithFollowingToken2() throws Exception {
+	[TestMethod] public void testAmbigAltChooseFirstWithFollowingToken2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -247,7 +228,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "cd", 3);
 	}
 
-	@Test public void testAmbigAltChooseFirst2() throws Exception {
+	[TestMethod] public void testAmbigAltChooseFirst2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -265,8 +246,8 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "abcd", 3);
 	}
 
-	@Test
-	public void testAmbigAltChooseFirst2WithEOF() throws Exception {
+	[TestMethod]
+	public void testAmbigAltChooseFirst2WithEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -290,7 +271,7 @@ public class TestATNInterpreter {
 		}
 	}
 
-	@Test public void testSimpleLoop() throws Exception {
+	[TestMethod] public void testSimpleLoop(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -306,7 +287,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "aabd", 1);
 	}
 
-	@Test public void testCommonLeftPrefix() throws Exception {
+	[TestMethod] public void testCommonLeftPrefix(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -319,7 +300,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "ac", 2);
 	}
 
-	@Test public void testArbitraryLeftPrefix() throws Exception {
+	[TestMethod] public void testArbitraryLeftPrefix(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -331,7 +312,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "aac", 2);
 	}
 
-	@Test public void testRecursiveLeftPrefix() throws Exception {
+	[TestMethod] public void testRecursiveLeftPrefix(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +

@@ -4,26 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.analysis.AnalysisPipeline;
-import org.antlr.v4.automata.ATNFactory;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.semantics.SemanticPipeline;
-import org.antlr.v4.test.runtime.ErrorQueue;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupString;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-/** */
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public class TestActionTranslation {
 	String attributeTemplate =
 		"attributeTemplate(members,init,inline,finally,inline2) ::= <<\n" +
@@ -44,7 +27,8 @@ public class TestActionTranslation {
 		"d	 :   ;\n" +
 		">>";
 
-    @Test public void testEscapedLessThanInAction() throws Exception {
+    [TestMethod] 
+	public void testEscapedLessThanInAction(){
         String action = "i<3; '<xmltag>'";
 		String expected = "i<3; '<xmltag>'";
 		testActions(attributeTemplate, "members", action, expected);
@@ -54,7 +38,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline2", action, expected);
     }
 
-    @Test public void testEscaped$InAction() throws Exception {
+    [TestMethod] public void testEscaped$InAction(){
 		String action = "int \\$n; \"\\$in string\\$\"";
 		String expected = "int $n; \"$in string$\"";
 		testActions(attributeTemplate, "members", action, expected);
@@ -68,7 +52,7 @@ public class TestActionTranslation {
 	 * Regression test for "in antlr v4 lexer, $ translation issue in action".
 	 * https://github.com/antlr/antlr4/issues/176
 	 */
-	@Test public void testUnescaped$InAction() throws Exception {
+	[TestMethod] public void testUnescaped$InAction(){
 		String action = "\\$string$";
 		String expected = "$string$";
 		testActions(attributeTemplate, "members", action, expected);
@@ -78,7 +62,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline2", action, expected);
 	}
 
-	@Test public void testEscapedSlash() throws Exception {
+	[TestMethod] public void testEscapedSlash(){
 		String action   = "x = '\\n';";  // x = '\n'; -> x = '\n';
 		String expected = "x = '\\n';";
 		testActions(attributeTemplate, "members", action, expected);
@@ -88,7 +72,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline2", action, expected);
 	}
 
-	@Test public void testComplicatedArgParsing() throws Exception {
+	[TestMethod] public void testComplicatedArgParsing(){
 		String action = "x, (*a).foo(21,33), 3.2+1, '\\n', "+
 						"\"a,oo\\nick\", {bl, \"fdkj\"eck}";
 		String expected = "x, (*a).foo(21,33), 3.2+1, '\\n', "+
@@ -100,7 +84,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline2", action, expected);
 	}
 
-	@Test public void testComplicatedArgParsingWithTranslation() throws Exception {
+	[TestMethod] public void testComplicatedArgParsingWithTranslation(){
 		String action = "x, $ID.text+\"3242\", (*$ID).foo(21,33), 3.2+1, '\\n', "+
 						"\"a,oo\\nick\", {bl, \"fdkj\"eck}";
 		String expected =
@@ -109,56 +93,56 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-	@Test public void testArguments() throws Exception {
+	[TestMethod] public void testArguments(){
 		String action = "$x; $ctx.x";
 		String expected = "_localctx.x; _localctx.x";
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-	@Test public void testReturnValue() throws Exception {
+	[TestMethod] public void testReturnValue(){
 		String action = "$y; $ctx.y";
 		String expected = "_localctx.y; _localctx.y";
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-	@Test public void testReturnValueWithNumber() throws Exception {
+	[TestMethod] public void testReturnValueWithNumber(){
 		String action = "$ctx.x1";
 		String expected = "_localctx.x1";
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-	@Test public void testReturnValuesCurrentRule() throws Exception {
+	[TestMethod] public void testReturnValuesCurrentRule(){
 		String action = "$y; $ctx.y;";
 		String expected = "_localctx.y; _localctx.y;";
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-	@Test public void testReturnValues() throws Exception {
+	[TestMethod] public void testReturnValues(){
 		String action = "$lab.e; $b.e; $y.e = \"\";";
 		String expected = "((AContext)_localctx).lab.e; ((AContext)_localctx).b.e; _localctx.y.e = \"\";";
 		testActions(attributeTemplate, "inline", action, expected);
 	}
 
-    @Test public void testReturnWithMultipleRuleRefs() throws Exception {
+    [TestMethod] public void testReturnWithMultipleRuleRefs(){
 		String action = "$c.x; $c.y;";
 		String expected = "((AContext)_localctx).c.x; ((AContext)_localctx).c.y;";
 		testActions(attributeTemplate, "inline", action, expected);
     }
 
-    @Test public void testTokenRefs() throws Exception {
+    [TestMethod] public void testTokenRefs(){
 		String action = "$id; $ID; $id.text; $id.getText(); $id.line;";
 		String expected = "((AContext)_localctx).id; ((AContext)_localctx).ID; (((AContext)_localctx).id!=null?((AContext)_localctx).id.getText():null); ((AContext)_localctx).id.getText(); (((AContext)_localctx).id!=null?((AContext)_localctx).id.getLine():0);";
 		testActions(attributeTemplate, "inline", action, expected);
     }
 
-    @Test public void testRuleRefs() throws Exception {
+    [TestMethod] public void testRuleRefs(){
         String action = "$lab.start; $c.text;";
 		String expected = "(((AContext)_localctx).lab!=null?(((AContext)_localctx).lab.start):null); (((AContext)_localctx).c!=null?_input.getText(((AContext)_localctx).c.start,((AContext)_localctx).c.stop):null);";
 		testActions(attributeTemplate, "inline", action, expected);
     }
 
     /** Added in response to https://github.com/antlr/antlr4/issues/1211 */
-	@Test public void testUnknownAttr() throws Exception {
+	[TestMethod] public void testUnknownAttr(){
 		String action = "$qqq.text";
 		String expected = ""; // was causing an exception
 		testActions(attributeTemplate, "inline", action, expected);
@@ -169,7 +153,7 @@ public class TestActionTranslation {
      * $e.v yields incorrect value 0 in "e returns [int v] : '1' {$v = 1;} | '(' e ')' {$v = $e.v;} ;"
 	 * https://github.com/antlr/antlr4/issues/1295
 	 */
-	@Test public void testRuleRefsRecursive() throws Exception {
+	[TestMethod] public void testRuleRefsRecursive(){
         String recursiveTemplate =
             "recursiveTemplate(inline) ::= <<\n" +
             "parser grammar A;\n"+
@@ -203,7 +187,7 @@ public class TestActionTranslation {
 		testActions(leftRecursiveTemplate, "inline", action, expected);
 	}
 
-	@Test public void testRefToTextAttributeForCurrentRule() throws Exception {
+	[TestMethod] public void testRefToTextAttributeForCurrentRule(){
         String action = "$ctx.text; $text";
 
 		// this is the expected translation for all cases
@@ -215,7 +199,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "finally", action, expected);
     }
 
-    @Test public void testEmptyActions() throws Exception {
+    [TestMethod] public void testEmptyActions(){
 	    String gS =
 	   		"grammar A;\n"+
 	   		"a[] : 'a' ;\n" +
@@ -255,7 +239,7 @@ public class TestActionTranslation {
 			assertEquals(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {
-//			System.err.println(equeue.toString());
+//			System.err.println(equeue.ToString());
 		}
 	}
 }

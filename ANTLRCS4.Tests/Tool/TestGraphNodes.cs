@@ -4,27 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.runtime.atn.ArrayPredictionContext;
-import org.antlr.v4.runtime.atn.EmptyPredictionContext;
-import org.antlr.v4.runtime.atn.PredictionContext;
-import org.antlr.v4.runtime.atn.SingletonPredictionContext;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.IdentityHashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestGraphNodes {
-	public boolean rootIsWildcard() { return true; }
-	public boolean fullCtx() { return false; }
+	public bool rootIsWildcard() { return true; }
+	public bool fullCtx() { return false; }
 
-	@Test public void test_$_$() {
+	[TestMethod] public void test_dollar_dollar() {
 		PredictionContext r = PredictionContext.merge(
 				EmptyPredictionContext.Instance, EmptyPredictionContext.Instance, rootIsWildcard(), null);
 //		System.out.println(toDOTString(r, rootIsWildcard()));
@@ -36,7 +23,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_$_$_fullctx() {
+	[TestMethod] public void test_dollar_dollar_fullctx() {
 		PredictionContext r = PredictionContext.merge(
 				EmptyPredictionContext.Instance, EmptyPredictionContext.Instance, fullCtx(), null);
 //		System.out.println(toDOTString(r, fullCtx()));
@@ -48,7 +35,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_x_$() {
+	[TestMethod] public void test_x_dollar() {
 		PredictionContext r = PredictionContext.merge(x(), EmptyPredictionContext.Instance, rootIsWildcard(), null);
 //		System.out.println(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -59,7 +46,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_x_$_fullctx() {
+	[TestMethod] public void test_x_dollar_fullctx() {
 		PredictionContext r = PredictionContext.merge(x(), EmptyPredictionContext.Instance, fullCtx(), null);
 //		System.out.println(toDOTString(r, fullCtx()));
 		String expecting =
@@ -72,7 +59,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_$_x() {
+	[TestMethod] public void test_dollar_x() {
 		PredictionContext r = PredictionContext.merge(EmptyPredictionContext.Instance, x(), rootIsWildcard(), null);
 //		System.out.println(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -83,7 +70,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_$_x_fullctx() {
+	[TestMethod] public void test_dollar_x_fullctx() {
 		PredictionContext r = PredictionContext.merge(EmptyPredictionContext.Instance, x(), fullCtx(), null);
 //		System.out.println(toDOTString(r, fullCtx()));
 		String expecting =
@@ -96,7 +83,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_a_a() {
+	[TestMethod] public void test_a_a() {
 		PredictionContext r = PredictionContext.merge(a(), a(), rootIsWildcard(), null);
 //		System.out.println(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -109,7 +96,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_a$_ax() {
+	[TestMethod] public void test_a$_ax() {
 		PredictionContext a1 = a();
 		PredictionContext x = x();
 		PredictionContext a2 = createSingleton(x, 1);
@@ -125,7 +112,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_a$_ax_fullctx() {
+	[TestMethod] public void test_a$_ax_fullctx() {
 		PredictionContext a1 = a();
 		PredictionContext x = x();
 		PredictionContext a2 = createSingleton(x, 1);
@@ -143,7 +130,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_ax$_a$() {
+	[TestMethod] public void test_ax$_a$() {
 		PredictionContext x = x();
 		PredictionContext a1 = createSingleton(x, 1);
 		PredictionContext a2 = a();
@@ -159,7 +146,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_aa$_a$_$_fullCtx() {
+	[TestMethod] public void test_aa$_a$_$_fullCtx() {
 		PredictionContext empty = EmptyPredictionContext.Instance;
 		PredictionContext child1 = createSingleton(empty, 8);
 		PredictionContext right = PredictionContext.merge(empty, child1, false, null);
@@ -179,7 +166,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, actual);
 	}
 
-	@Test public void test_ax$_a$_fullctx() {
+	[TestMethod] public void test_ax$_a$_fullctx() {
 		PredictionContext x = x();
 		PredictionContext a1 = createSingleton(x, 1);
 		PredictionContext a2 = a();
@@ -197,7 +184,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_a_b() {
+	[TestMethod] public void test_a_b() {
 		PredictionContext r = PredictionContext.merge(a(), b(), rootIsWildcard(), null);
 //		System.out.println(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -211,7 +198,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_ax_ax_same() {
+	[TestMethod] public void test_ax_ax_same() {
 		PredictionContext x = x();
 		PredictionContext a1 = createSingleton(x, 1);
 		PredictionContext a2 = createSingleton(x, 1);
@@ -229,7 +216,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_ax_ax() {
+	[TestMethod] public void test_ax_ax() {
 		PredictionContext x1 = x();
 		PredictionContext x2 = x();
 		PredictionContext a1 = createSingleton(x1, 1);
@@ -248,7 +235,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_abx_abx() {
+	[TestMethod] public void test_abx_abx() {
 		PredictionContext x1 = x();
 		PredictionContext x2 = x();
 		PredictionContext b1 = createSingleton(x1, 2);
@@ -271,7 +258,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_abx_acx() {
+	[TestMethod] public void test_abx_acx() {
 		PredictionContext x1 = x();
 		PredictionContext x2 = x();
 		PredictionContext b = createSingleton(x1, 2);
@@ -295,7 +282,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_ax_bx_same() {
+	[TestMethod] public void test_ax_bx_same() {
 		PredictionContext x = x();
 		PredictionContext a = createSingleton(x, 1);
 		PredictionContext b = createSingleton(x, 2);
@@ -314,7 +301,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_ax_bx() {
+	[TestMethod] public void test_ax_bx() {
 		PredictionContext x1 = x();
 		PredictionContext x2 = x();
 		PredictionContext a = createSingleton(x1, 1);
@@ -334,7 +321,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_ax_by() {
+	[TestMethod] public void test_ax_by() {
 		PredictionContext a = createSingleton(x(), 1);
 		PredictionContext b = createSingleton(y(), 2);
 		PredictionContext r = PredictionContext.merge(a, b, rootIsWildcard(), null);
@@ -354,7 +341,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_a$_bx() {
+	[TestMethod] public void test_a$_bx() {
 		PredictionContext x2 = x();
 		PredictionContext a = a();
 		PredictionContext b = createSingleton(x2, 2);
@@ -373,7 +360,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_a$_bx_fullctx() {
+	[TestMethod] public void test_a$_bx_fullctx() {
 		PredictionContext x2 = x();
 		PredictionContext a = a();
 		PredictionContext b = createSingleton(x2, 2);
@@ -393,7 +380,7 @@ public class TestGraphNodes {
 	}
 
 	@Disabled("Known inefficiency but deferring resolving the issue for now")
-	@Test public void test_aex_bfx() {
+	[TestMethod] public void test_aex_bfx() {
 		// TJP: this is inefficient as it leaves the top x nodes unmerged.
 		PredictionContext x1 = x();
 		PredictionContext x2 = x();
@@ -422,7 +409,7 @@ public class TestGraphNodes {
 
 	// Array merges
 
-	@Test public void test_A$_A$_fullctx() {
+	[TestMethod] public void test_A$_A$_fullctx() {
 		ArrayPredictionContext A1 = array(EmptyPredictionContext.Instance);
 		ArrayPredictionContext A2 = array(EmptyPredictionContext.Instance);
 		PredictionContext r = PredictionContext.merge(A1, A2, fullCtx(), null);
@@ -435,7 +422,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Test public void test_Aab_Ac() { // a,b + c
+	[TestMethod] public void test_Aab_Ac() { // a,b + c
 		SingletonPredictionContext a = a();
 		SingletonPredictionContext b = b();
 		SingletonPredictionContext c = c();
@@ -455,7 +442,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aa_Aa() {
+	[TestMethod] public void test_Aa_Aa() {
 		SingletonPredictionContext a1 = a();
 		SingletonPredictionContext a2 = a();
 		ArrayPredictionContext A1 = array(a1);
@@ -472,7 +459,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aa_Abc() { // a + b,c
+	[TestMethod] public void test_Aa_Abc() { // a + b,c
 		SingletonPredictionContext a = a();
 		SingletonPredictionContext b = b();
 		SingletonPredictionContext c = c();
@@ -492,7 +479,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aac_Ab() { // a,c + b
+	[TestMethod] public void test_Aac_Ab() { // a,c + b
 		SingletonPredictionContext a = a();
 		SingletonPredictionContext b = b();
 		SingletonPredictionContext c = c();
@@ -512,7 +499,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aab_Aa() { // a,b + a
+	[TestMethod] public void test_Aab_Aa() { // a,b + a
 		ArrayPredictionContext A1 = array(a(), b());
 		ArrayPredictionContext A2 = array(a());
 		PredictionContext r = PredictionContext.merge(A1, A2, rootIsWildcard(), null);
@@ -528,7 +515,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aab_Ab() { // a,b + b
+	[TestMethod] public void test_Aab_Ab() { // a,b + b
 		ArrayPredictionContext A1 = array(a(), b());
 		ArrayPredictionContext A2 = array(b());
 		PredictionContext r = PredictionContext.merge(A1, A2, rootIsWildcard(), null);
@@ -544,7 +531,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aax_Aby() { // ax + by but in arrays
+	[TestMethod] public void test_Aax_Aby() { // ax + by but in arrays
 		SingletonPredictionContext a = createSingleton(x(), 1);
 		SingletonPredictionContext b = createSingleton(y(), 2);
 		ArrayPredictionContext A1 = array(a);
@@ -566,7 +553,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aax_Aay() { // ax + ay -> merged singleton a, array parent
+	[TestMethod] public void test_Aax_Aay() { // ax + ay -> merged singleton a, array parent
 		SingletonPredictionContext a1 = createSingleton(x(), 1);
 		SingletonPredictionContext a2 = createSingleton(y(), 1);
 		ArrayPredictionContext A1 = array(a1);
@@ -586,7 +573,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaxc_Aayd() { // ax,c + ay,d -> merged a, array parent
+	[TestMethod] public void test_Aaxc_Aayd() { // ax,c + ay,d -> merged a, array parent
 		SingletonPredictionContext a1 = createSingleton(x(), 1);
 		SingletonPredictionContext a2 = createSingleton(y(), 1);
 		ArrayPredictionContext A1 = array(a1, c());
@@ -608,7 +595,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaubv_Acwdx() { // au,bv + cw,dx -> [a,b,c,d]->[u,v,w,x]
+	[TestMethod] public void test_Aaubv_Acwdx() { // au,bv + cw,dx -> [a,b,c,d]->[u,v,w,x]
 		SingletonPredictionContext a = createSingleton(u(), 1);
 		SingletonPredictionContext b = createSingleton(v(), 2);
 		SingletonPredictionContext c = createSingleton(w(), 3);
@@ -638,7 +625,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaubv_Abvdx() { // au,bv + bv,dx -> [a,b,d]->[u,v,x]
+	[TestMethod] public void test_Aaubv_Abvdx() { // au,bv + bv,dx -> [a,b,d]->[u,v,x]
 		SingletonPredictionContext a = createSingleton(u(), 1);
 		SingletonPredictionContext b1 = createSingleton(v(), 2);
 		SingletonPredictionContext b2 = createSingleton(v(), 2);
@@ -665,7 +652,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaubv_Abwdx() { // au,bv + bw,dx -> [a,b,d]->[u,[v,w],x]
+	[TestMethod] public void test_Aaubv_Abwdx() { // au,bv + bw,dx -> [a,b,d]->[u,[v,w],x]
 		SingletonPredictionContext a = createSingleton(u(), 1);
 		SingletonPredictionContext b1 = createSingleton(v(), 2);
 		SingletonPredictionContext b2 = createSingleton(w(), 2);
@@ -693,7 +680,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaubv_Abvdu() { // au,bv + bv,du -> [a,b,d]->[u,v,u]; u,v shared
+	[TestMethod] public void test_Aaubv_Abvdu() { // au,bv + bv,du -> [a,b,d]->[u,v,u]; u,v shared
 		SingletonPredictionContext a = createSingleton(u(), 1);
 		SingletonPredictionContext b1 = createSingleton(v(), 2);
 		SingletonPredictionContext b2 = createSingleton(v(), 2);
@@ -718,7 +705,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	@Test public void test_Aaubu_Acudu() { // au,bu + cu,du -> [a,b,c,d]->[u,u,u,u]
+	[TestMethod] public void test_Aaubu_Acudu() { // au,bu + cu,du -> [a,b,c,d]->[u,u,u,u]
 		SingletonPredictionContext a = createSingleton(u(), 1);
 		SingletonPredictionContext b = createSingleton(u(), 2);
 		SingletonPredictionContext c = createSingleton(u(), 3);
@@ -866,6 +853,6 @@ public class TestGraphNodes {
 		builder.append(nodes);
 		builder.append(edges);
 		builder.append("}\n");
-		return builder.toString();
+		return builder.ToString();
 	}
 }

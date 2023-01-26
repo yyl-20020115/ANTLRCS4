@@ -3,35 +3,13 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.automata.ATNPrinter;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.test.runtime.ErrorQueue;
-import org.antlr.v4.test.runtime.RuntimeTestUtils;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.GrammarRootAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+[TestClass]
 public class TestATNConstruction {
-	@Test public void testA() throws Exception {
+	[TestMethod] public void testA(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A;");
@@ -42,7 +20,7 @@ public class TestATNConstruction {
 			"RuleStop_a_1-EOF->s4\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAB() throws Exception {
+	[TestMethod] public void testAB(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A B ;");
@@ -54,7 +32,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s5\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAorB() throws Exception {
+	[TestMethod] public void testAorB(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A | B {;} ;");
@@ -69,7 +47,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s7\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testSetAorB() throws Exception {
+	[TestMethod] public void testSetAorB(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A | B ;");
@@ -80,7 +58,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s4\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testLexerIsntSetMultiCharString() throws Exception {
+	[TestMethod] public void testLexerIsntSetMultiCharString(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : ('0x' | '0X') ;");
@@ -96,7 +74,7 @@ public class TestATNConstruction {
 				"BlockEnd_8->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testRange() throws Exception {
+	[TestMethod] public void testRange(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : 'a'..'c' ;"
@@ -108,7 +86,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSet() throws Exception {
+	[TestMethod] public void testCharSet(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [abc] ;"
@@ -120,7 +98,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetRange() throws Exception {
+	[TestMethod] public void testCharSetRange(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [a-c] ;"
@@ -132,7 +110,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodeBMPEscape() throws Exception {
+	[TestMethod] public void testCharSetUnicodeBMPEscape(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [\\uABCD] ;"
@@ -144,7 +122,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodeBMPEscapeRange() throws Exception {
+	[TestMethod] public void testCharSetUnicodeBMPEscapeRange(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [a-c\\uABCD-\\uABFF] ;"
@@ -156,7 +134,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodeSMPEscape() throws Exception {
+	[TestMethod] public void testCharSetUnicodeSMPEscape(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [\\u{10ABCD}] ;"
@@ -168,7 +146,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodeSMPEscapeRange() throws Exception {
+	[TestMethod] public void testCharSetUnicodeSMPEscapeRange(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [a-c\\u{10ABCD}-\\u{10ABFF}] ;"
@@ -180,7 +158,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodePropertyEscape() throws Exception {
+	[TestMethod] public void testCharSetUnicodePropertyEscape(){
 		// The Gothic script is long dead and unlikely to change (which would
 		// cause this test to fail)
 		LexerGrammar g = new LexerGrammar(
@@ -194,7 +172,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodePropertyInvertEscape() throws Exception {
+	[TestMethod] public void testCharSetUnicodePropertyInvertEscape(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [\\P{Gothic}] ;"
@@ -206,7 +184,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodeMultiplePropertyEscape() throws Exception {
+	[TestMethod] public void testCharSetUnicodeMultiplePropertyEscape(){
 		// Ditto the Mahajani script. Not going to change soon. I hope.
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
@@ -219,7 +197,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testCharSetUnicodePropertyOverlap() throws Exception {
+	[TestMethod] public void testCharSetUnicodePropertyOverlap(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : [\\p{ASCII_Hex_Digit}\\p{Hex_Digit}] ;"
@@ -231,7 +209,7 @@ public class TestATNConstruction {
 				"s4->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testRangeOrRange() throws Exception {
+	[TestMethod] public void testRangeOrRange(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar P;\n"+
 			"A : ('a'..'c' 'h' | 'q' 'j'..'l') ;"
@@ -248,7 +226,7 @@ public class TestATNConstruction {
 				"BlockEnd_8->RuleStop_A_2\n";
 		checkTokensRule(g, null, expecting);
 	}
-	@Test public void testStringLiteralInParser() throws Exception {
+	[TestMethod] public void testStringLiteralInParser(){
 		Grammar g = new Grammar(
 			"grammar P;\n"+
 			"a : A|'b' ;"
@@ -260,7 +238,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s4\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testABorCD() throws Exception {
+	[TestMethod] public void testABorCD(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A B | C D;");
@@ -276,7 +254,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s8\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testbA() throws Exception {
+	[TestMethod] public void testbA(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : b A ;\n"+
@@ -295,7 +273,7 @@ public class TestATNConstruction {
 				"RuleStop_b_3->s5\n";
 		RuntimeTestUtils.checkRuleATN(g, "b", expecting);
 	}
-	@Test public void testFollow() throws Exception {
+	[TestMethod] public void testFollow(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : b A ;\n"+
@@ -309,7 +287,7 @@ public class TestATNConstruction {
 				"RuleStop_b_3->s12\n";
 		RuntimeTestUtils.checkRuleATN(g, "b", expecting);
 	}
-	@Test public void testAorEpsilon() throws Exception {
+	[TestMethod] public void testAorEpsilon(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A | ;");
@@ -323,7 +301,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s6\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAOptional() throws Exception {
+	[TestMethod] public void testAOptional(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A?;");
@@ -336,7 +314,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s5\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAorBoptional() throws Exception {
+	[TestMethod] public void testAorBoptional(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A{;}|B)?;");
@@ -352,7 +330,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s7\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testSetAorBoptional() throws Exception {
+	[TestMethod] public void testSetAorBoptional(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A|B)?;");
@@ -365,7 +343,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s5\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAorBthenC() throws Exception {
+	[TestMethod] public void testAorBthenC(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A | B) C;");
@@ -377,7 +355,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s5\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAplus() throws Exception {
+	[TestMethod] public void testAplus(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A+;");
@@ -392,7 +370,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s7\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAplusSingleAltHasPlusASTPointingAtLoopBackState() throws Exception {
+	[TestMethod] public void testAplusSingleAltHasPlusASTPointingAtLoopBackState(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"s : a B ;\n" +			// (RULE a (BLOCK (ALT (+ (BLOCK (ALT A))))))
@@ -417,9 +395,9 @@ public class TestATNConstruction {
 				covered.put(node, node.atnState);
 			}
 		}
-		assertEquals("{RULE=2, BLOCK=8, +=10, BLOCK=8, A=7}", covered.toString());
+		assertEquals("{RULE=2, BLOCK=8, +=10, BLOCK=8, A=7}", covered.ToString());
 	}
-	@Test public void testAorBplus() throws Exception {
+	[TestMethod] public void testAorBplus(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A|B{;})+;");
@@ -437,7 +415,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s9\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAorBorEmptyPlus() throws Exception {
+	[TestMethod] public void testAorBorEmptyPlus(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A | B | )+ ;");
@@ -456,7 +434,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s9\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testEmptyOrEmpty() throws Exception {
+	[TestMethod] public void testEmptyOrEmpty(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : | ;");
@@ -470,7 +448,7 @@ public class TestATNConstruction {
 			"RuleStop_a_1-EOF->s6\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAStar() throws Exception {
+	[TestMethod] public void testAStar(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : A*;");
@@ -486,7 +464,7 @@ public class TestATNConstruction {
 				"StarLoopBack_7->StarLoopEntry_5\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testNestedAstar() throws Exception {
+	[TestMethod] public void testNestedAstar(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (COMMA ID*)*;");
@@ -509,7 +487,7 @@ public class TestATNConstruction {
 				"StarLoopBack_8->StarLoopEntry_6\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testAorBstar() throws Exception {
+	[TestMethod] public void testAorBstar(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : (A | B{;})* ;");
@@ -528,7 +506,7 @@ public class TestATNConstruction {
 				"StarLoopBack_9->StarLoopEntry_7\n";
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
-	@Test public void testPredicatedAorB() throws Exception {
+	[TestMethod] public void testPredicatedAorB(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : {p1}? A | {p2}? B ;");
@@ -545,7 +523,7 @@ public class TestATNConstruction {
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 	}
 
-	@Test public void testParserRuleRefInLexerRule() throws Exception {
+	[TestMethod] public void testParserRuleRefInLexerRule(){
 		boolean threwException = false;
 		ErrorQueue errorQueue = new ErrorQueue();
 		try {
@@ -572,7 +550,7 @@ public class TestATNConstruction {
 		System.out.println(errorQueue);
 		assertEquals(1, errorQueue.errors.size());
 		assertEquals(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors.get(0).getErrorType());
-		assertEquals("[a, A]", Arrays.toString(errorQueue.errors.get(0).getArgs()));
+		assertEquals("[a, A]", Arrays.ToString(errorQueue.errors.get(0).getArgs()));
 		assertTrue(!threwException);
 	}
 
@@ -583,9 +561,9 @@ public class TestATNConstruction {
 	 RuleStop_e_3->BlockEnd_26
 	 RuleStop_e_3->BlockEnd_26
 
-	 * @throws Exception
+	 * @
 	 */
-	@Test public void testForRepeatedTransitionsToStopState() throws Exception {
+	[TestMethod] public void testForRepeatedTransitionsToStopState(){
 		String gstr =
 			"grammar T;\n"+
 			"\t s : e EOF;\n"+
@@ -636,7 +614,7 @@ public class TestATNConstruction {
 
 
 /*
-	@Test public void testMultiplePredicates() throws Exception {
+	[TestMethod] public void testMultiplePredicates(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : {p1}? {p1a}? A | {p2}? B | {p3} b;\n" +
@@ -645,7 +623,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "a", expecting);
 	}
-	@Test public void testSets() throws Exception {
+	[TestMethod] public void testSets(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"a : ( A | B )+ ;\n" +
@@ -669,7 +647,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "e", expecting);
 	}
-	@Test public void testNotSet() throws Exception {
+	[TestMethod] public void testNotSet(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"tokens { A; B; C; }\n"+
@@ -678,7 +656,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "a", expecting);
 	}
-	@Test public void testNotSingletonBlockSet() throws Exception {
+	[TestMethod] public void testNotSingletonBlockSet(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"tokens { A; B; C; }\n"+
@@ -687,7 +665,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "a", expecting);
 	}
-	@Test public void testNotCharSet() throws Exception {
+	[TestMethod] public void testNotCharSet(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : ~'3' ;\n");
@@ -697,7 +675,7 @@ public class TestATNConstruction {
 			"s6->RuleStop_A_2\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testNotBlockSet() throws Exception {
+	[TestMethod] public void testNotBlockSet(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : ~('3'|'b') ;\n");
@@ -705,7 +683,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testNotSetLoop() throws Exception {
+	[TestMethod] public void testNotSetLoop(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : ~('3')* ;\n");
@@ -713,7 +691,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testNotBlockSetLoop() throws Exception {
+	[TestMethod] public void testNotBlockSetLoop(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : ~('3'|'b')* ;\n");
@@ -721,7 +699,7 @@ public class TestATNConstruction {
 			"\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testLabeledNotSet() throws Exception {
+	[TestMethod] public void testLabeledNotSet(){
 		Grammar g = new Grammar(
 			"parser grammar P;\n"+
 			"tokens { A; B; C; }\n"+
@@ -734,7 +712,7 @@ public class TestATNConstruction {
 			":s4-EOF->.s5\n";
 		checkRule(g, "a", expecting);
 	}
-	@Test public void testLabeledNotCharSet() throws Exception {
+	[TestMethod] public void testLabeledNotCharSet(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : t=~'3' ;\n");
@@ -746,7 +724,7 @@ public class TestATNConstruction {
 			":s4-<EOT>->.s5\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testLabeledNotBlockSet() throws Exception {
+	[TestMethod] public void testLabeledNotBlockSet(){
 		Grammar g = new Grammar(
 			"lexer grammar P;\n"+
 			"A : t=~('3'|'b') ;\n");
@@ -758,7 +736,7 @@ public class TestATNConstruction {
 			":s4-<EOT>->.s5\n";
 		checkRule(g, "A", expecting);
 	}
-	@Test public void testEscapedCharLiteral() throws Exception {
+	[TestMethod] public void testEscapedCharLiteral(){
 		Grammar g = new Grammar(
 			"grammar P;\n"+
 			"a : '\\n';");
@@ -770,7 +748,7 @@ public class TestATNConstruction {
 			":s4-EOF->.s5\n";
 		checkRule(g, "a", expecting);
 	}
-	@Test public void testEscapedStringLiteral() throws Exception {
+	[TestMethod] public void testEscapedStringLiteral(){
 		Grammar g = new Grammar(
 			"grammar P;\n"+
 			"a : 'a\\nb\\u0030c\\'';");
@@ -783,7 +761,7 @@ public class TestATNConstruction {
 	}
 	*/
 
-	@Test public void testDefaultMode() throws Exception {
+	[TestMethod] public void testDefaultMode(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n" +
@@ -803,7 +781,7 @@ public class TestATNConstruction {
 		checkTokensRule(g, "DEFAULT_MODE", expecting);
 	}
 
-	@Test public void testMode() throws Exception {
+	[TestMethod] public void testMode(){
 		LexerGrammar g = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n" +

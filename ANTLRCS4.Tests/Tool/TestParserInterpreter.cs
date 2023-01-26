@@ -4,22 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.tree;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
+[TestClass]
 public class TestParserInterpreter {
-	@Test public void testEmptyStartRule() throws Exception {
+	[TestMethod] public void testEmptyStartRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -32,7 +24,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "a", "s");
 	}
 
-	@Test public void testA() throws Exception {
+	[TestMethod] public void testA(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -42,10 +34,10 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s a)");
-		assertEquals("0..0", t.getSourceInterval().toString());
+		assertEquals("0..0", t.getSourceInterval().ToString());
 	}
 
-	@Test public void testEOF() throws Exception {
+	[TestMethod] public void testEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -55,10 +47,10 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s a <EOF>)");
-		assertEquals("0..1", t.getSourceInterval().toString());
+		assertEquals("0..1", t.getSourceInterval().ToString());
 	}
 
-	@Test public void testEOFInChild() throws Exception {
+	[TestMethod] public void testEOFInChild(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -69,11 +61,11 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>))");
-		assertEquals("0..1", t.getSourceInterval().toString());
-		assertEquals("0..1", t.getChild(0).getSourceInterval().toString());
+		assertEquals("0..1", t.getSourceInterval().ToString());
+		assertEquals("0..1", t.getChild(0).getSourceInterval().ToString());
 	}
 
-	@Test public void testEmptyRuleAfterEOFInChild() throws Exception {
+	[TestMethod] public void testEmptyRuleAfterEOFInChild(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -85,12 +77,12 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>) y)");
-		assertEquals("0..1", t.getSourceInterval().toString()); // s
-		assertEquals("0..1", t.getChild(0).getSourceInterval().toString()); // x
-// unspecified		assertEquals("1..0", t.getChild(1).getSourceInterval().toString()); // y
+		assertEquals("0..1", t.getSourceInterval().ToString()); // s
+		assertEquals("0..1", t.getChild(0).getSourceInterval().ToString()); // x
+// unspecified		assertEquals("1..0", t.getChild(1).getSourceInterval().ToString()); // y
 	}
 
-	@Test public void testEmptyRuleAfterJustEOFInChild() throws Exception {
+	[TestMethod] public void testEmptyRuleAfterJustEOFInChild(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -102,13 +94,13 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) y)");
-		assertEquals("0..0", t.getSourceInterval().toString()); // s
-		assertEquals("0..0", t.getChild(0).getSourceInterval().toString()); // x
+		assertEquals("0..0", t.getSourceInterval().ToString()); // s
+		assertEquals("0..0", t.getChild(0).getSourceInterval().ToString()); // x
 		// this next one is a weird special case where somebody tries to match beyond in the file
-// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().toString()); // y
+// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().ToString()); // y
 	}
 
-	@Test public void testEmptyInput() throws Exception {
+	[TestMethod] public void testEmptyInput(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -119,11 +111,11 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s x <EOF>)");
-		assertEquals("0..0", t.getSourceInterval().toString()); // s
-		assertEquals("0..-1", t.getChild(0).getSourceInterval().toString()); // x
+		assertEquals("0..0", t.getSourceInterval().ToString()); // s
+		assertEquals("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
 	}
 
-	@Test public void testEmptyInputWithCallsAfter() throws Exception {
+	[TestMethod] public void testEmptyInputWithCallsAfter(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -136,12 +128,12 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) (y z))");
-		assertEquals("0..0", t.getSourceInterval().toString()); // s
-		assertEquals("0..0", t.getChild(0).getSourceInterval().toString()); // x
-// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().toString()); // x
+		assertEquals("0..0", t.getSourceInterval().ToString()); // s
+		assertEquals("0..0", t.getChild(0).getSourceInterval().ToString()); // x
+// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().ToString()); // x
 	}
 
-	@Test public void testEmptyFirstRule() throws Exception {
+	[TestMethod] public void testEmptyFirstRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n");
@@ -152,12 +144,12 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s x a)");
-		assertEquals("0..0", t.getSourceInterval().toString()); // s
+		assertEquals("0..0", t.getSourceInterval().ToString()); // s
 		// This gets an empty interval because the stop token is null for x
-		assertEquals("0..-1", t.getChild(0).getSourceInterval().toString()); // x
+		assertEquals("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
 	}
 
-	@Test public void testAorB() throws Exception {
+	[TestMethod] public void testAorB(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -171,7 +163,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "b", "(s b)");
 	}
 
-	@Test public void testCall() throws Exception {
+	[TestMethod] public void testCall(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -187,7 +179,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "bc", "(s (t b) c)");
 	}
 
-	@Test public void testCall2() throws Exception {
+	[TestMethod] public void testCall2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -204,7 +196,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "bc", "(s (t (u b)) c)");
 	}
 
-	@Test public void testOptionalA() throws Exception {
+	[TestMethod] public void testOptionalA(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -219,7 +211,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "ab", "(s a b)");
 	}
 
-	@Test public void testOptionalAorB() throws Exception {
+	[TestMethod] public void testOptionalAorB(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -235,7 +227,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "bc", "(s b c)");
 	}
 
-	@Test public void testStarA() throws Exception {
+	[TestMethod] public void testStarA(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -251,7 +243,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "aaaaaab", "(s a a a a a a b)");
 	}
 
-	@Test public void testStarAorB() throws Exception {
+	[TestMethod] public void testStarAorB(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -269,7 +261,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "s", "babac", "(s b a b a c)");
 	}
 
-	@Test public void testLeftRecursion() throws Exception {
+	[TestMethod] public void testLeftRecursion(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -298,7 +290,7 @@ public class TestParserInterpreter {
 	 * This is a regression test for antlr/antlr4#461.
 	 * https://github.com/antlr/antlr4/issues/461
 	 */
-	@Test public void testLeftRecursiveStartRule() throws Exception {
+	[TestMethod] public void testLeftRecursiveStartRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -323,7 +315,7 @@ public class TestParserInterpreter {
 		testInterp(lg, g, "e", "a+a*a", "(e (e a) + (e (e a) * (e a)))");
 	}
 
-	@Test public void testCaseInsensitiveTokensInParser() throws Exception {
+	[TestMethod] public void testCaseInsensitiveTokensInParser(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +

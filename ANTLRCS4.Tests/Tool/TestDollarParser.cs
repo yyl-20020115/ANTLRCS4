@@ -4,17 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.junit.jupiter.api.Test;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.execParser;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+namespace org.antlr.v4.test.tool;
 
 public class TestDollarParser {
-	@Test
+	[TestMethod]
 	public void testSimpleCall() {
 		String grammar = "grammar T;\n" +
                       "a : ID  { outStream.println(new java.io.File($parser.getSourceName()).getAbsolutePath()); }\n" +

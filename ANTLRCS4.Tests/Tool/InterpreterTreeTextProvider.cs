@@ -4,21 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.gui.TreeTextProvider;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.Tree;
-import org.antlr.v4.runtime.tree.Trees;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-import java.util.List;
 
-public class InterpreterTreeTextProvider implements TreeTextProvider {
+public class InterpreterTreeTextProvider : TreeTextProvider {
 	public List<String> ruleNames;
 	public InterpreterTreeTextProvider(String[] ruleNames) {this.ruleNames = Arrays.asList(ruleNames);}
 
-	@Override
+	//@Override
 	public String getText(Tree node) {
 		if ( node==null ) return "null";
 		String nodeText = Trees.getNodeText(node, ruleNames);

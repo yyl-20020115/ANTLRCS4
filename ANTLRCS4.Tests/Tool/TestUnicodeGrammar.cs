@@ -4,28 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.gui.Trees;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.GrammarParserInterpreter;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestUnicodeGrammar {
-	@Test
-	public void unicodeBMPLiteralInGrammar() throws Exception {
+	[TestMethod]
+	public void unicodeBMPLiteralInGrammar(){
 		String grammarText =
 			"grammar Unicode;\n" +
 			"r : 'hello' WORLD;\n" +
@@ -48,8 +32,8 @@ public class TestUnicodeGrammar {
 	// '\\uD83C\\uDF0D' -> ('\\u{1F30E}' | '\\uD83C\\uDF0D')
 	//
 	// but I worry that might cause parse ambiguity if we're not careful.
-	//@Test
-	public void unicodeSurrogatePairLiteralInGrammar() throws Exception {
+	//[TestMethod]
+	public void unicodeSurrogatePairLiteralInGrammar(){
 		String grammarText =
 			"grammar Unicode;\n" +
 			"r : 'hello' WORLD;\n" +
@@ -57,7 +41,7 @@ public class TestUnicodeGrammar {
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
-				.toString();
+				.ToString();
 		assertEquals(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
@@ -66,8 +50,8 @@ public class TestUnicodeGrammar {
 						inputText));
 	}
 
-	@Test
-	public void unicodeSMPLiteralInGrammar() throws Exception {
+	[TestMethod]
+	public void unicodeSMPLiteralInGrammar(){
 		String grammarText =
 			"grammar Unicode;\n" +
 			"r : 'hello' WORLD;\n" +
@@ -75,7 +59,7 @@ public class TestUnicodeGrammar {
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
-				.toString();
+				.ToString();
 		assertEquals(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
@@ -84,8 +68,8 @@ public class TestUnicodeGrammar {
 						inputText));
 	}
 
-	@Test
-	public void unicodeSMPRangeInGrammar() throws Exception {
+	[TestMethod]
+	public void unicodeSMPRangeInGrammar(){
 		String grammarText =
 			"grammar Unicode;\n" +
 			"r : 'hello' WORLD;\n" +
@@ -93,7 +77,7 @@ public class TestUnicodeGrammar {
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
-				.toString();
+				.ToString();
 		assertEquals(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
@@ -102,8 +86,8 @@ public class TestUnicodeGrammar {
 						inputText));
 	}
 
-	@Test
-	public void matchingDanglingSurrogateInInput() throws Exception {
+	[TestMethod]
+	public void matchingDanglingSurrogateInInput(){
 		String grammarText =
 			"grammar Unicode;\n" +
 			"r : 'hello' WORLD;\n" +
@@ -118,8 +102,8 @@ public class TestUnicodeGrammar {
 						inputText));
 	}
 
-	@Test
-	public void binaryGrammar() throws Exception {
+	[TestMethod]
+	public void binaryGrammar(){
 		String grammarText =
 			"grammar Binary;\n" +
 			"r : HEADER PACKET+ FOOTER;\n" +
@@ -133,10 +117,10 @@ public class TestUnicodeGrammar {
 				(byte)0xFF
 		};
 		CharStream charStream;
-		try (ByteArrayInputStream is = new ByteArrayInputStream(toParse);
+		try (ByteArrayInputStream @is = new ByteArrayInputStream(toParse);
 		     // Note we use ISO_8859_1 to treat all byte values as Unicode "characters" from
 		     // U+0000 to U+00FF.
-		     InputStreamReader isr = new InputStreamReader(is, StandardCharsets.ISO_8859_1)) {
+		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.ISO_8859_1)) {
 			charStream = new ANTLRInputStream(isr);
 		}
 		Grammar grammar = new Grammar(grammarText);
@@ -156,7 +140,7 @@ public class TestUnicodeGrammar {
 	private static String parseTreeForGrammarWithInput(
 			String grammarText,
 			String rootRule,
-			String inputText) throws Exception {
+			String inputText){
 		Grammar grammar = new Grammar(grammarText);
 		LexerInterpreter lexEngine = grammar.createLexerInterpreter(
 				CharStreams.fromString(inputText));

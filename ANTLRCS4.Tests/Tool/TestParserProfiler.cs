@@ -4,35 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
 
-import org.antlr.runtime.RecognitionException;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.atn.DecisionInfo;
-import org.antlr.v4.test.runtime.RunOptions;
-import org.antlr.v4.test.runtime.Stage;
-import org.antlr.v4.test.runtime.java.JavaRunner;
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.createOptionsForJavaToolTests;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
+[TestClass]
 public class TestParserProfiler {
-	final static LexerGrammar lg;
+	readonly static LexerGrammar lg;
 
-	static {
+	static TestParserProfiler(){
 		try {
 			lg = new LexerGrammar(
 					"lexer grammar L;\n" +
@@ -48,7 +30,7 @@ public class TestParserProfiler {
 		}
 	}
 
-	@Test public void testLL1() throws Exception {
+	[TestMethod] public void testLL1(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ';'{}\n" +
@@ -61,10 +43,10 @@ public class TestParserProfiler {
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=1, " +
 				"SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].toString());
+		assertEquals(expecting, info[0].ToString());
 	}
 
-	@Test public void testLL2() throws Exception {
+	[TestMethod] public void testLL2(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ID ';'{}\n" +
@@ -77,10 +59,10 @@ public class TestParserProfiler {
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].toString());
+		assertEquals(expecting, info[0].ToString());
 	}
 
-	@Test public void testRepeatedLL2() throws Exception {
+	[TestMethod] public void testRepeatedLL2(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ID ';'{}\n" +
@@ -93,10 +75,10 @@ public class TestParserProfiler {
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].toString());
+		assertEquals(expecting, info[0].ToString());
 	}
 
-	@Test public void test3xLL2() throws Exception {
+	[TestMethod] public void test3xLL2(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ID ';'{}\n" +
@@ -110,10 +92,10 @@ public class TestParserProfiler {
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 				"SLL_ATNTransitions=3, SLL_DFATransitions=3, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].toString());
+		assertEquals(expecting, info[0].ToString());
 	}
 
-	@Test public void testOptional() throws Exception {
+	[TestMethod] public void testOptional(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ID ('.' ID)? ';'\n" +
@@ -128,10 +110,10 @@ public class TestParserProfiler {
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.toString(info));
+		assertEquals(expecting, Arrays.ToString(info));
 	}
 
-	@Test public void test2xOptional() throws Exception {
+	[TestMethod] public void test2xOptional(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : ID ('.' ID)? ';'\n" +
@@ -146,10 +128,10 @@ public class TestParserProfiler {
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=1, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.toString(info));
+		assertEquals(expecting, Arrays.ToString(info));
 	}
 
-	@Test public void testContextSensitivity() throws Exception {
+	[TestMethod] public void testContextSensitivity(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : '.' e ID \n" +
@@ -160,11 +142,11 @@ public class TestParserProfiler {
 		assertEquals(2, info.length);
 		String expecting =
 			"{decision=1, contextSensitivities=1, errors=0, ambiguities=0, SLL_lookahead=3, SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_lookahead=3, LL_ATNTransitions=2}";
-		assertEquals(expecting, info[1].toString());
+		assertEquals(expecting, info[1].ToString());
 	}
 
 	@Disabled
-	@Test public void testSimpleLanguage() throws Exception {
+	[TestMethod] public void testSimpleLanguage(){
 		Grammar g = new Grammar(TestXPath.grammar);
 		String input =
 			"def f(x,y) { x = 3+4*1*1/5*1*1+1*1+1; y; ; }\n" +
@@ -176,12 +158,12 @@ public class TestParserProfiler {
 			"SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_ATNTransitions=1}]";
 
 
-		assertEquals(expecting, Arrays.toString(info));
+		assertEquals(expecting, Arrays.ToString(info));
 		assertEquals(1, info.length);
 	}
 
 	@Disabled
-	@Test public void testDeepLookahead() throws Exception {
+	[TestMethod] public void testDeepLookahead(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
 				"s : e ';'\n" +
@@ -203,10 +185,10 @@ public class TestParserProfiler {
 			  "SLL_ATNTransitions=6, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.toString(info));
+		assertEquals(expecting, Arrays.ToString(info));
 	}
 
-	@Test public void testProfilerGeneratedCode() {
+	[TestMethod] public void testProfilerGeneratedCode() {
 		String grammar =
 			"grammar T;\n" +
 			"s : a+ ID EOF ;\n" +

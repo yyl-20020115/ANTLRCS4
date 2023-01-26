@@ -1,3 +1,6 @@
+using org.antlr.v4.runtime.atn;
+using System.Text;
+
 namespace org.antlr.v4.test.tool;
 
 
@@ -24,7 +27,7 @@ public class ATNDescriber {
 	private List<String> tokenNames;
 
 	public ATNDescriber(ATN atn, List<String> tokenNames) {
-		assert atn.grammarType != null;
+		//assert atn.grammarType != null;
 		this.atn = atn;
 		this.tokenNames = tokenNames;
 	}
@@ -36,7 +39,7 @@ public class ATNDescriber {
 		int version = data[p++];
 		if (version != ATNDeserializer.SERIALIZED_VERSION) {
 			String reason = String.format("Could not deserialize ATN with version %d (expected %d).", version, ATNDeserializer.SERIALIZED_VERSION);
-			throw new UnsupportedOperationException(new InvalidClassException(ATN.class.getName(), reason));
+			throw new UnsupportedOperationException(new InvalidClassException(ATN.getName(), reason));
 		}
 
 		p++; // skip grammarType
@@ -129,7 +132,7 @@ public class ATNDescriber {
 				int data2 = data[p++];
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	private int appendSets(StringBuilder buf, int[] data, int p, int nsets) {
@@ -179,7 +182,7 @@ public class ATNDescriber {
 				default:
 					if ( Character.UnicodeBlock.of((char)t)==Character.UnicodeBlock.BASIC_LATIN &&
 							!Character.isISOControl((char)t) ) {
-						return '\''+Character.toString((char)t)+'\'';
+						return '\''+Character.ToString((char)t)+'\'';
 					}
 					// turn on the bit above max "\uFFFF" value so that we pad with zeros
 					// then only take last 4 digits

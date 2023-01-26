@@ -4,20 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
-
-import org.antlr.v4.codegen.OutputModelFactory;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 public class Parser : Recognizer {
 	public ParserFile file;
 
-	@ModelElement public List<RuleFunction> funcs = new ArrayList<RuleFunction>();
+	//@ModelElement 
+	public List<RuleFunction> funcs = new ();
 
-	public Parser(OutputModelFactory factory, ParserFile file) {
-		super(factory);
+	public Parser(OutputModelFactory factory, ParserFile file):base(factory) {
 		this.file = file; // who contains us?
 	}
 }

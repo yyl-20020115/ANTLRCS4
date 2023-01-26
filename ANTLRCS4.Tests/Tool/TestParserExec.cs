@@ -4,17 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import java.nio.file.Path;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /** Test parser execution.
  *
@@ -47,14 +38,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *  Nongreedy loops match as much input as possible while still allowing
  *  the remaining input to match.
  */
+[TestClass]
 public class TestParserExec {
 	/**
 	 * This is a regression test for antlr/antlr4#118.
 	 * https://github.com/antlr/antlr4/issues/118
 	 */
-	@Disabled("Performance impact of passing this test may not be worthwhile")
+	//@Disabled("Performance impact of passing this test may not be worthwhile")
 	// TODO: port to test framework (not ported because test currently fails)
-	@Test public void testStartRuleWithoutEOF() {
+	[TestMethod] public void testStartRuleWithoutEOF() {
 		String grammar =
 			"grammar T;\n"+
 			"s @after {dumpDFA();}\n" +
@@ -79,7 +71,7 @@ public class TestParserExec {
 	 * https://github.com/antlr/antlr4/issues/588
 	 */
 	// TODO: port to test framework (can we simplify the Psl grammar?)
-	@Test public void testFailedPredicateExceptionState() throws Exception {
+	[TestMethod] public void testFailedPredicateExceptionState(){
 		String grammar = load("Psl.g4");
 		ExecutedState executedState = execParser("Psl.g4", grammar,
 				"PslParser", "PslLexer", "floating_constant", " . 234", false);
@@ -93,7 +85,7 @@ public class TestParserExec {
 	 * https://github.com/antlr/antlr4/issues/563
 	 */
 	// TODO: port to test framework (missing templates)
-	@Test public void testAlternateQuotes(@TempDir Path tempDir) {
+	[TestMethod] public void testAlternateQuotes(@TempDir Path tempDir) {
 		String lexerGrammar =
 			"lexer grammar ModeTagsLexer;\n" +
 			"\n" +
@@ -132,7 +124,7 @@ public class TestParserExec {
 	 * https://github.com/antlr/antlr4/issues/672
 	 */
 	// TODO: port to test framework (missing templates)
-	@Test public void testAttributeValueInitialization() {
+	[TestMethod] public void testAttributeValueInitialization() {
 		String grammar =
 			"grammar Data; \n" +
 			"\n" +
@@ -155,7 +147,7 @@ public class TestParserExec {
 		assertEquals("", executedState.errors);
 	}
 
-	@Test public void testCaseInsensitiveInCombinedGrammar() throws Exception {
+	[TestMethod] public void testCaseInsensitiveInCombinedGrammar(){
 		String grammar =
 				"grammar CaseInsensitiveGrammar;\n" +
 				"options { caseInsensitive = true; }\n" +

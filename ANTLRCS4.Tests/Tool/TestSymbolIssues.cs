@@ -4,19 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import static org.antlr.v4.test.tool.ToolTestUtils.realElements;
-import static org.antlr.v4.test.tool.ToolTestUtils.testErrors;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /** */
 public class TestSymbolIssues {
-    final static String[] A = {
+    readonly static String[] A = {
         // INPUT
         "grammar A;\n" +
         "options { opt='sss'; k=3; }\n" +
@@ -32,19 +27,19 @@ public class TestSymbolIssues {
         "\n" +
         "ID : 'a'..'z'+ ID ;",
         // YIELDS
-			"error(" + ErrorType.ACTION_REDEFINITION.code + "): A.g4:5:1: redefinition of members action\n" +
-			"error(" + ErrorType.ACTION_REDEFINITION.code + "): A.g4:7:1: redefinition of header action\n" +
-			"warning(" + ErrorType.ILLEGAL_OPTION.code + "): A.g4:2:10: unsupported option opt\n" +
-			"warning(" + ErrorType.ILLEGAL_OPTION.code + "): A.g4:2:21: unsupported option k\n" +
-			"error(" + ErrorType.ACTION_REDEFINITION.code + "): A.g4:5:1: redefinition of members action\n" +
-			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION.code + "): A.g4:9:27: implicit definition of token X in parser\n" +
-			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION.code + "): A.g4:10:20: implicit definition of token Y in parser\n" +
-			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION.code + "): A.g4:11:4: implicit definition of token FJKD in parser\n" +
-			"error(" + ErrorType.RULE_HAS_NO_ARGS.code + "): A.g4:9:37: rule b has no defined parameters\n" +
-			"error(" + ErrorType.MISSING_RULE_ARGS.code + "): A.g4:10:31: missing argument(s) on rule reference: a\n"
+			"error(" + ErrorType.ACTION_REDEFINITION + "): A.g4:5:1: redefinition of members action\n" +
+			"error(" + ErrorType.ACTION_REDEFINITION + "): A.g4:7:1: redefinition of header action\n" +
+			"warning(" + ErrorType.ILLEGAL_OPTION + "): A.g4:2:10: unsupported option opt\n" +
+			"warning(" + ErrorType.ILLEGAL_OPTION + "): A.g4:2:21: unsupported option k\n" +
+			"error(" + ErrorType.ACTION_REDEFINITION + "): A.g4:5:1: redefinition of members action\n" +
+			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION + "): A.g4:9:27: implicit definition of token X in parser\n" +
+			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION + "): A.g4:10:20: implicit definition of token Y in parser\n" +
+			"warning(" + ErrorType.IMPLICIT_TOKEN_DEFINITION + "): A.g4:11:4: implicit definition of token FJKD in parser\n" +
+			"error(" + ErrorType.RULE_HAS_NO_ARGS + "): A.g4:9:37: rule b has no defined parameters\n" +
+			"error(" + ErrorType.MISSING_RULE_ARGS + "): A.g4:10:31: missing argument(s) on rule reference: a\n"
     };
 
-	final static String[] B = {
+	readonly static String[] B = {
         // INPUT
         "parser grammar B;\n" +
         "tokens { ID, FOO, X, Y }\n" +
@@ -55,14 +50,14 @@ public class TestSymbolIssues {
         "\n" +
         "s : FOO ;",
         // YIELDS
-		"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE.code + "): B.g4:4:4: label s conflicts with rule with same name\n" +
-		"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE.code + "): B.g4:4:9: label b conflicts with rule with same name\n" +
-		"error(" + ErrorType.LABEL_CONFLICTS_WITH_TOKEN.code + "): B.g4:4:15: label X conflicts with token with same name\n" +
-		"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): B.g4:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n" +
-		"error(" + ErrorType.IMPLICIT_STRING_DEFINITION.code + "): B.g4:4:20: cannot create implicit token for string literal in non-combined grammar: '.'\n"
+		"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE + "): B.g4:4:4: label s conflicts with rule with same name\n" +
+		"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE + "): B.g4:4:9: label b conflicts with rule with same name\n" +
+		"error(" + ErrorType.LABEL_CONFLICTS_WITH_TOKEN + "): B.g4:4:15: label X conflicts with token with same name\n" +
+		"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): B.g4:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n" +
+		"error(" + ErrorType.IMPLICIT_STRING_DEFINITION + "): B.g4:4:20: cannot create implicit token for string literal in non-combined grammar: '.'\n"
     };
 
-	final static String[] D = {
+	readonly static String[] D = {
         // INPUT
         "parser grammar D;\n" +
 		"tokens{ID}\n" +
@@ -75,11 +70,11 @@ public class TestSymbolIssues {
         "        :       ID ;",
 
         // YIELDS
-        "error(" + ErrorType.LABEL_CONFLICTS_WITH_ARG.code + "): D.g4:4:21: label j conflicts with parameter with same name\n" +
-		"error(" + ErrorType.RETVAL_CONFLICTS_WITH_ARG.code + "): D.g4:6:22: return value i conflicts with parameter with same name\n"
+        "error(" + ErrorType.LABEL_CONFLICTS_WITH_ARG + "): D.g4:4:21: label j conflicts with parameter with same name\n" +
+		"error(" + ErrorType.RETVAL_CONFLICTS_WITH_ARG + "): D.g4:6:22: return value i conflicts with parameter with same name\n"
     };
 
-	final static String[] E = {
+	readonly static String[] E = {
 		// INPUT
 		"grammar E;\n" +
 		"tokens {\n" +
@@ -90,10 +85,10 @@ public class TestSymbolIssues {
 		"a : A ;\n",
 
 		// YIELDS
-		"warning(" + ErrorType.TOKEN_NAME_REASSIGNMENT.code + "): E.g4:3:4: token name A is already defined\n"
+		"warning(" + ErrorType.TOKEN_NAME_REASSIGNMENT + "): E.g4:3:4: token name A is already defined\n"
 	};
 
-	final static String[] F = {
+	readonly static String[] F = {
 		// INPUT
 		"lexer grammar F;\n" +
 		"A: 'a';\n" +
@@ -104,16 +99,16 @@ public class TestSymbolIssues {
 		"M1: 'b';\n",
 
 		// YIELDS
-		"error(" + ErrorType.MODE_CONFLICTS_WITH_TOKEN.code + "): F.g4:3:0: mode M1 conflicts with token with same name\n"
+		"error(" + ErrorType.MODE_CONFLICTS_WITH_TOKEN + "): F.g4:3:0: mode M1 conflicts with token with same name\n"
 	};
 
-    @Test public void testA() { testErrors(A, false); }
-    @Test public void testB() { testErrors(B, false); }
-	@Test public void testD() { testErrors(D, false); }
-	@Test public void testE() { testErrors(E, false); }
-	@Test public void testF() { testErrors(F, false); }
+    [TestMethod] public void testA() { testErrors(A, false); }
+    [TestMethod] public void testB() { testErrors(B, false); }
+	[TestMethod] public void testD() { testErrors(D, false); }
+	[TestMethod] public void testE() { testErrors(E, false); }
+	[TestMethod] public void testF() { testErrors(F, false); }
 
-	@Test public void testStringLiteralRedefs() throws Exception {
+	[TestMethod] public void testStringLiteralRedefs(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -128,25 +123,25 @@ public class TestSymbolIssues {
 		String expectedStringLiteralToTypeMap = "{}";
 		String expectedTypeToTokenList = "[A, B, C]";
 
-		assertEquals(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.toString());
-		assertEquals(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.toString());
-		assertEquals(expectedTypeToTokenList, realElements(g.typeToTokenList).toString());
+		assertEquals(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
+		assertEquals(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
+		assertEquals(expectedTypeToTokenList, realElements(g.typeToTokenList).ToString());
 	}
 
-	@Test public void testEmptyLexerModeDetection() throws Exception {
+	[TestMethod] public void testEmptyLexerModeDetection(){
 		String[] test = {
 			"lexer grammar L;\n" +
 			"A : 'a';\n" +
 			"mode X;\n" +
 			"fragment B : 'b';",
 
-			"error(" + ErrorType.MODE_WITHOUT_RULES.code + "): L.g4:3:5: lexer mode X must contain at least one non-fragment rule\n"
+			"error(" + ErrorType.MODE_WITHOUT_RULES + "): L.g4:3:5: lexer mode X must contain at least one non-fragment rule\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testEmptyLexerRuleDetection() throws Exception {
+	[TestMethod] public void testEmptyLexerRuleDetection(){
 		String[] test = {
 			"lexer grammar L;\n" +
 			"A : 'a';\n" +
@@ -155,14 +150,14 @@ public class TestSymbolIssues {
 			"  B : C;\n" +
 			"  fragment C : A | (A C)?;",
 
-			"warning(" + ErrorType.EPSILON_TOKEN.code + "): L.g4:3:0: non-fragment lexer rule WS can match the empty string\n" +
-			"warning(" + ErrorType.EPSILON_TOKEN.code + "): L.g4:5:2: non-fragment lexer rule B can match the empty string\n"
+			"warning(" + ErrorType.EPSILON_TOKEN + "): L.g4:3:0: non-fragment lexer rule WS can match the empty string\n" +
+			"warning(" + ErrorType.EPSILON_TOKEN + "): L.g4:5:2: non-fragment lexer rule B can match the empty string\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testTokensModesChannelsDeclarationConflictsWithReserved() throws Exception {
+	[TestMethod] public void testTokensModesChannelsDeclarationConflictsWithReserved(){
 		String[] test = {
 			"lexer grammar L;\n" +
 			"channels { SKIP, HIDDEN, channel0 }\n" +
@@ -174,16 +169,16 @@ public class TestSymbolIssues {
 			"mode M;\n" +
 			"C: 'c';",
 
-			"error(" + ErrorType.RESERVED_RULE_NAME.code + "): L.g4:5:0: cannot declare a rule with reserved name MIN_CHAR_VALUE\n" +
-			"error(" + ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:4:0: cannot use or declare mode with reserved name MAX_CHAR_VALUE\n" +
-			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:2:11: cannot use or declare channel with reserved name SKIP\n" +
-			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:2:17: cannot use or declare channel with reserved name HIDDEN\n"
+			"error(" + ErrorType.RESERVED_RULE_NAME + "): L.g4:5:0: cannot declare a rule with reserved name MIN_CHAR_VALUE\n" +
+			"error(" + ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:4:0: cannot use or declare mode with reserved name MAX_CHAR_VALUE\n" +
+			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:2:11: cannot use or declare channel with reserved name SKIP\n" +
+			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:2:17: cannot use or declare channel with reserved name HIDDEN\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testTokensModesChannelsUsingConflictsWithReserved() throws Exception {
+	[TestMethod] public void testTokensModesChannelsUsingConflictsWithReserved(){
 		String[] test = {
 			"lexer grammar L;\n" +
 			"A: 'a' -> channel(SKIP);\n" +
@@ -193,16 +188,16 @@ public class TestSymbolIssues {
 			"E: 'e' -> type(EOF);\n" +
 			"F: 'f' -> pushMode(DEFAULT_MODE);",
 
-			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:2:18: cannot use or declare channel with reserved name SKIP\n" +
-			"error(" + ErrorType.TOKEN_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:3:15: cannot use or declare token with reserved name MORE\n" +
-			"error(" + ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS.code + "): L.g4:4:15: cannot use or declare mode with reserved name SKIP\n"
+			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:2:18: cannot use or declare channel with reserved name SKIP\n" +
+			"error(" + ErrorType.TOKEN_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:3:15: cannot use or declare token with reserved name MORE\n" +
+			"error(" + ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:4:15: cannot use or declare mode with reserved name SKIP\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1411
-	@Test public void testWrongIdForTypeChannelModeCommand() throws Exception {
+	[TestMethod] public void testWrongIdForTypeChannelModeCommand(){
 		String[] test = {
 			"lexer grammar L;\n" +
 			"tokens { TOKEN1 }\n" +
@@ -211,16 +206,16 @@ public class TestSymbolIssues {
 			"mode MODE1;\n" +
 			"MODE1_TOKEN: 'qwer';",
 
-			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME.code + "): L.g4:4:22: CHANNEL1 is not a recognized token name\n" +
-			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME.code + "): L.g4:4:41: MODE1 is not a recognized channel name\n" +
-			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME.code + "): L.g4:4:54: TOKEN1 is not a recognized mode name\n"
+			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME + "): L.g4:4:22: CHANNEL1 is not a recognized token name\n" +
+			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME + "): L.g4:4:41: MODE1 is not a recognized channel name\n" +
+			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME + "): L.g4:4:54: TOKEN1 is not a recognized mode name\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1388
-	@Test public void testDuplicatedCommands() throws Exception {
+	[TestMethod] public void testDuplicatedCommands(){
 		String[] test = {
 			"lexer grammar Lexer;\n" +
 			"channels { CHANNEL1, CHANNEL2 }\n" +
@@ -236,17 +231,17 @@ public class TestSymbolIssues {
 			"MODE2_TOKEN1: 'g' -> type(TEST1), type(TEST2);\n" +
 			"MODE2_TOKEN2: 'h' -> channel(CHANNEL1), channel(CHANNEL2), channel(DEFAULT_TOKEN_CHANNEL);",
 
-			"warning(" + ErrorType.DUPLICATED_COMMAND.code + "): Lexer.g4:4:27: duplicated command mode\n" +
-			"warning(" + ErrorType.DUPLICATED_COMMAND.code + "): Lexer.g4:12:34: duplicated command type\n" +
-			"warning(" + ErrorType.DUPLICATED_COMMAND.code + "): Lexer.g4:13:40: duplicated command channel\n" +
-			"warning(" + ErrorType.DUPLICATED_COMMAND.code + "): Lexer.g4:13:59: duplicated command channel\n"
+			"warning(" + ErrorType.DUPLICATED_COMMAND + "): Lexer.g4:4:27: duplicated command mode\n" +
+			"warning(" + ErrorType.DUPLICATED_COMMAND + "): Lexer.g4:12:34: duplicated command type\n" +
+			"warning(" + ErrorType.DUPLICATED_COMMAND + "): Lexer.g4:13:40: duplicated command channel\n" +
+			"warning(" + ErrorType.DUPLICATED_COMMAND + "): Lexer.g4:13:59: duplicated command channel\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1388
-	@Test public void testIncompatibleCommands() throws Exception {
+	[TestMethod] public void testIncompatibleCommands(){
 		String[] test = {
 				"lexer grammar L;\n" +
 				"channels { CHANNEL1 }\n" +
@@ -266,23 +261,23 @@ public class TestSymbolIssues {
 				"T10: 'a10' -> type(TYPE1), channel(CHANNEL1);\n" +
 				"T11: 'a11' -> channel(CHANNEL1), type(TYPE1);",
 
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:5:20: incompatible commands skip and more\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:6:20: incompatible commands skip and type\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:7:20: incompatible commands skip and channel\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:8:20: incompatible commands more and type\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:9:20: incompatible commands more and channel\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:10:20: incompatible commands more and skip\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:11:27: incompatible commands type and skip\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:12:27: incompatible commands type and more\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:13:33: incompatible commands channel and skip\n" +
-				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS.code + "): L.g4:14:33: incompatible commands channel and more\n"
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:5:20: incompatible commands skip and more\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:6:20: incompatible commands skip and type\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:7:20: incompatible commands skip and channel\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:8:20: incompatible commands more and type\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:9:20: incompatible commands more and channel\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:10:20: incompatible commands more and skip\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:11:27: incompatible commands type and skip\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:12:27: incompatible commands type and more\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:13:33: incompatible commands channel and skip\n" +
+				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:14:33: incompatible commands channel and more\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1409
-	@Test public void testLabelsForTokensWithMixedTypes() {
+	[TestMethod] public void testLabelsForTokensWithMixedTypes() {
 		String[] test = {
 				"grammar L;\n" +
 				"\n" +
@@ -324,19 +319,19 @@ public class TestSymbolIssues {
 				"B: 'b';\n" +
 				"C: 'c';\n",
 
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:8:13: label t2=b type mismatch with previous definition: t2=a\n" +
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:11:15: label t3+=c type mismatch with previous definition: t3+=a\n" +
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:8:13: label t2=b type mismatch with previous definition: t2=a\n" +
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:11:15: label t3+=c type mismatch with previous definition: t3+=a\n" +
 
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:24:0: label t7 type mismatch with previous definition: TOKEN_LABEL!=RULE_LABEL\n" +
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:24:0: label t71 type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n" +
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:24:0: label t72 type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:24:0: label t7 type mismatch with previous definition: TOKEN_LABEL!=RULE_LABEL\n" +
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:24:0: label t71 type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n" +
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:24:0: label t72 type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1543
-	@Test public void testLabelsForTokensWithMixedTypesLRWithLabels() {
+	[TestMethod] public void testLabelsForTokensWithMixedTypesLRWithLabels() {
 		String[] test = {
 				"grammar L;\n" +
 				"\n" +
@@ -356,7 +351,7 @@ public class TestSymbolIssues {
 	}
 
 	// https://github.com/antlr/antlr4/issues/1543
-	@Test
+	[TestMethod]
 	public void testLabelsForTokensWithMixedTypesLRWithoutLabels() {
 		String[] test = {
 				"grammar L;\n" +
@@ -370,14 +365,14 @@ public class TestSymbolIssues {
 				"B: 'b';\n" +
 				"C: 'c';\n",
 
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:3:0: label left type mismatch with previous definition: TOKEN_LABEL!=RULE_LABEL\n" +
-				"error(" + ErrorType.LABEL_TYPE_CONFLICT.code + "): L.g4:3:0: label right type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:3:0: label left type mismatch with previous definition: TOKEN_LABEL!=RULE_LABEL\n" +
+				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:3:0: label right type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testCharsCollision() throws  Exception {
+	[TestMethod] public void testCharsCollision(){
 		String[] test = {
 				"lexer grammar L;\n" +
 				"TOKEN_RANGE:      [aa-f];\n" +
@@ -387,17 +382,17 @@ public class TestSymbolIssues {
 				"TOKEN_RANGE_WITHOUT_COLLISION: '_' | [a-zA-Z];\n" +
 				"TOKEN_RANGE_WITH_ESCAPED_CHARS: [\\n-\\r] | '\\n'..'\\r';",
 
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:2:18: chars a-f used multiple times in set [aa-f]\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars D-J used multiple times in set [A-FD-J]\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:38: chars O-V used multiple times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars 'g' used multiple times in set 'g'..'l'\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars '\\n' used multiple times in set '\\n'..'\\r'\n"
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4:2:18: chars a-f used multiple times in set [aa-f]\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4:3:18: chars D-J used multiple times in set [A-FD-J]\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4:4:38: chars O-V used multiple times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars 'g' used multiple times in set 'g'..'l'\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars '\\n' used multiple times in set '\\n'..'\\r'\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testCaseInsensitiveCharsCollision() {
+	[TestMethod] public void testCaseInsensitiveCharsCollision() {
 		String[] test = {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
@@ -405,16 +400,16 @@ public class TestSymbolIssues {
 				"TOKEN_RANGE_2:    'g'..'l' | 'G'..'L';\n" +
 				"TOKEN_RANGE_3:    'm'..'q' | [M-Q];\n",
 
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars a-f used multiple times in set [a-fA-F0-9]\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:32: chars g-l used multiple times in set 'g'..'l' | 'G'..'L'\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars 'M' used multiple times in set 'M'..'Q' | 'm'..'q'\n" +
-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars 'm' used multiple times in set 'M'..'Q' | 'm'..'q'\n"
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4:3:18: chars a-f used multiple times in set [a-fA-F0-9]\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4:4:32: chars g-l used multiple times in set 'g'..'l' | 'G'..'L'\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars 'M' used multiple times in set 'M'..'Q' | 'm'..'q'\n" +
+				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars 'm' used multiple times in set 'M'..'Q' | 'm'..'q'\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testCaseInsensitiveWithUnicodeRanges() {
+	[TestMethod] public void testCaseInsensitiveWithUnicodeRanges() {
 		String[] test = {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive=true; }\n" +
@@ -432,7 +427,7 @@ public class TestSymbolIssues {
 		testErrors(test, false);
 	}
 
-	@Test public void testUnreachableTokens() {
+	[TestMethod] public void testUnreachableTokens() {
 		String[] test = {
 				"lexer grammar Test;\n" +
 				"TOKEN1: 'as' 'df' | 'qwer';\n" +
@@ -453,40 +448,40 @@ public class TestSymbolIssues {
 				"\n" +
 				"fragment A: 'A';",
 
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:4:0: One of the token TOKEN3 values unreachable. asdf is always overlapped by token TOKEN1\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:5:0: One of the token TOKEN4 values unreachable. qwer is always overlapped by token TOKEN1\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:7:0: One of the token TOKEN6 values unreachable. asdf is always overlapped by token TOKEN1\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:7:0: One of the token TOKEN6 values unreachable. asdf is always overlapped by token TOKEN3\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:9:0: One of the token TOKEN8 values unreachable. ab is always overlapped by token TOKEN8\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:11:0: One of the token TOKEN9 values unreachable. qwer is always overlapped by token TOKEN9\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:12:0: One of the token TOKEN10 values unreachable. \\r\\n is always overlapped by token TOKEN10\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:13:0: One of the token TOKEN11 values unreachable. \\r\\n is always overlapped by token TOKEN10\n" +
-				"warning(" + ErrorType.TOKEN_UNREACHABLE.code + "): Test.g4:13:0: One of the token TOKEN11 values unreachable. \\r\\n is always overlapped by token TOKEN10\n"
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:4:0: One of the token TOKEN3 values unreachable. asdf is always overlapped by token TOKEN1\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:5:0: One of the token TOKEN4 values unreachable. qwer is always overlapped by token TOKEN1\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:7:0: One of the token TOKEN6 values unreachable. asdf is always overlapped by token TOKEN1\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:7:0: One of the token TOKEN6 values unreachable. asdf is always overlapped by token TOKEN3\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:9:0: One of the token TOKEN8 values unreachable. ab is always overlapped by token TOKEN8\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:11:0: One of the token TOKEN9 values unreachable. qwer is always overlapped by token TOKEN9\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:12:0: One of the token TOKEN10 values unreachable. \\r\\n is always overlapped by token TOKEN10\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:13:0: One of the token TOKEN11 values unreachable. \\r\\n is always overlapped by token TOKEN10\n" +
+				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:13:0: One of the token TOKEN11 values unreachable. \\r\\n is always overlapped by token TOKEN10\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testIllegalCaseInsensitiveOptionValue() {
+	[TestMethod] public void testIllegalCaseInsensitiveOptionValue() {
 		String[] test = {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = badValue; }\n" +
 				"TOKEN_1 options { caseInsensitive = badValue; } : [A-F]+;\n",
 
-				"warning(" + ErrorType.ILLEGAL_OPTION_VALUE.code + "): L.g4:2:28: unsupported option value caseInsensitive=badValue\n" +
-				"warning(" + ErrorType.ILLEGAL_OPTION_VALUE.code + "): L.g4:3:36: unsupported option value caseInsensitive=badValue\n"
+				"warning(" + ErrorType.ILLEGAL_OPTION_VALUE + "): L.g4:2:28: unsupported option value caseInsensitive=badValue\n" +
+				"warning(" + ErrorType.ILLEGAL_OPTION_VALUE + "): L.g4:3:36: unsupported option value caseInsensitive=badValue\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testRedundantCaseInsensitiveLexerRuleOption() {
+	[TestMethod] public void testRedundantCaseInsensitiveLexerRuleOption() {
 		String[] test = {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
 				"TOKEN options { caseInsensitive = true; } : [A-F]+;\n",
 
-				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION.code + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (true)\n"
+				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (true)\n"
 		};
 		testErrors(test, false);
 
@@ -495,23 +490,23 @@ public class TestSymbolIssues {
 				"options { caseInsensitive = false; }\n" +
 				"TOKEN options { caseInsensitive = false; } : [A-F]+;\n",
 
-				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION.code + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (false)\n"
+				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (false)\n"
 		};
 		testErrors(test2, false);
 	}
 
-	@Test public void testCaseInsensitiveOptionInParseRule() {
+	[TestMethod] public void testCaseInsensitiveOptionInParseRule() {
 		String[] test = {
 				"grammar G;\n" +
 				"root options { caseInsensitive=true; } : 'token';",
 
-				"warning(" + ErrorType.ILLEGAL_OPTION.code + "): G.g4:2:15: unsupported option caseInsensitive\n"
+				"warning(" + ErrorType.ILLEGAL_OPTION + "): G.g4:2:15: unsupported option caseInsensitive\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testNotImpliedCharacters() {
+	[TestMethod] public void testNotImpliedCharacters() {
 		String[] test = {
 				"lexer grammar Test;\n" +
 				"TOKEN1: 'A'..'g';\n" +
@@ -519,27 +514,27 @@ public class TestSymbolIssues {
 				"TOKEN3: [А-я]; // OK since range does not contain intermediate characters\n" +
 				"TOKEN4: '\\u0100'..'\\u1fff'; // OK since range borders are unicode characters",
 
-				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS.code + "): Test.g4:2:8: Range A..g probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n" +
-				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS.code + "): Test.g4:3:8: Range C..m probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
+				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS + "): Test.g4:2:8: Range A..g probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n" +
+				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS + "): Test.g4:3:8: Range C..m probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
 		};
 
 		testErrors(test, false);
 	}
 
-	@Test public void testNotImpliedCharactersWithCaseInsensitiveOption() {
+	[TestMethod] public void testNotImpliedCharactersWithCaseInsensitiveOption() {
 		String[] test = {
 				"lexer grammar Test;\n" +
 				"options { caseInsensitive=true; }\n" +
 				"TOKEN: [A-z];",
 
-				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS.code + "): Test.g4:3:7: Range A..z probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
+				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS + "): Test.g4:3:7: Range A..z probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
 		};
 
 		testErrors(test, false);
 	}
 
 	// ISSUE: https://github.com/antlr/antlr4/issues/2788
-	@Test public void testUndefinedLabel() {
+	[TestMethod] public void testUndefinedLabel() {
 		String[] test = {
 				"grammar Test;" +
 				"root\n" +
@@ -550,7 +545,7 @@ public class TestSymbolIssues {
 				"a: 'a';\n" +
 				"b: 'b';",
 
-				"error(" + ErrorType.INTERNAL_ERROR.code + "): Test.g4:2:30: internal error: Rule error undefined \n"
+				"error(" + ErrorType.INTERNAL_ERROR + "): Test.g4:2:30: internal error: Rule error undefined \n"
 		};
 
 		testErrors(test, false);

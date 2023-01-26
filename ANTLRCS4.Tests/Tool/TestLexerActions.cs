@@ -4,18 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.junit.jupiter.api.Test;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.execLexer;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestLexerActions {
 	// ----- ACTIONS --------------------------------------------------------
 
-	@Test public void testActionExecutedInDFA() throws Exception {
+	[TestMethod] public void testActionExecutedInDFA(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
@@ -30,7 +25,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testActionEvalsAtCorrectIndex() throws Exception {
+	[TestMethod] public void testActionEvalsAtCorrectIndex(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : [0-9] {outStream.println(\"2nd char: \"+(char)_input.LA(1));} [0-9]+ ;\n"+
@@ -50,7 +45,7 @@ public class TestLexerActions {
 	 * rule actions are executed".
 	 * https://github.com/antlr/antlr4/issues/469
 	 */
-	@Test public void testEvalMultipleActions() throws Exception {
+	[TestMethod] public void testEvalMultipleActions(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"\n" +
@@ -91,7 +86,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void test2ActionsIn1Rule() throws Exception {
+	[TestMethod] public void test2ActionsIn1Rule(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : [0-9] {outStream.println(\"x\");} [0-9]+ {outStream.println(\"y\");} ;\n"+
@@ -108,7 +103,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testAltActionsIn1Rule() throws Exception {
+	[TestMethod] public void testAltActionsIn1Rule(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : ( [0-9]+ {outStream.print(\"int\");}\n" +
@@ -127,7 +122,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testActionPlusCommand() throws Exception {
+	[TestMethod] public void testActionPlusCommand(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} -> skip ;\n"+
@@ -142,7 +137,7 @@ public class TestLexerActions {
 
 	// ----- COMMANDS --------------------------------------------------------
 
-	@Test public void testSkipCommand() throws Exception {
+	[TestMethod] public void testSkipCommand(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
@@ -157,7 +152,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testMoreCommand() throws Exception {
+	[TestMethod] public void testMoreCommand(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
@@ -172,7 +167,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testTypeCommand() throws Exception {
+	[TestMethod] public void testTypeCommand(){
 		String grammar =
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
@@ -186,7 +181,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testCombinedCommand() throws Exception {
+	[TestMethod] public void testCombinedCommand(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
@@ -201,7 +196,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testLexerMode() throws Exception {
+	[TestMethod] public void testLexerMode(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"STRING_START : '\"' -> pushMode(STRING_MODE), more;\n" +
@@ -217,7 +212,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testLexerPushPopModeAction() throws Exception {
+	[TestMethod] public void testLexerPushPopModeAction(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"STRING_START : '\"' -> pushMode(STRING_MODE), more ;\n" +
@@ -233,7 +228,7 @@ public class TestLexerActions {
 		assertEquals(expecting, executedState.output);
 	}
 
-	@Test public void testLexerModeAction() throws Exception {
+	[TestMethod] public void testLexerModeAction(){
 		String grammar =
 			"lexer grammar L;\n" +
 			"STRING_START : '\"' -> mode(STRING_MODE), more ;\n" +
@@ -256,7 +251,7 @@ public class TestLexerActions {
 	 * while negated char set fail to match"
 	 * https://github.com/antlr/antlr4/issues/398
 	 */
-	@Test
+	[TestMethod]
 	public void testFailingPredicateEvalIsNotCached() {
 		String grammar =
 			"lexer grammar TestLexer;\n" +

@@ -4,40 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.semantics.SemanticPipeline;
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.java.JavaRunner;
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.antlr.v4.test.runtime.states.State;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static org.antlr.v4.test.runtime.FileUtils.deleteDirectory;
-import static org.antlr.v4.test.runtime.Generator.antlrOnString;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.TempDirectory;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ToolTestUtils {
 	public static ExecutedState execLexer(String grammarFileName, String grammarStr, String lexerName, String input) {
@@ -73,7 +41,7 @@ public class ToolTestUtils {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, lexerName,
 				false, true, startRuleName, input,
 				false, showDiagnosticErrors, Stage.Execute, false);
-		try (JavaRunner runner = new JavaRunner(workingDir, saveTestDir)) {
+		using (JavaRunner runner = new JavaRunner(workingDir, saveTestDir)) {
 			State result = runner.run(runOptions);
 			if (!(result is ExecutedState)) {
 				fail(result.getErrorMessage());
@@ -102,12 +70,12 @@ public class ToolTestUtils {
 			String fileName = getFilenameFromFirstLineOfGrammar(lines[0]);
 
 			String tempDirName = "AntlrTestErrors-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
-			String tempTestDir = Paths.get(TempDirectory, tempDirName).toString();
+			String tempTestDir = Paths.get(TempDirectory, tempDirName).ToString();
 
 			try {
 				ErrorQueue equeue = antlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-				String actual = equeue.toString(true);
+				String actual = equeue.ToString(true);
 				actual = actual.replace(tempTestDir + File.separator, "");
 				String msg = grammarStr;
 				msg = msg.replace("\n", "\\n");
@@ -142,22 +110,22 @@ public class ToolTestUtils {
 	}
 
 	public static String load(String fileName)
-			throws IOException {
+			 {
 		if ( fileName==null ) {
 			return null;
 		}
 
-		String fullFileName = ToolTestUtils.class.getPackage().getName().replace('.', '/')+'/'+fileName;
+		String fullFileName = ToolTestUtils.getPackage().getName().replace('.', '/')+'/'+fileName;
 		int size = 65000;
-		InputStream fis = ToolTestUtils.class.getClassLoader().getResourceAsStream(fullFileName);
-		try (InputStreamReader isr = new InputStreamReader(fis)) {
+		InputStream fis = ToolTestUtils.getClassLoader().getResourceAsStream(fullFileName);
+		using (InputStreamReader isr = new InputStreamReader(fis)) {
 			char[] data = new char[size];
 			int n = isr.read(data);
 			return new String(data, 0, n);
 		}
 	}
 
-	public static ATN createATN(Grammar g, boolean useSerializer) {
+	public static ATN createATN(Grammar g, bool useSerializer) {
 		if ( g.atn==null ) {
 			semanticProcess(g);
 			assertEquals(0, g.tool.getNumErrors());

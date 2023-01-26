@@ -4,31 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.runtime.tree.xpath.XPath;
-import org.antlr.v4.test.runtime.RunOptions;
-import org.antlr.v4.test.runtime.Stage;
-import org.antlr.v4.test.runtime.java.JavaRunner;
-import org.antlr.v4.test.runtime.states.JavaCompiledState;
-import org.antlr.v4.test.runtime.states.JavaExecutedState;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.createOptionsForJavaToolTests;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+namespace org.antlr.v4.test.tool;
 
 public class TestXPath {
-	public static final String grammar =
+	public static readonly String grammar =
 		"grammar Expr;\n" +
 		"prog:   func+ ;\n" +
 		"func:  'def' ID '(' arg (',' arg)* ')' body ;\n" +
@@ -58,12 +40,12 @@ public class TestXPath {
 		"INT :   [0-9]+ ;         // match integers\n" +
 		"NEWLINE:'\\r'? '\\n' -> skip;     // return newlines to parser (is end-statement signal)\n" +
 		"WS  :   [ \\t]+ -> skip ; // toss out whitespace\n";
-	public static final String SAMPLE_PROGRAM =
+	public static readonly String SAMPLE_PROGRAM =
 			"def f(x,y) { x = 3+4; y; ; }\n" +
 			"def g(x) { return 1+2*x; }\n";
 
-	@Test public void testValidPaths() throws Exception {
-		String xpath[] = {
+	[TestMethod] public void testValidPaths(){
+		String[] xpath = {
 			"/prog/func",		// all funcs under prog at root
 			"/prog/*",			// all children of prog at root
 			"/*/func",			// all func kids of any root node
@@ -86,7 +68,7 @@ public class TestXPath {
 			"/!*",				// nothing at root
 			"//expr//ID",		// any ID under any expression (tests antlr/antlr4#370)
 		};
-		String expected[] = {
+		String[] expected = {
 			"[func, func]",
 			"[func, func]",
 			"[func, func]",
@@ -110,49 +92,49 @@ public class TestXPath {
 			"[y, x]",
 		};
 
-		for (int i=0; i<xpath.length; i++) {
+		for (int i=0; i<xpath.Length; i++) {
 			List<String> nodes = getNodeStrings("Expr.g4", grammar, SAMPLE_PROGRAM, xpath[i], "prog", "ExprParser", "ExprLexer");
-			String result = nodes.toString();
+			String result = nodes.ToString();
 			assertEquals(expected[i], result, "path "+xpath[i]+" failed");
 		}
 	}
 
-	@Test public void testWeirdChar() throws Exception {
+	[TestMethod] public void testWeirdChar(){
 		String path = "&";
 		String expected = "Invalid tokens or characters at index 0 in path '&'";
 
 		testError("Expr.g4", grammar, SAMPLE_PROGRAM, path, expected, "prog", "ExprParser", "ExprLexer");
 	}
 
-	@Test public void testWeirdChar2() throws Exception {
+	[TestMethod] public void testWeirdChar2(){
 		String path = "//w&e/";
 		String expected = "Invalid tokens or characters at index 3 in path '//w&e/'";
 
 		testError("Expr.g4", grammar, SAMPLE_PROGRAM, path, expected, "prog", "ExprParser", "ExprLexer");
 	}
 
-	@Test public void testBadSyntax() throws Exception {
+	[TestMethod] public void testBadSyntax(){
 		String path = "///";
 		String expected = "/ at index 2 isn't a valid rule name";
 
 		testError("Expr.g4", grammar, SAMPLE_PROGRAM, path, expected, "prog", "ExprParser", "ExprLexer");
 	}
 
-	@Test public void testMissingWordAtEnd() throws Exception {
+	[TestMethod] public void testMissingWordAtEnd(){
 		String path = "//";
 		String expected = "Missing path element at end of path";
 
 		testError("Expr.g4", grammar, SAMPLE_PROGRAM, path, expected, "prog", "ExprParser", "ExprLexer");
 	}
 
-	@Test public void testBadTokenName() throws Exception {
+	[TestMethod] public void testBadTokenName(){
 		String path = "//Ick";
 		String expected = "Ick at index 2 isn't a valid token name";
 
 		testError("Expr.g4", grammar, SAMPLE_PROGRAM, path, expected, "prog", "ExprParser", "ExprLexer");
 	}
 
-	@Test public void testBadRuleName() throws Exception {
+	[TestMethod] public void testBadRuleName(){
 		String path = "/prog/ick";
 		String expected = "ick at index 6 isn't a valid rule name";
 
@@ -161,7 +143,7 @@ public class TestXPath {
 
 	private void testError(String grammarFileName, String grammar, String input, String xpath, String expected,
 							 String startRuleName, String parserName, String lexerName)
-		throws Exception
+		
 	{
 		IllegalArgumentException e = null;
 		try {
@@ -176,12 +158,12 @@ public class TestXPath {
 
 	private List<String> getNodeStrings(String grammarFileName, String grammar, String input, String xpath,
 									   String startRuleName, String parserName, String lexerName)
-		throws Exception
+		
 	{
-		Pair<String[], Collection<ParseTree>> result = compileAndExtract(
+		Pair<String[], ICollection<ParseTree>> result = compileAndExtract(
 				grammarFileName, grammar, input, xpath, startRuleName, parserName, lexerName);
 
-		List<String> nodes = new ArrayList<>();
+		List<String> nodes = new ();
 		for (ParseTree t : result.b) {
 			if ( t is RuleContext) {
 				RuleContext r = (RuleContext)t;
@@ -195,10 +177,10 @@ public class TestXPath {
 		return nodes;
 	}
 
-	private Pair<String[], Collection<ParseTree>> compileAndExtract(String grammarFileName, String grammar,
+	private Pair<String[], ICollection<ParseTree>> compileAndExtract(String grammarFileName, String grammar,
 																	String input, String xpath, String startRuleName,
 																	String parserName, String lexerName
-	) throws Exception {
+	){
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRuleName, input,
 				false, false, Stage.Execute, true);
@@ -208,7 +190,7 @@ public class TestXPath {
 			Parser parser = compiledState.initializeLexerAndParser(input).b;
 			Collection<ParseTree> found = XPath.findAll(executedState.parseTree, xpath, parser);
 
-			return new Pair<>(parser.getRuleNames(), found);
+			return new (parser.getRuleNames(), found);
 		}
 	}
 }

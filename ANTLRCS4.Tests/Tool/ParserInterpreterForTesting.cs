@@ -4,25 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.atn.ParserATNSimulator;
-import org.antlr.v4.runtime.atn.PredictionContextCache;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.tool.Grammar;
+namespace org.antlr.v4.test.tool;
 
 public class ParserInterpreterForTesting {
-	public static class DummyParser : Parser {
-		public final ATN atn;
-		public final DFA[] decisionToDFA; // not shared for interp
-		public final PredictionContextCache sharedContextCache =
+	public class DummyParser : Parser {
+		public readonly ATN atn;
+		public readonly DFA[] decisionToDFA; // not shared for interp
+		public readonly PredictionContextCache sharedContextCache =
 			new PredictionContextCache();
 
 		public Grammar g;

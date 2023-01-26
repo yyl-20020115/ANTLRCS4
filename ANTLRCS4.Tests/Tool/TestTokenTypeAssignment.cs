@@ -4,22 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+[TestClass]
 public class TestTokenTypeAssignment {
-	@Test public void testParserSimpleTokens() throws Exception {
+	[TestMethod] public void testParserSimpleTokens(){
 		Grammar g = new Grammar(
 				"parser grammar t;\n"+
 				"a : A | B;\n" +
@@ -29,7 +20,7 @@ public class TestTokenTypeAssignment {
 		checkSymbols(g, rules, tokenNames);
 	}
 
-	@Test public void testParserTokensSection() throws Exception {
+	[TestMethod] public void testParserTokensSection(){
 		Grammar g = new Grammar(
 				"parser grammar t;\n" +
 				"tokens {\n" +
@@ -43,7 +34,7 @@ public class TestTokenTypeAssignment {
 		checkSymbols(g, rules, tokenNames);
 	}
 
-	@Test public void testLexerTokensSection() throws Exception {
+	[TestMethod] public void testLexerTokensSection(){
 		LexerGrammar g = new LexerGrammar(
 				"lexer grammar t;\n" +
 				"tokens {\n" +
@@ -57,7 +48,7 @@ public class TestTokenTypeAssignment {
 		checkSymbols(g, rules, tokenNames);
 	}
 
-	@Test public void testCombinedGrammarLiterals() throws Exception {
+	[TestMethod] public void testCombinedGrammarLiterals(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : 'begin' b 'end';\n" +
@@ -70,7 +61,7 @@ public class TestTokenTypeAssignment {
 		checkSymbols(g, rules, tokenNames);
 	}
 
-	@Test public void testLiteralInParserAndLexer() throws Exception {
+	[TestMethod] public void testLiteralInParserAndLexer(){
 		// 'x' is token and char in lexer rule
 		Grammar g = new Grammar(
 				"grammar t;\n" +
@@ -78,34 +69,34 @@ public class TestTokenTypeAssignment {
 				"E: 'x' '0' ;\n");
 
 		String literals = "['x']";
-		String foundLiterals = g.stringLiteralToTypeMap.keySet().toString();
+		String foundLiterals = g.stringLiteralToTypeMap.keySet().ToString();
 		assertEquals(literals, foundLiterals);
 
-		foundLiterals = g.implicitLexer.stringLiteralToTypeMap.keySet().toString();
+		foundLiterals = g.implicitLexer.stringLiteralToTypeMap.keySet().ToString();
 		assertEquals("['x']", foundLiterals); // pushed in lexer from parser
 
 		String[] typeToTokenName = g.getTokenDisplayNames();
 		Set<String> tokens = new LinkedHashSet<String>();
 		for (String t : typeToTokenName) if ( t!=null ) tokens.add(t);
-		assertEquals("[<INVALID>, 'x', E]", tokens.toString());
+		assertEquals("[<INVALID>, 'x', E]", tokens.ToString());
 	}
 
-	@Test public void testPredDoesNotHideNameToLiteralMapInLexer() throws Exception {
+	[TestMethod] public void testPredDoesNotHideNameToLiteralMapInLexer(){
 		// 'x' is token and char in lexer rule
 		Grammar g = new Grammar(
 				"grammar t;\n" +
 				"a : 'x' X ; \n" +
 				"X: 'x' {true}?;\n"); // must match as alias even with pred
 
-		assertEquals("{'x'=1}", g.stringLiteralToTypeMap.toString());
-		assertEquals("{EOF=-1, X=1}", g.tokenNameToTypeMap.toString());
+		assertEquals("{'x'=1}", g.stringLiteralToTypeMap.ToString());
+		assertEquals("{EOF=-1, X=1}", g.tokenNameToTypeMap.ToString());
 
 		// pushed in lexer from parser
-		assertEquals("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.toString());
-		assertEquals("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.toString());
+		assertEquals("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.ToString());
+		assertEquals("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.ToString());
 	}
 
-	@Test public void testCombinedGrammarWithRefToLiteralButNoTokenIDRef() throws Exception {
+	[TestMethod] public void testCombinedGrammarWithRefToLiteralButNoTokenIDRef(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : 'a' ;\n" +
@@ -115,7 +106,7 @@ public class TestTokenTypeAssignment {
 		checkSymbols(g, rules, tokenNames);
 	}
 
-	@Test public void testSetDoesNotMissTokenAliases() throws Exception {
+	[TestMethod] public void testSetDoesNotMissTokenAliases(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : 'a'|'b' ;\n" +
@@ -128,7 +119,7 @@ public class TestTokenTypeAssignment {
 
 	// T E S T  L I T E R A L  E S C A P E S
 
-	@Test public void testParserCharLiteralWithEscape() throws Exception {
+	[TestMethod] public void testParserCharLiteralWithEscape(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\n';\n");
@@ -137,7 +128,7 @@ public class TestTokenTypeAssignment {
 		assertEquals("'\\n'", literals.toArray()[0]);
 	}
 
-	@Test public void testParserCharLiteralWithBasicUnicodeEscape() throws Exception {
+	[TestMethod] public void testParserCharLiteralWithBasicUnicodeEscape(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\uABCD';\n");
@@ -146,7 +137,7 @@ public class TestTokenTypeAssignment {
 		assertEquals("'\\uABCD'", literals.toArray()[0]);
 	}
 
-	@Test public void testParserCharLiteralWithExtendedUnicodeEscape() throws Exception {
+	[TestMethod] public void testParserCharLiteralWithExtendedUnicodeEscape(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\u{1ABCD}';\n");
@@ -158,10 +149,10 @@ public class TestTokenTypeAssignment {
 	protected void checkSymbols(Grammar g,
 								String rulesStr,
 								String allValidTokensStr)
-		throws Exception
+		
 	{
 		String[] typeToTokenName = g.getTokenNames();
-		Set<String> tokens = new HashSet<String>();
+        HashSet<String> tokens = new HashSet<String>();
 		for (int i = 0; i < typeToTokenName.length; i++) {
 			String t = typeToTokenName[i];
 			if ( t!=null ) {

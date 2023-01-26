@@ -3,28 +3,23 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.VocabularyImpl;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
  * @author Sam Harwell
  */
+[TestClass]
 public class TestVocabulary {
-	@Test
+	[TestMethod]
 	public void testEmptyVocabulary() {
 		assertNotNull(VocabularyImpl.EMPTY_VOCABULARY);
 		assertEquals("EOF", VocabularyImpl.EMPTY_VOCABULARY.getSymbolicName(Token.EOF));
 		assertEquals("0", VocabularyImpl.EMPTY_VOCABULARY.getDisplayName(Token.INVALID_TYPE));
 	}
 
-	@Test
+	[TestMethod]
 	public void testVocabularyFromTokenNames() {
 		String[] tokenNames = {
 			"<INVALID>",

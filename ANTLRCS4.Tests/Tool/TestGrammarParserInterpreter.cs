@@ -3,34 +3,22 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.v4.gui.Trees;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.InterpreterRuleContext;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.GrammarParserInterpreter;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /** Tests to ensure GrammarParserInterpreter subclass of ParserInterpreter
  *  hasn't messed anything up.
  */
 public class TestGrammarParserInterpreter {
-	public static final String lexerText = "lexer grammar L;\n" +
+	public static readonly String lexerText = "lexer grammar L;\n" +
 										   "PLUS : '+' ;\n" +
 										   "MULT : '*' ;\n" +
 										   "ID : [a-z]+ ;\n" +
 										   "INT : [0-9]+ ;\n" +
 										   "WS : [ \\r\\t\\n]+ ;\n";
 
-	@Test
-	public void testAlts() throws Exception {
+	[TestMethod]
+	public void testAlts(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -42,8 +30,8 @@ public class TestGrammarParserInterpreter {
 		testInterp(lg, g, "s", "3", 	"(s:2 3)");
 	}
 
-	@Test
-	public void testAltsAsSet() throws Exception {
+	[TestMethod]
+	public void testAltsAsSet(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -55,8 +43,8 @@ public class TestGrammarParserInterpreter {
 		testInterp(lg, g, "s", "3", 	"(s:1 3)");
 	}
 
-	@Test
-	public void testAltsWithLabels() throws Exception {
+	[TestMethod]
+	public void testAltsWithLabels(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -69,8 +57,8 @@ public class TestGrammarParserInterpreter {
 		testInterp(lg, g, "s", "3", 	"(s:2 3)");
 	}
 
-	@Test
-	public void testOneAlt() throws Exception {
+	[TestMethod]
+	public void testOneAlt(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -81,8 +69,8 @@ public class TestGrammarParserInterpreter {
 	}
 
 
-	@Test
-	public void testLeftRecursionWithMultiplePrimaryAndRecursiveOps() throws Exception {
+	[TestMethod]
+	public void testLeftRecursionWithMultiplePrimaryAndRecursiveOps(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +

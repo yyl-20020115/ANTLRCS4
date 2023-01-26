@@ -4,29 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenSource;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.UnbufferedTokenStream;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.io.StringReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
+[TestClass]
 public class TestUnbufferedTokenStream {
-	@Test
-	public void testLookahead() throws Exception {
+	[TestMethod]
+	public void testLookahead(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -52,7 +38,7 @@ public class TestUnbufferedTokenStream {
 		assertEquals(";", tokens.LT(6).getText());
     }
 
-	@Test public void testNoBuffering() throws Exception {
+	[TestMethod] public void testNoBuffering(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -70,26 +56,26 @@ public class TestUnbufferedTokenStream {
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().toString());
+		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
 		assertEquals("x", tokens.LT(1).getText());
 		tokens.consume(); // move to WS
 		assertEquals(" ", tokens.LT(1).getText());
-		assertEquals("[[@1,1:1=' ',<7>,1:1]]", tokens.getRemainingBuffer().toString());
+		assertEquals("[[@1,1:1=' ',<7>,1:1]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
 		assertEquals("=", tokens.LT(1).getText());
-		assertEquals("[[@2,2:2='=',<4>,1:2]]", tokens.getRemainingBuffer().toString());
+		assertEquals("[[@2,2:2='=',<4>,1:2]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
 		assertEquals(" ", tokens.LT(1).getText());
-		assertEquals("[[@3,3:3=' ',<7>,1:3]]", tokens.getRemainingBuffer().toString());
+		assertEquals("[[@3,3:3=' ',<7>,1:3]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
 		assertEquals("302", tokens.LT(1).getText());
-		assertEquals("[[@4,4:6='302',<2>,1:4]]", tokens.getRemainingBuffer().toString());
+		assertEquals("[[@4,4:6='302',<2>,1:4]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
 		assertEquals(";", tokens.LT(1).getText());
-		assertEquals("[[@5,7:7=';',<3>,1:7]]", tokens.getRemainingBuffer().toString());
+		assertEquals("[[@5,7:7=';',<3>,1:7]]", tokens.getRemainingBuffer().ToString());
     }
 
-	@Test public void testMarkStart() throws Exception {
+	[TestMethod] public void testMarkStart(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -108,10 +94,10 @@ public class TestUnbufferedTokenStream {
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
 		int m = tokens.mark();
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().toString());
+		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
 		assertEquals("x", tokens.LT(1).getText());
 		tokens.consume(); // consume x
-		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().toString());
+		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
 		tokens.consume(); // ' '
 		tokens.consume(); // =
 		tokens.consume(); // ' '
@@ -121,10 +107,10 @@ public class TestUnbufferedTokenStream {
 					 " [@2,2:2='=',<4>,1:2], [@3,3:3=' ',<7>,1:3]," +
 					 " [@4,4:6='302',<2>,1:4], [@5,7:7=';',<3>,1:7]," +
 					 " [@6,8:7='<EOF>',<-1>,1:8]]",
-					 tokens.getBuffer().toString());
+					 tokens.getBuffer().ToString());
     }
 
-	@Test public void testMarkThenRelease() throws Exception {
+	[TestMethod] public void testMarkThenRelease(){
         LexerGrammar g = new LexerGrammar(
             "lexer grammar t;\n"+
             "ID : 'a'..'z'+;\n" +
@@ -143,10 +129,10 @@ public class TestUnbufferedTokenStream {
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
 		int m = tokens.mark();
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().toString());
+		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
 		assertEquals("x", tokens.LT(1).getText());
 		tokens.consume(); // consume x
-		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().toString());
+		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
 		tokens.consume(); // ' '
 		tokens.consume(); // =
 		tokens.consume(); // ' '
@@ -165,20 +151,20 @@ public class TestUnbufferedTokenStream {
 		assertEquals("[[@6,8:8='+',<5>,1:8], [@7,9:9=' ',<7>,1:9]," +
 					 " [@8,10:10='1',<2>,1:10], [@9,11:11=';',<3>,1:11]," +
 					 " [@10,12:11='<EOF>',<-1>,1:12]]",
-					 tokens.getBuffer().toString());
+					 tokens.getBuffer().ToString());
 		tokens.release(m);
     }
 
-	protected static class TestingUnbufferedTokenStream<T extends Token> extends UnbufferedTokenStream<T> {
+	protected static class TestingUnbufferedTokenStream<T> : UnbufferedTokenStream<T> where T:Token {
 
-		public TestingUnbufferedTokenStream(TokenSource tokenSource) {
+		public TestingUnbufferedTokenStream(TokenSource<T> tokenSource) {
 			super(tokenSource);
 		}
 
 		/** For testing.  What's in moving window into token stream from
 		 *  current index, LT(1) or tokens[p], to end of buffer?
 		 */
-		protected List<? extends Token> getRemainingBuffer() {
+		protected List<Token> getRemainingBuffer() {
 			if ( n==0 ) {
 				return Collections.emptyList();
 			}
@@ -189,7 +175,7 @@ public class TestUnbufferedTokenStream {
 		/** For testing.  What's in moving window buffer into data stream.
 		 *  From 0..p-1 have been consume.
 		 */
-		protected List<? extends Token> getBuffer() {
+		protected List<Token> getBuffer() {
 			if ( n==0 ) {
 				return Collections.emptyList();
 			}

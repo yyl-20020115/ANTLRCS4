@@ -4,22 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.Interval;
-
+namespace org.antlr.v4.test.tool;
 /**
  *
  * @author Sam Harwell
  */
-public class JavaUnicodeInputStream implements CharStream {
+public class JavaUnicodeInputStream : CharStream {
 
-	private final CharStream source;
-	private final IntegerList escapeIndexes = new IntegerList();
-	private final IntegerList escapeCharacters = new IntegerList();
-	private final IntegerList escapeIndirectionLevels = new IntegerList();
+	private readonly CharStream source;
+	private readonly IntegerList escapeIndexes = new IntegerList();
+	private readonly IntegerList escapeCharacters = new IntegerList();
+	private readonly IntegerList escapeIndirectionLevels = new IntegerList();
 
 	private int escapeListIndex;
 	private int range;
@@ -36,27 +31,27 @@ public class JavaUnicodeInputStream implements CharStream {
 		this.la1 = source.LA(1);
 	}
 
-	@Override
+	//@Override
 	public int size() {
 		return source.size();
 	}
 
-	@Override
+	//@Override
 	public int index() {
 		return source.index();
 	}
 
-	@Override
+	//@Override
 	public String getSourceName() {
 		return source.getSourceName();
 	}
 
-	@Override
+	//@Override
 	public String getText(Interval interval) {
 		return source.getText(interval);
 	}
 
-	@Override
+	//@Override
 	public void consume() {
 		if (la1 != '\\') {
 			source.consume();
@@ -87,7 +82,7 @@ public class JavaUnicodeInputStream implements CharStream {
 		assert range >= index();
 	}
 
-	@Override
+	//@Override
 	public int LA(int i) {
 		if (i == 1 && la1 != '\\') {
 			return la1;
@@ -146,17 +141,17 @@ public class JavaUnicodeInputStream implements CharStream {
 		}
 	}
 
-	@Override
+	//@Override
 	public int mark() {
 		return source.mark();
 	}
 
-	@Override
+	//@Override
 	public void release(int marker) {
 		source.release(marker);
 	}
 
-	@Override
+	//@Override
 	public void seek(int index) {
 		if (index > range) {
 			throw new UnsupportedOperationException();

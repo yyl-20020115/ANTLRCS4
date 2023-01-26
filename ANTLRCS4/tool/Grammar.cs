@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
@@ -155,26 +156,26 @@ public class Grammar : AttributeResolver {
 	 * Map token like {@code ID} (but not literals like {@code 'while'}) to its
 	 * token type.
 	 */
-	public final Map<String, Integer> tokenNameToTypeMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> tokenNameToTypeMap = new LinkedHashMap<String, Integer>();
 
 	/**
 	 * Map token literals like {@code 'while'} to its token type. It may be that
 	 * {@code WHILE="while"=35}, in which case both {@link #tokenNameToTypeMap}
 	 * and this field will have entries both mapped to 35.
 	 */
-	public final Map<String, Integer> stringLiteralToTypeMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> stringLiteralToTypeMap = new LinkedHashMap<String, Integer>();
 
 	/**
 	 * Reverse index for {@link #stringLiteralToTypeMap}. Indexed with raw token
 	 * type. 0 is invalid.
 	 */
-	public final List<String> typeToStringLiteralList = new ArrayList<String>();
+	public readonly List<String> typeToStringLiteralList = new ();
 
 	/**
 	 * Map a token type to its token name. Indexed with raw token type. 0 is
 	 * invalid.
 	 */
-	public final List<String> typeToTokenList = new ArrayList<String>();
+	public readonly List<String> typeToTokenList = new ();
 
 	/**
 	 * The maximum channel value which is assigned by this grammar. Values below
@@ -186,7 +187,7 @@ public class Grammar : AttributeResolver {
 	 * Map channel like {@code COMMENTS_CHANNEL} to its constant channel value.
 	 * Only user-defined channels are defined in this map.
 	 */
-	public final Map<String, Integer> channelNameToValueMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> channelNameToValueMap = new LinkedHashMap<String, Integer>();
 
 	/**
 	 * Map a constant channel value to its name. Indexed with raw channel value.
@@ -194,28 +195,28 @@ public class Grammar : AttributeResolver {
 	 * {@link Token#HIDDEN_CHANNEL} are not stored in this list, so the values
 	 * at the corresponding indexes is {@code null}.
 	 */
-	public final List<String> channelValueToNameList = new ArrayList<String>();
+	public readonly List<String> channelValueToNameList = new ArrayList<String>();
 
     /** Map a name to an action.
      *  The code generator will use this to fill holes in the output files.
      *  I track the AST node for the action in case I need the line number
      *  for errors.
      */
-	public Map<String,ActionAST> namedActions = new HashMap<String,ActionAST>();
+	public Dictionary<String,ActionAST> namedActions = new HashMap<String,ActionAST>();
 
 	/** Tracks all user lexer actions in all alternatives of all rules.
 	 *  Doesn't track sempreds.  maps tree node to action index (alt number 1..n).
  	 */
-	public LinkedHashMap<ActionAST, Integer> lexerActions = new LinkedHashMap<ActionAST, Integer>();
+	public Dictionary<ActionAST, Integer> lexerActions = new LinkedHashMap<ActionAST, Integer>();
 
 	/** All sempreds found in grammar; maps tree node to sempred index;
 	 *  sempred index is 0..n-1
 	 */
-	public LinkedHashMap<PredAST, Integer> sempreds = new LinkedHashMap<PredAST, Integer>();
+	public Dictionary<PredAST, Integer> sempreds = new LinkedHashMap<PredAST, Integer>();
 	/** Map the other direction upon demand */
-	public LinkedHashMap<Integer, PredAST> indexToPredMap;
+	public Dictionary<Integer, PredAST> indexToPredMap;
 
-	public static final String AUTO_GENERATED_TOKEN_NAME_PREFIX = "T__";
+	public static readonly String AUTO_GENERATED_TOKEN_NAME_PREFIX = "T__";
 
 	public Grammar(Tool tool, GrammarRootAST ast) {
 		if ( ast==null ) {
@@ -236,38 +237,38 @@ public class Grammar : AttributeResolver {
     }
 
 	/** For testing */
-	public Grammar(String grammarText) throws org.antlr.runtime.RecognitionException {
+	public Grammar(String grammarText)  {
 		this(GRAMMAR_FROM_STRING_NAME, grammarText, null);
 	}
 
-	public Grammar(String grammarText, LexerGrammar tokenVocabSource) throws org.antlr.runtime.RecognitionException {
+	public Grammar(String grammarText, LexerGrammar tokenVocabSource)  {
 		this(GRAMMAR_FROM_STRING_NAME, grammarText, tokenVocabSource, null);
 	}
 
 	/** For testing */
 	public Grammar(String grammarText, ANTLRToolListener listener)
-		throws org.antlr.runtime.RecognitionException
+		
 	{
 		this(GRAMMAR_FROM_STRING_NAME, grammarText, listener);
 	}
 
 	/** For testing; builds trees, does sem anal */
 	public Grammar(String fileName, String grammarText)
-		throws org.antlr.runtime.RecognitionException
+		
 	{
 		this(fileName, grammarText, null);
 	}
 
 	/** For testing; builds trees, does sem anal */
 	public Grammar(String fileName, String grammarText, ANTLRToolListener listener)
-		throws org.antlr.runtime.RecognitionException
+		
 	{
 		this(fileName, grammarText, null, listener);
 	}
 
 	/** For testing; builds trees, does sem anal */
 	public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, ANTLRToolListener listener)
-		throws org.antlr.runtime.RecognitionException
+		
 	{
         this.text = grammarText;
 		this.fileName = fileName;

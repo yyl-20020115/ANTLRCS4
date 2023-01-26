@@ -4,24 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.LexerATNSimulator;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.Utils;
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.antlr.v4.tool.DOTGenerator;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.antlr.v4.test.tool.ToolTestUtils.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+namespace org.antlr.v4.test.tool;
 
 /**
  * Lexer rules are little quirky when it comes to wildcards. Problem
@@ -36,8 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * want, but occasionally there are some quirks as you'll see from
  * the tests below.
  */
+[TestClass]
 public class TestATNLexerInterpreter {
-	@Test public void testLexerTwoRules() throws Exception {
+	[TestMethod] public void testLexerTwoRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n" +
@@ -46,7 +30,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "abab", expecting);
 	}
 
-	@Test public void testShortLongRule() throws Exception {
+	[TestMethod] public void testShortLongRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'xy'\n" +
@@ -58,7 +42,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "xyz", "A, EOF");
 	}
 
-	@Test public void testShortLongRule2() throws Exception {
+	[TestMethod] public void testShortLongRule2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'xyz'\n" +  // make sure nongreedy mech cut off doesn't kill this alt
@@ -68,7 +52,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "xyz", "A, EOF");
 	}
 
-	@Test public void testWildOnEndFirstAlt() throws Exception {
+	[TestMethod] public void testWildOnEndFirstAlt(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'xy' .\n" + // should pursue '.' since xyz hits stop first, before 2nd alt
@@ -80,7 +64,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "xyz", "A, EOF");
 	}
 
-	@Test public void testWildOnEndLastAlt() throws Exception {
+	[TestMethod] public void testWildOnEndLastAlt(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'xy'\n" +
@@ -92,7 +76,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "xyz", "A, EOF");
 	}
 
-	@Test public void testWildcardNonQuirkWhenSplitBetweenTwoRules() throws Exception {
+	[TestMethod] public void testWildcardNonQuirkWhenSplitBetweenTwoRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'xy' ;\n" +
@@ -101,7 +85,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "xyqz", "B, EOF");
 	}
 
-	@Test public void testLexerLoops() throws Exception {
+	[TestMethod] public void testLexerLoops(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '0'..'9'+ ;\n" +
@@ -110,7 +94,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "a34bde3", expecting);
 	}
 
-	@Test public void testLexerNotSet() throws Exception {
+	[TestMethod] public void testLexerNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
@@ -118,7 +102,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "c", expecting);
 	}
 
-	@Test public void testLexerSetUnicodeBMP() throws Exception {
+	[TestMethod] public void testLexerSetUnicodeBMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\u611B'|'\u611C')\n ;");
@@ -126,7 +110,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "\u611B", expecting);
 	}
 
-	@Test public void testLexerNotSetUnicodeBMP() throws Exception {
+	[TestMethod] public void testLexerNotSetUnicodeBMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\u611B'|'\u611C')\n ;");
@@ -134,31 +118,31 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "\u611D", expecting);
 	}
 
-		@Test public void testLexerNotSetUnicodeBMPMatchesSMP() throws Exception {
+		[TestMethod] public void testLexerNotSetUnicodeBMPMatchesSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\u611B'|'\u611C')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
 	}
 
-	@Test public void testLexerSetUnicodeSMP() throws Exception {
+	[TestMethod] public void testLexerSetUnicodeSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
 	}
 
-	@Test public void testLexerNotBMPSetMatchesUnicodeSMP() throws Exception {
+	[TestMethod] public void testLexerNotBMPSetMatchesUnicodeSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
 	}
 
-	@Test public void testLexerNotBMPSetMatchesBMP() throws Exception {
+	[TestMethod] public void testLexerNotBMPSetMatchesBMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
@@ -166,15 +150,15 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "\u611B", expecting);
 	}
 
-	@Test public void testLexerNotBMPSetMatchesSMP() throws Exception {
+	[TestMethod] public void testLexerNotBMPSetMatchesSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
 	}
 
-	@Test public void testLexerNotSMPSetMatchesBMP() throws Exception {
+	[TestMethod] public void testLexerNotSMPSetMatchesBMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
@@ -182,31 +166,31 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "\u611B", expecting);
 	}
 
-	@Test public void testLexerNotSMPSetMatchesSMP() throws Exception {
+	[TestMethod] public void testLexerNotSMPSetMatchesSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1D7C0).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1D7C0).ToString(), expecting);
 	}
 
-	@Test public void testLexerRangeUnicodeSMP() throws Exception {
+	[TestMethod] public void testLexerRangeUnicodeSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\\u{1F4A9}'..'\\u{1F4B0}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4AF).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4AF).ToString(), expecting);
 	}
 
-	@Test public void testLexerRangeUnicodeBMPToSMP() throws Exception {
+	[TestMethod] public void testLexerRangeUnicodeBMPToSMP(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ('\\u611B'..'\\u{1F4B0}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x12001).toString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x12001).ToString(), expecting);
 	}
 
-	@Test public void testLexerKeywordIDAmbiguity() throws Exception {
+	[TestMethod] public void testLexerKeywordIDAmbiguity(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"KEND : 'end' ;\n" +
@@ -222,7 +206,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "a end bcd", expecting);
 	}
 
-	@Test public void testLexerRuleRef() throws Exception {
+	[TestMethod] public void testLexerRuleRef(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : DIGIT+ ;\n" +
@@ -232,7 +216,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "32 99", expecting);
 	}
 
-	@Test public void testRecursiveLexerRuleRef() throws Exception {
+	[TestMethod] public void testRecursiveLexerRuleRef(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '/*' (CMT | ~'*')+ '*/' ;\n" +
@@ -241,7 +225,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "/* ick */\n/* /*nested*/ */", expecting);
 	}
 
-	@Test public void testRecursiveLexerRuleRefWithWildcard() throws Exception {
+	[TestMethod] public void testRecursiveLexerRuleRefWithWildcard(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '/*' (CMT | .)*? '*/' ;\n" +
@@ -255,7 +239,7 @@ public class TestATNLexerInterpreter {
 						  expecting);
 	}
 
-	@Test public void testLexerWildcardGreedyLoopByDefault() throws Exception {
+	[TestMethod] public void testLexerWildcardGreedyLoopByDefault(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' .* '\\n' ;\n");
@@ -263,7 +247,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "//x\n//y\n", expecting);
 	}
 
-	@Test public void testLexerWildcardLoopExplicitNonGreedy() throws Exception {
+	[TestMethod] public void testLexerWildcardLoopExplicitNonGreedy(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' .*? '\\n' ;\n");
@@ -271,7 +255,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "//x\n//y\n", expecting);
 	}
 
-	@Test public void testLexerEscapeInString() throws Exception {
+	[TestMethod] public void testLexerEscapeInString(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"STR : '[' ('~' ']' | .)* ']' ;\n");
@@ -279,7 +263,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "[a]", "STR, EOF");
 	}
 
-	@Test public void testLexerWildcardGreedyPlusLoopByDefault() throws Exception {
+	[TestMethod] public void testLexerWildcardGreedyPlusLoopByDefault(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' .+ '\\n' ;\n");
@@ -287,7 +271,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "//x\n//y\n", expecting);
 	}
 
-	@Test public void testLexerWildcardExplicitNonGreedyPlusLoop() throws Exception {
+	[TestMethod] public void testLexerWildcardExplicitNonGreedyPlusLoop(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' .+? '\\n' ;\n");
@@ -296,7 +280,7 @@ public class TestATNLexerInterpreter {
 	}
 
 	// does not fail since ('*/')? can't match and have rule succeed
-	@Test public void testLexerGreedyOptionalShouldWorkAsWeExpect() throws Exception {
+	[TestMethod] public void testLexerGreedyOptionalShouldWorkAsWeExpect(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '/*' ('*/')? '*/' ;\n");
@@ -304,7 +288,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "/**/", expecting);
 	}
 
-	@Test public void testGreedyBetweenRules() throws Exception {
+	[TestMethod] public void testGreedyBetweenRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : '<a>' ;\n" +
@@ -313,7 +297,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "<a><x>", expecting);
 	}
 
-	@Test public void testNonGreedyBetweenRules() throws Exception {
+	[TestMethod] public void testNonGreedyBetweenRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : '<a>' ;\n" +
@@ -322,7 +306,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "<a><x>", expecting);
 	}
 
-	@Test public void testEOFAtEndOfLineComment() throws Exception {
+	[TestMethod] public void testEOFAtEndOfLineComment(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' ~('\\n')* ;\n");
@@ -330,7 +314,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "//x", expecting);
 	}
 
-	@Test public void testEOFAtEndOfLineComment2() throws Exception {
+	[TestMethod] public void testEOFAtEndOfLineComment2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' ~('\\n'|'\\r')* ;\n");
@@ -341,7 +325,7 @@ public class TestATNLexerInterpreter {
 	/** only positive sets like (EOF|'\n') can match EOF and not in wildcard or ~foo sets
 	 *  EOF matches but does not advance cursor.
 	 */
-	@Test public void testEOFInSetAtEndOfLineComment() throws Exception {
+	[TestMethod] public void testEOFInSetAtEndOfLineComment(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"CMT : '//' .* (EOF|'\\n') ;\n");
@@ -349,7 +333,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "//", expecting);
 	}
 
-	@Test public void testEOFSuffixInSecondRule() throws Exception {
+	[TestMethod] public void testEOFSuffixInSecondRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n"+ // shorter than 'a' EOF, despite EOF being 0 width
@@ -358,7 +342,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "a", expecting);
 	}
 
-	@Test public void testEOFSuffixInFirstRule() throws Exception {
+	[TestMethod] public void testEOFSuffixInFirstRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' EOF ;\n"+
@@ -367,7 +351,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "a", expecting);
 	}
 
-	@Test public void testEOFByItself() throws Exception {
+	[TestMethod] public void testEOFByItself(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"DONE : EOF ;\n"+
@@ -376,7 +360,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "a", expecting);
 	}
 
-	@Test public void testLexerCaseInsensitive() throws Exception {
+	[TestMethod] public void testLexerCaseInsensitive(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"\n" +
@@ -420,7 +404,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, inputString, expecting);
 	}
 
-	@Test public void testLexerCaseInsensitiveLiteralWithNegation() {
+	[TestMethod] public void testLexerCaseInsensitiveLiteralWithNegation() {
 		String grammar =
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
@@ -430,7 +414,7 @@ public class TestATNLexerInterpreter {
 		assertEquals("line 1:0 token recognition error at: 'F'\n", executedState.errors);
 	}
 
-	@Test public void testLexerCaseInsensitiveSetWithNegation() {
+	[TestMethod] public void testLexerCaseInsensitiveSetWithNegation() {
 		String grammar =
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
@@ -440,7 +424,7 @@ public class TestATNLexerInterpreter {
 		assertEquals("line 1:0 token recognition error at: 'B'\n", executedState.errors);
 	}
 
-	@Test public void testLexerCaseInsensitiveFragments() throws Exception {
+	[TestMethod] public void testLexerCaseInsensitiveFragments(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
@@ -456,7 +440,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, inputString, expecting);
 	}
 
-	@Test public void testLexerCaseInsensitiveWithDifferentCultures() throws Exception {
+	[TestMethod] public void testLexerCaseInsensitiveWithDifferentCultures(){
 		// From http://www.periodni.com/unicode_utf-8_encoding.html
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
@@ -489,7 +473,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, inputString, expecting);
 	}
 
-	@Test public void testNotImpliedCharactersWithEnabledCaseInsensitiveOption() throws Exception {
+	[TestMethod] public void testNotImpliedCharactersWithEnabledCaseInsensitiveOption(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
@@ -501,7 +485,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, inputString, "TOKEN, EOF");
 	}
 
-	@Test public void testCaseInsensitiveInLexerRule() throws Exception {
+	[TestMethod] public void testCaseInsensitiveInLexerRule(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 				"TOKEN1 options { caseInsensitive=true; } : [a-f]+;\n" +
@@ -511,7 +495,7 @@ public class TestATNLexerInterpreter {
 		checkLexerMatches(lg, "ABCDEF", "TOKEN1, EOF");
 	}
 
-	@Test public void testCaseInsensitiveInLexerRuleOverridesGlobalValue() {
+	[TestMethod] public void testCaseInsensitiveInLexerRuleOverridesGlobalValue() {
 		String grammar =
 				"lexer grammar L;\n" +
 				"options { caseInsensitive=true; }\n" +

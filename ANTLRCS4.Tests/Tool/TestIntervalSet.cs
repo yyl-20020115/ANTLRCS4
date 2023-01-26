@@ -4,119 +4,115 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+[TestClass]
 public class TestIntervalSet {
 
     /** Public default constructor used by TestRig */
     public TestIntervalSet() {
 	}
 
-	@Test public void testSingleElement() throws Exception {
+	[TestMethod] public void testSingleElement(){
 		IntervalSet s = IntervalSet.of(99);
 		String expecting = "99";
-		assertEquals(s.toString(), expecting);
+		assertEquals(s.ToString(), expecting);
 	}
 
-	@Test public void testMin() throws Exception {
+	[TestMethod] public void testMin(){
 		assertEquals(0, IntervalSet.COMPLETE_CHAR_SET.getMinElement());
 		assertEquals(Token.EPSILON, IntervalSet.COMPLETE_CHAR_SET.or(IntervalSet.of(Token.EPSILON)).getMinElement());
 		assertEquals(Token.EOF, IntervalSet.COMPLETE_CHAR_SET.or(IntervalSet.of(Token.EOF)).getMinElement());
 	}
 
-	@Test public void testIsolatedElements() throws Exception {
+	[TestMethod] public void testIsolatedElements(){
 		IntervalSet s = new IntervalSet();
 		s.add(1);
 		s.add('z');
 		s.add('\uFFF0');
 		String expecting = "{1, 122, 65520}";
-        assertEquals(s.toString(), expecting);
+        assertEquals(s.ToString(), expecting);
     }
 
-    @Test public void testMixedRangesAndElements() throws Exception {
+    [TestMethod] public void testMixedRangesAndElements(){
         IntervalSet s = new IntervalSet();
         s.add(1);
         s.add('a','z');
         s.add('0','9');
         String expecting = "{1, 48..57, 97..122}";
-        assertEquals(s.toString(), expecting);
+        assertEquals(s.ToString(), expecting);
     }
 
-    @Test public void testSimpleAnd() throws Exception {
+    [TestMethod] public void testSimpleAnd(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(13,15);
         String expecting = "{13..15}";
-        String result = (s.and(s2)).toString();
+        String result = (s.and(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testRangeAndIsolatedElement() throws Exception {
+    [TestMethod] public void testRangeAndIsolatedElement(){
         IntervalSet s = IntervalSet.of('a','z');
         IntervalSet s2 = IntervalSet.of('d');
         String expecting = "100";
-        String result = (s.and(s2)).toString();
+        String result = (s.and(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-	@Test public void testEmptyIntersection() throws Exception {
+	[TestMethod] public void testEmptyIntersection(){
 		IntervalSet s = IntervalSet.of('a','z');
 		IntervalSet s2 = IntervalSet.of('0','9');
 		String expecting = "{}";
-		String result = (s.and(s2)).toString();
+		String result = (s.and(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testEmptyIntersectionSingleElements() throws Exception {
+	[TestMethod] public void testEmptyIntersectionSingleElements(){
 		IntervalSet s = IntervalSet.of('a');
 		IntervalSet s2 = IntervalSet.of('d');
 		String expecting = "{}";
-		String result = (s.and(s2)).toString();
+		String result = (s.and(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-    @Test public void testNotSingleElement() throws Exception {
+    [TestMethod] public void testNotSingleElement(){
         IntervalSet vocabulary = IntervalSet.of(1,1000);
         vocabulary.add(2000,3000);
         IntervalSet s = IntervalSet.of(50,50);
         String expecting = "{1..49, 51..1000, 2000..3000}";
-        String result = (s.complement(vocabulary)).toString();
+        String result = (s.complement(vocabulary)).ToString();
         assertEquals(expecting, result);
     }
 
-	@Test public void testNotSet() throws Exception {
+	[TestMethod] public void testNotSet(){
 		IntervalSet vocabulary = IntervalSet.of(1,1000);
 		IntervalSet s = IntervalSet.of(50,60);
 		s.add(5);
 		s.add(250,300);
 		String expecting = "{1..4, 6..49, 61..249, 301..1000}";
-		String result = (s.complement(vocabulary)).toString();
+		String result = (s.complement(vocabulary)).ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testNotEqualSet() throws Exception {
+	[TestMethod] public void testNotEqualSet(){
 		IntervalSet vocabulary = IntervalSet.of(1,1000);
 		IntervalSet s = IntervalSet.of(1,1000);
 		String expecting = "{}";
-		String result = (s.complement(vocabulary)).toString();
+		String result = (s.complement(vocabulary)).ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testNotSetEdgeElement() throws Exception {
+	[TestMethod] public void testNotSetEdgeElement(){
 		IntervalSet vocabulary = IntervalSet.of(1,2);
 		IntervalSet s = IntervalSet.of(1);
 		String expecting = "2";
-		String result = (s.complement(vocabulary)).toString();
+		String result = (s.complement(vocabulary)).ToString();
 		assertEquals(expecting, result);
 	}
 
-    @Test public void testNotSetFragmentedVocabulary() throws Exception {
+    [TestMethod] public void testNotSetFragmentedVocabulary(){
         IntervalSet vocabulary = IntervalSet.of(1,255);
         vocabulary.add(1000,2000);
         vocabulary.add(9999);
@@ -125,90 +121,90 @@ public class TestIntervalSet {
         s.add(250,300);
         s.add(10000); // this is outside range of vocab and should be ignored
         String expecting = "{1..2, 4..49, 61..249, 1000..2000, 9999}";
-        String result = (s.complement(vocabulary)).toString();
+        String result = (s.complement(vocabulary)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testSubtractOfCompletelyContainedRange() throws Exception {
+    [TestMethod] public void testSubtractOfCompletelyContainedRange(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(12,15);
         String expecting = "{10..11, 16..20}";
-        String result = (s.subtract(s2)).toString();
+        String result = (s.subtract(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-	@Test public void testSubtractFromSetWithEOF() throws Exception {
+	[TestMethod] public void testSubtractFromSetWithEOF(){
 		IntervalSet s = IntervalSet.of(10,20);
 		s.add(Token.EOF);
 		IntervalSet s2 = IntervalSet.of(12,15);
 		String expecting = "{<EOF>, 10..11, 16..20}";
-		String result = (s.subtract(s2)).toString();
+		String result = (s.subtract(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testSubtractOfOverlappingRangeFromLeft() throws Exception {
+	[TestMethod] public void testSubtractOfOverlappingRangeFromLeft(){
 		IntervalSet s = IntervalSet.of(10,20);
 		IntervalSet s2 = IntervalSet.of(5,11);
 		String expecting = "{12..20}";
-        String result = (s.subtract(s2)).toString();
+        String result = (s.subtract(s2)).ToString();
         assertEquals(expecting, result);
 
         IntervalSet s3 = IntervalSet.of(5,10);
         expecting = "{11..20}";
-        result = (s.subtract(s3)).toString();
+        result = (s.subtract(s3)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testSubtractOfOverlappingRangeFromRight() throws Exception {
+    [TestMethod] public void testSubtractOfOverlappingRangeFromRight(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(15,25);
         String expecting = "{10..14}";
-        String result = (s.subtract(s2)).toString();
+        String result = (s.subtract(s2)).ToString();
         assertEquals(expecting, result);
 
         IntervalSet s3 = IntervalSet.of(20,25);
         expecting = "{10..19}";
-        result = (s.subtract(s3)).toString();
+        result = (s.subtract(s3)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testSubtractOfCompletelyCoveredRange() throws Exception {
+    [TestMethod] public void testSubtractOfCompletelyCoveredRange(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(1,25);
         String expecting = "{}";
-        String result = (s.subtract(s2)).toString();
+        String result = (s.subtract(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testSubtractOfRangeSpanningMultipleRanges() throws Exception {
+    [TestMethod] public void testSubtractOfRangeSpanningMultipleRanges(){
         IntervalSet s = IntervalSet.of(10,20);
         s.add(30,40);
         s.add(50,60); // s has 3 ranges now: 10..20, 30..40, 50..60
         IntervalSet s2 = IntervalSet.of(5,55); // covers one and touches 2nd range
         String expecting = "{56..60}";
-        String result = (s.subtract(s2)).toString();
+        String result = (s.subtract(s2)).ToString();
         assertEquals(expecting, result);
 
         IntervalSet s3 = IntervalSet.of(15,55); // touches both
         expecting = "{10..14, 56..60}";
-        result = (s.subtract(s3)).toString();
+        result = (s.subtract(s3)).ToString();
         assertEquals(expecting, result);
     }
 
 	/** The following was broken:
 	 	{0..113, 115..65534}-{0..115, 117..65534}=116..65534
 	 */
-	@Test public void testSubtractOfWackyRange() throws Exception {
+	[TestMethod] public void testSubtractOfWackyRange(){
 		IntervalSet s = IntervalSet.of(0,113);
 		s.add(115,200);
 		IntervalSet s2 = IntervalSet.of(0,115);
 		s2.add(117,200);
 		String expecting = "116";
-		String result = (s.subtract(s2)).toString();
+		String result = (s.subtract(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-    @Test public void testSimpleEquals() throws Exception {
+    [TestMethod] public void testSimpleEquals(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(10,20);
         assertEquals(s, s2);
@@ -217,7 +213,7 @@ public class TestIntervalSet {
         assertFalse(s.equals(s3));
     }
 
-    @Test public void testEquals() throws Exception {
+    [TestMethod] public void testEquals(){
         IntervalSet s = IntervalSet.of(10,20);
         s.add(2);
         s.add(499,501);
@@ -231,16 +227,16 @@ public class TestIntervalSet {
 		assertFalse(s.equals(s3));
     }
 
-    @Test public void testSingleElementMinusDisjointSet() throws Exception {
+    [TestMethod] public void testSingleElementMinusDisjointSet(){
         IntervalSet s = IntervalSet.of(15,15);
         IntervalSet s2 = IntervalSet.of(1,5);
         s2.add(10,20);
         String expecting = "{}"; // 15 - {1..5, 10..20} = {}
-        String result = s.subtract(s2).toString();
+        String result = s.subtract(s2).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testMembership() throws Exception {
+    [TestMethod] public void testMembership(){
         IntervalSet s = IntervalSet.of(15,15);
         s.add(50,60);
         assertTrue(!s.contains(0));
@@ -253,71 +249,71 @@ public class TestIntervalSet {
     }
 
     // {2,15,18} & 10..20
-    @Test public void testIntersectionWithTwoContainedElements() throws Exception {
+    [TestMethod] public void testIntersectionWithTwoContainedElements(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(2,2);
         s2.add(15);
         s2.add(18);
         String expecting = "{15, 18}";
-        String result = (s.and(s2)).toString();
+        String result = (s.and(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testIntersectionWithTwoContainedElementsReversed() throws Exception {
+    [TestMethod] public void testIntersectionWithTwoContainedElementsReversed(){
         IntervalSet s = IntervalSet.of(10,20);
         IntervalSet s2 = IntervalSet.of(2,2);
         s2.add(15);
         s2.add(18);
         String expecting = "{15, 18}";
-        String result = (s2.and(s)).toString();
+        String result = (s2.and(s)).ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testComplement() throws Exception {
+    [TestMethod] public void testComplement(){
         IntervalSet s = IntervalSet.of(100,100);
         s.add(101,101);
         IntervalSet s2 = IntervalSet.of(100,102);
         String expecting = "102";
-        String result = (s.complement(s2)).toString();
+        String result = (s.complement(s2)).ToString();
         assertEquals(expecting, result);
     }
 
-	@Test public void testComplement2() throws Exception {
+	[TestMethod] public void testComplement2(){
 		IntervalSet s = IntervalSet.of(100,101);
 		IntervalSet s2 = IntervalSet.of(100,102);
 		String expecting = "102";
-		String result = (s.complement(s2)).toString();
+		String result = (s.complement(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testComplement3() throws Exception {
+	[TestMethod] public void testComplement3(){
 		IntervalSet s = IntervalSet.of(1,96);
 		s.add(99, Lexer.MAX_CHAR_VALUE);
 		String expecting = "{97..98}";
-		String result = (s.complement(1, Lexer.MAX_CHAR_VALUE)).toString();
+		String result = (s.complement(1, Lexer.MAX_CHAR_VALUE)).ToString();
 		assertEquals(expecting, result);
 	}
 
-    @Test public void testMergeOfRangesAndSingleValues() throws Exception {
+    [TestMethod] public void testMergeOfRangesAndSingleValues(){
         // {0..41, 42, 43..65534}
         IntervalSet s = IntervalSet.of(0,41);
         s.add(42);
         s.add(43,65534);
         String expecting = "{0..65534}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testMergeOfRangesAndSingleValuesReverse() throws Exception {
+    [TestMethod] public void testMergeOfRangesAndSingleValuesReverse(){
         IntervalSet s = IntervalSet.of(43,65534);
         s.add(42);
         s.add(0,41);
         String expecting = "{0..65534}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testMergeWhereAdditionMergesTwoExistingIntervals() throws Exception {
+    [TestMethod] public void testMergeWhereAdditionMergesTwoExistingIntervals(){
         // 42, 10, {0..9, 11..41, 43..65534}
         IntervalSet s = IntervalSet.of(42);
         s.add(10);
@@ -325,7 +321,7 @@ public class TestIntervalSet {
         s.add(43,65534);
         s.add(11,41);
         String expecting = "{0..65534}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
@@ -333,27 +329,27 @@ public class TestIntervalSet {
 	 * This case is responsible for antlr/antlr4#153.
 	 * https://github.com/antlr/antlr4/issues/153
 	 */
-	@Test public void testMergeWhereAdditionMergesThreeExistingIntervals() throws Exception {
+	[TestMethod] public void testMergeWhereAdditionMergesThreeExistingIntervals(){
 		IntervalSet s = new IntervalSet();
 		s.add(0);
 		s.add(3);
 		s.add(5);
 		s.add(0, 7);
 		String expecting = "{0..7}";
-		String result = s.toString();
+		String result = s.ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testMergeWithDoubleOverlap() throws Exception {
+	[TestMethod] public void testMergeWithDoubleOverlap(){
 		IntervalSet s = IntervalSet.of(1,10);
 		s.add(20,30);
 		s.add(5,25); // overlaps two!
 		String expecting = "{1..30}";
-		String result = s.toString();
+		String result = s.ToString();
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testSize() throws Exception {
+	[TestMethod] public void testSize(){
 		IntervalSet s = IntervalSet.of(20,30);
 		s.add(50,55);
 		s.add(5,19);
@@ -362,7 +358,7 @@ public class TestIntervalSet {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testToList() throws Exception {
+	[TestMethod] public void testToList(){
 		IntervalSet s = IntervalSet.of(20,25);
 		s.add(50,55);
 		s.add(5,5);
@@ -377,49 +373,49 @@ public class TestIntervalSet {
 	 	'q' is 113 ascii
 	 	'u' is 117
 	*/
-	@Test public void testNotRIntersectionNotT() throws Exception {
+	[TestMethod] public void testNotRIntersectionNotT(){
 		IntervalSet s = IntervalSet.of(0,'s');
 		s.add('u',200);
 		IntervalSet s2 = IntervalSet.of(0,'q');
 		s2.add('s',200);
 		String expecting = "{0..113, 115, 117..200}";
-		String result = (s.and(s2)).toString();
+		String result = (s.and(s2)).ToString();
 		assertEquals(expecting, result);
 	}
 
-    @Test public void testRmSingleElement() throws Exception {
+    [TestMethod] public void testRmSingleElement(){
         IntervalSet s = IntervalSet.of(1,10);
         s.add(-3,-3);
         s.remove(-3);
         String expecting = "{1..10}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testRmLeftSide() throws Exception {
+    [TestMethod] public void testRmLeftSide(){
         IntervalSet s = IntervalSet.of(1,10);
         s.add(-3,-3);
         s.remove(1);
         String expecting = "{-3, 2..10}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testRmRightSide() throws Exception {
+    [TestMethod] public void testRmRightSide(){
         IntervalSet s = IntervalSet.of(1,10);
         s.add(-3,-3);
         s.remove(10);
         String expecting = "{-3, 1..9}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test public void testRmMiddleRange() throws Exception {
+    [TestMethod] public void testRmMiddleRange(){
         IntervalSet s = IntervalSet.of(1,10);
         s.add(-3,-3);
         s.remove(5);
         String expecting = "{-3, 1..4, 6..10}";
-        String result = s.toString();
+        String result = s.ToString();
         assertEquals(expecting, result);
     }
 }

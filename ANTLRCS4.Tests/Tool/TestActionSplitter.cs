@@ -4,21 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.Token;
-import org.antlr.v4.parse.ActionSplitter;
-import org.antlr.v4.semantics.BlankActionSplitterListener;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestActionSplitter {
-    final static String[] exprs = {
+    readonly static String[] exprs = {
         "foo",		"['foo'<" + ActionSplitter.TEXT + ">]",
         "$x",		"['$x'<" + ActionSplitter.ATTR + ">]",
         "\\$x",		"['\\$x'<" + ActionSplitter.TEXT + ">]",
@@ -35,18 +25,18 @@ public class TestActionSplitter {
         "$foo.get(\"ick\");",		"['$foo'<" + ActionSplitter.ATTR + ">, '.get(\"ick\");'<" + ActionSplitter.TEXT + ">]",
     };
 
-    @Test
+    [TestMethod]
 	public void testExprs() {
 		for (int i = 0; i < exprs.length; i += 2) {
 			String input = exprs[i];
 			String expect = exprs[i + 1];
 			List<String> chunks = getActionChunks(input);
-			assertEquals(expect, chunks.toString(), "input: " + input);
+			assertEquals(expect, chunks.ToString(), "input: " + input);
 		}
 	}
 
 	private static List<String> getActionChunks(String a) {
-        List<String> chunks = new ArrayList<String>();
+        List<String> chunks = new();
         ActionSplitter splitter = new ActionSplitter(new ANTLRStringStream(a),
 													 new BlankActionSplitterListener());
         Token t = splitter.nextToken();

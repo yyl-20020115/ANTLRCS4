@@ -3,17 +3,11 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.runtime.misc.FastQueue;
-import org.junit.jupiter.api.Test;
-
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestFastQueue {
-    @Test public void testQueueNoRemove() throws Exception {
+    [TestMethod] public void testQueueNoRemove(){
         FastQueue<String> q = new FastQueue<String>();
         q.add("a");
         q.add("b");
@@ -21,11 +15,11 @@ public class TestFastQueue {
         q.add("d");
         q.add("e");
         String expecting = "a b c d e";
-        String found = q.toString();
+        String found = q.ToString();
         assertEquals(expecting, found);
     }
 
-    @Test public void testQueueThenRemoveAll() throws Exception {
+    [TestMethod] public void testQueueThenRemoveAll(){
         FastQueue<String> q = new FastQueue<String>();
         q.add("a");
         q.add("b");
@@ -40,11 +34,11 @@ public class TestFastQueue {
         }
         assertEquals(0, q.size(), "queue should be empty");
         String expecting = "a b c d e";
-        String found = buf.toString();
+        String found = buf.ToString();
         assertEquals(expecting, found);
     }
 
-    @Test public void testQueueThenRemoveOneByOne() throws Exception {
+    [TestMethod] public void testQueueThenRemoveOneByOne(){
         StringBuilder buf = new StringBuilder();
         FastQueue<String> q = new FastQueue<String>();
         q.add("a");
@@ -59,13 +53,13 @@ public class TestFastQueue {
         buf.append(q.remove());
         assertEquals(0, q.size(), "queue should be empty");
         String expecting = "abcde";
-        String found = buf.toString();
+        String found = buf.ToString();
         assertEquals(expecting, found);
     }
 
     // E r r o r s
 
-    @Test public void testGetFromEmptyQueue() throws Exception {
+    [TestMethod] public void testGetFromEmptyQueue(){
         FastQueue<String> q = new FastQueue<String>();
         String msg = null;
         try { q.remove(); }
@@ -77,7 +71,7 @@ public class TestFastQueue {
         assertEquals(expecting, found);
     }
 
-    @Test public void testGetFromEmptyQueueAfterSomeAdds() throws Exception {
+    [TestMethod] public void testGetFromEmptyQueueAfterSomeAdds(){
         FastQueue<String> q = new FastQueue<String>();
         q.add("a");
         q.add("b");
@@ -93,7 +87,7 @@ public class TestFastQueue {
         assertEquals(expecting, found);
     }
 
-    @Test public void testGetFromEmptyQueueAfterClear() throws Exception {
+    [TestMethod] public void testGetFromEmptyQueueAfterClear(){
         FastQueue<String> q = new FastQueue<String>();
         q.add("a");
         q.add("b");

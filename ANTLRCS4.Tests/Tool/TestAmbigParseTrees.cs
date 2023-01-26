@@ -4,35 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.gui.Trees;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.AmbiguityInfo;
-import org.antlr.v4.runtime.atn.BasicBlockStartState;
-import org.antlr.v4.runtime.atn.DecisionInfo;
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.atn.PredictionMode;
-import org.antlr.v4.runtime.atn.RuleStartState;
-import org.antlr.v4.runtime.atn.Transition;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.GrammarParserInterpreter;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
+[TestClass]
 public class TestAmbigParseTrees {
-	@Test public void testParseDecisionWithinAmbiguousStartRule() throws Exception {
+	[TestMethod] public void testParseDecisionWithinAmbiguousStartRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -50,7 +28,7 @@ public class TestAmbigParseTrees {
 		testInterpAtSpecificAlt(lg, g, "s", 2, "abc", "(s:2 a b c)");
 	}
 
-	@Test public void testAmbigAltsAtRoot() throws Exception {
+	[TestMethod] public void testAmbigAltsAtRoot(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -77,7 +55,7 @@ public class TestAmbigParseTrees {
 						   expectedOverallTree, expectedParseTrees);
 	}
 
-	@Test public void testAmbigAltsNotAtRoot() throws Exception {
+	[TestMethod] public void testAmbigAltsNotAtRoot(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"A : 'a' ;\n" +
@@ -106,7 +84,7 @@ public class TestAmbigParseTrees {
 						   expectedOverallTree, expectedParseTrees);
 	}
 
-	@Test public void testAmbigAltDipsIntoOuterContextToRoot() throws Exception {
+	[TestMethod] public void testAmbigAltDipsIntoOuterContextToRoot(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"SELF : 'self' ;\n" +
@@ -133,7 +111,7 @@ public class TestAmbigParseTrees {
 						   expectedOverallTree, expectedParseTrees);
 	}
 
-	@Test public void testAmbigAltDipsIntoOuterContextBelowRoot() throws Exception {
+	[TestMethod] public void testAmbigAltDipsIntoOuterContextBelowRoot(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"SELF : 'self' ;\n" +
@@ -161,7 +139,7 @@ public class TestAmbigParseTrees {
 						   expectedOverallTree, expectedParseTrees);
 	}
 
-	@Test public void testAmbigAltInLeftRecursiveBelowStartRule() throws Exception {
+	[TestMethod] public void testAmbigAltInLeftRecursiveBelowStartRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"SELF : 'self' ;\n" +
@@ -189,7 +167,7 @@ public class TestAmbigParseTrees {
 						   expectedOverallTree, expectedParseTrees);
 	}
 
-	@Test public void testAmbigAltInLeftRecursiveStartRule() throws Exception {
+	[TestMethod] public void testAmbigAltInLeftRecursiveStartRule(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n" +
 			"SELF : 'self' ;\n" +
@@ -226,7 +204,7 @@ public class TestAmbigParseTrees {
 
 		LexerInterpreter lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
-		final GrammarParserInterpreter parser = g.createGrammarParserInterpreter(tokens);
+		 GrammarParserInterpreter parser = g.createGrammarParserInterpreter(tokens);
 		parser.setProfile(true);
 		parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
 
@@ -250,7 +228,7 @@ public class TestAmbigParseTrees {
 															  ambiguityInfo.startIndex,
 															  ambiguityInfo.stopIndex,
 															  ruleIndex);
-		assertEquals(expectedAmbigAlts, ambiguityInfo.ambigAlts.toString());
+		assertEquals(expectedAmbigAlts, ambiguityInfo.ambigAlts.ToString());
 		assertEquals(ambiguityInfo.ambigAlts.cardinality(), ambiguousParseTrees.size());
 
 		for (int i = 0; i<ambiguousParseTrees.size(); i++) {

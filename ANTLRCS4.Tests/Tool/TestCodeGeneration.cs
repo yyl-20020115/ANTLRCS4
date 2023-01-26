@@ -3,37 +3,11 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+namespace org.antlr.v4.test.tool;
 
-import org.antlr.runtime.RecognitionException;
-import org.antlr.v4.automata.ATNFactory;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.automata.ParserATNFactory;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.semantics.SemanticPipeline;
-import org.antlr.v4.test.runtime.ErrorQueue;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
-import org.stringtemplate.v4.AutoIndentWriter;
-import org.stringtemplate.v4.InstanceScope;
-import org.stringtemplate.v4.Interpreter;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STWriter;
-import org.stringtemplate.v4.misc.ErrorManager;
-import org.stringtemplate.v4.misc.ErrorType;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestCodeGeneration {
-	@Test public void testArgDecl() throws Exception { // should use template not string
+	[TestMethod] public void testArgDecl(){ // should use template not string
 		/*ErrorQueue equeue = */new ErrorQueue();
 		String g =
 				"grammar T;\n" +
@@ -46,7 +20,7 @@ public class TestCodeGeneration {
 		}
 	}
 
-	@Test public void AssignTokenNamesToStringLiteralsInGeneratedParserRuleContexts() throws Exception {
+	[TestMethod] public void AssignTokenNamesToStringLiteralsInGeneratedParserRuleContexts(){
 		String g =
 			"grammar T;\n" +
 			"root: 't1';\n" +
@@ -55,7 +29,7 @@ public class TestCodeGeneration {
 		assertNotEquals(0, evals.size());
 	}
 
-	@Test public void AssignTokenNamesToStringLiteralArraysInGeneratedParserRuleContexts() throws Exception {
+	[TestMethod] public void AssignTokenNamesToStringLiteralArraysInGeneratedParserRuleContexts(){
 		String g =
 			"grammar T;\n" +
 				"root: 't1' 't1';\n" +
@@ -99,8 +73,8 @@ public class TestCodeGeneration {
 		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options){
 			Class<?> type = o.getClass();
 			String name = type.getSimpleName();
-			out.write("<pojo:"+name+">"+o.toString()+"</pojo:"+name+">");
-			evals.add("<pojo:" + name + ">" + o.toString() + "</pojo:" + name + ">");
+			out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
+			evals.add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
 			return super.writePOJO(out, scope, o, options);
 		}
 
@@ -111,7 +85,7 @@ public class TestCodeGeneration {
 		}
 	}
 
-	public List<String> getEvalInfoForString(String grammarString, String pattern) throws RecognitionException {
+	public List<String> getEvalInfoForString(String grammarString, String pattern)  {
 		ErrorQueue equeue = new ErrorQueue();
 		Grammar g = new Grammar(grammarString);
 		List<String> evals = new ArrayList<String>();
@@ -151,7 +125,7 @@ public class TestCodeGeneration {
 			}
 		}
 		if ( equeue.size()>0 ) {
-			System.err.println(equeue.toString());
+			System.err.println(equeue.ToString());
 		}
 		return evals;
 	}

@@ -3,23 +3,16 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.Token;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestTokenPositionOptions {
-	@Test public void testLeftRecursionRewrite() throws Exception {
+	[TestMethod] public void testLeftRecursionRewrite(){
 		Grammar g = new Grammar(
 				"grammar T;\n" +
 				"s : e ';' ;\n" +
@@ -63,7 +56,7 @@ public class TestTokenPositionOptions {
 		assertEquals(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
 	}
 
-	@Test public void testLeftRecursionWithLabels() throws Exception {
+	[TestMethod] public void testLeftRecursionWithLabels(){
 		Grammar g = new Grammar(
 				"grammar T;\n" +
 				"s : e ';' ;\n" +
@@ -107,7 +100,7 @@ public class TestTokenPositionOptions {
 		assertEquals(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
 	}
 
-	@Test public void testLeftRecursionWithSet() throws Exception {
+	[TestMethod] public void testLeftRecursionWithSet(){
 		Grammar g = new Grammar(
 				"grammar T;\n" +
 				"s : e ';' ;\n" +
@@ -145,11 +138,11 @@ public class TestTokenPositionOptions {
 				ANTLRParser.STRING_LITERAL,
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ();
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		assertEquals(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
+		assertEquals(expectedElementTokens, Utils.join(tokens.ToArray(), "\n"));
 	}
 
 }

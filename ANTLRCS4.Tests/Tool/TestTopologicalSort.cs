@@ -3,19 +3,15 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.tool;
+using org.antlr.v4.misc;
 
-import org.antlr.v4.misc.Graph;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 /** Test topo sort in GraphNode. */
 public class TestTopologicalSort {
-    @Test
-    public void testFairlyLargeGraph() throws Exception {
+    [TestMethod]
+    public void testFairlyLargeGraph(){
         Graph<String> g = new Graph<String>();
         g.addEdge("C", "F");
         g.addEdge("C", "G");
@@ -31,12 +27,12 @@ public class TestTopologicalSort {
 
         String expecting = "[H, F, G, E, D, A, B, C]";
         List<String> nodes = g.sort();
-        String result = nodes.toString();
+        String result = nodes.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test
-    public void testCyclicGraph() throws Exception {
+    [TestMethod]
+    public void testCyclicGraph(){
         Graph<String> g = new Graph<String>();
         g.addEdge("A", "B");
         g.addEdge("B", "C");
@@ -45,12 +41,12 @@ public class TestTopologicalSort {
 
         String expecting = "[D, C, B, A]";
         List<String> nodes = g.sort();
-        String result = nodes.toString();
+        String result = nodes.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test
-    public void testRepeatedEdges() throws Exception {
+    [TestMethod]
+    public void testRepeatedEdges(){
         Graph<String> g = new Graph<String>();
         g.addEdge("A", "B");
         g.addEdge("B", "C");
@@ -59,12 +55,12 @@ public class TestTopologicalSort {
 
         String expecting = "[D, C, B, A]";
         List<String> nodes = g.sort();
-        String result = nodes.toString();
+        String result = nodes.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test
-    public void testSimpleTokenDependence() throws Exception {
+    [TestMethod]
+    public void testSimpleTokenDependence(){
         Graph<String> g = new Graph<String>();
         g.addEdge("Java.g4", "MyJava.tokens"); // Java feeds off manual token file
         g.addEdge("Java.tokens", "Java.g4");
@@ -73,12 +69,12 @@ public class TestTopologicalSort {
 
         String expecting = "[MyJava.tokens, Java.g4, Java.tokens, Def.g4, Ref.g4]";
         List<String> nodes = g.sort();
-        String result = nodes.toString();
+        String result = nodes.ToString();
         assertEquals(expecting, result);
     }
 
-    @Test
-    public void testParserLexerCombo() throws Exception {
+    [TestMethod]
+    public void testParserLexerCombo(){
         Graph<String> g = new Graph<String>();
         g.addEdge("JavaLexer.tokens", "JavaLexer.g4");
         g.addEdge("JavaParser.g4", "JavaLexer.tokens");
@@ -87,7 +83,7 @@ public class TestTopologicalSort {
 
         String expecting = "[JavaLexer.g4, JavaLexer.tokens, JavaParser.g4, Def.g4, Ref.g4]";
         List<String> nodes = g.sort();
-        String result = nodes.toString();
+        String result = nodes.ToString();
         assertEquals(expecting, result);
     }
 }

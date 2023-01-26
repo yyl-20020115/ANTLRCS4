@@ -1,51 +1,50 @@
-package org.antlr.v4.test.tool;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.test.tool;
 
-public class MockIntTokenStream implements TokenStream {
+public class MockIntTokenStream : TokenStream {
 
 	public IntegerList types;
 	int p=0;
 
 	public MockIntTokenStream(IntegerList types) { this.types = types; }
 
-	@Override
+	//@Override
 	public void consume() { p++; }
 
-	@Override
+	//@Override
 	public int LA(int i) { return LT(i).getType(); }
 
-	@Override
+	//@Override
 	public int mark() {
 		return index();
 	}
 
-	@Override
+	//@Override
 	public int index() { return p; }
 
-	@Override
+	//@Override
 	public void release(int marker) {
 		seek(marker);
 	}
 
-	@Override
+	//@Override
 	public void seek(int index) {
 		p = index;
 	}
 
-	@Override
+	//@Override
 	public int size() {
 		return types.size();
 	}
 
-	@Override
+	//@Override
 	public String getSourceName() {
 		return UNKNOWN_SOURCE_NAME;
 	}
 
-	@Override
+	//@Override
 	public Token LT(int i) {
 		CommonToken t;
 		int rawIndex = p + i - 1;
@@ -55,36 +54,36 @@ public class MockIntTokenStream implements TokenStream {
 		return t;
 	}
 
-	@Override
+	//@Override
 	public Token get(int i) {
 		return new org.antlr.v4.runtime.CommonToken(types.get(i));
 	}
 
-	@Override
+	//@Override
 	public TokenSource getTokenSource() {
 		return null;
 	}
 
 
-	@Override
+	//@Override
 	public String getText() {
 		throw new UnsupportedOperationException("can't give strings");
 	}
 
 
-	@Override
+	//@Override
 	public String getText(Interval interval) {
 		throw new UnsupportedOperationException("can't give strings");
 	}
 
 
-	@Override
+	//@Override
 	public String getText(RuleContext ctx) {
 		throw new UnsupportedOperationException("can't give strings");
 	}
 
 
-	@Override
+	//@Override
 	public String getText(Token start, Token stop) {
 		throw new UnsupportedOperationException("can't give strings");
 	}

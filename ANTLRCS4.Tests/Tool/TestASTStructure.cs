@@ -4,23 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
-
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.Parser;
-import org.antlr.runtime.RuleReturnScope;
-import org.antlr.runtime.TokenSource;
-import org.antlr.runtime.TokenStream;
-import org.antlr.runtime.tree.Tree;
-import org.antlr.runtime.tree.TreeAdaptor;
-import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+namespace org.antlr.v4.test.tool;
 
 public class TestASTStructure {
 	String lexerClassName = "org.antlr.v4.parse.ANTLRLexer";
@@ -31,24 +15,24 @@ public class TestASTStructure {
 	String ruleName,
 	String input,
 	int scriptLine)
-	throws Exception
+	
 	{
 		ANTLRStringStream is = new ANTLRStringStream(input);
-		Class<? extends TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource.class);
-		Constructor<? extends TokenSource> lexConstructor = lexerClass.getConstructor(CharStream.class);
+		Class<? extends TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
+		Constructor<? extends TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
 		TokenSource lexer = lexConstructor.newInstance(is);
 		is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Class<? extends Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser.class);
-		Constructor<? extends Parser> parConstructor = parserClass.getConstructor(TokenStream.class);
+		Class<? extends Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
+		Constructor<? extends Parser> parConstructor = parserClass.getConstructor(TokenStream);
 		Parser parser = parConstructor.newInstance(tokens);
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
-			Method m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor.class);
-			Class<? extends TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor.class);
+			Method m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
+			Class<? extends TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
 			m.invoke(parser, adaptorClass.newInstance());
 		}
 
@@ -58,7 +42,7 @@ public class TestASTStructure {
 		return ruleMethod.invoke(parser);
 	}
 
-	@Test public void test_grammarSpec1() throws Exception {
+	[TestMethod] public void test_grammarSpec1(){
 		// gunit test on line 15
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "parser grammar P; a : A;", 15);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -66,7 +50,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule grammarSpec");
 	}
 
-	@Test public void test_grammarSpec2() throws Exception {
+	[TestMethod] public void test_grammarSpec2(){
 		// gunit test on line 18
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    tokens { A, B }\n    @header {foo}\n    a : A;\n    ", 18);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -74,7 +58,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule grammarSpec");
 	}
 
-	@Test public void test_grammarSpec3() throws Exception {
+	[TestMethod] public void test_grammarSpec3(){
 		// gunit test on line 30
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    @header {foo}\n    tokens { A,B }\n    a : A;\n    ", 30);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -82,19 +66,19 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule grammarSpec");
 	}
 
-	@Test public void test_grammarSpec4() throws Exception {
+	[TestMethod] public void test_grammarSpec4(){
 		// gunit test on line 42
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    import A=B, C;\n    a : A;\n    ", 42);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
 		Object expecting = "(PARSER_GRAMMAR P (import (= A B) C) (RULES (RULE a (BLOCK (ALT A)))))";
 		assertEquals(expecting, actual, "testing rule grammarSpec");
-	} @Test public void test_delegateGrammars1() throws Exception {
+	} [TestMethod] public void test_delegateGrammars1(){
 		// gunit test on line 53
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("delegateGrammars", "import A;", 53);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
 		Object expecting = "(import A)";
 		assertEquals(expecting, actual, "testing rule delegateGrammars");
-	} @Test public void test_rule1() throws Exception {
+	} [TestMethod] public void test_rule1(){
 		// gunit test on line 56
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "a : A<X,Y=a.b.c>;", 56);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -102,7 +86,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule2() throws Exception {
+	[TestMethod] public void test_rule2(){
 		// gunit test on line 58
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "A : B+;", 58);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -110,7 +94,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule3() throws Exception {
+	[TestMethod] public void test_rule3(){
 		// gunit test on line 60
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n      : ID ;\n    ", 60);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -118,7 +102,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule4() throws Exception {
+	[TestMethod] public void test_rule4(){
 		// gunit test on line 75
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n    options {backtrack=true;}\n      : ID;\n    ", 75);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -126,7 +110,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule5() throws Exception {
+	[TestMethod] public void test_rule5(){
 		// gunit test on line 88
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A b] {foo}\n      finally {bar}\n    ", 88);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -134,7 +118,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule6() throws Exception {
+	[TestMethod] public void test_rule6(){
 		// gunit test on line 97
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A a] {foo}\n      catch[B b] {fu}\n      finally {bar}\n    ", 97);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -142,7 +126,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule7() throws Exception {
+	[TestMethod] public void test_rule7(){
 		// gunit test on line 107
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i]\n\tlocals [int a, float b]\n\t\t:\tA\n\t\t;\n\t", 107);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -150,13 +134,13 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule rule");
 	}
 
-	@Test public void test_rule8() throws Exception {
+	[TestMethod] public void test_rule8(){
 		// gunit test on line 115
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i] throws a.b.c\n\t\t:\tA\n\t\t;\n\t", 115);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
 		Object expecting = "(RULE a int i (throws a.b.c) (BLOCK (ALT A)))";
 		assertEquals(expecting, actual, "testing rule rule");
-	} @Test public void test_ebnf1() throws Exception {
+	} [TestMethod] public void test_ebnf1(){
 		// gunit test on line 123
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)", 123);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -164,7 +148,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule ebnf");
 	}
 
-	@Test public void test_ebnf2() throws Exception {
+	[TestMethod] public void test_ebnf2(){
 		// gunit test on line 124
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)?", 124);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -172,7 +156,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule ebnf");
 	}
 
-	@Test public void test_ebnf3() throws Exception {
+	[TestMethod] public void test_ebnf3(){
 		// gunit test on line 125
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)*", 125);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -180,13 +164,13 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule ebnf");
 	}
 
-	@Test public void test_ebnf4() throws Exception {
+	[TestMethod] public void test_ebnf4(){
 		// gunit test on line 126
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)+", 126);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
 		Object expecting = "(+ (BLOCK (ALT A) (ALT B)))";
 		assertEquals(expecting, actual, "testing rule ebnf");
-	} @Test public void test_element1() throws Exception {
+	} [TestMethod] public void test_element1(){
 		// gunit test on line 129
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "~A", 129);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -194,7 +178,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element2() throws Exception {
+	[TestMethod] public void test_element2(){
 		// gunit test on line 130
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b+", 130);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -202,7 +186,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element3() throws Exception {
+	[TestMethod] public void test_element3(){
 		// gunit test on line 131
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)+", 131);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -210,7 +194,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element4() throws Exception {
+	[TestMethod] public void test_element4(){
 		// gunit test on line 132
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b?", 132);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -218,7 +202,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element5() throws Exception {
+	[TestMethod] public void test_element5(){
 		// gunit test on line 133
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)?", 133);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -226,7 +210,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element6() throws Exception {
+	[TestMethod] public void test_element6(){
 		// gunit test on line 134
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)*", 134);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -234,7 +218,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element7() throws Exception {
+	[TestMethod] public void test_element7(){
 		// gunit test on line 135
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b*", 135);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -242,7 +226,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element8() throws Exception {
+	[TestMethod] public void test_element8(){
 		// gunit test on line 136
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'while'*", 136);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -250,7 +234,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element9() throws Exception {
+	[TestMethod] public void test_element9(){
 		// gunit test on line 137
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'a'+", 137);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -258,7 +242,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element10() throws Exception {
+	[TestMethod] public void test_element10(){
 		// gunit test on line 138
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "a[3]", 138);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -266,7 +250,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element11() throws Exception {
+	[TestMethod] public void test_element11(){
 		// gunit test on line 139
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'a'..'z'+", 139);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -274,7 +258,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element12() throws Exception {
+	[TestMethod] public void test_element12(){
 		// gunit test on line 140
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID", 140);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -282,7 +266,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element13() throws Exception {
+	[TestMethod] public void test_element13(){
 		// gunit test on line 141
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID?", 141);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -290,7 +274,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element14() throws Exception {
+	[TestMethod] public void test_element14(){
 		// gunit test on line 142
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID*", 142);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -298,7 +282,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element15() throws Exception {
+	[TestMethod] public void test_element15(){
 		// gunit test on line 143
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=b", 143);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -306,7 +290,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element16() throws Exception {
+	[TestMethod] public void test_element16(){
 		// gunit test on line 144
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=(A|B)", 144);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -314,7 +298,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element17() throws Exception {
+	[TestMethod] public void test_element17(){
 		// gunit test on line 145
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=~(A|B)", 145);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -322,7 +306,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element18() throws Exception {
+	[TestMethod] public void test_element18(){
 		// gunit test on line 146
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)", 146);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -330,7 +314,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element19() throws Exception {
+	[TestMethod] public void test_element19(){
 		// gunit test on line 147
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)+", 147);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -338,7 +322,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element20() throws Exception {
+	[TestMethod] public void test_element20(){
 		// gunit test on line 148
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=b+", 148);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -346,7 +330,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element21() throws Exception {
+	[TestMethod] public void test_element21(){
 		// gunit test on line 149
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=ID*", 149);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -354,7 +338,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element22() throws Exception {
+	[TestMethod] public void test_element22(){
 		// gunit test on line 150
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+='int'*", 150);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -362,7 +346,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element23() throws Exception {
+	[TestMethod] public void test_element23(){
 		// gunit test on line 151
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=b+", 151);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();
@@ -370,7 +354,7 @@ public class TestASTStructure {
 		assertEquals(expecting, actual, "testing rule element");
 	}
 
-	@Test public void test_element24() throws Exception {
+	[TestMethod] public void test_element24(){
 		// gunit test on line 152
 		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "({blort} 'x')*", 152);
 		Object actual = ((Tree)rstruct.getTree()).toStringTree();

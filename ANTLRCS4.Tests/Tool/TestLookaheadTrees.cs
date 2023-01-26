@@ -4,27 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.gui.Trees;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.atn.DecisionInfo;
-import org.antlr.v4.runtime.atn.LookaheadEventInfo;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.GrammarParserInterpreter;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestLookaheadTrees {
-	public static final String lexerText =
+	public static readonly String lexerText =
 		"lexer grammar L;\n" +
 		"DOT  : '.' ;\n" +
 		"SEMI : ';' ;\n" +
@@ -37,8 +23,8 @@ public class TestLookaheadTrees {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;\n";
 
-	@Test
-	public void testAlts() throws Exception {
+	[TestMethod]
+	public void testAlts(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -55,8 +41,8 @@ public class TestLookaheadTrees {
 						   new String[] {"(e:1 a . b)", "(e:2 a <error .>)"});
 	}
 
-	@Test
-	public void testAlts2() throws Exception {
+	[TestMethod]
+	public void testAlts2(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -74,8 +60,8 @@ public class TestLookaheadTrees {
 										 "(s:1 (e:1 a) ; <EOF>)"}); // root s:1 is included to show ';' node
 	}
 
-	@Test
-	public void testIncludeEOF() throws Exception {
+	[TestMethod]
+	public void testIncludeEOF(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +
@@ -90,8 +76,8 @@ public class TestLookaheadTrees {
 						   new String[] {"(e:1 a . b <EOF>)", "(e:2 a . b <EOF>)"});
 	}
 
-	@Test
-	public void testCallLeftRecursiveRule() throws Exception {
+	[TestMethod]
+	public void testCallLeftRecursiveRule(){
 		LexerGrammar lg = new LexerGrammar(lexerText);
 		Grammar g = new Grammar(
 			"parser grammar T;\n" +

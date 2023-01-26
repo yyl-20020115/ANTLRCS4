@@ -4,48 +4,34 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.tool;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.tool;
 
-import java.util.Arrays;
-
-import static org.antlr.v4.runtime.atn.ATNDeserializer.encodeIntsWith16BitWords;
-import static org.antlr.v4.runtime.atn.ATNDeserializer.decodeIntsEncodedAs16BitWords;
-import static org.antlr.v4.test.tool.ToolTestUtils.createATN;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
+[TestClass]
 public class TestATNDeserialization {
-	@Test public void testSimpleNoBlock() throws Exception {
+	[TestMethod] public void testSimpleNoBlock(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A B ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testEOF() throws Exception {
+	[TestMethod] public void testEOF(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : EOF ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testEOFInSet() throws Exception {
+	[TestMethod] public void testEOFInSet(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : (EOF|A) ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testNot() throws Exception {
+	[TestMethod] public void testNot(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"tokens {A, B, C}\n" +
@@ -53,7 +39,7 @@ public class TestATNDeserialization {
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testWildcard() throws Exception {
+	[TestMethod] public void testWildcard(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"tokens {A, B, C}\n" +
@@ -61,28 +47,28 @@ public class TestATNDeserialization {
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testPEGAchillesHeel() throws Exception {
+	[TestMethod] public void testPEGAchillesHeel(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A | A B ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void test3Alts() throws Exception {
+	[TestMethod] public void test3Alts(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A | A B | A B C ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testSimpleLoop() throws Exception {
+	[TestMethod] public void testSimpleLoop(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : A+ B ;");
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testRuleRef() throws Exception {
+	[TestMethod] public void testRuleRef(){
 		Grammar g = new Grammar(
 			"parser grammar T;\n"+
 			"a : e ;\n" +
@@ -90,7 +76,7 @@ public class TestATNDeserialization {
 		checkDeserializationIsStable(g);
 	}
 
-	@Test public void testLexerTwoRules() throws Exception {
+	[TestMethod] public void testLexerTwoRules(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' ;\n" +
@@ -98,56 +84,56 @@ public class TestATNDeserialization {
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerEOF() throws Exception {
+	[TestMethod] public void testLexerEOF(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' EOF ;\n");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerEOFInSet() throws Exception {
+	[TestMethod] public void testLexerEOFInSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"A : 'a' (EOF|'\\n') ;\n");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerRange() throws Exception {
+	[TestMethod] public void testLexerRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '0'..'9' ;\n");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerLoops() throws Exception {
+	[TestMethod] public void testLexerLoops(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"INT : '0'..'9'+ ;\n");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerNotSet() throws Exception {
+	[TestMethod] public void testLexerNotSet(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerNotSetWithRange() throws Exception {
+	[TestMethod] public void testLexerNotSetWithRange(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b'|'e'|'p'..'t')\n ;");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLexerNotSetWithRange2() throws Exception {
+	[TestMethod] public void testLexerNotSetWithRange2(){
 		LexerGrammar lg = new LexerGrammar(
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b') ~('e'|'p'..'t')\n ;");
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void test2ModesInLexer() throws Exception {
+	[TestMethod] public void test2ModesInLexer(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n"+
 						"A : 'a'\n ;\n" +
@@ -158,7 +144,7 @@ public class TestATNDeserialization {
 		checkDeserializationIsStable(lg);
 	}
 
-	@Test public void testLastValidBMPCharInSet() throws Exception {
+	[TestMethod] public void testLastValidBMPCharInSet(){
 		LexerGrammar lg = new LexerGrammar(
 				"lexer grammar L;\n" +
 						"ID : 'Ā'..'\\uFFFC'; // FFFD+ are not valid char\n");
