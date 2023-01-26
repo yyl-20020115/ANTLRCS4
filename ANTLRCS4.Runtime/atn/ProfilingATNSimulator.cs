@@ -175,7 +175,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 	//@Override
 	protected void reportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex) {
 		if ( prediction != conflictingAltResolvedBySLL ) {
-			decisions[currentDecision].contextSensitivities.add(
+			decisions[currentDecision].contextSensitivities.Add(
 					new ContextSensitivityInfo(currentDecision, configs, _input, startIndex, stopIndex)
 			);
 		}

@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree.pattern;
 using System.Text;
 
 namespace org.antlr.v4.runtime;
@@ -206,7 +207,7 @@ public class UnbufferedCharStream : CharStream {
 	}
 
 	protected void add(int c) {
-		if ( n>=data.length ) {
+		if ( n>=data.Length ) {
 			data = Arrays.copyOf(data, data.length * 2);
         }
         data[n++] = c;

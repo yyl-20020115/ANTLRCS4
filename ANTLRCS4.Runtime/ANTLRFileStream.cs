@@ -28,7 +28,7 @@ public class ANTLRFileStream : ANTLRInputStream {
 		
 	{
 		data = Utils.readFile(fileName, encoding);
-		this.n = data.length;
+		this.n = data.Length;
 	}
 
 	//@Override

@@ -13,6 +13,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Text;
 
 namespace org.antlr.v4;
 
@@ -124,7 +125,7 @@ public class Tool {
             if ( antlr.log ) {
                 try {
                     String logname = antlr.logMgr.save();
-                    System.out.println("wrote "+logname);
+                    Console.WriteLine("wrote "+logname);
                 }
                 catch (IOException ioe) {
                     antlr.errMgr.toolError(ErrorType.INTERNAL_ERROR, ioe);
@@ -161,7 +162,7 @@ public class Tool {
 				continue;
 			}
 			if ( arg.charAt(0)!='-' ) { // file name
-				if ( !grammarFiles.contains(arg) ) grammarFiles.add(arg);
+				if ( !grammarFiles.Contains(arg) ) grammarFiles.add(arg);
 				continue;
 			}
 			boolean found = false;
@@ -196,7 +197,7 @@ public class Tool {
 			if (outputDirectory.endsWith("/") ||
 				outputDirectory.endsWith("\\")) {
 				outputDirectory =
-					outputDirectory.substring(0, outputDirectory.length() - 1);
+					outputDirectory.substring(0, outputDirectory.Length - 1);
 			}
 			File outDir = new File(outputDirectory);
 			haveOutputDir = true;
@@ -211,7 +212,7 @@ public class Tool {
 		if ( libDirectory!=null ) {
 			if (libDirectory.endsWith("/") ||
 				libDirectory.endsWith("\\")) {
-				libDirectory = libDirectory.substring(0, libDirectory.length() - 1);
+				libDirectory = libDirectory.substring(0, libDirectory.Length - 1);
 			}
 			File outDir = new File(libDirectory);
 			if (!outDir.exists()) {
@@ -229,18 +230,18 @@ public class Tool {
 	}
 
 	protected void handleOptionSetArg(String arg) {
-		int eq = arg.indexOf('=');
-		if ( eq>0 && arg.length()>3 ) {
-			String option = arg.substring("-D".length(), eq);
+		int eq = arg.IndexOf('=');
+		if ( eq>0 && arg.Length>3 ) {
+			String option = arg.substring("-D".Length, eq);
 			String value = arg.substring(eq+1);
-			if ( value.length()==0 ) {
+			if ( value.Length==0 ) {
 				errMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
 				return;
 			}
-			if ( Grammar.parserOptions.contains(option) ||
-				 Grammar.lexerOptions.contains(option) )
+			if ( Grammar.parserOptions.Contains(option) ||
+				 Grammar.lexerOptions.Contains(option) )
 			{
-				if ( grammarOptions==null ) grammarOptions = new HashMap<String, String>();
+				if ( grammarOptions==null ) grammarOptions = new ();
 				grammarOptions.put(option, value);
 			}
 			else {
@@ -267,10 +268,10 @@ public class Tool {
 				/*
 					List outputFiles = dep.getGeneratedFileList();
 					List dependents = dep.getDependenciesFileList();
-					System.out.println("output: "+outputFiles);
-					System.out.println("dependents: "+dependents);
+					Console.WriteLine("output: "+outputFiles);
+					Console.WriteLine("dependents: "+dependents);
 					 */
-				System.out.println(dep.getDependencies().render());
+				Console.WriteLine(dep.getDependencies().render());
 
 			}
 			else if (errMgr.getNumErrors() == 0) {
@@ -308,13 +309,13 @@ public class Tool {
 				g.implicitLexer = lexerg;
 				lexerg.implicitLexerOwner = g;
 				processNonCombinedGrammar(lexerg, gencode);
-//				System.out.println("lexer tokens="+lexerg.tokenNameToTypeMap);
-//				System.out.println("lexer strings="+lexerg.stringLiteralToTypeMap);
+//				Console.WriteLine("lexer tokens="+lexerg.tokenNameToTypeMap);
+//				Console.WriteLine("lexer strings="+lexerg.stringLiteralToTypeMap);
 			}
 		}
 		if ( g.implicitLexer!=null ) g.importVocab(g.implicitLexer);
-//		System.out.println("tokens="+g.tokenNameToTypeMap);
-//		System.out.println("strings="+g.stringLiteralToTypeMap);
+//		Console.WriteLine("tokens="+g.tokenNameToTypeMap);
+//		Console.WriteLine("strings="+g.stringLiteralToTypeMap);
 		processNonCombinedGrammar(g, gencode);
 	}
 
@@ -368,15 +369,54 @@ public class Tool {
 			gen.process();
 		}
 	}
+    // check for undefined rules
+    class UndefChecker : GrammarTreeVisitor
+    {
+        public bool badref = false;
+        // @Override
+        public void tokenRef(TerminalAST ref)
+        {
+            if ("EOF".equals(ref.getText()))
+            {
+                // this is a special predefined reference
+                return;
+            }
 
-	/**
+            if (g.isLexer()) ruleRef(ref, null);
+        }
+
+        //@Override
+        public void ruleRef(GrammarAST ref, ActionAST arg)
+        {
+            RuleAST ruleAST = ruleToAST.get(ref.getText());
+            String fileName = ref.getToken().getInputStream().getSourceName();
+            if (Character.isUpperCase(currentRuleName.charAt(0)) &&
+                Character.isLowerCase(ref.getText().charAt(0)))
+            {
+                badref = true;
+                errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
+                                    fileName, ref.getToken(), ref.getText(), currentRuleName);
+            }
+            else if (ruleAST == null)
+            {
+                badref = true;
+                errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
+                                    fileName, ref.token, ref.getText());
+            }
+        }
+        //@Override
+        public ErrorManager getErrorManager() { return errMgr; }
+    }
+
+
+    /**
 	 * Important enough to avoid multiple definitions that we do very early,
 	 * right after AST construction. Also check for undefined rules in
 	 * parser/lexer to avoid exceptions later. Return true if we find multiple
 	 * definitions of the same rule or a reference to an undefined rule or
 	 * parser rule ref in lexer rule.
 	 */
-	public bool checkForRuleIssues( Grammar g) {
+    public bool checkForRuleIssues( Grammar g) {
 		// check for redefined rules
 		GrammarAST RULES = (GrammarAST)g.ast.getFirstChildWithType(ANTLRParser.RULES);
 		List<GrammarAST> rules = new ArrayList<GrammarAST>(RULES.getAllChildrenWithType(ANTLRParser.RULE));
@@ -404,40 +444,6 @@ public class Tool {
 			ruleToAST.put(ruleName, ruleAST);
 		}
 
-		// check for undefined rules
-		class UndefChecker : GrammarTreeVisitor {
-			public boolean badref = false;
-			@Override
-			public void tokenRef(TerminalAST ref) {
-				if ("EOF".equals(ref.getText())) {
-					// this is a special predefined reference
-					return;
-				}
-
-				if ( g.isLexer() ) ruleRef(ref, null);
-			}
-
-			@Override
-			public void ruleRef(GrammarAST ref, ActionAST arg) {
-				RuleAST ruleAST = ruleToAST.get(ref.getText());
-				String fileName = ref.getToken().getInputStream().getSourceName();
-				if (Character.isUpperCase(currentRuleName.charAt(0)) &&
-					Character.isLowerCase(ref.getText().charAt(0)))
-				{
-					badref = true;
-					errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
-										fileName, ref.getToken(), ref.getText(), currentRuleName);
-				}
-				else if ( ruleAST==null ) {
-					badref = true;
-					errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
-										fileName, ref.token, ref.getText());
-				}
-			}
-			@Override
-			public ErrorManager getErrorManager() { return errMgr; }
-		}
-
 		UndefChecker chk = new UndefChecker();
 		chk.visitGrammar(g.ast);
 
@@ -445,7 +451,7 @@ public class Tool {
 	}
 
 	public List<GrammarRootAST> sortGrammarByTokenVocab(List<String> fileNames) {
-//		System.out.println(fileNames);
+//		Console.WriteLine(fileNames);
 		Graph<String> g = new Graph<String>();
 		List<GrammarRootAST> roots = new ArrayList<GrammarRootAST>();
 		for (String fileName : fileNames) {
@@ -462,13 +468,13 @@ public class Tool {
 			if ( tokenVocabNode!=null ) {
 				String vocabName = tokenVocabNode.getText();
 				// Strip quote characters if any
-				int len = vocabName.length();
+				int len = vocabName.Length;
 				int firstChar = vocabName.charAt(0);
 				int lastChar = vocabName.charAt(len - 1);
 				if (len >= 2 && firstChar == '\'' && lastChar == '\'') {
 					vocabName = vocabName.substring(1, len-1);
 				}
-				// If the name contains a path delimited by forward slashes,
+				// If the name Contains a path delimited by forward slashes,
 				// use only the part after the last slash as the name
 				int lastSlash = vocabName.lastIndexOf('/');
 				if (lastSlash >= 0) {
@@ -482,13 +488,13 @@ public class Tool {
 		}
 
 		List<String> sortedGrammarNames = g.sort();
-//		System.out.println("sortedGrammarNames="+sortedGrammarNames);
+//		Console.WriteLine("sortedGrammarNames="+sortedGrammarNames);
 
-		List<GrammarRootAST> sortedRoots = new ArrayList<GrammarRootAST>();
-		for (String grammarName : sortedGrammarNames) {
-			for (GrammarRootAST root : roots) {
-				if ( root.getGrammarName().equals(grammarName) ) {
-					sortedRoots.add(root);
+		List<GrammarRootAST> sortedRoots = new ();
+		foreach (String grammarName in sortedGrammarNames) {
+			foreach (GrammarRootAST root in roots) {
+				if ( root.getGrammarName().Equals(grammarName) ) {
+					sortedRoots.Add(root);
 					break;
 				}
 			}
@@ -521,7 +527,7 @@ public class Tool {
 		comes from.
 	 */
 	public Grammar createGrammar(GrammarRootAST ast) {
-		final Grammar g;
+		 Grammar g;
 		if ( ast.grammarType==ANTLRParser.LEXER ) g = new LexerGrammar(this, ast);
 		else g = new Grammar(this, ast);
 
@@ -554,13 +560,13 @@ public class Tool {
 	 */
 	public Grammar loadGrammar(String fileName) {
 		GrammarRootAST grammarRootAST = parseGrammar(fileName);
-		final Grammar g = createGrammar(grammarRootAST);
+		 Grammar g = createGrammar(grammarRootAST);
 		g.fileName = fileName;
 		process(g, false);
 		return g;
 	}
 
-	private final Map<String, Grammar> importedGrammars = new HashMap<String, Grammar>();
+	private readonly Dictionary<String, Grammar> importedGrammars = new ();
 
 	/**
 	 * Try current dir then dir of g then lib dir
@@ -633,12 +639,12 @@ public class Tool {
 
 	public void generateATNs(Grammar g) {
 		DOTGenerator dotGenerator = new DOTGenerator(g);
-		List<Grammar> grammars = new ArrayList<Grammar>();
+		List<Grammar> grammars = new ();
 		grammars.add(g);
 		List<Grammar> imported = g.getAllImportedGrammars();
 		if ( imported!=null ) grammars.addAll(imported);
-		for (Grammar ig : grammars) {
-			for (Rule r : ig.rules.values()) {
+		foreach (Grammar ig in grammars) {
+			foreach (Rule r in ig.rules.values()) {
 				try {
 					String dot = dotGenerator.getDOT(g.atn.ruleToStartState[r.index], g.isLexer());
 					if (dot != null) {
@@ -655,39 +661,39 @@ public class Tool {
 	public static String generateInterpreterData(Grammar g) {
 		StringBuilder content = new StringBuilder();
 
-		content.append("token literal names:\n");
+		content.Append("token literal names:\n");
 		String[] names = g.getTokenLiteralNames();
 		for (String name : names) {
-			content.append(name + "\n");
+			content.Append(name + "\n");
 		}
-		content.append("\n");
+		content.Append("\n");
 
-		content.append("token symbolic names:\n");
+		content.Append("token symbolic names:\n");
 		names = g.getTokenSymbolicNames();
 		for (String name : names) {
-			content.append(name + "\n");
+			content.Append(name + "\n");
 		}
-		content.append("\n");
+		content.Append("\n");
 
-		content.append("rule names:\n");
+		content.Append("rule names:\n");
 		names = g.getRuleNames();
 		for (String name : names) {
-			content.append(name + "\n");
+			content.Append(name + "\n");
 		}
-		content.append("\n");
+		content.Append("\n");
 
 		if ( g.isLexer() ) {
-			content.append("channel names:\n");
-			content.append("DEFAULT_TOKEN_CHANNEL\n");
-			content.append("HIDDEN\n");
-			for (String channel : g.channelValueToNameList) {
-				content.append(channel + "\n");
+			content.Append("channel names:\n");
+			content.Append("DEFAULT_TOKEN_CHANNEL\n");
+			content.Append("HIDDEN\n");
+			for (String channel in g.channelValueToNameList) {
+				content.Append(channel + "\n");
 			}
-			content.append("\n");
+			content.Append("\n");
 
-			content.append("mode names:\n");
-			for (String mode : ((LexerGrammar)g).modes.keySet()) {
-				content.append(mode + "\n");
+			content.Append("mode names:\n");
+			for (String mode in ((LexerGrammar)g).modes.keySet()) {
+				content.Append(mode + "\n");
 			}
 		}
 		content.append("\n");
@@ -720,7 +726,7 @@ public class Tool {
 	 *
 	 *  If outputDirectory==null then write a String.
 	 */
-	public Writer getOutputFileWriter(Grammar g, String fileName){
+	public TextWriter getOutputFileWriter(Grammar g, String fileName){
 		if (outputDirectory == null) {
 			return new StringWriter();
 		}
@@ -743,7 +749,7 @@ public class Tool {
 		return new BufferedWriter(osw);
 	}
 
-	public File getImportedGrammarFile(Grammar g, String fileName) {
+	public string getImportedGrammarFile(Grammar g, String fileName) {
 		File importedFile = new File(inputDirectory, fileName);
 		if ( !importedFile.exists() ) {
 			File gfile = new File(g.fileName);
@@ -767,7 +773,7 @@ public class Tool {
 	 *
 	 * @param fileNameWithPath path to input source
 	 */
-	public File getOutputDirectory(String fileNameWithPath) {
+	public string getOutputDirectory(String fileNameWithPath) {
 		if ( exact_output_dir ) {
 			return new_getOutputDirectory(fileNameWithPath);
 		}
@@ -918,7 +924,7 @@ public class Tool {
 		info("ANTLR Parser Generator  Version " + VERSION);
 	}
 
-	public void exit(int e) { System.exit(e); }
+	public void exit(int e) { Environment.Exit(e); }
 
 	public void panic() { throw new Error("ANTLR panic"); }
 

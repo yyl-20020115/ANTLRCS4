@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /**
@@ -58,7 +60,7 @@ public class LexerSkipAction : LexerAction {
 	//@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		return MurmurHash.finish(hash, 1);
 	}
 

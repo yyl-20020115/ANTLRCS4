@@ -57,27 +57,27 @@ public class XPathLexer : Lexer {
 	}
 
 	//@Override
-	public String getGrammarFileName() { return "XPathLexer.g4"; }
+	public override String getGrammarFileName() { return "XPathLexer.g4"; }
 
     //@Override
-    public String[] getRuleNames() { return ruleNames; }
+    public override String[] getRuleNames() { return ruleNames; }
 
     //@Override
-    public String[] getModeNames() { return modeNames; }
+    public override String[] getModeNames() { return modeNames; }
 
     //@Override
     //@Deprecated
-    public String[] getTokenNames() {
+    public override String[] getTokenNames() {
 		return tokenNames;
 	}
 
     //@Override
-    public Vocabulary getVocabulary() {
+    public override Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
 
     //@Override
-    public ATN getATN() {
+    public override ATN getATN() {
 		return null;
 	}
 
@@ -89,7 +89,7 @@ public class XPathLexer : Lexer {
 	}
 
 	//@Override
-	public Token nextToken() {
+	public override Token nextToken() {
 		_tokenStartCharIndex = _input.index();
 		CommonToken t = null;
 		while ( t==null ) {

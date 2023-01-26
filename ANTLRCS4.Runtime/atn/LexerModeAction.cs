@@ -65,7 +65,7 @@ public  class LexerModeAction : LexerAction {
 	}
 
     //@Override
-    public int GetHashCode() {
+    public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, mode);

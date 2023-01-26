@@ -6,6 +6,7 @@
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using System.Text;
 
 namespace org.antlr.v4.runtime;
 /** A lexer is recognizer that draws input symbols from a character stream.
@@ -28,7 +29,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	protected Pair<TokenSource, CharStream> _tokenFactorySourcePair;
 
 	/** How to create token objects */
-	protected TokenFactory _factory = CommonTokenFactory.DEFAULT;
+	protected TokenFactory<T> _factory = CommonTokenFactory.DEFAULT;
 
 	/** The goal of all lexer rules/methods is to create a token object.
 	 *  This is an instance variable as multiple rules may collaborate to
@@ -102,7 +103,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  stream.
 	 */
 	//@Override
-	public Token nextToken() {
+	public virtual Token nextToken() {
 		if (_input == null) {
 			throw new IllegalStateException("nextToken requires a non-null input stream.");
 		}
@@ -126,7 +127,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 				_text = null;
 				do {
 					_type = Token.INVALID_TYPE;
-//				System.out.println("nextToken line "+tokenStartLine+" at "+((char)input.LA(1))+
+//				Console.WriteLine("nextToken line "+tokenStartLine+" at "+((char)input.LA(1))+
 //								   " in mode "+mode+
 //								   " at index "+input.index());
 					int ttype;
@@ -176,25 +177,25 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	}
 
 	public void pushMode(int m) {
-		if ( LexerATNSimulator.debug ) System.out.println("pushMode "+m);
+		if ( LexerATNSimulator.debug ) Console.WriteLine("pushMode "+m);
 		_modeStack.push(_mode);
 		mode(m);
 	}
 
 	public int popMode() {
 		if ( _modeStack.isEmpty() ) throw new EmptyStackException();
-		if ( LexerATNSimulator.debug ) System.out.println("popMode back to "+ _modeStack.peek());
+		if ( LexerATNSimulator.debug ) Console.WriteLine("popMode back to "+ _modeStack.peek());
 		mode( _modeStack.pop() );
 		return _mode;
 	}
 
 	//@Override
-	public void setTokenFactory(TokenFactory<?> factory) {
+	public void setTokenFactory(TokenFactory<T> factory) where T:Token {
 		this._factory = factory;
 	}
 
 	//@Override
-	public TokenFactory<? extends Token> getTokenFactory() {
+	public TokenFactory<T> getTokenFactory() where T:Token {
 		return _factory;
 	}
 
@@ -324,15 +325,15 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  that overrides this to point to their String[] tokenNames.
 	 */
 	//@Override
-	@Deprecated
-	public String[] getTokenNames() {
+	//@Deprecated
+	public virtual String[] getTokenNames() {
 		return null;
 	}
 
 	/** Return a list of all Token objects in input char stream.
 	 *  Forces load of all tokens. Does not include EOF token.
 	 */
-	public List<? extends Token> getAllTokens() {
+	public List<Token> getAllTokens() {
 		List<Token> tokens = new ArrayList<Token>();
 		Token t = nextToken();
 		while ( t.getType()!=Token.EOF ) {
@@ -359,14 +360,14 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
 	public String getErrorDisplay(String s) {
 		StringBuilder buf = new StringBuilder();
-		for (char c : s.toCharArray()) {
+		foreach (char c in s.toCharArray()) {
 			buf.append(getErrorDisplay(c));
 		}
 		return buf.toString();
 	}
 
 	public String getErrorDisplay(int c) {
-		String s = String.valueOf((char)c);
+		String s = c.ToString();// String.valueOf((char)c);
 		switch ( c ) {
 			case Token.EOF :
 				s = "<EOF>";
@@ -395,7 +396,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  to do sophisticated error recovery if you are in a fragment rule.
 	 */
 	public void recover(RecognitionException re) {
-		//System.out.println("consuming char "+(char)input.LA(1)+" during recovery");
+		//Console.WriteLine("consuming char "+(char)input.LA(1)+" during recovery");
 		//re.printStackTrace();
 		// TODO: Do we lose character or line position information?
 		_input.consume();

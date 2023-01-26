@@ -72,7 +72,7 @@ public interface TokenSource {
 	 *
 	 * @param factory The {@link TokenFactory} to use for creating tokens.
 	 */
-	public void setTokenFactory(TokenFactory factory);
+	public void setTokenFactory(TokenFactory<T> factory);
 
 	/**
 	 * Gets the {@link TokenFactory} this token source is currently using for
@@ -80,5 +80,5 @@ public interface TokenSource {
 	 *
 	 * @return The {@link TokenFactory} currently used by this token source.
 	 */
-	public TokenFactory getTokenFactory();
+	public TokenFactory<T> getTokenFactory();
 }

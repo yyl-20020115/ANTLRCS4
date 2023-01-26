@@ -87,9 +87,9 @@ public static class Trees
 
 	/** Return ordered list of all children of this node */
 	public static List<Tree> getChildren(Tree t) {
-		List<Tree> kids = new ArrayList<Tree>();
+		List<Tree> kids = new();
 		for (int i=0; i<t.getChildCount(); i++) {
-			kids.add(t.getChild(i));
+			kids.Add(t.getChild(i));
 		}
 		return kids;
 	}
@@ -99,12 +99,12 @@ public static class Trees
 	 *
 	 *  @since 4.5.1
 	 */
-	public static List<T> getAncestors<T>(Tree t) where T: Tree {
-		if ( t.getParent()==null ) return Collections.emptyList();
-		List<Tree> ancestors = new ArrayList<Tree>();
+	public static List<Tree> getAncestors<T>(Tree t) where T: Tree {
+		if ( t.getParent()==null ) return new();
+		List<Tree> ancestors = new ();
 		t = t.getParent();
 		while ( t!=null ) {
-			ancestors.add(0, t); // insert at start
+			ancestors.Insert(0, t); // insert at start
 			t = t.getParent();
 		}
 		return ancestors;
@@ -134,7 +134,7 @@ public static class Trees
 	}
 
 	public static List<ParseTree> findAllNodes(ParseTree t, int index, bool findTokens) {
-		List<ParseTree> nodes = new ArrayList<ParseTree>();
+		List<ParseTree> nodes = new();
 		_findAllNodes(t, index, findTokens, nodes);
 		return nodes;
 	}

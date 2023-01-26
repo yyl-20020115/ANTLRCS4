@@ -121,7 +121,7 @@ loop:
 					}
 					XPathElement pathElement = getXPathElement(next, anywhere);
 					pathElement.invert = invert;
-					elements.add(pathElement);
+					elements.Add(pathElement);
 					i++;
 					break;
 
@@ -150,7 +150,7 @@ exit_loop:
 	 */
 	protected XPathElement getXPathElement(Token wordToken, bool anywhere) {
 		if ( wordToken.getType()==Token.EOF ) {
-			throw new IllegalArgumentException("Missing path element at end of path");
+			throw new ArgumentException("Missing path element at end of path");
 		}
 		String word = wordToken.getText();
 		int ttype = parser.getTokenType(word);
@@ -204,7 +204,7 @@ exit_loop:
 		int i = 0;
 		while ( i < elements.Length ) {
             ICollection<ParseTree> next = new HashSet<ParseTree>();
-			for (ParseTree node : work) {
+			foreach (ParseTree node in work) {
 				if ( node.getChildCount()>0 ) {
 					// only try to match next element if it has children
 					// e.g., //func/*/stat might have a token node for which
