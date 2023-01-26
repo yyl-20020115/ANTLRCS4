@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using System.Text;
 
 namespace org.antlr.v4.runtime;
 
@@ -159,16 +160,20 @@ public abstract class CodePointCharStream : CharStream {
 			this.byteArray = byteArray;
 		}
 
-		/** Return the UTF-16 encoded string for the given interval */
-		//@Override
-		public String getText(Interval interval) {
+		public static readonly Encoding ByteEncoding = Encoding.GetEncoding("ISO_8859_1");
+
+        /** Return the UTF-16 encoded string for the given interval */
+        //@Override
+        public virtual String getText(Interval interval) {
 			int startIdx = Math.Min(interval.a, size());
 			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// We know the maximum code point in byteArray is U+00FF,
 			// so we can treat this as if it were ISO-8859-1, aka Latin-1,
 			// which shares the same code points up to 0xFF.
-			return new String(byteArray, startIdx, len, StandardCharsets.ISO_8859_1);
+			var tb = byteArray[startIdx..(startIdx+ len)].Select(b=>(char)b).ToArray();
+
+            return new String(tb);
 		}
 
 		//@Override
@@ -276,7 +281,13 @@ public abstract class CodePointCharStream : CharStream {
 
 			// Note that we pass the int[] code points to the String constructor --
 			// this is supported, and the constructor will convert to UTF-16 internally.
-			return new String(intArray, startIdx, len);
+			var rs = intArray.Select(i => new Rune(i)).ToArray()[startIdx .. (startIdx+len)];
+			var builder = new StringBuilder();
+			foreach(var r in rs)
+			{
+				builder.Append(r.ToString());
+			}
+			return builder.ToString();
 		}
 
 		//@Override

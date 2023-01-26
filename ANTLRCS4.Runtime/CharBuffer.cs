@@ -78,7 +78,11 @@ public class CharBuffer
         throw new NotImplementedException();
     }
 
-    internal void put(string s)
+    public void put(string s)
+    {
+        throw new NotImplementedException();
+    }
+    public void put(char c)
     {
         throw new NotImplementedException();
     }

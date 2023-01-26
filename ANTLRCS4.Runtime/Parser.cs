@@ -14,16 +14,22 @@ namespace org.antlr.v4.runtime;
 /** This is all the parsing support code essentially; most of it is error recovery stuff. */
 public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	public class TraceListener : ParseTreeListener {
-		//@Override
-		public void enterEveryRule(ParserRuleContext ctx) {
-			Console.Out.WriteLine("enter   " + getRuleNames()[ctx.getRuleIndex()] +
-							   ", LT(1)=" + _input.LT(1).getText());
+		public readonly Parser parser;
+
+		public TraceListener(Parser parser)
+		{
+			this.parser = parser;				
+		}
+        //@Override
+        public void enterEveryRule(ParserRuleContext ctx) {
+			Console.Out.WriteLine("enter   " + this.parser.getRuleNames()[ctx.getRuleIndex()] +
+							   ", LT(1)=" + this.parser._input.LT(1).getText());
 		}
 
 		//@Override
 		public void visitTerminal(TerminalNode node) {
-			Console.Out.println("consume "+node.getSymbol()+" rule "+
-							   getRuleNames()[_ctx.getRuleIndex()]);
+			Console.Out.WriteLine("consume "+node.getSymbol()+" rule "+
+                               this.parser.getRuleNames()[this.parser._ctx.getRuleIndex()]);
 		}
 
 		//@Override
@@ -32,8 +38,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
-			Console.Out.WriteLine("exit    "+getRuleNames()[ctx.getRuleIndex()]+
-							   ", LT(1)="+_input.LT(1).getText());
+			Console.Out.WriteLine("exit    "+ this.parser.getRuleNames()[ctx.getRuleIndex()]+
+							   ", LT(1)="+ this.parser._input.LT(1).getText());
 		}
 	}
 
@@ -432,7 +438,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 			}
 			ATNDeserializationOptions deserializationOptions = new ATNDeserializationOptions();
 			deserializationOptions.setGenerateRuleBypassTransitions(true);
-			bypassAltsAtnCache = new ATNDeserializer(deserializationOptions).deserialize(serializedAtn.toCharArray());
+			bypassAltsAtnCache = new ATNDeserializer(deserializationOptions).deserialize(serializedAtn.ToCharArray());
 			return bypassAltsAtnCache;
 		}
 	}
@@ -804,7 +810,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
     public IntervalSet getExpectedTokensWithinCurrentRule() {
         ATN atn = getInterpreter().atn;
-        ATNState s = atn.states.get(getState());
+        ATNState s = atn.states[(getState())];
    		return atn.nextTokens(s);
    	}
 

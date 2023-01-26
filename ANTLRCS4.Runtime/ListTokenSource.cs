@@ -185,13 +185,13 @@ public class ListTokenSource<T> : TokenSource {
 	//@Override
 	public CharStream getInputStream() {
 		if (i < tokens.Count) {
-			return tokens.get(i).getInputStream();
+			return tokens[(i)].getInputStream();
 		}
 		else if (eofToken != null) {
 			return eofToken.getInputStream();
 		}
 		else if (tokens.Count > 0) {
-			return tokens.get(tokens.Count - 1).getInputStream();
+			return tokens[(tokens.Count - 1)].getInputStream();
 		}
 
 		// no input stream information is available

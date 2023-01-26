@@ -328,8 +328,7 @@ public class TokenStreamRewriter {
 	}
 
 	protected int getLastRewriteTokenIndex(String programName) {
-		int I = lastRewriteTokenIndexes.get(programName);
-		if ( I==null ) {
+		if ( !lastRewriteTokenIndexes.TryGetValue(programName,out var I) ) {
 			return -1;
 		}
 		return I;
@@ -488,7 +487,7 @@ public class TokenStreamRewriter {
 			if ( !(op is ReplaceOp) ) continue;
 			ReplaceOp rop = (ReplaceOp)rewrites[(i)];
 			// Wipe prior inserts within range
-			List<InsertBeforeOp> inserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+			var inserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
 			foreach (InsertBeforeOp iop in inserts) {
 				if ( iop.index == rop.index ) {
 					// E.g., insert before 2, delete 2..2; update replace
@@ -502,7 +501,7 @@ public class TokenStreamRewriter {
 				}
 			}
 			// Drop any prior replaces contained within
-			List<ReplaceOp> prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+			var prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
             foreach (ReplaceOp prevRop in prevReplaces) {
 				if ( prevRop.index>=rop.index && prevRop.lastIndex <= rop.lastIndex ) {
 					// delete replace as it's a no-op.
@@ -534,7 +533,7 @@ public class TokenStreamRewriter {
 			if ( !(op is InsertBeforeOp) ) continue;
 			InsertBeforeOp iop = (InsertBeforeOp)rewrites[(i)];
 			// combine current insert with prior if any at same index
-			List<InsertBeforeOp> prevInserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+			var prevInserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
 			foreach (InsertBeforeOp prevIop in prevInserts) {
 				if ( prevIop.index==iop.index ) {
 					if ( typeof(InsertAfterOp).IsInstanceOfType(prevIop) ) {
@@ -551,7 +550,7 @@ public class TokenStreamRewriter {
 				}
 			}
 			// look for replaces where iop.index @is in range; error
-			List<ReplaceOp> prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+			var prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
 			foreach (ReplaceOp rop in prevReplaces) {
 				if ( iop.index == rop.index ) {
 					rop.text = catOpText(iop.text,rop.text);

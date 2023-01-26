@@ -383,13 +383,5 @@ public class CodePointBuffer {
 			charBuffer = null;
 			intBuffer = newBuffer;
 		}
-
-        private class Integer
-        {
-            internal static int numberOfLeadingZeros(int v)
-            {
-                throw new NotImplementedException();
-            }
-        }
-    }
+	}
 }

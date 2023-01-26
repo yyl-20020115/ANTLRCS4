@@ -174,5 +174,5 @@ public class XPathLexer : Lexer {
 
 	public bool isNameChar(int c) { return char.isUnicodeIdentifierPart(c); }
 
-	public bool isNameStartChar(int c) { return Character.isUnicodeIdentifierStart(c); }
+	public bool isNameStartChar(int c) { return char.isUnicodeIdentifierStart(c); }
 }

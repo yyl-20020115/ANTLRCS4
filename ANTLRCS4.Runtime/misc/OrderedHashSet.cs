@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 
 namespace org.antlr.v4.runtime.misc;
@@ -17,6 +18,15 @@ public class OrderedHashSet<T> : HashSet<T> {
     /** Track the elements as they are added to the set */
     protected List<T> _elements = new ();
 
+    public OrderedHashSet()
+    {
+
+    }
+    public OrderedHashSet(OrderedHashSet<T> other)
+        :base(other)
+    {
+        this._elements.AddRange(other._elements);
+    }
     public T get(int i) {
         return _elements[i];
     }
@@ -26,15 +36,16 @@ public class OrderedHashSet<T> : HashSet<T> {
      */
     public T set(int i, T value) {
         T oldElement = _elements[i];
-        _elements.set(i,value); // update list
-        base.remove(oldElement); // now update the set: remove/add
-        base.add(value);
+        _elements[i] = value;//.set(i,value); // update list
+        base.Remove(oldElement); // now update the set: remove/add
+        base.Add(value);
         return oldElement;
     }
 
 	public bool remove(int i) {
-		T o = _elements.remove(i);
-        return super.remove(o);
+        T o = _elements[i];
+        _elements.RemoveAt(i);
+        return base.Remove(o);
 	}
 
     /** Add a value to list; keep in hashtable for consistency also;
@@ -42,9 +53,9 @@ public class OrderedHashSet<T> : HashSet<T> {
      *  a list of strings.
      */
     public bool add(T value) {
-        bool result = super.add(value);
+        bool result = base.Add(value);
 		if ( result ) {  // only track if new element not in set
-            _elements.add(value);
+            _elements.Add(value);
 		}
 		return result;
     }
@@ -54,8 +65,8 @@ public class OrderedHashSet<T> : HashSet<T> {
     }
 
 	public void clear() {
-        _elements.clear();
-        super.clear();
+        _elements.Clear();
+        base.Clear();
     }
 
 	public override int GetHashCode() {
@@ -68,7 +79,7 @@ public class OrderedHashSet<T> : HashSet<T> {
 		}
 
 //		System.out.print("equals " + this + ", " + o+" = ");
-		bool same = _elements != null && _elements.equals(((OrderedHashSet<T>)o).elements);
+		bool same = _elements != null && _elements.Equals(((OrderedHashSet<T>)o).elements);
 //		System.out.println(same);
 		return same;
 	}
@@ -85,9 +96,7 @@ public class OrderedHashSet<T> : HashSet<T> {
     }
 
     public Object clone() {
-        OrderedHashSet<T> dup = (OrderedHashSet<T>)base.Clone();
-        dup._elements = new (this._elements);
-        return dup;
+        return new OrderedHashSet<T>(this);
     }
 
 	public T[] ToArray() {

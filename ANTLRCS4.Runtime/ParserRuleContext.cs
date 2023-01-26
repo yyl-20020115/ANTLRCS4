@@ -201,17 +201,17 @@ public class ParserRuleContext : RuleContext {
 		return children!=null && i>=0 && i<children.Count ? children[(i)] : null;
 	}
 
-	public T getChild<T>(Type ctxType, int i) where T:ParseTree {
+	public T getChild<T>(Type ctxType, int i) where T:class {
 		if ( children==null || i < 0 || i >= children.Count ) {
 			return default;
 		}
 
 		int j = -1; // what element have we found with ctxType?
 		foreach (ParseTree o in children) {
-			if ( ctxType.isInstance(o) ) {
+			if ( ctxType.IsInstanceOfType(o) ) {
 				j++;
 				if ( j == i ) {
-					return ctxType.cast(o);
+					return o as T;
 				}
 			}
 		}
@@ -268,22 +268,22 @@ public class ParserRuleContext : RuleContext {
 
 	public T getRuleContext<T>(Type ctxType, int i) where T: ParserRuleContext
     {
-		return getChild(ctxType, i);
+		return getChild<T>(ctxType, i);
 	}
 
-	public List<T> getRuleContexts<T>(Type ctxType) {
+	public List<T> getRuleContexts<T>(Type ctxType) where T : class {
 		if ( children==null ) {
 			return new List<T>();
 		}
 
 		List<T> contexts = null;
 		foreach (ParseTree o in children) {
-			if ( ctxType.isInstance(o) ) {
+			if ( ctxType.IsInstanceOfType(o) ) {
 				if ( contexts==null ) {
 					contexts = new ();
 				}
 
-				contexts.Add(ctxType.cast(o));
+				contexts.Add(o as T);
 			}
 		}
 

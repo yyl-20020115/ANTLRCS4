@@ -33,12 +33,12 @@ public class ByteBuffer
         throw new NotImplementedException();
     }
 
-    public byte get(int offset)
+    public int get(int offset)
     {
         throw new NotImplementedException();
     }
 
-    public byte get()
+    public int get()
     {
         throw new NotImplementedException();
     }
