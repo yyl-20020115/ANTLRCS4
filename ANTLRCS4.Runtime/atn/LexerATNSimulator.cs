@@ -405,7 +405,7 @@ public class LexerATNSimulator extends ATNSimulator {
 			System.out.println("closure("+config.toString(recog, true)+")");
 		}
 
-		if ( config.state instanceof RuleStopState ) {
+		if ( config.state is RuleStopState ) {
 			if ( debug ) {
 				if ( recog!=null ) {
 					System.out.format(Locale.getDefault(), "closure at %s rule stop %s\n", recog.getRuleNames()[config.state.ruleIndex], config);
@@ -674,7 +674,7 @@ public class LexerATNSimulator extends ATNSimulator {
 		DFAState proposed = new DFAState(configs);
 		ATNConfig firstConfigWithRuleStopState = null;
 		for (ATNConfig c : configs) {
-			if ( c.state instanceof RuleStopState )	{
+			if ( c.state is RuleStopState )	{
 				firstConfigWithRuleStopState = c;
 				break;
 			}

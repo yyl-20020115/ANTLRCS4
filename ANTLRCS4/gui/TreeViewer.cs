@@ -176,17 +176,17 @@ public class TreeViewer extends JComponent {
 		Rectangle2D.Double box = getBoundsOfNode(tree);
 		// draw the box in the background
 		boolean ruleFailedAndMatchedNothing = false;
-		if ( tree instanceof ParserRuleContext ) {
+		if ( tree is ParserRuleContext ) {
 			ParserRuleContext ctx = (ParserRuleContext) tree;
 			ruleFailedAndMatchedNothing = ctx.exception != null &&
 										  ctx.stop != null && ctx.stop.getTokenIndex() < ctx.start.getTokenIndex();
 		}
 		if ( isHighlighted(tree) || boxColor!=null ||
-			 tree instanceof ErrorNode ||
+			 tree is ErrorNode ||
 			 ruleFailedAndMatchedNothing)
 		{
 			if ( isHighlighted(tree) ) g.setColor(highlightedBoxColor);
-			else if ( tree instanceof ErrorNode || ruleFailedAndMatchedNothing ) g.setColor(LIGHT_RED);
+			else if ( tree is ErrorNode || ruleFailedAndMatchedNothing ) g.setColor(LIGHT_RED);
 			else g.setColor(boxColor);
 			g.fillRoundRect((int) box.x, (int) box.y, (int) box.width - 1,
 							(int) box.height - 1, arcSize, arcSize);

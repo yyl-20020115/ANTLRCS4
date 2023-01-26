@@ -9,7 +9,7 @@ package org.antlr.v4.tool.ast;
 import org.antlr.runtime.Token;
 
 public class PlusBlockAST : GrammarAST implements RuleElementAST, QuantifierAST {
-	private final boolean _greedy;
+	private final bool _greedy;
 
 	public PlusBlockAST(PlusBlockAST node) {
 		super(node);
@@ -22,7 +22,7 @@ public class PlusBlockAST : GrammarAST implements RuleElementAST, QuantifierAST 
 	}
 
 	@Override
-	public boolean isGreedy() {
+	public bool isGreedy() {
 		return _greedy;
 	}
 

@@ -137,7 +137,7 @@ public class CommonToken implements WritableToken, Serializable {
 		start = oldToken.getStartIndex();
 		stop = oldToken.getStopIndex();
 
-		if (oldToken instanceof CommonToken) {
+		if (oldToken is CommonToken) {
 			text = ((CommonToken)oldToken).text;
 			source = ((CommonToken)oldToken).source;
 		}

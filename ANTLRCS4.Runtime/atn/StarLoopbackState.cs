@@ -4,15 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-public final class StarLoopbackState extends ATNState {
-	public final StarLoopEntryState getLoopEntryState() {
+public class StarLoopbackState : ATNState {
+	public StarLoopEntryState getLoopEntryState() {
 		return (StarLoopEntryState)transition(0).target;
 	}
 
-	@Override
-	public int getStateType() {
+	public override int getStateType() {
 		return STAR_LOOP_BACK;
 	}
 }

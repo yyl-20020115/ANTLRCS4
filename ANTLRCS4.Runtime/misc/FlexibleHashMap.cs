@@ -26,7 +26,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 
-	protected readonly AbstractEqualityComparator<? super K> comparator;
+	protected readonly AbstractEqualityComparator<K> comparator;
 
 	protected LinkedList<Entry<K, V>>[] buckets;
 
@@ -73,7 +73,6 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 
 	@Override
 	public V get(Object key) {
-		@SuppressWarnings("unchecked")
 		K typedKey = (K)key;
 		if ( key==null ) return null;
 		int b = getBucket(typedKey);
@@ -116,7 +115,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
+	public void putAll(Map<? : K, ? : V> m) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -143,7 +142,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	@Override
-	public boolean containsKey(Object key) {
+	public bool containsKey(Object key) {
 		return get(key)!=null;
 	}
 

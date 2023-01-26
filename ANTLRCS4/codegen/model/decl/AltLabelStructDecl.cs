@@ -42,7 +42,7 @@ public class AltLabelStructDecl : StructDecl {
 	@Override
 	public bool equals(Object obj) {
 		if ( obj == this ) return true;
-		if (!(obj instanceof AltLabelStructDecl)) return false;
+		if (!(obj is AltLabelStructDecl)) return false;
 
 		return name.equals(((AltLabelStructDecl)obj).name);
 	}

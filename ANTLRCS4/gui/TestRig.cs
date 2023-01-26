@@ -175,7 +175,7 @@ public class TestRig {
 
 			if ( showTokens ) {
 				for (Token tok : tokens.getTokens()) {
-					if ( tok instanceof CommonToken ) {
+					if ( tok is CommonToken ) {
 						System.out.println(((CommonToken)tok).toString(lexer));
 					}
 					else {

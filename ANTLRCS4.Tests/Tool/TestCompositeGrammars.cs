@@ -715,7 +715,7 @@ public class TestCompositeGrammars {
 			}
 		}
 		assertNotNull(foundMsg, "no error; "+expectedMessage.getErrorType()+" expected");
-		assertTrue(foundMsg instanceof GrammarSemanticsMessage, "error is not a GrammarSemanticsMessage");
+		assertTrue(foundMsg is GrammarSemanticsMessage, "error is not a GrammarSemanticsMessage");
 		assertEquals(Arrays.toString(expectedMessage.getArgs()), Arrays.toString(foundMsg.getArgs()));
 		if ( equeue.size()!=1 ) {
 			System.err.println(equeue);

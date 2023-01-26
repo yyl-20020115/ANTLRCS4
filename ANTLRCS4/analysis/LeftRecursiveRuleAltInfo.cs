@@ -10,7 +10,7 @@ public class LeftRecursiveRuleAltInfo {
 	public int altNum; // original alt index (from 1)
 	public String leftRecursiveRuleRefLabel;
 	public String altLabel;
-	public readonly boolean isListLabel;
+	public readonly bool isListLabel;
 	public String altText;
 	public AltAST altAST; // transformed ALT
 	public AltAST originalAltAST;

@@ -51,7 +51,7 @@ public class OutputModelWalker {
 		this.templates = templates;
 	}
 
-	public ST walk(OutputModelObject omo, boolean header) {
+	public ST walk(OutputModelObject omo, bool header) {
 		// CREATE TEMPLATE FOR THIS OUTPUT OBJECT
 		Class<? : OutputModelObject> cl = omo.getClass();
 		String templateName = cl.getSimpleName();
@@ -101,15 +101,15 @@ public class OutputModelWalker {
 
 			try {
 				Object o = fi.get(omo);
-				if ( o instanceof OutputModelObject ) {  // SINGLE MODEL OBJECT?
+				if ( o is OutputModelObject ) {  // SINGLE MODEL OBJECT?
 					OutputModelObject nestedOmo = (OutputModelObject)o;
 					ST nestedST = walk(nestedOmo, header);
 //					System.out.println("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
 					st.add(fieldName, nestedST);
 				}
-				else if ( o instanceof Collection || o instanceof OutputModelObject[] ) {
+				else if ( o is Collection || o is OutputModelObject[] ) {
 					// LIST OF MODEL OBJECTS?
-					if ( o instanceof OutputModelObject[] ) {
+					if ( o is OutputModelObject[] ) {
 						o = Arrays.asList((OutputModelObject[])o);
 					}
 					Collection<?> nestedOmos = (Collection<?>)o;
@@ -120,7 +120,7 @@ public class OutputModelWalker {
 						st.add(fieldName, nestedST);
 					}
 				}
-				else if ( o instanceof Map ) {
+				else if ( o is Map ) {
 					Map<?, ?> nestedOmoMap = (Map<?, ?>)o;
 					Map<Object, ST> m = new LinkedHashMap<Object, ST>();
 					for (Map.Entry<?, ?> entry : nestedOmoMap.entrySet()) {

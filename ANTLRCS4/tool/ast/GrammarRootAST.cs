@@ -20,7 +20,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	}
 
     public int grammarType; // LEXER, PARSER, GRAMMAR (combined)
-	public boolean hasErrors;
+	public bool hasErrors;
 	/** Track stream used to create this tree */
 
 	public final TokenStream tokenStream;

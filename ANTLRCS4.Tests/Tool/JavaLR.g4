@@ -227,7 +227,7 @@ classDeclaration
     
 normalClassDeclaration
     :   'class' Identifier typeParameters?
-        ('extends' type)?
+        (':' type)?
         ('implements' typeList)?
         classBody
     ;
@@ -726,7 +726,7 @@ expression
     |   expression ('+'|'-') expression
     |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression
     |   expression ('<=' | '>=' | '>' | '<') expression
-	|   expression 'instanceof' type
+	|   expression 'is' type
 	|   expression ('==' | '!=') expression
 	|   expression '&' expression
 	|   expression '^' expression
@@ -848,7 +848,7 @@ IF : 'if';
 GOTO : 'goto';
 IMPLEMENTS : 'implements';
 IMPORT : 'import';
-INSTANCEOF : 'instanceof';
+INSTANCEOF : 'is';
 INT : 'int';
 INTERFACE : 'interface';
 LONG : 'long';

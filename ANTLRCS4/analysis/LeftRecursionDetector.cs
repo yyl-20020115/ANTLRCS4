@@ -49,17 +49,17 @@ public class LeftRecursionDetector {
 	 *  filling the cycles in listOfRecursiveCycles and also, as a
 	 *  side-effect, set leftRecursiveRules.
 	 */
-	public boolean check(Rule enclosingRule, ATNState s, Set<ATNState> visitedStates) {
-		if ( s instanceof RuleStopState) return true;
+	public bool check(Rule enclosingRule, ATNState s, Set<ATNState> visitedStates) {
+		if ( s is RuleStopState) return true;
 		if ( visitedStates.contains(s) ) return false;
 		visitedStates.add(s);
 
 		//System.out.println("visit "+s);
 		int n = s.getNumberOfTransitions();
-		boolean stateReachesStopState = false;
+		bool stateReachesStopState = false;
 		for (int i=0; i<n; i++) {
 			Transition t = s.transition(i);
-			if ( t instanceof RuleTransition ) {
+			if ( t is RuleTransition ) {
 				RuleTransition rt = (RuleTransition) t;
 				Rule r = g.getRule(rt.ruleIndex);
 				if ( rulesVisitedPerRuleCheck.contains((RuleStartState)t.target) ) {
@@ -69,7 +69,7 @@ public class LeftRecursionDetector {
 					// must visit if not already visited; mark target, pop when done
 					rulesVisitedPerRuleCheck.add((RuleStartState)t.target);
 					// send new visitedStates set per rule invocation
-					boolean nullable = check(r, t.target, new HashSet<ATNState>());
+					bool nullable = check(r, t.target, new HashSet<ATNState>());
 					// we're back from visiting that rule
 					rulesVisitedPerRuleCheck.remove((RuleStartState)t.target);
 					if ( nullable ) {
@@ -92,7 +92,7 @@ public class LeftRecursionDetector {
 	 */
 	protected void addRulesToCycle(Rule enclosingRule, Rule targetRule) {
 		//System.err.println("left-recursion to "+targetRule.name+" from "+enclosingRule.name);
-		boolean foundCycle = false;
+		bool foundCycle = false;
 		for (Set<Rule> rulesInCycle : listOfRecursiveCycles) {
 			// ensure both rules are in same cycle
 			if (rulesInCycle.contains(targetRule)) {

@@ -108,7 +108,7 @@ public void visit(GrammarAST t, String ruleName) {
 	}
 	catch (Throwable e) {
 		ErrorManager errMgr = getErrorManager();
-		if ( e instanceof InvocationTargetException ) {
+		if ( e is InvocationTargetException ) {
 			e = e.getCause();
 		}
 		//e.printStackTrace(System.err);

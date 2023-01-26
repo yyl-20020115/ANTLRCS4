@@ -797,7 +797,7 @@ public class ParserATNSimulator extends ATNSimulator {
 		for (ATNConfig c : closure) {
 			if ( debug ) System.out.println("testing "+getTokenName(t)+" at "+c.toString());
 
-			if (c.state instanceof RuleStopState) {
+			if (c.state is RuleStopState) {
 				assert c.context.isEmpty();
 				if (fullCtx || t == IntStream.EOF) {
 					if (skippedStopStates == null) {
@@ -927,7 +927,7 @@ public class ParserATNSimulator extends ATNSimulator {
 
 		ATNConfigSet result = new ATNConfigSet(configs.fullCtx);
 		for (ATNConfig config : configs) {
-			if (config.state instanceof RuleStopState) {
+			if (config.state is RuleStopState) {
 				result.add(config, mergeCache);
 				continue;
 			}
@@ -1321,7 +1321,7 @@ public class ParserATNSimulator extends ATNSimulator {
 	protected int getAltThatFinishedDecisionEntryRule(ATNConfigSet configs) {
 		IntervalSet alts = new IntervalSet();
 		for (ATNConfig c : configs) {
-			if ( c.getOuterContextDepth()>0 || (c.state instanceof RuleStopState && c.context.hasEmptyPath()) ) {
+			if ( c.getOuterContextDepth()>0 || (c.state is RuleStopState && c.context.hasEmptyPath()) ) {
 				alts.add(c.alt);
 			}
 		}
@@ -1464,7 +1464,7 @@ public class ParserATNSimulator extends ATNSimulator {
 	{
 		if ( debug ) System.out.println("closure("+config.toString(parser,true)+")");
 
-		if ( config.state instanceof RuleStopState ) {
+		if ( config.state is RuleStopState ) {
 			// We hit rule end. If we have context info, use it
 			// run thru all possible stack tops in ctx
 			if ( !config.context.isEmpty() ) {
@@ -1540,12 +1540,12 @@ public class ParserATNSimulator extends ATNSimulator {
 
 			Transition t = p.transition(i);
 			boolean continueCollecting =
-				!(t instanceof ActionTransition) && collectPredicates;
+				!(t is ActionTransition) && collectPredicates;
 			ATNConfig c = getEpsilonTarget(config, t, continueCollecting,
 										   depth == 0, fullCtx, treatEofAsEpsilon);
 			if ( c!=null ) {
 				int newDepth = depth;
-				if ( config.state instanceof RuleStopState) {
+				if ( config.state is RuleStopState) {
 					assert !fullCtx;
 					// target fell off end of rule; mark resulting c as having dipped into outer context
 					// We can't get here if incoming config was rule stop and we had context
@@ -1578,7 +1578,7 @@ public class ParserATNSimulator extends ATNSimulator {
 						continue;
 					}
 
-					if (t instanceof RuleTransition) {
+					if (t is RuleTransition) {
 						// latch when newDepth goes negative - once we step out of the entry context we can't return
 						if (newDepth >= 0) {
 							newDepth++;
@@ -2006,13 +2006,13 @@ public class ParserATNSimulator extends ATNSimulator {
 			String trans = "no edges";
 			if ( c.state.getNumberOfTransitions()>0 ) {
 				Transition t = c.state.transition(0);
-				if ( t instanceof AtomTransition) {
+				if ( t is AtomTransition) {
 					AtomTransition at = (AtomTransition)t;
 					trans = "Atom "+getTokenName(at.label);
 				}
-				else if ( t instanceof SetTransition ) {
+				else if ( t is SetTransition ) {
 					SetTransition st = (SetTransition)t;
-					boolean not = st instanceof NotSetTransition;
+					boolean not = st is NotSetTransition;
 					trans = (not?"~":"")+"Set "+st.set.toString();
 				}
 			}

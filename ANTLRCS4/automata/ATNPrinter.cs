@@ -38,24 +38,24 @@ public class ATNPrinter {
 			marked.add(s);
 			for (int i=0; i<n; i++) {
 				Transition t = s.transition(i);
-				if ( !(s instanceof RuleStopState) ) { // don't add follow states to work
-					if ( t instanceof RuleTransition ) work.add(((RuleTransition)t).followState);
+				if ( !(s is RuleStopState) ) { // don't add follow states to work
+					if ( t is RuleTransition ) work.add(((RuleTransition)t).followState);
 					else work.add( t.target );
 				}
 				buf.append(getStateString(s));
-				if ( t instanceof EpsilonTransition ) {
+				if ( t is EpsilonTransition ) {
 					buf.append("->").append(getStateString(t.target)).append('\n');
 				}
-				else if ( t instanceof RuleTransition ) {
+				else if ( t is RuleTransition ) {
 					buf.append("-").append(g.getRule(((RuleTransition)t).ruleIndex).name).append("->").append(getStateString(t.target)).append('\n');
 				}
-				else if ( t instanceof ActionTransition ) {
+				else if ( t is ActionTransition ) {
 					ActionTransition a = (ActionTransition)t;
 					buf.append("-").append(a.toString()).append("->").append(getStateString(t.target)).append('\n');
 				}
-				else if ( t instanceof SetTransition ) {
+				else if ( t is SetTransition ) {
 					SetTransition st = (SetTransition)t;
-					boolean not = st instanceof NotSetTransition;
+					bool not = st is NotSetTransition;
 					if ( g.isLexer() ) {
 						buf.append("-").append(not?"~":"").append(st.toString()).append("->").append(getStateString(t.target)).append('\n');
 					}
@@ -63,7 +63,7 @@ public class ATNPrinter {
 						buf.append("-").append(not?"~":"").append(st.label().toString(g.getVocabulary())).append("->").append(getStateString(t.target)).append('\n');
 					}
 				}
-				else if ( t instanceof AtomTransition ) {
+				else if ( t is AtomTransition ) {
 					AtomTransition a = (AtomTransition)t;
 					String label = g.getTokenDisplayName(a.label);
 					buf.append("-").append(label).append("->").append(getStateString(t.target)).append('\n');
@@ -79,15 +79,15 @@ public class ATNPrinter {
 	String getStateString(ATNState s) {
 		int n = s.stateNumber;
 		String stateStr = "s"+n;
-		if ( s instanceof StarBlockStartState ) stateStr = "StarBlockStart_"+n;
-		else if ( s instanceof PlusBlockStartState ) stateStr = "PlusBlockStart_"+n;
-		else if ( s instanceof BlockStartState) stateStr = "BlockStart_"+n;
-		else if ( s instanceof BlockEndState ) stateStr = "BlockEnd_"+n;
-		else if ( s instanceof RuleStartState) stateStr = "RuleStart_"+g.getRule(s.ruleIndex).name+"_"+n;
-		else if ( s instanceof RuleStopState ) stateStr = "RuleStop_"+g.getRule(s.ruleIndex).name+"_"+n;
-		else if ( s instanceof PlusLoopbackState) stateStr = "PlusLoopBack_"+n;
-		else if ( s instanceof StarLoopbackState) stateStr = "StarLoopBack_"+n;
-		else if ( s instanceof StarLoopEntryState) stateStr = "StarLoopEntry_"+n;
+		if ( s is StarBlockStartState ) stateStr = "StarBlockStart_"+n;
+		else if ( s is PlusBlockStartState ) stateStr = "PlusBlockStart_"+n;
+		else if ( s is BlockStartState) stateStr = "BlockStart_"+n;
+		else if ( s is BlockEndState ) stateStr = "BlockEnd_"+n;
+		else if ( s is RuleStartState) stateStr = "RuleStart_"+g.getRule(s.ruleIndex).name+"_"+n;
+		else if ( s is RuleStopState ) stateStr = "RuleStop_"+g.getRule(s.ruleIndex).name+"_"+n;
+		else if ( s is PlusLoopbackState) stateStr = "PlusLoopBack_"+n;
+		else if ( s is StarLoopbackState) stateStr = "StarLoopBack_"+n;
+		else if ( s is StarLoopEntryState) stateStr = "StarLoopEntry_"+n;
 		return stateStr;
 	}
 }

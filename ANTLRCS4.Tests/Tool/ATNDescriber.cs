@@ -136,7 +136,7 @@ public class ATNDescriber {
 		for (int i=0; i<nsets; i++) {
 			int nintervals = data[p++];
 			buf.append(i).append(":");
-			boolean containsEof = data[p++] != 0;
+			bool containsEof = data[p++] != 0;
 			if (containsEof) {
 				buf.append(getTokenName(Token.EOF));
 			}

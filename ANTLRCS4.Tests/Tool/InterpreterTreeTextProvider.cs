@@ -22,7 +22,7 @@ public class InterpreterTreeTextProvider implements TreeTextProvider {
 	public String getText(Tree node) {
 		if ( node==null ) return "null";
 		String nodeText = Trees.getNodeText(node, ruleNames);
-		if ( node instanceof ErrorNode) {
+		if ( node is ErrorNode) {
 			return "<error "+nodeText+">";
 		}
 		return nodeText;

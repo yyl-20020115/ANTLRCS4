@@ -272,7 +272,7 @@ public class SemanticPipeline {
 				g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, channel.token, channelName);
 			}
 
-			if (outermost instanceof LexerGrammar) {
+			if (outermost is LexerGrammar) {
 				LexerGrammar lexerGrammar = (LexerGrammar)outermost;
 				if (lexerGrammar.modes.containsKey(channelName)) {
 					g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_MODE, g.fileName, channel.token, channelName);

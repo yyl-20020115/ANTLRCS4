@@ -171,7 +171,7 @@ public class SymbolChecks {
 		if (label == null) {
 			return null;
 		}
-		else if (label instanceof AltAST) {
+		else if (label is AltAST) {
 			AltAST altAST = (AltAST) label;
 			if (altAST.altLabel != null) {
 				return altAST.altLabel.toString();
@@ -196,7 +196,7 @@ public class SymbolChecks {
 			// See https://github.com/antlr/antlr4/pull/1585
 			// Such behavior is referring to the fact that the warning is typically reported on the actual label redefinition,
 			//   but for left-recursive rules the warning is reported on the enclosing rule.
-			org.antlr.runtime.Token token = r instanceof LeftRecursiveRule
+			org.antlr.runtime.Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
 			errMgr.grammarError(
@@ -210,7 +210,7 @@ public class SymbolChecks {
 			(prevLabelPair.type.equals(LabelType.RULE_LABEL) || prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL)) &&
 			(labelPair.type.equals(LabelType.RULE_LABEL) || labelPair.type.equals(LabelType.RULE_LIST_LABEL))) {
 
-			org.antlr.runtime.Token token = r instanceof LeftRecursiveRule
+			org.antlr.runtime.Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
 			String prevLabelOp = prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
@@ -382,7 +382,7 @@ public class SymbolChecks {
 			if (alt != null) {
 				// select first alt if token has a command
 				Tree rootNode = alt.ast.getChildCount() == 2 &&
-						alt.ast.getChild(0) instanceof AltAST && alt.ast.getChild(1) instanceof GrammarAST
+						alt.ast.getChild(0) is AltAST && alt.ast.getChild(1) is GrammarAST
 						? alt.ast.getChild(0)
 						: alt.ast;
 
@@ -395,7 +395,7 @@ public class SymbolChecks {
 				StringBuilder currentValue = new StringBuilder();
 				for (int i = 0; i < rootNode.getChildCount(); i++) {
 					Tree child = rootNode.getChild(i);
-					if (!(child instanceof TerminalAST)) {
+					if (!(child is TerminalAST)) {
 						ignore = true;
 						break;
 					}

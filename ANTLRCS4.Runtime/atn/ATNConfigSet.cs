@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using System.Text;
+
 namespace org.antlr.v4.runtime.atn;
 /**
  * Specialized {@link Set}{@code <}{@link ATNConfig}{@code >} that can track
@@ -40,7 +42,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		}
 
 		@Override
-		public boolean equals(ATNConfig a, ATNConfig b) {
+		public bool equals(ATNConfig a, ATNConfig b) {
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;
 			return a.state.stateNumber==b.state.stateNumber
@@ -105,7 +107,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	@Override
-	public boolean add(ATNConfig config) {
+	public bool add(ATNConfig config) {
 		return add(config, null);
 	}
 
@@ -119,7 +121,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	 * <p>This method updates {@link #dipsIntoOuterContext} and
 	 * {@link #hasSemanticContext} when necessary.</p>
 	 */
-	public boolean add(
+	public bool add(
 		ATNConfig config,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
@@ -137,7 +139,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			return true;
 		}
 		// a previous (s,i,pi,_), merge with it and save result
-		boolean rootIsWildcard = !fullCtx;
+		bool rootIsWildcard = !fullCtx;
 		PredictionContext merged =
 			PredictionContext.merge(existing.context, config.context, rootIsWildcard, mergeCache);
 		// no need to check for existing.context, config.context in cache
@@ -208,23 +210,23 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends ATNConfig> coll) {
+	public bool addAll(Collection<? : ATNConfig> coll) {
 		for (ATNConfig c : coll) add(c);
 		return false;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public bool equals(Object o) {
 		if (o == this) {
 			return true;
 		}
-		else if (!(o instanceof ATNConfigSet)) {
+		else if (!(o is ATNConfigSet)) {
 			return false;
 		}
 
 //		System.out.print("equals " + this + ", " + o+" = ");
 		ATNConfigSet other = (ATNConfigSet)o;
-		boolean same = configs!=null &&
+		bool same = configs!=null &&
 			configs.equals(other.configs) &&  // includes stack context
 			this.fullCtx == other.fullCtx &&
 			this.uniqueAlt == other.uniqueAlt &&
@@ -255,12 +257,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	@Override
-	public boolean isEmpty() {
+	public bool isEmpty() {
 		return configs.isEmpty();
 	}
 
 	@Override
-	public boolean contains(Object o) {
+	public bool contains(Object o) {
 		if (configLookup == null) {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
 		}
@@ -268,7 +270,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return configLookup.contains(o);
 	}
 
-	public boolean containsFast(ATNConfig obj) {
+	public bool containsFast(ATNConfig obj) {
 		if (configLookup == null) {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
 		}
@@ -289,11 +291,11 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		configLookup.clear();
 	}
 
-	public boolean isReadonly() {
+	public bool isReadonly() {
 		return readonly;
 	}
 
-	public void setReadonly(boolean readonly) {
+	public void setReadonly(bool readonly) {
 		this.readonly = readonly;
 		configLookup = null; // can't mod, no need for lookup cache
 	}
@@ -322,26 +324,26 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public bool remove(Object o) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public bool containsAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public bool retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public bool removeAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	public static abstract class AbstractConfigHashSet extends Array2DHashSet<ATNConfig> {
+	public static abstract class AbstractConfigHashSet : Array2DHashSet<ATNConfig> {
 
 		public AbstractConfigHashSet(AbstractEqualityComparator<? super ATNConfig> comparator) {
 			this(comparator, 16, 2);
@@ -352,8 +354,8 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		}
 
 		@Override
-		protected final ATNConfig asElementType(Object o) {
-			if (!(o instanceof ATNConfig)) {
+		protected ATNConfig asElementType(Object o) {
+			if (!(o is ATNConfig)) {
 				return null;
 			}
 
@@ -361,7 +363,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		}
 
 		@Override
-		protected final ATNConfig[][] createBuckets(int capacity) {
+		protected ATNConfig[][] createBuckets(int capacity) {
 			return new ATNConfig[capacity][];
 		}
 

@@ -3,7 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime.misc;
+namespace org.antlr.v4.runtime.misc;
 
 /**
  * This default implementation of {@link EqualityComparator} uses object equality
@@ -11,8 +11,8 @@ package org.antlr.v4.runtime.misc;
  *
  * @author Sam Harwell
  */
-public final class ObjectEqualityComparator extends AbstractEqualityComparator<Object> {
-	public static final ObjectEqualityComparator INSTANCE = new ObjectEqualityComparator();
+public class ObjectEqualityComparator : AbstractEqualityComparator<object> {
+	public static readonly ObjectEqualityComparator INSTANCE = new ();
 
 	/**
 	 * {@inheritDoc}
@@ -20,13 +20,12 @@ public final class ObjectEqualityComparator extends AbstractEqualityComparator<O
 	 * <p>This implementation returns
 	 * {@code obj.}{@link Object#hashCode hashCode()}.</p>
 	 */
-	@Override
-	public int hashCode(Object obj) {
+	public override int GetHashCode(Object obj) {
 		if (obj == null) {
 			return 0;
 		}
 
-		return obj.hashCode();
+		return obj.GetHashCode();
 	}
 
 	/**
@@ -38,13 +37,12 @@ public final class ObjectEqualityComparator extends AbstractEqualityComparator<O
 	 * this method returns the result of
 	 * {@code a.}{@link Object#equals equals}{@code (b)}.</p>
 	 */
-	@Override
-	public boolean equals(Object a, Object b) {
+	public override bool Equals(Object a, Object b) {
 		if (a == null) {
 			return b == null;
 		}
 
-		return a.equals(b);
+		return a.Equals(b);
 	}
 
 }

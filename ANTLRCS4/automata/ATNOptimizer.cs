@@ -39,7 +39,7 @@ public class ATNOptimizer {
 			IntervalSet setTransitions = new IntervalSet();
 			for (int i = 0; i < decision.getNumberOfTransitions(); i++) {
 				Transition epsTransition = decision.transition(i);
-				if (!(epsTransition instanceof EpsilonTransition)) {
+				if (!(epsTransition is EpsilonTransition)) {
 					continue;
 				}
 
@@ -48,18 +48,18 @@ public class ATNOptimizer {
 				}
 
 				Transition transition = epsTransition.target.transition(0);
-				if (!(transition.target instanceof BlockEndState)) {
+				if (!(transition.target is BlockEndState)) {
 					continue;
 				}
 
-				if (transition instanceof NotSetTransition) {
+				if (transition is NotSetTransition) {
 					// TODO: not yet implemented
 					continue;
 				}
 
-				if (transition instanceof AtomTransition
-					|| transition instanceof RangeTransition
-					|| transition instanceof SetTransition)
+				if (transition is AtomTransition
+					|| transition is RangeTransition
+					|| transition is SetTransition)
 				{
 					setTransitions.add(i);
 				}
@@ -76,7 +76,7 @@ public class ATNOptimizer {
 				IntervalSet matchSet = new IntervalSet();
 				for (int j = interval.a; j <= interval.b; j++) {
 					Transition matchTransition = decision.transition(j).target.transition(0);
-					if (matchTransition instanceof NotSetTransition) {
+					if (matchTransition is NotSetTransition) {
 						throw new UnsupportedOperationException("Not yet implemented.");
 					}
 					IntervalSet set =  matchTransition.label();

@@ -24,7 +24,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 *
 	 * @see #inErrorRecoveryMode
 	 */
-	protected boolean errorRecoveryMode = false;
+	protected bool errorRecoveryMode = false;
 
 	/** The index into the input stream where the last error occurred.
 	 * 	This is used to prevent infinite loops where an error is found
@@ -76,7 +76,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean inErrorRecoveryMode(Parser recognizer) {
+	public bool inErrorRecoveryMode(Parser recognizer) {
 		return errorRecoveryMode;
 	}
 
@@ -132,13 +132,13 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 			return; // don't report spurious errors
 		}
 		beginErrorCondition(recognizer);
-		if ( e instanceof NoViableAltException ) {
+		if ( e is NoViableAltException ) {
 			reportNoViableAlternative(recognizer, (NoViableAltException) e);
 		}
-		else if ( e instanceof InputMismatchException ) {
+		else if ( e is InputMismatchException ) {
 			reportInputMismatch(recognizer, (InputMismatchException)e);
 		}
-		else if ( e instanceof FailedPredicateException ) {
+		else if ( e is FailedPredicateException ) {
 			reportFailedPredicate(recognizer, (FailedPredicateException)e);
 		}
 		else {
@@ -505,7 +505,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * @return {@code true} if single-token insertion is a viable recovery
 	 * strategy for the current mismatched input, otherwise {@code false}
 	 */
-	protected boolean singleTokenInsertion(Parser recognizer) {
+	protected bool singleTokenInsertion(Parser recognizer) {
 		int currentSymbolType = recognizer.getInputStream().LA(1);
 		// if current token is consistent with what could come after current
 		// ATN state, then we know we're missing a token; error recovery

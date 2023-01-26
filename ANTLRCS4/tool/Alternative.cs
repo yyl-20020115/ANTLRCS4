@@ -48,7 +48,7 @@ public class Alternative implements AttributeResolver {
     public Alternative(Rule r, int altNum) { this.rule = r; this.altNum = altNum; }
 
 	@Override
-	public boolean resolvesToToken(String x, ActionAST node) {
+	public bool resolvesToToken(String x, ActionAST node) {
 		if ( tokenRefs.get(x)!=null ) return true;
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
@@ -56,7 +56,7 @@ public class Alternative implements AttributeResolver {
 	}
 
 	@Override
-	public boolean resolvesToAttributeDict(String x, ActionAST node) {
+	public bool resolvesToAttributeDict(String x, ActionAST node) {
 		if ( resolvesToToken(x, node) ) return true;
         if ( ruleRefs.get(x)!=null ) return true; // rule ref in this alt?
         LabelElementPair anyLabelDef = getAnyLabelDef(x);
@@ -99,7 +99,7 @@ public class Alternative implements AttributeResolver {
 	}
 
 	@Override
-	public boolean resolvesToLabel(String x, ActionAST node) {
+	public bool resolvesToLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.TOKEN_LABEL ||
@@ -107,7 +107,7 @@ public class Alternative implements AttributeResolver {
 	}
 
 	@Override
-	public boolean resolvesToListLabel(String x, ActionAST node) {
+	public bool resolvesToListLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.RULE_LIST_LABEL ||

@@ -50,7 +50,7 @@ public class ErrorManager {
 		ST reportST = getReportFormat(msg.getErrorType().severity);
 		ST messageFormatST = getMessageFormat();
 
-		boolean locationValid = false;
+		bool locationValid = false;
 		if (msg.line != -1) {
 			locationST.add("line", msg.line);
 			locationValid = true;
@@ -105,7 +105,7 @@ public class ErrorManager {
     public ST getMessageFormat() {
         return format.getInstanceOf("message");
     }
-    public boolean formatWantsSingleLineMessage() {
+    public bool formatWantsSingleLineMessage() {
         return format.getInstanceOf("wantsSingleLineMessage").render().equals("true");
     }
 
@@ -253,7 +253,7 @@ public class ErrorManager {
 			panic();
 		}
 
-		boolean formatOK = verifyFormat();
+		bool formatOK = verifyFormat();
 		if (!formatOK && formatName.equals("antlr")) {
 			rawError("ANTLR installation corrupted; ANTLR messages format file " + formatName + ".stg incomplete");
 			panic();
@@ -264,8 +264,8 @@ public class ErrorManager {
 	}
 
     /** Verify the message format template group */
-    protected boolean verifyFormat() {
-        boolean ok = true;
+    protected bool verifyFormat() {
+        bool ok = true;
         if (!format.isDefined("location")) {
             System.err.println("Format template 'location' not found in " + formatName);
             ok = false;

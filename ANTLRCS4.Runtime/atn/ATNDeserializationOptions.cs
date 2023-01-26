@@ -17,9 +17,9 @@ public class ATNDeserializationOptions {
 		defaultOptions.makeReadOnly();
 	}
 
-	private boolean readOnly;
-	private boolean verifyATN;
-	private boolean generateRuleBypassTransitions;
+	private bool readOnly;
+	private bool verifyATN;
+	private bool generateRuleBypassTransitions;
 
 	public ATNDeserializationOptions() {
 		this.verifyATN = true;
@@ -36,7 +36,7 @@ public class ATNDeserializationOptions {
 		return defaultOptions;
 	}
 
-	public final boolean isReadOnly() {
+	public final bool isReadOnly() {
 		return readOnly;
 	}
 
@@ -44,20 +44,20 @@ public class ATNDeserializationOptions {
 		readOnly = true;
 	}
 
-	public final boolean isVerifyATN() {
+	public final bool isVerifyATN() {
 		return verifyATN;
 	}
 
-	public final void setVerifyATN(boolean verifyATN) {
+	public final void setVerifyATN(bool verifyATN) {
 		throwIfReadOnly();
 		this.verifyATN = verifyATN;
 	}
 
-	public final boolean isGenerateRuleBypassTransitions() {
+	public final bool isGenerateRuleBypassTransitions() {
 		return generateRuleBypassTransitions;
 	}
 
-	public final void setGenerateRuleBypassTransitions(boolean generateRuleBypassTransitions) {
+	public final void setGenerateRuleBypassTransitions(bool generateRuleBypassTransitions) {
 		throwIfReadOnly();
 		this.generateRuleBypassTransitions = generateRuleBypassTransitions;
 	}

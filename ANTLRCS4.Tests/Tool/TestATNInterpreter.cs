@@ -374,7 +374,7 @@ public class TestATNInterpreter {
 //		System.out.println("input="+input.types);
 		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, input);
 		ATNState startState = atn.ruleToStartState[g.getRule("a").index];
-		if ( startState.transition(0).target instanceof BlockStartState ) {
+		if ( startState.transition(0).target is BlockStartState ) {
 			startState = startState.transition(0).target;
 		}
 

@@ -65,7 +65,7 @@ public abstract class Recognizer : OutputModelObject {
 
 		ruleNames = g.rules.keySet();
 		rules = g.rules.values();
-		if ( gen.getTarget() instanceof JavaTarget ) {
+		if ( gen.getTarget() is JavaTarget ) {
 			atn = new SerializedJavaATN(factory, g.atn);
 		}
 		else {

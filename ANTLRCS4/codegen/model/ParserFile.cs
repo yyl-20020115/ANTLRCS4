@@ -17,8 +17,8 @@ import java.util.Map;
 public class ParserFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line
-	public boolean genListener; // from -listener cmd-line
-	public boolean genVisitor; // from -visitor cmd-line
+	public bool genListener; // from -listener cmd-line
+	public bool genVisitor; // from -visitor cmd-line
 	@ModelElement public Parser parser;
 	@ModelElement public Map<String, Action> namedActions;
 	@ModelElement public ActionChunk contextSuperClass;

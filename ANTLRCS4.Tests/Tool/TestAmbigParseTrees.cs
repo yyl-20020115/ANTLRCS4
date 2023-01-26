@@ -270,7 +270,7 @@ public class TestAmbigParseTrees {
 		RuleStartState ruleStartState = g.atn.ruleToStartState[g.getRule(startRule).index];
 		Transition tr = ruleStartState.transition(0);
 		ATNState t2 = tr.target;
-		if ( !(t2 instanceof BasicBlockStartState) ) {
+		if ( !(t2 is BasicBlockStartState) ) {
 			throw new IllegalArgumentException("rule has no decision: "+startRule);
 		}
 		parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);

@@ -87,12 +87,12 @@ public class Grammar implements AttributeResolver {
 
 	public static final Set<String> lexerOptions = parserOptions;
 
-	public static final Set<String> lexerRuleOptions = new HashSet<>();
+	public static final Set<String> lexerRuleOptions = new ();
 	static {
 		lexerRuleOptions.add(caseInsensitiveOptionName);
 	}
 
-	public static final Set<String> parseRuleOptions = new HashSet<>();
+	public static final Set<String> parseRuleOptions = new ();
 
 	public static final Set<String> parserBlockOptions = new HashSet<String>();
 
@@ -373,7 +373,7 @@ public class Grammar implements AttributeResolver {
 
 
 	public void loadImportedGrammars() {
-		this.loadImportedGrammars(new HashSet<>());
+		this.loadImportedGrammars(new ());
 	}
 
     private void loadImportedGrammars(Set<String> visited) {
@@ -440,7 +440,7 @@ public class Grammar implements AttributeResolver {
 	 * instance; otherwise, {@code false} if a rule with this name already
 	 * existed in the grammar instance.
 	 */
-	public boolean defineRule(Rule r) {
+	public bool defineRule(Rule r) {
 		if ( rules.get(r.name)!=null ) {
 			return false;
 		}
@@ -466,7 +466,7 @@ public class Grammar implements AttributeResolver {
 	 * instance; otherwise, {@code false} if the specified rule was not defined
 	 * in the grammar.
 	 */
-	public boolean undefineRule(Rule r) {
+	public bool undefineRule(Rule r) {
 		if (r.index < 0 || r.index >= indexToRule.size() || indexToRule.get(r.index) != r) {
 			return false;
 		}
@@ -841,14 +841,14 @@ public class Grammar implements AttributeResolver {
 	 *  Pull predicates from grammar text.
 	 */
 	public String getSemanticContextDisplayString(SemanticContext semctx) {
-		if ( semctx instanceof SemanticContext.Predicate ) {
+		if ( semctx is SemanticContext.Predicate ) {
 			return getPredicateDisplayString((SemanticContext.Predicate)semctx);
 		}
-		if ( semctx instanceof SemanticContext.AND ) {
+		if ( semctx is SemanticContext.AND ) {
 			SemanticContext.AND and = (SemanticContext.AND)semctx;
 			return joinPredicateOperands(and, " and ");
 		}
-		if ( semctx instanceof SemanticContext.OR ) {
+		if ( semctx is SemanticContext.OR ) {
 			SemanticContext.OR or = (SemanticContext.OR)semctx;
 			return joinPredicateOperands(or, " or ");
 		}
@@ -872,7 +872,7 @@ public class Grammar implements AttributeResolver {
 		LinkedHashMap<Integer, PredAST> indexToPredMap = new LinkedHashMap<Integer, PredAST>();
 		for (Rule r : rules.values()) {
 			for (ActionAST a : r.actions) {
-				if (a instanceof PredAST) {
+				if (a is PredAST) {
 					PredAST p = (PredAST) a;
 					indexToPredMap.put(sempreds.get(p), p);
 				}
@@ -1110,16 +1110,16 @@ public class Grammar implements AttributeResolver {
 	}
 
 	@Override
-	public boolean resolvesToLabel(String x, ActionAST node) { return false; }
+	public bool resolvesToLabel(String x, ActionAST node) { return false; }
 
 	@Override
-	public boolean resolvesToListLabel(String x, ActionAST node) { return false; }
+	public bool resolvesToListLabel(String x, ActionAST node) { return false; }
 
 	@Override
-	public boolean resolvesToToken(String x, ActionAST node) { return false; }
+	public bool resolvesToToken(String x, ActionAST node) { return false; }
 
 	@Override
-	public boolean resolvesToAttributeDict(String x, ActionAST node) {
+	public bool resolvesToAttributeDict(String x, ActionAST node) {
 		return false;
 	}
 
@@ -1148,12 +1148,12 @@ public class Grammar implements AttributeResolver {
 		return null;
 	}
 
-	public boolean isLexer() { return getType()==ANTLRParser.LEXER; }
-	public boolean isParser() { return getType()==ANTLRParser.PARSER; }
-	public boolean isCombined() { return getType()==ANTLRParser.COMBINED; }
+	public bool isLexer() { return getType()==ANTLRParser.LEXER; }
+	public bool isParser() { return getType()==ANTLRParser.PARSER; }
+	public bool isCombined() { return getType()==ANTLRParser.COMBINED; }
 
 	/** Is id a valid token name? Does id start with an uppercase letter? */
-	public static boolean isTokenName(String id) {
+	public static bool isTokenName(String id) {
 		return Character.isUpperCase(id.charAt(0));
 	}
 
@@ -1225,7 +1225,7 @@ public class Grammar implements AttributeResolver {
 			org.antlr.runtime.tree.Tree name = r.getChild(0);
 			if ( name.getType()==ANTLRParser.TOKEN_REF ) {
 				// check rule against patterns
-				boolean isLitRule;
+				bool isLitRule;
 				for (String pattern : patterns) {
 					isLitRule =
 						defAlias(r, pattern, wiz, lexerRuleToStringLiteral);
@@ -1237,7 +1237,7 @@ public class Grammar implements AttributeResolver {
 		return lexerRuleToStringLiteral;
 	}
 
-	protected static boolean defAlias(GrammarAST r, String pattern,
+	protected static bool defAlias(GrammarAST r, String pattern,
 									  org.antlr.runtime.tree.TreeWizard wiz,
 									  List<Pair<GrammarAST,GrammarAST>> lexerRuleToStringLiteral)
 	{
@@ -1290,10 +1290,10 @@ public class Grammar implements AttributeResolver {
 						ruleNode = n.getAncestor(ANTLRParser.RULE);
 						break;
 				}
-				if ( ruleNode instanceof RuleAST ) {
+				if ( ruleNode is RuleAST ) {
 					String ruleName = ((RuleAST) ruleNode).getRuleName();
 					Rule r = ast.g.getRule(ruleName);
-					if ( r instanceof LeftRecursiveRule ) {
+					if ( r is LeftRecursiveRule ) {
 						RuleAST originalAST = ((LeftRecursiveRule) r).getOriginalAST();
 						tokenRegion = Interval.of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
 					}

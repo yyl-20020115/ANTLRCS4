@@ -4,21 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.misc;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
+namespace org.antlr.v4.runtime.misc;
 
 /** A HashMap that remembers the order that the elements were added.
  *  You can alter the ith element with set(i,value) too :)  Unique list.
  *  I need the replace/set-element-i functionality so I'm subclassing
  *  LinkedHashSet.
  */
-public class OrderedHashSet<T> extends LinkedHashSet<T> {
+public class OrderedHashSet<T> : HashSet<T> {
     /** Track the elements as they are added to the set */
-    protected ArrayList<T> elements = new ArrayList<T>();
+    protected List<T> elements = new ();
 
     public T get(int i) {
         return elements.get(i);
@@ -35,7 +30,7 @@ public class OrderedHashSet<T> extends LinkedHashSet<T> {
         return oldElement;
     }
 
-	public boolean remove(int i) {
+	public bool remove(int i) {
 		T o = elements.remove(i);
         return super.remove(o);
 	}
@@ -44,44 +39,38 @@ public class OrderedHashSet<T> extends LinkedHashSet<T> {
      *  Key is object itself.  Good for say asking if a certain string is in
      *  a list of strings.
      */
-    @Override
-    public boolean add(T value) {
-        boolean result = super.add(value);
+    public bool add(T value) {
+        bool result = super.add(value);
 		if ( result ) {  // only track if new element not in set
 			elements.add(value);
 		}
 		return result;
     }
 
-	@Override
-	public boolean remove(Object o) {
+	public bool remove(Object o) {
 		throw new UnsupportedOperationException();
     }
 
-	@Override
 	public void clear() {
         elements.clear();
         super.clear();
     }
 
-	@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		return elements.hashCode();
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof OrderedHashSet<?>)) {
+	public bool Equals(Object o) {
+		if (!(o is OrderedHashSet<T>)) {
 			return false;
 		}
 
 //		System.out.print("equals " + this + ", " + o+" = ");
-		boolean same = elements!=null && elements.equals(((OrderedHashSet<?>)o).elements);
+		bool same = elements!=null && elements.equals(((OrderedHashSet<?>)o).elements);
 //		System.out.println(same);
 		return same;
 	}
 
-	@Override
 	public Iterator<T> iterator() {
 		return elements.iterator();
 	}
@@ -93,21 +82,17 @@ public class OrderedHashSet<T> extends LinkedHashSet<T> {
         return elements;
     }
 
-    @Override
     public Object clone() {
-        @SuppressWarnings("unchecked") // safe (result of clone)
         OrderedHashSet<T> dup = (OrderedHashSet<T>)super.clone();
-        dup.elements = new ArrayList<T>(this.elements);
+        dup.elements = new (this.elements);
         return dup;
     }
 
-    @Override
-	public Object[] toArray() {
-		return elements.toArray();
+	public Object[] ToArray() {
+		return elements.ToArray();
 	}
 
-	@Override
-	public String toString() {
+	public override String ToString() {
         return elements.toString();
     }
 }

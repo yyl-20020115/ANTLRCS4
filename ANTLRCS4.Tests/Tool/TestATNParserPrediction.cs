@@ -442,7 +442,7 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e instanceof LeftRecursiveRule);
+		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
 		assertEquals("[0, 2, 4]", Arrays.toString(lr.getPrimaryAlts()));
 		assertEquals("[0, 1, 3]", Arrays.toString(lr.getRecursiveOpAlts()));
@@ -459,7 +459,7 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e instanceof LeftRecursiveRule);
+		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
 		assertEquals("[0, 1, 3]", Arrays.toString(lr.getPrimaryAlts()));
 		assertEquals("[0, 2]", Arrays.toString(lr.getRecursiveOpAlts()));
@@ -479,7 +479,7 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e instanceof LeftRecursiveRule);
+		assertTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
 		assertEquals("[0, 1, 5]", Arrays.toString(lr.getPrimaryAlts()));
 		assertEquals("[0, 2, 3, 4]", Arrays.toString(lr.getRecursiveOpAlts()));

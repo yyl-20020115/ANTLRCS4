@@ -106,7 +106,7 @@ public class LexerActionExecutor {
 	public LexerActionExecutor fixOffsetBeforeMatch(int offset) {
 		LexerAction[] updatedLexerActions = null;
 		for (int i = 0; i < lexerActions.length; i++) {
-			if (lexerActions[i].isPositionDependent() && !(lexerActions[i] instanceof LexerIndexedCustomAction)) {
+			if (lexerActions[i].isPositionDependent() && !(lexerActions[i] is LexerIndexedCustomAction)) {
 				if (updatedLexerActions == null) {
 					updatedLexerActions = lexerActions.clone();
 				}
@@ -154,7 +154,7 @@ public class LexerActionExecutor {
 		int stopIndex = input.index();
 		try {
 			for (LexerAction lexerAction : lexerActions) {
-				if (lexerAction instanceof LexerIndexedCustomAction) {
+				if (lexerAction is LexerIndexedCustomAction) {
 					int offset = ((LexerIndexedCustomAction)lexerAction).getOffset();
 					input.seek(startIndex + offset);
 					lexerAction = ((LexerIndexedCustomAction)lexerAction).getAction();
@@ -185,7 +185,7 @@ public class LexerActionExecutor {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof LexerActionExecutor)) {
+		else if (!(obj is LexerActionExecutor)) {
 			return false;
 		}
 

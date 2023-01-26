@@ -74,7 +74,7 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 
 		@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
-			if (ctx.children instanceof ArrayList) {
+			if (ctx.children is ArrayList) {
 				((ArrayList<?>)ctx.children).trimToSize();
 			}
 		}
@@ -472,7 +472,7 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 	public ParseTreePattern compileParseTreePattern(String pattern, int patternRuleIndex) {
 		if ( getTokenStream()!=null ) {
 			TokenSource tokenSource = getTokenStream().getTokenSource();
-			if ( tokenSource instanceof Lexer ) {
+			if ( tokenSource is Lexer ) {
 				Lexer lexer = (Lexer)tokenSource;
 				return compileParseTreePattern(pattern, patternRuleIndex, lexer);
 			}
@@ -901,7 +901,7 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 	@Override
 	public ParseInfo getParseInfo() {
 		ParserATNSimulator interp = getInterpreter();
-		if (interp instanceof ProfilingATNSimulator) {
+		if (interp is ProfilingATNSimulator) {
 			return new ParseInfo((ProfilingATNSimulator)interp);
 		}
 		return null;
@@ -914,11 +914,11 @@ public abstract class Parser extends Recognizer<Token, ParserATNSimulator> {
 		ParserATNSimulator interp = getInterpreter();
 		PredictionMode saveMode = interp.getPredictionMode();
 		if ( profile ) {
-			if ( !(interp instanceof ProfilingATNSimulator) ) {
+			if ( !(interp is ProfilingATNSimulator) ) {
 				setInterpreter(new ProfilingATNSimulator(this));
 			}
 		}
-		else if ( interp instanceof ProfilingATNSimulator ) {
+		else if ( interp is ProfilingATNSimulator ) {
 			ParserATNSimulator sim =
 				new ParserATNSimulator(this, getATN(), interp.decisionToDFA, interp.getSharedContextCache());
 			setInterpreter(sim);

@@ -4,23 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.misc.DoubleKeyMap;
-import org.antlr.v4.runtime.misc.MurmurHash;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+namespace org.antlr.v4.runtime.atn;
 
 public abstract class PredictionContext {
 	/**
@@ -28,12 +12,12 @@ public abstract class PredictionContext {
 	 * doesn't mean wildcard: {@code $ + x = [$,x]}. Here,
 	 * {@code $} = {@link #EMPTY_RETURN_STATE}.
 	 */
-	public static final int EMPTY_RETURN_STATE = Integer.MAX_VALUE;
+	public static readonly int EMPTY_RETURN_STATE = int.MaxValue;
 
-	private static final int INITIAL_HASH = 1;
+	private static readonly int INITIAL_HASH = 1;
 
-	private static final AtomicInteger globalNodeCount = new AtomicInteger();
-	public final int id = globalNodeCount.getAndIncrement();
+	private static readonly AtomicInteger globalNodeCount = new AtomicInteger();
+	public readonly int id = globalNodeCount.getAndIncrement();
 
 	/**
 	 * Stores the computed hash code of this {@link PredictionContext}. The hash
@@ -56,7 +40,7 @@ public abstract class PredictionContext {
 	 *  }
 	 * </pre>
 	 */
-	public final int cachedHashCode;
+	public readonly int cachedHashCode;
 
 	protected PredictionContext(int cachedHashCode) {
 		this.cachedHashCode = cachedHashCode;
@@ -90,11 +74,11 @@ public abstract class PredictionContext {
 	public abstract int getReturnState(int index);
 
 	/** This means only the {@link EmptyPredictionContext#Instance} (wildcard? not sure) context is in set. */
-	public boolean isEmpty() {
+	public bool isEmpty() {
 		return this == EmptyPredictionContext.Instance;
 	}
 
-	public boolean hasEmptyPath() {
+	public bool hasEmptyPath() {
 		// since EMPTY_RETURN_STATE can only appear in the last position, we check last one
 		return getReturnState(size() - 1) == EMPTY_RETURN_STATE;
 	}
@@ -105,7 +89,7 @@ public abstract class PredictionContext {
 	}
 
 	@Override
-	public abstract boolean equals(Object obj);
+	public abstract bool equals(Object obj);
 
 	protected static int calculateEmptyHashCode() {
 		int hash = MurmurHash.initialize(INITIAL_HASH);
@@ -139,7 +123,7 @@ public abstract class PredictionContext {
 	// dispatch
 	public static PredictionContext merge(
 		PredictionContext a, PredictionContext b,
-		boolean rootIsWildcard,
+		bool rootIsWildcard,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
 		assert a!=null && b!=null; // must be empty context, never null
@@ -147,7 +131,7 @@ public abstract class PredictionContext {
 		// share same graph if both same
 		if ( a==b || a.equals(b) ) return a;
 
-		if ( a instanceof SingletonPredictionContext && b instanceof SingletonPredictionContext) {
+		if ( a is SingletonPredictionContext && b is SingletonPredictionContext) {
 			return mergeSingletons((SingletonPredictionContext)a,
 								   (SingletonPredictionContext)b,
 								   rootIsWildcard, mergeCache);
@@ -156,15 +140,15 @@ public abstract class PredictionContext {
 		// At least one of a or b is array
 		// If one is $ and rootIsWildcard, return $ as * wildcard
 		if ( rootIsWildcard ) {
-			if ( a instanceof EmptyPredictionContext ) return a;
-			if ( b instanceof EmptyPredictionContext ) return b;
+			if ( a is EmptyPredictionContext ) return a;
+			if ( b is EmptyPredictionContext ) return b;
 		}
 
 		// convert singleton so both are arrays to normalize
-		if ( a instanceof SingletonPredictionContext ) {
+		if ( a is SingletonPredictionContext ) {
 			a = new ArrayPredictionContext((SingletonPredictionContext)a);
 		}
-		if ( b instanceof SingletonPredictionContext) {
+		if ( b is SingletonPredictionContext) {
 			b = new ArrayPredictionContext((SingletonPredictionContext)b);
 		}
 		return mergeArrays((ArrayPredictionContext) a, (ArrayPredictionContext) b,
@@ -201,7 +185,7 @@ public abstract class PredictionContext {
 	public static PredictionContext mergeSingletons(
 		SingletonPredictionContext a,
 		SingletonPredictionContext b,
-		boolean rootIsWildcard,
+		bool rootIsWildcard,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
 		if ( mergeCache!=null ) {
@@ -304,7 +288,7 @@ public abstract class PredictionContext {
 	 */
 	public static PredictionContext mergeRoot(SingletonPredictionContext a,
 											  SingletonPredictionContext b,
-											  boolean rootIsWildcard)
+											  bool rootIsWildcard)
 	{
 		if ( rootIsWildcard ) {
 			if ( a == EmptyPredictionContext.Instance) return EmptyPredictionContext.Instance;  // * + b = *
@@ -352,7 +336,7 @@ public abstract class PredictionContext {
 	public static PredictionContext mergeArrays(
 		ArrayPredictionContext a,
 		ArrayPredictionContext b,
-		boolean rootIsWildcard,
+		bool rootIsWildcard,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
 		if ( mergeCache!=null ) {
@@ -379,9 +363,9 @@ public abstract class PredictionContext {
 				// same payload (stack tops are equal), must yield merged singleton
 				int payload = a.returnStates[i];
 				// $+$ = $
-				boolean both$ = payload == EMPTY_RETURN_STATE &&
+				bool both$ = payload == EMPTY_RETURN_STATE &&
 								a_parent == null && b_parent == null;
-				boolean ax_ax = (a_parent!=null && b_parent!=null) &&
+				bool ax_ax = (a_parent!=null && b_parent!=null) &&
 								a_parent.equals(b_parent); // ax+ax -> ax
 				if ( both$ || ax_ax ) {
 					mergedParents[k] = a_parent; // choose left
@@ -493,11 +477,11 @@ public abstract class PredictionContext {
 		});
 
 		for (PredictionContext current : nodes) {
-			if ( current instanceof SingletonPredictionContext ) {
+			if ( current is SingletonPredictionContext ) {
 				String s = String.valueOf(current.id);
 				buf.append("  s").append(s);
 				String returnState = String.valueOf(current.getReturnState(0));
-				if ( current instanceof EmptyPredictionContext ) returnState = "$";
+				if ( current is EmptyPredictionContext ) returnState = "$";
 				buf.append(" [label=\"").append(returnState).append("\"];\n");
 				continue;
 			}
@@ -505,7 +489,7 @@ public abstract class PredictionContext {
 			buf.append("  s").append(arr.id);
 			buf.append(" [shape=box, label=\"");
 			buf.append("[");
-			boolean first = true;
+			bool first = true;
 			for (int inv : arr.returnStates) {
 				if ( !first ) buf.append(", ");
 				if ( inv == EMPTY_RETURN_STATE ) buf.append("$");
@@ -555,7 +539,7 @@ public abstract class PredictionContext {
 			return existing;
 		}
 
-		boolean changed = false;
+		bool changed = false;
 		PredictionContext[] parents = new PredictionContext[context.size()];
 		for (int i = 0; i < parents.length; i++) {
 			PredictionContext parent = getCachedContext(context.getParent(i), contextCache, visited);
@@ -657,7 +641,7 @@ public abstract class PredictionContext {
 		outer:
 		for (int perm = 0; ; perm++) {
 			int offset = 0;
-			boolean last = true;
+			bool last = true;
 			PredictionContext p = this;
 			int stateNumber = currentState;
 			StringBuilder localBuffer = new StringBuilder();

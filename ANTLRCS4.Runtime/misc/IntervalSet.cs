@@ -152,7 +152,7 @@ public class IntervalSet : IntSet {
 			return this;
 		}
 
-		if (set instanceof IntervalSet) {
+		if (set is IntervalSet) {
 			IntervalSet other = (IntervalSet)set;
 			// walk set and add each interval
 			int n = other.intervals.size();
@@ -182,7 +182,7 @@ public class IntervalSet : IntSet {
 		}
 
 		IntervalSet vocabularyIS;
-		if (vocabulary instanceof IntervalSet) {
+		if (vocabulary is IntervalSet) {
 			vocabularyIS = (IntervalSet)vocabulary;
 		}
 		else {
@@ -199,7 +199,7 @@ public class IntervalSet : IntSet {
 			return new IntervalSet(this);
 		}
 
-		if (a instanceof IntervalSet) {
+		if (a is IntervalSet) {
 			return subtract(this, (IntervalSet)a);
 		}
 
@@ -301,7 +301,7 @@ public class IntervalSet : IntSet {
     /** {@inheritDoc} */
 	@Override
 	public IntervalSet and(IntSet other) {
-		if ( other==null ) { //|| !(other instanceof IntervalSet) ) {
+		if ( other==null ) { //|| !(other is IntervalSet) ) {
 			return null; // nothing in common with null set
 		}
 
@@ -449,8 +449,8 @@ public class IntervalSet : IntSet {
      *  by the List.equals() method to check the ranges.
      */
     @Override
-    public boolean equals(Object obj) {
-        if ( obj==null || !(obj instanceof IntervalSet) ) {
+    public bool equals(Object obj) {
+        if ( obj==null || !(obj is IntervalSet) ) {
             return false;
         }
         IntervalSet other = (IntervalSet)obj;
@@ -460,7 +460,7 @@ public class IntervalSet : IntSet {
 	@Override
 	public String toString() { return toString(false); }
 
-	public String toString(boolean elemAreChar) {
+	public String toString(bool elemAreChar) {
 		StringBuilder buf = new StringBuilder();
 		if ( this.intervals==null || this.intervals.isEmpty() ) {
 			return "{}";
@@ -669,11 +669,11 @@ public class IntervalSet : IntSet {
         }
     }
 
-    public boolean isReadonly() {
+    public bool isReadonly() {
         return readonly;
     }
 
-    public void setReadonly(boolean readonly) {
+    public void setReadonly(bool readonly) {
         if ( this.readonly && !readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
         this.readonly = readonly;
     }

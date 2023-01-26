@@ -117,7 +117,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public AltAST getOutermostAltNode() {
-		if ( this instanceof AltAST && parent.parent instanceof RuleAST ) {
+		if ( this is AltAST && parent.parent is RuleAST ) {
 			return (AltAST)this;
 		}
 		if ( parent!=null ) return ((GrammarAST)parent).getOutermostAltNode();
@@ -144,7 +144,7 @@ public class GrammarAST : CommonTree {
 		return null;
 	}
 
-	public boolean deleteChild(org.antlr.runtime.tree.Tree t) {
+	public bool deleteChild(org.antlr.runtime.tree.Tree t) {
 		for (int i=0; i<children.size(); i++) {
 			Object c = children.get(i);
 			if ( c == t ) {
@@ -202,7 +202,7 @@ public class GrammarAST : CommonTree {
 	}
 
 //	@Override
-//	public boolean equals(Object obj) {
+//	public bool equals(Object obj) {
 //		return super.equals(obj);
 //	}
 

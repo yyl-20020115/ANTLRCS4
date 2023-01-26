@@ -99,7 +99,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
 
 		String label = null;
-		boolean isListLabel = false;
+		bool isListLabel = false;
 		GrammarAST lrlabel = stripLeftRecursion(altTree);
 		if ( lrlabel!=null ) {
 			label = lrlabel.getText();
@@ -147,7 +147,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
 
 		String label = null;
-		boolean isListLabel = false;
+		bool isListLabel = false;
 		GrammarAST lrlabel = stripLeftRecursion(altTree);
 		if ( lrlabel!=null ) {
 			label = lrlabel.getText();
@@ -218,8 +218,8 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		List<GrammarAST> outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.of(RULE_REF));
 		for (GrammarAST x : outerAltRuleRefs) {
 			RuleRefAST rref = (RuleRefAST)x;
-			boolean recursive = rref.getText().equals(ruleName);
-			boolean rightmost = rref == outerAltRuleRefs.get(outerAltRuleRefs.size()-1);
+			bool recursive = rref.getText().equals(ruleName);
+			bool rightmost = rref == outerAltRuleRefs.get(outerAltRuleRefs.size()-1);
 			if ( recursive && rightmost ) {
 				GrammarAST dummyValueNode = new GrammarAST(new CommonToken(ANTLRParser.INT, ""+prec));
 				rref.setOption(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME, dummyValueNode);
@@ -232,7 +232,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	 * Match (RULE RULE_REF (BLOCK (ALT .*) (ALT RULE_REF[self] .*) (ALT .*)))
 	 * Match (RULE RULE_REF (BLOCK (ALT .*) (ALT (ASSIGN ID RULE_REF[self]) .*) (ALT .*)))
 	 */
-	public static boolean hasImmediateRecursiveRuleRefs(GrammarAST t, String ruleName) {
+	public static bool hasImmediateRecursiveRuleRefs(GrammarAST t, String ruleName) {
 		if ( t==null ) return false;
 		GrammarAST blk = (GrammarAST)t.getFirstChildWithType(BLOCK);
 		if ( blk==null ) return false;
@@ -341,7 +341,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 					elementOptions.append("tokenIndex=").append(tok.getTokenIndex());
 				}
 
-				if ( node instanceof GrammarASTWithOptions ) {
+				if ( node is GrammarASTWithOptions ) {
 					GrammarASTWithOptions o = (GrammarASTWithOptions)node;
 					for (Map.Entry<String, GrammarAST> entry : o.getOptions().entrySet()) {
 						if (elementOptions.length() > 0) {

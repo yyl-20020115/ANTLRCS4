@@ -19,7 +19,7 @@ public class RuleAST : GrammarASTWithOptions {
 	public RuleAST(Token t) { super(t); }
     public RuleAST(int type) { super(type); }
 
-	public boolean isLexerRule() {
+	public bool isLexerRule() {
 		String name = getRuleName();
 		return name!=null && Grammar.isTokenName(name);
 	}

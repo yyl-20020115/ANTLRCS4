@@ -88,7 +88,7 @@ public class ParserInterpreterForTesting {
 		if (startState.getNumberOfTransitions() == 1) {
 			return 1;
 		}
-		else if (startState instanceof DecisionState) {
+		else if (startState is DecisionState) {
 			return atnSimulator.adaptivePredict(input, ((DecisionState)startState).decision, null);
 		}
 		else if (startState.getNumberOfTransitions() > 0) {

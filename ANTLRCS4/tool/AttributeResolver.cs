@@ -37,10 +37,10 @@ namespace org.antlr.v4.tool;
  *  $s::y	Attribute: s is a global scope; y is prop within
  */
 public interface AttributeResolver {
-	public boolean resolvesToListLabel(String x, ActionAST node);
-	public boolean resolvesToLabel(String x, ActionAST node);
-	public boolean resolvesToAttributeDict(String x, ActionAST node);
-	public boolean resolvesToToken(String x, ActionAST node);
+	public bool resolvesToListLabel(String x, ActionAST node);
+	public bool resolvesToLabel(String x, ActionAST node);
+	public bool resolvesToAttributeDict(String x, ActionAST node);
+	public bool resolvesToToken(String x, ActionAST node);
 	public Attribute resolveToAttribute(String x, ActionAST node);
 	public Attribute resolveToAttribute(String x, String y, ActionAST node);
 }

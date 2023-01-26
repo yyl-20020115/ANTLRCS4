@@ -188,7 +188,7 @@ public class UnbufferedTokenStream<T extends Token> implements TokenStream {
 			tokens = Arrays.copyOf(tokens, tokens.length * 2);
 		}
 
-		if (t instanceof WritableToken) {
+		if (t is WritableToken) {
 			((WritableToken)t).setTokenIndex(getBufferStartIndex() + n);
 		}
 

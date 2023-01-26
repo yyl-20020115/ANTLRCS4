@@ -4,12 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.dfa.DFA;
-
-public final class StarLoopEntryState extends DecisionState {
+namespace org.antlr.v4.runtime.atn;
+public class StarLoopEntryState : DecisionState {
 	public StarLoopbackState loopBackState;
 
 	/**
@@ -22,10 +18,9 @@ public final class StarLoopEntryState extends DecisionState {
 	 *
 	 * @see DFA#isPrecedenceDfa()
 	 */
-	public boolean isPrecedenceDecision;
+	public bool isPrecedenceDecision;
 
-	@Override
-	public int getStateType() {
+	public override int getStateType() {
 		return STAR_LOOP_ENTRY;
 	}
 }

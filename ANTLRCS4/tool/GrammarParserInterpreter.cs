@@ -105,7 +105,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			DecisionState decisionState = atn.getDecisionState(i);
 			RuleStartState startState = atn.ruleToStartState[decisionState.ruleIndex];
 			// Look for StarLoopEntryState that is in any left recursive rule
-			if ( decisionState instanceof StarLoopEntryState) {
+			if ( decisionState is StarLoopEntryState) {
 				StarLoopEntryState loopEntry = (StarLoopEntryState)decisionState;
 				if ( loopEntry.isPrecedenceDecision ) {
 					// Recursive alts always result in a (...)* in the transformed
@@ -391,7 +391,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 */
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
-		if (originalParser instanceof ParserInterpreter) {
+		if (originalParser is ParserInterpreter) {
 			Class<? : ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter.class);
 			try {
 				Constructor<? : ParserInterpreter> ctor = c.getConstructor(Grammar.class, ATN.class, TokenStream.class);

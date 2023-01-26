@@ -49,7 +49,7 @@ public abstract class EscapeSequenceParsing {
 		}
 
 		public override bool Equals(Object other) {
-			if (!(other instanceof Result)) {
+			if (!(other is Result)) {
 				return false;
 			}
 			Result that = (Result) other;

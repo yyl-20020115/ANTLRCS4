@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+
 package org.antlr.v4.runtime.atn;
 
 import org.antlr.v4.runtime.misc.IntervalSet;
@@ -75,24 +77,24 @@ import java.util.Locale;
  * <embed src="images/OptionalNonGreedy.svg" type="image/svg+xml"/>
  */
 public abstract class ATNState {
-	public static final int INITIAL_NUM_TRANSITIONS = 4;
+	public static readonly int INITIAL_NUM_TRANSITIONS = 4;
 
 	// constants for serialization
-	public static final int INVALID_TYPE = 0;
-	public static final int BASIC = 1;
-	public static final int RULE_START = 2;
-	public static final int BLOCK_START = 3;
-	public static final int PLUS_BLOCK_START = 4;
-	public static final int STAR_BLOCK_START = 5;
-	public static final int TOKEN_START = 6;
-	public static final int RULE_STOP = 7;
-	public static final int BLOCK_END = 8;
-	public static final int STAR_LOOP_BACK = 9;
-	public static final int STAR_LOOP_ENTRY = 10;
-	public static final int PLUS_LOOP_BACK = 11;
-	public static final int LOOP_END = 12;
+	public static readonly int INVALID_TYPE = 0;
+	public static readonly int BASIC = 1;
+	public static readonly int RULE_START = 2;
+	public static readonly int BLOCK_START = 3;
+	public static readonly int PLUS_BLOCK_START = 4;
+	public static readonly int STAR_BLOCK_START = 5;
+	public static readonly int TOKEN_START = 6;
+	public static readonly int RULE_STOP = 7;
+	public static readonly int BLOCK_END = 8;
+	public static readonly int STAR_LOOP_BACK = 9;
+	public static readonly int STAR_LOOP_ENTRY = 10;
+	public static readonly int PLUS_LOOP_BACK = 11;
+	public static readonly int LOOP_END = 12;
 
-	public static final List<String> serializationNames =
+	public static readonly List<String> serializationNames =
 		Collections.unmodifiableList(Arrays.asList(
 			"INVALID",
 			"BASIC",
@@ -109,7 +111,7 @@ public abstract class ATNState {
 			"LOOP_END"
 		));
 
-	public static final int INVALID_STATE_NUMBER = -1;
+	public static readonly int INVALID_STATE_NUMBER = -1;
 
     /** Which ATN are we in? */
    	public ATN atn = null;
@@ -118,31 +120,28 @@ public abstract class ATNState {
 
 	public int ruleIndex; // at runtime, we don't have Rule objects
 
-	public boolean epsilonOnlyTransitions = false;
+	public bool epsilonOnlyTransitions = false;
 
 	/** Track the transitions emanating from this ATN state. */
-	protected final List<Transition> transitions =
+	protected readonly List<Transition> transitions =
 		new ArrayList<Transition>(INITIAL_NUM_TRANSITIONS);
 
 	/** Used to cache lookahead during parsing, not used during construction */
     public IntervalSet nextTokenWithinRule;
 
-	@Override
-	public int hashCode() { return stateNumber; }
+	public override int GetHashCode() { return stateNumber; }
 
-	@Override
-	public boolean equals(Object o) {
+	public override bool Equals(Object o) {
 		// are these states same object?
-		if ( o instanceof ATNState ) return stateNumber==((ATNState)o).stateNumber;
+		if ( o is ATNState ) return stateNumber==((ATNState)o).stateNumber;
 		return false;
 	}
 
-	public boolean isNonGreedyExitState() {
+	public bool isNonGreedyExitState() {
 		return false;
 	}
 
-	@Override
-	public String toString() {
+	public override String ToString() {
 		return String.valueOf(stateNumber);
 	}
 
@@ -167,7 +166,7 @@ public abstract class ATNState {
 			epsilonOnlyTransitions = false;
 		}
 
-		boolean alreadyPresent = false;
+		bool alreadyPresent = false;
 		for (Transition t : transitions) {
 			if ( t.target.stateNumber == e.target.stateNumber ) {
 				if ( t.label()!=null && e.label()!=null && t.label().equals(e.label()) ) {
@@ -199,7 +198,7 @@ public abstract class ATNState {
 
 	public abstract int getStateType();
 
-	public final boolean onlyHasEpsilonTransitions() {
+	public bool onlyHasEpsilonTransitions() {
 		return epsilonOnlyTransitions;
 	}
 

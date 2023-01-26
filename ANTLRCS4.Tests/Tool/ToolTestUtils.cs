@@ -75,7 +75,7 @@ public class ToolTestUtils {
 				false, showDiagnosticErrors, Stage.Execute, false);
 		try (JavaRunner runner = new JavaRunner(workingDir, saveTestDir)) {
 			State result = runner.run(runOptions);
-			if (!(result instanceof ExecutedState)) {
+			if (!(result is ExecutedState)) {
 				fail(result.getErrorMessage());
 			}
 			return  (ExecutedState) result;

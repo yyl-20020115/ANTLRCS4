@@ -4,10 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /** */
-public class ATN {
+public class ATN 
+{
 	public static readonly int INVALID_ALT_NUMBER = 0;
 
 
@@ -17,7 +20,7 @@ public class ATN {
 	 *  can go back later and build DFA predictors for them.  This includes
 	 *  all the rules, subrules, optional blocks, ()+, ()* etc...
 	 */
-	public readonly List<DecisionState> decisionToState = ();
+	public readonly List<DecisionState> decisionToState = new();
 
 	/**
 	 * Maps from rule index to starting state number.
@@ -30,8 +33,7 @@ public class ATN {
 	public RuleStopState[] ruleToStopState;
 
 
-	public readonly Dictionary<String, TokensStartState> modeNameToStartState =
-		new ();
+	public readonly Dictionary<String, TokensStartState> modeNameToStartState = new ();
 
 	/**
 	 * The type of the ATN.
@@ -155,7 +157,7 @@ public class ATN {
 	 */
 	public IntervalSet getExpectedTokens(int stateNumber, RuleContext context) {
 		if (stateNumber < 0 || stateNumber >= states.size()) {
-			throw new IllegalArgumentException("Invalid state number.");
+			throw new ArgumentException(null,nameof(stateNumber));
 		}
 
 		RuleContext ctx = context;

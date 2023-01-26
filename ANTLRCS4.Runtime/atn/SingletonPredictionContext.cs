@@ -47,7 +47,7 @@ public class SingletonPredictionContext extends PredictionContext {
 		if (this == o) {
 			return true;
 		}
-		else if ( !(o instanceof SingletonPredictionContext) ) {
+		else if ( !(o is SingletonPredictionContext) ) {
 			return false;
 		}
 

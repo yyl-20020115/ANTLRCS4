@@ -20,7 +20,7 @@ public class GrammarASTErrorNode : GrammarAST {
     }
 
     @Override
-    public boolean isNil() { return delegate.isNil(); }
+    public bool isNil() { return delegate.isNil(); }
 
     @Override
     public int getType() { return delegate.getType(); }

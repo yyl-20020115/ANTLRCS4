@@ -4,12 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.misc;
+namespace org.antlr.v4.runtime.misc;
 
 public class Triple<A,B,C> {
-	public final A a;
-	public final B b;
-	public final C c;
+	public readonly A a;
+	public readonly B b;
+	public readonly C c;
 
 	public Triple(A a, B b, C c) {
 		this.a = a;
@@ -17,12 +17,11 @@ public class Triple<A,B,C> {
 		this.c = c;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	public override bool Equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof Triple<?, ?, ?>)) {
+		else if (!(obj is Triple<?, ?, ?>)) {
 			return false;
 		}
 
@@ -32,8 +31,8 @@ public class Triple<A,B,C> {
 			&& ObjectEqualityComparator.INSTANCE.equals(c, other.c);
 	}
 
-	@Override
-	public int hashCode() {
+	
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, a);
 		hash = MurmurHash.update(hash, b);
@@ -41,8 +40,7 @@ public class Triple<A,B,C> {
 		return MurmurHash.finish(hash, 3);
 	}
 
-	@Override
-	public String toString() {
-		return String.format("(%s, %s, %s)", a, b, c);
+	public override String ToString() {
+		return $"({a}, {b}, {c})";
 	}
 }

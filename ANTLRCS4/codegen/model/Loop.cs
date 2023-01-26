@@ -25,7 +25,7 @@ public class Loop : Choice {
 				List<CodeBlockForAlt> alts)
 	{
 		super(factory, blkOrEbnfRootAST, alts);
-		boolean nongreedy = (blkOrEbnfRootAST instanceof QuantifierAST) && !((QuantifierAST)blkOrEbnfRootAST).isGreedy();
+		bool nongreedy = (blkOrEbnfRootAST is QuantifierAST) && !((QuantifierAST)blkOrEbnfRootAST).isGreedy();
 		exitAlt = nongreedy ? 1 : alts.size() + 1;
 	}
 

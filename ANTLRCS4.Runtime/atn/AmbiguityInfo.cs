@@ -60,9 +60,9 @@ public class AmbiguityInfo : DecisionEventInfo {
 						 ATNConfigSet configs,
 						 BitSet ambigAlts,
 						 TokenStream input, int startIndex, int stopIndex,
-						 boolean fullCtx)
-	{
-		super(decision, configs, input, startIndex, stopIndex, fullCtx);
+						 bool fullCtx)
+		:base(decision, configs, input, startIndex, stopIndex, fullCtx)
+    {
 		this.ambigAlts = ambigAlts;
 	}
 }

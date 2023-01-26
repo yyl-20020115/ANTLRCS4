@@ -62,7 +62,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	 *
 	 * <p>The default value is {@code true}.</p>
 	 */
-	public boolean checkAssocElementOption = true;
+	public bool checkAssocElementOption = true;
 
 	/**
 	 * This field is used for reporting the {@link ErrorType#MODE_WITHOUT_RULES}
@@ -75,12 +75,12 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	 * for a lexer rule with the {@code fragment} modifier until
 	 * {@link #exitLexerRule} is called.
 	 */
-	private boolean inFragmentRule;
+	private bool inFragmentRule;
 
 	/**
 	 * Value of caseInsensitive option (false if not defined)
 	 */
-	private boolean grammarCaseInsensitive = false;
+	private bool grammarCaseInsensitive = false;
 
 	public BasicSemanticChecks(Grammar g, RuleCollector ruleCollector) {
 		this.g = g;
@@ -396,7 +396,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	protected void checkElementIsOuterMostInSingleAlt(GrammarAST tree) {
 		CommonTree alt = tree.parent;
 		CommonTree blk = alt.parent;
-		boolean outerMostAlt = blk.parent.getType() == RULE;
+		bool outerMostAlt = blk.parent.getType() == RULE;
 		Tree rule = tree.getAncestor(RULE);
 		String fileName = tree.getToken().getInputStream().getSourceName();
 		if ( !outerMostAlt || blk.getChildCount()>1 )
@@ -471,7 +471,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if (optionName.equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
 			if (valueText.equals("true") || valueText.equals("false")) {
-				boolean currentValue = Boolean.parseBoolean(valueText);
+				bool currentValue = Boolean.parseBoolean(valueText);
 				if (parentType == ANTLRParser.GRAMMAR) {
 					grammarCaseInsensitive = currentValue;
 				}
@@ -490,7 +490,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	}
 
 	/** Check option is appropriate for elem; parent of ID is ELEMENT_OPTIONS */
-	boolean checkElementOptions(GrammarASTWithOptions elem,
+	bool checkElementOptions(GrammarASTWithOptions elem,
 								GrammarAST ID,
 								GrammarAST valueAST)
 	{
@@ -505,10 +505,10 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 			}
 		}
 
-		if ( elem instanceof RuleRefAST ) {
+		if ( elem is RuleRefAST ) {
 			return checkRuleRefOptions((RuleRefAST)elem, ID, valueAST);
 		}
-		if ( elem instanceof TerminalAST ) {
+		if ( elem is TerminalAST ) {
 			return checkTokenOptions((TerminalAST)elem, ID, valueAST);
 		}
 		if ( elem.getType()==ANTLRParser.ACTION ) {
@@ -528,7 +528,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		return false;
 	}
 
-	boolean checkRuleRefOptions(RuleRefAST elem, GrammarAST ID, GrammarAST valueAST) {
+	bool checkRuleRefOptions(RuleRefAST elem, GrammarAST ID, GrammarAST valueAST) {
 		Token optionID = ID.token;
 		String fileName = optionID.getInputStream().getSourceName();
 		// don't care about id<SimpleValue> options
@@ -543,7 +543,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		return true;
 	}
 
-	boolean checkTokenOptions(TerminalAST elem, GrammarAST ID, GrammarAST valueAST) {
+	bool checkTokenOptions(TerminalAST elem, GrammarAST ID, GrammarAST valueAST) {
 		Token optionID = ID.token;
 		String fileName = optionID.getInputStream().getSourceName();
 		// don't care about ID<ASTNodeName> options

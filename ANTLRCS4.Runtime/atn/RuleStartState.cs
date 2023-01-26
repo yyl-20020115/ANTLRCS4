@@ -4,14 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-public final class RuleStartState extends ATNState {
+public class RuleStartState : ATNState {
 	public RuleStopState stopState;
-	public boolean isLeftRecursiveRule;
+	public bool isLeftRecursiveRule;
 
-	@Override
-	public int getStateType() {
+	public override int getStateType() {
 		return RULE_START;
 	}
 }

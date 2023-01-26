@@ -183,7 +183,7 @@ public class SymbolCollector extends GrammarTreeVisitor {
 
 	/** In case of option id={...}, set resolve in case they use $foo */
 	private void setActionResolver(GrammarAST valueAST) {
-		if ( valueAST instanceof ActionAST) {
+		if ( valueAST is ActionAST) {
 			((ActionAST)valueAST).resolver = currentRule.alt[currentOuterAltNumber];
 		}
 	}

@@ -46,13 +46,13 @@ public abstract class BlankOutputModelFactory implements OutputModelFactory {
 	// ALTERNATIVES / ELEMENTS
 
 	@Override
-	public CodeBlockForAlt alternative(Alternative alt, boolean outerMost) { return null; }
+	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) { return null; }
 
 	@Override
 	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops) { return blk; }
 
 	@Override
-	public CodeBlockForAlt epsilon(Alternative alt, boolean outerMost) { return null; }
+	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) { return null; }
 
 	@Override
 	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) { return null; }
@@ -64,7 +64,7 @@ public abstract class BlankOutputModelFactory implements OutputModelFactory {
 	public List<SrcOp> stringRef(GrammarAST ID, GrammarAST label) { return tokenRef(ID, label, null); }
 
 	@Override
-	public List<SrcOp> set(GrammarAST setAST, GrammarAST label, boolean invert) {	return null; }
+	public List<SrcOp> set(GrammarAST setAST, GrammarAST label, bool invert) {	return null; }
 
 	@Override
 	public List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST) { return null; }
@@ -101,6 +101,6 @@ public abstract class BlankOutputModelFactory implements OutputModelFactory {
 	public List<SrcOp> getLL1Test(IntervalSet look, GrammarAST blkAST) { return null; }
 
 	@Override
-	public boolean needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
+	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
 }
 

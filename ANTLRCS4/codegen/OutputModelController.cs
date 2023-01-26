@@ -160,7 +160,7 @@ public class OutputModelController {
 		pushCurrentRule(function);
 		function.fillNamedActions(delegate, r);
 
-		if ( r instanceof LeftRecursiveRule ) {
+		if ( r is LeftRecursiveRule ) {
 			buildLeftRecursiveRuleFunction((LeftRecursiveRule)r,
 										   (LeftRecursiveRuleFunction)function);
 		}
@@ -170,7 +170,7 @@ public class OutputModelController {
 
 		Grammar g = getGrammar();
 		for (ActionAST a : r.actions) {
-			if ( a instanceof PredAST ) {
+			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = parser.sempredFuncs.get(r);
 				if ( rsf==null ) {
@@ -195,7 +195,7 @@ public class OutputModelController {
 		CodeBlockForOuterMostAlt outerAlt = (CodeBlockForOuterMostAlt)function.code.get(0);
 		List<CodeBlockForAlt> primaryAltsCode = new ArrayList<CodeBlockForAlt>();
 		SrcOp primaryStuff = outerAlt.ops.get(0);
-		if ( primaryStuff instanceof Choice ) {
+		if ( primaryStuff is Choice ) {
 			Choice primaryAltBlock = (Choice) primaryStuff;
 			primaryAltsCode.addAll(primaryAltBlock.alts);
 		}
@@ -208,7 +208,7 @@ public class OutputModelController {
 		CodeBlockForAlt altForOpAltBlock = opAltStarBlock.alts.get(0);
 		List<CodeBlockForAlt> opAltsCode = new ArrayList<CodeBlockForAlt>();
 		SrcOp opStuff = altForOpAltBlock.ops.get(0);
-		if ( opStuff instanceof AltBlock ) {
+		if ( opStuff is AltBlock ) {
 			AltBlock opAltBlock = (AltBlock)opStuff;
 			opAltsCode.addAll(opAltBlock.alts);
 		}
@@ -304,7 +304,7 @@ public class OutputModelController {
 		}
 
 		for (ActionAST a : r.actions) {
-			if ( a instanceof PredAST ) {
+			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = lexer.sempredFuncs.get(r);
 				if ( rsf==null ) {

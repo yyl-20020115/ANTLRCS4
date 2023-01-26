@@ -78,7 +78,7 @@ public final class LexerPushModeAction implements LexerAction {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof LexerPushModeAction)) {
+		else if (!(obj is LexerPushModeAction)) {
 			return false;
 		}
 

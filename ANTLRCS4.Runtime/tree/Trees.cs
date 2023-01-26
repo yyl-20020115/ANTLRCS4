@@ -69,7 +69,7 @@ public class Trees {
 
 	public static String getNodeText(Tree t, List<String> ruleNames) {
 		if ( ruleNames!=null ) {
-			if ( t instanceof RuleContext ) {
+			if ( t is RuleContext ) {
 				int ruleIndex = ((RuleContext)t).getRuleContext().getRuleIndex();
 				String ruleName = ruleNames.get(ruleIndex);
 				int altNumber = ((RuleContext) t).getAltNumber();
@@ -78,10 +78,10 @@ public class Trees {
 				}
 				return ruleName;
 			}
-			else if ( t instanceof ErrorNode) {
+			else if ( t is ErrorNode) {
 				return t.toString();
 			}
-			else if ( t instanceof TerminalNode) {
+			else if ( t is TerminalNode) {
 				Token symbol = ((TerminalNode)t).getSymbol();
 				if (symbol != null) {
 					String s = symbol.getText();
@@ -91,7 +91,7 @@ public class Trees {
 		}
 		// no recog for rule names
 		Object payload = t.getPayload();
-		if ( payload instanceof Token ) {
+		if ( payload is Token ) {
 			return ((Token)payload).getText();
 		}
 		return t.getPayload().toString();
@@ -155,11 +155,11 @@ public class Trees {
 									 List<? super ParseTree> nodes)
 	{
 		// check this node (the root) first
-		if ( findTokens && t instanceof TerminalNode ) {
+		if ( findTokens && t is TerminalNode ) {
 			TerminalNode tnode = (TerminalNode)t;
 			if ( tnode.getSymbol().getType()==index ) nodes.add(t);
 		}
-		else if ( !findTokens && t instanceof ParserRuleContext ) {
+		else if ( !findTokens && t is ParserRuleContext ) {
 			ParserRuleContext ctx = (ParserRuleContext)t;
 			if ( ctx.getRuleIndex() == index ) nodes.add(t);
 		}
@@ -205,7 +205,7 @@ public class Trees {
 			ParserRuleContext r = getRootOfSubtreeEnclosingRegion(child, startTokenIndex, stopTokenIndex);
 			if ( r!=null ) return r;
 		}
-		if ( t instanceof ParserRuleContext ) {
+		if ( t is ParserRuleContext ) {
 			ParserRuleContext r = (ParserRuleContext) t;
 			if ( startTokenIndex>=r.getStart().getTokenIndex() && // is range fully contained in t?
 				 (r.getStop()==null || stopTokenIndex<=r.getStop().getTokenIndex()) )
@@ -234,7 +234,7 @@ public class Trees {
 		for (int i = 0; i < t.getChildCount(); i++) {
 			ParseTree child = t.getChild(i);
 			Interval range = child.getSourceInterval();
-			if ( child instanceof ParserRuleContext && (range.b < startIndex || range.a > stopIndex) ) {
+			if ( child is ParserRuleContext && (range.b < startIndex || range.a > stopIndex) ) {
 				if ( isAncestorOf(child, root) ) { // replace only if subtree doesn't have displayed root
 					CommonToken abbrev = new CommonToken(Token.INVALID_TYPE, "...");
 					t.children.set(i, new TerminalNodeImpl(abbrev));

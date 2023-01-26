@@ -330,7 +330,7 @@ public class Rule implements AttributeResolver {
 			return true;
 		}
 
-		if (!(obj instanceof Rule)) {
+		if (!(obj is Rule)) {
 			return false;
 		}
 

@@ -87,7 +87,7 @@ public class LexerATNConfig extends ATNConfig {
 		if (this == other) {
 			return true;
 		}
-		else if (!(other instanceof LexerATNConfig)) {
+		else if (!(other is LexerATNConfig)) {
 			return false;
 		}
 
@@ -105,6 +105,6 @@ public class LexerATNConfig extends ATNConfig {
 
 	private static boolean checkNonGreedyDecision(LexerATNConfig source, ATNState target) {
 		return source.passedThroughNonGreedyDecision
-			|| target instanceof DecisionState && ((DecisionState)target).nonGreedy;
+			|| target is DecisionState && ((DecisionState)target).nonGreedy;
 	}
 }

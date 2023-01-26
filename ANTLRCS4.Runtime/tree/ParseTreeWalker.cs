@@ -21,11 +21,11 @@ public class ParseTreeWalker {
 	 * @param t The parse tree to be walked on
 	 */
 	public void walk(ParseTreeListener listener, ParseTree t) {
-		if ( t instanceof ErrorNode) {
+		if ( t is ErrorNode) {
 			listener.visitErrorNode((ErrorNode)t);
 			return;
 		}
-		else if ( t instanceof TerminalNode) {
+		else if ( t is TerminalNode) {
 			listener.visitTerminal((TerminalNode)t);
 			return;
 		}

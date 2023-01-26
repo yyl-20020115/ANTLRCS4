@@ -37,10 +37,10 @@ public final class EpsilonTransition extends Transition {
 	}
 
 	@Override
-	public boolean isEpsilon() { return true; }
+	public bool isEpsilon() { return true; }
 
 	@Override
-	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 

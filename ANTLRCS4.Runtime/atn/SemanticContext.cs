@@ -113,7 +113,7 @@ public abstract class SemanticContext {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Predicate) ) return false;
+			if ( !(obj is Predicate) ) return false;
 			if ( this == obj ) return true;
 			Predicate p = (Predicate)obj;
 			return this.ruleIndex == p.ruleIndex &&
@@ -167,7 +167,7 @@ public abstract class SemanticContext {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (!(obj instanceof PrecedencePredicate)) {
+			if (!(obj is PrecedencePredicate)) {
 				return false;
 			}
 
@@ -214,9 +214,9 @@ public abstract class SemanticContext {
 
 		public AND(SemanticContext a, SemanticContext b) {
 			Set<SemanticContext> operands = new HashSet<SemanticContext>();
-			if ( a instanceof AND ) operands.addAll(Arrays.asList(((AND)a).opnds));
+			if ( a is AND ) operands.addAll(Arrays.asList(((AND)a).opnds));
 			else operands.add(a);
-			if ( b instanceof AND ) operands.addAll(Arrays.asList(((AND)b).opnds));
+			if ( b is AND ) operands.addAll(Arrays.asList(((AND)b).opnds));
 			else operands.add(b);
 
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
@@ -237,7 +237,7 @@ public abstract class SemanticContext {
 		@Override
 		public boolean equals(Object obj) {
 			if ( this==obj ) return true;
-			if ( !(obj instanceof AND) ) return false;
+			if ( !(obj is AND) ) return false;
 			AND other = (AND)obj;
 			return Arrays.equals(this.opnds, other.opnds);
 		}
@@ -311,9 +311,9 @@ public abstract class SemanticContext {
 
 		public OR(SemanticContext a, SemanticContext b) {
 			Set<SemanticContext> operands = new HashSet<SemanticContext>();
-			if ( a instanceof OR ) operands.addAll(Arrays.asList(((OR)a).opnds));
+			if ( a is OR ) operands.addAll(Arrays.asList(((OR)a).opnds));
 			else operands.add(a);
-			if ( b instanceof OR ) operands.addAll(Arrays.asList(((OR)b).opnds));
+			if ( b is OR ) operands.addAll(Arrays.asList(((OR)b).opnds));
 			else operands.add(b);
 
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
@@ -334,7 +334,7 @@ public abstract class SemanticContext {
 		@Override
 		public boolean equals(Object obj) {
 			if ( this==obj ) return true;
-			if ( !(obj instanceof OR) ) return false;
+			if ( !(obj is OR) ) return false;
 			OR other = (OR)obj;
 			return Arrays.equals(this.opnds, other.opnds);
 		}
@@ -430,7 +430,7 @@ public abstract class SemanticContext {
 		ArrayList<PrecedencePredicate> result = null;
 		for (Iterator<? extends SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
 			SemanticContext context = iterator.next();
-			if (context instanceof PrecedencePredicate) {
+			if (context is PrecedencePredicate) {
 				if (result == null) {
 					result = new ArrayList<PrecedencePredicate>();
 				}

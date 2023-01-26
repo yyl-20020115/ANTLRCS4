@@ -45,7 +45,7 @@ public class SemPred extends Action {
 
 		assert ast.atnState != null
 			&& ast.atnState.getNumberOfTransitions() == 1
-			&& ast.atnState.transition(0) instanceof AbstractPredicateTransition;
+			&& ast.atnState.transition(0) is AbstractPredicateTransition;
 
 		GrammarAST failNode = ast.getOptionAST("fail");
 		CodeGenerator gen = factory.getGenerator();
@@ -57,7 +57,7 @@ public class SemPred extends Action {
 
 		if ( failNode==null ) return;
 
-		if ( failNode instanceof ActionAST ) {
+		if ( failNode is ActionAST ) {
 			ActionAST failActionNode = (ActionAST)failNode;
 			RuleFunction rf = factory.getCurrentRuleFunction();
 			failChunks = ActionTranslator.translateAction(factory, rf,

@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.dfa;
@@ -105,7 +107,7 @@ public class DFAState {
 		var alts = new HashSet<int>();
 		if ( configs!=null ) {
 			foreach (ATNConfig c in configs) {
-				alts.add(c.alt);
+				alts.Add(c.alt);
 			}
 		}
 		if ( alts.isEmpty() ) return null;
@@ -149,16 +151,16 @@ public class DFAState {
 
 	public override String ToString() {
         StringBuilder buf = new StringBuilder();
-        buf.append(stateNumber).append(":").append(configs);
+        buf.Append(stateNumber).Append(":").Append(configs);
         if ( isAcceptState ) {
-            buf.append("=>");
+            buf.Append("=>");
             if ( predicates!=null ) {
-                buf.append(Arrays.toString(predicates));
+                buf.Append(Arrays.toString(predicates));
             }
             else {
-                buf.append(prediction);
+                buf.Append(prediction);
             }
         }
-		return buf.toString();
+		return buf.ToString();
 	}
 }

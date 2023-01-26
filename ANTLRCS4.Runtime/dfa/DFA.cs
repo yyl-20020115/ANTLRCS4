@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
+
 namespace org.antlr.v4.runtime.dfa;
 
 public class DFA {
@@ -35,7 +37,7 @@ public class DFA {
 		this.decision = decision;
 
 		bool precedenceDfa = false;
-		if (atnStartState instanceof StarLoopEntryState) {
+		if (atnStartState is StarLoopEntryState) {
 			if (((StarLoopEntryState)atnStartState).isPrecedenceDecision) {
 				precedenceDfa = true;
 				DFAState precedenceState = new DFAState(new ATNConfigSet());
@@ -80,7 +82,7 @@ public class DFA {
 		}
 
 		// s0.edges is never null for a precedence DFA
-		if (precedence < 0 || precedence >= s0.edges.length) {
+		if (precedence < 0 || precedence >= s0.edges.Length) {
 			return null;
 		}
 
@@ -110,7 +112,7 @@ public class DFA {
 		// precedence DFA, s0 will be initialized once and not updated again
 		lock (s0) {
 			// s0.edges is never null for a precedence DFA
-			if (precedence >= s0.edges.length) {
+			if (precedence >= s0.edges.Length) {
 				s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
 			}
 
@@ -161,7 +163,7 @@ public class DFA {
 	public String toString(String[] tokenNames) {
 		if ( s0==null ) return "";
 		DFASerializer serializer = new DFASerializer(this,tokenNames);
-		return serializer.toString();
+		return serializer.ToString();
 	}
 
 	public String toString(Vocabulary vocabulary) {
@@ -170,13 +172,13 @@ public class DFA {
 		}
 
 		var serializer = new DFASerializer(this, vocabulary);
-		return serializer.toString();
+		return serializer.ToString();
 	}
 
 	public String toLexerString() {
 		if ( s0==null ) return "";
 		var serializer = new LexerDFASerializer(this);
-		return serializer.toString();
+		return serializer.ToString();
 	}
 
 }

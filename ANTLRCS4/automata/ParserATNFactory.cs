@@ -36,7 +36,7 @@ public class ParserATNFactory : ATNFactory {
 
 		this.g = g;
 
-		ATNType atnType = g instanceof LexerGrammar ? ATNType.LEXER : ATNType.PARSER;
+		ATNType atnType = g is LexerGrammar ? ATNType.LEXER : ATNType.PARSER;
 		int maxTokenType = g.getMaxTokenType();
 		this.atn = new ATN(atnType, maxTokenType);
 	}
@@ -83,7 +83,7 @@ public class ParserATNFactory : ATNFactory {
 			ATNState blkStop = pair.c;
 			IntervalSet lookahead = analyzer.LOOK(blkStart, blkStop, null);
 			if ( lookahead.contains(org.antlr.v4.runtime.Token.EPSILON)) {
-				ErrorType errorType = pair.a instanceof LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
+				ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
 				g.tool.errMgr.grammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
 			}
 			if ( lookahead.contains(org.antlr.v4.runtime.Token.EOF)) {
@@ -156,7 +156,7 @@ public class ParserATNFactory : ATNFactory {
      */
 
 	@Override
-	public Handle set(GrammarAST associatedAST, List<GrammarAST> terminals, boolean invert) {
+	public Handle set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert) {
 		ATNState left = newState(associatedAST);
 		ATNState right = newState(associatedAST);
 		IntervalSet set = new IntervalSet();
@@ -285,7 +285,7 @@ public class ParserATNFactory : ATNFactory {
 			p = new PrecedencePredicateTransition(right, precedence);
 		}
 		else {
-			boolean isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
+			bool isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
 			p = new PredicateTransition(right, currentRule.index, g.sempreds.get(pred), isCtxDependent);
 		}
 
@@ -409,7 +409,7 @@ public class ParserATNFactory : ATNFactory {
 			// and not last in alt
             Transition tr = null;
             if ( el.left.getNumberOfTransitions()==1 ) tr = el.left.transition(0);
-            boolean isRuleTrans = tr instanceof RuleTransition;
+            bool isRuleTrans = tr is RuleTransition;
             if ( el.left.getStateType() == ATNState.BASIC &&
 				el.right != null &&
 				el.right.getStateType()== ATNState.BASIC &&
@@ -464,7 +464,7 @@ public class ParserATNFactory : ATNFactory {
 		ATNState blkEnd = blk.right;
 		preventEpsilonOptionalBlocks.add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-		boolean greedy = ((QuantifierAST)optAST).isGreedy();
+		bool greedy = ((QuantifierAST)optAST).isGreedy();
 		blkStart.nonGreedy = !greedy;
 		epsilon(blkStart, blk.right, !greedy);
 
@@ -585,7 +585,7 @@ public class ParserATNFactory : ATNFactory {
 		epsilon(a, b, false);
 	}
 
-	protected void epsilon(ATNState a, ATNState b, boolean prepend) {
+	protected void epsilon(ATNState a, ATNState b, bool prepend) {
 		if ( a!=null ) {
 			int index = prepend ? 0 : a.getNumberOfTransitions();
 			a.addTransition(index, new EpsilonTransition(b));
@@ -602,7 +602,7 @@ public class ParserATNFactory : ATNFactory {
 			RuleStartState start = newState(RuleStartState.class, r.ast);
 			RuleStopState stop = newState(RuleStopState.class, r.ast);
 			start.stopState = stop;
-			start.isLeftRecursiveRule = r instanceof LeftRecursiveRule;
+			start.isLeftRecursiveRule = r is LeftRecursiveRule;
 			start.setRuleIndex(r.index);
 			stop.setRuleIndex(r.index);
 			atn.ruleToStartState[r.index] = start;
@@ -614,7 +614,7 @@ public class ParserATNFactory : ATNFactory {
         for (ATNState p : atn.states) {
             if ( p!=null &&
                  p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions()==1 &&
-                 p.transition(0) instanceof RuleTransition )
+                 p.transition(0) is RuleTransition )
             {
                 RuleTransition rt = (RuleTransition) p.transition(0);
                 addFollowLink(rt.ruleIndex, rt.followState);
@@ -695,7 +695,7 @@ public class ParserATNFactory : ATNFactory {
 	@Override
 	public ATNState newState() { return newState(null); }
 
-	public boolean expectNonGreedy(BlockAST blkAST) {
+	public bool expectNonGreedy(BlockAST blkAST) {
 		if ( blockHasWildcardAlt(blkAST) ) {
 			return true;
 		}
@@ -706,9 +706,9 @@ public class ParserATNFactory : ATNFactory {
 	/**
 	 * {@code (BLOCK (ALT .))} or {@code (BLOCK (ALT 'a') (ALT .))}.
 	 */
-	public static boolean blockHasWildcardAlt(GrammarAST block) {
+	public static bool blockHasWildcardAlt(GrammarAST block) {
 		for (Object alt : block.getChildren()) {
-			if ( !(alt instanceof AltAST) ) continue;
+			if ( !(alt is AltAST) ) continue;
 			AltAST altAST = (AltAST)alt;
 			if ( altAST.getChildCount()==1 || (altAST.getChildCount() == 2 && altAST.getChild(0).getType() == ANTLRParser.ELEMENT_OPTIONS) ) {
 				Tree e = altAST.getChild(altAST.getChildCount() - 1);

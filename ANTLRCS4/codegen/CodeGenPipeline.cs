@@ -104,7 +104,7 @@ public class CodeGenPipeline {
 		gen.writeVocabFile();
 	}
 
-	protected void writeRecognizer(ST template, CodeGenerator gen, boolean header) {
+	protected void writeRecognizer(ST template, CodeGenerator gen, bool header) {
 		if ( g.tool.launch_ST_inspector ) {
 			STViz viz = template.inspect();
 			if (g.tool.ST_inspector_wait_for_close) {

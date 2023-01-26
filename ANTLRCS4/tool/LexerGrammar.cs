@@ -38,7 +38,7 @@ public class LexerGrammar : Grammar {
 	}
 
 	@Override
-	public boolean defineRule(Rule r) {
+	public bool defineRule(Rule r) {
 		if (!super.defineRule(r)) {
 			return false;
 		}
@@ -49,12 +49,12 @@ public class LexerGrammar : Grammar {
 	}
 
 	@Override
-	public boolean undefineRule(Rule r) {
+	public bool undefineRule(Rule r) {
 		if (!super.undefineRule(r)) {
 			return false;
 		}
 
-		boolean removed = modes.get(r.mode).remove(r);
+		bool removed = modes.get(r.mode).remove(r);
 		assert removed;
 		return true;
 	}

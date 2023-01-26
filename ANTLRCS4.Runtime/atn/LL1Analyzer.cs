@@ -157,7 +157,7 @@ public class LL1Analyzer {
 			}
 		}
 
-        if ( s instanceof RuleStopState ) {
+        if ( s is RuleStopState ) {
             if ( ctx==null ) {
                 look.add(Token.EPSILON);
                 return;
@@ -206,7 +206,7 @@ public class LL1Analyzer {
 					calledRuleStack.clear(((RuleTransition)t).target.ruleIndex);
 				}
 			}
-			else if ( t instanceof AbstractPredicateTransition ) {
+			else if ( t is AbstractPredicateTransition ) {
 				if ( seeThruPreds ) {
 					_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 				}
@@ -224,7 +224,7 @@ public class LL1Analyzer {
 //				System.out.println("adding "+ t);
 				IntervalSet set = t.label();
 				if (set != null) {
-					if (t instanceof NotSetTransition) {
+					if (t is NotSetTransition) {
 						set = set.complement(IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType));
 					}
 					look.addAll(set);

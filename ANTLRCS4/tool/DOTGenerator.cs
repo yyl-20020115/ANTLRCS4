@@ -42,7 +42,7 @@ import java.util.Set;
 
 /** The DOT (part of graphviz) generation aspect. */
 public class DOTGenerator {
-	public static final boolean STRIP_NONREDUCED_STATES = false;
+	public static final bool STRIP_NONREDUCED_STATES = false;
 
 	protected String arrowhead="normal";
 	protected String rankdir="LR";
@@ -57,7 +57,7 @@ public class DOTGenerator {
 		this.grammar = grammar;
 	}
 
-	public String getDOT(DFA dfa, boolean isLexer) {
+	public String getDOT(DFA dfa, bool isLexer) {
 		if ( dfa.s0==null )	return null;
 
 		ST dot = stlib.getInstanceOf("dfa");
@@ -166,7 +166,7 @@ public class DOTGenerator {
 		return getDOT(startState, false);
 	}
 
-	public String getDOT(ATNState startState, boolean isLexer) {
+	public String getDOT(ATNState startState, bool isLexer) {
 		Set<String> ruleNames = grammar.rules.keySet();
 		String[] names = new String[ruleNames.size()+1];
 		int i = 0;
@@ -178,7 +178,7 @@ public class DOTGenerator {
      *  will show the incoming state machine visually.  All nodes reachable
      *  from startState will be included.
      */
-	public String getDOT(ATNState startState, String[] ruleNames, boolean isLexer) {
+	public String getDOT(ATNState startState, String[] ruleNames, bool isLexer) {
 		if ( startState==null )	return null;
 
 		// The output DOT graph for visualization
@@ -196,11 +196,11 @@ public class DOTGenerator {
 			markedStates.add(s);
 
 			// don't go past end of rule node to the follow states
-			if ( s instanceof RuleStopState) continue;
+			if ( s is RuleStopState) continue;
 
 			// special case: if decision point, then line up the alt start states
 			// unless it's an end of block
-//			if ( s instanceof BlockStartState ) {
+//			if ( s is BlockStartState ) {
 //				ST rankST = stlib.getInstanceOf("decision-rank");
 //				DecisionState alt = (DecisionState)s;
 //				for (int i=0; i<alt.getNumberOfTransitions(); i++) {
@@ -216,7 +216,7 @@ public class DOTGenerator {
 			ST edgeST;
 			for (int i = 0; i < s.getNumberOfTransitions(); i++) {
 				Transition edge = s.transition(i);
-				if ( edge instanceof RuleTransition ) {
+				if ( edge is RuleTransition ) {
 					RuleTransition rr = ((RuleTransition)edge);
 					// don't jump to other rules, but display edge to follow node
 					edgeST = stlib.getInstanceOf("edge");
@@ -235,27 +235,27 @@ public class DOTGenerator {
 					work.add(rr.followState);
 					continue;
 				}
-				if ( edge instanceof ActionTransition) {
+				if ( edge is ActionTransition) {
 					edgeST = stlib.getInstanceOf("action-edge");
 					edgeST.add("label", getEdgeLabel(edge.toString()));
 				}
-				else if ( edge instanceof AbstractPredicateTransition ) {
+				else if ( edge is AbstractPredicateTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					edgeST.add("label", getEdgeLabel(edge.toString()));
 				}
 				else if ( edge.isEpsilon() ) {
 					edgeST = stlib.getInstanceOf("epsilon-edge");
 					edgeST.add("label", getEdgeLabel(edge.toString()));
-					boolean loopback = false;
-					if (edge.target instanceof PlusBlockStartState) {
+					bool loopback = false;
+					if (edge.target is PlusBlockStartState) {
 						loopback = s.equals(((PlusBlockStartState)edge.target).loopBackState);
 					}
-					else if (edge.target instanceof StarLoopEntryState) {
+					else if (edge.target is StarLoopEntryState) {
 						loopback = s.equals(((StarLoopEntryState)edge.target).loopBackState);
 					}
 					edgeST.add("loopback", loopback);
 				}
-				else if ( edge instanceof AtomTransition ) {
+				else if ( edge is AtomTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					AtomTransition atom = (AtomTransition)edge;
 					String label = String.valueOf(atom.label);
@@ -263,16 +263,16 @@ public class DOTGenerator {
 					else if ( grammar!=null ) label = grammar.getTokenDisplayName(atom.label);
 					edgeST.add("label", getEdgeLabel(label));
 				}
-				else if ( edge instanceof SetTransition ) {
+				else if ( edge is SetTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					SetTransition set = (SetTransition)edge;
 					String label = set.label().toString();
 					if ( isLexer ) label = set.label().toString(true);
 					else if ( grammar!=null ) label = set.label().toString(grammar.getVocabulary());
-					if ( edge instanceof NotSetTransition ) label = "~"+label;
+					if ( edge is NotSetTransition ) label = "~"+label;
 					edgeST.add("label", getEdgeLabel(label));
 				}
-				else if ( edge instanceof RangeTransition ) {
+				else if ( edge is RangeTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					RangeTransition range = (RangeTransition)edge;
 					String label = range.label().toString();
@@ -310,7 +310,7 @@ public class DOTGenerator {
 //			dot.add("states", st);
 //		}
 		for (ATNState s : markedStates) {
-			if ( !(s instanceof RuleStopState) ) continue;
+			if ( !(s is RuleStopState) ) continue;
 			ST st = stlib.getInstanceOf("stopstate");
 			st.add("name", "s"+s.stateNumber);
 			st.add("label", getStateLabel(s));
@@ -318,7 +318,7 @@ public class DOTGenerator {
 		}
 
 		for (ATNState s : markedStates) {
-			if ( s instanceof RuleStopState ) continue;
+			if ( s is RuleStopState ) continue;
 			ST st = stlib.getInstanceOf("state");
 			st.add("name", "s"+s.stateNumber);
 			st.add("label", getStateLabel(s));
@@ -347,7 +347,7 @@ public class DOTGenerator {
 //
 //        // first add this node
 //        ST stateST;
-//        if ( s instanceof RuleStopState ) {
+//        if ( s is RuleStopState ) {
 //            stateST = stlib.getInstanceOf("stopstate");
 //        }
 //        else {
@@ -356,15 +356,15 @@ public class DOTGenerator {
 //        stateST.add("name", getStateLabel(s));
 //        dot.add("states", stateST);
 //
-//        if ( s instanceof RuleStopState )  {
+//        if ( s is RuleStopState )  {
 //            return; // don't go past end of rule node to the follow states
 //        }
 //
 //        // special case: if decision point, then line up the alt start states
 //        // unless it's an end of block
-//		if ( s instanceof DecisionState ) {
+//		if ( s is DecisionState ) {
 //			GrammarAST n = ((ATNState)s).ast;
-//			if ( n!=null && s instanceof BlockEndState ) {
+//			if ( n!=null && s is BlockEndState ) {
 //				ST rankST = stlib.getInstanceOf("decision-rank");
 //				ATNState alt = (ATNState)s;
 //				while ( alt!=null ) {
@@ -384,7 +384,7 @@ public class DOTGenerator {
 //		ST edgeST = null;
 //		for (int i = 0; i < s.getNumberOfTransitions(); i++) {
 //            Transition edge = (Transition) s.transition(i);
-//            if ( edge instanceof RuleTransition ) {
+//            if ( edge is RuleTransition ) {
 //                RuleTransition rr = ((RuleTransition)edge);
 //                // don't jump to other rules, but display edge to follow node
 //                edgeST = stlib.getInstanceOf("edge");
@@ -401,10 +401,10 @@ public class DOTGenerator {
 //				walkRuleATNCreatingDOT(dot, rr.followState);
 //                continue;
 //            }
-//			if ( edge instanceof ActionTransition ) {
+//			if ( edge is ActionTransition ) {
 //				edgeST = stlib.getInstanceOf("action-edge");
 //			}
-//			else if ( edge instanceof PredicateTransition ) {
+//			else if ( edge is PredicateTransition ) {
 //				edgeST = stlib.getInstanceOf("edge");
 //			}
 //			else if ( edge.isEpsilon() ) {
@@ -437,23 +437,23 @@ public class DOTGenerator {
 		if ( s==null ) return "null";
 		String stateLabel = "";
 
-		if (s instanceof BlockStartState) {
+		if (s is BlockStartState) {
 			stateLabel += "&rarr;\\n";
 		}
-		else if (s instanceof BlockEndState) {
+		else if (s is BlockEndState) {
 			stateLabel += "&larr;\\n";
 		}
 
 		stateLabel += String.valueOf(s.stateNumber);
 
-		if (s instanceof PlusBlockStartState || s instanceof PlusLoopbackState) {
+		if (s is PlusBlockStartState || s is PlusLoopbackState) {
 			stateLabel += "+";
 		}
-		else if (s instanceof StarBlockStartState || s instanceof StarLoopEntryState || s instanceof StarLoopbackState) {
+		else if (s is StarBlockStartState || s is StarLoopEntryState || s is StarLoopbackState) {
 			stateLabel += "*";
 		}
 
-		if ( s instanceof DecisionState && ((DecisionState)s).decision>=0 ) {
+		if ( s is DecisionState && ((DecisionState)s).decision>=0 ) {
 			stateLabel = stateLabel+"\\nd="+((DecisionState)s).decision;
 		}
 

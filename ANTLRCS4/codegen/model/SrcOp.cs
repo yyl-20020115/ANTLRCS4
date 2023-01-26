@@ -35,12 +35,12 @@ public abstract class SrcOp : OutputModelObject {
 
 	/** Walk upwards in model tree, looking for outer alt's code block */
 	public CodeBlockForOuterMostAlt getOuterMostAltCodeBlock() {
-		if ( this instanceof CodeBlockForOuterMostAlt ) {
+		if ( this is CodeBlockForOuterMostAlt ) {
 			return (CodeBlockForOuterMostAlt)this;
 		}
 		CodeBlock p = enclosingBlock;
 		while ( p!=null ) {
-			if ( p instanceof CodeBlockForOuterMostAlt ) {
+			if ( p is CodeBlockForOuterMostAlt ) {
 				return (CodeBlockForOuterMostAlt)p;
 			}
 			p = p.enclosingBlock;

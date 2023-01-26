@@ -79,7 +79,7 @@ public final class LexerChannelAction implements LexerAction {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof LexerChannelAction)) {
+		else if (!(obj is LexerChannelAction)) {
 			return false;
 		}
 

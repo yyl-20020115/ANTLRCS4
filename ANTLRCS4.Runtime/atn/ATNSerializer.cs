@@ -296,11 +296,11 @@ public class ATNSerializer {
 			}
 
 			int stateType = s.getStateType();
-			if (s instanceof DecisionState && ((DecisionState)s).nonGreedy) {
+			if (s is DecisionState && ((DecisionState)s).nonGreedy) {
 				nonGreedyStates.add(s.stateNumber);
 			}
 
-			if (s instanceof RuleStartState && ((RuleStartState)s).isLeftRecursiveRule) {
+			if (s is RuleStartState && ((RuleStartState)s).isLeftRecursiveRule) {
 				precedenceStates.add(s.stateNumber);
 			}
 
@@ -311,7 +311,7 @@ public class ATNSerializer {
 			if ( s.getStateType() == ATNState.LOOP_END ) {
 				data.add(((LoopEndState)s).loopBackState.stateNumber);
 			}
-			else if ( s instanceof BlockStartState ) {
+			else if ( s is BlockStartState ) {
 				data.add(((BlockStartState)s).endState.stateNumber);
 			}
 
@@ -337,7 +337,7 @@ public class ATNSerializer {
 		data.add(nSets);
 
 		for (IntervalSet set : sets) {
-			boolean containsEof = set.contains(Token.EOF);
+			bool containsEof = set.contains(Token.EOF);
 			if (containsEof && set.getIntervals().get(0).b == Token.EOF) {
 				data.add(set.getIntervals().size() - 1);
 			}

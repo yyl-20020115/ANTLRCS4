@@ -753,7 +753,7 @@ equalityExpression
     ;
 
 instanceOfExpression
-    :   relationalExpression ('instanceof' type)?
+    :   relationalExpression ('is' type)?
     ;
 
 relationalExpression
@@ -932,7 +932,7 @@ IF : 'if';
 GOTO : 'goto';
 IMPLEMENTS : 'implements';
 IMPORT : 'import';
-INSTANCEOF : 'instanceof';
+INSTANCEOF : 'is';
 INT : 'int';
 INTERFACE : 'interface';
 LONG : 'long';

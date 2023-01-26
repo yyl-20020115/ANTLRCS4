@@ -111,7 +111,7 @@ public final class LexerCustomAction implements LexerAction {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof LexerCustomAction)) {
+		else if (!(obj is LexerCustomAction)) {
 			return false;
 		}
 

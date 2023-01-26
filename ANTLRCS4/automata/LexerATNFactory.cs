@@ -141,7 +141,7 @@ public class LexerATNFactory : ParserATNFactory {
 	protected Handle action(GrammarAST node, LexerAction lexerAction) {
 		ATNState left = newState(node);
 		ATNState right = newState(node);
-		boolean isCtxDependent = false;
+		bool isCtxDependent = false;
 		int lexerActionIndex = getLexerActionIndex(lexerAction);
 		ActionTransition a =
 			new ActionTransition(right, currentRule.index, lexerActionIndex, isCtxDependent);
@@ -183,8 +183,8 @@ public class LexerATNFactory : ParserATNFactory {
 			return epsilon(ID);
 		}
 
-		boolean callCommand = arg != null;
-		boolean containsArg = cmdST.impl.formalArguments != null && cmdST.impl.formalArguments.containsKey("arg");
+		bool callCommand = arg != null;
+		bool containsArg = cmdST.impl.formalArguments != null && cmdST.impl.formalArguments.containsKey("arg");
 		if (callCommand != containsArg) {
 			ErrorType errorType = callCommand ? ErrorType.UNWANTED_LEXER_COMMAND_ARGUMENT : ErrorType.MISSING_LEXER_COMMAND_ARGUMENT;
 			g.tool.errMgr.grammarError(errorType, g.fileName, ID.token, ID.getText());
@@ -214,7 +214,7 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	@Override
-	public Handle set(GrammarAST associatedAST, List<GrammarAST> alts, boolean invert) {
+	public Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert) {
 		ATNState left = newState(associatedAST);
 		ATNState right = newState(associatedAST);
 		IntervalSet set = new IntervalSet();
@@ -263,8 +263,8 @@ public class LexerATNFactory : ParserATNFactory {
 		return new Handle(left, right);
 	}
 
-	protected boolean checkRange(GrammarAST leftNode, GrammarAST rightNode, int leftValue, int rightValue) {
-		boolean result = true;
+	protected bool checkRange(GrammarAST leftNode, GrammarAST rightNode, int leftValue, int rightValue) {
+		bool result = true;
 		if (leftValue == -1) {
 			result = false;
 			g.tool.errMgr.grammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
@@ -341,13 +341,13 @@ public class LexerATNFactory : ParserATNFactory {
 		public static final CharSetParseState ERROR = new CharSetParseState(Mode.ERROR, false, -1, IntervalSet.EMPTY_SET);
 
 		public final Mode mode;
-		public final boolean inRange;
+		public final bool inRange;
 		public final int prevCodePoint;
 		public final IntervalSet prevProperty;
 
 		public CharSetParseState(
 				Mode mode,
-				boolean inRange,
+				bool inRange,
 				int prevCodePoint,
 				IntervalSet prevProperty) {
 			this.mode = mode;
@@ -368,8 +368,8 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		@Override
-		public boolean equals(Object other) {
-			if (!(other instanceof CharSetParseState)) {
+		public bool equals(Object other) {
+			if (!(other is CharSetParseState)) {
 				return false;
 			}
 			CharSetParseState that = (CharSetParseState) other;
@@ -519,7 +519,7 @@ public class LexerATNFactory : ParserATNFactory {
 		checkRangeAndAddToSet(mainAst, mainAst, set, a, b, currentRule.caseInsensitive, null);
 	}
 
-	private CharactersDataCheckStatus checkRangeAndAddToSet(GrammarAST rootAst, GrammarAST ast, IntervalSet set, int a, int b, boolean caseInsensitive, CharactersDataCheckStatus previousStatus) {
+	private CharactersDataCheckStatus checkRangeAndAddToSet(GrammarAST rootAst, GrammarAST ast, IntervalSet set, int a, int b, bool caseInsensitive, CharactersDataCheckStatus previousStatus) {
 		CharactersDataCheckStatus status;
 		RangeBorderCharactersData charactersData = RangeBorderCharactersData.getAndCheckCharactersData(a, b, g, ast,
 				previousStatus == null || !previousStatus.notImpliedCharacters);
@@ -535,7 +535,7 @@ public class LexerATNFactory : ParserATNFactory {
 			}
 		}
 		else {
-			boolean charactersCollision = previousStatus != null && previousStatus.collision;
+			bool charactersCollision = previousStatus != null && previousStatus.collision;
 			if (!charactersCollision) {
 				for (int i = a; i <= b; i++) {
 					if (set.contains(i)) {
@@ -546,7 +546,7 @@ public class LexerATNFactory : ParserATNFactory {
 						else {
 							StringBuilder sb = new StringBuilder();
 							for (Object child : rootAst.getChildren()) {
-								if (child instanceof RangeAST) {
+								if (child is RangeAST) {
 									sb.append(((RangeAST) child).getChild(0).getText());
 									sb.append("..");
 									sb.append(((RangeAST) child).getChild(1).getText());

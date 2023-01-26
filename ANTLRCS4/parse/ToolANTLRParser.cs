@@ -40,11 +40,11 @@ public class ToolANTLRParser extends ANTLRParser {
 
 	public String getParserErrorMessage(Parser parser, RecognitionException e) {
 		String msg;
-		if ( e instanceof NoViableAltException) {
+		if ( e is NoViableAltException) {
 			String name = parser.getTokenErrorDisplay(e.token);
 			msg = name+" came as a complete surprise to me";
 		}
-		else if ( e instanceof v4ParserException) {
+		else if ( e is v4ParserException) {
 			msg = ((v4ParserException)e).msg;
 		}
 		else {

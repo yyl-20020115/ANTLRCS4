@@ -30,10 +30,10 @@ public class IterativeParseTreeWalker extends ParseTreeWalker {
 		while (currentNode != null) {
 
 			// pre-order visit
-			if (currentNode instanceof ErrorNode) {
+			if (currentNode is ErrorNode) {
 				listener.visitErrorNode((ErrorNode) currentNode);
 			}
-			else if (currentNode instanceof TerminalNode) {
+			else if (currentNode is TerminalNode) {
 				listener.visitTerminal((TerminalNode) currentNode);
 			}
 			else {
@@ -54,7 +54,7 @@ public class IterativeParseTreeWalker extends ParseTreeWalker {
 			do {
 
 				// post-order visit
-				if (currentNode instanceof RuleNode) {
+				if (currentNode is RuleNode) {
 					exitRule(listener, (RuleNode) currentNode);
 				}
 

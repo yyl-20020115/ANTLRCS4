@@ -229,7 +229,7 @@ public class RuleFunction extends OutputModelObject {
 			boolean ignore = false;
 			while (r != null) {
 				// Ignore string literals in predicates
-				if (r instanceof PredAST) {
+				if (r is PredAST) {
 					ignore = true;
 					break;
 				}

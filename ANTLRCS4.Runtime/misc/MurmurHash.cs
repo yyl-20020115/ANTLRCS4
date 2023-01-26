@@ -4,15 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.misc;
+namespace org.antlr.v4.runtime.misc;
 
 /**
  *
  * @author Sam Harwell
  */
-public final class MurmurHash {
+public static class MurmurHash
+{
 
-	private static final int DEFAULT_SEED = 0;
+	private static readonly int DEFAULT_SEED = 0;
 
 	/**
 	 * Initialize the hash using the default seed value.
@@ -41,12 +42,12 @@ public final class MurmurHash {
 	 * @return the updated intermediate hash value
 	 */
 	public static int update(int hash, int value) {
-		final int c1 = 0xCC9E2D51;
-		final int c2 = 0x1B873593;
-		final int r1 = 15;
-		final int r2 = 13;
-		final int m = 5;
-		final int n = 0xE6546B64;
+		int c1 = unchecked((int)0xCC9E2D51);
+		int c2 = unchecked((int)0x1B873593);
+		int r1 = unchecked((int)15);
+		int r2 = unchecked((int)13);
+		int m = unchecked((int)5);
+		int n = unchecked((int)0xE6546B64);
 
 		int k = value;
 		k = k * c1;
@@ -68,7 +69,7 @@ public final class MurmurHash {
 	 * @return the updated intermediate hash value
 	 */
 	public static int update(int hash, Object value) {
-		return update(hash, value != null ? value.hashCode() : 0);
+		return update(hash, value != null ? value.GetHashCode() : 0);
 	}
 
 	/**
@@ -80,12 +81,12 @@ public final class MurmurHash {
 	 * @return the final hash result
 	 */
 	public static int finish(int hash, int numberOfWords) {
-		hash = hash ^ (numberOfWords * 4);
-		hash = hash ^ (hash >>> 16);
-		hash = hash * 0x85EBCA6B;
-		hash = hash ^ (hash >>> 13);
-		hash = hash * 0xC2B2AE35;
-		hash = hash ^ (hash >>> 16);
+		hash ^= (numberOfWords * 4);
+		hash ^= (hash >>> 16);
+		hash *= unchecked((int)0x85EBCA6B);
+		hash ^= (hash >>> 13);
+		hash *= unchecked((int)0xC2B2AE35);
+		hash ^= (hash >>> 16);
 		return hash;
 	}
 
@@ -98,16 +99,14 @@ public final class MurmurHash {
 	 * @param seed the seed for the MurmurHash algorithm
 	 * @return the hash code of the data
 	 */
-	public static <T> int hashCode(T[] data, int seed) {
+	public static int GetHashCode<T>(T[] data, int seed) {
 		int hash = initialize(seed);
-		for (T value : data) {
+		foreach (T value in data) {
 			hash = update(hash, value);
 		}
 
-		hash = finish(hash, data.length);
+		hash = finish(hash, data.Length);
 		return hash;
 	}
 
-	private MurmurHash() {
-	}
 }

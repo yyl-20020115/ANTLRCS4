@@ -49,7 +49,7 @@ public interface ATNFactory {
 	Handle tokenRef(TerminalAST node);
 
 
-	Handle set(GrammarAST associatedAST, List<GrammarAST> alts, boolean invert);
+	Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert);
 
 
 	Handle charSetLiteral(GrammarAST charSetAST);

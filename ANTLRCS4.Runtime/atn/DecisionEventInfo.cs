@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+
 package org.antlr.v4.runtime.atn;
 
 import org.antlr.v4.runtime.TokenStream;
@@ -23,53 +25,54 @@ import org.antlr.v4.runtime.TokenStream;
  *
  * @since 4.3
  */
-public class DecisionEventInfo {
-	/**
+public class DecisionEventInfo
+{
+    /**
 	 * The invoked decision number which this event is related to.
 	 *
 	 * @see ATN#decisionToState
 	 */
-	public final int decision;
+    public readonly int decision;
 
-	/**
+    /**
 	 * The configuration set containing additional information relevant to the
 	 * prediction state when the current event occurred, or {@code null} if no
 	 * additional information is relevant or available.
 	 */
-	public final ATNConfigSet configs;
+    public readonly ATNConfigSet configs;
 
-	/**
+    /**
 	 * The input token stream which is being parsed.
 	 */
-	public final TokenStream input;
+    public readonly TokenStream input;
 
-	/**
+    /**
 	 * The token index in the input stream at which the current prediction was
 	 * originally invoked.
 	 */
-	public final int startIndex;
+    public readonly int startIndex;
 
-	/**
+    /**
 	 * The token index in the input stream at which the current event occurred.
 	 */
-	public final int stopIndex;
+    public readonly int stopIndex;
 
-	/**
+    /**
 	 * {@code true} if the current event occurred during LL prediction;
 	 * otherwise, {@code false} if the input occurred during SLL prediction.
 	 */
-	public final boolean fullCtx;
+    public readonly bool fullCtx;
 
-	public DecisionEventInfo(int decision,
-							 ATNConfigSet configs,
-							 TokenStream input, int startIndex, int stopIndex,
-							 boolean fullCtx)
-	{
-		this.decision = decision;
-		this.fullCtx = fullCtx;
-		this.stopIndex = stopIndex;
-		this.input = input;
-		this.startIndex = startIndex;
-		this.configs = configs;
-	}
+    public DecisionEventInfo(int decision,
+                             ATNConfigSet configs,
+                             TokenStream input, int startIndex, int stopIndex,
+                             bool fullCtx)
+    {
+        this.decision = decision;
+        this.fullCtx = fullCtx;
+        this.stopIndex = stopIndex;
+        this.input = input;
+        this.startIndex = startIndex;
+        this.configs = configs;
+    }
 }

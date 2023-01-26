@@ -70,7 +70,7 @@ block[GrammarAST label, GrammarAST ebnfRoot] returns [List<? extends SrcOp> omos
     	}
     	else {
             Choice choice = controller.getEBNFBlock($ebnfRoot, alts);
-            hasLookaheadBlock |= choice instanceof PlusBlock || choice instanceof StarBlock;
+            hasLookaheadBlock |= choice is PlusBlock || choice is StarBlock;
     	    $omos = DefaultOutputModelFactory.list(choice);
     	}
     	}
@@ -137,7 +137,7 @@ subrule returns [List<? extends SrcOp> omos]
 		alt.addOp(blk);
 		alts.add(alt);
 		SrcOp loop = controller.getEBNFBlock($op, alts); // "star it"
-        hasLookaheadBlock |= loop instanceof PlusBlock || loop instanceof StarBlock;
+        hasLookaheadBlock |= loop is PlusBlock || loop is StarBlock;
    	    $omos = DefaultOutputModelFactory.list(loop);
 		}
 	| 	block[null, null]					{$omos = $block.omos;}

@@ -183,7 +183,7 @@ public class TestXPath {
 
 		List<String> nodes = new ArrayList<>();
 		for (ParseTree t : result.b) {
-			if ( t instanceof RuleContext) {
+			if ( t is RuleContext) {
 				RuleContext r = (RuleContext)t;
 				nodes.add(result.a[r.getRuleIndex()]);
 			}

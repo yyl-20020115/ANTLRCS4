@@ -21,7 +21,7 @@ public class TailEpsilonRemover : ATNVisitor {
 	public override void visitState(ATNState p) {
 		if (p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions() == 1) {
 			ATNState q = p.transition(0).target;
-			if (p.transition(0) instanceof RuleTransition) {
+			if (p.transition(0) is RuleTransition) {
 				q = ((RuleTransition) p.transition(0)).followState;
 			}
 			if (q.getStateType() == ATNState.BASIC) {
@@ -29,11 +29,11 @@ public class TailEpsilonRemover : ATNVisitor {
 				// if edge out of q is single epsilon to block end
 				// we can strip epsilon p-x->q-eps->r
 				Transition trans = q.transition(0);
-				if (q.getNumberOfTransitions() == 1 && trans instanceof EpsilonTransition) {
+				if (q.getNumberOfTransitions() == 1 && trans is EpsilonTransition) {
 					ATNState r = trans.target;
-					if (r instanceof BlockEndState || r instanceof PlusLoopbackState || r instanceof StarLoopbackState) {
+					if (r is BlockEndState || r is PlusLoopbackState || r is StarLoopbackState) {
 						// skip over q
-						if (p.transition(0) instanceof RuleTransition) {
+						if (p.transition(0) is RuleTransition) {
 							((RuleTransition) p.transition(0)).followState = r;
 						}
 						else {

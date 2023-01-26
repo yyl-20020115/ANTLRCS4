@@ -4,12 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.misc;
-
-import org.antlr.v4.runtime.BailErrorStrategy;
-import org.antlr.v4.runtime.RecognitionException;
-
-import java.util.concurrent.CancellationException;
+namespace org.antlr.v4.runtime.misc;
 
 /**
  * This exception is thrown to cancel a parsing operation. This exception does
@@ -19,7 +14,7 @@ import java.util.concurrent.CancellationException;
  *
  * @author Sam Harwell
  */
-public class ParseCancellationException extends CancellationException {
+public class ParseCancellationException : CancellationException {
 
 	public ParseCancellationException() {
 	}
@@ -28,11 +23,11 @@ public class ParseCancellationException extends CancellationException {
 		super(message);
 	}
 
-	public ParseCancellationException(Throwable cause) {
+	public ParseCancellationException(Exception cause) {
 		initCause(cause);
 	}
 
-	public ParseCancellationException(String message, Throwable cause) {
+	public ParseCancellationException(String message, Exception cause) {
 		super(message);
 		initCause(cause);
 	}

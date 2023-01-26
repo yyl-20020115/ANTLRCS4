@@ -35,7 +35,7 @@ public class LeftRecursiveRule : Rule {
 	}
 
 	@Override
-	public boolean hasAltSpecificContexts() {
+	public bool hasAltSpecificContexts() {
 		return super.hasAltSpecificContexts() || getAltLabels()!=null;
 	}
 

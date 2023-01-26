@@ -58,7 +58,7 @@ public class ANTLRMessage {
 		return args;
     }
 
-	public ST getMessageTemplate(boolean verbose) {
+	public ST getMessageTemplate(bool verbose) {
 		ST messageST = new ST(getErrorType().msg);
 		messageST.impl.name = errorType.name();
 

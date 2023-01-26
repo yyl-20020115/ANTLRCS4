@@ -35,7 +35,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 	public String getOptionString(String key) {
 		GrammarAST value = getOptionAST(key);
 		if ( value == null ) return null;
-		if ( value instanceof ActionAST ) {
+		if ( value is ActionAST ) {
 			return value.getText();
 		}
 		else {

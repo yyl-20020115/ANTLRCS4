@@ -482,7 +482,7 @@ public class TokenStreamRewriter {
 		for (int i = 0; i < rewrites.size(); i++) {
 			RewriteOperation op = rewrites.get(i);
 			if ( op==null ) continue;
-			if ( !(op instanceof ReplaceOp) ) continue;
+			if ( !(op is ReplaceOp) ) continue;
 			ReplaceOp rop = (ReplaceOp)rewrites.get(i);
 			// Wipe prior inserts within range
 			List<? extends InsertBeforeOp> inserts = getKindOfOps(rewrites, InsertBeforeOp.class, i);
@@ -528,7 +528,7 @@ public class TokenStreamRewriter {
 		for (int i = 0; i < rewrites.size(); i++) {
 			RewriteOperation op = rewrites.get(i);
 			if ( op==null ) continue;
-			if ( !(op instanceof InsertBeforeOp) ) continue;
+			if ( !(op is InsertBeforeOp) ) continue;
 			InsertBeforeOp iop = (InsertBeforeOp)rewrites.get(i);
 			// combine current insert with prior if any at same index
 			List<? extends InsertBeforeOp> prevInserts = getKindOfOps(rewrites, InsertBeforeOp.class, i);

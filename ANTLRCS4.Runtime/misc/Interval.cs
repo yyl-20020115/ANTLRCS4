@@ -44,7 +44,7 @@ public class Interval {
 	}
 
 	public override bool equals(Object? o) {
-		if ( o==null || !(o instanceof Interval) ) {
+		if ( o==null || !(o is Interval) ) {
 			return false;
 		}
 		Interval other = (Interval)o;

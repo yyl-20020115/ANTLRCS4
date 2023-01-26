@@ -4,26 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.semantics;
+namespace org.antlr.v4.semantics;
 
-import org.antlr.v4.analysis.LeftRecursiveRuleAnalyzer;
-import org.antlr.v4.misc.OrderedHashMap;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.GrammarTreeVisitor;
-import org.antlr.v4.parse.ScopeParser;
-import org.antlr.v4.tool.*;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.AltAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.RuleAST;
-import org.stringtemplate.v4.misc.MultiMap;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class RuleCollector extends GrammarTreeVisitor {
-	private boolean grammarCaseInsensitive = false;
+public class RuleCollector : GrammarTreeVisitor {
+	private bool grammarCaseInsensitive = false;
 
 	/** which grammar are we checking */
 	public Grammar g;

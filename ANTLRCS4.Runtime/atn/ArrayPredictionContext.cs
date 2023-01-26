@@ -40,7 +40,7 @@ public class ArrayPredictionContext : PredictionContext {
 	}
 
 	public override int size() {
-		return returnStates.length;
+		return returnStates.Length;
 	}
 
 	public override PredictionContext getParent(int index) {
@@ -60,11 +60,11 @@ public class ArrayPredictionContext : PredictionContext {
 		if (this == o) {
 			return true;
 		}
-		else if ( !(o instanceof ArrayPredictionContext) ) {
+		else if ( !(o is ArrayPredictionContext) ) {
 			return false;
 		}
 
-		if ( this.hashCode() != o.hashCode() ) {
+		if ( this.GetHashCode() != o.GetHashCode() ) {
 			return false; // can't be same if hash is different
 		}
 
@@ -76,23 +76,23 @@ public class ArrayPredictionContext : PredictionContext {
 	public override String ToString() {
 		if ( isEmpty() ) return "[]";
 		StringBuilder buf = new StringBuilder();
-		buf.append("[");
-		for (int i=0; i<returnStates.length; i++) {
-			if ( i>0 ) buf.append(", ");
+		buf.Append('[');
+		for (int i=0; i<returnStates.Length; i++) {
+			if ( i>0 ) buf.Append(", ");
 			if ( returnStates[i]==EMPTY_RETURN_STATE ) {
-				buf.append("$");
+				buf.Append("$");
 				continue;
 			}
-			buf.append(returnStates[i]);
+			buf.Append(returnStates[i]);
 			if ( parents[i]!=null ) {
-				buf.append(' ');
-				buf.append(parents[i].toString());
+				buf.Append(' ');
+				buf.Append(parents[i].ToString());
 			}
 			else {
-				buf.append("null");
+				buf.Append("null");
 			}
 		}
-		buf.append("]");
-		return buf.toString();
+		buf.Append(']');
+		return buf.ToString();
 	}
 }

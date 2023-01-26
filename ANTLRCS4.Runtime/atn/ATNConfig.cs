@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using System.Text;
+
 namespace org.antlr.v4.runtime.atn;
 
 /** A tuple: (ATN state, predicted alt, syntactic, semantic context).
@@ -129,11 +131,11 @@ public class ATNConfig {
 		return reachesIntoOuterContext & ~SUPPRESS_PRECEDENCE_FILTER;
 	}
 
-	public final boolean isPrecedenceFilterSuppressed() {
+	public final bool isPrecedenceFilterSuppressed() {
 		return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
 	}
 
-	public final void setPrecedenceFilterSuppressed(boolean value) {
+	public final void setPrecedenceFilterSuppressed(bool value) {
 		if (value) {
 			this.reachesIntoOuterContext |= 0x40000000;
 		}
@@ -147,15 +149,15 @@ public class ATNConfig {
      *  syntactic/semantic contexts are the same.
      */
     @Override
-    public boolean equals(Object o) {
-		if (!(o instanceof ATNConfig)) {
+    public bool equals(Object o) {
+		if (!(o is ATNConfig)) {
 			return false;
 		}
 
 		return this.equals((ATNConfig)o);
 	}
 
-	public boolean equals(ATNConfig other) {
+	public bool equals(ATNConfig other) {
 		if (this == other) {
 			return true;
 		}
@@ -186,7 +188,7 @@ public class ATNConfig {
 		return toString(null, true);
 	}
 
-	public String toString(Recognizer<?, ?> recog, boolean showAlt) {
+	public String toString(Recognizer<?, ?> recog, bool showAlt) {
 		StringBuilder buf = new StringBuilder();
 //		if ( state.ruleIndex>=0 ) {
 //			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");

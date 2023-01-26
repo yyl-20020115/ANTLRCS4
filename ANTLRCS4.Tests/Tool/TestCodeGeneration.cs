@@ -76,7 +76,7 @@ public class TestCodeGeneration {
 
 		@Override
 		protected int writeObject(STWriter out, InstanceScope scope, Object o, String[] options) {
-			if ( o instanceof ST ) {
+			if ( o is ST ) {
 				String name = ((ST)o).getName();
 				name = name.substring(1);
 				if ( !name.startsWith("_sub") ) {

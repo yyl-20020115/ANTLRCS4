@@ -256,7 +256,7 @@ public enum PredictionMode {
 	 */
 	public static boolean hasConfigInRuleStopState(ATNConfigSet configs) {
 		for (ATNConfig c : configs) {
-			if (c.state instanceof RuleStopState) {
+			if (c.state is RuleStopState) {
 				return true;
 			}
 		}
@@ -276,7 +276,7 @@ public enum PredictionMode {
 	 */
 	public static boolean allConfigsInRuleStopStates(ATNConfigSet configs) {
 		for (ATNConfig config : configs) {
-			if (!(config.state instanceof RuleStopState)) {
+			if (!(config.state is RuleStopState)) {
 				return false;
 			}
 		}

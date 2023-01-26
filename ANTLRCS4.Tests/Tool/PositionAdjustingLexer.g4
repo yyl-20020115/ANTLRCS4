@@ -32,7 +32,7 @@ lexer grammar PositionAdjustingLexer;
 @members {
 	@Override
 	public Token nextToken() {
-		if (!(_interp instanceof PositionAdjustingLexerATNSimulator)) {
+		if (!(_interp is PositionAdjustingLexerATNSimulator)) {
 			_interp = new PositionAdjustingLexerATNSimulator(this, _ATN, _decisionToDFA, _sharedContextCache);
 		}
 

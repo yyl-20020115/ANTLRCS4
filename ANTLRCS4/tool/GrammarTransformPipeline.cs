@@ -113,7 +113,7 @@ public class GrammarTransformPipeline {
 		for (int i = 0; i < optionsSubTrees.size(); i++) {
 			GrammarAST t = optionsSubTrees.get(i);
 			CommonTree elWithOpt = t.parent;
-			if ( elWithOpt instanceof GrammarASTWithOptions ) {
+			if ( elWithOpt is GrammarASTWithOptions ) {
 				Map<String, GrammarAST> options = ((GrammarASTWithOptions) elWithOpt).getOptions();
 				if ( options.containsKey(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME) ) {
 					GrammarToken newTok = new GrammarToken(g, elWithOpt.getToken());

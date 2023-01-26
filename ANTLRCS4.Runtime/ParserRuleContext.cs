@@ -3,19 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ErrorNodeImpl;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.runtime.tree.TerminalNodeImpl;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /** A rule invocation record for parsing.
  *
@@ -39,8 +28,8 @@ import java.util.List;
  *  group values such as this aggregate.  The getters/setters are there to
  *  satisfy the superclass interface.
  */
-public class ParserRuleContext extends RuleContext {
-	public static final ParserRuleContext EMPTY = new ParserRuleContext();
+public class ParserRuleContext : RuleContext {
+	public static readonly ParserRuleContext EMPTY = new ParserRuleContext();
 
 	/** If we are debugging or building a parse tree for a visitor,
 	 *  we need to track all of the tokens and rule invocations associated
@@ -104,7 +93,7 @@ public class ParserRuleContext extends RuleContext {
 			this.children = new ArrayList<>();
 			// reset parent pointer for any error nodes
 			for (ParseTree child : ctx.children) {
-				if ( child instanceof ErrorNode ) {
+				if ( child is ErrorNode ) {
 					addChild((ErrorNode)child);
 				}
 			}
@@ -131,7 +120,7 @@ public class ParserRuleContext extends RuleContext {
 	 *
 	 *  @since 4.7
 	 */
-	public <T extends ParseTree> T addAnyChild(T t) {
+	public T addAnyChild<T>(T t) where T:ParseTree {
 		if ( children==null ) children = new ArrayList<>();
 		children.add(t);
 		return t;
@@ -208,7 +197,7 @@ public class ParserRuleContext extends RuleContext {
 		return children!=null && i>=0 && i<children.size() ? children.get(i) : null;
 	}
 
-	public <T extends ParseTree> T getChild(Class<? extends T> ctxType, int i) {
+	public <T : ParseTree> T getChild(Class<? : T> ctxType, int i) {
 		if ( children==null || i < 0 || i >= children.size() ) {
 			return null;
 		}
@@ -232,7 +221,7 @@ public class ParserRuleContext extends RuleContext {
 
 		int j = -1; // what token with ttype have we found?
 		for (ParseTree o : children) {
-			if ( o instanceof TerminalNode ) {
+			if ( o is TerminalNode ) {
 				TerminalNode tnode = (TerminalNode)o;
 				Token symbol = tnode.getSymbol();
 				if ( symbol.getType()==ttype ) {
@@ -254,7 +243,7 @@ public class ParserRuleContext extends RuleContext {
 
 		List<TerminalNode> tokens = null;
 		for (ParseTree o : children) {
-			if ( o instanceof TerminalNode ) {
+			if ( o is TerminalNode ) {
 				TerminalNode tnode = (TerminalNode)o;
 				Token symbol = tnode.getSymbol();
 				if ( symbol.getType()==ttype ) {
@@ -273,11 +262,11 @@ public class ParserRuleContext extends RuleContext {
 		return tokens;
 	}
 
-	public <T extends ParserRuleContext> T getRuleContext(Class<? extends T> ctxType, int i) {
+	public <T : ParserRuleContext> T getRuleContext(Class<? : T> ctxType, int i) {
 		return getChild(ctxType, i);
 	}
 
-	public <T extends ParserRuleContext> List<T> getRuleContexts(Class<? extends T> ctxType) {
+	public <T : ParserRuleContext> List<T> getRuleContexts(Class<? : T> ctxType) {
 		if ( children==null ) {
 			return Collections.emptyList();
 		}

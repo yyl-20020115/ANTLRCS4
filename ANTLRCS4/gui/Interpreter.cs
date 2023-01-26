@@ -52,11 +52,11 @@ public class Interpreter {
 	protected String parserGrammarFileName;
 	protected String lexerGrammarFileName;
 	protected String startRuleName;
-	protected boolean printTree = false;
-	protected boolean gui = false;
-	protected boolean trace = false;
+	protected bool printTree = false;
+	protected bool gui = false;
+	protected bool trace = false;
 	protected String encoding = null;
-	protected boolean showTokens = false;
+	protected bool showTokens = false;
 	protected String profileFileName = null;
 	protected String inputFileName;
 
@@ -172,7 +172,7 @@ public class Interpreter {
 
 		if ( showTokens ) {
 			for (Token tok : tokens.getTokens()) {
-				if ( tok instanceof CommonToken ) {
+				if ( tok is CommonToken ) {
 					System.out.println(((CommonToken)tok).toString(lexEngine));
 				}
 				else {

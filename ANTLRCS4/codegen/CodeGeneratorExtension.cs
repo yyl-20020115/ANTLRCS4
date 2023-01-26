@@ -40,9 +40,9 @@ public class CodeGeneratorExtension {
 
 	public List<SrcOp> rulePostamble(List<SrcOp> ops) { return ops; }
 
-	public CodeBlockForAlt alternative(CodeBlockForAlt blk, boolean outerMost) { return blk; }
+	public CodeBlockForAlt alternative(CodeBlockForAlt blk, bool outerMost) { return blk; }
 
-	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, boolean outerMost) { return blk; }
+	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, bool outerMost) { return blk; }
 
 	public CodeBlockForAlt epsilon(CodeBlockForAlt blk) { return blk; }
 
@@ -68,5 +68,5 @@ public class CodeGeneratorExtension {
 
 	public Choice getEBNFBlock(Choice c) { return c; }
 
-	public boolean needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
+	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
 }

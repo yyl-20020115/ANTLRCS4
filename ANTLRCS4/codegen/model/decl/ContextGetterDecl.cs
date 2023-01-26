@@ -30,7 +30,7 @@ public abstract class ContextGetterDecl : Decl {
 	public bool equals(Object obj) {
 		if ( this==obj ) return true;
 		// A() and label A are different
-		if ( !(obj instanceof ContextGetterDecl) ) return false;
+		if ( !(obj is ContextGetterDecl) ) return false;
 		return name.equals(((Decl) obj).name) &&
 				getArgType().equals(((ContextGetterDecl) obj).getArgType());
 	}

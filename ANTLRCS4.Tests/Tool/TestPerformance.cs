@@ -1276,7 +1276,7 @@ public class TestPerformance {
 								System.err.println(sourceName+"Forced to retry with full context.");
 							}
 
-							if (!(ex.getCause() instanceof ParseCancellationException)) {
+							if (!(ex.getCause() is ParseCancellationException)) {
 								throw ex;
 							}
 
@@ -1323,7 +1323,7 @@ public class TestPerformance {
 							parseResult = parseMethod.invoke(parser);
 						}
 
-						assertTrue(parseResult instanceof ParseTree);
+						assertTrue(parseResult is ParseTree);
 						if (COMPUTE_CHECKSUM && BUILD_PARSE_TREES) {
 							ParseTreeWalker.DEFAULT.walk(new ChecksumParseTreeListener(checksum), (ParseTree)parseResult);
 						}
@@ -1333,7 +1333,7 @@ public class TestPerformance {
 
 						return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), (ParseTree)parseResult, tokens.size(), TIME_PARSE_ONLY ? parseStartTime : startTime, lexer, parser);
                     } catch (Exception e) {
-						if (!REPORT_SYNTAX_ERRORS && e instanceof ParseCancellationException) {
+						if (!REPORT_SYNTAX_ERRORS && e is ParseCancellationException) {
 							return new FileParseResult("unknown", (int)checksum.getValue(), null, 0, startTime, null, null);
 						}
 
@@ -1383,7 +1383,7 @@ public class TestPerformance {
 
 			if (lexer != null) {
 				LexerATNSimulator interpreter = lexer.getInterpreter();
-				if (interpreter instanceof StatisticsLexerATNSimulator) {
+				if (interpreter is StatisticsLexerATNSimulator) {
 					lexerTotalTransitions = ((StatisticsLexerATNSimulator)interpreter).totalTransitions;
 					lexerComputedTransitions = ((StatisticsLexerATNSimulator)interpreter).computedTransitions;
 				} else {
@@ -1407,7 +1407,7 @@ public class TestPerformance {
 
 			if (parser != null) {
 				ParserATNSimulator interpreter = parser.getInterpreter();
-				if (interpreter instanceof StatisticsParserATNSimulator) {
+				if (interpreter is StatisticsParserATNSimulator) {
 					decisionInvocations = ((StatisticsParserATNSimulator)interpreter).decisionInvocations;
 					fullContextFallback = ((StatisticsParserATNSimulator)interpreter).fullContextFallback;
 					nonSll = ((StatisticsParserATNSimulator)interpreter).nonSll;

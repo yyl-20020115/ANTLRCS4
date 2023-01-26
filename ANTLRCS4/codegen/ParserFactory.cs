@@ -69,7 +69,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 
 	@Override
 	public RuleFunction rule(Rule r) {
-		if ( r instanceof LeftRecursiveRule ) {
+		if ( r is LeftRecursiveRule ) {
 			return new LeftRecursiveRuleFunction(this, (LeftRecursiveRule)r);
 		}
 		else {
@@ -79,12 +79,12 @@ public class ParserFactory : DefaultOutputModelFactory {
 	}
 
 	@Override
-	public CodeBlockForAlt epsilon(Alternative alt, boolean outerMost) {
+	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) {
 		return alternative(alt, outerMost);
 	}
 
 	@Override
-	public CodeBlockForAlt alternative(Alternative alt, boolean outerMost) {
+	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) {
 		if ( outerMost ) return new CodeBlockForOuterMostAlt(this, alt);
 		return new CodeBlockForAlt(this);
 	}
@@ -150,7 +150,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 	}
 
 	@Override
-	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, boolean invert) {
+	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, bool invert) {
 		MatchSet matchOp;
 		if ( invert ) matchOp = new MatchNotSet(this, setAST);
 		else matchOp = new MatchSet(this, setAST);
@@ -297,10 +297,10 @@ public class ParserFactory : DefaultOutputModelFactory {
 	}
 
 	@Override
-	public boolean needsImplicitLabel(GrammarAST ID, LabeledOp op) {
+	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
 		Alternative currentOuterMostAlt = getCurrentOuterMostAlt();
-		boolean actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.containsKey(ID.getText());
-		boolean actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.containsKey(ID.getText());
+		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.containsKey(ID.getText());
+		bool actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.containsKey(ID.getText());
 		return	op.getLabels().isEmpty() &&	(actionRefsAsToken || actionRefsAsRule);
 	}
 

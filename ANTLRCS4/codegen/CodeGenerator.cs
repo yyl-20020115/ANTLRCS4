@@ -83,28 +83,28 @@ public class CodeGenerator {
 		return controller;
 	}
 
-	private ST walk(OutputModelObject outputModel, boolean header) {
+	private ST walk(OutputModelObject outputModel, bool header) {
 		OutputModelWalker walker = new OutputModelWalker(tool, getTemplates());
 		return walker.walk(outputModel, header);
 	}
 
 	public ST generateLexer() { return generateLexer(false); }
-	public ST generateLexer(boolean header) { return walk(createController().buildLexerOutputModel(header), header); }
+	public ST generateLexer(bool header) { return walk(createController().buildLexerOutputModel(header), header); }
 
 	public ST generateParser() { return generateParser(false); }
-	public ST generateParser(boolean header) { return walk(createController().buildParserOutputModel(header), header); }
+	public ST generateParser(bool header) { return walk(createController().buildParserOutputModel(header), header); }
 
 	public ST generateListener() { return generateListener(false); }
-	public ST generateListener(boolean header) { return walk(createController().buildListenerOutputModel(header), header); }
+	public ST generateListener(bool header) { return walk(createController().buildListenerOutputModel(header), header); }
 
 	public ST generateBaseListener() { return generateBaseListener(false); }
-	public ST generateBaseListener(boolean header) { return walk(createController().buildBaseListenerOutputModel(header), header); }
+	public ST generateBaseListener(bool header) { return walk(createController().buildBaseListenerOutputModel(header), header); }
 
 	public ST generateVisitor() { return generateVisitor(false); }
-	public ST generateVisitor(boolean header) { return walk(createController().buildVisitorOutputModel(header), header); }
+	public ST generateVisitor(bool header) { return walk(createController().buildVisitorOutputModel(header), header); }
 
 	public ST generateBaseVisitor() { return generateBaseVisitor(false); }
-	public ST generateBaseVisitor(boolean header) { return walk(createController().buildBaseVisitorOutputModel(header), header); }
+	public ST generateBaseVisitor(bool header) { return walk(createController().buildBaseVisitorOutputModel(header), header); }
 
 	/** Generate a token vocab file with all the token names/types.  For example:
 	 *  ID=7
@@ -138,23 +138,23 @@ public class CodeGenerator {
 		return vocabFileST;
 	}
 
-	public void writeRecognizer(ST outputFileST, boolean header) {
+	public void writeRecognizer(ST outputFileST, bool header) {
 		target.genFile(g, outputFileST, getRecognizerFileName(header));
 	}
 
-	public void writeListener(ST outputFileST, boolean header) {
+	public void writeListener(ST outputFileST, bool header) {
 		target.genFile(g, outputFileST, getListenerFileName(header));
 	}
 
-	public void writeBaseListener(ST outputFileST, boolean header) {
+	public void writeBaseListener(ST outputFileST, bool header) {
 		target.genFile(g, outputFileST, getBaseListenerFileName(header));
 	}
 
-	public void writeVisitor(ST outputFileST, boolean header) {
+	public void writeVisitor(ST outputFileST, bool header) {
 		target.genFile(g, outputFileST, getVisitorFileName(header));
 	}
 
-	public void writeBaseVisitor(ST outputFileST, boolean header) {
+	public void writeBaseVisitor(ST outputFileST, bool header) {
 		target.genFile(g, outputFileST, getBaseVisitorFileName(header));
 	}
 
@@ -191,11 +191,11 @@ public class CodeGenerator {
 	public String getBaseListenerFileName() { return getBaseListenerFileName(false); }
 	public String getBaseVisitorFileName() { return getBaseVisitorFileName(false); }
 
-	public String getRecognizerFileName(boolean header) { return target.getRecognizerFileName(header); }
-	public String getListenerFileName(boolean header) { return target.getListenerFileName(header); }
-	public String getVisitorFileName(boolean header) { return target.getVisitorFileName(header); }
-	public String getBaseListenerFileName(boolean header) { return target.getBaseListenerFileName(header); }
-	public String getBaseVisitorFileName(boolean header) { return target.getBaseVisitorFileName(header); }
+	public String getRecognizerFileName(bool header) { return target.getRecognizerFileName(header); }
+	public String getListenerFileName(bool header) { return target.getListenerFileName(header); }
+	public String getVisitorFileName(bool header) { return target.getVisitorFileName(header); }
+	public String getBaseListenerFileName(bool header) { return target.getBaseListenerFileName(header); }
+	public String getBaseVisitorFileName(bool header) { return target.getBaseVisitorFileName(header); }
 
 	/** What is the name of the vocab file generated for this grammar?
 	 *  Returns null if no .tokens file should be generated.

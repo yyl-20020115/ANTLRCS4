@@ -188,7 +188,7 @@ public class IntegerList {
 			return true;
 		}
 
-		if (!(o instanceof IntegerList)) {
+		if (!(o is IntegerList)) {
 			return false;
 		}
 

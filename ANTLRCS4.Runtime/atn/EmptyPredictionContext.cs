@@ -4,21 +4,21 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-public class EmptyPredictionContext extends SingletonPredictionContext {
+public class EmptyPredictionContext : SingletonPredictionContext {
 	/**
 	 * Represents {@code $} in local context prediction, which means wildcard.
 	 * {@code *+x = *}.
 	 */
-	public static final EmptyPredictionContext Instance = new EmptyPredictionContext();
+	public static readonly EmptyPredictionContext Instance = new EmptyPredictionContext();
 
 	private EmptyPredictionContext() {
 		super(null, EMPTY_RETURN_STATE);
 	}
 
 	@Override
-	public boolean isEmpty() { return true; }
+	public bool isEmpty() { return true; }
 
 	@Override
 	public int size() {
@@ -36,7 +36,7 @@ public class EmptyPredictionContext extends SingletonPredictionContext {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public bool equals(Object o) {
 		return this == o;
 	}
 

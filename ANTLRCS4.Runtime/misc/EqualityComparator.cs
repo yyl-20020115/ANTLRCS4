@@ -22,7 +22,7 @@ public interface EqualityComparator<T>
 	 * @param obj The object.
 	 * @return The hash code for {@code obj}.
 	 */
-	int hashCode(T obj);
+	int GetHashCode(T obj);
 
 	/**
 	 * This method tests if two objects are equal.
@@ -31,6 +31,6 @@ public interface EqualityComparator<T>
 	 * @param b The second object to compare.
 	 * @return {@code true} if {@code a} equals {@code b}, otherwise {@code false}.
 	 */
-	bool equals(T a, T b);
+	bool Equals(T a, T b);
 
 }

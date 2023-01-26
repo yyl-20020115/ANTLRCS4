@@ -80,7 +80,7 @@ public class ATNDeserializer {
 				int loopBackStateNumber = data[p++];
 				loopBackStateNumbers.add(new Pair<LoopEndState, Integer>((LoopEndState)s, loopBackStateNumber));
 			}
-			else if (s instanceof BlockStartState) {
+			else if (s is BlockStartState) {
 				int endStateNumber = data[p++];
 				endStateNumbers.add(new Pair<BlockStartState, Integer>((BlockStartState)s, endStateNumber));
 			}
@@ -129,7 +129,7 @@ public class ATNDeserializer {
 
 		atn.ruleToStopState = new RuleStopState[nrules];
 		for (ATNState state : atn.states) {
-			if (!(state instanceof RuleStopState)) {
+			if (!(state is RuleStopState)) {
 				continue;
 			}
 
@@ -178,7 +178,7 @@ public class ATNDeserializer {
 		for (ATNState state : atn.states) {
 			for (int i = 0; i < state.getNumberOfTransitions(); i++) {
 				Transition t = state.transition(i);
-				if (!(t instanceof RuleTransition)) {
+				if (!(t is RuleTransition)) {
 					continue;
 				}
 
@@ -196,7 +196,7 @@ public class ATNDeserializer {
 		}
 
 		for (ATNState state : atn.states) {
-			if (state instanceof BlockStartState) {
+			if (state is BlockStartState) {
 				// we need to know the end state to set its start state
 				if (((BlockStartState)state).endState == null) {
 					throw new IllegalStateException();
@@ -210,20 +210,20 @@ public class ATNDeserializer {
 				((BlockStartState)state).endState.startState = (BlockStartState)state;
 			}
 
-			if (state instanceof PlusLoopbackState) {
+			if (state is PlusLoopbackState) {
 				PlusLoopbackState loopbackState = (PlusLoopbackState)state;
 				for (int i = 0; i < loopbackState.getNumberOfTransitions(); i++) {
 					ATNState target = loopbackState.transition(i).target;
-					if (target instanceof PlusBlockStartState) {
+					if (target is PlusBlockStartState) {
 						((PlusBlockStartState)target).loopBackState = loopbackState;
 					}
 				}
 			}
-			else if (state instanceof StarLoopbackState) {
+			else if (state is StarLoopbackState) {
 				StarLoopbackState loopbackState = (StarLoopbackState)state;
 				for (int i = 0; i < loopbackState.getNumberOfTransitions(); i++) {
 					ATNState target = loopbackState.transition(i).target;
-					if (target instanceof StarLoopEntryState) {
+					if (target is StarLoopEntryState) {
 						((StarLoopEntryState)target).loopBackState = loopbackState;
 					}
 				}
@@ -293,16 +293,16 @@ public class ATNDeserializer {
 							continue;
 						}
 
-						if (!(state instanceof StarLoopEntryState)) {
+						if (!(state is StarLoopEntryState)) {
 							continue;
 						}
 
 						ATNState maybeLoopEndState = state.transition(state.getNumberOfTransitions() - 1).target;
-						if (!(maybeLoopEndState instanceof LoopEndState)) {
+						if (!(maybeLoopEndState is LoopEndState)) {
 							continue;
 						}
 
-						if (maybeLoopEndState.epsilonOnlyTransitions && maybeLoopEndState.transition(0).target instanceof RuleStopState) {
+						if (maybeLoopEndState.epsilonOnlyTransitions && maybeLoopEndState.transition(0).target is RuleStopState) {
 							endState = state;
 							break;
 						}
@@ -364,7 +364,7 @@ public class ATNDeserializer {
 			IntervalSet set = new IntervalSet();
 			sets.add(set);
 
-			boolean containsEof = data[p++] != 0;
+			bool containsEof = data[p++] != 0;
 			if (containsEof) {
 				set.add(-1);
 			}
@@ -387,7 +387,7 @@ public class ATNDeserializer {
 	 */
 	protected void markPrecedenceDecisions(ATN atn) {
 		for (ATNState state : atn.states) {
-			if (!(state instanceof StarLoopEntryState)) {
+			if (!(state is StarLoopEntryState)) {
 				continue;
 			}
 
@@ -397,8 +397,8 @@ public class ATNDeserializer {
 			 */
 			if (atn.ruleToStartState[state.ruleIndex].isLeftRecursiveRule) {
 				ATNState maybeLoopEndState = state.transition(state.getNumberOfTransitions() - 1).target;
-				if (maybeLoopEndState instanceof LoopEndState) {
-					if (maybeLoopEndState.epsilonOnlyTransitions && maybeLoopEndState.transition(0).target instanceof RuleStopState) {
+				if (maybeLoopEndState is LoopEndState) {
+					if (maybeLoopEndState.epsilonOnlyTransitions && maybeLoopEndState.transition(0).target is RuleStopState) {
 						((StarLoopEntryState)state).isPrecedenceDecision = true;
 					}
 				}
@@ -415,21 +415,21 @@ public class ATNDeserializer {
 
 			checkCondition(state.onlyHasEpsilonTransitions() || state.getNumberOfTransitions() <= 1);
 
-			if (state instanceof PlusBlockStartState) {
+			if (state is PlusBlockStartState) {
 				checkCondition(((PlusBlockStartState)state).loopBackState != null);
 			}
 
-			if (state instanceof StarLoopEntryState) {
+			if (state is StarLoopEntryState) {
 				StarLoopEntryState starLoopEntryState = (StarLoopEntryState)state;
 				checkCondition(starLoopEntryState.loopBackState != null);
 				checkCondition(starLoopEntryState.getNumberOfTransitions() == 2);
 
-				if (starLoopEntryState.transition(0).target instanceof StarBlockStartState) {
-					checkCondition(starLoopEntryState.transition(1).target instanceof LoopEndState);
+				if (starLoopEntryState.transition(0).target is StarBlockStartState) {
+					checkCondition(starLoopEntryState.transition(1).target is LoopEndState);
 					checkCondition(!starLoopEntryState.nonGreedy);
 				}
-				else if (starLoopEntryState.transition(0).target instanceof LoopEndState) {
-					checkCondition(starLoopEntryState.transition(1).target instanceof StarBlockStartState);
+				else if (starLoopEntryState.transition(0).target is LoopEndState) {
+					checkCondition(starLoopEntryState.transition(1).target is StarBlockStartState);
 					checkCondition(starLoopEntryState.nonGreedy);
 				}
 				else {
@@ -437,42 +437,42 @@ public class ATNDeserializer {
 				}
 			}
 
-			if (state instanceof StarLoopbackState) {
+			if (state is StarLoopbackState) {
 				checkCondition(state.getNumberOfTransitions() == 1);
-				checkCondition(state.transition(0).target instanceof StarLoopEntryState);
+				checkCondition(state.transition(0).target is StarLoopEntryState);
 			}
 
-			if (state instanceof LoopEndState) {
+			if (state is LoopEndState) {
 				checkCondition(((LoopEndState)state).loopBackState != null);
 			}
 
-			if (state instanceof RuleStartState) {
+			if (state is RuleStartState) {
 				checkCondition(((RuleStartState)state).stopState != null);
 			}
 
-			if (state instanceof BlockStartState) {
+			if (state is BlockStartState) {
 				checkCondition(((BlockStartState)state).endState != null);
 			}
 
-			if (state instanceof BlockEndState) {
+			if (state is BlockEndState) {
 				checkCondition(((BlockEndState)state).startState != null);
 			}
 
-			if (state instanceof DecisionState) {
+			if (state is DecisionState) {
 				DecisionState decisionState = (DecisionState)state;
 				checkCondition(decisionState.getNumberOfTransitions() <= 1 || decisionState.decision >= 0);
 			}
 			else {
-				checkCondition(state.getNumberOfTransitions() <= 1 || state instanceof RuleStopState);
+				checkCondition(state.getNumberOfTransitions() <= 1 || state is RuleStopState);
 			}
 		}
 	}
 
-	protected void checkCondition(boolean condition) {
+	protected void checkCondition(bool condition) {
 		checkCondition(condition, null);
 	}
 
-	protected void checkCondition(boolean condition, String message) {
+	protected void checkCondition(bool condition, String message) {
 		if (!condition) {
 			throw new IllegalStateException(message);
 		}
@@ -633,7 +633,7 @@ public class ATNDeserializer {
 	/** Convert a list of chars (16 uint) that represent a serialized and compressed list of ints for an ATN.
 	 *  This method pairs with {@link #encodeIntsWith16BitWords(IntegerList)} above. Used only for Java Target.
 	 */
-	public static int[] decodeIntsEncodedAs16BitWords(char[] data16, boolean trimToSize) {
+	public static int[] decodeIntsEncodedAs16BitWords(char[] data16, bool trimToSize) {
 		// will be strictly smaller but we waste bit of space to avoid copying during initialization of parsers
 		int[] data = new int[data16.length];
 		int i = 0;

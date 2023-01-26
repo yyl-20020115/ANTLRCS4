@@ -194,14 +194,14 @@ public class AttributeChecks implements ActionSplitterListener {
 	// SUPPORT
 
 	public Rule isolatedRuleRef(String x) {
-		if ( node.resolver instanceof Grammar ) return null;
+		if ( node.resolver is Grammar ) return null;
 
 		if ( x.equals(r.name) ) return r;
 		List<LabelElementPair> labels = null;
-		if ( node.resolver instanceof Rule ) {
+		if ( node.resolver is Rule ) {
 			labels = r.getElementLabelDefs().get(x);
 		}
-		else if ( node.resolver instanceof Alternative ) {
+		else if ( node.resolver is Alternative ) {
 			labels = ((Alternative)node.resolver).labelDefs.get(x);
 		}
 		if ( labels!=null ) {  // it's a label ref. is it a rule label?
@@ -210,7 +210,7 @@ public class AttributeChecks implements ActionSplitterListener {
 				return g.getRule(anyLabelDef.element.getText());
 			}
 		}
-		if ( node.resolver instanceof Alternative ) {
+		if ( node.resolver is Alternative ) {
 			if ( ((Alternative)node.resolver).ruleRefs.get(x)!=null ) {
 				return g.getRule(x);
 			}

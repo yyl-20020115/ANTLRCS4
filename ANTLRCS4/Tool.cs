@@ -491,7 +491,7 @@ public class Tool {
 		List<GrammarRootAST> roots = new ArrayList<GrammarRootAST>();
 		for (String fileName : fileNames) {
 			GrammarAST t = parseGrammar(fileName);
-			if ( t==null || t instanceof GrammarASTErrorNode) continue; // came back as error node
+			if ( t==null || t is GrammarASTErrorNode) continue; // came back as error node
 			if ( ((GrammarRootAST)t).hasErrors ) continue;
 			GrammarRootAST root = (GrammarRootAST)t;
 			roots.add(root);
@@ -655,7 +655,7 @@ public class Tool {
 			p.setTreeAdaptor(adaptor);
 			ParserRuleReturnScope r = p.grammarSpec();
 			GrammarAST root = (GrammarAST) r.getTree();
-			if (root instanceof GrammarRootAST) {
+			if (root is GrammarRootAST) {
 				((GrammarRootAST) root).hasErrors = lexer.getNumberOfSyntaxErrors() > 0 || p.getNumberOfSyntaxErrors() > 0;
 				assert ((GrammarRootAST) root).tokenStream == tokens;
 				if (grammarOptions != null) {

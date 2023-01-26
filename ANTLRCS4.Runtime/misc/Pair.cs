@@ -4,43 +4,41 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.misc;
+using System.Runtime.Serialization;
 
-import java.io.Serializable;
+namespace org.antlr.v4.runtime.misc;
 
-public class Pair<A,B> implements Serializable {
-	public final A a;
-	public final B b;
+public class Pair<A,B> : ISerializable {
+	public readonly A a;
+	public readonly B b;
 
 	public Pair(A a, B b) {
 		this.a = a;
 		this.b = b;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	public override bool Equals(Object obj) {
 		if (obj == this) {
 			return true;
 		}
-		else if (!(obj instanceof Pair<?, ?>)) {
+		else if (!(obj is Pair<A, B>)) {
 			return false;
 		}
 
-		Pair<?, ?> other = (Pair<?, ?>)obj;
-		return ObjectEqualityComparator.INSTANCE.equals(a, other.a)
-			&& ObjectEqualityComparator.INSTANCE.equals(b, other.b);
+		Pair<A, B> other = (Pair<A, B>)obj;
+		return ObjectEqualityComparator.INSTANCE.Equals(a, other.a)
+			&& ObjectEqualityComparator.INSTANCE.Equals(b, other.b);
 	}
 
-	@Override
-	public int hashCode() {
+
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, a);
 		hash = MurmurHash.update(hash, b);
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
-	public String toString() {
-		return String.format("(%s, %s)", a, b);
+	public override String ToString() {
+		return $"({a}, {b})";
 	}
 }
