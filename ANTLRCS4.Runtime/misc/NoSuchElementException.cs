@@ -4,27 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System.Runtime.Serialization;
+namespace org.antlr.v4.runtime.misc;
 
-namespace org.antlr.v4.runtime.misc
+public class NoSuchElementException : Exception
 {
-    [Serializable]
-    internal class NoSuchElementException : Exception
+    public NoSuchElementException()
     {
-        public NoSuchElementException()
-        {
-        }
-
-        public NoSuchElementException(string? message) : base(message)
-        {
-        }
-
-        public NoSuchElementException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected NoSuchElementException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
+
+    public NoSuchElementException(string? message) : base(message)
+    {
+    }
+
+    public NoSuchElementException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
 }

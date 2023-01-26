@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
 using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
@@ -42,15 +43,17 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	protected readonly int initialCapacity;
 	protected readonly int initialBucketCapacity;
 
-	public FlexibleHashMap() {
-		this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY);
+	public FlexibleHashMap(): this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
+    {
+		;
 	}
 
-	public FlexibleHashMap(AbstractEqualityComparator<? super K> comparator) {
-		this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY);
+	public FlexibleHashMap(AbstractEqualityComparator<K> comparator): this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
+    {
+		;
 	}
 
-	public FlexibleHashMap(AbstractEqualityComparator<? super K> comparator, int initialCapacity, int initialBucketCapacity) {
+	public FlexibleHashMap(AbstractEqualityComparator<K> comparator, int initialCapacity, int initialBucketCapacity) {
 		if (comparator == null) {
 			comparator = ObjectEqualityComparator.INSTANCE;
 		}
@@ -63,7 +66,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	private static  LinkedList<Entry<K, V>>[] createEntryListArray<K, V>(int length) {
-		LinkedList<Entry<K, V>>[] result = (LinkedList<Entry<K, V>>[])new LinkedList<?>[length];
+		LinkedList<Entry<K, V>>[] result = (LinkedList<Entry<K, V>>[])new LinkedList<>[length];
 		return result;
 	}
 
@@ -149,7 +152,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public boolean containsValue(Object value) {
+	public bool containsValue(Object value) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -169,7 +172,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public boolean equals(Object o) {
+	public bool equals(Object o) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -180,7 +183,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		LinkedList<Entry<K, V>>[] newTable = createEntryListArray(newCapacity);
 		buckets = newTable;
 		threshold = (int)(newCapacity * LOAD_FACTOR);
-//		System.out.println("new size="+newCapacity+", thres="+threshold);
+//		Console.WriteLine("new size="+newCapacity+", thres="+threshold);
 		// rehash all existing entries
 		int oldSize = size();
 		for (LinkedList<Entry<K, V>> bucket : old) {
@@ -199,7 +202,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public boolean isEmpty() {
+	public bool isEmpty() {
 		return n==0;
 	}
 
@@ -216,7 +219,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 
 		StringBuilder buf = new StringBuilder();
 		buf.append('{');
-		boolean first = true;
+		bool first = true;
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
 			if ( bucket==null ) continue;
 			for (Entry<K, V> e : bucket) {
@@ -238,7 +241,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 				continue;
 			}
 			buf.append('[');
-			boolean first = true;
+			bool first = true;
 			for (Entry<K, V> e : bucket) {
 				if ( first ) first=false;
 				else buf.append(" ");
@@ -261,7 +264,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		map.put("edf", 7);
 		map.put("mom", 8);
 		map.put("hi", 9);
-		System.out.println(map);
-		System.out.println(map.toTableString());
+		Console.WriteLine(map);
+		Console.WriteLine(map.toTableString());
 	}
 }

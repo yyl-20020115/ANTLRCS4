@@ -205,10 +205,10 @@ public class CharStreams {
 	public static CodePointCharStream fromString(String s, String sourceName) {
 		// Initial guess assumes no code points > U+FFFF: one code
 		// point for each code unit in the string
-		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(s.length());
+		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(s.Length);
 		// TODO: CharBuffer.wrap(String) rightfully returns a read-only buffer
 		// which doesn't expose its array, so we make a copy.
-		CharBuffer cb = CharBuffer.allocate(s.length());
+		CharBuffer cb = CharBuffer.allocate(s.Length);
 		cb.put(s);
 		cb.flip();
 		codePointBufferBuilder.append(cb);

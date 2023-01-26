@@ -13,23 +13,24 @@ namespace org.antlr.v4.runtime.atn;
 public class PrecedencePredicateTransition : AbstractPredicateTransition {
 	public readonly int precedence;
 
-	public PrecedencePredicateTransition(ATNState target, int precedence) {
-		super(target);
+	public PrecedencePredicateTransition(ATNState target, int precedence):base(target)
+    {
+		;
 		this.precedence = precedence;
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return PRECEDENCE;
 	}
 
 	//@Override
-	public boolean isEpsilon() {
+	public override bool isEpsilon() {
 		return true;
 	}
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
@@ -38,7 +39,7 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition {
 	}
 
 	//@Override
-	public String toString() {
+	public override String ToString() {
 		return precedence + " >= _p";
 	}
 

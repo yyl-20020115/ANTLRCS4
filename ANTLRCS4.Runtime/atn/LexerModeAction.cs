@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime.atn;
 
 /**
@@ -63,15 +65,15 @@ public  class LexerModeAction : LexerAction {
 	}
 
     //@Override
-    public int hashCode() {
+    public int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, mode);
 		return MurmurHash.finish(hash, 2);
 	}
 
     //@Override
-    public boolean equals(Object obj) {
+    public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -83,7 +85,7 @@ public  class LexerModeAction : LexerAction {
 	}
 
     //@Override
-    public String toString() {
-		return String.format("mode(%d)", mode);
+    public override String ToString() {
+		return $"mode({mode})";
 	}
 }

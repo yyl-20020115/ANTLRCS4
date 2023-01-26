@@ -30,7 +30,7 @@ public abstract class SemanticContext {
 	 * prediction, so we passed in the outer context here in case of context
 	 * dependent predicate evaluation.</p>
 	 */
-    public abstract bool eval(Recognizer<?,?> parser, RuleContext parserCallStack);
+    public abstract bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack);
 
 	/**
 	 * Evaluate the precedence predicates for the context and reduce the result.
@@ -50,7 +50,7 @@ public abstract class SemanticContext {
 	 * semantic context after precedence predicates are evaluated.</li>
 	 * </ul>
 	 */
-	public SemanticContext evalPrecedence(Recognizer<?,?> parser, RuleContext parserCallStack) {
+	public SemanticContext evalPrecedence(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
 		return this;
 	}
 
@@ -62,7 +62,7 @@ public abstract class SemanticContext {
 		public static readonly Empty Instance = new Empty();
 
 		//@Override
-		public bool eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			return false;
 		}
 	}
@@ -85,7 +85,7 @@ public abstract class SemanticContext {
         }
 
         //@Override
-        public bool eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
+        public bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
             RuleContext localctx = isCtxDependent ? parserCallStack : null;
             return parser.sempred(localctx, ruleIndex, predIndex);
         }
@@ -116,7 +116,7 @@ public abstract class SemanticContext {
         }
     }
 
-	public class PrecedencePredicate : SemanticContext : IComparable<PrecedencePredicate> {
+	public class PrecedencePredicate : SemanticContext , IComparable<PrecedencePredicate> {
 		public readonly int precedence;
 
 		protected PrecedencePredicate() {
@@ -128,12 +128,12 @@ public abstract class SemanticContext {
 		}
 
 		//@Override
-		public bool eval(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			return parser.precpred(parserCallStack, precedence);
 		}
 
 		//@Override
-		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public SemanticContext evalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			if (parser.precpred(parserCallStack, precedence)) {
 				return Empty.Instance;
 			}
@@ -181,7 +181,7 @@ public abstract class SemanticContext {
 	 *
 	 * @since 4.3
 	 */
-	public static abstract class Operator : SemanticContext {
+	public abstract class Operator : SemanticContext {
 		/**
 		 * Gets the operands for the semantic context operator.
 		 *
@@ -202,7 +202,7 @@ public abstract class SemanticContext {
 		public readonly SemanticContext[] opnds;
 
 		public AND(SemanticContext a, SemanticContext b) {
-			Set<SemanticContext> operands = new HashSet<SemanticContext>();
+			HashSet<SemanticContext> operands = new HashSet<SemanticContext>();
 			if ( a is AND ) operands.addAll(Arrays.asList(((AND)a).opnds));
 			else operands.add(a);
 			if ( b is AND ) operands.addAll(Arrays.asList(((AND)b).opnds));
@@ -330,7 +330,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		public int hashCode() {
-			return MurmurHash.hashCode(opnds, OR.class.hashCode());
+			return MurmurHash.hashCode(opnds, OR.hashCode());
 		}
 
 		/**
@@ -349,7 +349,7 @@ public abstract class SemanticContext {
         }
 
 		//@Override
-		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public SemanticContext evalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			bool differs = false;
 			List<SemanticContext> operands = new ArrayList<SemanticContext>();
 			for (SemanticContext context : opnds) {
@@ -415,13 +415,13 @@ public abstract class SemanticContext {
 		return result;
 	}
 
-	private static List<PrecedencePredicate> filterPrecedencePredicates(ICollection<? : SemanticContext> collection) {
-		ArrayList<PrecedencePredicate> result = null;
+	private static List<PrecedencePredicate> filterPrecedencePredicates(ICollection<SemanticContext> collection) {
+		List<PrecedencePredicate> result = null;
 		for (Iterator<? : SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
 			SemanticContext context = iterator.next();
 			if (context is PrecedencePredicate) {
 				if (result == null) {
-					result = new ArrayList<PrecedencePredicate>();
+					result = new ();
 				}
 
 				result.add((PrecedencePredicate)context);

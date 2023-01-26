@@ -64,8 +64,8 @@ public class LexerActionExecutor {
 			return new LexerActionExecutor(new LexerAction[] { lexerAction });
 		}
 
-		LexerAction[] lexerActions = Arrays.copyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.length + 1);
-		lexerActions[lexerActions.length - 1] = lexerAction;
+		LexerAction[] lexerActions = Arrays.copyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
+		lexerActions[lexerActions.Length - 1] = lexerAction;
 		return new LexerActionExecutor(lexerActions);
 	}
 
@@ -149,12 +149,17 @@ public class LexerActionExecutor {
 		int stopIndex = input.index();
 		try {
 			foreach (LexerAction lexerAction in lexerActions) {
-				if (lexerAction is LexerIndexedCustomAction) {
-					int offset = ((LexerIndexedCustomAction)lexerAction).getOffset();
+				if (lexerAction is LexerIndexedCustomAction action) {
+
+					int offset = action.getOffset();
 					input.seek(startIndex + offset);
-					lexerAction = ((LexerIndexedCustomAction)lexerAction).getAction();
+					var _lexerAction = action.getAction();
+
 					requiresSeek = (startIndex + offset) != stopIndex;
-				}
+
+					_lexerAction.execute(lexer);
+					continue;
+                }
 				else if (lexerAction.isPositionDependent()) {
 					input.seek(stopIndex);
 					requiresSeek = false;
@@ -170,13 +175,13 @@ public class LexerActionExecutor {
 		}
 	}
 
-	@Override
-	public int hashCode() {
+	
+	public override int GetHashCode() {
 		return this.hashCode;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -186,6 +191,6 @@ public class LexerActionExecutor {
 
 		LexerActionExecutor other = (LexerActionExecutor)obj;
 		return hashCode == other.hashCode
-			&& Arrays.equals(lexerActions, other.lexerActions);
+			&& Enumerable.SequenceEqual(lexerActions, other.lexerActions);
 	}
 }

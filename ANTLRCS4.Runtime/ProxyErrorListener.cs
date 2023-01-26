@@ -3,6 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime;
 
 /**
@@ -17,21 +20,21 @@ public class ProxyErrorListener : ANTLRErrorListener {
 
 	public ProxyErrorListener(ICollection<ANTLRErrorListener> delegates) {
 		if (delegates == null) {
-			throw new NullPointerException("delegates");
+			throw new NullReferenceException("delegates");
 		}
 
 		this.delegates = delegates;
 	}
 
 	//@Override
-	public void syntaxError(Recognizer<?, ?> recognizer,
+	public void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,
 							String msg,
 							RecognitionException e)
 	{
-		for (ANTLRErrorListener listener : delegates) {
+		foreach (ANTLRErrorListener listener in delegates) {
 			listener.syntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 		}
 	}
@@ -41,11 +44,11 @@ public class ProxyErrorListener : ANTLRErrorListener {
 								DFA dfa,
 								int startIndex,
 								int stopIndex,
-								boolean exact,
+								bool exact,
 								BitSet ambigAlts,
 								ATNConfigSet configs)
 	{
-		for (ANTLRErrorListener listener : delegates) {
+		foreach (ANTLRErrorListener listener in delegates) {
 			listener.reportAmbiguity(recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
 		}
 	}
@@ -58,7 +61,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 											BitSet conflictingAlts,
 											ATNConfigSet configs)
 	{
-		for (ANTLRErrorListener listener : delegates) {
+		foreach (ANTLRErrorListener listener in delegates) {
 			listener.reportAttemptingFullContext(recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
 		}
 	}
@@ -71,7 +74,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 										 int prediction,
 										 ATNConfigSet configs)
 	{
-		for (ANTLRErrorListener listener : delegates) {
+		foreach (ANTLRErrorListener listener in delegates) {
 			listener.reportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs);
 		}
 	}

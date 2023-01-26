@@ -60,7 +60,7 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 	 * The {@link #DEFAULT} instance should be used instead of calling this
 	 * directly.</p>
 	 */
-	public CommonTokenFactory() { this(false); }
+	public CommonTokenFactory():this(false) {  }
 
 	//@Override
 	public CommonToken create(Pair<TokenSource, CharStream> source, int type, String text,
@@ -80,8 +80,7 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 		return t;
 	}
 
-	@Override
-	public CommonToken create(int type, String text) {
+	public virtual CommonToken create(int type, String text) {
 		return new CommonToken(type, text);
 	}
 }

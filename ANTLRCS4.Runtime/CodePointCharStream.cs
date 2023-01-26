@@ -4,11 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.Interval;
+namespace org.antlr.v4.runtime;
 
-import java.nio.charset.StandardCharsets;
 
 /**
  * Alternative to {@link ANTLRInputStream} which treats the input
@@ -18,9 +18,9 @@ import java.nio.charset.StandardCharsets;
  * Use this if you need to parse input which potentially contains
  * Unicode values > U+FFFF.
  */
-public abstract class CodePointCharStream implements CharStream {
-	protected final int size;
-	protected final String name;
+public abstract class CodePointCharStream : CharStream {
+	protected readonly int size;
+	protected readonly String name;
 
 	// To avoid lots of virtual method calls, we directly access
 	// the state of the underlying code points in the
@@ -31,7 +31,7 @@ public abstract class CodePointCharStream implements CharStream {
 	// construct instances of this type.
 	private CodePointCharStream(int position, int remaining, String name) {
 		// TODO
-		assert position == 0;
+		//assert position == 0;
 		this.size = remaining;
 		this.name = name;
 		this.position = 0;
@@ -64,21 +64,21 @@ public abstract class CodePointCharStream implements CharStream {
 		// char[], or int[]), so we can avoid lots of virtual
 		// method calls to ByteBuffer.get(offset).
 		switch (codePointBuffer.getType()) {
-			case BYTE:
+			case CodePointBuffer.Type.BYTE:
 				return new CodePoint8BitCharStream(
 						codePointBuffer.position(),
 						codePointBuffer.remaining(),
 						name,
 						codePointBuffer.byteArray(),
 						codePointBuffer.arrayOffset());
-			case CHAR:
+			case CodePointBuffer.Type.CHAR:
 				return new CodePoint16BitCharStream(
 						codePointBuffer.position(),
 						codePointBuffer.remaining(),
 						name,
 						codePointBuffer.charArray(),
 						codePointBuffer.arrayOffset());
-			case INT:
+			case CodePointBuffer.Type.INT:
 				return new CodePoint32BitCharStream(
 						codePointBuffer.position(),
 						codePointBuffer.remaining(),
@@ -89,8 +89,8 @@ public abstract class CodePointCharStream implements CharStream {
 		throw new UnsupportedOperationException("Not reached");
 	}
 
-	@Override
-	public final void consume() {
+	//@Override
+	public void consume() {
 		if (size - position == 0) {
 			assert LA(1) == IntStream.EOF;
 			throw new IllegalStateException("cannot consume EOF");
@@ -98,33 +98,33 @@ public abstract class CodePointCharStream implements CharStream {
 		position = position + 1;
 	}
 
-	@Override
-	public final int index() {
+	//@Override
+	public int index() {
 		return position;
 	}
 
-	@Override
-	public final int size() {
+	//@Override
+	public int size() {
 		return size;
 	}
 
 	/** mark/release do nothing; we have entire buffer */
-	@Override
-	public final int mark() {
+	//@Override
+	public int mark() {
 		return -1;
 	}
 
-	@Override
-	public final void release(int marker) {
+	//@Override
+	public void release(int marker) {
 	}
 
-	@Override
-	public final void seek(int index) {
+	//@Override
+	public void seek(int index) {
 		position = index;
 	}
 
-	@Override
-	public final String getSourceName() {
+	//@Override
+	public String getSourceName() {
 		if (name == null || name.isEmpty()) {
 			return UNKNOWN_SOURCE_NAME;
 		}
@@ -132,14 +132,14 @@ public abstract class CodePointCharStream implements CharStream {
 		return name;
 	}
 
-	@Override
-	public final String toString() {
+	//@Override
+	public String toString() {
 		return getText(Interval.of(0, size - 1));
 	}
 
 	// 8-bit storage for code points <= U+00FF.
-	private static final class CodePoint8BitCharStream extends CodePointCharStream {
-		private final byte[] byteArray;
+	private class CodePoint8BitCharStream : CodePointCharStream {
+		private readonly byte[] byteArray;
 
 		private CodePoint8BitCharStream(int position, int remaining, String name, byte[] byteArray, int arrayOffset) {
 			super(position, remaining, name);
@@ -149,7 +149,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		@Override
+		//@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -160,7 +160,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(byteArray, startIdx, len, StandardCharsets.ISO_8859_1);
 		}
 
-		@Override
+		//@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -183,15 +183,15 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		@Override
+		//@Override
 		Object getInternalStorage() {
 			return byteArray;
 		}
 	}
 
 	// 16-bit internal storage for code points between U+0100 and U+FFFF.
-	private static final class CodePoint16BitCharStream extends CodePointCharStream {
-		private final char[] charArray;
+	private class CodePoint16BitCharStream : CodePointCharStream {
+		private readonly char[] charArray;
 
 		private CodePoint16BitCharStream(int position, int remaining, String name, char[] charArray, int arrayOffset) {
 			super(position, remaining, name);
@@ -201,7 +201,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		@Override
+		//@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -215,7 +215,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(charArray, startIdx, len);
 		}
 
-		@Override
+		//@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -238,15 +238,15 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		@Override
+		//@Override
 		Object getInternalStorage() {
 			return charArray;
 		}
 	}
 
 	// 32-bit internal storage for code points between U+10000 and U+10FFFF.
-	private static final class CodePoint32BitCharStream extends CodePointCharStream {
-		private final int[] intArray;
+	private class CodePoint32BitCharStream : CodePointCharStream {
+		private readonly int[] intArray;
 
 		private CodePoint32BitCharStream(int position, int remaining, String name, int[] intArray, int arrayOffset) {
 			super(position, remaining, name);
@@ -256,7 +256,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		@Override
+		//@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -266,7 +266,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(intArray, startIdx, len);
 		}
 
-		@Override
+		//@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -289,7 +289,7 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		@Override
+		//@Override
 		Object getInternalStorage() {
 			return intArray;
 		}

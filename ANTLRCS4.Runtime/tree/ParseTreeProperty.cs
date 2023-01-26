@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
-
-import java.util.IdentityHashMap;
-import java.util.Map;
+namespace org.antlr.v4.runtime.tree;
 
 /**
  * Associate a property with a parse tree node. Useful with parse tree listeners
@@ -26,7 +23,7 @@ import java.util.Map;
  * in your event methods.
  */
 public class ParseTreeProperty<V> {
-	protected Map<ParseTree, V> annotations = new IdentityHashMap<ParseTree, V>();
+	protected Dictionary<ParseTree, V> annotations = new ();
 
 	public V get(ParseTree node) { return annotations.get(node); }
 	public void put(ParseTree node, V value) { annotations.put(node, value); }

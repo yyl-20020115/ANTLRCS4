@@ -11,7 +11,7 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public enum ATNType : uint
+public enum ATNType : int
 {
 
 	/**

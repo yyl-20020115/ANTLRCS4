@@ -4,12 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
-
-import org.antlr.v4.runtime.ParserRuleContext;
+namespace org.antlr.v4.runtime.tree;
 
 public class ParseTreeWalker {
-    public static final ParseTreeWalker DEFAULT = new ParseTreeWalker();
+    public static readonly ParseTreeWalker DEFAULT = new ();
 
 
 	/**
@@ -21,12 +19,12 @@ public class ParseTreeWalker {
 	 * @param t The parse tree to be walked on
 	 */
 	public void walk(ParseTreeListener listener, ParseTree t) {
-		if ( t is ErrorNode) {
-			listener.visitErrorNode((ErrorNode)t);
+		if ( t is ErrorNode node) {
+			listener.visitErrorNode(node);
 			return;
 		}
-		else if ( t is TerminalNode) {
-			listener.visitTerminal((TerminalNode)t);
+		else if ( t is TerminalNode node1) {
+			listener.visitTerminal(node1);
 			return;
 		}
 		RuleNode r = (RuleNode)t;

@@ -421,7 +421,7 @@ public class LexerATNSimulator : ATNSimulator {
 				for (int i = 0; i < config.context.size(); i++) {
 					if (config.context.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE) {
 						PredictionContext newContext = config.context.getParent(i); // "pop" return state
-						ATNState returnState = atn.states.get(config.context.getReturnState(i));
+						ATNState returnState = atn.states[config.context.getReturnState(i)];
 						LexerATNConfig c = new LexerATNConfig(config, returnState, newContext);
 						currentAltReachedAcceptState = closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
 					}

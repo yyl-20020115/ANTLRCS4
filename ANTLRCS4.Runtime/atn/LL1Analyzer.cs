@@ -167,7 +167,7 @@ public class LL1Analyzer {
 				try {
 					calledRuleStack.clear(s.ruleIndex);
 					for (int i = 0; i < ctx.size(); i++) {
-						ATNState returnState = atn.states.get(ctx.getReturnState(i));
+						ATNState returnState = atn.states[ctx.getReturnState(i)];
 //					    System.out.println("popping back to "+retState);
 						_LOOK(returnState, stopState, ctx.getParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 					}
@@ -184,7 +184,7 @@ public class LL1Analyzer {
         int n = s.getNumberOfTransitions();
         for (int i=0; i<n; i++) {
 			Transition t = s.transition(i);
-			if ( t.getClass() == typeof(RuleTransition) ) {
+			if ( t.GetType() == typeof(RuleTransition) ) {
 				if (calledRuleStack.get(((RuleTransition)t).target.ruleIndex)) {
 					continue;
 				}
@@ -211,7 +211,7 @@ public class LL1Analyzer {
 			else if ( t.isEpsilon() ) {
 				_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 			}
-			else if ( t.getClass() == typeof(WildcardTransition) ) {
+			else if ( t.GetType() == typeof(WildcardTransition) ) {
 				look.addAll( IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
 			}
 			else {

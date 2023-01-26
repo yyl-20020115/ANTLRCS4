@@ -110,7 +110,7 @@ public class DFAState {
 				alts.Add(c.alt);
 			}
 		}
-		if ( alts.isEmpty() ) return null;
+		if ( alts.Count==0 ) return null;
 		return alts;
 	}
 
@@ -151,11 +151,11 @@ public class DFAState {
 
 	public override String ToString() {
         StringBuilder buf = new StringBuilder();
-        buf.Append(stateNumber).Append(":").Append(configs);
+        buf.Append(stateNumber).Append(':').Append(configs);
         if ( isAcceptState ) {
             buf.Append("=>");
             if ( predicates!=null ) {
-                buf.Append(Arrays.toString(predicates));
+                buf.Append(string.Join<DFAState.PredPrediction>(',',predicates));
             }
             else {
                 buf.Append(prediction);

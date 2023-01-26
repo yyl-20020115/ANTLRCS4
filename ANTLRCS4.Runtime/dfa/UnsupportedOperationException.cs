@@ -7,8 +7,7 @@ using System.Runtime.Serialization;
 
 namespace org.antlr.v4.runtime.dfa;
 
-[Serializable]
-internal class UnsupportedOperationException : InvalidOperationException
+public class UnsupportedOperationException : InvalidOperationException
 {
     public UnsupportedOperationException()
     {
@@ -22,7 +21,4 @@ internal class UnsupportedOperationException : InvalidOperationException
     {
     }
 
-    protected UnsupportedOperationException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
 }

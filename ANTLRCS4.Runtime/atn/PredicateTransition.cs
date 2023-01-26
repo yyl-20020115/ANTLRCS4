@@ -17,23 +17,22 @@ public class PredicateTransition : AbstractPredicateTransition {
 	public readonly int predIndex;
 	public readonly bool isCtxDependent;  // e.g., $i ref in pred
 
-	public PredicateTransition(ATNState target, int ruleIndex, int predIndex, bool isCtxDependent) {
-		super(target);
+	public PredicateTransition(ATNState target, int ruleIndex, int predIndex, bool isCtxDependent) :base(target){
 		this.ruleIndex = ruleIndex;
 		this.predIndex = predIndex;
 		this.isCtxDependent = isCtxDependent;
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return PREDICATE;
 	}
 
 	//@Override
-	public bool isEpsilon() { return true; }
+	public override bool isEpsilon() { return true; }
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
@@ -42,7 +41,7 @@ public class PredicateTransition : AbstractPredicateTransition {
    	}
 
 	//@Override
-	public String toString() {
+	public override String ToString() {
 		return "pred_"+ruleIndex+":"+predIndex;
 	}
 

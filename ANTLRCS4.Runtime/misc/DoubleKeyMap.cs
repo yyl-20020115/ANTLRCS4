@@ -33,24 +33,24 @@ public class DoubleKeyMap<Key1, Key2, Value> {
 		return data2.get(k2);
 	}
 
-	public Dictionary<Key2, Value> get(Key1 k1) { return data.get(k1); }
+	public Dictionary<Key2, Value> get(Key1 k1) { return data.TryGetValue(k1,out var d)?d:null; }
 
 	/** Get all values associated with primary key */
 	public ICollection<Value> values(Key1 k1) {
-        Dictionary<Key2, Value> data2 = data.get(k1);
-		if ( data2==null ) return null;
-		return data2.values();
+		if ( !data.TryGetValue(k1,out var data2) ) return null;
+		return data2.Values;
 	}
 
 	/** get all primary keys */
 	public HashSet<Key1> keySet() {
-		return data.keySet();
+		return data.Keys.ToHashSet();
 	}
 
 	/** get all secondary keys associated with a primary key */
 	public HashSet<Key2> keySet(Key1 k1) {
-        Dictionary<Key2, Value> data2 = data.get(k1);
-		if ( data2==null ) return null;
-		return data2.keySet();
+		if (!data.TryGetValue(k1, out var data2))
+			return null;
+		else
+		return data2.Keys.ToHashSet();
 	}
 }

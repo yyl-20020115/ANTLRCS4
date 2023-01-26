@@ -4,10 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Implements the {@code popMode} lexer action by calling {@link Lexer#popMode}.
@@ -18,11 +17,11 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerPopModeAction implements LexerAction {
+public class LexerPopModeAction : LexerAction {
 	/**
 	 * Provides a singleton instance of this parameterless lexer action.
 	 */
-	public static final LexerPopModeAction INSTANCE = new LexerPopModeAction();
+	public static readonly LexerPopModeAction INSTANCE = new LexerPopModeAction();
 
 	/**
 	 * Constructs the singleton instance of the lexer {@code popMode} command.
@@ -34,7 +33,7 @@ public final class LexerPopModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#POP_MODE}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.POP_MODE;
 	}
@@ -43,8 +42,8 @@ public final class LexerPopModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+	//@Override
+	public bool isPositionDependent() {
 		return false;
 	}
 
@@ -53,26 +52,26 @@ public final class LexerPopModeAction implements LexerAction {
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#popMode}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		lexer.popMode();
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		return MurmurHash.finish(hash, 1);
 	}
 
-	@Override
-	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-	public boolean equals(Object obj) {
+    //@Override
+    //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    public override bool Equals(Object? obj) {
 		return obj == this;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public override String ToString() {
 		return "popMode";
 	}
 }

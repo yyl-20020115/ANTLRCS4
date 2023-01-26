@@ -26,13 +26,15 @@ public class NoViableAltException : RecognitionException {
 
 	private readonly Token startToken;
 
-	public NoViableAltException(Parser recognizer) { // LL(1) error
-		this(recognizer,
-			 recognizer.getInputStream(),
-			 recognizer.getCurrentToken(),
-			 recognizer.getCurrentToken(),
-			 null,
-			 recognizer._ctx);
+	public NoViableAltException(Parser recognizer)
+		: this(recognizer,
+             recognizer.getInputStream(),
+             recognizer.getCurrentToken(),
+             recognizer.getCurrentToken(),
+             null,
+             recognizer._ctx)
+    { // LL(1) error
+		;
 	}
 
 	public NoViableAltException(Parser recognizer,
@@ -41,8 +43,9 @@ public class NoViableAltException : RecognitionException {
 								Token offendingToken,
 								ATNConfigSet deadEndConfigs,
 								ParserRuleContext ctx)
-	{
-		super(recognizer, input, ctx);
+		:base(recognizer, input, ctx)
+    {
+		;
 		this.deadEndConfigs = deadEndConfigs;
 		this.startToken = startToken;
 		this.setOffendingToken(offendingToken);

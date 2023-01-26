@@ -219,7 +219,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	}
 
 
-	public List<? extends ANTLRErrorListener> getErrorListeners() {
+	public List<ANTLRErrorListener> getErrorListeners() {
 		return _listeners;
 	}
 
@@ -262,7 +262,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	public abstract void setInputStream(IntStream input);
 
 
-	public abstract TokenFactory getTokenFactory();
+	public abstract TokenFactory<Token> getTokenFactory();
 
-	public abstract void setTokenFactory(TokenFactory input);
+	public abstract void setTokenFactory(TokenFactory<Token> input);
 }

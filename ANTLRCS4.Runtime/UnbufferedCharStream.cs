@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using System.Text;
 
 namespace org.antlr.v4.runtime;
 
@@ -86,25 +88,25 @@ public class UnbufferedCharStream : CharStream {
 		data = new int[bufferSize];
 	}
 
-	public UnbufferedCharStream(InputStream input) {
+	public UnbufferedCharStream(Stream input) {
 		this(input, 256);
 	}
 
-	public UnbufferedCharStream(Reader input) {
+	public UnbufferedCharStream(TextReader input) {
 		this(input, 256);
 	}
 
-	public UnbufferedCharStream(InputStream input, int bufferSize) {
+	public UnbufferedCharStream(Stream input, int bufferSize) {
 		this(input, bufferSize, StandardCharsets.UTF_8);
 	}
 
-	public UnbufferedCharStream(InputStream input, int bufferSize, Charset charset) {
+	public UnbufferedCharStream(Stream input, int bufferSize, Encoding charset) {
 		this(bufferSize);
-		this.input = new InputStreamReader(input, charset);
+		this.input = new StreamReader(input, charset);
 		fill(1); // prime
 	}
 
-	public UnbufferedCharStream(Reader input, int bufferSize) {
+	public UnbufferedCharStream(TextReader input, int bufferSize) {
 		this(bufferSize);
 		this.input = input;
 		fill(1); // prime

@@ -197,6 +197,6 @@ public class RuntimeMetaData
             referenceLength = Math.Min(referenceLength, firstDash);
         }
 
-        return version.substring(0, referenceLength);
+        return version.Substring(0, referenceLength);
     }
 }

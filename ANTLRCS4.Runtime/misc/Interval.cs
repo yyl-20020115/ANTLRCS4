@@ -43,7 +43,7 @@ public class Interval {
 		return b-a+1;
 	}
 
-	public override bool equals(Object? o) {
+	public override bool Equals(Object? o) {
 		if ( o==null || !(o is Interval) ) {
 			return false;
 		}

@@ -4,9 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.TokenStream;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * This class represents profiling event information for tracking the lookahead
@@ -14,7 +12,7 @@ import org.antlr.v4.runtime.TokenStream;
  *
  * @since 4.3
  */
-public class LookaheadEventInfo extends DecisionEventInfo {
+public class LookaheadEventInfo : DecisionEventInfo {
 	/** The alternative chosen by adaptivePredict(), not necessarily
 	 *  the outermost alt shown for a rule; left-recursive rules have
 	 *  user-level alts that differ from the rewritten rule with a (...) block
@@ -41,9 +39,9 @@ public class LookaheadEventInfo extends DecisionEventInfo {
 							  ATNConfigSet configs,
 							  int predictedAlt,
 							  TokenStream input, int startIndex, int stopIndex,
-							  boolean fullCtx)
-	{
-		super(decision, configs, input, startIndex, stopIndex, fullCtx);
+							  bool fullCtx)
+		: base(decision, configs, input, startIndex, stopIndex, fullCtx)
+    {
 		this.predictedAlt = predictedAlt;
 	}
 }

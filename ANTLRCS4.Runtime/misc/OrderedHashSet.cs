@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime.misc;
 
 /** A HashMap that remembers the order that the elements were added.
@@ -16,14 +18,14 @@ public class OrderedHashSet<T> : HashSet<T> {
     protected List<T> elements = new ();
 
     public T get(int i) {
-        return elements.get(i);
+        return elements[i];
     }
 
     /** Replace an existing value with a new value; updates the element
      *  list and the hash table, but not the key as that has not changed.
      */
     public T set(int i, T value) {
-        T oldElement = elements.get(i);
+        T oldElement = elements[i];
         elements.set(i,value); // update list
         super.remove(oldElement); // now update the set: remove/add
         super.add(value);

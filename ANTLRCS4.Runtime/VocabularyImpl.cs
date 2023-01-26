@@ -95,21 +95,21 @@ public class VocabularyImpl : Vocabulary {
 			return EMPTY_VOCABULARY;
 		}
 
-		String[] literalNames = Arrays.copyOf(tokenNames, tokenNames.length);
-		String[] symbolicNames = Arrays.copyOf(tokenNames, tokenNames.length);
-		for (int i = 0; i < tokenNames.length; i++) {
+		String[] literalNames = Arrays.copyOf(tokenNames, tokenNames.Length);
+		String[] symbolicNames = Arrays.copyOf(tokenNames, tokenNames.Length);
+		for (int i = 0; i < tokenNames.Length; i++) {
 			String tokenName = tokenNames[i];
 			if (tokenName == null) {
 				continue;
 			}
 
-			if (!tokenName.isEmpty()) {
-				char firstChar = tokenName.charAt(0);
+			if (tokenName.Length>0) {
+				char firstChar = tokenName[0];
 				if (firstChar == '\'') {
 					symbolicNames[i] = null;
 					continue;
 				}
-				else if (Character.isUpperCase(firstChar)) {
+				else if (char.IsUpper(firstChar)) {
 					literalNames[i] = null;
 					continue;
 				}

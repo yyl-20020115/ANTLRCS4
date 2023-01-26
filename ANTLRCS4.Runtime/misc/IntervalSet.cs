@@ -25,13 +25,11 @@ public class IntervalSet : IntSet {
 	public static readonly IntervalSet COMPLETE_CHAR_SET = IntervalSet.of(Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE);
 	static IntervalSet() {
 		COMPLETE_CHAR_SET.setReadonly(true);
-	}
+        EMPTY_SET.setReadonly(true);
+    }
 
-	public static readonly IntervalSet EMPTY_SET = new ();
-	static IntervalSet(){
-		EMPTY_SET.setReadonly(true);
-	}
-
+    public static readonly IntervalSet EMPTY_SET = new ();
+	
 	/** The list of sorted, disjoint intervals. */
     protected List<Interval> intervals;
 
@@ -41,8 +39,7 @@ public class IntervalSet : IntSet {
 		this.intervals = intervals;
 	}
 
-	public IntervalSet(IntervalSet set) {
-		this();
+	public IntervalSet(IntervalSet set):this() {
 		addAll(set);
 	}
 
@@ -51,8 +48,8 @@ public class IntervalSet : IntSet {
 			intervals = new (2); // most sets are 1 or 2 elements
 		}
 		else {
-			intervals = new (els.length);
-			for (int e : els) add(e);
+			intervals = new (els.Length);
+			foreach(int e in els) add(e);
 		}
 	}
 
@@ -73,7 +70,7 @@ public class IntervalSet : IntSet {
 
 	public void clear() {
         if ( @readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
-		intervals.clear();
+		intervals.Clear();
 	}
 
     /** Add a single element to the set.  An isolated element is stored
@@ -140,13 +137,13 @@ public class IntervalSet : IntSet {
 		}
 		// ok, must be after last interval (and disjoint from last interval)
 		// just add it
-		intervals.add(addition);
+		intervals.Add(addition);
 	}
 
 	/** combine all sets in the array returned the or'd value */
 	public static IntervalSet or(IntervalSet[] sets) {
 		IntervalSet r = new IntervalSet();
-		for (IntervalSet s : sets) r.addAll(s);
+		foreach (IntervalSet s in sets) r.addAll(s);
 		return r;
 	}
 
@@ -438,7 +435,7 @@ public class IntervalSet : IntSet {
 	////@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
-		for (Interval I : intervals) {
+		for (Interval I in intervals) {
 			hash = MurmurHash.update(hash, I.a);
 			hash = MurmurHash.update(hash, I.b);
 		}

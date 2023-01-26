@@ -114,5 +114,5 @@ public interface ANTLRErrorStrategy {
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception to report
 	 */
-	void reportError<T1, T2>(Parser recognizer, RecognitionException<T1,T2> e);
+	void reportError(Parser recognizer, RecognitionException e);
 }

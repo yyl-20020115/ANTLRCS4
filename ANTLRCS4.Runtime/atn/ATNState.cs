@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
@@ -151,11 +150,11 @@ public abstract class ATNState {
 	}
 
 	public void addTransition(int index, Transition e) {
-		if (transitions.isEmpty()) {
+		if (transitions.Count==0) {
 			epsilonOnlyTransitions = e.isEpsilon();
 		}
 		else if (epsilonOnlyTransitions != e.isEpsilon()) {
-			Console.Error.format(Locale.getDefault(), "ATN state %d has both epsilon and non-epsilon transitions.\n", stateNumber);
+			Console.Error.WriteLine($"ATN state {stateNumber} has both epsilon and non-epsilon transitions.\n");
 			epsilonOnlyTransitions = false;
 		}
 
@@ -175,18 +174,20 @@ public abstract class ATNState {
 			}
 		}
 		if ( !alreadyPresent ) {
-			transitions.add(index, e);
+			transitions.Insert(index, e);
 		}
 	}
 
-	public Transition transition(int i) { return transitions.get(i); }
+	public Transition transition(int i) { return transitions[i]; }
 
 	public void setTransition(int i, Transition e) {
-		transitions.set(i, e);
+		transitions[i]=e;
 	}
 
 	public Transition removeTransition(int index) {
-		return transitions.remove(index);
+		var t = transitions[index];
+		transitions.RemoveAt(index);
+		return t;
 	}
 
 	public abstract int getStateType();

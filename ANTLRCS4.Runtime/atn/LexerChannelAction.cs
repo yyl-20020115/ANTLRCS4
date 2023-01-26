@@ -73,7 +73,7 @@ public class LexerChannelAction : LexerAction {
 	}
 
 	//@Override
-	public override bool Equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -86,6 +86,7 @@ public class LexerChannelAction : LexerAction {
 
 	//@Override
 	public override String ToString() {
-		return String.format("channel(%d)", channel);
-	}
+		return $"channel({channel})";
+
+    }
 }

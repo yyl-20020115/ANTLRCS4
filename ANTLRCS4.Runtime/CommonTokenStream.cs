@@ -32,7 +32,7 @@ package org.antlr.v4.runtime;
  * such a rule will not be available as part of the token stream, regardless of
  * channel.</p>we
  */
-public class CommonTokenStream<T> : BufferedTokenStream<T> {
+public class CommonTokenStream : BufferedTokenStream {
 	/**
 	 * Specifies the channel to use for filtering tokens.
 	 *
@@ -48,7 +48,7 @@ public class CommonTokenStream<T> : BufferedTokenStream<T> {
 	 *
 	 * @param tokenSource The token source.
 	 */
-    public CommonTokenStream(TokenSource<T> tokenSource):base(tokenSource) {
+    public CommonTokenStream(TokenSource tokenSource):base(tokenSource) {
     }
 
 	/**
@@ -61,7 +61,7 @@ public class CommonTokenStream<T> : BufferedTokenStream<T> {
 	 * @param tokenSource The token source.
 	 * @param channel The channel to use for filtering tokens.
 	 */
-    public CommonTokenStream(TokenSource<T> tokenSource, int channel):this(tokenSource) {
+    public CommonTokenStream(TokenSource tokenSource, int channel):this(tokenSource) {
         this.channel = channel;
     }
 
@@ -83,7 +83,7 @@ public class CommonTokenStream<T> : BufferedTokenStream<T> {
             n++;
         }
         if ( i<0 ) return null;
-        return tokens.get(i);
+        return tokens[i];
     }
 
     //@Override
@@ -103,15 +103,15 @@ public class CommonTokenStream<T> : BufferedTokenStream<T> {
             n++;
         }
 //		if ( i>range ) range = i;
-        return tokens.get(i);
+        return tokens[i];
     }
 
 	/** Count EOF just once. */
 	public int getNumberOfOnChannelTokens() {
 		int n = 0;
 		fill();
-		for (int i = 0; i < tokens.size(); i++) {
-			Token t = tokens.get(i);
+		for (int i = 0; i < tokens.Count; i++) {
+			Token t = tokens[i];
 			if ( t.getChannel()==channel ) n++;
 			if ( t.getType()==Token.EOF ) break;
 		}

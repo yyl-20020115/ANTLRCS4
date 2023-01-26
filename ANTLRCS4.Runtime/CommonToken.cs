@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
@@ -257,24 +258,24 @@ public class CommonToken : WritableToken /*Serializable*/
 
     //@Override
     public override String ToString() {
-		return toString(null);
+		return ToString(null);
 	}
 
-	public String toString<T1, T2>(Recognizer<T1, T2> r) {
+	public String toString(Recognizer<Token, ATNSimulator> r) {
 		String channelStr = "";
 		if ( channel>0 ) {
 			channelStr=",channel="+channel;
 		}
 		String txt = getText();
 		if ( txt!=null ) {
-			txt = txt.replace("\n","\\n");
-			txt = txt.replace("\r","\\r");
-			txt = txt.replace("\t","\\t");
+			txt = txt.Replace("\n","\\n");
+			txt = txt.Replace("\r","\\r");
+			txt = txt.Replace("\t","\\t");
 		}
 		else {
 			txt = "<no text>";
 		}
-		String typeString = String.valueOf(type);
+		String typeString = type.ToString();// String.valueOf(type);
 		if ( r!=null ) {
 			typeString = r.getVocabulary().getDisplayName(type);
 		}

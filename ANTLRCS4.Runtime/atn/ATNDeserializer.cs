@@ -44,7 +44,7 @@ public class ATNDeserializer {
 		int p = 0;
 		int version = data[p++];
 		if (version != SERIALIZED_VERSION) {
-			String reason = String.format(Locale.getDefault(), "Could not deserialize ATN with version %d (expected %d).", version, SERIALIZED_VERSION);
+			String reason = $"Could not deserialize ATN with version {version} (expected {SERIALIZED_VERSION}).";
 			throw new UnsupportedOperationException(new InvalidClassException(ATN.getName(), reason));
 		}
 

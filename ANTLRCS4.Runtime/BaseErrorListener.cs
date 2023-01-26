@@ -17,12 +17,12 @@ namespace org.antlr.v4.runtime;
  * @author Sam Harwell
  */
 public class BaseErrorListener : ANTLRErrorListener {
-	public virtual void syntaxError<T1, T2>(Recognizer<T1, T2> recognizer,
+	public virtual void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,
 							String msg,
-							RecognitionException<T1,T2> e)
+							RecognitionException e)
 	{
 	}
 

@@ -4,12 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree.pattern;
+
 namespace org.antlr.v4.runtime.misc;
 
 // A class to read plain text interpreter data produced by ANTLR.
 public class InterpreterDataReader {
 
-	public static class InterpreterData {
+	public class InterpreterData {
 	  ATN atn;
 	  Vocabulary vocabulary;
 	  List<String> ruleNames;
@@ -112,9 +115,9 @@ public class InterpreterDataReader {
 		  	ATNDeserializer deserializer = new ATNDeserializer();
 		  	result.atn = deserializer.deserialize(serializedATN);
 		}
-		catch (IOException e) {
-			// We just swallow the error and return empty objects instead.
-		}
+		//catch (IOException e) {
+		//	// We just swallow the error and return empty objects instead.
+		//}
 
 		return result;
 	}

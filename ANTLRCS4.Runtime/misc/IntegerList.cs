@@ -52,7 +52,7 @@ public class IntegerList {
 	}
 
 	public void add(int value) {
-		if (_data.length == _size) {
+		if (_data.Length == _size) {
 			ensureCapacity(_size + 1);
 		}
 
@@ -61,9 +61,9 @@ public class IntegerList {
 	}
 
 	public void addAll(int[] array) {
-		ensureCapacity(_size + array.length);
-		System.arraycopy(array, 0, _data, _size, array.length);
-		_size += array.length;
+		ensureCapacity(_size + array.Length);
+		System.arraycopy(array, 0, _data, _size, array.Length);
+		_size += array.Length;
 	}
 
 	public void addAll(IntegerList list) {
@@ -75,7 +75,7 @@ public class IntegerList {
 	public void addAll(ICollection<int> list) {
 		ensureCapacity(_size + list.size());
 		int current = 0;
-    		for (int x : list) {
+    		foreach (int x in list) {
       			_data[_size + current] = x;
       			current++;
     		}
@@ -84,7 +84,7 @@ public class IntegerList {
 
 	public int get(int index) {
 		if (index < 0 || index >= _size) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfRangeException(nameof(index));
 		}
 
 		return _data[index];
@@ -102,7 +102,7 @@ public class IntegerList {
 
 	public int set(int index, int value) {
 		if (index < 0 || index >= _size) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfRangeException(nameof(index));
 		}
 
 		int previous = _data[index];
@@ -120,7 +120,7 @@ public class IntegerList {
 
 	public void removeRange(int fromIndex, int toIndex) {
 		if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfRangeException();
 		}
 		if (fromIndex > toIndex) {
 			throw new IllegalArgumentException();
@@ -140,7 +140,7 @@ public class IntegerList {
 	}
 
 	public void trimToSize() {
-		if (_data.length == _size) {
+		if (_data.Length == _size) {
 			return;
 		}
 

@@ -8,15 +8,10 @@ namespace org.antlr.v4.runtime.atn;
 
 public class EpsilonTransition : Transition {
 
-	private readonly int outermostPrecedenceReturn;
+	private readonly int _outermostPrecedenceReturn;
 
-	public EpsilonTransition(ATNState target) {
-		this(target, -1);
-	}
-
-	public EpsilonTransition(ATNState target, int outermostPrecedenceReturn) {
-		super(target);
-		this.outermostPrecedenceReturn = outermostPrecedenceReturn;
+	public EpsilonTransition(ATNState target, int outermostPrecedenceReturn = -1):base(target) {
+		this._outermostPrecedenceReturn = outermostPrecedenceReturn;
 	}
 
 	/**
@@ -28,19 +23,19 @@ public class EpsilonTransition : Transition {
 	 * @since 4.4.1
 	 */
 	public int outermostPrecedenceReturn() {
-		return outermostPrecedenceReturn;
+		return _outermostPrecedenceReturn;
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return EPSILON;
 	}
 
     //@Override
-    public bool isEpsilon() { return true; }
+    public override bool isEpsilon() { return true; }
 
     //@Override
-    public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 

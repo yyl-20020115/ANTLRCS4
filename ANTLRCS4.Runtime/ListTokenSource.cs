@@ -17,7 +17,7 @@ namespace org.antlr.v4.runtime;
  * as the EOF token for every call to {@link #nextToken} after the end of the
  * list is reached. Otherwise, an EOF token will be created.</p>
  */
-public class ListTokenSource<T> : TokenSource<T> {
+public class ListTokenSource<T> : TokenSource {
 	/**
 	 * The wrapped collection of {@link Token} objects to return.
 	 */

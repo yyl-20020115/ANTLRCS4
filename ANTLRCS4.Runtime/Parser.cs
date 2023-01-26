@@ -138,7 +138,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	/** reset the parser's state */
-	public void reset() {
+	public virtual void reset() {
 		if ( getInputStream()!=null ) getInputStream().seek(0);
 		_errHandler.reset(this);
 		_ctx = null;
@@ -641,7 +641,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * @return The precedence level for the top-most precedence rule, or -1 if
 	 * the parser context is not nested within a precedence rule.
 	 */
-	public final int getPrecedence() {
+	public int getPrecedence() {
 		if (_precedenceStack.isEmpty()) {
 			return -1;
 		}

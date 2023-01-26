@@ -101,7 +101,7 @@ public class ATN
 	}
 
 	public void removeState(ATNState state) {
-		states.set(state.stateNumber, null); // just free mem, don't shift states in list
+		states[state.stateNumber]= null; // just free mem, don't shift states in list
 	}
 
 	public int defineDecisionState(DecisionState s) {
@@ -111,8 +111,8 @@ public class ATN
 	}
 
     public DecisionState getDecisionState(int decision) {
-        if ( !decisionToState.isEmpty() ) {
-            return decisionToState.get(decision);
+        if ( decisionToState.Count>0 ) {
+            return decisionToState[decision];
         }
         return null;
     }
@@ -161,7 +161,7 @@ public class ATN
 		}
 
 		RuleContext ctx = context;
-		ATNState s = states.get(stateNumber);
+		ATNState s = states[stateNumber];
 		IntervalSet following = nextTokens(s);
 		if (!following.contains(Token.EPSILON)) {
 			return following;
@@ -171,7 +171,7 @@ public class ATN
 		expected.addAll(following);
 		expected.remove(Token.EPSILON);
 		while (ctx != null && ctx.invokingState >= 0 && following.contains(Token.EPSILON)) {
-			ATNState invokingState = states.get(ctx.invokingState);
+			ATNState invokingState = states[ctx.invokingState];
 			RuleTransition rt = (RuleTransition)invokingState.transition(0);
 			following = nextTokens(rt.followState);
 			expected.addAll(following);

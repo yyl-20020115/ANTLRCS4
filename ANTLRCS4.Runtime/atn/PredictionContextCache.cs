@@ -4,18 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /** Used to cache {@link PredictionContext} objects. Its used for the shared
  *  context cash associated with contexts in DFA states. This cache
  *  can be used for both lexers and parsers.
  */
 public class PredictionContextCache {
-	protected final Map<PredictionContext, PredictionContext> cache =
-		new HashMap<PredictionContext, PredictionContext>();
+	protected readonly Dictionary<PredictionContext, PredictionContext> cache = new();
 
 	/** Add a context to the cache and return it. If the context already exists,
 	 *  return that one instead and do not add a new context to the cache.

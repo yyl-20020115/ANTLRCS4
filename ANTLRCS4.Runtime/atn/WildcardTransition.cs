@@ -7,15 +7,15 @@
 namespace org.antlr.v4.runtime.atn;
 
 public class WildcardTransition : Transition {
-	public WildcardTransition(ATNState target) { super(target); }
+	public WildcardTransition(ATNState target):base(target) {  }
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return WILDCARD;
 	}
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 	}
 

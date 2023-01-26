@@ -19,8 +19,9 @@ public class LexerATNConfig : ATNConfig {
 	public LexerATNConfig(ATNState state,
 						  int alt,
 						  PredictionContext context)
-	{
-		super(state, alt, context, SemanticContext.Empty.Instance);
+		:base(state, alt, context, SemanticContext.Empty.Instance)
+    {
+		;
 		this.passedThroughNonGreedyDecision = false;
 		this.lexerActionExecutor = null;
 	}
@@ -29,30 +30,37 @@ public class LexerATNConfig : ATNConfig {
 						  int alt,
 						  PredictionContext context,
 						  LexerActionExecutor lexerActionExecutor)
-	{
-		super(state, alt, context, SemanticContext.Empty.Instance);
+		:base(state, alt, context, SemanticContext.Empty.Instance)
+    {
+		;
 		this.lexerActionExecutor = lexerActionExecutor;
 		this.passedThroughNonGreedyDecision = false;
 	}
 
-	public LexerATNConfig(LexerATNConfig c, ATNState state) {
-		super(c, state, c.context, c.semanticContext);
+	public LexerATNConfig(LexerATNConfig c, ATNState state)
+        :base(c, state, c.context, c.semanticContext)
+    {
+		;
 		this.lexerActionExecutor = c.lexerActionExecutor;
 		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
 	}
 
 	public LexerATNConfig(LexerATNConfig c, ATNState state,
 						  LexerActionExecutor lexerActionExecutor)
+		:base(c, state, c.context, c.semanticContext)
 	{
-		super(c, state, c.context, c.semanticContext);
+		
 		this.lexerActionExecutor = lexerActionExecutor;
 		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
 	}
 
 	public LexerATNConfig(LexerATNConfig c, ATNState state,
-						  PredictionContext context) {
-		super(c, state, context, c.semanticContext);
-		this.lexerActionExecutor = c.lexerActionExecutor;
+						  PredictionContext context) 
+	:base(c, state, context, c.semanticContext)
+	{
+	
+
+        this.lexerActionExecutor = c.lexerActionExecutor;
 		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
 	}
 
@@ -104,6 +112,6 @@ public class LexerATNConfig : ATNConfig {
 
 	private static bool checkNonGreedyDecision(LexerATNConfig source, ATNState target) {
 		return source.passedThroughNonGreedyDecision
-			|| target is DecisionState && ((DecisionState)target).nonGreedy;
+			|| target is DecisionState state1 && state1.nonGreedy;
 	}
 }

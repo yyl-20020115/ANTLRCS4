@@ -11,29 +11,30 @@ namespace org.antlr.v4.runtime.atn;
 /** TODO: make all transitions sets? no, should remove set edges */
 public class AtomTransition : Transition {
 	/** The token type or character value; or, signifies special label. */
-	public readonly int label;
+	public readonly int _label;
 
-	public AtomTransition(ATNState target, int label) {
-		super(target);
-		this.label = label;
+	public AtomTransition(ATNState target, int label):base(target)
+    {
+		;
+		this._label = label;
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return ATOM;
 	}
 
 	//@Override
 
-	public IntervalSet label() { return IntervalSet.of(label); }
+	public override IntervalSet label() { return IntervalSet.of(_label); }
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return label == symbol;
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+		return _label == symbol;
 	}
 
 	//@Override
-	public String toString() {
-		return String.valueOf(label);
+	public override String ToString() {
+		return this._label.ToString();	
 	}
 }

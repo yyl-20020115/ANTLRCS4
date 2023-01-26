@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using System.Text;
+
 namespace org.antlr.v4.runtime.misc;
 
 public class LogManager {

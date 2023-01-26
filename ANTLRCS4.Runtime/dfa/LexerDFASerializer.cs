@@ -16,7 +16,7 @@ public class LexerDFASerializer : DFASerializer {
 	protected override String getEdgeLabel(int i) {
 		return new StringBuilder("'")
 				.Append(char.ConvertFromUtf32(i))//.appendCodePoint(i)
-				.Append("'")
+				.Append('\'')
 				.ToString();
 	}
 }

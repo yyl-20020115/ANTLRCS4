@@ -76,7 +76,7 @@ public class ATNSerializer {
 		data.add(ATNDeserializer.SERIALIZED_VERSION);
 
 		// convert grammar type to ATN const to avoid dependence on ANTLRParser
-		data.add(atn.grammarType);
+		data.add((int)atn.grammarType);
 		data.add(atn.maxTokenType);
 	}
 
@@ -84,7 +84,7 @@ public class ATNSerializer {
 		if (atn.grammarType == ATNType.LEXER) {
 			data.add(atn.lexerActions.Length);
 			foreach (LexerAction action in atn.lexerActions) {
-				data.add(action.getActionType());
+				data.add((int)action.getActionType());
 				switch (action.getActionType()) {
 				case LexerActionType.CHANNEL:
 					int channel = ((LexerChannelAction)action).getChannel();

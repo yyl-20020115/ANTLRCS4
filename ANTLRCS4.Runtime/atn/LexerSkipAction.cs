@@ -4,10 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Implements the {@code skip} lexer action by calling {@link Lexer#skip}.
@@ -18,11 +15,11 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerSkipAction implements LexerAction {
+public class LexerSkipAction : LexerAction {
 	/**
 	 * Provides a singleton instance of this parameterless lexer action.
 	 */
-	public static final LexerSkipAction INSTANCE = new LexerSkipAction();
+	public static readonly LexerSkipAction INSTANCE = new LexerSkipAction();
 
 	/**
 	 * Constructs the singleton instance of the lexer {@code skip} command.
@@ -34,7 +31,7 @@ public final class LexerSkipAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#SKIP}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.SKIP;
 	}
@@ -43,8 +40,8 @@ public final class LexerSkipAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+	//@Override
+	public bool isPositionDependent() {
 		return false;
 	}
 
@@ -53,25 +50,25 @@ public final class LexerSkipAction implements LexerAction {
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#skip}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		lexer.skip();
 	}
 
-	@Override
+	//@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
 		return MurmurHash.finish(hash, 1);
 	}
 
-	@Override
-	@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+	//@Override
+	//@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 	public boolean equals(Object obj) {
 		return obj == this;
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return "skip";
 	}

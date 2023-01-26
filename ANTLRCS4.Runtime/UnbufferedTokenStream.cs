@@ -4,11 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
+
 namespace org.antlr.v4.runtime;
 
 
-public class UnbufferedTokenStream<T> : TokenStream<T> where T:token {
-	protected TokenSource<T> tokenSource;
+public class UnbufferedTokenStream<T> : TokenStream<T> {
+	protected TokenSource tokenSource;
 
 	/**
 	 * A moving window buffer of the data being scanned. While there's a marker,
@@ -61,8 +63,8 @@ public class UnbufferedTokenStream<T> : TokenStream<T> where T:token {
 	 */
 	protected int currentTokenIndex = 0;
 
-	public UnbufferedTokenStream(TokenSource tokenSource) {
-		this(tokenSource, 256);
+	public UnbufferedTokenStream(TokenSource tokenSource) : this(tokenSource, 256)
+    {
 	}
 
 	public UnbufferedTokenStream(TokenSource tokenSource, int bufferSize) {
@@ -76,7 +78,7 @@ public class UnbufferedTokenStream<T> : TokenStream<T> where T:token {
 	public Token get(int i) { // get absolute index
 		int bufferStartIndex = getBufferStartIndex();
 		if (i < bufferStartIndex || i >= bufferStartIndex + n) {
-			throw new IndexOutOfBoundsException("get("+i+") outside buffer: "+
+			throw new IndexOutOfRangeException("get("+i+") outside buffer: "+
 			                    bufferStartIndex+".."+(bufferStartIndex+n));
 		}
 		return tokens[i - bufferStartIndex];
@@ -91,11 +93,11 @@ public class UnbufferedTokenStream<T> : TokenStream<T> where T:token {
 		sync(i);
         int index = p + i - 1;
         if ( index < 0 ) {
-			throw new IndexOutOfBoundsException("LT("+i+") gives negative index");
+			throw new IndexOutOfRangeException("LT("+i+") gives negative index");
 		}
 
 		if ( index >= n ) {
-			assert n > 0 && tokens[n-1].getType() == Token.EOF;
+			//assert n > 0 && tokens[n-1].getType() == Token.EOF;
 			return tokens[n-1];
 		}
 

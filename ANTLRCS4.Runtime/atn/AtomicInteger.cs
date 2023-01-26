@@ -8,4 +8,8 @@ namespace org.antlr.v4.runtime.atn;
 
 public class AtomicInteger
 {
+    internal int getAndIncrement()
+    {
+        throw new NotImplementedException();
+    }
 }

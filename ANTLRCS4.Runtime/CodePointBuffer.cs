@@ -94,7 +94,7 @@ public class CodePointBuffer {
 		throw new UnsupportedOperationException("Not reached");
 	}
 
-	Type getType() {
+	public Type getType() {
 		return type;
 	}
 

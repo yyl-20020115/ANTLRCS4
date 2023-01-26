@@ -40,15 +40,15 @@ public class RuleTransition : Transition {
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return RULE;
 	}
 
 	//@Override
-	public bool isEpsilon() { return true; }
+	public override bool isEpsilon() { return true; }
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 }

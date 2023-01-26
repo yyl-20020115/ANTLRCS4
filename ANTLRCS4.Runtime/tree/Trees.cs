@@ -37,16 +37,16 @@ public static class Trees
 		String s = Utils.escapeWhitespace(getNodeText(t, ruleNames), false);
 		if ( t.getChildCount()==0 ) return s;
 		StringBuilder buf = new StringBuilder();
-		buf.append("(");
+		buf.Append('(');
 		s = Utils.escapeWhitespace(getNodeText(t, ruleNames), false);
-		buf.append(s);
-		buf.append(' ');
+		buf.Append(s);
+		buf.Append(' ');
 		for (int i = 0; i<t.getChildCount(); i++) {
-			if ( i>0 ) buf.append(' ');
-			buf.append(toStringTree(t.getChild(i), ruleNames));
+			if ( i>0 ) buf.Append(' ');
+			buf.Append(toStringTree(t.getChild(i), ruleNames));
 		}
-		buf.append(")");
-		return buf.toString();
+		buf.Append(')');
+		return buf.ToString();
 	}
 
 	public static String getNodeText(Tree t, Parser recog) {
@@ -67,7 +67,7 @@ public static class Trees
 				return ruleName;
 			}
 			else if ( t is ErrorNode) {
-				return t.toString();
+				return t.ToString();
 			}
 			else if ( t is TerminalNode) {
 				Token symbol = ((TerminalNode)t).getSymbol();
@@ -82,7 +82,7 @@ public static class Trees
 		if ( payload is Token ) {
 			return ((Token)payload).getText();
 		}
-		return t.getPayload().toString();
+		return t.getPayload().ToString();
 	}
 
 	/** Return ordered list of all children of this node */
@@ -133,7 +133,7 @@ public static class Trees
 		return findAllNodes(t, ruleIndex, false);
 	}
 
-	public static List<ParseTree> findAllNodes(ParseTree t, int index, boolean findTokens) {
+	public static List<ParseTree> findAllNodes(ParseTree t, int index, bool findTokens) {
 		List<ParseTree> nodes = new ArrayList<ParseTree>();
 		_findAllNodes(t, index, findTokens, nodes);
 		return nodes;

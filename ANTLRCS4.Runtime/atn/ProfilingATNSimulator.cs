@@ -34,12 +34,13 @@ public class ProfilingATNSimulator : ParserATNSimulator {
  	 */
 	protected int conflictingAltResolvedBySLL;
 
-	public ProfilingATNSimulator(Parser parser) {
-		super(parser,
-				parser.getInterpreter().atn,
-				parser.getInterpreter().decisionToDFA,
-				parser.getInterpreter().sharedContextCache);
-		numDecisions = atn.decisionToState.size();
+	public ProfilingATNSimulator(Parser parser):base(parser,
+                parser.getInterpreter().atn,
+                parser.getInterpreter().decisionToDFA,
+                parser.getInterpreter().sharedContextCache)
+    {
+		;
+		numDecisions = atn.decisionToState.Count;
 		decisions = new DecisionInfo[numDecisions];
 		for (int i=0; i<numDecisions; i++) {
 			decisions[i] = new DecisionInfo(i);
@@ -53,7 +54,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			this._llStopIndex = -1;
 			this.currentDecision = decision;
 			long start = System.nanoTime(); // expensive but useful info
-			int alt = super.adaptivePredict(input, decision, outerContext);
+			int alt = base.adaptivePredict(input, decision, outerContext);
 			long stop = System.nanoTime();
 			decisions[decision].timeInPrediction += (stop-start);
 			decisions[decision].invocations++;
@@ -91,11 +92,11 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 		// during SLL prediction
 		_sllStopIndex = _input.index();
 
-		DFAState existingTargetState = super.getExistingTargetState(previousD, t);
+		DFAState existingTargetState = base.getExistingTargetState(previousD, t);
 		if ( existingTargetState!=null ) {
 			decisions[currentDecision].SLL_DFATransitions++; // count only if we transition over a DFA state
 			if ( existingTargetState==ERROR ) {
-				decisions[currentDecision].errors.add(
+				decisions[currentDecision].errors.Add(
 						new ErrorInfo(currentDecision, previousD.configs, _input, _startIndex, _sllStopIndex, false)
 				);
 			}
@@ -107,27 +108,27 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 
 	//@Override
 	protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
-		DFAState state = super.computeTargetState(dfa, previousD, t);
+		DFAState state = base.computeTargetState(dfa, previousD, t);
 		currentState = state;
 		return state;
 	}
 
 	//@Override
-	protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, boolean fullCtx) {
+	protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, bool fullCtx) {
 		if (fullCtx) {
 			// this method is called after each time the input position advances
 			// during full context prediction
 			_llStopIndex = _input.index();
 		}
 
-		ATNConfigSet reachConfigs = super.computeReachSet(closure, t, fullCtx);
+		ATNConfigSet reachConfigs = base.computeReachSet(closure, t, fullCtx);
 		if (fullCtx) {
 			decisions[currentDecision].LL_ATNTransitions++; // count computation even if error
 			if ( reachConfigs!=null ) {
 			}
 			else { // no reach on current lookahead symbol. ERROR.
 				// TODO: does not handle delayed errors per getSynValidOrSemInvalidAltThatFinishedDecisionEntryRule()
-				decisions[currentDecision].errors.add(
+				decisions[currentDecision].errors.Add(
 					new ErrorInfo(currentDecision, closure, _input, _startIndex, _llStopIndex, true)
 				);
 			}
@@ -137,7 +138,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			if ( reachConfigs!=null ) {
 			}
 			else { // no reach on current lookahead symbol. ERROR.
-				decisions[currentDecision].errors.add(
+				decisions[currentDecision].errors.Add(
 					new ErrorInfo(currentDecision, closure, _input, _startIndex, _sllStopIndex, false)
 				);
 			}
@@ -146,12 +147,12 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 	}
 
 	//@Override
-	protected boolean evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, boolean fullCtx) {
-		boolean result = super.evalSemanticContext(pred, parserCallStack, alt, fullCtx);
+	protected bool evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, boolean fullCtx) {
+        bool result = base.evalSemanticContext(pred, parserCallStack, alt, fullCtx);
 		if (!(pred is SemanticContext.PrecedencePredicate)) {
-			boolean fullContext = _llStopIndex >= 0;
+			bool fullContext = _llStopIndex >= 0;
 			int stopIndex = fullContext ? _llStopIndex : _sllStopIndex;
-			decisions[currentDecision].predicateEvals.add(
+			decisions[currentDecision].predicateEvals.Add(
 				new PredicateEvalInfo(currentDecision, _input, _startIndex, stopIndex, pred, result, alt, fullCtx)
 			);
 		}
@@ -168,7 +169,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			conflictingAltResolvedBySLL = configs.getAlts().nextSetBit(0);
 		}
 		decisions[currentDecision].LL_Fallback++;
-		super.reportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
+		base.reportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
 	}
 
 	//@Override
@@ -178,11 +179,11 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 					new ContextSensitivityInfo(currentDecision, configs, _input, startIndex, stopIndex)
 			);
 		}
-		super.reportContextSensitivity(dfa, prediction, configs, startIndex, stopIndex);
+		base.reportContextSensitivity(dfa, prediction, configs, startIndex, stopIndex);
 	}
 
 	//@Override
-	protected void reportAmbiguity(DFA dfa, DFAState D, int startIndex, int stopIndex, boolean exact,
+	protected void reportAmbiguity(DFA dfa, DFAState D, int startIndex, int stopIndex, bool exact,
 								   BitSet ambigAlts, ATNConfigSet configs)
 	{
 		int prediction;
@@ -198,15 +199,15 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			// are showing a conflict, hence an ambiguity, but if they resolve
 			// to different minimum alternatives we have also identified a
 			// context sensitivity.
-			decisions[currentDecision].contextSensitivities.add(
+			decisions[currentDecision].contextSensitivities.Add(
 					new ContextSensitivityInfo(currentDecision, configs, _input, startIndex, stopIndex)
 			);
 		}
-		decisions[currentDecision].ambiguities.add(
+		decisions[currentDecision].ambiguities.Add(
 			new AmbiguityInfo(currentDecision, configs, ambigAlts,
 							  _input, startIndex, stopIndex, configs.fullCtx)
 		);
-		super.reportAmbiguity(dfa, D, startIndex, stopIndex, exact, ambigAlts, configs);
+		base.reportAmbiguity(dfa, D, startIndex, stopIndex, exact, ambigAlts, configs);
 	}
 
 	// ---------------------------------------------------------------------

@@ -19,14 +19,15 @@ namespace org.antlr.v4.runtime;
  *  I'm only putting into Java runtime as I'm certain I'm the only one that
  *  will really every use this.
  */
-public class RuleContextWithAltNum : ParserRuleContext {
+public class RuleContextWithAltNum : ParserRuleContext
+{
 	public int altNum;
 	public RuleContextWithAltNum() { altNum = ATN.INVALID_ALT_NUMBER; }
 
-	public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber):base(parent, invokingStateNumber)
-    {
+	public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber) : base(parent, invokingStateNumber)
+	{
 		;
 	}
-		public override int getAltNumber() { return altNum; }
-		public override void setAltNumber(int altNum) { this.altNum = altNum; }
+	public override int getAltNumber() { return altNum; }
+	public override void setAltNumber(int altNum) { this.altNum = altNum; }
 }

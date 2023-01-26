@@ -8,4 +8,33 @@ namespace org.antlr.v4.runtime.atn;
 
 public class BitSet
 {
+    internal int cardinality()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void clear(int ruleIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal bool get(int ruleIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal int nextSetBit(int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void or(BitSet alts)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void set(int ruleIndex)
+    {
+        throw new NotImplementedException();
+    }
 }

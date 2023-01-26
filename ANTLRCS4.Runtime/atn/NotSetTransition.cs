@@ -10,24 +10,24 @@ namespace org.antlr.v4.runtime.atn;
 
 
 public class NotSetTransition : SetTransition {
-	public NotSetTransition(ATNState target, IntervalSet set) {
-		super(target, set);
+	public NotSetTransition(ATNState target, IntervalSet set):base(target, set)
+    {
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return NOT_SET;
 	}
 
 	//@Override
-	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol
 			&& symbol <= maxVocabSymbol
-			&& !super.matches(symbol, minVocabSymbol, maxVocabSymbol);
+			&& !base.matches(symbol, minVocabSymbol, maxVocabSymbol);
 	}
 
 	//@Override
-	public String toString() {
-		return '~'+super.toString();
+	public override String ToString() {
+		return '~'+base.ToString();
 	}
 }

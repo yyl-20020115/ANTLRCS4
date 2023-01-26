@@ -4,25 +4,23 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.runtime.misc.IntegerStack;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
+nameof org.antlr.v4.runtime.tree;
 
 /**
  * An iterative (read: non-recursive) pre-order and post-order tree walker that
  * doesn't use the thread stack but heap-based stacks. Makes it possible to
  * process deeply nested parse trees.
  */
-public class IterativeParseTreeWalker extends ParseTreeWalker {
+public class IterativeParseTreeWalker : ParseTreeWalker {
 
-	@Override
+	//@Override
 	public void walk(ParseTreeListener listener, ParseTree t) {
 
-		final Deque<ParseTree> nodeStack = new ArrayDeque<ParseTree>();
-		final IntegerStack indexStack = new IntegerStack();
+		Deque<ParseTree> nodeStack = new ArrayDeque<ParseTree>();
+		IntegerStack indexStack = new IntegerStack();
 
 		ParseTree currentNode = t;
 		int currentIndex = 0;
@@ -37,7 +35,7 @@ public class IterativeParseTreeWalker extends ParseTreeWalker {
 				listener.visitTerminal((TerminalNode) currentNode);
 			}
 			else {
-				final RuleNode r = (RuleNode) currentNode;
+				 RuleNode r = (RuleNode) currentNode;
 				enterRule(listener, r);
 			}
 
@@ -54,8 +52,8 @@ public class IterativeParseTreeWalker extends ParseTreeWalker {
 			do {
 
 				// post-order visit
-				if (currentNode is RuleNode) {
-					exitRule(listener, (RuleNode) currentNode);
+				if (currentNode is RuleNode node) {
+					exitRule(listener, node);
 				}
 
 				// No parent, so no siblings

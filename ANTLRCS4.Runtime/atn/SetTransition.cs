@@ -14,29 +14,30 @@ public class SetTransition : Transition {
 	public readonly IntervalSet set;
 
 	// TODO (sam): should we really allow null here?
-	public SetTransition(ATNState target, IntervalSet set) {
-		super(target);
+	public SetTransition(ATNState target, IntervalSet set):base(target)
+    {
+		;
 		if ( set == null ) set = IntervalSet.of(Token.INVALID_TYPE);
 		this.set = set;
 	}
 
 	//@Override
-	public int getSerializationType() {
+	public override int getSerializationType() {
 		return SET;
 	}
 
 	//@Override
 
-	public IntervalSet label() { return set; }
+	public override IntervalSet label() { return set; }
 
 	//@Override
-	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return set.contains(symbol);
 	}
 
 	//@Override
 
-	public String toString() {
+	public override String ToString() {
 		return set.toString();
 	}
 }

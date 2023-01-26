@@ -93,18 +93,19 @@ public class ParserRuleContext : RuleContext {
 
 		// copy any error nodes to alt label node
 		if ( ctx.children!=null ) {
-			this.children = new ArrayList<>();
+			this.children = new ();
 			// reset parent pointer for any error nodes
-			for (ParseTree child : ctx.children) {
-				if ( child is ErrorNode ) {
-					addChild((ErrorNode)child);
+			foreach (ParseTree child in ctx.children) {
+				if ( child is ErrorNode node) {
+					addChild(node);
 				}
 			}
 		}
 	}
 
-	public ParserRuleContext(ParserRuleContext parent, int invokingStateNumber) {
-		super(parent, invokingStateNumber);
+	public ParserRuleContext(ParserRuleContext parent, int invokingStateNumber):base(parent, invokingStateNumber)
+    {
+		;
 	}
 
 	// Double dispatch methods for listeners
@@ -124,8 +125,8 @@ public class ParserRuleContext : RuleContext {
 	 *  @since 4.7
 	 */
 	public T addAnyChild<T>(T t) where T:ParseTree {
-		if ( children==null ) children = new ArrayList<>();
-		children.add(t);
+		if ( children==null ) children = new ();
+		children.Add(t);
 		return t;
 	}
 
@@ -185,28 +186,28 @@ public class ParserRuleContext : RuleContext {
 	 */
 	public void removeLastChild() {
 		if ( children!=null ) {
-			children.remove(children.size()-1);
+			children.RemoveAt(children.Count-1);
 		}
 	}
 
     ////@Override
     /** Override to make type more specific */
     public ParserRuleContext getParent() {
-		return (ParserRuleContext)super.getParent();
+		return (ParserRuleContext)base.getParent();
 	}
 
     ////@Override
     public ParseTree getChild(int i) {
-		return children!=null && i>=0 && i<children.size() ? children.get(i) : null;
+		return children!=null && i>=0 && i<children.Count ? children.get(i) : null;
 	}
 
 	public T getChild<T>(Type ctxType, int i) where T:ParseTree {
 		if ( children==null || i < 0 || i >= children.size() ) {
-			return null;
+			return default;
 		}
 
 		int j = -1; // what element have we found with ctxType?
-		for (ParseTree o : children) {
+		foreach (ParseTree o in children) {
 			if ( ctxType.isInstance(o) ) {
 				j++;
 				if ( j == i ) {
@@ -223,7 +224,7 @@ public class ParserRuleContext : RuleContext {
 		}
 
 		int j = -1; // what token with ttype have we found?
-		for (ParseTree o : children) {
+		foreach (ParseTree o in children) {
 			if ( o is TerminalNode ) {
 				TerminalNode tnode = (TerminalNode)o;
 				Token symbol = tnode.getSymbol();
@@ -276,7 +277,7 @@ public class ParserRuleContext : RuleContext {
 		}
 
 		List<T> contexts = null;
-		for (ParseTree o : children) {
+		foreach (ParseTree o in children) {
 			if ( ctxType.isInstance(o) ) {
 				if ( contexts==null ) {
 					contexts = new ArrayList<T>();
@@ -294,7 +295,7 @@ public class ParserRuleContext : RuleContext {
 	}
 
 	//@Override
-	public int getChildCount() { return children!=null ? children.size() : 0; }
+	public int getChildCount() { return children!=null ? children.Count : 0; }
 
 	//@Override
 	public Interval getSourceInterval() {

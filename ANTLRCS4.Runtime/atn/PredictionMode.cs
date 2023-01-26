@@ -72,12 +72,14 @@ public enum PredictionMode {
 	 * This prediction mode does not provide any guarantees for prediction
 	 * behavior for syntactically-incorrect inputs.</p>
 	 */
-	LL_EXACT_AMBIG_DETECTION;
-
+	LL_EXACT_AMBIG_DETECTION
+}
+public static class PredictionModeTools
+{ 
 	/** A Map that uses just the state and the stack context as the key. */
- class AltAndContextMap : FlexibleHashMap<ATNConfig,BitSet> {
-		public AltAndContextMap() {
-			super(AltAndContextConfigEqualityComparator.INSTANCE);
+	 class AltAndContextMap : FlexibleHashMap<ATNConfig,BitSet> {
+		public AltAndContextMap(): base(AltAndContextConfigEqualityComparator.INSTANCE)
+        {
 		}
 	}
 
@@ -219,9 +221,9 @@ public enum PredictionMode {
 			if ( configs.hasSemanticContext ) {
 				// dup configs, tossing out semantic predicates
 				ATNConfigSet dup = new ATNConfigSet();
-				for (ATNConfig c : configs) {
-					c = new ATNConfig(c,SemanticContext.Empty.Instance);
-					dup.add(c);
+				foreach (ATNConfig c in configs) {
+					var c2 = new ATNConfig(c,SemanticContext.Empty.Instance);
+					dup.add(c2);
 				}
 				configs = dup;
 			}
@@ -247,7 +249,7 @@ public enum PredictionMode {
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
 	public static bool hasConfigInRuleStopState(ATNConfigSet configs) {
-		for (ATNConfig c : configs) {
+		foreach (ATNConfig c in configs) {
 			if (c.state is RuleStopState) {
 				return true;
 			}
@@ -267,8 +269,8 @@ public enum PredictionMode {
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
 	public static bool allConfigsInRuleStopStates(ATNConfigSet configs) {
-		for (ATNConfig config : configs) {
-			if (!(config.state is RuleStopState)) {
+		foreach (ATNConfig config in configs) {
+			if (config.state is not RuleStopState) {
 				return false;
 			}
 		}
@@ -442,7 +444,7 @@ public enum PredictionMode {
 	 * {@link BitSet#cardinality cardinality} 1, otherwise {@code false}
 	 */
 	public static bool hasNonConflictingAltSet(ICollection<BitSet> altsets) {
-		for (BitSet alts : altsets) {
+		foreach (BitSet alts in altsets) {
 			if ( alts.cardinality()==1 ) {
 				return true;
 			}
@@ -459,7 +461,7 @@ public enum PredictionMode {
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
 	public static bool hasConflictingAltSet(ICollection<BitSet> altsets) {
-		for (BitSet alts : altsets) {
+		foreach (BitSet alts in altsets) {
 			if ( alts.cardinality()>1 ) {
 				return true;
 			}
@@ -479,7 +481,7 @@ public enum PredictionMode {
 		BitSet first = it.next();
 		while ( it.hasNext() ) {
 			BitSet next = it.next();
-			if ( !next.equals(first) ) return false;
+			if ( !next.Equals(first) ) return false;
 		}
 		return true;
 	}
@@ -507,7 +509,7 @@ public enum PredictionMode {
 	 */
 	public static BitSet getAlts(ICollection<BitSet> altsets) {
 		BitSet all = new BitSet();
-		for (BitSet alts : altsets) {
+		foreach (BitSet alts in altsets) {
 			all.or(alts);
 		}
 		return all;
@@ -520,7 +522,7 @@ public enum PredictionMode {
 	 */
 	public static BitSet getAlts(ATNConfigSet configs) {
 		BitSet alts = new BitSet();
-		for (ATNConfig config : configs) {
+		foreach (ATNConfig config in configs) {
 			alts.set(config.alt);
 		}
 		return alts;
@@ -537,7 +539,7 @@ public enum PredictionMode {
 	 */
 	public static ICollection<BitSet> getConflictingAltSubsets(ATNConfigSet configs) {
 		AltAndContextMap configToAlts = new AltAndContextMap();
-		for (ATNConfig c : configs) {
+		foreach (ATNConfig c in configs) {
 			BitSet alts = configToAlts.get(c);
 			if ( alts==null ) {
 				alts = new BitSet();
@@ -556,13 +558,13 @@ public enum PredictionMode {
 	 * map[c.{@link ATNConfig#state state}] U= c.{@link ATNConfig#alt alt}
 	 * </pre>
 	 */
-	public static Map<ATNState, BitSet> getStateToAltMap(ATNConfigSet configs) {
-		Map<ATNState, BitSet> m = new HashMap<ATNState, BitSet>();
-		for (ATNConfig c : configs) {
+	public static Dictionary<ATNState, BitSet> getStateToAltMap(ATNConfigSet configs) {
+        Dictionary<ATNState, BitSet> m = new ();
+		foreach (ATNConfig c in configs) {
 			BitSet alts = m.get(c.state);
 			if ( alts==null ) {
 				alts = new BitSet();
-				m.put(c.state, alts);
+				m.Add(c.state, alts);
 			}
 			alts.set(c.alt);
 		}
@@ -570,8 +572,8 @@ public enum PredictionMode {
 	}
 
 	public static bool hasStateAssociatedWithOneAlt(ATNConfigSet configs) {
-		Map<ATNState, BitSet> x = getStateToAltMap(configs);
-		for (BitSet alts : x.values()) {
+		Dictionary<ATNState, BitSet> x = getStateToAltMap(configs);
+		foreach(BitSet alts in x.Values) {
 			if ( alts.cardinality()==1 ) return true;
 		}
 		return false;
@@ -579,7 +581,7 @@ public enum PredictionMode {
 
 	public static int getSingleViableAlt(ICollection<BitSet> altsets) {
 		BitSet viableAlts = new BitSet();
-		for (BitSet alts : altsets) {
+		foreach (BitSet alts in altsets) {
 			int minAlt = alts.nextSetBit(0);
 			viableAlts.set(minAlt);
 			if ( viableAlts.cardinality()>1 ) { // more than 1 viable alt

@@ -121,7 +121,7 @@ public class XPathLexer : Lexer {
 				default:
 					if ( isNameStartChar(_input.LA(1)) ) {
 						String id = matchID();
-						if ( Character.isUpperCase(id.charAt(0)) ) t = new CommonToken(TOKEN_REF, id);
+						if ( char.IsUpper(id[0]) ) t = new CommonToken(TOKEN_REF, id);
 						else t = new CommonToken(RULE_REF, id);
 					}
 					else {
@@ -172,7 +172,7 @@ public class XPathLexer : Lexer {
 		return _input.getText(Interval.of(start,_input.index()-1));
 	}
 
-	public bool isNameChar(int c) { return Character.isUnicodeIdentifierPart(c); }
+	public bool isNameChar(int c) { return char.isUnicodeIdentifierPart(c); }
 
 	public bool isNameStartChar(int c) { return Character.isUnicodeIdentifierStart(c); }
 }

@@ -4,10 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.misc.MurmurHash;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Implements the {@code pushMode} lexer action by calling
@@ -16,8 +15,8 @@ import org.antlr.v4.runtime.misc.MurmurHash;
  * @author Sam Harwell
  * @since 4.2
  */
-public final class LexerPushModeAction implements LexerAction {
-	private final int mode;
+public class LexerPushModeAction : LexerAction {
+	private readonly int mode;
 
 	/**
 	 * Constructs a new {@code pushMode} action with the specified mode value.
@@ -40,7 +39,7 @@ public final class LexerPushModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#PUSH_MODE}.
 	 */
-	@Override
+	//@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.PUSH_MODE;
 	}
@@ -49,8 +48,8 @@ public final class LexerPushModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	@Override
-	public boolean isPositionDependent() {
+	//@Override
+	public bool isPositionDependent() {
 		return false;
 	}
 
@@ -60,21 +59,21 @@ public final class LexerPushModeAction implements LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#pushMode} with the
 	 * value provided by {@link #getMode}.</p>
 	 */
-	@Override
+	//@Override
 	public void execute(Lexer lexer) {
 		lexer.pushMode(mode);
 	}
 
-	@Override
-	public int hashCode() {
+	//@Override
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, mode);
 		return MurmurHash.finish(hash, 2);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	//@Override
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -85,8 +84,8 @@ public final class LexerPushModeAction implements LexerAction {
 		return mode == ((LexerPushModeAction)obj).mode;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("pushMode(%d)", mode);
+	//@Override
+	public override String ToString() {
+		return $"pushMode({mode})";
 	}
 }

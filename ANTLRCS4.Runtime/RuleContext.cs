@@ -100,18 +100,18 @@ public class RuleContext : RuleNode {
 	// satisfy the ParseTree / SyntaxTree interface
 
 	//@Override
-	public Interval getSourceInterval() {
+	public virtual Interval getSourceInterval() {
 		return Interval.INVALID;
 	}
 
 	//@Override
-	public RuleContext getRuleContext() { return this; }
+	public virtual RuleContext getRuleContext() { return this; }
 
     //@Override
-    public RuleContext getParent() { return parent; }
+    public virtual RuleContext getParent() { return parent; }
 
     //@Override
-    public RuleContext getPayload() { return this; }
+    public virtual RuleContext getPayload() { return this; }
 
     /** Return the combined text of all child nodes. This method only considers
 	 *  tokens which have been added to the parse tree.
@@ -145,7 +145,7 @@ public class RuleContext : RuleNode {
 	 *
 	 *  @since 4.5.3
 	 */
-	public int getAltNumber() { return ATN.INVALID_ALT_NUMBER; }
+	public virtual int getAltNumber() { return ATN.INVALID_ALT_NUMBER; }
 
 	/** Set the outer alternative number for this context node. Default
 	 *  implementation does nothing to avoid backing field overhead for
@@ -155,7 +155,7 @@ public class RuleContext : RuleNode {
 	 *
 	 *  @since 4.5.3
 	 */
-	public void setAltNumber(int altNumber) { }
+	public virtual void setAltNumber(int altNumber) { }
 
 	/** @since 4.7. {@see ParseTree#setParent} comment */
 	//@Override
@@ -202,7 +202,7 @@ public class RuleContext : RuleNode {
 		return toString((List<String>)null, (RuleContext)null);
 	}
 
-	public String toString<T1,T2>(Recognizer<T1, T2> recog) {
+	public String toString(Recognizer<Token, ATNSimulator> recog) {
 		return toString(recog, ParserRuleContext.EMPTY);
 	}
 
@@ -211,9 +211,9 @@ public class RuleContext : RuleNode {
 	}
 
 	// recog null unless ParserRuleContext, in which case we use subclass toString(...)
-	public String toString<T1, T2>(Recognizer<T1, T2> recog, RuleContext stop) {
+	public String toString<T1, T2>(Recognizer<Token, ATNSimulator> recog, RuleContext stop) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
-		List<String> ruleNamesList = ruleNames != null ? Arrays.asList(ruleNames) : null;
+		List<String> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
 		return toString(ruleNamesList, stop);
 	}
 
@@ -229,7 +229,8 @@ public class RuleContext : RuleNode {
 			}
 			else {
 				int ruleIndex = p.getRuleIndex();
-				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.size() ? ruleNames.get(ruleIndex) : Integer.toString(ruleIndex);
+				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.size() ? ruleNames.get(ruleIndex) : 
+					(ruleIndex.ToString());
 				buf.Append(ruleName);
 			}
 

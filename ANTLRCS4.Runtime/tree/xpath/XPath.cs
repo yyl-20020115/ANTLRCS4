@@ -83,7 +83,7 @@ public class XPath {
 			@in = new ANTLRInputStream(new StringReader(path));
 		}
 		catch (IOException ioe) {
-			throw new IllegalArgumentException("Could not read path: "+path, ioe);
+			throw new ArgumentException("Could not read path: "+path, ioe);
 		}
 		XPathLexer lexer = new XPathLexerWithoutRecovery(@in);
 

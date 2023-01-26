@@ -246,7 +246,8 @@ public class ParserATNSimulator : ATNSimulator {
 	public static readonly bool retry_debug = false;
 
 	/** Just in case this optimization is bad, add an ENV variable to turn it off */
-	public static readonly bool TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT = Boolean.parseBoolean(getSafeEnv("TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT"));
+	public static readonly bool TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT = Boolean.parseBoolean(
+		getSafeEnv("TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT"));
 
 	protected readonly Parser parser;
 
@@ -275,15 +276,17 @@ public class ParserATNSimulator : ATNSimulator {
 	/** Testing only! */
 	public ParserATNSimulator(ATN atn, DFA[] decisionToDFA,
 							  PredictionContextCache sharedContextCache)
-	{
-		this(null, atn, decisionToDFA, sharedContextCache);
+		: this(null, atn, decisionToDFA, sharedContextCache)
+    {
+		;
 	}
 
 	public ParserATNSimulator(Parser parser, ATN atn,
 							  DFA[] decisionToDFA,
 							  PredictionContextCache sharedContextCache)
-	{
-		super(atn, sharedContextCache);
+		: base(atn, sharedContextCache)
+    {
+		;
 		this.parser = parser;
 		this.decisionToDFA = decisionToDFA;
 		//		DOTGenerator dot = new DOTGenerator(null);
@@ -529,7 +532,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 */
 	protected DFAState getExistingTargetState(DFAState previousD, int t) {
 		DFAState[] edges = previousD.edges;
-		if (edges == null || t + 1 < 0 || t + 1 >= edges.length) {
+		if (edges == null || t + 1 < 0 || t + 1 >= edges.Length) {
 			return null;
 		}
 
@@ -561,7 +564,7 @@ public class ParserATNSimulator : ATNSimulator {
 		int predictedAlt = getUniqueAlt(reach);
 
 		if ( debug ) {
-			Collection<BitSet> altSubSets = PredictionMode.getConflictingAltSubsets(reach);
+			ICollection<BitSet> altSubSets = PredictionMode.getConflictingAltSubsets(reach);
 			Console.WriteLine("SLL altSubSets="+altSubSets+
 							   ", configs="+reach+
 							   ", predict="+predictedAlt+", allSubsetsConflict="+

@@ -23,8 +23,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	 * use a hash table that lets us specify the equals/hashcode operation.
 	 */
 	public class ConfigHashSet : AbstractConfigHashSet {
-		public ConfigHashSet() {
-			super(ConfigEqualityComparator.INSTANCE);
+		public ConfigHashSet(): base(ConfigEqualityComparator.INSTANCE) {
 		}
 	}
 

@@ -4,13 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.runtime.misc
-{
+namespace org.antlr.v4.runtime.misc;
 
-    public class CancellationException : Exception
-    {
-        public CancellationException() { }
-        public CancellationException(string message) : base(message) { }
-        public CancellationException(string message, Exception inner) : base(message, inner) { }
-    }
+
+public class CancellationException : Exception
+{
+    public CancellationException() { }
+    public CancellationException(string message) : base(message) { }
+    public CancellationException(string message, Exception inner) : base(message, inner) { }
 }
