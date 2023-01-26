@@ -65,7 +65,7 @@ public abstract class PredictionContext {
 		PredictionContext parent = EmptyPredictionContext.Instance;
 		parent = PredictionContext.fromRuleContext(atn, outerContext.parent);
 
-		ATNState state = atn.states.get(outerContext.invokingState);
+		ATNState state = atn.states[(outerContext.invokingState)];
 		RuleTransition transition = (RuleTransition)state.transition(0);
 		return SingletonPredictionContext.create(parent, transition.followState.stateNumber);
 	}
@@ -109,15 +109,15 @@ public abstract class PredictionContext {
 	protected static int calculateHashCode(PredictionContext[] parents, int[] returnStates) {
 		int hash = MurmurHash.initialize(INITIAL_HASH);
 
-		for (PredictionContext parent : parents) {
+        foreach (PredictionContext parent in parents) {
 			hash = MurmurHash.update(hash, parent);
 		}
 
-		for (int returnState : returnStates) {
+		foreach (int returnState in returnStates) {
 			hash = MurmurHash.update(hash, returnState);
 		}
 
-		hash = MurmurHash.finish(hash, 2 * parents.length);
+		hash = MurmurHash.finish(hash, 2 * parents.Length);
 		return hash;
 	}
 
@@ -127,10 +127,10 @@ public abstract class PredictionContext {
 		bool rootIsWildcard,
 		DoubleKeyMap<PredictionContext,PredictionContext,PredictionContext> mergeCache)
 	{
-		assert a!=null && b!=null; // must be empty context, never null
+		//assert a!=null && b!=null; // must be empty context, never null
 
 		// share same graph if both same
-		if ( a==b || a.equals(b) ) return a;
+		if ( a==b || a.Equals(b) ) return a;
 
 		if ( a is SingletonPredictionContext && b is SingletonPredictionContext) {
 			return mergeSingletons((SingletonPredictionContext)a,
@@ -218,20 +218,20 @@ public abstract class PredictionContext {
 		else { // a != b payloads differ
 			// see if we can collapse parents due to $+x parents if local ctx
 			PredictionContext singleParent = null;
-			if ( a==b || (a.parent!=null && a.parent.equals(b.parent)) ) { // ax + bx = [a,b]x
+			if ( a==b || (a.parent!=null && a.parent.Equals(b.parent)) ) { // ax + bx = [a,b]x
 				singleParent = a.parent;
 			}
 			if ( singleParent!=null ) {	// parents are same
 				// sort payloads and use same parent
-				int[] payloads = {a.returnState, b.returnState};
+				int[] _payloads = new int[]{a.returnState, b.returnState};
 				if ( a.returnState > b.returnState ) {
-					payloads[0] = b.returnState;
-					payloads[1] = a.returnState;
+                    _payloads[0] = b.returnState;
+                    _payloads[1] = a.returnState;
 				}
-				PredictionContext[] parents = {singleParent, singleParent};
-				PredictionContext a_ = new ArrayPredictionContext(parents, payloads);
-				if ( mergeCache!=null ) mergeCache.put(a, b, a_);
-				return a_;
+				PredictionContext[] _parents = {singleParent, singleParent};
+				PredictionContext _a_ = new ArrayPredictionContext(_parents, _payloads);
+				if ( mergeCache!=null ) mergeCache.put(a, b, _a_);
+				return _a_;
 			}
 			// parents differ and can't merge them. Just pack together
 			// into array; can't merge.
@@ -353,22 +353,22 @@ public abstract class PredictionContext {
 		int k = 0; // walks target M array
 
 		int[] mergedReturnStates =
-			new int[a.returnStates.length + b.returnStates.length];
+			new int[a.returnStates.Length + b.returnStates.Length];
 		PredictionContext[] mergedParents =
-			new PredictionContext[a.returnStates.length + b.returnStates.length];
+			new PredictionContext[a.returnStates.Length + b.returnStates.Length];
 		// walk and merge to yield mergedParents, mergedReturnStates
-		while ( i<a.returnStates.length && j<b.returnStates.length ) {
+		while ( i<a.returnStates.Length && j<b.returnStates.Length ) {
 			PredictionContext a_parent = a.parents[i];
 			PredictionContext b_parent = b.parents[j];
 			if ( a.returnStates[i]==b.returnStates[j] ) {
 				// same payload (stack tops are equal), must yield merged singleton
 				int payload = a.returnStates[i];
 				// $+$ = $
-				bool both$ = payload == EMPTY_RETURN_STATE &&
+				bool both = payload == EMPTY_RETURN_STATE &&
 								a_parent == null && b_parent == null;
 				bool ax_ax = (a_parent!=null && b_parent!=null) &&
-								a_parent.equals(b_parent); // ax+ax -> ax
-				if ( both$ || ax_ax ) {
+								a_parent.Equals(b_parent); // ax+ax -> ax
+				if ( both || ax_ax ) {
 					mergedParents[k] = a_parent; // choose left
 					mergedReturnStates[k] = payload;
 				}
@@ -395,15 +395,15 @@ public abstract class PredictionContext {
 		}
 
 		// copy over any payloads remaining in either array
-		if (i < a.returnStates.length) {
-			for (int p = i; p < a.returnStates.length; p++) {
+		if (i < a.returnStates.Length) {
+			for (int p = i; p < a.returnStates.Length; p++) {
 				mergedParents[k] = a.parents[p];
 				mergedReturnStates[k] = a.returnStates[p];
 				k++;
 			}
 		}
 		else {
-			for (int p = j; p < b.returnStates.length; p++) {
+			for (int p = j; p < b.returnStates.Length; p++) {
 				mergedParents[k] = b.parents[p];
 				mergedReturnStates[k] = b.returnStates[p];
 				k++;
@@ -411,7 +411,7 @@ public abstract class PredictionContext {
 		}
 
 		// trim merged if we combined a few that had same stack tops
-		if ( k < mergedParents.length ) { // write index < last position; trim
+		if ( k < mergedParents.Length ) { // write index < last position; trim
 			if ( k == 1 ) { // for just one merged element, return singleton top
 				PredictionContext a_ =
 					SingletonPredictionContext.create(mergedParents[0],
@@ -428,11 +428,11 @@ public abstract class PredictionContext {
 
 		// if we created same array as a or b, return that instead
 		// TODO: track whether this is possible above during merge sort for speed
-		if ( M.equals(a) ) {
+		if ( M.Equals(a) ) {
 			if ( mergeCache!=null ) mergeCache.put(a,b,a);
 			return a;
 		}
-		if ( M.equals(b) ) {
+		if ( M.Equals(b) ) {
 			if ( mergeCache!=null ) mergeCache.put(a,b,b);
 			return b;
 		}
@@ -448,17 +448,17 @@ public abstract class PredictionContext {
 	 * ones.
 	 */
 	protected static void combineCommonParents(PredictionContext[] parents) {
-		Map<PredictionContext, PredictionContext> uniqueParents =
-			new HashMap<PredictionContext, PredictionContext>();
+		Dictionary<PredictionContext, PredictionContext> uniqueParents =
+			new ();
 
-		for (int p = 0; p < parents.length; p++) {
+		for (int p = 0; p < parents.Length; p++) {
 			PredictionContext parent = parents[p];
-			if ( !uniqueParents.containsKey(parent) ) { // don't replace
-				uniqueParents.put(parent, parent);
+			if ( !uniqueParents.ContainsKey(parent) ) { // don't replace
+				uniqueParents[parent] = parent;
 			}
 		}
 
-		for (int p = 0; p < parents.length; p++) {
+		for (int p = 0; p < parents.Length; p++) {
 			parents[p] = uniqueParents.get(parents[p]);
 		}
 	}
@@ -466,58 +466,58 @@ public abstract class PredictionContext {
 	public static String toDOTString(PredictionContext context) {
 		if ( context==null ) return "";
 		StringBuilder buf = new StringBuilder();
-		buf.append("digraph G {\n");
-		buf.append("rankdir=LR;\n");
+		buf.Append("digraph G {\n");
+		buf.Append("rankdir=LR;\n");
 
 		List<PredictionContext> nodes = getAllContextNodes(context);
-		nodes.Sort((o1,o2)=>o1.id-o2.id);	
-		//Collections.sort(nodes, new Comparator<PredictionContext>() {
-		//	@Override
-		//	public int compare(PredictionContext o1, PredictionContext o2) {
-		//		return o1.id - o2.id;
-		//	}
-		//});
+		nodes.Sort((o1,o2)=>o1.id-o2.id);
+        //Collections.sort(nodes, new Comparator<PredictionContext>() {
+        //	@Override
+        //	public int compare(PredictionContext o1, PredictionContext o2) {
+        //		return o1.id - o2.id;
+        //	}
+        //});
 
-		for (PredictionContext current : nodes) {
+        foreach (PredictionContext current in nodes) {
 			if ( current is SingletonPredictionContext ) {
-				String s = String.valueOf(current.id);
-				buf.append("  s").append(s);
-				String returnState = String.valueOf(current.getReturnState(0));
+				String s = (current.id.ToString());
+				buf.Append("  s").Append(s);
+				String returnState = (current.getReturnState(0).ToString());
 				if ( current is EmptyPredictionContext ) returnState = "$";
-				buf.append(" [label=\"").append(returnState).append("\"];\n");
+				buf.Append(" [label=\"").Append(returnState).Append("\"];\n");
 				continue;
 			}
 			ArrayPredictionContext arr = (ArrayPredictionContext)current;
-			buf.append("  s").append(arr.id);
-			buf.append(" [shape=box, label=\"");
-			buf.append("[");
+			buf.Append("  s").Append(arr.id);
+			buf.Append(" [shape=box, label=\"");
+			buf.Append("[");
 			bool first = true;
-			for (int inv : arr.returnStates) {
-				if ( !first ) buf.append(", ");
-				if ( inv == EMPTY_RETURN_STATE ) buf.append("$");
-				else buf.append(inv);
+			foreach (int inv in arr.returnStates) {
+				if ( !first ) buf.Append(", ");
+				if ( inv == EMPTY_RETURN_STATE ) buf.Append("$");
+				else buf.Append(inv);
 				first = false;
 			}
-			buf.append("]");
-			buf.append("\"];\n");
+			buf.Append("]");
+			buf.Append("\"];\n");
 		}
 
-		for (PredictionContext current : nodes) {
+		foreach (PredictionContext current in nodes) {
 			if ( current== EmptyPredictionContext.Instance) continue;
 			for (int i = 0; i < current.size(); i++) {
 				if ( current.getParent(i)==null ) continue;
-				String s = String.valueOf(current.id);
-				buf.append("  s").append(s);
-				buf.append("->");
-				buf.append("s");
-				buf.append(current.getParent(i).id);
-				if ( current.size()>1 ) buf.append(" [label=\"parent["+i+"]\"];\n");
-				else buf.append(";\n");
+				String s = (current.id.ToString());
+				buf.Append("  s").Append(s);
+				buf.Append("->");
+				buf.Append("s");
+				buf.Append(current.getParent(i).id);
+				if ( current.size()>1 ) buf.Append(" [label=\"parent["+i+"]\"];\n");
+				else buf.Append(";\n");
 			}
 		}
 
-		buf.append("}\n");
-		return buf.toString();
+		buf.Append("}\n");
+		return buf.ToString();
 	}
 
 	// From Sam
@@ -560,7 +560,7 @@ public abstract class PredictionContext {
 
 		if (!changed) {
 			contextCache.add(context);
-			visited.put(context, context);
+			visited[context] = context;
 			return context;
 		}
 
@@ -577,16 +577,15 @@ public abstract class PredictionContext {
 		}
 
 		contextCache.add(updated);
-		visited.put(updated, updated);
-		visited.put(context, updated);
-
+		visited[updated] = updated;
+		visited[context] = context;
 		return updated;
 	}
 
 //	// extra structures, but cut/paste/morphed works, so leave it.
 //	// seems to do a breadth-first walk
 //	public static List<PredictionContext> getAllNodes(PredictionContext context) {
-//		Map<PredictionContext, PredictionContext> visited =
+//		Dictionary<PredictionContext, PredictionContext> visited =
 //			new IdentityHashMap<PredictionContext, PredictionContext>();
 //		Deque<PredictionContext> workList = new ArrayDeque<PredictionContext>();
 //		workList.add(context);
@@ -607,46 +606,48 @@ public abstract class PredictionContext {
 
 	// ter's recursive version of Sam's getAllNodes()
 	public static List<PredictionContext> getAllContextNodes(PredictionContext context) {
-		List<PredictionContext> nodes = new ArrayList<PredictionContext>();
-		Map<PredictionContext, PredictionContext> visited =
-			new IdentityHashMap<PredictionContext, PredictionContext>();
+		List<PredictionContext> nodes = new ();
+		Dictionary<PredictionContext, PredictionContext> visited =
+			new ();
 		getAllContextNodes_(context, nodes, visited);
 		return nodes;
 	}
 
 	public static void getAllContextNodes_(PredictionContext context,
 										   List<PredictionContext> nodes,
-										   Map<PredictionContext, PredictionContext> visited)
+										   Dictionary<PredictionContext, PredictionContext> visited)
 	{
-		if ( context==null || visited.containsKey(context) ) return;
-		visited.put(context, context);
-		nodes.add(context);
+		if ( context==null || visited.ContainsKey(context) ) return;
+		visited[context] = context;
+		nodes.Add(context);
 		for (int i = 0; i < context.size(); i++) {
 			getAllContextNodes_(context.getParent(i), nodes, visited);
 		}
 	}
 
-	public String toString(Recognizer<?,?> recog) {
-		return toString();
+	public String toString(Recognizer<Token,ATNSimulator> recog) {
+		return ToString();
 //		return toString(recog, ParserRuleContext.EMPTY);
 	}
 
-	public String[] toStrings(Recognizer<?, ?> recognizer, int currentState) {
+	public String[] toStrings(Recognizer<Token, ATNSimulator> recognizer, int currentState) {
 		return toStrings(recognizer, EmptyPredictionContext.Instance, currentState);
 	}
 
 	// FROM SAM
-	public String[] toStrings(Recognizer<?, ?> recognizer, PredictionContext stop, int currentState) {
-		List<String> result = new ArrayList<String>();
+	public String[] toStrings(Recognizer<Token, ATNSimulator> recognizer, PredictionContext stop, int currentState) {
+		List<String> result = new ();
 
-		outer:
-		for (int perm = 0; ; perm++) {
+		int perm = 0;
+
+        outer:
+		for (; ; perm++) {
 			int offset = 0;
 			bool last = true;
 			PredictionContext p = this;
 			int stateNumber = currentState;
 			StringBuilder localBuffer = new StringBuilder();
-			localBuffer.append("[");
+			localBuffer.Append("[");
 			while ( !p.isEmpty() && p != stop ) {
 				int index = 0;
 				if (p.size() > 0) {
@@ -659,7 +660,7 @@ public abstract class PredictionContext {
 					index = (perm >> offset) & mask;
 					last &= index >= p.size() - 1;
 					if (index >= p.size()) {
-						continue outer;
+						goto outer;
 					}
 					offset += bits;
 				}
@@ -667,29 +668,29 @@ public abstract class PredictionContext {
 				if ( recognizer!=null ) {
 					if (localBuffer.Length > 1) {
 						// first char is '[', if more than that this isn't the first rule
-						localBuffer.append(' ');
+						localBuffer.Append(' ');
 					}
 
 					ATN atn = recognizer.getATN();
-					ATNState s = atn.states.get(stateNumber);
+					ATNState s = atn.states[(stateNumber)];
 					String ruleName = recognizer.getRuleNames()[s.ruleIndex];
-					localBuffer.append(ruleName);
+					localBuffer.Append(ruleName);
 				}
 				else if ( p.getReturnState(index)!= EMPTY_RETURN_STATE) {
 					if ( !p.isEmpty() ) {
 						if (localBuffer.Length > 1) {
 							// first char is '[', if more than that this isn't the first rule
-							localBuffer.append(' ');
+							localBuffer.Append(' ');
 						}
 
-						localBuffer.append(p.getReturnState(index));
+						localBuffer.Append(p.getReturnState(index));
 					}
 				}
 				stateNumber = p.getReturnState(index);
 				p = p.getParent(index);
 			}
-			localBuffer.append("]");
-			result.add(localBuffer.toString());
+			localBuffer.Append("]");
+			result.Add(localBuffer.ToString());
 
 			if (last) {
 				break;

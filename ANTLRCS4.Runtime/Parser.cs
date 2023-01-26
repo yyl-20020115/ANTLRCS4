@@ -32,7 +32,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
-			Console.Out.println("exit    "+getRuleNames()[ctx.getRuleIndex()]+
+			Console.Out.WriteLine("exit    "+getRuleNames()[ctx.getRuleIndex()]+
 							   ", LT(1)="+_input.LT(1).getText());
 		}
 	}

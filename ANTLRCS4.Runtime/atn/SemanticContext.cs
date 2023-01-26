@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.misc;
 using static org.antlr.v4.runtime.atn.SemanticContext;
 
@@ -50,7 +51,7 @@ public abstract class SemanticContext {
 	 * semantic context after precedence predicates are evaluated.</li>
 	 * </ul>
 	 */
-	public SemanticContext evalPrecedence(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
+	public virtual SemanticContext evalPrecedence(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
 		return this;
 	}
 
@@ -143,7 +144,7 @@ public abstract class SemanticContext {
 		}
 
 		//@Override
-		public int compareTo(PrecedencePredicate o) {
+		public int CompareTo(PrecedencePredicate o) {
 			return precedence - o.precedence;
 		}
 
@@ -170,7 +171,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		// precedence >= _precedenceStack.peek()
-		public String toString() {
+		public override String ToString() {
 			return "{"+precedence+">=prec}?";
 		}
 	}
@@ -203,37 +204,37 @@ public abstract class SemanticContext {
 
 		public AND(SemanticContext a, SemanticContext b) {
 			HashSet<SemanticContext> operands = new HashSet<SemanticContext>();
-			if ( a is AND ) operands.addAll(Arrays.asList(((AND)a).opnds));
-			else operands.add(a);
-			if ( b is AND ) operands.addAll(Arrays.asList(((AND)b).opnds));
-			else operands.add(b);
+			if ( a is AND ) operands.UnionWith((((AND)a).opnds));
+			else operands.Add(a);
+			if ( b is AND ) operands.UnionWith((((AND)b).opnds));
+			else operands.Add(b);
 
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
-			if (!precedencePredicates.isEmpty()) {
+			if (precedencePredicates.Count>0) {
 				// interested in the transition with the lowest precedence
 				PrecedencePredicate reduced = Collections.min(precedencePredicates);
-				operands.add(reduced);
+				operands.Add(reduced);
 			}
 
-			opnds = operands.toArray(new SemanticContext[0]);
+			opnds = operands.ToArray();
         }
 
 		//@Override
-		public ICollection<SemanticContext> getOperands() {
-			return Arrays.asList(opnds);
+		public override ICollection<SemanticContext> getOperands() {
+			return (opnds.ToList());
 		}
 
 		//@Override
-		public bool equals(Object obj) {
+		public override bool Equals(Object obj) {
 			if ( this==obj ) return true;
 			if ( !(obj is AND) ) return false;
 			AND other = (AND)obj;
-			return Arrays.equals(this.opnds, other.opnds);
+			return Enumerable.SequenceEqual(this.opnds, other.opnds);
 		}
 
 		//@Override
-		public int hashCode() {
-			return MurmurHash.hashCode(opnds, AND.hashCode());
+		public override int GetHashCode() {
+			return MurmurHash.GetHashCode(opnds, AND.GetHashCode());
 		}
 
 		/**
@@ -244,18 +245,18 @@ public abstract class SemanticContext {
 		 * unordered.</p>
 		 */
 		//@Override
-		public bool eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
-			for (SemanticContext opnd : opnds) {
+		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+            foreach (SemanticContext opnd in opnds) {
 				if ( !opnd.eval(parser, parserCallStack) ) return false;
 			}
 			return true;
         }
 
 		//@Override
-		public SemanticContext evalPrecedence(Recognizer<?, ?> parser, RuleContext parserCallStack) {
+		public SemanticContext evalPrecedence(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
 			bool differs = false;
-			List<SemanticContext> operands = new ArrayList<SemanticContext>();
-			for (SemanticContext context : opnds) {
+			List<SemanticContext> operands = new ();
+            foreach (SemanticContext context in opnds) {
 				SemanticContext evaluated = context.evalPrecedence(parser, parserCallStack);
 				differs |= (evaluated != context);
 				if (evaluated == null) {
@@ -264,7 +265,7 @@ public abstract class SemanticContext {
 				}
 				else if (evaluated != Empty.Instance) {
 					// Reduce the result by skipping true elements
-					operands.add(evaluated);
+					operands.Add(evaluated);
 				}
 			}
 
@@ -272,14 +273,14 @@ public abstract class SemanticContext {
 				return this;
 			}
 
-			if (operands.isEmpty()) {
+			if (operands.Count==0) {
 				// all elements were true, so the AND context is true
 				return Empty.Instance;
 			}
 
-			SemanticContext result = operands.get(0);
-			for (int i = 1; i < operands.size(); i++) {
-				result = SemanticContext.and(result, operands.get(i));
+			SemanticContext result = operands[(0)];
+			for (int i = 1; i < operands.Count; i++) {
+				result = SemanticContext.and(result, operands[(i)]);
 			}
 
 			return result;
@@ -287,7 +288,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		public String toString() {
-			return Utils.join(Arrays.asList(opnds).iterator(), "&&");
+			return Utils.join(opnds, "&&");
         }
     }
 
@@ -299,38 +300,38 @@ public abstract class SemanticContext {
 		public readonly SemanticContext[] opnds;
 
 		public OR(SemanticContext a, SemanticContext b) {
-			Set<SemanticContext> operands = new HashSet<SemanticContext>();
-			if ( a is OR ) operands.addAll(Arrays.asList(((OR)a).opnds));
-			else operands.add(a);
-			if ( b is OR ) operands.addAll(Arrays.asList(((OR)b).opnds));
-			else operands.add(b);
+            HashSet<SemanticContext> operands = new HashSet<SemanticContext>();
+			if ( a is OR ) operands.UnionWith((((OR)a).opnds));
+			else operands.Add(a);
+			if ( b is OR ) operands.UnionWith((((OR)b).opnds));
+			else operands.Add(b);
 
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
-			if (!precedencePredicates.isEmpty()) {
+			if (precedencePredicates.Count>0) {
 				// interested in the transition with the highest precedence
 				PrecedencePredicate reduced = Collections.max(precedencePredicates);
-				operands.add(reduced);
+				operands.Add(reduced);
 			}
 
-			this.opnds = operands.toArray(new SemanticContext[0]);
+			this.opnds = operands.ToArray();
         }
 
 		//@Override
-		public ICollection<SemanticContext> getOperands() {
-			return Arrays.asList(opnds);
+		public override ICollection<SemanticContext> getOperands() {
+			return opnds.ToList();// Arrays.asList(opnds);
 		}
 
 		//@Override
-		public bool equals(Object obj) {
+		public override bool Equals(Object? obj) {
 			if ( this==obj ) return true;
 			if ( !(obj is OR) ) return false;
 			OR other = (OR)obj;
-			return Arrays.equals(this.opnds, other.opnds);
+			return Enumerable.SequenceEqual(this.opnds, other.opnds);
 		}
 
 		//@Override
-		public int hashCode() {
-			return MurmurHash.hashCode(opnds, OR.hashCode());
+		public override int GetHashCode() {
+			return MurmurHash.GetHashCode(opnds, OR.GetHashCode());
 		}
 
 		/**
@@ -341,8 +342,8 @@ public abstract class SemanticContext {
 		 * unordered.</p>
 		 */
 		//@Override
-        public bool eval(Recognizer<?,?> parser, RuleContext parserCallStack) {
-			for (SemanticContext opnd : opnds) {
+        public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+			foreach (SemanticContext opnd in opnds) {
 				if ( opnd.eval(parser, parserCallStack) ) return true;
 			}
 			return false;
@@ -351,8 +352,8 @@ public abstract class SemanticContext {
 		//@Override
 		public SemanticContext evalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			bool differs = false;
-			List<SemanticContext> operands = new ArrayList<SemanticContext>();
-			for (SemanticContext context : opnds) {
+			List<SemanticContext> operands = new ();
+			foreach (SemanticContext context in opnds) {
 				SemanticContext evaluated = context.evalPrecedence(parser, parserCallStack);
 				differs |= (evaluated != context);
 				if (evaluated == Empty.Instance) {
@@ -361,7 +362,7 @@ public abstract class SemanticContext {
 				}
 				else if (evaluated != null) {
 					// Reduce the result by skipping false elements
-					operands.add(evaluated);
+					operands.Add(evaluated);
 				}
 			}
 
@@ -369,14 +370,14 @@ public abstract class SemanticContext {
 				return this;
 			}
 
-			if (operands.isEmpty()) {
+			if (operands.Count==0) {
 				// all elements were false, so the OR context is false
 				return null;
 			}
 
-			SemanticContext result = operands.get(0);
-			for (int i = 1; i < operands.size(); i++) {
-				result = SemanticContext.or(result, operands.get(i));
+			SemanticContext result = operands[(0)];
+			for (int i = 1; i < operands.Count; i++) {
+				result = SemanticContext.or(result, operands[(i)]);
 			}
 
 			return result;
@@ -384,7 +385,7 @@ public abstract class SemanticContext {
 
         //@Override
         public String toString() {
-			return Utils.join(Arrays.asList(opnds).iterator(), "||");
+			return Utils.join((opnds), "||");
         }
     }
 
@@ -392,7 +393,7 @@ public abstract class SemanticContext {
 		if ( a == null || a == Empty.Instance ) return b;
 		if ( b == null || b == Empty.Instance ) return a;
 		AND result = new AND(a, b);
-		if (result.opnds.length == 1) {
+		if (result.opnds.Length == 1) {
 			return result.opnds[0];
 		}
 
@@ -408,7 +409,7 @@ public abstract class SemanticContext {
 		if ( b == null ) return a;
 		if ( a == Empty.Instance || b == Empty.Instance ) return Empty.Instance;
 		OR result = new OR(a, b);
-		if (result.opnds.length == 1) {
+		if (result.opnds.Length == 1) {
 			return result.opnds[0];
 		}
 
@@ -417,15 +418,15 @@ public abstract class SemanticContext {
 
 	private static List<PrecedencePredicate> filterPrecedencePredicates(ICollection<SemanticContext> collection) {
 		List<PrecedencePredicate> result = null;
-		for (Iterator<? : SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
+		for (Iterator<SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
 			SemanticContext context = iterator.next();
 			if (context is PrecedencePredicate) {
 				if (result == null) {
 					result = new ();
 				}
 
-				result.add((PrecedencePredicate)context);
-				iterator.remove();
+				result.Add((PrecedencePredicate)context);
+				iterator.Remove();
 			}
 		}
 

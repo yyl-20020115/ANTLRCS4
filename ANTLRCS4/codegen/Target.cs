@@ -4,37 +4,24 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen;
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+using System.Text;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.codegen.model.RuleFunction;
-import org.antlr.v4.codegen.model.SerializedATN;
-import org.antlr.v4.misc.CharSupport;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.RuntimeMetaData;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.stringtemplate.v4.*;
-import org.stringtemplate.v4.misc.STMessage;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+namespace org.antlr.v4.codegen;
 
 /** */
 public abstract class Target {
-	private final static Map<String, STGroup> languageTemplates = new HashMap<>();
+	private readonly static Dictionary<String, STGroup> languageTemplates = new ();
 
-	protected final CodeGenerator gen;
+	protected readonly CodeGenerator gen;
 
-	protected static final Map<Character, String> defaultCharValueEscape;
-	static {
+	protected static readonly Dictionary<Character, String> defaultCharValueEscape;
+	static Target(){
 		// https://docs.oracle.com/javase/tutorial/java/data/characters.html
-		HashMap<Character, String> map = new HashMap<>();
+		Dictionary<Character, String> map = new ();
 		addEscapedChar(map, '\t', 't');
 		addEscapedChar(map, '\b', 'b');
 		addEscapedChar(map, '\n', 'n');
@@ -57,15 +44,15 @@ public abstract class Target {
 	 *  that the target language can hold them as a string.
 	 *  Each target can have a different set in memory at same time.
 	 */
-	public Map<Character, String> getTargetCharValueEscape() {
+	public Dictionary<Character, String> getTargetCharValueEscape() {
 		return defaultCharValueEscape;
 	}
 
-	protected static void addEscapedChar(HashMap<Character, String> map, char key) {
+	protected static void addEscapedChar(Dictionary<Character, String> map, char key) {
 		addEscapedChar(map, key, key);
 	}
 
-	protected static void addEscapedChar(HashMap<Character, String> map, char key, char representation) {
+	protected static void addEscapedChar(Dictionary<Character, String> map, char key, char representation) {
 		map.put(key, "\\" + representation);
 	}
 
@@ -87,27 +74,32 @@ public abstract class Target {
 		return Tool.VERSION;
 	}
 
-	public synchronized STGroup getTemplates() {
-		String language = getLanguage();
-		STGroup templates = languageTemplates.get(language);
+	public STGroup getTemplates() {
+		lock (this)
+		{
+			String language = getLanguage();
+			STGroup templates = languageTemplates.get(language);
 
-		if (templates == null) {
-			String version = getVersion();
-			if (version == null ||
-					!RuntimeMetaData.getMajorMinorVersion(version).equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION))) {
-				gen.tool.errMgr.toolError(ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+			if (templates == null)
+			{
+				String version = getVersion();
+				if (version == null ||
+						!RuntimeMetaData.getMajorMinorVersion(version).equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
+				{
+					gen.tool.errMgr.toolError(ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+				}
+				templates = loadTemplates();
+				languageTemplates.put(language, templates);
 			}
-			templates = loadTemplates();
-			languageTemplates.put(language, templates);
-		}
 
-		return templates;
+			return templates;
+		}
 	}
 
-	protected abstract Set<String> getReservedWords();
+	protected abstract HashSet<String> getReservedWords();
 
 	public String escapeIfNeeded(String identifier) {
-		return getReservedWords().contains(identifier) ? escapeWord(identifier) : identifier;
+		return getReservedWords().Contains(identifier) ? escapeWord(identifier) : identifier;
 	}
 
 	protected String escapeWord(String word) {
@@ -136,8 +128,8 @@ public abstract class Target {
 	}
 
 	public String[] getTokenTypesAsTargetLabels(Grammar g, int[] ttypes) {
-		String[] labels = new String[ttypes.length];
-		for (int i=0; i<ttypes.length; i++) {
+		String[] labels = new String[ttypes.Length];
+		for (int i=0; i<ttypes.Length; i++) {
 			labels[i] = getTokenTypeAsTargetLabel(g, ttypes[i]);
 		}
 		return labels;
@@ -162,20 +154,20 @@ public abstract class Target {
 	 *
 	 *  depending on the quoted arg.
 	 */
-	public String getTargetStringLiteralFromString(String s, boolean quoted) {
+	public String getTargetStringLiteralFromString(String s, bool quoted) {
 		if ( s==null ) {
 			return null;
 		}
 
 		StringBuilder buf = new StringBuilder();
 		if ( quoted ) {
-			buf.append('"');
+			buf.Append('"');
 		}
-		for (int i=0; i < s.length(); ) {
+		for (int i=0; i < s.Length; ) {
 			int c = s.codePointAt(i);
 			String escaped = c <= Character.MAX_VALUE ? getTargetCharValueEscape().get((char)c) : null;
 			if (c != '\'' && escaped != null) { // don't escape single quotes in strings for java
-				buf.append(escaped);
+				buf.Append(escaped);
 			}
 			else if (shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(c)) {
 				appendUnicodeEscapedCodePoint(i, buf);
@@ -187,21 +179,21 @@ public abstract class Target {
 			i += Character.charCount(c);
 		}
 		if ( quoted ) {
-			buf.append('"');
+			buf.Append('"');
 		}
 		return buf.toString();
 	}
 
-	private void appendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb, boolean escape) {
+	private void appendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb, bool escape) {
 		if (escape) {
-			sb.append("\\");
+			sb.Append("\\");
 		}
 		appendUnicodeEscapedCodePoint(codePoint, sb);
 	}
 
 	/**
 	 * Escape the Unicode code point appropriately for this language
-	 * and append the escaped value to {@code sb}.
+	 * and Append the escaped value to {@code sb}.
 	 * It exists for flexibility and backward compatibility with external targets
 	 * The static method {@link UnicodeEscapes#appendEscapedCodePoint(StringBuilder, int, String)} can be used as well
 	 * if default escaping method (Java) is used or language is officially supported
@@ -214,7 +206,7 @@ public abstract class Target {
 		return getTargetStringLiteralFromString(s, true);
 	}
 
-	public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, boolean addQuotes) {
+	public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes) {
 		return getTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, false);
 	}
 
@@ -237,14 +229,14 @@ public abstract class Target {
 	public String getTargetStringLiteralFromANTLRStringLiteral(
 		CodeGenerator generator,
 		String literal,
-		boolean addQuotes,
-		boolean escapeSpecial)
+		bool addQuotes,
+		bool escapeSpecial)
 	{
 		StringBuilder sb = new StringBuilder();
 
-		if ( addQuotes ) sb.append('"');
+		if ( addQuotes ) sb.Append('"');
 
-		for (int i = 1; i < literal.length() -1; ) {
+		for (int i = 1; i < literal.Length -1; ) {
 			int codePoint = literal.codePointAt(i);
 			int toAdvance = Character.charCount(codePoint);
 			if  (codePoint == '\\') {
@@ -267,9 +259,9 @@ public abstract class Target {
 					case    '\\':
 						// Pass the escape through
 						if (escapeSpecial && escapedCodePoint != '\\') {
-							sb.append('\\');
+							sb.Append('\\');
 						}
-						sb.append('\\');
+						sb.Append('\\');
 						sb.appendCodePoint(escapedCodePoint);
 						break;
 
@@ -283,7 +275,7 @@ public abstract class Target {
 						else {
 							toAdvance += 4;
 						}
-						if ( i+toAdvance <= literal.length() ) { // we might have an invalid \\uAB or something
+						if ( i+toAdvance <= literal.Length ) { // we might have an invalid \\uAB or something
 							String fullEscape = literal.substring(i, i+toAdvance);
 							appendUnicodeEscapedCodePoint(
 								CharSupport.getCharValueFromCharInGrammarLiteral(fullEscape),
@@ -305,7 +297,7 @@ public abstract class Target {
 				if (codePoint == 0x22) {
 					// ANTLR doesn't escape " in literal strings,
 					// but every other language needs to do so.
-					sb.append("\\\"");
+					sb.Append("\\\"");
 				}
 				else if (shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint)) {
 					appendUnicodeEscapedCodePoint(codePoint, sb, escapeSpecial);
@@ -317,17 +309,17 @@ public abstract class Target {
 			i += toAdvance;
 		}
 
-		if ( addQuotes ) sb.append('"');
+		if ( addQuotes ) sb.Append('"');
 
 		return sb.toString();
 	}
 
-	protected boolean shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
+	protected bool shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
 		// We don't want anyone passing 0x0A (newline) or 0x22
 		// (double-quote) here because Java treats \\u000A as
 		// a literal newline and \\u0022 as a literal
 		// double-quote, so Unicode escaping doesn't help.
-		assert codePoint != 0x0A && codePoint != 0x22;
+		//assert codePoint != 0x0A && codePoint != 0x22;
 
 		return
 			codePoint < 0x20  || // control characters up to but not including space
@@ -453,7 +445,7 @@ public abstract class Target {
 	/** Generate TParser.java and TLexer.java from T.g4 if combined, else
 	 *  just use T.java as output regardless of type.
 	 */
-	public String getRecognizerFileName(boolean header) {
+	public String getRecognizerFileName(bool header) {
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String recognizerName = gen.g.getRecognizerName();
 		return recognizerName+extST.render();
@@ -462,7 +454,7 @@ public abstract class Target {
 	/** A given grammar T, return the listener name such as
 	 *  TListener.java, if we're using the Java target.
  	 */
-	public String getListenerFileName(boolean header) {
+	public String getListenerFileName(bool header) {
 		assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "Listener";
@@ -472,7 +464,7 @@ public abstract class Target {
 	/** A given grammar T, return the visitor name such as
 	 *  TVisitor.java, if we're using the Java target.
  	 */
-	public String getVisitorFileName(boolean header) {
+	public String getVisitorFileName(bool header) {
 		assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "Visitor";
@@ -482,7 +474,7 @@ public abstract class Target {
 	/** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-	public String getBaseListenerFileName(boolean header) {
+	public String getBaseListenerFileName(bool header) {
 		assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "BaseListener";
@@ -492,7 +484,7 @@ public abstract class Target {
 	/** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-	public String getBaseVisitorFileName(boolean header) {
+	public String getBaseVisitorFileName(bool header) {
 		assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "BaseVisitor";
@@ -535,7 +527,7 @@ public abstract class Target {
 	 */
 	public int getInlineTestSetWordSize() { return 64; }
 
-	public boolean grammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) {
+	public bool grammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) {
 		switch (idNode.getParent().getType()) {
 			case ANTLRParser.ASSIGN:
 				switch (idNode.getParent().getParent().getType()) {
@@ -570,11 +562,11 @@ public abstract class Target {
 	}
 
 	@Deprecated
-	protected boolean visibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) {
+	protected bool visibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) {
 		return getReservedWords().contains(idNode.getText());
 	}
 
-	public boolean templatesExist() {
+	public bool templatesExist() {
 		return loadTemplatesHelper(false) != null;
 	}
 
@@ -586,22 +578,22 @@ public abstract class Target {
 		result.registerRenderer(Integer.class, new NumberRenderer());
 		result.registerRenderer(String.class, new StringRenderer());
 		result.setListener(new STErrorListener() {
-			@Override
+			//@Override
 			public void compileTimeError(STMessage msg) {
 				reportError(msg);
 			}
 
-			@Override
+			//@Override
 			public void runTimeError(STMessage msg) {
 				reportError(msg);
 			}
 
-			@Override
+			//@Override
 			public void IOError(STMessage msg) {
 				reportError(msg);
 			}
 
-			@Override
+			//@Override
 			public void internalError(STMessage msg) {
 				reportError(msg);
 			}
@@ -614,7 +606,7 @@ public abstract class Target {
 		return result;
 	}
 
-	private STGroup loadTemplatesHelper(boolean reportErrorIfFail) {
+	private STGroup loadTemplatesHelper(bool reportErrorIfFail) {
 		String language = getLanguage();
 		String groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + STGroup.GROUP_FILE_EXTENSION;
 		try {
@@ -631,28 +623,28 @@ public abstract class Target {
 	/**
 	 * @since 4.3
 	 */
-	public boolean wantsBaseListener() {
+	public bool wantsBaseListener() {
 		return true;
 	}
 
 	/**
 	 * @since 4.3
 	 */
-	public boolean wantsBaseVisitor() {
+	public bool wantsBaseVisitor() {
 		return true;
 	}
 
 	/**
 	 * @since 4.3
 	 */
-	public boolean supportsOverloadedMethods() {
+	public bool supportsOverloadedMethods() {
 		return true;
 	}
 
-	public boolean isATNSerializedAsInts() {
+	public bool isATNSerializedAsInts() {
 		return true;
 	}
 
 	/** @since 4.6 */
-	public boolean needsHeader() { return false; } // Override in targets that need header files.
+	public bool needsHeader() { return false; } // Override in targets that need header files.
 }

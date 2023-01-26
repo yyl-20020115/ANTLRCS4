@@ -96,28 +96,28 @@ public class XPath {
 		catch (LexerNoViableAltException e) {
 			int pos = lexer.getCharPositionInLine();
 			String msg = "Invalid tokens or characters at index "+pos+" in path '"+path+"'";
-			throw new IllegalArgumentException(msg, e);
+			throw new ArgumentException(msg, e);
 		}
 
 		List<Token> tokens = tokenStream.getTokens();
 //		System.out.println("path="+path+"=>"+tokens);
-		List<XPathElement> elements = new ArrayList<XPathElement>();
-		int n = tokens.size();
+		List<XPathElement> elements = new ();
+		int n = tokens.Count;
 		int i=0;
 loop:
 		while ( i<n ) {
-			Token el = tokens.get(i);
+			Token el = tokens[(i)];
 			Token next = null;
 			switch ( el.getType() ) {
 				case XPathLexer.ROOT :
 				case XPathLexer.ANYWHERE :
 					bool anywhere = el.getType() == XPathLexer.ANYWHERE;
 					i++;
-					next = tokens.get(i);
+					next = tokens[(i)];
 					bool invert = next.getType()==XPathLexer.BANG;
 					if ( invert ) {
 						i++;
-						next = tokens.get(i);
+						next = tokens[(i)];
 					}
 					XPathElement pathElement = getXPathElement(next, anywhere);
 					pathElement.invert = invert;
@@ -128,7 +128,7 @@ loop:
 				case XPathLexer.TOKEN_REF :
 				case XPathLexer.RULE_REF :
 				case XPathLexer.WILDCARD :
-					elements.add( getXPathElement(el, false) );
+					elements.Add( getXPathElement(el, false) );
 					i++;
 					break;
 
@@ -163,7 +163,7 @@ exit_loop:
 			case XPathLexer.TOKEN_REF :
 			case XPathLexer.STRING :
 				if ( ttype==Token.INVALID_TYPE ) {
-					throw new IllegalArgumentException(word+
+					throw new ArgumentException(word+
 													   " at index "+
 													   wordToken.getStartIndex()+
 													   " isn't a valid token name");
@@ -173,7 +173,7 @@ exit_loop:
 					new XPathTokenElement(word, ttype);
 			default :
 				if ( ruleIndex==-1 ) {
-					throw new IllegalArgumentException(word+
+					throw new ArgumentException(word+
 													   " at index "+
 													   wordToken.getStartIndex()+
 													   " isn't a valid rule name");
@@ -196,10 +196,12 @@ exit_loop:
 	 * {@link #evaluate}.
 	 */
 	public ICollection<ParseTree> evaluate(ParseTree t) {
-		ParserRuleContext dummyRoot = new ParserRuleContext();
-		dummyRoot.children = Collections.singletonList(t); // don't set t's parent.
+        var dummyRoot = new ParserRuleContext
+        {
+            children = new List<ParseTree>()// Collections.singletonList(t); // don't set t's parent.
+        };
 
-        ICollection<ParseTree> work = Collections.<ParseTree>singleton(dummyRoot);
+        ICollection<ParseTree> work = new List<ParseTree> { dummyRoot };// Collections.<ParseTree>singleton(dummyRoot);
 
 		int i = 0;
 		while ( i < elements.Length ) {
@@ -210,7 +212,7 @@ exit_loop:
 					// e.g., //func/*/stat might have a token node for which
 					// we can't go looking for stat nodes.
 					ICollection<ParseTree> matching = elements[i].evaluate(node);
-					next.addAll(matching);
+					foreach(var m in matching) next.Add(m); 
 				}
 			}
 			i++;

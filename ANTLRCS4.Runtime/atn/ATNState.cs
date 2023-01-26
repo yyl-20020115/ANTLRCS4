@@ -115,7 +115,7 @@ public abstract class ATNState {
 	public bool epsilonOnlyTransitions = false;
 
 	/** Track the transitions emanating from this ATN state. */
-	protected readonly List<Transition> transitions =
+	public readonly List<Transition> transitions =
 		new List<Transition>(INITIAL_NUM_TRANSITIONS);
 
 	/** Used to cache lookahead during parsing, not used during construction */
@@ -123,7 +123,7 @@ public abstract class ATNState {
 
 	public override int GetHashCode() { return stateNumber; }
 
-	public override bool Equals(Object o) {
+	public override bool Equals(Object? o) {
 		// are these states same object?
 		if ( o is ATNState ) return stateNumber==((ATNState)o).stateNumber;
 		return false;

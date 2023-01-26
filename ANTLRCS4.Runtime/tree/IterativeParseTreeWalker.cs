@@ -7,7 +7,7 @@
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 
-nameof org.antlr.v4.runtime.tree;
+namespace org.antlr.v4.runtime.tree;
 
 /**
  * An iterative (read: non-recursive) pre-order and post-order tree walker that
@@ -19,7 +19,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker {
 	//@Override
 	public void walk(ParseTreeListener listener, ParseTree t) {
 
-		Deque<ParseTree> nodeStack = new ArrayDeque<ParseTree>();
+		Deque<ParseTree> nodeStack = new ();
 		IntegerStack indexStack = new IntegerStack();
 
 		ParseTree currentNode = t;

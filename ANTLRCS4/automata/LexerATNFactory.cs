@@ -8,6 +8,7 @@ using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using System.Reflection.Metadata;
 using System.Text;
@@ -65,7 +66,7 @@ public class LexerATNFactory : ParserATNFactory {
 	//@Override
 	public ATN createATN() {
 		// BUILD ALL START STATES (ONE PER MODE)
-		Set<String> modes = ((LexerGrammar) g).modes.keySet();
+		HashSet<String> modes = ((LexerGrammar) g).modes.Keys.ToHashSet();
 		for (String modeName : modes) {
 			// create s0, start state; implied Tokens rule node
 			TokensStartState startState =
@@ -77,7 +78,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 		// INIT ACTION, RULE->TOKEN_TYPE MAP
 		atn.ruleToTokenType = new int[g.rules.size()];
-		for (Rule r : g.rules.values()) {
+		foreach (Rule r in g.rules.values()) {
 			atn.ruleToTokenType[r.index] = g.getTokenType(r.name);
 		}
 

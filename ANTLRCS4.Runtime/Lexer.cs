@@ -144,7 +144,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 					}
 					if ( _type == Token.INVALID_TYPE ) _type = ttype;
 					if ( _type ==SKIP ) {
-						continue outer;
+						goto outer;
 					}
 				} while ( _type ==MORE );
 				if ( _token == null ) emit();
@@ -190,18 +190,18 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	}
 
 	//@Override
-	public void setTokenFactory(TokenFactory<T> factory) where T:Token {
+	public void setTokenFactory<T>(TokenFactory<T> factory) where T:Token {
 		this._factory = factory;
 	}
 
 	//@Override
-	public TokenFactory<T> getTokenFactory() where T:Token {
+	public TokenFactory<T> getTokenFactory<T>() where T:Token {
 		return _factory;
 	}
 
 	/** Set the char stream and reset the lexer */
 	//@Override
-	public void setInputStream(IntStream input) {
+	public override void setInputStream(IntStream input) {
 		this._input = null;
 		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, _input);
 		reset();
@@ -210,12 +210,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	}
 
 	//@Override
-	public String getSourceName() {
+	public virtual String getSourceName() {
 		return _input.getSourceName();
 	}
 
 	//@Override
-	public CharStream getInputStream() {
+	public override CharStream getInputStream() {
 		return _input;
 	}
 
@@ -316,7 +316,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
 	public String[] getChannelNames() { return null; }
 
-	public String[] getModeNames() {
+	public virtual String[] getModeNames() {
 		return null;
 	}
 
@@ -326,7 +326,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 */
 	//@Override
 	//@Deprecated
-	public virtual String[] getTokenNames() {
+	public override String[] getTokenNames() {
 		return null;
 	}
 
@@ -334,10 +334,10 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  Forces load of all tokens. Does not include EOF token.
 	 */
 	public List<Token> getAllTokens() {
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ();
 		Token t = nextToken();
 		while ( t.getType()!=Token.EOF ) {
-			tokens.add(t);
+			tokens.Add(t);
 			t = nextToken();
 		}
 		return tokens;
@@ -360,10 +360,10 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
 	public String getErrorDisplay(String s) {
 		StringBuilder buf = new StringBuilder();
-		foreach (char c in s.toCharArray()) {
-			buf.append(getErrorDisplay(c));
+		foreach (char c in s.ToCharArray()) {
+			buf.Append(getErrorDisplay(c));
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public String getErrorDisplay(int c) {

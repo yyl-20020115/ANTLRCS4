@@ -17,5 +17,5 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * chunks are converted to {@link RuleTagToken}, {@link TokenTagToken}, or the
  * regular tokens of the text surrounding the tags.</p>
  */
-abstract class Chunk {
+public abstract class Chunk {
 }

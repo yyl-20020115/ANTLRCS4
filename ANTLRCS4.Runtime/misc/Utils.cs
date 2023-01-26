@@ -22,6 +22,10 @@ public class Utils
 
         return string.Join(separator, list);
     }
+    public static String join<T>(IEnumerable<T> values, String separator)
+    {
+        return string.Join(separator, values.ToArray());
+    }
 
     public static String join<T>(T[] array, String separator)
     {

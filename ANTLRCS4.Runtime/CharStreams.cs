@@ -59,7 +59,7 @@ public class CharStreams {
 	 * Reads the entire contents of the file into the result before returning.
 	 */
 	public static CharStream fromPath(string path){
-		return fromPath(path, Encoding.UTF_8);
+		return fromPath(path, Encoding.UTF8);
 	}
 
 	/**
@@ -68,18 +68,18 @@ public class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(Path path, Encoding charset){
-		long size = Files.size(path);
-		using (ReadableByteChannel channel = Files.newByteChannel(path)) {
-			return fromChannel(
-				channel,
-				charset,
-				DEFAULT_BUFFER_SIZE,
-				CodingErrorAction.REPLACE,
-				path.toString(),
-				size);
-		}
-	}
+	//public static CharStream fromPath(string path, Encoding charset){
+	//	long size = Files.size(path);
+	//	using (ReadableByteChannel channel = Files.newByteChannel(path)) {
+	//		return fromChannel(
+	//			channel,
+	//			charset,
+	//			DEFAULT_BUFFER_SIZE,
+	//			CodingErrorAction.REPLACE,
+	//			path.toString(),
+	//			size);
+	//	}
+	//}
 
 	/**
 	 * Creates a {@link CharStream} given a string containing a
@@ -88,7 +88,7 @@ public class CharStreams {
 	 * Reads the entire contents of the file into the result before returning.
 	 */
 	public static CharStream fromFileName(String fileName){
-		return fromPath(Paths.get(fileName), StandardCharsets.UTF_8);
+		return fromReader(new StreamReader(fileName, Encoding.UTF8));
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class CharStreams {
 	 * Reads the entire contents of the file into the result before returning.
 	 */
 	public static CharStream fromFileName(String fileName, Encoding charset){
-		return fromPath(Paths.get(fileName), charset);
+		return fromReader(new StreamReader(fileName, charset));
 	}
 
 
@@ -110,9 +110,9 @@ public class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream @is){
-		return fromStream(@is, StandardCharsets.UTF_8);
-	}
+	//public static CharStream fromStream(Stream @is){
+	//	return fromStream(@is, Encoding.UTF8);
+	//}
 
 	/**
 	 * Creates a {@link CharStream} given an opened {@link InputStream} and the
@@ -121,21 +121,21 @@ public class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream @is, Encoding charset){
-		return fromStream(@is, charset, -1);
-	}
+	//public static CharStream fromStream(Stream @is, Encoding charset){
+	//	return fromStream(@is, charset, -1);
+	//}
 
-	public static CharStream fromStream(InputStream @is, Encoding charset, long inputSize){
-		using (ReadableByteChannel channel = Channels.newChannel(@is)) {
-			return fromChannel(
-				channel,
-				charset,
-				DEFAULT_BUFFER_SIZE,
-				CodingErrorAction.REPLACE,
-				IntStream.UNKNOWN_SOURCE_NAME,
-				inputSize);
-		}
-	}
+	//public static CharStream fromStream(Stream @is, Encoding charset, long inputSize){
+	//	using (ReadableByteChannel channel = Channels.newChannel(@is)) {
+	//		return fromChannel(
+	//			channel,
+	//			charset,
+	//			DEFAULT_BUFFER_SIZE,
+	//			CodingErrorAction.REPLACE,
+	//			IntStream.UNKNOWN_SOURCE_NAME,
+	//			inputSize);
+	//	}
+	//}
 
 	/**
 	 * Creates a {@link CharStream} given an opened {@link ReadableByteChannel}
@@ -144,9 +144,9 @@ public class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CharStream fromChannel(ReadableByteChannel channel){
-		return fromChannel(channel, StandardCharsets.UTF_8);
-	}
+	//public static CharStream fromChannel(ReadableByteChannel channel){
+	//	return fromChannel(channel, StandardCharsets.UTF_8);
+	//}
 
 	/**
 	 * Creates a {@link CharStream} given an opened {@link ReadableByteChannel} and the
@@ -155,19 +155,19 @@ public class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CharStream fromChannel(ReadableByteChannel channel, Encoding charset){
-		return fromChannel(
-			channel,
-			DEFAULT_BUFFER_SIZE,
-			CodingErrorAction.REPLACE,
-			IntStream.UNKNOWN_SOURCE_NAME);
-	}
+	//public static CharStream fromChannel(ReadableByteChannel channel, Encoding charset){
+	//	return fromChannel(
+	//		channel,
+	//		DEFAULT_BUFFER_SIZE,
+	//		CodingErrorAction.REPLACE,
+	//		IntStream.UNKNOWN_SOURCE_NAME);
+	//}
 
 	/**
 	 * Creates a {@link CharStream} given a {@link Reader}. Closes
 	 * the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(Reader r){
+	public static CodePointCharStream fromReader(TextReader r){
 		return fromReader(r, IntStream.UNKNOWN_SOURCE_NAME);
 	}
 
@@ -175,19 +175,19 @@ public class CharStreams {
 	 * Creates a {@link CharStream} given a {@link Reader} and its
 	 * source name. Closes the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(Reader r, String sourceName){
+	public static CodePointCharStream fromReader(TextReader r, String sourceName){
 		try {
 			CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(DEFAULT_BUFFER_SIZE);
 			CharBuffer charBuffer = CharBuffer.allocate(DEFAULT_BUFFER_SIZE);
-			while ((r.read(charBuffer)) != -1) {
-				charBuffer.flip();
+			while ((r.Read(/*charBuffer*/)) != -1) {
+				//charBuffer.flip();
 				codePointBufferBuilder.append(charBuffer);
-				charBuffer.compact();
+				//charBuffer.compact();
 			}
 			return CodePointCharStream.fromBuffer(codePointBufferBuilder.build(), sourceName);
 		}
 		finally {
-			r.close();
+			r.Close();
 		}
 	}
 
@@ -222,71 +222,71 @@ public class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CodePointCharStream fromChannel(
-		ReadableByteChannel channel,
-		int bufferSize,
-		CodingErrorAction decodingErrorAction,
-		String sourceName)
+	//public static CodePointCharStream fromChannel(
+	//	ReadableByteChannel channel,
+	//	int bufferSize,
+	//	CodingErrorAction decodingErrorAction,
+	//	String sourceName)
 		
-	{
-		return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
-	}
+	//{
+	//	return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
+	//}
 
-	public static CodePointCharStream fromChannel(
-		ReadableByteChannel channel,
-		Encoding charset,
-		int bufferSize,
-		CodingErrorAction decodingErrorAction,
-		String sourceName,
-		long inputSize)
+	//public static CodePointCharStream fromChannel(
+	//	ReadableByteChannel channel,
+	//	Encoding charset,
+	//	int bufferSize,
+	//	CodingErrorAction decodingErrorAction,
+	//	String sourceName,
+	//	long inputSize)
 		
-	{
-		try {
-			ByteBuffer utf8BytesIn = ByteBuffer.allocate(bufferSize);
-			CharBuffer utf16CodeUnitsOut = CharBuffer.allocate(bufferSize);
-			if (inputSize == -1) {
-				inputSize = bufferSize;
-			} else if (inputSize > Integer.MAX_VALUE) {
-				// ByteBuffer et al don't support long sizes
-				throw new IOException(String.format("inputSize %d larger than max %d", inputSize, Integer.MAX_VALUE));
-			}
-			CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
-			CharsetDecoder decoder = charset
-					.newDecoder()
-					.onMalformedInput(decodingErrorAction)
-					.onUnmappableCharacter(decodingErrorAction);
+	//{
+	//	try {
+	//		ByteBuffer utf8BytesIn = ByteBuffer.allocate(bufferSize);
+	//		CharBuffer utf16CodeUnitsOut = CharBuffer.allocate(bufferSize);
+	//		if (inputSize == -1) {
+	//			inputSize = bufferSize;
+	//		} else if (inputSize > Integer.MAX_VALUE) {
+	//			// ByteBuffer et al don't support long sizes
+	//			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, Integer.MAX_VALUE));
+	//		}
+	//		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
+	//		CharsetDecoder decoder = charset
+	//				.newDecoder()
+	//				.onMalformedInput(decodingErrorAction)
+	//				.onUnmappableCharacter(decodingErrorAction);
 
-			bool endOfInput = false;
-			while (!endOfInput) {
-				int bytesRead = channel.read(utf8BytesIn);
-				endOfInput = (bytesRead == -1);
-				utf8BytesIn.flip();
-				CoderResult result = decoder.decode(
-					utf8BytesIn,
-					utf16CodeUnitsOut,
-					endOfInput);
-				if (result.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
-					result.throwException();
-				}
-				utf16CodeUnitsOut.flip();
-				codePointBufferBuilder.append(utf16CodeUnitsOut);
-				utf8BytesIn.compact();
-				utf16CodeUnitsOut.compact();
-			}
-			// Handle any bytes at the end of the file which need to
-			// be represented as errors or substitution characters.
-			CoderResult flushResult = decoder.flush(utf16CodeUnitsOut);
-			if (flushResult.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
-				flushResult.throwException();
-			}
-			utf16CodeUnitsOut.flip();
-			codePointBufferBuilder.append(utf16CodeUnitsOut);
+	//		bool endOfInput = false;
+	//		while (!endOfInput) {
+	//			int bytesRead = channel.read(utf8BytesIn);
+	//			endOfInput = (bytesRead == -1);
+	//			utf8BytesIn.flip();
+	//			CoderResult result = decoder.decode(
+	//				utf8BytesIn,
+	//				utf16CodeUnitsOut,
+	//				endOfInput);
+	//			if (result.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
+	//				result.throwException();
+	//			}
+	//			utf16CodeUnitsOut.flip();
+	//			codePointBufferBuilder.append(utf16CodeUnitsOut);
+	//			utf8BytesIn.compact();
+	//			utf16CodeUnitsOut.compact();
+	//		}
+	//		// Handle any bytes at the end of the file which need to
+	//		// be represented as errors or substitution characters.
+	//		CoderResult flushResult = decoder.flush(utf16CodeUnitsOut);
+	//		if (flushResult.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
+	//			flushResult.throwException();
+	//		}
+	//		utf16CodeUnitsOut.flip();
+	//		codePointBufferBuilder.append(utf16CodeUnitsOut);
 
-			CodePointBuffer codePointBuffer = codePointBufferBuilder.build();
-			return CodePointCharStream.fromBuffer(codePointBuffer, sourceName);
-		}
-		finally {
-			channel.close();
-		}
-	}
+	//		CodePointBuffer codePointBuffer = codePointBufferBuilder.build();
+	//		return CodePointCharStream.fromBuffer(codePointBuffer, sourceName);
+	//	}
+	//	finally {
+	//		channel.close();
+	//	}
+	//}
 }

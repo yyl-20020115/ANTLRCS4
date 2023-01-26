@@ -123,7 +123,7 @@ public interface IntSet {
 	/**
 	 * {@inheritDoc}
 	 */
-	bool equals(Object obj);
+	bool Equals(Object? obj);
 
 	/**
 	 * Returns {@code true} if the set contains the specified element.

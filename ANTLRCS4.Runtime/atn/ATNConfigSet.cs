@@ -78,7 +78,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	 *  I should also point out that this seems to include predicated alternatives
 	 *  that have predicates that evaluate to false. Computed in computeTargetState().
  	 */
-	protected BitSet conflictingAlts;
+	public BitSet conflictingAlts;
 
 	// Used in parser and lexer. In lexer, it indicates we hit a pred
 	// while computing a closure operation.  Don't make a DFA state from this.

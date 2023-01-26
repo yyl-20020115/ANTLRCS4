@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
 
@@ -32,10 +33,10 @@ public class LexerATNSimulator : ATNSimulator {
 	 *  can simply return the predicted token type.</p>
 	 */
 	public class SimState {
-		protected int index = -1;
-		protected int line = 0;
-		protected int charPos = -1;
-		protected DFAState dfaState;
+        public int index = -1;
+        public int line = 0;
+        public int charPos = -1;
+		public DFAState dfaState;
 
 		public void reset() {
 			index = -1;
@@ -111,7 +112,7 @@ public class LexerATNSimulator : ATNSimulator {
 	}
 
 	//@Override
-	public void reset() {
+	public override void reset() {
 		prevAccept.reset();
 		startIndex = -1;
 		line = 1;
@@ -130,7 +131,7 @@ public class LexerATNSimulator : ATNSimulator {
 		ATNState startState = atn.modeToStartState[mode];
 
 		if ( debug ) {
-			Console.Out.format("matchATN mode %d start: %s\n", mode, startState);
+			Console.Out.WriteLine($"matchATN mode {mode} start: {startState}");
 		}
 
 		int old_mode = mode;
@@ -147,7 +148,7 @@ public class LexerATNSimulator : ATNSimulator {
 		int predict = execATN(input, next);
 
 		if ( debug ) {
-			Console.Out.format("DFA after matchATN: %s\n", decisionToDFA[old_mode].toLexerString());
+			Console.Out.WriteLine("DFA after matchATN: %s", decisionToDFA[old_mode].toLexerString());
 		}
 
 		return predict;
@@ -156,7 +157,7 @@ public class LexerATNSimulator : ATNSimulator {
 	protected int execATN(CharStream input, DFAState ds0) {
 		//Console.Out.println("enter exec index "+input.index()+" from "+ds0.configs);
 		if ( debug ) {
-			Console.Out.format("start state closure=%s\n", ds0.configs);
+			Console.Out.WriteLine("start state closure=%s", ds0.configs);
 		}
 
 		if (ds0.isAcceptState) {
@@ -170,7 +171,7 @@ public class LexerATNSimulator : ATNSimulator {
 
 		while ( true ) { // while more work
 			if ( debug ) {
-				Console.Out.format("execATN loop starting closure: %s\n", s.configs);
+				Console.Out.WriteLine($"execATN loop starting closure: {s.configs}");
 			}
 
 			// As we move src->trg, src->trg, we keep track of the previous trg to
@@ -240,7 +241,7 @@ public class LexerATNSimulator : ATNSimulator {
 
 		DFAState target = s.edges[t - MIN_DFA_EDGE];
 		if (debug && target != null) {
-			Console.Out.println("reuse state "+s.stateNumber+
+			Console.Out.WriteLine("reuse state "+s.stateNumber+
 							   " edge to "+target.stateNumber);
 		}
 
@@ -305,18 +306,18 @@ public class LexerATNSimulator : ATNSimulator {
 	 *  we can reach upon input {@code t}. Parameter {@code reach} is a return
 	 *  parameter.
 	 */
-	protected void getReachableConfigSet(CharStream input, ATNConfigSet closure, ATNConfigSet reach, int t) {
+	protected void getReachableConfigSet(CharStream input, ATNConfigSet _closure, ATNConfigSet reach, int t) {
 		// this is used to skip processing for configs which have a lower priority
 		// than a config that already reached an accept state for the same rule
 		int skipAlt = ATN.INVALID_ALT_NUMBER;
-		foreach (ATNConfig c in closure) {
+		foreach (ATNConfig c in _closure) {
 			bool currentAltReachedAcceptState = c.alt == skipAlt;
 			if (currentAltReachedAcceptState && ((LexerATNConfig)c).hasPassedThroughNonGreedyDecision()) {
 				continue;
 			}
 
 			if ( debug ) {
-				Console.Out.format("testing %s at %s\n", getTokenName(t), c.toString(recog, true));
+				Console.Out.WriteLine("testing %s at %s", getTokenName(t), c.toString(recog, true));
 			}
 
 			int n = c.state.getNumberOfTransitions();
@@ -345,7 +346,7 @@ public class LexerATNSimulator : ATNSimulator {
 						  int startIndex, int index, int line, int charPos)
 	{
 		if ( debug ) {
-			Console.Out.format("ACTION %s\n", lexerActionExecutor);
+			Console.Out.WriteLine("ACTION %s", lexerActionExecutor);
 		}
 
 		// seek to after last char in token
@@ -393,16 +394,16 @@ public class LexerATNSimulator : ATNSimulator {
 	 */
 	protected bool closure(CharStream input, LexerATNConfig config, ATNConfigSet configs, bool currentAltReachedAcceptState, bool speculative, bool treatEofAsEpsilon) {
 		if ( debug ) {
-			Console.Out.println("closure("+config.toString(recog, true)+")");
+			Console.Out.WriteLine("closure("+config.toString(recog, true)+")");
 		}
 
 		if ( config.state is RuleStopState ) {
 			if ( debug ) {
 				if ( recog!=null ) {
-					Console.Out.format("closure at %s rule stop %s\n", recog.getRuleNames()[config.state.ruleIndex], config);
+					Console.Out.WriteLine("closure at %s rule stop %s", recog.getRuleNames()[config.state.ruleIndex], config);
 				}
 				else {
-					Console.Out.format("closure at rule stop %s\n", config);
+					Console.Out.WriteLine("closure at rule stop %s", config);
 				}
 			}
 
@@ -492,7 +493,7 @@ public class LexerATNSimulator : ATNSimulator {
 			 */
 				PredicateTransition pt = (PredicateTransition)t;
 				if ( debug ) {
-					Console.Out.println("EVAL rule "+pt.ruleIndex+":"+pt.predIndex);
+					Console.Out.WriteLine("EVAL rule "+pt.ruleIndex+":"+pt.predIndex);
 				}
 				configs.hasSemanticContext = true;
 				if (evaluatePredicate(input, pt.ruleIndex, pt.predIndex, speculative)) {
@@ -638,10 +639,10 @@ public class LexerATNSimulator : ATNSimulator {
 		}
 
 		if ( debug ) {
-			Console.Out.println("EDGE "+p+" -> "+q+" upon "+((char)t));
+			Console.Out.WriteLine("EDGE "+p+" -> "+q+" upon "+((char)t));
 		}
 
-		synchronized (p) {
+		lock (p) {
 			if ( p.edges==null ) {
 				//  make room for tokens 1..n and -1 masquerading as index 0
 				p.edges = new DFAState[MAX_DFA_EDGE-MIN_DFA_EDGE+1];
@@ -678,16 +679,15 @@ public class LexerATNSimulator : ATNSimulator {
 		}
 
 		DFA dfa = decisionToDFA[mode];
-		synchronized (dfa.states) {
-			DFAState existing = dfa.states.get(proposed);
-			if ( existing!=null ) return existing;
+		lock (dfa.states) {
+			if ( dfa.states.TryGetValue(proposed,out var existing) ) return existing;
 
 			DFAState newState = proposed;
 
-			newState.stateNumber = dfa.states.size();
+			newState.stateNumber = dfa.states.Count;
 			configs.setReadonly(true);
 			newState.configs = configs;
-			dfa.states.put(newState, newState);
+			dfa.states[newState] = newState;
 			return newState;
 		}
 	}

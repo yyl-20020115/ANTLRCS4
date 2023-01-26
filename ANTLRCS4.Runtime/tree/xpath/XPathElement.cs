@@ -8,7 +8,7 @@ namespace org.antlr.v4.runtime.tree.xpath;
 
 public abstract class XPathElement {
 	protected String nodeName;
-	protected bool invert;
+	public bool invert;
 
 	/** Construct element like {@code /ID} or {@code ID} or {@code /*} etc...
 	 *  op is null if just node

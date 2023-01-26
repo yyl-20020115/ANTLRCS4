@@ -29,12 +29,14 @@ public class GrammarAST : CommonTree {
 		this.textOverride = node.textOverride;
 	}
     public GrammarAST(int type) :base(new CommonToken(type, ANTLRParser.tokenNames[type])){}
-    public GrammarAST(int type, Token t) {
-		this(new CommonToken(t));
+    public GrammarAST(int type, Token t): this(new CommonToken(t))
+    {
+		;
 		token.setType(type);
 	}
-    public GrammarAST(int type, Token t, String text) {
-		this(new CommonToken(t));
+    public GrammarAST(int type, Token t, String text) : this(new CommonToken(t))
+    {
+		;
 		token.setType(type);
 		token.setText(text);
     }
@@ -59,9 +61,9 @@ public class GrammarAST : CommonTree {
 	}
 
 	public List<GrammarAST> getNodesWithType(IntervalSet types) {
-		List<GrammarAST> nodes = new ArrayList<GrammarAST>();
+		List<GrammarAST> nodes = new();
 		List<GrammarAST> work = new LinkedList<GrammarAST>();
-		work.add(this);
+		work.Add(this);
 		GrammarAST t;
 		while ( !work.isEmpty() ) {
 			t = work.remove(0);
@@ -174,7 +176,7 @@ public class GrammarAST : CommonTree {
 		token.setType(type);
 	}
 //
-//	@Override
+//	//@Override
 //	public String getText() {
 //		if ( textOverride!=null ) return textOverride;
 //        if ( token!=null ) {
@@ -188,12 +190,12 @@ public class GrammarAST : CommonTree {
 		token.setText(text); // we delete surrounding tree, so ok to alter
 	}
 
-//	@Override
+//	//@Override
 //	public bool equals(Object obj) {
 //		return super.equals(obj);
 //	}
 
-	@Override
+	//@Override
     public GrammarAST dupNode() {
         return new GrammarAST(this);
     }

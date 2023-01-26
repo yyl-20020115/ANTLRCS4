@@ -6,6 +6,8 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.runtime;
 
@@ -49,8 +51,8 @@ public class ParserInterpreter : Parser {
 	 *  Those values are used to create new recursive rule invocation contexts
 	 *  associated with left operand of an alt like "expr '*' expr".
 	 */
-	protected readonly Deque<Pair<ParserRuleContext, Integer>> _parentContextStack =
-		new ArrayDeque<Pair<ParserRuleContext, Integer>>();
+	protected readonly Deque<Pair<ParserRuleContext, int>> _parentContextStack =
+		new ();
 
 	/** We need a map from (decision,inputIndex)->forced alt for computing ambiguous
 	 *  parse trees. For now, we allow exactly one override.
@@ -73,23 +75,25 @@ public class ParserInterpreter : Parser {
 	 * @deprecated Use {@link #ParserInterpreter(String, Vocabulary, Collection, ATN, TokenStream)} instead.
 	 */
 	//@Deprecated
-	public ParserInterpreter(String grammarFileName, Collection<String> tokenNames,
-							 Collection<String> ruleNames, ATN atn, TokenStream input) {
-		this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.toArray(new String[0])), ruleNames, atn, input);
+	public ParserInterpreter(String grammarFileName, ICollection<String> tokenNames,
+							 ICollection<String> ruleNames, ATN atn, TokenStream input) : this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, atn, input)
+    {
+		;
 	}
 
 	public ParserInterpreter(String grammarFileName, Vocabulary vocabulary,
-							 Collection<String> ruleNames, ATN atn, TokenStream input)
-	{
-		super(input);
+							 ICollection<String> ruleNames, ATN atn, TokenStream input)
+		:base(input)
+    {
+		;
 		this.grammarFileName = grammarFileName;
 		this.atn = atn;
 		this.tokenNames = new String[atn.maxTokenType];
-		for (int i = 0; i < tokenNames.length; i++) {
+		for (int i = 0; i < tokenNames.Length; i++) {
 			tokenNames[i] = vocabulary.getDisplayName(i);
 		}
 
-		this.ruleNames = ruleNames.toArray(new String[0]);
+		this.ruleNames = ruleNames.ToArray();
 		this.vocabulary = vocabulary;
 
 		// init decision DFA
@@ -114,28 +118,28 @@ public class ParserInterpreter : Parser {
 	}
 
 	//@Override
-	public ATN getATN() {
+	public override ATN getATN() {
 		return atn;
 	}
 
 	//@Override
-	@Deprecated
-	public String[] getTokenNames() {
+	//@Deprecated
+	public override String[] getTokenNames() {
 		return tokenNames;
 	}
 
 	//@Override
-	public Vocabulary getVocabulary() {
+	public virtual Vocabulary getVocabulary() {
 		return vocabulary;
 	}
 
 	//@Override
-	public String[] getRuleNames() {
+	public override String[] getRuleNames() {
 		return ruleNames;
 	}
 
 	//@Override
-	public String getGrammarFileName() {
+	public override String getGrammarFileName() {
 		return grammarFileName;
 	}
 
@@ -159,7 +163,7 @@ public class ParserInterpreter : Parser {
 				if ( _ctx.isEmpty() ) {
 					if (startRuleStartState.isLeftRecursiveRule) {
 						ParserRuleContext result = _ctx;
-						Pair<ParserRuleContext, Integer> parentContext = _parentContextStack.pop();
+						Pair<ParserRuleContext, int> parentContext = _parentContextStack.pop();
 						unrollRecursionContexts(parentContext.a);
 						return result;
 					}
@@ -190,13 +194,13 @@ public class ParserInterpreter : Parser {
 
 	//@Override
 	public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence) {
-		Pair<ParserRuleContext, Integer> pair = new Pair<ParserRuleContext, Integer>(_ctx, localctx.invokingState);
+		Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);
 		_parentContextStack.push(pair);
-		super.enterRecursionRule(localctx, state, ruleIndex, precedence);
+		base.enterRecursionRule(localctx, state, ruleIndex, precedence);
 	}
 
 	protected ATNState getATNState() {
-		return atn.states.get(getState());
+		return atn.states[(getState())];
 	}
 
 	protected void visitState(ATNState p) {
@@ -226,7 +230,7 @@ public class ParserInterpreter : Parser {
 				break;
 
 			case Transition.ATOM:
-				match(((AtomTransition)transition).label);
+				match(((AtomTransition)transition)._label);
 				break;
 
 			case Transition.RANGE:
@@ -316,7 +320,7 @@ public class ParserInterpreter : Parser {
 	protected void visitRuleStopState(ATNState p) {
 		RuleStartState ruleStartState = atn.ruleToStartState[p.ruleIndex];
 		if (ruleStartState.isLeftRecursiveRule) {
-			Pair<ParserRuleContext, Integer> parentContext = _parentContextStack.pop();
+			Pair<ParserRuleContext, int> parentContext = _parentContextStack.pop();
 			unrollRecursionContexts(parentContext.a);
 			setState(parentContext.b);
 		}
@@ -324,7 +328,7 @@ public class ParserInterpreter : Parser {
 			exitRule();
 		}
 
-		RuleTransition ruleTransition = (RuleTransition)atn.states.get(getState()).transition(0);
+		RuleTransition ruleTransition = (RuleTransition)atn.states[(getState())].transition(0);
 		setState(ruleTransition.followState.stateNumber);
 	}
 

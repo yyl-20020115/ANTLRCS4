@@ -4,16 +4,26 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.runtime.misc;
+namespace org.antlr.v4.runtime.tree;
 
-public class StackTraceElement
+public class Deque<T>
 {
-    internal bool getFileName()
+    public bool isEmpty()
     {
         throw new NotImplementedException();
     }
 
-    internal bool getLineNumber()
+    public T peek()
+    {
+        throw new NotImplementedException();
+    }
+
+    public T pop()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void push(T currentNode)
     {
         throw new NotImplementedException();
     }

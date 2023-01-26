@@ -72,7 +72,7 @@ public class XPathLexer : Lexer {
 	}
 
     //@Override
-    public override Vocabulary getVocabulary() {
+    public virtual Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
 

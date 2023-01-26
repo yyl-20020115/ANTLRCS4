@@ -9,29 +9,30 @@ using System.Text;
 namespace org.antlr.v4.runtime.misc;
 
 public class LogManager {
-    protected class Record {
-		long timestamp;
-		StackTraceElement location;
-		String component;
-		String msg;
+    public class Record {
+		public long timestamp;
+        public StackTraceElement location;
+        public String component;
+        public String msg;
 		public Record() {
             timestamp = DateTime.Now.Millisecond;
-			location = new Throwable().getStackTrace()[0];
+            location = null;// new Exception().StackTrace;//.getStackTrace()[0];
 		}
 
 		//@Override
 		public override String ToString() {
             StringBuilder buf = new StringBuilder();
-            buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date(timestamp)));
-            buf.append(" ");
-            buf.append(component);
-            buf.append(" ");
-            buf.append(location.getFileName());
-            buf.append(":");
-            buf.append(location.getLineNumber());
-            buf.append(" ");
-            buf.append(msg);
-            return buf.toString();
+            //SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date(timestamp))
+            buf.Append(DateTime.Now.ToLongTimeString());
+            buf.Append(" ");
+            buf.Append(component);
+            buf.Append(" ");
+            buf.Append(location.getFileName());
+            buf.Append(":");
+            buf.Append(location.getLineNumber());
+            buf.Append(" ");
+            buf.Append(msg);
+            return buf.ToString();
 		}
 	}
 
@@ -44,20 +45,13 @@ public class LogManager {
 		if ( records==null ) {
 			records = new ();
 		}
-		records.add(r);
+		records.Add(r);
 	}
 
     public void log(String msg) { log(null, msg); }
 
     public void save(String filename){
-        FileWriter fw = new FileWriter(filename);
-        BufferedWriter bw = new BufferedWriter(fw);
-        try {
-            bw.write(toString());
-        }
-        finally {
-            bw.close();
-        }
+        File.WriteAllText(filename, toString());
     }
 
     public String save(){
@@ -65,7 +59,8 @@ public class LogManager {
         String dir = ".";
         String defaultFilename =
             dir + "/antlr-" +
-            new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(new Date()) + ".log";
+            DateTime.Now.ToString("yyyy-MM-dd-HH.mm.ss") + ".log";
+        // new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(new DateTime())
         save(defaultFilename);
         return defaultFilename;
     }
@@ -73,13 +68,13 @@ public class LogManager {
     //@Override
     public String toString() {
         if ( records==null ) return "";
-        String nl = System.getProperty("line.separator");
+        String nl = Environment.NewLine;
         StringBuilder buf = new StringBuilder();
-        for (Record r : records) {
-            buf.append(r);
-            buf.append(nl);
+        foreach (Record r in records) {
+            buf.Append(r);
+            buf.Append(nl);
         }
-        return buf.toString();
+        return buf.ToString();
     }
 
     public static void TestMain(String[] args){

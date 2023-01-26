@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
@@ -88,21 +87,21 @@ public class ListTokenSource<T> : TokenSource {
 	 */
 	//@Override
 	public int getCharPositionInLine() {
-		if (i < tokens.size()) {
-			return tokens.get(i).getCharPositionInLine();
+		if (i < tokens.Count) {
+			return tokens[(i)].getCharPositionInLine();
 		}
 		else if (eofToken != null) {
 			return eofToken.getCharPositionInLine();
 		}
-		else if (tokens.size() > 0) {
+		else if (tokens.Count > 0) {
 			// have to calculate the result from the line/column of the previous
 			// token, along with the text of the token.
-			Token lastToken = tokens.get(tokens.size() - 1);
+			Token lastToken = tokens[(tokens.Count - 1)];
 			String tokenText = lastToken.getText();
 			if (tokenText != null) {
-				int lastNewLine = tokenText.lastIndexOf('\n');
+				int lastNewLine = tokenText.LastIndexOf('\n');
 				if (lastNewLine >= 0) {
-					return tokenText.length() - lastNewLine - 1;
+					return tokenText.Length - lastNewLine - 1;
 				}
 			}
 
@@ -119,25 +118,25 @@ public class ListTokenSource<T> : TokenSource {
 	 */
 	//@Override
 	public Token nextToken() {
-		if (i >= tokens.size()) {
+		if (i >= tokens.Count) {
 			if (eofToken == null) {
 				int start = -1;
-				if (tokens.size() > 0) {
-					int previousStop = tokens.get(tokens.size() - 1).getStopIndex();
+				if (tokens.Count > 0) {
+					int previousStop = tokens[(tokens.Count - 1)].getStopIndex();
 					if (previousStop != -1) {
 						start = previousStop + 1;
 					}
 				}
 
-				int stop = Math.max(-1, start - 1);
+				int stop = Math.Max(-1, start - 1);
 				eofToken = _factory.create(new Pair<TokenSource, CharStream>(this, getInputStream()), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, getLine(), getCharPositionInLine());
 			}
 
 			return eofToken;
 		}
 
-		Token t = tokens.get(i);
-		if (i == tokens.size() - 1 && t.getType() == Token.EOF) {
+		Token t = tokens[(i)];
+		if (i == tokens.Count - 1 && t.getType() == Token.EOF) {
 			eofToken = t;
 		}
 
@@ -150,22 +149,22 @@ public class ListTokenSource<T> : TokenSource {
 	 */
 	//@Override
 	public int getLine() {
-		if (i < tokens.size()) {
-			return tokens.get(i).getLine();
+		if (i < tokens.Count) {
+			return tokens[(i)].getLine();
 		}
 		else if (eofToken != null) {
 			return eofToken.getLine();
 		}
-		else if (tokens.size() > 0) {
+		else if (tokens.Count > 0) {
 			// have to calculate the result from the line/column of the previous
 			// token, along with the text of the token.
-			Token lastToken = tokens.get(tokens.size() - 1);
+			Token lastToken = tokens[(tokens.Count - 1)];
 			int line = lastToken.getLine();
 
 			String tokenText = lastToken.getText();
 			if (tokenText != null) {
-				for (int i = 0; i < tokenText.length(); i++) {
-					if (tokenText.charAt(i) == '\n') {
+				for (int i = 0; i < tokenText.Length; i++) {
+					if (tokenText[(i)] == '\n') {
 						line++;
 					}
 				}
@@ -185,14 +184,14 @@ public class ListTokenSource<T> : TokenSource {
 	 */
 	//@Override
 	public CharStream getInputStream() {
-		if (i < tokens.size()) {
+		if (i < tokens.Count) {
 			return tokens.get(i).getInputStream();
 		}
 		else if (eofToken != null) {
 			return eofToken.getInputStream();
 		}
-		else if (tokens.size() > 0) {
-			return tokens.get(tokens.size() - 1).getInputStream();
+		else if (tokens.Count > 0) {
+			return tokens.get(tokens.Count - 1).getInputStream();
 		}
 
 		// no input stream information is available

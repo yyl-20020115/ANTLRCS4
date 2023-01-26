@@ -5,11 +5,13 @@
  */
 
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
+using System.Text;
 
 namespace org.antlr.v4.runtime;
 
 
-public class UnbufferedTokenStream<T> : TokenStream<T> {
+public class UnbufferedTokenStream : TokenStream {
 	protected TokenSource tokenSource;
 
 	/**
@@ -183,8 +185,8 @@ public class UnbufferedTokenStream<T> : TokenStream<T> {
 	}
 
 	protected void add(Token t) {
-		if ( n>=tokens.length ) {
-			tokens = Arrays.copyOf(tokens, tokens.length * 2);
+		if ( n>=tokens.Length ) {
+			tokens = Arrays.copyOf(tokens, tokens.Length * 2);
 		}
 
 		if (t is WritableToken) {
@@ -246,13 +248,13 @@ public class UnbufferedTokenStream<T> : TokenStream<T> {
 
 		if (index > currentTokenIndex) {
 			sync(index - currentTokenIndex);
-			index = Math.min(index, getBufferStartIndex() + n - 1);
+			index = Math.Min(index, getBufferStartIndex() + n - 1);
 		}
 
 		int bufferStartIndex = getBufferStartIndex();
 		int i = index - bufferStartIndex;
 		if ( i < 0 ) {
-			throw new IllegalArgumentException("cannot seek to negative index " + index);
+			throw new ArgumentException("cannot seek to negative index " + index);
 		}
 		else if (i >= n) {
 			throw new UnsupportedOperationException("seek to index outside buffer: "+
@@ -283,7 +285,7 @@ public class UnbufferedTokenStream<T> : TokenStream<T> {
 	//@Override
 	public String getText(Interval interval) {
 		int bufferStartIndex = getBufferStartIndex();
-		int bufferStopIndex = bufferStartIndex + tokens.length - 1;
+		int bufferStopIndex = bufferStartIndex + tokens.Length - 1;
 
 		int start = interval.a;
 		int stop = interval.b;
@@ -298,13 +300,13 @@ public class UnbufferedTokenStream<T> : TokenStream<T> {
 		StringBuilder buf = new StringBuilder();
 		for (int i = a; i <= b; i++) {
 			Token t = tokens[i];
-			buf.append(t.getText());
+			buf.Append(t.getText());
 		}
 
-		return buf.toString();
+		return buf.ToString();
 	}
 
-	protected final int getBufferStartIndex() {
+	protected int getBufferStartIndex() {
 		return currentTokenIndex - p;
 	}
 }

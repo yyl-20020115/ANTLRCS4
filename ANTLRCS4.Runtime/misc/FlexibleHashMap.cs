@@ -61,12 +61,12 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		this.comparator = comparator;
 		this.initialCapacity = initialCapacity;
 		this.initialBucketCapacity = initialBucketCapacity;
-		this.threshold = (int)Math.floor(initialCapacity * LOAD_FACTOR);
-		this.buckets = createEntryListArray(initialBucketCapacity);
+		this.threshold = (int)Math.Floor(initialCapacity * LOAD_FACTOR);
+		this.buckets = createEntryListArray<K, V>(initialBucketCapacity);
 	}
 
 	private static  LinkedList<Entry<K, V>>[] createEntryListArray<K, V>(int length) {
-		LinkedList<Entry<K, V>>[] result = (LinkedList<Entry<K, V>>[])new LinkedList<>[length];
+		LinkedList<Entry<K, V>>[] result = new LinkedList<Entry<K, V>>[length];
 		return result;
 	}
 
@@ -159,11 +159,11 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	//@Override
 	public int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		for (LinkedList<Entry<K, V>> bucket : buckets) {
+        foreach (LinkedList<Entry<K, V>> bucket in buckets) {
 			if ( bucket==null ) continue;
-			for (Entry<K, V> e : bucket) {
+            foreach (Entry<K, V> e in bucket) {
 				if ( e==null ) break;
-				hash = MurmurHash.update(hash, comparator.hashCode(e.key));
+				hash = MurmurHash.update(hash, comparator.GetHashCode(e.key));
 			}
 		}
 
@@ -179,16 +179,16 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	protected void expand() {
 		LinkedList<Entry<K, V>>[] old = buckets;
 		currentPrime += 4;
-		int newCapacity = buckets.length * 2;
-		LinkedList<Entry<K, V>>[] newTable = createEntryListArray(newCapacity);
+		int newCapacity = buckets.Length * 2;
+		LinkedList<Entry<K, V>>[] newTable = createEntryListArray<K,V>(newCapacity);
 		buckets = newTable;
 		threshold = (int)(newCapacity * LOAD_FACTOR);
 //		Console.WriteLine("new size="+newCapacity+", thres="+threshold);
 		// rehash all existing entries
 		int oldSize = size();
-		for (LinkedList<Entry<K, V>> bucket : old) {
+        foreach (LinkedList<Entry<K, V>> bucket in old) {
 			if ( bucket==null ) continue;
-			for (Entry<K, V> e : bucket) {
+            foreach (Entry<K, V> e in bucket) {
 				if ( e==null ) break;
 				put(e.key, e.value);
 			}
@@ -208,7 +208,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 
 	//@Override
 	public void clear() {
-		buckets = createEntryListArray(this.initialCapacity);
+		buckets = createEntryListArray<K, V>(this.initialCapacity);
 		n = 0;
 		threshold = (int)Math.Floor(this.initialCapacity * LOAD_FACTOR);
 	}
@@ -220,33 +220,33 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		StringBuilder buf = new StringBuilder();
 		buf.Append('{');
 		bool first = true;
-		for (LinkedList<Entry<K, V>> bucket : buckets) {
+		foreach (LinkedList<Entry<K, V>> bucket in buckets) {
 			if ( bucket==null ) continue;
-			for (Entry<K, V> e : bucket) {
+            foreach (Entry<K, V> e in bucket) {
 				if ( e==null ) break;
 				if ( first ) first=false;
 				else buf.Append(", ");
-				buf.Append(e.toString());
+				buf.Append(e.ToString());
 			}
 		}
 		buf.Append('}');
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public String toTableString() {
 		StringBuilder buf = new StringBuilder();
-		for (LinkedList<Entry<K, V>> bucket : buckets) {
+        foreach (LinkedList<Entry<K, V>> bucket in buckets) {
 			if ( bucket==null ) {
 				buf.Append("null\n");
 				continue;
 			}
 			buf.Append('[');
 			bool first = true;
-			for (Entry<K, V> e : bucket) {
+			foreach (Entry<K, V> e in bucket) {
 				if ( first ) first=false;
 				else buf.Append(" ");
 				if ( e==null ) buf.Append("_");
-				else buf.Append(e.toString());
+				else buf.Append(e.ToString());
 			}
 			buf.Append("]\n");
 		}

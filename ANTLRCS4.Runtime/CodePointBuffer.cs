@@ -84,11 +84,11 @@ public class CodePointBuffer {
 
 	public int get(int offset) {
 		switch (type) {
-			case BYTE:
+			case Type.BYTE:
 				return byteBuffer.get(offset);
-			case CHAR:
+			case Type.CHAR:
 				return charBuffer.get(offset);
-			case INT:
+			case Type.INT:
 				return intBuffer.get(offset);
 		}
 		throw new UnsupportedOperationException("Not reached");
@@ -98,7 +98,7 @@ public class CodePointBuffer {
 		return type;
 	}
 
-	int arrayOffset() {
+	public int arrayOffset() {
 		switch (type) {
 			case Type.BYTE:
 				return byteBuffer.arrayOffset();
@@ -110,17 +110,17 @@ public class CodePointBuffer {
 		throw new UnsupportedOperationException("Not reached");
 	}
 
-	byte[] byteArray() {
+    public byte[] byteArray() {
 		//assert type == Type.BYTE;
 		return byteBuffer.array();
 	}
 
-	char[] charArray() {
+    public char[] charArray() {
         //assert type == Type.CHAR;
         return charBuffer.array();
 	}
 
-	int[] intArray() {
+	public int[] intArray() {
         //assert type == Type.INT;
         return intBuffer.array();
 	}
@@ -129,14 +129,14 @@ public class CodePointBuffer {
 		return new Builder(initialBufferSize);
 	}
 
-	public static class Builder {
+	public class Builder {
 		private Type type;
 		private ByteBuffer byteBuffer;
 		private CharBuffer charBuffer;
 		private IntBuffer intBuffer;
 		private int prevHighSurrogate;
 
-		private Builder(int initialBufferSize) {
+		public Builder(int initialBufferSize) {
 			type = Type.BYTE;
 			byteBuffer = ByteBuffer.allocate(initialBufferSize);
 			charBuffer = null;
@@ -162,13 +162,13 @@ public class CodePointBuffer {
 
 		public CodePointBuffer build() {
 			switch (type) {
-				case BYTE:
+				case Type.BYTE:
 					byteBuffer.flip();
 					break;
-				case CHAR:
+				case Type.CHAR:
 					charBuffer.flip();
 					break;
-				case INT:
+				case Type.INT:
 					intBuffer.flip();
 					break;
 			}
@@ -226,13 +226,13 @@ public class CodePointBuffer {
 			//assert utf16In.hasArray();
 
 			switch (type) {
-				case BYTE:
+				case Type.BYTE:
 					appendArrayByte(utf16In);
 					break;
-				case CHAR:
+				case Type.CHAR:
 					appendArrayChar(utf16In);
 					break;
-				case INT:
+				case Type.INT:
 					appendArrayInt(utf16In);
 					break;
 			}
@@ -255,7 +255,7 @@ public class CodePointBuffer {
 				} else {
 					utf16In.position(inOffset - utf16In.arrayOffset());
 					byteBuffer.position(outOffset - byteBuffer.arrayOffset());
-					if (!Character.isHighSurrogate(c)) {
+					if (!char.IsHighSurrogate(c)) {
 						byteToCharBuffer(utf16In.remaining());
 						appendArrayChar(utf16In);
 						return;
@@ -274,7 +274,7 @@ public class CodePointBuffer {
 		}
 
 		private void appendArrayChar(CharBuffer utf16In) {
-			assert prevHighSurrogate == -1;
+			//assert prevHighSurrogate == -1;
 
 			char[] @In = utf16In.array();
 			int inOffset = utf16In.arrayOffset() + utf16In.position();
@@ -285,7 +285,7 @@ public class CodePointBuffer {
 
 			while (inOffset < inLimit) {
 				char c = @In[inOffset];
-				if (!Character.isHighSurrogate(c)) {
+				if (!char.IsHighSurrogate(c)) {
 					outChar[outOffset] = c;
 				} else {
 					utf16In.position(inOffset - utf16In.arrayOffset());
@@ -314,15 +314,15 @@ public class CodePointBuffer {
 				char c = @In[inOffset];
 				inOffset++;
 				if (prevHighSurrogate != -1) {
-					if (Character.isLowSurrogate(c)) {
-						outInt[outOffset] = Character.toCodePoint((char) prevHighSurrogate, c);
+					if (char.IsLowSurrogate(c)) {
+						outInt[outOffset] = char.ConvertToUtf32((char) prevHighSurrogate, c);
 						outOffset++;
 						prevHighSurrogate = -1;
 					} else {
 						// Dangling high surrogate
 						outInt[outOffset] = prevHighSurrogate;
 						outOffset++;
-						if (Character.isHighSurrogate(c)) {
+						if (char.IsHighSurrogate(c)) {
 							prevHighSurrogate = c & 0xFFFF;
 						} else {
 							outInt[outOffset] = c & 0xFFFF;
@@ -330,7 +330,7 @@ public class CodePointBuffer {
 							prevHighSurrogate = -1;
 						}
 					}
-				} else if (Character.isHighSurrogate(c)) {
+				} else if (char.IsHighSurrogate(c)) {
 					prevHighSurrogate = c & 0xFFFF;
 				} else {
 					outInt[outOffset] = c & 0xFFFF;
@@ -351,7 +351,7 @@ public class CodePointBuffer {
 		private void byteToCharBuffer(int toAppend) {
 			byteBuffer.flip();
 			// CharBuffers hold twice as much per unit as ByteBuffers, so start with half the capacity.
-			CharBuffer newBuffer = CharBuffer.allocate(Math.max(byteBuffer.remaining() + toAppend, byteBuffer.capacity() / 2));
+			CharBuffer newBuffer = CharBuffer.allocate(Math.Max(byteBuffer.remaining() + toAppend, byteBuffer.capacity() / 2));
 			while (byteBuffer.hasRemaining()) {
 				newBuffer.put((char) (byteBuffer.get() & 0xFF));
 			}
@@ -363,7 +363,7 @@ public class CodePointBuffer {
 		private void byteToIntBuffer(int toAppend) {
 			byteBuffer.flip();
 			// IntBuffers hold four times as much per unit as ByteBuffers, so start with one quarter the capacity.
-			IntBuffer newBuffer = IntBuffer.allocate(Math.max(byteBuffer.remaining() + toAppend, byteBuffer.capacity() / 4));
+			IntBuffer newBuffer = IntBuffer.allocate(Math.Max(byteBuffer.remaining() + toAppend, byteBuffer.capacity() / 4));
 			while (byteBuffer.hasRemaining()) {
 				newBuffer.put(byteBuffer.get() & 0xFF);
 			}
@@ -383,5 +383,13 @@ public class CodePointBuffer {
 			charBuffer = null;
 			intBuffer = newBuffer;
 		}
-	}
+
+        private class Integer
+        {
+            internal static int numberOfLeadingZeros(int v)
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
 }

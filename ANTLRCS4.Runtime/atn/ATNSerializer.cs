@@ -22,9 +22,9 @@ public class ATNSerializer {
 	private readonly IntegerList data = new ();
 	/** Note that we use a LinkedHashMap as a set to mainintain insertion order while deduplicating
 	    entries with the same key. */
-	private readonly Dictionary<IntervalSet, Boolean> sets = new ();
+	private readonly Dictionary<IntervalSet, bool> sets = new ();
 	private readonly IntegerList nonGreedyStates = new ();
-	private readonly IntegerList precedenceStates = new ();
+	private readonly IntegerList _precedenceStates = new ();
 
 	public ATNSerializer(ATN atn) {
 		//assert atn.grammarType != null;
@@ -133,7 +133,7 @@ public class ATNSerializer {
 					break;
 
 				default:
-					String message = String.format(Locale.getDefault(), "The specified lexer action type %s is not valid.", action.getActionType());
+					String message = $"The specified lexer action type {action.getActionType()} is not valid.";
 					throw new ArgumentException(message);
 				}
 			}
@@ -163,13 +163,13 @@ public class ATNSerializer {
 			for (int i=0; i<s.getNumberOfTransitions(); i++) {
 				Transition t = s.transition(i);
 
-				if (atn.states.get(t.target.stateNumber) == null) {
+				if (atn.states[(t.target.stateNumber)] == null) {
 					throw new IllegalStateException("Cannot serialize a transition to a removed state.");
 				}
 
 				int src = s.stateNumber;
 				int trg = t.target.stateNumber;
-				int edgeType = Transition.serializationTypes.get(t.getClass());
+				int edgeType = Transition.serializationTypes[(t.GetType())];
 				int arg1 = 0;
 				int arg2 = 0;
 				int arg3 = 0;
@@ -199,7 +199,7 @@ public class ATNSerializer {
 						}
 						break;
 					case Transition.ATOM :
-						arg1 = ((AtomTransition)t).label;
+						arg1 = ((AtomTransition)t)._label;
 						if (arg1 == Token.EOF) {
 							arg1 = 0;
 							arg3 = 1;
@@ -212,10 +212,11 @@ public class ATNSerializer {
 						arg3 = at.isCtxDependent ? 1 : 0 ;
 						break;
 					case Transition.SET :
-						arg1 = setIndices.get(((SetTransition)t).set);
-						break;
-					case Transition.NOT_SET :
-						arg1 = setIndices.get(((SetTransition)t).set);
+                    case Transition.NOT_SET:
+                        if (setIndices.TryGetValue(((SetTransition)t).set, out var ret))
+						{
+							arg1 = ret;
+						}
 						break;
 					case Transition.WILDCARD :
 						break;
@@ -232,11 +233,11 @@ public class ATNSerializer {
 	}
 
 	private Dictionary<IntervalSet, int> addSets() {
-		serializeSets(data,	sets.keySet());
+		serializeSets(data,	sets.Keys);
         Dictionary<IntervalSet, int> setIndices = new ();
 		int setIndex = 0;
-		foreach (IntervalSet s in sets.keySet()) {
-			setIndices.put(s, setIndex++);
+		foreach (IntervalSet s in sets.Keys) {
+			setIndices[s]=setIndex++;
 		}
 		return setIndices;
 	}
@@ -252,28 +253,28 @@ public class ATNSerializer {
 	}
 
 	private void addRuleStatesAndLexerTokenTypes() {
-		int nrules = atn.ruleToStartState.length;
+		int nrules = atn.ruleToStartState.Length;
 		data.add(nrules);
 		for (int r=0; r<nrules; r++) {
 			ATNState ruleStartState = atn.ruleToStartState[r];
 			data.add(ruleStartState.stateNumber);
 			if (atn.grammarType == ATNType.LEXER) {
-				assert atn.ruleToTokenType[r]>=0; // 0 implies fragment rule, other token types > 0
+				//assert atn.ruleToTokenType[r]>=0; // 0 implies fragment rule, other token types > 0
 				data.add(atn.ruleToTokenType[r]);
 			}
 		}
 	}
 
 	private void addPrecedenceStates() {
-		data.add(precedenceStates.Count);
-		for (int i = 0; i < precedenceStates.Count; i++) {
-			data.add(precedenceStates.get(i));
+		data.add(_precedenceStates.size());
+		for (int i = 0; i < _precedenceStates.size(); i++) {
+			data.add(_precedenceStates.get(i));
 		}
 	}
 
 	private void addNonGreedyStates() {
-		data.add(nonGreedyStates.Count);
-		for (int i = 0; i < nonGreedyStates.Count; i++) {
+		data.add(nonGreedyStates.size());
+		for (int i = 0; i < nonGreedyStates.size(); i++) {
 			data.add(nonGreedyStates.get(i));
 		}
 	}
@@ -293,7 +294,7 @@ public class ATNSerializer {
 			}
 
 			if (s is RuleStartState && ((RuleStartState)s).isLeftRecursiveRule) {
-				precedenceStates.add(s.stateNumber);
+				_precedenceStates.add(s.stateNumber);
 			}
 
 			data.add(stateType);
@@ -314,12 +315,15 @@ public class ATNSerializer {
 
 			for (int i=0; i<s.getNumberOfTransitions(); i++) {
 				Transition t = s.transition(i);
-				int edgeType = Transition.serializationTypes.get(t.getClass());
-				if ( edgeType == Transition.SET || edgeType == Transition.NOT_SET ) {
-					SetTransition st = (SetTransition)t;
-					sets.put(st.set, true);
-				}
-			}
+				if(Transition.serializationTypes.TryGetValue(t.GetType(),out var edgeType))
+				{
+                    if (edgeType == Transition.SET || edgeType == Transition.NOT_SET)
+                    {
+                        SetTransition st = (SetTransition)t;
+                        sets[st.set] = true;
+                    }
+                }
+            }
 		}
 		return nedges;
 	}
@@ -330,7 +334,7 @@ public class ATNSerializer {
 
 		foreach (IntervalSet set in sets) {
 			bool containsEof = set.contains(Token.EOF);
-			if (containsEof && set.getIntervals().get(0).b == Token.EOF) {
+			if (containsEof && set.getIntervals()[(0)].b == Token.EOF) {
 				data.add(set.getIntervals().Count - 1);
 			}
 			else {

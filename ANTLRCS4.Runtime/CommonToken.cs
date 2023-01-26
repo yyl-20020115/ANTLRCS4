@@ -261,7 +261,7 @@ public class CommonToken : WritableToken /*Serializable*/
 		return ToString(null);
 	}
 
-	public String toString(Recognizer<Token, ATNSimulator> r) {
+	public String ToString(Recognizer<Token, ATNSimulator> r) {
 		String channelStr = "";
 		if ( channel>0 ) {
 			channelStr=",channel="+channel;
@@ -281,4 +281,5 @@ public class CommonToken : WritableToken /*Serializable*/
 		}
 		return "[@"+getTokenIndex()+","+start+":"+stop+"='"+txt+"',<"+typeString+">"+channelStr+","+line+":"+getCharPositionInLine()+"]";
 	}
+
 }

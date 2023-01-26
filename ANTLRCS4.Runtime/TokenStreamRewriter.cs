@@ -3,7 +3,6 @@
  * Use of this file @is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
@@ -65,7 +64,7 @@ namespace org.antlr.v4.runtime;
  * ...
  * rewriter.insertAfter(t, "text to put after t");}
  * rewriter.insertAfter(u, "text after u");}
- * System.out.println(rewriter.getText());
+ * Console.WriteLine(rewriter.getText());
  * </pre>
  *
  * <p>
@@ -77,8 +76,8 @@ namespace org.antlr.v4.runtime;
  * <pre>
  * rewriter.insertAfter("pass1", t, "text to put after t");}
  * rewriter.insertAfter("pass2", u, "text after u");}
- * System.out.println(rewriter.getText("pass1"));
- * System.out.println(rewriter.getText("pass2"));
+ * Console.WriteLine(rewriter.getText("pass1"));
+ * Console.WriteLine(rewriter.getText("pass2"));
  * </pre>
  *
  * <p>
@@ -93,19 +92,22 @@ public class TokenStreamRewriter {
 	// Define the rewrite operation hierarchy
 
 	public class RewriteOperation {
-		/** What index into rewrites List are we? */
-		protected int instructionIndex;
+		public readonly TokenStreamRewriter writer;
+        /** What index into rewrites List are we? */
+        public int instructionIndex;
 		/** Token buffer index. */
-		protected int index;
-		protected Object text;
+		public int index;
+        public Object text;
 
-		protected RewriteOperation(int index) {
+		protected RewriteOperation(TokenStreamRewriter writer,int index) {
 			this.index = index;
+			this.writer = writer;
 		}
 
-		protected RewriteOperation(int index, Object text) {
+		protected RewriteOperation(TokenStreamRewriter writer,int index, Object text) {
 			this.index = index;
 			this.text = text;
+			this.writer = writer;
 		}
 		/** Execute the rewrite operation by possibly adding to the buffer.
 		 *  Return the index of the next token to operate on.
@@ -116,24 +118,25 @@ public class TokenStreamRewriter {
 
 		//@Override
 		public String toString() {
-			String opName = getClass().getName();
-			int index = opName.indexOf('$');
-			opName = opName.substring(index+1, opName.length());
-			return "<"+opName+"@"+tokens.get(index)+
+			String opName = this.GetType().Name;
+			int index = opName.IndexOf('$');
+			opName = opName.Substring(index+1, opName.Length-(index+1));
+			return "<"+opName+"@"+this.writer.tokens.get(index)+
 					":\""+text+"\">";
 		}
 	}
 
 	class InsertBeforeOp : RewriteOperation {
-		public InsertBeforeOp(int index, Object text) {
-			super(index,text);
+		public InsertBeforeOp(TokenStreamRewriter writer,int index, Object text): base(writer,index, text)
+        {
+			;
 		}
 
 		//@Override
 		public int execute(StringBuilder buf) {
-			buf.append(text);
-			if ( tokens.get(index).getType()!=Token.EOF ) {
-				buf.append(tokens.get(index).getText());
+			buf.Append(text);
+			if ( writer.tokens.get(index).getType()!=Token.EOF ) {
+				buf.Append(writer.tokens.get(index).getText());
 			}
 			return index+1;
 		}
@@ -144,35 +147,36 @@ public class TokenStreamRewriter {
 	 *  of "insert after" @is "insert before index+1".
 	 */
     class InsertAfterOp : InsertBeforeOp {
-        public InsertAfterOp(int index, Object text) {
-            super(index+1, text); // insert after @is insert before index+1
+        public InsertAfterOp(TokenStreamRewriter writer,int index, Object text): base(writer,index + 1, text)
+        {
+            // insert after @is insert before index+1
         }
     }
 
 	/** I'm going to try replacing range from x..y with (y-x)+1 ReplaceOp
 	 *  instructions.
 	 */
-	class ReplaceOp : RewriteOperation {
-		protected int lastIndex;
-		public ReplaceOp(int from, int to, Object text) {
-			super(from,text);
+	public	class ReplaceOp : RewriteOperation {
+		public int lastIndex;
+		public ReplaceOp(TokenStreamRewriter writer,int from, int to, Object text) : base(writer, from, text)
+        {
 			lastIndex = to;
 		}
 		//@Override
 		public int execute(StringBuilder buf) {
 			if ( text!=null ) {
-				buf.append(text);
+				buf.Append(text);
 			}
 			return lastIndex+1;
 		}
 		//@Override
-		public String toString() {
+		public override String ToString() {
 			if ( text==null ) {
-				return "<DeleteOp@"+tokens.get(index)+
-						".."+tokens.get(lastIndex)+">";
+				return "<DeleteOp@"+writer.tokens.get(index)+
+						".."+writer.tokens.get(lastIndex)+">";
 			}
-			return "<ReplaceOp@"+tokens.get(index)+
-					".."+tokens.get(lastIndex)+":\""+text+"\">";
+			return "<ReplaceOp@"+writer.tokens.get(index)+
+					".."+writer.tokens.get(lastIndex)+":\""+text+"\">";
 		}
 	}
 
@@ -183,20 +187,20 @@ public class TokenStreamRewriter {
 	 *  I'm calling these things "programs."
 	 *  Maps String (name) &rarr; rewrite (List)
 	 */
-	protected readonly Directory<String, List<RewriteOperation>> programs;
+	protected readonly Dictionary<String, List<RewriteOperation>> programs;
 
-	/** Map String (program name) &rarr; Integer index */
+	/** Dictionary String (program name) &rarr; int index */
 	protected readonly Dictionary<String, int> lastRewriteTokenIndexes;
 
 	public TokenStreamRewriter(TokenStream tokens) {
 		this.tokens = tokens;
-		programs = new HashMap<String, List<RewriteOperation>>();
-		programs.put(DEFAULT_PROGRAM_NAME,
-					 new ArrayList<RewriteOperation>(PROGRAM_INIT_SIZE));
-		lastRewriteTokenIndexes = new HashMap<String, Integer>();
+		programs = new ();
+		programs[DEFAULT_PROGRAM_NAME]=
+					 new (PROGRAM_INIT_SIZE);
+		lastRewriteTokenIndexes = new ();
 	}
 
-	public final TokenStream getTokenStream() {
+	public TokenStream getTokenStream() {
 		return tokens;
 	}
 
@@ -209,9 +213,8 @@ public class TokenStreamRewriter {
 	 *  longer in the stream. UNTESTED!
 	 */
 	public void rollback(String programName, int instructionIndex) {
-		List<RewriteOperation> @is = programs.get(programName);
-		if ( @is!=null ) {
-			programs.put(programName, @is.subList(MIN_TOKEN_INDEX,instructionIndex));
+		if ( programs.TryGetValue(programName,out var list) ) {
+			programs[programName] = list.ToArray()[MIN_TOKEN_INDEX .. instructionIndex].ToList();// @is.subList(MIN_TOKEN_INDEX,instructionIndex);
 		}
 	}
 
@@ -238,10 +241,10 @@ public class TokenStreamRewriter {
 
 	public void insertAfter(String programName, int index, Object text) {
 		// to insert after, just insert before next index (even if past end)
-        RewriteOperation op = new InsertAfterOp(index, text);
+        RewriteOperation op = new InsertAfterOp(this,index, text);
         List<RewriteOperation> rewrites = getProgram(programName);
-        op.instructionIndex = rewrites.size();
-        rewrites.add(op);
+        op.instructionIndex = rewrites.Count;
+        rewrites.Add(op);
 	}
 
 	public void insertBefore(Token t, Object text) {
@@ -257,10 +260,10 @@ public class TokenStreamRewriter {
 	}
 
 	public void insertBefore(String programName, int index, Object text) {
-		RewriteOperation op = new InsertBeforeOp(index,text);
+		RewriteOperation op = new InsertBeforeOp(this,index,text);
 		List<RewriteOperation> rewrites = getProgram(programName);
-		op.instructionIndex = rewrites.size();
-		rewrites.add(op);
+		op.instructionIndex = rewrites.Count;
+		rewrites.Add(op);
 	}
 
 	public void replace(int index, Object text) {
@@ -281,12 +284,12 @@ public class TokenStreamRewriter {
 
 	public void replace(String programName, int from, int to, Object text) {
 		if ( from > to || from<0 || to<0 || to >= tokens.size() ) {
-			throw new IllegalArgumentException("replace: range invalid: "+from+".."+to+"(size="+tokens.size()+")");
+			throw new ArgumentException("replace: range invalid: "+from+".."+to+"(size="+tokens.size()+")");
 		}
-		RewriteOperation op = new ReplaceOp(from, to, text);
+		RewriteOperation op = new ReplaceOp(this,from, to, text);
 		List<RewriteOperation> rewrites = getProgram(programName);
-		op.instructionIndex = rewrites.size();
-		rewrites.add(op);
+		op.instructionIndex = rewrites.Count;
+		rewrites.Add(op);
 	}
 
 	public void replace(String programName, Token from, Token to, Object text) {
@@ -325,7 +328,7 @@ public class TokenStreamRewriter {
 	}
 
 	protected int getLastRewriteTokenIndex(String programName) {
-		Integer I = lastRewriteTokenIndexes.get(programName);
+		int I = lastRewriteTokenIndexes.get(programName);
 		if ( I==null ) {
 			return -1;
 		}
@@ -333,12 +336,11 @@ public class TokenStreamRewriter {
 	}
 
 	protected void setLastRewriteTokenIndex(String programName, int i) {
-		lastRewriteTokenIndexes.put(programName, i);
+		lastRewriteTokenIndexes[programName]=i;
 	}
 
 	protected List<RewriteOperation> getProgram(String name) {
-		List<RewriteOperation> @is = programs.get(name);
-		if ( @is==null ) {
+		if (!programs.TryGetValue(name,out var @is) ) {
 			@is = initializeProgram(name);
 		}
 		return @is;
@@ -346,7 +348,7 @@ public class TokenStreamRewriter {
 
 	private List<RewriteOperation> initializeProgram(String name) {
 		List<RewriteOperation> @is = new (PROGRAM_INIT_SIZE);
-		programs.put(name, @is);
+		programs[name]=@is;
 		return @is;
 	}
 
@@ -378,7 +380,11 @@ public class TokenStreamRewriter {
 	}
 
 	public String getText(String programName, Interval interval) {
-		List<RewriteOperation> rewrites = programs.get(programName);
+		
+		if(!programs.TryGetValue(programName,out var rewrites))
+		{
+			rewrites = new();
+		}
 		int start = interval.a;
 		int stop = interval.b;
 
@@ -386,23 +392,23 @@ public class TokenStreamRewriter {
 		if ( stop>tokens.size()-1 ) stop = tokens.size()-1;
 		if ( start<0 ) start = 0;
 
-		if ( rewrites==null || rewrites.isEmpty() ) {
+		if ( rewrites==null || rewrites.Count==0 ) {
 			return tokens.getText(interval); // no instructions to execute
 		}
 		StringBuilder buf = new StringBuilder();
 
 		// First, optimize instruction stream
-		Map<Integer, RewriteOperation> indexToOp = reduceToSingleOperationPerIndex(rewrites);
+		Dictionary<int, RewriteOperation> indexToOp = reduceToSingleOperationPerIndex(rewrites);
 
 		// Walk buffer, executing instructions and emitting tokens
 		int i = start;
 		while ( i <= stop && i < tokens.size() ) {
-			RewriteOperation op = indexToOp.get(i);
-			indexToOp.remove(i); // remove so any left have index size-1
+			RewriteOperation op = indexToOp[(i)];
+			indexToOp.Remove(i); // remove so any left have index size-1
 			Token t = tokens.get(i);
 			if ( op==null ) {
 				// no operation at that index, just dump token
-				if ( t.getType()!=Token.EOF ) buf.append(t.getText());
+				if ( t.getType()!=Token.EOF ) buf.Append(t.getText());
 				i++; // move to next token
 			}
 			else {
@@ -416,11 +422,11 @@ public class TokenStreamRewriter {
 		if ( stop==tokens.size()-1 ) {
 			// Scan any remaining operations after last token
 			// should be included (they will be inserts).
-			for (RewriteOperation op : indexToOp.values()) {
-				if ( op.index >= tokens.size()-1 ) buf.append(op.text);
+			foreach (RewriteOperation op in indexToOp.Values) {
+				if ( op.index >= tokens.size()-1 ) buf.Append(op.text);
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	/** We need to combine operations and report invalid operations (like
@@ -473,120 +479,121 @@ public class TokenStreamRewriter {
 	 *  Return a map from token index to operation.
 	 */
 	protected Dictionary<int, RewriteOperation> reduceToSingleOperationPerIndex(List<RewriteOperation> rewrites) {
-//		System.out.println("rewrites="+rewrites);
+//		Console.WriteLine("rewrites="+rewrites);
 
 		// WALK REPLACES
-		for (int i = 0; i < rewrites.size(); i++) {
-			RewriteOperation op = rewrites.get(i);
+		for (int i = 0; i < rewrites.Count; i++) {
+			RewriteOperation op = rewrites[(i)];
 			if ( op==null ) continue;
 			if ( !(op is ReplaceOp) ) continue;
-			ReplaceOp rop = (ReplaceOp)rewrites.get(i);
+			ReplaceOp rop = (ReplaceOp)rewrites[(i)];
 			// Wipe prior inserts within range
-			List<? extends InsertBeforeOp> inserts = getKindOfOps(rewrites, InsertBeforeOp, i);
-			for (InsertBeforeOp iop : inserts) {
+			List<InsertBeforeOp> inserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+			foreach (InsertBeforeOp iop in inserts) {
 				if ( iop.index == rop.index ) {
 					// E.g., insert before 2, delete 2..2; update replace
 					// text to include insert before, kill insert
-					rewrites.set(iop.instructionIndex, null);
-					rop.text = iop.text.toString() + (rop.text!=null?rop.text.toString():"");
+					rewrites[iop.instructionIndex]= null;
+					rop.text = iop.text.ToString() + (rop.text!=null?rop.text.ToString():"");
 				}
 				else if ( iop.index > rop.index && iop.index <= rop.lastIndex ) {
 					// delete insert as it's a no-op.
-					rewrites.set(iop.instructionIndex, null);
+					rewrites[iop.instructionIndex]= null;
 				}
 			}
 			// Drop any prior replaces contained within
-			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp, i);
-			for (ReplaceOp prevRop : prevReplaces) {
+			List<ReplaceOp> prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+            foreach (ReplaceOp prevRop in prevReplaces) {
 				if ( prevRop.index>=rop.index && prevRop.lastIndex <= rop.lastIndex ) {
 					// delete replace as it's a no-op.
-					rewrites.set(prevRop.instructionIndex, null);
+					rewrites[prevRop.instructionIndex]= null;
 					continue;
 				}
 				// throw exception unless disjoint or identical
-				boolean disjoint =
+				bool disjoint =
 					prevRop.lastIndex<rop.index || prevRop.index > rop.lastIndex;
 				// Delete special case of replace (text==null):
 				// D.i-j.u D.x-y.v	| boundaries overlap	combine to max(min)..max(right)
 				if ( prevRop.text==null && rop.text==null && !disjoint ) {
-					//System.out.println("overlapping deletes: "+prevRop+", "+rop);
-					rewrites.set(prevRop.instructionIndex, null); // kill first delete
-					rop.index = Math.min(prevRop.index, rop.index);
-					rop.lastIndex = Math.max(prevRop.lastIndex, rop.lastIndex);
-					System.out.println("new rop "+rop);
+					//Console.WriteLine("overlapping deletes: "+prevRop+", "+rop);
+					rewrites[prevRop.instructionIndex]= null; // kill first delete
+					rop.index = Math.Min(prevRop.index, rop.index);
+					rop.lastIndex = Math.Max(prevRop.lastIndex, rop.lastIndex);
+					Console.WriteLine("new rop "+rop);
 				}
 				else if ( !disjoint ) {
-					throw new IllegalArgumentException("replace op boundaries of "+rop+" overlap with previous "+prevRop);
+					throw new ArgumentException("replace op boundaries of "+rop+" overlap with previous "+prevRop);
 				}
 			}
 		}
 
 		// WALK INSERTS
-		for (int i = 0; i < rewrites.size(); i++) {
-			RewriteOperation op = rewrites.get(i);
+		for (int i = 0; i < rewrites.Count; i++) {
+			RewriteOperation op = rewrites[(i)];
 			if ( op==null ) continue;
 			if ( !(op is InsertBeforeOp) ) continue;
-			InsertBeforeOp iop = (InsertBeforeOp)rewrites.get(i);
+			InsertBeforeOp iop = (InsertBeforeOp)rewrites[(i)];
 			// combine current insert with prior if any at same index
-			List<? extends InsertBeforeOp> prevInserts = getKindOfOps(rewrites, InsertBeforeOp, i);
-			for (InsertBeforeOp prevIop : prevInserts) {
+			List<InsertBeforeOp> prevInserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+			foreach (InsertBeforeOp prevIop in prevInserts) {
 				if ( prevIop.index==iop.index ) {
-					if ( InsertAfterOp.isInstance(prevIop) ) {
+					if ( typeof(InsertAfterOp).IsInstanceOfType(prevIop) ) {
 						iop.text = catOpText(prevIop.text, iop.text);
-						rewrites.set(prevIop.instructionIndex, null);
+						rewrites[prevIop.instructionIndex]=null;
 					}
-					else if ( InsertBeforeOp.isInstance(prevIop) ) { // combine objects
+					else if (typeof(InsertBeforeOp).IsInstanceOfType(prevIop) ) { // combine objects
 						// convert to strings...we're in process of toString'ing
 						// whole token buffer so no lazy eval issue with any templates
 						iop.text = catOpText(iop.text, prevIop.text);
 						// delete redundant prior insert
-						rewrites.set(prevIop.instructionIndex, null);
+						rewrites[prevIop.instructionIndex]= null;
 					}
 				}
 			}
 			// look for replaces where iop.index @is in range; error
-			List<? extends ReplaceOp> prevReplaces = getKindOfOps(rewrites, ReplaceOp, i);
-			for (ReplaceOp rop : prevReplaces) {
+			List<ReplaceOp> prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+			foreach (ReplaceOp rop in prevReplaces) {
 				if ( iop.index == rop.index ) {
 					rop.text = catOpText(iop.text,rop.text);
-					rewrites.set(i, null);	// delete current insert
+					rewrites[i]=null;	// delete current insert
 					continue;
 				}
 				if ( iop.index >= rop.index && iop.index <= rop.lastIndex ) {
-					throw new IllegalArgumentException("insert op "+iop+" within boundaries of previous "+rop);
+					throw new ArgumentException("insert op "+iop+" within boundaries of previous "+rop);
 				}
 			}
 		}
-		// System.out.println("rewrites after="+rewrites);
-		Map<Integer, RewriteOperation> m = new HashMap<Integer, RewriteOperation>();
-		for (int i = 0; i < rewrites.size(); i++) {
-			RewriteOperation op = rewrites.get(i);
+		// Console.WriteLine("rewrites after="+rewrites);
+		Dictionary<int, RewriteOperation> m = new ();
+		for (int i = 0; i < rewrites.Count; i++) {
+			RewriteOperation op = rewrites[(i)];
 			if ( op==null ) continue; // ignore deleted ops
-			if ( m.get(op.index)!=null ) {
+			if ( m.ContainsKey(op.index) ) {
 				throw new Error("should only be one op per index");
 			}
-			m.put(op.index, op);
+			m[op.index] = op;
 		}
-		//System.out.println("index to op: "+m);
+		//Console.WriteLine("index to op: "+m);
 		return m;
 	}
 
 	protected String catOpText(Object a, Object b) {
 		String x = "";
 		String y = "";
-		if ( a!=null ) x = a.toString();
-		if ( b!=null ) y = b.toString();
+		if ( a!=null ) x = a.ToString();
+		if ( b!=null ) y = b.ToString();
 		return x+y;
 	}
 
 	/** Get all operations before an index of a particular kind */
-	protected <T extends RewriteOperation> List<? extends T> getKindOfOps(List<? extends RewriteOperation> rewrites, Class<T> kind, int before) {
-		List<T> ops = new ArrayList<T>();
-		for (int i=0; i<before && i<rewrites.size(); i++) {
-			RewriteOperation op = rewrites.get(i);
+	protected List<RewriteOperation> getKindOfOps<T>(List<RewriteOperation> rewrites, Type kind, int before) where T: RewriteOperation
+    {
+		List<RewriteOperation> ops = new ();
+		for (int i=0; i<before && i<rewrites.Count; i++) {
+			var op = rewrites[(i)];
 			if ( op==null ) continue; // ignore deleted
-			if ( kind.isInstance(op) ) {
-				ops.add(kind.cast(op));
+			if ( kind.IsInstanceOfType(op) ) {
+				ops.Add(op);
 			}
 		}
 		return ops;

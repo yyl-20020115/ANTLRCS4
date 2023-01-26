@@ -45,10 +45,12 @@ public class ATNDeserializer {
 		int version = data[p++];
 		if (version != SERIALIZED_VERSION) {
 			String reason = $"Could not deserialize ATN with version {version} (expected {SERIALIZED_VERSION}).";
-			throw new UnsupportedOperationException(new InvalidClassException(ATN.getName(), reason));
+			throw new UnsupportedOperationException(reason);
 		}
 
-		ATNType grammarType = ATNType.values()[data[p++]];
+		var values = (ATNType[])ATNType.GetValues(typeof(ATNType));
+
+        ATNType grammarType = values[data[p++]];
 		int maxTokenType = data[p++];
 		ATN atn = new ATN(grammarType, maxTokenType);
 
@@ -70,34 +72,34 @@ public class ATNDeserializer {
 			ATNState s = stateFactory(stype, ruleIndex);
 			if ( stype == ATNState.LOOP_END ) { // special case
 				int loopBackStateNumber = data[p++];
-				loopBackStateNumbers.add(new Pair<LoopEndState, int>((LoopEndState)s, loopBackStateNumber));
+				loopBackStateNumbers.Add(new Pair<LoopEndState, int>((LoopEndState)s, loopBackStateNumber));
 			}
 			else if (s is BlockStartState) {
 				int endStateNumber = data[p++];
-				endStateNumbers.add(new Pair<BlockStartState, int>((BlockStartState)s, endStateNumber));
+				endStateNumbers.Add(new Pair<BlockStartState, int>((BlockStartState)s, endStateNumber));
 			}
 			atn.addState(s);
 		}
 
 		// delay the assignment of loop back and end states until we know all the state instances have been initialized
 		foreach (Pair<LoopEndState, int> pair in loopBackStateNumbers) {
-			pair.a.loopBackState = atn.states.get(pair.b);
+			pair.a.loopBackState = atn.states[(pair.b)];
 		}
 
 		foreach (Pair<BlockStartState, int> pair in endStateNumbers) {
-			pair.a.endState = (BlockEndState)atn.states.get(pair.b);
+			pair.a.endState = (BlockEndState)atn.states[(pair.b)];
 		}
 
 		int numNonGreedyStates = data[p++];
 		for (int i = 0; i < numNonGreedyStates; i++) {
 			int stateNumber = data[p++];
-			((DecisionState)atn.states.get(stateNumber)).nonGreedy = true;
+			((DecisionState)atn.states[(stateNumber)]).nonGreedy = true;
 		}
 
 		int numPrecedenceStates = data[p++];
 		for (int i = 0; i < numPrecedenceStates; i++) {
 			int stateNumber = data[p++];
-			((RuleStartState)atn.states.get(stateNumber)).isLeftRecursiveRule = true;
+			((RuleStartState)atn.states[(stateNumber)]).isLeftRecursiveRule = true;
 		}
 
 		//
@@ -111,7 +113,7 @@ public class ATNDeserializer {
 		atn.ruleToStartState = new RuleStartState[nrules];
 		for (int i=0; i<nrules; i++) {
 			int s = data[p++];
-			RuleStartState startState = (RuleStartState)atn.states.get(s);
+			RuleStartState startState = (RuleStartState)atn.states[(s)];
 			atn.ruleToStartState[i] = startState;
 			if ( atn.grammarType == ATNType.LEXER ) {
 				int tokenType = data[p++];
@@ -120,7 +122,7 @@ public class ATNDeserializer {
 		}
 
 		atn.ruleToStopState = new RuleStopState[nrules];
-		for (ATNState state : atn.states) {
+		foreach (ATNState state in atn.states) {
 			if (!(state is RuleStopState)) {
 				continue;
 			}
@@ -136,7 +138,7 @@ public class ATNDeserializer {
 		int nmodes = data[p++];
 		for (int i=0; i<nmodes; i++) {
 			int s = data[p++];
-			atn.modeToStartState.add((TokensStartState)atn.states.get(s));
+			atn.modeToStartState.Add((TokensStartState)atn.states[(s)]);
 		}
 
 		//
@@ -161,7 +163,7 @@ public class ATNDeserializer {
 //							   src+"->"+trg+
 //					   " "+Transition.serializationNames[ttype]+
 //					   " "+arg1+","+arg2+","+arg3);
-			ATNState srcState = atn.states.get(src);
+			ATNState srcState = atn.states[(src)];
 			srcState.addTransition(trans);
 			p += 6;
 		}
@@ -228,7 +230,7 @@ public class ATNDeserializer {
 		int ndecisions = data[p++];
 		for (int i=1; i<=ndecisions; i++) {
 			int s = data[p++];
-			DecisionState decState = (DecisionState)atn.states.get(s);
+			DecisionState decState = (DecisionState)atn.states[(s)];
 			atn.decisionToState.Add(decState);
 			decState.decision = i-1;
 		}
@@ -239,7 +241,8 @@ public class ATNDeserializer {
 		if (atn.grammarType == ATNType.LEXER) {
 			atn.lexerActions = new LexerAction[data[p++]];
 			for (int i = 0; i < atn.lexerActions.Length; i++) {
-				LexerActionType actionType = LexerActionType.values()[data[p++]];
+				
+				LexerActionType actionType = Enum.GetValues<LexerActionType>()[data[p++]];
 				int data1 = data[p++];
 				int data2 = data[p++];
 
@@ -256,12 +259,12 @@ public class ATNDeserializer {
 		}
 
 		if (deserializationOptions.isGenerateRuleBypassTransitions() && atn.grammarType == ATNType.PARSER) {
-			atn.ruleToTokenType = new int[atn.ruleToStartState.length];
-			for (int i = 0; i < atn.ruleToStartState.length; i++) {
+			atn.ruleToTokenType = new int[atn.ruleToStartState.Length];
+			for (int i = 0; i < atn.ruleToStartState.Length; i++) {
 				atn.ruleToTokenType[i] = atn.maxTokenType + i + 1;
 			}
 
-			for (int i = 0; i < atn.ruleToStartState.length; i++) {
+			for (int i = 0; i < atn.ruleToStartState.Length; i++) {
 				BasicBlockStartState bypassStart = new BasicBlockStartState();
 				bypassStart.ruleIndex = i;
 				atn.addState(bypassStart);
@@ -378,7 +381,7 @@ public class ATNDeserializer {
 	 * @param atn The ATN.
 	 */
 	protected void markPrecedenceDecisions(ATN atn) {
-		for (ATNState state : atn.states) {
+		foreach (ATNState state in atn.states) {
 			if (!(state is StarLoopEntryState)) {
 				continue;
 			}
@@ -487,7 +490,7 @@ public class ATNDeserializer {
 										 int arg1, int arg2, int arg3,
 										 List<IntervalSet> sets)
 	{
-		ATNState target = atn.states.get(trg);
+		ATNState target = atn.states[(trg)];
 		switch (type) {
 			case Transition.EPSILON : return new EpsilonTransition(target);
 			case Transition.RANGE :
@@ -498,7 +501,7 @@ public class ATNDeserializer {
 					return new RangeTransition(target, arg1, arg2);
 				}
 			case Transition.RULE :
-				RuleTransition rt = new RuleTransition((RuleStartState)atn.states.get(arg1), arg2, arg3, target);
+				RuleTransition rt = new RuleTransition((RuleStartState)atn.states[(arg1)], arg2, arg3, target);
 				return rt;
 			case Transition.PREDICATE :
 				PredicateTransition pt = new PredicateTransition(target, arg1, arg2, arg3 != 0);
@@ -515,8 +518,8 @@ public class ATNDeserializer {
 			case Transition.ACTION :
 				ActionTransition a = new ActionTransition(target, arg1, arg2, arg3 != 0);
 				return a;
-			case Transition.SET : return new SetTransition(target, sets.get(arg1));
-			case Transition.NOT_SET : return new NotSetTransition(target, sets.get(arg1));
+			case Transition.SET : return new SetTransition(target, sets[(arg1)]);
+			case Transition.NOT_SET : return new NotSetTransition(target, sets[(arg1)]);
 			case Transition.WILDCARD : return new WildcardTransition(target);
 		}
 
@@ -540,7 +543,7 @@ public class ATNDeserializer {
 			case ATNState.PLUS_LOOP_BACK : s = new PlusLoopbackState(); break;
 			case ATNState.LOOP_END : s = new LoopEndState(); break;
 			default :
-				String message = String.format(Locale.getDefault(), "The specified state type %d is not valid.", type);
+				String message = $"The specified state type {type} is not valid.";
 				throw new ArgumentException(message);
 		}
 
@@ -575,7 +578,7 @@ public class ATNDeserializer {
 			return new LexerTypeAction(data1);
 
 		default:
-			throw new IllegalArgumentException(String.format(Locale.getDefault(), "The specified lexer action type %s is not valid.", type));
+			throw new ArgumentException($"The specified lexer action type {type} is not valid.");
 		}
 	}
 
@@ -627,10 +630,10 @@ public class ATNDeserializer {
 	 */
 	public static int[] decodeIntsEncodedAs16BitWords(char[] data16, bool trimToSize) {
 		// will be strictly smaller but we waste bit of space to avoid copying during initialization of parsers
-		int[] data = new int[data16.length];
+		int[] data = new int[data16.Length];
 		int i = 0;
 		int i2 = 0;
-		while ( i < data16.length ) {
+		while ( i < data16.Length ) {
 			char v = data16[i++];
 			if ( (v & 0x8000) == 0 ) { // hi bit not set? Implies 1-word value
 				data[i2++] = v; // 7 bit int

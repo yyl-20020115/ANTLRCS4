@@ -28,48 +28,52 @@ public class LexerInterpreter : Lexer {
 		new PredictionContextCache();
 
 	//@Deprecated
-	public LexerInterpreter(String grammarFileName, ICollection<String> tokenNames, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) {
-		this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.toArray(new String[0])), ruleNames, new ArrayList<String>(), modeNames, atn, input);
+	public LexerInterpreter(String grammarFileName, ICollection<String> tokenNames, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) 
+	: this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
+    {
 	}
 
 	//@Deprecated
-	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, Collection<String> ruleNames, Collection<String> modeNames, ATN atn, CharStream input) {
-		this(grammarFileName, vocabulary, ruleNames, new ArrayList<String>(), modeNames, atn, input);
+	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) 
+	: this(grammarFileName, vocabulary, ruleNames, new List<String>(), modeNames, atn, input)
+	{
+		
 	}
 
-	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, Collection<String> ruleNames, Collection<String> channelNames, Collection<String> modeNames, ATN atn, CharStream input) {
-		super(input);
+	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, ICollection<String> ruleNames, ICollection<String> channelNames, ICollection<String> modeNames, ATN atn, CharStream input)
+        : base(input)
+	{
 
 		if (atn.grammarType != ATNType.LEXER) {
-			throw new IllegalArgumentException("The ATN must be a lexer ATN.");
+			throw new ArgumentException("The ATN must be a lexer ATN.");
 		}
 
 		this.grammarFileName = grammarFileName;
 		this.atn = atn;
 		this.tokenNames = new String[atn.maxTokenType];
-		for (int i = 0; i < tokenNames.length; i++) {
+		for (int i = 0; i < tokenNames.Length; i++) {
 			tokenNames[i] = vocabulary.getDisplayName(i);
 		}
 
-		this.ruleNames = ruleNames.toArray(new String[0]);
-		this.channelNames = channelNames.toArray(new String[0]);
-		this.modeNames = modeNames.toArray(new String[0]);
+		this.ruleNames = ruleNames.ToArray();
+		this.channelNames = channelNames.ToArray();
+		this.modeNames = modeNames.ToArray();
 		this.vocabulary = vocabulary;
 
 		this._decisionToDFA = new DFA[atn.getNumberOfDecisions()];
-		for (int i = 0; i < _decisionToDFA.length; i++) {
+		for (int i = 0; i < _decisionToDFA.Length; i++) {
 			_decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
 		}
 		this._interp = new LexerATNSimulator(this,atn,_decisionToDFA,_sharedContextCache);
 	}
 
 	//@Override
-	public ATN getATN() {
+	public override ATN getATN() {
 		return atn;
 	}
 
     //@Override
-    public String getGrammarFileName() {
+    public override String getGrammarFileName() {
 		return grammarFileName;
 	}
 
@@ -80,7 +84,7 @@ public class LexerInterpreter : Lexer {
 	}
 
     //@Override
-    public String[] getRuleNames() {
+    public override String[] getRuleNames() {
 		return ruleNames;
 	}
 
@@ -90,7 +94,7 @@ public class LexerInterpreter : Lexer {
 	}
 
     //@Override
-    public String[] getModeNames() {
+    public override String[] getModeNames() {
 		return modeNames;
 	}
 
@@ -102,4 +106,14 @@ public class LexerInterpreter : Lexer {
 
 		return base.getVocabulary();
 	}
+
+    public override TokenFactory<Token> getTokenFactory()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void setTokenFactory(TokenFactory<Token> input)
+    {
+        throw new NotImplementedException();
+    }
 }

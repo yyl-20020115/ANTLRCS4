@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.atn;
+
 namespace org.antlr.v4.runtime;
 
 /**
@@ -28,7 +30,7 @@ public class ConsoleErrorListener : BaseErrorListener {
 	 * </pre>
 	 */
 	//@Override
-	public override void syntaxError(Recognizer<T1, T2> recognizer,
+	public override void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

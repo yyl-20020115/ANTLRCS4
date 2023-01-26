@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
@@ -49,8 +51,8 @@ public class AnalysisPipeline {
 	}
 
 	protected void processParser() {
-		g.decisionLOOK = new ArrayList<IntervalSet[]>(g.atn.getNumberOfDecisions()+1);
-		for (DecisionState s : g.atn.decisionToState) {
+		g.decisionLOOK = new (g.atn.getNumberOfDecisions()+1);
+		foreach (DecisionState s in g.atn.decisionToState) {
             g.tool.log("LL1", "\nDECISION "+s.decision+" in rule "+g.getRule(s.ruleIndex).name);
 			IntervalSet[] look;
 			if ( s.nonGreedy ) { // nongreedy decisions can't be LL(1)
@@ -62,7 +64,7 @@ public class AnalysisPipeline {
 				g.tool.log("LL1", "look=" + Arrays.toString(look));
 			}
 
-			assert s.decision + 1 >= g.decisionLOOK.size();
+			//assert s.decision + 1 >= g.decisionLOOK.size();
 			Utils.setSize(g.decisionLOOK, s.decision+1);
 			g.decisionLOOK.set(s.decision, look);
 			g.tool.log("LL1", "LL(1)? " + disjoint(look));

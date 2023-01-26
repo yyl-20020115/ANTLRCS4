@@ -114,12 +114,12 @@ public class ParseTreePatternMatcher {
 	 * @exception IllegalArgumentException if {@code stop} is {@code null} or empty.
 	 */
 	public void setDelimiters(String start, String stop, String escapeLeft) {
-		if (start == null || start.isEmpty()) {
-			throw new IllegalArgumentException("start cannot be null or empty");
+		if (string.IsNullOrEmpty(start)) {
+			throw new ArgumentException("start cannot be null or empty");
 		}
 
-		if (stop == null || stop.isEmpty()) {
-			throw new IllegalArgumentException("stop cannot be null or empty");
+		if (string.IsNullOrEmpty(stop)) {
+			throw new ArgumentException("stop cannot be null or empty");
 		}
 
 		this.start = start;
@@ -170,13 +170,13 @@ public class ParseTreePatternMatcher {
 	 * {@link ParseTreePattern} using this method.
 	 */
 	public ParseTreePattern compile(String pattern, int patternRuleIndex) {
-		List<Token> tokenList = tokenize(pattern);
+		var tokenList = tokenize(pattern);
 		ListTokenSource tokenSrc = new ListTokenSource(tokenList);
 		CommonTokenStream tokens = new CommonTokenStream(tokenSrc);
 
 		ParserInterpreter parserInterp = new ParserInterpreter(parser.getGrammarFileName(),
 															   parser.getVocabulary(),
-															   Arrays.asList(parser.getRuleNames()),
+															   parser.getRuleNames(),
 															   parser.getATNWithBypassAlts(),
 															   tokens);
 
@@ -187,7 +187,7 @@ public class ParseTreePatternMatcher {
 //			System.out.println("pattern tree = "+tree.toStringTree(parserInterp));
 		}
 		catch (ParseCancellationException e) {
-			throw (RecognitionException)e.getCause();
+			throw (RecognitionException)e.GetBaseException();
 		}
 		catch (RecognitionException re) {
 			throw re;
@@ -343,43 +343,43 @@ public class ParseTreePatternMatcher {
 		return null;
 	}
 
-	public List<T> tokenize<T>(String pattern) where T:Token {
+	public List<Token> tokenize(String pattern) {
 		// split pattern into chunks: sea (raw input) and islands (<ID>, <expr>)
 		List<Chunk> chunks = split(pattern);
 
 		// create token stream from text and tags
 		List<Token> tokens = new ();
-		for (Chunk chunk : chunks) {
+		foreach (Chunk chunk in chunks) {
 			if ( chunk is TagChunk ) {
 				TagChunk tagChunk = (TagChunk)chunk;
 				// add special rule token or conjure up new token from name
-				if ( Character.isUpperCase(tagChunk.getTag().charAt(0)) ) {
-					Integer ttype = parser.getTokenType(tagChunk.getTag());
+				if ( char.IsUpper(tagChunk.getTag()[(0)]) ) {
+					int ttype = parser.getTokenType(tagChunk.getTag());
 					if ( ttype==Token.INVALID_TYPE ) {
-						throw new IllegalArgumentException("Unknown token "+tagChunk.getTag()+" in pattern: "+pattern);
+						throw new ArgumentException("Unknown token "+tagChunk.getTag()+" in pattern: "+pattern);
 					}
 					TokenTagToken t = new TokenTagToken(tagChunk.getTag(), ttype, tagChunk.getLabel());
-					tokens.add(t);
+					tokens.Add(t);
 				}
-				else if ( Character.isLowerCase(tagChunk.getTag().charAt(0)) ) {
+				else if ( char.IsLower(tagChunk.getTag()[(0)]) ) {
 					int ruleIndex = parser.getRuleIndex(tagChunk.getTag());
 					if ( ruleIndex==-1 ) {
-						throw new IllegalArgumentException("Unknown rule "+tagChunk.getTag()+" in pattern: "+pattern);
+						throw new ArgumentException("Unknown rule "+tagChunk.getTag()+" in pattern: "+pattern);
 					}
 					int ruleImaginaryTokenType = parser.getATNWithBypassAlts().ruleToTokenType[ruleIndex];
-					tokens.add(new RuleTagToken(tagChunk.getTag(), ruleImaginaryTokenType, tagChunk.getLabel()));
+					tokens.Add(new RuleTagToken(tagChunk.getTag(), ruleImaginaryTokenType, tagChunk.getLabel()));
 				}
 				else {
-					throw new IllegalArgumentException("invalid tag: "+tagChunk.getTag()+" in pattern: "+pattern);
+					throw new ArgumentException("invalid tag: "+tagChunk.getTag()+" in pattern: "+pattern);
 				}
 			}
 			else {
 				TextChunk textChunk = (TextChunk)chunk;
-				ANTLRInputStream in = new ANTLRInputStream(textChunk.getText());
-				lexer.setInputStream(in);
+				ANTLRInputStream @in = new ANTLRInputStream(textChunk.getText());
+				lexer.setInputStream(@in);
 				Token t = lexer.nextToken();
 				while ( t.getType()!=Token.EOF ) {
-					tokens.add(t);
+					tokens.Add(t);
 					t = lexer.nextToken();
 				}
 			}
@@ -392,26 +392,26 @@ public class ParseTreePatternMatcher {
 	/** Split {@code <ID> = <e:expr> ;} into 4 chunks for tokenizing by {@link #tokenize}. */
 	public List<Chunk> split(String pattern) {
 		int p = 0;
-		int n = pattern.length();
-		List<Chunk> chunks = new ArrayList<Chunk>();
+		int n = pattern.Length;
+		List<Chunk> chunks = new ();
 		StringBuilder buf = new StringBuilder();
 		// find all start and stop indexes first, then collect
-		List<Integer> starts = new ArrayList<Integer>();
-		List<Integer> stops = new ArrayList<Integer>();
+		List<int> starts = new ();
+		List<int> stops = new ();
 		while ( p<n ) {
-			if ( p == pattern.indexOf(escape+start,p) ) {
-				p += escape.length() + start.length();
+			if ( p == pattern.IndexOf(escape+start,p) ) {
+				p += escape.Length + start.Length;
 			}
-			else if ( p == pattern.indexOf(escape+stop,p) ) {
-				p += escape.length() + stop.length();
+			else if ( p == pattern.IndexOf(escape+stop,p) ) {
+				p += escape.Length + stop.Length;
 			}
-			else if ( p == pattern.indexOf(start,p) ) {
-				starts.add(p);
-				p += start.length();
+			else if ( p == pattern.IndexOf(start,p) ) {
+				starts.Add(p);
+				p += start.Length;
 			}
-			else if ( p == pattern.indexOf(stop,p) ) {
-				stops.add(p);
-				p += stop.length();
+			else if ( p == pattern.IndexOf(stop,p) ) {
+				stops.Add(p);
+				p += stop.Length;
 			}
 			else {
 				p++;
@@ -421,64 +421,64 @@ public class ParseTreePatternMatcher {
 //		System.out.println("");
 //		System.out.println(starts);
 //		System.out.println(stops);
-		if ( starts.size() > stops.size() ) {
-			throw new IllegalArgumentException("unterminated tag in pattern: "+pattern);
+		if ( starts.Count > stops.Count ) {
+			throw new ArgumentException("unterminated tag in pattern: "+pattern);
 		}
 
-		if ( starts.size() < stops.size() ) {
-			throw new IllegalArgumentException("missing start tag in pattern: "+pattern);
+		if ( starts.Count < stops.Count ) {
+			throw new ArgumentException("missing start tag in pattern: "+pattern);
 		}
 
-		int ntags = starts.size();
+		int ntags = starts.Count;
 		for (int i=0; i<ntags; i++) {
-			if ( starts.get(i)>=stops.get(i) ) {
-				throw new IllegalArgumentException("tag delimiters out of order in pattern: "+pattern);
+			if ( starts[(i)]>=stops[(i)] ) {
+				throw new ArgumentException("tag delimiters out of order in pattern: "+pattern);
 			}
 		}
 
 		// collect into chunks now
 		if ( ntags==0 ) {
-			String text = pattern.substring(0, n);
-			chunks.add(new TextChunk(text));
+			String text = pattern.Substring(0, n - 0);
+			chunks.Add(new TextChunk(text));
 		}
 
-		if ( ntags>0 && starts.get(0)>0 ) { // copy text up to first tag into chunks
-			String text = pattern.substring(0, starts.get(0));
-			chunks.add(new TextChunk(text));
+		if ( ntags>0 && starts[(0)]>0 ) { // copy text up to first tag into chunks
+			String text = pattern.Substring(0, starts[(0)] - 0);
+			chunks.Add(new TextChunk(text));
 		}
 		for (int i=0; i<ntags; i++) {
 			// copy inside of <tag>
-			String tag = pattern.substring(starts.get(i) + start.length(), stops.get(i));
+			String tag = pattern.Substring(starts[(i)] + start.Length, stops[(i)]-(starts[(i)] + start.Length));
 			String ruleOrToken = tag;
 			String label = null;
-			int colon = tag.indexOf(':');
+			int colon = tag.IndexOf(':');
 			if ( colon >= 0 ) {
-				label = tag.substring(0,colon);
-				ruleOrToken = tag.substring(colon+1, tag.length());
+				label = tag.Substring(0,colon - 0);
+				ruleOrToken = tag.Substring(colon+1, tag.Length-(colon + 1));
 			}
-			chunks.add(new TagChunk(label, ruleOrToken));
+			chunks.Add(new TagChunk(label, ruleOrToken));
 			if ( i+1 < ntags ) {
 				// copy from end of <tag> to start of next
-				String text = pattern.substring(stops.get(i) + stop.length(), starts.get(i + 1));
-				chunks.add(new TextChunk(text));
+				String text = pattern.Substring(stops[(i)] + stop.Length, starts[(i + 1)]-(stops[(i)] + stop.Length));
+				chunks.Add(new TextChunk(text));
 			}
 		}
 		if ( ntags>0 ) {
-			int afterLastTag = stops.get(ntags - 1) + stop.length();
+			int afterLastTag = stops[(ntags - 1)] + stop.Length;
 			if ( afterLastTag < n ) { // copy text from end of last tag to end
-				String text = pattern.substring(afterLastTag, n);
-				chunks.add(new TextChunk(text));
+				String text = pattern.Substring(afterLastTag, n-afterLastTag);
+				chunks.Add(new TextChunk(text));
 			}
 		}
 
 		// strip out the escape sequences from text chunks but not tags
-		for (int i = 0; i < chunks.size(); i++) {
-			Chunk c = chunks.get(i);
+		for (int i = 0; i < chunks.Count; i++) {
+			Chunk c = chunks[(i)];
 			if ( c is TextChunk ) {
 				TextChunk tc = (TextChunk)c;
-				String unescaped = tc.getText().replace(escape, "");
-				if (unescaped.length() < tc.getText().length()) {
-					chunks.set(i, new TextChunk(unescaped));
+				String unescaped = tc.getText().Replace(escape, "");
+				if (unescaped.Length < tc.getText().Length) {
+					chunks[i]=new TextChunk(unescaped);
 				}
 			}
 		}

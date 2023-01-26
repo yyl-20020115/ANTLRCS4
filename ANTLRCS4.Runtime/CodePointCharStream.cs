@@ -19,7 +19,7 @@ namespace org.antlr.v4.runtime;
  * Unicode values > U+FFFF.
  */
 public abstract class CodePointCharStream : CharStream {
-	protected readonly int size;
+	protected readonly int _size;
 	protected readonly String name;
 
 	// To avoid lots of virtual method calls, we directly access
@@ -32,20 +32,20 @@ public abstract class CodePointCharStream : CharStream {
 	private CodePointCharStream(int position, int remaining, String name) {
 		// TODO
 		//assert position == 0;
-		this.size = remaining;
+		this._size = remaining;
 		this.name = name;
 		this.position = 0;
 	}
 
 	// Visible for testing.
-	abstract Object getInternalStorage();
+	public abstract Object getInternalStorage();
 
 	/**
 	 * Constructs a {@link CodePointCharStream} which provides access
 	 * to the Unicode code points stored in {@code codePointBuffer}.
 	 */
 	public static CodePointCharStream fromBuffer(CodePointBuffer codePointBuffer) {
-		return fromBuffer(codePointBuffer, UNKNOWN_SOURCE_NAME);
+		return fromBuffer(codePointBuffer, IntStream.UNKNOWN_SOURCE_NAME);
 	}
 
 	/**
@@ -91,8 +91,8 @@ public abstract class CodePointCharStream : CharStream {
 
 	//@Override
 	public void consume() {
-		if (size - position == 0) {
-			assert LA(1) == IntStream.EOF;
+		if (_size - position == 0) {
+			//assert LA(1) == IntStream.EOF;
 			throw new IllegalStateException("cannot consume EOF");
 		}
 		position = position + 1;
@@ -105,7 +105,7 @@ public abstract class CodePointCharStream : CharStream {
 
 	//@Override
 	public int size() {
-		return size;
+		return _size;
 	}
 
 	/** mark/release do nothing; we have entire buffer */
@@ -124,35 +124,46 @@ public abstract class CodePointCharStream : CharStream {
 	}
 
 	//@Override
-	public String getSourceName() {
-		if (name == null || name.isEmpty()) {
-			return UNKNOWN_SOURCE_NAME;
+	public virtual String getSourceName() {
+		if (string.IsNullOrEmpty(name)) {
+			return IntStream.UNKNOWN_SOURCE_NAME;
 		}
 
 		return name;
 	}
 
 	//@Override
-	public String toString() {
-		return getText(Interval.of(0, size - 1));
+	public override String ToString() {
+		return getText(Interval.of(0, _size - 1));
 	}
 
-	// 8-bit storage for code points <= U+00FF.
-	private class CodePoint8BitCharStream : CodePointCharStream {
+    public string getText(Interval interval)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int LA(int i)
+    {
+        throw new NotImplementedException();
+    }
+
+    // 8-bit storage for code points <= U+00FF.
+    public class CodePoint8BitCharStream : CodePointCharStream {
 		private readonly byte[] byteArray;
 
-		private CodePoint8BitCharStream(int position, int remaining, String name, byte[] byteArray, int arrayOffset) {
-			super(position, remaining, name);
+        public CodePoint8BitCharStream(int position, int remaining, String name, byte[] byteArray, int arrayOffset): base(position, remaining, name)
+        {
+			;
 			// TODO
-			assert arrayOffset == 0;
+			//assert arrayOffset == 0;
 			this.byteArray = byteArray;
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
 		//@Override
 		public String getText(Interval interval) {
-			int startIdx = Math.min(interval.a, size);
-			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
+			int startIdx = Math.Min(interval.a, size());
+			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// We know the maximum code point in byteArray is U+00FF,
 			// so we can treat this as if it were ISO-8859-1, aka Latin-1,
@@ -163,7 +174,7 @@ public abstract class CodePointCharStream : CharStream {
 		//@Override
 		public int LA(int i) {
 			int offset;
-			switch (Integer.signum(i)) {
+			switch (Math.Sign(i)) {
 				case -1:
 					offset = position + i;
 					if (offset < 0) {
@@ -175,7 +186,7 @@ public abstract class CodePointCharStream : CharStream {
 					return 0;
 				case 1:
 					offset = position + i - 1;
-					if (offset >= size) {
+					if (offset >= _size) {
 						return IntStream.EOF;
 					}
 					return byteArray[offset] & 0xFF;
@@ -184,27 +195,28 @@ public abstract class CodePointCharStream : CharStream {
 		}
 
 		//@Override
-		Object getInternalStorage() {
+		 public override Object getInternalStorage() {
 			return byteArray;
 		}
 	}
 
-	// 16-bit internal storage for code points between U+0100 and U+FFFF.
-	private class CodePoint16BitCharStream : CodePointCharStream {
+    // 16-bit internal storage for code points between U+0100 and U+FFFF.
+    public class CodePoint16BitCharStream : CodePointCharStream {
 		private readonly char[] charArray;
 
-		private CodePoint16BitCharStream(int position, int remaining, String name, char[] charArray, int arrayOffset) {
-			super(position, remaining, name);
+        public CodePoint16BitCharStream(int position, int remaining, String name, char[] charArray, int arrayOffset): base(position, remaining, name)
+        {
+			;
 			this.charArray = charArray;
 			// TODO
-			assert arrayOffset == 0;
+			//assert arrayOffset == 0;
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
 		//@Override
 		public String getText(Interval interval) {
-			int startIdx = Math.min(interval.a, size);
-			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
+			int startIdx = Math.Min(interval.a, size());
+			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// We know there are no surrogates in this
 			// array, since otherwise we would be given a
@@ -218,7 +230,7 @@ public abstract class CodePointCharStream : CharStream {
 		//@Override
 		public int LA(int i) {
 			int offset;
-			switch (Integer.signum(i)) {
+			switch (Math.Sign(i)) {
 				case -1:
 					offset = position + i;
 					if (offset < 0) {
@@ -230,7 +242,7 @@ public abstract class CodePointCharStream : CharStream {
 					return 0;
 				case 1:
 					offset = position + i - 1;
-					if (offset >= size) {
+					if (offset >= _size) {
 						return IntStream.EOF;
 					}
 					return charArray[offset] & 0xFFFF;
@@ -239,27 +251,28 @@ public abstract class CodePointCharStream : CharStream {
 		}
 
 		//@Override
-		Object getInternalStorage() {
+		public override Object getInternalStorage() {
 			return charArray;
 		}
 	}
 
-	// 32-bit internal storage for code points between U+10000 and U+10FFFF.
-	private class CodePoint32BitCharStream : CodePointCharStream {
+    // 32-bit internal storage for code points between U+10000 and U+10FFFF.
+    public class CodePoint32BitCharStream : CodePointCharStream {
 		private readonly int[] intArray;
 
-		private CodePoint32BitCharStream(int position, int remaining, String name, int[] intArray, int arrayOffset) {
-			super(position, remaining, name);
+        public CodePoint32BitCharStream(int position, int remaining, String name, int[] intArray, int arrayOffset): base(position, remaining, name)
+        {
+			;
 			this.intArray = intArray;
 			// TODO
-			assert arrayOffset == 0;
+			//assert arrayOffset == 0;
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
 		//@Override
 		public String getText(Interval interval) {
-			int startIdx = Math.min(interval.a, size);
-			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
+			int startIdx = Math.Min(interval.a, _size);
+			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// Note that we pass the int[] code points to the String constructor --
 			// this is supported, and the constructor will convert to UTF-16 internally.
@@ -269,7 +282,7 @@ public abstract class CodePointCharStream : CharStream {
 		//@Override
 		public int LA(int i) {
 			int offset;
-			switch (Integer.signum(i)) {
+			switch (Math.Sign(i)) {
 				case -1:
 					offset = position + i;
 					if (offset < 0) {
@@ -281,7 +294,7 @@ public abstract class CodePointCharStream : CharStream {
 					return 0;
 				case 1:
 					offset = position + i - 1;
-					if (offset >= size) {
+					if (offset >= _size) {
 						return IntStream.EOF;
 					}
 					return intArray[offset];
@@ -289,8 +302,8 @@ public abstract class CodePointCharStream : CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		//@Override
-		Object getInternalStorage() {
+        //@Override
+        public override Object getInternalStorage() {
 			return intArray;
 		}
 	}

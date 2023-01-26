@@ -198,11 +198,11 @@ public class ParserRuleContext : RuleContext {
 
     ////@Override
     public ParseTree getChild(int i) {
-		return children!=null && i>=0 && i<children.Count ? children.get(i) : null;
+		return children!=null && i>=0 && i<children.Count ? children[(i)] : null;
 	}
 
 	public T getChild<T>(Type ctxType, int i) where T:ParseTree {
-		if ( children==null || i < 0 || i >= children.size() ) {
+		if ( children==null || i < 0 || i >= children.Count ) {
 			return default;
 		}
 
@@ -215,11 +215,11 @@ public class ParserRuleContext : RuleContext {
 				}
 			}
 		}
-		return null;
+		return default;
 	}
 
 	public TerminalNode getToken(int ttype, int i) {
-		if ( children==null || i < 0 || i >= children.size() ) {
+		if ( children==null || i < 0 || i >= children.Count ) {
 			return null;
 		}
 
@@ -242,25 +242,25 @@ public class ParserRuleContext : RuleContext {
 
 	public List<TerminalNode> getTokens(int ttype) {
 		if ( children==null ) {
-			return Collections.emptyList();
+			return new List<TerminalNode>();
 		}
 
 		List<TerminalNode> tokens = null;
-		for (ParseTree o : children) {
+        foreach (ParseTree o in children) {
 			if ( o is TerminalNode ) {
 				TerminalNode tnode = (TerminalNode)o;
 				Token symbol = tnode.getSymbol();
 				if ( symbol.getType()==ttype ) {
 					if ( tokens==null ) {
-						tokens = new ArrayList<TerminalNode>();
+						tokens = new ();
 					}
-					tokens.add(tnode);
+					tokens.Add(tnode);
 				}
 			}
 		}
 
 		if ( tokens==null ) {
-			return Collections.emptyList();
+			return new List<TerminalNode>();
 		}
 
 		return tokens;
@@ -273,22 +273,22 @@ public class ParserRuleContext : RuleContext {
 
 	public List<T> getRuleContexts<T>(Type ctxType) {
 		if ( children==null ) {
-			return Collections.emptyList();
+			return new List<T>();
 		}
 
 		List<T> contexts = null;
 		foreach (ParseTree o in children) {
 			if ( ctxType.isInstance(o) ) {
 				if ( contexts==null ) {
-					contexts = new ArrayList<T>();
+					contexts = new ();
 				}
 
-				contexts.add(ctxType.cast(o));
+				contexts.Add(ctxType.cast(o));
 			}
 		}
 
 		if ( contexts==null ) {
-			return Collections.emptyList();
+			return new();
 		}
 
 		return contexts;
