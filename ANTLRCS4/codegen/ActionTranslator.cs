@@ -102,7 +102,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		return translator.chunks;
 	}
 
-	//Override
+	@Override
 	public void attr(String expr, Token x) {
 		gen.g.tool.log("action-translator", "attr "+x);
 		Attribute a = node.resolver.resolveToAttribute(x.getText(), node);
@@ -147,7 +147,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		}
 	}
 
-	//Override
+	@Override
 	public void qualifiedAttr(String expr, Token x, Token y) {
 		gen.g.tool.log("action-translator", "qattr "+x+"."+y);
 		if ( node.resolver.resolveToAttribute(x.getText(), node)!=null ) {
@@ -181,7 +181,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		}
 	}
 
-	//Override
+	@Override
 	public void setAttr(String expr, Token x, Token rhs) {
 		gen.g.tool.log("action-translator", "setAttr "+x+" "+rhs);
 		List<ActionChunk> rhsChunks = translateActionChunk(factory,rf,rhs.getText(),node);
@@ -190,7 +190,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		chunks.add(s);
 	}
 
-	//Override
+	@Override
 	public void nonLocalAttr(String expr, Token x, Token y) {
 		gen.g.tool.log("action-translator", "nonLocalAttr "+x+"::"+y);
 		Rule r = factory.getGrammar().getRule(x.getText());
@@ -198,7 +198,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		chunks.add(new NonLocalAttrRef(nodeContext, x.getText(), name, target.escapeIfNeeded(name), r.index));
 	}
 
-	//Override
+	@Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		gen.g.tool.log("action-translator", "setNonLocalAttr "+x+"::"+y+"="+rhs);
 		Rule r = factory.getGrammar().getRule(x.getText());
@@ -208,7 +208,7 @@ public class ActionTranslator implements ActionSplitterListener {
 		chunks.add(s);
 	}
 
-	//Override
+	@Override
 	public void text(String text) {
 		chunks.add(new ActionText(nodeContext,text));
 	}

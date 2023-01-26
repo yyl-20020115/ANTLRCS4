@@ -17,26 +17,26 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 
 	public V getElement(int i) { return get(elements.get(i)); }
 
-	//Override
+	@Override
 	public V put(K key, V value) {
 		elements.add(key);
 		return super.put(key, value);
 	}
 
-	//Override
+	@Override
 	public void putAll(Map<? : K, ? : V> m) {
 		for (Map.Entry<? : K, ? : V> entry : m.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
 	}
 
-	//Override
+	@Override
 	public V remove(Object key) {
 		elements.remove(key);
 		return super.remove(key);
 	}
 
-	//Override
+	@Override
 	public void clear() {
 		elements.clear();
 		super.clear();

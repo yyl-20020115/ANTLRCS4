@@ -32,7 +32,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		private ConfigEqualityComparator() {
 		}
 
-		//Override
+		@Override
 		public int hashCode(ATNConfig o) {
 			int hashCode = 7;
 			hashCode = 31 * hashCode + o.state.stateNumber;
@@ -41,7 +41,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	        return hashCode;
 		}
 
-		//Override
+		@Override
 		public bool equals(ATNConfig a, ATNConfig b) {
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;
@@ -106,7 +106,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		this.dipsIntoOuterContext = old.dipsIntoOuterContext;
 	}
 
-	//Override
+	@Override
 	public bool add(ATNConfig config) {
 		return add(config, null);
 	}
@@ -209,13 +209,13 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		}
 	}
 
-	//Override
+	@Override
 	public bool addAll(Collection<? : ATNConfig> coll) {
 		for (ATNConfig c : coll) add(c);
 		return false;
 	}
 
-	//Override
+	@Override
 	public bool equals(Object o) {
 		if (o == this) {
 			return true;
@@ -238,7 +238,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return same;
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		if (isReadonly()) {
 			if (cachedHashCode == -1) {
@@ -251,17 +251,17 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return configs.hashCode();
 	}
 
-	//Override
+	@Override
 	public int size() {
 		return configs.size();
 	}
 
-	//Override
+	@Override
 	public bool isEmpty() {
 		return configs.isEmpty();
 	}
 
-	//Override
+	@Override
 	public bool contains(Object o) {
 		if (configLookup == null) {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
@@ -278,12 +278,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		return configLookup.containsFast(obj);
 	}
 
-	//Override
+	@Override
 	public Iterator<ATNConfig> iterator() {
 		return configs.iterator();
 	}
 
-	//Override
+	@Override
 	public void clear() {
 		if ( readonly ) throw new IllegalStateException("This set is readonly");
 		configs.clear();
@@ -300,7 +300,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		configLookup = null; // can't mod, no need for lookup cache
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		StringBuilder buf = new StringBuilder();
 		buf.append(elements().toString());
@@ -313,32 +313,32 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	// satisfy interface
 
-	//Override
+	@Override
 	public ATNConfig[] toArray() {
 		return configLookup.toArray();
 	}
 
-	//Override
+	@Override
 	public <T> T[] toArray(T[] a) {
 		return configLookup.toArray(a);
 	}
 
-	//Override
+	@Override
 	public bool remove(Object o) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public bool containsAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public bool retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public bool removeAll(Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
@@ -353,7 +353,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			super(comparator, initialCapacity, initialBucketCapacity);
 		}
 
-		//Override
+		@Override
 		protected ATNConfig asElementType(Object o) {
 			if (!(o is ATNConfig)) {
 				return null;
@@ -362,12 +362,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			return (ATNConfig)o;
 		}
 
-		//Override
+		@Override
 		protected ATNConfig[][] createBuckets(int capacity) {
 			return new ATNConfig[capacity][];
 		}
 
-		//Override
+		@Override
 		protected final ATNConfig[] createBucket(int capacity) {
 			return new ATNConfig[capacity];
 		}

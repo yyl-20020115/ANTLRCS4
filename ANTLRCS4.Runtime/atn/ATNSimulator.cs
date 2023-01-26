@@ -4,20 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
-import org.antlr.v4.runtime.dfa.DFAState;
-import org.antlr.v4.runtime.misc.IntervalSet;
+namespace org.antlr.v4.runtime.atn;
 
-import java.util.IdentityHashMap;
-import java.util.List;
 
 public abstract class ATNSimulator {
 	/** Must distinguish between missing edge and edge we know leads nowhere */
 
-	public static final DFAState ERROR;
+	public static readonly DFAState ERROR;
 
-	public final ATN atn;
+	public readonly ATN atn;
 
 	/** The context cache maps all PredictionContext objects that are equals()
 	 *  to a single cached copy. This cache is shared across all contexts
@@ -39,9 +36,9 @@ public abstract class ATNSimulator {
 	 *  more time I think and doesn't save on the overall footprint
 	 *  so it's not worth the complexity.</p>
  	 */
-	protected final PredictionContextCache sharedContextCache;
+	protected readonly PredictionContextCache sharedContextCache;
 
-	static {
+	static ATNSimulator() {
 		ERROR = new DFAState(new ATNConfigSet());
 		ERROR.stateNumber = Integer.MAX_VALUE;
 	}
@@ -77,7 +74,7 @@ public abstract class ATNSimulator {
 	public PredictionContext getCachedContext(PredictionContext context) {
 		if ( sharedContextCache==null ) return context;
 
-		synchronized (sharedContextCache) {
+		lock (sharedContextCache) {
 			IdentityHashMap<PredictionContext, PredictionContext> visited =
 				new IdentityHashMap<PredictionContext, PredictionContext>();
 			return PredictionContext.getCachedContext(context,

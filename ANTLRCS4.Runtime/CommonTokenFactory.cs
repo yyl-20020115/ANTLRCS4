@@ -62,7 +62,7 @@ public class CommonTokenFactory implements TokenFactory<CommonToken> {
 	 */
 	public CommonTokenFactory() { this(false); }
 
-	//Override
+	@Override
 	public CommonToken create(Pair<TokenSource, CharStream> source, int type, String text,
 							  int channel, int start, int stop,
 							  int line, int charPositionInLine)
@@ -80,7 +80,7 @@ public class CommonTokenFactory implements TokenFactory<CommonToken> {
 		return t;
 	}
 
-	//Override
+	@Override
 	public CommonToken create(int type, String text) {
 		return new CommonToken(type, text);
 	}

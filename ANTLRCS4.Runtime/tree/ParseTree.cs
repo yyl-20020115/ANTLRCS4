@@ -15,9 +15,9 @@ namespace org.antlr.v4.runtime.tree;
  */
 public interface ParseTree : SyntaxTree {
 	// the following methods narrow the return type; they are not additional methods
-	//Override
+	@Override
 	ParseTree getParent();
-	//Override
+	@Override
 	ParseTree getChild(int i);
 
 
@@ -39,7 +39,7 @@ public interface ParseTree : SyntaxTree {
 	void setParent(RuleContext parent);
 
 	/** The {@link ParseTreeVisitor} needs a double dispatch method. */
-	T accept<T>(ParseTreeVisitor<T> visitor);
+	<T> T accept(ParseTreeVisitor<? extends T> visitor);
 
 	/** Return the combined text of all leaf nodes. Does not get any
 	 *  off-channel tokens (if any) so won't return whitespace and

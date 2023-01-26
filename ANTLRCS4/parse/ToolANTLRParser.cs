@@ -24,7 +24,7 @@ public class ToolANTLRParser extends ANTLRParser {
 		this.tool = tool;
 	}
 
-	//Override
+	@Override
 	public void displayRecognitionError(String[] tokenNames,
 										RecognitionException e)
 	{
@@ -53,7 +53,7 @@ public class ToolANTLRParser extends ANTLRParser {
 		return msg;
 	}
 
-	//Override
+	@Override
 	public void grammarError(ErrorType etype, org.antlr.runtime.Token token, Object... args) {
 		tool.errMgr.grammarError(etype, getSourceName(), token, args);
 	}

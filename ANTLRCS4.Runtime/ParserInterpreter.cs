@@ -123,35 +123,35 @@ public class ParserInterpreter extends Parser {
 											  sharedContextCache));
 	}
 
-	//Override
+	@Override
 	public void reset() {
 		super.reset();
 		overrideDecisionReached = false;
 		overrideDecisionRoot = null;
 	}
 
-	//Override
+	@Override
 	public ATN getATN() {
 		return atn;
 	}
 
-	//Override
+	@Override
 	@Deprecated
 	public String[] getTokenNames() {
 		return tokenNames;
 	}
 
-	//Override
+	@Override
 	public Vocabulary getVocabulary() {
 		return vocabulary;
 	}
 
-	//Override
+	@Override
 	public String[] getRuleNames() {
 		return ruleNames;
 	}
 
-	//Override
+	@Override
 	public String getGrammarFileName() {
 		return grammarFileName;
 	}
@@ -205,7 +205,7 @@ public class ParserInterpreter extends Parser {
 		}
 	}
 
-	//Override
+	@Override
 	public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence) {
 		Pair<ParserRuleContext, Integer> pair = new Pair<ParserRuleContext, Integer>(_ctx, localctx.invokingState);
 		_parentContextStack.push(pair);

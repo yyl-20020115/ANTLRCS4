@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestCommonTokenStream extends TestBufferedTokenStream {
-	//Override
+	@Override
 	protected TokenStream createTokenStream(TokenSource src) {
 		return new CommonTokenStream(src);
 	}
@@ -44,30 +44,30 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
                     new CommonToken(1,"\n") {{channel = Lexer.HIDDEN;}},
                     new CommonToken(Token.EOF,"")
                 };
-                //Override
+                @Override
                 public Token nextToken() {
                     return tokens[i++];
                 }
-                //Override
+                @Override
                 public String getSourceName() { return "test"; }
-				//Override
+				@Override
 				public int getCharPositionInLine() {
 					return 0;
 				}
-				//Override
+				@Override
 				public int getLine() {
 					return 0;
 				}
-				//Override
+				@Override
 				public CharStream getInputStream() {
 					return null;
 				}
 
-				//Override
+				@Override
 				public void setTokenFactory(TokenFactory<?> factory) {
 				}
 
-				//Override
+				@Override
 				public TokenFactory<?> getTokenFactory() {
 					return null;
 				}
@@ -116,30 +116,30 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 				new CommonToken(1,"\n") {{channel = Lexer.HIDDEN;}},// 9
 				new CommonToken(Token.EOF,"")						// 10
 				};
-				//Override
+				@Override
 				public Token nextToken() {
 					return tokens[i++];
 				}
-				//Override
+				@Override
 				public String getSourceName() { return "test"; }
-				//Override
+				@Override
 				public int getCharPositionInLine() {
 					return 0;
 				}
-				//Override
+				@Override
 				public int getLine() {
 					return 0;
 				}
-				//Override
+				@Override
 				public CharStream getInputStream() {
 					return null;
 				}
 
-				//Override
+				@Override
 				public void setTokenFactory(TokenFactory<?> factory) {
 				}
 
-				//Override
+				@Override
 				public TokenFactory<?> getTokenFactory() {
 					return null;
 				}
@@ -192,37 +192,37 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 	public void testSingleEOF() throws Exception {
 		TokenSource lexer = new TokenSource() {
 
-			//Override
+			@Override
 			public Token nextToken() {
 				return new CommonToken(Token.EOF);
 			}
 
-			//Override
+			@Override
 			public int getLine() {
 				return 0;
 			}
 
-			//Override
+			@Override
 			public int getCharPositionInLine() {
 				return 0;
 			}
 
-			//Override
+			@Override
 			public CharStream getInputStream() {
 				return null;
 			}
 
-			//Override
+			@Override
 			public String getSourceName() {
 				return IntStream.UNKNOWN_SOURCE_NAME;
 			}
 
-			//Override
+			@Override
 			public TokenFactory<?> getTokenFactory() {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 
-			//Override
+			@Override
 			public void setTokenFactory(TokenFactory<?> factory) {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
@@ -240,37 +240,37 @@ public class TestCommonTokenStream extends TestBufferedTokenStream {
 	public void testCannotConsumeEOF() {
 		TokenSource lexer = new TokenSource() {
 
-			//Override
+			@Override
 			public Token nextToken() {
 				return new CommonToken(Token.EOF);
 			}
 
-			//Override
+			@Override
 			public int getLine() {
 				return 0;
 			}
 
-			//Override
+			@Override
 			public int getCharPositionInLine() {
 				return 0;
 			}
 
-			//Override
+			@Override
 			public CharStream getInputStream() {
 				return null;
 			}
 
-			//Override
+			@Override
 			public String getSourceName() {
 				return IntStream.UNKNOWN_SOURCE_NAME;
 			}
 
-			//Override
+			@Override
 			public TokenFactory<?> getTokenFactory() {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 
-			//Override
+			@Override
 			public void setTokenFactory(TokenFactory<?> factory) {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}

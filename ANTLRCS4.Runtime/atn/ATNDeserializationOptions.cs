@@ -4,15 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+
+namespace org.antlr.v4.runtime.atn;
 
 /**
  *
  * @author Sam Harwell
  */
 public class ATNDeserializationOptions {
-	private static final ATNDeserializationOptions defaultOptions;
-	static {
+	private static readonly ATNDeserializationOptions defaultOptions;
+	static ATNDeserializationOptions(){
 		defaultOptions = new ATNDeserializationOptions();
 		defaultOptions.makeReadOnly();
 	}
@@ -36,28 +38,28 @@ public class ATNDeserializationOptions {
 		return defaultOptions;
 	}
 
-	public final bool isReadOnly() {
+	public bool isReadOnly() {
 		return readOnly;
 	}
 
-	public final void makeReadOnly() {
+	public void makeReadOnly() {
 		readOnly = true;
 	}
 
-	public final bool isVerifyATN() {
+	public bool isVerifyATN() {
 		return verifyATN;
 	}
 
-	public final void setVerifyATN(bool verifyATN) {
+	public void setVerifyATN(bool verifyATN) {
 		throwIfReadOnly();
 		this.verifyATN = verifyATN;
 	}
 
-	public final bool isGenerateRuleBypassTransitions() {
+	public bool isGenerateRuleBypassTransitions() {
 		return generateRuleBypassTransitions;
 	}
 
-	public final void setGenerateRuleBypassTransitions(bool generateRuleBypassTransitions) {
+	public  void setGenerateRuleBypassTransitions(bool generateRuleBypassTransitions) {
 		throwIfReadOnly();
 		this.generateRuleBypassTransitions = generateRuleBypassTransitions;
 	}

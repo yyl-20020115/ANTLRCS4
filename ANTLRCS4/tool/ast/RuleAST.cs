@@ -30,7 +30,7 @@ public class RuleAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	//Override
+	@Override
 	public RuleAST dupNode() { return new RuleAST(this); }
 
 	public ActionAST getLexerAction() {
@@ -45,6 +45,6 @@ public class RuleAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	//Override
+	@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

@@ -24,15 +24,15 @@ public final class PredicateTransition extends AbstractPredicateTransition {
 		this.isCtxDependent = isCtxDependent;
 	}
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return PREDICATE;
 	}
 
-	//Override
+	@Override
 	public boolean isEpsilon() { return true; }
 
-	//Override
+	@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
@@ -41,7 +41,7 @@ public final class PredicateTransition extends AbstractPredicateTransition {
    		return new SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent);
    	}
 
-	//Override
+	@Override
 	public String toString() {
 		return "pred_"+ruleIndex+":"+predIndex;
 	}

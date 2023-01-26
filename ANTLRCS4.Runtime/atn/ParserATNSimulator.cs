@@ -318,11 +318,11 @@ public class ParserATNSimulator extends ATNSimulator {
 		//		System.out.println(dot.getDOT(atn.rules.get(1), parser.getRuleNames()));
 	}
 
-	//Override
+	@Override
 	public void reset() {
 	}
 
-	//Override
+	@Override
 	public void clearDFA() {
 		for (int d = 0; d < decisionToDFA.length; d++) {
 			decisionToDFA[d] = new DFA(atn.getDecisionState(d), d);
@@ -2188,7 +2188,7 @@ public class ParserATNSimulator extends ATNSimulator {
 	public static String getSafeEnv(String envName) {
 		try {
 			return AccessController.doPrivileged(new PrivilegedAction<String>() {
-				//Override
+				@Override
 				public String run() {
 					return System.getenv(envName);
 				}

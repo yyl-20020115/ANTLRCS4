@@ -40,7 +40,7 @@ public final class LexerModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#MODE}.
 	 */
-	//Override
+	@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.MODE;
 	}
@@ -49,7 +49,7 @@ public final class LexerModeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	//Override
+	@Override
 	public boolean isPositionDependent() {
 		return false;
 	}
@@ -60,12 +60,12 @@ public final class LexerModeAction implements LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#mode} with the
 	 * value provided by {@link #getMode}.</p>
 	 */
-	//Override
+	@Override
 	public void execute(Lexer lexer) {
 		lexer.mode(mode);
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
@@ -73,7 +73,7 @@ public final class LexerModeAction implements LexerAction {
 		return MurmurHash.finish(hash, 2);
 	}
 
-	//Override
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -85,7 +85,7 @@ public final class LexerModeAction implements LexerAction {
 		return mode == ((LexerModeAction)obj).mode;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		return String.format("mode(%d)", mode);
 	}

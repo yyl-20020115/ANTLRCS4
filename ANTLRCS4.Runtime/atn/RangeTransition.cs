@@ -18,21 +18,21 @@ public final class RangeTransition extends Transition {
 		this.to = to;
 	}
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return RANGE;
 	}
 
-	//Override
+	@Override
 
 	public IntervalSet label() { return IntervalSet.of(from, to); }
 
-	//Override
+	@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= from && symbol <= to;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		return new StringBuilder("'")
 				.appendCodePoint(from)

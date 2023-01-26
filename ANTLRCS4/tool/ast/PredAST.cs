@@ -17,9 +17,9 @@ public class PredAST : ActionAST {
     public PredAST(int type) { super(type); }
     public PredAST(int type, Token t) { super(type, t); }
 
-	//Override
+	@Override
 	public PredAST dupNode() { return new PredAST(this); }
 
-	//Override
+	@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

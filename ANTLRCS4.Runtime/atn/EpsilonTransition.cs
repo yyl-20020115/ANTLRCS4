@@ -4,11 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
-public final class EpsilonTransition extends Transition {
+public class EpsilonTransition : Transition {
 
-	private final int outermostPrecedenceReturn;
+	private readonly int outermostPrecedenceReturn;
 
 	public EpsilonTransition(ATNState target) {
 		this(target, -1);
@@ -31,20 +31,20 @@ public final class EpsilonTransition extends Transition {
 		return outermostPrecedenceReturn;
 	}
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return EPSILON;
 	}
 
-	//Override
+	@Override
 	public bool isEpsilon() { return true; }
 
-	//Override
+	@Override
 	public bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 
-	//Override
+	@Override
 
 	public String toString() {
 		return "epsilon";

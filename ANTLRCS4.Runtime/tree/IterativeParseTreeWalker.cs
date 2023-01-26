@@ -18,7 +18,7 @@ import java.util.Deque;
  */
 public class IterativeParseTreeWalker extends ParseTreeWalker {
 
-	//Override
+	@Override
 	public void walk(ParseTreeListener listener, ParseTree t) {
 
 		final Deque<ParseTree> nodeStack = new ArrayDeque<ParseTree>();

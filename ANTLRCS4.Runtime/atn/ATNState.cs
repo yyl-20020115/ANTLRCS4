@@ -5,16 +5,9 @@
  */
 
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.misc.IntervalSet;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * The following images show the relation of states and
@@ -94,8 +87,8 @@ public abstract class ATNState {
 	public static readonly int PLUS_LOOP_BACK = 11;
 	public static readonly int LOOP_END = 12;
 
-	public static readonly List<String> serializationNames =
-		Collections.unmodifiableList(Arrays.asList(
+	public static readonly List<String> serializationNames = new ()
+		{
 			"INVALID",
 			"BASIC",
 			"RULE_START",
@@ -109,7 +102,7 @@ public abstract class ATNState {
 			"STAR_LOOP_ENTRY",
 			"PLUS_LOOP_BACK",
 			"LOOP_END"
-		));
+	};
 
 	public static readonly int INVALID_STATE_NUMBER = -1;
 
@@ -124,7 +117,7 @@ public abstract class ATNState {
 
 	/** Track the transitions emanating from this ATN state. */
 	protected readonly List<Transition> transitions =
-		new ArrayList<Transition>(INITIAL_NUM_TRANSITIONS);
+		new List<Transition>(INITIAL_NUM_TRANSITIONS);
 
 	/** Used to cache lookahead during parsing, not used during construction */
     public IntervalSet nextTokenWithinRule;
@@ -142,19 +135,19 @@ public abstract class ATNState {
 	}
 
 	public override String ToString() {
-		return String.valueOf(stateNumber);
+		return stateNumber.ToString();
 	}
 
 	public Transition[] getTransitions() {
-		return transitions.toArray(new Transition[0]);
+		return transitions.ToArray();
 	}
 
 	public int getNumberOfTransitions() {
-		return transitions.size();
+		return transitions.Count;
 	}
 
 	public void addTransition(Transition e) {
-		addTransition(transitions.size(), e);
+		addTransition(transitions.Count, e);
 	}
 
 	public void addTransition(int index, Transition e) {
@@ -167,7 +160,7 @@ public abstract class ATNState {
 		}
 
 		bool alreadyPresent = false;
-		for (Transition t : transitions) {
+		foreach (Transition t in transitions) {
 			if ( t.target.stateNumber == e.target.stateNumber ) {
 				if ( t.label()!=null && e.label()!=null && t.label().equals(e.label()) ) {
 //					System.err.println("Repeated transition upon "+e.label()+" from "+stateNumber+"->"+t.target.stateNumber);

@@ -9,7 +9,7 @@ package org.antlr.v4.runtime;
 import org.antlr.v4.runtime.misc.Interval;
 
 /** A source of characters for an ANTLR lexer. */
-public interface CharStream extends IntStream {
+public interface CharStream : IntStream {
 	/**
 	 * This method returns the text for a range of characters within this input
 	 * stream. This method is guaranteed to not throw an exception if the

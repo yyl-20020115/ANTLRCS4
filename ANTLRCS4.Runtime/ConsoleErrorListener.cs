@@ -27,7 +27,7 @@ public class ConsoleErrorListener extends BaseErrorListener {
 	 * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
 	 * </pre>
 	 */
-	//Override
+	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer,
 							Object offendingSymbol,
 							int line,

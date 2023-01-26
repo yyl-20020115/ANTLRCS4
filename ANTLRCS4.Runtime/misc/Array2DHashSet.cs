@@ -108,7 +108,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return b;
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		for (T[] bucket : buckets) {
@@ -123,7 +123,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return hash;
 	}
 
-	//Override
+	@Override
 	public bool equals(Object o) {
 		if (o == this) return true;
 		if ( !(o is Array2DHashSet) ) return false;
@@ -179,23 +179,23 @@ public class Array2DHashSet<T> : HashSet<T> {
 		assert n == oldSize;
 	}
 
-	//Override
+	@Override
 	public final bool add(T t) {
 		T existing = getOrAdd(t);
 		return existing==t;
 	}
 
-	//Override
+	@Override
 	public final int size() {
 		return n;
 	}
 
-	//Override
+	@Override
 	public final bool isEmpty() {
 		return n==0;
 	}
 
-	//Override
+	@Override
 	public final bool contains(Object o) {
 		return containsFast(asElementType(o));
 	}
@@ -208,12 +208,12 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return get(obj) != null;
 	}
 
-	//Override
+	@Override
 	public Iterator<T> iterator() {
 		return new SetIterator(toArray());
 	}
 
-	//Override
+	@Override
 	public T[] toArray() {
 		T[] a = createBucket(size());
 		int i = 0;
@@ -234,7 +234,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return a;
 	}
 
-	//Override
+	@Override
 	public <U> U[] toArray(U[] a) {
 		if (a.length < size()) {
 			a = Arrays.copyOf(a, size());
@@ -259,7 +259,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return a;
 	}
 
-	//Override
+	@Override
 	public final bool remove(Object o) {
 		return removeFast(asElementType(o));
 	}
@@ -295,7 +295,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return false;
 	}
 
-	//Override
+	@Override
 	public bool containsAll(Collection<?> collection) {
 		if ( collection is Array2DHashSet ) {
 			Array2DHashSet<?> s = (Array2DHashSet<?>)collection;
@@ -315,7 +315,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return true;
 	}
 
-	//Override
+	@Override
 	public bool addAll(Collection<? : T> c) {
 		bool changed = false;
 		for (T o : c) {
@@ -325,7 +325,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return changed;
 	}
 
-	//Override
+	@Override
 	public bool retainAll(Collection<?> c) {
 		int newsize = 0;
 		for (T[] bucket : buckets) {
@@ -367,7 +367,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return changed;
 	}
 
-	//Override
+	@Override
 	public bool removeAll(Collection<?> c) {
 		bool changed = false;
 		for (Object o : c) {
@@ -377,14 +377,14 @@ public class Array2DHashSet<T> : HashSet<T> {
 		return changed;
 	}
 
-	//Override
+	@Override
 	public void clear() {
 		n = 0;
 		buckets = createBuckets(this.initialCapacity);
 		threshold = (int)Math.floor(this.initialCapacity * LOAD_FACTOR);
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		if ( size()==0 ) return "{}";
 
@@ -473,12 +473,12 @@ public class Array2DHashSet<T> : HashSet<T> {
 			this.data = data;
 		}
 
-		//Override
+		@Override
 		public bool hasNext() {
 			return nextIndex < data.length;
 		}
 
-		//Override
+		@Override
 		public T next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
@@ -488,7 +488,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 			return data[nextIndex++];
 		}
 
-		//Override
+		@Override
 		public void remove() {
 			if (removed) {
 				throw new IllegalStateException();

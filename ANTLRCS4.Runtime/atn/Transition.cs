@@ -20,16 +20,16 @@ namespace org.antlr.v4.runtime.atn;
  */
 public abstract class Transition {
 	// constants for serialization
-	public static readonly int EPSILON			= 1;
-	public static readonly int RANGE			= 2;
-	public static readonly int RULE			= 3;
-	public static readonly int PREDICATE		= 4; // e.g., {isType(input.LT(1))}?
-	public static readonly int ATOM			= 5;
-	public static readonly int ACTION			= 6;
-	public static readonly int SET				= 7; // ~(A|B) or ~atom, wildcard, which convert to next 2
-	public static readonly int NOT_SET			= 8;
-	public static readonly int WILDCARD		= 9;
-	public static readonly int PRECEDENCE		= 10;
+	public const int EPSILON			= 1;
+	public const int RANGE			= 2;
+	public const int RULE			= 3;
+	public const int PREDICATE		= 4; // e.g., {isType(input.LT(1))}?
+	public const int ATOM			= 5;
+	public const int ACTION			= 6;
+	public const int SET				= 7; // ~(A|B) or ~atom, wildcard, which convert to next 2
+	public const int NOT_SET			= 8;
+	public const int WILDCARD		= 9;
+	public const int PRECEDENCE		= 10;
 
 
 	public static readonly List<String> serializationNames =

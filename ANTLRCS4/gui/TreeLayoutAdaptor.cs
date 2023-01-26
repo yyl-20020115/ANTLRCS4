@@ -21,17 +21,17 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 			this.tree = tree;
 		}
 
-		//Override
+		@Override
 		public Iterator<Tree> iterator() {
 			return new Iterator<Tree>() {
 				private int i = 0;
 
-				//Override
+				@Override
 				public boolean hasNext() {
 					return tree.getChildCount() > i;
 				}
 
-				//Override
+				@Override
 				public Tree next() {
 					if (!hasNext())
 						throw new NoSuchElementException();
@@ -39,7 +39,7 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 					return tree.getChild(i++);
 				}
 
-				//Override
+				@Override
 				public void remove() {
 					throw new UnsupportedOperationException();
 				}
@@ -56,17 +56,17 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 			this.tree = tree;
 		}
 
-		//Override
+		@Override
 		public Iterator<Tree> iterator() {
 			return new Iterator<Tree>() {
 				private int i = tree.getChildCount();
 
-				//Override
+				@Override
 				public boolean hasNext() {
 					return i > 0;
 				}
 
-				//Override
+				@Override
 				public Tree next() {
 					if (!hasNext())
 						throw new NoSuchElementException();
@@ -74,7 +74,7 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 					return tree.getChild(--i);
 				}
 
-				//Override
+				@Override
 				public void remove() {
 					throw new UnsupportedOperationException();
 				}
@@ -88,37 +88,37 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 		this.root = root;
 	}
 
-	//Override
+	@Override
 	public boolean isLeaf(Tree node) {
 		return node.getChildCount() == 0;
 	}
 
-	//Override
+	@Override
 	public boolean isChildOfParent(Tree node, Tree parentNode) {
 		return node.getParent() == parentNode;
 	}
 
-	//Override
+	@Override
 	public Tree getRoot() {
 		return root;
 	}
 
-	//Override
+	@Override
 	public Tree getLastChild(Tree parentNode) {
 		return parentNode.getChild(parentNode.getChildCount() - 1);
 	}
 
-	//Override
+	@Override
 	public Tree getFirstChild(Tree parentNode) {
 		return parentNode.getChild(0);
 	}
 
-	//Override
+	@Override
 	public Iterable<Tree> getChildrenReverse(Tree node) {
 		return new AntlrTreeChildrenReverseIterable(node);
 	}
 
-	//Override
+	@Override
 	public Iterable<Tree> getChildren(Tree node) {
 		return new AntlrTreeChildrenIterable(node);
 	}

@@ -63,7 +63,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 		return options==null ? 0 : options.size();
 	}
 
-	//Override
+	@Override
 	public abstract GrammarASTWithOptions dupNode();
 
 

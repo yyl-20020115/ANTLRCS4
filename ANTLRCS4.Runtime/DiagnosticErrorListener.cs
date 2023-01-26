@@ -34,11 +34,11 @@ import java.util.BitSet;
  *
  * @author Sam Harwell
  */
-public class DiagnosticErrorListener extends BaseErrorListener {
+public class DiagnosticErrorListener : BaseErrorListener {
 	/**
 	 * When {@code true}, only exactly known ambiguities are reported.
 	 */
-	protected final bool exactOnly;
+	protected readonly bool exactOnly;
 
 	/**
 	 * Initializes a new instance of {@link DiagnosticErrorListener} which only
@@ -59,7 +59,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		this.exactOnly = exactOnly;
 	}
 
-	//Override
+	@Override
 	public void reportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
@@ -80,7 +80,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	//Override
+	@Override
 	public void reportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
@@ -95,7 +95,7 @@ public class DiagnosticErrorListener extends BaseErrorListener {
 		recognizer.notifyErrorListeners(message);
 	}
 
-	//Override
+	@Override
 	public void reportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,

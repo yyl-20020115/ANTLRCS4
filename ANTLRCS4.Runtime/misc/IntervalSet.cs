@@ -75,7 +75,7 @@ public class IntervalSet : IntSet {
     /** Add a single element to the set.  An isolated element is stored
      *  as a range el..el.
      */
-    //Override
+    @Override
     public void add(int el) {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
         add(el,el);
@@ -146,7 +146,7 @@ public class IntervalSet : IntSet {
 		return r;
 	}
 
-	//Override
+	@Override
 	public IntervalSet addAll(IntSet set) {
 		if ( set==null ) {
 			return this;
@@ -175,7 +175,7 @@ public class IntervalSet : IntSet {
     }
 
     /** {@inheritDoc} */
-    //Override
+    @Override
     public IntervalSet complement(IntSet vocabulary) {
 		if ( vocabulary==null || vocabulary.isNil() ) {
 			return null; // nothing in common with null set
@@ -193,7 +193,7 @@ public class IntervalSet : IntSet {
 		return vocabularyIS.subtract(this);
     }
 
-	//Override
+	@Override
 	public IntervalSet subtract(IntSet a) {
 		if (a == null || a.isNil()) {
 			return new IntervalSet(this);
@@ -290,7 +290,7 @@ public class IntervalSet : IntSet {
 		return result;
 	}
 
-	//Override
+	@Override
 	public IntervalSet or(IntSet a) {
 		IntervalSet o = new IntervalSet();
 		o.addAll(this);
@@ -299,7 +299,7 @@ public class IntervalSet : IntSet {
 	}
 
     /** {@inheritDoc} */
-	//Override
+	@Override
 	public IntervalSet and(IntSet other) {
 		if ( other==null ) { //|| !(other is IntervalSet) ) {
 			return null; // nothing in common with null set
@@ -369,7 +369,7 @@ public class IntervalSet : IntSet {
 	}
 
     /** {@inheritDoc} */
-    //Override
+    @Override
     public bool contains(int el) {
 		int n = intervals.size();
 		int l = 0;
@@ -393,7 +393,7 @@ public class IntervalSet : IntSet {
     }
 
     /** {@inheritDoc} */
-    //Override
+    @Override
     public bool isNil() {
         return intervals==null || intervals.isEmpty();
     }
@@ -431,7 +431,7 @@ public class IntervalSet : IntSet {
         return intervals;
     }
 
-	//Override
+	@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		for (Interval I : intervals) {
@@ -448,7 +448,7 @@ public class IntervalSet : IntSet {
      *  to make sure they are the same.  Interval.equals() is used
      *  by the List.equals() method to check the ranges.
      */
-    //Override
+    @Override
     public bool equals(Object obj) {
         if ( obj==null || !(obj is IntervalSet) ) {
             return false;
@@ -457,7 +457,7 @@ public class IntervalSet : IntSet {
 		return this.intervals.equals(other.intervals);
 	}
 
-	//Override
+	@Override
 	public String toString() { return toString(false); }
 
 	public String toString(bool elemAreChar) {
@@ -553,7 +553,7 @@ public class IntervalSet : IntSet {
 		}
 	}
 
-    //Override
+    @Override
     public int size() {
 		int n = 0;
 		int numIntervals = intervals.size();
@@ -582,7 +582,7 @@ public class IntervalSet : IntSet {
 		return values;
 	}
 
-    //Override
+    @Override
     public List<Integer> toList() {
 		List<Integer> values = new ArrayList<Integer>();
 		int n = intervals.size();
@@ -634,7 +634,7 @@ public class IntervalSet : IntSet {
 		return toIntegerList().toArray();
 	}
 
-	//Override
+	@Override
 	public void remove(int el) {
         if ( readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
         int n = intervals.size();

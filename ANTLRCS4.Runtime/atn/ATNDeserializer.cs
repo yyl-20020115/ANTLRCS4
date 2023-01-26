@@ -4,18 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
-
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.runtime.misc.Pair;
-
-import java.io.InvalidClassException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+namespace org.antlr.v4.runtime.atn;
 
 /** Deserialize ATNs for JavaTarget; it's complicated by the fact that java requires
  *  that we serialize the list of integers as 16 bit characters in a string. Other
@@ -25,8 +14,8 @@ import java.util.Locale;
  * @author Sam Harwell
  */
 public class ATNDeserializer {
-	public static final int SERIALIZED_VERSION;
-	static {
+	public static readonly int SERIALIZED_VERSION;
+	static ATNDeserializer(){
 		SERIALIZED_VERSION = 4;
 	}
 
@@ -53,7 +42,7 @@ public class ATNDeserializer {
 		int version = data[p++];
 		if (version != SERIALIZED_VERSION) {
 			String reason = String.format(Locale.getDefault(), "Could not deserialize ATN with version %d (expected %d).", version, SERIALIZED_VERSION);
-			throw new UnsupportedOperationException(new InvalidClassException(ATN.class.getName(), reason));
+			throw new UnsupportedOperationException(new InvalidClassException(ATN.getName(), reason));
 		}
 
 		ATNType grammarType = ATNType.values()[data[p++]];

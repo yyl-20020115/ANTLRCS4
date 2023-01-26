@@ -25,24 +25,24 @@ public class SingletonPredictionContext : PredictionContext {
 		return new SingletonPredictionContext(parent, returnState);
 	}
 
-	//Override
+	@Override
 	public int size() {
 		return 1;
 	}
 
-	//Override
+	@Override
 	public PredictionContext getParent(int index) {
 		assert index == 0;
 		return parent;
 	}
 
-	//Override
+	@Override
 	public int getReturnState(int index) {
 		assert index == 0;
 		return returnState;
 	}
 
-	//Override
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
@@ -60,7 +60,7 @@ public class SingletonPredictionContext : PredictionContext {
 			(parent!=null && parent.equals(s.parent));
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		String up = parent!=null ? parent.toString() : "";
 		if ( up.length()==0 ) {

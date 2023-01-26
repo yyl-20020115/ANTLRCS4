@@ -20,21 +20,21 @@ public class SetTransition extends Transition {
 		this.set = set;
 	}
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return SET;
 	}
 
-	//Override
+	@Override
 
 	public IntervalSet label() { return set; }
 
-	//Override
+	@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return set.contains(symbol);
 	}
 
-	//Override
+	@Override
 
 	public String toString() {
 		return set.toString();

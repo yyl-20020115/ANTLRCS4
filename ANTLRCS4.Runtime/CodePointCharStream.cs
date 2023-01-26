@@ -89,7 +89,7 @@ public abstract class CodePointCharStream implements CharStream {
 		throw new UnsupportedOperationException("Not reached");
 	}
 
-	//Override
+	@Override
 	public final void consume() {
 		if (size - position == 0) {
 			assert LA(1) == IntStream.EOF;
@@ -98,32 +98,32 @@ public abstract class CodePointCharStream implements CharStream {
 		position = position + 1;
 	}
 
-	//Override
+	@Override
 	public final int index() {
 		return position;
 	}
 
-	//Override
+	@Override
 	public final int size() {
 		return size;
 	}
 
 	/** mark/release do nothing; we have entire buffer */
-	//Override
+	@Override
 	public final int mark() {
 		return -1;
 	}
 
-	//Override
+	@Override
 	public final void release(int marker) {
 	}
 
-	//Override
+	@Override
 	public final void seek(int index) {
 		position = index;
 	}
 
-	//Override
+	@Override
 	public final String getSourceName() {
 		if (name == null || name.isEmpty()) {
 			return UNKNOWN_SOURCE_NAME;
@@ -132,7 +132,7 @@ public abstract class CodePointCharStream implements CharStream {
 		return name;
 	}
 
-	//Override
+	@Override
 	public final String toString() {
 		return getText(Interval.of(0, size - 1));
 	}
@@ -149,7 +149,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		//Override
+		@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -160,7 +160,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(byteArray, startIdx, len, StandardCharsets.ISO_8859_1);
 		}
 
-		//Override
+		@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -183,7 +183,7 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		//Override
+		@Override
 		Object getInternalStorage() {
 			return byteArray;
 		}
@@ -201,7 +201,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		//Override
+		@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -215,7 +215,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(charArray, startIdx, len);
 		}
 
-		//Override
+		@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -238,7 +238,7 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		//Override
+		@Override
 		Object getInternalStorage() {
 			return charArray;
 		}
@@ -256,7 +256,7 @@ public abstract class CodePointCharStream implements CharStream {
 		}
 
 		/** Return the UTF-16 encoded string for the given interval */
-		//Override
+		@Override
 		public String getText(Interval interval) {
 			int startIdx = Math.min(interval.a, size);
 			int len = Math.min(interval.b - interval.a + 1, size - startIdx);
@@ -266,7 +266,7 @@ public abstract class CodePointCharStream implements CharStream {
 			return new String(intArray, startIdx, len);
 		}
 
-		//Override
+		@Override
 		public int LA(int i) {
 			int offset;
 			switch (Integer.signum(i)) {
@@ -289,7 +289,7 @@ public abstract class CodePointCharStream implements CharStream {
 			throw new UnsupportedOperationException("Not reached");
 		}
 
-		//Override
+		@Override
 		Object getInternalStorage() {
 			return intArray;
 		}

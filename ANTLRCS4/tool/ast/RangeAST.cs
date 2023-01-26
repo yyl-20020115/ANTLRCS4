@@ -16,11 +16,11 @@ public class RangeAST : GrammarAST implements RuleElementAST {
 
 	public RangeAST(Token t) { super(t); }
 
-	//Override
+	@Override
 	public RangeAST dupNode() {
 		return new RangeAST(this);
 	}
 
-	//Override
+	@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

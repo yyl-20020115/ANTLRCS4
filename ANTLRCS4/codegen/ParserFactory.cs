@@ -57,17 +57,17 @@ import java.util.List;
 public class ParserFactory : DefaultOutputModelFactory {
 	public ParserFactory(CodeGenerator gen) { super(gen); }
 
-	//Override
+	@Override
 	public ParserFile parserFile(String fileName) {
 		return new ParserFile(this, fileName);
 	}
 
-	//Override
+	@Override
 	public Parser parser(ParserFile file) {
 		return new Parser(this, file);
 	}
 
-	//Override
+	@Override
 	public RuleFunction rule(Rule r) {
 		if ( r is LeftRecursiveRule ) {
 			return new LeftRecursiveRuleFunction(this, (LeftRecursiveRule)r);
@@ -78,30 +78,30 @@ public class ParserFactory : DefaultOutputModelFactory {
 		}
 	}
 
-	//Override
+	@Override
 	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) {
 		return alternative(alt, outerMost);
 	}
 
-	//Override
+	@Override
 	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) {
 		if ( outerMost ) return new CodeBlockForOuterMostAlt(this, alt);
 		return new CodeBlockForAlt(this);
 	}
 
-	//Override
+	@Override
 	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops) {
 		blk.ops = ops;
 		return blk;
 	}
 
-	//Override
+	@Override
 	public List<SrcOp> action(ActionAST ast) { return list(new Action(this, ast)); }
 
-	//Override
+	@Override
 	public List<SrcOp> sempred(ActionAST ast) { return list(new SemPred(this, ast)); }
 
-	//Override
+	@Override
 	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) {
 		InvokeRule invokeOp = new InvokeRule(this, ID, label);
 		// If no manual label and action refs as token/rule not label, we need to define implicit label
@@ -110,7 +110,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return list(invokeOp, listLabelOp);
 	}
 
-	//Override
+	@Override
 	public List<SrcOp> tokenRef(GrammarAST ID, GrammarAST labelAST, GrammarAST args) {
 		MatchToken matchOp = new MatchToken(this, (TerminalAST) ID);
 		if ( labelAST!=null ) {
@@ -149,7 +149,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return new TokenListDecl(this, gen.getTarget().getListLabel(label));
 	}
 
-	//Override
+	@Override
 	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, bool invert) {
 		MatchSet matchOp;
 		if ( invert ) matchOp = new MatchNotSet(this, setAST);
@@ -173,7 +173,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return list(matchOp, listLabelOp);
 	}
 
-	//Override
+	@Override
 	public List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST) {
 		Wildcard wild = new Wildcard(this, ast);
 		// TODO: dup with tokenRef
@@ -192,7 +192,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return list(wild, listLabelOp);
 	}
 
-	//Override
+	@Override
 	public Choice getChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST labelAST) {
 		int decision = ((DecisionState)blkAST.atnState).decision;
 		Choice c;
@@ -218,7 +218,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return c;
 	}
 
-	//Override
+	@Override
 	public Choice getEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
 		if (!g.tool.force_atn) {
 			int decision;
@@ -240,17 +240,17 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return getComplexEBNFBlock(ebnfRoot, alts);
 	}
 
-	//Override
+	@Override
 	public Choice getLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) {
 		return new LL1AltBlock(this, blkAST, alts);
 	}
 
-	//Override
+	@Override
 	public Choice getComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) {
 		return new AltBlock(this, blkAST, alts);
 	}
 
-	//Override
+	@Override
 	public Choice getLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
 		int ebnf = 0;
 		if ( ebnfRoot!=null ) ebnf = ebnfRoot.getType();
@@ -272,7 +272,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return c;
 	}
 
-	//Override
+	@Override
 	public Choice getComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
 		int ebnf = 0;
 		if ( ebnfRoot!=null ) ebnf = ebnfRoot.getType();
@@ -291,12 +291,12 @@ public class ParserFactory : DefaultOutputModelFactory {
 		return c;
 	}
 
-	//Override
+	@Override
 	public List<SrcOp> getLL1Test(IntervalSet look, GrammarAST blkAST) {
 		return list(new TestSetInline(this, blkAST, look, gen.getTarget().getInlineTestSetWordSize()));
 	}
 
-	//Override
+	@Override
 	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
 		Alternative currentOuterMostAlt = getCurrentOuterMostAlt();
 		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.containsKey(ID.getText());

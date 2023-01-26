@@ -11,7 +11,7 @@ public class ContextRuleListIndexedGetterDecl : ContextRuleListGetterDecl {
 		super(factory, name, ctxName);
 	}
 
-	//Override
+	@Override
 	public String getArgType() {
 		return "int";
 	}

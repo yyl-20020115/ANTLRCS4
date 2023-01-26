@@ -17,24 +17,24 @@ public class TerminalNodeImpl implements TerminalNode {
 
 	public TerminalNodeImpl(Token symbol) {	this.symbol = symbol;	}
 
-	//Override
+	@Override
 	public ParseTree getChild(int i) {return null;}
 
-	//Override
+	@Override
 	public Token getSymbol() {return symbol;}
 
-	//Override
+	@Override
 	public ParseTree getParent() { return parent; }
 
-	//Override
+	@Override
 	public void setParent(RuleContext parent) {
 		this.parent = parent;
 	}
 
-	//Override
+	@Override
 	public Token getPayload() { return symbol; }
 
-	//Override
+	@Override
 	public Interval getSourceInterval() {
 		if ( symbol ==null ) return Interval.INVALID;
 
@@ -42,29 +42,29 @@ public class TerminalNodeImpl implements TerminalNode {
 		return new Interval(tokenIndex, tokenIndex);
 	}
 
-	//Override
+	@Override
 	public int getChildCount() { return 0; }
 
-	//Override
+	@Override
 	public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 		return visitor.visitTerminal(this);
 	}
 
-	//Override
+	@Override
 	public String getText() { return symbol.getText(); }
 
-	//Override
+	@Override
 	public String toStringTree(Parser parser) {
 		return toString();
 	}
 
-	//Override
+	@Override
 	public String toString() {
 			if ( symbol.getType() == Token.EOF ) return "<EOF>";
 			return symbol.getText();
 	}
 
-	//Override
+	@Override
 	public String toStringTree() {
 		return toString();
 	}

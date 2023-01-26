@@ -123,12 +123,12 @@ public class VocabularyImpl : Vocabulary {
 		return new VocabularyImpl(literalNames, symbolicNames, tokenNames);
 	}
 
-	//Override
+	@Override
 	public int getMaxTokenType() {
 		return maxTokenType;
 	}
 
-	//Override
+	@Override
 	public String getLiteralName(int tokenType) {
 		if (tokenType >= 0 && tokenType < literalNames.length) {
 			return literalNames[tokenType];
@@ -137,7 +137,7 @@ public class VocabularyImpl : Vocabulary {
 		return null;
 	}
 
-	//Override
+	@Override
 	public String getSymbolicName(int tokenType) {
 		if (tokenType >= 0 && tokenType < symbolicNames.length) {
 			return symbolicNames[tokenType];
@@ -150,7 +150,7 @@ public class VocabularyImpl : Vocabulary {
 		return null;
 	}
 
-	//Override
+	@Override
 	public String getDisplayName(int tokenType) {
 		if (tokenType >= 0 && tokenType < displayNames.length) {
 			String displayName = displayNames[tokenType];

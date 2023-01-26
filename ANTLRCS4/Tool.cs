@@ -448,7 +448,7 @@ public class Tool {
 		// check for undefined rules
 		class UndefChecker extends GrammarTreeVisitor {
 			public boolean badref = false;
-			//Override
+			@Override
 			public void tokenRef(TerminalAST ref) {
 				if ("EOF".equals(ref.getText())) {
 					// this is a special predefined reference
@@ -458,7 +458,7 @@ public class Tool {
 				if ( g.isLexer() ) ruleRef(ref, null);
 			}
 
-			//Override
+			@Override
 			public void ruleRef(GrammarAST ref, ActionAST arg) {
 				RuleAST ruleAST = ruleToAST.get(ref.getText());
 				String fileName = ref.getToken().getInputStream().getSourceName();
@@ -475,7 +475,7 @@ public class Tool {
 										fileName, ref.token, ref.getText());
 				}
 			}
-			//Override
+			@Override
 			public ErrorManager getErrorManager() { return errMgr; }
 		}
 

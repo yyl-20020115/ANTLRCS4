@@ -36,23 +36,23 @@ public class ParserInterpreterForTesting {
 			}
 		}
 
-		//Override
+		@Override
 		public String getGrammarFileName() {
 			throw new UnsupportedOperationException("not implemented");
 		}
 
-		//Override
+		@Override
 		public String[] getRuleNames() {
 			return g.rules.keySet().toArray(new String[0]);
 		}
 
-		//Override
+		@Override
 		@Deprecated
 		public String[] getTokenNames() {
 			return g.getTokenNames();
 		}
 
-		//Override
+		@Override
 		public ATN getATN() {
 			return atn;
 		}

@@ -39,15 +39,15 @@ public final class RuleTransition extends Transition {
 		this.followState = followState;
 	}
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return RULE;
 	}
 
-	//Override
+	@Override
 	public boolean isEpsilon() { return true; }
 
-	//Override
+	@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}

@@ -22,7 +22,7 @@ public class AltLabelStructDecl : StructDecl {
 		derivedFromName = label;
 	}
 
-	//Override
+	@Override
 	public void addDispatchMethods(Rule r) {
 		dispatchMethods = new ArrayList<DispatchMethod>();
 		if ( factory.getGrammar().tool.gen_listener ) {
@@ -34,12 +34,12 @@ public class AltLabelStructDecl : StructDecl {
 		}
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		return name.hashCode();
 	}
 
-	//Override
+	@Override
 	public bool equals(Object obj) {
 		if ( obj == this ) return true;
 		if (!(obj is AltLabelStructDecl)) return false;

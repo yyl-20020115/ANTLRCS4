@@ -188,7 +188,7 @@ public class ParseTreeMatch {
 	/**
 	 * {@inheritDoc}
 	 */
-	//Override
+	@Override
 	public String toString() {
 		return String.format(
 			"Match %s; found %d labels",

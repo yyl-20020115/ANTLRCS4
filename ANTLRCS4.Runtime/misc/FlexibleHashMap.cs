@@ -71,7 +71,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		return b;
 	}
 
-	//Override
+	@Override
 	public V get(Object key) {
 		K typedKey = (K)key;
 		if ( key==null ) return null;
@@ -86,7 +86,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		return null;
 	}
 
-	//Override
+	@Override
 	public V put(K key, V value) {
 		if ( key==null ) return null;
 		if ( n > threshold ) expand();
@@ -109,22 +109,22 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		return null;
 	}
 
-	//Override
+	@Override
 	public V remove(Object key) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public void putAll(Map<? : K, ? : V> m) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public Set<K> keySet() {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public Collection<V> values() {
 		List<V> a = new ArrayList<V>(size());
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
@@ -136,22 +136,22 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		return a;
 	}
 
-	//Override
+	@Override
 	public Set<Map.Entry<K, V>> entrySet() {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public bool containsKey(Object key) {
 		return get(key)!=null;
 	}
 
-	//Override
+	@Override
 	public boolean containsValue(Object value) {
 		throw new UnsupportedOperationException();
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
@@ -166,7 +166,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		return hash;
 	}
 
-	//Override
+	@Override
 	public boolean equals(Object o) {
 		throw new UnsupportedOperationException();
 	}
@@ -191,24 +191,24 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		n = oldSize;
 	}
 
-	//Override
+	@Override
 	public int size() {
 		return n;
 	}
 
-	//Override
+	@Override
 	public boolean isEmpty() {
 		return n==0;
 	}
 
-	//Override
+	@Override
 	public void clear() {
 		buckets = createEntryListArray(this.initialCapacity);
 		n = 0;
 		threshold = (int)Math.floor(this.initialCapacity * LOAD_FACTOR);
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		if ( size()==0 ) return "{}";
 

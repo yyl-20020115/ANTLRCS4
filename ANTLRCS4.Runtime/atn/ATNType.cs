@@ -4,14 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.atn;
 
 /**
  * Represents the type of recognizer an ATN applies to.
  *
  * @author Sam Harwell
  */
-public enum ATNType {
+public enum ATNType : uint
+{
 
 	/**
 	 * A lexer grammar.

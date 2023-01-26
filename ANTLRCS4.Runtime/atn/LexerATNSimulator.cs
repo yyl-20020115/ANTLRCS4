@@ -119,7 +119,7 @@ public class LexerATNSimulator extends ATNSimulator {
 		}
 	}
 
-	//Override
+	@Override
 	public void reset() {
 		prevAccept.reset();
 		startIndex = -1;
@@ -128,7 +128,7 @@ public class LexerATNSimulator extends ATNSimulator {
 		mode = Lexer.DEFAULT_MODE;
 	}
 
-	//Override
+	@Override
 	public void clearDFA() {
 		for (int d = 0; d < decisionToDFA.length; d++) {
 			decisionToDFA[d] = new DFA(atn.getDecisionState(d), d);

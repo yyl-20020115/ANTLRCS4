@@ -182,7 +182,7 @@ public class IntegerList {
 	 * @param o the object to be compared for equality with this list
 	 * @return {@code true} if the specified object is equal to this list
 	 */
-	//Override
+	@Override
 	public bool equals(Object o) {
 		if (o == this) {
 			return true;
@@ -215,7 +215,7 @@ public class IntegerList {
 	 *
 	 * @return the hash code value for this list
 	 */
-	//Override
+	@Override
 	public int hashCode() {
 		int hashCode = 1;
 		for (int i = 0; i < _size; i++) {
@@ -228,7 +228,7 @@ public class IntegerList {
 	/**
 	 * Returns a string representation of this list.
 	 */
-	//Override
+	@Override
 	public String toString() {
 		return Arrays.toString(toArray());
 	}

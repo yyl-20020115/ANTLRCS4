@@ -47,7 +47,7 @@ class TextChunk extends Chunk {
 	 * <p>The implementation for {@link TextChunk} returns the result of
 	 * {@link #getText()} in single quotes.</p>
 	 */
-	//Override
+	@Override
 	public String toString() {
 		return "'"+text+"'";
 	}

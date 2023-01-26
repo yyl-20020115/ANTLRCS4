@@ -4,23 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.IntervalSet;
-
-import java.util.BitSet;
-import java.util.HashSet;
-import java.util.Set;
+namespace org.antlr.v4.runtime.atn;
 
 public class LL1Analyzer {
 	/** Special value added to the lookahead sets to indicate that we hit
 	 *  a predicate during analysis if {@code seeThruPreds==false}.
 	 */
-	public static final int HIT_PRED = Token.INVALID_TYPE;
+	public static readonly int HIT_PRED = Token.INVALID_TYPE;
 
-	public final ATN atn;
+	public readonly ATN atn;
 
 	public LL1Analyzer(ATN atn) { this.atn = atn; }
 
@@ -43,8 +37,8 @@ public class LL1Analyzer {
 		IntervalSet[] look = new IntervalSet[s.getNumberOfTransitions()];
 		for (int alt = 0; alt < s.getNumberOfTransitions(); alt++) {
 			look[alt] = new IntervalSet();
-			Set<ATNConfig> lookBusy = new HashSet<ATNConfig>();
-			boolean seeThruPreds = false; // fail to get lookahead upon pred
+			HashSet<ATNConfig> lookBusy = new HashSet<ATNConfig>();
+			bool seeThruPreds = false; // fail to get lookahead upon pred
 			_LOOK(s.transition(alt).target, null, EmptyPredictionContext.Instance,
 				  look[alt], lookBusy, new BitSet(), seeThruPreds, false);
 			// Wipe out lookahead for this alternative if we found nothing
@@ -97,7 +91,7 @@ public class LL1Analyzer {
 
    	public IntervalSet LOOK(ATNState s, ATNState stopState, RuleContext ctx) {
    		IntervalSet r = new IntervalSet();
-		boolean seeThruPreds = true; // ignore preds; get all lookahead
+		bool seeThruPreds = true; // ignore preds; get all lookahead
 		PredictionContext lookContext = ctx != null ? PredictionContext.fromRuleContext(s.atn, ctx) : null;
    		_LOOK(s, stopState, lookContext,
 			  r, new HashSet<ATNConfig>(), new BitSet(), seeThruPreds, true);
@@ -138,13 +132,13 @@ public class LL1Analyzer {
 						 ATNState stopState,
 						 PredictionContext ctx,
 						 IntervalSet look,
-                         Set<ATNConfig> lookBusy,
+                         HashSet<ATNConfig> lookBusy,
 						 BitSet calledRuleStack,
-						 boolean seeThruPreds, boolean addEOF)
+						 bool seeThruPreds, bool addEOF)
 	{
 //		System.out.println("_LOOK("+s.stateNumber+", ctx="+ctx);
         ATNConfig c = new ATNConfig(s, 0, ctx);
-        if ( !lookBusy.add(c) ) return;
+        if ( !lookBusy.Add(c) ) return;
 
 		if (s == stopState) {
 			if (ctx == null) {
@@ -169,7 +163,7 @@ public class LL1Analyzer {
 
 			if ( ctx != EmptyPredictionContext.Instance ) {
 				// run thru all possible stack tops in ctx
-				boolean removed = calledRuleStack.get(s.ruleIndex);
+				bool removed = calledRuleStack.get(s.ruleIndex);
 				try {
 					calledRuleStack.clear(s.ruleIndex);
 					for (int i = 0; i < ctx.size(); i++) {
@@ -190,7 +184,7 @@ public class LL1Analyzer {
         int n = s.getNumberOfTransitions();
         for (int i=0; i<n; i++) {
 			Transition t = s.transition(i);
-			if ( t.getClass() == RuleTransition.class ) {
+			if ( t.getClass() == typeof(RuleTransition) ) {
 				if (calledRuleStack.get(((RuleTransition)t).target.ruleIndex)) {
 					continue;
 				}
@@ -217,7 +211,7 @@ public class LL1Analyzer {
 			else if ( t.isEpsilon() ) {
 				_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 			}
-			else if ( t.getClass() == WildcardTransition.class ) {
+			else if ( t.getClass() == typeof(WildcardTransition) ) {
 				look.addAll( IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
 			}
 			else {

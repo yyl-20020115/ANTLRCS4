@@ -39,7 +39,7 @@ public class InterpreterRuleContext extends ParserRuleContext {
 		this.ruleIndex = ruleIndex;
 	}
 
-	//Override
+	@Override
 	public int getRuleIndex() {
 		return ruleIndex;
 	}

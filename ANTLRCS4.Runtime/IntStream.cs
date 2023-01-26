@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
 /**
  * A simple stream of symbols whose values are represented as integers. This
@@ -27,13 +27,13 @@ public interface IntStream {
 	 * The value returned by {@link #LA LA()} when the end of the stream is
 	 * reached.
 	 */
-	public static final int EOF = -1;
+	public static readonly int EOF = -1;
 
 	/**
 	 * The value returned by {@link #getSourceName} when the actual name of the
 	 * underlying source is not known.
 	 */
-	public static final String UNKNOWN_SOURCE_NAME = "<unknown>";
+	public static readonly String UNKNOWN_SOURCE_NAME = "<unknown>";
 
 	/**
 	 * Consumes the current symbol in the stream. This method has the following

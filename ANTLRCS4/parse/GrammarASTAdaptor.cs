@@ -19,12 +19,12 @@ public class GrammarASTAdaptor : CommonTreeAdaptor {
     public GrammarASTAdaptor() { }
     public GrammarASTAdaptor(org.antlr.runtime.CharStream input) { this.input = input; }
 
-    //Override
+    @Override
     public Object create(Token token) {
         return new GrammarAST(token);
     }
 
-    //Override
+    @Override
     /** Make sure even imaginary nodes know the input stream */
     public Object create(int tokenType, String text) {
 		GrammarAST t;
@@ -44,13 +44,13 @@ public class GrammarASTAdaptor : CommonTreeAdaptor {
         return t;
     }
 
-    //Override
+    @Override
     public Object dupNode(Object t) {
         if ( t==null ) return null;
         return ((GrammarAST)t).dupNode(); //create(((GrammarAST)t).token);
     }
 
-    //Override
+    @Override
     public Object errorNode(org.antlr.runtime.TokenStream input, org.antlr.runtime.Token start, org.antlr.runtime.Token stop,
                             org.antlr.runtime.RecognitionException e)
     {

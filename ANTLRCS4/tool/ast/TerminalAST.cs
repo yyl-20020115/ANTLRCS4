@@ -18,9 +18,9 @@ public class TerminalAST extends GrammarASTWithOptions implements RuleElementAST
     public TerminalAST(int type) { super(type); }
     public TerminalAST(int type, Token t) { super(type, t); }
 
-	//Override
+	@Override
 	public TerminalAST dupNode() { return new TerminalAST(this); }
 
-	//Override
+	@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

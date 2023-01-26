@@ -10,9 +10,9 @@ package org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public final class BasicState extends ATNState {
+public class BasicState : ATNState {
 
-	//Override
+	@Override
 	public int getStateType() {
 		return BASIC;
 	}

@@ -88,19 +88,19 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		this.errMgr = g.tool.errMgr;
 	}
 
-	//Override
+	@Override
 	public ErrorManager getErrorManager() { return errMgr; }
 
 	public void process() {	visitGrammar(g.ast); }
 
 	// Routines to route visitor traffic to the checking routines
 
-	//Override
+	@Override
 	public void discoverGrammar(GrammarRootAST root, GrammarAST ID) {
 		checkGrammarName(ID.token);
 	}
 
-	//Override
+	@Override
 	public void finishPrequels(GrammarAST firstPrequel) {
 		if ( firstPrequel==null ) return;
 		GrammarAST parent = (GrammarAST)firstPrequel.parent;
@@ -110,22 +110,22 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		checkNumPrequels(options, imports, tokens);
 	}
 
-	//Override
+	@Override
 	public void importGrammar(GrammarAST label, GrammarAST ID) {
 		checkImport(ID.token);
 	}
 
-	//Override
+	@Override
 	public void discoverRules(GrammarAST rules) {
 		checkNumRules(rules);
 	}
 
-	//Override
+	@Override
 	protected void enterMode(GrammarAST tree) {
 		nonFragmentRuleCount = 0;
 	}
 
-	//Override
+	@Override
 	protected void exitMode(GrammarAST tree) {
 		if (nonFragmentRuleCount == 0) {
 			Token token = tree.getToken();
@@ -143,7 +143,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void modeDef(GrammarAST m, GrammarAST ID) {
 		if ( !g.isLexer() ) {
 			g.tool.errMgr.grammarError(ErrorType.MODE_NOT_IN_LEXER, g.fileName,
@@ -151,7 +151,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void discoverRule(RuleAST rule, GrammarAST ID,
 							 List<GrammarAST> modifiers,
 							 ActionAST arg, ActionAST returns,
@@ -163,7 +163,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		checkInvalidRuleDef(ID.token);
 	}
 
-	//Override
+	@Override
 	public void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
 								  GrammarAST block)
 	{
@@ -182,37 +182,37 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	protected void exitLexerRule(GrammarAST tree) {
 		inFragmentRule = false;
 	}
 
-	//Override
+	@Override
 	public void ruleRef(GrammarAST ref, ActionAST arg) {
 		checkInvalidRuleRef(ref.token);
 	}
 
-	//Override
+	@Override
 	public void grammarOption(GrammarAST ID, GrammarAST valueAST) {
 		checkOptions(g.ast, ID.token, valueAST);
 	}
 
-	//Override
+	@Override
 	public void ruleOption(GrammarAST ID, GrammarAST valueAST) {
 		checkOptions((GrammarAST)ID.getAncestor(RULE), ID.token, valueAST);
 	}
 
-	//Override
+	@Override
 	public void blockOption(GrammarAST ID, GrammarAST valueAST) {
 		checkOptions((GrammarAST)ID.getAncestor(BLOCK), ID.token, valueAST);
 	}
 
-	//Override
+	@Override
 	public void defineToken(GrammarAST ID) {
 		checkTokenDefinition(ID.token);
 	}
 
-	//Override
+	@Override
 	protected void enterChannelsSpec(GrammarAST tree) {
 		ErrorType errorType = g.isParser()
 				? ErrorType.CHANNELS_BLOCK_IN_PARSER_GRAMMAR
@@ -224,17 +224,17 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void defineChannel(GrammarAST ID) {
 		checkChannelDefinition(ID.token);
 	}
 
-	//Override
+	@Override
 	public void elementOption(GrammarASTWithOptions elem, GrammarAST ID, GrammarAST valueAST) {
 		checkElementOptions(elem, ID, valueAST);
 	}
 
-	//Override
+	@Override
 	public void finishRule(RuleAST rule, GrammarAST ID, GrammarAST block) {
 		if ( rule.isLexerRule() ) return;
 		BlockAST blk = (BlockAST)rule.getFirstChildWithType(BLOCK);
@@ -362,11 +362,11 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	void checkChannelDefinition(Token tokenID) {
 	}
 
-	//Override
+	@Override
 	protected void enterLexerElement(GrammarAST tree) {
 	}
 
-	//Override
+	@Override
 	protected void enterLexerCommand(GrammarAST tree) {
 		checkElementIsOuterMostInSingleAlt(tree);
 
@@ -377,7 +377,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void actionInAlt(ActionAST action) {
 		if (inFragmentRule) {
 			String fileName = action.token.getInputStream().getSourceName();
@@ -410,7 +410,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void label(GrammarAST op, GrammarAST ID, GrammarAST element) {
 		switch (element.getType()) {
 		// token atoms
@@ -432,7 +432,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	protected void enterTerminal(GrammarAST tree) {
 		String text = tree.getText();
 		if (text.equals("''")) {

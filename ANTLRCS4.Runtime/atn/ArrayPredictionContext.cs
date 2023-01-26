@@ -52,7 +52,7 @@ public class ArrayPredictionContext : PredictionContext {
 		return returnStates[index];
 	}
 
-//	//Override
+//	@Override
 //	public int findReturnState(int returnState) {
 //		return Arrays.binarySearch(returnStates, returnState);
 //	}

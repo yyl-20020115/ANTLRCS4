@@ -186,13 +186,13 @@ public class ParserRuleContext : RuleContext {
 		}
 	}
 
-	//Override
+	@Override
 	/** Override to make type more specific */
 	public ParserRuleContext getParent() {
 		return (ParserRuleContext)super.getParent();
 	}
 
-	//Override
+	@Override
 	public ParseTree getChild(int i) {
 		return children!=null && i>=0 && i<children.size() ? children.get(i) : null;
 	}
@@ -289,10 +289,10 @@ public class ParserRuleContext : RuleContext {
 		return contexts;
 	}
 
-	//Override
+	@Override
 	public int getChildCount() { return children!=null ? children.size() : 0; }
 
-	//Override
+	@Override
 	public Interval getSourceInterval() {
 		if ( start == null ) {
 			return Interval.INVALID;

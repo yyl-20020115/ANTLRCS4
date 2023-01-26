@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 namespace org.antlr.v4.runtime;
-
 /** A lexer is recognizer that draws input symbols from a character stream.
  *  lexer grammars result in a subclass of this object. A Lexer object
  *  uses simplified match() and error recovery mechanisms in the interest
@@ -98,7 +97,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	/** Return a token from this source; i.e., match a token on the char
 	 *  stream.
 	 */
-	//Override
+	@Override
 	public Token nextToken() {
 		if (_input == null) {
 			throw new IllegalStateException("nextToken requires a non-null input stream.");
@@ -185,18 +184,18 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 		return _mode;
 	}
 
-	//Override
+	@Override
 	public void setTokenFactory(TokenFactory<?> factory) {
 		this._factory = factory;
 	}
 
-	//Override
+	@Override
 	public TokenFactory<? extends Token> getTokenFactory() {
 		return _factory;
 	}
 
 	/** Set the char stream and reset the lexer */
-	//Override
+	@Override
 	public void setInputStream(IntStream input) {
 		this._input = null;
 		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, _input);
@@ -205,12 +204,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, _input);
 	}
 
-	//Override
+	@Override
 	public String getSourceName() {
 		return _input.getSourceName();
 	}
 
-	//Override
+	@Override
 	public CharStream getInputStream() {
 		return _input;
 	}
@@ -247,12 +246,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 		return eof;
 	}
 
-	//Override
+	@Override
 	public int getLine() {
 		return getInterpreter().getLine();
 	}
 
-	//Override
+	@Override
 	public int getCharPositionInLine() {
 		return getInterpreter().getCharPositionInLine();
 	}
@@ -320,7 +319,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  error reporting.  The generated parsers implement a method
 	 *  that overrides this to point to their String[] tokenNames.
 	 */
-	//Override
+	@Override
 	@Deprecated
 	public String[] getTokenNames() {
 		return null;

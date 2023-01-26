@@ -17,30 +17,30 @@ public class EmptyPredictionContext : SingletonPredictionContext {
 		super(null, EMPTY_RETURN_STATE);
 	}
 
-	//Override
+	@Override
 	public bool isEmpty() { return true; }
 
-	//Override
+	@Override
 	public int size() {
 		return 1;
 	}
 
-	//Override
+	@Override
 	public PredictionContext getParent(int index) {
 		return null;
 	}
 
-	//Override
+	@Override
 	public int getReturnState(int index) {
 		return returnState;
 	}
 
-	//Override
+	@Override
 	public bool equals(Object o) {
 		return this == o;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		return "$";
 	}

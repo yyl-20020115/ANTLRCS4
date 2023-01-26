@@ -46,17 +46,17 @@ public class UseDefAnalyzer {
 		in.setCharPositionInLine(actionAST.token.getCharPositionInLine());
 		final boolean[] dependent = new boolean[] {false}; // can't be simple bool with anon class
 		ActionSplitterListener listener = new BlankActionSplitterListener() {
-			//Override
+			@Override
 			public void nonLocalAttr(String expr, Token x, Token y) { dependent[0] = true; }
-			//Override
+			@Override
 			public void qualifiedAttr(String expr, Token x, Token y) { dependent[0] = true; }
-			//Override
+			@Override
 			public void setAttr(String expr, Token x, Token rhs) { dependent[0] = true; }
-			//Override
+			@Override
 			public void setExprAttribute(String expr) { dependent[0] = true; }
-			//Override
+			@Override
 			public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) { dependent[0] = true; }
-			//Override
+			@Override
 			public void attr(String expr, Token x) {  dependent[0] = true; }
 		};
 		ActionSplitter splitter = new ActionSplitter(in, listener);

@@ -4,18 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.misc.IntervalSet;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+namespace org.antlr.v4.runtime.atn;
 
 /** This class represents a target neutral serializer for ATNs. An ATN is converted to a list of integers
  *  that can be converted back to and ATN. We compute the list of integers and then generate an array
@@ -27,15 +18,15 @@ import java.util.Map;
 public class ATNSerializer {
 	public ATN atn;
 
-	private final IntegerList data = new IntegerList();
+	private readonly IntegerList data = new ();
 	/** Note that we use a LinkedHashMap as a set to mainintain insertion order while deduplicating
 	    entries with the same key. */
-	private final Map<IntervalSet, Boolean> sets = new LinkedHashMap<>();
-	private final IntegerList nonGreedyStates = new IntegerList();
-	private final IntegerList precedenceStates = new IntegerList();
+	private readonly Dictionary<IntervalSet, Boolean> sets = new ();
+	private readonly IntegerList nonGreedyStates = new ();
+	private readonly IntegerList precedenceStates = new ();
 
 	public ATNSerializer(ATN atn) {
-		assert atn.grammarType != null;
+		//assert atn.grammarType != null;
 		this.atn = atn;
 	}
 
@@ -71,7 +62,7 @@ public class ATNSerializer {
 		addPrecedenceStates();
 		addRuleStatesAndLexerTokenTypes();
 		addModeStartStates();
-		Map<IntervalSet, Integer> setIndices = null;
+		Dictionary<IntervalSet, int> setIndices = null;
 		setIndices = addSets();
 		addEdges(nedges, setIndices);
 		addDecisionStartStates();
@@ -90,8 +81,8 @@ public class ATNSerializer {
 
 	private void addLexerActions() {
 		if (atn.grammarType == ATNType.LEXER) {
-			data.add(atn.lexerActions.length);
-			for (LexerAction action : atn.lexerActions) {
+			data.add(atn.lexerActions.Length);
+			foreach (LexerAction action in atn.lexerActions) {
 				data.add(action.getActionType().ordinal());
 				switch (action.getActionType()) {
 				case CHANNEL:
@@ -151,12 +142,12 @@ public class ATNSerializer {
 	private void addDecisionStartStates() {
 		int ndecisions = atn.decisionToState.size();
 		data.add(ndecisions);
-		for (DecisionState decStartState : atn.decisionToState) {
+		for (DecisionState decStartState in atn.decisionToState) {
 			data.add(decStartState.stateNumber);
 		}
 	}
 
-	private void addEdges(int nedges, Map<IntervalSet, Integer> setIndices) {
+	private void addEdges(int nedges, Dictionary<IntervalSet, int> setIndices) {
 		data.add(nedges);
 		for (ATNState s : atn.states) {
 			if ( s==null ) {
@@ -239,9 +230,9 @@ public class ATNSerializer {
 		}
 	}
 
-	private Map<IntervalSet, Integer> addSets() {
+	private Dictionary<IntervalSet, Integer> addSets() {
 		serializeSets(data,	sets.keySet());
-		Map<IntervalSet, Integer> setIndices = new HashMap<>();
+        Dictionary<IntervalSet, int> setIndices = new ();
 		int setIndex = 0;
 		for (IntervalSet s : sets.keySet()) {
 			setIndices.put(s, setIndex++);
@@ -332,7 +323,7 @@ public class ATNSerializer {
 		return nedges;
 	}
 
-	private static void serializeSets(IntegerList data, Collection<IntervalSet> sets) {
+	private static void serializeSets(IntegerList data, ICollection<IntervalSet> sets) {
 		int nSets = sets.size();
 		data.add(nSets);
 

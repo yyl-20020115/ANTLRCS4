@@ -57,7 +57,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * <p>The default implementation simply calls {@link #endErrorCondition} to
 	 * ensure that the handler is not in error recovery mode.</p>
 	 */
-	//Override
+	@Override
 	public void reset(Parser recognizer) {
 		endErrorCondition(recognizer);
 	}
@@ -75,7 +75,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	/**
 	 * {@inheritDoc}
 	 */
-	//Override
+	@Override
 	public bool inErrorRecoveryMode(Parser recognizer) {
 		return errorRecoveryMode;
 	}
@@ -97,7 +97,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 *
 	 * <p>The default implementation simply calls {@link #endErrorCondition}.</p>
 	 */
-	//Override
+	@Override
 	public void reportMatch(Parser recognizer) {
 		endErrorCondition(recognizer);
 	}
@@ -121,7 +121,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * the exception</li>
 	 * </ul>
 	 */
-	//Override
+	@Override
 	public void reportError(Parser recognizer,
 							RecognitionException e)
 	{
@@ -154,7 +154,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * until we find one in the resynchronization set--loosely the set of tokens
 	 * that can follow the current rule.</p>
 	 */
-	//Override
+	@Override
 	public void recover(Parser recognizer, RecognitionException e) {
 //		System.out.println("recover in "+recognizer.getRuleInvocationStack()+
 //						   " index="+recognizer.getInputStream().index()+
@@ -226,7 +226,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * some reason speed is suffering for you, you can turn off this
 	 * functionality by simply overriding this method as a blank { }.</p>
 	 */
-	//Override
+	@Override
 	public void sync(Parser recognizer) throws RecognitionException {
 		ATNState s = recognizer.getInterpreter().atn.states.get(recognizer.getState());
 //		System.err.println("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
@@ -459,7 +459,7 @@ public class DefaultErrorStrategy implements ANTLRErrorStrategy {
 	 * is in the set of tokens that can follow the {@code ')'} token reference
 	 * in rule {@code atom}. It can assume that you forgot the {@code ')'}.
 	 */
-	//Override
+	@Override
 	public Token recoverInline(Parser recognizer)
 		throws RecognitionException
 	{

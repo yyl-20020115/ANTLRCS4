@@ -23,7 +23,7 @@ import org.antlr.v4.runtime.TokenStream;
  *
  * @since 4.3
  */
-public class ErrorInfo extends DecisionEventInfo {
+public class ErrorInfo : DecisionEventInfo {
 	/**
 	 * Constructs a new instance of the {@link ErrorInfo} class with the
 	 * specified detailed syntax error information.

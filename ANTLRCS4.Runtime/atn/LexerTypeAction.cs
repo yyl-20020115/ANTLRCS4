@@ -39,7 +39,7 @@ public class LexerTypeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#TYPE}.
 	 */
-	//Override
+	@Override
 	public LexerActionType getActionType() {
 		return LexerActionType.TYPE;
 	}
@@ -48,7 +48,7 @@ public class LexerTypeAction implements LexerAction {
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	//Override
+	@Override
 	public boolean isPositionDependent() {
 		return false;
 	}
@@ -59,12 +59,12 @@ public class LexerTypeAction implements LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#setType} with the
 	 * value provided by {@link #getType}.</p>
 	 */
-	//Override
+	@Override
 	public void execute(Lexer lexer) {
 		lexer.setType(type);
 	}
 
-	//Override
+	@Override
 	public int hashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType().ordinal());
@@ -72,7 +72,7 @@ public class LexerTypeAction implements LexerAction {
 		return MurmurHash.finish(hash, 2);
 	}
 
-	//Override
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -84,7 +84,7 @@ public class LexerTypeAction implements LexerAction {
 		return type == ((LexerTypeAction)obj).type;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		return String.format("type(%d)", type);
 	}

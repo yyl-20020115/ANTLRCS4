@@ -17,7 +17,7 @@ public class LogManager {
 			location = new Throwable().getStackTrace()[0];
 		}
 
-		//Override
+		@Override
 		public String toString() {
             StringBuilder buf = new StringBuilder();
             buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date(timestamp)));
@@ -68,7 +68,7 @@ public class LogManager {
         return defaultFilename;
     }
 
-    //Override
+    @Override
     public String toString() {
         if ( records==null ) return "";
         String nl = System.getProperty("line.separator");

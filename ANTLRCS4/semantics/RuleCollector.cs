@@ -23,12 +23,12 @@ public class RuleCollector : GrammarTreeVisitor {
 		this.errMgr = g.tool.errMgr;
 	}
 
-	//Override
+	@Override
 	public ErrorManager getErrorManager() { return errMgr; }
 
 	public void process(GrammarAST ast) { visitGrammar(ast); }
 
-	//Override
+	@Override
 	public void discoverRule(RuleAST rule, GrammarAST ID,
 							 List<GrammarAST> modifiers, ActionAST arg,
 							 ActionAST returns, GrammarAST thrws,
@@ -73,7 +73,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void discoverOuterAlt(AltAST alt) {
 		if ( alt.altLabel!=null ) {
 			ruleToAltLabels.map(currentRuleName, alt.altLabel);
@@ -83,7 +83,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void grammarOption(GrammarAST ID, GrammarAST valueAST) {
 		Boolean caseInsensitive = getCaseInsensitiveValue(ID, valueAST);
 		if (caseInsensitive != null) {
@@ -91,7 +91,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	//Override
+	@Override
 	public void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
 								  GrammarAST options, GrammarAST block)
 	{

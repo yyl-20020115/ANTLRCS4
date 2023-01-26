@@ -65,12 +65,12 @@ public class CommonTokenStream extends BufferedTokenStream {
         this.channel = channel;
     }
 
-	//Override
+	@Override
 	protected int adjustSeekIndex(int i) {
 		return nextTokenOnChannel(i, channel);
 	}
 
-    //Override
+    @Override
     protected Token LB(int k) {
         if ( k==0 || (p-k)<0 ) return null;
 
@@ -86,7 +86,7 @@ public class CommonTokenStream extends BufferedTokenStream {
         return tokens.get(i);
     }
 
-    //Override
+    @Override
     public Token LT(int k) {
         //System.out.println("enter LT("+k+")");
         lazyInit();

@@ -18,24 +18,24 @@ public class GrammarToken : CommonToken {
 		this.g = g;
 	}
 
-	//Override
+	@Override
 	public int getCharPositionInLine() {
 		if ( originalTokenIndex>=0 ) return g.originalTokenStream.get(originalTokenIndex).getCharPositionInLine();
 		return super.getCharPositionInLine();
 	}
 
-	//Override
+	@Override
 	public int getLine() {
 		if ( originalTokenIndex>=0 ) return g.originalTokenStream.get(originalTokenIndex).getLine();
 		return super.getLine();
 	}
 
-	//Override
+	@Override
 	public int getTokenIndex() {
 		return originalTokenIndex;
 	}
 
-	//Override
+	@Override
 	public int getStartIndex() {
 		if ( originalTokenIndex>=0 ) {
 			return ((CommonToken)g.originalTokenStream.get(originalTokenIndex)).getStartIndex();
@@ -43,13 +43,13 @@ public class GrammarToken : CommonToken {
 		return super.getStartIndex();
 	}
 
-	//Override
+	@Override
 	public int getStopIndex() {
 		int n = super.getStopIndex() - super.getStartIndex() + 1;
 		return getStartIndex() + n - 1;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		String channelStr = "";
 		if ( channel>0 ) {

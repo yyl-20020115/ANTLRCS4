@@ -9,17 +9,17 @@ package org.antlr.v4.runtime.atn;
 public final class WildcardTransition extends Transition {
 	public WildcardTransition(ATNState target) { super(target); }
 
-	//Override
+	@Override
 	public int getSerializationType() {
 		return WILDCARD;
 	}
 
-	//Override
+	@Override
 	public boolean matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 	}
 
-	//Override
+	@Override
 	public String toString() {
 		return ".";
 	}

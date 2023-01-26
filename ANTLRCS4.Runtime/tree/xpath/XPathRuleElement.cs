@@ -22,7 +22,7 @@ public class XPathRuleElement extends XPathElement {
 		this.ruleIndex = ruleIndex;
 	}
 
-	//Override
+	@Override
 	public Collection<ParseTree> evaluate(ParseTree t) {
 				// return all children of t that match nodeName
 		List<ParseTree> nodes = new ArrayList<ParseTree>();
