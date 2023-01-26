@@ -4,22 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.semantics;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.analysis.LeftRecursiveRuleTransformer;
-import org.antlr.v4.automata.LexerATNFactory;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+namespace org.antlr.v4.semantics;
 
 /** Do as much semantic checking as we can and fill in grammar
  *  with rules, actions, and token definitions.

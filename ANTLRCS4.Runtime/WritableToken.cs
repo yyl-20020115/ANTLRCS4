@@ -4,9 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+namespace org.antlr.v4.runtime;
 
-public interface WritableToken extends Token {
+public interface WritableToken : Token {
 	public void setText(String text);
 
 	public void setType(int ttype);

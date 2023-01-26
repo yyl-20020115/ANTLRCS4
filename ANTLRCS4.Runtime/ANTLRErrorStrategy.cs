@@ -4,9 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.tree.ErrorNode;
+using org.antlr.v4.runtime;
 
 /**
  * The interface for defining strategies to deal with syntax errors encountered
@@ -50,7 +48,7 @@ public interface ANTLRErrorStrategy {
 	 * @throws RecognitionException if the error strategy was not able to
 	 * recover from the unexpected input symbol
 	 */
-	Token recoverInline(Parser recognizer) throws RecognitionException;
+	Token recoverInline(Parser recognizer) ;
 
 	/**
 	 * This method is called to recover from exception {@code e}. This method is
@@ -64,7 +62,7 @@ public interface ANTLRErrorStrategy {
 	 * @throws RecognitionException if the error strategy could not recover from
 	 * the recognition exception
 	 */
-	void recover(Parser recognizer, RecognitionException e) throws RecognitionException;
+	void recover(Parser recognizer, RecognitionException e) ;
 
 	/**
 	 * This method provides the error handler with an opportunity to handle
@@ -85,7 +83,7 @@ public interface ANTLRErrorStrategy {
 	 * strategy but cannot be automatically recovered at the current state in
 	 * the parsing process
 	 */
-	void sync(Parser recognizer) throws RecognitionException;
+	void sync(Parser recognizer);
 
 	/**
 	 * Tests whether or not {@code recognizer} is in the process of recovering
@@ -116,5 +114,5 @@ public interface ANTLRErrorStrategy {
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception to report
 	 */
-	void reportError(Parser recognizer, RecognitionException e);
+	void reportError<T1, T2>(Parser recognizer, RecognitionException<T1,T2> e);
 }

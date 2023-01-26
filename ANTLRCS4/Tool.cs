@@ -561,7 +561,7 @@ public class Tool {
 	 * @param g
 	 * @param nameNode The node associated with the imported grammar name.
 	 */
-	public Grammar loadImportedGrammar(Grammar g, GrammarAST nameNode) throws IOException {
+	public Grammar loadImportedGrammar(Grammar g, GrammarAST nameNode){
 		String name = nameNode.getText();
 		Grammar imported = importedGrammars.get(name);
 		if (imported == null) {
@@ -714,7 +714,7 @@ public class Tool {
 	 *
 	 *  If outputDirectory==null then write a String.
 	 */
-	public Writer getOutputFileWriter(Grammar g, String fileName) throws IOException {
+	public Writer getOutputFileWriter(Grammar g, String fileName){
 		if (outputDirectory == null) {
 			return new StringWriter();
 		}
@@ -846,11 +846,11 @@ public class Tool {
 		return outputDir;
 	}
 
-	protected void writeDOTFile(Grammar g, Rule r, String dot) throws IOException {
+	protected void writeDOTFile(Grammar g, Rule r, String dot){
 		writeDOTFile(g, r.g.name + "." + r.name, dot);
 	}
 
-	protected void writeDOTFile(Grammar g, String name, String dot) throws IOException {
+	protected void writeDOTFile(Grammar g, String name, String dot){
 		Writer fw = getOutputFileWriter(g, name + ".dot");
 		try {
 			fw.write(dot);

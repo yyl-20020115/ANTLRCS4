@@ -10,7 +10,8 @@ namespace org.antlr.v4.runtime;
  *  (so we can ignore tabs), token channel, index, and source from which
  *  we obtained this token.
  */
-public interface Token {
+public interface Token
+{
 	public static readonly int INVALID_TYPE = 0;
 
     /** During lookahead operations, this "token" signifies we hit rule end ATN state
@@ -91,7 +92,7 @@ public interface Token {
 
 	/** Gets the {@link TokenSource} which created this token.
 	 */
-	TokenSource getTokenSource();
+	TokenSource<Token> getTokenSource();
 
 	/**
 	 * Gets the {@link CharStream} from which this token was derived.

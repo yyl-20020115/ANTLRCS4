@@ -640,7 +640,7 @@ public class TestCompositeGrammars {
 	 */
 	// TODO: migrate to test framework
 	@Test
-	public void testImportLargeGrammar(@TempDir Path tempDir) throws IOException {
+	public void testImportLargeGrammar(@TempDir Path tempDir){
 		String tempDirPath = tempDir.toString();
 		String slave = load("Java.g4");
 		String master =

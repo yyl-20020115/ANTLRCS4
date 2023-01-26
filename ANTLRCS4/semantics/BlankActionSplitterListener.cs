@@ -4,32 +4,32 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.semantics;
 
-import org.antlr.runtime.Token;
-import org.antlr.v4.parse.ActionSplitterListener;
 
-public class BlankActionSplitterListener implements ActionSplitterListener {
-	@Override
+public class BlankActionSplitterListener : ActionSplitterListener {
+	//@Override
 	public void qualifiedAttr(String expr, Token x, Token y) {
 	}
 
-	@Override
+	//@Override
 	public void setAttr(String expr, Token x, Token rhs) {
 	}
 
-	@Override
+	//@Override
 	public void attr(String expr, Token x) {
 	}
 
 	public void templateInstance(String expr) {
 	}
 
-	@Override
+	//@Override
 	public void nonLocalAttr(String expr, Token x, Token y) {
 	}
 
-	@Override
+	//@Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 	}
 
@@ -45,7 +45,7 @@ public class BlankActionSplitterListener implements ActionSplitterListener {
 	public void templateExpr(String expr) {
 	}
 
-	@Override
+	//@Override
 	public void text(String text) {
 	}
 }

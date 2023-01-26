@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.semantics;
 
 
@@ -11,7 +15,7 @@ namespace org.antlr.v4.semantics;
 /** Trigger checks for various kinds of attribute expressions.
  *  no side-effects.
  */
-public class AttributeChecks implements ActionSplitterListener {
+public class AttributeChecks : ActionSplitterListener {
     public Grammar g;
     public Rule r;          // null if action outside of rule
     public Alternative alt; // null if action outside of alt; could be in rule

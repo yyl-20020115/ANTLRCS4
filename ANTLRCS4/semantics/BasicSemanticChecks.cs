@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.semantics;
 
 
@@ -38,8 +40,8 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	 *  validDelegations.get(LEXER) gives list of the kinds of delegators
 	 *  that can import lexers.
 	 */
-	public final static MultiMap<Integer,Integer> validImportTypes =
-		new MultiMap<Integer,Integer>() {
+	public static MultiMap<int, int> validImportTypes =
+		new MultiMap<int, int>() {
 			{
 				map(ANTLRParser.LEXER, ANTLRParser.LEXER);
 				map(ANTLRParser.LEXER, ANTLRParser.COMBINED);

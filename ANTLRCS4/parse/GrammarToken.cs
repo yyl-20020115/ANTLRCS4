@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.parse;
 
 /** A CommonToken that can also track it's original location,
@@ -14,42 +17,42 @@ public class GrammarToken : CommonToken {
 	public int originalTokenIndex = -1;
 
 	public GrammarToken(Grammar g, Token oldToken) {
-		super(oldToken);
+		base(oldToken);
 		this.g = g;
 	}
 
-	@Override
+	//@Override
 	public int getCharPositionInLine() {
 		if ( originalTokenIndex>=0 ) return g.originalTokenStream.get(originalTokenIndex).getCharPositionInLine();
-		return super.getCharPositionInLine();
+		return base.getCharPositionInLine();
 	}
 
-	@Override
+	//@Override
 	public int getLine() {
 		if ( originalTokenIndex>=0 ) return g.originalTokenStream.get(originalTokenIndex).getLine();
-		return super.getLine();
+		return bases.getLine();
 	}
 
-	@Override
+	//@Override
 	public int getTokenIndex() {
 		return originalTokenIndex;
 	}
 
-	@Override
+	//@Override
 	public int getStartIndex() {
 		if ( originalTokenIndex>=0 ) {
 			return ((CommonToken)g.originalTokenStream.get(originalTokenIndex)).getStartIndex();
 		}
-		return super.getStartIndex();
+		return base.getStartIndex();
 	}
 
-	@Override
+	//@Override
 	public int getStopIndex() {
-		int n = super.getStopIndex() - super.getStartIndex() + 1;
+		int n = base.getStopIndex() - base.getStartIndex() + 1;
 		return getStartIndex() + n - 1;
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		String channelStr = "";
 		if ( channel>0 ) {
@@ -57,9 +60,9 @@ public class GrammarToken : CommonToken {
 		}
 		String txt = getText();
 		if ( txt!=null ) {
-			txt = txt.replaceAll("\n","\\\\n");
-			txt = txt.replaceAll("\r","\\\\r");
-			txt = txt.replaceAll("\t","\\\\t");
+			txt = txt.Replace("\n","\\\\n");
+			txt = txt.Replace("\r","\\\\r");
+			txt = txt.Replace("\t","\\\\t");
 		}
 		else {
 			txt = "<no text>";

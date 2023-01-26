@@ -4,19 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.parse;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.BaseRecognizer;
-import org.antlr.runtime.CommonToken;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.Attribute;
-import org.antlr.v4.tool.AttributeDict;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.ActionAST;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.parse;
 
 /**
  * Parse args, return values, locals
@@ -141,9 +133,9 @@ public class ScopeParser {
 		return attr;
 	}
 
-	public static Pair<Integer, Integer> _parsePrefixDecl(Attribute attr, String decl, ActionAST a, Grammar g) {
+	public static Pair<int, int> _parsePrefixDecl(tool.Attribute attr, String decl, ActionAST a, Grammar g) {
 		// walk backwards looking for start of an ID
-		boolean inID = false;
+		bool inID = false;
 		int start = -1;
 		for (int i = decl.length() - 1; i >= 0; i--) {
 			char ch = decl.charAt(i);
@@ -190,10 +182,10 @@ public class ScopeParser {
 		if (attr.type.length() == 0) {
 			attr.type = null;
 		}
-		return new Pair<Integer, Integer>(start, stop);
+		return new Pair<int, int>(start, stop);
 	}
 
-	public static Pair<Integer, Integer> _parsePostfixDecl(Attribute attr, String decl, ActionAST a, Grammar g) {
+	public static Pair<int, int> _parsePostfixDecl(tool.Attribute attr, String decl, ActionAST a, Grammar g) {
 		int start = -1;
 		int stop = -1;
 		int colon = decl.indexOf(':');
@@ -256,8 +248,8 @@ public class ScopeParser {
 	 * convert to a list of attributes.  Allow nested square brackets etc...
 	 * Set separatorChar to ';' or ',' or whatever you want.
 	 */
-	public static List<Pair<String, Integer>> splitDecls(String s, int separatorChar) {
-		List<Pair<String, Integer>> args = new ArrayList<Pair<String, Integer>>();
+	public static List<Pair<String, int>> splitDecls(String s, int separatorChar) {
+		List<Pair<String, int>> args = new ();
 		_splitArgumentList(s, 0, -1, separatorChar, args);
 		return args;
 	}
@@ -266,7 +258,7 @@ public class ScopeParser {
 	                                     int start,
 	                                     int targetChar,
 	                                     int separatorChar,
-	                                     List<Pair<String, Integer>> args) {
+	                                     List<Pair<String, int>> args) {
 		if (actionText == null) {
 			return -1;
 		}

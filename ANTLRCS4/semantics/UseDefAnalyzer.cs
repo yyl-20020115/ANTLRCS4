@@ -4,27 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.semantics;
-
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.Token;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.ActionSplitter;
-import org.antlr.v4.parse.ActionSplitterListener;
-import org.antlr.v4.tool.Alternative;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LexerGrammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+namespace org.antlr.v4.semantics;
 /** Look for errors and deadcode stuff */
 public class UseDefAnalyzer {
 	// side-effect: updates Alternative with refs in actions

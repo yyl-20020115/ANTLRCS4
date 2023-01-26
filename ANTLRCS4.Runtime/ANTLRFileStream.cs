@@ -3,11 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
-
-import org.antlr.v4.runtime.misc.Utils;
-
-import java.io.IOException;
+namespace org.antlr.v4.runtime;
 
 /**
  * This is an {@link ANTLRInputStream} that is loaded from a file all at once
@@ -15,15 +11,15 @@ import java.io.IOException;
  *
  * @deprecated as of 4.7 Please use {@link CharStreams} interface.
  */
-@Deprecated
+//@Deprecated
 public class ANTLRFileStream : ANTLRInputStream {
 	protected String fileName;
 
-	public ANTLRFileStream(String fileName) throws IOException {
+	public ANTLRFileStream(String fileName){
 		this(fileName, null);
 	}
 
-	public ANTLRFileStream(String fileName, String encoding) throws IOException {
+	public ANTLRFileStream(String fileName, String encoding){
 		this.fileName = fileName;
 		load(fileName, encoding);
 	}

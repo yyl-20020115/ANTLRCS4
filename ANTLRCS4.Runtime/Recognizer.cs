@@ -4,26 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNSimulator;
-import org.antlr.v4.runtime.atn.ParseInfo;
-import org.antlr.v4.runtime.misc.Utils;
+namespace org.antlr.v4.runtime;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : ATNSimulator
+{
+	public static readonly int EOF=-1;
 
-public abstract class Recognizer<Symbol, ATNInterpreter extends ATNSimulator> {
-	public static final int EOF=-1;
-
-	private static final Map<Vocabulary, Map<String, Integer>> tokenTypeMapCache =
+	private static readonly Map<Vocabulary, Map<String, Integer>> tokenTypeMapCache =
 		new WeakHashMap<Vocabulary, Map<String, Integer>>();
-	private static final Map<String[], Map<String, Integer>> ruleIndexMapCache =
+	private static readonly Map<String[], Map<String, Integer>> ruleIndexMapCache =
 		new WeakHashMap<String[], Map<String, Integer>>();
 
 
@@ -42,7 +33,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter extends ATNSimulator> {
 	 *
 	 * @deprecated Use {@link #getVocabulary()} instead.
 	 */
-	@Deprecated
+	//@Deprecated
 	public abstract String[] getTokenNames();
 
 	public abstract String[] getRuleNames();
@@ -53,7 +44,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter extends ATNSimulator> {
 	 * @return A {@link Vocabulary} instance providing information about the
 	 * vocabulary used by the grammar.
 	 */
-	@SuppressWarnings("deprecation")
+	//@SuppressWarnings("deprecation")
 	public Vocabulary getVocabulary() {
 		return VocabularyImpl.fromTokenNames(getTokenNames());
 	}
@@ -63,9 +54,9 @@ public abstract class Recognizer<Symbol, ATNInterpreter extends ATNSimulator> {
 	 *
 	 * <p>Used for XPath and tree pattern compilation.</p>
 	 */
-	public Map<String, Integer> getTokenTypeMap() {
+	public Dictionary<String, int> getTokenTypeMap() {
 		Vocabulary vocabulary = getVocabulary();
-		synchronized (tokenTypeMapCache) {
+		lock (tokenTypeMapCache) {
 			Map<String, Integer> result = tokenTypeMapCache.get(vocabulary);
 			if (result == null) {
 				result = new HashMap<String, Integer>();
@@ -95,13 +86,13 @@ public abstract class Recognizer<Symbol, ATNInterpreter extends ATNSimulator> {
 	 *
 	 * <p>Used for XPath and tree pattern compilation.</p>
 	 */
-	public Map<String, Integer> getRuleIndexMap() {
+	public Dictionary<String, int> getRuleIndexMap() {
 		String[] ruleNames = getRuleNames();
 		if (ruleNames == null) {
 			throw new UnsupportedOperationException("The current recognizer does not provide a list of rule names.");
 		}
 
-		synchronized (ruleIndexMapCache) {
+		lock (ruleIndexMapCache) {
 			Map<String, Integer> result = ruleIndexMapCache.get(ruleNames);
 			if (result == null) {
 				result = Collections.unmodifiableMap(Utils.toMap(ruleNames));

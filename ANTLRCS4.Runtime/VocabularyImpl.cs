@@ -45,8 +45,8 @@ public class VocabularyImpl : Vocabulary {
 	 * @see #getLiteralName(int)
 	 * @see #getSymbolicName(int)
 	 */
-	public VocabularyImpl(String[] literalNames, String[] symbolicNames) {
-		this(literalNames, symbolicNames, null);
+	public VocabularyImpl(String[] literalNames, String[] symbolicNames) : this(literalNames, symbolicNames, null)
+    {
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class VocabularyImpl : Vocabulary {
 	 * the display names of tokens.
 	 */
 	public static Vocabulary fromTokenNames(String[] tokenNames) {
-		if (tokenNames == null || tokenNames.length == 0) {
+		if (tokenNames == null || tokenNames.Length == 0) {
 			return EMPTY_VOCABULARY;
 		}
 
@@ -123,23 +123,23 @@ public class VocabularyImpl : Vocabulary {
 		return new VocabularyImpl(literalNames, symbolicNames, tokenNames);
 	}
 
-	@Override
+	//@Override
 	public int getMaxTokenType() {
 		return maxTokenType;
 	}
 
-	@Override
+	//@Override
 	public String getLiteralName(int tokenType) {
-		if (tokenType >= 0 && tokenType < literalNames.length) {
+		if (tokenType >= 0 && tokenType < literalNames.Length) {
 			return literalNames[tokenType];
 		}
 
 		return null;
 	}
 
-	@Override
+	//@Override
 	public String getSymbolicName(int tokenType) {
-		if (tokenType >= 0 && tokenType < symbolicNames.length) {
+		if (tokenType >= 0 && tokenType < symbolicNames.Length) {
 			return symbolicNames[tokenType];
 		}
 
@@ -150,9 +150,9 @@ public class VocabularyImpl : Vocabulary {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public String getDisplayName(int tokenType) {
-		if (tokenType >= 0 && tokenType < displayNames.length) {
+		if (tokenType >= 0 && tokenType < displayNames.Length) {
 			String displayName = displayNames[tokenType];
 			if (displayName != null) {
 				return displayName;
@@ -169,7 +169,7 @@ public class VocabularyImpl : Vocabulary {
 			return symbolicName;
 		}
 
-		return Integer.toString(tokenType);
+		return tokenType.ToString();// Integer.toString(tokenType);
 	}
 
 	// Because this is an actual implementation object, we can provide access methods for vocabulary symbols

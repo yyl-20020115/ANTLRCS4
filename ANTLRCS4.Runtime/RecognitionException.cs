@@ -14,7 +14,7 @@ namespace org.antlr.v4.runtime;
  *  in the input, where it is in the ATN, the rule invocation stack,
  *  and what kind of problem occurred.
  */
-public class RecognitionException : RuntimeException {
+public class RecognitionException<T1,T2> : RuntimeException {
 	/** The {@link Recognizer} where this exception originated. */
 	private readonly Recognizer<T1, T2> recognizer;
 

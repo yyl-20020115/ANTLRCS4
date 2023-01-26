@@ -1080,7 +1080,7 @@ public class TestPerformance {
 		return result;
 	}
 
-    protected JavaCompiledState compileJavaParser(boolean leftRecursive) throws IOException {
+    protected JavaCompiledState compileJavaParser(boolean leftRecursive){
         String grammarFileName = leftRecursive ? "JavaLR.g4"    : "Java.g4";
         String parserName      = leftRecursive ? "JavaLRParser" : "JavaParser";
         String lexerName       = leftRecursive ? "JavaLRLexer"  : "JavaLexer";
@@ -1891,7 +1891,7 @@ public class TestPerformance {
 
 	protected static class CloneableANTLRFileStream extends ANTLRFileStream {
 
-		public CloneableANTLRFileStream(String fileName, String encoding) throws IOException {
+		public CloneableANTLRFileStream(String fileName, String encoding){
 			super(fileName, encoding);
 		}
 

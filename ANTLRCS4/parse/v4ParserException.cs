@@ -4,19 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.parse;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.IntStream;
-import org.antlr.runtime.RecognitionException;
+namespace org.antlr.v4.parse;
 
 /** */
-public class v4ParserException extends RecognitionException {
+public class v4ParserException : RecognitionException {
 	public String msg;
 	/** Used for remote debugger deserialization */
 	public v4ParserException() {}
 
-	public v4ParserException(String msg, IntStream input) {
-		super(input);
+	public v4ParserException(String msg, IntStream input):base(input) {
 		this.msg = msg;
 	}
 

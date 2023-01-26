@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.parse;
+using org.antlr.v4.runtime.tree.pattern;
+
+namespace org.antlr.v4.parse;
 
 /** Used to throw us out of deeply nested element back to end of a rule's
  *  alt list. Note it's not under RecognitionException.

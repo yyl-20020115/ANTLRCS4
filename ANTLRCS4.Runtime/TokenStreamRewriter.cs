@@ -3,14 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.runtime;
+using System.Text;
 
-import org.antlr.v4.runtime.misc.Interval;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+namespace org.antlr.v4.runtime;
 
 /**
  * Useful for rewriting out a buffered input token stream after doing some
@@ -89,9 +84,9 @@ import java.util.Map;
  * first example shows.</p>
  */
 public class TokenStreamRewriter {
-	public static final String DEFAULT_PROGRAM_NAME = "default";
-	public static final int PROGRAM_INIT_SIZE = 100;
-	public static final int MIN_TOKEN_INDEX = 0;
+	public static readonly String DEFAULT_PROGRAM_NAME = "default";
+	public static readonly int PROGRAM_INIT_SIZE = 100;
+	public static readonly int MIN_TOKEN_INDEX = 0;
 
 	// Define the rewrite operation hierarchy
 
@@ -117,7 +112,7 @@ public class TokenStreamRewriter {
 			return index;
 		}
 
-		@Override
+		//@Override
 		public String toString() {
 			String opName = getClass().getName();
 			int $index = opName.indexOf('$');
@@ -132,7 +127,7 @@ public class TokenStreamRewriter {
 			super(index,text);
 		}
 
-		@Override
+		//@Override
 		public int execute(StringBuilder buf) {
 			buf.append(text);
 			if ( tokens.get(index).getType()!=Token.EOF ) {
@@ -155,20 +150,20 @@ public class TokenStreamRewriter {
 	/** I'm going to try replacing range from x..y with (y-x)+1 ReplaceOp
 	 *  instructions.
 	 */
-	class ReplaceOp extends RewriteOperation {
+	class ReplaceOp : RewriteOperation {
 		protected int lastIndex;
 		public ReplaceOp(int from, int to, Object text) {
 			super(from,text);
 			lastIndex = to;
 		}
-		@Override
+		//@Override
 		public int execute(StringBuilder buf) {
 			if ( text!=null ) {
 				buf.append(text);
 			}
 			return lastIndex+1;
 		}
-		@Override
+		//@Override
 		public String toString() {
 			if ( text==null ) {
 				return "<DeleteOp@"+tokens.get(index)+

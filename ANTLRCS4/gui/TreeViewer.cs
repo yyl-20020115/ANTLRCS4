@@ -248,7 +248,7 @@ public class TreeViewer extends JComponent {
 		}
 	}
 
-	protected void generateEdges(Writer writer, Tree parent) throws IOException {
+	protected void generateEdges(Writer writer, Tree parent){
 		if (!getTree().isLeaf(parent)) {
 			Rectangle2D.Double b1 = getBoundsOfNode(parent);
 			double x1 = b1.getCenterX();
@@ -265,7 +265,7 @@ public class TreeViewer extends JComponent {
 		}
 	}
 
-	protected void generateBox(Writer writer, Tree parent) throws IOException {
+	protected void generateBox(Writer writer, Tree parent){
 
 		// draw the box in the background
 		Rectangle2D.Double box = getBoundsOfNode(parent);
@@ -302,7 +302,7 @@ public class TreeViewer extends JComponent {
 			style, text);
 	}
 
-	private void paintSVG(Writer writer) throws IOException {
+	private void paintSVG(Writer writer){
 
 		generateEdges(writer, getTree().getRoot());
 

@@ -96,7 +96,7 @@ public class TestCodeGeneration {
 		}
 
 		@Override
-		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options) throws IOException {
+		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options){
 			Class<?> type = o.getClass();
 			String name = type.getSimpleName();
 			out.write("<pojo:"+name+">"+o.toString()+"</pojo:"+name+">");
@@ -104,7 +104,7 @@ public class TestCodeGeneration {
 			return super.writePOJO(out, scope, o, options);
 		}
 
-		public void indent(STWriter out) throws IOException {
+		public void indent(STWriter out){
 			for (int i=1; i<=tab; i++) {
 				out.write("\t");
 			}

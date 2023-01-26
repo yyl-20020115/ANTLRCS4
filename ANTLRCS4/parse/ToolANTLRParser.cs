@@ -4,27 +4,23 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.parse;
+using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
 
-import org.antlr.runtime.NoViableAltException;
-import org.antlr.runtime.Parser;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenStream;
-import org.antlr.v4.Tool;
-import org.antlr.v4.tool.ErrorType;
+namespace org.antlr.v4.parse;
+
 
 /** Override error handling for use with ANTLR tool itself; leaves
  *  nothing in grammar associated with Tool so others can use in IDEs, ...
  */
-public class ToolANTLRParser extends ANTLRParser {
+public class ToolANTLRParser : ANTLRParser {
 	public Tool tool;
 
-	public ToolANTLRParser(TokenStream input, Tool tool) {
-		super(input);
+	public ToolANTLRParser(TokenStream<T> input, Tool tool):base(input) {
 		this.tool = tool;
 	}
 
-	@Override
+	//@Override
 	public void displayRecognitionError(String[] tokenNames,
 										RecognitionException e)
 	{
@@ -53,7 +49,7 @@ public class ToolANTLRParser extends ANTLRParser {
 		return msg;
 	}
 
-	@Override
+	//@Override
 	public void grammarError(ErrorType etype, org.antlr.runtime.Token token, Object... args) {
 		tool.errMgr.grammarError(etype, getSourceName(), token, args);
 	}

@@ -72,7 +72,7 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(Path path) throws IOException {
+	public static CharStream fromPath(Path path){
 		return fromPath(path, StandardCharsets.UTF_8);
 	}
 
@@ -82,7 +82,7 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(Path path, Charset charset) throws IOException {
+	public static CharStream fromPath(Path path, Charset charset){
 		long size = Files.size(path);
 		try (ReadableByteChannel channel = Files.newByteChannel(path)) {
 			return fromChannel(
@@ -101,7 +101,7 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromFileName(String fileName) throws IOException {
+	public static CharStream fromFileName(String fileName){
 		return fromPath(Paths.get(fileName), StandardCharsets.UTF_8);
 	}
 
@@ -112,7 +112,7 @@ public final class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromFileName(String fileName, Charset charset) throws IOException {
+	public static CharStream fromFileName(String fileName, Charset charset){
 		return fromPath(Paths.get(fileName), charset);
 	}
 
@@ -124,7 +124,7 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream is) throws IOException {
+	public static CharStream fromStream(InputStream is){
 		return fromStream(is, StandardCharsets.UTF_8);
 	}
 
@@ -135,11 +135,11 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	public static CharStream fromStream(InputStream is, Charset charset) throws IOException {
+	public static CharStream fromStream(InputStream is, Charset charset){
 		return fromStream(is, charset, -1);
 	}
 
-	public static CharStream fromStream(InputStream is, Charset charset, long inputSize) throws IOException {
+	public static CharStream fromStream(InputStream is, Charset charset, long inputSize){
 		try (ReadableByteChannel channel = Channels.newChannel(is)) {
 			return fromChannel(
 				channel,
@@ -158,7 +158,7 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CharStream fromChannel(ReadableByteChannel channel) throws IOException {
+	public static CharStream fromChannel(ReadableByteChannel channel){
 		return fromChannel(channel, StandardCharsets.UTF_8);
 	}
 
@@ -169,7 +169,7 @@ public final class CharStreams {
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	public static CharStream fromChannel(ReadableByteChannel channel, Charset charset) throws IOException {
+	public static CharStream fromChannel(ReadableByteChannel channel, Charset charset){
 		return fromChannel(
 			channel,
 			DEFAULT_BUFFER_SIZE,
@@ -181,7 +181,7 @@ public final class CharStreams {
 	 * Creates a {@link CharStream} given a {@link Reader}. Closes
 	 * the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(Reader r) throws IOException {
+	public static CodePointCharStream fromReader(Reader r){
 		return fromReader(r, IntStream.UNKNOWN_SOURCE_NAME);
 	}
 
@@ -189,7 +189,7 @@ public final class CharStreams {
 	 * Creates a {@link CharStream} given a {@link Reader} and its
 	 * source name. Closes the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(Reader r, String sourceName) throws IOException {
+	public static CodePointCharStream fromReader(Reader r, String sourceName){
 		try {
 			CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(DEFAULT_BUFFER_SIZE);
 			CharBuffer charBuffer = CharBuffer.allocate(DEFAULT_BUFFER_SIZE);

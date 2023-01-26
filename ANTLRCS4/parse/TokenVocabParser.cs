@@ -4,37 +4,21 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.parse;
+using org.antlr.v4.tool;
 
-import org.antlr.runtime.Token;
-import org.antlr.v4.Tool;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+namespace org.antlr.v4.parse;
 
 /** */
 public class TokenVocabParser {
-	protected final Grammar g;
+	protected readonly Grammar g;
 
 	public TokenVocabParser(Grammar g) {
 		this.g = g;
 	}
 
 	/** Load a vocab file {@code <vocabName>.tokens} and return mapping. */
-	public Map<String,Integer> load() {
-		Map<String,Integer> tokens = new LinkedHashMap<String,Integer>();
+	public Dictionary<String,int> load() {
+        Dictionary<String, int> tokens = new ();
 		int maxTokenType = -1;
 		File fullFile = getImportedVocabFile();
 		FileInputStream fis = null;
@@ -131,7 +115,7 @@ public class TokenVocabParser {
 	 *  directory, which means the current directory for the command line tool if there
 	 *  was no output directory specified.
 	 */
-	public File getImportedVocabFile() {
+	public String getImportedVocabFile() {
 		String vocabName = g.getOptionString("tokenVocab");
 		File f = new File(g.tool.libDirectory,
 						  File.separator +
