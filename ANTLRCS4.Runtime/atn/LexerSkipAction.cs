@@ -58,7 +58,7 @@ public class LexerSkipAction : LexerAction {
 	}
 
 	//@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		hash = MurmurHash.update(hash, getActionType());
 		return MurmurHash.finish(hash, 1);
@@ -66,12 +66,12 @@ public class LexerSkipAction : LexerAction {
 
 	//@Override
 	//@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-	public boolean equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		return obj == this;
 	}
 
 	//@Override
-	public String toString() {
+	public override String ToString() {
 		return "skip";
 	}
 }

@@ -14,12 +14,11 @@ public class IntegerStack : IntegerList {
 	public IntegerStack() {
 	}
 
-	public IntegerStack(int capacity) {
-		super(capacity);
+	public IntegerStack(int capacity):base(capacity) {
 	}
 
-	public IntegerStack(IntegerStack list) {
-		super(list);
+	public IntegerStack(IntegerStack list) : base(list)
+    {
 	}
 
 	public void push(int value) {

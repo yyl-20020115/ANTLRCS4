@@ -53,15 +53,15 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			this._sllStopIndex = -1;
 			this._llStopIndex = -1;
 			this.currentDecision = decision;
-			long start = System.nanoTime(); // expensive but useful info
+			long start = DateTime.Now.Nanosecond;// System.nanoTime(); // expensive but useful info
 			int alt = base.adaptivePredict(input, decision, outerContext);
-			long stop = System.nanoTime();
+			long stop = DateTime.Now.Nanosecond;
 			decisions[decision].timeInPrediction += (stop-start);
 			decisions[decision].invocations++;
 
 			int SLL_k = _sllStopIndex - _startIndex + 1;
 			decisions[decision].SLL_TotalLook += SLL_k;
-			decisions[decision].SLL_MinLook = decisions[decision].SLL_MinLook==0 ? SLL_k : Math.min(decisions[decision].SLL_MinLook, SLL_k);
+			decisions[decision].SLL_MinLook = decisions[decision].SLL_MinLook==0 ? SLL_k : Math.Min(decisions[decision].SLL_MinLook, SLL_k);
 			if ( SLL_k > decisions[decision].SLL_MaxLook ) {
 				decisions[decision].SLL_MaxLook = SLL_k;
 				decisions[decision].SLL_MaxLookEvent =
@@ -71,7 +71,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			if (_llStopIndex >= 0) {
 				int LL_k = _llStopIndex - _startIndex + 1;
 				decisions[decision].LL_TotalLook += LL_k;
-				decisions[decision].LL_MinLook = decisions[decision].LL_MinLook==0 ? LL_k : Math.min(decisions[decision].LL_MinLook, LL_k);
+				decisions[decision].LL_MinLook = decisions[decision].LL_MinLook==0 ? LL_k : Math.Min(decisions[decision].LL_MinLook, LL_k);
 				if ( LL_k > decisions[decision].LL_MaxLook ) {
 					decisions[decision].LL_MaxLook = LL_k;
 					decisions[decision].LL_MaxLookEvent =
@@ -147,7 +147,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 	}
 
 	//@Override
-	protected bool evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, boolean fullCtx) {
+	protected bool evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx) {
         bool result = base.evalSemanticContext(pred, parserCallStack, alt, fullCtx);
 		if (!(pred is SemanticContext.PrecedencePredicate)) {
 			bool fullContext = _llStopIndex >= 0;

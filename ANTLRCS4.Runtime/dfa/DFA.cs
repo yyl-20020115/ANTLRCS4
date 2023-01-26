@@ -28,8 +28,9 @@ public class DFA {
 	 */
 	private readonly bool precedenceDfa;
 
-	public DFA(DecisionState atnStartState) {
-		this(atnStartState, 0);
+	public DFA(DecisionState atnStartState) : this(atnStartState, 0)
+    {
+		
 	}
 
 	public DFA(DecisionState atnStartState, int decision) {
@@ -143,7 +144,7 @@ public class DFA {
 	 */
 
 	public List<DFAState> getStates() {
-		List<DFAState> result = new (states.keySet());
+		List<DFAState> result = new (states.Keys);
 		result.Sort((x, y) => x.stateNumber - y.stateNumber);
 		//Collections.sort(result, new Comparator<DFAState>() {
 		//	@Override

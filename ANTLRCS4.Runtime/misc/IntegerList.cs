@@ -40,12 +40,12 @@ public class IntegerList {
 	}
 
 	public IntegerList(IntegerList list) {
-		_data = list._data.clone();
+		_data = (int[])list._data.Clone();
 		_size = list._size;
 	}
 
-	public IntegerList(ICollection<int> list) {
-		this(list.Count);
+	public IntegerList(ICollection<int> list): this(list.Count)
+    {
 		foreach (var value in list) {
 			add(value);
 		}
@@ -123,7 +123,7 @@ public class IntegerList {
 			throw new IndexOutOfRangeException();
 		}
 		if (fromIndex > toIndex) {
-			throw new IllegalArgumentException();
+			throw new ArgumentException();
 		}
 
 		System.arraycopy(_data, toIndex, _data, fromIndex, _size - toIndex);
@@ -183,7 +183,7 @@ public class IntegerList {
 	 * @return {@code true} if the specified object is equal to this list
 	 */
 	//@Override
-	public bool equals(Object o) {
+	public override bool Equals(Object? o) {
 		if (o == this) {
 			return true;
 		}
@@ -216,7 +216,7 @@ public class IntegerList {
 	 * @return the hash code value for this list
 	 */
 	//@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		int hashCode = 1;
 		for (int i = 0; i < _size; i++) {
 			hashCode = 31*hashCode + _data[i];
@@ -239,10 +239,10 @@ public class IntegerList {
 
 	public int binarySearch(int fromIndex, int toIndex, int key) {
 		if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfRangeException();
 		}
 		if (fromIndex > toIndex) {
-        		throw new IllegalArgumentException();
+        		throw new ArgumentException();
 		}
 
 		return Arrays.binarySearch(_data, fromIndex, toIndex, key);
@@ -250,15 +250,15 @@ public class IntegerList {
 
 	private void ensureCapacity(int capacity) {
 		if (capacity < 0 || capacity > MAX_ARRAY_SIZE) {
-			throw new OutOfMemoryError();
+			throw new OutOfMemoryException();
 		}
 
 		int newLength;
-		if (_data.length == 0) {
+		if (_data.Length == 0) {
 			newLength = INITIAL_SIZE;
 		}
 		else {
-			newLength = _data.length;
+			newLength = _data.Length;
 		}
 
 		while (newLength < capacity) {

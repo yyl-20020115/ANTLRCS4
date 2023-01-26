@@ -524,26 +524,25 @@ public abstract class PredictionContext {
 	public static PredictionContext getCachedContext(
 		PredictionContext context,
 		PredictionContextCache contextCache,
-		IdentityHashMap<PredictionContext, PredictionContext> visited)
+		Dictionary<PredictionContext, PredictionContext> visited)
 	{
 		if (context.isEmpty()) {
 			return context;
 		}
 
-		PredictionContext existing = visited.get(context);
-		if (existing != null) {
+		if (visited.TryGetValue(context,out var existing)) {
 			return existing;
 		}
 
 		existing = contextCache.get(context);
 		if (existing != null) {
-			visited.put(context, existing);
+			visited.Add(context, existing);
 			return existing;
 		}
 
 		bool changed = false;
 		PredictionContext[] parents = new PredictionContext[context.size()];
-		for (int i = 0; i < parents.length; i++) {
+		for (int i = 0; i < parents.Length; i++) {
 			PredictionContext parent = getCachedContext(context.getParent(i), contextCache, visited);
 			if (changed || parent != context.getParent(i)) {
 				if (!changed) {
@@ -566,10 +565,10 @@ public abstract class PredictionContext {
 		}
 
 		PredictionContext updated;
-		if (parents.length == 0) {
+		if (parents.Length == 0) {
 			updated = EmptyPredictionContext.Instance;
 		}
-		else if (parents.length == 1) {
+		else if (parents.Length == 1) {
 			updated = SingletonPredictionContext.create(parents[0], context.getReturnState(0));
 		}
 		else {
@@ -666,7 +665,7 @@ public abstract class PredictionContext {
 				}
 
 				if ( recognizer!=null ) {
-					if (localBuffer.length() > 1) {
+					if (localBuffer.Length > 1) {
 						// first char is '[', if more than that this isn't the first rule
 						localBuffer.append(' ');
 					}
@@ -678,7 +677,7 @@ public abstract class PredictionContext {
 				}
 				else if ( p.getReturnState(index)!= EMPTY_RETURN_STATE) {
 					if ( !p.isEmpty() ) {
-						if (localBuffer.length() > 1) {
+						if (localBuffer.Length > 1) {
 							// first char is '[', if more than that this isn't the first rule
 							localBuffer.append(' ');
 						}
@@ -697,6 +696,6 @@ public abstract class PredictionContext {
 			}
 		}
 
-		return result.toArray(new String[0]);
+		return result.ToArray();
 	}
 }

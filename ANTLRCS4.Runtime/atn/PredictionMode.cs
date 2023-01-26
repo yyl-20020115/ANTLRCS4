@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
@@ -107,7 +108,7 @@ public static class PredictionModeTools
 			if ( a==b ) return true;
 			if ( a==null || b==null ) return false;
 			return a.state.stateNumber==b.state.stateNumber
-				&& a.context.equals(b.context);
+				&& a.context.Equals(b.context);
 		}
 	}
 
@@ -561,8 +562,7 @@ public static class PredictionModeTools
 	public static Dictionary<ATNState, BitSet> getStateToAltMap(ATNConfigSet configs) {
         Dictionary<ATNState, BitSet> m = new ();
 		foreach (ATNConfig c in configs) {
-			BitSet alts = m.get(c.state);
-			if ( alts==null ) {
+			if ( !m.TryGetValue(c.state,out var alts) ) {
 				alts = new BitSet();
 				m.Add(c.state, alts);
 			}

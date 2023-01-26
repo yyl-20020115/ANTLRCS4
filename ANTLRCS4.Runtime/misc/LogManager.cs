@@ -9,18 +9,18 @@ using System.Text;
 namespace org.antlr.v4.runtime.misc;
 
 public class LogManager {
-    protected static class Record {
+    protected class Record {
 		long timestamp;
 		StackTraceElement location;
 		String component;
 		String msg;
 		public Record() {
-			timestamp = System.currentTimeMillis();
+            timestamp = DateTime.Now.Millisecond;
 			location = new Throwable().getStackTrace()[0];
 		}
 
-		@Override
-		public String toString() {
+		//@Override
+		public override String ToString() {
             StringBuilder buf = new StringBuilder();
             buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date(timestamp)));
             buf.append(" ");
@@ -42,7 +42,7 @@ public class LogManager {
 		r.component = component;
 		r.msg = msg;
 		if ( records==null ) {
-			records = new ArrayList<Record>();
+			records = new ();
 		}
 		records.add(r);
 	}

@@ -52,7 +52,7 @@ public class Interval {
 	}
 
 
-	public int GetHashCode() {
+	public override int GetHashCode() {
 		int hash = 23;
 		hash = hash * 31 + a;
 		hash = hash * 31 + b;

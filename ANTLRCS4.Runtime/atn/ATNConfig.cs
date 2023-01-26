@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
@@ -170,7 +171,7 @@ public class ATNConfig {
 		return this.state.stateNumber==other.state.stateNumber
 			&& this.alt==other.alt
 			&& Objects.equals(this.context, other.context)
-			&& this.semanticContext.equals(other.semanticContext)
+			&& this.semanticContext.Equals(other.semanticContext)
 			&& this.isPrecedenceFilterSuppressed() == other.isPrecedenceFilterSuppressed();
 	}
 

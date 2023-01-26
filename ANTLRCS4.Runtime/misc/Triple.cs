@@ -17,7 +17,7 @@ public class Triple<A,B,C> {
 		this.c = c;
 	}
 
-	public override bool Equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}

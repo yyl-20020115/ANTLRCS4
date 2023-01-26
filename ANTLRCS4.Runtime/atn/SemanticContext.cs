@@ -62,7 +62,7 @@ public abstract class SemanticContext {
 		public static readonly Empty Instance = new Empty();
 
 		//@Override
-		public bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			return false;
 		}
 	}
@@ -85,7 +85,7 @@ public abstract class SemanticContext {
         }
 
         //@Override
-        public bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
+        public override bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
             RuleContext localctx = isCtxDependent ? parserCallStack : null;
             return parser.sempred(localctx, ruleIndex, predIndex);
         }
@@ -128,7 +128,7 @@ public abstract class SemanticContext {
 		}
 
 		//@Override
-		public bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
 			return parser.precpred(parserCallStack, precedence);
 		}
 

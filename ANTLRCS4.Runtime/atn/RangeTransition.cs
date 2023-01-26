@@ -33,12 +33,12 @@ public class RangeTransition : Transition {
 	}
 
 	//@Override
-	public String ToString() {
+	public override String ToString() {
 		return new StringBuilder("'")
 				.Append(char.ConvertFromUtf32(from))
 				.Append("'..'")
 				.Append(char.ConvertFromUtf32(to))
-				.Append("'")
-				.toString();
+				.Append('\'')
+				.ToString();
 	}
 }

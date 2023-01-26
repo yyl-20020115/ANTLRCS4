@@ -55,7 +55,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 
 	public FlexibleHashMap(AbstractEqualityComparator<K> comparator, int initialCapacity, int initialBucketCapacity) {
 		if (comparator == null) {
-			comparator = ObjectEqualityComparator.INSTANCE;
+			comparator = TEqualityComparator<K>.INSTANCE;
 		}
 
 		this.comparator = comparator;
@@ -71,37 +71,37 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	protected int getBucket(K key) {
-		int hash = comparator.hashCode(key);
-		int b = hash & (buckets.length-1); // assumes len is power of 2
+		int hash = comparator.GetHashCode(key);
+		int b = hash & (buckets.Length-1); // assumes len is power of 2
 		return b;
 	}
 
 	//@Override
 	public V get(Object key) {
 		K typedKey = (K)key;
-		if ( key==null ) return null;
+		if ( key==null ) return default;
 		int b = getBucket(typedKey);
 		LinkedList<Entry<K, V>> bucket = buckets[b];
-		if ( bucket==null ) return null; // no bucket
-		for (Entry<K, V> e : bucket) {
-			if ( comparator.equals(e.key, typedKey) ) {
+		if ( bucket==null ) return default; // no bucket
+		foreach (Entry<K, V> e in bucket) {
+			if ( comparator.Equals(e.key, typedKey) ) {
 				return e.value;
 			}
 		}
-		return null;
+		return default;
 	}
 
 	//@Override
 	public V put(K key, V value) {
-		if ( key==null ) return null;
+		if ( key==null ) return default;
 		if ( n > threshold ) expand();
 		int b = getBucket(key);
 		LinkedList<Entry<K, V>> bucket = buckets[b];
 		if ( bucket==null ) {
 			bucket = buckets[b] = new LinkedList<Entry<K, V>>();
 		}
-		for (Entry<K, V> e : bucket) {
-			if ( comparator.equals(e.key, key) ) {
+		foreach (Entry<K, V> e in bucket) {
+			if ( comparator.Equals(e.key, key) ) {
 				V prev = e.value;
 				e.value = value;
 				n++;
@@ -109,9 +109,9 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 			}
 		}
 		// not there
-		bucket.add(new Entry<K, V>(key, value));
+		bucket.AddLast(new Entry<K, V>(key, value));
 		n++;
-		return null;
+		return default;
 	}
 
 	//@Override
@@ -120,29 +120,29 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public void putAll(Map<? : K, ? : V> m) {
+	public void putAll(Dictionary<K,V> m) {
 		throw new UnsupportedOperationException();
 	}
 
 	//@Override
-	public Set<K> keySet() {
+	public HashSet<K> keySet() {
 		throw new UnsupportedOperationException();
 	}
 
 	//@Override
-	public Collection<V> values() {
-		List<V> a = new ArrayList<V>(size());
-		for (LinkedList<Entry<K, V>> bucket : buckets) {
+	public ICollection<V> values() {
+		List<V> a = new (size());
+		foreach (LinkedList<Entry<K, V>> bucket in buckets) {
 			if ( bucket==null ) continue;
-			for (Entry<K, V> e : bucket) {
-				a.add(e.value);
+			foreach (Entry<K, V> e in bucket) {
+				a.Add(e.value);
 			}
 		}
 		return a;
 	}
 
 	//@Override
-	public Set<Map.Entry<K, V>> entrySet() {
+	public HashSet<Dictionary<K,V>.Entry<K, V>> entrySet() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -157,7 +157,7 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public int hashCode() {
+	public int GetHashCode() {
 		int hash = MurmurHash.initialize();
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
 			if ( bucket==null ) continue;
@@ -250,11 +250,11 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 			}
 			buf.Append("]\n");
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
-	public static void main(String[] args) {
-		FlexibleHashMap<String,Integer> map = new FlexibleHashMap<String,Integer>();
+	public static void TestMain(String[] args) {
+		FlexibleHashMap<String,int> map = new FlexibleHashMap<String,int>();
 		map.put("hi", 1);
 		map.put("mom", 2);
 		map.put("foo", 3);

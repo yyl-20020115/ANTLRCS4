@@ -15,25 +15,25 @@ namespace org.antlr.v4.runtime.misc;
  */
 public class OrderedHashSet<T> : HashSet<T> {
     /** Track the elements as they are added to the set */
-    protected List<T> elements = new ();
+    protected List<T> _elements = new ();
 
     public T get(int i) {
-        return elements[i];
+        return _elements[i];
     }
 
     /** Replace an existing value with a new value; updates the element
      *  list and the hash table, but not the key as that has not changed.
      */
     public T set(int i, T value) {
-        T oldElement = elements[i];
-        elements.set(i,value); // update list
-        super.remove(oldElement); // now update the set: remove/add
-        super.add(value);
+        T oldElement = _elements[i];
+        _elements.set(i,value); // update list
+        base.remove(oldElement); // now update the set: remove/add
+        base.add(value);
         return oldElement;
     }
 
 	public bool remove(int i) {
-		T o = elements.remove(i);
+		T o = _elements.remove(i);
         return super.remove(o);
 	}
 
@@ -44,7 +44,7 @@ public class OrderedHashSet<T> : HashSet<T> {
     public bool add(T value) {
         bool result = super.add(value);
 		if ( result ) {  // only track if new element not in set
-			elements.add(value);
+            _elements.add(value);
 		}
 		return result;
     }
@@ -54,47 +54,47 @@ public class OrderedHashSet<T> : HashSet<T> {
     }
 
 	public void clear() {
-        elements.clear();
+        _elements.clear();
         super.clear();
     }
 
 	public override int GetHashCode() {
-		return elements.hashCode();
+		return _elements.GetHashCode();
 	}
 
-	public bool Equals(Object o) {
+	public override bool Equals(Object o) {
 		if (!(o is OrderedHashSet<T>)) {
 			return false;
 		}
 
 //		System.out.print("equals " + this + ", " + o+" = ");
-		bool same = elements!=null && elements.equals(((OrderedHashSet<T>)o).elements);
+		bool same = _elements != null && _elements.equals(((OrderedHashSet<T>)o).elements);
 //		System.out.println(same);
 		return same;
 	}
 
 	public Iterator<T> iterator() {
-		return elements.iterator();
+		return _elements.iterator();
 	}
 
 	/** Return the List holding list of table elements.  Note that you are
      *  NOT getting a copy so don't write to the list.
      */
     public List<T> elements() {
-        return elements;
+        return _elements;
     }
 
     public Object clone() {
-        OrderedHashSet<T> dup = (OrderedHashSet<T>)super.clone();
-        dup.elements = new (this.elements);
+        OrderedHashSet<T> dup = (OrderedHashSet<T>)base.Clone();
+        dup._elements = new (this._elements);
         return dup;
     }
 
-	public Object[] ToArray() {
-		return elements.ToArray();
+	public T[] ToArray() {
+		return _elements.ToArray();
 	}
 
 	public override String ToString() {
-        return elements.toString();
+        return _elements.ToString();
     }
 }

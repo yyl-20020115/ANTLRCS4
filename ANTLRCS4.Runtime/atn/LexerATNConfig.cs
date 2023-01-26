@@ -77,7 +77,7 @@ public class LexerATNConfig : ATNConfig {
 	}
 
 	//@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		int hashCode = MurmurHash.initialize(7);
 		hashCode = MurmurHash.update(hashCode, state.stateNumber);
 		hashCode = MurmurHash.update(hashCode, alt);
@@ -90,7 +90,7 @@ public class LexerATNConfig : ATNConfig {
 	}
 
 	//@Override
-	public bool Equals(ATNConfig other) {
+	public new bool Equals(ATNConfig other) {
 		if (this == other) {
 			return true;
 		}

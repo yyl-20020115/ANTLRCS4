@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using System.Text;
@@ -38,7 +39,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			int hashCode = 7;
 			hashCode = 31 * hashCode + o.state.stateNumber;
 			hashCode = 31 * hashCode + o.alt;
-			hashCode = 31 * hashCode + o.semanticContext.hashCode();
+			hashCode = 31 * hashCode + o.semanticContext.GetHashCode();
 	        return hashCode;
 		}
 
@@ -48,7 +49,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			if ( a==null || b==null ) return false;
 			return a.state.stateNumber==b.state.stateNumber
 				&& a.alt==b.alt
-				&& a.semanticContext.equals(b.semanticContext);
+				&& a.semanticContext.Equals(b.semanticContext);
 		}
 	}
 
@@ -92,14 +93,13 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	private int cachedHashCode = -1;
 
-	public ATNConfigSet(bool fullCtx) {
+	public ATNConfigSet(bool fullCtx = true) {
 		configLookup = new ConfigHashSet();
 		this.fullCtx = fullCtx;
 	}
-	public ATNConfigSet() { this(true); }
-
-	public ATNConfigSet(ATNConfigSet old) {
-		this(old.fullCtx);
+	
+	public ATNConfigSet(ATNConfigSet old): this(old.fullCtx)
+    {
 		addAll(old);
 		this.uniqueAlt = old.uniqueAlt;
 		this.conflictingAlts = old.conflictingAlts;
@@ -136,7 +136,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		ATNConfig existing = configLookup.getOrAdd(config);
 		if ( existing==config ) { // we added this new one
 			cachedHashCode = -1;
-			configs.add(config);  // track order here
+			configs.Add(config);  // track order here
 			return true;
 		}
 		// a previous (s,i,pi,_), merge with it and save result
@@ -147,7 +147,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		// since only way to create new graphs is "call rule" and here. We
 		// cache at both places.
 		existing.reachesIntoOuterContext =
-			Math.max(existing.reachesIntoOuterContext, config.reachesIntoOuterContext);
+			Math.Max(existing.reachesIntoOuterContext, config.reachesIntoOuterContext);
 
 		// make sure to preserve the precedence filter suppression during the merge
 		if (config.isPrecedenceFilterSuppressed()) {
@@ -187,16 +187,16 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	public List<SemanticContext> getPredicates() {
-		List<SemanticContext> preds = new ArrayList<SemanticContext>();
+		List<SemanticContext> preds = new ();
 		foreach (ATNConfig c in configs) {
 			if ( c.semanticContext!=SemanticContext.Empty.Instance ) {
-				preds.add(c.semanticContext);
+				preds.Add(c.semanticContext);
 			}
 		}
 		return preds;
 	}
 
-	public ATNConfig get(int i) { return configs.get(i); }
+	public ATNConfig get(int i) { return configs[i]; }
 
 	public void optimizeConfigs(ATNSimulator interpreter) {
 		if ( @readonly ) throw new IllegalStateException("This set is readonly");
@@ -217,7 +217,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public bool equals(Object o) {
+	public override bool Equals(Object? o) {
 		if (o == this) {
 			return true;
 		}
@@ -228,7 +228,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 //		System.out.print("equals " + this + ", " + o+" = ");
 		ATNConfigSet other = (ATNConfigSet)o;
 		bool same = configs!=null &&
-			configs.equals(other.configs) &&  // includes stack context
+			configs.Equals(other.configs) &&  // includes stack context
 			this.fullCtx == other.fullCtx &&
 			this.uniqueAlt == other.uniqueAlt &&
 			this.conflictingAlts == other.conflictingAlts &&
@@ -240,26 +240,26 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public int hashCode() {
+	public override int GetHashCode() {
 		if (isReadonly()) {
 			if (cachedHashCode == -1) {
-				cachedHashCode = configs.hashCode();
+				cachedHashCode = configs.GetHashCode();
 			}
 
 			return cachedHashCode;
 		}
 
-		return configs.hashCode();
+		return configs.GetHashCode();
 	}
 
 	//@Override
 	public int size() {
-		return configs.size();
+		return configs.Count;
 	}
 
 	//@Override
 	public bool isEmpty() {
-		return configs.isEmpty();
+		return configs.Count==0;
 	}
 
 	//@Override
@@ -287,7 +287,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	//@Override
 	public void clear() {
 		if ( @readonly ) throw new IllegalStateException("This set is readonly");
-		configs.clear();
+		configs.Clear();
 		cachedHashCode = -1;
 		configLookup.clear();
 	}
@@ -304,12 +304,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	//@Override
 	public String toString() {
 		StringBuilder buf = new StringBuilder();
-		buf.append(elements().toString());
-		if ( hasSemanticContext ) buf.append(",hasSemanticContext=").append(hasSemanticContext);
-		if ( uniqueAlt!=ATN.INVALID_ALT_NUMBER ) buf.append(",uniqueAlt=").append(uniqueAlt);
-		if ( conflictingAlts!=null ) buf.append(",conflictingAlts=").append(conflictingAlts);
-		if ( dipsIntoOuterContext ) buf.append(",dipsIntoOuterContext");
-		return buf.toString();
+		buf.Append(elements().ToString());
+		if ( hasSemanticContext ) buf.Append(",hasSemanticContext=").Append(hasSemanticContext);
+		if ( uniqueAlt!=ATN.INVALID_ALT_NUMBER ) buf.Append(",uniqueAlt=").Append(uniqueAlt);
+		if ( conflictingAlts!=null ) buf.Append(",conflictingAlts=").Append(conflictingAlts);
+		if ( dipsIntoOuterContext ) buf.Append(",dipsIntoOuterContext");
+		return buf.ToString();
 	}
 
 	// satisfy interface
@@ -320,8 +320,8 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public  T[] toArray<T>(T[] a) {
-		return configLookup.toArray(a);
+	public ATNConfig[] ToArray<T>(ATNConfig[] a) {
+		return configLookup.toArray();
 	}
 
 	//@Override
@@ -330,28 +330,24 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public bool containsAll(ICollection<T> c) {
+	public bool containsAll(ICollection<ATNConfig> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	//@Override
-	public bool retainAll(ICollection<T> c) {
+	public bool retainAll(ICollection<ATNConfig> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	//@Override
-	public bool removeAll(Collection<?> c) {
+	public bool removeAll(ICollection<ATNConfig> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	public abstract class AbstractConfigHashSet : Array2DHashSet<ATNConfig> {
 
-		public AbstractConfigHashSet(AbstractEqualityComparator<? super ATNConfig> comparator) {
-			this(comparator, 16, 2);
-		}
-
-		public AbstractConfigHashSet(AbstractEqualityComparator<? super ATNConfig> comparator, int initialCapacity, int initialBucketCapacity) {
-			super(comparator, initialCapacity, initialBucketCapacity);
+		public AbstractConfigHashSet(AbstractEqualityComparator<ATNConfig> comparator, 
+			int initialCapacity = 16, int initialBucketCapacity =2):base(comparator, initialCapacity, initialBucketCapacity) {
 		}
 
 		//@Override

@@ -103,7 +103,7 @@ public class LexerActionExecutor {
 		for (int i = 0; i < lexerActions.Length; i++) {
 			if (lexerActions[i].isPositionDependent() && !(lexerActions[i] is LexerIndexedCustomAction)) {
 				if (updatedLexerActions == null) {
-					updatedLexerActions = lexerActions.clone();
+					updatedLexerActions = (LexerAction[])lexerActions.Clone();
 				}
 
 				updatedLexerActions[i] = new LexerIndexedCustomAction(offset, lexerActions[i]);

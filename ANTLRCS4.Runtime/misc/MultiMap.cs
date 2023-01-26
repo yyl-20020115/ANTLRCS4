@@ -6,7 +6,7 @@
 
 namespace org.antlr.v4.runtime.misc;
 
-public class MultiMap<K, V> : Dictionary<K, List<V>>
+public class MultiMap<K, V> : Dictionary<K, List<V>> where K :notnull
 {
 	public void map(K key, V value) {
 		if (!this.TryGetValue(key, out var elementsForKey)) {

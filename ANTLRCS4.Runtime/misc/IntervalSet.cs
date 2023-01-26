@@ -156,14 +156,14 @@ public class IntervalSet : IntSet {
 		if (set is IntervalSet) {
 			IntervalSet other = (IntervalSet)set;
 			// walk set and add each interval
-			int n = other.intervals.size();
+			int n = other.intervals.Count;
 			for (int i = 0; i < n; i++) {
-				Interval I = other.intervals.get(i);
+				Interval I = other.intervals[i];
 				this.add(I.a,I.b);
 			}
 		}
 		else {
-			for (int value : set.toList()) {
+			foreach (int value in set.toList()) {
 				add(value);
 			}
 		}
@@ -228,7 +228,7 @@ public class IntervalSet : IntSet {
 
 		int resultI = 0;
 		int rightI = 0;
-		while (resultI < result.intervals.size() && rightI < right.intervals.size()) {
+		while (resultI < result.intervals.Count && rightI < right.intervals.Count) {
 			Interval resultInterval = result.intervals.get(resultI);
 			Interval rightInterval = right.intervals.get(rightI);
 
@@ -285,8 +285,8 @@ public class IntervalSet : IntSet {
 			}
 		}
 
-		// If rightI reached right.intervals.size(), no more intervals to subtract from result.
-		// If resultI reached result.intervals.size(), we would be subtracting from an empty set.
+		// If rightI reached right.intervals.Count, no more intervals to subtract from result.
+		// If resultI reached result.intervals.Count, we would be subtracting from an empty set.
 		// Either way, we are done.
 		return result;
 	}
@@ -309,8 +309,8 @@ public class IntervalSet : IntSet {
 		List<Interval> myIntervals = this.intervals;
 		List<Interval> theirIntervals = ((IntervalSet)other).intervals;
 		IntervalSet intersection = null;
-		int mySize = myIntervals.size();
-		int theirSize = theirIntervals.size();
+		int mySize = myIntervals.Count;
+		int theirSize = theirIntervals.Count;
 		int i = 0;
 		int j = 0;
 		// iterate down both interval lists looking for nondisjoint intervals
@@ -372,7 +372,7 @@ public class IntervalSet : IntSet {
     /** {@inheritDoc} */
     ////@Override
     public bool contains(int el) {
-		int n = intervals.size();
+		int n = intervals.Count;
 		int l = 0;
 		int r = n - 1;
 		// Binary search for the element in the (sorted,
@@ -409,7 +409,7 @@ public class IntervalSet : IntSet {
 		if ( isNil() ) {
 			throw new RuntimeException("set is empty");
 		}
-		Interval last = intervals.get(intervals.size()-1);
+		Interval last = intervals.get(intervals.Count-1);
 		return last.b;
 	}
 
@@ -440,7 +440,7 @@ public class IntervalSet : IntSet {
 			hash = MurmurHash.update(hash, I.b);
 		}
 
-		hash = MurmurHash.finish(hash, intervals.size() * 2);
+		hash = MurmurHash.finish(hash, intervals.Count * 2);
 		return hash;
 	}
 
@@ -466,7 +466,7 @@ public class IntervalSet : IntSet {
 		if ( this.intervals==null || this.intervals.isEmpty() ) {
 			return "{}";
 		}
-		if ( this.size()>1 ) {
+		if ( this.Count>1 ) {
 			buf.append("{");
 		}
 		Iterator<Interval> iter = this.intervals.iterator();
@@ -487,7 +487,7 @@ public class IntervalSet : IntSet {
 				buf.append(", ");
 			}
 		}
-		if ( this.size()>1 ) {
+		if ( this.Count>1 ) {
 			buf.append("}");
 		}
 		return buf.toString();
@@ -506,7 +506,7 @@ public class IntervalSet : IntSet {
 		if ( this.intervals==null || this.intervals.isEmpty() ) {
 			return "{}";
 		}
-		if ( this.size()>1 ) {
+		if ( this.Count>1 ) {
 			buf.append("{");
 		}
 		Iterator<Interval> iter = this.intervals.iterator();
@@ -527,7 +527,7 @@ public class IntervalSet : IntSet {
 				buf.append(", ");
 			}
 		}
-		if ( this.size()>1 ) {
+		if ( this.Count>1 ) {
 			buf.append("}");
 		}
         return buf.toString();
@@ -557,7 +557,7 @@ public class IntervalSet : IntSet {
     ////@Override
     public int size() {
 		int n = 0;
-		int numIntervals = intervals.size();
+		int numIntervals = intervals.Count;
 		if ( numIntervals==1 ) {
 			Interval firstInterval = this.intervals.get(0);
 			return firstInterval.b-firstInterval.a+1;
@@ -571,7 +571,7 @@ public class IntervalSet : IntSet {
 
 	public IntegerList toIntegerList() {
 		IntegerList values = new IntegerList(size());
-		int n = intervals.size();
+		int n = intervals.Count;
 		for (int i = 0; i < n; i++) {
 			Interval I = intervals.get(i);
 			int a = I.a;
@@ -586,7 +586,7 @@ public class IntervalSet : IntSet {
     ////@Override
     public List<int> toList() {
 		List<int> values = new ();
-		int n = intervals.size();
+		int n = intervals.Count;
 		for (int i = 0; i < n; i++) {
 			Interval I = intervals.get(i);
 			int a = I.a;
@@ -615,7 +615,7 @@ public class IntervalSet : IntSet {
 	 *  ANTLR code gen target.
 	 */
 	public int get(int i) {
-		int n = intervals.size();
+		int n = intervals.Count;
 		int index = 0;
 		for (int j = 0; j < n; j++) {
 			Interval I = intervals.get(j);
@@ -638,7 +638,7 @@ public class IntervalSet : IntSet {
 	//@Override
 	public void remove(int el) {
         if ( @readonly ) throw new IllegalStateException("can't alter readonly IntervalSet");
-        int n = intervals.size();
+        int n = intervals.Count;
         for (int i = 0; i < n; i++) {
             Interval I = intervals.get(i);
             int a = I.a;

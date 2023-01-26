@@ -36,7 +36,7 @@ public abstract class ATNSimulator {
 	 *  more time I think and doesn't save on the overall footprint
 	 *  so it's not worth the complexity.</p>
  	 */
-	protected readonly PredictionContextCache sharedContextCache;
+	public readonly PredictionContextCache sharedContextCache;
 
 	static ATNSimulator() {
 		ERROR = new DFAState(new ATNConfigSet());
@@ -75,8 +75,8 @@ public abstract class ATNSimulator {
 		if ( sharedContextCache==null ) return context;
 
 		lock (sharedContextCache) {
-			IdentityHashMap<PredictionContext, PredictionContext> visited =
-				new IdentityHashMap<PredictionContext, PredictionContext>();
+			var visited =
+				new Dictionary<PredictionContext, PredictionContext>();
 			return PredictionContext.getCachedContext(context,
 													  sharedContextCache,
 													  visited);

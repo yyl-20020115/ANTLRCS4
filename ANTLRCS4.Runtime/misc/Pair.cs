@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace org.antlr.v4.runtime.misc;
 
-public class Pair<A,B> : ISerializable {
+public class Pair<A,B> {
 	public readonly A a;
 	public readonly B b;
 
@@ -17,7 +17,7 @@ public class Pair<A,B> : ISerializable {
 		this.b = b;
 	}
 
-	public override bool Equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}

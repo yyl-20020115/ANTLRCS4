@@ -45,15 +45,15 @@ public class InterpreterDataReader {
 	 */
 	public static InterpreterData parseFile(String fileName) {
 		InterpreterData result = new InterpreterData();
-		result.ruleNames = new ArrayList<String>();
+		result.ruleNames = new ();
 
 		using (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 		    String line;
-		  	List<String> literalNames = new ArrayList<String>();
-		  	List<String> symbolicNames = new ArrayList<String>();
+		  	List<String> literalNames = new();
+		  	List<String> symbolicNames = new();
 
 			line = br.readLine();
-			if ( !line.equals("token literal names:") )
+			if ( !line.Equals("token literal names:") )
 				throw new RuntimeException("Unexpected data entry");
 		    while ((line = br.readLine()) != null) {
 		       if ( line.isEmpty() )

@@ -14,23 +14,25 @@ public class DoubleKeyMap<Key1, Key2, Value> {
 	Dictionary<Key1, Dictionary<Key2, Value>> data = new ();
 
 	public Value put(Key1 k1, Key2 k2, Value v) {
-		Dictionary<Key2, Value> data2 = data.get(k1);
-		Value prev = null;
-		if ( data2==null ) {
+		Value prev = default;
+		if ( !data.TryGetValue(k1,out var data2) ) {
 			data2 = new ();
-			data.put(k1, data2);
+			data.Add(k1, data2);
 		}
 		else {
-			prev = data2.get(k2);
+			if(!data2.TryGetValue(k2, out prev))
+			{
+
+			}
 		}
-		data2.put(k2, v);
+		data2.Add(k2, v);
 		return prev;
 	}
 
 	public Value get(Key1 k1, Key2 k2) {
-        Dictionary<Key2, Value> data2 = data.get(k1);
-		if ( data2==null ) return null;
-		return data2.get(k2);
+        
+		if (! data.TryGetValue(k1,out var data2) ) return default;
+		return data2.TryGetValue(k2,out var ret)?ret:default;
 	}
 
 	public Dictionary<Key2, Value> get(Key1 k1) { return data.TryGetValue(k1,out var d)?d:null; }

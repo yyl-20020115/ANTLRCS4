@@ -4,8 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.tree.pattern;
 
 namespace org.antlr.v4.runtime;
 
@@ -14,7 +16,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	public class TraceListener : ParseTreeListener {
 		//@Override
 		public void enterEveryRule(ParserRuleContext ctx) {
-			Console.Out.println("enter   " + getRuleNames()[ctx.getRuleIndex()] +
+			Console.Out.WriteLine("enter   " + getRuleNames()[ctx.getRuleIndex()] +
 							   ", LT(1)=" + _input.LT(1).getText());
 		}
 
@@ -49,8 +51,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
-			if (ctx.children is ArrayList) {
-				((ArrayList<?>)ctx.children).trimToSize();
+			if (ctx.children is List<ParseTree> ch) {
+				ch.TrimExcess();
 			}
 		}
 	}
@@ -280,14 +282,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * using the default {@link Parser.TrimToSizeListener} during the parse process.
 	 */
 	public bool getTrimParseTree() {
-		return getParseListeners().contains(TrimToSizeListener.INSTANCE);
+		return getParseListeners().Contains(TrimToSizeListener.INSTANCE);
 	}
 
 
 	public List<ParseTreeListener> getParseListeners() {
 		List<ParseTreeListener> listeners = _parseListeners;
 		if (listeners == null) {
-			return Collections.emptyList();
+			return new();// Collections.emptyList();
 		}
 
 		return listeners;
@@ -324,14 +326,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 */
 	public void addParseListener(ParseTreeListener listener) {
 		if (listener == null) {
-			throw new NullPointerException("listener");
+			throw new NullReferenceException(nameof(listener));
 		}
 
 		if (_parseListeners == null) {
-			_parseListeners = new ArrayList<ParseTreeListener>();
+			_parseListeners = new ();
 		}
 
-		this._parseListeners.add(listener);
+		this._parseListeners.Add(listener);
 	}
 
 	/**
@@ -346,8 +348,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 */
 	public void removeParseListener(ParseTreeListener listener) {
 		if (_parseListeners != null) {
-			if (_parseListeners.remove(listener)) {
-				if (_parseListeners.isEmpty()) {
+			if (_parseListeners.Remove(listener)) {
+				if (_parseListeners.Count==0) {
 					_parseListeners = null;
 				}
 			}
@@ -369,7 +371,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * @see #addParseListener
 	 */
 	protected void triggerEnterRuleEvent() {
-		for (ParseTreeListener listener : _parseListeners) {
+		foreach (ParseTreeListener listener in _parseListeners) {
 			listener.enterEveryRule(_ctx);
 			_ctx.enterRule(listener);
 		}
@@ -382,8 +384,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 */
 	protected void triggerExitRuleEvent() {
 		// reverse order walk of listeners
-		for (int i = _parseListeners.size()-1; i >= 0; i--) {
-			ParseTreeListener listener = _parseListeners.get(i);
+		for (int i = _parseListeners.Count-1; i >= 0; i--) {
+			ParseTreeListener listener = _parseListeners[i];
 			_ctx.exitRule(listener);
 			listener.exitEveryRule(_ctx);
 		}
@@ -400,13 +402,13 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	//@Override
-	public TokenFactory getTokenFactory() {
+	public TokenFactory<T> getTokenFactory() {
 		return _input.getTokenSource().getTokenFactory();
 	}
 
 	/** Tell our token source and error strategy about a new way to create tokens. */
 	//@Override
-	public void setTokenFactory(TokenFactory<?> factory) {
+	public void setTokenFactory(TokenFactory<T> factory) {
 		_input.getTokenSource().setTokenFactory(factory);
 	}
 
@@ -478,10 +480,10 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	//@Override
-	public TokenStream getInputStream() { return getTokenStream(); }
+	public override TokenStream getInputStream() { return getTokenStream(); }
 
 	//@Override
-	public void setInputStream(IntStream input) {
+	public override void setInputStream(IntStream input) {
 		setTokenStream((TokenStream)input);
 	}
 
@@ -504,7 +506,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		return _input.LT(1);
 	}
 
-	public final void notifyErrorListeners(String msg)	{
+	public void notifyErrorListeners(String msg)	{
 		notifyErrorListeners(getCurrentToken(), msg, null);
 	}
 
@@ -547,12 +549,12 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		if (o.getType() != EOF) {
 			getInputStream().consume();
 		}
-		bool hasListener = _parseListeners != null && !_parseListeners.isEmpty();
+		bool hasListener = _parseListeners != null && _parseListeners.Count>0;
 		if (_buildParseTrees || hasListener) {
 			if ( _errHandler.inErrorRecoveryMode(this) ) {
 				ErrorNode node = _ctx.addErrorNode(createErrorNode(_ctx,o));
 				if (_parseListeners != null) {
-					for (ParseTreeListener listener : _parseListeners) {
+					foreach (ParseTreeListener listener in _parseListeners) {
 						listener.visitErrorNode(node);
 					}
 				}
@@ -560,7 +562,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 			else {
 				TerminalNode node = _ctx.addChild(createTerminalNode(_ctx,o));
 				if (_parseListeners != null) {
-					for (ParseTreeListener listener : _parseListeners) {
+					foreach (ParseTreeListener listener in _parseListeners) {
 						listener.visitTerminal(node);
 					}
 				}
@@ -758,7 +760,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 //   		return getInterpreter().atn.nextTokens(_ctx);
         ATN atn = getInterpreter().atn;
 		ParserRuleContext ctx = _ctx;
-        ATNState s = atn.states.get(getState());
+        ATNState s = atn.states[getState()];
         IntervalSet following = atn.nextTokens(s);
         if (following.contains(symbol)) {
             return true;
@@ -767,7 +769,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
         if ( !following.contains(Token.EPSILON) ) return false;
 
         while ( ctx!=null && ctx.invokingState>=0 && following.contains(Token.EPSILON) ) {
-            ATNState invokingState = atn.states.get(ctx.invokingState);
+            ATNState invokingState = atn.states[ctx.invokingState];
             RuleTransition rt = (RuleTransition)invokingState.transition(0);
             following = atn.nextTokens(rt.followState);
             if (following.contains(symbol)) {
@@ -808,8 +810,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 	/** Get a rule's index (i.e., {@code RULE_ruleName} field) or -1 if not found. */
 	public int getRuleIndex(String ruleName) {
-		Integer ruleIndex = getRuleIndexMap().get(ruleName);
-		if ( ruleIndex!=null ) return ruleIndex;
+		if (getRuleIndexMap().TryGetValue(ruleName,out var ruleIndex)) return ruleIndex;
 		return -1;
 	}
 
@@ -828,12 +829,12 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 	public List<String> getRuleInvocationStack(RuleContext p) {
 		String[] ruleNames = getRuleNames();
-		List<String> stack = new ArrayList<String>();
+		List<String> stack = new ();
 		while ( p!=null ) {
 			// compute what follows who invoked us
 			int ruleIndex = p.getRuleIndex();
-			if ( ruleIndex<0 ) stack.add("n/a");
-			else stack.add(ruleNames[ruleIndex]);
+			if ( ruleIndex<0 ) stack.Add("n/a");
+			else stack.Add(ruleNames[ruleIndex]);
 			p = p.parent;
 		}
 		return stack;
@@ -841,11 +842,11 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 	/** For debugging and other purposes. */
 	public List<String> getDFAStrings() {
-		synchronized (_interp.decisionToDFA) {
-			List<String> s = new ArrayList<String>();
-			for (int d = 0; d < _interp.decisionToDFA.length; d++) {
+		lock (_interp.decisionToDFA) {
+			List<String> s = new ();
+			for (int d = 0; d < _interp.decisionToDFA.Length; d++) {
 				DFA dfa = _interp.decisionToDFA[d];
-				s.add( dfa.toString(getVocabulary()) );
+				s.Add( dfa.toString(getVocabulary()) );
 			}
 			return s;
 		}
@@ -856,15 +857,15 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	/** For debugging and other purposes. */
-	public void dumpDFA(PrintStream dumpStream) {
-		synchronized (_interp.decisionToDFA) {
+	public void dumpDFA(TextWriter dumpStream) {
+		lock (_interp.decisionToDFA) {
 			bool seenOne = false;
-			for (int d = 0; d < _interp.decisionToDFA.length; d++) {
+			for (int d = 0; d < _interp.decisionToDFA.Length; d++) {
 				DFA dfa = _interp.decisionToDFA[d];
-				if ( !dfa.states.isEmpty() ) {
-					if ( seenOne ) dumpStream.println();
-					dumpStream.println("Decision " + dfa.decision + ":");
-					dumpStream.print(dfa.toString(getVocabulary()));
+				if ( dfa.states.Count>0 ) {
+					if ( seenOne ) dumpStream.WriteLine();
+					dumpStream.WriteLine("Decision " + dfa.decision + ":");
+					dumpStream.Write(dfa.toString(getVocabulary()));
 					seenOne = true;
 				}
 			}

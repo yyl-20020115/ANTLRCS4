@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 using System.Text;
 
@@ -32,17 +33,15 @@ public class Array2DHashSet<T> : HashSet<T> {
 
 	public Array2DHashSet(): this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
     {
-		;
 	}
 
 	public Array2DHashSet(AbstractEqualityComparator<T> comparator) : this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
     {
-		;
 	}
 
 	public Array2DHashSet(AbstractEqualityComparator<T> comparator, int initialCapacity, int initialBucketCapacity) {
 		if (comparator == null) {
-			comparator = ObjectEqualityComparator.INSTANCE;
+			comparator = TEqualityComparator<T>.INSTANCE;
 		}
 
 		this.comparator = comparator;
@@ -215,7 +214,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 
 	//@Override
 	public Iterator<T> iterator() {
-		return new SetIterator(toArray());
+		return new SetIterator(this,this.toArray());
 	}
 
 	//@Override
@@ -325,7 +324,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		bool changed = false;
 		foreach (T o in c) {
 			T existing = getOrAdd(o);
-			if ( existing!=o ) changed=true;
+			if ( !existing.Equals(o) ) changed=true;
 		}
 		return changed;
 	}
@@ -362,7 +361,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 			newsize += j;
 
 			while (j < i) {
-				bucket[j] = null;
+				bucket[j] = default;
 				j++;
 			}
 		}
@@ -455,7 +454,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 	 */
 	//@SuppressWarnings("unchecked")
 	protected T[][] createBuckets(int capacity) {
-		return (T[][])new Object[capacity][];
+		return (T[][])new T[capacity][];
 	}
 
 	/**
@@ -466,16 +465,18 @@ public class Array2DHashSet<T> : HashSet<T> {
 	 */
 	//@SuppressWarnings("unchecked")
 	protected T[] createBucket(int capacity) {
-		return (T[])new Object[capacity];
+		return (T[])new T[capacity];
 	}
 
 	protected class SetIterator : Iterator<T> {
-		readonly T[] data;
+		readonly Array2DHashSet<T> values;
+        readonly T[] data;
 		int nextIndex = 0;
 		bool removed = true;
 
-		public SetIterator(T[] data) {
-			this.data = data;
+		public SetIterator(Array2DHashSet<T> values,T[] data) {
+			this.data = (T[])data.Clone();
+			this.values = values;
 		}
 
 		//@Override
@@ -499,7 +500,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 				throw new IllegalStateException();
 			}
 
-			Array2DHashSet.this.remove(data[nextIndex - 1]);
+			this.values.Remove(data[nextIndex - 1]);
 			removed = true;
 		}
 	}

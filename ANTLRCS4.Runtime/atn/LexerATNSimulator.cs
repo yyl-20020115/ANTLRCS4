@@ -31,13 +31,13 @@ public class LexerATNSimulator : ATNSimulator {
 	 *  then the ATN does the accept and the DFA simulator that invoked it
 	 *  can simply return the predicted token type.</p>
 	 */
-	protected class SimState {
+	public class SimState {
 		protected int index = -1;
 		protected int line = 0;
 		protected int charPos = -1;
 		protected DFAState dfaState;
 
-		protected void reset() {
+		public void reset() {
 			index = -1;
 			line = 0;
 			charPos = -1;
@@ -71,15 +71,15 @@ public class LexerATNSimulator : ATNSimulator {
 
 	public LexerATNSimulator(ATN atn, DFA[] decisionToDFA,
 							 PredictionContextCache sharedContextCache)
-	{
-		this(null, atn, decisionToDFA,sharedContextCache);
+		: this(null, atn, decisionToDFA, sharedContextCache)
+    {
 	}
 
 	public LexerATNSimulator(Lexer recog, ATN atn,
 							 DFA[] decisionToDFA,
 							 PredictionContextCache sharedContextCache)
-	{
-		super(atn,sharedContextCache);
+		:base(atn, sharedContextCache)
+    {
 		this.decisionToDFA = decisionToDFA;
 		this.recog = recog;
 	}
@@ -121,16 +121,16 @@ public class LexerATNSimulator : ATNSimulator {
 
 	//@Override
 	public void clearDFA() {
-		for (int d = 0; d < decisionToDFA.length; d++) {
+		for (int d = 0; d < decisionToDFA.Length; d++) {
 			decisionToDFA[d] = new DFA(atn.getDecisionState(d), d);
 		}
 	}
 
 	protected int matchATN(CharStream input) {
-		ATNState startState = atn.modeToStartState.get(mode);
+		ATNState startState = atn.modeToStartState[mode];
 
 		if ( debug ) {
-			Console.Out.format(Locale.getDefault(), "matchATN mode %d start: %s\n", mode, startState);
+			Console.Out.format("matchATN mode %d start: %s\n", mode, startState);
 		}
 
 		int old_mode = mode;
@@ -147,7 +147,7 @@ public class LexerATNSimulator : ATNSimulator {
 		int predict = execATN(input, next);
 
 		if ( debug ) {
-			Console.Out.format(Locale.getDefault(), "DFA after matchATN: %s\n", decisionToDFA[old_mode].toLexerString());
+			Console.Out.format("DFA after matchATN: %s\n", decisionToDFA[old_mode].toLexerString());
 		}
 
 		return predict;
@@ -156,7 +156,7 @@ public class LexerATNSimulator : ATNSimulator {
 	protected int execATN(CharStream input, DFAState ds0) {
 		//Console.Out.println("enter exec index "+input.index()+" from "+ds0.configs);
 		if ( debug ) {
-			Console.Out.format(Locale.getDefault(), "start state closure=%s\n", ds0.configs);
+			Console.Out.format("start state closure=%s\n", ds0.configs);
 		}
 
 		if (ds0.isAcceptState) {
@@ -170,7 +170,7 @@ public class LexerATNSimulator : ATNSimulator {
 
 		while ( true ) { // while more work
 			if ( debug ) {
-				Console.Out.format(Locale.getDefault(), "execATN loop starting closure: %s\n", s.configs);
+				Console.Out.format("execATN loop starting closure: %s\n", s.configs);
 			}
 
 			// As we move src->trg, src->trg, we keep track of the previous trg to
@@ -316,7 +316,7 @@ public class LexerATNSimulator : ATNSimulator {
 			}
 
 			if ( debug ) {
-				Console.Out.format(Locale.getDefault(), "testing %s at %s\n", getTokenName(t), c.toString(recog, true));
+				Console.Out.format("testing %s at %s\n", getTokenName(t), c.toString(recog, true));
 			}
 
 			int n = c.state.getNumberOfTransitions();
@@ -345,7 +345,7 @@ public class LexerATNSimulator : ATNSimulator {
 						  int startIndex, int index, int line, int charPos)
 	{
 		if ( debug ) {
-			Console.Out.format(Locale.getDefault(), "ACTION %s\n", lexerActionExecutor);
+			Console.Out.format("ACTION %s\n", lexerActionExecutor);
 		}
 
 		// seek to after last char in token
@@ -399,10 +399,10 @@ public class LexerATNSimulator : ATNSimulator {
 		if ( config.state is RuleStopState ) {
 			if ( debug ) {
 				if ( recog!=null ) {
-					Console.Out.format(Locale.getDefault(), "closure at %s rule stop %s\n", recog.getRuleNames()[config.state.ruleIndex], config);
+					Console.Out.format("closure at %s rule stop %s\n", recog.getRuleNames()[config.state.ruleIndex], config);
 				}
 				else {
-					Console.Out.format(Locale.getDefault(), "closure at rule stop %s\n", config);
+					Console.Out.format("closure at rule stop %s\n", config);
 				}
 			}
 

@@ -64,15 +64,15 @@ public class LexerTypeAction : LexerAction {
 	}
 
 	//@Override
-	public int hashCode() {
+	public int GetHashCode() {
 		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType().ordinal());
+		hash = MurmurHash.update(hash, getActionType());
 		hash = MurmurHash.update(hash, type);
 		return MurmurHash.finish(hash, 2);
 	}
 
 	//@Override
-	public bool equals(Object obj) {
+	public override bool Equals(Object? obj) {
 		if (obj == this) {
 			return true;
 		}
@@ -84,7 +84,7 @@ public class LexerTypeAction : LexerAction {
 	}
 
 	//@Override
-	public String toString() {
+	public override String ToString() {
 		return $"type({type})";
 	}
 }
