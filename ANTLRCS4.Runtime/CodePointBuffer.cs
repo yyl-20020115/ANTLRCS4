@@ -223,7 +223,7 @@ public class CodePointBuffer {
 		}
 
 		private void appendArray(CharBuffer utf16In) {
-			assert utf16In.hasArray();
+			//assert utf16In.hasArray();
 
 			switch (type) {
 				case BYTE:

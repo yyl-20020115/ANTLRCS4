@@ -7,6 +7,7 @@ namespace org.antlr.v4.test.tool;
 
 
 /** Test errors with the set stuff in lexer and parser */
+[TestClass]
 public class TestErrorSets {
 	protected bool debug = false;
 

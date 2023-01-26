@@ -17,11 +17,11 @@ public class TestASTStructure {
 	int scriptLine)
 	
 	{
-		ANTLRStringStream is = new ANTLRStringStream(input);
+		ANTLRStringStream @is = new ANTLRStringStream(input);
 		Class<? extends TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
 		Constructor<? extends TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
-		TokenSource lexer = lexConstructor.newInstance(is);
-		is.setLine(scriptLine);
+		TokenSource lexer = lexConstructor.newInstance(@is);
+        @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 

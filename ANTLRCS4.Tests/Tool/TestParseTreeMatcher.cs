@@ -33,8 +33,8 @@ public class TestParseTreeMatcher {
 		try {
 			m.split(">expr<");
 		}
-		catch (IllegalArgumentException iae) {
-			result = iae.getMessage();
+		catch (ArgumentException iae) {
+			result = iae.Message;
 		}
 		String expected = "tag delimiters out of order in pattern: >expr<";
 		assertEquals(expected, result);
@@ -46,8 +46,8 @@ public class TestParseTreeMatcher {
 		try {
 			m.split("<expr hi mom");
 		}
-		catch (IllegalArgumentException iae) {
-			result = iae.getMessage();
+		catch (ArgumentException iae) {
+			result = iae.Message;
 		}
 		String expected = "unterminated tag in pattern: <expr hi mom";
 		assertEquals(expected, result);
@@ -59,8 +59,8 @@ public class TestParseTreeMatcher {
 		try {
 			m.split("<expr> >");
 		}
-		catch (IllegalArgumentException iae) {
-			result = iae.getMessage();
+		catch (ArgumentException iae) {
+			result = iae.Message;
 		}
 		String expected = "missing start tag in pattern: <expr> >";
 		assertEquals(expected, result);
@@ -106,7 +106,7 @@ public class TestParseTreeMatcher {
 			"WS : [ \\r\\n\\t]+ -> skip ;\n";
 		ParseTreePatternMatcher m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-		boolean failed = false;
+		bool failed = false;
 		try {
 			m.compile("<ID> = <expr> ; extra", m.getParser().getRuleIndex("s"));
 		}
@@ -127,7 +127,7 @@ public class TestParseTreeMatcher {
 			"WS : [ \\r\\n\\t]+ -> skip ;\n";
 		ParseTreePatternMatcher m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-		boolean failed = false;
+		bool failed = false;
 		try {
 			m.compile("<ID> ;", m.getParser().getRuleIndex("s"));
 		}
@@ -148,7 +148,7 @@ public class TestParseTreeMatcher {
 			"WS : [ \\r\\n\\t]+ -> skip ;\n";
 		ParseTreePatternMatcher m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-		boolean failed = false;
+		bool failed = false;
 		try {
 			m.compile("<ID> <ID> ;", m.getParser().getRuleIndex("s"));
 		}
@@ -296,7 +296,7 @@ public class TestParseTreeMatcher {
 
 		String input = "x = 0;";
 		String pattern = "<ID> = 1;";
-		boolean invertMatch = true; // 0!=1
+		bool invertMatch = true; // 0!=1
 		checkPatternMatch(grammar, "s", input, pattern, "X4", invertMatch);
 
 		input = "x = 0;";
@@ -366,7 +366,7 @@ public class TestParseTreeMatcher {
 
 	private static ParseTreeMatch checkPatternMatch(String grammar, String startRule,
 											String input, String pattern,
-											String grammarName, boolean invertMatch)
+											String grammarName, bool invertMatch)
 		
 	{
 		String grammarFileName = grammarName+".g4";
@@ -383,7 +383,7 @@ public class TestParseTreeMatcher {
 			ParseTreePattern p = parser.compileParseTreePattern(pattern, parser.getRuleIndex(startRule));
 
 			ParseTreeMatch match = p.match(executedState.parseTree);
-			boolean matched = match.succeeded();
+			bool matched = match.succeeded();
 			if ( invertMatch ) assertFalse(matched);
 			else assertTrue(matched);
 			return match;

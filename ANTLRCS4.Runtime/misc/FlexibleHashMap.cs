@@ -218,18 +218,18 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		if ( size()==0 ) return "{}";
 
 		StringBuilder buf = new StringBuilder();
-		buf.append('{');
+		buf.Append('{');
 		bool first = true;
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
 			if ( bucket==null ) continue;
 			for (Entry<K, V> e : bucket) {
 				if ( e==null ) break;
 				if ( first ) first=false;
-				else buf.append(", ");
-				buf.append(e.toString());
+				else buf.Append(", ");
+				buf.Append(e.toString());
 			}
 		}
-		buf.append('}');
+		buf.Append('}');
 		return buf.toString();
 	}
 
@@ -237,18 +237,18 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 		StringBuilder buf = new StringBuilder();
 		for (LinkedList<Entry<K, V>> bucket : buckets) {
 			if ( bucket==null ) {
-				buf.append("null\n");
+				buf.Append("null\n");
 				continue;
 			}
-			buf.append('[');
+			buf.Append('[');
 			bool first = true;
 			for (Entry<K, V> e : bucket) {
 				if ( first ) first=false;
-				else buf.append(" ");
-				if ( e==null ) buf.append("_");
-				else buf.append(e.toString());
+				else buf.Append(" ");
+				if ( e==null ) buf.Append("_");
+				else buf.Append(e.toString());
 			}
-			buf.append("]\n");
+			buf.Append("]\n");
 		}
 		return buf.toString();
 	}

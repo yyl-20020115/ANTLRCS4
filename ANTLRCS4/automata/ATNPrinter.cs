@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.tool;
+using System.Text;
 
 namespace org.antlr.v4.automata;
 
@@ -27,8 +28,8 @@ public class ATNPrinter {
 		if ( start==null ) return null;
 		marked = new HashSet<ATNState>();
 
-		work = new ArrayList<ATNState>();
-		work.add(start);
+		work = new ();
+		work.Add(start);
 
 		StringBuilder buf = new StringBuilder();
 		ATNState s;
@@ -38,41 +39,41 @@ public class ATNPrinter {
 			if ( marked.contains(s) ) continue;
 			int n = s.getNumberOfTransitions();
 //			System.out.println("visit "+s+"; edges="+n);
-			marked.add(s);
+			marked.Add(s);
 			for (int i=0; i<n; i++) {
 				Transition t = s.transition(i);
 				if ( !(s is RuleStopState) ) { // don't add follow states to work
-					if ( t is RuleTransition ) work.add(((RuleTransition)t).followState);
-					else work.add( t.target );
+					if ( t is RuleTransition ) work.Add(((RuleTransition)t).followState);
+					else work.Add( t.target );
 				}
-				buf.append(getStateString(s));
+				buf.Append(getStateString(s));
 				if ( t is EpsilonTransition ) {
-					buf.append("->").append(getStateString(t.target)).append('\n');
+					buf.Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else if ( t is RuleTransition ) {
-					buf.append("-").append(g.getRule(((RuleTransition)t).ruleIndex).name).append("->").append(getStateString(t.target)).append('\n');
+					buf.Append("-").Append(g.getRule(((RuleTransition)t).ruleIndex).name).append("->").Append(getStateString(t.target)).append('\n');
 				}
 				else if ( t is ActionTransition ) {
 					ActionTransition a = (ActionTransition)t;
-					buf.append("-").append(a.toString()).append("->").append(getStateString(t.target)).append('\n');
+					buf.Append("-").Append(a.ToString()).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else if ( t is SetTransition ) {
 					SetTransition st = (SetTransition)t;
 					bool not = st is NotSetTransition;
 					if ( g.isLexer() ) {
-						buf.append("-").append(not?"~":"").append(st.toString()).append("->").append(getStateString(t.target)).append('\n');
+						buf.Append("-").Append(not?"~":"").Append(st.ToString()).Append("->").Append(getStateString(t.target)).Append('\n');
 					}
 					else {
-						buf.append("-").append(not?"~":"").append(st.label().toString(g.getVocabulary())).append("->").append(getStateString(t.target)).append('\n');
+						buf.Append("-").Append(not?"~":"").Append(st.label().toString(g.getVocabulary())).Append("->").Append(getStateString(t.target)).append('\n');
 					}
 				}
 				else if ( t is AtomTransition ) {
 					AtomTransition a = (AtomTransition)t;
 					String label = g.getTokenDisplayName(a.label);
-					buf.append("-").append(label).append("->").append(getStateString(t.target)).append('\n');
+					buf.Append("-").Append(label).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else {
-					buf.append("-").append(t.toString()).append("->").append(getStateString(t.target)).append('\n');
+					buf.Append("-").Append(t.toString()).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 			}
 		}

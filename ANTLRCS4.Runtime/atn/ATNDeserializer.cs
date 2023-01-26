@@ -541,7 +541,7 @@ public class ATNDeserializer {
 			case ATNState.LOOP_END : s = new LoopEndState(); break;
 			default :
 				String message = String.format(Locale.getDefault(), "The specified state type %d is not valid.", type);
-				throw new IllegalArgumentException(message);
+				throw new ArgumentException(message);
 		}
 
 		s.ruleIndex = ruleIndex;

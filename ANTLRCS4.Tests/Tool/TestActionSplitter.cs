@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
@@ -27,7 +29,7 @@ public class TestActionSplitter {
 
     [TestMethod]
 	public void testExprs() {
-		for (int i = 0; i < exprs.length; i += 2) {
+		for (int i = 0; i < exprs.Length; i += 2) {
 			String input = exprs[i];
 			String expect = exprs[i + 1];
 			List<String> chunks = getActionChunks(input);

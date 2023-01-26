@@ -236,7 +236,7 @@ public class TestAttributeChecks {
 	}
 
 	private static void testActions(String location, String[] pairs, String template) {
-		for (int i = 0; i < pairs.length; i += 2) {
+		for (int i = 0; i < pairs.Length; i += 2) {
 			String action = pairs[i];
 			String expected = pairs[i + 1];
 			STGroup g = new STGroup('<', '>');

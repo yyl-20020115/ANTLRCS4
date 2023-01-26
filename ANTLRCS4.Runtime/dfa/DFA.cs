@@ -12,7 +12,7 @@ public class DFA {
 	 *  ({@link Set} only allows you to see if it's there).
      */
 
-	public readonly Map<DFAState, DFAState> states = new HashMap<DFAState, DFAState>();
+	public readonly Dictionary<DFAState, DFAState> states = new ();
 
 	public volatile DFAState s0;
 

@@ -43,12 +43,12 @@ public class TestCodeGeneration {
 		List<String> evals = new ArrayList<String>();
 		ErrorManager myErrMgrCopy;
 		int tab = 0;
-		public DebugInterpreter(STGroup group, ErrorManager errMgr, boolean debug) {
+		public DebugInterpreter(STGroup group, ErrorManager errMgr, bool debug) {
 			super(group, errMgr, debug);
 			myErrMgrCopy = errMgr;
 		}
 
-		@Override
+		//@Override
 		protected int writeObject(STWriter out, InstanceScope scope, Object o, String[] options) {
 			if ( o is ST ) {
 				String name = ((ST)o).getName();
@@ -69,7 +69,7 @@ public class TestCodeGeneration {
 			return super.writeObject(out, scope, o, options);
 		}
 
-		@Override
+		//@Override
 		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options){
 			Class<?> type = o.getClass();
 			String name = type.getSimpleName();
@@ -108,7 +108,7 @@ public class TestCodeGeneration {
 //				e.printStackTrace();
 //			}
 
-			boolean debug = false;
+			bool debug = false;
 			DebugInterpreter interp =
 					new DebugInterpreter(outputFileST.groupThatCreatedThisInstance,
 							outputFileST.impl.nativeGroup.errMgr,

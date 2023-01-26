@@ -4,20 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
+namespace org.antlr.v4.gui;
 
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.misc.Utils;
-import org.antlr.v4.runtime.tree.Tree;
-
-import javax.print.PrintException;
-import javax.swing.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.Future;
 
 public class Trees {
 	/** Call this method to view a parse tree in a dialog box visually. */
@@ -34,7 +22,7 @@ public class Trees {
 
 	/** Save this tree in a postscript file */
 	public static void save(Tree t, Parser parser, String fileName)
-		throws IOException, PrintException
+		
 	{
 		List<String> ruleNames = parser != null ? Arrays.asList(parser.getRuleNames()) : null;
 		save(t, ruleNames, fileName);
@@ -43,7 +31,7 @@ public class Trees {
 	/** Save this tree in a postscript file using a particular font name and size */
 	public static void save(Tree t, Parser parser, String fileName,
 					 String fontName, int fontSize)
-		throws IOException
+		
 	{
 		List<String> ruleNames = parser != null ? Arrays.asList(parser.getRuleNames()) : null;
 		save(t, ruleNames, fileName, fontName, fontSize);
@@ -51,7 +39,7 @@ public class Trees {
 
 	/** Save this tree in a postscript file */
 	public static void save(Tree t, List<String> ruleNames, String fileName)
-		throws IOException, PrintException
+		
 	{
 		writePS(t, ruleNames, fileName);
 	}
@@ -60,7 +48,7 @@ public class Trees {
 	public static void save(Tree t,
 	                        List<String> ruleNames, String fileName,
 	                        String fontName, int fontSize)
-	throws IOException
+
 	{
 		writePS(t, ruleNames, fileName, fontName, fontSize);
 	}
@@ -80,7 +68,7 @@ public class Trees {
 	public static void writePS(Tree t, List<String> ruleNames,
 							   String fileName,
 							   String fontName, int fontSize)
-		throws IOException
+	
 	{
 		String ps = getPS(t, ruleNames, fontName, fontSize);
 		FileWriter f = new FileWriter(fileName);
@@ -94,7 +82,7 @@ public class Trees {
 	}
 
 	public static void writePS(Tree t, List<String> ruleNames, String fileName)
-		throws IOException
+	
 	{
 		writePS(t, ruleNames, fileName, "Helvetica", 11);
 	}
@@ -121,6 +109,4 @@ public class Trees {
 		return buf.toString();
 	}
 
-	private Trees() {
-	}
 }

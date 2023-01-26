@@ -1,4 +1,5 @@
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -44,13 +45,13 @@ public class ATNDescriber {
 
 		p++; // skip grammarType
 		int maxType = data[p++];
-		buf.append("max type ").append(maxType).append("\n");
+		buf.Append("max type ").append(maxType).append("\n");
 		int nstates = data[p++];
 		for (int i=0; i<nstates; i++) {
 			int stype = data[p++];
 			if ( stype== ATNState.INVALID_TYPE ) continue; // ignore bad type of states
 			int ruleIndex = data[p++];
-			if (ruleIndex == Character.MAX_VALUE) {
+			if (ruleIndex == char.MaxValue) {
 				ruleIndex = -1;
 			}
 
@@ -63,9 +64,9 @@ public class ATNDescriber {
 				int endStateNumber = data[p++];
 				arg = " "+endStateNumber;
 			}
-			buf.append(i).append(":")
-					.append(ATNState.serializationNames.get(stype)).append(" ")
-					.append(ruleIndex).append(arg).append("\n");
+			buf.Append(i).Append(":")
+					.Append(ATNState.serializationNames.get(stype)).Append(" ")
+					.Append(ruleIndex).Append(arg).Append("\n");
 		}
 		// this code is meant to model the form of ATNDeserializer.deserialize,
 		// since both need to be updated together whenever a change is made to
@@ -87,16 +88,16 @@ public class ATNDescriber {
 			int s = data[p++];
 			if (atn.grammarType == ATNType.LEXER) {
 				int arg1 = data[p++];
-				buf.append("rule ").append(i).append(":").append(s).append(" ").append(arg1).append('\n');
+				buf.Append("rule ").Append(i).Append(":").Append(s).Append(" ").Append(arg1).Append('\n');
 			}
 			else {
-				buf.append("rule ").append(i).append(":").append(s).append('\n');
+				buf.Append("rule ").Append(i).Append(":").Append(s).Append('\n');
 			}
 		}
 		int nmodes = data[p++];
 		for (int i=0; i<nmodes; i++) {
 			int s = data[p++];
-			buf.append("mode ").append(i).append(":").append(s).append('\n');
+			buf.Append("mode ").Append(i).Append(":").Append(s).Append('\n');
 		}
 		int numBMPSets = data[p++];
 		p = appendSets(buf, data, p, numBMPSets);
@@ -108,9 +109,9 @@ public class ATNDescriber {
 			int arg1 = data[p + 3];
 			int arg2 = data[p + 4];
 			int arg3 = data[p + 5];
-			buf.append(src).append("->").append(trg)
-					.append(" ").append(Transition.serializationNames.get(ttype))
-					.append(" ").append(arg1).append(",").append(arg2).append(",").append(arg3)
+			buf.Append(src).Append("->").Append(trg)
+					.Append(" ").Append(Transition.serializationNames.get(ttype))
+					.Append(" ").append(arg1).append(",").append(arg2).append(",").append(arg3)
 					.append("\n");
 			p += 6;
 		}

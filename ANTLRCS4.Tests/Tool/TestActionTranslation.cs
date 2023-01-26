@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.tool;
 
 //@SuppressWarnings("unused")
@@ -181,8 +183,8 @@ public class TestActionTranslation {
 		testActions(recursiveTemplate, "inline", action, expected);
 		testActions(leftRecursiveTemplate, "inline", action, expected);
         // ref to predefined attribute obtained from recursive call to rule
-        action = "$v = $e.text.length();";
-        expected = "((EContext)_localctx).v =  (((EContext)_localctx).e!=null?_input.getText(((EContext)_localctx).e.start,((EContext)_localctx).e.stop):null).length();";
+        action = "$v = $e.text.Length();";
+        expected = "((EContext)_localctx).v =  (((EContext)_localctx).e!=null?_input.getText(((EContext)_localctx).e.start,((EContext)_localctx).e.stop):null).Length();";
 		testActions(recursiveTemplate, "inline", action, expected);
 		testActions(leftRecursiveTemplate, "inline", action, expected);
 	}
@@ -207,7 +209,7 @@ public class TestActionTranslation {
 	    Grammar g = new Grammar(gS);
     }
 
-	private static void testActions(String templates, String actionName, String action, String expected) throws org.antlr.runtime.RecognitionException {
+	private static void testActions(String templates, String actionName, String action, String expected){
 		int lp = templates.indexOf('(');
 		String name = templates.substring(0, lp);
 		STGroup group = new STGroupString(templates);
@@ -235,7 +237,7 @@ public class TestActionTranslation {
 			int start = output.indexOf(b);
 			String e = "#end-" + actionName + "#";
 			int end = output.indexOf(e);
-			String snippet = output.substring(start+b.length(),end);
+			String snippet = output.substring(start+b.Length(),end);
 			assertEquals(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {

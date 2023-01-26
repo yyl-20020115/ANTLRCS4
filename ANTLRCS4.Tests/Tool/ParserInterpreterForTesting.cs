@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 
@@ -22,28 +25,28 @@ public class ParserInterpreterForTesting {
 			this.g = g;
 			this.atn = atn;
 			this.decisionToDFA = new DFA[atn.getNumberOfDecisions()];
-			for (int i = 0; i < decisionToDFA.length; i++) {
+			for (int i = 0; i < decisionToDFA.Length; i++) {
 				decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
 			}
 		}
 
-		@Override
+		//@Override
 		public String getGrammarFileName() {
 			throw new UnsupportedOperationException("not implemented");
 		}
 
-		@Override
+		//@Override
 		public String[] getRuleNames() {
 			return g.rules.keySet().toArray(new String[0]);
 		}
 
-		@Override
-		@Deprecated
+		//@Override
+		//@Deprecated
 		public String[] getTokenNames() {
 			return g.getTokenNames();
 		}
 
-		@Override
+		//@Override
 		public ATN getATN() {
 			return atn;
 		}

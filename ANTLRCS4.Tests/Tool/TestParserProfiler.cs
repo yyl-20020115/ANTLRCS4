@@ -5,6 +5,8 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -39,7 +41,7 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", ";");
-		assertEquals(1, info.length);
+		assertEquals(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=1, " +
 				"SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
@@ -55,7 +57,7 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;");
-		assertEquals(1, info.length);
+		assertEquals(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
@@ -71,7 +73,7 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;", "abc;");
-		assertEquals(1, info.length);
+		assertEquals(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
@@ -88,7 +90,7 @@ public class TestParserProfiler {
 
 		// The '.' vs ';' causes another ATN transition
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;", "abc;", "z.");
-		assertEquals(1, info.length);
+		assertEquals(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 				"SLL_ATNTransitions=3, SLL_DFATransitions=3, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
@@ -104,7 +106,7 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a.b;");
-		assertEquals(2, info.length);
+		assertEquals(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=1, " +
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
@@ -122,7 +124,7 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a.b;", "a.b;");
-		assertEquals(2, info.length);
+		assertEquals(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=1, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
@@ -139,7 +141,7 @@ public class TestParserProfiler {
 			"e : INT | ;\n",
 			lg);
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "a", "; 1 x");
-		assertEquals(2, info.length);
+		assertEquals(2, info.Length);
 		String expecting =
 			"{decision=1, contextSensitivities=1, errors=0, ambiguities=0, SLL_lookahead=3, SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_lookahead=3, LL_ATNTransitions=2}";
 		assertEquals(expecting, info[1].ToString());
@@ -159,7 +161,7 @@ public class TestParserProfiler {
 
 
 		assertEquals(expecting, Arrays.ToString(info));
-		assertEquals(1, info.length);
+		assertEquals(1, info.Length);
 	}
 
 	@Disabled
@@ -179,7 +181,7 @@ public class TestParserProfiler {
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a+b+c;");
 		// at "+b" it uses k=1 and enters loop then calls e for b...
 		// e matches and d=2 uses "+c;" for k=3
-		assertEquals(2, info.length);
+		assertEquals(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 			  "SLL_ATNTransitions=6, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +

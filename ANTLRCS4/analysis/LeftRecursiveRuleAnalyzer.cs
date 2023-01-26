@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen;
+using org.antlr.v4.parse;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.analysis;
 
 /** Using a tree walker on the rules, determine if a rule is directly left-recursive and if it follows
@@ -14,9 +18,9 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 	public Tool tool;
 	public String ruleName;
-	public Dictionary<int, LeftRecursiveRuleAltInfo> binaryAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
-	public Dictionary<int, LeftRecursiveRuleAltInfo> ternaryAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
-	public Dictionary<int, LeftRecursiveRuleAltInfo> suffixAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> binaryAlts = new ();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> ternaryAlts = new ();
+	public Dictionary<int, LeftRecursiveRuleAltInfo> suffixAlts = new ();
 	public List<LeftRecursiveRuleAltInfo> prefixAndOtherAlts = new ArrayList<LeftRecursiveRuleAltInfo>();
 
 	/** Pointer to ID node of ^(= ID element) */
@@ -34,7 +38,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 	public Dictionary<int, ASSOC> altAssociativity = new ();
 
-	static {
+	static LeftRecursiveRuleAnalyzer(){
 		String templateGroupFile = "org/antlr/v4/tool/templates/LeftRecursiveRules.stg";
 		recRuleTemplates = new STGroupFile(templateGroupFile);
 		if (!recRuleTemplates.isDefined("recRule")) {
@@ -62,12 +66,12 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		codegenTemplates = CodeGenerator.create(tool, null, language).getTemplates();
 	}
 
-	@Override
+	//@Override
 	public void setReturnValues(GrammarAST t) {
 		retvals = t;
 	}
 
-	@Override
+	//@Override
 	public void setAltAssoc(AltAST t, int alt) {
 		ASSOC assoc = ASSOC.left;
 		if ( t.getOptions()!=null ) {
@@ -93,7 +97,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 //		System.out.println("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
 	}
 
-	@Override
+	//@Override
 	public void binaryAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
@@ -123,7 +127,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		//System.out.println("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//@Override
 	public void prefixAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		stripAltLabel(altTree);
@@ -141,7 +145,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		//System.out.println("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//@Override
 	public void suffixAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
@@ -163,7 +167,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 //		System.out.println("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
-	@Override
+	//@Override
 	public void otherAlt(AltAST originalAltTree, int alt) {
 		AltAST altTree = (AltAST)originalAltTree.dupTree();
 		stripAltLabel(altTree);
@@ -383,7 +387,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		return p+1;
 	}
 
-	@Override
+	//@Override
 	public String toString() {
 		return "PrecRuleOperatorCollector{" +
 			   "binaryAlts=" + binaryAlts +

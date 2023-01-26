@@ -64,8 +64,8 @@ public class ActionTranslator : ActionSplitterListener {
 
 	public static String toString(List<ActionChunk> chunks) {
 		StringBuilder buf = new StringBuilder();
-		for (ActionChunk c : chunks) buf.append(c.toString());
-		return buf.toString();
+		foreach (ActionChunk c in chunks) buf.Append(c.toString());
+		return buf.ToString();
 	}
 
 	public static List<ActionChunk> translateAction(OutputModelFactory factory,
@@ -210,12 +210,12 @@ public class ActionTranslator : ActionSplitterListener {
 		List<ActionChunk> rhsChunks = translateActionChunk(factory,rf,rhs.getText(),node);
 		String name = y.getText();
 		SetNonLocalAttr s = new SetNonLocalAttr(nodeContext, x.getText(), name, target.escapeIfNeeded(name), r.index, rhsChunks);
-		chunks.add(s);
+		chunks.Add(s);
 	}
 
 	//@Override
 	public void text(String text) {
-		chunks.add(new ActionText(nodeContext,text));
+		chunks.Add(new ActionText(nodeContext,text));
 	}
 
 	TokenPropertyRef getTokenPropertyRef(Token x, Token y) {

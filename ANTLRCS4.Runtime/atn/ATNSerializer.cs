@@ -141,7 +141,7 @@ public class ATNSerializer {
 	}
 
 	private void addDecisionStartStates() {
-		int ndecisions = atn.decisionToState.size();
+		int ndecisions = atn.decisionToState.Count;
 		data.add(ndecisions);
 		foreach (DecisionState decStartState in atn.decisionToState) {
 			data.add(decStartState.stateNumber);
@@ -242,7 +242,7 @@ public class ATNSerializer {
 	}
 
 	private void addModeStartStates() {
-		int nmodes = atn.modeToStartState.size();
+		int nmodes = atn.modeToStartState.Count;
 		data.add(nmodes);
 		if ( nmodes>0 ) {
 			foreach (ATNState modeStartState in atn.modeToStartState) {
@@ -265,22 +265,22 @@ public class ATNSerializer {
 	}
 
 	private void addPrecedenceStates() {
-		data.add(precedenceStates.size());
-		for (int i = 0; i < precedenceStates.size(); i++) {
+		data.add(precedenceStates.Count);
+		for (int i = 0; i < precedenceStates.Count; i++) {
 			data.add(precedenceStates.get(i));
 		}
 	}
 
 	private void addNonGreedyStates() {
-		data.add(nonGreedyStates.size());
-		for (int i = 0; i < nonGreedyStates.size(); i++) {
+		data.add(nonGreedyStates.Count);
+		for (int i = 0; i < nonGreedyStates.Count; i++) {
 			data.add(nonGreedyStates.get(i));
 		}
 	}
 
 	private int addEdges() {
 		int nedges = 0;
-		data.add(atn.states.size());
+		data.add(atn.states.Count);
 		foreach (ATNState s in atn.states) {
 			if ( s==null ) { // might be optimized away
 				data.add(ATNState.INVALID_TYPE);
@@ -325,20 +325,20 @@ public class ATNSerializer {
 	}
 
 	private static void serializeSets(IntegerList data, ICollection<IntervalSet> sets) {
-		int nSets = sets.size();
+		int nSets = sets.Count;
 		data.add(nSets);
 
-		for (IntervalSet set : sets) {
+		foreach (IntervalSet set in sets) {
 			bool containsEof = set.contains(Token.EOF);
 			if (containsEof && set.getIntervals().get(0).b == Token.EOF) {
-				data.add(set.getIntervals().size() - 1);
+				data.add(set.getIntervals().Count - 1);
 			}
 			else {
-				data.add(set.getIntervals().size());
+				data.add(set.getIntervals().Count);
 			}
 
 			data.add(containsEof ? 1 : 0);
-			for (Interval I : set.getIntervals()) {
+			foreach (Interval I in set.getIntervals()) {
 				if (I.a == Token.EOF) {
 					if (I.b == Token.EOF) {
 						continue;

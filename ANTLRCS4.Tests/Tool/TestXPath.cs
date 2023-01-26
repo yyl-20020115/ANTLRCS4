@@ -4,11 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.tree.xpath;
 
 namespace org.antlr.v4.test.tool;
 
+[TestClass]
 public class TestXPath {
 	public static readonly String grammar =
 		"grammar Expr;\n" +
@@ -145,15 +148,15 @@ public class TestXPath {
 							 String startRuleName, String parserName, String lexerName)
 		
 	{
-		IllegalArgumentException e = null;
+		ArgumentException e = null;
 		try {
 			compileAndExtract(grammarFileName, grammar, input, xpath, startRuleName, parserName, lexerName);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			e = iae;
 		}
 		assertNotNull(e);
-		assertEquals(expected, e.getMessage());
+		assertEquals(expected, e.Message);
 	}
 
 	private List<String> getNodeStrings(String grammarFileName, String grammar, String input, String xpath,
@@ -184,11 +187,11 @@ public class TestXPath {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRuleName, input,
 				false, false, Stage.Execute, true);
-		try (JavaRunner runner = new JavaRunner()) {
+		using (JavaRunner runner = new JavaRunner()) {
 			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
 			Parser parser = compiledState.initializeLexerAndParser(input).b;
-			Collection<ParseTree> found = XPath.findAll(executedState.parseTree, xpath, parser);
+			ICollection<ParseTree> found = XPath.findAll(executedState.parseTree, xpath, parser);
 
 			return new (parser.getRuleNames(), found);
 		}

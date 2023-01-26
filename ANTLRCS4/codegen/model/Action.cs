@@ -18,8 +18,9 @@ public class Action : RuleElement {
 	//@ModelElement
 	public List<ActionChunk> chunks;
 
-	public Action(OutputModelFactory factory, ActionAST ast) {
-		super(factory,ast);
+	public Action(OutputModelFactory factory, ActionAST ast) :base(factory, ast)
+    {
+		;
 		RuleFunction rf = factory.getCurrentRuleFunction();
 		if (ast != null) {
 			chunks = ActionTranslator.translateAction(factory, rf, ast.token, ast);
@@ -30,8 +31,8 @@ public class Action : RuleElement {
 		//System.out.println("actions="+chunks);
 	}
 
-	public Action(OutputModelFactory factory, StructDecl ctx, String action) {
-		super(factory,null);
+	public Action(OutputModelFactory factory, StructDecl ctx, String action):base(factory,null)
+    {
 		ActionAST ast = new ActionAST(new CommonToken(ANTLRParser.ACTION, action));
 		RuleFunction rf = factory.getCurrentRuleFunction();
 		if ( rf!=null ) { // we can translate
@@ -40,14 +41,15 @@ public class Action : RuleElement {
 		}
 		else {
 			chunks = new ();
-			chunks.add(new ActionText(ctx, action));
+			chunks.Add(new ActionText(ctx, action));
 		}
 	}
 
-	public Action(OutputModelFactory factory, StructDecl ctx, ST actionST) {
-		super(factory, null);
+	public Action(OutputModelFactory factory, StructDecl ctx, ST actionST) :base(factory, null)
+    {
+		;
 		chunks = new ();
-		chunks.add(new ActionTemplate(ctx, actionST));
+		chunks.Add(new ActionTemplate(ctx, actionST));
 	}
 
 }

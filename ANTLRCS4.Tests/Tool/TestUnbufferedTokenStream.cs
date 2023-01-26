@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 

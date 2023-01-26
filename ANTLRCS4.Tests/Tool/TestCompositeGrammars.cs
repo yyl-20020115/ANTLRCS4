@@ -10,7 +10,7 @@ namespace org.antlr.v4.test.tool;
 public class TestCompositeGrammars {
 	protected bool debug = false;
 
-	[TestMethod] public void testImportFileLocationInSubdir(@TempDir Path tempDir) {
+	[TestMethod] public void testImportFileLocationInSubdir(string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -700,7 +700,7 @@ public class TestCompositeGrammars {
 		}
 	}
 
-	private static boolean compile(String grammarFileName, String grammarStr, String parserName, String startRuleName,
+	private static bool compile(String grammarFileName, String grammarStr, String parserName, String startRuleName,
 							Path tempDirPath
 	) {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, null,

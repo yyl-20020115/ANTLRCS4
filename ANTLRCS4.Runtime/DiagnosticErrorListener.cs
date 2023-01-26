@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
 
@@ -111,7 +112,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 		int ruleIndex = dfa.atnStartState.ruleIndex;
 
 		String[] ruleNames = recognizer.getRuleNames();
-		if (ruleIndex < 0 || ruleIndex >= ruleNames.length) {
+		if (ruleIndex < 0 || ruleIndex >= ruleNames.Length) {
 			return String.valueOf(decision);
 		}
 

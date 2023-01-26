@@ -153,7 +153,7 @@ public class TestTokenTypeAssignment {
 	{
 		String[] typeToTokenName = g.getTokenNames();
         HashSet<String> tokens = new HashSet<String>();
-		for (int i = 0; i < typeToTokenName.length; i++) {
+		for (int i = 0; i < typeToTokenName.Length; i++) {
 			String t = typeToTokenName[i];
 			if ( t!=null ) {
 				if (t.startsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX)) {

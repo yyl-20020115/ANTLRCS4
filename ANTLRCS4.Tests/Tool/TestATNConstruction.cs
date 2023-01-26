@@ -524,7 +524,7 @@ public class TestATNConstruction {
 	}
 
 	[TestMethod] public void testParserRuleRefInLexerRule(){
-		boolean threwException = false;
+		bool threwException = false;
 		ErrorQueue errorQueue = new ErrorQueue();
 		try {
 			String gstr =

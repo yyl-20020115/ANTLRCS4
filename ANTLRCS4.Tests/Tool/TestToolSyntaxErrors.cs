@@ -8,7 +8,7 @@ using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 
-
+[TestClass]
 public class TestToolSyntaxErrors {
 	readonly static String[] A = new string[] {
 	    // INPUT
@@ -55,8 +55,8 @@ public class TestToolSyntaxErrors {
 	[TestMethod]
 	public void AllErrorCodesDistinct() {
 		ErrorType[] errorTypes = typeof(ErrorType).getEnumConstants();
-		for (int i = 0; i < errorTypes.length; i++) {
-			for (int j = i + 1; j < errorTypes.length; j++) {
+		for (int i = 0; i < errorTypes.Length; i++) {
+			for (int j = i + 1; j < errorTypes.Length; j++) {
 				assertNotEquals(errorTypes[i], errorTypes[j]);
 			}
 		}
@@ -195,7 +195,7 @@ public class TestToolSyntaxErrors {
 
 	/**
 	 * This is a regression test for antlr/antlr4#194
-	 * "NullPointerException on 'options{}' in grammar file"
+	 * "NullReferenceException on 'options{}' in grammar file"
 	 * https://github.com/antlr/antlr4/issues/194
 	 */
 	[TestMethod] public void testEmptyGrammarOptions() {
@@ -211,7 +211,7 @@ public class TestToolSyntaxErrors {
 
 	/**
 	 * This is a "related" regression test for antlr/antlr4#194
-	 * "NullPointerException on 'options{}' in grammar file"
+	 * "NullReferenceException on 'options{}' in grammar file"
 	 * https://github.com/antlr/antlr4/issues/194
 	 */
 	[TestMethod] public void testEmptyRuleOptions() {
@@ -226,7 +226,7 @@ public class TestToolSyntaxErrors {
 
 	/**
 	 * This is a "related" regression test for antlr/antlr4#194
-	 * "NullPointerException on 'options{}' in grammar file"
+	 * "NullReferenceException on 'options{}' in grammar file"
 	 * https://github.com/antlr/antlr4/issues/194
 	 */
 	[TestMethod] public void testEmptyBlockOptions() {
@@ -252,7 +252,7 @@ public class TestToolSyntaxErrors {
 
 	/**
 	 * This is a regression test for antlr/antlr4#190
-	 * "NullPointerException building lexer grammar using bogus 'token' action"
+	 * "NullReferenceException building lexer grammar using bogus 'token' action"
 	 * https://github.com/antlr/antlr4/issues/190
 	 */
 	[TestMethod] public void testInvalidLexerCommand() {
@@ -511,7 +511,7 @@ public class TestToolSyntaxErrors {
 	}
 
 	/**
-	 * This is a regression test for antlr/antlr4#507 "NullPointerException When
+	 * This is a regression test for antlr/antlr4#507 "NullReferenceException When
 	 * Generating Code from Grammar".
 	 * https://github.com/antlr/antlr4/issues/507
 	 */
@@ -533,7 +533,7 @@ public class TestToolSyntaxErrors {
 	}
 
 	/**
-	 * This is a regression test for antlr/antlr4#959 "NullPointerException".
+	 * This is a regression test for antlr/antlr4#959 "NullReferenceException".
 	 * https://github.com/antlr/antlr4/issues/959
 	 */
 	[TestMethod] public void testNotAllowedEmptyStrings() {

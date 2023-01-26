@@ -64,7 +64,7 @@ public class TestFastQueue {
         String msg = null;
         try { q.remove(); }
         catch (NoSuchElementException nsee) {
-            msg = nsee.getMessage();
+            msg = nsee.Message;
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;
@@ -80,7 +80,7 @@ public class TestFastQueue {
         String msg = null;
         try { q.remove(); }
         catch (NoSuchElementException nsee) {
-            msg = nsee.getMessage();
+            msg = nsee.Message;
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;
@@ -95,7 +95,7 @@ public class TestFastQueue {
         String msg = null;
         try { q.remove(); }
         catch (NoSuchElementException nsee) {
-            msg = nsee.getMessage();
+            msg = nsee.Message;
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;

@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.automata;
 
 
@@ -66,7 +70,7 @@ public class ATNOptimizer {
 			}
 
 			// due to min alt resolution policies, can only collapse sequential alts
-			for (int i = setTransitions.getIntervals().size() - 1; i >= 0; i--) {
+			for (int i = setTransitions.getIntervals().Count - 1; i >= 0; i--) {
 				Interval interval = setTransitions.getIntervals().get(i);
 				if (interval.length() <= 1) {
 					continue;
@@ -130,9 +134,9 @@ public class ATNOptimizer {
 
 	private static void optimizeStates(ATN atn) {
 //		System.out.println(atn.states);
-		List<ATNState> compressed = new ArrayList<ATNState>();
+		List<ATNState> compressed = new ();
 		int i = 0; // new state number
-		for (ATNState s : atn.states) {
+		foreach (ATNState s in atn.states) {
 			if ( s!=null ) {
 				compressed.add(s);
 				s.stateNumber = i; // reset state number as we shift to new position

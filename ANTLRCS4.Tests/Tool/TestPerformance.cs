@@ -4,7 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
 
 namespace org.antlr.v4.test.tool;
 
@@ -304,6 +308,65 @@ public class TestPerformance {
 			tokensPerFile = null;
 		}
 	}
+	public class R0new: Runnable
+    {
+        //@Override
+        public void run()
+        {
+            try
+            {
+                parse1(0, factory, sources, SHUFFLE_FILES_AT_START);
+            }
+            catch (InterruptedException ex)
+            {
+                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public class R1
+    {
+        //@Override
+        public void run()
+        {
+            if (CLEAR_DFA)
+            {
+                int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
+                if (sharedLexers.Length > 0 && sharedLexers[index] != null)
+                {
+                    ATN atn = sharedLexers[index].getATN();
+                    for (int j = 0; j < sharedLexers[index].getInterpreter().decisionToDFA.Length; j++)
+                    {
+                        sharedLexers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
+                    }
+                }
+
+                if (sharedParsers.Length > 0 && sharedParsers[index] != null)
+                {
+                    ATN atn = sharedParsers[index].getATN();
+                    for (int j = 0; j < sharedParsers[index].getInterpreter().decisionToDFA.Length; j++)
+                    {
+                        sharedParsers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
+                    }
+                }
+
+                if (FILE_GRANULARITY)
+				{
+					Arrays.fill(sharedLexers, null);
+                    Arrays.fill(sharedParsers, null);
+                }
+            }
+
+            try
+            {
+                parse2(currentPass, factory, sources, SHUFFLE_FILES_AFTER_ITERATIONS);
+            }
+            catch (InterruptedException ex)
+            {
+                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     private readonly AtomicIntegerArray tokenCount = new AtomicIntegerArray(PASSES);
 
@@ -359,50 +422,10 @@ public class TestPerformance {
 		ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
 		List<Future<?>> passResults = new ArrayList<Future<?>>();
-		passResults.add(executorService.submit(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					parse1(0, factory, sources, SHUFFLE_FILES_AT_START);
-				} catch (InterruptedException ex) {
-					Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-		}));
+		passResults.add(executorService.submit(new R0()));
         for (int i = 0; i < PASSES - 1; i++) {
              int currentPass = i + 1;
-			passResults.add(executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					if (CLEAR_DFA) {
-						int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
-						if (sharedLexers.length > 0 && sharedLexers[index] != null) {
-							ATN atn = sharedLexers[index].getATN();
-							for (int j = 0; j < sharedLexers[index].getInterpreter().decisionToDFA.length; j++) {
-								sharedLexers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
-							}
-						}
-
-						if (sharedParsers.length > 0 && sharedParsers[index] != null) {
-							ATN atn = sharedParsers[index].getATN();
-							for (int j = 0; j < sharedParsers[index].getInterpreter().decisionToDFA.length; j++) {
-								sharedParsers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
-							}
-						}
-
-						if (FILE_GRANULARITY) {
-							Arrays.fill(sharedLexers, null);
-							Arrays.fill(sharedParsers, null);
-						}
-					}
-
-					try {
-						parse2(currentPass, factory, sources, SHUFFLE_FILES_AFTER_ITERATIONS);
-					} catch (InterruptedException ex) {
-						Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-					}
-				}
-			}));
+			passResults.add(executorService.submit(new R1()));
         }
 
 		for (Future<?> passResult : passResults) {
@@ -439,24 +462,24 @@ public class TestPerformance {
 		if (TRANSITION_RUNNING_AVERAGE) {
 			for (int i = 0; i < PASSES; i++) {
 				long[] data = computedTransitionsPerFile[i];
-				for (int j = 0; j < data.length - 1; j++) {
+				for (int j = 0; j < data.Length - 1; j++) {
 					data[j + 1] += data[j];
 				}
 
 				data = totalTransitionsPerFile[i];
-				for (int j = 0; j < data.length - 1; j++) {
+				for (int j = 0; j < data.Length - 1; j++) {
 					data[j + 1] += data[j];
 				}
 			}
 		}
 
-		long[] sumNum = new long[totalTransitionsPerFile[0].length];
-		long[] sumDen = new long[totalTransitionsPerFile[0].length];
-		double[] sumNormalized = new double[totalTransitionsPerFile[0].length];
+		long[] sumNum = new long[totalTransitionsPerFile[0].Length];
+		long[] sumDen = new long[totalTransitionsPerFile[0].Length];
+		double[] sumNormalized = new double[totalTransitionsPerFile[0].Length];
 		for (int i = 0; i < PASSES; i++) {
 			long[] num = computedTransitionsPerFile[i];
 			long[] den = totalTransitionsPerFile[i];
-			for (int j = 0; j < den.length; j++) {
+			for (int j = 0; j < den.Length; j++) {
 				sumNum[j] += num[j];
 				sumDen[j] += den[j];
 				if (den[j] > 0) {
@@ -465,9 +488,9 @@ public class TestPerformance {
 			}
 		}
 
-		double[] weightedAverage = new double[totalTransitionsPerFile[0].length];
-		double[] average = new double[totalTransitionsPerFile[0].length];
-		for (int i = 0; i < average.length; i++) {
+		double[] weightedAverage = new double[totalTransitionsPerFile[0].Length];
+		double[] average = new double[totalTransitionsPerFile[0].Length];
+		for (int i = 0; i < average.Length; i++) {
 			if (sumDen[i] > 0) {
 				weightedAverage[i] = (double)sumNum[i] / (double)sumDen[i];
 			}
@@ -478,12 +501,12 @@ public class TestPerformance {
 			average[i] = sumNormalized[i] / PASSES;
 		}
 
-		double[] low95 = new double[totalTransitionsPerFile[0].length];
-		double[] high95 = new double[totalTransitionsPerFile[0].length];
-		double[] low67 = new double[totalTransitionsPerFile[0].length];
-		double[] high67 = new double[totalTransitionsPerFile[0].length];
-		double[] stddev = new double[totalTransitionsPerFile[0].length];
-		for (int i = 0; i < stddev.length; i++) {
+		double[] low95 = new double[totalTransitionsPerFile[0].Length];
+		double[] high95 = new double[totalTransitionsPerFile[0].Length];
+		double[] low67 = new double[totalTransitionsPerFile[0].Length];
+		double[] high67 = new double[totalTransitionsPerFile[0].Length];
+		double[] stddev = new double[totalTransitionsPerFile[0].Length];
+		for (int i = 0; i < stddev.Length; i++) {
 			double[] points = new double[PASSES];
 			for (int j = 0; j < PASSES; j++) {
 				long totalTransitions = totalTransitionsPerFile[j][i];
@@ -507,14 +530,14 @@ public class TestPerformance {
 			int ignoreCount95 = (int)Math.round(PASSES * (1 - 0.95) / 2.0);
 			int ignoreCount67 = (int)Math.round(PASSES * (1 - 0.667) / 2.0);
 			low95[i] = points[ignoreCount95];
-			high95[i] = points[points.length - 1 - ignoreCount95];
+			high95[i] = points[points.Length - 1 - ignoreCount95];
 			low67[i] = points[ignoreCount67];
-			high67[i] = points[points.length - 1 - ignoreCount67];
+			high67[i] = points[points.Length - 1 - ignoreCount67];
 			stddev[i] = Math.sqrt(value / PASSES);
 		}
 
 		Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
-		for (int i = 0; i < stddev.length; i++) {
+		for (int i = 0; i < stddev.Length; i++) {
 			 double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
 			Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
 		}
@@ -527,29 +550,29 @@ public class TestPerformance {
 		if (TIMING_CUMULATIVE) {
 			for (int i = 0; i < PASSES; i++) {
 				long[] data = timePerFile[i];
-				for (int j = 0; j < data.length - 1; j++) {
+				for (int j = 0; j < data.Length - 1; j++) {
 					data[j + 1] += data[j];
 				}
 
 				int[] data2 = tokensPerFile[i];
-				for (int j = 0; j < data2.length - 1; j++) {
+				for (int j = 0; j < data2.Length - 1; j++) {
 					data2[j + 1] += data2[j];
 				}
 			}
 		}
 
-		 int fileCount = timePerFile[0].length;
+		 int fileCount = timePerFile[0].Length;
 		double[] sum = new double[fileCount];
 		for (int i = 0; i < PASSES; i++) {
 			long[] data = timePerFile[i];
 			int[] tokenData = tokensPerFile[i];
-			for (int j = 0; j < data.length; j++) {
+			for (int j = 0; j < data.Length; j++) {
 				sum[j] += (double)data[j] / (double)tokenData[j];
 			}
 		}
 
 		double[] average = new double[fileCount];
-		for (int i = 0; i < average.length; i++) {
+		for (int i = 0; i < average.Length; i++) {
 			average[i] = sum[i] / PASSES;
 		}
 
@@ -558,7 +581,7 @@ public class TestPerformance {
 		double[] low67 = new double[fileCount];
 		double[] high67 = new double[fileCount];
 		double[] stddev = new double[fileCount];
-		for (int i = 0; i < stddev.length; i++) {
+		for (int i = 0; i < stddev.Length; i++) {
 			double[] points = new double[PASSES];
 			for (int j = 0; j < PASSES; j++) {
 				points[j] = (double)timePerFile[j][i] / (double)tokensPerFile[j][i];
@@ -576,14 +599,14 @@ public class TestPerformance {
 			int ignoreCount95 = (int)Math.round(PASSES * (1 - 0.95) / 2.0);
 			int ignoreCount67 = (int)Math.round(PASSES * (1 - 0.667) / 2.0);
 			low95[i] = points[ignoreCount95];
-			high95[i] = points[points.length - 1 - ignoreCount95];
+			high95[i] = points[points.Length - 1 - ignoreCount95];
 			low67[i] = points[ignoreCount67];
-			high67[i] = points[points.length - 1 - ignoreCount67];
+			high67[i] = points[points.Length - 1 - ignoreCount67];
 			stddev[i] = Math.sqrt(value / PASSES);
 		}
 
 		Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
-		for (int i = 0; i < stddev.length; i++) {
+		for (int i = 0; i < stddev.Length; i++) {
 			 double averageValue = average[i];
 			Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
 		}
@@ -716,7 +739,7 @@ public class TestPerformance {
             inputSize += input.size();
 			inputCount++;
 			Future<FileParseResult> futureChecksum = executorService.submit(new Callable<FileParseResult>() {
-				@Override
+				//@Override
 				public FileParseResult call() {
 					// this incurred a great deal of overhead and was causing significant variations in performance results.
 					//Console.Out.format("Parsing file %s\n", input.getSourceName());
@@ -782,7 +805,7 @@ public class TestPerformance {
 						  COMPUTE_CHECKSUM ? String.format(", checksum 0x%8X", checksum.getValue()) : "",
                           (double)(System.nanoTime() - startTime) / 1000000.0);
 
-		if (sharedLexers.length > 0) {
+		if (sharedLexers.Length > 0) {
 			int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
 			Lexer lexer = sharedLexers[index];
 			 LexerATNSimulator lexerInterpreter = lexer.getInterpreter();
@@ -792,7 +815,7 @@ public class TestPerformance {
 				int configs = 0;
 				Set<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
-				for (int i = 0; i < modeToDFA.length; i++) {
+				for (int i = 0; i < modeToDFA.Length; i++) {
 					DFA dfa = modeToDFA[i];
 					if (dfa == null) {
 						continue;
@@ -809,7 +832,7 @@ public class TestPerformance {
 
 				if (DETAILED_DFA_STATE_STATS) {
 					Console.Out.format("\tMode\tStates\tConfigs\tMode%n");
-					for (int i = 0; i < modeToDFA.length; i++) {
+					for (int i = 0; i < modeToDFA.Length; i++) {
 						DFA dfa = modeToDFA[i];
 						if (dfa == null || dfa.states.isEmpty()) {
 							continue;
@@ -827,7 +850,7 @@ public class TestPerformance {
 			}
 		}
 
-		if (RUN_PARSER && sharedParsers.length > 0) {
+		if (RUN_PARSER && sharedParsers.Length > 0) {
 			int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
 			Parser parser = sharedParsers[index];
             // make sure the individual DFAState objects actually have unique ATNConfig arrays
@@ -839,7 +862,7 @@ public class TestPerformance {
 				int configs = 0;
 				Set<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
-                for (int i = 0; i < decisionToDFA.length; i++) {
+                for (int i = 0; i < decisionToDFA.Length; i++) {
                     DFA dfa = decisionToDFA[i];
                     if (dfa == null) {
                         continue;
@@ -862,7 +885,7 @@ public class TestPerformance {
 						Console.Out.format("\tDecision\tStates\tConfigs\tRule%n");
 					}
 
-					for (int i = 0; i < decisionToDFA.length; i++) {
+					for (int i = 0; i < decisionToDFA.Length; i++) {
 						DFA dfa = decisionToDFA[i];
 						if (dfa == null || dfa.states.isEmpty()) {
 							continue;
@@ -935,7 +958,7 @@ public class TestPerformance {
             int globalConfigCount = 0;
             int[] contextsInDFAState = new int[0];
 
-            for (int i = 0; i < decisionToDFA.length; i++) {
+            for (int i = 0; i < decisionToDFA.Length; i++) {
                 DFA dfa = decisionToDFA[i];
                 if (dfa == null) {
                     continue;
@@ -943,7 +966,7 @@ public class TestPerformance {
 
                 if (SHOW_CONFIG_STATS) {
                     for (DFAState state : dfa.states.keySet()) {
-                        if (state.configs.size() >= contextsInDFAState.length) {
+                        if (state.configs.size() >= contextsInDFAState.Length) {
                             contextsInDFAState = Arrays.copyOf(contextsInDFAState, state.configs.size() + 1);
                         }
 
@@ -974,7 +997,7 @@ public class TestPerformance {
                 Console.Out.format("  DFA accept states: %d total, %d with only local context, %d with a global context%n", localDfaCount + globalDfaCount, localDfaCount, globalDfaCount);
                 Console.Out.format("  Config stats: %d total, %d local, %d global%n", localConfigCount + globalConfigCount, localConfigCount, globalConfigCount);
                 if (SHOW_DFA_STATE_STATS) {
-                    for (int i = 0; i < contextsInDFAState.length; i++) {
+                    for (int i = 0; i < contextsInDFAState.Length; i++) {
                         if (contextsInDFAState[i] != 0) {
                             Console.Out.format("  %d configs = %d%n", i, contextsInDFAState[i]);
                         }
@@ -985,7 +1008,7 @@ public class TestPerformance {
 
 		if (COMPUTE_TIMING_STATS) {
 			Console.Out.format("File\tTokens\tTime%n");
-			for (int i = 0; i< timePerFile[currentPass].length; i++) {
+			for (int i = 0; i< timePerFile[currentPass].Length; i++) {
 				Console.Out.format("%d\t%d\t%d%n", i + 1, tokensPerFile[currentPass][i], timePerFile[currentPass][i]);
 			}
 		}
@@ -993,7 +1016,7 @@ public class TestPerformance {
 
 	private static long sum(long[] array) {
 		long result = 0;
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < array.Length; i++) {
 			result += array[i];
 		}
 
@@ -1060,7 +1083,7 @@ public class TestPerformance {
 
             return new ParserFactory() {
 
-				@Override
+				//@Override
                 public FileParseResult parseFile(CharStream input, int currentPass, int thread) {
 					 MurmurHashChecksum checksum = new MurmurHashChecksum();
 
@@ -1082,7 +1105,7 @@ public class TestPerformance {
                             lexer = lexerCtor.newInstance(input);
 							DFA[] decisionToDFA = (FILE_GRANULARITY || previousLexer == null ? lexer : previousLexer).getInterpreter().decisionToDFA;
 							if (!REUSE_LEXER_DFA || (!FILE_GRANULARITY && previousLexer == null)) {
-								decisionToDFA = new DFA[decisionToDFA.length];
+								decisionToDFA = new DFA[decisionToDFA.Length];
 							}
 
 							if (COMPUTE_TRANSITION_STATS) {
@@ -1099,7 +1122,7 @@ public class TestPerformance {
 
 						if (lexer.getInterpreter().decisionToDFA[0] == null) {
 							ATN atn = lexer.getATN();
-							for (int i = 0; i < lexer.getInterpreter().decisionToDFA.length; i++) {
+							for (int i = 0; i < lexer.getInterpreter().decisionToDFA.Length; i++) {
 								lexer.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
 							}
 						}
@@ -1135,7 +1158,7 @@ public class TestPerformance {
 
 							DFA[] decisionToDFA = (FILE_GRANULARITY || previousParser == null ? parser : previousParser).getInterpreter().decisionToDFA;
 							if (!REUSE_PARSER_DFA || (!FILE_GRANULARITY && previousParser == null)) {
-								decisionToDFA = new DFA[decisionToDFA.length];
+								decisionToDFA = new DFA[decisionToDFA.Length];
 							}
 
 							if (COMPUTE_TRANSITION_STATS) {
@@ -1156,7 +1179,7 @@ public class TestPerformance {
 
 						if (parser.getInterpreter().decisionToDFA[0] == null) {
 							ATN atn = parser.getATN();
-							for (int i = 0; i < parser.getInterpreter().decisionToDFA.length; i++) {
+							for (int i = 0; i < parser.getInterpreter().decisionToDFA.Length; i++) {
 								parser.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
 							}
 						}
@@ -1264,7 +1287,7 @@ public class TestPerformance {
             };
         } catch (Exception e) {
             e.printStackTrace(Console.Out);
-            fail(e.getMessage());
+            fail(e.Message);
             throw new IllegalStateException(e);
         }
     }
@@ -1376,13 +1399,13 @@ public class TestPerformance {
 			super(recog, atn, decisionToDFA, sharedContextCache);
 		}
 
-		@Override
+		//@Override
 		protected DFAState getExistingTargetState(DFAState s, int t) {
 			totalTransitions++;
 			return super.getExistingTargetState(s, t);
 		}
 
-		@Override
+		//@Override
 		protected DFAState computeTargetState(CharStream input, DFAState s, int t) {
 			computedTransitions++;
 			return super.computeTargetState(input, s, t);
@@ -1420,7 +1443,7 @@ public class TestPerformance {
 			fullContextTransitions = new long[atn.decisionToState.size()];
 		}
 
-		@Override
+		//@Override
 		public int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext) {
 			try {
 				this.decision = decision;
@@ -1432,25 +1455,25 @@ public class TestPerformance {
 			}
 		}
 
-		@Override
+		//@Override
 		protected int execATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext) {
 			fullContextFallback[decision]++;
 			return super.execATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
 		}
 
-		@Override
+		//@Override
 		protected DFAState getExistingTargetState(DFAState previousD, int t) {
 			totalTransitions[decision]++;
 			return super.getExistingTargetState(previousD, t);
 		}
 
-		@Override
+		//@Override
 		protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
 			computedTransitions[decision]++;
 			return super.computeTargetState(dfa, previousD, t);
 		}
 
-		@Override
+		//@Override
 		protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, bool fullCtx) {
 			if (fullCtx) {
 				totalTransitions[decision]++;
@@ -1465,7 +1488,7 @@ public class TestPerformance {
 	private class DescriptiveErrorListener : BaseErrorListener {
 		public readonly static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
 
-		@Override
+		//@Override
 		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol,
 								int line, int charPositionInLine,
 								String msg, RecognitionException e)
@@ -1488,7 +1511,7 @@ public class TestPerformance {
 		private BitSet _sllConflict;
 		private ATNConfigSet _sllConfigs;
 
-		@Override
+		//@Override
 		public void reportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs) {
 			if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS) {
 				BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
@@ -1512,7 +1535,7 @@ public class TestPerformance {
 			recognizer.notifyErrorListeners(String.format(format, decision, rule, ambigAlts, input));
 		}
 
-		@Override
+		//@Override
 		public void reportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs) {
 			_sllConflict = conflictingAlts;
 			_sllConfigs = configs;
@@ -1529,7 +1552,7 @@ public class TestPerformance {
 			recognizer.notifyErrorListeners(String.format(format, decision, rule, input, representedAlts));
 		}
 
-		@Override
+		//@Override
 		public void reportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs) {
 			if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS) {
 				BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
@@ -1556,7 +1579,7 @@ public class TestPerformance {
 	protected static readonly class FilenameFilters {
 		public static readonly FilenameFilter ALL_FILES = new FilenameFilter() {
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				return true;
 			}
@@ -1612,7 +1635,7 @@ public class TestPerformance {
 				this.caseSensitive = caseSensitive;
 			}
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				if (caseSensitive) {
 					return name.endsWith(extension);
@@ -1632,7 +1655,7 @@ public class TestPerformance {
 				this.caseSensitive = caseSensitive;
 			}
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				if (caseSensitive) {
 					return name.equals(filename);
@@ -1650,7 +1673,7 @@ public class TestPerformance {
 				this.filters = filters;
 			}
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				for (FilenameFilter filter : filters) {
 					if (!filter.accept(dir, name)) {
@@ -1670,7 +1693,7 @@ public class TestPerformance {
 				this.filters = filters;
 			}
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				for (FilenameFilter filter : filters) {
 					if (filter.accept(dir, name)) {
@@ -1690,7 +1713,7 @@ public class TestPerformance {
 				this.filter = filter;
 			}
 
-			@Override
+			//@Override
 			public bool accept(File dir, String name) {
 				return !filter.accept(dir, name);
 			}
@@ -1714,7 +1737,7 @@ public class TestPerformance {
 	protected class NumberedThreadFactory : ThreadFactory {
 		private readonly AtomicInteger nextThread = new AtomicInteger();
 
-		@Override
+		//@Override
 		public Thread newThread(Runnable r) {
 			int threadNumber = nextThread.getAndIncrement();
 			assert threadNumber < NUMBER_OF_THREADS;
@@ -1730,7 +1753,7 @@ public class TestPerformance {
 			this.threadNumber = threadNumber;
 		}
 
-		@Override
+		//@Override
 		public Thread newThread(Runnable r) {
 			assert threadNumber < NUMBER_OF_THREADS;
 			return new NumberedThread(r, threadNumber);
@@ -1749,26 +1772,26 @@ public class TestPerformance {
 			this.checksum = checksum;
 		}
 
-		@Override
+		//@Override
 		public void visitTerminal(TerminalNode node) {
 			checksum.update(VISIT_TERMINAL);
 			updateChecksum(checksum, node.getSymbol());
 		}
 
-		@Override
+		//@Override
 		public void visitErrorNode(ErrorNode node) {
 			checksum.update(VISIT_ERROR_NODE);
 			updateChecksum(checksum, node.getSymbol());
 		}
 
-		@Override
+		//@Override
 		public void enterEveryRule(ParserRuleContext ctx) {
 			checksum.update(ENTER_RULE);
 			updateChecksum(checksum, ctx.getRuleIndex());
 			updateChecksum(checksum, ctx.getStart());
 		}
 
-		@Override
+		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
 			checksum.update(EXIT_RULE);
 			updateChecksum(checksum, ctx.getRuleIndex());
@@ -1830,7 +1853,7 @@ public class TestPerformance {
 			this.referent = referent;
 		}
 
-		@Override
+		//@Override
 		public T get() {
 			return referent;
 		}

@@ -52,19 +52,19 @@ public class TestScopeParsing {
     public void testArgs(Parameter parameter){
 		Grammar dummy = new Grammar("grammar T; a:'a';");
 
-		LinkedHashMap<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
-		List<String> out = new ArrayList<>();
+		Dictionary<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
+		List<String> @out = new ArrayList<>();
 		for (String arg : attributes.keySet()) {
 			Attribute attr = attributes.get(arg);
-			out.add(attr.ToString());
+            @out.add(attr.ToString());
 		}
-		String actual = Utils.join(out.toArray(), ", ");
+		String actual = Utils.join(@out.toArray(), ", ");
 		assertEquals(parameter.output, actual);
 	}
 
 	private static ICollection<Parameter> getAllTestDescriptors() {
 		List<Parameter> tests = new ArrayList<>();
-		for (int i = 0; i < argPairs.length; i+=2) {
+		for (int i = 0; i < argPairs.Length; i+=2) {
 			String arg = argPairs[i];
 			String output = argPairs[i+1];
 			tests.add(new Parameter(arg, output));
@@ -81,7 +81,7 @@ public class TestScopeParsing {
 			this.output = output;
 		}
 
-		//@Override
+		////@Override
 		public override String ToString() {
 			return input;
 		}

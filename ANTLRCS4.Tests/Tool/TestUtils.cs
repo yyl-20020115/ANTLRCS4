@@ -1,3 +1,5 @@
+using org.antlr.v4.misc;
+
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
@@ -46,12 +48,12 @@ public class TestUtils {
 
 	[TestMethod]
 	public void testSelect() {
-		ArrayList<String> strings = new ArrayList<>();
+		List<String> strings = new ();
 		strings.add("foo");
 		strings.add("bar");
 
 		Utils.Func1<String, String> func1 = new Utils.Func1() {
-			@Override
+			//@Override
 			public Object exec(Object arg1) {
 				return "baz";
 			}
@@ -81,8 +83,8 @@ public class TestUtils {
 		strings.add("foo");
 		strings.add("bar");
 		Utils.Filter filter = new Utils.Filter() {
-			@Override
-			public boolean select(Object o) {
+			//@Override
+			public bool select(Object o) {
 				return true;
 			}
 		};
@@ -96,8 +98,8 @@ public class TestUtils {
 		strings.add("foo");
 		strings.add("bar");
 		Utils.Filter filter = new Utils.Filter() {
-			@Override
-			public boolean select(Object o) {
+			//@Override
+			public bool select(Object o) {
 				return true;
 			}
 		};

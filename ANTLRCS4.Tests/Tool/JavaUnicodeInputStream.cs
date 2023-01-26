@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.test.tool;
 /**
  *
@@ -24,34 +27,34 @@ public class JavaUnicodeInputStream : CharStream {
 
 	public JavaUnicodeInputStream(CharStream source) {
 		if (source == null) {
-			throw new NullPointerException("source");
+			throw new NullReferenceException("source");
 		}
 
 		this.source = source;
 		this.la1 = source.LA(1);
 	}
 
-	//@Override
+	////@Override
 	public int size() {
 		return source.size();
 	}
 
-	//@Override
+	////@Override
 	public int index() {
 		return source.index();
 	}
 
-	//@Override
+	////@Override
 	public String getSourceName() {
 		return source.getSourceName();
 	}
 
-	//@Override
+	////@Override
 	public String getText(Interval interval) {
 		return source.getText(interval);
 	}
 
-	//@Override
+	////@Override
 	public void consume() {
 		if (la1 != '\\') {
 			source.consume();
@@ -82,7 +85,7 @@ public class JavaUnicodeInputStream : CharStream {
 		assert range >= index();
 	}
 
-	//@Override
+	////@Override
 	public int LA(int i) {
 		if (i == 1 && la1 != '\\') {
 			return la1;
@@ -141,17 +144,17 @@ public class JavaUnicodeInputStream : CharStream {
 		}
 	}
 
-	//@Override
+	////@Override
 	public int mark() {
 		return source.mark();
 	}
 
-	//@Override
+	////@Override
 	public void release(int marker) {
 		source.release(marker);
 	}
 
-	//@Override
+	////@Override
 	public void seek(int index) {
 		if (index > range) {
 			throw new UnsupportedOperationException();
@@ -171,7 +174,7 @@ public class JavaUnicodeInputStream : CharStream {
 		}
 	}
 
-	private static boolean isHexDigit(int c) {
+	private static bool isHexDigit(int c) {
 		return c >= '0' && c <= '9'
 			|| c >= 'a' && c <= 'f'
 			|| c >= 'A' && c <= 'F';
@@ -190,15 +193,15 @@ public class JavaUnicodeInputStream : CharStream {
 			return c - 'A' + 10;
 		}
 
-		throw new IllegalArgumentException("c");
+		throw new ArgumentException("c");
 	}
 
 	private int readCharAt(int[] nextIndexPtr, int[] slashCountPtr, int[] indirectionLevelPtr) {
-		assert nextIndexPtr != null && nextIndexPtr.length == 1;
-		assert slashCountPtr != null && slashCountPtr.length == 1;
-		assert indirectionLevelPtr != null && indirectionLevelPtr.length == 1;
+		assert nextIndexPtr != null && nextIndexPtr.Length == 1;
+		assert slashCountPtr != null && slashCountPtr.Length == 1;
+		assert indirectionLevelPtr != null && indirectionLevelPtr.Length == 1;
 
-		boolean blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
+		bool blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
 
 		int c0 = source.LA(nextIndexPtr[0] - index() + 1);
 		if (c0 == '\\') {

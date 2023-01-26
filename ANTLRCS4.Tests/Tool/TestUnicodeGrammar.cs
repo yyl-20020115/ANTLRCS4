@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
+using org.antlr.v4.tool;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -119,7 +122,7 @@ public class TestUnicodeGrammar {
 				(byte)0xFF
 		};
 		CharStream charStream;
-		try (ByteArrayInputStream @is = new ByteArrayInputStream(toParse);
+		using (ByteArrayInputStream @is = new ByteArrayInputStream(toParse);
 		     // Note we use ISO_8859_1 to treat all byte values as Unicode "characters" from
 		     // U+0000 to U+00FF.
 		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.ISO_8859_1)) {

@@ -158,8 +158,8 @@ public class TestATNDeserialization {
 
 		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);
 		int[] ints16 = serialized16.toArray();
-		char[] chars = new char[ints16.length];
-		for (int i = 0; i < ints16.length; i++) {
+		char[] chars = new char[ints16.Length];
+		for (int i = 0; i < ints16.Length; i++) {
 			chars[i] = (char)ints16[i];
 		}
 		int[] serialized32 = decodeIntsEncodedAs16BitWords(chars, true);

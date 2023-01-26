@@ -528,7 +528,7 @@ public class TestATNParserPrediction {
 		semanticProcess(g);
 
 		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, null);
-		for (int i=0; i<inputString.length; i++) {
+		for (int i=0; i<inputString.Length; i++) {
 			// Check DFA
 			IntegerList types = getTokenTypesViaATN(inputString[i], lexInterp);
 //			System.out.println(types);

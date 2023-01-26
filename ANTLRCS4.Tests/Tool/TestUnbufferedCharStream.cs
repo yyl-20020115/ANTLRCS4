@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.test.tool;
 //@SuppressWarnings("unused")
 [TestClass]
@@ -29,7 +31,7 @@ public class TestUnbufferedCharStream {
 	[TestMethod]
 	public void testNegativeSeek() {
 		CharStream input = createStream("");
-		assertThrows(typeof(IllegalArgumentException), () -> input.seek(-1));
+		assertThrows(typeof(ArgumentException), () -> input.seek(-1));
 	}
 
 	[TestMethod]
@@ -84,13 +86,13 @@ public class TestUnbufferedCharStream {
 	/**
 	 * It is not valid to pass a mark to {@link IntStream#seek}, but
 	 * {@link UnbufferedCharStream} creates marks in such a way that this
-	 * invalid usage results in an {@link IllegalArgumentException}.
+	 * invalid usage results in an {@link ArgumentException}.
 	 */
 	[TestMethod]
 	public void testMarkPassedToSeek() {
 		CharStream input = createStream("");
 		int m1 = input.mark();
-		assertThrows(IllegalArgumentException, () -> input.seek(m1));
+		assertThrows(ArgumentException, () -> input.seek(m1));
 	}
 
 	[TestMethod]
@@ -100,7 +102,7 @@ public class TestUnbufferedCharStream {
 		int m1 = input.mark();
 		assertEquals(1, input.index());
 		input.consume();
-		assertThrows(IllegalArgumentException, () -> input.seek(0));
+		assertThrows(ArgumentException, () -> input.seek(0));
 	}
 
 	[TestMethod]

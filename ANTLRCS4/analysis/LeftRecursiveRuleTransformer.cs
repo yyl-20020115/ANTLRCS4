@@ -33,7 +33,7 @@ public class LeftRecursiveRuleTransformer {
 	public void translateLeftRecursiveRules() {
 		String language = g.getLanguage();
 		// translate all recursive rules
-		List<String> leftRecursiveRuleNames = new ArrayList<String>();
+		List<String> leftRecursiveRuleNames = new ();
 		foreach (Rule r in rules) {
 			if ( !Grammar.isTokenName(r.name) ) {
 				if ( LeftRecursiveRuleAnalyzer.hasImmediateRecursiveRuleRefs(r.ast, r.name) ) {

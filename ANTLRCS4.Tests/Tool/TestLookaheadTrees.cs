@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 
@@ -128,7 +130,7 @@ public class TestLookaheadTrees {
 			GrammarParserInterpreter.getLookaheadParseTrees(g, parser, tokens, startRuleIndex, lookaheadEventInfo.decision,
 															lookaheadEventInfo.startIndex, lookaheadEventInfo.stopIndex);
 
-		assertEquals(expectedTrees.length, lookaheadParseTrees.size());
+		assertEquals(expectedTrees.Length, lookaheadParseTrees.size());
 		for (int i = 0; i < lookaheadParseTrees.size(); i++) {
 			ParserRuleContext lt = lookaheadParseTrees.get(i);
 			assertEquals(expectedTrees[i], Trees.toStringTree(lt, nodeTextProvider));

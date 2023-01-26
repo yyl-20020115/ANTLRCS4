@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -249,7 +250,7 @@ public class TestAmbigParseTrees {
 		Transition tr = ruleStartState.transition(0);
 		ATNState t2 = tr.target;
 		if ( !(t2 is BasicBlockStartState) ) {
-			throw new IllegalArgumentException("rule has no decision: "+startRule);
+			throw new ArgumentException("rule has no decision: "+startRule);
 		}
 		parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
 		ParseTree t = parser.parse(g.rules.get(startRule).index);

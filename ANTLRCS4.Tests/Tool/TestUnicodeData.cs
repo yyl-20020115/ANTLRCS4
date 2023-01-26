@@ -189,6 +189,6 @@ public class TestUnicodeData {
 	[TestMethod]
 	public void modifyingUnicodeDataShouldThrow() {
 		IllegalStateException exception = assertThrows(IllegalStateException, () -> UnicodeData.getPropertyCodePoints("L").add(0x12345));
-		assertEquals("can't alter readonly IntervalSet", exception.getMessage());
+		assertEquals("can't alter readonly IntervalSet", exception.Message);
 	}
 }

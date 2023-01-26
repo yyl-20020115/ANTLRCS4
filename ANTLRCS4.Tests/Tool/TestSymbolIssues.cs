@@ -423,7 +423,7 @@ public class TestSymbolIssues {
 
 		// Don't transform øùúûüýþÿ to uppercase
 		// ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸ
-		// because of different length of lower and UPPER range
+		// because of different Length of lower and UPPER range
 		testErrors(test, false);
 	}
 

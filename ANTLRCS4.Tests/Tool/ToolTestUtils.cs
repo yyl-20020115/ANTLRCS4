@@ -15,14 +15,14 @@ public class ToolTestUtils {
 	}
 
 	public static ExecutedState execLexer(String grammarFileName, String grammarStr, String lexerName, String input,
-									  Path tempDir, boolean saveTestDir) {
+									  string tempDir, bool saveTestDir) {
 		return execRecognizer(grammarFileName, grammarStr, null, lexerName,
 				null, input, false, tempDir, saveTestDir);
 	}
 
 	public static ExecutedState execParser(String grammarFileName, String grammarStr,
 									   String parserName, String lexerName, String startRuleName,
-									   String input, boolean showDiagnosticErrors
+									   String input, bool showDiagnosticErrors
 	) {
 		return execParser(grammarFileName, grammarStr, parserName, lexerName, startRuleName,
 				input, showDiagnosticErrors, null);
@@ -30,7 +30,7 @@ public class ToolTestUtils {
 
 	public static ExecutedState execParser(String grammarFileName, String grammarStr,
 									String parserName, String lexerName, String startRuleName,
-									String input, boolean showDiagnosticErrors, Path workingDir
+									String input, bool showDiagnosticErrors, Path workingDir
 	) {
 		return execRecognizer(grammarFileName, grammarStr, parserName, lexerName,
 				startRuleName, input, showDiagnosticErrors, workingDir, false);
@@ -38,8 +38,8 @@ public class ToolTestUtils {
 
 	private static ExecutedState execRecognizer(String grammarFileName, String grammarStr,
 										 String parserName, String lexerName, String startRuleName,
-										 String input, boolean showDiagnosticErrors,
-										 Path workingDir, boolean saveTestDir) {
+										 String input, bool showDiagnosticErrors,
+										 string workingDir, bool saveTestDir) {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, lexerName,
 				false, true, startRuleName, input,
 				false, showDiagnosticErrors, Stage.Execute, false);
@@ -54,17 +54,17 @@ public class ToolTestUtils {
 
 	public static RunOptions createOptionsForJavaToolTests(
 			String grammarFileName, String grammarStr, String parserName, String lexerName,
-			boolean useListener, boolean useVisitor, String startRuleName,
-			String input, boolean profile, boolean showDiagnosticErrors,
-			Stage endStage, boolean returnObject
+			bool useListener, bool useVisitor, String startRuleName,
+			String input, bool profile, bool showDiagnosticErrors,
+			Stage endStage, bool returnObject
 	) {
 		return new RunOptions(grammarFileName, grammarStr, parserName, lexerName, useListener, useVisitor, startRuleName,
 				input, profile, showDiagnosticErrors, false, endStage, returnObject, "Java",
 				JavaRunner.runtimeTestParserName);
 	}
 
-	public static void testErrors(String[] pairs, boolean printTree) {
-		for (int i = 0; i < pairs.length; i += 2) {
+	public static void testErrors(String[] pairs, bool printTree) {
+		for (int i = 0; i < pairs.Length; i += 2) {
 			String grammarStr = pairs[i];
 			String expect = pairs[i + 1];
 
@@ -103,7 +103,7 @@ public class ToolTestUtils {
 			int space = line.indexOf(' ', grIndex);
 			fileName = line.substring(space+1, semi)+Tool.GRAMMAR_EXTENSION;
 		}
-		if ( fileName.length()==Tool.GRAMMAR_EXTENSION.length() ) fileName = "A" + Tool.GRAMMAR_EXTENSION;
+		if ( fileName.Length()==Tool.GRAMMAR_EXTENSION.Length() ) fileName = "A" + Tool.GRAMMAR_EXTENSION;
 		return fileName;
 	}
 

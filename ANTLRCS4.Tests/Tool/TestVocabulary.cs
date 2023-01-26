@@ -29,7 +29,7 @@ public class TestVocabulary {
 		Vocabulary vocabulary = VocabularyImpl.fromTokenNames(tokenNames);
 		assertNotNull(vocabulary);
 		assertEquals("EOF", vocabulary.getSymbolicName(Token.EOF));
-		for (int i = 0; i < tokenNames.length; i++) {
+		for (int i = 0; i < tokenNames.Length; i++) {
 			assertEquals(tokenNames[i], vocabulary.getDisplayName(i));
 
 			if (tokenNames[i].startsWith("'")) {

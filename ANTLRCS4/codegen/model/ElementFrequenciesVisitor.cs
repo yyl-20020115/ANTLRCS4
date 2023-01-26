@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.misc;
+
 namespace org.antlr.v4.codegen.model;
 
 
@@ -13,10 +15,10 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 * to ensure that {@link #combineMin} doesn't merge an empty set (all zeros)
 	 * with the results of the first alternative.
 	 */
-	private static final FrequencySet<String> SENTINEL = new FrequencySet<String>();
+	private static readonly FrequencySet<String> SENTINEL = new FrequencySet<String>();
 
-	final Deque<FrequencySet<String>> frequencies;
-	private final Deque<FrequencySet<String>> minFrequencies;
+	readonly Deque<FrequencySet<String>> frequencies;
+	private readonly Deque<FrequencySet<String>> minFrequencies;
 
 	public ElementFrequenciesVisitor(TreeNodeStream input) {
 		super(input);
@@ -35,7 +37,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	}
 
 	/** During code gen, we can assume tree is in good shape */
-	@Override
+	//@Override
 	public ErrorManager getErrorManager() { return super.getErrorManager(); }
 
 	/*
@@ -82,7 +84,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 			return a;
 		}
 
-		assert a != SENTINEL;
+		//assert a != SENTINEL;
 		FrequencySet<String> result = combineAndClip(a, b, Integer.MAX_VALUE);
 		for (Map.Entry<String, MutableInt> entry : result.entrySet()) {
 			entry.getValue().v = Math.min(a.count(entry.getKey()), b.count(entry.getKey()));
@@ -124,19 +126,19 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		return result;
 	}
 
-	@Override
+	//@Override
 	public void tokenRef(TerminalAST ref) {
 		frequencies.peek().add(ref.getText());
 		minFrequencies.peek().add(ref.getText());
 	}
 
-	@Override
+	//@Override
 	public void ruleRef(GrammarAST ref, ActionAST arg) {
 		frequencies.peek().add(ref.getText());
 		minFrequencies.peek().add(ref.getText());
 	}
 
-	@Override
+	//@Override
 	public void stringRef(TerminalAST ref) {
 		String tokenName = ref.g.getTokenName(ref.getText());
 
@@ -150,37 +152,37 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 * Parser rules
 	 */
 
-	@Override
+	//@Override
 	protected void enterAlternative(AltAST tree) {
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies.push(new FrequencySet<String>());
 	}
 
-	@Override
+	//@Override
 	protected void exitAlternative(AltAST tree) {
 		frequencies.push(combineMax(frequencies.pop(), frequencies.pop()));
 		minFrequencies.push(combineMin(minFrequencies.pop(), minFrequencies.pop()));
 	}
 
-	@Override
+	//@Override
 	protected void enterElement(GrammarAST tree) {
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies.push(new FrequencySet<String>());
 	}
 
-	@Override
+	//@Override
 	protected void exitElement(GrammarAST tree) {
 		frequencies.push(combineAndClip(frequencies.pop(), frequencies.pop(), 2));
 		minFrequencies.push(combineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
 	}
 
-	@Override
+	//@Override
 	protected void enterBlockSet(GrammarAST tree) {
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies.push(new FrequencySet<String>());
 	}
 
-	@Override
+	//@Override
 	protected void exitBlockSet(GrammarAST tree) {
 		for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {
 			// This visitor counts a block set as a sequence of elements, not a
@@ -199,7 +201,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		minFrequencies.push(combineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
 	}
 
-	@Override
+	//@Override
 	protected void exitSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
 			for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {
@@ -218,31 +220,31 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 * Lexer rules
 	 */
 
-	@Override
+	//@Override
 	protected void enterLexerAlternative(GrammarAST tree) {
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies.push(new FrequencySet<String>());
 	}
 
-	@Override
+	//@Override
 	protected void exitLexerAlternative(GrammarAST tree) {
 		frequencies.push(combineMax(frequencies.pop(), frequencies.pop()));
 		minFrequencies.push(combineMin(minFrequencies.pop(), minFrequencies.pop()));
 	}
 
-	@Override
+	//@Override
 	protected void enterLexerElement(GrammarAST tree) {
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies.push(new FrequencySet<String>());
 	}
 
-	@Override
+	//@Override
 	protected void exitLexerElement(GrammarAST tree) {
 		frequencies.push(combineAndClip(frequencies.pop(), frequencies.pop(), 2));
 		minFrequencies.push(combineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
 	}
 
-	@Override
+	//@Override
 	protected void exitLexerSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
 			for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {

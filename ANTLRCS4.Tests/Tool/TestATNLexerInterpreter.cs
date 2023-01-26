@@ -523,7 +523,7 @@ public class TestATNLexerInterpreter {
 		LexerATNSimulator interp = new LexerATNSimulator(atn, new DFA[]{new DFA(atn.modeToStartState.get(Lexer.DEFAULT_MODE))}, null);
 		List<String> tokenTypes = new ArrayList<>();
 		int ttype;
-		boolean hitEOF = false;
+		bool hitEOF = false;
 		do {
 			if ( hitEOF ) {
 				tokenTypes.add("EOF");

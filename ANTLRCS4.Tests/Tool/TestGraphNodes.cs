@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using System.Text;
+
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
@@ -96,7 +99,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	[TestMethod] public void test_a$_ax() {
+	[TestMethod] public void test_adollar_ax() {
 		PredictionContext a1 = a();
 		PredictionContext x = x();
 		PredictionContext a2 = createSingleton(x, 1);
@@ -112,7 +115,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	[TestMethod] public void test_a$_ax_fullctx() {
+	[TestMethod] public void test_adollar_ax_fullctx() {
 		PredictionContext a1 = a();
 		PredictionContext x = x();
 		PredictionContext a2 = createSingleton(x, 1);
@@ -130,7 +133,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, fullCtx()));
 	}
 
-	[TestMethod] public void test_ax$_a$() {
+	[TestMethod] public void test_axdollar_adollar() {
 		PredictionContext x = x();
 		PredictionContext a1 = createSingleton(x, 1);
 		PredictionContext a2 = a();
@@ -146,7 +149,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	[TestMethod] public void test_aa$_a$_$_fullCtx() {
+	[TestMethod] public void test_aadollar_adollar_dollar_fullCtx() {
 		PredictionContext empty = EmptyPredictionContext.Instance;
 		PredictionContext child1 = createSingleton(empty, 8);
 		PredictionContext right = PredictionContext.merge(empty, child1, false, null);
@@ -166,7 +169,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, actual);
 	}
 
-	[TestMethod] public void test_ax$_a$_fullctx() {
+	[TestMethod] public void test_axdollar_adollar_fullctx() {
 		PredictionContext x = x();
 		PredictionContext a1 = createSingleton(x, 1);
 		PredictionContext a2 = a();
@@ -341,7 +344,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	[TestMethod] public void test_a$_bx() {
+	[TestMethod] public void test_adollar_bx() {
 		PredictionContext x2 = x();
 		PredictionContext a = a();
 		PredictionContext b = createSingleton(x2, 2);
@@ -360,7 +363,7 @@ public class TestGraphNodes {
 		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
-	[TestMethod] public void test_a$_bx_fullctx() {
+	[TestMethod] public void test_adollar_bx_fullctx() {
 		PredictionContext x2 = x();
 		PredictionContext a = a();
 		PredictionContext b = createSingleton(x2, 2);
@@ -409,7 +412,7 @@ public class TestGraphNodes {
 
 	// Array merges
 
-	[TestMethod] public void test_A$_A$_fullctx() {
+	[TestMethod] public void test_Adollar_Adollar_fullctx() {
 		ArrayPredictionContext A1 = array(EmptyPredictionContext.Instance);
 		ArrayPredictionContext A2 = array(EmptyPredictionContext.Instance);
 		PredictionContext r = PredictionContext.merge(A1, A2, fullCtx(), null);
@@ -773,17 +776,17 @@ public class TestGraphNodes {
 		return a;
 	}
 
-	public ArrayPredictionContext array(SingletonPredictionContext... nodes) {
-		PredictionContext[] parents = new PredictionContext[nodes.length];
-		int[] invokingStates = new int[nodes.length];
-		for (int i=0; i<nodes.length; i++) {
+	public ArrayPredictionContext array(params SingletonPredictionContext[] nodes) {
+		PredictionContext[] parents = new PredictionContext[nodes.Length];
+		int[] invokingStates = new int[nodes.Length];
+		for (int i=0; i<nodes.Length; i++) {
 			parents[i] = nodes[i].parent;
 			invokingStates[i] = nodes[i].returnState;
 		}
 		return new ArrayPredictionContext(parents, invokingStates);
 	}
 
-	private static String toDOTString(PredictionContext context, boolean rootIsWildcard) {
+	private static String toDOTString(PredictionContext context, bool rootIsWildcard) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder edges = new StringBuilder();
 		Map<PredictionContext, PredictionContext> visited = new IdentityHashMap<PredictionContext, PredictionContext>();
@@ -794,32 +797,32 @@ public class TestGraphNodes {
 		workList.add(context);
 		while (!workList.isEmpty()) {
 			PredictionContext current = workList.pop();
-			nodes.append("  s").append(contextIds.get(current)).append('[');
+			nodes.Append("  s").Append(contextIds.get(current)).Append('[');
 
 			if (current.size() > 1) {
-				nodes.append("shape=record, ");
+				nodes.Append("shape=record, ");
 			}
 
-			nodes.append("label=\"");
+			nodes.Append("label=\"");
 
 			if (current.isEmpty()) {
-				nodes.append(rootIsWildcard ? '*' : '$');
+				nodes.Append(rootIsWildcard ? '*' : '$');
 			} else if (current.size() > 1) {
 				for (int i = 0; i < current.size(); i++) {
 					if (i > 0) {
-						nodes.append('|');
+						nodes.Append('|');
 					}
 
-					nodes.append("<p").append(i).append('>');
+					nodes.Append("<p").Append(i).Append('>');
 					if (current.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE) {
-						nodes.append(rootIsWildcard ? '*' : '$');
+						nodes.Append(rootIsWildcard ? '*' : '$');
 					}
 				}
 			} else {
-				nodes.append(contextIds.get(current));
+				nodes.Append(contextIds.get(current));
 			}
 
-			nodes.append("\"];\n");
+			nodes.Append("\"];\n");
 
 			if (current.isEmpty()) {
 				continue;
@@ -835,24 +838,24 @@ public class TestGraphNodes {
 					workList.push(current.getParent(i));
 				}
 
-				edges.append("  s").append(contextIds.get(current));
+				edges.Append("  s").Append(contextIds.get(current));
 				if (current.size() > 1) {
-					edges.append(":p").append(i);
+					edges.Append(":p").Append(i);
 				}
 
-				edges.append("->");
-				edges.append('s').append(contextIds.get(current.getParent(i)));
-				edges.append("[label=\"").append(current.getReturnState(i)).append("\"]");
-				edges.append(";\n");
+				edges.Append("->");
+				edges.Append('s').Append(contextIds.get(current.getParent(i)));
+				edges.Append("[label=\"").Append(current.getReturnState(i)).Append("\"]");
+				edges.Append(";\n");
 			}
 		}
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("digraph G {\n");
-		builder.append("rankdir=LR;\n");
-		builder.append(nodes);
-		builder.append(edges);
-		builder.append("}\n");
+		builder.Append("digraph G {\n");
+		builder.Append("rankdir=LR;\n");
+		builder.Append(nodes);
+		builder.Append(edges);
+		builder.Append("}\n");
 		return builder.ToString();
 	}
 }
