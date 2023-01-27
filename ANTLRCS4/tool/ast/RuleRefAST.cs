@@ -4,22 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.CommonToken;
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
-public class RuleRefAST extends GrammarASTWithOptions implements RuleElementAST {
-	public RuleRefAST(RuleRefAST node) {
-		super(node);
+public class RuleRefAST : GrammarASTWithOptions , RuleElementAST {
+	public RuleRefAST(RuleRefAST node):base(node) {
 	}
 
-	public RuleRefAST(Token t) { super(t); }
-    public RuleRefAST(int type) { super(type); }
-    public RuleRefAST(int type, Token t) { super(type, t); }
+	public RuleRefAST(Token t):base(t) {  }
+    public RuleRefAST(int type):base(type) {  }
+    public RuleRefAST(int type, Token t):base(type,t) {  }
 
 	/** Dup token too since we overwrite during LR rule transform */
-	@Override
+	//@Override
 	public RuleRefAST dupNode() {
 		RuleRefAST r = new RuleRefAST(this);
 		// In LR transform, we alter original token stream to make e -> e[n]
@@ -31,6 +29,6 @@ public class RuleRefAST extends GrammarASTWithOptions implements RuleElementAST 
 		return r;
 	}
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

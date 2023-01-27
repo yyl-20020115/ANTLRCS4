@@ -1,4 +1,4 @@
-﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\ATNBuilder.g 2023-01-27 19:22:58
+﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\ATNBuilder.g 2023-01-27 22:27:34
 
 /*
  [The "BSD license"]
@@ -25,13 +25,13 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-using org.antlr.runtime;
 using org.antlr.runtime.tree;
+using org.antlr.runtime;
 using org.antlr.v4.automata;
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
-using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.parse;
 public class ATNBuilder : TreeParser
@@ -146,17 +146,16 @@ public class ATNBuilder : TreeParser
     public ATNBuilder(TreeNodeStream input)
         : this(input, new RecognizerSharedState())
     {
-        ;
     }
     public ATNBuilder(TreeNodeStream input, RecognizerSharedState state)
-        :base(input,state)
+        : base(input, state)
     {
     }
 
     //@Override
     public String[] getTokenNames() { return ATNBuilder.tokenNames; }
-    //@Override
-    public String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ATNBuilder.g"; }
+    //@Override 
+    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ATNBuilder.g"; }
 
 
     ATNFactory factory;
@@ -294,7 +293,7 @@ public class ATNBuilder : TreeParser
                                 a = alternative();
                                 state._fsp--;
 
-                                alts.add(a); factory.setCurrentOuterAlt(++alt);
+                                alts.Add(a); factory.setCurrentOuterAlt(++alt);
                             }
                             break;
 
@@ -419,7 +418,7 @@ public class ATNBuilder : TreeParser
                                 a = alternative();
                                 state._fsp--;
 
-                                alts.Add(a);
+                                alts.add(a);
                             }
                             break;
 
@@ -640,7 +639,7 @@ public class ATNBuilder : TreeParser
                                 c = lexerCommand();
                                 state._fsp--;
 
-                                if (c != null) cmds.add(c);
+                                if (c != null) cmds.Add(c);
                             }
                             break;
 
@@ -862,9 +861,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 13, 4, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -892,9 +891,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae3 =
                                     new NoViableAltException("", 13, 5, input);
-                                throw nvae;
+                                throw nvae3;
                             }
                             finally
                             {
@@ -1310,7 +1309,7 @@ public class ATNBuilder : TreeParser
 
 
     // $ANTLR start "blockSet"
-    // org\\antlr\\v4\\parse\\ATNBuilder.g:160:1: blockSet[boolean invert] returns [ATNFactory.Handle p] : ^( SET ( setElement )+ ) ;
+    // org\\antlr\\v4\\parse\\ATNBuilder.g:160:1: blockSet[bool invert] returns [ATNFactory.Handle p] : ^( SET ( setElement )+ ) ;
     public ATNBuilder.blockSet_return blockSet(bool invert)
     {
         ATNBuilder.blockSet_return retval = new ATNBuilder.blockSet_return();
@@ -1318,7 +1317,7 @@ public class ATNBuilder : TreeParser
 
         TreeRuleReturnScope setElement23 = null;
 
-        List<GrammarAST> alts = new ();
+        List<GrammarAST> alts = new();
         try
         {
             // org\\antlr\\v4\\parse\\ATNBuilder.g:162:2: ( ^( SET ( setElement )+ ) )
@@ -1347,7 +1346,7 @@ public class ATNBuilder : TreeParser
                                 setElement23 = setElement();
                                 state._fsp--;
 
-                                alts.add((setElement23 != null ? ((GrammarAST)setElement23.start) : null));
+                                alts.Add((setElement23 != null ? ((GrammarAST)setElement23.start) : null));
                             }
                             break;
 
@@ -1602,9 +1601,9 @@ public class ATNBuilder : TreeParser
                                         {
                                             input.consume();
                                         }
-                                        NoViableAltException nvae2 =
+                                        NoViableAltException nvae =
                                             new NoViableAltException("", 19, 10, input);
-                                        throw nvae2;
+                                        throw nvae;
                                     }
                                     finally
                                     {
@@ -1623,9 +1622,9 @@ public class ATNBuilder : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae =
+                                    NoViableAltException nvae2 =
                                         new NoViableAltException("", 19, 7, input);
-                                    throw nvae;
+                                    throw nvae2;
                                 }
                                 finally
                                 {
@@ -1641,9 +1640,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae3 =
                                     new NoViableAltException("", 19, 2, input);
-                                throw nvae;
+                                throw nvae3;
                             }
                             finally
                             {
@@ -1671,9 +1670,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae4 =
                                     new NoViableAltException("", 19, 3, input);
-                                throw nvae;
+                                throw nvae4;
                             }
                             finally
                             {
@@ -1849,7 +1848,7 @@ public class ATNBuilder : TreeParser
 
                                 else
                                 {
-                                    int nvaeMark = input.mark();
+                                    int nvaeMark2 = input.mark();
                                     try
                                     {
                                         for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
@@ -1862,7 +1861,7 @@ public class ATNBuilder : TreeParser
                                     }
                                     finally
                                     {
-                                        input.rewind(nvaeMark);
+                                        input.rewind(nvaeMark2);
                                     }
                                 }
 
@@ -2514,7 +2513,6 @@ public class ATNBuilder : TreeParser
                         match(input, ID, FOLLOW_ID_in_elementOption1207);
                         match(input, INT, FOLLOW_INT_in_elementOption1209);
                         match(input, Token.UP, null);
-
                     }
                     break;
 
@@ -2536,93 +2534,45 @@ public class ATNBuilder : TreeParser
 
 
     protected DFA10 dfa10 = new DFA10(this);
-    //static readonly String DFA10_eotS =
-    //        "\25\uffff";
-    //static readonly String DFA10_eofS =
-    //        "\25\uffff";
-    //static readonly String DFA10_minS =
-    //        "\1\105\1\uffff\1\2\1\4\1\2\2\uffff\2\3\1\2\1\4\1\34\1\4\10\3";
-    //static readonly String DFA10_maxS =
-    //        "\1\114\1\uffff\1\2\1\123\1\2\2\uffff\2\34\1\2\1\123\1\34\1\73\4\3\4\34";
-    //static readonly String DFA10_acceptS =
-    //        "\1\uffff\1\1\3\uffff\1\2\1\3\16\uffff";
-    //static readonly String DFA10_specialS =
-    //        "\25\uffff}>";
-    //static readonly String[] DFA10_transitionS = {
-    //        "\1\2\6\uffff\1\1",
-    //        "",
-    //        "\1\3",
-    //        "\1\6\5\uffff\1\6\11\uffff\1\6\13\uffff\1\6\6\uffff\1\6\6\uffff\1\6\2"+
-    //        "\uffff\1\6\4\uffff\1\6\1\uffff\1\6\2\uffff\1\6\2\uffff\1\6\7\uffff\2"+
-    //        "\6\1\uffff\1\4\1\5\2\uffff\2\6\3\uffff\2\6",
-    //        "\1\7",
-    //        "",
-    //        "",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10",
-    //        "\1\13",
-    //        "\1\6\5\uffff\1\6\11\uffff\1\6\13\uffff\1\6\6\uffff\1\6\6\uffff\1\6\2"+
-    //        "\uffff\1\6\4\uffff\1\6\1\uffff\1\6\2\uffff\1\6\2\uffff\1\6\7\uffff\2"+
-    //        "\6\2\uffff\1\5\2\uffff\2\6\3\uffff\2\6",
-    //        "\1\14",
-    //        "\1\17\27\uffff\1\15\1\uffff\1\20\34\uffff\1\16",
-    //        "\1\21",
-    //        "\1\22",
-    //        "\1\23",
-    //        "\1\24",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10",
-    //        "\1\12\6\uffff\1\11\21\uffff\1\10"
-    //};
 
-    //static readonly short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
-    //static readonly short[] DFA10_eof = DFA.unpackEncodedString(DFA10_eofS);
-    //static readonly char[] DFA10_min = DFA.unpackEncodedStringToUnsignedChars(DFA10_minS);
-    //static readonly char[] DFA10_max = DFA.unpackEncodedStringToUnsignedChars(DFA10_maxS);
-    //static readonly short[] DFA10_accept = DFA.unpackEncodedString(DFA10_acceptS);
-    //static readonly short[] DFA10_special = DFA.unpackEncodedString(DFA10_specialS);
-    //static readonly short[][] DFA10_transition;
-    public static short[] Convert(char[] chars)
-    {
-        short[] shorts = new short[chars.Length];
-        for (int i = 0; i < shorts.Length; i++)
-        {
-            int c = chars[i];
-            shorts[i] = (short)c;
-        }
-        return shorts;
-    }
+    //static final short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
+    //static final short[] DFA10_eof = DFA.unpackEncodedString(DFA10_eofS);
+    //static final char[] DFA10_min = DFA.unpackEncodedStringToUnsignedChars(DFA10_minS);
+    //static final char[] DFA10_max = DFA.unpackEncodedStringToUnsignedChars(DFA10_maxS);
+    //static final short[] DFA10_accept = DFA.unpackEncodedString(DFA10_acceptS);
+    //static final short[] DFA10_special = DFA.unpackEncodedString(DFA10_specialS);
+    //static final short[][] DFA10_transition;
+    static readonly short[] DFA10_eot = Utils.Convert(new char[] { '\u0015', '\uffff' });
+    static readonly short[] DFA10_eof = Utils.Convert(new char[] { '\u0015', '\uffff' });
+    static readonly char[] DFA10_min = new char[] { '\u0001', '\u0045', '\u0001', '\uffff', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
+    static readonly char[] DFA10_max = new char[] { '\u0001', '\u004c', '\u0001', '\uffff', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
+    static readonly short[] DFA10_accept = Utils.Convert(new char[] { '\u0001', '\uffff', '\u0001', '\u0001', '\u0003', '\uffff', '\u0001', '\u0002', '\u0001', '\u0003', '\u000e', '\uffff' });
+    static readonly short[] DFA10_special = Utils.Convert(new char[] { '\u0015', '\uffff', '\u007d', '\u003e' });
+    static readonly short[][] DFA10_transition = new short[][]{
+        Utils.Convert(new char[] {'\u0001','\u0002','\u0006','\uffff','\u0001','\u0001'}),
+        Utils.Convert(new char[0]),
+        Utils.Convert(new char[] {'\u0001','\u0003'}),
+        Utils.Convert(new char[] {'\u0001','\u0006','\u0005','\uffff','\u0001','\u0006','\u0009','\uffff','\u0001','\u0006','\u000b','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0004','\uffff','\u0001','\u0006','\u0001','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0007','\uffff','\u0002','\u0006','\u0001','\uffff','\u0001','\u0004','\u0001','\u0005','\u0002','\uffff','\u0002','\u0006','\u0003','\uffff','\u0002','\u0006'}),
+        Utils.Convert(new char[] {'\u0001','\u0007'}),
+        Utils.Convert(new char[0]),
+        Utils.Convert(new char[0]),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
+        Utils.Convert(new char[] {'\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u0006','\u0005','\uffff','\u0001','\u0006','\u0009','\uffff','\u0001','\u0006','\u000b','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0004','\uffff','\u0001','\u0006','\u0001','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0007','\uffff','\u0002','\u0006','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0006','\u0003','\uffff','\u0002','\u0006'}),
+        Utils.Convert(new char[] {'\u0001','\u000c'}),
+        Utils.Convert(new char[] {'\u0001','\u000f','\u0017','\uffff','\u0001','\u000d','\u0001','\uffff','\u0001','\u0010','\u001c','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0011'}),
+        Utils.Convert(new char[] {'\u0001','\u0012'}),
+        Utils.Convert(new char[] {'\u0001','\u0013'}),
+        Utils.Convert(new char[] {'\u0001','\u0014'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'})
+    };
 
-    static readonly short[] DFA10_eotS = Convert(new char[] { '\u0015', '\uffff' });
-    static readonly short[] DFA10_eofS = Convert(new char[] { '\u0015', '\uffff' });
-    static readonly char[] DFA10_minS = new char[] { '\u0001', '\u0045', '\u0001', '\uffff', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' });
-    static readonly char[] DFA10_maxS = new char[] { '\u0001', '\u004c', '\u0001', '\uffff', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' });
-    static readonly short[] DFA10_acceptS = Convert(new char[] { '\u0001', '\uffff', '\u0001', '\u0001', '\u0003', '\uffff', '\u0001', '\u0002', '\u0001', '\u0003', '\u000e', '\uffff' });
-    static readonly short[] DFA10_specialS = Convert(new char[] { '\u0015', '\uffff', '\u007d', '\u003e' });
-    static readonly short[][] DFA10_transitionS = new short[][]{
-    Convert(new char[] {'\u0001','\u0002','\u0006','\uffff','\u0001','\u0001'}),
-    Convert(new char[0]),
-    Convert(new char[] {'\u0001','\u0003'}),
-    Convert(new char[] {'\u0001','\u0006','\u0005','\uffff','\u0001','\u0006','\u0009','\uffff','\u0001','\u0006','\u000b','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0004','\uffff','\u0001','\u0006','\u0001','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0007','\uffff','\u0002','\u0006','\u0001','\uffff','\u0001','\u0004','\u0001','\u0005','\u0002','\uffff','\u0002','\u0006','\u0003','\uffff','\u0002','\u0006'}),
-    Convert(new char[] {'\u0001','\u0007'}),
-    Convert(new char[0]),
-    Convert(new char[0]),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
-    Convert(new char[] {'\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u0006','\u0005','\uffff','\u0001','\u0006','\u0009','\uffff','\u0001','\u0006','\u000b','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0006','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0004','\uffff','\u0001','\u0006','\u0001','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0006','\u0007','\uffff','\u0002','\u0006','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0006','\u0003','\uffff','\u0002','\u0006'}),
-    Convert(new char[] {'\u0001','\u000c'}),
-    Convert(new char[] {'\u0001','\u000f','\u0017','\uffff','\u0001','\u000d','\u0001','\uffff','\u0001','\u0010','\u001c','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0011'}),
-    Convert(new char[] {'\u0001','\u0012'}),
-    Convert(new char[] {'\u0001','\u0013'}),
-    Convert(new char[] {'\u0001','\u0014'}),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'}),
-    Convert(new char[] {'\u0001','\u000a','\u0006','\uffff','\u0001','\u0009','\u0011','\uffff','\u0001','\u0008'})
-};
+
 
     protected class DFA10 : DFA
     {
@@ -2728,7 +2678,7 @@ public class ATNBuilder : TreeParser
     public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal1069 = new BitSet(new long[] { 0x0000000000000004L });
     public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal1084 = new BitSet(new long[] { 0x0000000000000002L });
     public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal1098 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ARG_ACTION_in_terminal1100 = new BitSet(new long[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
+    public static readonly BitSet FOLLOW_ARG_ACTION_in_terminal1100 = new BitSet(new ulong[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
     public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal1114 = new BitSet(new long[] { 0x0000000000000004L });
     public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal1130 = new BitSet(new long[] { 0x0000000000000002L });
     public static readonly BitSet FOLLOW_ELEMENT_OPTIONS_in_elementOptions1151 = new BitSet(new long[] { 0x0000000000000004L });

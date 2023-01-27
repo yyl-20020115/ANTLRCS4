@@ -11,6 +11,18 @@ namespace org.antlr.v4.runtime.misc;
 
 public static class Utils
 {
+    public static short[] Convert(char[] chars)
+    {
+        short[] shorts = new short[chars.Length];
+        for (int i = 0; i < shorts.Length; i++)
+        {
+            int c = chars[i];
+            shorts[i] = (short)c;
+        }
+        return shorts;
+    }
+
+
     // Seriously: why isn't this built in to java? ugh!
     public static String join<T>(IEnumerator<T> iter, String separator)
     {

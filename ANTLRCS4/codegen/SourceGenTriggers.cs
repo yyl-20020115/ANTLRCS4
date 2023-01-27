@@ -2091,8 +2091,8 @@ public class SourceGenTriggers : TreeParser
 
     static readonly short[] DFA7_eotS = Convert(new char[] { '\u0014', '\uffff' });
     static readonly short[] DFA7_eofS = Convert(new char[] { '\u0014', '\uffff' });
-    static readonly char[] DFA7_minS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0001', '\u000a', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' });
-    static readonly char[] DFA7_maxS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' });
+    static readonly char[] DFA7_minS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0001', '\u000a', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
+    static readonly char[] DFA7_maxS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
     static readonly short[] DFA7_acceptS = Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
     static readonly short[] DFA7_specialS = Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
     static readonly short[][] DFA7_transitionS = new short[][]{

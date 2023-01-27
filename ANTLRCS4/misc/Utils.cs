@@ -14,17 +14,6 @@ public static class Utils {
 
 	public const int INTEGER_POOL_MAX_VALUE = 1000;
 
-    public static short[] Convert(char[] chars)
-    {
-        short[] shorts = new short[chars.Length];
-        for (int i = 0; i < shorts.Length; i++)
-        {
-            int c = chars[i];
-            shorts[i] = (short)c;
-        }
-        return shorts;
-    }
-
 
     public interface Filter<T> {
 		bool select(T t);

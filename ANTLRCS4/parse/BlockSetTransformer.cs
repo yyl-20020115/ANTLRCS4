@@ -1,4 +1,4 @@
-﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\BlockSetTransformer.g 2023-01-27 19:22:57
+﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\BlockSetTransformer.g 2023-01-27 22:27:33
 
 using org.antlr.runtime;
 using org.antlr.runtime.tree;
@@ -119,12 +119,12 @@ public class BlockSetTransformer : TreeRewriter
 
 
     public BlockSetTransformer(TreeNodeStream input)
+        : this(input, new RecognizerSharedState())
     {
-        this(input, new RecognizerSharedState());
     }
     public BlockSetTransformer(TreeNodeStream input, RecognizerSharedState state)
+        : base(input, state)
     {
-        super(input, state);
     }
 
     protected TreeAdaptor adaptor = new CommonTreeAdaptor();
@@ -140,22 +140,23 @@ public class BlockSetTransformer : TreeRewriter
     //@Override 
     public String[] getTokenNames() { return BlockSetTransformer.tokenNames; }
     //@Override 
-    public String getGrammarFileName() { return "org\\antlr\\v4\\parse\\BlockSetTransformer.g"; }
+    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\BlockSetTransformer.g"; }
 
 
     public String currentRuleName;
     public GrammarAST currentAlt;
     public Grammar g;
     public BlockSetTransformer(TreeNodeStream input, Grammar g)
+        : this(input, new RecognizerSharedState())
     {
-        this(input, new RecognizerSharedState());
+        ;
         this.g = g;
     }
 
 
     public class topdown_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -441,7 +442,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class setAlt_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -508,7 +509,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class ebnfBlockSet_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -634,7 +635,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class ebnfSuffix_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -706,7 +707,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class blockSet_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -864,7 +865,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 _last = (GrammarAST)input.LT(1);
                                                 ALT13 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet263); if (state.failed) return retval;
 
-                                                if (state.backtracking == 1) stream_ALT.add(ALT13);
+                                                if (state.backtracking == 1) stream_ALT.Add(ALT13);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT13;
@@ -936,7 +937,7 @@ public class BlockSetTransformer : TreeRewriter
 
 
                         // AST REWRITE
-                        // elements: BLOCK, setElement, ALT
+                        // elements: setElement, BLOCK, ALT
                         // token labels: 
                         // rule labels: retval
                         // token list labels: 
@@ -1008,7 +1009,7 @@ public class BlockSetTransformer : TreeRewriter
                             _last = (GrammarAST)input.LT(1);
                             BLOCK16 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_blockSet313); if (state.failed) return retval;
 
-                            if (state.backtracking == 1) stream_BLOCK.add(BLOCK16);
+                            if (state.backtracking == 1) stream_BLOCK.Add(BLOCK16);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK16;
@@ -1228,7 +1229,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class setElement_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -1531,7 +1532,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class elementOptions_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -1645,7 +1646,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public class elementOption_return : TreeRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -1992,167 +1993,148 @@ public class BlockSetTransformer : TreeRewriter
 
     protected DFA10 dfa10 = new DFA10(this);
 
-    //static readonly short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
-    //static readonly short[] DFA10_eof = DFA.unpackEncodedString(DFA10_eofS);
-    //static readonly char[] DFA10_min = DFA.unpackEncodedStringToUnsignedChars(DFA10_minS);
-    //static readonly char[] DFA10_max = DFA.unpackEncodedStringToUnsignedChars(DFA10_maxS);
-    //static readonly short[] DFA10_accept = DFA.unpackEncodedString(DFA10_acceptS);
-    //static readonly short[] DFA10_special = DFA.unpackEncodedString(DFA10_specialS);
-    //static readonly short[][] DFA10_transition;
-    public static short[] Convert(char[] chars)
-    {
-        short[] shorts = new short[chars.Length];
-        for (int i = 0; i < shorts.Length; i++)
-        {
-            int c = chars[i];
-            shorts[i] = (short)c;
-        }
-        return shorts;
-    }
 
-    static readonly short[] DFA10_eotS = Convert(new char[] { '\u007c', '\uffff' });
-    static readonly short[] DFA10_eofS = Convert(new char[] { '\u007c', '\uffff' });
-    static readonly char[] DFA10_minS = new char[] { '\u0001', '\u0046', '\u0001', '\u0002', '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0031', '\u0004', '\u0002', '\u0001', '\u0003', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0031', '\u0003', '\u0002', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u0031', '\u0002', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0003', '\u0004', '\u0002', '\u0001', '\u0003', '\u0001', '\u0002', '\u0006', '\u0003', '\u0001', '\u001c', '\u0002', '\u0003', '\u0001', '\u0049', '\u0001', '\u0003', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0005', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0031', '\u0001', '\u0002', '\u0001', '\u0000', '\u0001', '\u0002', '\u0001', '\u003b', '\u0001', '\u0004', '\u0004', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0002', '\uffff', '\u000a', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u000a', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0005', '\u0003', '\u0002', '\u0004', '\u0010', '\u0003' });
-    static readonly char[] DFA10_maxS = new char[] { '\u0001', '\u0046', '\u0001', '\u0002', '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0049', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u001c', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u003e', '\u0003', '\u0002', '\u0001', '\u003b', '\u0002', '\u001c', '\u0001', '\u0049', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u0003', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u001c', '\u0001', '\u0002', '\u0006', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0003', '\u0004', '\u001c', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u003e', '\u0001', '\u0002', '\u0001', '\u0000', '\u0001', '\u0002', '\u0002', '\u003b', '\u0004', '\u0003', '\u0002', '\u001c', '\u0002', '\uffff', '\u0001', '\u001c', '\u0005', '\u0003', '\u0004', '\u001c', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0002', '\u0002', '\u0003', '\u0004', '\u001c', '\u0004', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0004', '\u001c', '\u0002', '\u003b', '\u0008', '\u0003', '\u0008', '\u001c' });
-    static readonly short[] DFA10_acceptS = Convert(new char[] { '\u0046', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u0034', '\uffff' });
-    static readonly short[] DFA10_specialS = Convert(new char[] { '\u003c', '\uffff', '\u0001', '\u0000', '\u003f', '\uffff', '\u007d', '\u003e' });
-    static readonly short[][] DFA10_transitionS = new short[][]{
-    Convert(new char[] {'\u0001','\u0001'}),
-    Convert(new char[] {'\u0001','\u0002'}),
-    Convert(new char[] {'\u0001','\u0003'}),
-    Convert(new char[] {'\u0001','\u0004'}),
-    Convert(new char[] {'\u0001','\u0008','\u0009','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0007','\u000a','\uffff','\u0001','\u0005'}),
-    Convert(new char[] {'\u0001','\u0009'}),
-    Convert(new char[] {'\u0001','\u000a','\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u000c','\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u000d'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0011'}),
-    Convert(new char[] {'\u0001','\u0012'}),
-    Convert(new char[] {'\u0001','\u0013'}),
-    Convert(new char[] {'\u0001','\u0014'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0015'}),
-    Convert(new char[] {'\u0001','\u0008','\u0009','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u0016'}),
-    Convert(new char[] {'\u0001','\u0017'}),
-    Convert(new char[] {'\u0001','\u0018'}),
-    Convert(new char[] {'\u0001','\u0019'}),
-    Convert(new char[] {'\u0001','\u001a'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u0021','\u0009','\uffff','\u0001','\u001f','\u0002','\uffff','\u0001','\u0020','\u000a','\uffff','\u0001','\u001e'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0025'}),
-    Convert(new char[] {'\u0001','\u0028','\u0017','\uffff','\u0001','\u0026','\u0001','\uffff','\u0001','\u0029','\u001c','\uffff','\u0001','\u0027'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u002a'}),
-    Convert(new char[] {'\u0001','\u002b'}),
-    Convert(new char[] {'\u0001','\u002c'}),
-    Convert(new char[] {'\u0001','\u002d','\u0001','\u002e'}),
-    Convert(new char[] {'\u0001','\u002f','\u0001','\u002e'}),
-    Convert(new char[] {'\u0001','\u0030'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0031'}),
-    Convert(new char[] {'\u0001','\u0032'}),
-    Convert(new char[] {'\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u0033'}),
-    Convert(new char[] {'\u0001','\u0034'}),
-    Convert(new char[] {'\u0001','\u0035'}),
-    Convert(new char[] {'\u0001','\u0036'}),
-    Convert(new char[] {'\u0001','\u0037'}),
-    Convert(new char[] {'\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u003b'}),
-    Convert(new char[] {'\u0001','\u003c','\u0041','\uffff','\u0001','\u0012'}),
-    Convert(new char[] {'\u0001','\u003d'}),
-    Convert(new char[] {'\u0001','\u003e'}),
-    Convert(new char[] {'\u0001','\u003f'}),
-    Convert(new char[] {'\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
-    Convert(new char[] {'\u0001','\u0042','\u0017','\uffff','\u0001','\u0040','\u0001','\uffff','\u0001','\u0043','\u001c','\uffff','\u0001','\u0041'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u0044'}),
-    Convert(new char[] {'\u0001','\u0021','\u0009','\uffff','\u0001','\u001f','\u0002','\uffff','\u0001','\u0020'}),
-    Convert(new char[] {'\u0001','\u0045'}),
-    Convert(new char[] {'\u0001','\uffff'}),
-    Convert(new char[] {'\u0001','\u0048'}),
-    Convert(new char[] {'\u0001','\u0049'}),
-    Convert(new char[] {'\u0001','\u004c','\u0017','\uffff','\u0001','\u004a','\u0001','\uffff','\u0001','\u004d','\u001c','\uffff','\u0001','\u004b'}),
-    Convert(new char[] {'\u0001','\u004e'}),
-    Convert(new char[] {'\u0001','\u004f'}),
-    Convert(new char[] {'\u0001','\u0050'}),
-    Convert(new char[] {'\u0001','\u0051'}),
-    Convert(new char[] {'\u0001','\u0052'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[0]),
-    Convert(new char[0]),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
-    Convert(new char[] {'\u0001','\u0059'}),
-    Convert(new char[] {'\u0001','\u005a'}),
-    Convert(new char[] {'\u0001','\u005b'}),
-    Convert(new char[] {'\u0001','\u005c'}),
-    Convert(new char[] {'\u0001','\u005d'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
-    Convert(new char[] {'\u0001','\u0060','\u0017','\uffff','\u0001','\u005e','\u0001','\uffff','\u0001','\u0061','\u001c','\uffff','\u0001','\u005f'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[] {'\u0001','\u0062'}),
-    Convert(new char[] {'\u0001','\u0063'}),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
-    Convert(new char[] {'\u0001','\u0064'}),
-    Convert(new char[] {'\u0001','\u0065'}),
-    Convert(new char[] {'\u0001','\u002e'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
-    Convert(new char[] {'\u0001','\u0066'}),
-    Convert(new char[] {'\u0001','\u0067'}),
-    Convert(new char[] {'\u0001','\u0068'}),
-    Convert(new char[] {'\u0001','\u0069'}),
-    Convert(new char[] {'\u0001','\u006a'}),
-    Convert(new char[] {'\u0001','\u002e'}),
-    Convert(new char[] {'\u0001','\u006b'}),
-    Convert(new char[] {'\u0001','\u002e'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
-    Convert(new char[] {'\u0001','\u006e','\u0017','\uffff','\u0001','\u006c','\u0001','\uffff','\u0001','\u006f','\u001c','\uffff','\u0001','\u006d'}),
-    Convert(new char[] {'\u0001','\u0072','\u0017','\uffff','\u0001','\u0070','\u0001','\uffff','\u0001','\u0073','\u001c','\uffff','\u0001','\u0071'}),
-    Convert(new char[] {'\u0001','\u0074'}),
-    Convert(new char[] {'\u0001','\u0075'}),
-    Convert(new char[] {'\u0001','\u0076'}),
-    Convert(new char[] {'\u0001','\u0077'}),
-    Convert(new char[] {'\u0001','\u0078'}),
-    Convert(new char[] {'\u0001','\u0079'}),
-    Convert(new char[] {'\u0001','\u007a'}),
-    Convert(new char[] {'\u0001','\u007b'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
-    Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'})
-};
+    //static final short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
+    //static final short[] DFA10_eof = DFA.unpackEncodedString(DFA10_eofS);
+    //static final char[] DFA10_min = DFA.unpackEncodedStringToUnsignedChars(DFA10_minS);
+    //static final char[] DFA10_max = DFA.unpackEncodedStringToUnsignedChars(DFA10_maxS);
+    //static final short[] DFA10_accept = DFA.unpackEncodedString(DFA10_acceptS);
+    //static final short[] DFA10_special = DFA.unpackEncodedString(DFA10_specialS);
+    //static final short[][] DFA10_transition;
+    static readonly short[] DFA10_eot = Utils.Convert(new char[] { '\u007c', '\uffff' });
+    static readonly short[] DFA10_eof = Utils.Convert(new char[] { '\u007c', '\uffff' });
+    static readonly char[] DFA10_min = new char[] { '\u0001', '\u0046', '\u0001', '\u0002', '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0031', '\u0004', '\u0002', '\u0001', '\u0003', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0031', '\u0003', '\u0002', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u0031', '\u0002', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0003', '\u0004', '\u0002', '\u0001', '\u0003', '\u0001', '\u0002', '\u0006', '\u0003', '\u0001', '\u001c', '\u0002', '\u0003', '\u0001', '\u0049', '\u0001', '\u0003', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0005', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0031', '\u0001', '\u0002', '\u0001', '\u0000', '\u0001', '\u0002', '\u0001', '\u003b', '\u0001', '\u0004', '\u0004', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0002', '\uffff', '\u000a', '\u0003', '\u0001', '\u0004', '\u0001', '\u0003', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u000a', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0005', '\u0003', '\u0002', '\u0004', '\u0010', '\u0003' };
+    static readonly char[] DFA10_max = new char[] { '\u0001', '\u0046', '\u0001', '\u0002', '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0049', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u001c', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u003e', '\u0003', '\u0002', '\u0001', '\u003b', '\u0002', '\u001c', '\u0001', '\u0049', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u0003', '\u0001', '\u0002', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u001c', '\u0001', '\u0002', '\u0006', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0049', '\u0001', '\u0045', '\u0001', '\u0049', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0003', '\u0004', '\u001c', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u003e', '\u0001', '\u0002', '\u0001', '\u0000', '\u0001', '\u0002', '\u0002', '\u003b', '\u0004', '\u0003', '\u0002', '\u001c', '\u0002', '\uffff', '\u0001', '\u001c', '\u0005', '\u0003', '\u0004', '\u001c', '\u0001', '\u003b', '\u0001', '\u001c', '\u0001', '\u0002', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0002', '\u0002', '\u0003', '\u0004', '\u001c', '\u0004', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0001', '\u001c', '\u0001', '\u0003', '\u0004', '\u001c', '\u0002', '\u003b', '\u0008', '\u0003', '\u0008', '\u001c' };
+    static readonly short[] DFA10_accept = Utils.Convert(new char[] { '\u0046', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u0034', '\uffff' });
+    static readonly short[] DFA10_special = Utils.Convert(new char[] { '\u003c', '\uffff', '\u0001', '\u0000', '\u003f', '\uffff', '\u007d', '\u003e' });
+    static readonly short[][] DFA10_transition = new short[][]{
+        Utils.Convert(new char[] {'\u0001','\u0001'}),
+        Utils.Convert(new char[] {'\u0001','\u0002'}),
+        Utils.Convert(new char[] {'\u0001','\u0003'}),
+        Utils.Convert(new char[] {'\u0001','\u0004'}),
+        Utils.Convert(new char[] {'\u0001','\u0008','\u0009','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0007','\u000a','\uffff','\u0001','\u0005'}),
+        Utils.Convert(new char[] {'\u0001','\u0009'}),
+        Utils.Convert(new char[] {'\u0001','\u000a','\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u000c','\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u000d'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0011'}),
+        Utils.Convert(new char[] {'\u0001','\u0012'}),
+        Utils.Convert(new char[] {'\u0001','\u0013'}),
+        Utils.Convert(new char[] {'\u0001','\u0014'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0015'}),
+        Utils.Convert(new char[] {'\u0001','\u0008','\u0009','\uffff','\u0001','\u0006','\u0002','\uffff','\u0001','\u0007'}),
+        Utils.Convert(new char[] {'\u0001','\u0016'}),
+        Utils.Convert(new char[] {'\u0001','\u0017'}),
+        Utils.Convert(new char[] {'\u0001','\u0018'}),
+        Utils.Convert(new char[] {'\u0001','\u0019'}),
+        Utils.Convert(new char[] {'\u0001','\u001a'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u0021','\u0009','\uffff','\u0001','\u001f','\u0002','\uffff','\u0001','\u0020','\u000a','\uffff','\u0001','\u001e'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0025'}),
+        Utils.Convert(new char[] {'\u0001','\u0028','\u0017','\uffff','\u0001','\u0026','\u0001','\uffff','\u0001','\u0029','\u001c','\uffff','\u0001','\u0027'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u002a'}),
+        Utils.Convert(new char[] {'\u0001','\u002b'}),
+        Utils.Convert(new char[] {'\u0001','\u002c'}),
+        Utils.Convert(new char[] {'\u0001','\u002d','\u0001','\u002e'}),
+        Utils.Convert(new char[] {'\u0001','\u002f','\u0001','\u002e'}),
+        Utils.Convert(new char[] {'\u0001','\u0030'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0031'}),
+        Utils.Convert(new char[] {'\u0001','\u0032'}),
+        Utils.Convert(new char[] {'\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u0033'}),
+        Utils.Convert(new char[] {'\u0001','\u0034'}),
+        Utils.Convert(new char[] {'\u0001','\u0035'}),
+        Utils.Convert(new char[] {'\u0001','\u0036'}),
+        Utils.Convert(new char[] {'\u0001','\u0037'}),
+        Utils.Convert(new char[] {'\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u003b'}),
+        Utils.Convert(new char[] {'\u0001','\u003c','\u0041','\uffff','\u0001','\u0012'}),
+        Utils.Convert(new char[] {'\u0001','\u003d'}),
+        Utils.Convert(new char[] {'\u0001','\u003e'}),
+        Utils.Convert(new char[] {'\u0001','\u003f'}),
+        Utils.Convert(new char[] {'\u0001','\u000b'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0010','\u0006','\uffff','\u0001','\u000f','\u0011','\uffff','\u0001','\u000e'}),
+        Utils.Convert(new char[] {'\u0001','\u0042','\u0017','\uffff','\u0001','\u0040','\u0001','\uffff','\u0001','\u0043','\u001c','\uffff','\u0001','\u0041'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u0044'}),
+        Utils.Convert(new char[] {'\u0001','\u0021','\u0009','\uffff','\u0001','\u001f','\u0002','\uffff','\u0001','\u0020'}),
+        Utils.Convert(new char[] {'\u0001','\u0045'}),
+        Utils.Convert(new char[] {'\u0001','\uffff'}),
+        Utils.Convert(new char[] {'\u0001','\u0048'}),
+        Utils.Convert(new char[] {'\u0001','\u0049'}),
+        Utils.Convert(new char[] {'\u0001','\u004c','\u0017','\uffff','\u0001','\u004a','\u0001','\uffff','\u0001','\u004d','\u001c','\uffff','\u0001','\u004b'}),
+        Utils.Convert(new char[] {'\u0001','\u004e'}),
+        Utils.Convert(new char[] {'\u0001','\u004f'}),
+        Utils.Convert(new char[] {'\u0001','\u0050'}),
+        Utils.Convert(new char[] {'\u0001','\u0051'}),
+        Utils.Convert(new char[] {'\u0001','\u0052'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[0]),
+        Utils.Convert(new char[0]),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
+        Utils.Convert(new char[] {'\u0001','\u0059'}),
+        Utils.Convert(new char[] {'\u0001','\u005a'}),
+        Utils.Convert(new char[] {'\u0001','\u005b'}),
+        Utils.Convert(new char[] {'\u0001','\u005c'}),
+        Utils.Convert(new char[] {'\u0001','\u005d'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u001d','\u0006','\uffff','\u0001','\u001c','\u0011','\uffff','\u0001','\u001b'}),
+        Utils.Convert(new char[] {'\u0001','\u0060','\u0017','\uffff','\u0001','\u005e','\u0001','\uffff','\u0001','\u0061','\u001c','\uffff','\u0001','\u005f'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[] {'\u0001','\u0062'}),
+        Utils.Convert(new char[] {'\u0001','\u0063'}),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
+        Utils.Convert(new char[] {'\u0001','\u0064'}),
+        Utils.Convert(new char[] {'\u0001','\u0065'}),
+        Utils.Convert(new char[] {'\u0001','\u002e'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0024','\u0006','\uffff','\u0001','\u0023','\u0011','\uffff','\u0001','\u0022'}),
+        Utils.Convert(new char[] {'\u0001','\u0066'}),
+        Utils.Convert(new char[] {'\u0001','\u0067'}),
+        Utils.Convert(new char[] {'\u0001','\u0068'}),
+        Utils.Convert(new char[] {'\u0001','\u0069'}),
+        Utils.Convert(new char[] {'\u0001','\u006a'}),
+        Utils.Convert(new char[] {'\u0001','\u002e'}),
+        Utils.Convert(new char[] {'\u0001','\u006b'}),
+        Utils.Convert(new char[] {'\u0001','\u002e'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u003a','\u0006','\uffff','\u0001','\u0039','\u0011','\uffff','\u0001','\u0038'}),
+        Utils.Convert(new char[] {'\u0001','\u006e','\u0017','\uffff','\u0001','\u006c','\u0001','\uffff','\u0001','\u006f','\u001c','\uffff','\u0001','\u006d'}),
+        Utils.Convert(new char[] {'\u0001','\u0072','\u0017','\uffff','\u0001','\u0070','\u0001','\uffff','\u0001','\u0073','\u001c','\uffff','\u0001','\u0071'}),
+        Utils.Convert(new char[] {'\u0001','\u0074'}),
+        Utils.Convert(new char[] {'\u0001','\u0075'}),
+        Utils.Convert(new char[] {'\u0001','\u0076'}),
+        Utils.Convert(new char[] {'\u0001','\u0077'}),
+        Utils.Convert(new char[] {'\u0001','\u0078'}),
+        Utils.Convert(new char[] {'\u0001','\u0079'}),
+        Utils.Convert(new char[] {'\u0001','\u007a'}),
+        Utils.Convert(new char[] {'\u0001','\u007b'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[] {'\u0001','\u0055','\u0006','\uffff','\u0001','\u0054','\u0011','\uffff','\u0001','\u0053'}),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'}),
+        Utils.Convert(new char[] {'\u0001','\u0058','\u0006','\uffff','\u0001','\u0057','\u0011','\uffff','\u0001','\u0056'})
+    };
 
 
-    static BlockSetTransformer()
-    {
-        int numStates = DFA10_transitionS.length;
-        DFA10_transition = new short[numStates][];
-        for (int i = 0; i < numStates; i++)
-        {
-            DFA10_transition[i] = DFA.unpackEncodedString(DFA10_transitionS[i]);
-        }
-    }
 
     protected class DFA10 : DFA
     {
@@ -2205,8 +2187,8 @@ public class BlockSetTransformer : TreeRewriter
     }
 
     public static readonly BitSet FOLLOW_RULE_in_topdown86 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_TOKEN_REF_in_topdown91 = new BitSet(new long[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
-    public static readonly BitSet FOLLOW_RULE_REF_in_topdown95 = new BitSet(new long[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
+    public static readonly BitSet FOLLOW_TOKEN_REF_in_topdown91 = new BitSet(new ulong[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
+    public static readonly BitSet FOLLOW_RULE_REF_in_topdown95 = new BitSet(new ulong[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
     public static readonly BitSet FOLLOW_setAlt_in_topdown110 = new BitSet(new long[] { 0x0000000000000002L });
     public static readonly BitSet FOLLOW_ebnfBlockSet_in_topdown118 = new BitSet(new long[] { 0x0000000000000002L });
     public static readonly BitSet FOLLOW_blockSet_in_topdown126 = new BitSet(new long[] { 0x0000000000000002L });

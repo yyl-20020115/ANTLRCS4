@@ -1,4 +1,4 @@
-﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\ANTLRParser.g 2023-01-27 19:22:57
+﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\ANTLRParser.g 2023-01-27 22:27:33
 
 /*
  [The "BSD licence"]
@@ -28,22 +28,21 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using org.antlr.runtime;
-using org.antlr.runtime.tree;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using org.antlr.runtime.tree;
 
 namespace org.antlr.v4.parse;
+
 
 /** The definitive ANTLR v3 grammar to parse ANTLR v4 grammars.
  *  The grammar builds ASTs that are sniffed by subsequent stages.
  */
-//@SuppressWarnings("all")
 public class ANTLRParser : Parser
 {
-
     public static readonly String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
@@ -59,7 +58,6 @@ public class ANTLRParser : Parser
         "EPSILON", "LEXER_ACTION_CALL", "LEXER_ALT_ACTION", "OPTIONAL", "POSITIVE_CLOSURE",
         "RULE", "RULEMODIFIERS", "RULES", "SET", "WILDCARD"
     };
-    public const int EOF = -1;
     public const int ACTION = 4;
     public const int ACTION_CHAR_LITERAL = 5;
     public const int ACTION_ESC = 6;
@@ -150,14 +148,15 @@ public class ANTLRParser : Parser
     // delegators
 
 
-    public ANTLRParser(TokenStream input) : this(input, new RecognizerSharedState())
+    public ANTLRParser(TokenStream input)
+        : this(input, new RecognizerSharedState())
     {
     }
-    public ANTLRParser(TokenStream input, RecognizerSharedState state) : base(input)
+    public ANTLRParser(TokenStream input, RecognizerSharedState state)
+        : base(input, state)
     {
-        this.state = state;
     }
-    protected readonly RecognizerSharedState state;
+
     protected TreeAdaptor adaptor = new CommonTreeAdaptor();
 
     public void setTreeAdaptor(TreeAdaptor adaptor)
@@ -168,10 +167,10 @@ public class ANTLRParser : Parser
     {
         return adaptor;
     }
-    //@Override
-    public String[] getTokenNames() { return ANTLRParser.tokenNames; }
-    //@Override
-    public String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
+    ////@Override 
+    public override String[] getTokenNames() { return ANTLRParser.tokenNames; }
+    ////@Override
+    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
 
 
     Deque<String> paraphrases = new();
@@ -189,9 +188,8 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "grammarSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:130:1: grammarSpec : grammarType id SEMI sync ( prequelConstruct sync )* rules ( modeSpec )* EOF -> ^( grammarType id ( prequelConstruct )* rules ( modeSpec )* ) ;
-    public ANTLRParser.grammarSpec_return grammarSpec()
-    {
-        grammarSpec_return retval = new ();
+    public ANTLRParser.grammarSpec_return grammarSpec()  {
+        ANTLRParser.grammarSpec_return retval = new ANTLRParser.grammarSpec_return();
         retval.start = input.LT(1);
 
         GrammarAST root_0 = null;
@@ -313,7 +311,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: grammarType, prequelConstruct, modeSpec, id, rules
+                // elements: grammarType, modeSpec, rules, id, prequelConstruct
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -380,12 +378,6 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
-
-    private void pushFollow(BitSet fOLLOW_prequelConstruct_in_grammarSpec327)
-    {
-        throw new NotImplementedException();
-    }
-
     // $ANTLR end "grammarSpec"
 
 
@@ -400,8 +392,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "grammarType"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:182:1: grammarType : (t= LEXER g= GRAMMAR -> GRAMMAR[$g, \"LEXER_GRAMMAR\", getTokenStream()] |t= PARSER g= GRAMMAR -> GRAMMAR[$g, \"PARSER_GRAMMAR\", getTokenStream()] |g= GRAMMAR -> GRAMMAR[$g, \"COMBINED_GRAMMAR\", getTokenStream()] ) ;
-    public ANTLRParser.grammarType_return grammarType()
-    {
+    public ANTLRParser.grammarType_return grammarType()  {
         ANTLRParser.grammarType_return retval = new ANTLRParser.grammarType_return();
         retval.start = input.LT(1);
 
@@ -578,8 +569,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "prequelConstruct"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:199:1: prequelConstruct : ( optionsSpec | delegateGrammars | tokensSpec | channelsSpec | action );
-    public ANTLRParser.prequelConstruct_return prequelConstruct()
-    {
+    public ANTLRParser.prequelConstruct_return prequelConstruct()  {
         ANTLRParser.prequelConstruct_return retval = new ANTLRParser.prequelConstruct_return();
         retval.start = input.LT(1);
 
@@ -720,17 +710,6 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
-
-    private void recover(TokenStream input, RecognitionException re)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void reportError(RecognitionException re)
-    {
-        throw new NotImplementedException();
-    }
-
     // $ANTLR end "prequelConstruct"
 
 
@@ -745,8 +724,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "optionsSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:225:1: optionsSpec : OPTIONS ( option SEMI )* RBRACE -> ^( OPTIONS[$OPTIONS, \"OPTIONS\"] ( option )* ) ;
-    public ANTLRParser.optionsSpec_return optionsSpec()
-    {
+    public ANTLRParser.optionsSpec_return optionsSpec()  {
         ANTLRParser.optionsSpec_return retval = new ANTLRParser.optionsSpec_return();
         retval.start = input.LT(1);
 
@@ -875,8 +853,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "option"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:229:1: option : id ASSIGN ^ optionValue ;
-    public ANTLRParser.option_return option()
-    {
+    public ANTLRParser.option_return option()  {
         ANTLRParser.option_return retval = new ANTLRParser.option_return();
         retval.start = input.LT(1);
 
@@ -946,8 +923,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "optionValue"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:238:1: optionValue : ( qid | STRING_LITERAL | ACTION | INT );
-    public ANTLRParser.optionValue_return optionValue()
-    {
+    public ANTLRParser.optionValue_return optionValue()  {
         ANTLRParser.optionValue_return retval = new ANTLRParser.optionValue_return();
         retval.start = input.LT(1);
 
@@ -1080,8 +1056,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "delegateGrammars"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:250:1: delegateGrammars : IMPORT delegateGrammar ( COMMA delegateGrammar )* SEMI -> ^( IMPORT ( delegateGrammar )+ ) ;
-    public ANTLRParser.delegateGrammars_return delegateGrammars()
-    {
+    public ANTLRParser.delegateGrammars_return delegateGrammars()  {
         ANTLRParser.delegateGrammars_return retval = new ANTLRParser.delegateGrammars_return();
         retval.start = input.LT(1);
 
@@ -1219,8 +1194,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "delegateGrammar"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:256:1: delegateGrammar : ( id ASSIGN ^ id | id );
-    public ANTLRParser.delegateGrammar_return delegateGrammar()
-    {
+    public ANTLRParser.delegateGrammar_return delegateGrammar()  {
         ANTLRParser.delegateGrammar_return retval = new ANTLRParser.delegateGrammar_return();
         retval.start = input.LT(1);
 
@@ -1378,8 +1352,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "tokensSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:261:1: tokensSpec : ( TOKENS_SPEC id ( COMMA id )* RBRACE -> ^( TOKENS_SPEC ( id )+ ) | TOKENS_SPEC RBRACE ->);
-    public ANTLRParser.tokensSpec_return tokensSpec()
-    {
+    public ANTLRParser.tokensSpec_return tokensSpec()  {
         ANTLRParser.tokensSpec_return retval = new ANTLRParser.tokensSpec_return();
         retval.start = input.LT(1);
 
@@ -1495,7 +1468,7 @@ public class ANTLRParser : Parser
 
 
                         // AST REWRITE
-                        // elements: TOKENS_SPEC, id
+                        // elements: id, TOKENS_SPEC
                         // token labels: 
                         // rule labels: retval
                         // token list labels: 
@@ -1596,8 +1569,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "channelsSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:266:1: channelsSpec : CHANNELS ^ id ( COMMA ! id )* RBRACE !;
-    public ANTLRParser.channelsSpec_return channelsSpec()
-    {
+    public ANTLRParser.channelsSpec_return channelsSpec()  {
         ANTLRParser.channelsSpec_return retval = new ANTLRParser.channelsSpec_return();
         retval.start = input.LT(1);
 
@@ -1697,8 +1669,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "action"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:274:1: action : AT ( actionScopeName COLONCOLON )? id ACTION -> ^( AT ( actionScopeName )? id ACTION ) ;
-    public ANTLRParser.action_return action()
-    {
+    public ANTLRParser.action_return action()  {
         ANTLRParser.action_return retval = new ANTLRParser.action_return();
         retval.start = input.LT(1);
 
@@ -1784,7 +1755,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: actionScopeName, AT, id, ACTION
+                // elements: id, AT, ACTION, actionScopeName
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -1851,8 +1822,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "actionScopeName"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:281:1: actionScopeName : ( id | LEXER -> ID[$LEXER] | PARSER -> ID[$PARSER] );
-    public ANTLRParser.actionScopeName_return actionScopeName()
-    {
+    public ANTLRParser.actionScopeName_return actionScopeName()  {
         ANTLRParser.actionScopeName_return retval = new ANTLRParser.actionScopeName_return();
         retval.start = input.LT(1);
 
@@ -2000,8 +1970,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "modeSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:287:1: modeSpec : MODE id SEMI sync ( lexerRule sync )* -> ^( MODE id ( lexerRule )* ) ;
-    public ANTLRParser.modeSpec_return modeSpec()
-    {
+    public ANTLRParser.modeSpec_return modeSpec()  {
         ANTLRParser.modeSpec_return retval = new ANTLRParser.modeSpec_return();
         retval.start = input.LT(1);
 
@@ -2079,7 +2048,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: id, MODE, lexerRule
+                // elements: MODE, lexerRule, id
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -2145,8 +2114,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "rules"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:291:1: rules : sync ( rule sync )* -> ^( RULES ( rule )* ) ;
-    public ANTLRParser.rules_return rules()
-    {
+    public ANTLRParser.rules_return rules()  {
         ANTLRParser.rules_return retval = new ANTLRParser.rules_return();
         retval.start = input.LT(1);
 
@@ -2270,8 +2238,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "sync"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:299:1: sync :;
-    public ANTLRParser.sync_return sync()
-    {
+    public ANTLRParser.sync_return sync()  {
         ANTLRParser.sync_return retval = new ANTLRParser.sync_return();
         retval.start = input.LT(1);
 
@@ -2323,8 +2290,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "rule"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:311:1: rule : ( parserRule | lexerRule );
-    public ANTLRParser.rule_return rule()
-    {
+    public ANTLRParser.rule_return rule()  {
         ANTLRParser.rule_return retval = new ANTLRParser.rule_return();
         retval.start = input.LT(1);
 
@@ -2419,8 +2385,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "parserRule"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:324:1: parserRule : RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? rulePrequels COLON ruleBlock SEMI exceptionGroup -> ^( RULE RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? ( rulePrequels )? ruleBlock ( exceptionGroup )* ) ;
-    public ANTLRParser.parserRule_return parserRule()
-    {
+    public ANTLRParser.parserRule_return parserRule()  {
         ANTLRParser.parserRule_return retval = new ANTLRParser.parserRule_return();
         retval.start = input.LT(1);
 
@@ -2570,7 +2535,7 @@ public class ANTLRParser : Parser
                 stream_exceptionGroup.add(exceptionGroup75.getTree());
 
                 // AST REWRITE
-                // elements: ARG_ACTION, RULE_REF, rulePrequels, ruleBlock, exceptionGroup, localsSpec, ruleReturns, throwsSpec
+                // elements: ruleBlock, ruleReturns, throwsSpec, rulePrequels, RULE_REF, ARG_ACTION, exceptionGroup, localsSpec
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -2666,6 +2631,17 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    private void recover(TokenStream input, RecognitionException re)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void reportError(RecognitionException re)
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "parserRule"
 
 
@@ -2680,8 +2656,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "exceptionGroup"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:389:1: exceptionGroup : ( exceptionHandler )* ( finallyClause )? ;
-    public ANTLRParser.exceptionGroup_return exceptionGroup()
-    {
+    public ANTLRParser.exceptionGroup_return exceptionGroup()  {
         ANTLRParser.exceptionGroup_return retval = new ANTLRParser.exceptionGroup_return();
         retval.start = input.LT(1);
 
@@ -2786,8 +2761,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "exceptionHandler"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:395:1: exceptionHandler : CATCH ARG_ACTION ACTION -> ^( CATCH ARG_ACTION ACTION ) ;
-    public ANTLRParser.exceptionHandler_return exceptionHandler()
-    {
+    public ANTLRParser.exceptionHandler_return exceptionHandler()  {
         ANTLRParser.exceptionHandler_return retval = new ANTLRParser.exceptionHandler_return();
         retval.start = input.LT(1);
 
@@ -2820,7 +2794,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: ACTION, CATCH, ARG_ACTION
+                // elements: CATCH, ARG_ACTION, ACTION
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -2880,8 +2854,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "finallyClause"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:399:1: finallyClause : FINALLY ACTION -> ^( FINALLY ACTION ) ;
-    public ANTLRParser.finallyClause_return finallyClause()
-    {
+    public ANTLRParser.finallyClause_return finallyClause()  {
         ANTLRParser.finallyClause_return retval = new ANTLRParser.finallyClause_return();
         retval.start = input.LT(1);
 
@@ -2908,7 +2881,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: ACTION, FINALLY
+                // elements: FINALLY, ACTION
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -2967,8 +2940,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "rulePrequels"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:403:1: rulePrequels : sync ( rulePrequel sync )* -> ( rulePrequel )* ;
-    public ANTLRParser.rulePrequels_return rulePrequels()
-    {
+    public ANTLRParser.rulePrequels_return rulePrequels()  {
         ANTLRParser.rulePrequels_return retval = new ANTLRParser.rulePrequels_return();
         retval.start = input.LT(1);
 
@@ -3087,8 +3059,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "rulePrequel"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:412:1: rulePrequel : ( optionsSpec | ruleAction );
-    public ANTLRParser.rulePrequel_return rulePrequel()
-    {
+    public ANTLRParser.rulePrequel_return rulePrequel()  {
         ANTLRParser.rulePrequel_return retval = new ANTLRParser.rulePrequel_return();
         retval.start = input.LT(1);
 
@@ -3183,8 +3154,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleReturns"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:423:1: ruleReturns : RETURNS ^ ARG_ACTION ;
-    public ANTLRParser.ruleReturns_return ruleReturns()
-    {
+    public ANTLRParser.ruleReturns_return ruleReturns()  {
         ANTLRParser.ruleReturns_return retval = new ANTLRParser.ruleReturns_return();
         retval.start = input.LT(1);
 
@@ -3246,8 +3216,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "throwsSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:438:1: throwsSpec : THROWS qid ( COMMA qid )* -> ^( THROWS ( qid )+ ) ;
-    public ANTLRParser.throwsSpec_return throwsSpec()
-    {
+    public ANTLRParser.throwsSpec_return throwsSpec()  {
         ANTLRParser.throwsSpec_return retval = new ANTLRParser.throwsSpec_return();
         retval.start = input.LT(1);
 
@@ -3311,7 +3280,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: THROWS, qid
+                // elements: qid, THROWS
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -3379,8 +3348,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "localsSpec"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:443:1: localsSpec : LOCALS ^ ARG_ACTION ;
-    public ANTLRParser.localsSpec_return localsSpec()
-    {
+    public ANTLRParser.localsSpec_return localsSpec()  {
         ANTLRParser.localsSpec_return retval = new ANTLRParser.localsSpec_return();
         retval.start = input.LT(1);
 
@@ -3433,7 +3401,7 @@ public class ANTLRParser : Parser
 
     public class ruleAction_return : ParserRuleReturnScope
     {
-       public GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -3442,8 +3410,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleAction"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:454:1: ruleAction : AT id ACTION -> ^( AT id ACTION ) ;
-    public ANTLRParser.ruleAction_return ruleAction()
-    {
+    public ANTLRParser.ruleAction_return ruleAction()  {
         ANTLRParser.ruleAction_return retval = new ANTLRParser.ruleAction_return();
         retval.start = input.LT(1);
 
@@ -3477,7 +3444,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: AT, ACTION, id
+                // elements: AT, id, ACTION
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -3537,8 +3504,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleBlock"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:464:1: ruleBlock : ruleAltList -> ^( BLOCK[colon,\"BLOCK\"] ruleAltList ) ;
-    public ANTLRParser.ruleBlock_return ruleBlock()
-    {
+    public ANTLRParser.ruleBlock_return ruleBlock()  {
         ANTLRParser.ruleBlock_return retval = new ANTLRParser.ruleBlock_return();
         retval.start = input.LT(1);
 
@@ -3613,7 +3579,7 @@ public class ANTLRParser : Parser
 
     public class ruleAltList_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -3622,8 +3588,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleAltList"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:473:1: ruleAltList : labeledAlt ( OR labeledAlt )* -> ( labeledAlt )+ ;
-    public ANTLRParser.ruleAltList_return ruleAltList()
-    {
+    public ANTLRParser.ruleAltList_return ruleAltList()  {
         ANTLRParser.ruleAltList_return retval = new ANTLRParser.ruleAltList_return();
         retval.start = input.LT(1);
 
@@ -3728,13 +3693,19 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    private void pushFollow(BitSet fOLLOW_labeledAlt_in_ruleAltList1830)
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "ruleAltList"
 
 
     public class labeledAlt_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        ////@Override
+        //@Override
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3742,8 +3713,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "labeledAlt"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:477:1: labeledAlt : alternative ( POUND ! id !)? ;
-    public ANTLRParser.labeledAlt_return labeledAlt()
-    {
+    public ANTLRParser.labeledAlt_return labeledAlt()  {
         ANTLRParser.labeledAlt_return retval = new ANTLRParser.labeledAlt_return();
         retval.start = input.LT(1);
 
@@ -3826,8 +3796,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerRule"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:483:1: lexerRule : ( FRAGMENT )? TOKEN_REF ( optionsSpec )? COLON lexerRuleBlock SEMI -> ^( RULE TOKEN_REF ( ^( RULEMODIFIERS FRAGMENT ) )? ( optionsSpec )? lexerRuleBlock ) ;
-    public ANTLRParser.lexerRule_return lexerRule()
-    {
+    public ANTLRParser.lexerRule_return lexerRule()  {
         ANTLRParser.lexerRule_return retval = new ANTLRParser.lexerRule_return();
         retval.start = input.LT(1);
 
@@ -3915,7 +3884,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: lexerRuleBlock, optionsSpec, TOKEN_REF, FRAGMENT
+                // elements: TOKEN_REF, optionsSpec, lexerRuleBlock, FRAGMENT
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -3999,8 +3968,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerRuleBlock"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:499:1: lexerRuleBlock : lexerAltList -> ^( BLOCK[colon,\"BLOCK\"] lexerAltList ) ;
-    public ANTLRParser.lexerRuleBlock_return lexerRuleBlock()
-    {
+    public ANTLRParser.lexerRuleBlock_return lexerRuleBlock()  {
         ANTLRParser.lexerRuleBlock_return retval = new ANTLRParser.lexerRuleBlock_return();
         retval.start = input.LT(1);
 
@@ -4084,8 +4052,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerAltList"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:508:1: lexerAltList : lexerAlt ( OR lexerAlt )* -> ( lexerAlt )+ ;
-    public ANTLRParser.lexerAltList_return lexerAltList()
-    {
+    public ANTLRParser.lexerAltList_return lexerAltList()  {
         ANTLRParser.lexerAltList_return retval = new ANTLRParser.lexerAltList_return();
         retval.start = input.LT(1);
 
@@ -4204,8 +4171,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerAlt"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:512:1: lexerAlt : lexerElements ( lexerCommands -> ^( LEXER_ALT_ACTION lexerElements lexerCommands ) | -> lexerElements ) ;
-    public ANTLRParser.lexerAlt_return lexerAlt()
-    {
+    public ANTLRParser.lexerAlt_return lexerAlt()  {
         ANTLRParser.lexerAlt_return retval = new ANTLRParser.lexerAlt_return();
         retval.start = input.LT(1);
 
@@ -4258,7 +4224,7 @@ public class ANTLRParser : Parser
                             stream_lexerCommands.add(lexerCommands117.getTree());
 
                             // AST REWRITE
-                            // elements: lexerElements, lexerCommands
+                            // elements: lexerCommands, lexerElements
                             // token labels: 
                             // rule labels: retval
                             // token list labels: 
@@ -4348,8 +4314,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerElements"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:519:1: lexerElements : ( ( lexerElement )+ -> ^( ALT ( lexerElement )+ ) | -> ^( ALT EPSILON ) );
-    public ANTLRParser.lexerElements_return lexerElements()
-    {
+    public ANTLRParser.lexerElements_return lexerElements()  {
         ANTLRParser.lexerElements_return retval = new ANTLRParser.lexerElements_return();
         retval.start = input.LT(1);
 
@@ -4522,8 +4487,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerElement"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:524:1: lexerElement : ( lexerAtom ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) ) ) | -> lexerAtom ) | lexerBlock ( ebnfSuffix -> ^( ebnfSuffix lexerBlock ) | -> lexerBlock ) | actionElement );
-    public ANTLRParser.lexerElement_return lexerElement()
-    {
+    public ANTLRParser.lexerElement_return lexerElement()  {
         ANTLRParser.lexerElement_return retval = new ANTLRParser.lexerElement_return();
         retval.start = input.LT(1);
 
@@ -4616,7 +4580,7 @@ public class ANTLRParser : Parser
                                     stream_ebnfSuffix.add(ebnfSuffix120.getTree());
 
                                     // AST REWRITE
-                                    // elements: ebnfSuffix, lexerAtom
+                                    // elements: lexerAtom, ebnfSuffix
                                     // token labels: 
                                     // rule labels: retval
                                     // token list labels: 
@@ -4726,7 +4690,7 @@ public class ANTLRParser : Parser
                                     stream_ebnfSuffix.add(ebnfSuffix122.getTree());
 
                                     // AST REWRITE
-                                    // elements: lexerBlock, ebnfSuffix
+                                    // elements: ebnfSuffix, lexerBlock
                                     // token labels: 
                                     // rule labels: retval
                                     // token list labels: 
@@ -4864,8 +4828,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerBlock"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:571:1: lexerBlock : LPAREN ( optionsSpec COLON )? lexerAltList RPAREN -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? lexerAltList ) ;
-    public ANTLRParser.lexerBlock_return lexerBlock()
-    {
+    public ANTLRParser.lexerBlock_return lexerBlock()  {
         ANTLRParser.lexerBlock_return retval = new ANTLRParser.lexerBlock_return();
         retval.start = input.LT(1);
 
@@ -5002,8 +4965,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerCommands"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:586:1: lexerCommands : RARROW lexerCommand ( COMMA lexerCommand )* -> ( lexerCommand )+ ;
-    public ANTLRParser.lexerCommands_return lexerCommands()
-    {
+    public ANTLRParser.lexerCommands_return lexerCommands()  {
         ANTLRParser.lexerCommands_return retval = new ANTLRParser.lexerCommands_return();
         retval.start = input.LT(1);
 
@@ -5128,8 +5090,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerCommand"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:590:1: lexerCommand : ( lexerCommandName LPAREN lexerCommandExpr RPAREN -> ^( LEXER_ACTION_CALL lexerCommandName lexerCommandExpr ) | lexerCommandName );
-    public ANTLRParser.lexerCommand_return lexerCommand()
-    {
+    public ANTLRParser.lexerCommand_return lexerCommand()  {
         ANTLRParser.lexerCommand_return retval = new ANTLRParser.lexerCommand_return();
         retval.start = input.LT(1);
 
@@ -5348,8 +5309,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerCommandExpr"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:595:1: lexerCommandExpr : ( id | INT );
-    public ANTLRParser.lexerCommandExpr_return lexerCommandExpr()
-    {
+    public ANTLRParser.lexerCommandExpr_return lexerCommandExpr()  {
         ANTLRParser.lexerCommandExpr_return retval = new ANTLRParser.lexerCommandExpr_return();
         retval.start = input.LT(1);
 
@@ -5443,8 +5403,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerCommandName"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:600:1: lexerCommandName : ( id | MODE -> ID[$MODE] );
-    public ANTLRParser.lexerCommandName_return lexerCommandName()
-    {
+    public ANTLRParser.lexerCommandName_return lexerCommandName()  {
         ANTLRParser.lexerCommandName_return retval = new ANTLRParser.lexerCommandName_return();
         retval.start = input.LT(1);
 
@@ -5555,8 +5514,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "altList"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:605:1: altList : alternative ( OR alternative )* -> ( alternative )+ ;
-    public ANTLRParser.altList_return altList()
-    {
+    public ANTLRParser.altList_return altList()  {
         ANTLRParser.altList_return retval = new ANTLRParser.altList_return();
         retval.start = input.LT(1);
 
@@ -5675,8 +5633,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "alternative"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:610:1: alternative : (o= elementOptions )? ( (e+= element )+ -> ^( ALT ( elementOptions )? ( $e)+ ) | -> ^( ALT ( elementOptions )? EPSILON ) ) ;
-    public ANTLRParser.alternative_return alternative()
-    {
+    public ANTLRParser.alternative_return alternative()  {
         ANTLRParser.alternative_return retval = new ANTLRParser.alternative_return();
         retval.start = input.LT(1);
 
@@ -5762,8 +5719,8 @@ public class ANTLRParser : Parser
                                             state._fsp--;
 
                                             stream_element.add(e.getTree());
-                                            if (list_e == null) list_e = new ArrayList<Object>();
-                                            list_e.add(e.getTree());
+                                            if (list_e == null) list_e = new ();
+                                            list_e.Add(e.getTree());
                                         }
                                         break;
 
@@ -5900,8 +5857,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "element"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:622:1: element : ( labeledElement ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) ) ) | -> labeledElement ) | atom ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) ) ) | -> atom ) | ebnf | actionElement );
-    public ANTLRParser.element_return element()
-    {
+    public ANTLRParser.element_return element()  {
         ANTLRParser.element_return retval = new ANTLRParser.element_return();
         retval.start = input.LT(1);
 
@@ -6052,7 +6008,7 @@ public class ANTLRParser : Parser
                                     stream_ebnfSuffix.add(ebnfSuffix146.getTree());
 
                                     // AST REWRITE
-                                    // elements: ebnfSuffix, labeledElement
+                                    // elements: labeledElement, ebnfSuffix
                                     // token labels: 
                                     // rule labels: retval
                                     // token list labels: 
@@ -6162,7 +6118,7 @@ public class ANTLRParser : Parser
                                     stream_ebnfSuffix.add(ebnfSuffix148.getTree());
 
                                     // AST REWRITE
-                                    // elements: ebnfSuffix, atom
+                                    // elements: atom, ebnfSuffix
                                     // token labels: 
                                     // rule labels: retval
                                     // token list labels: 
@@ -6324,8 +6280,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "actionElement"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:666:1: actionElement : ( ACTION | ACTION elementOptions -> ^( ACTION elementOptions ) | SEMPRED | SEMPRED elementOptions -> ^( SEMPRED elementOptions ) );
-    public ANTLRParser.actionElement_return actionElement()
-    {
+    public ANTLRParser.actionElement_return actionElement()  {
         ANTLRParser.actionElement_return retval = new ANTLRParser.actionElement_return();
         retval.start = input.LT(1);
 
@@ -6564,8 +6519,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "labeledElement"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:679:1: labeledElement : id (ass= ASSIGN |ass= PLUS_ASSIGN ) ( atom -> ^( $ass id atom ) | block -> ^( $ass id block ) ) ;
-    public ANTLRParser.labeledElement_return labeledElement()
-    {
+    public ANTLRParser.labeledElement_return labeledElement()  {
         ANTLRParser.labeledElement_return retval = new ANTLRParser.labeledElement_return();
         retval.start = input.LT(1);
 
@@ -6664,7 +6618,7 @@ public class ANTLRParser : Parser
                             stream_atom.add(atom158.getTree());
 
                             // AST REWRITE
-                            // elements: id, ass, atom
+                            // elements: ass, id, atom
                             // token labels: ass
                             // rule labels: retval
                             // token list labels: 
@@ -6769,8 +6723,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ebnf"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:688:1: ebnf : block ( blockSuffix -> ^( blockSuffix block ) | -> block ) ;
-    public ANTLRParser.ebnf_return ebnf()
-    {
+    public ANTLRParser.ebnf_return ebnf()  {
         ANTLRParser.ebnf_return retval = new ANTLRParser.ebnf_return();
         retval.start = input.LT(1);
 
@@ -6912,8 +6865,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "blockSuffix"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:699:1: blockSuffix : ebnfSuffix ;
-    public ANTLRParser.blockSuffix_return blockSuffix()
-    {
+    public ANTLRParser.blockSuffix_return blockSuffix()  {
         ANTLRParser.blockSuffix_return retval = new ANTLRParser.blockSuffix_return();
         retval.start = input.LT(1);
 
@@ -6970,8 +6922,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ebnfSuffix"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:703:1: ebnfSuffix : ( QUESTION (nongreedy= QUESTION )? -> OPTIONAL[$start, $nongreedy] | STAR (nongreedy= QUESTION )? -> CLOSURE[$start, $nongreedy] | PLUS (nongreedy= QUESTION )? -> POSITIVE_CLOSURE[$start, $nongreedy] );
-    public ANTLRParser.ebnfSuffix_return ebnfSuffix()
-    {
+    public ANTLRParser.ebnfSuffix_return ebnfSuffix()  {
         ANTLRParser.ebnfSuffix_return retval = new ANTLRParser.ebnfSuffix_return();
         retval.start = input.LT(1);
 
@@ -7187,7 +7138,7 @@ public class ANTLRParser : Parser
 
     public class lexerAtom_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -7196,8 +7147,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "lexerAtom"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:709:1: lexerAtom : ( range | terminal | RULE_REF | notSet | wildcard | LEXER_CHAR_SET );
-    public ANTLRParser.lexerAtom_return lexerAtom()
-    {
+    public ANTLRParser.lexerAtom_return lexerAtom()  {
         ANTLRParser.lexerAtom_return retval = new ANTLRParser.lexerAtom_return();
         retval.start = input.LT(1);
 
@@ -7395,8 +7345,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "atom"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:718:1: atom : ( range | terminal | ruleref | notSet | wildcard );
-    public ANTLRParser.atom_return atom()
-    {
+    public ANTLRParser.atom_return atom()  {
         ANTLRParser.atom_return retval = new ANTLRParser.atom_return();
         retval.start = input.LT(1);
 
@@ -7575,8 +7524,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "wildcard"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:741:1: wildcard : DOT ( elementOptions )? -> ^( WILDCARD[$DOT] ( elementOptions )? ) ;
-    public ANTLRParser.wildcard_return wildcard()
-    {
+    public ANTLRParser.wildcard_return wildcard()  {
         ANTLRParser.wildcard_return retval = new ANTLRParser.wildcard_return();
         retval.start = input.LT(1);
 
@@ -7684,7 +7632,7 @@ public class ANTLRParser : Parser
 
     public class notSet_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -7693,8 +7641,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "notSet"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:762:1: notSet : ( NOT setElement -> ^( NOT[$NOT] ^( SET[$setElement.start,\"SET\"] setElement ) ) | NOT blockSet -> ^( NOT[$NOT] blockSet ) );
-    public ANTLRParser.notSet_return notSet()
-    {
+    public ANTLRParser.notSet_return notSet()  {
         ANTLRParser.notSet_return retval = new ANTLRParser.notSet_return();
         retval.start = input.LT(1);
 
@@ -7768,7 +7715,7 @@ public class ANTLRParser : Parser
                         stream_setElement.add(setElement180.getTree());
 
                         // AST REWRITE
-                        // elements: NOT, setElement
+                        // elements: setElement, NOT
                         // token labels: 
                         // rule labels: retval
                         // token list labels: 
@@ -7876,8 +7823,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "blockSet"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:767:1: blockSet : LPAREN setElement ( OR setElement )* RPAREN -> ^( SET[$LPAREN,\"SET\"] ( setElement )+ ) ;
-    public ANTLRParser.blockSet_return blockSet()
-    {
+    public ANTLRParser.blockSet_return blockSet()  {
         ANTLRParser.blockSet_return retval = new ANTLRParser.blockSet_return();
         retval.start = input.LT(1);
 
@@ -7899,7 +7845,7 @@ public class ANTLRParser : Parser
 
 
         Token t;
-        boolean ebnf = false;
+        bool ebnf = false;
 
         try
         {
@@ -8010,7 +7956,7 @@ public class ANTLRParser : Parser
 
     public class setElement_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -8019,8 +7965,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "setElement"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:776:1: setElement : ( TOKEN_REF ^ ( elementOptions )? | STRING_LITERAL ^ ( elementOptions )? | range | LEXER_CHAR_SET );
-    public ANTLRParser.setElement_return setElement()
-    {
+    public ANTLRParser.setElement_return setElement()  {
         ANTLRParser.setElement_return retval = new ANTLRParser.setElement_return();
         retval.start = input.LT(1);
 
@@ -8220,8 +8165,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "block"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:790:1: block : LPAREN ( ( optionsSpec )? (ra+= ruleAction )* COLON )? altList RPAREN -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? ( $ra)* altList ) ;
-    public ANTLRParser.block_return block()
-    {
+    public ANTLRParser.block_return block()  {
         ANTLRParser.block_return retval = new ANTLRParser.block_return();
         retval.start = input.LT(1);
 
@@ -8307,8 +8251,8 @@ public class ANTLRParser : Parser
                                             state._fsp--;
 
                                             stream_ruleAction.add(ra.getTree());
-                                            if (list_ra == null) list_ra = new ArrayList<Object>();
-                                            list_ra.add(ra.getTree());
+                                            if (list_ra == null) list_ra = new ();
+                                            list_ra.Add(ra.getTree());
                                         }
                                         break;
 
@@ -8335,7 +8279,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: altList, ra, optionsSpec
+                // elements: altList, optionsSpec, ra
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -8415,8 +8359,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleref"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:810:1: ruleref : RULE_REF ( ARG_ACTION )? ( elementOptions )? -> ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? ) ;
-    public ANTLRParser.ruleref_return ruleref()
-    {
+    public ANTLRParser.ruleref_return ruleref()  {
         ANTLRParser.ruleref_return retval = new ANTLRParser.ruleref_return();
         retval.start = input.LT(1);
 
@@ -8484,7 +8427,7 @@ public class ANTLRParser : Parser
 
 
                 // AST REWRITE
-                // elements: ARG_ACTION, RULE_REF, elementOptions
+                // elements: RULE_REF, ARG_ACTION, elementOptions
                 // token labels: 
                 // rule labels: retval
                 // token list labels: 
@@ -8553,7 +8496,7 @@ public class ANTLRParser : Parser
 
     public class range_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -8562,8 +8505,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "range"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:830:1: range : STRING_LITERAL RANGE ^ STRING_LITERAL ;
-    public ANTLRParser.range_return range()
-    {
+    public ANTLRParser.range_return range()  {
         ANTLRParser.range_return retval = new ANTLRParser.range_return();
         retval.start = input.LT(1);
 
@@ -8631,8 +8573,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "terminal"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:834:1: terminal : ( TOKEN_REF ( elementOptions )? -> ^( TOKEN_REF ( elementOptions )? ) | STRING_LITERAL ( elementOptions )? -> ^( STRING_LITERAL ( elementOptions )? ) );
-    public ANTLRParser.terminal_return terminal()
-    {
+    public ANTLRParser.terminal_return terminal()  {
         ANTLRParser.terminal_return retval = new ANTLRParser.terminal_return();
         retval.start = input.LT(1);
 
@@ -8765,7 +8706,7 @@ public class ANTLRParser : Parser
 
 
                         // AST REWRITE
-                        // elements: elementOptions, STRING_LITERAL
+                        // elements: STRING_LITERAL, elementOptions
                         // token labels: 
                         // rule labels: retval
                         // token list labels: 
@@ -8839,8 +8780,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "elementOptions"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:847:1: elementOptions : LT ( elementOption ( COMMA elementOption )* )? GT -> ^( ELEMENT_OPTIONS[$LT,\"ELEMENT_OPTIONS\"] ( elementOption )* ) ;
-    public ANTLRParser.elementOptions_return elementOptions()
-    {
+    public ANTLRParser.elementOptions_return elementOptions()  {
         ANTLRParser.elementOptions_return retval = new ANTLRParser.elementOptions_return();
         retval.start = input.LT(1);
 
@@ -8992,8 +8932,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "elementOption"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:854:1: elementOption : ( qid | id ASSIGN ^ optionValue );
-    public ANTLRParser.elementOption_return elementOption()
-    {
+    public ANTLRParser.elementOption_return elementOption()  {
         ANTLRParser.elementOption_return retval = new ANTLRParser.elementOption_return();
         retval.start = input.LT(1);
 
@@ -9151,8 +9090,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "id"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:864:1: id : ( RULE_REF -> ID[$RULE_REF] | TOKEN_REF -> ID[$TOKEN_REF] );
-    public ANTLRParser.id_return id()
-    {
+    public ANTLRParser.id_return id()  {
         ANTLRParser.id_return retval = new ANTLRParser.id_return();
         retval.start = input.LT(1);
 
@@ -9281,8 +9219,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "qid"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:871:1: qid : id ( DOT id )* -> ID[$qid.start, $text] ;
-    public ANTLRParser.qid_return qid()
-    {
+    public ANTLRParser.qid_return qid()  {
         ANTLRParser.qid_return retval = new ANTLRParser.qid_return();
         retval.start = input.LT(1);
 
@@ -9394,8 +9331,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "alternativeEntry"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:877:1: alternativeEntry : alternative EOF ;
-    public ANTLRParser.alternativeEntry_return alternativeEntry()
-    {
+    public ANTLRParser.alternativeEntry_return alternativeEntry()  {
         ANTLRParser.alternativeEntry_return retval = new ANTLRParser.alternativeEntry_return();
         retval.start = input.LT(1);
 
@@ -9458,8 +9394,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "elementEntry"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:878:1: elementEntry : element EOF ;
-    public ANTLRParser.elementEntry_return elementEntry()
-    {
+    public ANTLRParser.elementEntry_return elementEntry()  {
         ANTLRParser.elementEntry_return retval = new ANTLRParser.elementEntry_return();
         retval.start = input.LT(1);
 
@@ -9522,8 +9457,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "ruleEntry"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:879:1: ruleEntry : rule EOF ;
-    public ANTLRParser.ruleEntry_return ruleEntry()
-    {
+    public ANTLRParser.ruleEntry_return ruleEntry()  {
         ANTLRParser.ruleEntry_return retval = new ANTLRParser.ruleEntry_return();
         retval.start = input.LT(1);
 
@@ -9586,8 +9520,7 @@ public class ANTLRParser : Parser
 
     // $ANTLR start "blockEntry"
     // org\\antlr\\v4\\parse\\ANTLRParser.g:880:1: blockEntry : block EOF ;
-    public ANTLRParser.blockEntry_return blockEntry()
-    {
+    public ANTLRParser.blockEntry_return blockEntry()  {
         ANTLRParser.blockEntry_return retval = new ANTLRParser.blockEntry_return();
         retval.start = input.LT(1);
 

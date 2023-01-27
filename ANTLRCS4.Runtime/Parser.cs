@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
@@ -144,9 +145,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
         setInputStream(input);
 	}
-
-	/** reset the parser's state */
-	public virtual void reset() {
+	protected readonly RecognizerSharedState state;
+    public Parser(TokenStream input, RecognizerSharedState state)
+		:this(input)
+    {
+		this.state = state;
+    }
+    /** reset the parser's state */
+    public virtual void reset() {
 		if ( getInputStream()!=null ) getInputStream().seek(0);
 		_errHandler.reset(this);
 		_ctx = null;
