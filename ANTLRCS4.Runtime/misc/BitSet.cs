@@ -3,7 +3,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System;
 using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
@@ -40,7 +39,7 @@ public class BitSet
     public BitSet(int nbits)
     {
         if (nbits < 0)
-            throw new ArgumentOutOfRangeException("nbits");
+            throw new ArgumentOutOfRangeException(nameof(nbits));
 
         if (nbits > 0)
         {
@@ -127,17 +126,12 @@ public class BitSet
         return index64[((value ^ (value - 1)) * debruijn64) >> 58];
     }
 
-    public BitSet Clone()
-    {
-        BitSet result = new BitSet();
-        result._data = (ulong[])_data.Clone();
-        return result;
-    }
+    public BitSet Clone() => new(this._data);
 
     public void Clear(int index)
     {
         if (index < 0)
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
 
         int element = index / BitsPerElement;
         if (element >= _data.Length)
@@ -146,22 +140,16 @@ public class BitSet
         _data[element] &= ~(1UL << (index % BitsPerElement));
     }
 
-		public bool this[int index]
-		{
-			get
-			{
-				return Get(index);
-			}
-			set
-			{
-				Set(index);
-			}
-		}
+	public bool this[int index]
+    {
+        get => Get(index);
+        set => Set(index);
+    }
 
     public bool Get(int index)
     {
         if (index < 0)
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
 
         int element = index / BitsPerElement;
         if (element >= _data.Length)
@@ -193,15 +181,12 @@ public class BitSet
         return true;
     }
 
-    public int Cardinality()
-    {
-        return GetBitCount(_data);
-    }
+    public int Cardinality() => GetBitCount(_data);
 
     public int NextSetBit(int fromIndex)
     {
         if (fromIndex < 0)
-            throw new ArgumentOutOfRangeException("fromIndex");
+            throw new ArgumentOutOfRangeException(nameof(fromIndex));
 
         if (IsEmpty())
             return -1;
@@ -244,7 +229,7 @@ public class BitSet
     public void Or(BitSet set)
     {
         if (set == null)
-            throw new ArgumentNullException("set");
+            throw new ArgumentNullException(nameof(set));
 
         if (set._data.Length > _data.Length)
             Array.Resize(ref _data, set._data.Length);
@@ -253,10 +238,9 @@ public class BitSet
             _data[i] |= set._data[i];
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        BitSet other = obj as BitSet;
-        if (other == null)
+        if (obj is not BitSet other)
             return false;
 
         if (IsEmpty())
@@ -301,7 +285,7 @@ public class BitSet
 
     public override string ToString()
     {
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
         builder.Append('{');
 
         for (int i = NextSetBit(0); i >= 0; i = NextSetBit(i + 1))

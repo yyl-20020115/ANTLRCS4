@@ -9,10 +9,24 @@ using System.Text;
 namespace org.antlr.v4.misc;
 
 /** */
-public class Utils {
+public static class Utils {
+
+
 	public const int INTEGER_POOL_MAX_VALUE = 1000;
 
-	public interface Filter<T> {
+    public static short[] Convert(char[] chars)
+    {
+        short[] shorts = new short[chars.Length];
+        for (int i = 0; i < shorts.Length; i++)
+        {
+            int c = chars[i];
+            shorts[i] = (short)c;
+        }
+        return shorts;
+    }
+
+
+    public interface Filter<T> {
 		bool select(T t);
 	}
 
@@ -28,19 +42,19 @@ public class Utils {
         if ( name==null ) return null;
         int lastDot = name.LastIndexOf('.');
         if ( lastDot<0 ) return name;
-        return name.substring(0, lastDot);
+        return name.Substring(0, lastDot);
     }
 
 	public static String join(Object[] a, String separator) {
 		StringBuilder buf = new StringBuilder();
-		for (int i=0; i<a.length; i++) {
+		for (int i=0; i<a.Length; i++) {
 			Object o = a[i];
-			buf.append(o.toString());
-			if ( (i+1)<a.length ) {
-				buf.append(separator);
+			buf.Append(o.ToString());
+			if ( (i+1)<a.Length ) {
+				buf.Append(separator);
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public static String sortLinesInString(String s) {

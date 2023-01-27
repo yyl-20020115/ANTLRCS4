@@ -86,13 +86,13 @@ public class TreeParser : BaseRecognizer
     }
 
     ////@Override
-    public String getSourceName()
+    public override String getSourceName()
     {
         return input.getSourceName();
     }
 
     ////@Override
-    protected Object getCurrentInputSymbol(IntStream input)
+    protected override Object getCurrentInputSymbol(IntStream input)
     {
         return ((TreeNodeStream)input).LT(1);
     }
@@ -273,5 +273,10 @@ public class TreeParser : BaseRecognizer
     public void traceOut(String ruleName, int ruleIndex)
     {
         base.traceOut(ruleName, ruleIndex, input.LT(1));
+    }
+
+    public override string getSourceName()
+    {
+        throw new NotImplementedException();
     }
 }

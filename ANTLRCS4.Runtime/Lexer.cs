@@ -17,22 +17,22 @@ namespace org.antlr.v4.runtime;
  */
 public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 {
-	public static readonly int DEFAULT_MODE = 0;
-	public static readonly int MORE = -2;
-	public static readonly int SKIP = -3;
+    public static readonly int DEFAULT_MODE = 0;
+    public static readonly int MORE = -2;
+    public static readonly int SKIP = -3;
 
-	public static readonly int DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
-	public static readonly int HIDDEN = Token.HIDDEN_CHANNEL;
-	public static readonly int MIN_CHAR_VALUE = 0x0000;
-	public static readonly int MAX_CHAR_VALUE = 0x10FFFF;
+    public static readonly int DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
+    public static readonly int HIDDEN = Token.HIDDEN_CHANNEL;
+    public static readonly int MIN_CHAR_VALUE = 0x0000;
+    public static readonly int MAX_CHAR_VALUE = 0x10FFFF;
 
-	public CharStream input;
-	protected Pair<TokenSource, CharStream> _tokenFactorySourcePair;
+    public CharStream input;
+    protected Pair<TokenSource, CharStream> _tokenFactorySourcePair;
 
-	/** How to create token objects */
-	protected TokenFactory _factory = CommonTokenFactory.DEFAULT;
+    /** How to create token objects */
+    protected TokenFactory _factory = CommonTokenFactory.DEFAULT;
 
-	/** The goal of all lexer rules/methods is to create a token object.
+    /** The goal of all lexer rules/methods is to create a token object.
 	 *  This is an instance variable as multiple rules may collaborate to
 	 *  create a single token.  nextToken will return this object after
 	 *  matching lexer rule(s).  If you subclass to allow multiple token
@@ -40,373 +40,489 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  something nonnull so that the auto token emit mechanism will not
 	 *  emit another token.
 	 */
-	public Token token;
+    public Token token;
 
-	/** What character index in the stream did the current token start at?
+    /** What character index in the stream did the current token start at?
 	 *  Needed, for example, to get the text for current token.  Set at
 	 *  the start of nextToken.
 	 */
-	public int _tokenStartCharIndex = -1;
+    public int _tokenStartCharIndex = -1;
 
-	/** The line on which the first character of the token resides */
-	public int _tokenStartLine;
+    /** The line on which the first character of the token resides */
+    public int _tokenStartLine;
 
-	/** The character position of first character within the line */
-	public int _tokenStartCharPositionInLine;
+    /** The character position of first character within the line */
+    public int _tokenStartCharPositionInLine;
 
-	/** Once we see EOF on char stream, next token will be EOF.
+    /** Once we see EOF on char stream, next token will be EOF.
 	 *  If you have DONE : EOF ; then you see DONE EOF.
 	 */
-	public bool _hitEOF;
+    public bool _hitEOF;
 
-	/** The channel number for the current token */
-	public int _channel;
+    /** The channel number for the current token */
+    public int _channel;
 
-	/** The token type for the current token */
-	public int _type;
+    /** The token type for the current token */
+    public int _type;
 
-	public readonly IntegerStack _modeStack = new IntegerStack();
-	public int _mode = Lexer.DEFAULT_MODE;
+    public readonly IntegerStack _modeStack = new IntegerStack();
+    public int _mode = Lexer.DEFAULT_MODE;
 
-	/** You can set the text for the current token to override what is in
+    /** You can set the text for the current token to override what is in
 	 *  the input char buffer.  Use setText() or can set this instance var.
 	 */
-	public String _text;
-	public RecognizerSharedState state;
-	public Lexer() { }
+    public String _text;
+    public RecognizerSharedState state;
+    public Lexer() { }
 
-	public Lexer(CharStream input) {
-		this.input = input;
-		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, input);
-	}
+    public Lexer(CharStream input)
+    {
+        this.input = input;
+        this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, input);
+    }
     public Lexer(CharStream input, RecognizerSharedState state)
     {
-		this.state = state;
+        this.state = state;
         this.input = input;
         this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, input);
 
     }
+    public void match(String s)
+    {
 
-    public void reset() {
-		// wack Lexer state variables
-		if ( input !=null ) {
-			input.seek(0); // rewind the input
-		}
-		token = null;
-		_type = Token.INVALID_TYPE;
-		_channel = Token.DEFAULT_CHANNEL;
-		_tokenStartCharIndex = -1;
-		_tokenStartCharPositionInLine = -1;
-		_tokenStartLine = -1;
-		_text = null;
+        int i = 0;
+        while (i < s.Length)
+        {
+            if (input.LA(1) != s[i])
+            {
+                if (state.backtracking > 0)
+                {
+                    state.failed = true;
+                    return;
+                }
+                MismatchedTokenException mte =
+                    new MismatchedTokenException(s[i], input);
+                recover(mte);
+                throw mte;
+            }
+            i++;
+            input.consume();
+            state.failed = false;
+        }
+    }
 
-		_hitEOF = false;
-		_mode = Lexer.DEFAULT_MODE;
-		_modeStack.clear();
+    public void matchAny()
+    {
+        input.consume();
+    }
 
-		getInterpreter().reset();
-	}
+    public void match(int c)
+    {
+        if (input.LA(1) != c)
+        {
+            if (state.backtracking > 0)
+            {
+                state.failed = true;
+                return;
+            }
+            MismatchedTokenException mte =
+                new MismatchedTokenException(c, input);
+            recover(mte);  // don't really recover; just consume in lexer
+            throw mte;
+        }
+        input.consume();
+        state.failed = false;
+    }
 
-	/** Return a token from this source; i.e., match a token on the char
+    public void matchRange(int a, int b)
+    {
+        if (input.LA(1) < a || input.LA(1) > b)
+        {
+            if (state.backtracking > 0)
+            {
+                state.failed = true;
+                return;
+            }
+            MismatchedRangeException mre =
+                new MismatchedRangeException(a, b, input);
+            recover(mre);
+            throw mre;
+        }
+        input.consume();
+        state.failed = false;
+    }
+    public void reset()
+    {
+        // wack Lexer state variables
+        if (input != null)
+        {
+            input.seek(0); // rewind the input
+        }
+        token = null;
+        _type = Token.INVALID_TYPE;
+        _channel = Token.DEFAULT_CHANNEL;
+        _tokenStartCharIndex = -1;
+        _tokenStartCharPositionInLine = -1;
+        _tokenStartLine = -1;
+        _text = null;
+
+        _hitEOF = false;
+        _mode = Lexer.DEFAULT_MODE;
+        _modeStack.clear();
+
+        getInterpreter().reset();
+    }
+
+    /** Return a token from this source; i.e., match a token on the char
 	 *  stream.
 	 */
-	//@Override
-	public virtual Token nextToken() {
-		if (input == null) {
-			throw new IllegalStateException("nextToken requires a non-null input stream.");
-		}
+    //@Override
+    public virtual Token nextToken()
+    {
+        if (input == null)
+        {
+            throw new IllegalStateException("nextToken requires a non-null input stream.");
+        }
 
-		// Mark start location in char stream so unbuffered streams are
-		// guaranteed at least have text of current token
-		int tokenStartMarker = input.mark();
-		try{
-			outer:
-			while (true) {
-				if (_hitEOF) {
-					emitEOF();
-					return token;
-				}
+        // Mark start location in char stream so unbuffered streams are
+        // guaranteed at least have text of current token
+        int tokenStartMarker = input.mark();
+        try
+        {
+        outer:
+            while (true)
+            {
+                if (_hitEOF)
+                {
+                    emitEOF();
+                    return token;
+                }
 
-				token = null;
-				_channel = Token.DEFAULT_CHANNEL;
-				_tokenStartCharIndex = input.index();
-				_tokenStartCharPositionInLine = getInterpreter().getCharPositionInLine();
-				_tokenStartLine = getInterpreter().getLine();
-				_text = null;
-				do {
-					_type = Token.INVALID_TYPE;
-//				Console.WriteLine("nextToken line "+tokenStartLine+" at "+((char)input.LA(1))+
-//								   " in mode "+mode+
-//								   " at index "+input.index());
-					int ttype;
-					try {
-						ttype = getInterpreter().match(input, _mode);
-					}
-					catch (LexerNoViableAltException e) {
-						notifyListeners(e);		// report error
-						recover(e);
-						ttype = SKIP;
-					}
-					if ( input.LA(1)==IntStream.EOF ) {
-						_hitEOF = true;
-					}
-					if ( _type == Token.INVALID_TYPE ) _type = ttype;
-					if ( _type ==SKIP ) {
-						goto outer;
-					}
-				} while ( _type ==MORE );
-				if ( token == null ) emit();
-				return token;
-			}
-		}
-		finally {
-			// make sure we release marker after match or
-			// unbuffered char stream will keep buffering
-			input.release(tokenStartMarker);
-		}
-	}
+                token = null;
+                _channel = Token.DEFAULT_CHANNEL;
+                _tokenStartCharIndex = input.index();
+                _tokenStartCharPositionInLine = getInterpreter().getCharPositionInLine();
+                _tokenStartLine = getInterpreter().getLine();
+                _text = null;
+                do
+                {
+                    _type = Token.INVALID_TYPE;
+                    //				Console.WriteLine("nextToken line "+tokenStartLine+" at "+((char)input.LA(1))+
+                    //								   " in mode "+mode+
+                    //								   " at index "+input.index());
+                    int ttype;
+                    try
+                    {
+                        ttype = getInterpreter().match(input, _mode);
+                    }
+                    catch (LexerNoViableAltException e)
+                    {
+                        notifyListeners(e);     // report error
+                        recover(e);
+                        ttype = SKIP;
+                    }
+                    if (input.LA(1) == IntStream.EOF)
+                    {
+                        _hitEOF = true;
+                    }
+                    if (_type == Token.INVALID_TYPE) _type = ttype;
+                    if (_type == SKIP)
+                    {
+                        goto outer;
+                    }
+                } while (_type == MORE);
+                if (token == null) emit();
+                return token;
+            }
+        }
+        finally
+        {
+            // make sure we release marker after match or
+            // unbuffered char stream will keep buffering
+            input.release(tokenStartMarker);
+        }
+    }
 
-	/** Instruct the lexer to skip creating a token for current lexer rule
+    /** Instruct the lexer to skip creating a token for current lexer rule
 	 *  and look for another token.  nextToken() knows to keep looking when
 	 *  a lexer rule finishes with token set to SKIP_TOKEN.  Recall that
 	 *  if token==null at end of any token rule, it creates one for you
 	 *  and emits it.
 	 */
-	public void skip() {
-		_type = SKIP;
-	}
+    public void skip()
+    {
+        _type = SKIP;
+    }
 
-	public void more() {
-		_type = MORE;
-	}
+    public void more()
+    {
+        _type = MORE;
+    }
 
-	public void mode(int m) {
-		_mode = m;
-	}
+    public void mode(int m)
+    {
+        _mode = m;
+    }
 
-	public void pushMode(int m) {
-		if ( LexerATNSimulator.debug ) Console.WriteLine("pushMode "+m);
-		_modeStack.push(_mode);
-		mode(m);
-	}
+    public void pushMode(int m)
+    {
+        if (LexerATNSimulator.debug) Console.WriteLine("pushMode " + m);
+        _modeStack.push(_mode);
+        mode(m);
+    }
 
-	public int popMode() {
-		if ( _modeStack.isEmpty() ) throw new EmptyStackException();
-		if ( LexerATNSimulator.debug ) Console.WriteLine("popMode back to "+ _modeStack.peek());
-		mode( _modeStack.pop() );
-		return _mode;
-	}
+    public int popMode()
+    {
+        if (_modeStack.isEmpty()) throw new EmptyStackException();
+        if (LexerATNSimulator.debug) Console.WriteLine("popMode back to " + _modeStack.peek());
+        mode(_modeStack.pop());
+        return _mode;
+    }
 
-	//@Override
-	public override void setTokenFactory(TokenFactory factory) {
-		this._factory = factory;
-	}
+    //@Override
+    public override void setTokenFactory(TokenFactory factory)
+    {
+        this._factory = factory;
+    }
 
-	//@Override
-	public override TokenFactory getTokenFactory() {
-		return _factory;
-	}
+    //@Override
+    public override TokenFactory getTokenFactory()
+    {
+        return _factory;
+    }
 
-	/** Set the char stream and reset the lexer */
-	//@Override
-	public override void setInputStream(IntStream input) {
-		this.input = null;
-		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
-		reset();
-		this.input = (CharStream)input;
-		this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
-	}
+    /** Set the char stream and reset the lexer */
+    //@Override
+    public override void setInputStream(IntStream input)
+    {
+        this.input = null;
+        this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
+        reset();
+        this.input = (CharStream)input;
+        this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
+    }
 
-	//@Override
-	public virtual String getSourceName() {
-		return input.getSourceName();
-	}
+    //@Override
+    public virtual String getSourceName()
+    {
+        return input.getSourceName();
+    }
 
-	//@Override
-	public override CharStream getInputStream() {
-		return input;
-	}
+    //@Override
+    public override CharStream getInputStream()
+    {
+        return input;
+    }
 
-	/** By default does not support multiple emits per nextToken invocation
+    /** By default does not support multiple emits per nextToken invocation
 	 *  for efficiency reasons.  Subclass and override this method, nextToken,
 	 *  and getToken (to push tokens into a list and pull from that list
 	 *  rather than a single variable as this implementation does).
 	 */
-	public void emit(Token token) {
-		//System.err.println("emit "+token);
-		this.token = token;
-	}
+    public void emit(Token token)
+    {
+        //System.err.println("emit "+token);
+        this.token = token;
+    }
 
-	/** The standard method called to automatically emit a token at the
+    /** The standard method called to automatically emit a token at the
 	 *  outermost lexical rule.  The token object should point into the
 	 *  char buffer start..stop.  If there is a text override in 'text',
 	 *  use that to set the token's text.  Override this method to emit
 	 *  custom Token objects or provide a new factory.
 	 */
-	public Token emit() {
-		Token t = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex()-1,
-								  _tokenStartLine, _tokenStartCharPositionInLine);
-		emit(t);
-		return t;
-	}
+    public Token emit()
+    {
+        Token t = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex() - 1,
+                                  _tokenStartLine, _tokenStartCharPositionInLine);
+        emit(t);
+        return t;
+    }
 
-	public Token emitEOF() {
-		int cpos = getCharPositionInLine();
-		int line = getLine();
-		Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.index(), input.index()-1,
-									line, cpos);
-		emit(eof);
-		return eof;
-	}
+    public Token emitEOF()
+    {
+        int cpos = getCharPositionInLine();
+        int line = getLine();
+        Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.index(), input.index() - 1,
+                                    line, cpos);
+        emit(eof);
+        return eof;
+    }
 
-	//@Override
-	public int getLine() {
-		return getInterpreter().getLine();
-	}
+    //@Override
+    public int getLine()
+    {
+        return getInterpreter().getLine();
+    }
 
-	//@Override
-	public int getCharPositionInLine() {
-		return getInterpreter().getCharPositionInLine();
-	}
+    //@Override
+    public int getCharPositionInLine()
+    {
+        return getInterpreter().getCharPositionInLine();
+    }
 
-	public void setLine(int line) {
-		getInterpreter().setLine(line);
-	}
+    public void setLine(int line)
+    {
+        getInterpreter().setLine(line);
+    }
 
-	public void setCharPositionInLine(int charPositionInLine) {
-		getInterpreter().setCharPositionInLine(charPositionInLine);
-	}
+    public void setCharPositionInLine(int charPositionInLine)
+    {
+        getInterpreter().setCharPositionInLine(charPositionInLine);
+    }
 
-	/** What is the index of the current character of lookahead? */
-	public int getCharIndex() {
-		return input.index();
-	}
+    /** What is the index of the current character of lookahead? */
+    public int getCharIndex()
+    {
+        return input.index();
+    }
 
-	/** Return the text matched so far for the current token or any
+    /** Return the text matched so far for the current token or any
 	 *  text override.
 	 */
-	public String getText() {
-		if ( _text !=null ) {
-			return _text;
-		}
-		return getInterpreter().getText(input);
-	}
+    public String getText()
+    {
+        if (_text != null)
+        {
+            return _text;
+        }
+        return getInterpreter().getText(input);
+    }
 
-	/** Set the complete text of this token; it wipes any previous
+    /** Set the complete text of this token; it wipes any previous
 	 *  changes to the text.
 	 */
-	public void setText(String text) {
-		this._text = text;
-	}
+    public void setText(String text)
+    {
+        this._text = text;
+    }
 
-	/** Override if emitting multiple tokens. */
-	public Token getToken() { return token; }
+    /** Override if emitting multiple tokens. */
+    public Token getToken() { return token; }
 
-	public void setToken(Token _token) {
-		this.token = _token;
-	}
+    public void setToken(Token _token)
+    {
+        this.token = _token;
+    }
 
-	public void setType(int ttype) {
-		_type = ttype;
-	}
+    public void setType(int ttype)
+    {
+        _type = ttype;
+    }
 
-	public int getType() {
-		return _type;
-	}
+    public int getType()
+    {
+        return _type;
+    }
 
-	public void setChannel(int channel) {
-		_channel = channel;
-	}
+    public void setChannel(int channel)
+    {
+        _channel = channel;
+    }
 
-	public int getChannel() {
-		return _channel;
-	}
+    public int getChannel()
+    {
+        return _channel;
+    }
 
-	public String[] getChannelNames() { return null; }
+    public String[] getChannelNames() { return null; }
 
-	public virtual String[] getModeNames() {
-		return null;
-	}
+    public virtual String[] getModeNames()
+    {
+        return null;
+    }
 
-	/** Used to print out token names like ID during debugging and
+    /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
 	 *  that overrides this to point to their String[] tokenNames.
 	 */
-	//@Override
-	//@Deprecated
-	public override String[] getTokenNames() {
-		return null;
-	}
+    //@Override
+    //@Deprecated
+    public override String[] getTokenNames()
+    {
+        return null;
+    }
 
-	/** Return a list of all Token objects in input char stream.
+    /** Return a list of all Token objects in input char stream.
 	 *  Forces load of all tokens. Does not include EOF token.
 	 */
-	public List<Token> getAllTokens() {
-		List<Token> tokens = new ();
-		Token t = nextToken();
-		while ( t.getType()!=Token.EOF ) {
-			tokens.Add(t);
-			t = nextToken();
-		}
-		return tokens;
-	}
+    public List<Token> getAllTokens()
+    {
+        List<Token> tokens = new();
+        Token t = nextToken();
+        while (t.getType() != Token.EOF)
+        {
+            tokens.Add(t);
+            t = nextToken();
+        }
+        return tokens;
+    }
 
-	public void recover(LexerNoViableAltException e) {
-		if (input.LA(1) != IntStream.EOF) {
-			// skip a char and try again
-			getInterpreter().consume(input);
-		}
-	}
+    public void recover(LexerNoViableAltException e)
+    {
+        if (input.LA(1) != IntStream.EOF)
+        {
+            // skip a char and try again
+            getInterpreter().consume(input);
+        }
+    }
 
-	public void notifyListeners(LexerNoViableAltException e) {
-		String text = input.getText(Interval.of(_tokenStartCharIndex, input.index()));
-		String msg = "token recognition error at: '"+ getErrorDisplay(text) + "'";
+    public void notifyListeners(LexerNoViableAltException e)
+    {
+        String text = input.getText(Interval.of(_tokenStartCharIndex, input.index()));
+        String msg = "token recognition error at: '" + getErrorDisplay(text) + "'";
 
-		ANTLRErrorListener listener = getErrorListenerDispatch();
-		listener.syntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
-	}
+        ANTLRErrorListener listener = getErrorListenerDispatch();
+        listener.syntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
+    }
 
-	public String getErrorDisplay(String s) {
-		StringBuilder buf = new StringBuilder();
-		foreach (char c in s.ToCharArray()) {
-			buf.Append(getErrorDisplay(c));
-		}
-		return buf.ToString();
-	}
+    public String getErrorDisplay(String s)
+    {
+        StringBuilder buf = new StringBuilder();
+        foreach (char c in s.ToCharArray())
+        {
+            buf.Append(getErrorDisplay(c));
+        }
+        return buf.ToString();
+    }
 
-	public String getErrorDisplay(int c) {
-		String s = c.ToString();// String.valueOf((char)c);
-		switch ( c ) {
-			case Token.EOF :
-				s = "<EOF>";
-				break;
-			case '\n' :
-				s = "\\n";
-				break;
-			case '\t' :
-				s = "\\t";
-				break;
-			case '\r' :
-				s = "\\r";
-				break;
-		}
-		return s;
-	}
+    public String getErrorDisplay(int c)
+    {
+        String s = c.ToString();// String.valueOf((char)c);
+        switch (c)
+        {
+            case Token.EOF:
+                s = "<EOF>";
+                break;
+            case '\n':
+                s = "\\n";
+                break;
+            case '\t':
+                s = "\\t";
+                break;
+            case '\r':
+                s = "\\r";
+                break;
+        }
+        return s;
+    }
 
-	public String getCharErrorDisplay(int c) {
-		String s = getErrorDisplay(c);
-		return "'"+s+"'";
-	}
+    public String getCharErrorDisplay(int c)
+    {
+        String s = getErrorDisplay(c);
+        return "'" + s + "'";
+    }
 
-	/** Lexers can normally match any char in it's vocabulary after matching
+    /** Lexers can normally match any char in it's vocabulary after matching
 	 *  a token, so do the easy thing and just kill a character and hope
 	 *  it all works out.  You can instead use the rule invocation stack
 	 *  to do sophisticated error recovery if you are in a fragment rule.
 	 */
-	public void recover(RecognitionException re) {
-		//Console.WriteLine("consuming char "+(char)input.LA(1)+" during recovery");
-		//re.printStackTrace();
-		// TODO: Do we lose character or line position information?
-		input.consume();
-	}
+    public void recover(RecognitionException re)
+    {
+        //Console.WriteLine("consuming char "+(char)input.LA(1)+" during recovery");
+        //re.printStackTrace();
+        // TODO: Do we lose character or line position information?
+        input.consume();
+    }
 }

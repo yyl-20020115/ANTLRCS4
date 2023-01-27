@@ -30,7 +30,7 @@ public class NoViableAltException : RecognitionException {
     public string V1 { get; }
     public int V2 { get; }
     public int V3 { get; }
-    public TreeNodeStream Input { get; }
+    public IntStream Input { get; }
 
     public NoViableAltException(Parser recognizer)
 		: this(recognizer,
@@ -57,7 +57,8 @@ public class NoViableAltException : RecognitionException {
 		this.setOffendingToken(offendingToken);
 	}
 
-    public NoViableAltException(string v1, int v2, int v3, TreeNodeStream input)
+    public NoViableAltException(string v1, int v2, int v3, IntStream input)
+		:base(null,input,null)
     {
         V1 = v1;
         V2 = v2;

@@ -791,7 +791,7 @@ public enum ErrorType {
 	 *
 	 * <pre>
 	 * &#064;members {
-	 * public static final int CUSTOM = HIDDEN + 1;
+	 * public const int CUSTOM = HIDDEN + 1;
 	 * }
 	 *
 	 * X : 'foo' -&gt; channel(HIDDEN);           // ok

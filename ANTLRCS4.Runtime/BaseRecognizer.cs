@@ -830,7 +830,7 @@ public abstract class BaseRecognizer
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.
      */
-    public String getGrammarFileName()
+    public virtual String getGrammarFileName()
     {
         return null;
     }

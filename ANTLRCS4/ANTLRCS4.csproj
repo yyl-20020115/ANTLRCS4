@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="codegen\SourceGenTriggers.g" />
     <None Remove="parse\ActionSplitter.g" />
     <None Remove="parse\ANTLRLexer.g" />
     <None Remove="parse\ANTLRParser.g" />

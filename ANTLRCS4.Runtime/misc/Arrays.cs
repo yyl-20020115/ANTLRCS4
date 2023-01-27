@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using StringBuilder = System.Text.StringBuilder;
 namespace org.antlr.v4.runtime.misc;
 
-internal static class Arrays
+public static class Arrays
 {
     public static T[] CopyOf<T>(T[] array, int newSize)
     {
@@ -19,9 +19,9 @@ internal static class Arrays
         return array;
     }
 
-    public static IList<T> AsList<T>(params T[] array)
+    public static List<T> AsList<T>(params T[] array)
     {
-        return array;
+        return array.ToList();
     }
 
     public static void Fill<T>(T[] array, T value)

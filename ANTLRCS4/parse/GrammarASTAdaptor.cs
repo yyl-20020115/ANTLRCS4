@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 
@@ -11,9 +12,9 @@ namespace org.antlr.v4.parse;
 
 
 public class GrammarASTAdaptor : CommonTreeAdaptor {
-    org.antlr.runtime.CharStream input; // where we can find chars ref'd by tokens in tree
+    CharStream input; // where we can find chars ref'd by tokens in tree
     public GrammarASTAdaptor() { }
-    public GrammarASTAdaptor(org.antlr.runtime.CharStream input) { this.input = input; }
+    public GrammarASTAdaptor(CharStream input) { this.input = input; }
 
     //@Override
     public Object create(Token token) {
@@ -34,7 +35,7 @@ public class GrammarASTAdaptor : CommonTreeAdaptor {
 			t = new TerminalAST(new CommonToken(tokenType, text));
 		}
 		else {
-			t = (GrammarAST)super.create(tokenType, text);
+			t = (GrammarAST)base.create(tokenType, text);
 		}
         t.token.setInputStream(input);
         return t;
@@ -47,8 +48,8 @@ public class GrammarASTAdaptor : CommonTreeAdaptor {
     }
 
     //@Override
-    public Object errorNode(org.antlr.runtime.TokenStream input, org.antlr.runtime.Token start, org.antlr.runtime.Token stop,
-                            org.antlr.runtime.RecognitionException e)
+    public Object errorNode(TokenStream input, Token start,Token stop,
+                            RecognitionException e)
     {
         return new GrammarASTErrorNode(input, start, stop, e);
     }

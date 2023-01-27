@@ -70,51 +70,57 @@ public interface Token
 	 * Get the text of the token.
 	 */
     String getText();
+    void setText(String text);
 
-	/** Get the token type of the token */
-	int getType();
+    /** Get the token type of the token */
+    int getType();
+    void setType(int ttype);
 
-	/** The line number on which the 1st character of this token was matched,
+    /** The line number on which the 1st character of this token was matched,
 	 *  line=1..n
 	 */
-	int getLine();
+    int getLine();
+    void setLine(int line);
 
-	/** The index of the first character of this token relative to the
+    /** The index of the first character of this token relative to the
 	 *  beginning of the line at which it occurs, 0..n-1
 	 */
-	int getCharPositionInLine();
+    int getCharPositionInLine();
+    void setCharPositionInLine(int pos);
 
-	/** Return the channel this token. Each token can arrive at the parser
+    /** Return the channel this token. Each token can arrive at the parser
 	 *  on a different channel, but the parser only "tunes" to a single channel.
 	 *  The parser ignores everything not on DEFAULT_CHANNEL.
 	 */
-	int getChannel();
+    int getChannel();
+    void setChannel(int channel);
 
-	/** An index from 0..n-1 of the token object in the input stream.
+    /** An index from 0..n-1 of the token object in the input stream.
 	 *  This must be valid in order to print token streams and
 	 *  use TokenRewriteStream.
 	 *
 	 *  Return -1 to indicate that this token was conjured up since
 	 *  it doesn't have a valid index.
 	 */
-	int getTokenIndex();
-
-	/** The starting character index of the token
+    int getTokenIndex();
+    void setTokenIndex(int index);
+    /** The starting character index of the token
 	 *  This method is optional; return -1 if not implemented.
 	 */
-	int getStartIndex();
-
+    int getStartIndex();
+	void setStartIndex(int start);
 	/** The last character index of the token.
 	 *  This method is optional; return -1 if not implemented.
 	 */
 	int getStopIndex();
-
+	void setStopIndex(int stop);
 	/** Gets the {@link TokenSource} which created this token.
 	 */
 	TokenSource getTokenSource();
-
+	void setTokenSource(TokenSource tokenSource);
 	/**
 	 * Gets the {@link CharStream} from which this token was derived.
 	 */
 	CharStream getInputStream();
+    void setInputStream(CharStream input);
 }
