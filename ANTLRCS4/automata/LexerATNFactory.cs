@@ -63,11 +63,11 @@ public class LexerATNFactory : ParserATNFactory {
 		return COMMON_CONSTANTS.keySet();
 	}
 
-	//@Override
+	////@Override
 	public ATN createATN() {
 		// BUILD ALL START STATES (ONE PER MODE)
 		HashSet<String> modes = ((LexerGrammar) g).modes.Keys.ToHashSet();
-		for (String modeName : modes) {
+		foreach (String modeName in modes) {
 			// create s0, start state; implied Tokens rule node
 			TokensStartState startState =
 				newState(typeof(TokensStartState), null);
@@ -86,15 +86,15 @@ public class LexerATNFactory : ParserATNFactory {
 		_createATN(g.rules.values());
 
 		atn.lexerActions = new LexerAction[indexToActionMap.size()];
-		for (Map.Entry<Integer, LexerAction> entry : indexToActionMap.entrySet()) {
+		foreach (Map.Entry<int, LexerAction> entry in indexToActionMap.entrySet()) {
 			atn.lexerActions[entry.getKey()] = entry.getValue();
 		}
 
 		// LINK MODE START STATE TO EACH TOKEN RULE
-		for (String modeName : modes) {
+		foreach (String modeName in modes) {
 			List<Rule> rules = ((LexerGrammar)g).modes.get(modeName);
 			TokensStartState startState = atn.modeNameToStartState.get(modeName);
-			for (Rule r : rules) {
+            foreach (Rule r in rules) {
 				if ( !r.isFragment() ) {
 					RuleStartState s = atn.ruleToStartState[r.index];
 					epsilon(startState, s);
@@ -107,13 +107,13 @@ public class LexerATNFactory : ParserATNFactory {
 		return atn;
 	}
 
-	@Override
+	//@Override
 	public Handle rule(GrammarAST ruleAST, String name, Handle blk) {
 		ruleCommands.clear();
 		return super.rule(ruleAST, name, blk);
 	}
 
-	@Override
+	//@Override
 	public Handle action(ActionAST action) {
 		int ruleIndex = currentRule.index;
 		int actionIndex = g.lexerActions.get(action);
@@ -132,7 +132,7 @@ public class LexerATNFactory : ParserATNFactory {
 		return lexerActionIndex;
 	}
 
-	//@Override
+	////@Override
 	public Handle action(String action) {
 		if (action.trim().isEmpty()) {
 			ATNState left = newState(null);
@@ -160,19 +160,19 @@ public class LexerATNFactory : ParserATNFactory {
 		return h;
 	}
 
-	//@Override
+	////@Override
 	public Handle lexerAltCommands(Handle alt, Handle cmds) {
 		Handle h = new Handle(alt.left, cmds.right);
 		epsilon(alt.right, cmds.left);
 		return h;
 	}
 
-	//@Override
+	////@Override
 	public Handle lexerCallCommand(GrammarAST ID, GrammarAST arg) {
 		return lexerCallCommandOrCommand(ID, arg);
 	}
 
-    //@Override
+    ////@Override
     public Handle lexerCommand(GrammarAST ID) {
 		return lexerCallCommandOrCommand(ID, null);
 	}
@@ -208,7 +208,7 @@ public class LexerATNFactory : ParserATNFactory {
 		return action(cmdST.render());
 	}
 
-	@Override
+	//@Override
 	public Handle range(GrammarAST a, GrammarAST b) {
 		ATNState left = newState(a);
 		ATNState right = newState(b);
@@ -222,12 +222,12 @@ public class LexerATNFactory : ParserATNFactory {
 		return new Handle(left, right);
 	}
 
-	@Override
+	//@Override
 	public Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert) {
 		ATNState left = newState(associatedAST);
 		ATNState right = newState(associatedAST);
 		IntervalSet set = new IntervalSet();
-		for (GrammarAST t : alts) {
+		for (GrammarAST t in alts) {
 			if ( t.getType()==ANTLRParser.RANGE ) {
 				int a = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(0).getText());
 				int b = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(1).getText());
@@ -301,7 +301,7 @@ public class LexerATNFactory : ParserATNFactory {
 	 *  if "caseInsensitive" option is enabled, "fog" will be treated as
 	 *  o-('f'|'F') -> o-('o'|'O') -> o-('g'|'G')
 	 */
-	@Override
+	//@Override
 	public Handle stringLiteral(TerminalAST stringLiteralAST) {
 		String chars = stringLiteralAST.getText();
 		ATNState left = newState(stringLiteralAST);
@@ -327,7 +327,7 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	/** [Aa\t \u1234a-z\]\p{Letter}\-] char sets */
-	@Override
+	//@Override
 	public Handle charSetLiteral(GrammarAST charSetAST) {
 		ATNState left = newState(charSetAST);
 		ATNState right = newState(charSetAST);
@@ -365,7 +365,7 @@ public class LexerATNFactory : ParserATNFactory {
 			this.prevProperty = prevProperty;
 		}
 
-		@Override
+		//@Override
 		public String toString() {
 			return String.format(
 					"%s mode=%s inRange=%s prevCodePoint=%d prevProperty=%s",
@@ -376,7 +376,7 @@ public class LexerATNFactory : ParserATNFactory {
 					prevProperty);
 		}
 
-		@Override
+		//@Override
 		public bool equals(Object other) {
 			if (!(other is CharSetParseState)) {
 				return false;
@@ -391,7 +391,7 @@ public class LexerATNFactory : ParserATNFactory {
 				Objects.equals(this.prevProperty, that.prevProperty);
 		}
 
-		@Override
+		//@Override
 		public int hashCode() {
 			return Objects.hash(mode, inRange, prevCodePoint, prevProperty);
 		}
@@ -600,7 +600,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 	}
 
-	//@Override
+	////@Override
 	public Handle tokenRef(TerminalAST node) {
 		// Ref to EOF in lexer yields char transition on -1
 		if (node.getText().equals("EOF") ) {
@@ -627,7 +627,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else if ("mode".equals(command) && arg != null) {
 			String modeName = arg.getText();
-			Integer mode = getModeConstantValue(modeName, arg.getToken());
+			int mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
 				return null;
 			}
@@ -636,7 +636,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else if ("pushMode".equals(command) && arg != null) {
 			String modeName = arg.getText();
-			Integer mode = getModeConstantValue(modeName, arg.getToken());
+			int mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
 				return null;
 			}
@@ -645,7 +645,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else if ("type".equals(command) && arg != null) {
 			String typeName = arg.getText();
-			Integer type = getTokenConstantValue(typeName, arg.getToken());
+			int type = getTokenConstantValue(typeName, arg.getToken());
 			if (type == null) {
 				return null;
 			}
@@ -654,7 +654,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else if ("channel".equals(command) && arg != null) {
 			String channelName = arg.getText();
-			Integer channel = getChannelConstantValue(channelName, arg.getToken());
+			int channel = getChannelConstantValue(channelName, arg.getToken());
 			if (channel == null) {
 				return null;
 			}
@@ -714,7 +714,7 @@ public class LexerATNFactory : ParserATNFactory {
 		ruleCommands.add(command);
 	}
 
-	private Integer getModeConstantValue(String modeName, Token token) {
+	private int getModeConstantValue(String modeName, Token token) {
 		if (modeName == null) {
 			return null;
 		}
@@ -734,14 +734,14 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		try {
-			return Integer.parseInt(modeName);
+			return int.parseInt(modeName);
 		} catch (NumberFormatException ex) {
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME, g.fileName, token, token.getText());
 			return null;
 		}
 	}
 
-	private Integer getTokenConstantValue(String tokenName, Token token) {
+	private int getTokenConstantValue(String tokenName, Token token) {
 		if (tokenName == null) {
 			return null;
 		}
@@ -760,14 +760,14 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		try {
-			return Integer.parseInt(tokenName);
+			return int.parseInt(tokenName);
 		} catch (NumberFormatException ex) {
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME, g.fileName, token, token.getText());
 			return null;
 		}
 	}
 
-	private Integer getChannelConstantValue(String channelName, Token token) {
+	private int getChannelConstantValue(String channelName, Token token) {
 		if (channelName == null) {
 			return null;
 		}
@@ -789,7 +789,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		try {
-			return Integer.parseInt(channelName);
+			return int.parseInt(channelName);
 		} catch (NumberFormatException ex) {
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME, g.fileName, token, token.getText());
 			return null;

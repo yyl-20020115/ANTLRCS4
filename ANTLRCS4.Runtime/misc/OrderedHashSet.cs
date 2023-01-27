@@ -84,8 +84,8 @@ public class OrderedHashSet<T> : HashSet<T> {
 		return same;
 	}
 
-	public Iterator<T> iterator() {
-		return _elements.iterator();
+	public new IEnumerator<T> GetEnumerator() {
+		return _elements.GetEnumerator();
 	}
 
 	/** Return the List holding list of table elements.  Note that you are

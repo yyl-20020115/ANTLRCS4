@@ -128,7 +128,7 @@ public class BufferedTokenStream : TokenStream {
 			skipEofCheck = false;
 		}
 
-		if (!skipEofCheck && LA(1) == EOF) {
+		if (!skipEofCheck && LA(1) == Token.EOF) {
 			throw new IllegalStateException("cannot consume EOF");
 		}
 

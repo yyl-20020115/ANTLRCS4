@@ -478,11 +478,15 @@ public static class PredictionModeTools
 	 * others, otherwise {@code false}
 	 */
 	public static bool allSubsetsEqual(ICollection<BitSet> altsets) {
-		Iterator<BitSet> it = altsets.iterator();
-		BitSet first = it.next();
-		while ( it.hasNext() ) {
-			BitSet next = it.next();
-			if ( !next.Equals(first) ) return false;
+        var list = new List<BitSet>(altsets);
+		var it = list.GetEnumerator();
+		if(it.MoveNext())
+		{
+			var first = it.Current;
+			while (it.MoveNext())
+			{
+				if (!first.Equals(it.Current)) return false;
+			}
 		}
 		return true;
 	}

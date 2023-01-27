@@ -18,20 +18,13 @@ public class FailedPredicateException : RecognitionException {
 	private readonly int predicateIndex;
 	private readonly String predicate;
 
-	public FailedPredicateException(Parser recognizer) {
-		this(recognizer, null);
-	}
-
-	public FailedPredicateException(Parser recognizer, String predicate) {
-		this(recognizer, predicate, null);
-	}
 
 	public FailedPredicateException(Parser recognizer,
-									String predicate,
-									String message)
-	{
-		super(formatMessage(predicate, message), recognizer, recognizer.getInputStream(), recognizer._ctx);
-		ATNState s = recognizer.getInterpreter().atn.states.get(recognizer.getState());
+									String predicate = null,
+									String message = null)
+		: base(formatMessage(predicate, message), recognizer, recognizer.getInputStream(), recognizer.GetCtx())
+    {
+		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 
 		AbstractPredicateTransition trans = (AbstractPredicateTransition)s.transition(0);
 		if (trans is PredicateTransition) {
@@ -66,6 +59,6 @@ public class FailedPredicateException : RecognitionException {
 			return message;
 		}
 
-		return String.format(Locale.getDefault(), "failed predicate: {%s}?", predicate);
+		return $"failed predicate: {{{predicate}}}?";
 	}
 }

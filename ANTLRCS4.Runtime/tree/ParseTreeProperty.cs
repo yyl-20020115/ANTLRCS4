@@ -25,7 +25,22 @@ namespace org.antlr.v4.runtime.tree;
 public class ParseTreeProperty<V> {
 	protected Dictionary<ParseTree, V> annotations = new ();
 
-	public V get(ParseTree node) { return annotations.get(node); }
-	public void put(ParseTree node, V value) { annotations.put(node, value); }
-	public V removeFrom(ParseTree node) { return annotations.remove(node); }
+	public V get(ParseTree node)
+	{
+        if (annotations.TryGetValue(node, out var v))
+        {
+            return v;
+        }
+		return default;
+    }
+    public void put(ParseTree node, V value) { annotations[node]= value; }
+	public V removeFrom(ParseTree node)
+	{
+		if(annotations.TryGetValue(node, out var v))
+		{
+			annotations.Remove(node);
+			return v;
+		}
+		return default;
+	}
 }

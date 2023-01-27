@@ -289,7 +289,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 
 			if ( comparator.Equals(e, obj) ) {          // found it
 				// shift all elements to the right down one
-				System.arraycopy(bucket, i+1, bucket, i, bucket.Length-i-1);
+				Array.Copy(bucket, i+1, bucket, i, bucket.Length-i-1);
 				bucket[bucket.Length - 1] = default;
 				n--;
 				return true;

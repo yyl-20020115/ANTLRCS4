@@ -38,6 +38,6 @@ public class SetTransition : Transition {
 	//@Override
 
 	public override String ToString() {
-		return set.toString();
+		return set.ToString();
 	}
 }

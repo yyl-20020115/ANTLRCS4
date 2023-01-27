@@ -212,7 +212,7 @@ public abstract class SemanticContext {
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
 			if (precedencePredicates.Count>0) {
 				// interested in the transition with the lowest precedence
-				PrecedencePredicate reduced = Collections.min(precedencePredicates);
+				PrecedencePredicate reduced = precedencePredicates.Min();
 				operands.Add(reduced);
 			}
 
@@ -234,7 +234,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		public override int GetHashCode() {
-			return MurmurHash.GetHashCode(opnds, AND.GetHashCode());
+			return MurmurHash.GetHashCode(opnds, base.GetHashCode());
 		}
 
 		/**
@@ -309,7 +309,7 @@ public abstract class SemanticContext {
 			List<PrecedencePredicate> precedencePredicates = filterPrecedencePredicates(operands);
 			if (precedencePredicates.Count>0) {
 				// interested in the transition with the highest precedence
-				PrecedencePredicate reduced = Collections.max(precedencePredicates);
+				PrecedencePredicate reduced = precedencePredicates.Max();
 				operands.Add(reduced);
 			}
 
@@ -331,7 +331,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		public override int GetHashCode() {
-			return MurmurHash.GetHashCode(opnds, OR.GetHashCode());
+			return MurmurHash.GetHashCode(opnds, base.GetHashCode());
 		}
 
 		/**
@@ -418,15 +418,14 @@ public abstract class SemanticContext {
 
 	private static List<PrecedencePredicate> filterPrecedencePredicates(ICollection<SemanticContext> collection) {
 		List<PrecedencePredicate> result = null;
-		for (Iterator<SemanticContext> iterator = collection.iterator(); iterator.hasNext(); ) {
-			SemanticContext context = iterator.next();
+		foreach (var context in collection.ToArray()) {
 			if (context is PrecedencePredicate) {
 				if (result == null) {
 					result = new ();
 				}
 
 				result.Add((PrecedencePredicate)context);
-				iterator.remove();
+				collection.Remove (context);
 			}
 		}
 

@@ -109,7 +109,7 @@ public class InterpreterDataReader {
 	  		int[] serializedATN = new int[elements.Length];
 
 			for (int i = 0; i < elements.Length; ++i) { // ignore [...] on ends
-				serializedATN[i] = Integer.parseInt(elements[i].Trim());
+				serializedATN[i] = int.TryParse(elements[i].Trim(),out var v)?v:0;
 			}
 
 		  	ATNDeserializer deserializer = new ATNDeserializer();

@@ -17,7 +17,7 @@ namespace org.antlr.v4.runtime;
  */
 public class RecognitionException : RuntimeException {
 	/** The {@link Recognizer} where this exception originated. */
-	private readonly Recognizer<Token, ATNSimulator> recognizer;
+	private readonly Recognizer recognizer;
 
 	private readonly RuleContext ctx;
 
@@ -32,7 +32,7 @@ public class RecognitionException : RuntimeException {
 
 	private int offendingState = -1;
 
-	public RecognitionException(Recognizer<Token, ATNSimulator> recognizer,
+	public RecognitionException(Recognizer recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 	{
@@ -43,7 +43,7 @@ public class RecognitionException : RuntimeException {
 	}
 
 	public RecognitionException(String message,
-								Recognizer<Token, ATNSimulator> recognizer,
+								Recognizer recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 		: base(message) 
@@ -133,7 +133,7 @@ public class RecognitionException : RuntimeException {
 	 * @return The recognizer where this exception occurred, or {@code null} if
 	 * the recognizer is not available.
 	 */
-	public Recognizer<Token, ATNSimulator> getRecognizer() {
+	public Recognizer getRecognizer() {
 		return recognizer;
 	}
 }

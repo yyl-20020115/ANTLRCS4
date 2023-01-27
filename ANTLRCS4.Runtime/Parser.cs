@@ -102,15 +102,15 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * This is always non-null during the parsing process.
 	 */
 	protected ParserRuleContext _ctx;
-
-	/**
+	public ParserRuleContext GetCtx() { return _ctx; }	
+    /**
 	 * Specifies whether or not the parser should construct a parse tree during
 	 * the parsing process. The default value is {@code true}.
 	 *
 	 * @see #getBuildParseTree
 	 * @see #setBuildParseTree
 	 */
-	protected bool _buildParseTrees = true;
+    protected bool _buildParseTrees = true;
 
 
 	/**

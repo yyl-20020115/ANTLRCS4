@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
@@ -26,7 +27,7 @@ public static class Trees
 	 */
 	public static String toStringTree(Tree t, Parser recog) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
-		List<String> ruleNamesList = ruleNames != null ? Arrays.asList(ruleNames) : null;
+		List<String> ruleNamesList = ruleNames?.ToList();
 		return toStringTree(t, ruleNamesList);
 	}
 
@@ -51,7 +52,7 @@ public static class Trees
 
 	public static String getNodeText(Tree t, Parser recog) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
-		List<String> ruleNamesList = ruleNames != null ? Arrays.asList(ruleNames) : null;
+		List<String> ruleNamesList = ruleNames?.ToList();
 		return getNodeText(t, ruleNamesList);
 	}
 
@@ -59,7 +60,7 @@ public static class Trees
 		if ( ruleNames!=null ) {
 			if ( t is RuleContext ) {
 				int ruleIndex = ((RuleContext)t).getRuleContext().getRuleIndex();
-				String ruleName = ruleNames.get(ruleIndex);
+				String ruleName = ruleNames[(ruleIndex)];
 				int altNumber = ((RuleContext) t).getAltNumber();
 				if ( altNumber!=ATN.INVALID_ALT_NUMBER ) {
 					return ruleName+":"+altNumber;
@@ -135,25 +136,25 @@ public static class Trees
 
 	public static List<ParseTree> findAllNodes(ParseTree t, int index, bool findTokens) {
 		List<ParseTree> nodes = new();
-		_findAllNodes(t, index, findTokens, nodes);
+		_findAllNodes<ParseTree>(t, index, findTokens, nodes);
 		return nodes;
 	}
 
 	public static void _findAllNodes<T>(ParseTree t, int index, bool findTokens,
-									 List<T> nodes) where T : ParseTree
+									 List<ParseTree> nodes) where T : ParseTree
     {
 		// check this node (the root) first
 		if ( findTokens && t is TerminalNode ) {
 			TerminalNode tnode = (TerminalNode)t;
-			if ( tnode.getSymbol().getType()==index ) nodes.add(t);
+			if ( tnode.getSymbol().getType()==index ) nodes.Add(t);
 		}
 		else if ( !findTokens && t is ParserRuleContext ) {
 			ParserRuleContext ctx = (ParserRuleContext)t;
-			if ( ctx.getRuleIndex() == index ) nodes.add(t);
+			if ( ctx.getRuleIndex() == index ) nodes.Add(t);
 		}
 		// check children
 		for (int i = 0; i < t.getChildCount(); i++){
-			_findAllNodes(t.getChild(i), index, findTokens, nodes);
+			_findAllNodes<ParseTree>(t.getChild(i), index, findTokens, nodes);
 		}
 	}
 
@@ -163,11 +164,11 @@ public static class Trees
  	 */
 	public static List<ParseTree> getDescendants(ParseTree t) {
 		List<ParseTree> nodes = new ();
-		nodes.add(t);
+		nodes.Add(t);
 
 		int n = t.getChildCount();
 		for (int i = 0 ; i < n ; i++){
-			nodes.addAll(getDescendants(t.getChild(i)));
+			nodes.AddRange(getDescendants(t.getChild(i)));
 		}
 		return nodes;
 	}
@@ -225,7 +226,7 @@ public static class Trees
 			if ( child is ParserRuleContext && (range.b < startIndex || range.a > stopIndex) ) {
 				if ( isAncestorOf(child, root) ) { // replace only if subtree doesn't have displayed root
 					CommonToken abbrev = new CommonToken(Token.INVALID_TYPE, "...");
-					t.children.set(i, new TerminalNodeImpl(abbrev));
+					t.children[i]= new TerminalNodeImpl(abbrev);
 				}
 			}
 		}

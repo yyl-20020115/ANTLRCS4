@@ -336,7 +336,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	protected void reportFailedPredicate(Parser recognizer,
 										 FailedPredicateException e)
 	{
-		String ruleName = recognizer.getRuleNames()[recognizer._ctx.getRuleIndex()];
+		String ruleName = recognizer.getRuleNames()[recognizer.GetCtx().getRuleIndex()];
 		String msg = "rule "+ruleName+" "+e.Message;
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
@@ -510,7 +510,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		ATNState currentState = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 		ATNState next = currentState.transition(0).target;
 		ATN atn = recognizer.getInterpreter().atn;
-		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer._ctx);
+		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer.GetCtx());
 //		System.out.println("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
 		if ( expectingAtLL2.contains(currentSymbolType) ) {
 			reportMissingToken(recognizer);
@@ -737,7 +737,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 */
 	protected IntervalSet getErrorRecoverySet(Parser recognizer) {
 		ATN atn = recognizer.getInterpreter().atn;
-		RuleContext ctx = recognizer._ctx;
+		RuleContext ctx = recognizer.GetCtx();
 		IntervalSet recoverSet = new IntervalSet();
 		while ( ctx!=null && ctx.invokingState>=0 ) {
 			// compute what follows who invoked us

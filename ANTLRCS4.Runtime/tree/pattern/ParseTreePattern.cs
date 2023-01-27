@@ -95,9 +95,9 @@ public class ParseTreePattern {
 		ICollection<ParseTree> subtrees = XPath.findAll(tree, xpath, matcher.getParser());
 		List<ParseTreeMatch> matches = new ();
 		foreach (ParseTree t in subtrees) {
-			ParseTreeMatch match = match(t);
-			if ( match.succeeded() ) {
-				matches.Add(match);
+			ParseTreeMatch matched = match(t);
+			if (matched.succeeded() ) {
+				matches.Add(matched);
 			}
 		}
 		return matches;

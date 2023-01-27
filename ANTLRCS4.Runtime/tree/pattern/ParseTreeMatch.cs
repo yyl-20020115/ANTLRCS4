@@ -84,12 +84,11 @@ public class ParseTreeMatch {
 	 */
 
 	public ParseTree get(String label) {
-		List<ParseTree> parseTrees = labels.get(label);
-		if ( parseTrees==null || parseTrees.size()==0 ) {
+		if ( !labels.TryGetValue(label,out var parseTrees) || parseTrees.Count==0 ) {
 			return null;
 		}
 
-		return parseTrees.get( parseTrees.size()-1 ); // return last if multiple
+		return parseTrees[(parseTrees.Count -1 )]; // return last if multiple
 	}
 
 	/**
@@ -117,8 +116,7 @@ public class ParseTreeMatch {
 	 */
 
 	public List<ParseTree> getAll(String label) {
-		List<ParseTree> nodes = labels.get(label);
-		if ( nodes==null ) {
+		if ( !labels.TryGetValue(label,out var nodes) ) {
 			return new List<ParseTree>();
 		}
 

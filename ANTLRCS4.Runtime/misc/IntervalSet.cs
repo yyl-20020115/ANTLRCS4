@@ -6,6 +6,8 @@
 using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.tree.pattern;
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
@@ -103,35 +105,41 @@ public class IntervalSet : IntSet {
 		}
 		// find position in list
 		// Use iterators as we modify list in place
-		for (ListIterator<Interval> iter = intervals.listIterator(); iter.hasNext();) {
-			Interval r = iter.next();
+		
+        for(int i = 0;i< intervals.Count;i++) {
+			Interval r =intervals[i];
 			if ( addition.Equals(r) ) {
 				return;
 			}
 			if ( addition.adjacent(r) || !addition.disjoint(r) ) {
 				// next to each other, make a single larger interval
 				Interval bigger = addition.union(r);
-				iter.set(bigger);
-				// make sure we didn't just create an interval that
-				// should be merged with next interval in list
-				while ( iter.hasNext() ) {
-					Interval next = iter.next();
+				intervals[i] = bigger;
+                // make sure we didn't just create an interval that
+                // should be merged with next interval in list
+                while ( ++i<intervals.Count ) {
+					Interval next = intervals[i];
 					if ( !bigger.adjacent(next) && bigger.disjoint(next) ) {
 						break;
 					}
-
+					intervals.RemoveAt(i);
+					i--;
+					intervals[i] = bigger.union(next);
+					i++;
 					// if we bump up against or overlap next, merge
-					iter.remove();   // remove this one
-					iter.previous(); // move backwards to what we just set
-					iter.set(bigger.union(next)); // set to 3 merged ones
-					iter.next(); // first call to next after previous duplicates the result
+					//iter.remove();   // remove this one
+					//iter.previous(); // move backwards to what we just set
+					//iter.set(bigger.union(next)); // set to 3 merged ones
+					//iter.next(); // first call to next after previous duplicates the result
 				}
 				return;
 			}
 			if ( addition.startsBeforeDisjoint(r) ) {
 				// insert before r
-				iter.previous();
-				iter.add(addition);
+				//i++;
+				intervals.Insert(i, addition);
+				//iter.previous();
+				//iter.add(addition);
 				return;
 			}
 			// if disjoint and after r, a future iteration will handle it
@@ -470,10 +478,15 @@ public class IntervalSet : IntSet {
 		if ( this.size()>1 ) {
 			buf.Append("{");
 		}
-		Iterator<Interval> iter = this.intervals.iterator();
-		while (iter.hasNext()) {
-			Interval I = iter.next();
-			int a = I.a;
+		//Iterator<Interval> iter = this.intervals.iterator();
+		var first = true;
+		foreach (var I in this.intervals) {
+            if (!first)
+            {
+                buf.Append(", ");
+            }
+			first = true;
+            int a = I.a;
 			int b = I.b;
 			if ( a==b ) {
 				if ( a==Token.EOF ) buf.Append("<EOF>");
@@ -484,12 +497,10 @@ public class IntervalSet : IntSet {
 				if ( elemAreChar ) buf.Append('\'').Append(char.ConvertFromUtf32(a)).Append("'..'").Append(char.ConvertFromUtf32(b)).Append('\'');
 				else buf.Append(a).Append("..").Append(b);
 			}
-			if ( iter.hasNext() ) {
-				buf.Append(", ");
-			}
+			
 		}
 		if ( this.size()>1 ) {
-			buf.Append("}");
+			buf.Append('}');
 		}
 		return buf.ToString();
 	}
@@ -510,10 +521,14 @@ public class IntervalSet : IntSet {
 		if ( this.size()>1 ) {
 			buf.Append("{");
 		}
-		Iterator<Interval> iter = this.intervals.iterator();
-		while (iter.hasNext()) {
-			Interval I = iter.next();
-			int a = I.a;
+		bool first = true;
+		foreach (var I in this.intervals) {
+			if (!first)
+			{
+                buf.Append(", ");
+            }
+			first= false;
+            int a = I.a;
 			int b = I.b;
 			if ( a==b ) {
 				buf.Append(elementName(vocabulary, a));
@@ -523,9 +538,6 @@ public class IntervalSet : IntSet {
 					if ( i>a ) buf.Append(", ");
                     buf.Append(elementName(vocabulary, i));
 				}
-			}
-			if ( iter.hasNext() ) {
-				buf.Append(", ");
 			}
 		}
 		if ( this.size()>1 ) {

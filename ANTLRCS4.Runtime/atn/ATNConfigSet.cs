@@ -280,8 +280,8 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	}
 
 	//@Override
-	public Iterator<ATNConfig> iterator() {
-		return configs.iterator();
+	public new IEnumerator<ATNConfig> GetEnumerator() {
+		return configs.GetEnumerator();
 	}
 
 	//@Override

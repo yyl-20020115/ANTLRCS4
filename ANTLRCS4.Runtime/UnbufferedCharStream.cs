@@ -177,7 +177,7 @@ public class UnbufferedCharStream : CharStream {
 						else {
 							char lowSurrogateChar = (char) lowSurrogate;
 							if (char.IsLowSurrogate(lowSurrogateChar)) {
-								add(char.toCodePoint(ch, lowSurrogateChar));
+								add(char.ConvertToUtf32(ch, lowSurrogateChar));
 							}
 							else {
 								throw new RuntimeException("Invalid UTF-16 (dangling high surrogate");
@@ -333,7 +333,13 @@ public class UnbufferedCharStream : CharStream {
 		}
 		// convert from absolute to local index
 		int i = interval.a - bufferStartIndex;
-		return new String(data, i, interval.length());
+		var runs = data.Select(d => new Rune(d)).ToArray()[i .. interval.length()].ToArray();
+		var builder = new StringBuilder();
+		foreach(var r in runs)
+		{
+			builder.Append(r.ToString());
+		}
+		return builder.ToString();
 	}
 
 	protected int getBufferStartIndex() {

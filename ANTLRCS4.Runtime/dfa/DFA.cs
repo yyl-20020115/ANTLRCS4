@@ -114,7 +114,8 @@ public class DFA {
 		lock (s0) {
 			// s0.edges is never null for a precedence DFA
 			if (precedence >= s0.edges.Length) {
-				s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
+				Array.Resize(ref s0.edges, precedence + 1);
+				//s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
 			}
 
 			s0.edges[precedence] = startState;

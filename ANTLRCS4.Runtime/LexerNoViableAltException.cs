@@ -37,7 +37,7 @@ public class LexerNoViableAltException : RecognitionException {
 
 	//@Override
 	public CharStream getInputStream() {
-		return (CharStream)super.getInputStream();
+		return (CharStream)base.getInputStream();
 	}
 
     //@Override
@@ -48,6 +48,6 @@ public class LexerNoViableAltException : RecognitionException {
 			symbol = Utils.escapeWhitespace(symbol, false);
 		}
 
-		return String.format(Locale.getDefault(), "%s('%s')", typeof(LexerNoViableAltException).Name, symbol);
+		return $"{typeof(LexerNoViableAltException).Name}('{symbol}')";
 	}
 }

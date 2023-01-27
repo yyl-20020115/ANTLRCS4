@@ -32,7 +32,7 @@ public class NoViableAltException : RecognitionException {
              recognizer.getCurrentToken(),
              recognizer.getCurrentToken(),
              null,
-             recognizer._ctx)
+             recognizer.GetCtx())
     { // LL(1) error
 		;
 	}

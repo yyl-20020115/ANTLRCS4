@@ -59,7 +59,7 @@ public class CharStreams {
 	 * Reads the entire contents of the file into the result before returning.
 	 */
 	public static CharStream fromPath(string path){
-		return fromPath(path, Encoding.UTF8);
+		return fromReader(new StreamReader(path, Encoding.UTF8));
 	}
 
 	/**

@@ -419,8 +419,10 @@ public abstract class PredictionContext {
 				if ( mergeCache!=null ) mergeCache.put(a,b,a_);
 				return a_;
 			}
-			mergedParents = Arrays.copyOf(mergedParents, k);
-			mergedReturnStates = Arrays.copyOf(mergedReturnStates, k);
+			Array.Resize(ref mergedParents, k);
+			//mergedParents = Arrays.copyOf(mergedParents, k);
+			Array.Resize(ref mergedReturnStates, k);
+			//mergedReturnStates = Arrays.copyOf(mergedReturnStates, k);
 		}
 
 		PredictionContext M =
@@ -459,8 +461,11 @@ public abstract class PredictionContext {
 		}
 
 		for (int p = 0; p < parents.Length; p++) {
-			parents[p] = uniqueParents.get(parents[p]);
-		}
+			if (uniqueParents.TryGetValue(parents[p],out var parent))
+			{
+				parents[p] = parent;// uniqueParents[(parents[p])];
+            }
+        }
 	}
 
 	public static String toDOTString(PredictionContext context) {

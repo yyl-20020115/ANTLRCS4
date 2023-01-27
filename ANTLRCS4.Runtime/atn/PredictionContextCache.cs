@@ -20,8 +20,7 @@ public class PredictionContextCache {
 	 */
 	public PredictionContext add(PredictionContext ctx) {
 		if ( ctx==EmptyPredictionContext.Instance ) return EmptyPredictionContext.Instance;
-		PredictionContext existing = cache.get(ctx);
-		if ( existing!=null ) {
+		if ( cache.TryGetValue(ctx,out var existing) ) {
 //			System.out.println(name+" reuses "+existing);
 			return existing;
 		}
@@ -30,7 +29,7 @@ public class PredictionContextCache {
 	}
 
 	public PredictionContext get(PredictionContext ctx) {
-		return cache.get(ctx);
+		return cache.TryGetValue(ctx,out var prediction)?prediction:null;
 	}
 
 	public int size() {

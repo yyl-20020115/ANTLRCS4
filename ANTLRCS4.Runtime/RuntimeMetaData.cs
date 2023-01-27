@@ -162,13 +162,11 @@ public class RuntimeMetaData
 
         if (runtimeConflictsWithGeneratingTool)
         {
-            Console.Error.printf("ANTLR Tool version %s used for code generation does not match the current runtime version %s%n",
-                              generatingToolVersion, runtimeVersion);
+			Console.Error.WriteLine($"ANTLR Tool version %s used for code generation does not match the current runtime version {generatingToolVersion}{runtimeVersion}");
         }
         if (runtimeConflictsWithCompileTimeTool)
         {
-            Console.Error.printf("ANTLR Runtime version %s used for parser compilation does not match the current runtime version %s%n",
-                              compileTimeVersion, runtimeVersion);
+			Console.Error.WriteLine($"ANTLR Runtime version %s used for parser compilation does not match the current runtime version {compileTimeVersion}{runtimeVersion}");
         }
     }
 

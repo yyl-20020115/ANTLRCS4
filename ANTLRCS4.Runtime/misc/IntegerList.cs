@@ -3,6 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.dfa;
+using System.Text;
+
 namespace org.antlr.v4.runtime.misc;
 
 
@@ -127,7 +130,8 @@ public class IntegerList {
 		}
 
 		Array.Copy(_data, toIndex, _data, fromIndex, _size - toIndex);
-		Arrays.fill(_data, _size - (toIndex - fromIndex), _size, 0);
+		Array.Fill(_data, 0, _size - (toIndex - fromIndex), _size);
+		//Arrays.fill(_data, _size - (toIndex - fromIndex), _size, 0);
 		_size -= (toIndex - fromIndex);
 	}
 
@@ -148,7 +152,7 @@ public class IntegerList {
 	}
 
 	public void clear() {
-		Arrays.fill(_data, 0, _size, 0);
+		Array.Fill(_data, _size, 0,0);
 		_size = 0;
 	}
 
@@ -161,7 +165,7 @@ public class IntegerList {
 	}
 
 	public void sort() {
-		Arrays.sort(_data, 0, _size);
+		Array.Sort(_data, 0, _size);
 	}
 
 	/**
@@ -230,11 +234,11 @@ public class IntegerList {
 	 */
 	//@Override
 	public String toString() {
-		return Arrays.toString(toArray());
+		return string.Join(',',toArray());
 	}
 
 	public int binarySearch(int key) {
-		return Arrays.binarySearch(_data, 0, _size, key);
+		return Array.BinarySearch(_data, 0, _size, key);
 	}
 
 	public int binarySearch(int fromIndex, int toIndex, int key) {
@@ -245,7 +249,7 @@ public class IntegerList {
         		throw new ArgumentException();
 		}
 
-		return Arrays.binarySearch(_data, fromIndex, toIndex, key);
+		return Array.BinarySearch(_data, fromIndex, toIndex, key);
 	}
 
 	private void ensureCapacity(int capacity) {
@@ -270,14 +274,20 @@ public class IntegerList {
 
 		_data = Arrays.copyOf(_data, newLength);
 	}
-
-	/** Convert the int list to a char array where values > 0x7FFFF take 2 bytes. TODO?????
+    public const int MIN_SUPPLEMENTARY_CODE_POINT = 0x010000;
+    public const int MAX_CODE_POINT = 0X10FFFF;
+    public static bool isSupplementaryCodePoint(int codePoint)
+    {
+        return codePoint >= MIN_SUPPLEMENTARY_CODE_POINT
+            && codePoint < MAX_CODE_POINT + 1;
+    }
+    /** Convert the int list to a char array where values > 0x7FFFF take 2 bytes. TODO?????
 	 *  If all values are less
 	 *  than the 0x7FFF 16-bit code point limit (1 bit taken to indicatethen this is just a char array
 	 *  of 16-bit char as usual. For values in the supplementary range, encode
 	 * them as two UTF-16 code units.
 	 */
-	public char[] toCharArray() {
+    public char[] toCharArray() {
 		// Optimize for the common case (all data values are
 		// < 0xFFFF) to avoid an extra scan
 		char[] resultArray = new char[_size];
@@ -288,13 +298,25 @@ public class IntegerList {
 			// Calculate the precise result size if we encounter
 			// a code point > 0xFFFF
 			if (!calculatedPreciseResultSize &&
-			    Character.isSupplementaryCodePoint(codePoint)) {
+			    isSupplementaryCodePoint(codePoint)) {
 				resultArray = Arrays.copyOf(resultArray, charArraySize());
 				calculatedPreciseResultSize = true;
 			}
 			// This will throw IllegalArgumentException if
 			// the code point is not a valid Unicode code point
-			int charsWritten = Character.toChars(codePoint, resultArray, resultIdx);
+			var r = new Rune(codePoint);
+			var a = r.ToString().ToCharArray();
+
+			int charsWritten = a.Length;
+			if (charsWritten == 1)
+			{
+				resultArray[resultIdx] = a[0];
+			}else if (charsWritten == 2)
+			{
+                resultArray[resultIdx] = a[0];
+                resultArray[resultIdx+1] = a[1];
+            }
+
 			resultIdx += charsWritten;
 		}
 		return resultArray;
@@ -303,7 +325,7 @@ public class IntegerList {
 	private int charArraySize() {
 		int result = 0;
 		for (int i = 0; i < _size; i++) {
-			result += Character.charCount(_data[i]);
+			result += new Rune(_data[i]).Utf16SequenceLength;
 		}
 		return result;
 	}

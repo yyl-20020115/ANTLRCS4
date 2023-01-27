@@ -17,6 +17,9 @@ public interface Recognizer
     String[] getRuleNames();
 	bool precpred(RuleContext localctx, int precedence);
 	bool sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
+	int getState();
+    ATN getATN();
+
 
 }
 public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNInterpreter : ATNSimulator

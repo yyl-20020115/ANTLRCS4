@@ -41,10 +41,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 	 * Initializes a new instance of {@link DiagnosticErrorListener} which only
 	 * reports exact ambiguities.
 	 */
-	public DiagnosticErrorListener() {
-		this(true);
-	}
-
+	
 	/**
 	 * Initializes a new instance of {@link DiagnosticErrorListener}, specifying
 	 * whether all ambiguities or only exact ambiguities are reported.
@@ -52,7 +49,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 	 * @param exactOnly {@code true} to report only exact ambiguities, otherwise
 	 * {@code false} to report all ambiguities.
 	 */
-	public DiagnosticErrorListener(bool exactOnly) {
+	public DiagnosticErrorListener(bool exactOnly = true) {
 		this.exactOnly = exactOnly;
 	}
 
@@ -69,11 +66,10 @@ public class DiagnosticErrorListener : BaseErrorListener {
 			return;
 		}
 
-		String format = "reportAmbiguity d=%s: ambigAlts=%s, input='%s'";
 		String decision = getDecisionDescription(recognizer, dfa);
 		BitSet conflictingAlts = getConflictingAlts(ambigAlts, configs);
 		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-		String message = String.format(format, decision, conflictingAlts, text);
+		String message = $"reportAmbiguity d={decision}: ambigAlts={conflictingAlts}, input='{text}'";
 		recognizer.notifyErrorListeners(message);
 	}
 
@@ -85,11 +81,11 @@ public class DiagnosticErrorListener : BaseErrorListener {
 											BitSet conflictingAlts,
 											ATNConfigSet configs)
 	{
-		String format = "reportAttemptingFullContext d=%s, input='%s'";
 		String decision = getDecisionDescription(recognizer, dfa);
 		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-		String message = String.format(format, decision, text);
-		recognizer.notifyErrorListeners(message);
+		String message = $"reportAttemptingFullContext d={decision}, input='{text}'";
+
+        recognizer.notifyErrorListeners(message);
 	}
 
 	//@Override
@@ -100,11 +96,11 @@ public class DiagnosticErrorListener : BaseErrorListener {
 										 int prediction,
 										 ATNConfigSet configs)
 	{
-		String format = "reportContextSensitivity d=%s, input='%s'";
 		String decision = getDecisionDescription(recognizer, dfa);
 		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-		String message = String.format(format, decision, text);
-		recognizer.notifyErrorListeners(message);
+		String message = $"reportContextSensitivity d={decision}, input='{text}'";
+
+        recognizer.notifyErrorListeners(message);
 	}
 
 	protected String getDecisionDescription(Parser recognizer, DFA dfa) {
@@ -113,15 +109,15 @@ public class DiagnosticErrorListener : BaseErrorListener {
 
 		String[] ruleNames = recognizer.getRuleNames();
 		if (ruleIndex < 0 || ruleIndex >= ruleNames.Length) {
-			return String.valueOf(decision);
+			return decision.ToString();
 		}
 
 		String ruleName = ruleNames[ruleIndex];
-		if (ruleName == null || ruleName.isEmpty()) {
-			return String.valueOf(decision);
+		if (ruleName == null || ruleName.Length==0) {
+			return decision.ToString();
 		}
 
-		return String.format("%d (%s)", decision, ruleName);
+		return $"{decision} ({ruleName})";
 	}
 
 	/**
