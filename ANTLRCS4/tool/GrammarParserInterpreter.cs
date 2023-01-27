@@ -139,7 +139,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		if( p.getNumberOfTransitions() > 1) {
 //			System.out.println("decision "+p.decision+": "+predictedAlt);
 			if( p.decision == this.overrideDecision &&
-				this._input.index() == this.overrideDecisionInputIndex )
+				this.input.index() == this.overrideDecisionInputIndex )
 			{
 				overrideDecisionRoot = (GrammarInterpreterRuleContext)getContext();
 			}

@@ -4,27 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System.Runtime.Serialization;
+namespace org.antlr.v4;
 
-namespace org.antlr.v4
+public class Error : Exception
 {
-    [Serializable]
-    internal class Error : Exception
+    public Error()
     {
-        public Error()
-        {
-        }
-
-        public Error(string? message) : base(message)
-        {
-        }
-
-        public Error(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected Error(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
+
+    public Error(string? message) : base(message)
+    {
+    }
+
+    public Error(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
 }

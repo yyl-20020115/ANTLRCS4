@@ -34,9 +34,10 @@ public class ATNPrinter {
 		StringBuilder buf = new StringBuilder();
 		ATNState s;
 
-		while ( !work.isEmpty() ) {
-			s = work.remove(0);
-			if ( marked.contains(s) ) continue;
+		while ( work.Count>0 ) {
+			s = work[0];
+			work.RemoveAt(0);
+			if ( marked.Contains(s) ) continue;
 			int n = s.getNumberOfTransitions();
 //			System.out.println("visit "+s+"; edges="+n);
 			marked.Add(s);
@@ -51,7 +52,7 @@ public class ATNPrinter {
 					buf.Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else if ( t is RuleTransition ) {
-					buf.Append("-").Append(g.getRule(((RuleTransition)t).ruleIndex).name).append("->").Append(getStateString(t.target)).append('\n');
+					buf.Append("-").Append(g.getRule(((RuleTransition)t).ruleIndex).name).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else if ( t is ActionTransition ) {
 					ActionTransition a = (ActionTransition)t;
@@ -69,15 +70,15 @@ public class ATNPrinter {
 				}
 				else if ( t is AtomTransition ) {
 					AtomTransition a = (AtomTransition)t;
-					String label = g.getTokenDisplayName(a.label);
+					String label = g.getTokenDisplayName(a._label);
 					buf.Append("-").Append(label).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 				else {
-					buf.Append("-").Append(t.toString()).Append("->").Append(getStateString(t.target)).Append('\n');
+					buf.Append("-").Append(t.ToString()).Append("->").Append(getStateString(t.target)).Append('\n');
 				}
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	String getStateString(ATNState s) {

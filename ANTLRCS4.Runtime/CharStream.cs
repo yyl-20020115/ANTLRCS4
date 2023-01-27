@@ -27,4 +27,5 @@ public interface CharStream : IntStream {
 	 * getting the text of the specified interval
 	 */
 	public String getText(Interval interval);
+    void rewind(int start);
 }

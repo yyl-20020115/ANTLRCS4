@@ -87,7 +87,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 
 		// FULL BUCKET, expand and add to end
 		int oldLength = bucket.Length;
-		bucket = Arrays.copyOf(bucket, bucket.Length * 2);
+		bucket = Arrays.CopyOf(bucket, bucket.Length * 2);
 		buckets[b] = bucket;
 		bucket[oldLength] = o; // add to end
 		n++;
@@ -170,7 +170,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 					newBucket = newTable[b];
 					if (bucketLength == newBucket.Length) {
 						// expand
-						newBucket = Arrays.copyOf(newBucket, newBucket.Length * 2);
+						newBucket = Arrays.CopyOf(newBucket, newBucket.Length * 2);
 						newTable[b] = newBucket;
 					}
 				}
@@ -241,7 +241,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 	//@Override
 	public T[] toArray(T[] a) {
 		if (a.Length < size()) {
-			a = Arrays.copyOf(a, size());
+			a = Arrays.CopyOf(a, size());
 		}
 
 		int i = 0;

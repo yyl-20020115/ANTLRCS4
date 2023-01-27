@@ -20,7 +20,7 @@ public class TestSetInline : SrcOp {
 		bitsetWordSize = wordSize;
 		Bitset[] withZeroOffset = createBitsets(factory, set, wordSize, true);
 		Bitset[] withoutZeroOffset = createBitsets(factory, set, wordSize, false);
-		this.bitsets = withZeroOffset.length <= withoutZeroOffset.length ? withZeroOffset : withoutZeroOffset;
+		this.bitsets = withZeroOffset.Length <= withoutZeroOffset.Length ? withZeroOffset : withoutZeroOffset;
 		this.varName = "_la";
 	}
 
@@ -28,7 +28,7 @@ public class TestSetInline : SrcOp {
 										  IntervalSet set,
 										  int wordSize,
 										  bool useZeroOffset) {
-		List<Bitset> bitsetList = new ArrayList<>();
+		List<Bitset> bitsetList = new ();
 		Target target = factory.getGenerator().getTarget();
 		Bitset current = null;
 		for (int ttype : set.toArray()) {
@@ -52,7 +52,7 @@ public class TestSetInline : SrcOp {
 
 	public class Bitset {
 		public readonly int shift;
-		private readonly List<TokenInfo> tokens = new ArrayList<>();
+		private readonly List<TokenInfo> tokens = new ();
 		private long calculated;
 
 		public Bitset(int shift) {

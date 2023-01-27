@@ -6,6 +6,7 @@
 
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
+using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
@@ -29,14 +30,14 @@ public class LexerATNFactory : ParserATNFactory {
 	 */
 	public static readonly Dictionary<String, int> COMMON_CONSTANTS = new ();
 	static LexerATNFactory(){
-		COMMON_CONSTANTS.put("HIDDEN", Lexer.HIDDEN);
-		COMMON_CONSTANTS.put("DEFAULT_TOKEN_CHANNEL", Lexer.DEFAULT_TOKEN_CHANNEL);
-		COMMON_CONSTANTS.put("DEFAULT_MODE", Lexer.DEFAULT_MODE);
-		COMMON_CONSTANTS.put("SKIP", Lexer.SKIP);
-		COMMON_CONSTANTS.put("MORE", Lexer.MORE);
-		COMMON_CONSTANTS.put("EOF", Lexer.EOF);
-		COMMON_CONSTANTS.put("MAX_CHAR_VALUE", Lexer.MAX_CHAR_VALUE);
-		COMMON_CONSTANTS.put("MIN_CHAR_VALUE", Lexer.MIN_CHAR_VALUE);
+		COMMON_CONSTANTS.Add("HIDDEN", Lexer.HIDDEN);
+		COMMON_CONSTANTS.Add("DEFAULT_TOKEN_CHANNEL", Lexer.DEFAULT_TOKEN_CHANNEL);
+		COMMON_CONSTANTS.Add("DEFAULT_MODE", Lexer.DEFAULT_MODE);
+		COMMON_CONSTANTS.Add("SKIP", Lexer.SKIP);
+		COMMON_CONSTANTS.Add("MORE", Lexer.MORE);
+		COMMON_CONSTANTS.Add("EOF", Lexer.EOF);
+		COMMON_CONSTANTS.Add("MAX_CHAR_VALUE", Lexer.MAX_CHAR_VALUE);
+		COMMON_CONSTANTS.Add("MIN_CHAR_VALUE", Lexer.MIN_CHAR_VALUE);
 	}
 
 	private readonly List<String> ruleCommands = new();

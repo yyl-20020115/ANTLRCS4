@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 
 namespace org.antlr.v4.runtime.misc;

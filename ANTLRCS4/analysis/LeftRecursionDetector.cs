@@ -30,15 +30,15 @@ public class LeftRecursionDetector {
 	public void check() {
         foreach (RuleStartState start in atn.ruleToStartState) {
 			//System.out.print("check "+start.rule.name);
-			rulesVisitedPerRuleCheck.clear();
-			rulesVisitedPerRuleCheck.add(start);
+			rulesVisitedPerRuleCheck.Clear();
+			rulesVisitedPerRuleCheck.Add(start);
 			//FASerializer ser = new FASerializer(atn.g, start);
 			//System.out.print(":\n"+ser+"\n");
 
 			check(g.getRule(start.ruleIndex), start, new HashSet<ATNState>());
 		}
 		//System.out.println("cycles="+listOfRecursiveCycles);
-		if ( !listOfRecursiveCycles.isEmpty() ) {
+		if ( listOfRecursiveCycles.Count > 0 ) {
 			g.tool.errMgr.leftRecursionCycles(g.fileName, listOfRecursiveCycles);
 		}
 	}
@@ -56,8 +56,8 @@ public class LeftRecursionDetector {
 	 */
 	public bool check(Rule enclosingRule, ATNState s, HashSet<ATNState> visitedStates) {
 		if ( s is RuleStopState) return true;
-		if ( visitedStates.contains(s) ) return false;
-		visitedStates.add(s);
+		if ( visitedStates.Contains(s) ) return false;
+		visitedStates.Add(s);
 
 		//System.out.println("visit "+s);
 		int n = s.getNumberOfTransitions();
@@ -67,16 +67,16 @@ public class LeftRecursionDetector {
 			if ( t is RuleTransition ) {
 				RuleTransition rt = (RuleTransition) t;
 				Rule r = g.getRule(rt.ruleIndex);
-				if ( rulesVisitedPerRuleCheck.contains((RuleStartState)t.target) ) {
+				if ( rulesVisitedPerRuleCheck.Contains((RuleStartState)t.target) ) {
 					addRulesToCycle(enclosingRule, r);
 				}
 				else {
 					// must visit if not already visited; mark target, pop when done
-					rulesVisitedPerRuleCheck.add((RuleStartState)t.target);
+					rulesVisitedPerRuleCheck.Add((RuleStartState)t.target);
 					// send new visitedStates set per rule invocation
 					bool nullable = check(r, t.target, new HashSet<ATNState>());
 					// we're back from visiting that rule
-					rulesVisitedPerRuleCheck.remove((RuleStartState)t.target);
+					rulesVisitedPerRuleCheck.Remove((RuleStartState)t.target);
 					if ( nullable ) {
 						stateReachesStopState |= check(enclosingRule, rt.followState, visitedStates);
 					}
@@ -113,7 +113,7 @@ public class LeftRecursionDetector {
 			var cycle = new OrderedHashSet<Rule>();
 			cycle.add(targetRule);
 			cycle.add(enclosingRule);
-			listOfRecursiveCycles.add(cycle);
+			listOfRecursiveCycles.Add(cycle);
 		}
 	}
 }

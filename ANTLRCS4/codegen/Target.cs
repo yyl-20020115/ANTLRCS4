@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -18,10 +19,10 @@ public abstract class Target {
 
 	protected readonly CodeGenerator gen;
 
-	protected static readonly Dictionary<Character, String> defaultCharValueEscape;
+	protected static readonly Dictionary<char, String> defaultCharValueEscape;
 	static Target(){
 		// https://docs.oracle.com/javase/tutorial/java/data/characters.html
-		Dictionary<Character, String> map = new ();
+		Dictionary<char, String> map = new ();
 		addEscapedChar(map, '\t', 't');
 		addEscapedChar(map, '\b', 'b');
 		addEscapedChar(map, '\n', 'n');
@@ -44,15 +45,15 @@ public abstract class Target {
 	 *  that the target language can hold them as a string.
 	 *  Each target can have a different set in memory at same time.
 	 */
-	public Dictionary<Character, String> getTargetCharValueEscape() {
+	public Dictionary<char, String> getTargetCharValueEscape() {
 		return defaultCharValueEscape;
 	}
 
-	protected static void addEscapedChar(Dictionary<Character, String> map, char key) {
+	protected static void addEscapedChar(Dictionary<char, String> map, char key) {
 		addEscapedChar(map, key, key);
 	}
 
-	protected static void addEscapedChar(Dictionary<Character, String> map, char key, char representation) {
+	protected static void addEscapedChar(Dictionary<char, String> map, char key, char representation) {
 		map.put(key, "\\" + representation);
 	}
 
@@ -165,7 +166,7 @@ public abstract class Target {
 		}
 		for (int i=0; i < s.Length; ) {
 			int c = s.codePointAt(i);
-			String escaped = c <= Character.MAX_VALUE ? getTargetCharValueEscape().get((char)c) : null;
+			String escaped = c <= char.MAX_VALUE ? getTargetCharValueEscape().get((char)c) : null;
 			if (c != '\'' && escaped != null) { // don't escape single quotes in strings for java
 				buf.Append(escaped);
 			}
@@ -176,7 +177,7 @@ public abstract class Target {
 			{
 				buf.appendCodePoint(c);
 			}
-			i += Character.charCount(c);
+			i += char.charCount(c);
 		}
 		if ( quoted ) {
 			buf.Append('"');
@@ -238,7 +239,7 @@ public abstract class Target {
 
 		for (int i = 1; i < literal.Length -1; ) {
 			int codePoint = literal.codePointAt(i);
-			int toAdvance = Character.charCount(codePoint);
+			int toAdvance = char.charCount(codePoint);
 			if  (codePoint == '\\') {
 				// Anything escaped is what it is! We assume that
 				// people know how to escape characters correctly. However
@@ -329,7 +330,7 @@ public abstract class Target {
 
 	/** Assume 16-bit char */
 	public String encodeInt16AsCharEscape(int v) {
-		if (v < Character.MIN_VALUE || v > Character.MAX_VALUE) {
+		if (v < char.MIN_VALUE || v > char.MAX_VALUE) {
 			throw new IllegalArgumentException(String.format("Cannot encode the specified value: %d", v));
 		}
 
@@ -343,10 +344,10 @@ public abstract class Target {
 			return escaped;
 		}
 
-		switch (Character.getType(c)) {
-			case Character.CONTROL:
-			case Character.LINE_SEPARATOR:
-			case Character.PARAGRAPH_SEPARATOR:
+		switch (char.getType(c)) {
+			case char.CONTROL:
+			case char.LINE_SEPARATOR:
+			case char.PARAGRAPH_SEPARATOR:
 				return escapeChar(v);
 			default:
 				if ( v<=127 ) {
@@ -561,7 +562,7 @@ public abstract class Target {
 		return getReservedWords().contains(idNode.getText());
 	}
 
-	@Deprecated
+	//@Deprecated
 	protected bool visibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) {
 		return getReservedWords().contains(idNode.getText());
 	}

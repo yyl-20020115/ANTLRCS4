@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="gui\**" />
     <Compile Remove="Resources\org\**" />
+    <EmbeddedResource Remove="gui\**" />
     <EmbeddedResource Remove="Resources\org\**" />
+    <None Remove="gui\**" />
     <None Remove="Resources\org\**" />
   </ItemGroup>
 

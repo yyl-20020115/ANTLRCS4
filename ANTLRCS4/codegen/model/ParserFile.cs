@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen.model;
 

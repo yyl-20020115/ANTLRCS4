@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.misc;
@@ -171,7 +173,7 @@ public class CharSupport {
 		try {
 			result = Integer.parseInt(unicodeChars, 16);
 		}
-		catch (NumberFormatException e) {
+		catch (Exception e) {
 		}
 		return result;
 	}

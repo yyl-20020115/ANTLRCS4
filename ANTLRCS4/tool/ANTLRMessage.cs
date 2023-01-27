@@ -32,12 +32,12 @@ public class ANTLRMessage {
      */
     public Token offendingToken;
 
-	public ANTLRMessage(ErrorType errorType) {
-        this(errorType, (Exception)null, Token.INVALID_TOKEN);
+	public ANTLRMessage(ErrorType errorType): this(errorType, (Exception)null, Token.INVALID_TOKEN)
+    {
     }
 
-    public ANTLRMessage(ErrorType errorType, Token offendingToken,params Object[] args) {
-        this(errorType, null, offendingToken, args);
+    public ANTLRMessage(ErrorType errorType, Token offendingToken,params Object[] args) : this(errorType, null, offendingToken, args)
+    {
 	}
 
     public ANTLRMessage(ErrorType errorType, Exception e, Token offendingToken, params Object[] args) {
@@ -96,7 +96,7 @@ public class ANTLRMessage {
 	public String toString() {
 		return "Message{" +
 			   "errorType=" + getErrorType() +
-			   ", args=" + Arrays.asList(getArgs()) +
+			   ", args=" + string.Join(',',(getArgs())) +
 			   ", e=" + getCause() +
 			   ", fileName='" + fileName + '\'' +
 			   ", line=" + line +

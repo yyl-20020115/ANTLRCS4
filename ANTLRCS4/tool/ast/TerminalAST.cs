@@ -11,16 +11,15 @@ namespace org.antlr.v4.tool.ast;
 
 public class TerminalAST : GrammarASTWithOptions , RuleElementAST {
 
-	public TerminalAST(TerminalAST node) {
-		super(node);
+	public TerminalAST(TerminalAST node):base(node) {
 	}
 
-	public TerminalAST(Token t) { super(t); }
-    public TerminalAST(int type) { super(type); }
-    public TerminalAST(int type, Token t) { super(type, t); }
+	public TerminalAST(Token t):base(t) {  }
+    public TerminalAST(int type):base(type) {}
+    public TerminalAST(int type, Token t) : base(type, t) {}
 
 	//@Override
-	public TerminalAST dupNode() { return new TerminalAST(this); }
+	public override TerminalAST dupNode() { return new TerminalAST(this); }
 
 	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }

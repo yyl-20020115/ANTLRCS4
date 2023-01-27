@@ -9,67 +9,69 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.automata;
 
-
-
-public interface ATNFactory {
-	/** A pair of states pointing to the left/right (start and end) states of a
+public interface ATNFactory
+{
+    /** A pair of states pointing to the left/right (start and end) states of a
 	 *  state submachine.  Used to build ATNs.
 	 */
-	public class Handle {
-		public ATNState left;
-		public ATNState right;
+    public class Handle
+    {
+        public ATNState left;
+        public ATNState right;
 
-		public Handle(ATNState left, ATNState right) {
-			this.left = left;
-			this.right = right;
-		}
+        public Handle(ATNState left, ATNState right)
+        {
+            this.left = left;
+            this.right = right;
+        }
 
-		public override String ToString() {
-			return "("+left+","+right+")";
-		}
-	}
-
-
-	ATN createATN();
-
-	void setCurrentRuleName(String name);
-
-	void setCurrentOuterAlt(int alt);
+        public override String ToString()
+        {
+            return "(" + left + "," + right + ")";
+        }
+    }
 
 
-	Handle rule(GrammarAST ruleAST, String name, Handle blk);
+    ATN createATN();
+
+    void setCurrentRuleName(String name);
+
+    void setCurrentOuterAlt(int alt);
 
 
-	ATNState newState();
+    Handle rule(GrammarAST ruleAST, String name, Handle blk);
 
 
-	Handle label(Handle t);
+    ATNState newState();
 
 
-	Handle listLabel(Handle t);
+    Handle label(Handle t);
 
 
-	Handle tokenRef(TerminalAST node);
+    Handle listLabel(Handle t);
 
 
-	Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert);
+    Handle tokenRef(TerminalAST node);
 
 
-	Handle charSetLiteral(GrammarAST charSetAST);
+    Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert);
 
 
-	Handle range(GrammarAST a, GrammarAST b);
+    Handle charSetLiteral(GrammarAST charSetAST);
 
-	/** For a non-lexer, just build a simple token reference atom.
+
+    Handle range(GrammarAST a, GrammarAST b);
+
+    /** For a non-lexer, just build a simple token reference atom.
 	 *  For a lexer, a string is a sequence of char to match.  That is,
 	 *  "fog" is treated as 'f' 'o' 'g' not as a single transition in
 	 *  the DFA.  Machine== o-'f'-&gt;o-'o'-&gt;o-'g'-&gt;o and has n+1 states
 	 *  for n characters.
 	 */
 
-	Handle stringLiteral(TerminalAST stringLiteralAST);
+    Handle stringLiteral(TerminalAST stringLiteralAST);
 
-	/** For reference to rule r, build
+    /** For reference to rule r, build
 	 *
 	 *  o-e-&gt;(r)  o
 	 *
@@ -86,32 +88,32 @@ public interface ATNFactory {
 	 * @param node
 	 */
 
-	Handle ruleRef(GrammarAST node);
+    Handle ruleRef(GrammarAST node);
 
-	/** From an empty alternative build Grip o-e-&gt;o */
+    /** From an empty alternative build Grip o-e-&gt;o */
 
-	Handle epsilon(GrammarAST node);
+    Handle epsilon(GrammarAST node);
 
-	/** Build what amounts to an epsilon transition with a semantic
+    /** Build what amounts to an epsilon transition with a semantic
 	 *  predicate action.  The pred is a pointer into the AST of
 	 *  the SEMPRED token.
 	 */
 
-	Handle sempred(PredAST pred);
+    Handle sempred(PredAST pred);
 
-	/** Build what amounts to an epsilon transition with an action.
+    /** Build what amounts to an epsilon transition with an action.
 	 *  The action goes into ATN though it is ignored during analysis.
 	 */
 
-	Handle action(ActionAST action);
+    Handle action(ActionAST action);
 
 
-	Handle action(String action);
+    Handle action(String action);
 
 
-	Handle alt(List<Handle> els);
+    Handle alt(List<Handle> els);
 
-	/** From A|B|..|Z alternative block build
+    /** From A|B|..|Z alternative block build
      *
      *  o-&gt;o-A-&gt;o-&gt;o (last ATNState is blockEndATNState pointed to by all alts)
      *  |          ^
@@ -135,11 +137,11 @@ public interface ATNFactory {
      *  Set alt number (1..n) in the left-Transition ATNState.
      */
 
-	Handle block(BlockAST blockAST, GrammarAST ebnfRoot, List<Handle> alternativeGrips);
+    Handle block(BlockAST blockAST, GrammarAST ebnfRoot, List<Handle> alternativeGrips);
 
-//	Handle notBlock(GrammarAST blockAST, Handle set);
+    //	Handle notBlock(GrammarAST blockAST, Handle set);
 
-	/** From (A)? build either:
+    /** From (A)? build either:
 	 *
 	 *  o--A-&gt;o
 	 *  |     ^
@@ -148,9 +150,9 @@ public interface ATNFactory {
 	 *  or, if A is a block, just add an empty alt to the end of the block
 	 */
 
-	Handle optional(GrammarAST optAST, Handle blk);
+    Handle optional(GrammarAST optAST, Handle blk);
 
-	/** From (A)+ build
+    /** From (A)+ build
 	 *
 	 *     |---|    (Transition 2 from A.right points at alt 1)
 	 *     v   |    (follow of loop is Transition 1)
@@ -164,9 +166,9 @@ public interface ATNFactory {
 	 *  an n-alt A block.
 	 */
 
-	Handle plus(GrammarAST plusAST, Handle blk);
+    Handle plus(GrammarAST plusAST, Handle blk);
 
-	/** From (A)* build
+    /** From (A)* build
 	 *
 	 *     |---|
 	 *     v   |
@@ -197,18 +199,18 @@ public interface ATNFactory {
 	 *  determination.  See codegen.g
 	 */
 
-	Handle star(GrammarAST starAST, Handle blk);
+    Handle star(GrammarAST starAST, Handle blk);
 
-	/** Build an atom with all possible values in its label */
+    /** Build an atom with all possible values in its label */
 
-	Handle wildcard(GrammarAST associatedAST);
-
-
-	Handle lexerAltCommands(Handle alt, Handle cmds);
+    Handle wildcard(GrammarAST associatedAST);
 
 
-	Handle lexerCallCommand(GrammarAST ID, GrammarAST arg);
+    Handle lexerAltCommands(Handle alt, Handle cmds);
 
 
-	Handle lexerCommand(GrammarAST ID);
+    Handle lexerCallCommand(GrammarAST ID, GrammarAST arg);
+
+
+    Handle lexerCommand(GrammarAST ID);
 }

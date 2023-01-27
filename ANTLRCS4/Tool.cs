@@ -7,8 +7,10 @@
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
@@ -192,8 +194,8 @@ public class Tool {
 			}
 		}
 		if ( outputDirectory!=null ) {
-			if (outputDirectory.endsWith("/") ||
-				outputDirectory.endsWith("\\")) {
+			if (outputDirectory.EndsWith("/") ||
+				outputDirectory.EndsWith("\\")) {
 				outputDirectory =
 					outputDirectory.substring(0, outputDirectory.Length - 1);
 			}
@@ -257,8 +259,8 @@ public class Tool {
 	public void processGrammarsOnCommandLine() {
 		List<GrammarRootAST> sortedGrammars = sortGrammarByTokenVocab(grammarFiles);
 
-		for (GrammarRootAST t : sortedGrammars) {
-			final Grammar g = createGrammar(t);
+		foreach (GrammarRootAST t in sortedGrammars) {
+			 Grammar g = createGrammar(t);
 			g.fileName = t.fileName;
 			if ( gen_dependencies ) {
 				BuildDependencyGenerator dep =
@@ -424,7 +426,7 @@ public class Tool {
 
 		bool redefinition = false;
 		 Map<String, RuleAST> ruleToAST = new HashMap<String, RuleAST>();
-		for (GrammarAST r : rules) {
+		foreach (GrammarAST r in rules) {
 			RuleAST ruleAST = (RuleAST)r;
 			GrammarAST ID = (GrammarAST)ruleAST.getChild(0);
 			String ruleName = ID.getText();
@@ -451,7 +453,7 @@ public class Tool {
 	public List<GrammarRootAST> sortGrammarByTokenVocab(List<String> fileNames) {
 //		Console.WriteLine(fileNames);
 		Graph<String> g = new Graph<String>();
-		List<GrammarRootAST> roots = new ArrayList<GrammarRootAST>();
+		List<GrammarRootAST> roots = new ();
 		for (String fileName : fileNames) {
 			GrammarAST t = parseGrammar(fileName);
 			if ( t==null || t is GrammarASTErrorNode) continue; // came back as error node
@@ -694,17 +696,17 @@ public class Tool {
 				content.Append(mode + "\n");
 			}
 		}
-		content.append("\n");
+		content.Append("\n");
 
 		IntegerList serializedATN = ATNSerializer.getSerialized(g.atn);
 		// Uncomment if you'd like to write out histogram info on the numbers of
 		// each integer value:
 		//Utils.writeSerializedATNIntegerHistogram(g.name+"-histo.csv", serializedATN);
 
-		content.append("atn:\n");
-		content.append(serializedATN.toString());
+		content.Append("atn:\n");
+		content.Append(serializedATN.ToString());
 
-		return content.toString();
+		return content.ToString();
 	}
 
 	/** This method is used by all code generators to create new output

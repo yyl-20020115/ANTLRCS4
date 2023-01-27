@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
@@ -41,29 +42,29 @@ public class Grammar : AttributeResolver {
 
 	public static readonly HashSet<String> parserOptions = new HashSet<String>();
 	static Grammar() {
-		parserOptions.add("superClass");
-		parserOptions.add("contextSuperClass");
-		parserOptions.add("TokenLabelType");
-		parserOptions.add("tokenVocab");
-		parserOptions.add("language");
-		parserOptions.add("accessLevel");
-		parserOptions.add("exportMacro");
-		parserOptions.add(caseInsensitiveOptionName);
-        lexerRuleOptions.add(caseInsensitiveOptionName);
-        ruleRefOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
-        ruleRefOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
-        tokenOptions.add("assoc");
-        tokenOptions.add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
-        semPredOptions.add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
-        semPredOptions.add("fail");
-        doNotCopyOptionsToLexer.add("superClass");
-        doNotCopyOptionsToLexer.add("TokenLabelType");
-        doNotCopyOptionsToLexer.add("tokenVocab");
+		parserOptions.Add("superClass");
+		parserOptions.Add("contextSuperClass");
+		parserOptions.Add("TokenLabelType");
+		parserOptions.Add("tokenVocab");
+		parserOptions.Add("language");
+		parserOptions.Add("accessLevel");
+		parserOptions.Add("exportMacro");
+		parserOptions.Add(caseInsensitiveOptionName);
+        lexerRuleOptions.Add(caseInsensitiveOptionName);
+        ruleRefOptions.Add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
+        ruleRefOptions.Add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
+        tokenOptions.Add("assoc");
+        tokenOptions.Add(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME);
+        semPredOptions.Add(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
+        semPredOptions.Add("fail");
+        doNotCopyOptionsToLexer.Add("superClass");
+        doNotCopyOptionsToLexer.Add("TokenLabelType");
+        doNotCopyOptionsToLexer.Add("tokenVocab");
 
-        grammarAndLabelRefTypeToScope.put("parser:RULE_LABEL", Rule.predefinedRulePropertiesDict);
-        grammarAndLabelRefTypeToScope.put("parser:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
-        grammarAndLabelRefTypeToScope.put("combined:RULE_LABEL", Rule.predefinedRulePropertiesDict);
-        grammarAndLabelRefTypeToScope.put("combined:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
+        grammarAndLabelRefTypeToScope.Add("parser:RULE_LABEL", Rule.predefinedRulePropertiesDict);
+        grammarAndLabelRefTypeToScope.Add("parser:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
+        grammarAndLabelRefTypeToScope.Add("combined:RULE_LABEL", Rule.predefinedRulePropertiesDict);
+        grammarAndLabelRefTypeToScope.Add("combined:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
     }
 
     public static readonly HashSet<String> lexerOptions = parserOptions;
@@ -87,8 +88,8 @@ public class Grammar : AttributeResolver {
 
 	public static readonly HashSet<String> doNotCopyOptionsToLexer = new HashSet<String>();
 
-	public static readonly Map<String, AttributeDict> grammarAndLabelRefTypeToScope =
-		new HashMap<String, AttributeDict>();
+	public static readonly Dictionary<String, AttributeDict> grammarAndLabelRefTypeToScope =
+		new ();
 
 	public String name;
     public GrammarRootAST ast;
@@ -126,7 +127,7 @@ public class Grammar : AttributeResolver {
 	 *  not include lexical rules if combined.
 	 */
     public OrderedHashMap<String, Rule> rules = new OrderedHashMap<String, Rule>();
-	public List<Rule> indexToRule = new ArrayList<Rule>();
+	public List<Rule> indexToRule = new ();
 
 	int ruleNumber = 0; // used to get rule indexes (0..n-1)
 	int stringLiteralRuleNumber = 0; // used to invent rule names for 'keyword', ';', ... (0..n-1)
@@ -158,14 +159,14 @@ public class Grammar : AttributeResolver {
 	 * Map token like {@code ID} (but not literals like {@code 'while'}) to its
 	 * token type.
 	 */
-	public readonly Dictionary<String, int> tokenNameToTypeMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> tokenNameToTypeMap = new ();
 
 	/**
 	 * Map token literals like {@code 'while'} to its token type. It may be that
 	 * {@code WHILE="while"=35}, in which case both {@link #tokenNameToTypeMap}
 	 * and this field will have entries both mapped to 35.
 	 */
-	public readonly Dictionary<String, int> stringLiteralToTypeMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> stringLiteralToTypeMap = new ();
 
 	/**
 	 * Reverse index for {@link #stringLiteralToTypeMap}. Indexed with raw token
@@ -189,7 +190,7 @@ public class Grammar : AttributeResolver {
 	 * Map channel like {@code COMMENTS_CHANNEL} to its constant channel value.
 	 * Only user-defined channels are defined in this map.
 	 */
-	public readonly Dictionary<String, int> channelNameToValueMap = new LinkedHashMap<String, Integer>();
+	public readonly Dictionary<String, int> channelNameToValueMap = new ();
 
 	/**
 	 * Map a constant channel value to its name. Indexed with raw channel value.
@@ -197,24 +198,24 @@ public class Grammar : AttributeResolver {
 	 * {@link Token#HIDDEN_CHANNEL} are not stored in this list, so the values
 	 * at the corresponding indexes is {@code null}.
 	 */
-	public readonly List<String> channelValueToNameList = new ArrayList<String>();
+	public readonly List<String> channelValueToNameList = new();
 
     /** Map a name to an action.
      *  The code generator will use this to fill holes in the output files.
      *  I track the AST node for the action in case I need the line number
      *  for errors.
      */
-	public Dictionary<String,ActionAST> namedActions = new HashMap<String,ActionAST>();
+	public Dictionary<String,ActionAST> namedActions = new ();
 
 	/** Tracks all user lexer actions in all alternatives of all rules.
 	 *  Doesn't track sempreds.  maps tree node to action index (alt number 1..n).
  	 */
-	public Dictionary<ActionAST, Integer> lexerActions = new LinkedHashMap<ActionAST, Integer>();
+	public Dictionary<ActionAST, Integer> lexerActions = new();
 
 	/** All sempreds found in grammar; maps tree node to sempred index;
 	 *  sempred index is 0..n-1
 	 */
-	public Dictionary<PredAST, Integer> sempreds = new LinkedHashMap<PredAST, Integer>();
+	public Dictionary<PredAST, Integer> sempreds = new ();
 	/** Map the other direction upon demand */
 	public Dictionary<Integer, PredAST> indexToPredMap;
 
@@ -222,11 +223,11 @@ public class Grammar : AttributeResolver {
 
 	public Grammar(Tool tool, GrammarRootAST ast) {
 		if ( ast==null ) {
-			throw new NullPointerException("ast");
+			throw new NullReferenceException("ast");
 		}
 
 		if (ast.tokenStream == null) {
-			throw new IllegalArgumentException("ast must have a token stream");
+			throw new ArgumentException("ast must have a token stream");
 		}
 
         this.tool = tool;
@@ -338,7 +339,7 @@ public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, AN
 		this.loadImportedGrammars(new ());
 	}
 
-    private void loadImportedGrammars(Set<String> visited) {
+    private void loadImportedGrammars(HashSet<String> visited) {
 		if ( ast==null ) return;
         GrammarAST i = (GrammarAST)ast.getFirstChildWithType(ANTLRParser.IMPORT);
         if ( i==null ) return;

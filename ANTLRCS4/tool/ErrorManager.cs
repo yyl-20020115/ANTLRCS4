@@ -4,10 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.tool;
 
 public class ErrorManager {
-	private readonly static Map<String, STGroupFile> loadedFormats = new HashMap<>();
+	private readonly static Dictionary<String, STGroupFile> loadedFormats = new ();
 
 	public static readonly String FORMATS_DIR = "org/antlr/v4/tool/templates/messages/formats/";
 
@@ -103,9 +106,9 @@ public class ErrorManager {
 
 	public void syntaxError(ErrorType etype,
 								   String fileName,
-								   org.antlr.runtime.Token token,
-								   org.antlr.runtime.RecognitionException antlrException,
-								   Object... args)
+								   Token token,
+								   RecognitionException antlrException,
+								   params Object[] args)
 	{
 		ANTLRMessage msg = new GrammarSyntaxMessage(etype,fileName,token,antlrException,args);
 		emit(etype, msg);
@@ -116,7 +119,7 @@ public class ErrorManager {
 		throw new RuntimeException(error, e);
 	}
 
-	public static void internalError(String error, Throwable e) {
+	public static void internalError(String error, Exception e) {
         StackTraceElement location = getLastNonErrorManagerCodeLocation(e);
 		internalError("Exception "+e+"@"+location+": "+error);
     }
@@ -125,7 +128,7 @@ public class ErrorManager {
         StackTraceElement location =
             getLastNonErrorManagerCodeLocation(new Exception());
         String msg = location+": "+error;
-        System.err.println("internal error: "+msg);
+        Console.Error.WriteLine("internal error: "+msg);
     }
 
     /**
@@ -134,26 +137,26 @@ public class ErrorManager {
      * @param errorType The Message Descriptor
      * @param args The arguments to pass to the StringTemplate
      */
-	public void toolError(ErrorType errorType, Object... args) {
+	public void toolError(ErrorType errorType, params Object[] args) {
 		toolError(errorType, null, args);
 	}
 
-	public void toolError(ErrorType errorType, Throwable e, Object... args) {
+	public void toolError(ErrorType errorType, Exception e, params Object[] args) {
 		ToolMessage msg = new ToolMessage(errorType, e, args);
 		emit(errorType, msg);
 	}
 
     public void grammarError(ErrorType etype,
 							 String fileName,
-							 org.antlr.runtime.Token token,
-							 Object... args)
+							 Token token,
+							 params Object[] args)
 	{
         ANTLRMessage msg = new GrammarSemanticsMessage(etype,fileName,token,args);
 		emit(etype, msg);
 
 	}
 
-	public void leftRecursionCycles(String fileName, Collection<? : Collection<Rule>> cycles) {
+	public void leftRecursionCycles(String fileName, ICollection<ICollection<Rule>> cycles) {
 		errors++;
 		ANTLRMessage msg = new LeftRecursionCyclesMessage(fileName, cycles);
 		tool.error(msg);
@@ -164,7 +167,7 @@ public class ErrorManager {
     }
 
     /** Return first non ErrorManager code location for generating messages */
-    private static StackTraceElement getLastNonErrorManagerCodeLocation(Throwable e) {
+    private static StackTraceElement getLastNonErrorManagerCodeLocation(Exception e) {
         StackTraceElement[] stack = e.getStackTrace();
         int i = 0;
         for (; i < stack.length; i++) {
@@ -183,14 +186,14 @@ public class ErrorManager {
 	public void emit(ErrorType etype, ANTLRMessage msg) {
 		switch ( etype.severity ) {
 			case WARNING_ONE_OFF:
-				if ( errorTypes.contains(etype) ) break;
+				if ( errorTypes.Contains(etype) ) break;
 				// fall thru
 			case WARNING:
 				warnings++;
 				tool.warning(msg);
 				break;
 			case ERROR_ONE_OFF:
-				if ( errorTypes.contains(etype) ) break;
+				if ( errorTypes.Contains(etype) ) break;
 				// fall thru
 			case ERROR:
 				errors++;

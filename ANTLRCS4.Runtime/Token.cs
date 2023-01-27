@@ -47,10 +47,29 @@ public interface Token
 	 */
 	public const int MIN_USER_CHANNEL_VALUE = 2;
 
-	/**
+    public const int EOR_TOKEN_TYPE = 1;
+
+    /** imaginary tree navigation type; traverse "get child" link */
+    public const int DOWN = 2;
+    /** imaginary tree navigation type; finish with a child list */
+    public const int UP = 3;
+
+    public const int MIN_TOKEN_TYPE = UP + 1;
+
+    public const int INVALID_TOKEN_TYPE = 0;
+    public static readonly Token INVALID_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
+
+    /** In an action, a lexer rule can set token to this SKIP_TOKEN and ANTLR
+	 *  will avoid creating a token for this symbol and try to fetch another.
+	 */
+    public static readonly Token SKIP_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
+
+
+
+    /**
 	 * Get the text of the token.
 	 */
-	String getText();
+    String getText();
 
 	/** Get the token type of the token */
 	int getType();

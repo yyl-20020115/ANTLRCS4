@@ -4,13 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using System.Reflection.Metadata;
+using static org.antlr.v4.automata.ATNFactory;
 
 namespace org.antlr.v4.automata;
 
@@ -352,7 +353,7 @@ public class ParserATNFactory : ATNFactory {
 	//@Override
 	public Handle block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts) {
 		if ( ebnfRoot==null ) {
-			if ( alts.size()==1 ) {
+			if ( alts.Count==1 ) {
 				Handle h = alts.get(0);
 				blkAST.atnState = h.left;
 				return h;

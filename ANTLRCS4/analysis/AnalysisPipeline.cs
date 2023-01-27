@@ -8,6 +8,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.analysis;
 
@@ -24,7 +25,7 @@ public class AnalysisPipeline {
 		// LEFT-RECURSION CHECK
 		LeftRecursionDetector lr = new LeftRecursionDetector(g, g.atn);
 		lr.check();
-		if ( !lr.listOfRecursiveCycles.isEmpty() ) return; // bail out
+		if ( lr.listOfRecursiveCycles.Count>0 ) return; // bail out
 
 		if (g.isLexer()) {
 			processLexer();
@@ -37,7 +38,7 @@ public class AnalysisPipeline {
 
 	protected void processLexer() {
 		// make sure all non-fragment lexer rules must match at least one symbol
-		foreach (Rule rule in g.rules.values()) {
+		foreach (Rule rule in g.rules.Values) {
 			if (rule.isFragment()) {
 				continue;
 			}
@@ -66,7 +67,7 @@ public class AnalysisPipeline {
 
 			//assert s.decision + 1 >= g.decisionLOOK.size();
 			Utils.setSize(g.decisionLOOK, s.decision+1);
-			g.decisionLOOK.set(s.decision, look);
+			g.decisionLOOK[s.decision]= look;
 			g.tool.log("LL1", "LL(1)? " + disjoint(look));
 		}
 	}

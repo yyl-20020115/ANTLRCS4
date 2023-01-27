@@ -16,7 +16,7 @@ namespace org.antlr.v4.parse;
 public class ToolANTLRParser : ANTLRParser {
 	public Tool tool;
 
-	public ToolANTLRParser(TokenStream<T> input, Tool tool):base(input) {
+	public ToolANTLRParser(TokenStream input, Tool tool):base(input) {
 		this.tool = tool;
 	}
 
@@ -50,7 +50,7 @@ public class ToolANTLRParser : ANTLRParser {
 	}
 
 	//@Override
-	public void grammarError(ErrorType etype, org.antlr.runtime.Token token, Object... args) {
+	public void grammarError(ErrorType etype, Token token, params Object[] args) {
 		tool.errMgr.grammarError(etype, getSourceName(), token, args);
 	}
 }

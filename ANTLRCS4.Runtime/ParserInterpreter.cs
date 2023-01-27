@@ -236,7 +236,7 @@ public class ParserInterpreter : Parser {
 			case Transition.RANGE:
 			case Transition.SET:
 			case Transition.NOT_SET:
-				if (!transition.matches(_input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535)) {
+				if (!transition.matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535)) {
 					recoverInline();
 				}
 				matchWildcard();
@@ -293,14 +293,14 @@ public class ParserInterpreter : Parser {
 		if ( p.getNumberOfTransitions()>1 ) {
 			getErrorHandler().sync(this);
 			int decision = p.decision;
-			if ( decision == overrideDecision && _input.index() == overrideDecisionInputIndex &&
+			if ( decision == overrideDecision && input.index() == overrideDecisionInputIndex &&
 			     !overrideDecisionReached )
 			{
 				predictedAlt = overrideDecisionAlt;
 				overrideDecisionReached = true;
 			}
 			else {
-				predictedAlt = getInterpreter().adaptivePredict(_input, decision, _ctx);
+				predictedAlt = getInterpreter().adaptivePredict(input, decision, _ctx);
 			}
 		}
 		return predictedAlt;
@@ -387,9 +387,9 @@ public class ParserInterpreter : Parser {
 	 *  tree.
 	 */
 	protected void recover(RecognitionException e) {
-		int i = _input.index();
+		int i = input.index();
 		getErrorHandler().recover(this, e);
-		if ( _input.index()==i ) {
+		if ( input.index()==i ) {
 			// no input consumed, better add an error node
 			if ( e is InputMismatchException ) {
 				InputMismatchException ime = (InputMismatchException)e;

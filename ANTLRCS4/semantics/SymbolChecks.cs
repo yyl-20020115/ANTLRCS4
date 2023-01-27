@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.automata;
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -167,7 +168,7 @@ public class SymbolChecks {
 			// See https://github.com/antlr/antlr4/pull/1585
 			// Such behavior is referring to the fact that the warning is typically reported on the actual label redefinition,
 			//   but for left-recursive rules the warning is reported on the enclosing rule.
-			org.antlr.runtime.Token token = r is LeftRecursiveRule
+			Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
 			errMgr.grammarError(
@@ -181,7 +182,7 @@ public class SymbolChecks {
 			(prevLabelPair.type.equals(LabelType.RULE_LABEL) || prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL)) &&
 			(labelPair.type.equals(LabelType.RULE_LABEL) || labelPair.type.equals(LabelType.RULE_LIST_LABEL))) {
 
-			org.antlr.runtime.Token token = r is LeftRecursiveRule
+			Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
 			String prevLabelOp = prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";

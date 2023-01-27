@@ -23,7 +23,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
         //@Override
         public void enterEveryRule(ParserRuleContext ctx) {
 			Console.Out.WriteLine("enter   " + this.parser.getRuleNames()[ctx.getRuleIndex()] +
-							   ", LT(1)=" + this.parser._input.LT(1).getText());
+							   ", LT(1)=" + this.parser.input.LT(1).getText());
 		}
 
 		//@Override
@@ -39,7 +39,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		//@Override
 		public void exitEveryRule(ParserRuleContext ctx) {
 			Console.Out.WriteLine("exit    "+ this.parser.getRuleNames()[ctx.getRuleIndex()]+
-							   ", LT(1)="+ this.parser._input.LT(1).getText());
+							   ", LT(1)="+ this.parser.input.LT(1).getText());
 		}
 	}
 
@@ -89,7 +89,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * @see #getInputStream
 	 * @see #setInputStream
 	 */
-	protected TokenStream _input;
+	protected TokenStream input;
 
 	protected readonly IntegerStack _precedenceStack = new IntegerStack();
 	//{
@@ -409,13 +409,13 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 	//@Override
 	public override TokenFactory getTokenFactory() {
-		return _input.getTokenSource().getTokenFactory();
+		return input.getTokenSource().getTokenFactory();
 	}
 
 	/** Tell our token source and error strategy about a new way to create tokens. */
 	//@Override
 	public override void setTokenFactory(TokenFactory factory) {
-		_input.getTokenSource().setTokenFactory(factory);
+		input.getTokenSource().setTokenFactory(factory);
 	}
 
 	/**
@@ -494,14 +494,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	public TokenStream getTokenStream() {
-		return _input;
+		return input;
 	}
 
 	/** Set the token stream and reset the parser. */
 	public void setTokenStream(TokenStream input) {
-		this._input = null;
+		this.input = null;
 		reset();
-		this._input = input;
+		this.input = input;
 	}
 
     /** Match needs to return the current input symbol, which gets put
@@ -509,7 +509,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
      */
 
     public Token getCurrentToken() {
-		return _input.LT(1);
+		return input.LT(1);
 	}
 
 	public void notifyErrorListeners(String msg)	{
@@ -610,7 +610,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	public void enterRule(ParserRuleContext localctx, int state, int ruleIndex) {
 		setState(state);
 		_ctx = localctx;
-		_ctx.start = _input.LT(1);
+		_ctx.start = input.LT(1);
 		if (_buildParseTrees) addContextToParseTree();
         if ( _parseListeners != null) triggerEnterRuleEvent();
 	}
@@ -618,10 +618,10 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
     public void exitRule() {
 		if ( matchedEOF ) {
 			// if we have matched EOF, it cannot consume past EOF so we use LT(1) here
-			_ctx.stop = _input.LT(1); // LT(1) will be end of file
+			_ctx.stop = input.LT(1); // LT(1) will be end of file
 		}
 		else {
-			_ctx.stop = _input.LT(-1); // stop node is what we just matched
+			_ctx.stop = input.LT(-1); // stop node is what we just matched
 		}
         // trigger event on _ctx, before it reverts to parent
         if ( _parseListeners != null) triggerExitRuleEvent();
@@ -670,7 +670,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		setState(state);
 		_precedenceStack.push(precedence);
 		_ctx = localctx;
-		_ctx.start = _input.LT(1);
+		_ctx.start = input.LT(1);
 		if (_parseListeners != null) {
 			triggerEnterRuleEvent(); // simulates rule entry for left-recursive rules
 		}
@@ -683,7 +683,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		ParserRuleContext previous = _ctx;
 		previous.parent = localctx;
 		previous.invokingState = state;
-		previous.stop = _input.LT(-1);
+		previous.stop = input.LT(-1);
 
 		_ctx = localctx;
 		_ctx.start = previous.start;
@@ -698,7 +698,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 
 	public void unrollRecursionContexts(ParserRuleContext _parentctx) {
 		_precedenceStack.pop();
-		_ctx.stop = _input.LT(-1);
+		_ctx.stop = input.LT(-1);
 		ParserRuleContext retctx = _ctx; // save current ctx (return value)
 
 		// unroll so _ctx is as it was before call to recursive method
@@ -879,7 +879,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
     }
 
 	public String getSourceName() {
-		return _input.getSourceName();
+		return input.getSourceName();
 	}
 
 	//@Override

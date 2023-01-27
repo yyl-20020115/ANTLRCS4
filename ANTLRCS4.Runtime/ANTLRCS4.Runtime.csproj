@@ -12,4 +12,8 @@
     <None Remove="main\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="misc\TestRig.cs" />
+  </ItemGroup>
+
 </Project>

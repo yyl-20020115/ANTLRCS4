@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.misc;
 using org.antlr.v4.runtime;

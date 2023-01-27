@@ -90,13 +90,13 @@ public class XPathLexer : Lexer {
 
 	//@Override
 	public override Token nextToken() {
-		_tokenStartCharIndex = _input.index();
+		_tokenStartCharIndex = input.index();
 		CommonToken t = null;
 		while ( t==null ) {
-			switch ( _input.LA(1) ) {
+			switch ( input.LA(1) ) {
 				case '/':
 					consume();
-					if ( _input.LA(1)=='/' ) {
+					if ( input.LA(1)=='/' ) {
 						consume();
 						t = new CommonToken(ANYWHERE, "//");
 					}
@@ -119,13 +119,13 @@ public class XPathLexer : Lexer {
 				case CharStream.EOF :
 					return new CommonToken(EOF, "<EOF>");
 				default:
-					if ( isNameStartChar(_input.LA(1)) ) {
+					if ( isNameStartChar(input.LA(1)) ) {
 						String id = matchID();
 						if ( char.IsUpper(id[0]) ) t = new CommonToken(TOKEN_REF, id);
 						else t = new CommonToken(RULE_REF, id);
 					}
 					else {
-						throw new LexerNoViableAltException(this, _input, _tokenStartCharIndex, null);
+						throw new LexerNoViableAltException(this, input, _tokenStartCharIndex, null);
 					}
 					break;
 			}
@@ -137,7 +137,7 @@ public class XPathLexer : Lexer {
 	}
 
 	public void consume() {
-		int curChar = _input.LA(1);
+		int curChar = input.LA(1);
 		if ( curChar=='\n' ) {
 			line++;
 			charPositionInLine=0;
@@ -145,7 +145,7 @@ public class XPathLexer : Lexer {
 		else {
 			charPositionInLine++;
 		}
-		_input.consume();
+		input.consume();
 	}
 
 	//@Override
@@ -154,22 +154,22 @@ public class XPathLexer : Lexer {
 	}
 
 	public String matchID() {
-		int start = _input.index();
+		int start = input.index();
 		consume(); // drop start char
-		while ( isNameChar(_input.LA(1)) ) {
+		while ( isNameChar(input.LA(1)) ) {
 			consume();
 		}
-		return _input.getText(Interval.of(start,_input.index()-1));
+		return input.getText(Interval.of(start,input.index()-1));
 	}
 
 	public String matchString() {
-		int start = _input.index();
+		int start = input.index();
 		consume(); // drop first quote
-		while ( _input.LA(1)!='\'' ) {
+		while ( input.LA(1)!='\'' ) {
 			consume();
 		}
 		consume(); // drop last quote
-		return _input.getText(Interval.of(start,_input.index()-1));
+		return input.getText(Interval.of(start,input.index()-1));
 	}
 
 	public bool isNameChar(int c) { return char.IsLetterOrDigit((char)c); }

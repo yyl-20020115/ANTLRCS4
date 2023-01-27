@@ -7,6 +7,7 @@
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using Attribute = org.antlr.v4.tool.Attribute;
 
 namespace org.antlr.v4.parse;
 
@@ -42,9 +43,9 @@ public class ScopeParser {
 	public static AttributeDict parse(ActionAST action, String s, char separator, Grammar g) {
 		AttributeDict dict = new AttributeDict();
 		List<Pair<String, int>> decls = splitDecls(s, separator);
-		for (Pair<String, int> decl : decls) {
-			if (decl.a.trim().length() > 0) {
-				Attribute a = parseAttributeDef(action, decl, g);
+		foreach (Pair<String, int> decl in decls) {
+			if (decl.a.Trim().Length > 0) {
+				tool.Attribute a = parseAttributeDef(action, decl, g);
 				dict.add(a);
 			}
 		}

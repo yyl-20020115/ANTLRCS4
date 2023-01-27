@@ -4,30 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
+using org.antlr.v4.runtime.tree;
 
-import org.abego.treelayout.Configuration;
-import org.abego.treelayout.NodeExtentProvider;
-import org.abego.treelayout.TreeForTreeLayout;
-import org.abego.treelayout.TreeLayout;
-import org.abego.treelayout.util.DefaultConfiguration;
-import org.antlr.v4.runtime.misc.Utils;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.Tree;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.List;
+namespace org.antlr.v4.gui;
 
 public class TreePostScriptGenerator {
-	public class VariableExtentProvide implements NodeExtentProvider<Tree> {
-		@Override
+	public class VariableExtentProvide : NodeExtentProvider<Tree> {
+		//@Override
 		public double getWidth(Tree tree) {
 			String s = getText(tree);
 			return doc.getWidth(s) + nodeWidthPadding*2;
 		}
 
-		@Override
+		//@Override
 		public double getHeight(Tree tree) {
 			String s = getText(tree);
 			double h =

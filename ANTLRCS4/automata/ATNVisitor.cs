@@ -5,7 +5,6 @@
  */
 
 using org.antlr.v4.runtime.atn;
-using System.Collections.Generic;
 
 namespace org.antlr.v4.automata;
 
@@ -21,8 +20,8 @@ public class ATNVisitor {
 	}
 
 	public void visit_(ATNState s, HashSet<int> visited) {
-		if ( !visited.add(s.stateNumber) ) return;
-		visited.add(s.stateNumber);
+		if ( !visited.Add(s.stateNumber) ) return;
+		visited.Add(s.stateNumber);
 
 		visitState(s);
 		int n = s.getNumberOfTransitions();
