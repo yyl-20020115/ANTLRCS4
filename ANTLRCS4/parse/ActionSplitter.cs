@@ -25,8 +25,9 @@ public class ActionSplitter : Lexer
     ActionSplitterListener @delegate;
 
     public ActionSplitter(CharStream input, ActionSplitterListener @delegate)
+        : this(input, new RecognizerSharedState())
     {
-        this(input, new RecognizerSharedState());
+        ;
         this.@delegate = @delegate;
     }
 
@@ -58,12 +59,12 @@ public class ActionSplitter : Lexer
 
     public ActionSplitter() { }
     public ActionSplitter(CharStream input)
+        : this(input, new RecognizerSharedState())
     {
-        this(input, new RecognizerSharedState());
     }
     public ActionSplitter(CharStream input, RecognizerSharedState state)
+        : base(input, state) 
     {
-        super(input, state);
     }
     //@Override 
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
@@ -120,13 +121,13 @@ public class ActionSplitter : Lexer
             int ruleIndex,
             int ruleStartIndex)
     {
-        if (state.backtracking > 1) super.memoize(input, ruleIndex, ruleStartIndex);
+        if (state.backtracking > 1) base.memoize(input, ruleIndex, ruleStartIndex);
     }
 
     //@Override
-    public override bool alreadyParsedRule(IntStream input, int ruleIndex)
+    public bool alreadyParsedRule(IntStream input, int ruleIndex)
     {
-        if (state.backtracking > 1) return super.alreadyParsedRule(input, ruleIndex);
+        if (state.backtracking > 1) return base.alreadyParsedRule(input, ruleIndex);
         return false;
     }
     // $ANTLR start "COMMENT"
