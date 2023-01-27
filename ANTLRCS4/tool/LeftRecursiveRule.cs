@@ -5,22 +5,24 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.misc;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
-package org.antlr.v4.tool;
+namespace org.antlr.v4.tool;
 
 public class LeftRecursiveRule : Rule {
 	public List<LeftRecursiveRuleAltInfo> recPrimaryAlts;
-	public OrderedHashMap<Integer, LeftRecursiveRuleAltInfo> recOpAlts;
+	public OrderedHashMap<int, LeftRecursiveRuleAltInfo> recOpAlts;
 	public RuleAST originalAST;
 
 	/** Did we delete any labels on direct left-recur refs? Points at ID of ^(= ID el) */
 	public List<Pair<GrammarAST,String>> leftRecursiveRuleRefLabels =
-		new ArrayList<Pair<GrammarAST,String>>();
+		new ();
 
-	public LeftRecursiveRule(Grammar g, String name, RuleAST ast) {
-		super(g, name, ast, 1);
+	public LeftRecursiveRule(Grammar g, String name, RuleAST ast):base(g, name, ast, 1)
+    {
 		originalAST = ast;
 		alt = new Alternative[numberOfAlts+1]; // always just one
 		for (int i=1; i<=numberOfAlts; i++) alt[i] = new Alternative(this, i);
@@ -28,14 +30,14 @@ public class LeftRecursiveRule : Rule {
 
 	//@Override
 	public bool hasAltSpecificContexts() {
-		return super.hasAltSpecificContexts() || getAltLabels()!=null;
+		return base.hasAltSpecificContexts() || getAltLabels()!=null;
 	}
 
 	////@Override
 	public int getOriginalNumberOfAlts() {
 		int n = 0;
-		if ( recPrimaryAlts!=null ) n += recPrimaryAlts.size();
-		if ( recOpAlts!=null ) n += recOpAlts.size();
+		if ( recPrimaryAlts!=null ) n += recPrimaryAlts.Count;
+		if ( recOpAlts!=null ) n += recOpAlts.Count;
 		return n;
 	}
 
@@ -45,15 +47,15 @@ public class LeftRecursiveRule : Rule {
 
 	//@Override
 	public List<AltAST> getUnlabeledAltASTs() {
-		List<AltAST> alts = new ArrayList<AltAST>();
-		for (LeftRecursiveRuleAltInfo altInfo : recPrimaryAlts) {
-			if (altInfo.altLabel == null) alts.add(altInfo.originalAltAST);
+		List<AltAST> alts = new ();
+		foreach (LeftRecursiveRuleAltInfo altInfo in recPrimaryAlts) {
+			if (altInfo.altLabel == null) alts.Add(altInfo.originalAltAST);
 		}
-		for (int i = 0; i < recOpAlts.size(); i++) {
+		for (int i = 0; i < recOpAlts.Count; i++) {
 			LeftRecursiveRuleAltInfo altInfo = recOpAlts.getElement(i);
-			if ( altInfo.altLabel==null ) alts.add(altInfo.originalAltAST);
+			if ( altInfo.altLabel==null ) alts.Add(altInfo.originalAltAST);
 		}
-		if ( alts.isEmpty() ) return null;
+		if ( alts.Count==0 ) return null;
 		return alts;
 	}
 
@@ -71,10 +73,10 @@ public class LeftRecursiveRule : Rule {
 	 *  @since 4.5.1
 	 */
 	public int[] getPrimaryAlts() {
-		if ( recPrimaryAlts.size()==0 ) return null;
-		int[] alts = new int[recPrimaryAlts.size()+1];
-		for (int i = 0; i < recPrimaryAlts.size(); i++) { // recPrimaryAlts is a List not Map like recOpAlts
-			LeftRecursiveRuleAltInfo altInfo = recPrimaryAlts.get(i);
+		if ( recPrimaryAlts.Count==0 ) return null;
+		int[] alts = new int[recPrimaryAlts.Count+1];
+		for (int i = 0; i < recPrimaryAlts.Count; i++) { // recPrimaryAlts is a List not Map like recOpAlts
+			LeftRecursiveRuleAltInfo altInfo = recPrimaryAlts[(i)];
 			alts[i+1] = altInfo.altNum;
 		}
 		return alts;
@@ -94,10 +96,10 @@ public class LeftRecursiveRule : Rule {
 	 *  @since 4.5.1
 	 */
 	public int[] getRecursiveOpAlts() {
-		if ( recOpAlts.size()==0 ) return null;
-		int[] alts = new int[recOpAlts.size()+1];
+		if ( recOpAlts.Count==0 ) return null;
+		int[] alts = new int[recOpAlts.Count+1];
 		int alt = 1;
-		for (LeftRecursiveRuleAltInfo altInfo : recOpAlts.values()) {
+		foreach (LeftRecursiveRuleAltInfo altInfo in recOpAlts.Values) {
 			alts[alt] = altInfo.altNum;
 			alt++; // recOpAlts has alts possibly with gaps
 		}
@@ -106,38 +108,39 @@ public class LeftRecursiveRule : Rule {
 
 	/** Get -&gt; labels from those alts we deleted for left-recursive rules. */
 	//@Override
-	public Map<String, List<Pair<Integer, AltAST>>> getAltLabels() {
-		Map<String, List<Pair<Integer, AltAST>>> labels = new HashMap<String, List<Pair<Integer, AltAST>>>();
-		Map<String, List<Pair<Integer, AltAST>>> normalAltLabels = super.getAltLabels();
-		if ( normalAltLabels!=null ) labels.putAll(normalAltLabels);
+	public Dictionary<String, List<Pair<int, AltAST>>> getAltLabels() {
+        Dictionary<String, List<Pair<int, AltAST>>> labels = new ();
+        Dictionary<String, List<Pair<int, AltAST>>> normalAltLabels = base.getAltLabels();
+		if (normalAltLabels != null)
+		{
+			labels= new(normalAltLabels);
+		}
 		if ( recPrimaryAlts!=null ) {
-			for (LeftRecursiveRuleAltInfo altInfo : recPrimaryAlts) {
+			foreach (LeftRecursiveRuleAltInfo altInfo in recPrimaryAlts) {
 				if (altInfo.altLabel != null) {
-					List<Pair<Integer, AltAST>> pairs = labels.get(altInfo.altLabel);
-					if (pairs == null) {
-						pairs = new ArrayList<Pair<Integer, AltAST>>();
-						labels.put(altInfo.altLabel, pairs);
+					if (!labels.TryGetValue(altInfo.altLabel,out var pairs)) {
+						pairs = new ();
+						labels[altInfo.altLabel]= pairs;
 					}
 
-					pairs.add(new Pair<Integer, AltAST>(altInfo.altNum, altInfo.originalAltAST));
+					pairs.Add(new Pair<int, AltAST>(altInfo.altNum, altInfo.originalAltAST));
 				}
 			}
 		}
 		if ( recOpAlts!=null ) {
-			for (int i = 0; i < recOpAlts.size(); i++) {
+			for (int i = 0; i < recOpAlts.Count; i++) {
 				LeftRecursiveRuleAltInfo altInfo = recOpAlts.getElement(i);
 				if ( altInfo.altLabel!=null ) {
-					List<Pair<Integer, AltAST>> pairs = labels.get(altInfo.altLabel);
-					if (pairs == null) {
-						pairs = new ArrayList<Pair<Integer, AltAST>>();
-						labels.put(altInfo.altLabel, pairs);
+					if (!labels.TryGetValue(altInfo.altLabel,out var pairs)) {
+						pairs = new ();
+						labels.Add(altInfo.altLabel, pairs);
 					}
 
-					pairs.add(new Pair<Integer, AltAST>(altInfo.altNum, altInfo.originalAltAST));
+					pairs.Add(new Pair<int, AltAST>(altInfo.altNum, altInfo.originalAltAST));
 				}
 			}
 		}
-		if ( labels.isEmpty() ) return null;
+		if ( labels.Count==0 ) return null;
 		return labels;
 	}
 }

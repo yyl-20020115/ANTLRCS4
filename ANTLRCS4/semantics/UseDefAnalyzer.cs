@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.semantics;
 /** Look for errors and deadcode stuff */
 public class UseDefAnalyzer {
@@ -21,9 +23,9 @@ public class UseDefAnalyzer {
 	}
 
 	public static boolean actionIsContextDependent(ActionAST actionAST) {
-		ANTLRStringStream in = new ANTLRStringStream(actionAST.token.getText());
-		in.setLine(actionAST.token.getLine());
-		in.setCharPositionInLine(actionAST.token.getCharPositionInLine());
+		ANTLRStringStream @in = new ANTLRStringStream(actionAST.token.getText());
+		@in.setLine(actionAST.token.getLine());
+		@in.setCharPositionInLine(actionAST.token.getCharPositionInLine());
 		final boolean[] dependent = new boolean[] {false}; // can't be simple bool with anon class
 		ActionSplitterListener listener = new BlankActionSplitterListener() {
 			@Override

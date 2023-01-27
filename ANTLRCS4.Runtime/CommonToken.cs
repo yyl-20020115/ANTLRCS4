@@ -282,4 +282,13 @@ public class CommonToken : WritableToken /*Serializable*/
 		return "[@"+getTokenIndex()+","+start+":"+stop+"='"+txt+"',<"+typeString+">"+channelStr+","+line+":"+getCharPositionInLine()+"]";
 	}
 
+    public void setTokenSource(TokenSource tokenSource)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setInputStream(CharStream input)
+    {
+        throw new NotImplementedException();
+    }
 }

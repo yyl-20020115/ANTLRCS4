@@ -432,7 +432,7 @@ public class SymbolChecks {
 	}
 
 	public void checkForQualifiedRuleIssues(Grammar g, List<GrammarAST> qualifiedRuleRefs) {
-		for (GrammarAST dot : qualifiedRuleRefs) {
+        foreach (GrammarAST dot in qualifiedRuleRefs) {
 			GrammarAST grammar = (GrammarAST)dot.getChild(0);
 			GrammarAST rule = (GrammarAST)dot.getChild(1);
 			g.tool.log("semantics", grammar.getText()+"."+rule.getText());

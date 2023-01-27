@@ -128,7 +128,7 @@ public class ScopeParser {
 			attr.token = new CommonToken(action.getToken().getInputStream(), ANTLRParser.ID, BaseRecognizer.DEFAULT_TOKEN_CHANNEL, offset + declOffset + idStart + 1, offset + declOffset + idStop);
 			attr.token.setLine(line);
 			attr.token.setCharPositionInLine(charPositionInLine);
-			assert attr.name.equals(attr.token.getText()) : "Attribute text should match the pseudo-token text at this point.";
+			//assert attr.name.equals(attr.token.getText()) : "Attribute text should match the pseudo-token text at this point.";
 		}
 
 		return attr;
@@ -335,8 +335,8 @@ public class ScopeParser {
 				index++;
 			}
 			//System.out.println("arg="+arg);
-			if (arg.length() > 0) {
-				args.add(new Pair<String, int>(arg.trim(), index));
+			if (arg.Length > 0) {
+				args.Add(new Pair<String, int>(arg.Trim(), index));
 			}
 		}
 		p++;

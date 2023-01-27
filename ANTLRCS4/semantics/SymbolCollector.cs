@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -49,7 +50,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 	//@Override
 	public void globalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action) {
 		action.setScope(scope);
-		namedActions.add((GrammarAST)ID.getParent());
+		namedActions.Add((GrammarAST)ID.getParent());
 		action.resolver = g;
 	}
 
@@ -62,7 +63,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 
 	//@Override
 	public void defineChannel(GrammarAST ID) {
-		channelDefs.add(ID);
+		channelDefs.Add(ID);
 	}
 
 	//@Override
@@ -103,7 +104,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 	//@Override
 	public void ruleCatch(GrammarAST arg, ActionAST action) {
 		GrammarAST catchme = (GrammarAST)action.getParent();
-		currentRule.exceptions.add(catchme);
+		currentRule.exceptions.Add(catchme);
 		action.resolver = currentRule;
 	}
 
@@ -120,29 +121,29 @@ public class SymbolCollector : GrammarTreeVisitor {
 	}
 
 	//@Override
-	public void stringRef(TerminalAST ref) {
-		terminals.add(ref);
-		strings.add(ref.getText());
+	public void stringRef(TerminalAST @ref) {
+		terminals.Add(@ref);
+		strings.Add(@ref.getText());
 		if ( currentRule!=null ) {
-			currentRule.alt[currentOuterAltNumber].tokenRefs.map(ref.getText(), ref);
+			currentRule.alt[currentOuterAltNumber].tokenRefs.map(@ref.getText(), @ref);
 		}
 	}
 
 	//@Override
-	public void tokenRef(TerminalAST ref) {
-		terminals.add(ref);
-		tokenIDRefs.add(ref);
+	public void tokenRef(TerminalAST @ref) {
+		terminals.Add(@ref);
+		tokenIDRefs.Add(@ref);
 		if ( currentRule!=null ) {
-			currentRule.alt[currentOuterAltNumber].tokenRefs.map(ref.getText(), ref);
+			currentRule.alt[currentOuterAltNumber].tokenRefs.map(@ref.getText(), @ref);
 		}
 	}
 
 	//@Override
-	public void ruleRef(GrammarAST ref, ActionAST arg) {
-//		if ( inContext("DOT ...") ) qualifiedRulerefs.add((GrammarAST)ref.getParent());
-		rulerefs.add(ref);
+	public void ruleRef(GrammarAST @ref, ActionAST arg) {
+//		if ( inContext("DOT ...") ) qualifiedRulerefs.add((GrammarAST)@ref.getParent());
+		rulerefs.Add(@ref);
     	if ( currentRule!=null ) {
-    		currentRule.alt[currentOuterAltNumber].ruleRefs.map(ref.getText(), ref);
+    		currentRule.alt[currentOuterAltNumber].ruleRefs.map(@ref.getText(), @ref);
     	}
 	}
 

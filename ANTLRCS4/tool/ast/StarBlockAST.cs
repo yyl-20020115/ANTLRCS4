@@ -22,14 +22,14 @@ public class StarBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
 		_greedy = nongreedy == null;
 	}
 
-	@Override
-	public boolean isGreedy() {
+	//@Override
+	public bool isGreedy() {
 		return _greedy;
 	}
 
-	@Override
-	public StarBlockAST dupNode() { return new StarBlockAST(this); }
+    //@Override
+    public StarBlockAST dupNode() { return new StarBlockAST(this); }
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

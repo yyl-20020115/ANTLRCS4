@@ -38,7 +38,7 @@ public class DOTGenerator {
 		dot.add("rankdir", rankdir);
 
 		// define stop states first; seems to be a bug in DOT where doublecircle
-		for (DFAState d : dfa.states.keySet()) {
+		foreach (DFAState d in dfa.states.keySet()) {
 			if ( !d.isAcceptState ) continue;
 			ST st = stlib.getInstanceOf("stopstate");
 			st.add("name", "s"+d.stateNumber);

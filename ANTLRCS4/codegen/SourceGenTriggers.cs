@@ -274,7 +274,7 @@ public class SourceGenTriggers : TreeParser
                                 alternative1 = alternative();
                                 state._fsp--;
 
-                                alts.add((alternative1 != null ? ((SourceGenTriggers.alternative_return)alternative1).altCodeBlock : null));
+                                alts.Add((alternative1 != null ? ((SourceGenTriggers.alternative_return)alternative1).altCodeBlock : null));
                             }
                             break;
 

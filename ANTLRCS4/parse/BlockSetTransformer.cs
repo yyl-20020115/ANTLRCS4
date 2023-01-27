@@ -2,11 +2,13 @@
 
 using org.antlr.runtime;
 using org.antlr.runtime.tree;
+using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using Utils = org.antlr.v4.runtime.misc.Utils;
 
 namespace org.antlr.v4.parse;
 public class BlockSetTransformer : TreeRewriter

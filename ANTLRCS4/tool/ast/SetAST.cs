@@ -10,17 +10,16 @@ namespace org.antlr.v4.tool.ast;
 
 public class SetAST : GrammarAST , RuleElementAST {
 
-	public SetAST(SetAST node) {
-		super(node);
+	public SetAST(SetAST node):base(node) {
 	}
 
-	public SetAST(int type, Token t, String text) { super(type,t,text); }
+	public SetAST(int type, Token t, String text):base(type,t,text) {  }
 
-	@Override
+	//@Override
 	public SetAST dupNode() {
 		return new SetAST(this);
 	}
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

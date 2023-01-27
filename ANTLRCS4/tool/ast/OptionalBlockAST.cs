@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool.ast;
+
 package org.antlr.v4.tool.ast;
 
 import org.antlr.runtime.Token;
@@ -21,15 +23,15 @@ public class OptionalBlockAST : GrammarAST implements RuleElementAST, Quantifier
 		_greedy = nongreedy == null;
 	}
 
-	@Override
+	//@Override
 	public bool isGreedy() {
 		return _greedy;
 	}
 
-	@Override
+	//@Override
 	public OptionalBlockAST dupNode() { return new OptionalBlockAST(this); }
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 
 }

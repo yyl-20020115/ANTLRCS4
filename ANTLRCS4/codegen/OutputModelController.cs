@@ -20,7 +20,7 @@ public class OutputModelController {
 	public OutputModelFactory @delegate;
 
 	/** Post-processing CodeGeneratorExtension objects; done in order given. */
-	public List<CodeGeneratorExtension> extensions = new ArrayList<CodeGeneratorExtension>();
+	public List<CodeGeneratorExtension> extensions = new ();
 
 	/** While walking code in rules, this is set to the tree walker that
 	 *  triggers actions.
@@ -37,7 +37,7 @@ public class OutputModelController {
 	public CodeBlockForOuterMostAlt currentOuterMostAlternativeBlock;
 
 	public OutputModelController(OutputModelFactory factory) {
-		this.delegate = factory;
+		this.@delegate = factory;
 	}
 
 	public void addExtension(CodeGeneratorExtension ext) { extensions.add(ext); }
@@ -47,12 +47,12 @@ public class OutputModelController {
 	 *  extensions too, not just the factory functions in this factory.
 	 */
 	public OutputModelObject buildParserOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
+		CodeGenerator gen = @delegate.getGenerator();
 		ParserFile file = parserFile(gen.getRecognizerFileName(header));
 		setRoot(file);
 		file.parser = parser(file);
 
-		Grammar g = delegate.getGrammar();
+		Grammar g = @delegate.getGrammar();
 		for (Rule r : g.rules.values()) {
 			buildRuleFunction(file.parser, r);
 		}
@@ -61,12 +61,12 @@ public class OutputModelController {
 	}
 
 	public OutputModelObject buildLexerOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
+		CodeGenerator gen = @delegate.getGenerator();
 		LexerFile file = lexerFile(gen.getRecognizerFileName(header));
 		setRoot(file);
 		file.lexer = lexer(file);
 
-		Grammar g = delegate.getGrammar();
+		Grammar g = @delegate.getGrammar();
 		for (Rule r : g.rules.values()) {
 			buildLexerRuleActions(file.lexer, r);
 		}
@@ -75,43 +75,43 @@ public class OutputModelController {
 	}
 
 	public OutputModelObject buildListenerOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
-		return new ListenerFile(delegate, gen.getListenerFileName(header));
+		CodeGenerator gen = @delegate.getGenerator();
+		return new ListenerFile(@delegate, gen.getListenerFileName(header));
 	}
 
 	public OutputModelObject buildBaseListenerOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
-		return new BaseListenerFile(delegate, gen.getBaseListenerFileName(header));
+		CodeGenerator gen = @delegate.getGenerator();
+		return new BaseListenerFile(@delegate, gen.getBaseListenerFileName(header));
 	}
 
 	public OutputModelObject buildVisitorOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
-		return new VisitorFile(delegate, gen.getVisitorFileName(header));
+		CodeGenerator gen = @delegate.getGenerator();
+		return new VisitorFile(@delegate, gen.getVisitorFileName(header));
 	}
 
 	public OutputModelObject buildBaseVisitorOutputModel(bool header) {
-		CodeGenerator gen = delegate.getGenerator();
-		return new BaseVisitorFile(delegate, gen.getBaseVisitorFileName(header));
+		CodeGenerator gen = @delegate.getGenerator();
+		return new BaseVisitorFile(@delegate, gen.getBaseVisitorFileName(header));
 	}
 
 	public ParserFile parserFile(String fileName) {
-		ParserFile f = delegate.parserFile(fileName);
+		ParserFile f = @delegate.parserFile(fileName);
 		for (CodeGeneratorExtension ext : extensions) f = ext.parserFile(f);
 		return f;
 	}
 
 	public Parser parser(ParserFile file) {
-		Parser p = delegate.parser(file);
+		Parser p = @delegate.parser(file);
 		for (CodeGeneratorExtension ext : extensions) p = ext.parser(p);
 		return p;
 	}
 
 	public LexerFile lexerFile(String fileName) {
-		return new LexerFile(delegate, fileName);
+		return new LexerFile(@delegate, fileName);
 	}
 
 	public Lexer lexer(LexerFile file) {
-		return new Lexer(delegate, file);
+		return new Lexer(@delegate, file);
 	}
 
 	/** Create RuleFunction per rule and update sempreds,actions of parser
@@ -121,7 +121,7 @@ public class OutputModelController {
 		RuleFunction function = rule(r);
 		parser.funcs.add(function);
 		pushCurrentRule(function);
-		function.fillNamedActions(delegate, r);
+		function.fillNamedActions(@delegate, r);
 
 		if ( r is LeftRecursiveRule ) {
 			buildLeftRecursiveRuleFunction((LeftRecursiveRule)r,
@@ -137,10 +137,10 @@ public class OutputModelController {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = parser.sempredFuncs.get(r);
 				if ( rsf==null ) {
-					rsf = new RuleSempredFunction(delegate, r, function.ctxType);
+					rsf = new RuleSempredFunction(@delegate, r, function.ctxType);
 					parser.sempredFuncs.put(r, rsf);
 				}
-				rsf.actions.put(g.sempreds.get(p), new Action(delegate, p));
+				rsf.actions.put(g.sempreds.get(p), new Action(@delegate, p));
 			}
 		}
 
@@ -151,7 +151,7 @@ public class OutputModelController {
 		buildNormalRuleFunction(r, function);
 
 		// now inject code to start alts
-		CodeGenerator gen = delegate.getGenerator();
+		CodeGenerator gen = @delegate.getGenerator();
 		STGroup codegenTemplates = gen.getTemplates();
 
 		// pick out alt(s) for primaries
@@ -186,19 +186,19 @@ public class OutputModelController {
 			ST altActionST = codegenTemplates.getInstanceOf("recRuleReplaceContext");
 			altActionST.add("ctxName", Utils.capitalize(altInfo.altLabel));
 			Action altAction =
-				new Action(delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
+				new Action(@delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
 			CodeBlockForAlt alt = primaryAltsCode.get(i);
 			alt.insertOp(0, altAction);
 		}
 
 		// Insert code to set ctx.stop after primary block and before op * loop
 		ST setStopTokenAST = codegenTemplates.getInstanceOf("recRuleSetStopToken");
-		Action setStopTokenAction = new Action(delegate, function.ruleCtx, setStopTokenAST);
+		Action setStopTokenAction = new Action(@delegate, function.ruleCtx, setStopTokenAST);
 		outerAlt.insertOp(1, setStopTokenAction);
 
 		// Insert code to set _prevctx at start of * loop
 		ST setPrevCtx = codegenTemplates.getInstanceOf("recRuleSetPrevCtx");
-		Action setPrevCtxAction = new Action(delegate, function.ruleCtx, setPrevCtx);
+		Action setPrevCtxAction = new Action(@delegate, function.ruleCtx, setPrevCtx);
 		opAltStarBlock.addIterationOp(setPrevCtxAction);
 
 		// Insert code in front of each op alt to create specialized ctx if there was an alt label
@@ -223,17 +223,17 @@ public class OutputModelController {
 				altActionST.add("isListLabel", altInfo.isListLabel);
 			}
 			else if (altInfo.isListLabel) {
-				delegate.getGenerator().tool.errMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "isListLabel");
+				@delegate.getGenerator().tool.errMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "isListLabel");
 			}
 			Action altAction =
-				new Action(delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
+				new Action(@delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
 			CodeBlockForAlt alt = opAltsCode.get(i);
 			alt.insertOp(0, altAction);
 		}
 	}
 
 	public void buildNormalRuleFunction(Rule r, RuleFunction function) {
-		CodeGenerator gen = delegate.getGenerator();
+		CodeGenerator gen = @delegate.getGenerator();
 		// TRIGGER factory functions for rule alts, elements
 		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(r.ast.token.getInputStream());
 		GrammarAST blk = (GrammarAST)r.ast.getFirstChildWithType(ANTLRParser.BLOCK);
@@ -258,12 +258,12 @@ public class OutputModelController {
 			return;
 		}
 
-		CodeGenerator gen = delegate.getGenerator();
-		Grammar g = delegate.getGrammar();
+		CodeGenerator gen = @delegate.getGenerator();
+		Grammar g = @delegate.getGrammar();
 		String ctxType = gen.getTarget().getRuleFunctionContextStructName(r);
 		RuleActionFunction raf = lexer.actionFuncs.get(r);
 		if ( raf==null ) {
-			raf = new RuleActionFunction(delegate, r, ctxType);
+			raf = new RuleActionFunction(@delegate, r, ctxType);
 		}
 
 		for (ActionAST a : r.actions) {
@@ -271,13 +271,13 @@ public class OutputModelController {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = lexer.sempredFuncs.get(r);
 				if ( rsf==null ) {
-					rsf = new RuleSempredFunction(delegate, r, ctxType);
+					rsf = new RuleSempredFunction(@delegate, r, ctxType);
 					lexer.sempredFuncs.put(r, rsf);
 				}
-				rsf.actions.put(g.sempreds.get(p), new Action(delegate, p));
+				rsf.actions.put(g.sempreds.get(p), new Action(@delegate, p));
 			}
 			else if ( a.getType()== ANTLRParser.ACTION ) {
-				raf.actions.put(g.lexerActions.get(a), new Action(delegate, a));
+				raf.actions.put(g.lexerActions.get(a), new Action(@delegate, a));
 			}
 		}
 
@@ -288,40 +288,40 @@ public class OutputModelController {
 	}
 
 	public RuleFunction rule(Rule r) {
-		RuleFunction rf = delegate.rule(r);
+		RuleFunction rf = @delegate.rule(r);
 		for (CodeGeneratorExtension ext : extensions) rf = ext.rule(rf);
 		return rf;
 	}
 
 	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) {
-		List<SrcOp> ops = delegate.rulePostamble(function, r);
+		List<SrcOp> ops = @delegate.rulePostamble(function, r);
 		for (CodeGeneratorExtension ext : extensions) ops = ext.rulePostamble(ops);
 		return ops;
 	}
 
-	public Grammar getGrammar() { return delegate.getGrammar(); }
+	public Grammar getGrammar() { return @delegate.getGrammar(); }
 
-	public CodeGenerator getGenerator() { return delegate.getGenerator(); }
+	public CodeGenerator getGenerator() { return @delegate.getGenerator(); }
 
 	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) {
 		CodeBlockForAlt blk = @delegate.alternative(alt, outerMost);
 		if ( outerMost ) {
 			currentOuterMostAlternativeBlock = (CodeBlockForOuterMostAlt)blk;
 		}
-		for (CodeGeneratorExtension ext : extensions) blk = ext.alternative(blk, outerMost);
+		foreach (CodeGeneratorExtension ext in extensions) blk = ext.alternative(blk, outerMost);
 		return blk;
 	}
 
 	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops,
 											 bool outerMost)
 	{
-		blk = delegate.finishAlternative(blk, ops);
+		blk = @delegate.finishAlternative(blk, ops);
 		for (CodeGeneratorExtension ext : extensions) blk = ext.finishAlternative(blk, outerMost);
 		return blk;
 	}
 
 	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) {
-		List<SrcOp> ops = delegate.ruleRef(ID, label, args);
+		List<SrcOp> ops = @delegate.ruleRef(ID, label, args);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.ruleRef(ops);
 		}
@@ -330,7 +330,7 @@ public class OutputModelController {
 
 	public List<SrcOp> tokenRef(GrammarAST ID, GrammarAST label, GrammarAST args)
 	{
-		List<SrcOp> ops = delegate.tokenRef(ID, label, args);
+		List<SrcOp> ops = @delegate.tokenRef(ID, label, args);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.tokenRef(ops);
 		}
@@ -338,7 +338,7 @@ public class OutputModelController {
 	}
 
 	public List<SrcOp> stringRef(GrammarAST ID, GrammarAST label) {
-		List<SrcOp> ops = delegate.stringRef(ID, label);
+		List<SrcOp> ops = @delegate.stringRef(ID, label);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.stringRef(ops);
 		}
@@ -347,7 +347,7 @@ public class OutputModelController {
 
 	/** (A|B|C) possibly with ebnfRoot and label */
 	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, bool invert) {
-		List<SrcOp> ops = delegate.set(setAST, labelAST, invert);
+		List<SrcOp> ops = @delegate.set(setAST, labelAST, invert);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.set(ops);
 		}
@@ -355,13 +355,13 @@ public class OutputModelController {
 	}
 
 	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) {
-		CodeBlockForAlt blk = delegate.epsilon(alt, outerMost);
+		CodeBlockForAlt blk = @delegate.epsilon(alt, outerMost);
 		for (CodeGeneratorExtension ext : extensions) blk = ext.epsilon(blk);
 		return blk;
 	}
 
 	public List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST) {
-		List<SrcOp> ops = delegate.wildcard(ast, labelAST);
+		List<SrcOp> ops = @delegate.wildcard(ast, labelAST);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.wildcard(ops);
 		}
@@ -369,31 +369,31 @@ public class OutputModelController {
 	}
 
 	public List<SrcOp> action(ActionAST ast) {
-		List<SrcOp> ops = delegate.action(ast);
+		List<SrcOp> ops = @delegate.action(ast);
 		for (CodeGeneratorExtension ext : extensions) ops = ext.action(ops);
 		return ops;
 	}
 
 	public List<SrcOp> sempred(ActionAST ast) {
-		List<SrcOp> ops = delegate.sempred(ast);
+		List<SrcOp> ops = @delegate.sempred(ast);
 		for (CodeGeneratorExtension ext : extensions) ops = ext.sempred(ops);
 		return ops;
 	}
 
 	public Choice getChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label) {
-		Choice c = delegate.getChoiceBlock(blkAST, alts, label);
+		Choice c = @delegate.getChoiceBlock(blkAST, alts, label);
 		for (CodeGeneratorExtension ext : extensions) c = ext.getChoiceBlock(c);
 		return c;
 	}
 
 	public Choice getEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
-		Choice c = delegate.getEBNFBlock(ebnfRoot, alts);
+		Choice c = @delegate.getEBNFBlock(ebnfRoot, alts);
 		for (CodeGeneratorExtension ext : extensions) c = ext.getEBNFBlock(c);
 		return c;
 	}
 
 	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
-		bool needs = delegate.needsImplicitLabel(ID, op);
+		bool needs = @delegate.needsImplicitLabel(ID, op);
 		for (CodeGeneratorExtension ext : extensions) needs |= ext.needsImplicitLabel(ID, op);
 		return needs;
 	}

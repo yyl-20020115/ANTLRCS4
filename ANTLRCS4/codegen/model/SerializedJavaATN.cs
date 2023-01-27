@@ -1,19 +1,14 @@
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.Target;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.misc.IntegerList;
+namespace org.antlr.v4.codegen.model;
 
 /** A serialized ATN for the java target, which requires we use strings and 16-bit unicode values */
-public class SerializedJavaATN extends SerializedATN {
-	private final String[] serializedAsString;
-	private final String[][] segments;
+public class SerializedJavaATN : SerializedATN {
+	private readonly String[] serializedAsString;
+	private readonly String[][] segments;
 
-	public SerializedJavaATN(OutputModelFactory factory, ATN atn) {
-		super(factory);
+	public SerializedJavaATN(OutputModelFactory factory, ATN atn):base(factory) {
 		IntegerList data = ATNSerializer.getSerialized(atn);
 		data = ATNDeserializer.encodeIntsWith16BitWords(data);
 
@@ -24,7 +19,7 @@ public class SerializedJavaATN extends SerializedATN {
 		int segmentIndex = 0;
 
 		for (int i = 0; i < size; i += segmentLimit) {
-			int segmentSize = Math.min(i + segmentLimit, size) - i;
+			int segmentSize = Math.Min(i + segmentLimit, size) - i;
 			String[] segment = new String[segmentSize];
 			segments[segmentIndex++] = segment;
 			for (int j = 0; j < segmentSize; j++) {

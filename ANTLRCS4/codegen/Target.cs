@@ -7,6 +7,7 @@
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using System.Text;
@@ -54,7 +55,7 @@ public abstract class Target {
 	}
 
 	protected static void addEscapedChar(Dictionary<char, String> map, char key, char representation) {
-		map.put(key, "\\" + representation);
+		map[key]= ("\\" + representation);
 	}
 
 	public String getLanguage() { return gen.language; }
@@ -121,8 +122,8 @@ public abstract class Target {
 	public String getTokenTypeAsTargetLabel(Grammar g, int ttype) {
 		String name = g.getTokenName(ttype);
 		// If name is not valid, return the token type instead
-		if ( Grammar.INVALID_TOKEN_NAME.equals(name) ) {
-			return String.valueOf(ttype);
+		if ( Grammar.INVALID_TOKEN_NAME.Equals(name) ) {
+			return (ttype.ToString());
 		}
 
 		return name;
@@ -166,7 +167,7 @@ public abstract class Target {
 		}
 		for (int i=0; i < s.Length; ) {
 			int c = s.codePointAt(i);
-			String escaped = c <= char.MAX_VALUE ? getTargetCharValueEscape().get((char)c) : null;
+			String escaped = c <= char.MaxValue ? getTargetCharValueEscape().get((char)c) : null;
 			if (c != '\'' && escaped != null) { // don't escape single quotes in strings for java
 				buf.Append(escaped);
 			}
@@ -182,7 +183,7 @@ public abstract class Target {
 		if ( quoted ) {
 			buf.Append('"');
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	private void appendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb, bool escape) {
@@ -312,7 +313,7 @@ public abstract class Target {
 
 		if ( addQuotes ) sb.Append('"');
 
-		return sb.toString();
+		return sb.ToString();
 	}
 
 	protected bool shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
@@ -335,7 +336,7 @@ public abstract class Target {
 		}
 
 		if ( isATNSerializedAsInts() ) {
-			return Integer.toString(v);
+			return Integer.ToString(v);
 		}
 
 		char c = (char)v;
@@ -600,7 +601,7 @@ public abstract class Target {
 			}
 
 			private void reportError(STMessage msg) {
-				getCodeGenerator().tool.errMgr.toolError(ErrorType.STRING_TEMPLATE_WARNING, msg.cause, msg.toString());
+				getCodeGenerator().tool.errMgr.toolError(ErrorType.STRING_TEMPLATE_WARNING, msg.cause, msg.ToString());
 			}
 		});
 

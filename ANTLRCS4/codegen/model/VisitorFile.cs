@@ -3,22 +3,12 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.AltAST;
+namespace org.antlr.v4.codegen.model;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-public class VisitorFile extends OutputFile {
+public class VisitorFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String accessLevel; // from -DaccessLevel cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line
@@ -27,38 +17,40 @@ public class VisitorFile extends OutputFile {
 	/**
 	 * The names of all rule contexts which may need to be visited.
 	 */
-	public Set<String> visitorNames = new LinkedHashSet<String>();
+	public HashSet<String> visitorNames = new ();
 	/**
 	 * For rule contexts created for a labeled outer alternative, maps from
 	 * a listener context name to the name of the rule which defines the
 	 * context.
 	 */
-	public Map<String, String> visitorLabelRuleNames = new LinkedHashMap<String, String>();
+	public Dictionary<String, String> visitorLabelRuleNames = new ();
 
-	@ModelElement public Action header;
-	@ModelElement public Map<String, Action> namedActions;
+	//@ModelElement 
+		public Action header;
+    //@ModelElement 
+    public Dictionary<String, Action> namedActions;
 
-	public VisitorFile(OutputModelFactory factory, String fileName) {
-		super(factory, fileName);
+	public VisitorFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    {
+		;
 		Grammar g = factory.getGrammar();
 		namedActions = buildNamedActions(g);
 		parserName = g.getRecognizerName();
 		grammarName = g.name;
-		for (Rule r : g.rules.values()) {
-			Map<String, List<Pair<Integer, AltAST>>> labels = r.getAltLabels();
+		foreach (Rule r in g.rules.Values) {
+			var labels = r.getAltLabels();
 			if ( labels!=null ) {
-				for (Map.Entry<String, List<Pair<Integer, AltAST>>> pair : labels.entrySet()) {
-					visitorNames.add(pair.getKey());
-					visitorLabelRuleNames.put(pair.getKey(), r.name);
+				foreach (var pair in labels) {
+					visitorNames.Add(pair.Key);
+					visitorLabelRuleNames[pair.Key]= r.name;
 				}
 			}
 			else {
 				// if labels, must label all. no need for generic rule visitor then
-				visitorNames.add(r.name);
+				visitorNames.Add(r.name);
 			}
 		}
-		ActionAST ast = g.namedActions.get("header");
-		if ( ast!=null && ast.getScope()==null)
+		if ( g.namedActions.TryGetValue("header",out var ast) && ast.getScope()==null)
 			header = new Action(factory, ast);
 		genPackage = g.tool.genPackage;
 		accessLevel = g.getOptionString("accessLevel");

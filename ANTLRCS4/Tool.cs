@@ -912,7 +912,7 @@ public class Tool {
 			defaultListener.warning(msg);
 		}
 		else {
-			for (ANTLRToolListener l : listeners) l.warning(msg);
+			foreach (ANTLRToolListener l in listeners) l.warning(msg);
 		}
 
 		if (warnings_are_errors) {

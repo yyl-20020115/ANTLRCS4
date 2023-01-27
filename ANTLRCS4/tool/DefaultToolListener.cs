@@ -6,16 +6,13 @@
 
 namespace org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.stringtemplate.v4.ST;
-
 /** */
-public class DefaultToolListener implements ANTLRToolListener {
+public class DefaultToolListener : ANTLRToolListener {
 	public Tool tool;
 
 	public DefaultToolListener(Tool tool) { this.tool = tool; }
 
-	@Override
+	//@Override
 	public void info(String msg) {
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			msg = msg.replace('\n', ' ');
@@ -23,7 +20,7 @@ public class DefaultToolListener implements ANTLRToolListener {
 		System.out.println(msg);
 	}
 
-	@Override
+	//@Override
 	public void error(ANTLRMessage msg) {
 		ST msgST = tool.errMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.render();
@@ -33,7 +30,7 @@ public class DefaultToolListener implements ANTLRToolListener {
 		System.err.println(outputMsg);
 	}
 
-	@Override
+	//@Override
 	public void warning(ANTLRMessage msg) {
 		ST msgST = tool.errMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.render();

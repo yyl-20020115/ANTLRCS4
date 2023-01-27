@@ -116,8 +116,8 @@ public class SemanticPipeline {
 	}
 
 	void identifyStartRules(SymbolCollector collector) {
-		for (GrammarAST ref : collector.rulerefs) {
-			String ruleName = ref.getText();
+		foreach (GrammarAST @ref in collector.rulerefs) {
+			String ruleName = @ref.getText();
 			Rule r = g.getRule(ruleName);
 			if ( r!=null ) r.isStartRule = false;
 		}
@@ -125,7 +125,7 @@ public class SemanticPipeline {
 
 	void assignLexerTokenTypes(Grammar g, List<GrammarAST> tokensDefs) {
 		Grammar G = g.getOutermostGrammar(); // put in root, even if imported
-		for (GrammarAST def : tokensDefs) {
+		for (GrammarAST def in tokensDefs) {
 			// tokens { id (',' id)* } so must check IDs not TOKEN_REF
 			if ( Grammar.isTokenName(def.getText()) ) {
 				G.defineTokenName(def.getText());

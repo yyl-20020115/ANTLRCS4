@@ -67,8 +67,8 @@ public class BuildDependencyGenerator {
     /** From T.g return a list of File objects that
      *  name files ANTLR will emit from T.g.
      */
-    public List<File> getGeneratedFileList() {
-        List<File> files = new ArrayList<File>();
+    public List<string> getGeneratedFileList() {
+        List<string> files = new ();
 
         // Add generated recognizer; e.g., TParser.java
         if (generator.getTarget().needsHeader()) {
@@ -136,7 +136,7 @@ public class BuildDependencyGenerator {
 		// handle generated files for imported grammars
 		List<Grammar> imports = g.getAllImportedGrammars();
 		if ( imports!=null ) {
-			for (Grammar g : imports) {
+			foreach (Grammar g in imports) {
 //				File outputDir = tool.getOutputDirectory(g.fileName);
 //				String fname = groomQualifiedFileName(outputDir.toString(), g.getRecognizerName() + extST.render());
 //				files.Add(new File(outputDir, fname));
@@ -144,14 +144,14 @@ public class BuildDependencyGenerator {
 			}
 		}
 
-		if (files.isEmpty()) {
+		if (files.Count==0) {
 			return null;
 		}
 		return files;
 	}
 
-	public File getOutputFile(String fileName) {
-		File outputDir = tool.getOutputDirectory(g.fileName);
+	public string getOutputFile(String fileName) {
+		string outputDir = tool.getOutputDirectory(g.fileName);
 		if ( outputDir.toString().equals(".") ) {
 			// pay attention to -o then
 			outputDir = tool.getOutputDirectory(fileName);

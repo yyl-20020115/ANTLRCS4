@@ -26,15 +26,15 @@ public class Rule : AttributeResolver {
 		predefinedRulePropertiesDict.add(new Attribute("stop"));
 		predefinedRulePropertiesDict.add(new Attribute("ctx"));
         // CALLS
-        validLexerCommands.add("mode");
-        validLexerCommands.add("pushMode");
-        validLexerCommands.add("type");
-        validLexerCommands.add("channel");
+        validLexerCommands.Add("mode");
+        validLexerCommands.Add("pushMode");
+        validLexerCommands.Add("type");
+        validLexerCommands.Add("channel");
 
         // ACTIONS
-        validLexerCommands.add("popMode");
-        validLexerCommands.add("skip");
-        validLexerCommands.add("more");
+        validLexerCommands.Add("popMode");
+        validLexerCommands.Add("skip");
+        validLexerCommands.Add("more");
 
     }
 
@@ -97,7 +97,7 @@ public class Rule : AttributeResolver {
 		this(g, name, ast, numberOfAlts, null, false);
 	}
 
-	public Rule(Grammar g, String name, RuleAST ast, int numberOfAlts, String lexerMode, boolean caseInsensitive) {
+	public Rule(Grammar g, String name, RuleAST ast, int numberOfAlts, String lexerMode, bool caseInsensitive) {
 		this.g = g;
 		this.name = name;
 		this.ast = ast;
@@ -162,8 +162,8 @@ public class Rule : AttributeResolver {
         MultiMap<String, LabelElementPair> defs =
             new MultiMap<String, LabelElementPair>();
         for (int i=1; i<=numberOfAlts; i++) {
-            for (List<LabelElementPair> pairs : alt[i].labelDefs.values()) {
-                for (LabelElementPair p : pairs) {
+            foreach (List<LabelElementPair> pairs in alt[i].labelDefs.Values) {
+                foreach (LabelElementPair p in pairs) {
                     defs.map(p.label.getText(), p);
                 }
             }

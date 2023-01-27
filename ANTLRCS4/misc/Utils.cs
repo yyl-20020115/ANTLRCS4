@@ -112,43 +112,43 @@ public static class Utils {
 	 */
 	public static List<To> select<From, To>(List<From> list, Func1<From, To> selector) {
 		if ( list==null ) return null;
-		List<To> b = new ArrayList<To>();
-		for (From f : list) {
-			b.add(selector.exec(f));
+		List<To> b = new ();
+		foreach (From f in list) {
+			b.Add(selector.exec(f));
 		}
 		return b;
 	}
 
 	/** Find exact object type or subclass of cl in list */
-	public static T find<T>(List<T> ops, Type cl) {
-		for (Object o : ops) {
-			if ( cl.isInstance(o) ) return cl.cast(o);
+	public static T find<T>(List<T> ops, Type cl) where T:class {
+		foreach (Object o in ops) {
+			if ( cl.IsInstanceOfType(o) ) return (o as T);
 //			if ( o.getClass() == cl ) return o;
 		}
 		return null;
 	}
 
 	public static int indexOf<T>(List<T> elems, Filter<T> filter) {
-		for (int i=0; i<elems.size(); i++) {
-			if ( filter.select(elems.get(i)) ) return i;
+		for (int i=0; i<elems.Count; i++) {
+			if ( filter.select(elems[(i)]) ) return i;
 		}
 		return -1;
 	}
 
 	public static int lastIndexOf<T>(List<T> elems, Filter<T> filter) {
-		for (int i=elems.size()-1; i>=0; i--) {
-			if ( filter.select(elems.get(i)) ) return i;
+		for (int i=elems.Count-1; i>=0; i--) {
+			if ( filter.select(elems[(i)]) ) return i;
 		}
 		return -1;
 	}
 
 	public static void setSize(List<object> list, int size) {
-		if (size < list.size()) {
-			list.subList(size, list.size()).clear();
+		if (size < list.Count) {
+			list.subList(size, list.Count).clear();
 		}
 		else {
-			while (size > list.size()) {
-				list.add(null);
+			while (size > list.Count) {
+				list.Add(null);
 			}
 		}
 	}

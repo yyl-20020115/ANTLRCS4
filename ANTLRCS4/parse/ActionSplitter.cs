@@ -66,6 +66,10 @@ public class ActionSplitter : Lexer
         : base(input, state) 
     {
     }
+    public override string[] getRuleNames()
+    {
+        throw new NotImplementedException();
+    }
     //@Override 
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
 
