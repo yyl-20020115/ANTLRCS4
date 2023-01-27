@@ -172,7 +172,7 @@ public class XPathLexer : Lexer {
 		return _input.getText(Interval.of(start,_input.index()-1));
 	}
 
-	public bool isNameChar(int c) { return char.isUnicodeIdentifierPart(c); }
+	public bool isNameChar(int c) { return char.IsLetterOrDigit((char)c); }
 
-	public bool isNameStartChar(int c) { return char.isUnicodeIdentifierStart(c); }
+	public bool isNameStartChar(int c) { return c =='_'|| char.IsLetter((char)c); }
 }

@@ -16,7 +16,7 @@ namespace org.antlr.v4.runtime;
  * as the EOF token for every call to {@link #nextToken} after the end of the
  * list is reached. Otherwise, an EOF token will be created.</p>
  */
-public class ListTokenSource<T> : TokenSource {
+public class ListTokenSource : TokenSource {
 	/**
 	 * The wrapped collection of {@link Token} objects to return.
 	 */
@@ -46,7 +46,7 @@ public class ListTokenSource<T> : TokenSource {
 	 * This is the backing field for {@link #getTokenFactory} and
 	 * {@link setTokenFactory}.
 	 */
-	private TokenFactory<T> _factory = CommonTokenFactory.DEFAULT;
+	private TokenFactory _factory = CommonTokenFactory.DEFAULT;
 
 	/**
 	 * Constructs a new {@link ListTokenSource} instance from the specified
@@ -129,7 +129,7 @@ public class ListTokenSource<T> : TokenSource {
 				}
 
 				int stop = Math.Max(-1, start - 1);
-				eofToken = _factory.create(new Pair<TokenSource, CharStream>(this, getInputStream()), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, getLine(), getCharPositionInLine());
+				eofToken =(_factory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(this, getInputStream()), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, getLine(), getCharPositionInLine());
 			}
 
 			return eofToken;
@@ -219,7 +219,7 @@ public class ListTokenSource<T> : TokenSource {
 	 * {@inheritDoc}
 	 */
 	//@Override
-	public void setTokenFactory(TokenFactory<T> factory) {
+	public void setTokenFactory(TokenFactory factory) {
 		this._factory = factory;
 	}
 
@@ -227,7 +227,7 @@ public class ListTokenSource<T> : TokenSource {
 	 * {@inheritDoc}
 	 */
 	//@Override
-	public TokenFactory<T> getTokenFactory() {
+	public TokenFactory getTokenFactory() {
 		return _factory;
 	}
 }

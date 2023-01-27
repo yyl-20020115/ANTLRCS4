@@ -107,12 +107,12 @@ public class LexerInterpreter : Lexer {
 		return base.getVocabulary();
 	}
 
-    public override TokenFactory<Token> getTokenFactory()
+    public override TokenFactory getTokenFactory()
     {
         throw new NotImplementedException();
     }
 
-    public override void setTokenFactory(TokenFactory<Token> input)
+    public override void setTokenFactory(TokenFactory input)
     {
         throw new NotImplementedException();
     }

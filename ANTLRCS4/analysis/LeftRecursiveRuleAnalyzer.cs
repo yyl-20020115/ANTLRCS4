@@ -5,8 +5,11 @@
  */
 
 using org.antlr.v4.codegen;
+using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.parse;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool.ast;
+using System.Text;
 
 namespace org.antlr.v4.analysis;
 
@@ -21,7 +24,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	public Dictionary<int, LeftRecursiveRuleAltInfo> binaryAlts = new ();
 	public Dictionary<int, LeftRecursiveRuleAltInfo> ternaryAlts = new ();
 	public Dictionary<int, LeftRecursiveRuleAltInfo> suffixAlts = new ();
-	public List<LeftRecursiveRuleAltInfo> prefixAndOtherAlts = new ArrayList<LeftRecursiveRuleAltInfo>();
+	public List<LeftRecursiveRuleAltInfo> prefixAndOtherAlts = new ();
 
 	/** Pointer to ID node of ^(= ID element) */
 	public List<Pair<GrammarAST,String>> leftRecursiveRuleRefLabels =
@@ -196,7 +199,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		opPrecRuleAlts.putAll(binaryAlts);
 		opPrecRuleAlts.putAll(ternaryAlts);
 		opPrecRuleAlts.putAll(suffixAlts);
-		for (int alt : opPrecRuleAlts.keySet()) {
+        foreach (int alt in opPrecRuleAlts.keySet()) {
 			LeftRecursiveRuleAltInfo altInfo = opPrecRuleAlts.get(alt);
 			ST altST = recRuleTemplates.getInstanceOf("recRuleAlt");
 			ST predST = codegenTemplates.getInstanceOf("recRuleAltPredicate");
@@ -220,7 +223,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( t==null ) return null;
 		// get all top-level rule refs from ALT
 		List<GrammarAST> outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.of(RULE_REF));
-		for (GrammarAST x : outerAltRuleRefs) {
+        foreach (GrammarAST x in outerAltRuleRefs) {
 			RuleRefAST rref = (RuleRefAST)x;
 			bool recursive = rref.getText().equals(ruleName);
 			bool rightmost = rref == outerAltRuleRefs.get(outerAltRuleRefs.size()-1);
@@ -310,7 +313,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		// returned by getOptions().
 		IntervalSet ignore = new IntervalSet();
 		List<GrammarAST> optionsSubTrees = t.getNodesWithType(ELEMENT_OPTIONS);
-		for (GrammarAST sub : optionsSubTrees) {
+        foreach (GrammarAST sub in optionsSubTrees) {
 			ignore.add(sub.getTokenStartIndex(), sub.getTokenStopIndex());
 		}
 
@@ -319,7 +322,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		// and add the tokenIndex option when writing these tokens.
 		IntervalSet noOptions = new IntervalSet();
 		List<GrammarAST> labeledSubTrees = t.getNodesWithType(new IntervalSet(ASSIGN,PLUS_ASSIGN));
-		for (GrammarAST sub : labeledSubTrees) {
+        foreach (GrammarAST sub in labeledSubTrees) {
 			noOptions.add(sub.getChild(0).getTokenStartIndex());
 		}
 
@@ -347,7 +350,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 				if ( node is GrammarASTWithOptions ) {
 					GrammarASTWithOptions o = (GrammarASTWithOptions)node;
-					for (Map.Entry<String, GrammarAST> entry : o.getOptions().entrySet()) {
+                    foreach (Map.Entry<String, GrammarAST> entry in o.getOptions().entrySet()) {
 						if (elementOptions.length() > 0) {
 							elementOptions.append(',');
 						}

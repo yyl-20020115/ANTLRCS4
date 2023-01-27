@@ -408,13 +408,13 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	}
 
 	//@Override
-	public TokenFactory<T> getTokenFactory() {
+	public override TokenFactory getTokenFactory() {
 		return _input.getTokenSource().getTokenFactory();
 	}
 
 	/** Tell our token source and error strategy about a new way to create tokens. */
 	//@Override
-	public void setTokenFactory(TokenFactory<T> factory) {
+	public override void setTokenFactory(TokenFactory factory) {
 		_input.getTokenSource().setTokenFactory(factory);
 	}
 
@@ -920,7 +920,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 		}
 		else {
 			if ( _tracer!=null ) removeParseListener(_tracer);
-			else _tracer = new TraceListener();
+			else _tracer = new TraceListener(this);
 			addParseListener(_tracer);
 		}
 	}

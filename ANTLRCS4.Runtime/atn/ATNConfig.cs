@@ -191,7 +191,7 @@ public class ATNConfig {
 		return toString(null, true);
 	}
 
-	public String toString(Recognizer<Token, ATNSimulator> recog, bool showAlt) {
+	public String toString(Recognizer recog, bool showAlt) {
 		StringBuilder buf = new StringBuilder();
 //		if ( state.ruleIndex>=0 ) {
 //			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");

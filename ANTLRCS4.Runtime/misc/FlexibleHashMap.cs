@@ -142,9 +142,9 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 	}
 
 	//@Override
-	public HashSet<Dictionary<K,V>.Entry<K, V>> entrySet() {
-		throw new UnsupportedOperationException();
-	}
+	//public HashSet<Dictionary<K,V>.Entry<K, V>> entrySet() {
+	//	throw new UnsupportedOperationException();
+	//}
 
 	//@Override
 	public bool containsKey(Object key) {

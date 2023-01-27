@@ -62,13 +62,13 @@ public class IntegerList {
 
 	public void addAll(int[] array) {
 		ensureCapacity(_size + array.Length);
-		System.arraycopy(array, 0, _data, _size, array.Length);
+		Array.Copy(array, 0, _data, _size, array.Length);
 		_size += array.Length;
 	}
 
 	public void addAll(IntegerList list) {
 		ensureCapacity(_size + list._size);
-		System.arraycopy(list._data, 0, _data, _size, list._size);
+		Array.Copy(list._data, 0, _data, _size, list._size);
 		_size += list._size;
 	}
 
@@ -112,7 +112,7 @@ public class IntegerList {
 
 	public int removeAt(int index) {
 		int value = get(index);
-		System.arraycopy(_data, index + 1, _data, index, _size - index - 1);
+		Array.Copy(_data, index + 1, _data, index, _size - index - 1);
 		_data[_size - 1] = 0;
 		_size--;
 		return value;
@@ -126,7 +126,7 @@ public class IntegerList {
 			throw new ArgumentException();
 		}
 
-		System.arraycopy(_data, toIndex, _data, fromIndex, _size - toIndex);
+		Array.Copy(_data, toIndex, _data, fromIndex, _size - toIndex);
 		Arrays.fill(_data, _size - (toIndex - fromIndex), _size, 0);
 		_size -= (toIndex - fromIndex);
 	}

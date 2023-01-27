@@ -31,7 +31,7 @@ public abstract class SemanticContext {
 	 * prediction, so we passed in the outer context here in case of context
 	 * dependent predicate evaluation.</p>
 	 */
-    public abstract bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack);
+    public abstract bool eval(Recognizer parser, RuleContext parserCallStack);
 
 	/**
 	 * Evaluate the precedence predicates for the context and reduce the result.
@@ -51,7 +51,7 @@ public abstract class SemanticContext {
 	 * semantic context after precedence predicates are evaluated.</li>
 	 * </ul>
 	 */
-	public virtual SemanticContext evalPrecedence(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
+	public virtual SemanticContext evalPrecedence(Recognizer parser, RuleContext parserCallStack) {
 		return this;
 	}
 
@@ -63,7 +63,7 @@ public abstract class SemanticContext {
 		public static readonly Empty Instance = new Empty();
 
 		//@Override
-		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public override bool eval(Recognizer parser, RuleContext parserCallStack) {
 			return false;
 		}
 	}
@@ -86,7 +86,7 @@ public abstract class SemanticContext {
         }
 
         //@Override
-        public override bool eval(Recognizer<Token,ATNSimulator> parser, RuleContext parserCallStack) {
+        public override bool eval(Recognizer parser, RuleContext parserCallStack) {
             RuleContext localctx = isCtxDependent ? parserCallStack : null;
             return parser.sempred(localctx, ruleIndex, predIndex);
         }
@@ -129,12 +129,12 @@ public abstract class SemanticContext {
 		}
 
 		//@Override
-		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public override bool eval(Recognizer parser, RuleContext parserCallStack) {
 			return parser.precpred(parserCallStack, precedence);
 		}
 
 		//@Override
-		public SemanticContext evalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public SemanticContext evalPrecedence(Recognizer parser, RuleContext parserCallStack) {
 			if (parser.precpred(parserCallStack, precedence)) {
 				return Empty.Instance;
 			}
@@ -245,7 +245,7 @@ public abstract class SemanticContext {
 		 * unordered.</p>
 		 */
 		//@Override
-		public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public override bool eval(Recognizer parser, RuleContext parserCallStack) {
             foreach (SemanticContext opnd in opnds) {
 				if ( !opnd.eval(parser, parserCallStack) ) return false;
 			}
@@ -342,7 +342,7 @@ public abstract class SemanticContext {
 		 * unordered.</p>
 		 */
 		//@Override
-        public override bool eval(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+        public override bool eval(Recognizer parser, RuleContext parserCallStack) {
 			foreach (SemanticContext opnd in opnds) {
 				if ( opnd.eval(parser, parserCallStack) ) return true;
 			}
@@ -350,7 +350,7 @@ public abstract class SemanticContext {
         }
 
 		//@Override
-		public SemanticContext evalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack) {
+		public SemanticContext evalPrecedence(Recognizer parser, RuleContext parserCallStack) {
 			bool differs = false;
 			List<SemanticContext> operands = new ();
 			foreach (SemanticContext context in opnds) {
@@ -426,12 +426,12 @@ public abstract class SemanticContext {
 				}
 
 				result.Add((PrecedencePredicate)context);
-				iterator.Remove();
+				iterator.remove();
 			}
 		}
 
 		if (result == null) {
-			return Collections.emptyList();
+			return new();
 		}
 
 		return result;

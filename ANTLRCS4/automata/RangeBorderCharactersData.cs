@@ -21,10 +21,10 @@ public class RangeBorderCharactersData {
 	public static RangeBorderCharactersData getAndCheckCharactersData(int from, int to, Grammar grammar, CommonTree tree,
 																	  bool reportRangeContainsNotImpliedCharacters
 	) {
-		int lowerFrom = Character.toLowerCase(from);
-		int upperFrom = Character.toUpperCase(from);
-		int lowerTo = Character.toLowerCase(to);
-		int upperTo = Character.toUpperCase(to);
+		int lowerFrom = char.ToLower(from);
+		int upperFrom = char.ToUpper(from);
+		int lowerTo = char.toLowerCase(to);
+		int upperTo = char.toUpperCase(to);
 
 		bool isLowerFrom = lowerFrom == from;
 		bool isLowerTo = lowerTo == to;
@@ -32,8 +32,8 @@ public class RangeBorderCharactersData {
 		if (reportRangeContainsNotImpliedCharacters && mixOfLowerAndUpperCharCase && from <= 0x7F && to <= 0x7F) {
 			StringBuilder notImpliedCharacters = new StringBuilder();
 			for (int i = from; i < to; i++) {
-				if (!Character.isAlphabetic(i)) {
-					notImpliedCharacters.append((char)i);
+				if (!char.isAlphabetic(i)) {
+					notImpliedCharacters.Append((char)i);
 				}
 			}
 			if (notImpliedCharacters.length() > 0) {

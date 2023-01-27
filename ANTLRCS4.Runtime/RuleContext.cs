@@ -202,7 +202,7 @@ public class RuleContext : RuleNode {
 		return toString((List<String>)null, (RuleContext)null);
 	}
 
-	public String toString(Recognizer<Token, ATNSimulator> recog) {
+	public String toString(Recognizer recog) {
 		return toString(recog, ParserRuleContext.EMPTY);
 	}
 
@@ -211,7 +211,7 @@ public class RuleContext : RuleNode {
 	}
 
 	// recog null unless ParserRuleContext, in which case we use subclass toString(...)
-	public String toString<T1, T2>(Recognizer<Token, ATNSimulator> recog, RuleContext stop) {
+	public String toString(Recognizer recog, RuleContext stop) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
 		List<String> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
 		return toString(ruleNamesList, stop);
@@ -229,7 +229,7 @@ public class RuleContext : RuleNode {
 			}
 			else {
 				int ruleIndex = p.getRuleIndex();
-				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.size() ? ruleNames.get(ruleIndex) : 
+				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] : 
 					(ruleIndex.ToString());
 				buf.Append(ruleName);
 			}

@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using Rule = org.antlr.v4.tool.Rule;
 
@@ -27,7 +28,7 @@ public class LeftRecursionDetector {
 	}
 
 	public void check() {
-		for (RuleStartState start : atn.ruleToStartState) {
+        foreach (RuleStartState start in atn.ruleToStartState) {
 			//System.out.print("check "+start.rule.name);
 			rulesVisitedPerRuleCheck.clear();
 			rulesVisitedPerRuleCheck.add(start);
@@ -53,7 +54,7 @@ public class LeftRecursionDetector {
 	 *  filling the cycles in listOfRecursiveCycles and also, as a
 	 *  side-effect, set leftRecursiveRules.
 	 */
-	public bool check(Rule enclosingRule, ATNState s, Set<ATNState> visitedStates) {
+	public bool check(Rule enclosingRule, ATNState s, HashSet<ATNState> visitedStates) {
 		if ( s is RuleStopState) return true;
 		if ( visitedStates.contains(s) ) return false;
 		visitedStates.add(s);
@@ -97,19 +98,19 @@ public class LeftRecursionDetector {
 	protected void addRulesToCycle(Rule enclosingRule, Rule targetRule) {
 		//System.err.println("left-recursion to "+targetRule.name+" from "+enclosingRule.name);
 		bool foundCycle = false;
-		for (Set<Rule> rulesInCycle : listOfRecursiveCycles) {
+        foreach (var rulesInCycle in listOfRecursiveCycles) {
 			// ensure both rules are in same cycle
-			if (rulesInCycle.contains(targetRule)) {
-				rulesInCycle.add(enclosingRule);
+			if (rulesInCycle.Contains(targetRule)) {
+				rulesInCycle.Add(enclosingRule);
 				foundCycle = true;
 			}
-			if (rulesInCycle.contains(enclosingRule)) {
-				rulesInCycle.add(targetRule);
+			if (rulesInCycle.Contains(enclosingRule)) {
+				rulesInCycle.Add(targetRule);
 				foundCycle = true;
 			}
 		}
 		if ( !foundCycle ) {
-			Set<Rule> cycle = new OrderedHashSet<Rule>();
+			var cycle = new OrderedHashSet<Rule>();
 			cycle.add(targetRule);
 			cycle.add(enclosingRule);
 			listOfRecursiveCycles.add(cycle);

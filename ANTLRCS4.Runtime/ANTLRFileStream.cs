@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.runtime;
 
 /**
@@ -15,9 +17,8 @@ namespace org.antlr.v4.runtime;
 public class ANTLRFileStream : ANTLRInputStream {
 	protected String fileName;
 
-	public ANTLRFileStream(String fileName){
-		this(fileName, null);
-	}
+	public ANTLRFileStream(String fileName): this(fileName, null)
+    {}
 
 	public ANTLRFileStream(String fileName, String encoding){
 		this.fileName = fileName;

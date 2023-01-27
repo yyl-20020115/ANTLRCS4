@@ -17,7 +17,7 @@ namespace org.antlr.v4.runtime;
  * @author Sam Harwell
  */
 public class BaseErrorListener : ANTLRErrorListener {
-	public virtual void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
+	public virtual void syntaxError(Recognizer recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

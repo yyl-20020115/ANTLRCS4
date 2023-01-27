@@ -169,7 +169,7 @@ public class BufferedTokenStream : TokenStream {
             if ( t is WritableToken ) {
                 ((WritableToken)t).setTokenIndex(tokens.Count);
             }
-            tokens.add(t);
+            tokens.Add(t);
             if ( t.getType()==Token.EOF ) {
 				fetchedEOF = true;
 				return i + 1;
@@ -184,7 +184,7 @@ public class BufferedTokenStream : TokenStream {
         if ( i < 0 || i >= tokens.Count ) {
             throw new IndexOutOfRangeException("token index "+i+" out of range 0.."+(tokens.Count-1));
         }
-        return tokens.get(i);
+        return tokens[i];
     }
 
 	/** Get all tokens from start..stop inclusively */
@@ -194,9 +194,9 @@ public class BufferedTokenStream : TokenStream {
 		List<Token> subset = new ();
 		if ( stop>=tokens.Count ) stop = tokens.Count-1;
 		for (int i = start; i <= stop; i++) {
-			Token t = tokens.get(i);
+			Token t = tokens[i];
 			if ( t.getType()==Token.EOF ) break;
-			subset.add(t);
+			subset.Add(t);
 		}
 		return subset;
 	}
@@ -206,7 +206,7 @@ public class BufferedTokenStream : TokenStream {
 
     protected Token LB(int k) {
         if ( (p-k)<0 ) return null;
-        return tokens.get(p-k);
+        return tokens[(p-k)];
     }
 
 
@@ -220,10 +220,10 @@ public class BufferedTokenStream : TokenStream {
 		sync(i);
         if ( i >= tokens.Count ) { // return EOF token
             // EOF must be last token
-            return tokens.get(tokens.Count-1);
+            return tokens[(tokens.Count-1)];
         }
 //		if ( i>range ) range = i;
-        return tokens.get(i);
+        return tokens[i];
     }
 
 	/**
@@ -257,7 +257,7 @@ public class BufferedTokenStream : TokenStream {
     /** Reset this token stream by setting its token source. */
     public void setTokenSource(TokenSource tokenSource) {
         this.tokenSource = tokenSource;
-        tokens.clear();
+        tokens.Clear();
         p = -1;
         fetchedEOF = false;
     }
@@ -285,12 +285,12 @@ public class BufferedTokenStream : TokenStream {
         // list = tokens[start:stop]:{T t, t.getType() in types}
         List<Token> filteredTokens = new ();
         for (int i=start; i<=stop; i++) {
-            Token t = tokens.get(i);
-            if ( types==null || types.contains(t.getType()) ) {
-                filteredTokens.add(t);
+            Token t = tokens[i];
+            if ( types==null || types.Contains(t.getType()) ) {
+                filteredTokens.Add(t);
             }
         }
-        if ( filteredTokens.isEmpty() ) {
+        if ( filteredTokens.Count == 0 ) {
             filteredTokens = null;
         }
         return filteredTokens;
@@ -298,7 +298,7 @@ public class BufferedTokenStream : TokenStream {
 
     public List<Token> getTokens(int start, int stop, int ttype) {
 		HashSet<int> s = new HashSet<int>(ttype);
-		s.add(ttype);
+		s.Add(ttype);
 		return getTokens(start,stop, s);
     }
 
@@ -314,7 +314,7 @@ public class BufferedTokenStream : TokenStream {
 			return size() - 1;
 		}
 
-		Token token = tokens.get(i);
+		Token token = tokens[i];
 		while ( token.getChannel()!=channel ) {
 			if ( token.getType()==Token.EOF ) {
 				return i;
@@ -322,7 +322,7 @@ public class BufferedTokenStream : TokenStream {
 
 			i++;
 			sync(i);
-			token = tokens.get(i);
+			token = tokens[i];
 		}
 
 		return i;
@@ -346,7 +346,7 @@ public class BufferedTokenStream : TokenStream {
 		}
 
 		while (i >= 0) {
-			Token token = tokens.get(i);
+			Token token = tokens[i];
 			if (token.getType() == Token.EOF || token.getChannel() == channel) {
 				return i;
 			}
@@ -421,12 +421,12 @@ public class BufferedTokenStream : TokenStream {
 	protected List<Token> filterForChannel(int from, int to, int channel) {
 		List<Token> hidden = new ();
 		for (int i=from; i<=to; i++) {
-			Token t = tokens.get(i);
+			Token t = tokens[i];
 			if ( channel==-1 ) {
-				if ( t.getChannel()!= Lexer.DEFAULT_TOKEN_CHANNEL ) hidden.add(t);
+				if ( t.getChannel()!= Lexer.DEFAULT_TOKEN_CHANNEL ) hidden.Add(t);
 			}
 			else {
-				if ( t.getChannel()==channel ) hidden.add(t);
+				if ( t.getChannel()==channel ) hidden.Add(t);
 			}
 		}
 		if ( hidden.Count==0 ) return null;
@@ -453,11 +453,11 @@ public class BufferedTokenStream : TokenStream {
 
 		StringBuilder buf = new StringBuilder();
 		for (int i = start; i <= stop; i++) {
-			Token t = tokens.get(i);
+			Token t = tokens[i];
 			if ( t.getType()==Token.EOF ) break;
-			buf.append(t.getText());
+			buf.Append(t.getText());
 		}
-		return buf.toString();
+		return buf.ToString();
     }
 
 

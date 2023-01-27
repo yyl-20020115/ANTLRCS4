@@ -25,7 +25,7 @@ public class PredictionContextCache {
 //			System.out.println(name+" reuses "+existing);
 			return existing;
 		}
-		cache.put(ctx, ctx);
+		cache[ctx] = ctx;
 		return ctx;
 	}
 
@@ -34,6 +34,6 @@ public class PredictionContextCache {
 	}
 
 	public int size() {
-		return cache.size();
+		return cache.Count;
 	}
 }

@@ -32,7 +32,7 @@ public class ATNOptimizer {
 
 		int removedStates = 0;
 		List<DecisionState> decisions = atn.decisionToState;
-		for (DecisionState decision : decisions) {
+        foreach (DecisionState decision in decisions) {
 			if (decision.ruleIndex >= 0) {
 				Rule rule = g.getRule(decision.ruleIndex);
 				if (Character.isLowerCase(rule.name.charAt(0))) {

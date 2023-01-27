@@ -29,7 +29,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	protected Pair<TokenSource, CharStream> _tokenFactorySourcePair;
 
 	/** How to create token objects */
-	protected TokenFactory<T> _factory = CommonTokenFactory.DEFAULT;
+	protected TokenFactory _factory = CommonTokenFactory.DEFAULT;
 
 	/** The goal of all lexer rules/methods is to create a token object.
 	 *  This is an instance variable as multiple rules may collaborate to
@@ -190,12 +190,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	}
 
 	//@Override
-	public void setTokenFactory<T>(TokenFactory<T> factory) where T:Token {
+	public override void setTokenFactory(TokenFactory factory) {
 		this._factory = factory;
 	}
 
 	//@Override
-	public TokenFactory<T> getTokenFactory<T>() where T:Token {
+	public override TokenFactory getTokenFactory() {
 		return _factory;
 	}
 
@@ -236,7 +236,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  custom Token objects or provide a new factory.
 	 */
 	public Token emit() {
-		Token t = _factory.create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex()-1,
+		Token t = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex()-1,
 								  _tokenStartLine, _tokenStartCharPositionInLine);
 		emit(t);
 		return t;
@@ -245,7 +245,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	public Token emitEOF() {
 		int cpos = getCharPositionInLine();
 		int line = getLine();
-		Token eof = _factory.create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, _input.index(), _input.index()-1,
+		Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, _input.index(), _input.index()-1,
 									line, cpos);
 		emit(eof);
 		return eof;

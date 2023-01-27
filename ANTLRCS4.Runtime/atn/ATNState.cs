@@ -161,7 +161,7 @@ public abstract class ATNState {
 		bool alreadyPresent = false;
 		foreach (Transition t in transitions) {
 			if ( t.target.stateNumber == e.target.stateNumber ) {
-				if ( t.label()!=null && e.label()!=null && t.label().equals(e.label()) ) {
+				if ( t.label()!=null && e.label()!=null && t.label().Equals(e.label()) ) {
 //					Console.Error.println("Repeated transition upon "+e.label()+" from "+stateNumber+"->"+t.target.stateNumber);
 					alreadyPresent = true;
 					break;

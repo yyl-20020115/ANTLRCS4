@@ -12,15 +12,19 @@ namespace org.antlr.v4.runtime;
  *  the error handling strategy (to create missing tokens).  Notifying the parser
  *  of a new factory means that it notifies its token source and error strategy.
  */
-public interface TokenFactory<T> where T:Token {
+public interface TokenFactory
+{
+
+}
+public interface TokenFactory<Symbol>: TokenFactory where Symbol : Token {
     /** This is the method used to create tokens in the lexer and in the
 	 *  error handling strategy. If text!=null, than the start and stop positions
 	 *  are wiped to -1 in the text override is set in the CommonToken.
 	 */
-    T create(Pair<TokenSource, CharStream> source, int type, String text,
+    Symbol create(Pair<TokenSource, CharStream> source, int type, String text,
 				  int channel, int start, int stop,
 				  int line, int charPositionInLine);
 
     /** Generically useful */
-    T create(int type, String text);
+    Symbol create(int type, String text);
 }

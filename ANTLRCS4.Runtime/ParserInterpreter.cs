@@ -273,7 +273,7 @@ public class ParserInterpreter : Parser {
 
 			case Transition.PRECEDENCE:
 				if (!precpred(_ctx, ((PrecedencePredicateTransition)transition).precedence)) {
-					throw new FailedPredicateException(this, $"precpred(_ctx, {(((PrecedencePredicateTransition)transition).precedence)})";
+					throw new FailedPredicateException(this, $"precpred(_ctx, {(((PrecedencePredicateTransition)transition).precedence)})");
 				}
 				break;
 
@@ -399,7 +399,7 @@ public class ParserInterpreter : Parser {
 					expectedTokenType = ime.getExpectedTokens().getMinElement(); // get any element
 				}
 				Token errToken =
-					getTokenFactory().create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
+					(getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
 				                             expectedTokenType, tok.getText(),
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop
@@ -409,7 +409,7 @@ public class ParserInterpreter : Parser {
 			else { // NoViableAlt
 				Token tok = e.getOffendingToken();
 				Token errToken =
-					getTokenFactory().create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
+					(getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
 				                             Token.INVALID_TYPE, tok.getText(),
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop

@@ -6,10 +6,20 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
 
-public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : ATNSimulator
+public interface Recognizer
+{
+    String[] getTokenNames();
+
+    String[] getRuleNames();
+	bool precpred(RuleContext localctx, int precedence);
+	bool sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
+
+}
+public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNInterpreter : ATNSimulator
 {
 	public static readonly int EOF=-1;
 
@@ -58,24 +68,24 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	public Dictionary<String, int> getTokenTypeMap() {
 		Vocabulary vocabulary = getVocabulary();
 		lock (tokenTypeMapCache) {
-			Dictionary<String, int> result = tokenTypeMapCache.get(vocabulary);
-			if (result == null) {
+			if (!tokenTypeMapCache.TryGetValue(vocabulary,out var result)) {
 				result = new ();
 				for (int i = 0; i <= getATN().maxTokenType; i++) {
 					String literalName = vocabulary.getLiteralName(i);
 					if (literalName != null) {
-						result.put(literalName, i);
+						result[literalName] = i;
 					}
 
 					String symbolicName = vocabulary.getSymbolicName(i);
 					if (symbolicName != null) {
-						result.put(symbolicName, i);
+						result[symbolicName]= i;
 					}
 				}
 
-				result.put("EOF", Token.EOF);
-				result = Collections.unmodifiableMap(result);
-				tokenTypeMapCache.put(vocabulary, result);
+				result["EOF"]= Token.EOF;
+
+				result = new (result);
+				tokenTypeMapCache[vocabulary]= result;
 			}
 
 			return result;
@@ -94,10 +104,10 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 		}
 
 		lock (ruleIndexMapCache) {
-			var result = ruleIndexMapCache.get(ruleNames);
-			if (result == null) {
-				result = Collections.unmodifiableMap(Utils.toMap(ruleNames));
-				ruleIndexMapCache.put(ruleNames, result);
+			if (!ruleIndexMapCache.TryGetValue(ruleNames,out var result)) {
+				result = Utils.toMap(ruleNames);
+
+				ruleIndexMapCache.Add(ruleNames, result);
 			}
 
 			return result;
@@ -105,8 +115,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	}
 
 	public int getTokenType(String tokenName) {
-		int ttype = getTokenTypeMap().get(tokenName);
-		if ( ttype!=null ) return ttype;
+		if (getTokenTypeMap().TryGetValue(tokenName,out var ttype)) return ttype;
 		return Token.INVALID_TYPE;
 	}
 
@@ -204,18 +213,18 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	 */
 	public void addErrorListener(ANTLRErrorListener listener) {
 		if (listener == null) {
-			throw new NullPointerException("listener cannot be null.");
+			throw new NullReferenceException("listener cannot be null.");
 		}
 
-		_listeners.add(listener);
+		_listeners.Add(listener);
 	}
 
 	public void removeErrorListener(ANTLRErrorListener listener) {
-		_listeners.remove(listener);
+		_listeners.Remove(listener);
 	}
 
 	public void removeErrorListeners() {
-		_listeners.clear();
+		_listeners.Clear();
 	}
 
 
@@ -262,7 +271,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter >where ATNInterpreter : 
 	public abstract void setInputStream(IntStream input);
 
 
-	public abstract TokenFactory<Token> getTokenFactory();
+	public abstract TokenFactory getTokenFactory();
 
-	public abstract void setTokenFactory(TokenFactory<Token> input);
+	public abstract void setTokenFactory(TokenFactory input);
 }

@@ -4,7 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.semantics;
+using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 
@@ -163,11 +167,11 @@ public class ToolTestUtils {
 	}
 
 	public static IntegerList getTokenTypesViaATN(String input, LexerATNSimulator lexerATN) {
-		ANTLRInputStream in = new ANTLRInputStream(input);
+		ANTLRInputStream @in = new ANTLRInputStream(input);
 		IntegerList tokenTypes = new IntegerList();
 		int ttype;
 		do {
-			ttype = lexerATN.match(in, Lexer.DEFAULT_MODE);
+			ttype = lexerATN.match(@in, Lexer.DEFAULT_MODE);
 			tokenTypes.add(ttype);
 		} while ( ttype!= Token.EOF );
 		return tokenTypes;

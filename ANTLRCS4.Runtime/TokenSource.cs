@@ -3,7 +3,6 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-using org.antlr.v4.runtime;
 
 namespace org.antlr.v4.runtime;
 
@@ -72,7 +71,7 @@ public interface TokenSource {
 	 *
 	 * @param factory The {@link TokenFactory} to use for creating tokens.
 	 */
-	public void setTokenFactory(TokenFactory<T> factory);
+	public void setTokenFactory(TokenFactory factory);
 
 	/**
 	 * Gets the {@link TokenFactory} this token source is currently using for
@@ -80,5 +79,5 @@ public interface TokenSource {
 	 *
 	 * @return The {@link TokenFactory} currently used by this token source.
 	 */
-	public TokenFactory<T> getTokenFactory();
+	public TokenFactory getTokenFactory();
 }

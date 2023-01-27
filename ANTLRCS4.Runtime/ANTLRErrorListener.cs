@@ -44,7 +44,7 @@ public interface ANTLRErrorListener {
 	 *        the parser was able to recover in line without exiting the
 	 *        surrounding rule.
 	 */
-	public void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
+	public void syntaxError(Recognizer recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

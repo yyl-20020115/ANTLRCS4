@@ -139,8 +139,8 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			reportFailedPredicate(recognizer, (FailedPredicateException)e);
 		}
 		else {
-			System.err.println("unknown recognition error type: "+e.getClass().getName());
-			recognizer.notifyErrorListeners(e.getOffendingToken(), e.getMessage(), e);
+			Console.Error.WriteLine("unknown recognition error type: "+e.GetType().Name);
+			recognizer.notifyErrorListeners(e.getOffendingToken(), e.Message, e);
 		}
 	}
 
@@ -225,7 +225,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 */
 	//@Override
 	public void sync(Parser recognizer)  {
-		ATNState s = recognizer.getInterpreter().atn.states.get(recognizer.getState());
+		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 //		System.err.println("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
 		// If already recovering, don't try to sync
 		if (inErrorRecoveryMode(recognizer)) {
@@ -337,7 +337,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 										 FailedPredicateException e)
 	{
 		String ruleName = recognizer.getRuleNames()[recognizer._ctx.getRuleIndex()];
-		String msg = "rule "+ruleName+" "+e.getMessage();
+		String msg = "rule "+ruleName+" "+e.Message;
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
 
@@ -507,7 +507,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		// if current token is consistent with what could come after current
 		// ATN state, then we know we're missing a token; error recovery
 		// is free to conjure up and insert the missing token
-		ATNState currentState = recognizer.getInterpreter().atn.states.get(recognizer.getState());
+		ATNState currentState = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 		ATNState next = currentState.transition(0).target;
 		ATN atn = recognizer.getInterpreter().atn;
 		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer._ctx);
@@ -593,7 +593,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			current = lookback;
 		}
 		return
-			recognizer.getTokenFactory().create(new Pair<TokenSource, CharStream>(current.getTokenSource(), current.getTokenSource().getInputStream()), expectedTokenType, tokenText,
+			(recognizer.getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(current.getTokenSource(), current.getTokenSource().getInputStream()), expectedTokenType, tokenText,
 							Token.DEFAULT_CHANNEL,
 							-1, -1,
 							current.getLine(), current.getCharPositionInLine());
@@ -741,7 +741,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		IntervalSet recoverSet = new IntervalSet();
 		while ( ctx!=null && ctx.invokingState>=0 ) {
 			// compute what follows who invoked us
-			ATNState invokingState = atn.states.get(ctx.invokingState);
+			ATNState invokingState = atn.states[(ctx.invokingState)];
 			RuleTransition rt = (RuleTransition)invokingState.transition(0);
 			IntervalSet follow = atn.nextTokens(rt.followState);
 			recoverSet.addAll(follow);

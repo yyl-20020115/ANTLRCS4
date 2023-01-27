@@ -9,7 +9,7 @@ using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
 
-public class Utils
+public static class Utils
 {
     // Seriously: why isn't this built in to java? ugh!
     public static String join<T>(IEnumerator<T> iter, String separator)
@@ -116,7 +116,7 @@ public class Utils
 
     public static IntervalSet toSet(BitSet bits)
     {
-        IntervalSet s = new IntervalSet();
+        var s = new IntervalSet();
         int i = bits.nextSetBit(0);
         while (i >= 0)
         {

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -48,8 +51,8 @@ public class LeftRecursiveRuleTransformer {
 			}
 		}
 
-		// update all refs to recursive rules to have [0] argument
-		for (GrammarAST r : ast.getNodesWithType(ANTLRParser.RULE_REF)) {
+        // update all refs to recursive rules to have [0] argument
+        foreach (GrammarAST r in ast.getNodesWithType(ANTLRParser.RULE_REF)) {
 			if ( r.getParent().getType()==ANTLRParser.RULE ) continue; // must be rule def
 			if ( ((GrammarASTWithOptions)r).getOptionString(PRECEDENCE_OPTION_NAME) != null ) continue; // already has arg; must be in rewritten rule
 			if ( leftRecursiveRuleNames.contains(r.getText()) ) {
@@ -136,9 +139,9 @@ public class LeftRecursiveRuleTransformer {
 			arg.resolver = r.alt[1]; // todo: isn't this Rule or something?
 		}
 
-		// define labels on recursive rule refs we delete; they don't point to nodes of course
-		// these are so $label in action translation works
-		for (Pair<GrammarAST,String> pair : leftRecursiveRuleWalker.leftRecursiveRuleRefLabels) {
+        // define labels on recursive rule refs we delete; they don't point to nodes of course
+        // these are so $label in action translation works
+        foreach (Pair<GrammarAST,String> pair in leftRecursiveRuleWalker.leftRecursiveRuleRefLabels) {
 			GrammarAST labelNode = pair.a;
 			GrammarAST labelOpNode = (GrammarAST)labelNode.getParent();
 			GrammarAST elementNode = (GrammarAST)labelOpNode.getChild(1);
@@ -152,7 +155,7 @@ public class LeftRecursiveRuleTransformer {
 		return true;
 	}
 
-	public RuleAST parseArtificialRule(final Grammar g, String ruleText) {
+	public RuleAST parseArtificialRule( Grammar g, String ruleText) {
 		ANTLRLexer lexer = new ANTLRLexer(new ANTLRStringStream(ruleText));
 		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(lexer.getCharStream());
 		CommonTokenStream tokens = new CommonTokenStream(lexer);

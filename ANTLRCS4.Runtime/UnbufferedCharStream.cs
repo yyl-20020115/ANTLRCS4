@@ -79,8 +79,8 @@ public class UnbufferedCharStream : CharStream {
 	public String name;
 
 	/** Useful for subclasses that pull char from other than this.input. */
-	public UnbufferedCharStream() {
-		this(256);
+	public UnbufferedCharStream(): this(256)
+    {
 	}
 
 	/** Useful for subclasses that pull char from other than this.input. */
@@ -89,26 +89,25 @@ public class UnbufferedCharStream : CharStream {
 		data = new int[bufferSize];
 	}
 
-	public UnbufferedCharStream(Stream input) {
-		this(input, 256);
+	public UnbufferedCharStream(Stream input): this(input, 256)
+    {
+		;
 	}
 
-	public UnbufferedCharStream(TextReader input) {
-		this(input, 256);
-	}
+	public UnbufferedCharStream(TextReader input) : this(input, 256) {; }
 
-	public UnbufferedCharStream(Stream input, int bufferSize) {
-		this(input, bufferSize, StandardCharsets.UTF_8);
-	}
+	public UnbufferedCharStream(Stream input, int bufferSize) : this(input, bufferSize, Encoding.UTF8) {; }
 
-	public UnbufferedCharStream(Stream input, int bufferSize, Encoding charset) {
-		this(bufferSize);
+	public UnbufferedCharStream(Stream input, int bufferSize, Encoding charset): this(bufferSize)
+    {
+		;
 		this.input = new StreamReader(input, charset);
 		fill(1); // prime
 	}
 
-	public UnbufferedCharStream(TextReader input, int bufferSize) {
-		this(bufferSize);
+	public UnbufferedCharStream(TextReader input, int bufferSize): this(bufferSize)
+    {
+		;
 		this.input = input;
 		fill(1); // prime
 	}
@@ -159,17 +158,17 @@ public class UnbufferedCharStream : CharStream {
 
 			try {
 				int c = nextChar();
-				if (c > Character.MAX_VALUE || c == IntStream.EOF) {
+				if (c > char.MaxValue || c == IntStream.EOF) {
 					add(c);
 				}
 				else {
 					char ch = (char) c;
-					if (Character.isLowSurrogate(ch)) {
+					if (char.IsLowSurrogate(ch)) {
 						throw new RuntimeException("Invalid UTF-16 (low surrogate with no preceding high surrogate)");
 					}
-					else if (Character.isHighSurrogate(ch)) {
+					else if (char.IsHighSurrogate(ch)) {
 						int lowSurrogate = nextChar();
-						if (lowSurrogate > Character.MAX_VALUE) {
+						if (lowSurrogate > char.MaxValue) {
 							throw new RuntimeException("Invalid UTF-16 (high surrogate followed by code point > U+FFFF");
 						}
 						else if (lowSurrogate == IntStream.EOF) {
@@ -177,8 +176,8 @@ public class UnbufferedCharStream : CharStream {
 						}
 						else {
 							char lowSurrogateChar = (char) lowSurrogate;
-							if (Character.isLowSurrogate(lowSurrogateChar)) {
-								add(Character.toCodePoint(ch, lowSurrogateChar));
+							if (char.IsLowSurrogate(lowSurrogateChar)) {
+								add(char.toCodePoint(ch, lowSurrogateChar));
 							}
 							else {
 								throw new RuntimeException("Invalid UTF-16 (dangling high surrogate");
@@ -191,7 +190,7 @@ public class UnbufferedCharStream : CharStream {
 				}
 			}
 			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+				throw new RuntimeException(ioe.Message,ioe);
 			}
 		}
 
@@ -203,12 +202,12 @@ public class UnbufferedCharStream : CharStream {
 	 * {@link #input input}.
 	 */
 	protected int nextChar(){
-		return input.read();
+		return input.Read();
 	}
 
 	protected void add(int c) {
 		if ( n>=data.Length ) {
-			data = Arrays.copyOf(data, data.length * 2);
+			data = Arrays.copyOf(data, data.Length * 2);
         }
         data[n++] = c;
     }
@@ -218,7 +217,7 @@ public class UnbufferedCharStream : CharStream {
 		if ( i==-1 ) return lastChar; // special case
         sync(i);
         int index = p + i - 1;
-        if ( index < 0 ) throw new IndexOutOfBoundsException();
+        if ( index < 0 ) throw new IndexOutOfRangeException();
 		if ( index >= n ) return IntStream.EOF;
         return data[index];
     }
@@ -255,8 +254,8 @@ public class UnbufferedCharStream : CharStream {
 		if ( numMarkers==0 && p > 0 ) { // release buffer when we can, but don't do unnecessary work
 			// Copy data[p]..data[n-1] to data[0]..data[(n-1)-p], reset ptrs
 			// p is last valid char; move nothing if p==n as we have no valid char
-			System.arraycopy(data, p, data, 0, n - p); // shift n-p char from p to 0
-			n = n - p;
+			Array.Copy(data, p, data, 0, n - p); // shift n-p char from p to 0
+			n -= p;
 			p = 0;
 			lastCharBufferStart = lastChar;
 		}
@@ -278,13 +277,13 @@ public class UnbufferedCharStream : CharStream {
 
 		if (index > currentCharIndex) {
 			sync(index - currentCharIndex);
-			index = Math.min(index, getBufferStartIndex() + n - 1);
+			index = Math.Min(index, getBufferStartIndex() + n - 1);
 		}
 
         // index == to bufferStartIndex should set p to 0
         int i = index - getBufferStartIndex();
         if ( i < 0 ) {
-			throw new IllegalArgumentException("cannot seek to negative index " + index);
+			throw new ArgumentException("cannot seek to negative index " + index);
 		}
 		else if (i >= n) {
             throw new UnsupportedOperationException("seek to index outside buffer: "+
@@ -308,8 +307,8 @@ public class UnbufferedCharStream : CharStream {
 
     //@Override
     public String getSourceName() {
-		if (name == null || name.isEmpty()) {
-			return UNKNOWN_SOURCE_NAME;
+		if (string.IsNullOrEmpty(name)) {
+			return IntStream.UNKNOWN_SOURCE_NAME;
 		}
 
 		return name;
@@ -318,13 +317,13 @@ public class UnbufferedCharStream : CharStream {
 	//@Override
 	public String getText(Interval interval) {
 		if (interval.a < 0 || interval.b < interval.a - 1) {
-			throw new IllegalArgumentException("invalid interval");
+			throw new ArgumentException("invalid interval");
 		}
 
 		int bufferStartIndex = getBufferStartIndex();
-		if (n > 0 && data[n - 1] == Character.MAX_VALUE) {
+		if (n > 0 && data[n - 1] == char.MaxValue) {
 			if (interval.a + interval.length() > bufferStartIndex + n) {
-				throw new IllegalArgumentException("the interval extends past the end of the stream");
+				throw new ArgumentException("the interval extends past the end of the stream");
 			}
 		}
 

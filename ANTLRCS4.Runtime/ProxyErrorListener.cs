@@ -27,7 +27,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 	}
 
 	//@Override
-	public void syntaxError(Recognizer<Token, ATNSimulator> recognizer,
+	public void syntaxError(Recognizer recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

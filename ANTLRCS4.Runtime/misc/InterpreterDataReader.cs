@@ -13,11 +13,11 @@ namespace org.antlr.v4.runtime.misc;
 public class InterpreterDataReader {
 
 	public class InterpreterData {
-	  ATN atn;
-	  Vocabulary vocabulary;
-	  List<String> ruleNames;
-	  List<String> channels; // Only valid for lexer grammars.
-	  List<String> modes; // ditto
+	  public ATN atn;
+        public Vocabulary vocabulary;
+        public List<String> ruleNames;
+        public List<String> channels; // Only valid for lexer grammars.
+        public List<String> modes; // ditto
 	};
 
 	/**
@@ -47,69 +47,69 @@ public class InterpreterDataReader {
 		InterpreterData result = new InterpreterData();
 		result.ruleNames = new ();
 
-		using (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+		using (var br = new StreamReader(fileName)) {
 		    String line;
 		  	List<String> literalNames = new();
 		  	List<String> symbolicNames = new();
 
-			line = br.readLine();
+			line = br.ReadLine();
 			if ( !line.Equals("token literal names:") )
 				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.readLine()) != null) {
-		       if ( line.isEmpty() )
+		    while ((line = br.ReadLine()) != null) {
+		       if ( line.Length == 0 )
 					break;
-				literalNames.add(line.equals("null") ? "" : line);
+				literalNames.Add(line.Equals("null") ? "" : line);
 		    }
 
-			line = br.readLine();
-			if ( !line.equals("token symbolic names:") )
+			line = br.ReadLine();
+			if ( !line.Equals("token symbolic names:") )
 				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.readLine()) != null) {
-		       if ( line.isEmpty() )
+		    while ((line = br.ReadLine()) != null) {
+		       if ( line.Length == 0 )
 					break;
-				symbolicNames.add(line.equals("null") ? "" : line);
+				symbolicNames.Add(line.Equals("null") ? "" : line);
 		    }
 
-		  	result.vocabulary = new VocabularyImpl(literalNames.toArray(new String[0]), symbolicNames.toArray(new String[0]));
+		  	result.vocabulary = new VocabularyImpl(literalNames.ToArray(), symbolicNames.ToArray());
 
-			line = br.readLine();
-			if ( !line.equals("rule names:") )
+			line = br.ReadLine();
+			if ( !line.Equals("rule names:") )
 				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.readLine()) != null) {
-		       if ( line.isEmpty() )
+		    while ((line = br.ReadLine()) != null) {
+		       if ( line.Length==0 )
 					break;
-				result.ruleNames.add(line);
+				result.ruleNames.Add(line);
 		    }
 
-			line = br.readLine();
-			if ( line.equals("channel names:") ) { // Additional lexer data.
-				result.channels = new ArrayList<String>();
-			    while ((line = br.readLine()) != null) {
-			       if ( line.isEmpty() )
+			line = br.ReadLine();
+			if ( line.Equals("channel names:") ) { // Additional lexer data.
+				result.channels = new ();
+			    while ((line = br.ReadLine()) != null) {
+			       if ( line.Length==0 )
 						break;
-					result.channels.add(line);
+					result.channels.Add(line);
 			    }
 
-				line = br.readLine();
-				if ( !line.equals("mode names:") )
+				line = br.ReadLine();
+				if ( !line.Equals("mode names:") )
 					throw new RuntimeException("Unexpected data entry");
-				result.modes = new ArrayList<String>();
-			    while ((line = br.readLine()) != null) {
-			       if ( line.isEmpty() )
+				result.modes = new ();
+			    while ((line = br.ReadLine()) != null) {
+			       if ( line.Length == 0 )
 						break;
-					result.modes.add(line);
+					result.modes.Add(line);
 			    }
 			}
 
-		  	line = br.readLine();
-		  	if ( !line.equals("atn:") )
+		  	line = br.ReadLine();
+		  	if ( !line.Equals("atn:") )
 		  		throw new RuntimeException("Unexpected data entry");
-			line = br.readLine();
-			String[] elements = line.substring(1,line.length()-1).split(",");
-	  		int[] serializedATN = new int[elements.length];
+			line = br.ReadLine();
+			String[] elements = line[1..^1].Split(",");
+	  		int[] serializedATN = new int[elements.Length];
 
-			for (int i = 0; i < elements.length; ++i) { // ignore [...] on ends
-				serializedATN[i] = Integer.parseInt(elements[i].trim());
+			for (int i = 0; i < elements.Length; ++i) { // ignore [...] on ends
+				serializedATN[i] = Integer.parseInt(elements[i].Trim());
 			}
 
 		  	ATNDeserializer deserializer = new ATNDeserializer();
