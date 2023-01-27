@@ -4,23 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.ActionAST;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
+namespace org.antlr.v4.codegen.model;
 
 public abstract class OutputFile : OutputModelObject {
-	public final String fileName;
-	public final String grammarFileName;
-	public final String ANTLRVersion;
-    public final String TokenLabelType;
-    public final String InputSymbolType;
+	public readonly String fileName;
+	public readonly String grammarFileName;
+	public readonly String ANTLRVersion;
+    public readonly String TokenLabelType;
+    public readonly String InputSymbolType;
 
     public OutputFile(OutputModelFactory factory, String fileName) {
         super(factory);
@@ -32,13 +26,13 @@ public abstract class OutputFile : OutputModelObject {
         InputSymbolType = TokenLabelType;
     }
 
-	public Map<String, Action> buildNamedActions(Grammar g) {
+	public Dictionary<String, Action> buildNamedActions(Grammar g) {
 		return buildNamedActions(g, null);
 	}
 
-	public Map<String, Action> buildNamedActions(Grammar g, Predicate<ActionAST> filter) {
-		Map<String, Action> namedActions = new HashMap<String, Action>();
-		for (String name : g.namedActions.keySet()) {
+	public Dictionary<String, Action> buildNamedActions(Grammar g, Predicate<ActionAST> filter) {
+		Dictionary<String, Action> namedActions = new HashMap<String, Action>();
+        foreach (String name in g.namedActions.keySet()) {
 			ActionAST ast = g.namedActions.get(name);
 			if(filter==null || filter.test(ast))
 				namedActions.put(name, new Action(factory, ast));

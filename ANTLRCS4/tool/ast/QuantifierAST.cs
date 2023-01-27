@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+namespace org.antlr.v4.tool.ast;
 
 /**
  *
@@ -12,6 +12,6 @@ package org.antlr.v4.tool.ast;
  */
 public interface QuantifierAST {
 
-	boolean isGreedy();
+	bool isGreedy();
 
 }

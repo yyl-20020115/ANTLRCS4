@@ -4,22 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.tool.Rule;
-
-import java.util.LinkedHashMap;
+namespace org.antlr.v4.codegen.model;
 
 public class RuleActionFunction : OutputModelObject {
-	public final String name;
-	public final String escapedName;
-	public final String ctxType;
-	public final int ruleIndex;
+	public readonly String escapedName;
+	public readonly String ctxType;
+	public readonly int ruleIndex;
 
 	/** Map actionIndex to Action */
-	@ModelElement public LinkedHashMap<Integer, Action> actions =
-		new LinkedHashMap<Integer, Action>();
+	//@ModelElement 
+		public Dictionary<int, Action> actions =
+		new LinkedHashMap<int, Action>();
 
 	public RuleActionFunction(OutputModelFactory factory, Rule r, String ctxType) {
 		super(factory);

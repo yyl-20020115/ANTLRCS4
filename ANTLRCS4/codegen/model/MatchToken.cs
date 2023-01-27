@@ -4,25 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.Target;
-import org.antlr.v4.codegen.model.decl.Decl;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.TerminalAST;
+namespace org.antlr.v4.codegen.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /** */
-public class MatchToken : RuleElement implements LabeledOp {
-	public final String name;
-	public final String escapedName;
-	public final int ttype;
-	public final List<Decl> labels = new ArrayList<Decl>();
+public class MatchToken : RuleElement , LabeledOp {
+	public readonly String name;
+	public readonly String escapedName;
+	public readonly int ttype;
+	public readonly List<Decl> labels = new ();
 
 	public MatchToken(OutputModelFactory factory, TerminalAST ast) {
 		super(factory, ast);
@@ -41,6 +34,6 @@ public class MatchToken : RuleElement implements LabeledOp {
 		escapedName = null;
 	}
 
-	@Override
+	//@Override
 	public List<Decl> getLabels() { return labels; }
 }

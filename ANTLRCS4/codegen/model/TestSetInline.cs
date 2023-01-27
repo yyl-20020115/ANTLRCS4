@@ -4,21 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.Target;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 /** */
-public class TestSetInline extends SrcOp {
-	public final int bitsetWordSize;
-	public final String varName;
-	public final Bitset[] bitsets;
+public class TestSetInline : SrcOp {
+	public readonly int bitsetWordSize;
+	public readonly String varName;
+	public readonly Bitset[] bitsets;
 
 	public TestSetInline(OutputModelFactory factory, GrammarAST ast, IntervalSet set, int wordSize) {
 		super(factory, ast);
@@ -32,7 +27,7 @@ public class TestSetInline extends SrcOp {
 	private static Bitset[] createBitsets(OutputModelFactory factory,
 										  IntervalSet set,
 										  int wordSize,
-										  boolean useZeroOffset) {
+										  bool useZeroOffset) {
 		List<Bitset> bitsetList = new ArrayList<>();
 		Target target = factory.getGenerator().getTarget();
 		Bitset current = null;
@@ -55,9 +50,9 @@ public class TestSetInline extends SrcOp {
 		return bitsetList.toArray(new Bitset[0]);
 	}
 
-	public static final class Bitset {
-		public final int shift;
-		private final List<TokenInfo> tokens = new ArrayList<>();
+	public class Bitset {
+		public readonly int shift;
+		private readonly List<TokenInfo> tokens = new ArrayList<>();
 		private long calculated;
 
 		public Bitset(int shift) {

@@ -4,24 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen;
-
-import org.antlr.v4.Tool;
-import org.antlr.v4.codegen.model.ModelElement;
-import org.antlr.v4.codegen.model.OutputModelObject;
-import org.antlr.v4.tool.ErrorType;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.compiler.FormalArgument;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+namespace org.antlr.v4.codegen;
 
 /** Convert an output model tree to template hierarchy by walking
  *  the output model. Each output model object has a corresponding template
@@ -84,7 +67,7 @@ public class OutputModelWalker {
 		Set<String> usedFieldNames = new HashSet<String>();
 		Field fields[] = cl.getFields();
 		for (Field fi : fields) {
-			ModelElement annotation = fi.getAnnotation(ModelElement.class);
+			ModelElement annotation = fi.getAnnotation(ModelElement);
 			if (annotation == null) {
 				continue;
 			}

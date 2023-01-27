@@ -4,14 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
 /** */
-public class Sync extends SrcOp {
+public class Sync : SrcOp {
 	public int decision;
 //	public BitSetDecl expecting;
 	public Sync(OutputModelFactory factory,

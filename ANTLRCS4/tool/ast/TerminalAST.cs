@@ -4,11 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
-public class TerminalAST extends GrammarASTWithOptions implements RuleElementAST {
+
+public class TerminalAST : GrammarASTWithOptions , RuleElementAST {
 
 	public TerminalAST(TerminalAST node) {
 		super(node);
@@ -18,9 +19,9 @@ public class TerminalAST extends GrammarASTWithOptions implements RuleElementAST
     public TerminalAST(int type) { super(type); }
     public TerminalAST(int type, Token t) { super(type, t); }
 
-	@Override
+	//@Override
 	public TerminalAST dupNode() { return new TerminalAST(this); }
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

@@ -3,20 +3,10 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.AltAST;
-
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+namespace org.antlr.v4.codegen.model;
 
 /** A model object representing a parse tree listener file.
  *  These are the rules specific events triggered by a parse tree visitor.
@@ -30,16 +20,18 @@ public class ListenerFile : OutputFile {
 	/**
 	 * The names of all listener contexts.
 	 */
-	public Set<String> listenerNames = new LinkedHashSet<String>();
+	public HashSet<String> listenerNames = new LinkedHashSet<String>();
 	/**
 	 * For listener contexts created for a labeled outer alternative, maps from
 	 * a listener context name to the name of the rule which defines the
 	 * context.
 	 */
-	public Map<String, String> listenerLabelRuleNames = new LinkedHashMap<String, String>();
+	public Dictionary<String, String> listenerLabelRuleNames = new LinkedHashMap<String, String>();
 
-	@ModelElement public Action header;
-	@ModelElement public Map<String, Action> namedActions;
+	//@ModelElement 
+		public Action header;
+	//@ModelElement
+		public Dictionary<String, Action> namedActions;
 
 	public ListenerFile(OutputModelFactory factory, String fileName) {
 		super(factory, fileName);
@@ -47,17 +39,17 @@ public class ListenerFile : OutputFile {
 		parserName = g.getRecognizerName();
 		grammarName = g.name;
 		namedActions = buildNamedActions(factory.getGrammar(), ast -> ast.getScope() == null);
-		for (Rule r : g.rules.values()) {
+        foreach (Rule r in g.rules.values()) {
 			Map<String, List<Pair<Integer,AltAST>>> labels = r.getAltLabels();
 			if ( labels!=null ) {
-				for (Map.Entry<String, List<Pair<Integer, AltAST>>> pair : labels.entrySet()) {
+                foreach (Map.Entry<String, List<Pair<Integer, AltAST>>> pair in labels.entrySet()) {
 					listenerNames.add(pair.getKey());
 					listenerLabelRuleNames.put(pair.getKey(), r.name);
 				}
 			}
 			else {
 				// only add rule context if no labels
-				listenerNames.add(r.name);
+				listenerNames.Add(r.name);
 			}
 		}
 		ActionAST ast = g.namedActions.get("header");

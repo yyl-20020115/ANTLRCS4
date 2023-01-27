@@ -4,57 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen;
+using org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.tree.CommonTreeNodeStream;
-import org.antlr.v4.analysis.LeftRecursiveRuleAltInfo;
-import org.antlr.v4.codegen.model.Action;
-import org.antlr.v4.codegen.model.AltBlock;
-import org.antlr.v4.codegen.model.BaseListenerFile;
-import org.antlr.v4.codegen.model.BaseVisitorFile;
-import org.antlr.v4.codegen.model.Choice;
-import org.antlr.v4.codegen.model.CodeBlockForAlt;
-import org.antlr.v4.codegen.model.CodeBlockForOuterMostAlt;
-import org.antlr.v4.codegen.model.LabeledOp;
-import org.antlr.v4.codegen.model.LeftRecursiveRuleFunction;
-import org.antlr.v4.codegen.model.Lexer;
-import org.antlr.v4.codegen.model.LexerFile;
-import org.antlr.v4.codegen.model.ListenerFile;
-import org.antlr.v4.codegen.model.OutputModelObject;
-import org.antlr.v4.codegen.model.Parser;
-import org.antlr.v4.codegen.model.ParserFile;
-import org.antlr.v4.codegen.model.RuleActionFunction;
-import org.antlr.v4.codegen.model.RuleFunction;
-import org.antlr.v4.codegen.model.RuleSempredFunction;
-import org.antlr.v4.codegen.model.SrcOp;
-import org.antlr.v4.codegen.model.StarBlock;
-import org.antlr.v4.codegen.model.VisitorFile;
-import org.antlr.v4.codegen.model.decl.CodeBlock;
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.parse.GrammarASTAdaptor;
-import org.antlr.v4.tool.Alternative;
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.LeftRecursiveRule;
-import org.antlr.v4.tool.Rule;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.BlockAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.PredAST;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
+namespace org.antlr.v4.codegen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 /** This receives events from SourceGenTriggers.g and asks factory to do work.
  *  Then runs extensions in order on resulting SrcOps to get final list.
  **/
 public class OutputModelController {
 	/** Who does the work? Doesn't have to be CoreOutputModelFactory. */
-	public OutputModelFactory delegate;
+	public OutputModelFactory @delegate;
 
 	/** Post-processing CodeGeneratorExtension objects; done in order given. */
 	public List<CodeGeneratorExtension> extensions = new ArrayList<CodeGeneratorExtension>();
@@ -83,7 +46,7 @@ public class OutputModelController {
 	 *  controller as factory in SourceGenTriggers so it triggers codegen
 	 *  extensions too, not just the factory functions in this factory.
 	 */
-	public OutputModelObject buildParserOutputModel(boolean header) {
+	public OutputModelObject buildParserOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		ParserFile file = parserFile(gen.getRecognizerFileName(header));
 		setRoot(file);
@@ -97,7 +60,7 @@ public class OutputModelController {
 		return file;
 	}
 
-	public OutputModelObject buildLexerOutputModel(boolean header) {
+	public OutputModelObject buildLexerOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		LexerFile file = lexerFile(gen.getRecognizerFileName(header));
 		setRoot(file);
@@ -111,22 +74,22 @@ public class OutputModelController {
 		return file;
 	}
 
-	public OutputModelObject buildListenerOutputModel(boolean header) {
+	public OutputModelObject buildListenerOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		return new ListenerFile(delegate, gen.getListenerFileName(header));
 	}
 
-	public OutputModelObject buildBaseListenerOutputModel(boolean header) {
+	public OutputModelObject buildBaseListenerOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		return new BaseListenerFile(delegate, gen.getBaseListenerFileName(header));
 	}
 
-	public OutputModelObject buildVisitorOutputModel(boolean header) {
+	public OutputModelObject buildVisitorOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		return new VisitorFile(delegate, gen.getVisitorFileName(header));
 	}
 
-	public OutputModelObject buildBaseVisitorOutputModel(boolean header) {
+	public OutputModelObject buildBaseVisitorOutputModel(bool header) {
 		CodeGenerator gen = delegate.getGenerator();
 		return new BaseVisitorFile(delegate, gen.getBaseVisitorFileName(header));
 	}
@@ -340,8 +303,8 @@ public class OutputModelController {
 
 	public CodeGenerator getGenerator() { return delegate.getGenerator(); }
 
-	public CodeBlockForAlt alternative(Alternative alt, boolean outerMost) {
-		CodeBlockForAlt blk = delegate.alternative(alt, outerMost);
+	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) {
+		CodeBlockForAlt blk = @delegate.alternative(alt, outerMost);
 		if ( outerMost ) {
 			currentOuterMostAlternativeBlock = (CodeBlockForOuterMostAlt)blk;
 		}
@@ -350,7 +313,7 @@ public class OutputModelController {
 	}
 
 	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops,
-											 boolean outerMost)
+											 bool outerMost)
 	{
 		blk = delegate.finishAlternative(blk, ops);
 		for (CodeGeneratorExtension ext : extensions) blk = ext.finishAlternative(blk, outerMost);
@@ -383,7 +346,7 @@ public class OutputModelController {
 	}
 
 	/** (A|B|C) possibly with ebnfRoot and label */
-	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, boolean invert) {
+	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, bool invert) {
 		List<SrcOp> ops = delegate.set(setAST, labelAST, invert);
 		for (CodeGeneratorExtension ext : extensions) {
 			ops = ext.set(ops);
@@ -391,7 +354,7 @@ public class OutputModelController {
 		return ops;
 	}
 
-	public CodeBlockForAlt epsilon(Alternative alt, boolean outerMost) {
+	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) {
 		CodeBlockForAlt blk = delegate.epsilon(alt, outerMost);
 		for (CodeGeneratorExtension ext : extensions) blk = ext.epsilon(blk);
 		return blk;
@@ -429,8 +392,8 @@ public class OutputModelController {
 		return c;
 	}
 
-	public boolean needsImplicitLabel(GrammarAST ID, LabeledOp op) {
-		boolean needs = delegate.needsImplicitLabel(ID, op);
+	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
+		bool needs = delegate.needsImplicitLabel(ID, op);
 		for (CodeGeneratorExtension ext : extensions) needs |= ext.needsImplicitLabel(ID, op);
 		return needs;
 	}

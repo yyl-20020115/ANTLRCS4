@@ -1,21 +1,8 @@
-package org.antlr.v4.gui;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool;
 
-import org.antlr.runtime.RecognitionException;
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.DecisionInfo;
-import org.antlr.v4.runtime.atn.ParseInfo;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.tool.*;
+namespace org.antlr.v4.gui;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /** Interpret a lexer/parser, optionally printing tree string and dumping profile info
  *
@@ -28,7 +15,7 @@ import java.nio.file.Paths;
  *        [-profile filename.csv]
  */
 public class Interpreter {
-	public static final String[] profilerColumnNames = {
+	public static readonly String[] profilerColumnNames = {
 			"Rule","Invocations", "Time (ms)", "Total k", "Max k", "Ambiguities", "DFA cache miss"
 	};
 
@@ -37,12 +24,11 @@ public class Interpreter {
 									   String grammarText,
 									   Grammar tokenVocabSource,
 									   ANTLRToolListener listener)
-				throws RecognitionException
 		{
 			super(fileName, grammarText, tokenVocabSource, listener);
 		}
 
-		@Override
+		//@Override
 		public void importTokensFromTokensFile() {
 			// don't try to import tokens files; must give me both grammars if split
 		}
@@ -60,7 +46,7 @@ public class Interpreter {
 	protected String profileFileName = null;
 	protected String inputFileName;
 
-	public Interpreter(String[] args) throws Exception {
+	public Interpreter(String[] args)  {
 		if ( args.length < 2 ) {
 			System.err.println("java org.antlr.v4.guIntrepreter [X.g4|XParser.g4 XLexer.g4] startRuleName\n" +
 					"  [-tokens] [-tree] [-gui] [-encoding encodingname]\n" +
@@ -129,7 +115,7 @@ public class Interpreter {
 		}
 	}
 
-	protected ParseInfo interp() throws RecognitionException, IOException {
+	protected ParseInfo interp() {
 		if ( grammarFileName==null && (parserGrammarFileName==null && lexerGrammarFileName==null) ) {
 			return null;
 		}
@@ -272,7 +258,7 @@ public class Interpreter {
 		return "n/a";
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void TestMain(String[] args)  {
 		Interpreter I = new Interpreter(args);
 		I.interp();
 	}

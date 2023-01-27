@@ -41,8 +41,8 @@ public class ScopeParser {
 
 	public static AttributeDict parse(ActionAST action, String s, char separator, Grammar g) {
 		AttributeDict dict = new AttributeDict();
-		List<Pair<String, Integer>> decls = splitDecls(s, separator);
-		for (Pair<String, Integer> decl : decls) {
+		List<Pair<String, int>> decls = splitDecls(s, separator);
+		for (Pair<String, int> decl : decls) {
 			if (decl.a.trim().length() > 0) {
 				Attribute a = parseAttributeDef(action, decl, g);
 				dict.add(a);
@@ -57,7 +57,7 @@ public class ScopeParser {
 	 * but if the separator is ',' you cannot use ',' in the initvalue
 	 * unless you escape use "\," escape.
 	 */
-	public static Attribute parseAttributeDef(ActionAST action, Pair<String, Integer> decl, Grammar g) {
+	public static Attribute parseAttributeDef(ActionAST action, Pair<String, int> decl, Grammar g) {
 		if (decl.a == null) return null;
 
 		Attribute attr = new Attribute();
@@ -70,7 +70,7 @@ public class ScopeParser {
 		}
 
 		String declarator = decl.a.substring(0, rightEdgeOfDeclarator + 1);
-		Pair<Integer, Integer> p;
+		Pair<int, int> p;
 		String text = decl.a;
 		text = text.replaceAll("::","");
 		if ( text.contains(":") ) {
@@ -236,7 +236,7 @@ public class ScopeParser {
 		if (attr.type.length() == 0) {
 			attr.type = null;
 		}
-		return new Pair<Integer, Integer>(start, stop);
+		return new Pair<int, int>(start, stop);
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class ScopeParser {
 							index++;
 						}
 						//System.out.println("arg="+arg);
-						args.add(new Pair<String, Integer>(arg.trim(), index));
+						args.add(new Pair<String, int>(arg.trim(), index));
 						last = p + 1;
 					}
 					p++;
@@ -335,7 +335,7 @@ public class ScopeParser {
 			}
 			//System.out.println("arg="+arg);
 			if (arg.length() > 0) {
-				args.add(new Pair<String, Integer>(arg.trim(), index));
+				args.add(new Pair<String, int>(arg.trim(), index));
 			}
 		}
 		p++;

@@ -151,7 +151,7 @@ public abstract class UnicodeDataTemplateController {
 			IntervalSet intervalSet = new IntervalSet();
 			UnicodeSet unicodeSet = new UnicodeSet();
 			unicodeSet.applyIntPropertyValue(property, 1);
-			for (UnicodeSet.EntryRange range : unicodeSet.ranges()) {
+			foreach (UnicodeSet.EntryRange range in unicodeSet.ranges()) {
 				intervalSet.add(range.codepoint, range.codepointEnd);
 			}
 			propertyCodePointRanges.put(propertyName, intervalSet);

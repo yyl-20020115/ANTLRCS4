@@ -4,19 +4,22 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool;
 
 
 
 public class ANTLRMessage {
-	private static final Object[] EMPTY_ARGS = new Object[0];
+	private static readonly Object[] EMPTY_ARGS = new Object[0];
 
 
-    private final ErrorType errorType;
+    private readonly ErrorType errorType;
 
-    private final Object[] args;
+    private readonly Object[] args;
 
-    private final Throwable e;
+    private readonly Exception e;
 
     // used for location template
     public String fileName;
@@ -30,14 +33,14 @@ public class ANTLRMessage {
     public Token offendingToken;
 
 	public ANTLRMessage(ErrorType errorType) {
-        this(errorType, (Throwable)null, Token.INVALID_TOKEN);
+        this(errorType, (Exception)null, Token.INVALID_TOKEN);
     }
 
-    public ANTLRMessage(ErrorType errorType, Token offendingToken, Object... args) {
+    public ANTLRMessage(ErrorType errorType, Token offendingToken,params Object[] args) {
         this(errorType, null, offendingToken, args);
 	}
 
-    public ANTLRMessage(ErrorType errorType, Throwable e, Token offendingToken, Object... args) {
+    public ANTLRMessage(ErrorType errorType, Exception e, Token offendingToken, params Object[] args) {
         this.errorType = errorType;
         this.e = e;
         this.args = args;
@@ -71,7 +74,7 @@ public class ANTLRMessage {
 		}
 		if ( args.length<2 ) messageST.add("arg2", null); // some messages ref arg2
 
-		Throwable cause = getCause();
+		Exception cause = getCause();
 		if ( cause!=null ) {
 			messageST.add("exception", cause);
 			messageST.add("stackTrace", cause.getStackTrace());
@@ -85,11 +88,11 @@ public class ANTLRMessage {
 	}
 
 
-    public Throwable getCause() {
+    public Exception getCause() {
         return e;
     }
 
-	@Override
+	//@Override
 	public String toString() {
 		return "Message{" +
 			   "errorType=" + getErrorType() +

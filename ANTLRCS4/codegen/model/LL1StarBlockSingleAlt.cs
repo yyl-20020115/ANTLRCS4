@@ -4,14 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.atn.StarLoopEntryState;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
-import java.util.List;
 
 /** */
 public class LL1StarBlockSingleAlt : LL1Loop {
@@ -22,7 +20,7 @@ public class LL1StarBlockSingleAlt : LL1Loop {
 		loopBackStateNumber = star.loopBackState.stateNumber;
 		this.decision = star.decision;
 		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK.get(decision);
-		assert altLookSets.length == 2;
+		//assert altLookSets.length == 2;
 		IntervalSet enterLook = altLookSets[0];
 		IntervalSet exitLook = altLookSets[1];
 		loopExpr = addCodeForLoopLookaheadTempVar(enterLook);

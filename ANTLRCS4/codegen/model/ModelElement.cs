@@ -4,14 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+namespace org.antlr.v4.codegen.model;
 
 /** Indicate field of OutputModelObject is an element to be walked by
  *  OutputModelWalker.
  */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ModelElement {
+//@Retention(RetentionPolicy.RUNTIME)
+public interface ModelElement {
 }

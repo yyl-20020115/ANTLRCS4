@@ -4,9 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
-
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool;
 
 /** A generic message from the tool such as "file not found" type errors; there
  *  is no reason to create a special object for each error unlike the grammar
@@ -16,7 +14,7 @@ import org.antlr.runtime.Token;
  *  Allow a generic object to be passed in and the string template can deal
  *  with just printing it or pulling a property out of it.
  */
-public class ToolMessage extends ANTLRMessage {
+public class ToolMessage : ANTLRMessage {
 	public ToolMessage(ErrorType errorType) {
 		super(errorType);
 	}

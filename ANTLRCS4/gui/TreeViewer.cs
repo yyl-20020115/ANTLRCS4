@@ -4,57 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
+namespace org.antlr.v4.gui;
 
-import org.abego.treelayout.NodeExtentProvider;
-import org.abego.treelayout.TreeForTreeLayout;
-import org.abego.treelayout.TreeLayout;
-import org.abego.treelayout.util.DefaultConfiguration;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.Utils;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.Tree;
-import org.antlr.v4.runtime.tree.Trees;
+public class TreeViewer : JComponent {
+	public static readonly Color LIGHT_RED = new Color(244, 213, 211);
 
-import javax.imageio.ImageIO;
-import javax.print.PrintException;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.geom.CubicCurve2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.prefs.Preferences;
-
-public class TreeViewer extends JComponent {
-	public static final Color LIGHT_RED = new Color(244, 213, 211);
-
-	public static class DefaultTreeTextProvider implements TreeTextProvider {
-		private final List<String> ruleNames;
+	public class DefaultTreeTextProvider : TreeTextProvider {
+		private readonly List<String> ruleNames;
 
 		public DefaultTreeTextProvider(List<String> ruleNames) {
 			this.ruleNames = ruleNames;

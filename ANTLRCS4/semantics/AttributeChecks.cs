@@ -33,25 +33,25 @@ public class AttributeChecks : ActionSplitterListener {
     }
 
     public static void checkAllAttributeExpressions(Grammar g) {
-        for (ActionAST act : g.namedActions.values()) {
+        foreach (ActionAST act in g.namedActions.values()) {
             AttributeChecks checker = new AttributeChecks(g, null, null, act, act.token);
             checker.examineAction();
         }
 
-        for (Rule r : g.rules.values()) {
-            for (ActionAST a : r.namedActions.values()) {
+        foreach (Rule r in g.rules.values()) {
+            foreach (ActionAST a in r.namedActions.values()) {
                 AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
                 checker.examineAction();
             }
             for (int i=1; i<=r.numberOfAlts; i++) {
                 Alternative alt = r.alt[i];
-                for (ActionAST a : alt.actions) {
+                foreach (ActionAST a in alt.actions) {
                     AttributeChecks checker =
                         new AttributeChecks(g, r, alt, a, a.token);
                     checker.examineAction();
                 }
             }
-            for (GrammarAST e : r.exceptions) {
+            foreach (GrammarAST e in r.exceptions) {
 				ActionAST a = (ActionAST)e.getChild(1);
                 AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
                 checker.examineAction();
@@ -66,10 +66,10 @@ public class AttributeChecks : ActionSplitterListener {
 
     public void examineAction() {
 		//System.out.println("examine "+actionToken);
-        ANTLRStringStream in = new ANTLRStringStream(actionToken.getText());
-        in.setLine(actionToken.getLine());
-        in.setCharPositionInLine(actionToken.getCharPositionInLine());
-        ActionSplitter splitter = new ActionSplitter(in, this);
+        ANTLRStringStream @in = new ANTLRStringStream(actionToken.getText());
+        @in.setLine(actionToken.getLine());
+        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+        ActionSplitter splitter = new ActionSplitter(@in, this);
 		// forces eval, triggers listener methods
         node.chunks = splitter.getActionTokens();
     }
@@ -77,7 +77,7 @@ public class AttributeChecks : ActionSplitterListener {
     // LISTENER METHODS
 
 	// $x.y
-	@Override
+	//@Override
 	public void qualifiedAttr(String expr, Token x, Token y) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -113,7 +113,7 @@ public class AttributeChecks : ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void setAttr(String expr, Token x, Token rhs) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -133,7 +133,7 @@ public class AttributeChecks : ActionSplitterListener {
 		new AttributeChecks(g, r, alt, node, rhs).examineAction();
 	}
 
-	@Override
+	//@Override
     public void attr(String expr, Token x) {
 		if ( g.isLexer() ) {
 			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
@@ -157,7 +157,7 @@ public class AttributeChecks : ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void nonLocalAttr(String expr, Token x, Token y) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
@@ -171,7 +171,7 @@ public class AttributeChecks : ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
@@ -185,7 +185,7 @@ public class AttributeChecks : ActionSplitterListener {
 		}
 	}
 
-	@Override
+	//@Override
 	public void text(String text) { }
 
 	// don't care

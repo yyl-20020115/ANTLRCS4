@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool;
 
 
@@ -38,7 +40,7 @@ public class Attribute {
         this.decl = decl;
     }
 
-    @Override
+    //@Override
     public String toString() {
         if ( initValue!=null ) {
 	        return name+":"+type+"="+initValue;

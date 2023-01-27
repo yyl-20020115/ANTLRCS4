@@ -4,9 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen;
+namespace org.antlr.v4.codegen;
 
 /** */
 public class LexerFactory : DefaultOutputModelFactory {
-	public LexerFactory(CodeGenerator gen) { super(gen); }
+	public LexerFactory(CodeGenerator gen):base(gen) {  }
 }

@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.semantics;
 

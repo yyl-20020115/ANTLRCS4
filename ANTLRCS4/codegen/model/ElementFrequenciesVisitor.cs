@@ -5,6 +5,9 @@
  */
 
 using org.antlr.v4.misc;
+using org.antlr.v4.runtime.tree;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
@@ -29,11 +32,11 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	}
 
 	FrequencySet<String> getMinFrequencies() {
-		assert minFrequencies.size() == 1;
-		assert minFrequencies.peek() != SENTINEL;
-		assert SENTINEL.isEmpty();
+        //assert minFrequencies.size() == 1;
+        //assert minFrequencies.peek() != SENTINEL;
+        //assert SENTINEL.isEmpty();
 
-		return minFrequencies.peek();
+        return minFrequencies.peek();
 	}
 
 	/** During code gen, we can assume tree is in good shape */
@@ -56,11 +59,11 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 */
 	protected static FrequencySet<String> combineMax(FrequencySet<String> a, FrequencySet<String> b) {
 		FrequencySet<String> result = combineAndClip(a, b, 1);
-		for (Map.Entry<String, MutableInt> entry : a.entrySet()) {
+		foreach (Map.Entry<String, MutableInt> entry in a.entrySet()) {
 			result.get(entry.getKey()).v = entry.getValue().v;
 		}
 
-		for (Map.Entry<String, MutableInt> entry : b.entrySet()) {
+		foreach (Map.Entry<String, MutableInt> entry in b.entrySet()) {
 			MutableInt slot = result.get(entry.getKey());
 			slot.v = Math.max(slot.v, entry.getValue().v);
 		}
@@ -86,8 +89,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 		//assert a != SENTINEL;
 		FrequencySet<String> result = combineAndClip(a, b, Integer.MAX_VALUE);
-		for (Map.Entry<String, MutableInt> entry : result.entrySet()) {
-			entry.getValue().v = Math.min(a.count(entry.getKey()), b.count(entry.getKey()));
+		foreach (Map.Entry<String, MutableInt> entry in result.entrySet()) {
+			entry.getValue().v = Math.Min(a.count(entry.getKey()), b.count(entry.getKey()));
 		}
 
 		return result;
@@ -107,40 +110,40 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 */
 	protected static FrequencySet<String> combineAndClip(FrequencySet<String> a, FrequencySet<String> b, int clip) {
 		FrequencySet<String> result = new FrequencySet<String>();
-		for (Map.Entry<String, MutableInt> entry : a.entrySet()) {
+		foreach (Map.Entry<String, MutableInt> entry in a.entrySet()) {
 			for (int i = 0; i < entry.getValue().v; i++) {
 				result.add(entry.getKey());
 			}
 		}
 
-		for (Map.Entry<String, MutableInt> entry : b.entrySet()) {
+        foreach (Map.Entry<String, MutableInt> entry in b.entrySet()) {
 			for (int i = 0; i < entry.getValue().v; i++) {
 				result.add(entry.getKey());
 			}
 		}
 
-		for (Map.Entry<String, MutableInt> entry : result.entrySet()) {
-			entry.getValue().v = Math.min(entry.getValue().v, clip);
+        foreach (Map.Entry<String, MutableInt> entry in result.entrySet()) {
+			entry.getValue().v = Math.Min(entry.getValue().v, clip);
 		}
 
 		return result;
 	}
 
 	//@Override
-	public void tokenRef(TerminalAST ref) {
-		frequencies.peek().add(ref.getText());
-		minFrequencies.peek().add(ref.getText());
+	public void tokenRef(TerminalAST @ref) {
+		frequencies.peek().add(@ref.getText());
+		minFrequencies.peek().add(@ref.getText());
 	}
 
 	//@Override
-	public void ruleRef(GrammarAST ref, ActionAST arg) {
-		frequencies.peek().add(ref.getText());
-		minFrequencies.peek().add(ref.getText());
+	public void ruleRef(GrammarAST @ref, ActionAST arg) {
+		frequencies.peek().add(@ref.getText());
+		minFrequencies.peek().add(@ref.getText());
 	}
 
 	//@Override
-	public void stringRef(TerminalAST ref) {
-		String tokenName = ref.g.getTokenName(ref.getText());
+	public void stringRef(TerminalAST @ref) {
+		String tokenName = @ref.g.getTokenName(@ref.getText());
 
 		if (tokenName != null && !tokenName.startsWith("T__")) {
 			frequencies.peek().add(tokenName);
@@ -184,7 +187,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 	//@Override
 	protected void exitBlockSet(GrammarAST tree) {
-		for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {
+		foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
 			// This visitor counts a block set as a sequence of elements, not a
 			// sequence of alternatives of elements. Reset the count back to 1
 			// for all items when leaving the set to ensure duplicate entries in
@@ -204,7 +207,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	//@Override
 	protected void exitSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
-			for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {
+            foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
 				entry.getValue().v = 2;
 			}
 		}
@@ -247,7 +250,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	//@Override
 	protected void exitLexerSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
-			for (Map.Entry<String, MutableInt> entry : frequencies.peek().entrySet()) {
+            foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
 				entry.getValue().v = 2;
 			}
 		}

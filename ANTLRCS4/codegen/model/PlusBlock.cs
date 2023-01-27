@@ -4,18 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.runtime.atn.PlusBlockStartState;
-import org.antlr.v4.runtime.atn.PlusLoopbackState;
-import org.antlr.v4.tool.ast.BlockAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 public class PlusBlock : Loop {
-	@ModelElement public ThrowNoViableAlt error;
+    //@ModelElement 
+    public ThrowNoViableAlt error;
 
 	public PlusBlock(OutputModelFactory factory,
 					 GrammarAST plusRoot,

@@ -4,19 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool;
 
-import java.util.Collection;
 
 public class LeftRecursionCyclesMessage : ANTLRMessage {
-	public LeftRecursionCyclesMessage(String fileName, Collection<? : Collection<Rule>> cycles) {
+	public LeftRecursionCyclesMessage(String fileName, ICollection<ICollection<Rule>> cycles) {
 		super(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles);
 		this.fileName = fileName;
 	}
 
-	protected static Token getStartTokenOfFirstRule(Collection<? : Collection<Rule>> cycles) {
+	protected static Token getStartTokenOfFirstRule(ICollection<ICollection<Rule>> cycles) {
 	    if (cycles == null) {
 	        return null;
 	    }

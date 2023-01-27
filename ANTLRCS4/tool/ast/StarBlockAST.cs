@@ -4,12 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
-public class StarBlockAST extends GrammarAST implements RuleElementAST, QuantifierAST {
-	private final boolean _greedy;
+
+public class StarBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
+	private readonly bool _greedy;
 
 	public StarBlockAST(StarBlockAST node) {
 		super(node);

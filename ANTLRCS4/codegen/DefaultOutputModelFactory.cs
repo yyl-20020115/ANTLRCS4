@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen;
@@ -28,17 +30,17 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 		this.g = gen.g;
 	}
 
-	@Override
+	//@Override
 	public void setController(OutputModelController controller) {
 		this.controller = controller;
 	}
 
-	@Override
+	//@Override
 	public OutputModelController getController() {
 		return controller;
 	}
 
-	@Override
+	//@Override
 	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) {
 		if ( r.namedActions.containsKey("after") || r.namedActions.containsKey("finally") ) {
 			// See OutputModelController.buildLeftRecursiveRuleFunction
@@ -57,42 +59,42 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 	// Convenience methods
 
 
-	@Override
+	//@Override
 	public Grammar getGrammar() { return g; }
 
-	@Override
+	//@Override
 	public CodeGenerator getGenerator() { return gen; }
 
-	@Override
+	//@Override
 	public OutputModelObject getRoot() { return controller.getRoot(); }
 
-	@Override
+	//@Override
 	public RuleFunction getCurrentRuleFunction() { return controller.getCurrentRuleFunction(); }
 
-	@Override
+	//@Override
 	public Alternative getCurrentOuterMostAlt() { return controller.getCurrentOuterMostAlt(); }
 
-	@Override
+	//@Override
 	public CodeBlock getCurrentBlock() { return controller.getCurrentBlock(); }
 
-	@Override
+	//@Override
 	public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock() { return controller.getCurrentOuterMostAlternativeBlock(); }
 
-	@Override
+	//@Override
 	public int getCodeBlockLevel() { return controller.codeBlockLevel; }
 
-	@Override
+	//@Override
 	public int getTreeLevel() { return controller.treeLevel; }
 
 	// MISC
 
 
-	public static List<SrcOp> list(SrcOp... values) {
-		return new ArrayList<SrcOp>(Arrays.asList(values));
+	public static List<SrcOp> list(params SrcOp[] values) {
+		return new List<SrcOp>(values);
 	}
 
 
-	public static List<SrcOp> list(Collection<? : SrcOp> values) {
-		return new ArrayList<SrcOp>(values);
+	public static List<SrcOp> list(ICollection<SrcOp> values) {
+		return new List<SrcOp>(values);
 	}
 }

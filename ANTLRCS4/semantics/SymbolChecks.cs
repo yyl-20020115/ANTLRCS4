@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.semantics;
 
@@ -23,11 +25,7 @@ public class SymbolChecks {
 
 	public ErrorManager errMgr;
 
-	protected Set<String> reservedNames = new HashSet<String>();
-
-	{
-		reservedNames.addAll(LexerATNFactory.getCommonConstants());
-	}
+	protected Set<String> reservedNames = new HashSet<String>(LexerATNFactory.getCommonConstants());
 
 	public SymbolChecks(Grammar g, SymbolCollector collector) {
 		this.g = g;
@@ -437,8 +435,8 @@ public class SymbolChecks {
 			GrammarAST grammar = (GrammarAST)dot.getChild(0);
 			GrammarAST rule = (GrammarAST)dot.getChild(1);
 			g.tool.log("semantics", grammar.getText()+"."+rule.getText());
-			Grammar delegate = g.getImportedGrammar(grammar.getText());
-			if ( delegate==null ) {
+			Grammar @delegate = g.getImportedGrammar(grammar.getText());
+			if ( @delegate==null ) {
 				errMgr.grammarError(ErrorType.NO_SUCH_GRAMMAR_SCOPE,
 						g.fileName, grammar.token, grammar.getText(),
 						rule.getText());

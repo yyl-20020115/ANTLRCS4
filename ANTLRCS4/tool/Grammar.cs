@@ -5,10 +5,12 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.tool;
 
@@ -265,28 +267,41 @@ public class Grammar : AttributeResolver {
 	{
 		this(fileName, grammarText, null, listener);
 	}
+	public class ATL : ANTLRToolListener
+	{
+        //@Override
 
-	/** For testing; builds trees, does sem anal */
-	public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, ANTLRToolListener listener)
+        public void info(String msg) { }
+        //@Override
+
+        public void error(ANTLRMessage msg) { }
+            //@Override
+
+            public void warning(ANTLRMessage msg) { }
+        
+    }
+
+	public class TVA:org.antlr.runtime.tree.TreeVisitorAction
+	{
+			//@Override
+			public Object pre(Object t) { ((GrammarAST)t).g = thiz; return t; }
+			//@Override
+			public Object post(Object t) { return t; }
+	}
+/** For testing; builds trees, does sem anal */
+public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, ANTLRToolListener listener)
 		
 	{
         this.text = grammarText;
 		this.fileName = fileName;
 		this.tool = new Tool();
-		ANTLRToolListener hush = new ANTLRToolListener() {
-			@Override
-			public void info(String msg) { }
-			@Override
-			public void error(ANTLRMessage msg) { }
-			@Override
-			public void warning(ANTLRMessage msg) { }
-		};
+		ANTLRToolListener hush = new ATL();
 		tool.addListener(hush); // we want to hush errors/warnings
 		this.tool.addListener(listener);
-		org.antlr.runtime.ANTLRStringStream in = new org.antlr.runtime.ANTLRStringStream(grammarText);
-		in.name = fileName;
+		org.antlr.runtime.ANTLRStringStream @in = new org.antlr.runtime.ANTLRStringStream(grammarText);
+        @in.name = fileName;
 
-		this.ast = tool.parse(fileName, in);
+		this.ast = tool.parse(fileName, @in);
 		if ( ast==null ) {
 			throw new UnsupportedOperationException();
 		}
@@ -299,14 +314,9 @@ public class Grammar : AttributeResolver {
 		this.originalTokenStream = this.tokenStream;
 
 		// ensure each node has pointer to surrounding grammar
-		final Grammar thiz = this;
+		Grammar thiz = this;
 		org.antlr.runtime.tree.TreeVisitor v = new org.antlr.runtime.tree.TreeVisitor(new GrammarASTAdaptor());
-		v.visit(ast, new org.antlr.runtime.tree.TreeVisitorAction() {
-			@Override
-			public Object pre(Object t) { ((GrammarAST)t).g = thiz; return t; }
-			@Override
-			public Object post(Object t) { return t; }
-		});
+		v.visit(ast, new TVA());
 		initTokenSymbolTables();
 
 		if (tokenVocabSource != null) {

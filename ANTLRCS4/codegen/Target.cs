@@ -455,7 +455,7 @@ public abstract class Target {
 	 *  TListener.java, if we're using the Java target.
  	 */
 	public String getListenerFileName(bool header) {
-		assert gen.g.name != null;
+		//assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "Listener";
 		return listenerName+extST.render();
@@ -575,8 +575,8 @@ public abstract class Target {
 		if (result == null) {
 			return null;
 		}
-		result.registerRenderer(Integer.class, new NumberRenderer());
-		result.registerRenderer(String.class, new StringRenderer());
+		result.registerRenderer(Integer, new NumberRenderer());
+		result.registerRenderer(Strings, new StringRenderer());
 		result.setListener(new STErrorListener() {
 			//@Override
 			public void compileTimeError(STMessage msg) {

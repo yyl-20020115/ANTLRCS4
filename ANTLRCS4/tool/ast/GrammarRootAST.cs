@@ -4,18 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
-import org.antlr.runtime.TokenStream;
-import org.antlr.runtime.tree.Tree;
-
-import java.util.HashMap;
-import java.util.Map;
+namespace org.antlr.v4.tool.ast;
 
 public class GrammarRootAST : GrammarASTWithOptions {
-	public static final Map<String, String> defaultOptions = new HashMap<String, String>();
-	static {
+	public static readonly Map<String, String> defaultOptions = new HashMap<String, String>();
+	static GrammarRootAST(){
 		defaultOptions.put("language","Java");
 	}
 
@@ -23,7 +18,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	public bool hasErrors;
 	/** Track stream used to create this tree */
 
-	public final TokenStream tokenStream;
+	public readonly TokenStream tokenStream;
 	public Map<String, String> cmdLineOptions; // -DsuperClass=T on command line
 	public String fileName;
 

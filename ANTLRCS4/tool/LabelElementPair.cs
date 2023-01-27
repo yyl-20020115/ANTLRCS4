@@ -4,15 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.BitSet;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.tool;
 
 public class LabelElementPair {
-    public static final BitSet tokenTypeForTokens = new BitSet();
-    static {
+    public static readonly BitSet tokenTypeForTokens = new BitSet();
+    static LabelElementPair(){
         tokenTypeForTokens.add(ANTLRParser.TOKEN_REF);
         tokenTypeForTokens.add(ANTLRParser.STRING_LITERAL);
         tokenTypeForTokens.add(ANTLRParser.WILDCARD);

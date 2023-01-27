@@ -4,21 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.QuantifierAST;
-
-import java.util.ArrayList;
-import java.util.List;
+namespace org.antlr.v4.codegen.model;
 
 public class Loop : Choice {
 	public int blockStartStateNumber;
 	public int loopBackStateNumber;
-	public final int exitAlt;
+	public readonly int exitAlt;
 
-	@ModelElement public List<SrcOp> iteration;
+	//@ModelElement 
+		public List<SrcOp> iteration;
 
 	public Loop(OutputModelFactory factory,
 				GrammarAST blkOrEbnfRootAST,
@@ -30,7 +26,7 @@ public class Loop : Choice {
 	}
 
 	public void addIterationOp(SrcOp op) {
-		if ( iteration==null ) iteration = new ArrayList<SrcOp>();
-		iteration.add(op);
+		if ( iteration==null ) iteration = new ();
+		iteration.Add(op);
 	}
 }

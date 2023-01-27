@@ -4,19 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+
 package org.antlr.v4.tool;
-
-import org.antlr.v4.analysis.LeftRecursiveRuleAltInfo;
-import org.antlr.v4.misc.OrderedHashMap;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.tool.ast.AltAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-import org.antlr.v4.tool.ast.RuleAST;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class LeftRecursiveRule : Rule {
 	public List<LeftRecursiveRuleAltInfo> recPrimaryAlts;
@@ -34,12 +26,12 @@ public class LeftRecursiveRule : Rule {
 		for (int i=1; i<=numberOfAlts; i++) alt[i] = new Alternative(this, i);
 	}
 
-	@Override
+	//@Override
 	public bool hasAltSpecificContexts() {
 		return super.hasAltSpecificContexts() || getAltLabels()!=null;
 	}
 
-	@Override
+	////@Override
 	public int getOriginalNumberOfAlts() {
 		int n = 0;
 		if ( recPrimaryAlts!=null ) n += recPrimaryAlts.size();
@@ -51,7 +43,7 @@ public class LeftRecursiveRule : Rule {
 		return originalAST;
 	}
 
-	@Override
+	//@Override
 	public List<AltAST> getUnlabeledAltASTs() {
 		List<AltAST> alts = new ArrayList<AltAST>();
 		for (LeftRecursiveRuleAltInfo altInfo : recPrimaryAlts) {
@@ -113,7 +105,7 @@ public class LeftRecursiveRule : Rule {
 	}
 
 	/** Get -&gt; labels from those alts we deleted for left-recursive rules. */
-	@Override
+	//@Override
 	public Map<String, List<Pair<Integer, AltAST>>> getAltLabels() {
 		Map<String, List<Pair<Integer, AltAST>>> labels = new HashMap<String, List<Pair<Integer, AltAST>>>();
 		Map<String, List<Pair<Integer, AltAST>>> normalAltLabels = super.getAltLabels();

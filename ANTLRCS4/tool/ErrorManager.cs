@@ -6,27 +6,17 @@
 
 namespace org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
-import org.stringtemplate.v4.misc.ErrorBuffer;
-
-import java.io.File;
-import java.net.URL;
-import java.util.*;
-
 public class ErrorManager {
-	private final static Map<String, STGroupFile> loadedFormats = new HashMap<>();
+	private readonly static Map<String, STGroupFile> loadedFormats = new HashMap<>();
 
-	public static final String FORMATS_DIR = "org/antlr/v4/tool/templates/messages/formats/";
+	public static readonly String FORMATS_DIR = "org/antlr/v4/tool/templates/messages/formats/";
 
 	public Tool tool;
 	public int errors;
 	public int warnings;
 
 	/** All errors that have been generated */
-	public Set<ErrorType> errorTypes = EnumSet.noneOf(ErrorType.class);
+	public HashSet<ErrorType> errorTypes = EnumSet.noneOf(ErrorType);
 
     /** The group of templates that represent the current message format. */
     STGroup format;
@@ -189,7 +179,7 @@ public class ErrorManager {
 
     // S U P P O R T  C O D E
 
-	@SuppressWarnings("fallthrough")
+	//@SuppressWarnings("fallthrough")
 	public void emit(ErrorType etype, ANTLRMessage msg) {
 		switch ( etype.severity ) {
 			case WARNING_ONE_OFF:
@@ -218,14 +208,14 @@ public class ErrorManager {
     public void setFormat(String formatName) {
 		STGroupFile loadedFormat;
 
-		synchronized (loadedFormats) {
+		lock (loadedFormats) {
 			loadedFormat = loadedFormats.get(formatName);
 			if (loadedFormat == null) {
 				String fileName = FORMATS_DIR + formatName + STGroup.GROUP_FILE_EXTENSION;
 				ClassLoader cl = Thread.currentThread().getContextClassLoader();
 				URL url = cl.getResource(fileName);
 				if (url == null) {
-					cl = ErrorManager.class.getClassLoader();
+					cl = ErrorManager.getClassLoader();
 					url = cl.getResource(fileName);
 				}
 				if (url == null && formatName.equals("antlr")) {

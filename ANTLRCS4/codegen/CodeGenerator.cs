@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen;
@@ -34,8 +36,8 @@ public class CodeGenerator {
 	public static CodeGenerator create(Tool tool, Grammar g, String language) {
 		String targetName = "org.antlr.v4.codegen.target."+language+"Target";
 		try {
-			Class<? : Target> c = Class.forName(targetName).asSubclass(Target);
-			Constructor<? : Target> ctor = c.getConstructor(CodeGenerator);
+			Type c = Type.GetType(targetName).asSubclass(Target);
+			ConstructorInfo ctor = c.getConstructor(CodeGenerator);
 			CodeGenerator codeGenerator = new CodeGenerator(tool, g, language);
 			codeGenerator.target = ctor.newInstance(codeGenerator);
 			return codeGenerator;
@@ -101,9 +103,9 @@ public class CodeGenerator {
 	 */
 	ST getTokenVocabOutput() {
 		ST vocabFileST = new ST(vocabFilePattern);
-		Map<String,Integer> tokens = new LinkedHashMap<String,Integer>();
-		// make constants for the token names
-		for (String t : g.tokenNameToTypeMap.keySet()) {
+		Map<String,int> tokens = new LinkedHashMap<String,int>();
+        // make constants for the token names
+        foreach (String t in g.tokenNameToTypeMap.keySet()) {
 			int tokenType = g.tokenNameToTypeMap.get(t);
 			if ( tokenType>=Token.MIN_USER_TOKEN_TYPE) {
 				tokens.put(t, tokenType);
@@ -112,8 +114,8 @@ public class CodeGenerator {
 		vocabFileST.add("tokens", tokens);
 
 		// now dump the strings
-		Map<String,Integer> literals = new LinkedHashMap<String,Integer>();
-		for (String literal : g.stringLiteralToTypeMap.keySet()) {
+		Map<String,int> literals = new LinkedHashMap<String,int>();
+		foreach (String literal in g.stringLiteralToTypeMap.keySet()) {
 			int tokenType = g.stringLiteralToTypeMap.get(literal);
 			if ( tokenType>=Token.MIN_USER_TOKEN_TYPE) {
 				literals.put(literal, tokenType);

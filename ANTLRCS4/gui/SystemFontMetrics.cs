@@ -4,19 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
-
-import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.image.BufferedImage;
+namespace org.antlr.v4.gui;
 
 /**
  *
  * @author Sam Harwell
  */
-public class SystemFontMetrics extends BasicFontMetrics {
-	protected final Font font;
+public class SystemFontMetrics : BasicFontMetrics {
+	protected readonly Font font;
 
 	public SystemFontMetrics(String fontName) {
 		BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_4BYTE_ABGR);

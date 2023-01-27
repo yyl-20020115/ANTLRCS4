@@ -4,14 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.chunk.ActionChunk;
-import org.antlr.v4.codegen.model.chunk.ActionText;
-import org.antlr.v4.tool.Grammar;
-
-import java.util.Map;
+namespace org.antlr.v4.codegen.model;
 
 /** */
 public class ParserFile : OutputFile {
@@ -19,9 +14,12 @@ public class ParserFile : OutputFile {
 	public String exportMacro; // from -DexportMacro cmd-line
 	public bool genListener; // from -listener cmd-line
 	public bool genVisitor; // from -visitor cmd-line
-	@ModelElement public Parser parser;
-	@ModelElement public Map<String, Action> namedActions;
-	@ModelElement public ActionChunk contextSuperClass;
+	//@ModelElement
+		public Parser parser;
+    //@ModelElement 
+    public Dictionary<String, Action> namedActions;
+    //@ModelElement
+    public ActionChunk contextSuperClass;
 	public String grammarName;
 
 	public ParserFile(OutputModelFactory factory, String fileName) {

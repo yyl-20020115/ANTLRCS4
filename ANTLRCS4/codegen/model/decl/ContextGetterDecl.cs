@@ -26,12 +26,12 @@ public abstract class ContextGetterDecl : Decl {
 	 *  OTOH, treat X() with two diff return values as the same.  Treat
 	 *  two X() with diff args as different.
 	 */
-	@Override
+	//@Override
 	public bool equals(Object obj) {
 		if ( this==obj ) return true;
 		// A() and label A are different
 		if ( !(obj is ContextGetterDecl) ) return false;
-		return name.equals(((Decl) obj).name) &&
-				getArgType().equals(((ContextGetterDecl) obj).getArgType());
+		return name.Equals(((Decl) obj).name) &&
+				getArgType().Equals(((ContextGetterDecl) obj).getArgType());
 	}
 }

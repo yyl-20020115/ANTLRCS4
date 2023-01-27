@@ -48,13 +48,13 @@ namespace org.antlr.v4.gui;
  *	Units are 1000th of an 'em'.
  */
 public abstract class BasicFontMetrics {
-	public static final int MAX_CHAR = '\u00FF';
+	public static readonly int MAX_CHAR = '\u00FF';
 	protected int maxCharHeight;
 	protected int[] widths = new int[MAX_CHAR+1];
 
 	public double getWidth(String s, int fontSize) {
 		double w = 0;
-		for (char c : s.toCharArray()) {
+		foreach (char c in s) {
 			w += getWidth(c, fontSize);
 		}
 		return w;

@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -31,12 +33,12 @@ public class LeftRecursiveRuleFunction : RuleFunction {
 					d = new RuleContextListDecl(factory, label, ctxName);
 				}
 
-				StructDecl struct = ruleCtx;
+				StructDecl @struct = ruleCtx;
 				if ( altLabelCtxs!=null ) {
 					StructDecl s = altLabelCtxs.get(altLabel);
-					if ( s!=null ) struct = s; // if alt label, use subctx
+					if ( s!=null ) @struct = s; // if alt label, use subctx
 				}
-				struct.addDecl(d); // stick in overall rule's ctx
+                @struct.addDecl(d); // stick in overall rule's ctx
 			}
 		}
 	}

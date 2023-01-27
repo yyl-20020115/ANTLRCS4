@@ -3,48 +3,39 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.tool;
 
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.chunk.ActionChunk;
-import org.antlr.v4.codegen.model.chunk.ActionText;
-import org.antlr.v4.codegen.target.JavaTarget;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+namespace org.antlr.v4.codegen.model;
 
 public abstract class Recognizer : OutputModelObject {
 	public String name;
 	public String grammarName;
 	public String grammarFileName;
 	public String accessLevel;
-	public Map<String,Integer> tokens;
+	public Dictionary<String,int> tokens;
 
-	/**
+    /**
 	 * @deprecated This field is provided only for compatibility with code
 	 * generation targets which have not yet been updated to use
 	 * {@link #literalNames} and {@link #symbolicNames}.
 	 */
-	@Deprecated
-	public List<String> tokenNames;
+    //@Deprecated
+    public List<String> tokenNames;
 
 	public List<String> literalNames;
 	public List<String> symbolicNames;
-	public Set<String> ruleNames;
-	public Collection<Rule> rules;
-	@ModelElement public ActionChunk superClass;
+	public HashSet<String> ruleNames;
+	public ICollection<Rule> rules;
+	//@ModelElement 
+		public ActionChunk superClass;
 
-	@ModelElement public SerializedATN atn;
-	@ModelElement public LinkedHashMap<Rule, RuleSempredFunction> sempredFuncs =
-		new LinkedHashMap<Rule, RuleSempredFunction>();
+    //@ModelElement 
+    public SerializedATN atn;
+    //@ModelElement 
+    public Dictionary<Rule, RuleSempredFunction> sempredFuncs =
+		new ();
 
 	public Recognizer(OutputModelFactory factory) {
 		super(factory);
@@ -55,9 +46,9 @@ public abstract class Recognizer : OutputModelObject {
 		grammarName = g.name;
 		name = g.getRecognizerName();
 		accessLevel = g.getOptionString("accessLevel");
-		tokens = new LinkedHashMap<String,Integer>();
-		for (Map.Entry<String, Integer> entry : g.tokenNameToTypeMap.entrySet()) {
-			Integer ttype = entry.getValue();
+		tokens = new ();
+        foreach (Map.Entry<String, int> entry in g.tokenNameToTypeMap.entrySet()) {
+			int ttype = entry.getValue();
 			if ( ttype>0 ) {
 				tokens.put(entry.getKey(), ttype);
 			}
@@ -85,16 +76,16 @@ public abstract class Recognizer : OutputModelObject {
 
 	protected static List<String> translateTokenStringsToTarget(String[] tokenStrings, CodeGenerator gen) {
 		String[] result = tokenStrings.clone();
-		for (int i = 0; i < tokenStrings.length; i++) {
+		for (int i = 0; i < tokenStrings.Length; i++) {
 			result[i] = translateTokenStringToTarget(tokenStrings[i], gen);
 		}
 
-		int lastTrueEntry = result.length - 1;
+		int lastTrueEntry = result.Length - 1;
 		while (lastTrueEntry >= 0 && result[lastTrueEntry] == null) {
 			lastTrueEntry --;
 		}
 
-		if (lastTrueEntry < result.length - 1) {
+		if (lastTrueEntry < result.Length - 1) {
 			result = Arrays.copyOf(result, lastTrueEntry + 1);
 		}
 

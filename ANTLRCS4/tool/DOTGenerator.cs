@@ -4,51 +4,22 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+using System.Text;
+
 namespace org.antlr.v4.tool;
-
-import org.antlr.v4.misc.Utils;
-import org.antlr.v4.runtime.atn.ATNConfig;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.AbstractPredicateTransition;
-import org.antlr.v4.runtime.atn.ActionTransition;
-import org.antlr.v4.runtime.atn.AtomTransition;
-import org.antlr.v4.runtime.atn.BlockEndState;
-import org.antlr.v4.runtime.atn.BlockStartState;
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.atn.NotSetTransition;
-import org.antlr.v4.runtime.atn.PlusBlockStartState;
-import org.antlr.v4.runtime.atn.PlusLoopbackState;
-import org.antlr.v4.runtime.atn.RangeTransition;
-import org.antlr.v4.runtime.atn.RuleStartState;
-import org.antlr.v4.runtime.atn.RuleStopState;
-import org.antlr.v4.runtime.atn.RuleTransition;
-import org.antlr.v4.runtime.atn.SetTransition;
-import org.antlr.v4.runtime.atn.StarBlockStartState;
-import org.antlr.v4.runtime.atn.StarLoopEntryState;
-import org.antlr.v4.runtime.atn.StarLoopbackState;
-import org.antlr.v4.runtime.atn.Transition;
-import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.dfa.DFAState;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 /** The DOT (part of graphviz) generation aspect. */
 public class DOTGenerator {
-	public static final bool STRIP_NONREDUCED_STATES = false;
+	public static readonly bool STRIP_NONREDUCED_STATES = false;
 
 	protected String arrowhead="normal";
 	protected String rankdir="LR";
 
 	/** Library of output templates; use {@code <attrname>} format. */
-    public final static STGroup stlib = new STGroupFile("org/antlr/v4/tool/templates/dot/graphs.stg");
+    public readonly static STGroup stlib = new STGroupFile("org/antlr/v4/tool/templates/dot/graphs.stg");
 
     protected Grammar grammar;
 
@@ -92,7 +63,7 @@ public class DOTGenerator {
 					if ( target.stateNumber == Integer.MAX_VALUE ) continue;
 					int ttype = i-1; // we shift up for EOF as -1 for parser
 					String label = String.valueOf(ttype);
-					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(i).toString())+"'";
+					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(i).ToString())+"'";
 					else if ( grammar!=null ) label = grammar.getTokenDisplayName(ttype);
 					ST st = stlib.getInstanceOf("edge");
 					st.add("label", label);
@@ -111,18 +82,18 @@ public class DOTGenerator {
 	protected String getStateLabel(DFAState s) {
 		if ( s==null ) return "null";
 		StringBuilder buf = new StringBuilder(250);
-		buf.append('s');
-		buf.append(s.stateNumber);
+		buf.Append('s');
+		buf.Append(s.stateNumber);
 		if ( s.isAcceptState ) {
-			buf.append("=>").append(s.prediction);
+			buf.Append("=>").Append(s.prediction);
 		}
 		if ( s.requiresFullContext) {
-			buf.append("^");
+			buf.Append("^");
 		}
 		if ( grammar!=null ) {
 			Set<Integer> alts = s.getAltSet();
 			if ( alts!=null ) {
-				buf.append("\\n");
+				buf.Append("\\n");
 				// separate alts
 				IntegerList altList = new IntegerList();
 				altList.addAll(alts);
@@ -131,11 +102,11 @@ public class DOTGenerator {
 				for (int altIndex = 0; altIndex < altList.size(); altIndex++) {
 					int alt = altList.get(altIndex);
 					if ( altIndex>0 ) {
-						buf.append("\\n");
+						buf.Append("\\n");
 					}
-					buf.append("alt");
-					buf.append(alt);
-					buf.append(':');
+					buf.Append("alt");
+					buf.Append(alt);
+					buf.Append(':');
 					// get a list of configs for just this alt
 					// it will help us print better later
 					List<ATNConfig> configsInAlt = new ArrayList<ATNConfig>();
@@ -147,18 +118,18 @@ public class DOTGenerator {
 					for (int cIndex = 0; cIndex < configsInAlt.size(); cIndex++) {
 						ATNConfig c = configsInAlt.get(cIndex);
 						n++;
-						buf.append(c.toString(null, false));
+						buf.Append(c.ToString(null, false));
 						if ( (cIndex+1)<configsInAlt.size() ) {
-							buf.append(", ");
+							buf.Append(", ");
 						}
 						if ( n%5==0 && (configsInAlt.size()-cIndex)>3 ) {
-							buf.append("\\n");
+							buf.Append("\\n");
 						}
 					}
 				}
 			}
 		}
-		String stateLabel = buf.toString();
+		String stateLabel = buf.ToString();
         return stateLabel;
     }
 
@@ -237,15 +208,15 @@ public class DOTGenerator {
 				}
 				if ( edge is ActionTransition) {
 					edgeST = stlib.getInstanceOf("action-edge");
-					edgeST.add("label", getEdgeLabel(edge.toString()));
+					edgeST.add("label", getEdgeLabel(edge.ToString()));
 				}
 				else if ( edge is AbstractPredicateTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
-					edgeST.add("label", getEdgeLabel(edge.toString()));
+					edgeST.add("label", getEdgeLabel(edge.ToString()));
 				}
 				else if ( edge.isEpsilon() ) {
 					edgeST = stlib.getInstanceOf("epsilon-edge");
-					edgeST.add("label", getEdgeLabel(edge.toString()));
+					edgeST.add("label", getEdgeLabel(edge.ToString()));
 					bool loopback = false;
 					if (edge.target is PlusBlockStartState) {
 						loopback = s.equals(((PlusBlockStartState)edge.target).loopBackState);
@@ -259,30 +230,30 @@ public class DOTGenerator {
 					edgeST = stlib.getInstanceOf("edge");
 					AtomTransition atom = (AtomTransition)edge;
 					String label = String.valueOf(atom.label);
-					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(atom.label).toString())+"'";
+					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(atom.label).ToString())+"'";
 					else if ( grammar!=null ) label = grammar.getTokenDisplayName(atom.label);
 					edgeST.add("label", getEdgeLabel(label));
 				}
 				else if ( edge is SetTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					SetTransition set = (SetTransition)edge;
-					String label = set.label().toString();
-					if ( isLexer ) label = set.label().toString(true);
-					else if ( grammar!=null ) label = set.label().toString(grammar.getVocabulary());
+					String label = set.label().ToString();
+					if ( isLexer ) label = set.label().ToString(true);
+					else if ( grammar!=null ) label = set.label().ToString(grammar.getVocabulary());
 					if ( edge is NotSetTransition ) label = "~"+label;
 					edgeST.add("label", getEdgeLabel(label));
 				}
 				else if ( edge is RangeTransition ) {
 					edgeST = stlib.getInstanceOf("edge");
 					RangeTransition range = (RangeTransition)edge;
-					String label = range.label().toString();
-					if ( isLexer ) label = range.toString();
-					else if ( grammar!=null ) label = range.label().toString(grammar.getVocabulary());
+					String label = range.label().ToString();
+					if ( isLexer ) label = range.ToString();
+					else if ( grammar!=null ) label = range.label().ToString(grammar.getVocabulary());
 					edgeST.add("label", getEdgeLabel(label));
 				}
 				else {
 					edgeST = stlib.getInstanceOf("edge");
-					edgeST.add("label", getEdgeLabel(edge.toString()));
+					edgeST.add("label", getEdgeLabel(edge.ToString()));
 				}
 				edgeST.add("src", "s"+s.stateNumber);
 				edgeST.add("target", "s"+edge.target.stateNumber);
@@ -413,7 +384,7 @@ public class DOTGenerator {
 //			else {
 //				edgeST = stlib.getInstanceOf("edge");
 //			}
-//			edgeST.add("label", getEdgeLabel(edge.toString(grammar)));
+//			edgeST.add("label", getEdgeLabel(edge.ToString(grammar)));
 //            edgeST.add("src", getStateLabel(s));
 //			edgeST.add("target", getStateLabel(edge.target));
 //			edgeST.add("arrowhead", arrowhead);

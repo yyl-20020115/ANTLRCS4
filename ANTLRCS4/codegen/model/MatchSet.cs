@@ -4,17 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.decl.Decl;
-import org.antlr.v4.codegen.model.decl.TokenTypeDecl;
-import org.antlr.v4.runtime.atn.SetTransition;
-import org.antlr.v4.tool.ast.GrammarAST;
+namespace org.antlr.v4.codegen.model;
 
 public class MatchSet : MatchToken {
-	@ModelElement public TestSetInline expr;
-	@ModelElement public CaptureNextTokenType capture;
+	//@ModelElement 
+		public TestSetInline expr;
+	//@ModelElement 
+		public CaptureNextTokenType capture;
 
 	public MatchSet(OutputModelFactory factory, GrammarAST ast) {
 		super(factory, ast);

@@ -4,9 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.runtime.tree.Tree;
+namespace org.antlr.v4.gui;
 
 public interface TreeTextProvider {
 	String getText(Tree node);

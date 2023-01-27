@@ -4,26 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
-
-import javax.imageio.ImageIO;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.SimpleDoc;
-import javax.print.StreamPrintServiceFactory;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
+namespace org.antlr.v4.gui;
 
 public class GraphicsSupport {
 	/**
@@ -54,8 +35,7 @@ public class GraphicsSupport {
 	 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 	 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
-	public static void saveImage(final JComponent comp, String fileName)
-		throws IOException, PrintException
+	public static void saveImage( JComponent comp, String fileName)
 	{
 		if ( fileName.endsWith(".ps") || fileName.endsWith(".eps") ) {
 			DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
@@ -105,7 +85,7 @@ public class GraphicsSupport {
 //			g.setColor(Color.BLACK);
 			comp.paint(g);
 			String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
-			boolean result = ImageIO.write(image, extension, new File(fileName));
+			bool result = ImageIO.write(image, extension, new File(fileName));
 			if ( !result ) {
 				System.err.println("Now imager for " + extension);
 			}

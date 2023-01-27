@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.codegen.model.decl;
 
 
@@ -11,9 +13,12 @@ public class CodeBlock : SrcOp {
 	public int codeBlockLevel;
 	public int treeLevel;
 
-	@ModelElement public OrderedHashSet<Decl> locals;
-	@ModelElement public List<SrcOp> preamble;
-	@ModelElement public List<SrcOp> ops;
+	//@ModelElement 
+		public OrderedHashSet<Decl> locals;
+    //@ModelElement
+    public List<SrcOp> preamble;
+    //@ModelElement
+    public List<SrcOp> ops;
 
 	public CodeBlock(OutputModelFactory factory) {
 		super(factory);

@@ -4,10 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.codegen.model;
 public class ExceptionClause : SrcOp {
-	@ModelElement public Action catchArg;
-	@ModelElement public Action catchAction;
+	//@ModelElement 
+		public Action catchArg;
+	//@ModelElement 
+		public Action catchAction;
 
 	public ExceptionClause(OutputModelFactory factory,
 						   ActionAST catchArg,

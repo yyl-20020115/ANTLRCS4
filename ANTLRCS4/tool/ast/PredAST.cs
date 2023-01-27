@@ -4,9 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
 public class PredAST : ActionAST {
 	public PredAST(PredAST node) {
@@ -17,9 +17,9 @@ public class PredAST : ActionAST {
     public PredAST(int type) { super(type); }
     public PredAST(int type, Token t) { super(type, t); }
 
-	@Override
+	//@Override
 	public PredAST dupNode() { return new PredAST(this); }
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

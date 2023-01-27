@@ -4,20 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.tool.ast;
 
-import org.antlr.v4.codegen.ActionTranslator;
-import org.antlr.v4.codegen.CodeGenerator;
-import org.antlr.v4.codegen.OutputModelFactory;
-import org.antlr.v4.codegen.model.chunk.ActionChunk;
-import org.antlr.v4.runtime.atn.AbstractPredicateTransition;
-import org.antlr.v4.tool.ast.ActionAST;
-import org.antlr.v4.tool.ast.GrammarAST;
-
-import java.util.List;
-
-/** */
-public class SemPred extends Action {
+namespace org.antlr.v4.codegen.model;
+public class SemPred : Action {
 	/**
 	 * The user-specified terminal option {@code fail}, if it was used and the
 	 * value is a string literal. For example:
@@ -38,14 +29,15 @@ public class SemPred extends Action {
 	 * <p>
 	 * {@code {pred}?<fail={"Java literal"}>}</p>
 	 */
-	@ModelElement public List<ActionChunk> failChunks;
+	//@ModelElement 
+		public List<ActionChunk> failChunks;
 
 	public SemPred(OutputModelFactory factory, ActionAST ast) {
 		super(factory,ast);
 
-		assert ast.atnState != null
-			&& ast.atnState.getNumberOfTransitions() == 1
-			&& ast.atnState.transition(0) is AbstractPredicateTransition;
+		//assert ast.atnState != null
+		//	&& ast.atnState.getNumberOfTransitions() == 1
+		//	&& ast.atnState.transition(0) is AbstractPredicateTransition;
 
 		GrammarAST failNode = ast.getOptionAST("fail");
 		CodeGenerator gen = factory.getGenerator();

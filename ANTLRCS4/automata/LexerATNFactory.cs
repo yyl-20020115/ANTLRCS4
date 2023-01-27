@@ -6,6 +6,7 @@
 
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -26,7 +27,7 @@ public class LexerATNFactory : ParserATNFactory {
 	 * actions, but are required during code generation for creating
 	 * {@link LexerAction} instances that are usable by a lexer interpreter.
 	 */
-	public static readonly Directory<String, int> COMMON_CONSTANTS = new ();
+	public static readonly Dictionary<String, int> COMMON_CONSTANTS = new ();
 	static LexerATNFactory(){
 		COMMON_CONSTANTS.put("HIDDEN", Lexer.HIDDEN);
 		COMMON_CONSTANTS.put("DEFAULT_TOKEN_CHANNEL", Lexer.DEFAULT_TOKEN_CHANNEL);
@@ -227,7 +228,7 @@ public class LexerATNFactory : ParserATNFactory {
 		ATNState left = newState(associatedAST);
 		ATNState right = newState(associatedAST);
 		IntervalSet set = new IntervalSet();
-		for (GrammarAST t in alts) {
+		foreach (GrammarAST t in alts) {
 			if ( t.getType()==ANTLRParser.RANGE ) {
 				int a = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(0).getText());
 				int b = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(1).getText());
@@ -338,21 +339,21 @@ public class LexerATNFactory : ParserATNFactory {
 		return new Handle(left, right);
 	}
 
-	private static class CharSetParseState {
-		enum Mode {
+	public class CharSetParseState {
+		public enum Mode {
 			NONE,
 			ERROR,
 			PREV_CODE_POINT,
 			PREV_PROPERTY
 		}
 
-		public static final CharSetParseState NONE = new CharSetParseState(Mode.NONE, false, -1, IntervalSet.EMPTY_SET);
-		public static final CharSetParseState ERROR = new CharSetParseState(Mode.ERROR, false, -1, IntervalSet.EMPTY_SET);
+		public static readonly CharSetParseState NONE = new CharSetParseState(Mode.NONE, false, -1, IntervalSet.EMPTY_SET);
+		public static readonly CharSetParseState ERROR = new CharSetParseState(Mode.ERROR, false, -1, IntervalSet.EMPTY_SET);
 
-		public final Mode mode;
-		public final bool inRange;
-		public final int prevCodePoint;
-		public final IntervalSet prevProperty;
+		public readonly Mode mode;
+		public readonly bool inRange;
+		public readonly int prevCodePoint;
+		public readonly IntervalSet prevProperty;
 
 		public CharSetParseState(
 				Mode mode,
@@ -668,15 +669,15 @@ public class LexerATNFactory : ParserATNFactory {
 
 	private void checkCommands(String command, Token commandToken) {
 		// Command combinations list: https://github.com/antlr/antlr4/issues/1388#issuecomment-263344701
-		if (!command.equals("pushMode") && !command.equals("popMode")) {
-			if (ruleCommands.contains(command)) {
+		if (!command.Equals("pushMode") && !command.Equals("popMode")) {
+			if (ruleCommands.Contains(command)) {
 				g.tool.errMgr.grammarError(ErrorType.DUPLICATED_COMMAND, g.fileName, commandToken, command);
 			}
 
 			String firstCommand = null;
 
-			if (command.equals("skip")) {
-				if (ruleCommands.contains("more")) {
+			if (command.Equals("skip")) {
+				if (ruleCommands.Contains("more")) {
 					firstCommand = "more";
 				}
 				else if (ruleCommands.contains("type")) {

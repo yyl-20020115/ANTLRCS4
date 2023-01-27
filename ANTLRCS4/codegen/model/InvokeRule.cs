@@ -68,7 +68,7 @@ public class InvokeRule : RuleElement , LabeledOp {
 		}
 	}
 
-	@Override
+	//@Override
 	public List<Decl> getLabels() {
 		return labels.elements();
 	}

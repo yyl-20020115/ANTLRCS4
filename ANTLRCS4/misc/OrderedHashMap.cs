@@ -24,21 +24,21 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 	}
 
     //@Override
-    public void putAll(Map<? : K, ? : V> m) {
-		for (Map.Entry<? : K, ? : V> entry : m.entrySet()) {
+    public void putAll(Dictionary<K, V> m) {
+		foreach (Map.Entry<K,V> entry in m.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
 	}
 
     //@Override
     public V remove(Object key) {
-		elements.remove(key);
-		return super.remove(key);
+		elements.Remove(key);
+		return base.Remove(key);
 	}
 
     //@Override
     public void clear() {
-		elements.clear();
-		super.clear();
+		elements.Clear();
+		super.Clear();
 	}
 }

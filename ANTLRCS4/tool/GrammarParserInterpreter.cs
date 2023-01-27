@@ -3,37 +3,11 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.BailErrorStrategy;
-import org.antlr.v4.runtime.DefaultErrorStrategy;
-import org.antlr.v4.runtime.InputMismatchException;
-import org.antlr.v4.runtime.InterpreterRuleContext;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.DecisionState;
-import org.antlr.v4.runtime.atn.PredictionMode;
-import org.antlr.v4.runtime.atn.RuleStartState;
-import org.antlr.v4.runtime.atn.StarLoopEntryState;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.Trees;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.List;
+namespace org.antlr.v4.tool;
 
 /** A heavier weight {@link ParserInterpreter} that creates parse trees
  *  that track alternative numbers for subtree roots.
@@ -47,7 +21,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  this can reference Grammar, which is in the tools area not
 	 *  purely runtime.
 	 */
-	protected final Grammar g;
+	protected readonly Grammar g;
 
 	protected BitSet decisionStatesThatSetOuterAltNumInContext;
 
@@ -61,7 +35,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	public GrammarParserInterpreter(Grammar g,
 									String grammarFileName,
 									Vocabulary vocabulary,
-									Collection<String> ruleNames,
+									ICollection<String> ruleNames,
 									ATN atn,
 									TokenStream input) {
 		super(grammarFileName, vocabulary, ruleNames, atn, input);
@@ -78,7 +52,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		stateToAltsMap = new int[g.atn.states.size()][];
 	}
 
-	@Override
+	//@Override
 	protected InterpreterRuleContext createInterpreterRuleContext(ParserRuleContext parent,
 																  int invokingStateNumber,
 																  int ruleIndex)
@@ -86,7 +60,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		return new GrammarInterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
 	}
 
-	@Override
+	//@Override
 	public void reset() {
 		super.reset();
 		overrideDecisionRoot = null;
@@ -159,7 +133,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  We use stateToAltsMap as a cache to avoid expensive calls to
 	 *  getRecursiveOpAlts().
 	 */
-	@Override
+	//@Override
 	protected int visitDecisionState(DecisionState p) {
 		int predictedAlt = super.visitDecisionState(p);
 		if( p.getNumberOfTransitions() > 1) {
@@ -277,7 +251,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	                                                               int startIndex,
 	                                                               int stopIndex,
 	                                                               int startRuleIndex)
-		throws RecognitionException {
+		 {
 		List<ParserRuleContext> trees = new ArrayList<ParserRuleContext>();
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
@@ -392,13 +366,13 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
 		if (originalParser is ParserInterpreter) {
-			Class<? : ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter.class);
+			Class<? : ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter);
 			try {
-				Constructor<? : ParserInterpreter> ctor = c.getConstructor(Grammar.class, ATN.class, TokenStream.class);
+				Constructor<? : ParserInterpreter> ctor = c.getConstructor(Grammar, ATN, TokenStream);
 				parser = ctor.newInstance(g, originalParser.getATN(), originalParser.getTokenStream());
 			}
 			catch (Exception e) {
-				throw new IllegalArgumentException("can't create parser to match incoming "+originalParser.getClass().getSimpleName(), e);
+				throw new ArgumentException("can't create parser to match incoming "+originalParser.getClass().getSimpleName(), e);
 			}
 		}
 		else { // must've been a generated parser
@@ -430,7 +404,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 */
 	public static class BailButConsumeErrorStrategy : DefaultErrorStrategy {
 		public int firstErrorTokenIndex = -1;
-		@Override
+		////@Override
 		public void recover(Parser recognizer, RecognitionException e) {
 			int errIndex = recognizer.getInputStream().index();
 			if ( firstErrorTokenIndex == -1 ) {
@@ -443,8 +417,8 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			}
 		}
 
-		@Override
-		public Token recoverInline(Parser recognizer) throws RecognitionException {
+		////@Override
+		public Token recoverInline(Parser recognizer) {
 			int errIndex = recognizer.getInputStream().index();
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
@@ -456,7 +430,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			throw e;
 		}
 
-		@Override
+		////@Override
 		public void sync(Parser recognizer) { } // don't consume anything; let it fail later
 	}
 }

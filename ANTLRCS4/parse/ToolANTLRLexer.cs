@@ -22,7 +22,7 @@ public class ToolANTLRLexer : ANTLRLexer {
 	}
 
 	//@Override
-	public void grammarError(ErrorType etype, Token token, Object... args) {
+	public void grammarError(ErrorType etype, Token token, params Object[] args) {
 		tool.errMgr.grammarError(etype, getSourceName(), token, args);
 	}
 }

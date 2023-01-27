@@ -4,21 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.tool.ast;
 
-import org.antlr.runtime.Token;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class BlockAST : GrammarASTWithOptions implements RuleElementAST {
+public class BlockAST : GrammarASTWithOptions , RuleElementAST {
     // TODO: maybe I need a Subrule object like Rule so these options mov to that?
     /** What are the default options for a subrule? */
-    public static final Map<String, String> defaultBlockOptions =
-            new HashMap<String, String>();
+    public static readonly Dictionary<String, String> defaultBlockOptions =
+            new ();
 
-    public static final Map<String, String> defaultLexerBlockOptions =
-            new HashMap<String, String>();
+    public static readonly Dictionary<String, String> defaultLexerBlockOptions =
+            new ();
 
 	public BlockAST(BlockAST node) {
 		super(node);
@@ -29,9 +26,9 @@ public class BlockAST : GrammarASTWithOptions implements RuleElementAST {
     public BlockAST(int type, Token t) { super(type, t); }
 	public BlockAST(int type, Token t, String text) { super(type,t,text); }
 
-	@Override
+	//@Override
 	public BlockAST dupNode() { return new BlockAST(this); }
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

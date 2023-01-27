@@ -4,19 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.codegen.model;
-
-import org.antlr.v4.codegen.OutputModelFactory;
-
-import java.util.Map;
+namespace org.antlr.v4.codegen.model;
 
 public class LexerFile : OutputFile {
 	public String genPackage; // from -package cmd-line
 	public String exportMacro; // from -DexportMacro cmd-line
 	public bool genListener; // from -listener cmd-line
 	public bool genVisitor; // from -visitor cmd-line
-	@ModelElement public Lexer lexer;
-	@ModelElement public Map<String, Action> namedActions;
+	//@ModelElement 
+		public Lexer lexer;
+    //@ModelElement 
+    public Dictionary<String, Action> namedActions;
 
 	public LexerFile(OutputModelFactory factory, String fileName) {
 		super(factory, fileName);

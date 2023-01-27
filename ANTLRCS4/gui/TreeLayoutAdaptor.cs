@@ -4,18 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
-
-import org.abego.treelayout.TreeForTreeLayout;
-import org.antlr.v4.runtime.tree.Tree;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+namespace org.antlr.v4.gui;
 
 /** Adaptor ANTLR trees to {@link TreeForTreeLayout}. */
-public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
-	private static class AntlrTreeChildrenIterable implements Iterable<Tree> {
-		private final Tree tree;
+public class TreeLayoutAdaptor : TreeForTreeLayout<Tree> {
+	private static class AntlrTreeChildrenIterable : Iterable<Tree> {
+		private readonly Tree tree;
 
 		public AntlrTreeChildrenIterable(Tree tree) {
 			this.tree = tree;
@@ -47,7 +41,7 @@ public class TreeLayoutAdaptor implements TreeForTreeLayout<Tree> {
 		}
 	}
 
-	private static class AntlrTreeChildrenReverseIterable implements
+	private static class AntlrTreeChildrenReverseIterable :
 		Iterable<Tree>
 	{
 		private final Tree tree;

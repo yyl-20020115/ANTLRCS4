@@ -3,17 +3,14 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.codegen;
 
-import org.antlr.v4.tool.ErrorType;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.gui.STViz;
-
 public class CodeGenPipeline {
-	final Grammar g;
-	final CodeGenerator gen;
+	readonly Grammar g;
+	readonly CodeGenerator gen;
 
 	public CodeGenPipeline(Grammar g, CodeGenerator gen) {
 		this.g = g;

@@ -140,9 +140,7 @@ public class Tool {
 		antlr.exit(0);
 	}
 
-	public Tool() { this(null); }
-
-	public Tool(String[] args) {
+	public Tool(params String[] args) {
 		this.args = args;
 		errMgr = new ErrorManager(this);
 		// We have to use the default message format until we have
@@ -154,10 +152,10 @@ public class Tool {
 
 	protected void handleArgs() {
 		int i=0;
-		while ( args!=null && i<args.length ) {
+		while ( args!=null && i<args.Length ) {
 			String arg = args[i];
 			i++;
-			if ( arg.startsWith("-D") ) { // -Dlanguage=Java syntax
+			if ( arg.StartsWith("-D") ) { // -Dlanguage=Java syntax
 				handleOptionSetArg(arg);
 				continue;
 			}
@@ -165,7 +163,7 @@ public class Tool {
 				if ( !grammarFiles.Contains(arg) ) grammarFiles.add(arg);
 				continue;
 			}
-			boolean found = false;
+			var found = false;
 			for (Option o : optionDefs) {
 				if ( arg.equals(o.name) ) {
 					found = true;
@@ -286,7 +284,7 @@ public class Tool {
 		we have to extract the implicit lexer. Once all this is done, we
 		process the lexer first, if present, and then the parser grammar
 	 */
-	public void process(Grammar g, boolean gencode) {
+	public void process(Grammar g, bool gencode) {
 		g.loadImportedGrammars();
 
 		GrammarTransformPipeline transform = new GrammarTransformPipeline(g, this);

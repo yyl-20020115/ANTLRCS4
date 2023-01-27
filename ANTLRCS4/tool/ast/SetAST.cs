@@ -4,11 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
-public class SetAST extends GrammarAST implements RuleElementAST {
+public class SetAST : GrammarAST , RuleElementAST {
 
 	public SetAST(SetAST node) {
 		super(node);

@@ -4,11 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool.ast;
 
-public class RangeAST : GrammarAST implements RuleElementAST {
+public class RangeAST : GrammarAST , RuleElementAST {
 
 	public RangeAST(RangeAST node) {
 		super(node);
@@ -16,11 +16,11 @@ public class RangeAST : GrammarAST implements RuleElementAST {
 
 	public RangeAST(Token t) { super(t); }
 
-	@Override
+	//@Override
 	public RangeAST dupNode() {
 		return new RangeAST(this);
 	}
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

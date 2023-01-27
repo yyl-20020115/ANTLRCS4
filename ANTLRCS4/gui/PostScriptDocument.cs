@@ -4,18 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.gui;
-
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+namespace org.antlr.v4.gui;
 
 public class PostScriptDocument {
-	public static final String DEFAULT_FONT = "CourierNew";
+	public static readonly String DEFAULT_FONT = "CourierNew";
 
-	public static final Map<String, String> POSTSCRIPT_FONT_NAMES;
-	static {
+	public static readonly Map<String, String> POSTSCRIPT_FONT_NAMES;
+	static PostScriptDocument(){
 		POSTSCRIPT_FONT_NAMES = new HashMap<String, String>();
 		POSTSCRIPT_FONT_NAMES.put(Font.SANS_SERIF + ".plain", "ArialMT");
 		POSTSCRIPT_FONT_NAMES.put(Font.SANS_SERIF + ".bold", "Arial-BoldMT");

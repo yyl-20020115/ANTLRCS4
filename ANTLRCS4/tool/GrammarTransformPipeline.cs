@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.tool;
@@ -38,7 +41,20 @@ public class GrammarTransformPipeline {
 		transformer.setTreeAdaptor(adaptor);
 		transformer.downup(root);
 	}
-
+	public class TVA: TreeVisitorAction
+    {
+        //@Override
+        public Object pre(Object t)
+        {
+            if (((GrammarAST)t).getType() == 3)
+            {
+                return expandParameterizedLoop((GrammarAST)t);
+            }
+            return t;
+        }
+        //@Override
+        public Object post(Object t) { return t; }
+    }
     /** Find and replace
      *      ID*[','] with ID (',' ID)*
      *      ID+[','] with ID (',' ID)+
@@ -49,35 +65,26 @@ public class GrammarTransformPipeline {
      */
     public void expandParameterizedLoops(GrammarAST root) {
         TreeVisitor v = new TreeVisitor(new GrammarASTAdaptor());
-        v.visit(root, new TreeVisitorAction() {
-            @Override
-            public Object pre(Object t) {
-                if ( ((GrammarAST)t).getType() == 3 ) {
-                    return expandParameterizedLoop((GrammarAST)t);
-                }
-                return t;
-            }
-            @Override
-            public Object post(Object t) { return t; }
-        });
+        v.visit(root, new TVA());
     }
 
     public GrammarAST expandParameterizedLoop(GrammarAST t) {
         // todo: update grammar, alter AST
         return t;
     }
-
+	public class TVA2 : TreeVisitorAction
+    {
+        //@Override
+        public Object pre(Object t) { ((GrammarAST)t).g = g; return t; }
+        //@Override
+        public Object post(Object t) { return t; }
+    }
     /** Utility visitor that sets grammar ptr in each node */
-	public static void setGrammarPtr(final Grammar g, GrammarAST tree) {
+    public static void setGrammarPtr(Grammar g, GrammarAST tree) {
 		if ( tree==null ) return;
 		// ensure each node has pointer to surrounding grammar
 		TreeVisitor v = new TreeVisitor(new GrammarASTAdaptor());
-		v.visit(tree, new TreeVisitorAction() {
-			@Override
-			public Object pre(Object t) { ((GrammarAST)t).g = g; return t; }
-			@Override
-			public Object post(Object t) { return t; }
-		});
+		v.visit(tree,new TVA2() );
 	}
 
 	public static void augmentTokensWithOriginalPosition( Grammar g, GrammarAST tree) {
@@ -448,7 +455,7 @@ public class GrammarTransformPipeline {
 			if ( litAliases!=null ) {
 				for (Pair<GrammarAST,GrammarAST> pair : litAliases) {
 					GrammarAST litAST = pair.b;
-					if ( lit.equals(litAST.getText()) ) continue nextLit;
+					if ( lit.Equals(litAST.getText()) ) continue nextLit;
 				}
 			}
 			// create for each literal: (RULE <uniquename> (BLOCK (ALT <lit>))
