@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
 

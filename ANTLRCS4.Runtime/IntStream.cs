@@ -213,4 +213,5 @@ public interface IntStream {
 	 */
 
 	public String getSourceName();
+    void rewind(int nvaeMark);
 }

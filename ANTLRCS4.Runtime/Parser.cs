@@ -180,7 +180,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 * {@code ttype} and the error strategy could not recover from the
 	 * mismatched symbol
 	 */
-	public Token match(int ttype)  {
+	public Token match(TokenStream input, int ttype, BitSet fOLLOW_ACTION_in_optionValue890)  {
 		Token t = getCurrentToken();
 		if ( t.getType()==ttype ) {
 			if ( ttype==Token.EOF ) {

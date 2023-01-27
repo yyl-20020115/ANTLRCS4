@@ -840,10 +840,10 @@ public abstract class BaseRecognizer
     /** A convenience method for use most often with template rewrites.
      *  Convert a List&lt;Token&gt; to List&lt;String&gt;
      */
-    public List<String> toStrings(List<? extends Token> tokens)
+    public List<String> toStrings(List<Token> tokens)
     {
         if (tokens == null) return null;
-        List<String> strings = new ArrayList<String>(tokens.size());
+        List<String> strings = new (tokens.Count);
         for (int i = 0; i < tokens.size(); i++)
         {
             strings.add(tokens.get(i).getText());
@@ -935,7 +935,7 @@ public abstract class BaseRecognizer
         int n = 0;
         for (int i = 0; state.ruleMemo != null && i < state.ruleMemo.Length; i++)
         {
-            Map<Integer, Integer> ruleMap = state.ruleMemo[i];
+            var ruleMap = state.ruleMemo[i];
             if (ruleMap != null)
             {
                 n += ruleMap.size(); // how many input indexes are recorded?
@@ -958,14 +958,14 @@ public abstract class BaseRecognizer
                          int ruleIndex,
                          Object inputSymbol)
     {
-        Console.Out.print("exit " + ruleName + " " + inputSymbol);
+        Console.Out.Write("exit " + ruleName + " " + inputSymbol);
         if (state.backtracking > 0)
         {
-            Console.Out.print(" backtracking=" + state.backtracking);
-            if (state.failed) Console.Out.print(" failed");
-            else Console.Out.print(" succeeded");
+            Console.Out.Write(" backtracking=" + state.backtracking);
+            if (state.failed) Console.Out.Write(" failed");
+            else Console.Out.Write(" succeeded");
         }
-        Console.Out.println();
+        Console.Out.WriteLine();
     }
 
 }

@@ -13,6 +13,13 @@ public class BitSet
     private const int BitsPerElement = 8 * sizeof(ulong);
 
     private ulong[] _data = EmptyBits;
+    public static ulong[] Convert(long[] data)
+    {
+        ulong[] result = new ulong[data.Length];
+        for (int i = 0; i < data.Length; i++)
+            result[i] = unchecked((ulong)data[i]);
+        return result;
+    }
 
     public BitSet()
     {
@@ -22,27 +29,13 @@ public class BitSet
         int c = GetBitCount(data);
         int n = c / 64;
         int m = c % 64;
-
-        //TODO:
-
+        n += (m > 0 ? 1 : 0);
+        _data = new ulong[n];
+        Array.Copy(data, _data, data.Length);
     }
     public BitSet(params long[] data)
         :this(Convert(data))
     {
-
-        //TODO:
-    }
-    public static ulong[] Convert(long[] data)
-    {
-        ulong[] result = new ulong[data.Length];
-        for(int i = 0; i < data.Length; i++)
-        {
-            unchecked
-            {
-                result[i] =(ulong) data[i];
-            }
-        }
-        return result;
     }
     public BitSet(int nbits)
     {

@@ -6,7 +6,6 @@ using System.Text;
 
 namespace org.antlr.v4.parse;
 public class ActionSplitter : Lexer {
-	public static readonly int EOF=-1;
 	public static readonly int ATTR=4;
 	public static readonly int ATTR_VALUE_EXPR=5;
 	public static readonly int COMMENT=6;
@@ -165,10 +164,19 @@ public class ActionSplitter : Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "COMMENT"
 
-	// $ANTLR start "LINE_COMMENT"
-	public void mLINE_COMMENT(){
+    private void match(char v)
+    {
+        throw new NotImplementedException();
+    }
+    private void match(string v)
+    {
+        throw new NotImplementedException();
+    }
+    // $ANTLR end "COMMENT"
+
+    // $ANTLR start "LINE_COMMENT"
+    public void mLINE_COMMENT(){
 		try {
 			int _type = LINE_COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
@@ -591,7 +599,7 @@ public class ActionSplitter : Lexer {
 
 			state.type = _type;
 			state.channel = _channel;
-			if ( state.backtracking==1 ) {@delegate.text(buf.toString());}
+			if ( state.backtracking==1 ) {@delegate.text(buf.ToString());}
 		}
 		finally {
 			// do for sure before leaving
@@ -977,7 +985,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred2_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -991,7 +999,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred7_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -1005,7 +1013,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred1_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -1019,7 +1027,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred6_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -1033,7 +1041,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred3_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -1047,7 +1055,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred4_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -1061,7 +1069,7 @@ public class ActionSplitter : Lexer {
 		try {
 			synpred5_ActionSplitter_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);

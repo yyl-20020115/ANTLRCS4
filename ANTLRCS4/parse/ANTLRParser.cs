@@ -150,13 +150,14 @@ public class ANTLRParser : Parser
     // delegators
 
 
-    public ANTLRParser(TokenStream input): this(input, new RecognizerSharedState())
+    public ANTLRParser(TokenStream input) : this(input, new RecognizerSharedState())
     {
     }
-    public ANTLRParser(TokenStream input, RecognizerSharedState state):base(input, state)
+    public ANTLRParser(TokenStream input, RecognizerSharedState state) : base(input)
     {
+        this.state = state;
     }
-
+    protected readonly RecognizerSharedState state;
     protected TreeAdaptor adaptor = new CommonTreeAdaptor();
 
     public void setTreeAdaptor(TreeAdaptor adaptor)
@@ -168,18 +169,18 @@ public class ANTLRParser : Parser
         return adaptor;
     }
     //@Override
-        public String[] getTokenNames() { return ANTLRParser.tokenNames; }
+    public String[] getTokenNames() { return ANTLRParser.tokenNames; }
     //@Override
-        public String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
+    public String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
 
 
-    Deque<String> paraphrases = new ();
+    Deque<String> paraphrases = new();
     public void grammarError(ErrorType etype, Token token, params Object[] args) { }
 
 
     public class grammarSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
         public GrammarAST getTree() { return tree; }
@@ -190,7 +191,7 @@ public class ANTLRParser : Parser
     // org\\antlr\\v4\\parse\\ANTLRParser.g:130:1: grammarSpec : grammarType id SEMI sync ( prequelConstruct sync )* rules ( modeSpec )* EOF -> ^( grammarType id ( prequelConstruct )* rules ( modeSpec )* ) ;
     public ANTLRParser.grammarSpec_return grammarSpec()
     {
-        ANTLRParser.grammarSpec_return retval = new ANTLRParser.grammarSpec_return();
+        grammarSpec_return retval = new ();
         retval.start = input.LT(1);
 
         GrammarAST root_0 = null;
@@ -379,15 +380,21 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    private void pushFollow(BitSet fOLLOW_prequelConstruct_in_grammarSpec327)
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "grammarSpec"
 
 
     public class grammarType_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -562,10 +569,10 @@ public class ANTLRParser : Parser
 
     public class prequelConstruct_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -713,15 +720,26 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    private void recover(TokenStream input, RecognitionException re)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void reportError(RecognitionException re)
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "prequelConstruct"
 
 
     public class optionsSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -848,10 +866,10 @@ public class ANTLRParser : Parser
 
     public class option_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -919,10 +937,10 @@ public class ANTLRParser : Parser
 
     public class optionValue_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1053,10 +1071,10 @@ public class ANTLRParser : Parser
 
     public class delegateGrammars_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1192,10 +1210,10 @@ public class ANTLRParser : Parser
 
     public class delegateGrammar_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1351,10 +1369,10 @@ public class ANTLRParser : Parser
 
     public class tokensSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1569,10 +1587,10 @@ public class ANTLRParser : Parser
 
     public class channelsSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1670,10 +1688,10 @@ public class ANTLRParser : Parser
 
     public class action_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1824,10 +1842,10 @@ public class ANTLRParser : Parser
 
     public class actionScopeName_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -1973,10 +1991,10 @@ public class ANTLRParser : Parser
 
     public class modeSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2118,10 +2136,10 @@ public class ANTLRParser : Parser
 
     public class rules_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2243,10 +2261,10 @@ public class ANTLRParser : Parser
 
     public class sync_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2296,10 +2314,10 @@ public class ANTLRParser : Parser
 
     public class rule_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2392,10 +2410,10 @@ public class ANTLRParser : Parser
 
     public class parserRule_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2653,10 +2671,10 @@ public class ANTLRParser : Parser
 
     public class exceptionGroup_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2759,10 +2777,10 @@ public class ANTLRParser : Parser
 
     public class exceptionHandler_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2853,10 +2871,10 @@ public class ANTLRParser : Parser
 
     public class finallyClause_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -2940,10 +2958,10 @@ public class ANTLRParser : Parser
 
     public class rulePrequels_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3060,10 +3078,10 @@ public class ANTLRParser : Parser
 
     public class rulePrequel_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3156,10 +3174,10 @@ public class ANTLRParser : Parser
 
     public class ruleReturns_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3219,10 +3237,10 @@ public class ANTLRParser : Parser
 
     public class throwsSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3352,10 +3370,10 @@ public class ANTLRParser : Parser
 
     public class localsSpec_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3415,10 +3433,10 @@ public class ANTLRParser : Parser
 
     public class ruleAction_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+       public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3510,10 +3528,10 @@ public class ANTLRParser : Parser
 
     public class ruleBlock_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3598,7 +3616,7 @@ public class ANTLRParser : Parser
         GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3715,10 +3733,10 @@ public class ANTLRParser : Parser
 
     public class labeledAlt_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         ////@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3799,10 +3817,10 @@ public class ANTLRParser : Parser
 
     public class lexerRule_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -3972,10 +3990,10 @@ public class ANTLRParser : Parser
 
     public class lexerRuleBlock_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4057,10 +4075,10 @@ public class ANTLRParser : Parser
 
     public class lexerAltList_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4177,10 +4195,10 @@ public class ANTLRParser : Parser
 
     public class lexerAlt_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4321,10 +4339,10 @@ public class ANTLRParser : Parser
 
     public class lexerElements_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4495,10 +4513,10 @@ public class ANTLRParser : Parser
 
     public class lexerElement_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4837,10 +4855,10 @@ public class ANTLRParser : Parser
 
     public class lexerBlock_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -4975,10 +4993,10 @@ public class ANTLRParser : Parser
 
     public class lexerCommands_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5101,10 +5119,10 @@ public class ANTLRParser : Parser
 
     public class lexerCommand_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5321,10 +5339,10 @@ public class ANTLRParser : Parser
 
     public class lexerCommandExpr_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5416,10 +5434,10 @@ public class ANTLRParser : Parser
 
     public class lexerCommandName_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5528,10 +5546,10 @@ public class ANTLRParser : Parser
 
     public class altList_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5648,10 +5666,10 @@ public class ANTLRParser : Parser
 
     public class alternative_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -5873,10 +5891,10 @@ public class ANTLRParser : Parser
 
     public class element_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -6297,10 +6315,10 @@ public class ANTLRParser : Parser
 
     public class actionElement_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -6537,10 +6555,10 @@ public class ANTLRParser : Parser
 
     public class labeledElement_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -6742,10 +6760,10 @@ public class ANTLRParser : Parser
 
     public class ebnf_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -6885,10 +6903,10 @@ public class ANTLRParser : Parser
 
     public class blockSuffix_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -6943,10 +6961,10 @@ public class ANTLRParser : Parser
 
     public class ebnfSuffix_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7172,7 +7190,7 @@ public class ANTLRParser : Parser
         GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7368,10 +7386,10 @@ public class ANTLRParser : Parser
 
     public class atom_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7548,10 +7566,10 @@ public class ANTLRParser : Parser
 
     public class wildcard_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7669,7 +7687,7 @@ public class ANTLRParser : Parser
         GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7849,10 +7867,10 @@ public class ANTLRParser : Parser
 
     public class blockSet_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -7995,7 +8013,7 @@ public class ANTLRParser : Parser
         GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8193,10 +8211,10 @@ public class ANTLRParser : Parser
 
     public class block_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8388,10 +8406,10 @@ public class ANTLRParser : Parser
 
     public class ruleref_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8538,7 +8556,7 @@ public class ANTLRParser : Parser
         GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8604,10 +8622,10 @@ public class ANTLRParser : Parser
 
     public class terminal_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8812,10 +8830,10 @@ public class ANTLRParser : Parser
 
     public class elementOptions_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -8965,10 +8983,10 @@ public class ANTLRParser : Parser
 
     public class elementOption_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9124,10 +9142,10 @@ public class ANTLRParser : Parser
 
     public class id_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9254,10 +9272,10 @@ public class ANTLRParser : Parser
 
     public class qid_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9367,10 +9385,10 @@ public class ANTLRParser : Parser
 
     public class alternativeEntry_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9431,10 +9449,10 @@ public class ANTLRParser : Parser
 
     public class elementEntry_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9495,10 +9513,10 @@ public class ANTLRParser : Parser
 
     public class ruleEntry_return : ParserRuleReturnScope
     {
-        GrammarAST tree;
+        public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 
@@ -9562,7 +9580,7 @@ public class ANTLRParser : Parser
         public GrammarAST tree;
         //@Override
 
-            public GrammarAST getTree() { return tree; }
+        public GrammarAST getTree() { return tree; }
     };
 
 

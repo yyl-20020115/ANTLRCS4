@@ -95,7 +95,7 @@ public class ANTLRInputStream : CharStream {
    			do {
    				if ( p+readChunkSize > data.Length ) { // overflow?
    					// System.out.println("### overflow p="+p+", data.length="+data.length);
-   					data = Arrays.copyOf(data, data.Length * 2);
+   					data = Arrays.CopyOf(data, data.Length * 2);
    				}
    				numRead = r.Read(data, p, readChunkSize);
    				// System.out.println("read "+numRead+" chars; p was "+p+" is now "+(p+numRead));

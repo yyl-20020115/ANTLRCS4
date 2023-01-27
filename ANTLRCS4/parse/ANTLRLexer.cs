@@ -28,7 +28,6 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using org.antlr.runtime;
-using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.tool;
@@ -961,10 +960,12 @@ public class ANTLRLexer : Lexer {
 
     private void match(char v)
     {
+		//TODO:
         throw new NotImplementedException();
     }
     private void match(string v)
     {
+        //TODO:
         throw new NotImplementedException();
     }
 
@@ -2884,10 +2885,16 @@ public class ANTLRLexer : Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "ERRCHAR"
 
-	//@Override
-	public void mTokens()  {
+    private void matchAny()
+    {
+        throw new NotImplementedException();
+    }
+
+    // $ANTLR end "ERRCHAR"
+
+    //@Override
+    public void mTokens()  {
 		// org\\antlr\\v4\\parse\\ANTLRLexer.g:1:8: ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR )
 		int alt32=45;
 		alt32 = dfa32.predict(input);
@@ -3273,7 +3280,7 @@ public class ANTLRLexer : Lexer {
 		try {
 			synpred1_ANTLRLexer_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -3287,7 +3294,7 @@ public class ANTLRLexer : Lexer {
 		try {
 			synpred2_ANTLRLexer_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -3301,7 +3308,7 @@ public class ANTLRLexer : Lexer {
 		try {
 			synpred5_ANTLRLexer_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -3315,7 +3322,7 @@ public class ANTLRLexer : Lexer {
 		try {
 			synpred3_ANTLRLexer_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -3329,7 +3336,7 @@ public class ANTLRLexer : Lexer {
 		try {
 			synpred4_ANTLRLexer_fragment(); // can never throw exception
 		} catch (RecognitionException re) {
-			System.err.println("impossible: "+re);
+			Console.Error.WriteLine("impossible: "+re);
 		}
 		bool success = !state.failed;
 		input.rewind(start);
@@ -3341,71 +3348,71 @@ public class ANTLRLexer : Lexer {
 
 	protected DFA2 dfa2 = new DFA2(this);
 	protected DFA32 dfa32 = new DFA32(this);
-	static readonly String DFA2_eotS =
-		"\2\2\1\uffff\16\2\1\uffff\3\2\1\uffff\2\2\2\uffff";
-	static readonly String DFA2_eofS =
-		"\32\uffff";
-	static readonly String DFA2_minS =
-		"\1\40\1\44\1\uffff\1\101\1\116\1\124\1\114\1\122\1\163\1\162\1\143\2\11\3\0\1\11\1\uffff\3\0\1\uffff\1\11\3\0";
-	static readonly String DFA2_maxS =
-		"\1\40\1\44\1\uffff\1\101\1\116\1\124\1\114\1\122\1\163\1\162\1\143\1\40\1\42\3\uffff\1\40\1\uffff\3\uffff\1\uffff\1\71\1\uffff\2\0";
-	static readonly String DFA2_acceptS =
-		"\2\uffff\1\2\16\uffff\1\1\3\uffff\1\1\4\uffff";
-	static readonly String DFA2_specialS =
-		"\15\uffff\1\2\1\4\1\5\2\uffff\1\3\1\7\1\10\2\uffff\1\6\1\1\1\0}>";
-	static readonly String[] DFA2_transitionS = {
-			"\1\1",
-			"\1\3",
-			"",
-			"\1\4",
-			"\1\5",
-			"\1\6",
-			"\1\7",
-			"\1\10",
-			"\1\11",
-			"\1\12",
-			"\1\13",
-			"\1\14\2\uffff\1\14\23\uffff\1\14",
-			"\1\14\2\uffff\1\14\23\uffff\1\14\1\uffff\1\15",
-			"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
-			"\12\24\1\25\2\24\1\25\24\24\1\22\71\24\1\23\uffa3\24",
-			"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
-			"\1\26\2\uffff\1\26\23\uffff\1\26",
-			"",
-			"\11\17\1\27\1\21\1\17\1\27\1\21\22\17\1\27\1\17\1\20\71\17\1\16\uffa3"+
-			"\17",
-			"\12\24\1\25\2\24\1\25\24\24\1\22\71\24\1\23\uffa3\24",
-			"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
-			"",
-			"\1\26\2\uffff\1\26\23\uffff\1\26\17\uffff\12\30",
-			"\11\17\1\27\1\21\1\17\1\27\1\21\22\17\1\27\1\17\1\20\15\17\12\31\42"+
-			"\17\1\16\uffa3\17",
-			"\1\uffff",
-			"\1\uffff"
-	};
+	//static readonly String DFA2_eotS =
+	//	"\2\2\1\uffff\16\2\1\uffff\3\2\1\uffff\2\2\2\uffff";
+	//static readonly String DFA2_eofS =
+	//	"\32\uffff";
+	//static readonly String DFA2_minS =
+	//	"\1\40\1\44\1\uffff\1\101\1\116\1\124\1\114\1\122\1\163\1\162\1\143\2\11\3\0\1\11\1\uffff\3\0\1\uffff\1\11\3\0";
+	//static readonly String DFA2_maxS =
+	//	"\1\40\1\44\1\uffff\1\101\1\116\1\124\1\114\1\122\1\163\1\162\1\143\1\40\1\42\3\uffff\1\40\1\uffff\3\uffff\1\uffff\1\71\1\uffff\2\0";
+	//static readonly String DFA2_acceptS =
+	//	"\2\uffff\1\2\16\uffff\1\1\3\uffff\1\1\4\uffff";
+	//static readonly String DFA2_specialS =
+	//	"\15\uffff\1\2\1\4\1\5\2\uffff\1\3\1\7\1\10\2\uffff\1\6\1\1\1\0}>";
+	//static readonly String[] DFA2_transitionS = {
+	//		"\1\1",
+	//		"\1\3",
+	//		"",
+	//		"\1\4",
+	//		"\1\5",
+	//		"\1\6",
+	//		"\1\7",
+	//		"\1\10",
+	//		"\1\11",
+	//		"\1\12",
+	//		"\1\13",
+	//		"\1\14\2\uffff\1\14\23\uffff\1\14",
+	//		"\1\14\2\uffff\1\14\23\uffff\1\14\1\uffff\1\15",
+	//		"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
+	//		"\12\24\1\25\2\24\1\25\24\24\1\22\71\24\1\23\uffa3\24",
+	//		"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
+	//		"\1\26\2\uffff\1\26\23\uffff\1\26",
+	//		"",
+	//		"\11\17\1\27\1\21\1\17\1\27\1\21\22\17\1\27\1\17\1\20\71\17\1\16\uffa3"+
+	//		"\17",
+	//		"\12\24\1\25\2\24\1\25\24\24\1\22\71\24\1\23\uffa3\24",
+	//		"\12\17\1\21\2\17\1\21\24\17\1\20\71\17\1\16\uffa3\17",
+	//		"",
+	//		"\1\26\2\uffff\1\26\23\uffff\1\26\17\uffff\12\30",
+	//		"\11\17\1\27\1\21\1\17\1\27\1\21\22\17\1\27\1\17\1\20\15\17\12\31\42"+
+	//		"\17\1\16\uffa3\17",
+	//		"\1\uffff",
+	//		"\1\uffff"
+	//};
 
-	static readonly short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
-	static readonly short[] DFA2_eof = DFA.unpackEncodedString(DFA2_eofS);
-	static readonly char[] DFA2_min = DFA.unpackEncodedStringToUnsignedChars(DFA2_minS);
-	static readonly char[] DFA2_max = DFA.unpackEncodedStringToUnsignedChars(DFA2_maxS);
-	static readonly short[] DFA2_accept = DFA.unpackEncodedString(DFA2_acceptS);
-	static readonly short[] DFA2_special = DFA.unpackEncodedString(DFA2_specialS);
-	static readonly short[][] DFA2_transition;
+	//static readonly short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
+	//static readonly short[] DFA2_eof = DFA.unpackEncodedString(DFA2_eofS);
+	//static readonly char[] DFA2_min = DFA.unpackEncodedStringToUnsignedChars(DFA2_minS);
+	//static readonly char[] DFA2_max = DFA.unpackEncodedStringToUnsignedChars(DFA2_maxS);
+	//static readonly short[] DFA2_accept = DFA.unpackEncodedString(DFA2_acceptS);
+	//static readonly short[] DFA2_special = DFA.unpackEncodedString(DFA2_specialS);
+	//static readonly short[][] DFA2_transition;
 
-	static ANTLRLexer(){
-		int numStates = DFA2_transitionS.length;
-		DFA2_transition = new short[numStates][];
-		for (int i=0; i<numStates; i++) {
-			DFA2_transition[i] = DFA.unpackEncodedString(DFA2_transitionS[i]);
-		}
-        int numStates = DFA32_transitionS.length;
-        DFA32_transition = new short[numStates][];
-        for (int i = 0; i < numStates; i++)
-        {
-            DFA32_transition[i] = DFA.unpackEncodedString(DFA32_transitionS[i]);
-        }
+	//static ANTLRLexer(){
+	//	int numStates = DFA2_transitionS.length;
+	//	DFA2_transition = new short[numStates][];
+	//	for (int i=0; i<numStates; i++) {
+	//		DFA2_transition[i] = DFA.unpackEncodedString(DFA2_transitionS[i]);
+	//	}
+ //       int numStates = DFA32_transitionS.length;
+ //       DFA32_transition = new short[numStates][];
+ //       for (int i = 0; i < numStates; i++)
+ //       {
+ //           DFA32_transition[i] = DFA.unpackEncodedString(DFA32_transitionS[i]);
+ //       }
 
-    }
+ //   }
 
     protected class DFA2 : DFA {
 
@@ -3570,255 +3577,468 @@ public class ANTLRLexer : Lexer {
 		}
 	}
 
-	static readonly String DFA32_eotS =
-		"\2\uffff\1\46\1\uffff\12\54\1\73\4\uffff\1\46\5\uffff\1\107\2\uffff\1"+
-		"\113\16\uffff\1\54\1\uffff\15\54\32\uffff\33\54\1\175\4\54\1\u0082\3\54"+
-		"\1\u0086\4\54\1\uffff\2\54\1\u008d\1\54\1\uffff\1\u008f\2\54\1\uffff\1"+
-		"\u0092\1\u0093\3\54\2\uffff\1\54\1\uffff\1\54\1\u0099\2\uffff\1\u009a"+
-		"\1\u009b\1\uffff\1\54\1\u009d\5\uffff";
-	static readonly String DFA32_eofS =
-		"\u009e\uffff";
-	static readonly String DFA32_minS =
-		"\1\0\1\uffff\1\0\1\uffff\1\160\1\150\1\141\1\155\1\151\1\145\1\141\1\162"+
-		"\1\145\1\157\1\72\4\uffff\1\76\5\uffff\1\75\2\uffff\1\56\16\uffff\1\164"+
-		"\1\uffff\1\153\1\162\1\141\1\164\1\160\1\141\1\156\1\170\1\143\1\162\1"+
-		"\141\1\164\1\144\32\uffff\1\151\1\145\1\157\1\156\1\143\1\157\1\147\1"+
-		"\141\1\145\1\141\1\163\1\155\1\165\1\145\1\157\1\156\1\167\1\156\1\150"+
-		"\1\162\1\155\1\154\1\162\1\154\1\145\1\155\1\162\1\60\1\156\2\163\1\145"+
-		"\1\60\1\164\1\145\1\154\1\60\1\163\1\162\1\141\1\156\1\uffff\1\163\1\11"+
-		"\1\60\1\154\1\uffff\1\60\1\156\1\171\1\uffff\2\60\1\162\1\163\1\11\2\uffff"+
-		"\1\163\1\uffff\1\164\1\60\2\uffff\2\60\1\uffff\1\11\1\60\5\uffff";
-	static readonly String DFA32_maxS =
-		"\1\uffff\1\uffff\1\uffff\1\uffff\1\160\1\157\1\150\1\155\1\162\1\157\1"+
-		"\141\1\162\1\145\1\157\1\72\4\uffff\1\76\5\uffff\1\75\2\uffff\1\56\16"+
-		"\uffff\1\164\1\uffff\1\153\1\162\1\141\1\164\1\160\1\141\1\156\1\170\1"+
-		"\143\1\162\1\141\1\164\1\144\32\uffff\1\151\1\145\1\157\1\156\1\143\1"+
-		"\157\1\147\1\141\1\145\1\141\1\163\1\155\1\165\1\145\1\157\1\156\1\167"+
-		"\1\156\1\150\1\162\1\155\1\154\1\162\1\154\1\145\1\155\1\162\1\ufffd\1"+
-		"\156\2\163\1\145\1\ufffd\1\164\1\145\1\154\1\ufffd\1\163\1\162\1\141\1"+
-		"\156\1\uffff\1\163\1\173\1\ufffd\1\154\1\uffff\1\ufffd\1\156\1\171\1\uffff"+
-		"\2\ufffd\1\162\1\163\1\173\2\uffff\1\163\1\uffff\1\164\1\ufffd\2\uffff"+
-		"\2\ufffd\1\uffff\1\173\1\ufffd\5\uffff";
-	static readonly String DFA32_acceptS =
-		"\1\uffff\1\1\1\uffff\1\3\13\uffff\1\24\1\25\1\26\1\27\1\uffff\1\31\1\32"+
-		"\1\33\1\34\1\35\1\uffff\1\40\1\41\1\uffff\1\44\1\45\1\46\1\47\1\50\1\51"+
-		"\1\52\1\53\1\54\1\55\1\1\2\2\1\3\1\uffff\1\50\15\uffff\1\23\1\22\1\24"+
-		"\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\37\1\36\1\40\1\41\1\43"+
-		"\1\42\1\44\1\45\1\46\1\47\1\51\1\52\1\53\1\54\51\uffff\1\21\4\uffff\1"+
-		"\17\3\uffff\1\11\5\uffff\1\5\1\16\1\uffff\1\7\2\uffff\1\15\1\12\2\uffff"+
-		"\1\4\2\uffff\1\20\1\13\1\14\1\6\1\10";
-	static readonly String DFA32_specialS =
-		"\1\0\1\uffff\1\1\u009b\uffff}>";
-	static readonly String[] DFA32_transitionS = {
-			"\11\46\2\44\1\46\2\44\22\46\1\44\2\46\1\36\1\33\2\46\1\43\1\21\1\22\1"+
-			"\30\1\31\1\17\1\23\1\34\1\1\12\42\1\16\1\20\1\24\1\26\1\25\1\27\1\35"+
-			"\32\41\1\2\5\46\2\41\1\6\2\41\1\10\1\13\1\41\1\7\2\41\1\11\1\15\1\41"+
-			"\1\4\1\12\1\41\1\14\1\41\1\5\6\41\1\3\1\32\1\40\1\37\101\46\27\41\1\46"+
-			"\37\41\1\46\u0208\41\160\46\16\41\1\46\u1c81\41\14\46\2\41\142\46\u0120"+
-			"\41\u0a70\46\u03f0\41\21\46\ua7ff\41\u2100\46\u04d0\41\40\46\u010f\41"+
-			"\1\45\u00fe\41\2\46",
-			"",
-			"\12\50\1\51\2\50\1\51\ufff2\50",
-			"",
-			"\1\53",
-			"\1\56\6\uffff\1\55",
-			"\1\60\6\uffff\1\57",
-			"\1\61",
-			"\1\63\10\uffff\1\62",
-			"\1\64\11\uffff\1\65",
-			"\1\66",
-			"\1\67",
-			"\1\70",
-			"\1\71",
-			"\1\72",
-			"",
-			"",
-			"",
-			"",
-			"\1\100",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"\1\106",
-			"",
-			"",
-			"\1\112",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"\1\124",
-			"",
-			"\1\125",
-			"\1\126",
-			"\1\127",
-			"\1\130",
-			"\1\131",
-			"\1\132",
-			"\1\133",
-			"\1\134",
-			"\1\135",
-			"\1\136",
-			"\1\137",
-			"\1\140",
-			"\1\141",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"\1\142",
-			"\1\143",
-			"\1\144",
-			"\1\145",
-			"\1\146",
-			"\1\147",
-			"\1\150",
-			"\1\151",
-			"\1\152",
-			"\1\153",
-			"\1\154",
-			"\1\155",
-			"\1\156",
-			"\1\157",
-			"\1\160",
-			"\1\161",
-			"\1\162",
-			"\1\163",
-			"\1\164",
-			"\1\165",
-			"\1\166",
-			"\1\167",
-			"\1\170",
-			"\1\171",
-			"\1\172",
-			"\1\173",
-			"\1\174",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\176",
-			"\1\177",
-			"\1\u0080",
-			"\1\u0081",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\u0083",
-			"\1\u0084",
-			"\1\u0085",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\u0087",
-			"\1\u0088",
-			"\1\u0089",
-			"\1\u008a",
-			"",
-			"\1\u008b",
-			"\2\u008c\1\uffff\2\u008c\22\uffff\1\u008c\132\uffff\1\u008c",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\u008e",
-			"",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\u0090",
-			"\1\u0091",
-			"",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\1\u0094",
-			"\1\u0095",
-			"\2\u0096\1\uffff\2\u0096\22\uffff\1\u0096\132\uffff\1\u0096",
-			"",
-			"",
-			"\1\u0097",
-			"",
-			"\1\u0098",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"",
-			"",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"",
-			"\2\u009c\1\uffff\2\u009c\22\uffff\1\u009c\132\uffff\1\u009c",
-			"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
-			"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
-			"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
-			"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
-			"",
-			"",
-			"",
-			"",
-			""
+	//static readonly String DFA32_eotS =
+	//	"\2\uffff\1\46\1\uffff\12\54\1\73\4\uffff\1\46\5\uffff\1\107\2\uffff\1"+
+	//	"\113\16\uffff\1\54\1\uffff\15\54\32\uffff\33\54\1\175\4\54\1\u0082\3\54"+
+	//	"\1\u0086\4\54\1\uffff\2\54\1\u008d\1\54\1\uffff\1\u008f\2\54\1\uffff\1"+
+	//	"\u0092\1\u0093\3\54\2\uffff\1\54\1\uffff\1\54\1\u0099\2\uffff\1\u009a"+
+	//	"\1\u009b\1\uffff\1\54\1\u009d\5\uffff";
+	//static readonly String DFA32_eofS =
+	//	"\u009e\uffff";
+	//static readonly String DFA32_minS =
+	//	"\1\0\1\uffff\1\0\1\uffff\1\160\1\150\1\141\1\155\1\151\1\145\1\141\1\162"+
+	//	"\1\145\1\157\1\72\4\uffff\1\76\5\uffff\1\75\2\uffff\1\56\16\uffff\1\164"+
+	//	"\1\uffff\1\153\1\162\1\141\1\164\1\160\1\141\1\156\1\170\1\143\1\162\1"+
+	//	"\141\1\164\1\144\32\uffff\1\151\1\145\1\157\1\156\1\143\1\157\1\147\1"+
+	//	"\141\1\145\1\141\1\163\1\155\1\165\1\145\1\157\1\156\1\167\1\156\1\150"+
+	//	"\1\162\1\155\1\154\1\162\1\154\1\145\1\155\1\162\1\60\1\156\2\163\1\145"+
+	//	"\1\60\1\164\1\145\1\154\1\60\1\163\1\162\1\141\1\156\1\uffff\1\163\1\11"+
+	//	"\1\60\1\154\1\uffff\1\60\1\156\1\171\1\uffff\2\60\1\162\1\163\1\11\2\uffff"+
+	//	"\1\163\1\uffff\1\164\1\60\2\uffff\2\60\1\uffff\1\11\1\60\5\uffff";
+	//static readonly String DFA32_maxS =
+	//	"\1\uffff\1\uffff\1\uffff\1\uffff\1\160\1\157\1\150\1\155\1\162\1\157\1"+
+	//	"\141\1\162\1\145\1\157\1\72\4\uffff\1\76\5\uffff\1\75\2\uffff\1\56\16"+
+	//	"\uffff\1\164\1\uffff\1\153\1\162\1\141\1\164\1\160\1\141\1\156\1\170\1"+
+	//	"\143\1\162\1\141\1\164\1\144\32\uffff\1\151\1\145\1\157\1\156\1\143\1"+
+	//	"\157\1\147\1\141\1\145\1\141\1\163\1\155\1\165\1\145\1\157\1\156\1\167"+
+	//	"\1\156\1\150\1\162\1\155\1\154\1\162\1\154\1\145\1\155\1\162\1\ufffd\1"+
+	//	"\156\2\163\1\145\1\ufffd\1\164\1\145\1\154\1\ufffd\1\163\1\162\1\141\1"+
+	//	"\156\1\uffff\1\163\1\173\1\ufffd\1\154\1\uffff\1\ufffd\1\156\1\171\1\uffff"+
+	//	"\2\ufffd\1\162\1\163\1\173\2\uffff\1\163\1\uffff\1\164\1\ufffd\2\uffff"+
+	//	"\2\ufffd\1\uffff\1\173\1\ufffd\5\uffff";
+	//static readonly String DFA32_acceptS =
+	//	"\1\uffff\1\1\1\uffff\1\3\13\uffff\1\24\1\25\1\26\1\27\1\uffff\1\31\1\32"+
+	//	"\1\33\1\34\1\35\1\uffff\1\40\1\41\1\uffff\1\44\1\45\1\46\1\47\1\50\1\51"+
+	//	"\1\52\1\53\1\54\1\55\1\1\2\2\1\3\1\uffff\1\50\15\uffff\1\23\1\22\1\24"+
+	//	"\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\37\1\36\1\40\1\41\1\43"+
+	//	"\1\42\1\44\1\45\1\46\1\47\1\51\1\52\1\53\1\54\51\uffff\1\21\4\uffff\1"+
+	//	"\17\3\uffff\1\11\5\uffff\1\5\1\16\1\uffff\1\7\2\uffff\1\15\1\12\2\uffff"+
+	//	"\1\4\2\uffff\1\20\1\13\1\14\1\6\1\10";
+	//static readonly String DFA32_specialS =
+	//	"\1\0\1\uffff\1\1\u009b\uffff}>";
+	//static readonly String[] DFA32_transitionS = {
+	//		"\11\46\2\44\1\46\2\44\22\46\1\44\2\46\1\36\1\33\2\46\1\43\1\21\1\22\1"+
+	//		"\30\1\31\1\17\1\23\1\34\1\1\12\42\1\16\1\20\1\24\1\26\1\25\1\27\1\35"+
+	//		"\32\41\1\2\5\46\2\41\1\6\2\41\1\10\1\13\1\41\1\7\2\41\1\11\1\15\1\41"+
+	//		"\1\4\1\12\1\41\1\14\1\41\1\5\6\41\1\3\1\32\1\40\1\37\101\46\27\41\1\46"+
+	//		"\37\41\1\46\u0208\41\160\46\16\41\1\46\u1c81\41\14\46\2\41\142\46\u0120"+
+	//		"\41\u0a70\46\u03f0\41\21\46\ua7ff\41\u2100\46\u04d0\41\40\46\u010f\41"+
+	//		"\1\45\u00fe\41\2\46",
+	//		"",
+	//		"\12\50\1\51\2\50\1\51\ufff2\50",
+	//		"",
+	//		"\1\53",
+	//		"\1\56\6\uffff\1\55",
+	//		"\1\60\6\uffff\1\57",
+	//		"\1\61",
+	//		"\1\63\10\uffff\1\62",
+	//		"\1\64\11\uffff\1\65",
+	//		"\1\66",
+	//		"\1\67",
+	//		"\1\70",
+	//		"\1\71",
+	//		"\1\72",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"\1\100",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"\1\106",
+	//		"",
+	//		"",
+	//		"\1\112",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"\1\124",
+	//		"",
+	//		"\1\125",
+	//		"\1\126",
+	//		"\1\127",
+	//		"\1\130",
+	//		"\1\131",
+	//		"\1\132",
+	//		"\1\133",
+	//		"\1\134",
+	//		"\1\135",
+	//		"\1\136",
+	//		"\1\137",
+	//		"\1\140",
+	//		"\1\141",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		"\1\142",
+	//		"\1\143",
+	//		"\1\144",
+	//		"\1\145",
+	//		"\1\146",
+	//		"\1\147",
+	//		"\1\150",
+	//		"\1\151",
+	//		"\1\152",
+	//		"\1\153",
+	//		"\1\154",
+	//		"\1\155",
+	//		"\1\156",
+	//		"\1\157",
+	//		"\1\160",
+	//		"\1\161",
+	//		"\1\162",
+	//		"\1\163",
+	//		"\1\164",
+	//		"\1\165",
+	//		"\1\166",
+	//		"\1\167",
+	//		"\1\170",
+	//		"\1\171",
+	//		"\1\172",
+	//		"\1\173",
+	//		"\1\174",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\176",
+	//		"\1\177",
+	//		"\1\u0080",
+	//		"\1\u0081",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\u0083",
+	//		"\1\u0084",
+	//		"\1\u0085",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\u0087",
+	//		"\1\u0088",
+	//		"\1\u0089",
+	//		"\1\u008a",
+	//		"",
+	//		"\1\u008b",
+	//		"\2\u008c\1\uffff\2\u008c\22\uffff\1\u008c\132\uffff\1\u008c",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\u008e",
+	//		"",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\u0090",
+	//		"\1\u0091",
+	//		"",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\1\u0094",
+	//		"\1\u0095",
+	//		"\2\u0096\1\uffff\2\u0096\22\uffff\1\u0096\132\uffff\1\u0096",
+	//		"",
+	//		"",
+	//		"\1\u0097",
+	//		"",
+	//		"\1\u0098",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"",
+	//		"",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"",
+	//		"\2\u009c\1\uffff\2\u009c\22\uffff\1\u009c\132\uffff\1\u009c",
+	//		"\12\54\7\uffff\32\54\4\uffff\1\54\1\uffff\32\54\74\uffff\1\54\10\uffff"+
+	//		"\27\54\1\uffff\37\54\1\uffff\u0286\54\1\uffff\u1c81\54\14\uffff\2\54"+
+	//		"\61\uffff\2\54\57\uffff\u0120\54\u0a70\uffff\u03f0\54\21\uffff\ua7ff"+
+	//		"\54\u2100\uffff\u04d0\54\40\uffff\u010f\54\1\uffff\u00fe\54",
+	//		"",
+	//		"",
+	//		"",
+	//		"",
+	//		""
+	//};
+
+	//static readonly short[] DFA32_eot = DFA.unpackEncodedString(DFA32_eotS);
+	//static readonly short[] DFA32_eof = DFA.unpackEncodedString(DFA32_eofS);
+	//static readonly char[] DFA32_min = DFA.unpackEncodedStringToUnsignedChars(DFA32_minS);
+	//static readonly char[] DFA32_max = DFA.unpackEncodedStringToUnsignedChars(DFA32_maxS);
+	//static readonly short[] DFA32_accept = DFA.unpackEncodedString(DFA32_acceptS);
+	//static readonly short[] DFA32_special = DFA.unpackEncodedString(DFA32_specialS);
+	//static readonly short[][] DFA32_transition;
+
+	public static short[] Convert(char[] chars)
+	{
+		short[] shorts = new short[chars.Length];
+		for (int i = 0; i < shorts.Length; i++)
+		{
+			int c = chars[i];
+			shorts[i] = (short)c;
+		}
+		return shorts;
+	}
+
+    static readonly short[] DFA2_eotS = Convert(new char[] { '\u0002', '\u0002', '\u0001', '\uffff', '\u000e', '\u0002', '\u0001', '\uffff', '\u0003', '\u0002', '\u0001', '\uffff', '\u0002', '\u0002', '\u0002', '\uffff' });
+    static readonly short[] DFA2_eofS = Convert(new char[] { '\u001a', '\uffff' });
+    static readonly char[] DFA2_minS_unsigned = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0002', '\u0009', '\u0003', '\u0000', '\u0001', '\u0009', '\u0001', '\uffff', '\u0003', '\u0000', '\u0001', '\uffff', '\u0001', '\u0009', '\u0003', '\u0000' });
+    static readonly char[] DFA2_maxS_unsigned = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0001', '\u0020', '\u0001', '\u0022', '\u0003', '\uffff', '\u0001', '\u0020', '\u0001', '\uffff', '\u0003', '\uffff', '\u0001', '\uffff', '\u0001', '\u0039', '\u0001', '\uffff', '\u0002', '\u0000' });
+    static readonly short[] DFA2_acceptS = Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0002', '\u000e', '\uffff', '\u0001', '\u0001', '\u0003', '\uffff', '\u0001', '\u0001', '\u0004', '\uffff' });
+    static readonly short[] DFA2_specialS = Convert(new char[] { '\u000d', '\uffff', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0005', '\u0002', '\uffff', '\u0001', '\u0003', '\u0001', '\u0007', '\u0001', '\u0008', '\u0002', '\uffff', '\u0001', '\u0006', '\u0001', '\u0001', '\u0001', '\u0000', '\u007d', '\u003e' });
+    static readonly short[][] DFA2_transitionS = new short[][]{
+		Convert(new char[] {'\u0001','\u0001'}),
+		Convert(new char[] {'\u0001','\u0003'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0004'}),
+		Convert(new char[] {'\u0001','\u0005'}),
+		Convert(new char[] {'\u0001','\u0006'}),
+		Convert(new char[] {'\u0001','\u0007'}),
+		Convert(new char[] {'\u0001','\u0008'}),
+		Convert(new char[] {'\u0001','\u0009'}),
+		Convert(new char[] {'\u0001','\u000a'}),
+		Convert(new char[] {'\u0001','\u000b'}),
+		Convert(new char[] {'\u0001','\u000c','\u0002','\uffff','\u0001','\u000c','\u0013','\uffff','\u0001','\u000c'}),
+		Convert(new char[] {'\u0001','\u000c','\u0002','\uffff','\u0001','\u000c','\u0013','\uffff','\u0001','\u000c','\u0001','\uffff','\u0001','\u000d'}),
+		Convert(new char[] {'\u000a','\u000f','\u0001','\u0011','\u0002','\u000f','\u0001','\u0011','\u0014','\u000f','\u0001','\u0010','\u0039','\u000f','\u0001','\u000e','\uffa3','\u000f'}),
+		Convert(new char[] {'\u000a','\u0014','\u0001','\u0015','\u0002','\u0014','\u0001','\u0015','\u0014','\u0014','\u0001','\u0012','\u0039','\u0014','\u0001','\u0013','\uffa3','\u0014'}),
+		Convert(new char[] {'\u000a','\u000f','\u0001','\u0011','\u0002','\u000f','\u0001','\u0011','\u0014','\u000f','\u0001','\u0010','\u0039','\u000f','\u0001','\u000e','\uffa3','\u000f'}),
+		Convert(new char[] {'\u0001','\u0016','\u0002','\uffff','\u0001','\u0016','\u0013','\uffff','\u0001','\u0016'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0009','\u000f','\u0001','\u0017','\u0001','\u0011','\u0001','\u000f','\u0001','\u0017','\u0001','\u0011','\u0012','\u000f','\u0001','\u0017','\u0001','\u000f','\u0001','\u0010','\u0039','\u000f','\u0001','\u000e','\uffa3','\u000f'}),
+		Convert(new char[] {'\u000a','\u0014','\u0001','\u0015','\u0002','\u0014','\u0001','\u0015','\u0014','\u0014','\u0001','\u0012','\u0039','\u0014','\u0001','\u0013','\uffa3','\u0014'}),
+		Convert(new char[] {'\u000a','\u000f','\u0001','\u0011','\u0002','\u000f','\u0001','\u0011','\u0014','\u000f','\u0001','\u0010','\u0039','\u000f','\u0001','\u000e','\uffa3','\u000f'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0016','\u0002','\uffff','\u0001','\u0016','\u0013','\uffff','\u0001','\u0016','\u000f','\uffff','\u000a','\u0018'}),
+		Convert(new char[] {'\u0009','\u000f','\u0001','\u0017','\u0001','\u0011','\u0001','\u000f','\u0001','\u0017','\u0001','\u0011','\u0012','\u000f','\u0001','\u0017','\u0001','\u000f','\u0001','\u0010','\u000d','\u000f','\u000a','\u0019','\u0022','\u000f','\u0001','\u000e','\uffa3','\u000f'}),
+		Convert(new char[] {'\u0001','\uffff'}),
+		Convert(new char[] {'\u0001','\uffff'})
 	};
 
-	static readonly short[] DFA32_eot = DFA.unpackEncodedString(DFA32_eotS);
-	static readonly short[] DFA32_eof = DFA.unpackEncodedString(DFA32_eofS);
-	static readonly char[] DFA32_min = DFA.unpackEncodedStringToUnsignedChars(DFA32_minS);
-	static readonly char[] DFA32_max = DFA.unpackEncodedStringToUnsignedChars(DFA32_maxS);
-	static readonly short[] DFA32_accept = DFA.unpackEncodedString(DFA32_acceptS);
-	static readonly short[] DFA32_special = DFA.unpackEncodedString(DFA32_specialS);
-	static readonly short[][] DFA32_transition;
+    static readonly short[] DFA32_eotS = Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0026', '\u0001', '\uffff', '\u000a', '\u002c', '\u0001', '\u003b', '\u0004', '\uffff', '\u0001', '\u0026', '\u0005', '\uffff', '\u0001', '\u0047', '\u0002', '\uffff', '\u0001', '\u004b', '\u000e', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u000d', '\u002c', '\u001a', '\uffff', '\u001b', '\u002c', '\u0001', '\u007d', '\u0004', '\u002c', '\u0001', '\u0082', '\u0003', '\u002c', '\u0001', '\u0086', '\u0004', '\u002c', '\u0001', '\uffff', '\u0002', '\u002c', '\u0001', '\u008d', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u008f', '\u0002', '\u002c', '\u0001', '\uffff', '\u0001', '\u0092', '\u0001', '\u0093', '\u0003', '\u002c', '\u0002', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u0099', '\u0002', '\uffff', '\u0001', '\u009a', '\u0001', '\u009b', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u009d', '\u0005', '\uffff' });
+    static readonly short[] DFA32_eofS = Convert(new char[] { '\u009e', '\uffff' });
+    static readonly char[] DFA32_minS_unsigned = new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u0068', '\u0001', '\u0061', '\u0001', '\u006d', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u0030', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\u0030', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\u0030', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u0009', '\u0001', '\u0030', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\u0030', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\u0030', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u0009', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\u0030', '\u0002', '\uffff', '\u0002', '\u0030', '\u0001', '\uffff', '\u0001', '\u0009', '\u0001', '\u0030', '\u0005', '\uffff' });
+    static readonly char[] DFA32_maxS_unsigned = new char[] { '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u006f', '\u0001', '\u0068', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u006f', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\ufffd', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\ufffd', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\ufffd', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u007b', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\ufffd', '\u0002', '\uffff', '\u0002', '\ufffd', '\u0001', '\uffff', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0005', '\uffff' });
+    static readonly short[] DFA32_acceptS = Convert(new char[] { '\u0001', '\uffff', '\u0001', '\u0001', '\u0001', '\uffff', '\u0001', '\u0003', '\u000b', '\uffff', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\uffff', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\uffff', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\uffff', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0028', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0001', '\u002d', '\u0001', '\u0001', '\u0002', '\u0002', '\u0001', '\u0003', '\u0001', '\uffff', '\u0001', '\u0028', '\u000d', '\uffff', '\u0001', '\u0013', '\u0001', '\u0012', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\u0018', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\u001f', '\u0001', '\u001e', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\u0023', '\u0001', '\u0022', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0029', '\uffff', '\u0001', '\u0011', '\u0004', '\uffff', '\u0001', '\u000f', '\u0003', '\uffff', '\u0001', '\u0009', '\u0005', '\uffff', '\u0001', '\u0005', '\u0001', '\u000e', '\u0001', '\uffff', '\u0001', '\u0007', '\u0002', '\uffff', '\u0001', '\u000d', '\u0001', '\u000a', '\u0002', '\uffff', '\u0001', '\u0004', '\u0002', '\uffff', '\u0001', '\u0010', '\u0001', '\u000b', '\u0001', '\u000c', '\u0001', '\u0006', '\u0001', '\u0008' });
+    static readonly short[] DFA32_specialS = Convert(new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0001', '\u009b', '\uffff', '\u007d', '\u003e' });
+    static readonly short[][] DFA32_transitionS = new short[][]{
+		Convert(new char[] {'\u0009','\u0026','\u0002','\u0024','\u0001','\u0026','\u0002','\u0024','\u0012','\u0026','\u0001','\u0024','\u0002','\u0026','\u0001','\u001e','\u0001','\u001b','\u0002','\u0026','\u0001','\u0023','\u0001','\u0011','\u0001','\u0012','\u0001','\u0018','\u0001','\u0019','\u0001','\u000f','\u0001','\u0013','\u0001','\u001c','\u0001','\u0001','\u000a','\u0022','\u0001','\u000e','\u0001','\u0010','\u0001','\u0014','\u0001','\u0016','\u0001','\u0015','\u0001','\u0017','\u0001','\u001d','\u001a','\u0021','\u0001','\u0002','\u0005','\u0026','\u0002','\u0021','\u0001','\u0006','\u0002','\u0021','\u0001','\u0008','\u0001','\u000b','\u0001','\u0021','\u0001','\u0007','\u0002','\u0021','\u0001','\u0009','\u0001','\u000d','\u0001','\u0021','\u0001','\u0004','\u0001','\u000a','\u0001','\u0021','\u0001','\u000c','\u0001','\u0021','\u0001','\u0005','\u0006','\u0021','\u0001','\u0003','\u0001','\u001a','\u0001','\u0020','\u0001','\u001f','\u0041','\u0026','\u0017','\u0021','\u0001','\u0026','\u001f','\u0021','\u0001','\u0026','\u0208','\u0021','\u0070','\u0026','\u000e','\u0021','\u0001','\u0026','\u1c81','\u0021','\u000c','\u0026','\u0002','\u0021','\u0062','\u0026','\u0120','\u0021','\u0a70','\u0026','\u03f0','\u0021','\u0011','\u0026','\ua7ff','\u0021','\u2100','\u0026','\u04d0','\u0021','\u0020','\u0026','\u010f','\u0021','\u0001','\u0025','\u00fe','\u0021','\u0002','\u0026'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u000a','\u0028','\u0001','\u0029','\u0002','\u0028','\u0001','\u0029','\ufff2','\u0028'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u002b'}),
+		Convert(new char[] {'\u0001','\u002e','\u0006','\uffff','\u0001','\u002d'}),
+		Convert(new char[] {'\u0001','\u0030','\u0006','\uffff','\u0001','\u002f'}),
+		Convert(new char[] {'\u0001','\u0031'}),
+		Convert(new char[] {'\u0001','\u0033','\u0008','\uffff','\u0001','\u0032'}),
+		Convert(new char[] {'\u0001','\u0034','\u0009','\uffff','\u0001','\u0035'}),
+		Convert(new char[] {'\u0001','\u0036'}),
+		Convert(new char[] {'\u0001','\u0037'}),
+		Convert(new char[] {'\u0001','\u0038'}),
+		Convert(new char[] {'\u0001','\u0039'}),
+		Convert(new char[] {'\u0001','\u003a'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0040'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0046'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u004a'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0054'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0055'}),
+		Convert(new char[] {'\u0001','\u0056'}),
+		Convert(new char[] {'\u0001','\u0057'}),
+		Convert(new char[] {'\u0001','\u0058'}),
+		Convert(new char[] {'\u0001','\u0059'}),
+		Convert(new char[] {'\u0001','\u005a'}),
+		Convert(new char[] {'\u0001','\u005b'}),
+		Convert(new char[] {'\u0001','\u005c'}),
+		Convert(new char[] {'\u0001','\u005d'}),
+		Convert(new char[] {'\u0001','\u005e'}),
+		Convert(new char[] {'\u0001','\u005f'}),
+		Convert(new char[] {'\u0001','\u0060'}),
+		Convert(new char[] {'\u0001','\u0061'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0062'}),
+		Convert(new char[] {'\u0001','\u0063'}),
+		Convert(new char[] {'\u0001','\u0064'}),
+		Convert(new char[] {'\u0001','\u0065'}),
+		Convert(new char[] {'\u0001','\u0066'}),
+		Convert(new char[] {'\u0001','\u0067'}),
+		Convert(new char[] {'\u0001','\u0068'}),
+		Convert(new char[] {'\u0001','\u0069'}),
+		Convert(new char[] {'\u0001','\u006a'}),
+		Convert(new char[] {'\u0001','\u006b'}),
+		Convert(new char[] {'\u0001','\u006c'}),
+		Convert(new char[] {'\u0001','\u006d'}),
+		Convert(new char[] {'\u0001','\u006e'}),
+		Convert(new char[] {'\u0001','\u006f'}),
+		Convert(new char[] {'\u0001','\u0070'}),
+		Convert(new char[] {'\u0001','\u0071'}),
+		Convert(new char[] {'\u0001','\u0072'}),
+		Convert(new char[] {'\u0001','\u0073'}),
+		Convert(new char[] {'\u0001','\u0074'}),
+		Convert(new char[] {'\u0001','\u0075'}),
+		Convert(new char[] {'\u0001','\u0076'}),
+		Convert(new char[] {'\u0001','\u0077'}),
+		Convert(new char[] {'\u0001','\u0078'}),
+		Convert(new char[] {'\u0001','\u0079'}),
+		Convert(new char[] {'\u0001','\u007a'}),
+		Convert(new char[] {'\u0001','\u007b'}),
+		Convert(new char[] {'\u0001','\u007c'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u007e'}),
+		Convert(new char[] {'\u0001','\u007f'}),
+		Convert(new char[] {'\u0001','\u0080'}),
+		Convert(new char[] {'\u0001','\u0081'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u0083'}),
+		Convert(new char[] {'\u0001','\u0084'}),
+		Convert(new char[] {'\u0001','\u0085'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u0087'}),
+		Convert(new char[] {'\u0001','\u0088'}),
+		Convert(new char[] {'\u0001','\u0089'}),
+		Convert(new char[] {'\u0001','\u008a'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u008b'}),
+		Convert(new char[] {'\u0002','\u008c','\u0001','\uffff','\u0002','\u008c','\u0012','\uffff','\u0001','\u008c','\u005a','\uffff','\u0001','\u008c'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u008e'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u0090'}),
+		Convert(new char[] {'\u0001','\u0091'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u0001','\u0094'}),
+		Convert(new char[] {'\u0001','\u0095'}),
+		Convert(new char[] {'\u0002','\u0096','\u0001','\uffff','\u0002','\u0096','\u0012','\uffff','\u0001','\u0096','\u005a','\uffff','\u0001','\u0096'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0097'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0001','\u0098'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[0]),
+		Convert(new char[] {'\u0002','\u009c','\u0001','\uffff','\u0002','\u009c','\u0012','\uffff','\u0001','\u009c','\u005a','\uffff','\u0001','\u009c'}),
+		Convert(new char[] {'\u000a','\u002c','\u0007','\uffff','\u001a','\u002c','\u0004','\uffff','\u0001','\u002c','\u0001','\uffff','\u001a','\u002c','\u003c','\uffff','\u0001','\u002c','\u0008','\uffff','\u0017','\u002c','\u0001','\uffff','\u001f','\u002c','\u0001','\uffff','\u0286','\u002c','\u0001','\uffff','\u1c81','\u002c','\u000c','\uffff','\u0002','\u002c','\u0031','\uffff','\u0002','\u002c','\u002f','\uffff','\u0120','\u002c','\u0a70','\uffff','\u03f0','\u002c','\u0011','\uffff','\ua7ff','\u002c','\u2100','\uffff','\u04d0','\u002c','\u0020','\uffff','\u010f','\u002c','\u0001','\uffff','\u00fe','\u002c'}),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0]),
+		Convert(new char[0])
+	};
 
 
-	protected class DFA32 : DFA {
+    protected class DFA32 : DFA {
 
 		public DFA32(BaseRecognizer recognizer) {
 			this.recognizer = recognizer;
