@@ -136,9 +136,9 @@ public class GrammarAST : CommonTree {
 		return null;
 	}
 
-	public bool deleteChild(org.antlr.runtime.tree.Tree t) {
-		for (int i=0; i<children.size(); i++) {
-			Object c = children.get(i);
+	public bool deleteChild(Tree t) {
+		for (int i=0; i<children.Count; i++) {
+			Object c = children[(i)];
 			if ( c == t ) {
 				deleteChild(t.getChildIndex());
 				return true;
@@ -166,7 +166,7 @@ public class GrammarAST : CommonTree {
 	public CommonTree getFirstDescendantWithType(org.antlr.runtime.BitSet types) {
 		if ( types.member(getType()) ) return this;
 		if ( children==null ) return null;
-		for (Object c : children) {
+		foreach (Object c in children) {
 			GrammarAST t = (GrammarAST)c;
 			if ( types.member(t.getType()) ) return t;
 			CommonTree d = t.getFirstDescendantWithType(types);

@@ -63,7 +63,7 @@ public class UseDefAnalyzer {
 	}
 
 	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g, ICollection<Rule> rules) {
-		Dictionary<Rule, HashSet<Rule>> dependencies = new HashMap<Rule, HashSet<Rule>>();
+		Dictionary<Rule, HashSet<Rule>> dependencies = new Dictionary<Rule, HashSet<Rule>>();
 
 		foreach (Rule r in rules) {
 			List<GrammarAST> tokenRefs = r.ast.getNodesWithType(ANTLRParser.TOKEN_REF);

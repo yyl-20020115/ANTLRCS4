@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -12,9 +14,8 @@ namespace org.antlr.v4.codegen.model;
 
 /** */
 public class LL1PlusBlockSingleAlt : LL1Loop {
-	public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts) {
-		base(factory, plusRoot, alts);
-
+	public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts): base(factory, plusRoot, alts)
+    {
 		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
 		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;
 
@@ -22,7 +23,7 @@ public class LL1PlusBlockSingleAlt : LL1Loop {
 		blockStartStateNumber = blkStart.stateNumber;
 		PlusBlockStartState plus = (PlusBlockStartState)blkAST.atnState;
 		this.decision = plus.loopBackState.decision;
-		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK.get(decision);
+		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK[(decision)];
 
 		IntervalSet loopBackLook = altLookSets[0];
 		loopExpr = addCodeForLoopLookaheadTempVar(loopBackLook);

@@ -144,13 +144,13 @@ public static class Utils {
 		return -1;
 	}
 
-	public static void setSize(List<object> list, int size) {
+	public static void setSize<T>(List<T> list, int size) {
 		if (size < list.Count) {
 			list.subList(size, list.Count).clear();
 		}
 		else {
 			while (size > list.Count) {
-				list.Add(null);
+				list.Add(default);
 			}
 		}
 	}

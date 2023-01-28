@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using Attribute = org.antlr.v4.tool.Attribute;
 
@@ -59,16 +60,16 @@ public class TestScopeParsing {
 			Attribute attr = attributes.get(arg);
             @out.Add(attr.ToString());
 		}
-		String actual = Utils.join(@out.toArray(), ", ");
+		String actual = Utils.join(@out.ToArray(), ", ");
 		Assert.AreEqual(parameter.output, actual);
 	}
 
 	private static ICollection<Parameter> getAllTestDescriptors() {
-		List<Parameter> tests = new ArrayList<>();
+		List<Parameter> tests = new ();
 		for (int i = 0; i < argPairs.Length; i+=2) {
 			String arg = argPairs[i];
 			String output = argPairs[i+1];
-			tests.add(new Parameter(arg, output));
+			tests.Add(new Parameter(arg, output));
 		}
 		return tests;
 	}

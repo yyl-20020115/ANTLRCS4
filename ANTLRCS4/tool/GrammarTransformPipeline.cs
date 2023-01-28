@@ -5,6 +5,7 @@
  */
 
 using org.antlr.runtime.tree;
+using org.antlr.v4.analysis;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
@@ -99,7 +100,7 @@ public class GrammarTransformPipeline {
 			CommonTree elWithOpt = t.parent;
 			if ( elWithOpt is GrammarASTWithOptions ) {
 				Dictionary<String, GrammarAST> options = ((GrammarASTWithOptions) elWithOpt).getOptions();
-				if ( options.containsKey(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME) ) {
+				if ( options.ContainsKey(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME) ) {
 					GrammarToken newTok = new GrammarToken(g, elWithOpt.getToken());
 					newTok.originalTokenIndex = Integer.valueOf(options.get(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME).getText());
 					elWithOpt.token = newTok;
@@ -155,7 +156,7 @@ public class GrammarTransformPipeline {
 		HashSet<String> rootRuleNames = new HashSet<String>();
 		// make list of rules we have in root grammar
 		List<GrammarAST> rootRules = RULES.getNodesWithType(ANTLRParser.RULE);
-		foreach (GrammarAST r in rootRules) rootRuleNames.add(r.getChild(0).getText());
+		foreach (GrammarAST r in rootRules) rootRuleNames.Add(r.getChild(0).getText());
 
 		// make list of modes we have in root grammar
 		List<GrammarAST> rootModes = root.getNodesWithType(ANTLRParser.MODE);
@@ -237,9 +238,9 @@ public class GrammarTransformPipeline {
 						}
 						else {
 							String s1 = prevAction.getText();
-							s1 = s1.substring(1, s1.length()-1);
+							s1 = s1.substring(1, s1.Length-1);
 							String s2 = action.getText();
-							s2 = s2.substring(1, s2.length()-1);
+							s2 = s2.substring(1, s2.Length-1);
 							String combinedAction = "{"+s1 + '\n'+ s2+"}";
 							prevAction.token.setText(combinedAction);
 						}
@@ -327,7 +328,7 @@ public class GrammarTransformPipeline {
 				// https://github.com/antlr/antlr4/issues/707
 
 				bool hasNewOption = false;
-				for (Dictionary.Entry<String, GrammarAST> option in imp.ast.getOptions().entrySet()) {
+				foreach (Dictionary.Entry<String, GrammarAST> option in imp.ast.getOptions().entrySet()) {
 					String importOption = imp.ast.getOptionString(option.getKey());
 					if (importOption == null) {
 						continue;
@@ -386,11 +387,11 @@ public class GrammarTransformPipeline {
 		if ( optionsRoot!=null && optionsRoot.getChildCount()!=0 ) {
 			GrammarAST lexerOptionsRoot = (GrammarAST)adaptor.dupNode(optionsRoot);
 			lexerAST.addChild(lexerOptionsRoot);
-			GrammarAST[] options = optionsRoot.getChildren().toArray(new GrammarAST[0]);
-			for (GrammarAST o : options) {
+			GrammarAST[] options = optionsRoot.getChildren().ToArray();
+			foreach (GrammarAST o in options) {
 				String optionName = o.getChild(0).getText();
-				if ( Grammar.lexerOptions.contains(optionName) &&
-					 !Grammar.doNotCopyOptionsToLexer.contains(optionName) )
+				if ( Grammar.lexerOptions.Contains(optionName) &&
+					 !Grammar.doNotCopyOptionsToLexer.Contains(optionName) )
 				{
 					GrammarAST optionTree = (GrammarAST)adaptor.dupTree(o);
 					lexerOptionsRoot.addChild(optionTree);
@@ -453,10 +454,10 @@ public class GrammarTransformPipeline {
 //		tool.log("grammar", "strings from parser: "+stringLiterals);
 		int insertIndex = 0;
 		nextLit:
-		for (String lit : stringLiterals) {
+        foreach (String lit in stringLiterals) {
 			// if lexer already has a rule for literal, continue
 			if ( litAliases!=null ) {
-				for (Pair<GrammarAST,GrammarAST> pair : litAliases) {
+                foreach (Pair<GrammarAST,GrammarAST> pair in litAliases) {
 					GrammarAST litAST = pair.b;
 					if ( lit.Equals(litAST.getText()) ) continue nextLit;
 				}

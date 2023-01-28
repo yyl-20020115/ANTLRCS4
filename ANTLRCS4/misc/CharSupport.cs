@@ -77,8 +77,8 @@ public class CharSupport {
 	 *  Return -1 if not single char.
 	 */
 	public static int getCharValueFromGrammarCharLiteral(String literal) {
-		if ( literal==null || literal.length()<3 ) return -1;
-		return getCharValueFromCharInGrammarLiteral(literal.substring(1,literal.length()-1));
+		if ( literal==null || literal.Length<3 ) return -1;
+		return getCharValueFromCharInGrammarLiteral(literal.substring(1,literal.Length -1));
 	}
 
 	public static String getStringFromGrammarStringLiteral(String literal) {
@@ -157,7 +157,7 @@ public class CharSupport {
 				}
 				return parseHexValue(cstr, startOff, endOff);
 			default:
-				if ( cstr.startsWith("\\u{") ) {
+				if ( cstr.StartsWith("\\u{") ) {
 					return parseHexValue(cstr, 3, cstr.indexOf('}'));
 				}
 				return -1;

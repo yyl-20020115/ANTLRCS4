@@ -241,7 +241,7 @@ public class TestActionTranslation {
 			int start = output.indexOf(b);
 			String e = "#end-" + actionName + "#";
 			int end = output.indexOf(e);
-			String snippet = output.substring(start+b.Length(),end);
+			String snippet = output.substring(start+b.Length,end);
 			Assert.AreEqual(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {

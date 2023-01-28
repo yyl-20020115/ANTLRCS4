@@ -7,6 +7,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using System.Reflection;
 
 namespace org.antlr.v4.tool;
 
@@ -278,7 +279,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if ( Trees.isAncestorOf(parser.getOverrideDecisionRoot(), ambigSubTree) ) {
 				ambigSubTree = (GrammarInterpreterRuleContext) parser.getOverrideDecisionRoot();
 			}
-			trees.add(ambigSubTree);
+			trees.Add(ambigSubTree);
 			alt = alts.NextSetBit(alt+1);
 		}
 
@@ -368,9 +369,9 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
 		if (originalParser is ParserInterpreter) {
-			Class<ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter);
+			Type c = originalParser.getClass().asSubclass(ParserInterpreter);
 			try {
-				Constructor<ParserInterpreter> ctor = c.getConstructor(Grammar, ATN, TokenStream);
+				ConstructorInfo ctor = c.getConstructor(Grammar, ATN, TokenStream);
 				parser = ctor.newInstance(g, originalParser.getATN(), originalParser.getTokenStream());
 			}
 			catch (Exception e) {

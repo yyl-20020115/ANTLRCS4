@@ -71,8 +71,8 @@ public class LexerATNFactory : ParserATNFactory {
 			// create s0, start state; implied Tokens rule node
 			TokensStartState startState =
 				newState(typeof(TokensStartState), null);
-			atn.modeNameToStartState.put(modeName, startState);
-			atn.modeToStartState.add(startState);
+			atn.modeNameToStartState[modeName]= startState;
+			atn.modeToStartState.Add(startState);
 			atn.defineDecisionState(startState);
 		}
 
@@ -85,9 +85,9 @@ public class LexerATNFactory : ParserATNFactory {
 		// CREATE ATN FOR EACH RULE
 		_createATN(g.rules.Values);
 
-		atn.lexerActions = new LexerAction[indexToActionMap.size()];
-		foreach (Map.Entry<int, LexerAction> entry in indexToActionMap.entrySet()) {
-			atn.lexerActions[entry.getKey()] = entry.getValue();
+		atn.lexerActions = new LexerAction[indexToActionMap.Count];
+		foreach (var entry in indexToActionMap) {
+			atn.lexerActions[entry.Key] = entry.Value;
 		}
 
 		// LINK MODE START STATE TO EACH TOKEN RULE
@@ -114,17 +114,17 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	//@Override
-	public Handle action(ActionAST action) {
+	public Handle action(ActionAST _action) {
 		int ruleIndex = currentRule.index;
-		int actionIndex = g.lexerActions.get(action);
+		int actionIndex = g.lexerActions.get(_action);
 		LexerCustomAction lexerAction = new LexerCustomAction(ruleIndex, actionIndex);
-		return action(action, lexerAction);
+		return action(_action, lexerAction);
 	}
 
 	protected int getLexerActionIndex(LexerAction lexerAction) {
 		int lexerActionIndex = actionToIndexMap.get(lexerAction);
 		if (lexerActionIndex == null) {
-			lexerActionIndex = actionToIndexMap.size();
+			lexerActionIndex = actionToIndexMap.Count;
 			actionToIndexMap.put(lexerAction, lexerActionIndex);
 			indexToActionMap.put(lexerActionIndex, lexerAction);
 		}
@@ -133,8 +133,8 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	////@Override
-	public Handle action(String action) {
-		if (action.trim().Count == 0) {
+	public Handle action(String _action) {
+		if (_action.Trim().Length == 0) {
 			ATNState left = newState(null);
 			ATNState right = newState(null);
 			epsilon(left, right);
@@ -142,7 +142,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		// define action AST for this rule as if we had found in grammar
-        ActionAST ast =	new ActionAST(new CommonToken(ANTLRParser.ACTION, action));
+        ActionAST ast =	new ActionAST(new CommonToken(ANTLRParser.ACTION, _action));
 		currentRule.defineActionInAlt(currentOuterAlt, ast);
 		return action(ast);
 	}
@@ -369,7 +369,7 @@ public class LexerATNFactory : ParserATNFactory {
 		public String toString() {
 			return String.format(
 					"%s mode=%s inRange=%s prevCodePoint=%d prevProperty=%s",
-					base.toString(),
+					base.ToString(),
 					mode,
 					inRange,
 					prevCodePoint,
@@ -399,11 +399,11 @@ public class LexerATNFactory : ParserATNFactory {
 
 	public IntervalSet getSetFromCharSetLiteral(GrammarAST charSetAST) {
 		String chars = charSetAST.getText();
-		chars = chars.substring(1, chars.length() - 1);
+		chars = chars.Substring(1, chars.Length - 1 - 1);
 		IntervalSet set = new IntervalSet();
 		CharSetParseState state = CharSetParseState.NONE;
 
-		int n = chars.length();
+		int n = chars.Length;
 		for (int i = 0; i < n; ) {
 			if (state.mode == CharSetParseState.Mode.ERROR) {
 				return new IntervalSet();
@@ -627,39 +627,39 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else if ("mode".Equals(command) && arg != null) {
 			String modeName = arg.getText();
-			int mode = getModeConstantValue(modeName, arg.getToken());
+			int? mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
 				return null;
 			}
 
-			return new LexerModeAction(mode);
+			return new LexerModeAction(mode.GetValueOrDefault());
 		}
 		else if ("pushMode".Equals(command) && arg != null) {
 			String modeName = arg.getText();
-			int mode = getModeConstantValue(modeName, arg.getToken());
+			int? mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
 				return null;
 			}
 
-			return new LexerPushModeAction(mode);
+			return new LexerPushModeAction(mode.GetValueOrDefault());
 		}
 		else if ("type".Equals(command) && arg != null) {
 			String typeName = arg.getText();
-			int type = getTokenConstantValue(typeName, arg.getToken());
+			int? type = getTokenConstantValue(typeName, arg.getToken());
 			if (type == null) {
 				return null;
 			}
 
-			return new LexerTypeAction(type);
+			return new LexerTypeAction(type.GetValueOrDefault());
 		}
 		else if ("channel".Equals(command) && arg != null) {
 			String channelName = arg.getText();
-			int channel = getChannelConstantValue(channelName, arg.getToken());
+			int? channel = getChannelConstantValue(channelName, arg.getToken());
 			if (channel == null) {
 				return null;
 			}
 
-			return new LexerChannelAction(channel);
+			return new LexerChannelAction(channel.GetValueOrDefault());
 		}
 		else {
 			return null;
@@ -714,7 +714,7 @@ public class LexerATNFactory : ParserATNFactory {
 		ruleCommands.Add(command);
 	}
 
-	private int getModeConstantValue(String modeName, Token token) {
+	private int? getModeConstantValue(String modeName, Token token) {
 		if (modeName == null) {
 			return null;
 		}
@@ -722,13 +722,13 @@ public class LexerATNFactory : ParserATNFactory {
 		if (modeName.Equals("DEFAULT_MODE")) {
 			return Lexer.DEFAULT_MODE;
 		}
-		if (COMMON_CONSTANTS.containsKey(modeName)) {
+		if (COMMON_CONSTANTS.ContainsKey(modeName)) {
 			g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
 			return null;
 		}
 
-		List<String> modeNames = new (((LexerGrammar)g).modes.keySet());
-		int mode = modeNames.indexOf(modeName);
+		List<String> modeNames = new (((LexerGrammar)g).modes.Keys);
+		int mode = modeNames.IndexOf(modeName);
 		if (mode >= 0) {
 			return mode;
 		}
@@ -741,7 +741,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 	}
 
-	private int getTokenConstantValue(String tokenName, Token token) {
+	private int? getTokenConstantValue(String tokenName, Token token) {
 		if (tokenName == null) {
 			return null;
 		}
@@ -749,7 +749,7 @@ public class LexerATNFactory : ParserATNFactory {
 		if (tokenName.Equals("EOF")) {
 			return Lexer.EOF;
 		}
-		if (COMMON_CONSTANTS.containsKey(tokenName)) {
+		if (COMMON_CONSTANTS.ContainsKey(tokenName)) {
 			g.tool.errMgr.grammarError(ErrorType.TOKEN_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
 			return null;
 		}
@@ -760,14 +760,14 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		try {
-			return int.parseInt(tokenName);
+			return int.TryParse(tokenName,out var r)?r:-1;
 		} catch (NumberFormatException ex) {
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME, g.fileName, token, token.getText());
 			return null;
 		}
 	}
 
-	private int getChannelConstantValue(String channelName, Token token) {
+	private int? getChannelConstantValue(String channelName, Token token) {
 		if (channelName == null) {
 			return null;
 		}
@@ -778,7 +778,7 @@ public class LexerATNFactory : ParserATNFactory {
 		if (channelName.Equals("DEFAULT_TOKEN_CHANNEL")) {
 			return Lexer.DEFAULT_TOKEN_CHANNEL;
 		}
-		if (COMMON_CONSTANTS.containsKey(channelName)) {
+		if (COMMON_CONSTANTS.ContainsKey(channelName)) {
 			g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
 			return null;
 		}

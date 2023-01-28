@@ -30,7 +30,7 @@ public class TestUnbufferedTokenStream {
 			new StringReader("x = 302;")
 		);
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = new UnbufferedTokenStream<Token>(lexEngine);
+        TokenStream tokens = new UnbufferedTokenStream(lexEngine);
 
 		Assert.AreEqual("x", tokens.LT(1).getText());
 		Assert.AreEqual(" ", tokens.LT(2).getText());
@@ -56,7 +56,7 @@ public class TestUnbufferedTokenStream {
 			new StringReader("x = 302;")
 		);
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
+		TestingUnbufferedTokenStream tokens = new TestingUnbufferedTokenStream(lexEngine);
 
 		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
 		Assert.AreEqual("x", tokens.LT(1).getText());
@@ -93,7 +93,7 @@ public class TestUnbufferedTokenStream {
 			new StringReader("x = 302;")
 		);
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
+		TestingUnbufferedTokenStream tokens = new UnbufferedTokenStream(lexEngine);
 
 		int m = tokens.mark();
 		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
@@ -128,7 +128,7 @@ public class TestUnbufferedTokenStream {
 			new StringReader("x = 302 + 1;")
 		);
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
+		TestingUnbufferedTokenStream tokens = new TestingUnbufferedTokenStream(lexEngine);
 
 		int m = tokens.mark();
 		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
@@ -157,7 +157,7 @@ public class TestUnbufferedTokenStream {
 		tokens.release(m);
     }
 
-	protected class TestingUnbufferedTokenStream<T> : UnbufferedTokenStream<T> where T:Token {
+	protected class TestingUnbufferedTokenStream : UnbufferedTokenStream {
 
 		public TestingUnbufferedTokenStream(TokenSource tokenSource) : base(tokenSource)
         {
@@ -167,9 +167,9 @@ public class TestUnbufferedTokenStream {
 		/** For testing.  What's in moving window into token stream from
 		 *  current index, LT(1) or tokens[p], to end of buffer?
 		 */
-		protected List<Token> getRemainingBuffer() {
+		public List<Token> getRemainingBuffer() {
 			if ( n==0 ) {
-				return Collections.emptyList();
+				return new();
 			}
 
 			return Arrays.AsList(tokens).subList(p, n);
@@ -178,9 +178,9 @@ public class TestUnbufferedTokenStream {
 		/** For testing.  What's in moving window buffer into data stream.
 		 *  From 0..p-1 have been consume.
 		 */
-		protected List<Token> getBuffer() {
+		public List<Token> getBuffer() {
 			if ( n==0 ) {
-				return Collections.emptyList();
+				return new();
 			}
 
 			return Arrays.AsList(tokens).subList(0, n);

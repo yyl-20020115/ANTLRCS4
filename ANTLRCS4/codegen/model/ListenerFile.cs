@@ -40,7 +40,7 @@ public class ListenerFile : OutputFile {
 		Grammar g = factory.getGrammar();
 		parserName = g.getRecognizerName();
 		grammarName = g.name;
-		namedActions = buildNamedActions(factory.getGrammar(), ast -> ast.getScope() == null);
+		namedActions = buildNamedActions(factory.getGrammar(), ast => ast.getScope() == null);
         foreach (Rule r in g.rules.Values) {
 			Dictionary<String, List<Pair<int,AltAST>>> labels = r.getAltLabels();
 			if ( labels!=null ) {

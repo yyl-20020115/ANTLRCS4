@@ -77,8 +77,8 @@ public abstract class EscapeSequenceParsing {
 	 */
 	public static Result parseEscape(String s, int startOff) {
 		int offset = startOff;
-		if (offset + 2 > s.length() || s.codePointAt(offset) != '\\') {
-			return invalid(startOff, s.length()-1);
+		if (offset + 2 > s.Length || s.codePointAt(offset) != '\\') {
+			return invalid(startOff, s.Length -1);
 		}
 		// Move past backslash
 		offset++;
@@ -87,8 +87,8 @@ public abstract class EscapeSequenceParsing {
 		offset += char.charCount(escaped);
 		if (escaped == 'u') {
 			// \\u{1} is the shortest we support
-			if (offset + 3 > s.length()) {
-				return invalid(startOff, s.length()-1);
+			if (offset + 3 > s.Length) {
+				return invalid(startOff, s.Length -1);
 			}
 			int hexStartOffset;
 			int hexEndOffset; // appears to be exclusive
@@ -96,13 +96,13 @@ public abstract class EscapeSequenceParsing {
 				hexStartOffset = offset + 1;
 				hexEndOffset = s.indexOf('}', hexStartOffset);
 				if (hexEndOffset == -1) {
-					return invalid(startOff, s.length()-1);
+					return invalid(startOff, s.Length -1);
 				}
 				offset = hexEndOffset + 1;
 			}
 			else {
-				if (offset + 4 > s.length()) {
-					return invalid(startOff, s.length()-1);
+				if (offset + 4 > s.Length) {
+					return invalid(startOff, s.Length -1);
 				}
 				hexStartOffset = offset;
 				hexEndOffset = offset + 4;
@@ -121,8 +121,8 @@ public abstract class EscapeSequenceParsing {
 		}
 		else if (escaped == 'p' || escaped == 'P') {
 			// \p{L} is the shortest we support
-			if (offset + 3 > s.length()) {
-				return invalid(startOff, s.length()-1);
+			if (offset + 3 > s.Length) {
+				return invalid(startOff, s.Length -1);
 			}
 			if (s.codePointAt(offset) != '{') {
 				return invalid(startOff, offset);
@@ -130,7 +130,7 @@ public abstract class EscapeSequenceParsing {
 			int openBraceOffset = offset;
 			int closeBraceOffset = s.indexOf('}', openBraceOffset);
 			if (closeBraceOffset == -1) {
-				return invalid(startOff, s.length()-1);
+				return invalid(startOff, s.Length -1);
 			}
 			String propertyName = s.substring(openBraceOffset + 1, closeBraceOffset);
 			IntervalSet propertyIntervalSet = UnicodeData.getPropertyCodePoints(propertyName);
@@ -166,7 +166,7 @@ public abstract class EscapeSequenceParsing {
 				offset - startOff);
 		}
 		else {
-			return invalid(startOff,s.length()-1);
+			return invalid(startOff,s.Length -1);
 		}
 	}
 

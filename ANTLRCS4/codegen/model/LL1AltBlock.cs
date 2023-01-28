@@ -19,7 +19,7 @@ public class LL1AltBlock : LL1Choice {
 		this.decision = ((DecisionState)blkAST.atnState).decision;
 
 		/** Lookahead for each alt 1..n */
-		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK.get(decision);
+		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK[(decision)];
 		altLook = getAltLookaheadAsStringLists(altLookSets);
 
 		IntervalSet expecting = IntervalSet.or(altLookSets); // combine alt sets

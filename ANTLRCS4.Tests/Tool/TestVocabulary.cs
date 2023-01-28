@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+
 namespace org.antlr.v4.test.tool;
 
 
@@ -14,7 +16,7 @@ namespace org.antlr.v4.test.tool;
 public class TestVocabulary {
 	[TestMethod]
 	public void testEmptyVocabulary() {
-		assertNotNull(VocabularyImpl.EMPTY_VOCABULARY);
+		Assert.IsNotNull(VocabularyImpl.EMPTY_VOCABULARY);
 		Assert.AreEqual("EOF", VocabularyImpl.EMPTY_VOCABULARY.getSymbolicName(Token.EOF));
 		Assert.AreEqual("0", VocabularyImpl.EMPTY_VOCABULARY.getDisplayName(Token.INVALID_TYPE));
 	}
@@ -27,22 +29,22 @@ public class TestVocabulary {
 		};
 
 		Vocabulary vocabulary = VocabularyImpl.fromTokenNames(tokenNames);
-		assertNotNull(vocabulary);
+		Assert.IsNotNull(vocabulary);
 		Assert.AreEqual("EOF", vocabulary.getSymbolicName(Token.EOF));
 		for (int i = 0; i < tokenNames.Length; i++) {
 			Assert.AreEqual(tokenNames[i], vocabulary.getDisplayName(i));
 
-			if (tokenNames[i].startsWith("'")) {
+			if (tokenNames[i].StartsWith("'")) {
 				Assert.AreEqual(tokenNames[i], vocabulary.getLiteralName(i));
-				assertNull(vocabulary.getSymbolicName(i));
+				Assert.IsNull(vocabulary.getSymbolicName(i));
 			}
-			else if (Character.isUpperCase(tokenNames[i].charAt(0))) {
-				assertNull(vocabulary.getLiteralName(i));
+			else if (char.IsUpper(tokenNames[i][(0)])) {
+				Assert.IsNull(vocabulary.getLiteralName(i));
 				Assert.AreEqual(tokenNames[i], vocabulary.getSymbolicName(i));
 			}
 			else {
-				assertNull(vocabulary.getLiteralName(i));
-				assertNull(vocabulary.getSymbolicName(i));
+				Assert.IsNull(vocabulary.getLiteralName(i));
+				Assert.IsNull(vocabulary.getSymbolicName(i));
 			}
 		}
 	}

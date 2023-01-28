@@ -7,6 +7,7 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Text.RegularExpressions;
 
 namespace org.antlr.v4.parse;
 
@@ -28,7 +29,7 @@ public class TokenVocabParser {
 		Tool tool = g.tool;
 		String vocabName = g.getOptionString("tokenVocab");
 		try {
-			Pattern tokenDefPattern = Pattern.compile("([^\n]+?)[ \\t]*?=[ \\t]*?([0-9]+)");
+			Regex tokenDefPattern = new("([^\n]+?)[ \\t]*?=[ \\t]*?([0-9]+)");
 			fis = new FileInputStream(fullFile);
 			InputStreamReader isr;
 			if (tool.grammarEncoding != null) {
@@ -63,7 +64,7 @@ public class TokenVocabParser {
 					lineNum++;
 				}
 				else {
-					if ( tokenDef.length()>0 ) { // ignore blank lines
+					if ( tokenDef.Length >0 ) { // ignore blank lines
 						tool.errMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
 											  vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
 											  " bad token def: " + tokenDef,
@@ -139,14 +140,14 @@ public class TokenVocabParser {
 		// Still not found? Use the grammar's subfolder then.
 		String fileDirectory;
 
-		if (g.fileName.lastIndexOf(File.separatorChar) == -1) {
+		if (g.fileName.LastIndexOf(File.separatorChar) == -1) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might still be just ""
 			// but when it is not, we will write the file in the correct place.
 			fileDirectory = ".";
 		}
 		else {
-			fileDirectory = g.fileName.substring(0, g.fileName.lastIndexOf(File.separatorChar));
+			fileDirectory = g.fileName.substring(0, g.fileName.LastIndexOf(File.separatorChar));
 		}
 		return new File(fileDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
 	}

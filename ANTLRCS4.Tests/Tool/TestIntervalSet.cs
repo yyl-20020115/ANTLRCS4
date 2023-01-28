@@ -355,7 +355,7 @@ public class TestIntervalSet {
 		s.add(50,55);
 		s.add(5,19);
 		String expecting = "32";
-		String result = String.valueOf(s.size());
+		String result = (s.size().ToString());
 		Assert.AreEqual(expecting, result);
 	}
 

@@ -100,7 +100,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( altAssociativity.get(alt)!=null && altAssociativity.get(alt)!=assoc ) {
 			tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
 		}
-		altAssociativity.put(alt, assoc);
+		altAssociativity[alt]= assoc;
 
 //		Console.Out.WriteLine("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
 	}
@@ -116,7 +116,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( lrlabel!=null ) {
 			label = lrlabel.getText();
 			isListLabel = lrlabel.getParent().getType() == PLUS_ASSIGN;
-			leftRecursiveRuleRefLabels.add(new Pair<GrammarAST,String>(lrlabel,altLabel));
+			leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST,String>(lrlabel,altLabel));
 		}
 
 		stripAltLabel(altTree);
@@ -127,11 +127,11 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 		stripAltLabel(altTree);
 		String altText = text(altTree);
-		altText = altText.trim();
+		altText = altText.Trim();
 		LeftRecursiveRuleAltInfo a =
 			new LeftRecursiveRuleAltInfo(alt, altText, label, altLabel, isListLabel, originalAltTree);
 		a.nextPrec = nextPrec;
-		binaryAlts.put(alt, a);
+		binaryAlts[alt]= a;
 		//Console.Out.WriteLine("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
@@ -144,12 +144,12 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		// rewrite e to be e_[prec]
 		altTree = addPrecedenceArgToRules(altTree, nextPrec);
 		String altText = text(altTree);
-		altText = altText.trim();
+		altText = altText.Trim();
 		String altLabel = altTree.altLabel!=null ? altTree.altLabel.getText() : null;
 		LeftRecursiveRuleAltInfo a =
 			new LeftRecursiveRuleAltInfo(alt, altText, null, altLabel, false, originalAltTree);
 		a.nextPrec = nextPrec;
-		prefixAndOtherAlts.add(a);
+		prefixAndOtherAlts.Add(a);
 		//Console.Out.WriteLine("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
@@ -164,14 +164,14 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( lrlabel!=null ) {
 			label = lrlabel.getText();
 			isListLabel = lrlabel.getParent().getType() == PLUS_ASSIGN;
-			leftRecursiveRuleRefLabels.add(new Pair<GrammarAST,String>(lrlabel,altLabel));
+			leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST,String>(lrlabel,altLabel));
 		}
 		stripAltLabel(altTree);
 		String altText = text(altTree);
-		altText = altText.trim();
+		altText = altText.Trim();
 		LeftRecursiveRuleAltInfo a =
 			new LeftRecursiveRuleAltInfo(alt, altText, label, altLabel, isListLabel, originalAltTree);
-		suffixAlts.put(alt, a);
+		suffixAlts[alt]= a;
 //		Console.Out.WriteLine("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
@@ -185,7 +185,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			new LeftRecursiveRuleAltInfo(alt, altText, null, altLabel, false, originalAltTree);
 		// We keep other alts with prefix alts since they are all added to the start of the generated rule, and
 		// we want to retain any prior ordering between them
-		prefixAndOtherAlts.add(a);
+		prefixAndOtherAlts.Add(a);
 //		Console.Out.WriteLine("otherAlt " + alt + ": " + altText);
 	}
 
@@ -248,9 +248,9 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( t==null ) return false;
 		GrammarAST blk = (GrammarAST)t.getFirstChildWithType(BLOCK);
 		if ( blk==null ) return false;
-		int n = blk.getChildren().size();
+		int n = blk.getChildren().Count;
 		for (int i = 0; i < n; i++) {
-			GrammarAST alt = (GrammarAST)blk.getChildren().get(i);
+			GrammarAST alt = (GrammarAST)blk.getChildren()[(i)];
 			Tree first = alt.getChild(0);
 			if ( first==null ) continue;
 			if (first.getType() == ELEMENT_OPTIONS) {

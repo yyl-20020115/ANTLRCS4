@@ -213,14 +213,14 @@ public class TestParseTreeMatcher {
 		String pattern = "<id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X8");
 		Assert.AreEqual("{ID=[x], id=[x]}", m.getLabels().ToString());
-		assertNotNull(m.get("id"));
-		assertNotNull(m.get("ID"));
+		Assert.IsNotNull(m.get("id"));
+		Assert.IsNotNull(m.get("ID"));
 		Assert.AreEqual("x", m.get("id").getText());
 		Assert.AreEqual("x", m.get("ID").getText());
 		Assert.AreEqual("[x]", m.getAll("id").ToString());
 		Assert.AreEqual("[x]", m.getAll("ID").ToString());
 
-		assertNull(m.get("undefined"));
+		Assert.IsNull(m.get("undefined"));
 		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 
@@ -235,14 +235,14 @@ public class TestParseTreeMatcher {
 		String pattern = "<id:ID> <id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X9");
 		Assert.AreEqual("{ID=[x, y], id=[x, y]}", m.getLabels().ToString());
-		assertNotNull(m.get("id"));
-		assertNotNull(m.get("ID"));
+		Assert.IsNotNull(m.get("id"));
+		Assert.IsNotNull(m.get("ID"));
 		Assert.AreEqual("y", m.get("id").getText());
 		Assert.AreEqual("y", m.get("ID").getText());
 		Assert.AreEqual("[x, y]", m.getAll("id").ToString());
 		Assert.AreEqual("[x, y]", m.getAll("ID").ToString());
 
-		assertNull(m.get("undefined"));
+		Assert.IsNull(m.get("undefined"));
 		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 
@@ -257,9 +257,9 @@ public class TestParseTreeMatcher {
 		String pattern = "<a:ID> <b:ID> <a:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X7");
 		Assert.AreEqual("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().ToString());
-		assertNotNull(m.get("a")); // get first
-		assertNotNull(m.get("b"));
-		assertNotNull(m.get("ID"));
+		Assert.IsNotNull(m.get("a")); // get first
+		Assert.IsNotNull(m.get("b"));
+		Assert.IsNotNull(m.get("ID"));
 		Assert.AreEqual("z", m.get("a").getText());
 		Assert.AreEqual("y", m.get("b").getText());
 		Assert.AreEqual("z", m.get("ID").getText()); // get last
@@ -269,7 +269,7 @@ public class TestParseTreeMatcher {
 
 		Assert.AreEqual("xyz;", m.getTree().getText()); // whitespace stripped by lexer
 
-		assertNull(m.get("undefined"));
+		Assert.IsNull(m.get("undefined"));
 		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 

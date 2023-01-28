@@ -15,7 +15,7 @@ public class DefaultToolListener : ANTLRToolListener {
 	//@Override
 	public void info(String msg) {
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
-			msg = msg.replace('\n', ' ');
+			msg = msg.Replace('\n', ' ');
 		}
 		Console.Out.WriteLine(msg);
 	}
@@ -25,7 +25,7 @@ public class DefaultToolListener : ANTLRToolListener {
 		ST msgST = tool.errMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.render();
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
-			outputMsg = outputMsg.replace('\n', ' ');
+			outputMsg = outputMsg.Replace('\n', ' ');
 		}
 		Console.Error.WriteLine(outputMsg);
 	}
@@ -35,7 +35,7 @@ public class DefaultToolListener : ANTLRToolListener {
 		ST msgST = tool.errMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.render();
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
-			outputMsg = outputMsg.replace('\n', ' ');
+			outputMsg = outputMsg.Replace('\n', ' ');
 		}
 		Console.Error.WriteLine(outputMsg);
 	}

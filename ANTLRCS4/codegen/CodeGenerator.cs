@@ -160,7 +160,7 @@ public class CodeGenerator {
 	public void write(ST code, String fileName) {
 		try {
 //			long start = System.currentTimeMillis();
-			Writer w = tool.getOutputFileWriter(g, fileName);
+			TextWriter w = tool.getOutputFileWriter(g, fileName);
 			STWriter wr = new AutoIndentWriter(w);
 			wr.setLineWidth(lineWidth);
 			code.write(wr);

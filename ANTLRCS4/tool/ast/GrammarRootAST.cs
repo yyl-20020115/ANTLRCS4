@@ -23,15 +23,15 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	public Dictionary<String, String> cmdLineOptions; // -DsuperClass=T on command line
 	public String fileName;
 
-	public GrammarRootAST(GrammarRootAST node) {
-		base(node);
+	public GrammarRootAST(GrammarRootAST node): base(node)
+    {
 		this.grammarType = node.grammarType;
 		this.hasErrors = node.hasErrors;
 		this.tokenStream = node.tokenStream;
 	}
 
-	public GrammarRootAST(Token t, TokenStream tokenStream) {
-		base(t);
+	public GrammarRootAST(Token t, TokenStream tokenStream): base(t)
+    {
 		if (tokenStream == null) {
 			throw new NullReferenceException("tokenStream");
 		}
@@ -49,8 +49,8 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		this.tokenStream = tokenStream;
 	}
 
-	public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) {
-		base(type,t,text);
+	public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) : base(type, t, text)
+    {
 		if (tokenStream == null) {
 			throw new NullReferenceException("tokenStream");
 		}

@@ -39,7 +39,7 @@ public class DOTGenerator {
 		dot.add("rankdir", rankdir);
 
 		// define stop states first; seems to be a bug in DOT where doublecircle
-		foreach (DFAState d in dfa.states.keySet()) {
+		foreach (DFAState d in dfa.states.Keys) {
 			if ( !d.isAcceptState ) continue;
 			ST st = stlib.getInstanceOf("stopstate");
 			st.add("name", "s"+d.stateNumber);
@@ -47,7 +47,7 @@ public class DOTGenerator {
 			dot.add("states", st);
 		}
 
-		for (DFAState d : dfa.states.keySet()) {
+        foreach (DFAState d in dfa.states.Keys) {
 			if ( d.isAcceptState ) continue;
 			if ( d.stateNumber == int.MaxValue ) continue;
 			ST st = stlib.getInstanceOf("state");
@@ -56,14 +56,14 @@ public class DOTGenerator {
 			dot.add("states", st);
 		}
 
-		foreach (DFAState d in dfa.states.keySet()) {
+		foreach (DFAState d in dfa.states.Keys) {
 			if ( d.edges!=null ) {
 				for (int i = 0; i < d.edges.Length; i++) {
 					DFAState target = d.edges[i];
 					if ( target==null) continue;
 					if ( target.stateNumber == int.MaxValue ) continue;
 					int ttype = i-1; // we shift up for EOF as -1 for parser
-					String label = String.valueOf(ttype);
+					String label = ttype.ToString();// String.valueOf(ttype);
 					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(i).ToString())+"'";
 					else if ( grammar!=null ) label = grammar.getTokenDisplayName(ttype);
 					ST st = stlib.getInstanceOf("edge");
@@ -140,9 +140,9 @@ public class DOTGenerator {
 
 	public String getDOT(ATNState startState, bool isLexer) {
 		HashSet<String> ruleNames = grammar.rules.keySet();
-		String[] names = new String[ruleNames.size()+1];
+		String[] names = new String[ruleNames.Count+1];
 		int i = 0;
-		for (String s : ruleNames) names[i++] = s;
+		foreach (String s in ruleNames) names[i++] = s;
 		return getDOT(startState, names, isLexer);
 	}
 
@@ -164,8 +164,8 @@ public class DOTGenerator {
 		work.Add(startState);
 		while ( !work.isEmpty() ) {
 			ATNState s = work.get(0);
-			if ( markedStates.contains(s) ) { work.remove(0); continue; }
-			markedStates.add(s);
+			if ( markedStates.Contains(s) ) { work.remove(0); continue; }
+			markedStates.Add(s);
 
 			// don't go past end of rule node to the follow states
 			if ( s is RuleStopState) continue;
@@ -398,10 +398,10 @@ public class DOTGenerator {
 	 *  generate any gated predicates on edge too.
 	 */
     protected String getEdgeLabel(String label) {
-		label = label.replace("\\", "\\\\");
-		label = label.replace("\"", "\\\"");
-		label = label.replace("\n", "\\\\n");
-		label = label.replace("\r", "");
+		label = label.Replace("\\", "\\\\");
+		label = label.Replace("\"", "\\\"");
+		label = label.Replace("\n", "\\\\n");
+		label = label.Replace("\r", "");
         return label;
     }
 

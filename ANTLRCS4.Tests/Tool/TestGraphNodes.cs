@@ -102,8 +102,8 @@ public class TestGraphNodes {
 
 	[TestMethod] public void test_adollar_ax() {
 		PredictionContext a1 = a();
-		PredictionContext x = x();
-		PredictionContext a2 = createSingleton(x, 1);
+		PredictionContext _x = x();
+		PredictionContext a2 = createSingleton(_x, 1);
 		PredictionContext r = PredictionContext.merge(a1, a2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -135,8 +135,8 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_axdollar_adollar() {
-		PredictionContext x = x();
-		PredictionContext a1 = createSingleton(x, 1);
+		PredictionContext _x = x();
+		PredictionContext a1 = createSingleton(_x, 1);
 		PredictionContext a2 = a();
 		PredictionContext r = PredictionContext.merge(a1, a2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
@@ -171,8 +171,8 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_axdollar_adollar_fullctx() {
-		PredictionContext x = x();
-		PredictionContext a1 = createSingleton(x, 1);
+		PredictionContext _x = x();
+		PredictionContext a1 = createSingleton(_x, 1);
 		PredictionContext a2 = a();
 		PredictionContext r = PredictionContext.merge(a1, a2, fullCtx(), null);
 //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
@@ -203,9 +203,9 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_ax_ax_same() {
-		PredictionContext x = x();
-		PredictionContext a1 = createSingleton(x, 1);
-		PredictionContext a2 = createSingleton(x, 1);
+		PredictionContext _x = x();
+		PredictionContext a1 = createSingleton(_x, 1);
+		PredictionContext a2 = createSingleton(_x, 1);
 		PredictionContext r = PredictionContext.merge(a1, a2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -347,9 +347,9 @@ public class TestGraphNodes {
 
 	[TestMethod] public void test_adollar_bx() {
 		PredictionContext x2 = x();
-		PredictionContext a = a();
-		PredictionContext b = createSingleton(x2, 2);
-		PredictionContext r = PredictionContext.merge(a, b, rootIsWildcard(), null);
+		PredictionContext _a = a();
+		PredictionContext _b = createSingleton(x2, 2);
+		PredictionContext r = PredictionContext.merge(_a, _b, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
 			"digraph G {\n" +
@@ -383,7 +383,7 @@ public class TestGraphNodes {
 		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
-	@Disabled("Known inefficiency but deferring resolving the issue for now")
+	//@Disabled("Known inefficiency but deferring resolving the issue for now")
 	[TestMethod] public void test_aex_bfx() {
 		// TJP: this is inefficient as it leaves the top x nodes unmerged.
 		PredictionContext x1 = x();
@@ -427,11 +427,11 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_Aab_Ac() { // a,b + c
-		SingletonPredictionContext a = a();
-		SingletonPredictionContext b = b();
-		SingletonPredictionContext c = c();
-		ArrayPredictionContext A1 = array(a, b);
-		ArrayPredictionContext A2 = array(c);
+		SingletonPredictionContext _a = a();
+		SingletonPredictionContext _b = b();
+		SingletonPredictionContext _c = c();
+		ArrayPredictionContext A1 = array(_a, _b);
+		ArrayPredictionContext A2 = array(_c);
 		PredictionContext r = PredictionContext.merge(A1, A2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -464,11 +464,11 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_Aa_Abc() { // a + b,c
-		SingletonPredictionContext a = a();
-		SingletonPredictionContext b = b();
-		SingletonPredictionContext c = c();
-		ArrayPredictionContext A1 = array(a);
-		ArrayPredictionContext A2 = array(b, c);
+		SingletonPredictionContext _a = a();
+		SingletonPredictionContext _b = b();
+		SingletonPredictionContext _c = c();
+		ArrayPredictionContext A1 = array(_a);
+		ArrayPredictionContext A2 = array(_b, _c);
 		PredictionContext r = PredictionContext.merge(A1, A2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -790,8 +790,8 @@ public class TestGraphNodes {
 	private static String toDOTString(PredictionContext context, bool rootIsWildcard) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder edges = new StringBuilder();
-		Dictionary<PredictionContext, PredictionContext> visited = new IdentityHashMap<PredictionContext, PredictionContext>();
-		Dictionary<PredictionContext, Integer> contextIds = new IdentityHashMap<PredictionContext, Integer>();
+		Dictionary<PredictionContext, PredictionContext> visited = new ();
+		Dictionary<PredictionContext, Integer> contextIds = new ();
 		Deque<PredictionContext> workList = new ();
 		visited.put(context, context);
 		contextIds.put(context, contextIds.Count);

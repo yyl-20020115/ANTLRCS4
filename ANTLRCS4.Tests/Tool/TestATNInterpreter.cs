@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
@@ -88,7 +89,7 @@ public class TestATNInterpreter {
 
 		try {
 			checkMatchedAlt(lg, g, "ac", 1);
-			fail();
+			Assert.Fail();
 		}
 		catch (NoViableAltException re) {
 			Assert.AreEqual(1, re.getOffendingToken().getTokenIndex());
@@ -134,7 +135,7 @@ public class TestATNInterpreter {
 
 		try {
 			checkMatchedAlt(lg, g, "abd", 1);
-			fail();
+			Assert.Fail();
 		}
 		catch (NoViableAltException re) {
 			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
@@ -180,7 +181,7 @@ public class TestATNInterpreter {
 
 		try {
 			checkMatchedAlt(lg, g, "abd", 1);
-			fail();
+			Assert.Fail();
 		}
 		catch (NoViableAltException re) {
 			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
@@ -266,7 +267,7 @@ public class TestATNInterpreter {
 
 		try {
 			checkMatchedAlt(lg, g, "abd", 1);
-			fail();
+			Assert.Fail();
 		}
 		catch (NoViableAltException re) {
 			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());

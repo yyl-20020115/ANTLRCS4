@@ -38,7 +38,7 @@ public class CommonToken : WritableToken /*Serializable*/
 	 * This is the backing field for {@link #getChannel} and
 	 * {@link #setChannel}.
 	 */
-	protected int channel=Token.DEFAULT_CHANNEL;
+	public int channel=Token.DEFAULT_CHANNEL;
 
 	/**
 	 * This is the backing field for {@link #getTokenSource} and

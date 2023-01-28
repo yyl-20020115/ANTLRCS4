@@ -566,7 +566,7 @@ public class ANTLRLexer : Lexer
                             _type = ARG_ACTION;
                             // Set the token text to our gathered string minus outer [ ]
                             String t = getText();
-                            t = t.substring(1, t.length() - 1);
+                            t = t.substring(1, t.Length - 1);
                             setText(t);
                         }
                     }

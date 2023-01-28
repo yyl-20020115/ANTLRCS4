@@ -284,7 +284,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         if (treeToUniqueIDMap == null)
         {
-            treeToUniqueIDMap = new HashMap<Object, Integer>();
+            treeToUniqueIDMap = new Dictionary<Object, Integer>();
         }
         Integer prevID = treeToUniqueIDMap.get(node);
         if (prevID != null)

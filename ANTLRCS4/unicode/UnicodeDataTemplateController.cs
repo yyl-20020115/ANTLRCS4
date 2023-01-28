@@ -124,7 +124,7 @@ public abstract class UnicodeDataTemplateController {
 							UProperty.GENERAL_CATEGORY_MASK,
 							generalCategoryMask,
 							nameChoice);
-				} catch (IllegalArgumentException e) {
+				} catch (ArgumentException e) {
 					// No more aliases.
 					break;
 				}
@@ -369,7 +369,7 @@ public abstract class UnicodeDataTemplateController {
 			while (true) {
 				try {
 					alias = namePrefix + UCharacter.getPropertyValueName(property, propertyValue, nameChoice);
-				} catch (IllegalArgumentException e) {
+				} catch (ArgumentException e) {
 					// No more aliases.
 					break;
 				}
@@ -397,7 +397,7 @@ public abstract class UnicodeDataTemplateController {
 				String propertyNameAlias;
 				try {
 					propertyNameAlias = UCharacter.getPropertyName(property, nameChoice);
-				} catch (IllegalArgumentException e) {
+				} catch (ArgumentException e) {
 					// No more aliases.
 					break;
 				}

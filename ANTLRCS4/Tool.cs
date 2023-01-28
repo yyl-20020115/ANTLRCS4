@@ -37,10 +37,10 @@ public class Tool {
 
 	public enum OptionArgType { NONE, STRING } // NONE implies boolean
 	public class Option {
-		String fieldName;
-		String name;
-		OptionArgType argType;
-		String description;
+		public readonly String fieldName;
+        public readonly String name;
+        public readonly OptionArgType argType;
+		public readonly String description;
 
 		public Option(String fieldName, String name, String description)
 		: this(fieldName, name, OptionArgType.NONE, description)
@@ -180,7 +180,7 @@ public class Tool {
 					try {
 						Field f = c.getField(o.fieldName);
 						if ( argValue==null ) {
-							if ( arg.startsWith("-no-") ) f.setBoolean(this, false);
+							if ( arg.StartsWith("-no-") ) f.setBoolean(this, false);
 							else f.setBoolean(this, true);
 						}
 						else f.set(this, argValue);
@@ -348,7 +348,7 @@ public class Tool {
 
 		if (gencode && g.tool.getNumErrors()==0 ) {
 			String interpFile = generateInterpreterData(g);
-			using (Writer fw = getOutputFileWriter(g, g.name + ".interp")) {
+			using (TextWriter fw = getOutputFileWriter(g, g.name + ".interp")) {
 				fw.write(interpFile);
 			}
 			//catch (IOException ioe) {
@@ -477,7 +477,7 @@ public class Tool {
 				}
 				// If the name Contains a path delimited by forward slashes,
 				// use only the part after the last slash as the name
-				int lastSlash = vocabName.lastIndexOf('/');
+				int lastSlash = vocabName.LastIndexOf('/');
 				if (lastSlash >= 0) {
 					vocabName = vocabName.substring(lastSlash + 1);
 				}
@@ -623,7 +623,7 @@ public class Tool {
 			GrammarAST root = (GrammarAST) r.getTree();
 			if (root is GrammarRootAST) {
 				((GrammarRootAST) root).hasErrors = lexer.getNumberOfSyntaxErrors() > 0 || p.getNumberOfSyntaxErrors() > 0;
-				assert ((GrammarRootAST) root).tokenStream == tokens;
+				//assert ((GrammarRootAST) root).tokenStream == tokens;
 				if (grammarOptions != null) {
 					((GrammarRootAST) root).cmdLineOptions = grammarOptions;
 				}
@@ -788,7 +788,7 @@ public class Tool {
 		// or just or the relative path recorded for the parent grammar. This means
 		// that when we write the tokens files, or the .java files for imported grammars
 		// taht we will write them in the correct place.
-		if ((fileNameWithPath == null) || (fileNameWithPath.lastIndexOf(File.separatorChar) == -1)) {
+		if ((fileNameWithPath == null) || (fileNameWithPath.LastIndexOf(File.separatorChar) == -1)) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might sitll be just ""
 			// but when it is not, we will write the file in the correct place.
@@ -796,7 +796,7 @@ public class Tool {
 
 		}
 		else {
-			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.lastIndexOf(File.separatorChar));
+			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(File.separatorChar));
 		}
 		if ( haveOutputDir ) {
 			// -o /tmp /var/lib/t.g4 => /tmp/T.java
@@ -804,7 +804,7 @@ public class Tool {
 			// -o . /usr/lib/t.g4 => ./T.java
 			if (fileDirectory != null &&
 				(new File(fileDirectory).isAbsolute() ||
-					fileDirectory.startsWith("~"))) { // isAbsolute doesn't count this :(
+					fileDirectory.StartsWith("~"))) { // isAbsolute doesn't count this :(
 				// somebody set the dir, it takes precendence; write new file there
 				outputDir = new File(outputDirectory);
 			}
@@ -833,14 +833,14 @@ public class Tool {
 		File outputDir;
 		String fileDirectory;
 
-		if (fileNameWithPath.lastIndexOf(File.separatorChar) == -1) {
+		if (fileNameWithPath.LastIndexOf(File.separatorChar) == -1) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might still be just ""
 			// but when it is not, we will write the file in the correct place.
 			fileDirectory = ".";
 		}
 		else {
-			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.lastIndexOf(File.separatorChar));
+			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(File.separatorChar));
 		}
 		if ( haveOutputDir ) {
 			// -o /tmp /var/lib/t.g4 => /tmp/T.java
@@ -864,12 +864,12 @@ public class Tool {
 	}
 
 	protected void writeDOTFile(Grammar g, String name, String dot){
-		Writer fw = getOutputFileWriter(g, name + ".dot");
+		TextWriter fw = getOutputFileWriter(g, name + ".dot");
 		try {
-			fw.write(dot);
+			fw.Write(dot);
 		}
 		finally {
-			fw.close();
+			fw.Close();
 		}
 	}
 

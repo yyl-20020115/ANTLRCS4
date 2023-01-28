@@ -172,10 +172,10 @@ public class TestTokenTypeAssignment {
 		while ( st.hasMoreTokens() ) {
 			String tokenName = st.nextToken();
 			Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");
-			tokens.remove(tokenName);
+			tokens.Remove(tokenName);
 		}
-		// make sure there are not any others (other than <EOF> etc...)
-		for (String tokenName : tokens) {
+        // make sure there are not any others (other than <EOF> etc...)
+        foreach (String tokenName in tokens) {
 			Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name "+tokenName);
 		}
 
@@ -184,7 +184,7 @@ public class TestTokenTypeAssignment {
 		int n = 0;
 		while ( st.hasMoreTokens() ) {
 			String ruleName = st.nextToken();
-			assertNotNull(g.getRule(ruleName), "rule "+ruleName+" expected");
+			Assert.IsNotNull(g.getRule(ruleName), "rule "+ruleName+" expected");
 			n++;
 		}
 		//Console.Out.WriteLine("rules="+rules);

@@ -5,14 +5,18 @@
  */
 
 using org.antlr.runtime.tree;
+using org.antlr.v4.analysis;
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Reflection;
 using static org.antlr.v4.automata.ATNFactory;
 
 namespace org.antlr.v4.automata;
@@ -75,7 +79,8 @@ public class ParserATNFactory : ATNFactory {
 				LL1Analyzer analyzer = new LL1Analyzer(atn);
 				if (analyzer.LOOK(startState, pair.c, null).contains(org.antlr.v4.runtime.Token.EPSILON)) {
 					g.tool.errMgr.grammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
-					continue optionalCheck;
+					break;
+					//continue optionalCheck;
 				}
 			}
 
@@ -252,7 +257,7 @@ public class ParserATNFactory : ATNFactory {
 		ATNState right = newState(node);
 		int precedence = 0;
 		if (((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			precedence = Integer.parseInt(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+			precedence = int.parseInt(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
 		}
 		RuleTransition call = new RuleTransition(start, r.index, precedence, right);
 		left.addTransition(call);
@@ -292,7 +297,7 @@ public class ParserATNFactory : ATNFactory {
 
 		AbstractPredicateTransition p;
 		if (pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			int precedence = Integer.parseInt(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+			int precedence = int.parseInt(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
 			p = new PrecedencePredicateTransition(right, precedence);
 		}
 		else {
@@ -377,7 +382,7 @@ public class ParserATNFactory : ATNFactory {
 				return star(ebnfRoot, h);
 			case ANTLRParser.POSITIVE_CLOSURE :
 				PlusBlockStartState plus = newState(PlusBlockStartState, ebnfRoot);
-				if ( alts.size()>1 ) atn.defineDecisionState(plus);
+				if ( alts.Count>1 ) atn.defineDecisionState(plus);
 				h = makeBlock(plus, blkAST, alts);
 				return plus(ebnfRoot, h);
 		}
@@ -413,7 +418,7 @@ public class ParserATNFactory : ATNFactory {
 
 
 	public Handle elemList(List<Handle> els) {
-		int n = els.size();
+		int n = els.Count;
 		for (int i = 0; i < n - 1; i++) {	// hook up elements (visit all but last)
 			Handle el = els.get(i);
 			// if el is of form o-x->o for x in {rule, action, pred, token, ...}
@@ -550,7 +555,7 @@ public class ParserATNFactory : ATNFactory {
 	public Handle star(GrammarAST starAST, Handle elem) {
 		StarBlockStartState blkStart = (StarBlockStartState)elem.left;
 		BlockEndState blkEnd = (BlockEndState)elem.right;
-		preventEpsilonClosureBlocks.add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
 		StarLoopEntryState entry = newState(StarLoopEntryState, starAST);
 		entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
@@ -670,25 +675,15 @@ public class ParserATNFactory : ATNFactory {
 	public T newState<T>(Type nodeType, GrammarAST node) where T: ATNState {
 		Exception cause;
 		try {
-			Constructor<T> ctor = nodeType.getConstructor();
+			ConstructorInfo ctor = nodeType.getConstructor();
 			T s = ctor.newInstance();
 			if ( currentRule==null ) s.setRuleIndex(-1);
 			else s.setRuleIndex(currentRule.index);
 			atn.addState(s);
 			return s;
-		} catch (InstantiationException ex) {
+		} catch (Exception ex) {
 			cause = ex;
-		} catch (IllegalAccessException ex) {
-			cause = ex;
-		} catch (ArgumentException ex) {
-			cause = ex;
-		} catch (InvocationTargetException ex) {
-			cause = ex;
-		} catch (NoSuchMethodException ex) {
-			cause = ex;
-		} catch (SecurityException ex) {
-			cause = ex;
-		}
+		} 
 
 		String message = String.format("Could not create %s of type %s.", ATNState.getName(), nodeType.getName());
 		throw new UnsupportedOperationException(message, cause);

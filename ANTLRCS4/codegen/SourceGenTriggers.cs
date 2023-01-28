@@ -238,13 +238,13 @@ public class SourceGenTriggers : TreeParser
                                         break;
 
                                     default:
-                                        if (cnt1 >= 1) break loop1;
+                                        if (cnt1 >= 1) goto exit1;// break loop1;
                                         EarlyExitException eee = new EarlyExitException(1, input);
                                         throw eee;
                                 }
                                 cnt1++;
                             }
-
+                        exit1:
                             match(input, Token.UP, null);
 
                         }
@@ -279,12 +279,13 @@ public class SourceGenTriggers : TreeParser
                             break;
 
                         default:
-                            if (cnt3 >= 1) break loop3;
+                            if (cnt3 >= 1) goto exit3;// break loop3;
                             EarlyExitException eee = new EarlyExitException(3, input);
                             throw eee;
                     }
                     cnt3++;
                 }
+            exit3:
 
                 match(input, Token.UP, null);
 

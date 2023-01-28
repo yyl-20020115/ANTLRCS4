@@ -4,8 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
 using org.antlr.v4.misc;
 using org.antlr.v4.parse;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -21,7 +23,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	// stuff to collect. this is the output
 	public OrderedHashMap<String, Rule> rules = new OrderedHashMap<String, Rule>();
 	public MultiMap<String,GrammarAST> ruleToAltLabels = new MultiMap<String, GrammarAST>();
-	public Dictionary<String,String> altLabelToRuleName = new HashMap<String, String>();
+	public Dictionary<String,String> altLabelToRuleName = new ();
 
 	public RuleCollector(Grammar g) {
 		this.g = g;
@@ -102,7 +104,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	{
 		bool currentCaseInsensitive = grammarCaseInsensitive;
 		if (options != null) {
-			for (Object child : options.getChildren()) {
+			foreach (Object child in options.getChildren()) {
 				GrammarAST childAST = (GrammarAST) child;
 				Boolean caseInsensitive = getCaseInsensitiveValue((GrammarAST)childAST.getChild(0), (GrammarAST)childAST.getChild(1));
 				if (caseInsensitive != null) {

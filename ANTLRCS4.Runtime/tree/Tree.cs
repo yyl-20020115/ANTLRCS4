@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
+
 namespace org.antlr.v4.runtime.tree;
 
 /** The basic notion of a tree has a parent, a payload, and a list of children.
@@ -37,4 +39,14 @@ public interface Tree {
 	 */
 	String toStringTree();
     string getText();
+    void setParent(BaseTree baseTree);
+    void setChildIndex(int i);
+    void setTokenStartIndex(int start);
+    void setTokenStopIndex(int stop);
+    int getTokenStartIndex();
+    int getTokenStopIndex();
+    void replaceChildren(int startChildIndex, int stopChildIndex, object t);
+    object dupNode();
+    object deleteChild(int i);
+    Tree getChildIndex();
 }

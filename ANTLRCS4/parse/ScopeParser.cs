@@ -63,18 +63,18 @@ public class ScopeParser {
 		if (decl.a == null) return null;
 
 		Attribute attr = new Attribute();
-		int rightEdgeOfDeclarator = decl.a.length() - 1;
+		int rightEdgeOfDeclarator = decl.a.Length - 1;
 		int equalsIndex = decl.a.indexOf('=');
 		if (equalsIndex > 0) {
 			// everything after the '=' is the init value
-			attr.initValue = decl.a.substring(equalsIndex + 1, decl.a.length()).trim();
+			attr.initValue = decl.a.substring(equalsIndex + 1, decl.a.Length).Trim();
 			rightEdgeOfDeclarator = equalsIndex - 1;
 		}
 
 		String declarator = decl.a.substring(0, rightEdgeOfDeclarator + 1);
 		Pair<int, int> p;
 		String text = decl.a;
-		text = text.replaceAll("::","");
+		text = text.Replace("::","");
 		if ( text.Contains(':') ) {
 			// declarator has type appearing after the name like "x:T"
 			p = _parsePostfixDecl(attr, declarator, action, g);
@@ -176,12 +176,12 @@ public class ScopeParser {
 
 		// the type is the decl minus the ID (could be empty)
 		attr.type = decl.substring(0, start);
-		if (stop <= decl.length() - 1) {
-			attr.type += decl.substring(stop, decl.length());
+		if (stop <= decl.Length	 - 1) {
+			attr.type += decl.substring(stop, decl.Length);
 		}
 
-		attr.type = attr.type.trim();
-		if (attr.type.length() == 0) {
+		attr.type = attr.type.Trim();
+		if (attr.type.Length == 0) {
 			attr.type = null;
 		}
 		return new Pair<int, int>(start, stop);
@@ -231,11 +231,11 @@ public class ScopeParser {
 			attr.type = "";
 		}
 		else {
-			attr.type = decl.substring(colon + 1, decl.length());
+			attr.type = decl.substring(colon + 1, decl.Length);
 		}
-		attr.type = attr.type.trim();
+		attr.type = attr.type.Trim();
 
-		if (attr.type.length() == 0) {
+		if (attr.type.Length == 0) {
 			attr.type = null;
 		}
 		return new Pair<int, int>(start, stop);
@@ -330,7 +330,7 @@ public class ScopeParser {
 			}
 		}
 		if (targetChar == -1 && p <= n) {
-			String arg = actionText.substring(last, p).trim();
+			String arg = actionText.substring(last, p).Trim();
 			int index = last;
 			while (index < p && char.IsWhiteSpace(actionText[index])) {
 				index++;

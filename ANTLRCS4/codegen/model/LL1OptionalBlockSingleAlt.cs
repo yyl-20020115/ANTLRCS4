@@ -26,7 +26,7 @@ public class LL1OptionalBlockSingleAlt : LL1Choice {
 
 		/** Lookahead for each alt 1..n */
 //		IntervalSet[] altLookSets = LinearApproximator.getLL1LookaheadSets(dfa);
-		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK.get(decision);
+		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK[(decision)];
 		altLook = getAltLookaheadAsStringLists(altLookSets);
 		IntervalSet look = altLookSets[0];
 		IntervalSet followLook = altLookSets[1];

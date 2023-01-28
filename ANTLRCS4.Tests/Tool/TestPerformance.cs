@@ -13,6 +13,7 @@ using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
+using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -341,6 +342,11 @@ public class TestPerformance
         }
     }
 
+    private static object getName()
+    {
+        throw new NotImplementedException();
+    }
+
     public class R1
     {
         //@Override
@@ -378,7 +384,7 @@ public class TestPerformance
             {
                 parse2(currentPass, factory, sources, SHUFFLE_FILES_AFTER_ITERATIONS);
             }
-            catch (InterruptedException ex)
+            catch (Exception ex)
             {
                 Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
             }
@@ -402,7 +408,7 @@ public class TestPerformance
         String entryPoint = "compilationUnit";
         ParserFactory factory = getParserFactory(javaCompiledState, listenerName, entryPoint);
 
-        if (TOP_PACKAGE.Length>0)
+        if (TOP_PACKAGE.Length > 0)
         {
             jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.replace('.', '/');
         }
@@ -444,7 +450,7 @@ public class TestPerformance
 
         ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
-        List < Future > passResults = new ();
+        List<Future> passResults = new();
         passResults.add(executorService.submit(new R0()));
         for (int i = 0; i < PASSES - 1; i++)
         {
@@ -452,7 +458,7 @@ public class TestPerformance
             passResults.add(executorService.submit(new R1()));
         }
 
-        for (Future  passResult : passResults)
+        foreach (Future passResult in passResults)
         {
             passResult.get();
         }
@@ -470,14 +476,14 @@ public class TestPerformance
             computeTimingStatistics();
         }
 
-        sources.clear();
+        sources.Clear();
         if (PAUSE_FOR_HEAP_DUMP)
         {
-            System.gc();
-            Console.Out.println("Pausing before application exit.");
+            GC.Collect();
+            Console.Out.WriteLine("Pausing before application exit.");
             try
             {
-                Thread.sleep(4000);
+                Thread.Sleep(4000);
             }
             catch (InterruptedException ex)
             {
@@ -655,13 +661,13 @@ public class TestPerformance
                 value += diff * diff;
             }
 
-            int ignoreCount95 = (int)Math.round(PASSES * (1 - 0.95) / 2.0);
-            int ignoreCount67 = (int)Math.round(PASSES * (1 - 0.667) / 2.0);
+            int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
+            int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
             low95[i] = points[ignoreCount95];
             high95[i] = points[points.Length - 1 - ignoreCount95];
             low67[i] = points[ignoreCount67];
             high67[i] = points[points.Length - 1 - ignoreCount67];
-            stddev[i] = Math.sqrt(value / PASSES);
+            stddev[i] = Math.Sqrt(value / PASSES);
         }
 
         Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
@@ -747,7 +753,7 @@ public class TestPerformance
 
     protected List<InputDescriptor> loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive)
     {
-        List<InputDescriptor> result = new ();
+        List<InputDescriptor> result = new();
         loadSources(directory, filesFilter, directoriesFilter, recursive, result);
         return result;
     }
@@ -757,7 +763,7 @@ public class TestPerformance
         //assert directory.isDirectory();
 
         File[] sources = directory.listFiles(filesFilter);
-        for (File file in sources)
+        foreach (File file in sources)
         {
             if (!file.isFile())
             {
@@ -800,7 +806,7 @@ public class TestPerformance
         int inputSize = 0;
         int inputCount = 0;
 
-        ICollection<Future<FileParseResult>> results = new ();
+        ICollection<Future<FileParseResult>> results = new();
         ExecutorService executorService;
         if (FILE_GRANULARITY)
         {
@@ -853,7 +859,7 @@ public class TestPerformance
 
         MurmurHashChecksum checksum = new MurmurHashChecksum();
         int currentIndex = -1;
-        for (Future<FileParseResult> future : results)
+        foreach (Future<FileParseResult> future in results)
         {
             currentIndex++;
             int fileChecksum = 0;
@@ -948,7 +954,7 @@ public class TestPerformance
                         }
 
                         int modeConfigs = 0;
-                        for (DFAState state in dfa.states.Values)
+                        foreach (DFAState state in dfa.states.Values)
                         {
                             modeConfigs += state.configs.Count;
                         }
@@ -983,10 +989,10 @@ public class TestPerformance
                     }
 
                     states += dfa.states.Count;
-                    for (DFAState state in dfa.states.Values)
+                    foreach (DFAState state in dfa.states.Values)
                     {
                         configs += state.configs.Count;
-                        uniqueConfigs.addAll(state.configs);
+                        uniqueConfigs.UnionWith(state.configs);
                     }
                 }
 
@@ -1099,7 +1105,7 @@ public class TestPerformance
 
                 if (SHOW_CONFIG_STATS)
                 {
-                    for (DFAState state in dfa.states.Keys)
+                    foreach (DFAState state in dfa.states.Keys)
                     {
                         if (state.configs.Count >= contextsInDFAState.Length)
                         {
@@ -1181,7 +1187,7 @@ public class TestPerformance
         String parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
         String lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
         String body = load(grammarFileName);
-        List<String> extraOptions = new ();
+        List<String> extraOptions = new();
         extraOptions.Add("-Werror");
         if (FORCE_ATN)
         {
@@ -1374,7 +1380,7 @@ public class TestPerformance
                     parser.setErrorHandler(new BailErrorStrategy());
                 }
 
-                Method parseMethod = javaCompiledState.parser.getMethod(entryPoint);
+                MethodInfo parseMethod = javaCompiledState.parser.getMethod(entryPoint);
                 Object parseResult;
 
                 try
@@ -1402,7 +1408,7 @@ public class TestPerformance
                     }
 
                     String sourceName = tokens.getSourceName();
-                    sourceName = sourceName != null && sourceName.Length> 0 ? sourceName + ": " : "";
+                    sourceName = sourceName != null && sourceName.Length > 0 ? sourceName + ": " : "";
                     if (REPORT_SECOND_STAGE_RETRY)
                     {
                         Console.Error.WriteLine(sourceName + "Forced to retry with full context.");
@@ -1495,11 +1501,10 @@ public class TestPerformance
     {
         try
         {
-            ClassLoader loader = javaCompiledState.loader;
-            Class <ParseTreeListener > listenerClass = loader.loadClass(listenerName).asSubclass(ParseTreeListener);
+            Type listenerClass = loader.loadClass(listenerName).asSubclass(ParseTreeListener);
 
-            Constructor <Lexer > lexerCtor = javaCompiledState.lexer.getConstructor(CharStream);
-            Constructor <Parser > parserCtor = javaCompiledState.parser.getConstructor(TokenStream);
+            ConstructorInfo lexerCtor = javaCompiledState.lexer.getConstructor(CharStream);
+            ConstructorInfo parserCtor = javaCompiledState.parser.getConstructor(TokenStream);
 
             // construct initial instances of the lexer and parser to deserialize their ATNs
             javaCompiledState.initializeLexerAndParser("");
@@ -1509,7 +1514,7 @@ public class TestPerformance
         catch (Exception e)
         {
             e.printStackTrace(Console.Out);
-            fail(e.Message);
+            Assert.Fail(e.Message);
             throw new IllegalStateException(e);
         }
     }
@@ -1642,7 +1647,7 @@ public class TestPerformance
         public StatisticsLexerATNSimulator(Lexer recog, ATN atn, DFA[] decisionToDFA, PredictionContextCache sharedContextCache)
         : base(recog, atn, decisionToDFA, sharedContextCache)
         {
-           ;
+            ;
         }
 
         //@Override
@@ -1850,414 +1855,418 @@ public class TestPerformance
 
     }
 
-    protected class FilenameFilters
+    public class FilenameFilters
     {
-        public static readonly FilenameFilter ALL_FILES = new FilenameFilter()
+        public class FilenameFilter
+        {
+
+        }
+        public class ALL : FilenameFilter
         {
 
             //@Override
             public bool accept(File dir, String name)
-        {
-            return true;
-        }
-
-    };
-
-    public static FilenameFilter extension(String extension)
-    {
-        return extension(extension, true);
-    }
-
-    public static FilenameFilter extension(String extension, bool caseSensitive)
-    {
-        return new FileExtensionFilenameFilter(extension, caseSensitive);
-    }
-
-    public static FilenameFilter name(String filename)
-    {
-        return name(filename, true);
-    }
-
-    public static FilenameFilter name(String filename, bool caseSensitive)
-    {
-        return new FileNameFilenameFilter(filename, caseSensitive);
-    }
-
-    public static FilenameFilter all(FilenameFilter...filters)
-    {
-        return new AllFilenameFilter(filters);
-    }
-
-    public static FilenameFilter any(FilenameFilter...filters)
-    {
-        return new AnyFilenameFilter(filters);
-    }
-
-    public static FilenameFilter none(FilenameFilter...filters)
-    {
-        return not(any(filters));
-    }
-
-    public static FilenameFilter not(FilenameFilter filter)
-    {
-        return new NotFilenameFilter(filter);
-    }
-
-    private FilenameFilters()
-    {
-    }
-
-    protected class FileExtensionFilenameFilter : FilenameFilter
-    {
-
-        private readonly String extension;
-        private readonly bool caseSensitive;
-
-        public FileExtensionFilenameFilter(String extension, bool caseSensitive)
-        {
-            if (!extension.startsWith("."))
             {
-                extension = '.' + extension;
+                return true;
             }
 
-            this.extension = extension;
-            this.caseSensitive = caseSensitive;
+        }
+        public static readonly FilenameFilter ALL_FILES = new ALL();
+        public static FilenameFilter extension(String extension)
+        {
+            return extension(extension, true);
         }
 
-        //@Override
-        public bool accept(File dir, String name)
+        public static FilenameFilter extension(String extension, bool caseSensitive)
         {
-            if (caseSensitive)
-            {
-                return name.EndsWith(extension);
-            }
-            else
-            {
-                return name.ToLower().endsWith(extension);
-            }
-        }
-    }
-
-    protected class FileNameFilenameFilter : FilenameFilter
-    {
-
-        private readonly String filename;
-        private readonly bool caseSensitive;
-
-        public FileNameFilenameFilter(String filename, bool caseSensitive)
-        {
-            this.filename = filename;
-            this.caseSensitive = caseSensitive;
+            return new FileExtensionFilenameFilter(extension, caseSensitive);
         }
 
-        //@Override
-        public bool accept(File dir, String name)
+        public static FilenameFilter name(String filename)
         {
-            if (caseSensitive)
-            {
-                return name.Equals(filename);
-            }
-            else
-            {
-                return name.ToLower().Equals(filename);
-            }
-        }
-    }
-
-    protected class AllFilenameFilter : FilenameFilter
-    {
-
-        private readonly FilenameFilter[] filters;
-
-        public AllFilenameFilter(FilenameFilter[] filters)
-        {
-            this.filters = filters;
+            return name(filename, true);
         }
 
-        //@Override
-        public bool accept(File dir, String name)
+        public static FilenameFilter name(String filename, bool caseSensitive)
         {
-            for (FilenameFilter filter : filters)
+            return new FileNameFilenameFilter(filename, caseSensitive);
+        }
+
+        public static FilenameFilter all(params FilenameFilter[] filters)
+        {
+            return new AllFilenameFilter(filters);
+        }
+
+        public static FilenameFilter any(params FilenameFilter[] filters)
+        {
+            return new AnyFilenameFilter(filters);
+        }
+
+        public static FilenameFilter none(params FilenameFilter[] filters)
+        {
+            return not(any(filters));
+        }
+
+        public static FilenameFilter not(FilenameFilter filter)
+        {
+            return new NotFilenameFilter(filter);
+        }
+
+        private FilenameFilters()
+        {
+        }
+
+        protected class FileExtensionFilenameFilter : FilenameFilter
+        {
+
+            private readonly String extension;
+            private readonly bool caseSensitive;
+
+            public FileExtensionFilenameFilter(String extension, bool caseSensitive)
             {
-                if (!filter.accept(dir, name))
+                if (!extension.StartsWith("."))
                 {
-                    return false;
+                    extension = '.' + extension;
+                }
+
+                this.extension = extension;
+                this.caseSensitive = caseSensitive;
+            }
+
+            //@Override
+            public bool accept(File dir, String name)
+            {
+                if (caseSensitive)
+                {
+                    return name.EndsWith(extension);
+                }
+                else
+                {
+                    return name.ToLower().endsWith(extension);
                 }
             }
-
-            return true;
-        }
-    }
-
-    protected class AnyFilenameFilter : FilenameFilter
-    {
-
-        private readonly FilenameFilter[] filters;
-
-        public AnyFilenameFilter(FilenameFilter[] filters)
-        {
-            this.filters = filters;
         }
 
-        //@Override
-        public bool accept(File dir, String name)
+        protected class FileNameFilenameFilter : FilenameFilter
         {
-            for (FilenameFilter filter : filters)
+
+            private readonly String filename;
+            private readonly bool caseSensitive;
+
+            public FileNameFilenameFilter(String filename, bool caseSensitive)
             {
-                if (filter.accept(dir, name))
+                this.filename = filename;
+                this.caseSensitive = caseSensitive;
+            }
+
+            //@Override
+            public bool accept(File dir, String name)
+            {
+                if (caseSensitive)
                 {
-                    return true;
+                    return name.Equals(filename);
+                }
+                else
+                {
+                    return name.ToLower().Equals(filename);
                 }
             }
+        }
 
-            return false;
+        protected class AllFilenameFilter : FilenameFilter
+        {
+
+            private readonly FilenameFilter[] filters;
+
+            public AllFilenameFilter(FilenameFilter[] filters)
+            {
+                this.filters = filters;
+            }
+
+            //@Override
+            public bool accept(File dir, String name)
+            {
+                foreach (FilenameFilter filter in filters)
+                {
+                    if (!filter.accept(dir, name))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        protected class AnyFilenameFilter : FilenameFilter
+        {
+
+            private readonly FilenameFilter[] filters;
+
+            public AnyFilenameFilter(FilenameFilter[] filters)
+            {
+                this.filters = filters;
+            }
+
+            //@Override
+            public bool accept(File dir, String name)
+            {
+                foreach (FilenameFilter filter in filters)
+                {
+                    if (filter.accept(dir, name))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        protected class NotFilenameFilter : FilenameFilter
+        {
+
+            private readonly FilenameFilter filter;
+
+            public NotFilenameFilter(FilenameFilter filter)
+            {
+                this.filter = filter;
+            }
+
+            //@Override
+            public bool accept(File dir, String name)
+            {
+                return !filter.accept(dir, name);
+            }
         }
     }
 
-    protected class NotFilenameFilter : FilenameFilter
+    protected class NumberedThread : Thread
     {
+        private readonly int threadNumber;
 
-        private readonly FilenameFilter filter;
-
-        public NotFilenameFilter(FilenameFilter filter)
+        public NumberedThread(Runnable target, int threadNumber)
+            : base(target)
         {
-            this.filter = filter;
+            ;
+            this.threadNumber = threadNumber;
+        }
+
+        public int getThreadNumber()
+        {
+            return threadNumber;
+        }
+
+    }
+
+    protected class NumberedThreadFactory : ThreadFactory
+    {
+        private readonly AtomicInteger nextThread = new AtomicInteger();
+
+        //@Override
+        public Thread newThread(Runnable r)
+        {
+            int threadNumber = nextThread.getAndIncrement();
+            //assert threadNumber<NUMBER_OF_THREADS;
+            return new NumberedThread(r, threadNumber);
+        }
+
+    }
+
+    public class FixedThreadNumberFactory : ThreadFactory
+    {
+        private readonly int threadNumber;
+
+        public FixedThreadNumberFactory(int threadNumber)
+        {
+            this.threadNumber = threadNumber;
         }
 
         //@Override
-        public bool accept(File dir, String name)
+        public Thread newThread(Runnable r)
         {
-            return !filter.accept(dir, name);
-        }
-    }
-}
-
-protected class NumberedThread : Thread
-{
-    private readonly int threadNumber;
-
-    public NumberedThread(Runnable target, int threadNumber)
-        : base(target)
-    {
-        ;
-        this.threadNumber = threadNumber;
-    }
-
-    public readonly int getThreadNumber()
-    {
-        return threadNumber;
-    }
-
-}
-
-protected class NumberedThreadFactory : ThreadFactory
-{
-    private readonly AtomicInteger nextThread = new AtomicInteger();
-
-    //@Override
-    public Thread newThread(Runnable r)
-    {
-        int threadNumber = nextThread.getAndIncrement();
-        //assert threadNumber<NUMBER_OF_THREADS;
-        return new NumberedThread(r, threadNumber);
-    }
-
-}
-
-protected class FixedThreadNumberFactory : ThreadFactory
-{
-    private readonly int threadNumber;
-
-    public FixedThreadNumberFactory(int threadNumber)
-    {
-        this.threadNumber = threadNumber;
-    }
-
-    //@Override
-    public Thread newThread(Runnable r)
-    {
-        //assert threadNumber<NUMBER_OF_THREADS;
-        return new NumberedThread(r, threadNumber);
-    }
-}
-
-protected class ChecksumParseTreeListener : ParseTreeListener
-{
-    private static readonly int VISIT_TERMINAL = 1;
-    private static readonly int VISIT_ERROR_NODE = 2;
-    private static readonly int ENTER_RULE = 3;
-    private static readonly int EXIT_RULE = 4;
-
-    private readonly MurmurHashChecksum checksum;
-
-    public ChecksumParseTreeListener(MurmurHashChecksum checksum)
-    {
-        this.checksum = checksum;
-    }
-
-    //@Override
-    public void visitTerminal(TerminalNode node)
-    {
-        checksum.update(VISIT_TERMINAL);
-        updateChecksum(checksum, node.getSymbol());
-    }
-
-    //@Override
-    public void visitErrorNode(ErrorNode node)
-    {
-        checksum.update(VISIT_ERROR_NODE);
-        updateChecksum(checksum, node.getSymbol());
-    }
-
-    //@Override
-    public void enterEveryRule(ParserRuleContext ctx)
-    {
-        checksum.update(ENTER_RULE);
-        updateChecksum(checksum, ctx.getRuleIndex());
-        updateChecksum(checksum, ctx.getStart());
-    }
-
-    //@Override
-    public void exitEveryRule(ParserRuleContext ctx)
-    {
-        checksum.update(EXIT_RULE);
-        updateChecksum(checksum, ctx.getRuleIndex());
-        updateChecksum(checksum, ctx.getStop());
-    }
-
-}
-
-protected class InputDescriptor
-{
-    private readonly String source;
-    private Reference<CloneableANTLRFileStream> inputStream;
-
-    public InputDescriptor(String source)
-    {
-        this.source = source;
-        if (PRELOAD_SOURCES)
-        {
-            getInputStream();
+            //assert threadNumber<NUMBER_OF_THREADS;
+            return new NumberedThread(r, threadNumber);
         }
     }
 
-
-    public /*synchronized*/ CharStream getInputStream()
+    protected class ChecksumParseTreeListener : ParseTreeListener
     {
-        CloneableANTLRFileStream stream = inputStream != null ? inputStream.get() : null;
-        if (stream == null)
-        {
-            try
-            {
-                stream = new CloneableANTLRFileStream(source, ENCODING);
-            }
-            catch (IOException ex)
-            {
-                throw new RuntimeException(ex);
-            }
+        private static readonly int VISIT_TERMINAL = 1;
+        private static readonly int VISIT_ERROR_NODE = 2;
+        private static readonly int ENTER_RULE = 3;
+        private static readonly int EXIT_RULE = 4;
 
+        private readonly MurmurHashChecksum checksum;
+
+        public ChecksumParseTreeListener(MurmurHashChecksum checksum)
+        {
+            this.checksum = checksum;
+        }
+
+        //@Override
+        public void visitTerminal(TerminalNode node)
+        {
+            checksum.update(VISIT_TERMINAL);
+            updateChecksum(checksum, node.getSymbol());
+        }
+
+        //@Override
+        public void visitErrorNode(ErrorNode node)
+        {
+            checksum.update(VISIT_ERROR_NODE);
+            updateChecksum(checksum, node.getSymbol());
+        }
+
+        //@Override
+        public void enterEveryRule(ParserRuleContext ctx)
+        {
+            checksum.update(ENTER_RULE);
+            updateChecksum(checksum, ctx.getRuleIndex());
+            updateChecksum(checksum, ctx.getStart());
+        }
+
+        //@Override
+        public void exitEveryRule(ParserRuleContext ctx)
+        {
+            checksum.update(EXIT_RULE);
+            updateChecksum(checksum, ctx.getRuleIndex());
+            updateChecksum(checksum, ctx.getStop());
+        }
+
+    }
+
+    public class InputDescriptor
+    {
+        private readonly String source;
+        private Reference<CloneableANTLRFileStream> inputStream;
+
+        public InputDescriptor(String source)
+        {
+            this.source = source;
             if (PRELOAD_SOURCES)
             {
-                inputStream = new StrongReference<CloneableANTLRFileStream>(stream);
-            }
-            else
-            {
-                inputStream = new SoftReference<CloneableANTLRFileStream>(stream);
+                getInputStream();
             }
         }
 
-        return new JavaUnicodeInputStream(stream.createCopy());
-    }
-}
 
-protected class CloneableANTLRFileStream : ANTLRFileStream
-{
-
-    public CloneableANTLRFileStream(String fileName, String encoding)
-        : base(fileName, encoding)
-    {
-    }
-
-    public ANTLRInputStream createCopy()
-    {
-        ANTLRInputStream stream = new ANTLRInputStream(this.data, this.n);
-        stream.name = this.getSourceName();
-        return stream;
-    }
-}
-
-public class StrongReference<T> : WeakReference<T>
-{
-    public readonly T referent;
-
-    public StrongReference(T referent)
-    {
-        base(referent);
-        this.referent = referent;
-    }
-
-    //@Override
-    public T get()
-    {
-        return referent;
-    }
-}
-
-public class MurmurHashChecksum
-{
-    private int value;
-    private int count;
-
-    public MurmurHashChecksum()
-    {
-        this.value = MurmurHash.initialize();
-    }
-
-    public void update(int value)
-    {
-        this.value = MurmurHash.update(this.value, value);
-        this.count++;
-    }
-
-    public int getValue()
-    {
-        return MurmurHash.finish(value, count);
-    }
-}
-
-[TestMethod]
-//@Timeout(20)
-public void testExponentialInclude(string tempDir)
-{
-    String tempDirPath = tempDir.ToString();
-    String grammarFormat =
-        "parser grammar Level_%d_%d;\n" +
-        "\n" +
-        "%s import Level_%d_1, Level_%d_2;\n" +
-        "\n" +
-        "rule_%d_%d : EOF;\n";
-
-    FileUtils.mkdir(tempDirPath);
-
-    long startTime = System.nanoTime();
-
-    int levels = 20;
-    for (int level = 0; level < levels; level++)
-    {
-        String leafPrefix = level == levels - 1 ? "//" : "";
-        String grammar1 = String.format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
-        writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
-        if (level > 0)
+        public /*synchronized*/ CharStream getInputStream()
         {
-            String grammar2 = String.format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
-            writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
+            CloneableANTLRFileStream stream = inputStream != null ? inputStream.get() : null;
+            if (stream == null)
+            {
+                try
+                {
+                    stream = new CloneableANTLRFileStream(source, ENCODING);
+                }
+                catch (IOException ex)
+                {
+                    throw new RuntimeException(ex);
+                }
+
+                if (PRELOAD_SOURCES)
+                {
+                    inputStream = new StrongReference<CloneableANTLRFileStream>(stream);
+                }
+                else
+                {
+                    inputStream = new SoftReference<CloneableANTLRFileStream>(stream);
+                }
+            }
+
+            return new JavaUnicodeInputStream(stream.createCopy());
         }
     }
 
-    ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
-    Assert.IsTrue(equeue.errors.Count == 0);
+    protected class CloneableANTLRFileStream : ANTLRFileStream
+    {
 
-    long endTime = System.nanoTime();
-    Console.Out.format("%s milliseconds.%n", (endTime - startTime) / 1000000.0);
-}
+        public CloneableANTLRFileStream(String fileName, String encoding)
+            : base(fileName, encoding)
+        {
+        }
+
+        public ANTLRInputStream createCopy()
+        {
+            ANTLRInputStream stream = new ANTLRInputStream(this.data, this.n);
+            stream.name = this.getSourceName();
+            return stream;
+        }
+    }
+
+    public class StrongReference<T>
+    {
+        public readonly T referent;
+
+        public StrongReference(T referent)
+        {
+            ;
+            this.referent = referent;
+        }
+
+        //@Override
+        public T get()
+        {
+            return referent;
+        }
+    }
+
+    public class MurmurHashChecksum
+    {
+        private int value;
+        private int count;
+
+        public MurmurHashChecksum()
+        {
+            this.value = MurmurHash.initialize();
+        }
+
+        public void update(int value)
+        {
+            this.value = MurmurHash.update(this.value, value);
+            this.count++;
+        }
+
+        public int getValue()
+        {
+            return MurmurHash.finish(value, count);
+        }
+    }
+
+    [TestMethod]
+    //@Timeout(20)
+    public void testExponentialInclude(string tempDir)
+    {
+        String tempDirPath = tempDir.ToString();
+        String grammarFormat =
+            "parser grammar Level_%d_%d;\n" +
+            "\n" +
+            "%s import Level_%d_1, Level_%d_2;\n" +
+            "\n" +
+            "rule_%d_%d : EOF;\n";
+
+        FileUtils.mkdir(tempDirPath);
+
+        long startTime = System.nanoTime();
+
+        int levels = 20;
+        for (int level = 0; level < levels; level++)
+        {
+            String leafPrefix = level == levels - 1 ? "//" : "";
+            String grammar1 = String.format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
+            writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
+            if (level > 0)
+            {
+                String grammar2 = String.format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
+                writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
+            }
+        }
+
+        ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
+        Assert.IsTrue(equeue.errors.Count == 0);
+
+        long endTime = DateTime.Now.Nanosecond;
+        Console.Out.format("%s milliseconds.%n", (endTime - startTime) / 1000000.0);
+    }
 }

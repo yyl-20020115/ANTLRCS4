@@ -7,6 +7,7 @@
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using System.Reflection;
 
 namespace org.antlr.v4.codegen;
 
@@ -69,8 +70,8 @@ public class OutputModelWalker {
 
 		// COMPUTE STs FOR EACH NESTED MODEL OBJECT MARKED WITH @ModelElement AND MAKE ST ATTRIBUTE
 		HashSet<String> usedFieldNames = new HashSet<String>();
-		Field fields[] = cl.getFields();
-		for (Field fi : fields) {
+		FieldInfo[] fields = cl.getFields();
+		foreach(var fi in fields) {
 			ModelElement annotation = fi.getAnnotation(ModelElement);
 			if (annotation == null) {
 				continue;
@@ -78,7 +79,7 @@ public class OutputModelWalker {
 
 			String fieldName = fi.getName();
 
-			if (!usedFieldNames.add(fieldName)) {
+			if (!usedFieldNames.Add(fieldName)) {
 				tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.getClass().getSimpleName() + " has multiple fields named '" + fieldName + "'");
 				continue;
 			}
@@ -99,7 +100,7 @@ public class OutputModelWalker {
 					if ( o is OutputModelObject[] ) {
 						o = Arrays.AsList((OutputModelObject[])o);
 					}
-					ICollection nestedOmos = (Collection)o;
+					ICollection nestedOmos = (ICollection)o;
                     foreach (Object nestedOmo in nestedOmos) {
 						if ( nestedOmo==null ) continue;
 						ST nestedST = walk((OutputModelObject)nestedOmo, header);

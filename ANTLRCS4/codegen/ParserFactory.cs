@@ -87,7 +87,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 			}
 			else {
 				Decl d = getTokenLabelDecl(label);
-				matchOp.labels.add(d);
+				matchOp.labels.Add(d);
 				rf.addContextDecl(ID.getAltLabel(), d);
 			}
 
@@ -127,7 +127,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 			}
 			else {
 				Decl d = getTokenLabelDecl(label);
-				matchOp.labels.add(d);
+				matchOp.labels.Add(d);
 				rf.addContextDecl(setAST.getAltLabel(), d);
 			}
 		}
@@ -143,7 +143,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		if ( labelAST!=null ) {
 			String label = labelAST.getText();
 			Decl d = getTokenLabelDecl(label);
-			wild.labels.add(d);
+			wild.labels.Add(d);
 			getCurrentRuleFunction().addContextDecl(ast.getAltLabel(), d);
 			if ( labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN ) {
 				TokenListDecl l = getTokenListLabelDecl(label);
@@ -290,7 +290,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 			d = getTokenLabelDecl(implLabel);
 			((TokenDecl)d).isImplicit = true;
 		}
-		op.getLabels().add(d);
+		op.getLabels().Add(d);
 		// all labels must be in scope struct in case we exec action out of context
 		getCurrentRuleFunction().addContextDecl(ast.getAltLabel(), d);
 	}

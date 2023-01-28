@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Microsoft.VisualBasic;
 using org.antlr.runtime.tree;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
@@ -360,7 +361,7 @@ public class Grammar : AttributeResolver
         GrammarAST i = (GrammarAST)ast.getFirstChildWithType(ANTLRParser.IMPORT);
         if (i == null) return;
         visited.Add(this.name);
-        importedGrammars = new ();
+        importedGrammars = new();
         foreach (Object c in i.getChildren())
         {
             GrammarAST t = (GrammarAST)c;
@@ -405,7 +406,7 @@ public class Grammar : AttributeResolver
         if (atAST.getChildCount() == 2)
         {
             String name = atAST.getChild(0).getText();
-            namedActions[name]= (ActionAST)atAST.getChild(1);
+            namedActions[name] = (ActionAST)atAST.getChild(1);
         }
         else
         {
@@ -414,7 +415,7 @@ public class Grammar : AttributeResolver
             if (scope.Equals(gtype) || (scope.Equals("parser") && gtype.Equals("combined")))
             {
                 String name = atAST.getChild(1).getText();
-                namedActions[name]= (ActionAST)atAST.getChild(2);
+                namedActions[name] = (ActionAST)atAST.getChild(2);
             }
         }
     }
@@ -540,7 +541,7 @@ public class Grammar : AttributeResolver
             return null;
         }
 
-        Dictionary<String, Grammar> delegates = new ();
+        Dictionary<String, Grammar> delegates = new();
         foreach (Grammar d in importedGrammars)
         {
             delegates.put(d.fileName, d);
@@ -554,7 +555,7 @@ public class Grammar : AttributeResolver
             }
         }
 
-        return new (delegates.Values);
+        return new(delegates.Values);
     }
 
     public List<Grammar> getImportedGrammars() { return importedGrammars; }
@@ -578,7 +579,7 @@ public class Grammar : AttributeResolver
     {
         Grammar root = getOutermostGrammar();
         if (this == root) return null;
-        List<Grammar> grammars = new ();
+        List<Grammar> grammars = new();
         // walk backwards to root, collecting grammars
         Grammar p = this.parent;
         while (p != null)
@@ -698,7 +699,7 @@ public class Grammar : AttributeResolver
             return typeToStringLiteralList.get(ttype);
         }
 
-        if (ttype >= 0 && ttype < typeToTokenList.size() && typeToTokenList.get(ttype) != null)
+        if (ttype >= 0 && ttype < typeToTokenList.Count && typeToTokenList.get(ttype) != null)
         {
             return typeToTokenList.get(ttype);
         }
@@ -833,7 +834,7 @@ public class Grammar : AttributeResolver
     {
         int numTokens = getMaxTokenType();
         String[] literalNames = new String[numTokens + 1];
-        for (int i = 0; i < Math.Min(literalNames.Length, typeToStringLiteralList.size()); i++)
+        for (int i = 0; i < Math.Min(literalNames.Length, typeToStringLiteralList.Count); i++)
         {
             literalNames[i] = typeToStringLiteralList.get(i);
         }
@@ -858,7 +859,7 @@ public class Grammar : AttributeResolver
     {
         int numTokens = getMaxTokenType();
         String[] symbolicNames = new String[numTokens + 1];
-        for (int i = 0; i < Math.Min(symbolicNames.length, typeToTokenList.size()); i++)
+        for (int i = 0; i < Math.Min(symbolicNames.length, typeToTokenList.Count); i++)
         {
             if (typeToTokenList.get(i) == null || typeToTokenList.get(i).startsWith(AUTO_GENERATED_TOKEN_NAME_PREFIX))
             {
@@ -981,7 +982,7 @@ public class Grammar : AttributeResolver
     /** How many token types have been allocated so far? */
     public int getMaxTokenType()
     {
-        return typeToTokenList.size() - 1; // don't count 0 (invalid)
+        return typeToTokenList.Count - 1; // don't count 0 (invalid)
     }
 
     /** Return a new unique integer in the token type space */
@@ -1024,23 +1025,23 @@ public class Grammar : AttributeResolver
         {
             defineStringLiteral(tokenName, importG.stringLiteralToTypeMap.get(tokenName));
         }
-        foreach (Map.Entry<String, int> channel in importG.channelNameToValueMap.entrySet())
+        foreach (var channel in importG.channelNameToValueMap)
         {
-            defineChannelName(channel.getKey(), channel.getValue());
+            defineChannelName(channel.Key, channel.Value);
         }
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
-        int max = Math.Max(this.typeToTokenList.size(), importG.typeToTokenList.size());
+        int max = Math.Max(this.typeToTokenList.Count, importG.typeToTokenList.Count);
         Utils.setSize(typeToTokenList, max);
-        for (int ttype = 0; ttype < importG.typeToTokenList.size(); ttype++)
+        for (int ttype = 0; ttype < importG.typeToTokenList.Count; ttype++)
         {
             maxTokenType = Math.Max(maxTokenType, ttype);
             this.typeToTokenList.set(ttype, importG.typeToTokenList.get(ttype));
         }
 
-        max = Math.Max(this.channelValueToNameList.size(), importG.channelValueToNameList.size());
+        max = Math.Max(this.channelValueToNameList.Count, importG.channelValueToNameList.Count);
         Utils.setSize(channelValueToNameList, max);
-        for (int channelValue = 0; channelValue < importG.channelValueToNameList.size(); channelValue++)
+        for (int channelValue = 0; channelValue < importG.channelValueToNameList.Count; channelValue++)
         {
             maxChannelType = Math.Max(maxChannelType, channelValue);
             this.channelValueToNameList.set(channelValue, importG.channelValueToNameList.get(channelValue));
@@ -1080,7 +1081,7 @@ public class Grammar : AttributeResolver
         {
             stringLiteralToTypeMap.put(lit, ttype);
             // track in reverse index too
-            if (ttype >= typeToStringLiteralList.size())
+            if (ttype >= typeToStringLiteralList.Count)
             {
                 Utils.setSize(typeToStringLiteralList, ttype + 1);
             }
@@ -1108,7 +1109,7 @@ public class Grammar : AttributeResolver
             return;
         }
 
-        if (ttype >= typeToTokenList.size())
+        if (ttype >= typeToTokenList.Count)
         {
             Utils.setSize(typeToTokenList, ttype + 1);
         }
@@ -1177,7 +1178,7 @@ public class Grammar : AttributeResolver
 	 */
     public void setChannelNameForValue(int channelValue, String name)
     {
-        if (channelValue >= channelValueToNameList.size())
+        if (channelValue >= channelValueToNameList.Count)
         {
             Utils.setSize(channelValueToNameList, channelValue + 1);
         }
@@ -1321,9 +1322,9 @@ public class Grammar : AttributeResolver
 			// TODO: allow doc comment in there
 		};
         GrammarASTAdaptor adaptor = new GrammarASTAdaptor(ast.token.getInputStream());
-        org.antlr.runtime.tree.TreeWizard wiz = new org.antlr.runtime.tree.TreeWizard(adaptor, ANTLRParser.tokenNames);
+        TreeWizard wiz = new TreeWizard(adaptor, ANTLRParser.tokenNames);
         List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral =
-            new ();
+            new();
 
         List<GrammarAST> ruleNodes = ast.getNodesWithType(ANTLRParser.RULE);
         if (ruleNodes == null || ruleNodes.Count == 0) return null;
@@ -1350,151 +1351,152 @@ public class Grammar : AttributeResolver
     }
 
     protected static bool defAlias(GrammarAST r, String pattern,
-                                      org.antlr.runtime.tree.TreeWizard wiz,
+                                      TreeWizard wiz,
                                       List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral)
     {
-        HashMap<String, Object> nodes = new HashMap<String, Object>();
+        Dictionary<String, Object> nodes = new();
         if (wiz.parse(r, pattern, nodes))
         {
             GrammarAST litNode = (GrammarAST)nodes.get("lit");
             GrammarAST nameNode = (GrammarAST)nodes.get("name");
             Pair<GrammarAST, GrammarAST> pair =
                 new Pair<GrammarAST, GrammarAST>(nameNode, litNode);
-            lexerRuleToStringLiteral.add(pair);
+            lexerRuleToStringLiteral.Add(pair);
             return true;
         }
         return false;
     }
-
-    public HashSet<String> getStringLiterals()
+    public class GTV : GrammarTreeVisitor
     {
-        HashSet<String> strings = new HashSet<String>();
-        GrammarTreeVisitor collector = new GrammarTreeVisitor() {
-            //@Override
+        //@Override
 
-            public void stringRef(TerminalAST @ref)
+        public void stringRef(TerminalAST @ref)
         {
             strings.add(@ref.getText());
         }
         //@Override
 
-            public ErrorManager getErrorManager() { return tool.errMgr; }
-    };
-    collector.visitGrammar(ast);
-		return strings;
-	}
-
-public void setLookaheadDFA(int decision, DFA lookaheadDFA)
-{
-    decisionDFAs.put(decision, lookaheadDFA);
-}
-
-public static Dictionary<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
-{
-    Dictionary<int, Interval> stateToGrammarRegionMap = new ();
-    if (ast == null) return stateToGrammarRegionMap;
-
-    List<GrammarAST> nodes = ast.getNodesWithType(grammarTokenTypes);
-    foreach (GrammarAST n in nodes)
+        public ErrorManager getErrorManager() { return tool.errMgr; }
+    }
+    public HashSet<String> getStringLiterals()
     {
-        if (n.atnState != null)
+        HashSet<String> strings = new HashSet<String>();
+        GrammarTreeVisitor collector = new GTV();
+        collector.visitGrammar(ast);
+        return strings;
+    }
+
+    public void setLookaheadDFA(int decision, DFA lookaheadDFA)
+    {
+        decisionDFAs.put(decision, lookaheadDFA);
+    }
+
+    public static Dictionary<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
+    {
+        Dictionary<int, Interval> stateToGrammarRegionMap = new();
+        if (ast == null) return stateToGrammarRegionMap;
+
+        List<GrammarAST> nodes = ast.getNodesWithType(grammarTokenTypes);
+        foreach (GrammarAST n in nodes)
         {
-            Interval tokenRegion = Interval.of(n.getTokenStartIndex(), n.getTokenStopIndex());
-            Tree ruleNode = null;
-            // RULEs, BLOCKs of transformed recursive rules point to original token interval
-            switch (n.getType())
+            if (n.atnState != null)
             {
-                case ANTLRParser.RULE:
-                    ruleNode = n;
-                    break;
-                case ANTLRParser.BLOCK:
-                case ANTLRParser.CLOSURE:
-                    ruleNode = n.getAncestor(ANTLRParser.RULE);
-                    break;
-            }
-            if (ruleNode is RuleAST)
-            {
-                String ruleName = ((RuleAST)ruleNode).getRuleName();
-                Rule r = ast.g.getRule(ruleName);
-                if (r is LeftRecursiveRule)
+                Interval tokenRegion = Interval.of(n.getTokenStartIndex(), n.getTokenStopIndex());
+                Tree ruleNode = null;
+                // RULEs, BLOCKs of transformed recursive rules point to original token interval
+                switch (n.getType())
                 {
-                    RuleAST originalAST = ((LeftRecursiveRule)r).getOriginalAST();
-                    tokenRegion = Interval.of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
+                    case ANTLRParser.RULE:
+                        ruleNode = n;
+                        break;
+                    case ANTLRParser.BLOCK:
+                    case ANTLRParser.CLOSURE:
+                        ruleNode = n.getAncestor(ANTLRParser.RULE);
+                        break;
                 }
+                if (ruleNode is RuleAST)
+                {
+                    String ruleName = ((RuleAST)ruleNode).getRuleName();
+                    Rule r = ast.g.getRule(ruleName);
+                    if (r is LeftRecursiveRule)
+                    {
+                        RuleAST originalAST = ((LeftRecursiveRule)r).getOriginalAST();
+                        tokenRegion = Interval.of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
+                    }
+                }
+                stateToGrammarRegionMap.put(n.atnState.stateNumber, tokenRegion);
             }
-            stateToGrammarRegionMap.put(n.atnState.stateNumber, tokenRegion);
         }
+        return stateToGrammarRegionMap;
     }
-    return stateToGrammarRegionMap;
-}
 
-/** Given an ATN state number, return the token index range within the grammar from which that ATN state was derived. */
-public Interval getStateToGrammarRegion(int atnStateNumber)
-{
-    if (stateToGrammarRegionMap == null)
+    /** Given an ATN state number, return the token index range within the grammar from which that ATN state was derived. */
+    public Interval getStateToGrammarRegion(int atnStateNumber)
     {
-        stateToGrammarRegionMap = getStateToGrammarRegionMap(ast, null); // map all nodes with non-null atn state ptr
+        if (stateToGrammarRegionMap == null)
+        {
+            stateToGrammarRegionMap = getStateToGrammarRegionMap(ast, null); // map all nodes with non-null atn state ptr
+        }
+        if (stateToGrammarRegionMap == null) return Interval.INVALID;
+
+        return stateToGrammarRegionMap.get(atnStateNumber);
     }
-    if (stateToGrammarRegionMap == null) return Interval.INVALID;
 
-    return stateToGrammarRegionMap.get(atnStateNumber);
-}
-
-public LexerInterpreter createLexerInterpreter(CharStream input)
-{
-    if (this.isParser())
+    public LexerInterpreter createLexerInterpreter(CharStream input)
     {
-        throw new IllegalStateException("A lexer interpreter can only be created for a lexer or combined grammar.");
+        if (this.isParser())
+        {
+            throw new IllegalStateException("A lexer interpreter can only be created for a lexer or combined grammar.");
+        }
+
+        if (this.isCombined())
+        {
+            return implicitLexer.createLexerInterpreter(input);
+        }
+
+        List<String> allChannels = new();
+        allChannels.Add("DEFAULT_TOKEN_CHANNEL");
+        allChannels.Add("HIDDEN");
+        allChannels.AddRange(channelValueToNameList);
+
+        // must run ATN through serializer to set some state flags
+        IntegerList serialized = ATNSerializer.getSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+        return new LexerInterpreter(
+                fileName,
+                getVocabulary(),
+                Arrays.AsList(getRuleNames()),
+                allChannels,
+                ((LexerGrammar)this).modes.Keys,
+                deserializedATN,
+                input);
     }
 
-    if (this.isCombined())
+    /** @since 4.5.1 */
+    public GrammarParserInterpreter createGrammarParserInterpreter(TokenStream tokenStream)
     {
-        return implicitLexer.createLexerInterpreter(input);
+        if (this.isLexer())
+        {
+            throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
+        }
+        // must run ATN through serializer to set some state flags
+        IntegerList serialized = ATNSerializer.getSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+
+        return new GrammarParserInterpreter(this, deserializedATN, tokenStream);
     }
 
-    List<String> allChannels = new ();
-    allChannels.Add("DEFAULT_TOKEN_CHANNEL");
-    allChannels.Add("HIDDEN");
-    allChannels.AddRange(channelValueToNameList);
-
-    // must run ATN through serializer to set some state flags
-    IntegerList serialized = ATNSerializer.getSerialized(atn);
-    ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
-    return new LexerInterpreter(
-            fileName,
-            getVocabulary(),
-            Arrays.AsList(getRuleNames()),
-            allChannels,
-            ((LexerGrammar)this).modes.Keys,
-            deserializedATN,
-            input);
-}
-
-/** @since 4.5.1 */
-public GrammarParserInterpreter createGrammarParserInterpreter(TokenStream tokenStream)
-{
-    if (this.isLexer())
+    public ParserInterpreter createParserInterpreter(TokenStream tokenStream)
     {
-        throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
+        if (this.isLexer())
+        {
+            throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
+        }
+
+        // must run ATN through serializer to set some state flags
+        IntegerList serialized = ATNSerializer.getSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+
+        return new ParserInterpreter(fileName, getVocabulary(), Arrays.AsList(getRuleNames()), deserializedATN, tokenStream);
     }
-    // must run ATN through serializer to set some state flags
-    IntegerList serialized = ATNSerializer.getSerialized(atn);
-    ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
-
-    return new GrammarParserInterpreter(this, deserializedATN, tokenStream);
-}
-
-public ParserInterpreter createParserInterpreter(TokenStream tokenStream)
-{
-    if (this.isLexer())
-    {
-        throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
-    }
-
-    // must run ATN through serializer to set some state flags
-    IntegerList serialized = ATNSerializer.getSerialized(atn);
-    ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
-
-    return new ParserInterpreter(fileName, getVocabulary(), Arrays.AsList(getRuleNames()), deserializedATN, tokenStream);
-}
 }

@@ -61,13 +61,13 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 */
 	protected static FrequencySet<String> combineMax(FrequencySet<String> a, FrequencySet<String> b) {
 		FrequencySet<String> result = combineAndClip(a, b, 1);
-		foreach (Map.Entry<String, MutableInt> entry in a.entrySet()) {
-			result.get(entry.getKey()).v = entry.getValue().v;
+		foreach (var entry in a) {
+			result.get(entry.Key).v = entry.Value.v;
 		}
 
-		foreach (Map.Entry<String, MutableInt> entry in b.entrySet()) {
-			MutableInt slot = result.get(entry.getKey());
-			slot.v = Math.Max(slot.v, entry.getValue().v);
+		foreach (var entry in b) {
+			MutableInt slot = result.get(entry.Key);
+			slot.v = Math.Max(slot.v, entry.Value.v);
 		}
 
 		return result;
@@ -91,7 +91,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 		//assert a != SENTINEL;
 		FrequencySet<String> result = combineAndClip(a, b, int.MaxValue);
-		foreach (Map.Entry<String, MutableInt> entry in result.entrySet()) {
+		foreach (var entry in result) {
 			entry.getValue().v = Math.Min(a.count(entry.getKey()), b.count(entry.getKey()));
 		}
 
@@ -147,7 +147,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	public void stringRef(TerminalAST @ref) {
 		String tokenName = @ref.g.getTokenName(@ref.getText());
 
-		if (tokenName != null && !tokenName.startsWith("T__")) {
+		if (tokenName != null && !tokenName.StartsWith("T__")) {
 			frequencies.peek().add(tokenName);
 			minFrequencies.peek().add(tokenName);
 		}
@@ -197,9 +197,9 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 			entry.getValue().v = 1;
 		}
 
-		if (minFrequencies.peek().size() > 1) {
+		if (minFrequencies.peek().Count > 1) {
 			// Everything is optional
-			minFrequencies.peek().clear();
+			minFrequencies.peek().Clear();
 		}
 
 		frequencies.push(combineAndClip(frequencies.pop(), frequencies.pop(), 2));
@@ -217,7 +217,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		if (tree.getType() == CLOSURE || tree.getType() == OPTIONAL) {
 			// Everything inside a closure is optional, so the minimum
 			// number of occurrences for all elements is 0.
-			minFrequencies.peek().clear();
+			minFrequencies.peek().Clear();
 		}
 	}
 

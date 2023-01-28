@@ -24,9 +24,9 @@ namespace org.antlr.v4.semantics;
 public class SymbolChecks {
 	Grammar g;
 	SymbolCollector collector;
-	Dictionary<String, Rule> nameToRuleMap = new HashMap<String, Rule>();
+	Dictionary<String, Rule> nameToRuleMap = new();
 	HashSet<String> tokenIDs = new HashSet<String>();
-	Dictionary<String, HashSet<String>> actionScopeToActionNames = new HashMap<String, HashSet<String>>();
+	Dictionary<String, HashSet<String>> actionScopeToActionNames = new ();
 
 	public ErrorManager errMgr;
 
@@ -38,7 +38,7 @@ public class SymbolChecks {
 		this.errMgr = g.tool.errMgr;
 
 		foreach (GrammarAST tokenId in collector.tokenIDRefs) {
-			tokenIDs.add(tokenId.getText());
+			tokenIDs.Add(tokenId.getText());
 		}
 	}
 
@@ -73,8 +73,8 @@ public class SymbolChecks {
 				scopeActions = new HashSet<String>();
 				actionScopeToActionNames.put(scope, scopeActions);
 			}
-			if (!scopeActions.contains(name)) {
-				scopeActions.add(name);
+			if (!scopeActions.Contains(name)) {
+				scopeActions.Add(name);
 			}
 			else {
 				errMgr.grammarError(ErrorType.ACTION_REDEFINITION,
@@ -153,7 +153,7 @@ public class SymbolChecks {
 				return altAST.altLabel.toString();
 			}
 			else if (altAST.leftRecursiveAltInfo != null) {
-				return altAST.leftRecursiveAltInfo.altLabel.toString();
+				return altAST.leftRecursiveAltInfo.altLabel.ToString();
 			}
 			else {
 				return findAltLabelName(label.parent);
@@ -249,7 +249,7 @@ public class SymbolChecks {
 		}
 
 		foreach (tool.Attribute attribute in attributes.attributes.Values) {
-			if (ruleNames.contains(attribute.name)) {
+			if (ruleNames.Contains(attribute.name)) {
 				errMgr.grammarError(
 						errorType,
 						g.fileName,
@@ -383,7 +383,7 @@ public class SymbolChecks {
 					}
 					else {
 						String text = terminalAST.token.getText();
-						currentValue.Append(text.substring(1, text.length() - 1));
+						currentValue.Append(text.substring(1, text.Length - 1));
 					}
 				}
 

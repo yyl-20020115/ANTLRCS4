@@ -19,7 +19,7 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 
 	//@Override
 	public V put(K key, V value) {
-		elements.add(key);
+		elements.Add(key);
 		return base.put(key, value);
 	}
 

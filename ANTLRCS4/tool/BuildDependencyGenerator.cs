@@ -161,8 +161,8 @@ public class BuildDependencyGenerator {
 			return new File(fileName);
 		}
 		if (outputDir.getName().Equals(".")) {
-			String fname = outputDir.toString();
-			int dot = fname.lastIndexOf('.');
+			String fname = outputDir.ToString();
+			int dot = fname.LastIndexOf('.');
 			outputDir = new File(outputDir.toString().substring(0,dot));
 		}
 
@@ -250,7 +250,7 @@ public class BuildDependencyGenerator {
             return fileName;
         }
 		else if (outputDir.indexOf(' ') >= 0) { // has spaces?
-            String escSpaces = outputDir.replace(" ", "\\ ");
+            String escSpaces = outputDir.Replace(" ", "\\ ");
             return escSpaces + File.separator + fileName;
         }
 		else {

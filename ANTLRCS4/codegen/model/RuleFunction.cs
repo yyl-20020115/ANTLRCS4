@@ -228,7 +228,7 @@ public class RuleFunction : OutputModelObject {
 	private String getName(GrammarAST token) {
 		String tokenText = token.getText();
 		String tokenName = token.getType() != STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
-		return tokenName == null || tokenName.startsWith("T__") ? null : tokenName; // Do not include tokens with auto generated names
+		return tokenName == null || tokenName.StartsWith("T__") ? null : tokenName; // Do not include tokens with auto generated names
 	}
 
 	/** Given list of X and r refs in alt, compute how many of each there are */

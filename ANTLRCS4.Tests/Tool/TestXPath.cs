@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.xpath;
@@ -155,7 +156,7 @@ public class TestXPath {
 		catch (ArgumentException iae) {
 			e = iae;
 		}
-		assertNotNull(e);
+		Assert.IsNotNull(e);
 		Assert.AreEqual(expected, e.Message);
 	}
 
@@ -167,14 +168,14 @@ public class TestXPath {
 				grammarFileName, grammar, input, xpath, startRuleName, parserName, lexerName);
 
 		List<String> nodes = new ();
-		for (ParseTree t : result.b) {
+		foreach (ParseTree t in result.b) {
 			if ( t is RuleContext) {
 				RuleContext r = (RuleContext)t;
-				nodes.add(result.a[r.getRuleIndex()]);
+				nodes.Add(result.a[r.getRuleIndex()]);
 			}
 			else {
 				TerminalNode token = (TerminalNode)t;
-				nodes.add(token.getText());
+				nodes.Add(token.getText());
 			}
 		}
 		return nodes;

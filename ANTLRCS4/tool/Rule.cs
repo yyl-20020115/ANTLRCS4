@@ -145,7 +145,7 @@ public class Rule : AttributeResolver {
 	public HashSet<String> getTokenRefs() {
         HashSet<String> refs = new HashSet<String>();
 		for (int i=1; i<=numberOfAlts; i++) {
-			refs.addAll(alt[i].tokenRefs.keySet());
+			refs.UnionWith(alt[i].tokenRefs.Keys);
 		}
 		return refs;
     }
@@ -153,7 +153,7 @@ public class Rule : AttributeResolver {
     public HashSet<String> getElementLabelNames() {
         HashSet<String> refs = new HashSet<String>();
         for (int i=1; i<=numberOfAlts; i++) {
-            refs.addAll(alt[i].labelDefs.keySet());
+            refs.UnionWith(alt[i].labelDefs.Keys);
         }
 		if ( refs.Count == 0 ) return null;
         return refs;

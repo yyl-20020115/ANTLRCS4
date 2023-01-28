@@ -1633,7 +1633,7 @@ public class GrammarTreeVisitor : TreeParser
                             match(input, RULEMODIFIERS, FOLLOW_RULEMODIFIERS_in_lexerRule708);
                             match(input, Token.DOWN, null);
                             m = (GrammarAST)match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule712);
-                            mods.add(m);
+                            mods.Add(m);
                             match(input, Token.UP, null);
 
                         }

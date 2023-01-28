@@ -40,13 +40,13 @@ public class TestCharSupport {
 
 	[TestMethod]
 	public void testGetStringFromGrammarStringLiteral() {
-		assertNull(CharSupport
+		Assert.IsNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\u{bbb"));
-		assertNull(CharSupport
+		Assert.IsNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\u{[]bb"));
-		assertNull(CharSupport
+		Assert.IsNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\u[]bb"));
-		assertNull(CharSupport
+		Assert.IsNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\ubb"));
 
 		Assert.AreEqual("oo»b", CharSupport

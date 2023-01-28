@@ -695,7 +695,7 @@ public class TestCompositeGrammars {
 				foundMsg = m;
 			}
 		}
-		assertNotNull(foundMsg, "no error; "+expectedMessage.getErrorType()+" expected");
+		Assert.IsNotNull(foundMsg, "no error; "+expectedMessage.getErrorType()+" expected");
 		Assert.IsTrue(foundMsg is GrammarSemanticsMessage, "error is not a GrammarSemanticsMessage");
 		Assert.AreEqual(Arrays.ToString(expectedMessage.getArgs()), Arrays.ToString(foundMsg.getArgs()));
 		if ( equeue.size()!=1 ) {

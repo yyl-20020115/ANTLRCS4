@@ -8,6 +8,7 @@ using org.antlr.runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.tree;
+using System.Reflection;
 
 namespace org.antlr.v4.test.tool;
 
@@ -23,25 +24,25 @@ public class TestASTStructure {
 	
 	{
 		ANTLRStringStream @is = new ANTLRStringStream(input);
-		Type lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
-		Constructor<TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
+		Type lexerClass = Type.forName(lexerClassName).asSubclass(TokenSource);
+		ConstructorInfo lexConstructor = lexerClass.getConstructor(CharStream);
 		TokenSource lexer = lexConstructor.newInstance(@is);
         @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Class<Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
+		Type parserClass = Type.forName(parserClassName).asSubclass(Parser);
 		Constructor<Parser> parConstructor = parserClass.getConstructor(TokenStream);
 		Parser parser = parConstructor.newInstance(tokens);
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
-			Method m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
-			Class<TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
+			MethodInfo m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
+			Type adaptorClass = Type.forName(adaptorClassName).asSubclass(TreeAdaptor);
 			m.invoke(parser, adaptorClass.newInstance());
 		}
 
-		Method ruleMethod = parserClass.getMethod(ruleName);
+		MethodInfo ruleMethod = parserClass.getMethod(ruleName);
 
 		// INVOKE RULE
 		return ruleMethod.invoke(parser);

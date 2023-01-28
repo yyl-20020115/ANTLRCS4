@@ -51,7 +51,7 @@ public class ToolTestUtils {
 		using (JavaRunner runner = new JavaRunner(workingDir, saveTestDir)) {
 			State result = runner.run(runOptions);
 			if (!(result is ExecutedState)) {
-				fail(result.getErrorMessage());
+				Assert.Fail(result.getErrorMessage());
 			}
 			return  (ExecutedState) result;
 		}
@@ -73,7 +73,7 @@ public class ToolTestUtils {
 			String grammarStr = pairs[i];
 			String expect = pairs[i + 1];
 
-			String[] lines = grammarStr.split("\n");
+			String[] lines = grammarStr.Split('\n');
 			String fileName = getFilenameFromFirstLineOfGrammar(lines[0]);
 
 			String tempDirName = "AntlrTestErrors-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
@@ -82,8 +82,8 @@ public class ToolTestUtils {
 			try {
 				ErrorQueue equeue = antlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-				String actual = equeue.ToString(true);
-				actual = actual.replace(tempTestDir + File.separator, "");
+				String actual = equeue.toString(true);
+				actual = actual.Replace(tempTestDir + File.separator, "");
 				String msg = grammarStr;
 				msg = msg.Replace("\n", "\\n");
 				msg = msg.Replace("\r", "\\r");
@@ -102,18 +102,18 @@ public class ToolTestUtils {
 
 	public static String getFilenameFromFirstLineOfGrammar(String line) {
 		String fileName = "A" + Tool.GRAMMAR_EXTENSION;
-		int grIndex = line.lastIndexOf("grammar");
-		int semi = line.lastIndexOf(';');
+		int grIndex = line.LastIndexOf("grammar");
+		int semi = line.LastIndexOf(';');
 		if ( grIndex>=0 && semi>=0 ) {
-			int space = line.indexOf(' ', grIndex);
+			int space = line.IndexOf(' ', grIndex);
 			fileName = line.substring(space+1, semi)+Tool.GRAMMAR_EXTENSION;
 		}
-		if ( fileName.Length()==Tool.GRAMMAR_EXTENSION.Length() ) fileName = "A" + Tool.GRAMMAR_EXTENSION;
+		if ( fileName.Length ==Tool.GRAMMAR_EXTENSION.Length ) fileName = "A" + Tool.GRAMMAR_EXTENSION;
 		return fileName;
 	}
 
 	public static List<String> realElements(List<String> elements) {
-		return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.size());
+		return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.Count);
 	}
 
 	public static String load(String fileName)

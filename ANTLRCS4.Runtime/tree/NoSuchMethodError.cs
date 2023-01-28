@@ -25,22 +25,27 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.v4.runtime;
+using System.Runtime.Serialization;
 
-namespace org.antlr.runtime;
-
-public class UnwantedTokenException :RecognitionException
+namespace org.antlr.runtime.tree
 {
-    internal int expecting;
-
-    public UnwantedTokenException()
-        :base()
+    [Serializable]
+    internal class NoSuchMethodError : Exception
     {
+        public NoSuchMethodError()
+        {
+        }
 
-    }
+        public NoSuchMethodError(string? message) : base(message)
+        {
+        }
 
-    internal Token getUnexpectedToken()
-    {
-        throw new NotImplementedException();
+        public NoSuchMethodError(string? message, Exception? innerException) : base(message, innerException)
+        {
+        }
+
+        protected NoSuchMethodError(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 }

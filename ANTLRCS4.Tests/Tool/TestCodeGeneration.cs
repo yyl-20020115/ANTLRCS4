@@ -19,9 +19,9 @@ public class TestCodeGeneration {
 				"a[int xyz] : 'a' ;\n";
 		List<String> evals = getEvalInfoForString(g, "int xyz");
 		Console.Out.WriteLine(evals);
-		for (int i = 0; i < evals.size(); i++) {
+		for (int i = 0; i < evals.Count; i++) {
 			String eval = evals.get(i);
-			Assert.IsFalse(eval.startsWith("<pojo:"), "eval should not be POJO: "+eval);
+			Assert.IsFalse(eval.StartsWith("<pojo:"), "eval should not be POJO: "+eval);
 		}
 	}
 
@@ -31,7 +31,7 @@ public class TestCodeGeneration {
 			"root: 't1';\n" +
 			"Token: 't1';";
 		List<String> evals = getEvalInfoForString(g, "() { return getToken(");
-		assertNotEquals(0, evals.size());
+		Assert.AreNotEqual(0, evals.Count);
 	}
 
 	[TestMethod] public void AssignTokenNamesToStringLiteralArraysInGeneratedParserRuleContexts(){
@@ -40,7 +40,7 @@ public class TestCodeGeneration {
 				"root: 't1' 't1';\n" +
 				"Token: 't1';";
 		List<String> evals = getEvalInfoForString(g, "() { return getTokens(");
-		assertNotEquals(0, evals.size());
+		Assert.AreNotEqual(0, evals.Count);
 	}
 
 	/** Add tags around each attribute/template/value write */
@@ -60,7 +60,7 @@ public class TestCodeGeneration {
 			if ( o is ST ) {
 				String name = ((ST)o).getName();
 				name = name.substring(1);
-				if ( !name.startsWith("_sub") ) {
+				if ( !name.StartsWith("_sub") ) {
 					try {
 						@out.write("<ST:" + name + ">");
 						evals.Add("<ST:" + name + ">");
@@ -78,7 +78,7 @@ public class TestCodeGeneration {
 
 		//@Override
 		protected int writePOJO(STWriter @out, InstanceScope scope, Object o, String[] options){
-			Class type = o.getClass();
+			Type type = o.getClass();
 			String name = type.getSimpleName();
 			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
