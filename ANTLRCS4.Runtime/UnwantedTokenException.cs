@@ -33,8 +33,8 @@ public class UnwantedTokenException :RecognitionException
 {
     internal int expecting;
 
-    public UnwantedTokenException(int ttype)
-        :base()
+    public UnwantedTokenException(int ttype,IntStream input)
+        :base(null,input,null)
     {
 
     }

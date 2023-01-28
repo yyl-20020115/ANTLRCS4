@@ -789,8 +789,10 @@ public abstract class BaseRecognizer
     public static List<String> getRuleInvocationStack(Exception e,
                                               String recognizerClassName)
     {
+       
+        //TODO:
         List<String> rules = new ();
-        StackTraceElement[] stack = e.getStackTrace();
+        StackTraceElement[] stack = new StackTraceElement[0];// e.getStackTrace();
         int i;
         for (i = stack.Length - 1; i >= 0; i--)
         {

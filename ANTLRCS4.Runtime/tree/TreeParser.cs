@@ -211,13 +211,13 @@ public class TreeParser : BaseRecognizer
                                     Object t,
                                     String context)
     {
-        Matcher dotdotMatcher = dotdotPattern.matcher(context);
-        Matcher doubleEtcMatcher = doubleEtcPattern.matcher(context);
-        if (dotdotMatcher.find())
+        var dotdotMatcher = dotdotPattern.Match(context);
+        var doubleEtcMatcher = doubleEtcPattern.Match(context);
+        if (dotdotMatcher.Success)
         { // don't allow "..", must be "..."
             throw new ArgumentException("invalid syntax: ..");
         }
-        if (doubleEtcMatcher.find())
+        if (doubleEtcMatcher.Success)
         { // don't allow double "..."
             throw new ArgumentException("invalid syntax: ... ...");
         }

@@ -72,7 +72,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  override this method and any other createToken variant.
      */
     //@Override
-    public Token createToken(int tokenType, String text)
+    public override Token createToken(int tokenType, String text)
     {
         return new CommonToken(tokenType, text);
     }
@@ -92,7 +92,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  override this method and any other createToken variant.
      */
     //@Override
-    public Token createToken(Token fromToken)
+    public override Token createToken(Token fromToken)
     {
         return new CommonToken(fromToken);
     }
@@ -205,13 +205,4 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
         }
     }
 
-    public override Token createToken(int tokenType, string text)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Token createToken(Token fromToken)
-    {
-        throw new NotImplementedException();
-    }
 }
