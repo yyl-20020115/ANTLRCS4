@@ -17,9 +17,10 @@ public class FailedPredicateException : RecognitionException {
 	private readonly int ruleIndex;
 	private readonly int predicateIndex;
 	private readonly String predicate;
+    internal string predicateText;
+    internal string ruleName;
 
-
-	public FailedPredicateException(Parser recognizer,
+    public FailedPredicateException(Parser recognizer,
 									String predicate = null,
 									String message = null)
 		: base(formatMessage(predicate, message), recognizer, recognizer.getInputStream(), recognizer.GetCtx())

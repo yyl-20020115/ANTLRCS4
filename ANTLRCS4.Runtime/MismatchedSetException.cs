@@ -31,5 +31,6 @@ namespace org.antlr.runtime
 {
     internal class MismatchedSetException : RecognitionException
     {
+        internal string expecting;
     }
 }

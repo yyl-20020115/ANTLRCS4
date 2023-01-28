@@ -299,4 +299,14 @@ public class BitSet
         builder.Append('}');
         return builder.ToString();
     }
+
+    public bool member(int n)
+    {
+        return this[n];
+    }
+
+    public void remove(int n)
+    {
+        this[n] = false;
+    }
 }

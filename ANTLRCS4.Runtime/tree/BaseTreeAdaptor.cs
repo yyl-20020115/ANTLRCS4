@@ -38,7 +38,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
 	 *  track ourselves.  That's ok, it's only for debugging, though it's
 	 *  expensive: we have to create a hashtable with all tree nodes in it.
 	 */
-    protected Dictionary<Object, Integer> treeToUniqueIDMap;
+    protected Dictionary<Object, int> treeToUniqueIDMap;
     protected int uniqueNodeID = 1;
 
     //@Override
@@ -284,15 +284,14 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         if (treeToUniqueIDMap == null)
         {
-            treeToUniqueIDMap = new Dictionary<Object, Integer>();
+            treeToUniqueIDMap = new Dictionary<Object, int>();
         }
-        Integer prevID = treeToUniqueIDMap.get(node);
-        if (prevID != null)
+        if (treeToUniqueIDMap.TryGetValue(node, out var prevID))
         {
             return prevID;
         }
         int ID = uniqueNodeID;
-        treeToUniqueIDMap.put(node, ID);
+        treeToUniqueIDMap[node]= ID;
         uniqueNodeID++;
         return ID;
         // GC makes these nonunique:
@@ -324,5 +323,60 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  override this method and any other createToken variant.
      */
     public abstract Token createToken(Token fromToken);
+
+    public object create(Token payload)
+    {
+        throw new NotImplementedException();
+    }
+
+    public object dupNode(object treeNode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Token getToken(object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenBoundaries(object t, Token startToken, Token stopToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStartIndex(object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStopIndex(object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public object getParent(object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setParent(object t, object parent)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getChildIndex(object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setChildIndex(object t, int index)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void replaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
+    {
+        throw new NotImplementedException();
+    }
 }
 

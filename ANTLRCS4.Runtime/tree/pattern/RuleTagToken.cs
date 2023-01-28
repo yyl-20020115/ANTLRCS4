@@ -199,4 +199,54 @@ public class RuleTagToken : Token {
 	public override String ToString() {
 		return ruleName + ":" + bypassTokenType;
 	}
+
+    public void setText(string text)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setType(int ttype)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setLine(int line)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setCharPositionInLine(int pos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setChannel(int channel)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenIndex(int index)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setStartIndex(int start)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setStopIndex(int stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenSource(TokenSource tokenSource)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setInputStream(CharStream input)
+    {
+        throw new NotImplementedException();
+    }
 }

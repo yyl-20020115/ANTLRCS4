@@ -274,7 +274,7 @@ public abstract class BaseTree : Tree
           // set children and then delete extra
             for (int j = 0; j < numNewChildren; j++)
             {
-                children.set(startChildIndex + j, newChildren[(j)]);
+                children[startChildIndex + j]= newChildren[(j)];
             }
             int indexToDelete = startChildIndex + numNewChildren;
             for (int c = indexToDelete; c <= stopChildIndex; c++)
@@ -436,13 +436,13 @@ public abstract class BaseTree : Tree
     {
         if (children == null || children.Count==0)
         {
-            return this.toString();
+            return this.ToString();
         }
         StringBuilder buf = new StringBuilder();
         if (!isNil())
         {
             buf.Append("(");
-            buf.Append(this.toString());
+            buf.Append(this.ToString());
             buf.Append(' ');
         }
         for (int i = 0; children != null && i < children.Count; i++)
@@ -474,6 +474,51 @@ public abstract class BaseTree : Tree
     }
 
     public object getPayload()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getType()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string getText()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setParent(BaseTree baseTree)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenStartIndex(int start)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenStopIndex(int stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStartIndex()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStopIndex()
+    {
+        throw new NotImplementedException();
+    }
+
+    public object dupNode()
+    {
+        throw new NotImplementedException();
+    }
+
+    int Tree.getChildIndex()
     {
         throw new NotImplementedException();
     }

@@ -309,4 +309,24 @@ public class UnbufferedTokenStream : TokenStream {
 	protected int getBufferStartIndex() {
 		return currentTokenIndex - p;
 	}
+
+    public int range()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string toString(int start, int stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string toString(Token start, Token stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int nvaeMark)
+    {
+        throw new NotImplementedException();
+    }
 }

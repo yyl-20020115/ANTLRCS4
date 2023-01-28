@@ -39,7 +39,7 @@ public interface Tree {
 	 */
 	String toStringTree();
     string getText();
-    void setParent(BaseTree baseTree);
+    void setParent(Tree baseTree);
     void setChildIndex(int i);
     void setTokenStartIndex(int start);
     void setTokenStopIndex(int stop);
@@ -48,5 +48,8 @@ public interface Tree {
     void replaceChildren(int startChildIndex, int stopChildIndex, object t);
     object dupNode();
     object deleteChild(int i);
-    Tree getChildIndex();
+    int getChildIndex();
+    bool isNil();
+    void addChild(Tree child);
+    void setChild(int i, Tree child);
 }

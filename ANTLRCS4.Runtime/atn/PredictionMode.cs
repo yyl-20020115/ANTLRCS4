@@ -515,7 +515,7 @@ public static class PredictionModeTools
 	public static BitSet getAlts(ICollection<BitSet> altsets) {
 		BitSet all = new BitSet();
 		foreach (BitSet alts in altsets) {
-			all.or(alts);
+			all.Or(alts);
 		}
 		return all;
 	}

@@ -26,6 +26,7 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using System.Xml.Linq;
 
 namespace org.antlr.runtime;
@@ -275,4 +276,9 @@ public class ANTLRStringStream : CharStream
 
     //@Override
     public override String ToString() { return new String(data); }
+
+    public string getText(Interval interval)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -487,4 +487,24 @@ public class BufferedTokenStream : TokenStream {
 			}
 		}
     }
+
+    public int range()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string toString(int start, int stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string toString(Token start, Token stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int nvaeMark)
+    {
+        throw new NotImplementedException();
+    }
 }

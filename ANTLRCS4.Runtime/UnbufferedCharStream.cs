@@ -345,4 +345,19 @@ public class UnbufferedCharStream : CharStream {
 	protected int getBufferStartIndex() {
 		return currentCharIndex - p;
 	}
+
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int start)
+    {
+        throw new NotImplementedException();
+    }
 }

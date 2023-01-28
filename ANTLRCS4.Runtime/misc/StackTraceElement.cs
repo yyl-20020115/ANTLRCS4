@@ -8,12 +8,22 @@ namespace org.antlr.v4.runtime.misc;
 
 public class StackTraceElement
 {
-    internal bool getFileName()
+    public string getClassName()
     {
         throw new NotImplementedException();
     }
 
-    internal bool getLineNumber()
+    public string getFileName()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string getLineNumber()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string getMethodName()
     {
         throw new NotImplementedException();
     }

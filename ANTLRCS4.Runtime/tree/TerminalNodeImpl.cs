@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.tree;
@@ -79,5 +80,75 @@ public class TerminalNodeImpl : TerminalNode {
     Tree Tree.getChild(int i)
     {
 		return this.getChild(i);	
+    }
+
+    public int getType()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setParent(Tree baseTree)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setChildIndex(int i)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenStartIndex(int start)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenStopIndex(int stop)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStartIndex()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTokenStopIndex()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void replaceChildren(int startChildIndex, int stopChildIndex, object t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public object dupNode()
+    {
+        throw new NotImplementedException();
+    }
+
+    public object deleteChild(int i)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getChildIndex()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool isNil()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void addChild(Tree child)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setChild(int i, Tree child)
+    {
+        throw new NotImplementedException();
     }
 }

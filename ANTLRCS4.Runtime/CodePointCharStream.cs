@@ -148,6 +148,21 @@ public abstract class CodePointCharStream : CharStream {
         throw new NotImplementedException();
     }
 
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int start)
+    {
+        throw new NotImplementedException();
+    }
+
     // 8-bit storage for code points <= U+00FF.
     public class CodePoint8BitCharStream : CodePointCharStream {
 		private readonly byte[] byteArray;

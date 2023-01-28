@@ -204,4 +204,14 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
             ((Tree)parent).replaceChildren(startChildIndex, stopChildIndex, t);
         }
     }
+
+    public override Token createToken(int tokenType, string text)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Token createToken(Token fromToken)
+    {
+        throw new NotImplementedException();
+    }
 }

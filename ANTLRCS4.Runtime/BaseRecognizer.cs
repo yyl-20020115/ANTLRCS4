@@ -238,7 +238,7 @@ public abstract class BaseRecognizer
      */
     public String getErrorMessage(RecognitionException e, String[] tokenNames)
     {
-        String msg = e.getMessage();
+        String msg = e.Message;
         if (e is UnwantedTokenException ute) {
             String tokenName;
             if (ute.expecting == Token.EOF)
@@ -759,7 +759,7 @@ public abstract class BaseRecognizer
         if ((state._fsp + 1) >= state.following.Length)
         {
             BitSet[] f = new BitSet[state.following.Length * 2];
-            System.arraycopy(state.following, 0, f, 0, state.following.Length);
+            Array.Copy(state.following, 0, f, 0, state.following.Length);
             state.following = f;
         }
         state.following[++state._fsp] = fset;
@@ -775,7 +775,7 @@ public abstract class BaseRecognizer
      */
     public List<String> getRuleInvocationStack()
     {
-        String parserClassName = getClass().getName();
+        String parserClassName = GetType().Name;
         return getRuleInvocationStack(new Exception(), parserClassName);
     }
 
@@ -795,7 +795,7 @@ public abstract class BaseRecognizer
         for (i = stack.Length - 1; i >= 0; i--)
         {
             StackTraceElement t = stack[i];
-            if (t.getClassName().startsWith("org.antlr.runtime."))
+            if (t.getClassName().StartsWith("org.antlr.runtime."))
             {
                 continue; // skip support code such as this method
             }
@@ -868,9 +868,7 @@ public abstract class BaseRecognizer
         {
             state.ruleMemo[ruleIndex] = new ();
         }
-        Integer stopIndexI =
-            state.ruleMemo[ruleIndex].get(ruleStartIndex);
-        if (stopIndexI == null)
+        if (!state.ruleMemo[ruleIndex].TryGetValue(ruleStartIndex,out var stopIndexI))
         {
             return MEMO_RULE_UNKNOWN;
         }
@@ -922,9 +920,9 @@ public abstract class BaseRecognizer
         {
             Console.Error.WriteLine("!!!!!!!!! memo size is " + state.ruleMemo.Length + ", but rule index is " + ruleIndex);
         }
-        if (state.ruleMemo[ruleIndex] != null)
+        if (state.ruleMemo[ruleIndex].TryGetValue(ruleStartIndex,out _))
         {
-            state.ruleMemo[ruleIndex].put(ruleStartIndex, stopTokenIndex);
+            state.ruleMemo[ruleIndex][ruleStartIndex]= stopTokenIndex;
         }
     }
 
@@ -939,7 +937,7 @@ public abstract class BaseRecognizer
             var ruleMap = state.ruleMemo[i];
             if (ruleMap != null)
             {
-                n += ruleMap.size(); // how many input indexes are recorded?
+                n += ruleMap.Count; // how many input indexes are recorded?
             }
         }
         return n;
