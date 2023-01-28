@@ -3,26 +3,16 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.java.api;
+namespace org.antlr.v4.test.runtime.java.api;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.TokenStreamRewriter;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.tool.LexerGrammar;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+[TestClass]
 public class TestTokenStreamRewriter {
 
 	/** Public default constructor used by TestRig */
 	public TestTokenStreamRewriter() {
 	}
 
-	@Test
+	[TestMethod]
 	public void testInsertBeforeIndex0()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
@@ -39,7 +29,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testInsertAfterLastIndex()  {
+	[TestMethod] public void testInsertAfterLastIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -56,7 +46,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void test2InsertBeforeAfterMiddleIndex()  {
+	[TestMethod] public void test2InsertBeforeAfterMiddleIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -74,7 +64,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceIndex0()  {
+	[TestMethod] public void testReplaceIndex0()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -91,7 +81,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceLastIndex()  {
+	[TestMethod] public void testReplaceLastIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -108,7 +98,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceMiddleIndex()  {
+	[TestMethod] public void testReplaceMiddleIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -125,7 +115,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testToStringStartStop()  {
+	[TestMethod] public void testToStringStartStop()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "ID : 'a'..'z'+;\n" +
@@ -162,7 +152,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testToStringStartStop2()  {
+	[TestMethod] public void testToStringStartStop2()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "ID : 'a'..'z'+;\n" +
@@ -220,7 +210,7 @@ public class TestTokenStreamRewriter {
 	}
 
 
-	@Test public void test2ReplaceMiddleIndex()  {
+	[TestMethod] public void test2ReplaceMiddleIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -238,7 +228,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void test2ReplaceMiddleIndex1InsertBefore()  {
+	[TestMethod] public void test2ReplaceMiddleIndex1InsertBefore()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -257,7 +247,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceThenDeleteMiddleIndex()  {
+	[TestMethod] public void testReplaceThenDeleteMiddleIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -275,7 +265,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testInsertInPriorReplace()  {
+	[TestMethod] public void testInsertInPriorReplace()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -300,7 +290,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, exc.getMessage());
 	}
 
-	@Test public void testInsertThenReplaceSameIndex()  {
+	[TestMethod] public void testInsertThenReplaceSameIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -320,7 +310,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void test2InsertMiddleIndex()  {
+	[TestMethod] public void test2InsertMiddleIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -338,7 +328,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void test2InsertThenReplaceIndex0()  {
+	[TestMethod] public void test2InsertThenReplaceIndex0()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -357,7 +347,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceThenInsertBeforeLastIndex()  {
+	[TestMethod] public void testReplaceThenInsertBeforeLastIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -375,7 +365,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testInsertThenReplaceLastIndex()  {
+	[TestMethod] public void testInsertThenReplaceLastIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -393,7 +383,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceThenInsertAfterLastIndex()  {
+	[TestMethod] public void testReplaceThenInsertAfterLastIndex()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -411,7 +401,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceRangeThenInsertAtLeftEdge()  {
+	[TestMethod] public void testReplaceRangeThenInsertAtLeftEdge()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -429,7 +419,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceRangeThenInsertAtRightEdge()  {
+	[TestMethod] public void testReplaceRangeThenInsertAtRightEdge()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -455,7 +445,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, exc.getMessage());
 	}
 
-	@Test public void testReplaceRangeThenInsertAfterRightEdge()  {
+	[TestMethod] public void testReplaceRangeThenInsertAfterRightEdge()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -473,7 +463,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceAll()  {
+	[TestMethod] public void testReplaceAll()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -490,7 +480,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceSubsetThenFetch()  {
+	[TestMethod] public void testReplaceSubsetThenFetch()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -507,7 +497,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testReplaceThenReplaceSuperset()  {
+	[TestMethod] public void testReplaceThenReplaceSuperset()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -534,7 +524,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, exc.getMessage());
 	}
 
-	@Test public void testReplaceThenReplaceLowerIndexedSuperset()  {
+	[TestMethod] public void testReplaceThenReplaceLowerIndexedSuperset()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -561,7 +551,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, exc.getMessage());
 	}
 
-	@Test public void testReplaceSingleMiddleThenOverlappingSuperset()  {
+	[TestMethod] public void testReplaceSingleMiddleThenOverlappingSuperset()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -579,7 +569,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testCombineInserts()  {
+	[TestMethod] public void testCombineInserts()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -597,7 +587,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testCombine3Inserts()  {
+	[TestMethod] public void testCombine3Inserts()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -616,7 +606,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testCombineInsertOnLeftWithReplace()  {
+	[TestMethod] public void testCombineInsertOnLeftWithReplace()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -636,7 +626,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testCombineInsertOnLeftWithDelete()  {
+	[TestMethod] public void testCombineInsertOnLeftWithDelete()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -658,7 +648,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testDisjointInserts()  {
+	[TestMethod] public void testDisjointInserts()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -677,7 +667,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testOverlappingReplace()  {
+	[TestMethod] public void testOverlappingReplace()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -697,7 +687,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testOverlappingReplace2()  {
+	[TestMethod] public void testOverlappingReplace2()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -724,7 +714,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, exc.getMessage());
 	}
 
-	@Test public void testOverlappingReplace3()  {
+	[TestMethod] public void testOverlappingReplace3()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -744,7 +734,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testOverlappingReplace4()  {
+	[TestMethod] public void testOverlappingReplace4()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -764,7 +754,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testDropIdenticalReplace()  {
+	[TestMethod] public void testDropIdenticalReplace()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -784,7 +774,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testDropPrevCoveredInsert()  {
+	[TestMethod] public void testDropPrevCoveredInsert()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -804,7 +794,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLeaveAloneDisjointInsert()  {
+	[TestMethod] public void testLeaveAloneDisjointInsert()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -822,7 +812,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testLeaveAloneDisjointInsert2()  {
+	[TestMethod] public void testLeaveAloneDisjointInsert2()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -840,7 +830,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test public void testInsertBeforeTokenThenDeleteThatToken()  {
+	[TestMethod] public void testInsertBeforeTokenThenDeleteThatToken()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
 											 "A : 'a';\n" +
@@ -859,7 +849,7 @@ public class TestTokenStreamRewriter {
 	}
 
 	// Test Fix for https://github.com/antlr/antlr4/issues/550
-	@Test
+	[TestMethod]
 	public void testDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
@@ -880,7 +870,7 @@ public class TestTokenStreamRewriter {
 		assertEquals(expecting, result);
 	}
 
-	@Test
+	[TestMethod]
 	public void testDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder2()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+
@@ -904,7 +894,7 @@ public class TestTokenStreamRewriter {
 	}
 
 	// Test Fix for https://github.com/antlr/antlr4/issues/550
-	@Test
+	[TestMethod]
 	public void testPreservesOrderOfContiguousInserts()  {
 		LexerGrammar g = new LexerGrammar(
 											 "lexer grammar T;\n"+

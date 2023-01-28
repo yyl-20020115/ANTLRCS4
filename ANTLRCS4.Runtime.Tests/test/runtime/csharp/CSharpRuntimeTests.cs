@@ -4,14 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.csharp;
-
-import org.antlr.v4.test.runtime.RuntimeTests;
-import org.antlr.v4.test.runtime.RuntimeRunner;
+namespace org.antlr.v4.test.runtime.csharp;
 
 public class CSharpRuntimeTests : RuntimeTests {
-	//@Override
-	protected RuntimeRunner createRuntimeRunner() {
+	////@Override
+	protected override RuntimeRunner createRuntimeRunner() {
 		return new CSharpRunner();
 	}
 }

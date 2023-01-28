@@ -4,32 +4,28 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.java;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+namespace org.antlr.v4.test.runtime.java;
 
 public class TestIntegerList {
-	@Test
+	[TestMethod]
 	public void emptyListToEmptyCharArray() {
 		IntegerList l = new IntegerList();
 		assertArrayEquals(new char[0], l.toCharArray());
 	}
 
-	@Test
+	[TestMethod]
 	public void negativeIntegerToCharArrayThrows() {
 		IntegerList l = new IntegerList();
 		l.add(-42);
 		assertThrows(
-				IllegalArgumentException.class,
+				IllegalArgumentException,
 				l::toCharArray
 		);
 	}
 
-	@Test
+	[TestMethod]
 	public void surrogateRangeIntegerToCharArray() {
 		IntegerList l = new IntegerList();
 		// Java allows dangling surrogates, so (currently) we do
@@ -39,17 +35,17 @@ public class TestIntegerList {
 		assertArrayEquals(expected, l.toCharArray());
 	}
 
-	@Test
+	[TestMethod]
 	public void tooLargeIntegerToCharArrayThrows() {
 		IntegerList l = new IntegerList();
 		l.add(0x110000);
 		assertThrows(
-				IllegalArgumentException.class,
+				IllegalArgumentException,
 				l::toCharArray
 		);
 	}
 
-	@Test
+	[TestMethod]
 	public void unicodeBMPIntegerListToCharArray() {
 		IntegerList l = new IntegerList();
 		l.add(0x35);
@@ -59,7 +55,7 @@ public class TestIntegerList {
 		assertArrayEquals(expected, l.toCharArray());
 	}
 
-	@Test
+	[TestMethod]
 	public void unicodeSMPIntegerListToCharArray() {
 		IntegerList l = new IntegerList();
 		l.add(0x104A5);

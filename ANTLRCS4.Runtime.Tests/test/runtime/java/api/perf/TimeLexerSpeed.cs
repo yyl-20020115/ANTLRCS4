@@ -4,32 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.java.api.perf;
+using org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.ANTLRFileStream;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.test.runtime.java.api.JavaLexer;
-import org.openjdk.jol.info.GraphLayout;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+namespace org.antlr.v4.test.runtime.java.api.perf;
 
 /** Test how fast we can lex Java and some unicode graphemes using old and
  *  new unicode stream mechanism. It also tests load time for unicode code points beyond 0xFFFF.
@@ -166,25 +143,25 @@ Warming up Java compiler....
  *  @since 4.7
  */
 public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn test"
-	public static final String Parser_java_file = "Java/src/org/antlr/v4/runtime/Parser.java";
-	public static final String RuleContext_java_file = "Java/src/org/antlr/v4/runtime/RuleContext.java";
-	public static final String PerfDir = "org/antlr/v4/test/runtime/java/api/perf";
+	public static readonly String Parser_java_file = "Java/src/org/antlr/v4/runtime/Parser.java";
+	public static readonly String RuleContext_java_file = "Java/src/org/antlr/v4/runtime/RuleContext.java";
+	public static readonly String PerfDir = "org/antlr/v4/test/runtime/java/api/perf";
 
-	public boolean output = true;
+	public bool output = true;
 
-	public List<String> streamFootprints = new ArrayList<>();
+	public List<String> streamFootprints = new ();
 
 	public static void main(String[] args)  {
 		RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
 		List<String> vmArgs = runtimeMxBean.getInputArguments();
-		System.out.print("Java VM args: ");
+		Console.Out.Write("Java VM args: ");
 		for (String vmArg : vmArgs) {
 			if ( !vmArg.startsWith("-D") ) {
-				System.out.print(vmArg+" ");
+				Console.Out.Write(vmArg+" ");
 			}
 		}
-		System.out.println();
-//		System.out.println(VM.current().details());
+		Console.Out.WriteLine();
+//		Console.Out.WriteLine(VM.current().details());
 
 		TimeLexerSpeed tests = new TimeLexerSpeed();
 
@@ -200,14 +177,14 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		tests.load_new_utf8(Parser_java_file, n);
 		tests.load_new_utf8(RuleContext_java_file, n);
 		tests.load_new_utf8(PerfDir+"/udhr_hin.txt", n);
-		System.out.println();
+		Console.Out.WriteLine();
 
 		n = 2000;
 		tests.lex_legacy_java_utf8(n, false);
 		tests.lex_legacy_java_utf8(n, true);
 		tests.lex_new_java_utf8(n, false);
 		tests.lex_new_java_utf8(n, true);
-		System.out.println();
+		Console.Out.WriteLine();
 
 		n = 400;
 		tests.lex_legacy_grapheme_utf8("udhr_kor.txt", n, false);
@@ -223,28 +200,28 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		tests.lex_new_grapheme_utf8("emoji.txt", n, false);
 		tests.lex_new_grapheme_utf8("emoji.txt", n, true);
 
-		for (String streamFootprint : tests.streamFootprints) {
-			System.out.print(streamFootprint);
+		foreach (String streamFootprint in tests.streamFootprints) {
+			Console.Out.Write(streamFootprint);
 		}
 	}
 
 	public void compilerWarmUp(int n)  {
-		System.out.print("Warming up Java compiler");
+		Console.Out.Write("Warming up Java compiler");
 		output = false;
 		lex_new_java_utf8(n, false);
-		System.out.print('.');
+		Console.Out.Write('.');
 		lex_legacy_java_utf8(n, false);
-		System.out.print('.');
-		System.out.print('.');
+		Console.Out.Write('.');
+		Console.Out.Write('.');
 		lex_legacy_grapheme_utf8("udhr_hin.txt", n, false);
-		System.out.print('.');
+		Console.Out.Write('.');
 		lex_new_grapheme_utf8("udhr_hin.txt", n, false);
-		System.out.println();
+		Console.Out.WriteLine();
 		output = true;
 	}
 
 	public void load_legacy_java_ascii_file(String resourceName, int n)  {
-		URL sampleJavaFile = TimeLexerSpeed.class.getClassLoader().getResource(resourceName);
+		URL sampleJavaFile = TimeLexerSpeed.getClassLoader().getResource(resourceName);
 		if ( sampleJavaFile==null ) {
 			System.err.println("Can't run load_legacy_java_ascii_file from jar (or can't find "+resourceName+")");
 			return; // cannot find resource
@@ -265,7 +242,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		GraphLayout olayout = GraphLayout.parseInstance((Object) input[0]);
 		long streamSize = olayout.totalSize();
 		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+olayout.toFootprint());
-		if ( output ) System.out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
 		                                tus/n,
 		                                streamSize,
@@ -276,7 +253,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public void load_legacy_java_ascii(String resourceName, int n)  {
 		CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-		ClassLoader loader = TimeLexerSpeed.class.getClassLoader();
+		ClassLoader loader = TimeLexerSpeed.getClassLoader();
 		InputStream[] streams = new InputStream[n];
 		for (int i = 0; i<n; i++) {
 			streams[i] = loader.getResourceAsStream(resourceName);
@@ -293,7 +270,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
 		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-		if ( output ) System.out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
 		                                tus/n,
 		                                streamSize,
@@ -304,16 +281,17 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public void load_legacy_java_utf8(String resourceName, int n)  {
 		CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-		ClassLoader loader = TimeLexerSpeed.class.getClassLoader();
+		ClassLoader loader = TimeLexerSpeed.getClassLoader();
 		InputStream[] streams = new InputStream[n];
 		for (int i = 0; i<n; i++) {
 			streams[i] = loader.getResourceAsStream(resourceName);
 		}
 		long start = System.nanoTime(); // track only time to suck data out of stream
 		for (int i = 0; i<n; i++) {
-			try (InputStream is = streams[i];
-			     InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-			     BufferedReader br = new BufferedReader(isr)) {
+			InputStream @is = streams[i];
+			     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.UTF_8);
+				BufferedReader br = new BufferedReader(isr);
+				
 				input[i] = new ANTLRInputStream(br);
 			}
 		}
@@ -323,7 +301,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
 		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-		if ( output ) System.out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
 		                                tus/n,
 		                                streamSize,
@@ -334,7 +312,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public void load_new_utf8(String resourceName, int n)  {
 		CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-		ClassLoader loader = TimeLexerSpeed.class.getClassLoader();
+		ClassLoader loader = TimeLexerSpeed.getClassLoader();
 		InputStream[] streams = new InputStream[n];
 		for (int i = 0; i<n; i++) {
 			streams[i] = loader.getResourceAsStream(resourceName);
@@ -353,7 +331,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
 		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-		if ( output ) System.out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 						currentMethodName,
 						tus/n,
 						streamSize,
@@ -362,15 +340,15 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 						basename(resourceName));
 	}
 
-	public void lex_legacy_java_utf8(int n, boolean clearLexerDFACache)  {
-		try (InputStream is = TimeLexerSpeed.class.getClassLoader().getResourceAsStream(Parser_java_file);
-		     InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+	public void lex_legacy_java_utf8(int n, bool clearLexerDFACache)  {
+		try (InputStream is = TimeLexerSpeed.getClassLoader().getResourceAsStream(Parser_java_file);
+		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.UTF_8);
 		     BufferedReader br = new BufferedReader(isr)) {
 			CharStream input = new ANTLRInputStream(br);
 			JavaLexer lexer = new JavaLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
 			String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-			if ( output ) System.out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
+			if ( output ) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
 							currentMethodName,
 							(int)avg,
 							n,
@@ -379,15 +357,16 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		}
 	}
 
-	public void lex_new_java_utf8(int n, boolean clearLexerDFACache)  {
-		ClassLoader loader = TimeLexerSpeed.class.getClassLoader();
-		try (InputStream is = loader.getResourceAsStream(Parser_java_file)) {
+	public void lex_new_java_utf8(int n, bool clearLexerDFACache)  {
+		ClassLoader loader = TimeLexerSpeed.getClassLoader();
+		InputStream is = loader.getResourceAsStream(Parser_java_file);
+		{
 			long size = getResourceSize(loader, Parser_java_file);
 			CharStream input = CharStreams.fromStream(is, StandardCharsets.UTF_8, size);
 			JavaLexer lexer = new JavaLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
 			String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-			if ( output ) System.out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
+			if ( output ) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
 							currentMethodName,
 							(int)avg,
 							n,
@@ -396,15 +375,16 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		}
 	}
 
-	public void lex_legacy_grapheme_utf8(String fileName, int n, boolean clearLexerDFACache)  {
-		try (InputStream is = TimeLexerSpeed.class.getClassLoader().getResourceAsStream(PerfDir+"/"+fileName);
-		     InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-		     BufferedReader br = new BufferedReader(isr)) {
+	public void lex_legacy_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)  {
+		InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(PerfDir+"/"+fileName);
+		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.UTF_8);
+		BufferedReader br = new BufferedReader(isr);
+		{
 			CharStream input = new ANTLRInputStream(br);
 			graphemesLexer lexer = new graphemesLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
 			String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-			if ( output ) System.out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
+			if ( output ) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
 							currentMethodName,
 							(int)avg,
 							n,
@@ -414,16 +394,16 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		}
 	}
 
-	public void lex_new_grapheme_utf8(String fileName, int n, boolean clearLexerDFACache)  {
+	public void lex_new_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)  {
 		String resourceName = PerfDir+"/"+fileName;
-		ClassLoader loader = TimeLexerSpeed.class.getClassLoader();
-		try (InputStream is = loader.getResourceAsStream(resourceName)) {
+		ClassLoader loader = TimeLexerSpeed.getClassLoader();
+		using (InputStream @is = loader.getResourceAsStream(resourceName)) {
 			long size = getResourceSize(loader, resourceName);
-			CharStream input = CharStreams.fromStream(is, StandardCharsets.UTF_8, size);
+			CharStream input = CharStreams.fromStream(@is, StandardCharsets.UTF_8, size);
 			graphemesLexer lexer = new graphemesLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
 			String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-			if ( output ) System.out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
+			if ( output ) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
 							currentMethodName,
 							(int)avg,
 							n,
@@ -433,7 +413,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		}
 	}
 
-	public double tokenize(Lexer lexer, int n, boolean clearLexerDFACache) {
+	public double tokenize(Lexer lexer, int n, bool clearLexerDFACache) {
 		// always wipe the DFA before we begin tests so previous tests
 		// don't affect this run!
 		lexer.getInterpreter().clearDFA();
@@ -449,7 +429,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 //			int size = lexer.getInputStream().size();
 			long stop = System.nanoTime();
 			times[i] = (stop-start)/1000;
-//			if ( output ) System.out.printf("Tokenized %d char in %dus\n", size, times[i]);
+//			if ( output ) Console.Out.printf("Tokenized %d char in %dus\n", size, times[i]);
 		}
 		Arrays.sort(times);
 		times = Arrays.copyOfRange(times, 0, times.length-(int)(n*.2)); // drop highest 20% of times
@@ -464,9 +444,9 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		return sum / values.length;
 	}
 
-	public double std(double mean, List<Long> values) { // unbiased std dev
+	public double std(double mean, List<long> values) { // unbiased std dev
 		double sum = 0.0;
-		for (Long v : values) {
+		for (long v : values) {
 			sum += (v-mean)*(v-mean);
 		}
 		return Math.sqrt(sum / (values.size() - 1));
@@ -483,11 +463,11 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 	}
 
 	public static String basename(Path path) {
-		return path.getName(path.getNameCount()-1).toString();
+		return path.getName(path.getNameCount()-1).ToString();
 	}
 
 	public static String dirname(Path path) {
-		return path.getName(0).toString();
+		return path.getName(0).ToString();
 	}
 
 	public static long getResourceSize(ClassLoader loader, String resourceName) {

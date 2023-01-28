@@ -4,16 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.states;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.v4.runtime.tree.ParseTree;
+namespace org.antlr.v4.test.runtime.states;
 
 public class JavaExecutedState : ExecutedState {
-	public final ParseTree parseTree;
+	public readonly ParseTree parseTree;
 
 	public JavaExecutedState(JavaCompiledState previousState, String output, String errors, ParseTree parseTree,
 							 Exception exception) {
-		super(previousState, output, errors, exception);
+		base(previousState, output, errors, exception);
 		this.parseTree = parseTree;
 	}
 }

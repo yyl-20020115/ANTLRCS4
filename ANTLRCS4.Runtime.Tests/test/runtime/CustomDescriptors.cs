@@ -4,18 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+using System.Text;
 
-import java.net.URI;
-import java.nio.file.Paths;
-import java.util.*;
+namespace org.antlr.v4.test.runtime;
 
 public class CustomDescriptors {
-	public final static HashMap<String, RuntimeTestDescriptor[]> descriptors;
-	private final static URI uri;
+	public static readonly HashMap<String, RuntimeTestDescriptor[]> descriptors;
+	private static readonly URI uri;
 
-	static {
-		uri = Paths.get(RuntimeTestUtils.runtimeTestsuitePath.toString(),
+	static CustomDescriptors(){
+		uri = Paths.get(RuntimeTestUtils.runtimeTestsuitePath.ToString(),
 						"test", "org", "antlr", "v4", "test", "runtime", "CustomDescriptors.java").toUri();
 
 		descriptors = new HashMap<>();
@@ -75,14 +73,14 @@ public class CustomDescriptors {
 	}
 
 	private static RuntimeTestDescriptor getLargeLexerDescriptor() {
-		final int tokensCount = 4000;
-		final String grammarName = "L";
+		 int tokensCount = 4000;
+		 String grammarName = "L";
 
 		StringBuilder grammar = new StringBuilder();
-		grammar.append("lexer grammar ").append(grammarName).append(";\n");
-		grammar.append("WS: [ \\t\\r\\n]+ -> skip;\n");
+		grammar.Append("lexer grammar ").Append(grammarName).Append(";\n");
+		grammar.Append("WS: [ \\t\\r\\n]+ -> skip;\n");
 		for (int i = 0; i < tokensCount; i++) {
-			grammar.append("KW").append(i).append(" : 'KW' '").append(i).append("';\n");
+			grammar.Append("KW").Append(i).Append(" : 'KW' '").Append(i).Append("';\n");
 		}
 
 		return new RuntimeTestDescriptor(
@@ -97,20 +95,20 @@ public class CustomDescriptors {
 				"",
 				"",
 				grammarName,
-				grammar.toString(),
+				grammar.ToString(),
 				null, false, false, null, uri);
 	}
 
 	private static RuntimeTestDescriptor getAtnStatesSizeMoreThan65535Descriptor() {
 		// I tried playing around with different sizes, and I think 1002 works for Go but 1003 does not;
 		// the executing lexer gets a token syntax error for T208 or something like that
-		final int tokensCount = 1024;
-		final String suffix = String.join("", Collections.nCopies(70, "_"));
+		int tokensCount = 1024;
+		String suffix = String.join("", Collections.nCopies(70, "_"));
 
-		final String grammarName = "L";
+		String grammarName = "L";
 		StringBuilder grammar = new StringBuilder();
-		grammar.append("lexer grammar ").append(grammarName).append(";\n");
-		grammar.append('\n');
+		grammar.Append("lexer grammar ").Append(grammarName).Append(";\n");
+		grammar.Append('\n');
 		StringBuilder input = new StringBuilder();
 		StringBuilder output = new StringBuilder();
 		int startOffset;
@@ -118,41 +116,41 @@ public class CustomDescriptors {
 		for (int i = 0; i < tokensCount; i++) {
 			String ruleName = String.format("T_%06d", i);
 			String value = ruleName+suffix;
-			grammar.append(ruleName).append(": '").append(value).append("';\n");
-			input.append(value).append('\n');
+			grammar.Append(ruleName).Append(": '").Append(value).Append("';\n");
+			input.Append(value).Append('\n');
 
 			startOffset = stopOffset + 2;
 			stopOffset += value.length() + 1;
 
-			output.append("[@").append(i).append(',').append(startOffset).append(':').append(stopOffset)
-					.append("='").append(value).append("',<").append(i + 1).append(">,").append(i + 1)
-					.append(":0]\n");
+			output.Append("[@").Append(i).Append(',').Append(startOffset).Append(':').Append(stopOffset)
+					.Append("='").Append(value).Append("',<").Append(i + 1).Append(">,").Append(i + 1)
+					.Append(":0]\n");
 		}
 
-		grammar.append("\n");
-		grammar.append("WS: [ \\t\\r\\n]+ -> skip;\n");
+		grammar.Append("\n");
+		grammar.Append("WS: [ \\t\\r\\n]+ -> skip;\n");
 
 		startOffset = stopOffset + 2;
 		stopOffset = startOffset - 1;
-		output.append("[@").append(tokensCount).append(',').append(startOffset).append(':').append(stopOffset)
-				.append("='<EOF>',<-1>,").append(tokensCount + 1).append(":0]\n");
+		output.Append("[@").Append(tokensCount).Append(',').Append(startOffset).Append(':').Append(stopOffset)
+				.Append("='<EOF>',<-1>,").Append(tokensCount + 1).Append(":0]\n");
 
 		return new RuntimeTestDescriptor(
 				GrammarType.Lexer,
 				"AtnStatesSizeMoreThan65535",
 				"Regression for https://github.com/antlr/antlr4/issues/1863",
-				input.toString(),
-				output.toString(),
+				input.ToString(),
+				output.ToString(),
 				"",
 				"",
 				grammarName,
-				grammar.toString(),
+				grammar.ToString(),
 				null, false, false,
 				new String[] {"CSharp", "Python2", "Python3", "Go", "PHP", "Swift", "JavaScript", "Dart"}, uri);
 	}
 
 	private static RuntimeTestDescriptor getMultiTokenAlternativeDescriptor() {
-		final int tokensCount = 64;
+		 int tokensCount = 64;
 
 		StringBuilder rule = new StringBuilder("r1: ");
 		StringBuilder tokens = new StringBuilder();
@@ -161,20 +159,20 @@ public class CustomDescriptors {
 
 		for (int i = 0; i < tokensCount; i++) {
 			String currentToken = "T" + i;
-			rule.append(currentToken);
+			rule.Append(currentToken);
 			if (i < tokensCount - 1) {
-				rule.append(" | ");
+				rule.Append(" | ");
 			} else {
-				rule.append(";");
+				rule.Append(";");
 			}
-			tokens.append(currentToken).append(": '").append(currentToken).append("';\n");
-			input.append(currentToken).append(" ");
-			output.append(currentToken);
+			tokens.Append(currentToken).Append(": '").Append(currentToken).Append("';\n");
+			input.Append(currentToken).Append(" ");
+			output.Append(currentToken);
 		}
 		String currentToken = "T" + tokensCount;
-		tokens.append(currentToken).append(": '").append(currentToken).append("';\n");
-		input.append(currentToken).append(" ");
-		output.append(currentToken);
+		tokens.Append(currentToken).Append(": '").Append(currentToken).Append("';\n");
+		input.Append(currentToken).Append(" ");
+		output.Append(currentToken);
 
 		String grammar = "grammar P;\n" +
 				"r: (r1 | T" + tokensCount + ")+ EOF {<writeln(\"$text\")>};\n" +
@@ -186,7 +184,7 @@ public class CustomDescriptors {
 				GrammarType.Parser,
 				"MultiTokenAlternative",
 				"https://github.com/antlr/antlr4/issues/3698, https://github.com/antlr/antlr4/issues/3703",
-				input.toString(),
+				input.ToString(),
 				output + "\n",
 				"",
 				"r",

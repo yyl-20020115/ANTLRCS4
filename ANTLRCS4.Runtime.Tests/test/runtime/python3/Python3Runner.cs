@@ -3,30 +3,26 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.python3;
+using org.antlr.v4.test.runtime.python;
 
-import org.antlr.v4.test.runtime.python.PythonRunner;
-
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+namespace org.antlr.v4.test.runtime.python3;
 
 public class Python3Runner : PythonRunner {
-	public final static Map<String, String> environment;
+	public static readonly Dictionary<String, String> environment;
 
-	static {
-		environment = new HashMap<>();
-		environment.put("PYTHONPATH", Paths.get(getRuntimePath("Python3"), "src").toString());
-		environment.put("PYTHONIOENCODING", "utf-8");
+	static Python3Runner(){
+		environment = new();
+		environment.Add("PYTHONPATH", Path.Combine(getRuntimePath("Python3"), "src"));
+		environment.Add("PYTHONIOENCODING", "utf-8");
 	}
 
-	//@Override
-	public String getLanguage() {
+	////@Override
+	public override String getLanguage() {
 		return "Python3";
 	}
 
-	//@Override
-	public Map<String, String> getExecEnvironment() {
+	////@Override
+	public Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

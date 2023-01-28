@@ -13,7 +13,7 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString("");
 		assertEquals(0, s.size());
 		assertEquals(0, s.index());
-		assertEquals("", s.toString());
+		assertEquals("", s.ToString());
 	}
 
 	[TestMethod]
@@ -27,7 +27,7 @@ public class TestCodePointCharStream {
 	public void consumingEmptyStreamShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("");
 		IllegalStateException illegalStateException = assertThrows(
-				IllegalStateException.class,
+				IllegalStateException,
 				s::consume
 		);
 		assertEquals("cannot consume EOF", illegalStateException.getMessage());
@@ -51,7 +51,7 @@ public class TestCodePointCharStream {
 	public void consumingPastSingleLatinCodePointShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("X");
 		s.consume();
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, s::consume);
+		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
 		assertEquals("cannot consume EOF", illegalStateException.getMessage());
 	}
 
@@ -98,7 +98,7 @@ public class TestCodePointCharStream {
 	public void consumingPastSingleCJKCodePointShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("\u611B");
 		s.consume();
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, s::consume);
+		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
 		assertEquals("cannot consume EOF", illegalStateException.getMessage());
 	}
 
@@ -119,7 +119,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void singleEmojiCodePointHasSize1() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).toString());
+				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
 		assertEquals(1, s.size());
 		assertEquals(0, s.index());
 	}
@@ -127,7 +127,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void consumingSingleEmojiCodePointShouldMoveIndex() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).toString());
+				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
 		assertEquals(0, s.index());
 		s.consume();
 		assertEquals(1, s.index());
@@ -136,18 +136,18 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void consumingPastEndOfEmojiCodePointWithShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).toString());
+				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
 		assertEquals(0, s.index());
 		s.consume();
 		assertEquals(1, s.index());
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException.class, s::consume);
+		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
 		assertEquals("cannot consume EOF", illegalStateException.getMessage());
 	}
 
 	[TestMethod]
 	public void singleEmojiCodePointLookAheadShouldReturnCodePoint() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).toString());
+				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
 		assertEquals(0x1F4A9, s.LA(1));
 		assertEquals(0, s.index());
 	}
@@ -155,7 +155,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void singleEmojiCodePointLookAheadPastEndShouldReturnEOF() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).toString());
+				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
 		assertEquals(IntStream.EOF, s.LA(2));
 		assertEquals(0, s.index());
 	}
@@ -177,21 +177,21 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
 					.appendCodePoint(0x1F522)
-					.append("6789")
-					.toString());
+					.Append("6789")
+					.ToString());
 		assertEquals("34\uD83D\uDD2267", s.getText(Interval.of(3, 7)));
 	}
 
 	[TestMethod]
 	public void toStringWithLatin() {
 		CodePointCharStream s = CharStreams.fromString("0123456789");
-		assertEquals("0123456789", s.toString());
+		assertEquals("0123456789", s.ToString());
 	}
 
 	[TestMethod]
 	public void toStringWithCJK() {
 		CodePointCharStream s = CharStreams.fromString("01234\u40946789");
-		assertEquals("01234\u40946789", s.toString());
+		assertEquals("01234\u40946789", s.ToString());
 	}
 
 	[TestMethod]
@@ -199,9 +199,9 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
 					.appendCodePoint(0x1F522)
-					.append("6789")
-					.toString());
-		assertEquals("01234\uD83D\uDD226789", s.toString());
+					.Append("6789")
+					.ToString());
+		assertEquals("01234\uD83D\uDD226789", s.ToString());
 	}
 
 	[TestMethod]
@@ -221,8 +221,8 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
 					.appendCodePoint(0x1F522)
-					.append("6789")
-					.toString());
+					.Append("6789")
+					.ToString());
 		assertEquals(0x1F522, s.LA(6));
 	}
 
@@ -245,8 +245,8 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
 					.appendCodePoint(0x1F522)
-					.append("6789")
-					.toString());
+					.Append("6789")
+					.ToString());
 		s.seek(5);
 		assertEquals(0x1F522, s.LA(1));
 	}
@@ -270,8 +270,8 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
 					.appendCodePoint(0x1F522)
-					.append("6789")
-					.toString());
+					.Append("6789")
+					.ToString());
 		s.seek(6);
 		assertEquals(0x1F522, s.LA(-1));
 	}

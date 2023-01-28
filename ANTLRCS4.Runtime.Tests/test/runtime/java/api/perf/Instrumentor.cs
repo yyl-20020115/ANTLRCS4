@@ -4,9 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.java.api.perf;
-
-import java.lang.instrument.Instrumentation;
+namespace org.antlr.v4.test.runtime.java.api.perf;
 
 /** Just a hook so we can call {@link java.lang.instrument.Instrumentation}
  *  methods like sizeof().  Start the Java VM with -javaagent instrumentor.jar

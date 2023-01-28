@@ -4,28 +4,26 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.states;
-
-import org.antlr.v4.test.runtime.Stage;
+namespace org.antlr.v4.test.runtime.states;
 
 public abstract class State {
-	public final State previousState;
+	public readonly State previousState;
 
-	public final Exception exception;
+	public readonly Exception exception;
 
 	public abstract Stage getStage();
 
-	public boolean containsErrors() {
+	public bool containsErrors() {
 		return exception != null;
 	}
 
 	public String getErrorMessage() {
 		String result = "State: " + getStage() + "; ";
 		if (exception != null) {
-			result += exception.toString();
+			result += exception.ToString();
 			if ( exception.getCause()!=null ) {
 				result += "\nCause:\n";
-				result += exception.getCause().toString();
+				result += exception.getCause().ToString();
 			}
 		}
 		return result;

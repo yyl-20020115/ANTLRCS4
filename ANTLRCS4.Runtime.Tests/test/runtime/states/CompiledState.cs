@@ -4,12 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.states;
-
-import org.antlr.v4.test.runtime.Stage;
+namespace org.antlr.v4.test.runtime.states;
 
 public class CompiledState : State {
-	//@Override
+	////@Override
 	public Stage getStage() {
 		return Stage.Compile;
 	}

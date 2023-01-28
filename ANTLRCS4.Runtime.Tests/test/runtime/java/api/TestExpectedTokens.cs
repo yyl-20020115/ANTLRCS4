@@ -3,21 +3,18 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.java.api;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.test.runtime.RuntimeTestUtils;
-import org.antlr.v4.test.runtime.java.JavaRunner;
-import org.antlr.v4.tool.Grammar;
-import org.junit.jupiter.api.Test;
+namespace org.antlr.v4.test.runtime.java.api;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+[TestClass]
 public class TestExpectedTokens : JavaRunner {
-	@Test
+	public TestExpectedTokens()
+	{
+
+	}
+	[TestMethod]
 	public void testEpsilonAltSubrule()  {
 		String gtext =
 			"parser grammar T;\n" +
@@ -42,7 +39,7 @@ public class TestExpectedTokens : JavaRunner {
 		assertEquals("{B, C}", tokens.toString(g.getTokenNames()));
 	}
 
-	@Test public void testOptionalSubrule()  {
+	[TestMethod] public void testOptionalSubrule()  {
 		String gtext =
 			"parser grammar T;\n" +
 			"a : A B? C ;\n";
@@ -65,7 +62,7 @@ public class TestExpectedTokens : JavaRunner {
 		assertEquals("{B, C}", tokens.toString(g.getTokenNames()));
 	}
 
-	@Test public void testFollowIncluded()  {
+	[TestMethod] public void testFollowIncluded()  {
 		String gtext =
 			"parser grammar T;\n" +
 				"a : b A ;\n" +
@@ -102,7 +99,7 @@ public class TestExpectedTokens : JavaRunner {
 
 	// Test for https://github.com/antlr/antlr4/issues/1480
 	// can't reproduce
-	@Test public void testFollowIncludedInLeftRecursiveRule()  {
+	[TestMethod] public void testFollowIncludedInLeftRecursiveRule()  {
 		String gtext =
 			"grammar T;\n" +
 			"s : expr EOF ;\n" +
@@ -140,7 +137,7 @@ public class TestExpectedTokens : JavaRunner {
 
 //		DOTGenerator gen = new DOTGenerator(g);
 //		String dot = gen.getDOT(atn.states.get(2), g.getRuleNames(), false);
-//		System.out.println(dot);
+//		Console.Out.WriteLine(dot);
 
 		// Simulate call stack after input '(x' from rule s
 		ParserRuleContext callStackFrom_s = new ParserRuleContext(null, 4);

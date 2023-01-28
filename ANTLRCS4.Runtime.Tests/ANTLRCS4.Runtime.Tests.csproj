@@ -9,17 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="runtime\TestCodePointCharStream.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="test\runtime\java\api\Java.g4" />
     <None Remove="test\runtime\java\api\VisitorBasic.g4" />
     <None Remove="test\runtime\java\api\VisitorCalc.g4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="runtime\TestCodePointCharStream.cs" />
+    <None Remove="test\runtime\README.md" />
   </ItemGroup>
 
   <ItemGroup>

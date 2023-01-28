@@ -4,23 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.joinLines;
+namespace org.antlr.v4.test.runtime;
 
 public class Processor {
-	public final String[] arguments;
-	public final String workingDirectory;
-	public final Map<String, String> environmentVariables;
-	public final boolean throwOnNonZeroErrorCode;
+	public readonly String[] arguments;
+	public readonly String workingDirectory;
+	public readonly Map<String, String> environmentVariables;
+	public readonly bool throwOnNonZeroErrorCode;
 
 	public static ProcessorResult run(String[] arguments, String workingDirectory, Map<String, String> environmentVariables)
-			throws InterruptedException, IOException
+			
 	{
 		return new Processor(arguments, workingDirectory, environmentVariables, true).start();
 	}
@@ -30,7 +23,7 @@ public class Processor {
 	}
 
 	public Processor(String[] arguments, String workingDirectory, Map<String, String> environmentVariables,
-					 boolean throwOnNonZeroErrorCode) {
+					 bool throwOnNonZeroErrorCode) {
 		this.arguments = arguments;
 		this.workingDirectory = workingDirectory;
 		this.environmentVariables = environmentVariables;
@@ -58,8 +51,8 @@ public class Processor {
 		stdoutReader.join();
 		stderrReader.join();
 
-		String output = stdoutReader.toString();
-		String errors = stderrReader.toString();
+		String output = stdoutReader.ToString();
+		String errors = stderrReader.ToString();
 		if (throwOnNonZeroErrorCode && process.exitValue() != 0) {
 			throw new InterruptedException(joinLines(output, errors));
 		}

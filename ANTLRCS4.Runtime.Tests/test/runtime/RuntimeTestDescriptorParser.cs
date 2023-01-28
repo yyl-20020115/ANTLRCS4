@@ -4,15 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.test.runtime;
 
-import org.antlr.v4.runtime.misc.Pair;
+namespace org.antlr.v4.test.runtime;
 
-import java.net.URI;
-import java.util.*;
 
 public class RuntimeTestDescriptorParser {
-	private final static Set<String> sections = new HashSet<>(Arrays.asList(
+	private static readonly HashSet<String> sections = new HashSet<>(Arrays.AsList(
 			"notes", "type", "grammar", "slaveGrammar", "start", "input", "output", "errors", "flags", "skip"
 	));
 
@@ -68,52 +67,52 @@ public class RuntimeTestDescriptorParser {
 		StringBuilder currentValue = new StringBuilder();
 
 		List<Pair<String, String>> pairs = new ArrayList<>();
-		String[] lines = text.split("\r?\n");
+		String[] lines = text.Split("\r?\n");
 
 		for (String line : lines) {
-			boolean newSection = false;
+			bool newSection = false;
 			String sectionName = null;
-			if (line.startsWith("[") && line.length() > 2) {
-				sectionName = line.substring(1, line.length() - 1);
-				newSection = sections.contains(sectionName);
+			if (line.startsWith("[") && line.Length > 2) {
+				sectionName = line.substring(1, line.Length - 1);
+				newSection = sections.Contains(sectionName);
 			}
 
 			if (newSection) {
 				if (currentField != null) {
-					pairs.add(new Pair<>(currentField, currentValue.toString()));
+					pairs.Add(new (currentField, currentValue.ToString()));
 				}
 				currentField = sectionName;
 				currentValue.setLength(0);
 			}
 			else {
-				currentValue.append(line);
-				currentValue.append("\n");
+				currentValue.Append(line);
+				currentValue.Append("\n");
 			}
 		}
-		pairs.add(new Pair<>(currentField, currentValue.toString()));
+		pairs.Add(new (currentField, currentValue.ToString()));
 
 		String notes = "";
 		GrammarType testType = GrammarType.Lexer;
 		String grammar = "";
 		String grammarName = "";
-		List<Pair<String, String>> slaveGrammars = new ArrayList<>();
+		List<Pair<String, String>> slaveGrammars = new ();
 		String startRule = "";
 		String input = "";
 		String output = "";
 		String errors = "";
-		boolean showDFA = false;
-		boolean showDiagnosticErrors = false;
+		bool showDFA = false;
+		bool showDiagnosticErrors = false;
 		String[] skipTargets = new String[0];
 		for (Pair<String,String> p : pairs) {
 			String section = p.a;
 			String value = "";
 			if ( p.b!=null ) {
-				value = p.b.trim();
+				value = p.b.Trim();
 			}
-			if ( value.startsWith("\"\"\"") ) {
-				value = value.replace("\"\"\"", "");
+			if ( value.StartsWith("\"\"\"") ) {
+				value = value.Replace("\"\"\"", "");
 			}
-			else if ( value.indexOf('\n')>=0 ) {
+			else if ( value.IndexOf('\n')>=0 ) {
 				value = value + "\n"; // if multi line and not quoted, leave \n on end.
 			}
 			switch (section) {
@@ -121,14 +120,14 @@ public class RuntimeTestDescriptorParser {
 					notes = value;
 					break;
 				case "type":
-					testType = Enum.valueOf(GrammarType.class, value);
+					testType = Enum.valueOf(GrammarType, value);
 					break;
 				case "grammar":
-					grammarName = getGrammarName(value.split("\n")[0]);
+					grammarName = getGrammarName(value.Split("\n")[0]);
 					grammar = value;
 					break;
 				case "slaveGrammar":
-					String gname = getGrammarName(value.split("\n")[0]);
+					String gname = getGrammarName(value.Split("\n")[0]);
 					slaveGrammars.add(new Pair<>(gname, value));
 				case "start":
 					startRule = value;
@@ -143,8 +142,8 @@ public class RuntimeTestDescriptorParser {
 					errors = value;
 					break;
 				case "flags":
-					String[] flags = value.split("\n");
-					for (String f : flags) {
+					String[] flags = value.Split('\n');
+					foreach (String f in flags) {
 						switch (f) {
 							case "showDFA":
 								showDFA = true;

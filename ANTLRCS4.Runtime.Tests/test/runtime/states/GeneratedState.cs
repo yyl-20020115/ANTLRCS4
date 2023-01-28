@@ -4,32 +4,25 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.states;
+namespace org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.test.runtime.ErrorQueue;
-import org.antlr.v4.test.runtime.GeneratedFile;
-import org.antlr.v4.test.runtime.Stage;
-
-import java.util.List;
-
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.joinLines;
 
 public class GeneratedState : State {
-	@Override
+	////@Override
 	public Stage getStage() {
 		return Stage.Generate;
 	}
 
-	public final ErrorQueue errorQueue;
-	public final List<GeneratedFile> generatedFiles;
+	public readonly ErrorQueue errorQueue;
+	public readonly List<GeneratedFile> generatedFiles;
 
-	@Override
-	public boolean containsErrors() {
-		return errorQueue.errors.size() > 0 || super.containsErrors();
+	////@Override
+	public bool containsErrors() {
+		return errorQueue.errors.size() > 0 || base.containsErrors();
 	}
 
 	public String getErrorMessage() {
-		String result = super.getErrorMessage();
+		String result = base.getErrorMessage();
 
 		if (errorQueue.errors.size() > 0) {
 			result = joinLines(result, errorQueue.toString(true));
@@ -39,7 +32,7 @@ public class GeneratedState : State {
 	}
 
 	public GeneratedState(ErrorQueue errorQueue, List<GeneratedFile>  generatedFiles, Exception exception) {
-		super(null, exception);
+		base(null, exception);
 		this.errorQueue = errorQueue;
 		this.generatedFiles = generatedFiles;
 	}

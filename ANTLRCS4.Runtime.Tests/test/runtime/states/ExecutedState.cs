@@ -4,22 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.states;
-
-import org.antlr.v4.test.runtime.Stage;
+namespace org.antlr.v4.test.runtime.states;
 
 public class ExecutedState : State {
-	//@Override
+	////@Override
 	public Stage getStage() {
 		return Stage.Execute;
 	}
 
-	public final String output;
+	public readonly String output;
 
-	public final String errors;
+	public readonly String errors;
 
 	public ExecutedState(CompiledState previousState, String output, String errors, Exception exception) {
-		super(previousState, exception);
+		base(previousState, exception);
 		this.output = output != null ? output : "";
 		this.errors = errors != null ? errors : "";
 	}

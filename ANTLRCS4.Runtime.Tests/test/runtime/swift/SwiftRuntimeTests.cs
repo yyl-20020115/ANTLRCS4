@@ -4,13 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.swift;
-
-import org.antlr.v4.test.runtime.RuntimeTests;
-import org.antlr.v4.test.runtime.RuntimeRunner;
+namespace org.antlr.v4.test.runtime.swift;
 
 public class SwiftRuntimeTests : RuntimeTests {
-	////@Override
+	//////@Override
 	protected RuntimeRunner createRuntimeRunner() {
 		return new SwiftRunner();
 	}

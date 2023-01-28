@@ -4,43 +4,31 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+using System.Text;
 
-import org.antlr.v4.automata.ATNPrinter;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.tool.Grammar;
-import org.antlr.v4.tool.Rule;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+namespace org.antlr.v4.test.runtime;
 
 public abstract class RuntimeTestUtils {
-	public static final String NewLine = System.getProperty("line.separator");
-	public static final String PathSeparator = System.getProperty("path.separator");
-	public static final String FileSeparator = System.getProperty("file.separator");
-	public static final String TempDirectory = System.getProperty("java.io.tmpdir");
+	public static readonly String NewLine = System.getProperty("line.separator");
+	public static readonly String PathSeparator = System.getProperty("path.separator");
+	public static readonly String FileSeparator = System.getProperty("file.separator");
+	public static readonly String TempDirectory = System.getProperty("java.io.tmpdir");
 
-	public final static Path runtimePath;
-	public final static Path runtimeTestsuitePath;
-	public final static Path resourcePath;
+	public static readonly Path runtimePath;
+	public static readonly Path runtimeTestsuitePath;
+	public static readonly Path resourcePath;
 
-	private final static Map<String, String> resourceCache = new HashMap<>();
+	private static readonly Map<String, String> resourceCache = new HashMap<>();
 	private static OSType detectedOS;
 	private static Boolean isWindows;
 
-	static {
-		String locationPath = RuntimeTestUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+	static RuntimeTestUtils() {
+		String locationPath = RuntimeTestUtils.getProtectionDomain().getCodeSource().getLocation().getPath();
 		if (isWindows()) {
 			locationPath = locationPath.replaceFirst("/", "");
 		}
 		Path potentialRuntimeTestsuitePath = Paths.get(locationPath, "..", "..").normalize();
-		Path potentialResourcePath = Paths.get(potentialRuntimeTestsuitePath.toString(), "resources");
+		Path potentialResourcePath = Paths.get(potentialRuntimeTestsuitePath.ToString(), "resources");
 
 		if (Files.exists(potentialResourcePath)) {
 			runtimeTestsuitePath = potentialRuntimeTestsuitePath;
@@ -49,11 +37,11 @@ public abstract class RuntimeTestUtils {
 			runtimeTestsuitePath = Paths.get("..", "runtime-testsuite").normalize();
 		}
 
-		runtimePath = Paths.get(runtimeTestsuitePath.toString(), "..", "runtime").normalize();
-		resourcePath = Paths.get(runtimeTestsuitePath.toString(), "resources");
+		runtimePath = Paths.get(runtimeTestsuitePath.ToString(), "..", "runtime").normalize();
+		resourcePath = Paths.get(runtimeTestsuitePath.ToString(), "resources");
 	}
 
-	public static boolean isWindows() {
+	public static bool isWindows() {
 		if (isWindows == null) {
 			isWindows = getOS() == OSType.Windows;
 		}
@@ -63,14 +51,14 @@ public abstract class RuntimeTestUtils {
 
 	public static OSType getOS() {
 		if (detectedOS == null) {
-			String os = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-			if (os.contains("mac") || os.contains("darwin")) {
+			String os = Environment.GetEnvironmentVariable("os.name", "generic").ToLower();
+			if (os.Contains("mac") || os.Contains("darwin")) {
 				detectedOS = OSType.Mac;
 			}
-			else if (os.contains("win")) {
+			else if (os.Contains("win")) {
 				detectedOS = OSType.Windows;
 			}
-			else if (os.contains("nux")) {
+			else if (os.Contains("nux")) {
 				detectedOS = OSType.Linux;
 			}
 			else {
@@ -84,7 +72,7 @@ public abstract class RuntimeTestUtils {
 		try {
 			String text = resourceCache.get(name);
 			if (text == null) {
-				Path path = Paths.get(resourcePath.toString(), name);
+				Path path = Paths.get(resourcePath.ToString(), name);
 				text = new String(Files.readAllBytes(path));
 				resourceCache.put(name, text);
 			}
@@ -104,14 +92,14 @@ public abstract class RuntimeTestUtils {
 		assertEquals(expecting, result);
 	}
 
-	public static String joinLines(Object... args) {
+	public static String joinLines(params Object[] args) {
 		StringBuilder result = new StringBuilder();
-		for (Object arg : args) {
-			String str = arg.toString();
-			result.append(str);
-			if (!str.endsWith("\n"))
-				result.append("\n");
+		foreach (Object arg in args) {
+			String str = arg.ToString();
+			result.Append(str);
+			if (!str.EndsWith("\n"))
+				result.Append("\n");
 		}
-		return result.toString();
+		return result.ToString();
 	}
 }

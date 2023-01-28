@@ -3,42 +3,33 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.javascript;
+using org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.states.CompiledState;
-import org.antlr.v4.test.runtime.states.GeneratedState;
-import org.stringtemplate.v4.ST;
-
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static org.antlr.v4.test.runtime.FileUtils.writeFile;
+namespace org.antlr.v4.test.runtime.javascript;
 
 public class NodeRunner : RuntimeRunner {
-	@Override
+	////@Override
 	public String getLanguage() {
 		return "JavaScript";
 	}
 
-	@Override
+	////@Override
 	public String getExtension() { return "js"; }
 
-	@Override
+	////@Override
 	public String getBaseListenerSuffix() { return null; }
 
-	@Override
+	////@Override
 	public String getBaseVisitorSuffix() { return null; }
 
-	@Override
+	////@Override
 	public String getRuntimeToolName() { return "node"; }
 
-	private final static String normalizedRuntimePath = getRuntimePath("JavaScript").replace('\\', '/');
-	private final static String newImportAntlrString =
+	private static readonly String normalizedRuntimePath = getRuntimePath("JavaScript").replace('\\', '/');
+	private static readonly String newImportAntlrString =
 			"import antlr4 from 'file://" + normalizedRuntimePath + "/src/antlr4/index.js'";
 
-	@Override
+	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
 		for (GeneratedFile generatedFile : generatedFiles) {
@@ -56,7 +47,7 @@ public class NodeRunner : RuntimeRunner {
 		return new CompiledState(generatedState, null);
 	}
 
-	@Override
+	////@Override
 	protected void addExtraRecognizerParameters(ST template) {
 		template.add("runtimePath", normalizedRuntimePath);
 	}

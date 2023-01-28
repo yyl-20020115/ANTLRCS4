@@ -22,7 +22,7 @@ public class StreamReader : Runnable {
 		worker.start();
 	}
 
-	//@Override
+	////@Override
 	public void run() {
 		try {
 			while (true) {
@@ -33,7 +33,7 @@ public class StreamReader : Runnable {
 				if (c == '\r') {
 					continue;
 				}
-				buffer.append((char) c);
+				buffer.Append((char) c);
 			}
 		}
 		catch (IOException ioe) {
@@ -46,8 +46,8 @@ public class StreamReader : Runnable {
 		worker.join();
 	}
 
-	//@Override
-	public String toString() {
-		return buffer.toString();
+	////@Override
+	public String ToString() {
+		return buffer.ToString();
 	}
 }

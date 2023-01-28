@@ -3,24 +3,17 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime;
+using org.antlr.v4.runtime.misc;
+using System.Text;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.misc.Utils;
-import org.antlr.v4.tool.ANTLRMessage;
-import org.antlr.v4.tool.ANTLRToolListener;
-import org.antlr.v4.tool.ToolMessage;
-import org.stringtemplate.v4.ST;
+namespace org.antlr.v4.test.runtime;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ErrorQueue implements ANTLRToolListener {
-	public final Tool tool;
-	public final List<String> infos = new ArrayList<String>();
-	public final List<ANTLRMessage> errors = new ArrayList<ANTLRMessage>();
-	public final List<ANTLRMessage> warnings = new ArrayList<ANTLRMessage>();
-	public final List<ANTLRMessage> all = new ArrayList<ANTLRMessage>();
+public class ErrorQueue : ANTLRToolListener {
+	public readonly Tool tool;
+	public readonly List<String> infos = new ArrayList<String>();
+	public readonly List<ANTLRMessage> errors = new ArrayList<ANTLRMessage>();
+	public readonly List<ANTLRMessage> warnings = new ArrayList<ANTLRMessage>();
+	public readonly List<ANTLRMessage> all = new ArrayList<ANTLRMessage>();
 
 	public ErrorQueue() {
 		this(null);
@@ -30,18 +23,18 @@ public class ErrorQueue implements ANTLRToolListener {
 		this.tool = tool;
 	}
 
-	//@Override
+	////@Override
 	public void info(String msg) {
-		infos.add(msg);
+		infos.Add(msg);
 	}
 
-	//@Override
+	////@Override
 	public void error(ANTLRMessage msg) {
 		errors.add(msg);
         all.add(msg);
 	}
 
-	//@Override
+	////@Override
 	public void warning(ANTLRMessage msg) {
 		warnings.add(msg);
         all.add(msg);
@@ -56,28 +49,28 @@ public class ErrorQueue implements ANTLRToolListener {
 		return all.size() + infos.size();
 	}
 
-	//@Override
-	public String toString() {
+	////@Override
+	public String ToString() {
 		return toString(false);
 	}
 
-	public String toString(boolean rendered) {
+	public String toString(bool rendered) {
 		if (!rendered) {
-			return Utils.join(all.iterator(), "\n");
+			return RuntimeUtils.join(all, "\n");
 		}
 
 		if (tool == null) {
-			throw new IllegalStateException(String.format("No %s instance is available.", Tool.class.getName()));
+			throw new IllegalStateException(String.format("No %s instance is available.", typeof(Tool).Name));
 		}
 
 		StringBuilder buf = new StringBuilder();
-		for (ANTLRMessage m : all) {
+		for (ANTLRMessage in all) {
 			ST st = tool.errMgr.getMessageTemplate(m);
-			buf.append(st.render());
-			buf.append("\n");
+			buf.Append(st.render());
+			buf.Append("\n");
 		}
 
-		return buf.toString();
+		return buf.ToString();
 	}
 
 }

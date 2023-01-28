@@ -4,51 +4,33 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.swift;
-
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.states.CompiledState;
-import org.antlr.v4.test.runtime.states.GeneratedState;
-import org.stringtemplate.v4.ST;
-
-import java.io.File;
-import java.io.FilenameFilter;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static org.antlr.v4.test.runtime.FileUtils.*;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.getTextFromResource;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.isWindows;
+namespace org.antlr.v4.test.runtime.swift;
 
 public class SwiftRunner : RuntimeRunner {
-	@Override
+	////@Override
 	public String getLanguage() {
 		return "Swift";
 	}
 
-	@Override
+	////@Override
 	public String getTestFileName() {
 		return "main";
 	}
 
-	private static final String swiftRuntimePath;
-	private static final String buildSuffix;
-	private static final Map<String, String> environment;
+	private static readonly String swiftRuntimePath;
+	private static readonly String buildSuffix;
+	private static readonly Dictionary<String, String> environment;
 
-	private static final String includePath;
-	private static final String libraryPath;
+	private static readonly String includePath;
+	private static readonly String libraryPath;
 
-	static {
+	static SwiftRunner(){
 		swiftRuntimePath = getRuntimePath("Swift");
 		buildSuffix = isWindows() ? "x86_64-unknown-windows-msvc" : "";
-		includePath = Paths.get(swiftRuntimePath, ".build", buildSuffix, "release").toString();
+		includePath = Paths.get(swiftRuntimePath, ".build", buildSuffix, "release").ToString();
 		environment = new HashMap<>();
 		if (isWindows()) {
-			libraryPath = Paths.get(includePath, "Antlr4.lib").toString();
+			libraryPath = Paths.get(includePath, "Antlr4.lib").ToString();
 			String path = System.getenv("PATH");
 			environment.put("PATH", path == null ? includePath : path + ";" + includePath);
 		}
@@ -57,17 +39,17 @@ public class SwiftRunner : RuntimeRunner {
 		}
 	}
 
-	@Override
+	////@Override
 	protected String getCompilerName() {
 		return "swift";
 	}
 
-	@Override
+	////@Override
 	protected void initRuntime()  {
 		runCommand(new String[] {getCompilerPath(), "build", "-c", "release"}, swiftRuntimePath, "build Swift runtime");
 	}
 
-	@Override
+	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		Exception exception = null;
 		try {
@@ -107,30 +89,30 @@ public class SwiftRunner : RuntimeRunner {
 		return new CompiledState(generatedState, exception);
 	}
 
-	static class NoSwiftFileFilter implements FilenameFilter {
-		public final static NoSwiftFileFilter Instance = new NoSwiftFileFilter();
+	class NoSwiftFileFilter : FilenameFilter {
+		public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
 
-		public boolean accept(File dir, String name) {
+		public bool accept(File dir, String name) {
 			return !name.endsWith(".swift");
 		}
 	}
 
-	@Override
+	////@Override
 	public String getRuntimeToolName() {
 		return null;
 	}
 
-	@Override
+	////@Override
 	public String getExecFileName() {
 		return Paths.get(getTempDirPath(),
 				".build",
 				buildSuffix,
 				"release",
-				"Test" + (isWindows() ? ".exe" : "")).toString();
+				"Test" + (isWindows() ? ".exe" : "")).ToString();
 	}
 
-	@Override
-	public Map<String, String> getExecEnvironment() {
+	////@Override
+	public Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

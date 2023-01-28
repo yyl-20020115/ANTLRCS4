@@ -4,27 +4,22 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.php;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.antlr.v4.test.runtime.*;
+namespace org.antlr.v4.test.runtime.php;
 
 public class PHPRunner : RuntimeRunner {
-	private static final Map<String, String> environment;
+	private static readonly Dictionary<String, String> environment;
 
-	static {
-		environment = new HashMap<>();
-		environment.put("RUNTIME", getRuntimePath("PHP"));
+	static PHPRunner(){
+		environment = new ();
+		environment.Add("RUNTIME", getRuntimePath("PHP"));
 	}
 
-	@Override
-	public String getLanguage() {
+	////@Override
+	public override String getLanguage() {
 		return "PHP";
 	}
 
-	@Override
+	////@Override
 	public Map<String, String> getExecEnvironment() {
 		return environment;
 	}

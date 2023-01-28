@@ -4,45 +4,45 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+namespace org.antlr.v4.test.runtime;
 
 public class RunOptions {
-	public final String grammarFileName;
-	public final String grammarStr;
-	public final String parserName;
-	public final String lexerName;
-	public final String grammarName;
-	public final boolean useListener;
-	public final boolean useVisitor;
-	public final String startRuleName;
-	public final String input;
-	public final boolean profile;
-	public final boolean showDiagnosticErrors;
-	public final boolean showDFA;
-	public final Stage endStage;
-	public final boolean returnObject;
-	public final String superClass;
+	public readonly String grammarFileName;
+	public readonly String grammarStr;
+	public readonly String parserName;
+	public readonly String lexerName;
+	public readonly String grammarName;
+	public readonly bool useListener;
+	public readonly bool useVisitor;
+	public readonly String startRuleName;
+	public readonly String input;
+	public readonly bool profile;
+	public readonly bool showDiagnosticErrors;
+	public readonly bool showDFA;
+	public readonly Stage endStage;
+	public readonly bool returnObject;
+	public readonly String superClass;
 
 	public RunOptions(String grammarFileName, String grammarStr, String parserName, String lexerName,
-					  boolean useListener, boolean useVisitor, String startRuleName,
-					  String input, boolean profile, boolean showDiagnosticErrors,
-					  boolean showDFA, Stage endStage, boolean returnObject,
+					  bool useListener, bool useVisitor, String startRuleName,
+					  String input, bool profile, bool showDiagnosticErrors,
+					  bool showDFA, Stage endStage, bool returnObject,
 					  String language, String superClass) {
 		this.grammarFileName = grammarFileName;
 		this.grammarStr = grammarStr;
 		this.parserName = parserName;
 		this.lexerName = lexerName;
 		String grammarName = null;
-		boolean isCombinedGrammar = lexerName != null && parserName != null || language.equals("Go");
+		bool isCombinedGrammar = lexerName != null && parserName != null || language.Equals("Go");
 		if (isCombinedGrammar) {
 			if (parserName != null) {
-				grammarName = parserName.endsWith("Parser")
-					? parserName.substring(0, parserName.length() - "Parser".length())
+				grammarName = parserName.EndsWith("Parser")
+					? parserName[..^"Parser".Length]
 					: parserName;
 			}
 			else if (lexerName != null) {
-				grammarName = lexerName.endsWith("Lexer")
-					? lexerName.substring(0, lexerName.length() - "Lexer".length())
+				grammarName = lexerName.EndsWith("Lexer")
+					? lexerName[..^"Lexer".Length]
 					: lexerName;
 			}
 		}

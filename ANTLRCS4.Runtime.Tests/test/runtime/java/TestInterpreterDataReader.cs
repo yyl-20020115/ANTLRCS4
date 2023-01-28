@@ -4,34 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.java;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.Vocabulary;
-import org.antlr.v4.runtime.VocabularyImpl;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNDeserializer;
-import org.antlr.v4.runtime.atn.ATNSerializer;
-import org.antlr.v4.runtime.misc.IntegerList;
-import org.antlr.v4.runtime.misc.InterpreterDataReader;
-import org.antlr.v4.tool.Grammar;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+namespace org.antlr.v4.test.runtime.java;
 
 /** This file represents a simple sanity checks on the parsing of the .interp file
  *  available to the Java runtime for interpreting rather than compiling and executing parsers.
  */
 public class TestInterpreterDataReader {
-    @Test
+    [TestMethod]
     public void testParseFile() {
 		Grammar g = new Grammar(
 				"grammar Calc;\n" +
@@ -53,7 +35,7 @@ public class TestInterpreterDataReader {
 		Path interpFile = Files.createTempFile(null, null);
 		Files.write(interpFile, interpString.getBytes(StandardCharsets.UTF_8));
 
-        InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.toString());
+        InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
         Field atnField = interpreterData.getClass().getDeclaredField("atn");
         Field vocabularyField = interpreterData.getClass().getDeclaredField("vocabulary");
         Field ruleNamesField = interpreterData.getClass().getDeclaredField("ruleNames");
@@ -70,9 +52,9 @@ public class TestInterpreterDataReader {
         Vocabulary vocabulary = (Vocabulary) vocabularyField.get(interpreterData);
 		String[] literalNames = ((VocabularyImpl) vocabulary).getLiteralNames();
 		String[] symbolicNames = ((VocabularyImpl) vocabulary).getSymbolicNames();
-		List<String> ruleNames = castList(ruleNamesField.get(interpreterData), String.class);
-        List<String> channels = castList(channelsField.get(interpreterData), String.class);
-        List<String> modes = castList(modesField.get(interpreterData), String.class);
+		List<String> ruleNames = castList(ruleNamesField.get(interpreterData), String);
+        List<String> channels = castList(channelsField.get(interpreterData), String);
+        List<String> modes = castList(modesField.get(interpreterData), String);
 
 		assertEquals(6, vocabulary.getMaxTokenType());
 		assertArrayEquals(new String[]{"s","expr"}, ruleNames.toArray());

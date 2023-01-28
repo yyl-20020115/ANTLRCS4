@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+namespace org.antlr.v4.test.runtime;
 
 public enum OSType {
 	Windows,

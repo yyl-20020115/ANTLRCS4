@@ -4,19 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
-
-import org.antlr.v4.Tool;
-import org.antlr.v4.tool.ANTLRMessage;
-import org.antlr.v4.tool.DefaultToolListener;
-import org.stringtemplate.v4.ST;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.antlr.v4.test.runtime.FileUtils.writeFile;
+namespace org.antlr.v4.test.runtime;
 
 public class Generator {
 	/** Write a grammar to tmpdir and run antlr */
@@ -24,8 +12,8 @@ public class Generator {
 										   String targetName,
 										   String grammarFileName,
 										   String grammarStr,
-										   boolean defaultListener,
-										   String... extraOptions)
+										   bool defaultListener,
+										   params String[] extraOptions)
 	{
 		FileUtils.mkdir(workdir);
 		writeFile(workdir, grammarFileName, grammarStr);
@@ -36,10 +24,10 @@ public class Generator {
 	public static ErrorQueue antlrOnString(String workdir,
 										   String targetName,
 										   String grammarFileName,
-										   boolean defaultListener,
-										   String... extraOptions)
+										   bool defaultListener,
+										   params String[] extraOptions)
 	{
-		final List<String> options = new ArrayList<>();
+		List<String> options = new ();
 		Collections.addAll(options, extraOptions);
 		if ( targetName!=null ) {
 			options.add("-Dlanguage="+targetName);
@@ -56,9 +44,9 @@ public class Generator {
 			options.add("-encoding");
 			options.add("UTF-8");
 		}
-		options.add(new File(workdir,grammarFileName).toString());
+		options.add(new File(workdir,grammarFileName).ToString());
 
-		final String[] optionsA = new String[options.size()];
+		 String[] optionsA = new String[options.size()];
 		options.toArray(optionsA);
 		Tool antlr = new Tool(optionsA);
 		ErrorQueue equeue = new ErrorQueue(antlr);
@@ -80,7 +68,7 @@ public class Generator {
 		if ( !defaultListener && !equeue.warnings.isEmpty() ) {
 			for (int i = 0; i < equeue.warnings.size(); i++) {
 				ANTLRMessage msg = equeue.warnings.get(i);
-				// antlrToolErrors.append(msg); warnings are hushed
+				// antlrToolErrors.Append(msg); warnings are hushed
 			}
 		}
 

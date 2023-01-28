@@ -3,56 +3,48 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.csharp;
+using org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.states.CompiledState;
-import org.antlr.v4.test.runtime.states.GeneratedState;
-import org.stringtemplate.v4.ST;
-
-import java.nio.file.Paths;
-
-import static org.antlr.v4.test.runtime.FileUtils.mkdir;
-import static org.antlr.v4.test.runtime.FileUtils.writeFile;
+namespace org.antlr.v4.test.runtime.csharp;
 
 public class CSharpRunner : RuntimeRunner {
-	//@Override
+	////@Override
 	public String getLanguage() { return "CSharp"; }
 
-	//@Override
+	////@Override
 	public String getTitleName() { return "C#"; }
 
-	//@Override
+	////@Override
 	public String getExtension() { return "cs"; }
 
-	//@Override
+	////@Override
 	public String getRuntimeToolName() { return "dotnet"; }
 
-	//@Override
+	////@Override
 	public String getExecFileName() { return getTestFileName() + ".dll"; }
 
-	private final static String testProjectFileName = "Antlr4.Test.csproj";
-	private final static String cSharpAntlrRuntimeDllName =
-			Paths.get(getCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").toString();
+	private static readonly String testProjectFileName = "Antlr4.Test.csproj";
+	private static readonly String cSharpAntlrRuntimeDllName =
+			Paths.get(getCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").ToString();
 
-	private final static String cSharpTestProjectContent;
+	private static readonly String cSharpTestProjectContent;
 
-	static {
+	static CSharpRunner(){
 		ST projectTemplate = new ST(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Antlr4.Test.csproj.stg"));
 		projectTemplate.add("runtimeLibraryPath", cSharpAntlrRuntimeDllName);
 		cSharpTestProjectContent = projectTemplate.render();
 	}
 
-	//@Override
+	////@Override
 	protected void initRuntime()  {
 		String cachePath = getCachePath();
 		mkdir(cachePath);
-		String projectPath = Paths.get(getRuntimePath(), "src", "Antlr4.csproj").toString();
+		String projectPath = Paths.get(getRuntimePath(), "src", "Antlr4.csproj").ToString();
 		String[] args = new String[]{getRuntimeToolPath(), "build", projectPath, "-c", "Release", "-o", cachePath};
 		runCommand(args, cachePath, "build " + getTitleName() + " ANTLR runtime");
 	}
 
-	//@Override
+	////@Override
 	public CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		Exception exception = null;
 		try {

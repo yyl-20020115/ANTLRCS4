@@ -1,16 +1,16 @@
-package org.antlr.v4.test.runtime;
+namespace org.antlr.v4.test.runtime;
 
 public class GeneratedFile {
-	public final String name;
-	public final boolean isParser;
+	public readonly String name;
+	public readonly bool isParser;
 
-	public GeneratedFile(String name, boolean isParser) {
+	public GeneratedFile(String name, bool isParser) {
 		this.name = name;
 		this.isParser = isParser;
 	}
 
-	@Override
-	public String toString() {
+	//@Override
+	public String ToString() {
 		return name + "; isParser:" + isParser;
 	}
 }

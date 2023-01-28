@@ -4,27 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.dart;
+using org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.states.CompiledState;
-import org.antlr.v4.test.runtime.states.GeneratedState;
-import org.stringtemplate.v4.ST;
-
-import java.io.*;
-
-import static org.antlr.v4.test.runtime.FileUtils.*;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.FileSeparator;
+namespace org.antlr.v4.test.runtime.dart;
 
 public class DartRunner : RuntimeRunner {
-	//@Override
+	////@Override
 	public String getLanguage() {
 		return "Dart";
 	}
 
 	private static String cacheDartPackageConfig;
 
-	//@Override
+	////@Override
 	protected void initRuntime()  {
 		String cachePath = getCachePath();
 		mkdir(cachePath);
@@ -39,7 +31,7 @@ public class DartRunner : RuntimeRunner {
 		cacheDartPackageConfig = readFile(cachePath + FileSeparator + ".dart_tool", "package_config.json");
 	}
 
-	//@Override
+	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		String dartToolDirPath = new File(getTempDirPath(), ".dart_tool").getAbsolutePath();
 		mkdir(dartToolDirPath);

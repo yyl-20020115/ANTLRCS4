@@ -4,14 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.python3;
-
-import org.antlr.v4.test.runtime.RuntimeTests;
-import org.antlr.v4.test.runtime.RuntimeRunner;
+namespace org.antlr.v4.test.runtime.python3;
 
 public class Python3RuntimeTests : RuntimeTests {
-	////@Override
-	protected RuntimeRunner createRuntimeRunner() {
+	//////@Override
+	protected override RuntimeRunner createRuntimeRunner() {
 		return new Python3Runner();
 	}
 }

@@ -4,12 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+namespace org.antlr.v4.test.runtime;
 
 public class ProcessorResult {
-	public final int exitCode;
-	public final String output;
-	public final String errors;
+	public readonly int exitCode;
+	public readonly String output;
+	public readonly String errors;
 
 	public ProcessorResult(int exitCode, String output, String errors) {
 		this.exitCode = exitCode;
@@ -17,7 +17,7 @@ public class ProcessorResult {
 		this.errors = errors;
 	}
 
-	public boolean isSuccess() {
+	public bool isSuccess() {
 		return exitCode == 0;
 	}
 }

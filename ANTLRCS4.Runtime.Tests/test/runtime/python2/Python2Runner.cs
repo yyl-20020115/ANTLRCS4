@@ -4,30 +4,26 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime.python2;
+using org.antlr.v4.test.runtime.python;
 
-import org.antlr.v4.test.runtime.python.PythonRunner;
-
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+namespace org.antlr.v4.test.runtime.python2;
 
 public class Python2Runner : PythonRunner {
-	public final static Map<String, String> environment;
+	public static readonly Dictionary<String, String> environment;
 
-	static {
-		environment = new HashMap<>();
-		environment.put("PYTHONPATH", Paths.get(getRuntimePath("Python2"), "src").toString());
-		environment.put("PYTHONIOENCODING", "utf-8");
+	static Python2Runner(){
+		environment = new ();
+		environment.Add("PYTHONPATH", Path.Combine(getRuntimePath("Python2"), "src"));
+		environment.Add("PYTHONIOENCODING", "utf-8");
 	}
 
-	//@Override
-	public String getLanguage() {
+	////@Override
+	public override String getLanguage() {
 		return "Python2";
 	}
 
-	//@Override
-	public Map<String, String> getExecEnvironment() {
+	////@Override
+	public override Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

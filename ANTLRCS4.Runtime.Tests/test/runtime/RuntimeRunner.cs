@@ -4,27 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.test.runtime.states.CompiledState;
-import org.antlr.v4.test.runtime.states.ExecutedState;
-import org.antlr.v4.test.runtime.states.GeneratedState;
-import org.antlr.v4.test.runtime.states.State;
-import org.stringtemplate.v4.ST;
+namespace org.antlr.v4.test.runtime;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-
-import static org.antlr.v4.test.runtime.FileUtils.*;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.*;
-
-public abstract class RuntimeRunner implements AutoCloseable {
+public abstract class RuntimeRunner {
 	public abstract String getLanguage();
 
-	protected String getExtension() { return getLanguage().toLowerCase(); }
+	protected String getExtension() { return getLanguage().ToLower(); }
 
 	protected String getTitleName() { return getLanguage(); }
 
@@ -47,7 +34,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 	private static String runtimeToolPath;
 	private static String compilerPath;
 
-	protected final String getCompilerPath() {
+	protected String getCompilerPath() {
 		if (compilerPath == null) {
 			compilerPath = getCompilerName();
 			if (compilerPath != null) {
@@ -61,7 +48,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		return compilerPath;
 	}
 
-	protected final String getRuntimeToolPath() {
+	protected String getRuntimeToolPath() {
 		if (runtimeToolPath == null) {
 			runtimeToolPath = getRuntimeToolName();
 			if (runtimeToolPath != null) {
@@ -77,7 +64,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 
 	protected String getCompilerName() { return null; }
 
-	protected String getRuntimeToolName() { return getLanguage().toLowerCase(); }
+	protected String getRuntimeToolName() { return getLanguage().ToLower(); }
 
 	protected String getTestFileWithExt() { return getTestFileName() + "." + getExtension(); }
 
@@ -85,25 +72,25 @@ public abstract class RuntimeRunner implements AutoCloseable {
 
 	protected String[] getExtraRunArgs() { return null; }
 
-	protected Map<String, String> getExecEnvironment() { return null; }
+	protected Dictionary<String, String> getExecEnvironment() { return null; }
 
 	protected String getPropertyPrefix() {
-		return "antlr-" + getLanguage().toLowerCase();
+		return "antlr-" + getLanguage().ToLower();
 	}
 
-	public final String getTempDirPath() {
-		return tempTestDir.toString();
+	public  String getTempDirPath() {
+		return tempTestDir.ToString();
 	}
 
-	private boolean saveTestDir;
+	private bool saveTestDir;
 
-	protected final Path tempTestDir;
+	protected readonly Path tempTestDir;
 
 	protected RuntimeRunner() {
 		this(null, false);
 	}
 
-	protected RuntimeRunner(Path tempDir, boolean saveTestDir) {
+	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
 			String dirName = getClass().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
 			tempTestDir = Paths.get(TempDirectory, dirName);
@@ -114,7 +101,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		this.saveTestDir = saveTestDir;
 	}
 
-	public void setSaveTestDir(boolean saveTestDir) {
+	public void setSaveTestDir(bool saveTestDir) {
 		this.saveTestDir = saveTestDir;
 	}
 
@@ -122,21 +109,21 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		removeTempTestDirIfRequired();
 	}
 
-	public final static String cacheDirectory;
+	public static readonly String cacheDirectory;
 
-	private static class InitializationStatus {
-		public final Object lockObject = new Object();
+	private class InitializationStatus {
+		public  Object lockObject = new Object();
 		public volatile Boolean isInitialized;
 		public Exception exception;
 	}
 
-	private final static HashMap<String, InitializationStatus> runtimeInitializationStatuses = new HashMap<>();
+	private static readonly HashMap<String, InitializationStatus> runtimeInitializationStatuses = new HashMap<>();
 
-	static {
+	static RuntimeRunner() {
 		cacheDirectory = new File(System.getProperty("java.io.tmpdir"), "ANTLR-runtime-testsuite-cache").getAbsolutePath();
 	}
 
-	protected final String getCachePath() {
+	protected String getCachePath() {
 		return getCachePath(getLanguage());
 	}
 
@@ -144,16 +131,16 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		return cacheDirectory + FileSeparator + language;
 	}
 
-	protected final String getRuntimePath() {
+	protected String getRuntimePath() {
 		return getRuntimePath(getLanguage());
 	}
 
 	public static String getRuntimePath(String language) {
-		return runtimePath.toString() + FileSeparator + language;
+		return runtimePath.ToString() + FileSeparator + language;
 	}
 
 	public State run(RunOptions runOptions) {
-		List<String> options = new ArrayList<>();
+		List<String> options = new ;
 		if (runOptions.useVisitor) {
 			options.add("-visitor");
 		}
@@ -189,27 +176,27 @@ public abstract class RuntimeRunner implements AutoCloseable {
 	}
 
 	protected List<GeneratedFile> getGeneratedFiles(RunOptions runOptions) {
-		List<GeneratedFile> files = new ArrayList<>();
+		List<GeneratedFile> files = new ();
 		String extensionWithDot = "." + getExtension();
 		String fileGrammarName = grammarNameToFileName(runOptions.grammarName);
-		boolean isCombinedGrammarOrGo = runOptions.lexerName != null && runOptions.parserName != null || getLanguage().equals("Go");
+		bool isCombinedGrammarOrGo = runOptions.lexerName != null && runOptions.parserName != null || getLanguage().Equals("Go");
 		if (runOptions.lexerName != null) {
-			files.add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getLexerSuffix() : "") + extensionWithDot, false));
+			files.Add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getLexerSuffix() : "") + extensionWithDot, false));
 		}
 		if (runOptions.parserName != null) {
-			files.add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getParserSuffix() : "") + extensionWithDot, true));
+			files.Add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getParserSuffix() : "") + extensionWithDot, true));
 			if (runOptions.useListener) {
-				files.add(new GeneratedFile(fileGrammarName + getListenerSuffix() + extensionWithDot, true));
+				files.Add(new GeneratedFile(fileGrammarName + getListenerSuffix() + extensionWithDot, true));
 				String baseListenerSuffix = getBaseListenerSuffix();
 				if (baseListenerSuffix != null) {
-					files.add(new GeneratedFile(fileGrammarName + baseListenerSuffix + extensionWithDot, true));
+					files.Add(new GeneratedFile(fileGrammarName + baseListenerSuffix + extensionWithDot, true));
 				}
 			}
 			if (runOptions.useVisitor) {
-				files.add(new GeneratedFile(fileGrammarName + getVisitorSuffix() + extensionWithDot, true));
+				files.Add(new GeneratedFile(fileGrammarName + getVisitorSuffix() + extensionWithDot, true));
 				String baseVisitorSuffix = getBaseVisitorSuffix();
 				if (baseVisitorSuffix != null) {
-					files.add(new GeneratedFile(fileGrammarName + baseVisitorSuffix + extensionWithDot, true));
+					files.Add(new GeneratedFile(fileGrammarName + baseVisitorSuffix + extensionWithDot, true));
 				}
 			}
 		}
@@ -238,12 +225,12 @@ public abstract class RuntimeRunner implements AutoCloseable {
 
 	protected void addExtraRecognizerParameters(ST template) {}
 
-	private boolean initAntlrRuntimeIfRequired() {
+	private bool initAntlrRuntimeIfRequired() {
 		String language = getLanguage();
 		InitializationStatus status;
 
 		// Create initialization status for every runtime with lock object
-		synchronized (runtimeInitializationStatuses) {
+		lock (runtimeInitializationStatuses) {
 			status = runtimeInitializationStatuses.get(language);
 			if (status == null) {
 				status = new InitializationStatus();
@@ -256,7 +243,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		}
 
 		// Locking per runtime, several runtimes can be being initialized simultaneously
-		synchronized (status.lockObject) {
+		lock (status.lockObject) {
 			if (status.isInitialized == null) {
 				Exception exception = null;
 				try {
@@ -284,7 +271,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 		String errors = null;
 		Exception exception = null;
 		try {
-			List<String> args = new ArrayList<>();
+			List<String> args = new ();
 			String runtimeToolPath = getRuntimeToolPath();
 			if (runtimeToolPath != null) {
 				args.add(runtimeToolPath);
@@ -298,7 +285,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 			ProcessorResult result = Processor.run(args.toArray(new String[0]), getTempDirPath(), getExecEnvironment());
 			output = result.output;
 			errors = result.errors;
-		} catch (InterruptedException | IOException e) {
+		} catch (Exception e) {
 			exception = e;
 		}
 		return new ExecutedState(compiledState, output, errors, exception);
@@ -311,7 +298,7 @@ public abstract class RuntimeRunner implements AutoCloseable {
 	protected ProcessorResult runCommand(String[] command, String workPath, String description)  {
 		try {
 			return Processor.run(command, workPath);
-		} catch (InterruptedException | IOException e) {
+		} catch (Exception e) {
 			throw description != null ? new Exception("can't " + description, e) : e;
 		}
 	}

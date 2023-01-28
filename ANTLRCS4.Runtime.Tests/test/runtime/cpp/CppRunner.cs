@@ -25,36 +25,36 @@ namespace org.antlr.v4.test.runtime.cpp;
  * (lldb) thread backtrace
  */
 public class CppRunner : RuntimeRunner {
-	//@Override
-	public String getLanguage() {
+	////@Override
+	public override String getLanguage() {
 		return "Cpp";
 	}
 
-	//@Override
-	public String getTitleName() { return "C++"; }
+	////@Override
+	public override String getTitleName() { return "C++"; }
 
-	private static final String runtimeSourcePath;
-	private static final String runtimeBinaryPath;
-	private static final String runtimeLibraryFileName;
+	private static readonly String runtimeSourcePath;
+	private static readonly String runtimeBinaryPath;
+	private static readonly String runtimeLibraryFileName;
 	private static String compilerName;
-	private static final String visualStudioProjectContent;
-	private static final Map<String, String> environment;
+	private static readonly String visualStudioProjectContent;
+	private static readonly Dictionary<String, String> environment;
 
 	static CppRunner() {
 		String runtimePath = getRuntimePath("Cpp");
-		runtimeSourcePath = Paths.get(runtimePath, "runtime", "src").toString();
+		runtimeSourcePath = Paths.get(runtimePath, "runtime", "src").ToString();
 
 		environment = new HashMap<>();
 		if (isWindows()) {
-			runtimeBinaryPath = Paths.get(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").toString();
-			runtimeLibraryFileName = Paths.get(runtimeBinaryPath, "antlr4-runtime.dll").toString();
+			runtimeBinaryPath = Paths.get(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
+			runtimeLibraryFileName = Paths.get(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
 			String path = System.getenv("PATH");
 			environment.put("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
 		}
 		else {
-			runtimeBinaryPath = Paths.get(runtimePath, "dist").toString();
+			runtimeBinaryPath = Paths.get(runtimePath, "dist").ToString();
 			runtimeLibraryFileName = Paths.get(runtimeBinaryPath,
-					"libantlr4-runtime." + (getOS() == OSType.Mac ? "dylib" : "so")).toString();
+					"libantlr4-runtime." + (getOS() == OSType.Mac ? "dylib" : "so")).ToString();
 			environment.put("LD_PRELOAD", runtimeLibraryFileName);
 		}
 
@@ -65,7 +65,7 @@ public class CppRunner : RuntimeRunner {
 		}
 	}
 
-	//@Override
+	////@Override
 	protected String getCompilerName() {
 		if (compilerName == null) {
 			if (isWindows()) {
@@ -79,7 +79,7 @@ public class CppRunner : RuntimeRunner {
 		return compilerName;
 	}
 
-	//@Override
+	////@Override
 	protected void initRuntime()  {
 		String runtimePath = getRuntimePath();
 
@@ -99,7 +99,7 @@ public class CppRunner : RuntimeRunner {
 		}
 	}
 
-	//@Override
+	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		if (isWindows()) {
 			writeVisualStudioProjectFile(runOptions.grammarName, runOptions.lexerName, runOptions.parserName,
@@ -142,7 +142,7 @@ public class CppRunner : RuntimeRunner {
 	}
 
 	private void writeVisualStudioProjectFile(String grammarName, String lexerName, String parserName,
-											  boolean useListener, boolean useVisitor) {
+											  bool useListener, bool useVisitor) {
 		ST projectFileST = new ST(visualStudioProjectContent);
 		projectFileST.add("runtimeSourcePath", runtimeSourcePath);
 		projectFileST.add("runtimeBinaryPath", runtimeBinaryPath);
@@ -154,17 +154,17 @@ public class CppRunner : RuntimeRunner {
 		writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.render());
 	}
 
-	//@Override
+	////@Override
 	public String getRuntimeToolName() {
 		return null;
 	}
 
-	//@Override
+	////@Override
 	public String getExecFileName() {
-		return Paths.get(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).toString();
+		return Paths.get(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
 	}
 
-	//@Override
+	////@Override
 	public Map<String, String> getExecEnvironment() {
 		return environment;
 	}

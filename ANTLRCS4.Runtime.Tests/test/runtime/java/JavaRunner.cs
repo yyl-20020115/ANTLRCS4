@@ -3,72 +3,49 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.test.runtime.java;
+using org.antlr.v4.test.runtime.states;
 
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.misc.Pair;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.test.runtime.*;
-import org.antlr.v4.test.runtime.states.*;
-
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
-import java.io.*;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.antlr.v4.test.runtime.FileUtils.replaceInFile;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.PathSeparator;
-import static org.antlr.v4.test.runtime.RuntimeTestUtils.getTextFromResource;
+namespace org.antlr.v4.test.runtime.java;
 
 public class JavaRunner : RuntimeRunner {
-	@Override
-	public String getLanguage() {
+	//@Override
+	public override String getLanguage() {
 		return "Java";
 	}
 
-	public static final String classPath = System.getProperty("java.class.path");
+	public static readonly String classPath = Environment.GetEnvironmentVariable("java.class.path");
 
-	public static final String runtimeTestLexerName = "RuntimeTestLexer";
-	public static final String runtimeTestParserName = "RuntimeTestParser";
+	public static readonly String runtimeTestLexerName = "RuntimeTestLexer";
+	public static readonly String runtimeTestParserName = "RuntimeTestParser";
 
-	private final static String testLexerContent;
-	private final static String testParserContent;
+	private static readonly String testLexerContent;
+	private static readonly String testParserContent;
 	private static JavaCompiler compiler;
 
-	static {
+	static JavaRunner(){
 		testLexerContent = getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestLexerName + ".java");
 		testParserContent = getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestParserName + ".java");
 	}
 
-	public JavaRunner(Path tempDir, boolean saveTestDir) {
-		super(tempDir, saveTestDir);
+	public JavaRunner(string tempDir, bool saveTestDir) {
+		base(tempDir, saveTestDir);
 	}
 
 	public JavaRunner() {
-		super();
+		base();
 	}
 
-	@Override
+	//@Override
 	protected void initRuntime() {
 		compiler = ToolProvider.getSystemJavaCompiler();
 	}
 
-	@Override
+	//@Override
 	protected String getCompilerName() {
 		return "javac";
 	}
 
-	@Override
+	//@Override
 	protected JavaCompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		String tempTestDir = getTempDirPath();
 
@@ -118,10 +95,10 @@ public class JavaRunner : RuntimeRunner {
 
 			loader = new URLClassLoader(new URL[]{new File(tempTestDir).toURI().toURL()}, systemClassLoader);
 			if (runOptions.lexerName != null) {
-				lexer = loader.loadClass(runOptions.lexerName).asSubclass(Lexer.class);
+				lexer = loader.loadClass(runOptions.lexerName).asSubclass(Lexer);
 			}
 			if (runOptions.parserName != null) {
-				parser = loader.loadClass(runOptions.parserName).asSubclass(Parser.class);
+				parser = loader.loadClass(runOptions.parserName).asSubclass(Parser);
 			}
 		} catch (Exception ex) {
 			exception = ex;
@@ -130,7 +107,7 @@ public class JavaRunner : RuntimeRunner {
 		return new JavaCompiledState(generatedState, loader, lexer, parser, exception);
 	}
 
-	@Override
+	//@Override
 	protected ExecutedState execute(RunOptions runOptions, CompiledState compiledState) {
 		JavaCompiledState javaCompiledState = (JavaCompiledState) compiledState;
 
@@ -156,7 +133,7 @@ public class JavaRunner : RuntimeRunner {
 					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName);
 				} catch (NoSuchMethodException noSuchMethodException) {
 					// try with int _p arg for recursive func
-					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName, int.class);
+					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName, int);
 					args = new Integer[]{0};
 				}
 				parseTree = (ParseTree) startRule.invoke(lexerParser.b, args);
@@ -172,9 +149,9 @@ public class JavaRunner : RuntimeRunner {
 		String output = null;
 		String errors = null;
 		try {
-			final Class<?> mainClass = compiledState.loader.loadClass(getTestFileName());
-			final Method recognizeMethod = mainClass.getDeclaredMethod("recognize", String.class,
-					PrintStream.class, PrintStream.class);
+			 Type mainClass = compiledState.loader.loadClass(getTestFileName());
+			 Method recognizeMethod = mainClass.getDeclaredMethod("recognize", String,
+					PrintStream, PrintStream);
 
 			PipedInputStream stdoutIn = new PipedInputStream();
 			PipedInputStream stderrIn = new PipedInputStream();
@@ -192,8 +169,8 @@ public class JavaRunner : RuntimeRunner {
 			stderrOut.close();
 			stdoutReader.join();
 			stderrReader.join();
-			output = stdoutReader.toString();
-			errors = stderrReader.toString();
+			output = stdoutReader.ToString();
+			errors = stderrReader.ToString();
 		} catch (Exception ex) {
 			exception = ex;
 		}
