@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using System.Reflection;
 
 namespace org.antlr.v4.test.runtime.java.api.perf;
 
@@ -152,11 +153,11 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 	public List<String> streamFootprints = new ();
 
 	public static void main(String[] args)  {
-		RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-		List<String> vmArgs = runtimeMxBean.getInputArguments();
+		//RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+		//List<String> vmArgs = runtimeMxBean.getInputArguments();
 		Console.Out.Write("Java VM args: ");
-		for (String vmArg : vmArgs) {
-			if ( !vmArg.startsWith("-D") ) {
+		foreach (String vmArg in args) {
+			if ( !vmArg.StartsWith("-D") ) {
 				Console.Out.Write(vmArg+" ");
 			}
 		}
@@ -397,7 +398,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public void lex_new_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)  {
 		String resourceName = PerfDir+"/"+fileName;
-		ClassLoader loader = TimeLexerSpeed.getClassLoader();
+        Assembly assembly = TimeLexerSpeed.getClassLoader();
 		using (InputStream @is = loader.getResourceAsStream(resourceName)) {
 			long size = getResourceSize(loader, resourceName);
 			CharStream input = CharStreams.fromStream(@is, StandardCharsets.UTF_8, size);

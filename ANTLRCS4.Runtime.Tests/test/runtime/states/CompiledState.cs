@@ -13,6 +13,7 @@ public class CompiledState : State {
 	}
 
 	public CompiledState(GeneratedState previousState, Exception exception) {
-		super(previousState, exception);
+		base(previousState, exception);
+		base(previousState, exception);
 	}
 }

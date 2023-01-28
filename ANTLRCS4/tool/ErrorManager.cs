@@ -157,7 +157,7 @@ public class ErrorManager {
 
 	}
 
-	public void leftRecursionCycles(String fileName, ICollection<ICollection<Rule>> cycles) {
+	public void leftRecursionCycles(String fileName, ICollection<HashSet<Rule>> cycles) {
 		errors++;
 		ANTLRMessage msg = new LeftRecursionCyclesMessage(fileName, cycles);
 		tool.error(msg);

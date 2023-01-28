@@ -62,11 +62,11 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	protected static FrequencySet<String> combineMax(FrequencySet<String> a, FrequencySet<String> b) {
 		FrequencySet<String> result = combineAndClip(a, b, 1);
 		foreach (var entry in a) {
-			result.get(entry.Key).v = entry.Value.v;
+			result[(entry.Key)].v = entry.Value.v;
 		}
 
 		foreach (var entry in b) {
-			MutableInt slot = result.get(entry.Key);
+			MutableInt slot = result[(entry.Key)];
 			slot.v = Math.Max(slot.v, entry.Value.v);
 		}
 

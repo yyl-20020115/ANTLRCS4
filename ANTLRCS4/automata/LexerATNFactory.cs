@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using ANTLRCS4.Runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
@@ -70,7 +71,7 @@ public class LexerATNFactory : ParserATNFactory {
 		foreach (String modeName in modes) {
 			// create s0, start state; implied Tokens rule node
 			TokensStartState startState =
-				newState(typeof(TokensStartState), null);
+				newState<TokensStartState>(typeof(TokensStartState), null);
 			atn.modeNameToStartState[modeName]= startState;
 			atn.modeToStartState.Add(startState);
 			atn.defineDecisionState(startState);
@@ -92,8 +93,8 @@ public class LexerATNFactory : ParserATNFactory {
 
 		// LINK MODE START STATE TO EACH TOKEN RULE
 		foreach (String modeName in modes) {
-			List<Rule> rules = ((LexerGrammar)g).modes.get(modeName);
-			TokensStartState startState = atn.modeNameToStartState.get(modeName);
+			List<Rule> rules = ((LexerGrammar)g).modes[(modeName)];
+			TokensStartState startState = atn.modeNameToStartState[(modeName)];
             foreach (Rule r in rules) {
 				if ( !r.isFragment() ) {
 					RuleStartState s = atn.ruleToStartState[r.index];
@@ -116,7 +117,7 @@ public class LexerATNFactory : ParserATNFactory {
 	//@Override
 	public Handle action(ActionAST _action) {
 		int ruleIndex = currentRule.index;
-		int actionIndex = g.lexerActions.get(_action);
+		int actionIndex = g.lexerActions[(_action)];
 		LexerCustomAction lexerAction = new LexerCustomAction(ruleIndex, actionIndex);
 		return action(_action, lexerAction);
 	}
@@ -317,10 +318,10 @@ public class LexerATNFactory : ParserATNFactory {
 		right = null;
 		for (int i = 0; i < n; ) {
 			right = newState(stringLiteralAST);
-			int codePoint = s.codePointAt(i);
+			int codePoint = char.ConvertToUtf32(s, i);// s.codePointAt(i);
 			prev.addTransition(createTransition(right, codePoint, codePoint, stringLiteralAST));
 			prev = right;
-			i += char.charCount(codePoint);
+			i += new Rune(codePoint).Utf16SequenceLength;// char.charCount(codePoint);
 		}
 		stringLiteralAST.atnState = left;
 		return new Handle(left, right);
@@ -366,7 +367,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		//@Override
-		public String toString() {
+		public String ToString() {
 			return String.format(
 					"%s mode=%s inRange=%s prevCodePoint=%d prevProperty=%s",
 					base.ToString(),
@@ -393,7 +394,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 		//@Override
 		public int hashCode() {
-			return Objects.hash(mode, inRange, prevCodePoint, prevProperty);
+			return Objects.GetHashCode(mode, inRange, prevCodePoint, prevProperty);
 		}
 	}
 
@@ -408,15 +409,15 @@ public class LexerATNFactory : ParserATNFactory {
 			if (state.mode == CharSetParseState.Mode.ERROR) {
 				return new IntervalSet();
 			}
-			int c = chars.codePointAt(i);
-			int offset = char.charCount(c);
+			int c = char.ConvertToUtf32(chars,i);
+			int offset = new Rune(c).Utf16SequenceLength;
 			if (c == '\\') {
 				EscapeSequenceParsing.Result escapeParseResult =
 					EscapeSequenceParsing.parseEscape(chars, i);
 				switch (escapeParseResult.type) {
 					case INVALID:
-						String invalid = chars.substring(escapeParseResult.startOffset,
-						                                 escapeParseResult.startOffset+escapeParseResult.parseLength);
+						String invalid = chars.Substring(escapeParseResult.startOffset,
+						                                 escapeParseResult.parseLength);
 						g.tool.errMgr.grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE,
 						                           g.fileName, charSetAST.getToken(), invalid);
 						state = CharSetParseState.ERROR;
@@ -508,13 +509,13 @@ public class LexerATNFactory : ParserATNFactory {
 
 	private void applyPrevState(GrammarAST charSetAST, IntervalSet set, CharSetParseState state) {
 		switch (state.mode) {
-			case NONE:
-			case ERROR:
+			case CharSetParseState.Mode.NONE:
+			case CharSetParseState.Mode.ERROR:
 				break;
-			case PREV_CODE_POINT:
+			case CharSetParseState.Mode.PREV_CODE_POINT:
 				checkCharAndAddToSet(charSetAST, set, state.prevCodePoint);
 				break;
-			case PREV_PROPERTY:
+			case CharSetParseState.Mode.PREV_PROPERTY:
 				set.addAll(state.prevProperty);
 				break;
 		}
@@ -714,33 +715,40 @@ public class LexerATNFactory : ParserATNFactory {
 		ruleCommands.Add(command);
 	}
 
-	private int? getModeConstantValue(String modeName, Token token) {
-		if (modeName == null) {
+	private int? getModeConstantValue(String modeName, Token token)
+	{
+		if (modeName == null)
+		{
 			return null;
 		}
 
-		if (modeName.Equals("DEFAULT_MODE")) {
+		if (modeName.Equals("DEFAULT_MODE"))
+		{
 			return Lexer.DEFAULT_MODE;
 		}
-		if (COMMON_CONSTANTS.ContainsKey(modeName)) {
+		if (COMMON_CONSTANTS.ContainsKey(modeName))
+		{
 			g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
 			return null;
 		}
 
-		List<String> modeNames = new (((LexerGrammar)g).modes.Keys);
+		List<String> modeNames = new(((LexerGrammar)g).modes.Keys);
 		int mode = modeNames.IndexOf(modeName);
-		if (mode >= 0) {
+		if (mode >= 0)
+		{
 			return mode;
 		}
 
-		try {
-			return int.parseInt(modeName);
-		} catch (Exception ex) {
+		if (int.TryParse(modeName, out var r))
+		{
+			return r;
+		}
+		else
+		{
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME, g.fileName, token, token.getText());
 			return null;
 		}
 	}
-
 	private int? getTokenConstantValue(String tokenName, Token token) {
 		if (tokenName == null) {
 			return null;
@@ -759,9 +767,12 @@ public class LexerATNFactory : ParserATNFactory {
 			return tokenType;
 		}
 
-		try {
-			return int.TryParse(tokenName,out var r)?r:-1;
-		} catch (NumberFormatException ex) {
+		if (int.TryParse(tokenName, out var r))
+		{
+			return r;
+		}
+		else
+		{
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME, g.fileName, token, token.getText());
 			return null;
 		}
@@ -788,11 +799,12 @@ public class LexerATNFactory : ParserATNFactory {
 			return channelValue;
 		}
 
-		try {
-			return int.parseInt(channelName);
-		} catch (NumberFormatException ex) {
-			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME, g.fileName, token, token.getText());
-			return null;
-		}
+        return int.TryParse(channelName, out var r) ? r : null;
+  //      try
+  //      {
+		//} catch (NumberFormatException ex) {
+		//	g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME, g.fileName, token, token.getText());
+		//	return null;
+		//}
 	}
 }

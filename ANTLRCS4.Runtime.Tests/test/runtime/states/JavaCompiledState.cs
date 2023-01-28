@@ -6,22 +6,23 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using System.Reflection;
 
 namespace org.antlr.v4.test.runtime.states;
 
 public class JavaCompiledState : CompiledState {
-	public readonly ClassLoader loader;
+	public readonly Assembly assembly;
 	public readonly Type lexer;
 	public readonly Type parser;
 
 	public JavaCompiledState(GeneratedState previousState,
-							 ClassLoader loader,
-							 Class<? : Lexer> lexer,
-							 Class<? : Parser> parser,
+                             Assembly assembly,
+							 Type lexer,
+							 Type parser,
 							 Exception exception
 	) {
 		base(previousState, exception);
-		this.loader = loader;
+		this.assembly = assembly;
 		this.lexer = lexer;
 		this.parser = parser;
 	}
@@ -30,12 +31,12 @@ public class JavaCompiledState : CompiledState {
 			{
 		ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
 
-		Constructor<? : Lexer> lexerConstructor = lexer.getConstructor(CharStream);
+		ConstructorInfo lexerConstructor = lexer.getConstructor(CharStream);
 		Lexer lexer = lexerConstructor.newInstance(@in);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Constructor<? : Parser> parserConstructor = parser.getConstructor(TokenStream);
+		ConstructorInfo parserConstructor = parser.getConstructor(TokenStream);
 		Parser parser = parserConstructor.newInstance(tokens);
 		return new Pair<>(lexer, parser);
 	}

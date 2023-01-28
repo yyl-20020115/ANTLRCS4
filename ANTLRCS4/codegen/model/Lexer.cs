@@ -29,16 +29,16 @@ public class Lexer : Recognizer {
 
 		escapedChannels = new ();
 		channelNames = new List<string>();
-		foreach (String key in g.channelNameToValueMap.keySet()) {
-			int value = g.channelNameToValueMap.get(key);
-			escapedChannels.put(target.escapeIfNeeded(key), value);
-			channelNames.add(key);
+		foreach (String key in g.channelNameToValueMap.Keys) {
+			int value = g.channelNameToValueMap[key];
+			escapedChannels[target.escapeIfNeeded(key)]= value;
+			channelNames.Add(key);
 		}
 
 		modes = (g as LexerGrammar).modes.Keys;
-		escapedModeNames = new (modes.size());
+		escapedModeNames = new List<String>(modes.Count);
 		foreach (String mode in modes) {
-			escapedModeNames.add(target.escapeIfNeeded(mode));
+			escapedModeNames.Add(target.escapeIfNeeded(mode));
 		}
 	}
 }

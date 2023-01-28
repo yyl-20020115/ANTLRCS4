@@ -22,10 +22,10 @@ public class RangeBorderCharactersData {
 	public static RangeBorderCharactersData getAndCheckCharactersData(int from, int to, Grammar grammar, CommonTree tree,
 																	  bool reportRangeContainsNotImpliedCharacters
 	) {
-		int lowerFrom = char.ToLower(from);
-		int upperFrom = char.ToUpper(from);
-		int lowerTo = char.toLowerCase(to);
-		int upperTo = char.toUpperCase(to);
+		int lowerFrom = char.ToLower((char)from);
+		int upperFrom = char.ToUpper((char)from);
+		int lowerTo = char.ToLower((char)to);
+		int upperTo = char.ToUpper((char)to);
 
 		bool isLowerFrom = lowerFrom == from;
 		bool isLowerTo = lowerTo == to;
@@ -33,13 +33,13 @@ public class RangeBorderCharactersData {
 		if (reportRangeContainsNotImpliedCharacters && mixOfLowerAndUpperCharCase && from <= 0x7F && to <= 0x7F) {
 			StringBuilder notImpliedCharacters = new StringBuilder();
 			for (int i = from; i < to; i++) {
-				if (!char.isAlphabetic(i)) {
+				if (!char.IsLetter(i)) {
 					notImpliedCharacters.Append((char)i);
 				}
 			}
-			if (notImpliedCharacters.length() > 0) {
+			if (notImpliedCharacters.Length > 0) {
 				grammar.tool.errMgr.grammarError(ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS, grammar.fileName, tree.getToken(),
-						(char) from, (char) to, notImpliedCharacters.toString());
+						(char) from, (char) to, notImpliedCharacters.ToString());
 			}
 		}
 		return new RangeBorderCharactersData(lowerFrom, upperFrom, lowerTo, upperTo, mixOfLowerAndUpperCharCase);

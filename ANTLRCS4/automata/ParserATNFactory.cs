@@ -432,8 +432,8 @@ public class ParserATNFactory : ATNFactory {
 				tr!=null && (isRuleTrans && ((RuleTransition)tr).followState == el.right || tr.target == el.right) ) {
 				// we can avoid epsilon edge to next el
 				Handle handle = null;
-				if (i + 1 < els.size()) {
-					handle = els.get(i + 1);
+				if (i + 1 < els.Count) {
+					handle = els[(i + 1)];
 				}
 				if (handle != null) {
 					if (isRuleTrans) {

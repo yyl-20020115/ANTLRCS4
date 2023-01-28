@@ -97,7 +97,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			}
 		}
 
-		if ( altAssociativity.get(alt)!=null && altAssociativity.get(alt)!=assoc ) {
+		if ( altAssociativity.TryGetValue(alt,out var r) &&r!=assoc ) {
 			tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
 		}
 		altAssociativity[alt]= assoc;

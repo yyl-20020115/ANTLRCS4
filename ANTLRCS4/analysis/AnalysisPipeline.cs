@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
@@ -62,11 +63,11 @@ public class AnalysisPipeline {
 			else {
 				LL1Analyzer anal = new LL1Analyzer(g.atn);
 				look = anal.getDecisionLookahead(s);
-				g.tool.log("LL1", "look=" + Arrays.toString(look));
+				g.tool.log("LL1", "look=" + RuntimeUtils.join(look,","));
 			}
 
 			//assert s.decision + 1 >= g.decisionLOOK.size();
-			RuntimeUtils.setSize(g.decisionLOOK, s.decision+1);
+			Utils.setSize(g.decisionLOOK, s.decision+1);
 			g.decisionLOOK[s.decision]= look;
 			g.tool.log("LL1", "LL(1)? " + disjoint(look));
 		}

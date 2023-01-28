@@ -54,7 +54,7 @@ public class ListenerFile : OutputFile {
 				listenerNames.Add(r.name);
 			}
 		}
-		ActionAST ast = g.namedActions.get("header");
+		ActionAST ast = g.namedActions["header"];
 		if ( ast!=null ) header = new Action(factory, ast);
 		genPackage = g.tool.genPackage;
 		accessLevel = g.getOptionString("accessLevel");
