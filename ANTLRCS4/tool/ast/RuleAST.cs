@@ -4,20 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool.ast;
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
 
-import org.antlr.runtime.Token;
-import org.antlr.runtime.tree.Tree;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.tool.Grammar;
+namespace org.antlr.v4.tool.ast;
 
 public class RuleAST : GrammarASTWithOptions {
-	public RuleAST(RuleAST node) {
-		super(node);
+	public RuleAST(RuleAST node) :base(node)
+    {
+		;
 	}
 
-	public RuleAST(Token t) { super(t); }
-    public RuleAST(int type) { super(type); }
+	public RuleAST(Token t) :base(t){ ; }
+    public RuleAST(int type) :base(type){ ; }
 
 	public bool isLexerRule() {
 		String name = getRuleName();
@@ -30,8 +30,8 @@ public class RuleAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	@Override
-	public RuleAST dupNode() { return new RuleAST(this); }
+	//@Override
+	public override RuleAST dupNode() { return new RuleAST(this); }
 
 	public ActionAST getLexerAction() {
 		Tree blk = getFirstChildWithType(ANTLRParser.BLOCK);
@@ -45,6 +45,6 @@ public class RuleAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

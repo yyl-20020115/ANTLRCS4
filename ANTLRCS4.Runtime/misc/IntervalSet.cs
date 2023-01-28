@@ -99,7 +99,7 @@ public class IntervalSet : IntSet {
 	// copy on write so we can cache a..a intervals and sets of that
 	protected void add(Interval addition) {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
-		//System.out.println("add "+addition+" to "+intervals.toString());
+		//Console.Out.WriteLine("add "+addition+" to "+intervals.toString());
 		if ( addition.b<addition.a ) {
 			return;
 		}
@@ -326,7 +326,7 @@ public class IntervalSet : IntSet {
 		while ( i<mySize && j<theirSize ) {
 			Interval mine = myIntervals[(i)];
 			Interval theirs = theirIntervals[(j)];
-			//System.out.println("mine="+mine+" and theirs="+theirs);
+			//Console.Out.WriteLine("mine="+mine+" and theirs="+theirs);
 			if ( mine.startsBeforeDisjoint(theirs) ) {
 				// move this iterator looking for interval that might overlap
 				i++;

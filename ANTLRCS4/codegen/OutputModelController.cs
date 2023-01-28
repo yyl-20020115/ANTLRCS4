@@ -4,10 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using Action = org.antlr.v4.codegen.model.Action;
 
 namespace org.antlr.v4.codegen;
 
@@ -173,14 +176,14 @@ public class OutputModelController {
 		SrcOp opStuff = altForOpAltBlock.ops.get(0);
 		if ( opStuff is AltBlock ) {
 			AltBlock opAltBlock = (AltBlock)opStuff;
-			opAltsCode.addAll(opAltBlock.alts);
+			opAltsCode.AddRange(opAltBlock.alts);
 		}
 		else { // just a single alt I guess; no block
-			opAltsCode.add((CodeBlockForAlt)opStuff);
+			opAltsCode.Add((CodeBlockForAlt)opStuff);
 		}
 
 		// Insert code in front of each primary alt to create specialized ctx if there was a label
-		for (int i = 0; i < primaryAltsCode.size(); i++) {
+		for (int i = 0; i < primaryAltsCode.Count; i++) {
 			LeftRecursiveRuleAltInfo altInfo = r.recPrimaryAlts.get(i);
 			if ( altInfo.altLabel==null ) continue;
 			ST altActionST = codegenTemplates.getInstanceOf("recRuleReplaceContext");
@@ -253,7 +256,7 @@ public class OutputModelController {
 		function.postamble = rulePostamble(function, r);
 	}
 
-	public void buildLexerRuleActions(Lexer lexer, final Rule r) {
+	public void buildLexerRuleActions(Lexer lexer, Rule r) {
 		if (r.actions.isEmpty()) {
 			return;
 		}
@@ -266,7 +269,7 @@ public class OutputModelController {
 			raf = new RuleActionFunction(@delegate, r, ctxType);
 		}
 
-		for (ActionAST a : r.actions) {
+		foreach (ActionAST a in r.actions) {
 			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = lexer.sempredFuncs.get(r);

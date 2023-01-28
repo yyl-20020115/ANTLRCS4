@@ -26,14 +26,14 @@ public class SymbolChecks {
 
 	public ErrorManager errMgr;
 
-	protected Set<String> reservedNames = new HashSet<String>(LexerATNFactory.getCommonConstants());
+	protected HashSet<String> reservedNames = new HashSet<String>(LexerATNFactory.getCommonConstants());
 
 	public SymbolChecks(Grammar g, SymbolCollector collector) {
 		this.g = g;
 		this.collector = collector;
 		this.errMgr = g.tool.errMgr;
 
-		for (GrammarAST tokenId : collector.tokenIDRefs) {
+		foreach (GrammarAST tokenId in collector.tokenIDRefs) {
 			tokenIDs.add(tokenId.getText());
 		}
 	}
@@ -43,7 +43,7 @@ public class SymbolChecks {
 		// So, call order sensitive
 		// First collect all rules for later use in checkForLabelConflict()
 		if (g.rules != null) {
-			for (Rule r : g.rules.values()) nameToRuleMap.put(r.name, r);
+			foreach (Rule r in g.rules.values()) nameToRuleMap.put(r.name, r);
 		}
 		checkReservedNames(g.rules.values());
 		checkActionRedefinitions(collector.namedActions);
@@ -55,7 +55,7 @@ public class SymbolChecks {
 		String scope = g.getDefaultActionScope();
 		String name;
 		GrammarAST nameNode;
-		for (GrammarAST ampersandAST : actions) {
+		for (GrammarAST ampersandAST in actions) {
 			nameNode = (GrammarAST) ampersandAST.getChild(0);
 			if (ampersandAST.getChildCount() == 2) {
 				name = nameNode.getText();
@@ -87,17 +87,17 @@ public class SymbolChecks {
 	 * for repeated defs.
 	 */
 	public void checkForLabelConflicts(Collection<Rule> rules) {
-		for (Rule r : rules) {
+		for (Rule r in rules) {
 			checkForAttributeConflicts(r);
 
 			Map<String, LabelElementPair> labelNameSpace = new HashMap<>();
 			for (int i = 1; i <= r.numberOfAlts; i++) {
 				Alternative a = r.alt[i];
-				for (List<LabelElementPair> pairs : a.labelDefs.values()) {
+				for (List<LabelElementPair> pairs in a.labelDefs.values()) {
 					if (r.hasAltSpecificContexts()) {
 						// Collect labelName-labeledRules map for rule with alternative labels.
 						Map<String, List<LabelElementPair>> labelPairs = new HashMap<>();
-						for (LabelElementPair p : pairs) {
+						for (LabelElementPair p in pairs) {
 							String labelName = findAltLabelName(p.label);
 							if (labelName != null) {
 								List<LabelElementPair> list;
@@ -108,11 +108,11 @@ public class SymbolChecks {
 									list = new ArrayList<>();
 									labelPairs.put(labelName, list);
 								}
-								list.add(p);
+								list.Add(p);
 							}
 						}
 
-						for (List<LabelElementPair> internalPairs : labelPairs.values()) {
+						foreachs (List<LabelElementPair> internalPairs in labelPairs.values()) {
 							labelNameSpace.clear();
 							checkLabelPairs(r, labelNameSpace, internalPairs);
 						}
@@ -126,7 +126,7 @@ public class SymbolChecks {
 	}
 
 	private void checkLabelPairs(Rule r, Map<String, LabelElementPair> labelNameSpace, List<LabelElementPair> pairs) {
-		for (LabelElementPair p : pairs) {
+		for (LabelElementPair p in pairs) {
 			checkForLabelConflict(r, p.label);
 			String name = p.label.getText();
 			LabelElementPair prev = labelNameSpace.get(name);
@@ -178,15 +178,15 @@ public class SymbolChecks {
 					labelPair.label.getText(),
 					labelPair.type + "!=" + prevLabelPair.type);
 		}
-		if (!prevLabelPair.element.getText().equals(labelPair.element.getText()) &&
-			(prevLabelPair.type.equals(LabelType.RULE_LABEL) || prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL)) &&
-			(labelPair.type.equals(LabelType.RULE_LABEL) || labelPair.type.equals(LabelType.RULE_LIST_LABEL))) {
+		if (!prevLabelPair.element.getText().Equals(labelPair.element.getText()) &&
+			(prevLabelPair.type.Equals(LabelType.RULE_LABEL) || prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL)) &&
+			(labelPair.type.Equals(LabelType.RULE_LABEL) || labelPair.type.Equals(LabelType.RULE_LIST_LABEL))) {
 
 			Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
-			String prevLabelOp = prevLabelPair.type.equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
-			String labelOp = labelPair.type.equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
+			String prevLabelOp = prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
+			String labelOp = labelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
 			errMgr.grammarError(
 					ErrorType.LABEL_TYPE_CONFLICT,
 					g.fileName,
@@ -244,7 +244,7 @@ public class SymbolChecks {
 			return;
 		}
 
-		for (Attribute attribute : attributes.attributes.values()) {
+		for (Attribute attribute in attributes.attributes.values()) {
 			if (ruleNames.contains(attribute.name)) {
 				errMgr.grammarError(
 						errorType,
@@ -272,9 +272,9 @@ public class SymbolChecks {
 		}
 	}
 
-	protected void checkReservedNames(Collection<Rule> rules) {
-		for (Rule rule : rules) {
-			if (reservedNames.contains(rule.name)) {
+	protected void checkReservedNames(ICollection<Rule> rules) {
+		foreach (Rule rule in rules) {
+			if (reservedNames.Contains(rule.name)) {
 				errMgr.grammarError(ErrorType.RESERVED_RULE_NAME, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
 			}
 		}
@@ -283,8 +283,8 @@ public class SymbolChecks {
 	public void checkForModeConflicts(Grammar g) {
 		if (g.isLexer()) {
 			LexerGrammar lexerGrammar = (LexerGrammar)g;
-			for (String modeName : lexerGrammar.modes.keySet()) {
-				if (!modeName.equals("DEFAULT_MODE") && reservedNames.contains(modeName)) {
+			foreach (String modeName in lexerGrammar.modes.Keys) {
+				if (!modeName.Equals("DEFAULT_MODE") && reservedNames.Contains(modeName)) {
 					Rule rule = lexerGrammar.modes.get(modeName).iterator().next();
 					g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, rule.ast.parent.getToken(), modeName);
 				}
@@ -310,22 +310,22 @@ public class SymbolChecks {
 	public void checkForUnreachableTokens(Grammar g) {
 		if (g.isLexer()) {
 			LexerGrammar lexerGrammar = (LexerGrammar)g;
-			for (List<Rule> rules : lexerGrammar.modes.values()) {
+			foreach (List<Rule> rules in lexerGrammar.modes.Values) {
 				// Collect string literal lexer rules for each mode
-				List<Rule> stringLiteralRules = new ArrayList<>();
-				List<List<String>> stringLiteralValues = new ArrayList<>();
-				for (int i = 0; i < rules.size(); i++) {
-					Rule rule = rules.get(i);
+				List<Rule> stringLiteralRules = new ();
+				List<List<String>> stringLiteralValues = new ();
+				for (int i = 0; i < rules.Count; i++) {
+					Rule rule = rules[(i)];
 
 					List<String> ruleStringAlts = getSingleTokenValues(rule);
-					if (ruleStringAlts != null && ruleStringAlts.size() > 0) {
-						stringLiteralRules.add(rule);
-						stringLiteralValues.add(ruleStringAlts);
+					if (ruleStringAlts != null && ruleStringAlts.Count > 0) {
+						stringLiteralRules.Add(rule);
+						stringLiteralValues.Add(ruleStringAlts);
 					}
 				}
 
 				// Check string sets intersection
-				for (int i = 0; i < stringLiteralRules.size(); i++) {
+				for (int i = 0; i < stringLiteralRules.Count; i++) {
 					List<String> firstTokenStringValues = stringLiteralValues.get(i);
 					Rule rule1 =  stringLiteralRules.get(i);
 					checkForOverlap(g, rule1, rule1, firstTokenStringValues, stringLiteralValues.get(i));
@@ -350,7 +350,7 @@ public class SymbolChecks {
 	private List<String> getSingleTokenValues(Rule rule)
 	{
 		List<String> values = new ArrayList<>();
-		for (Alternative alt : rule.alt) {
+		for (Alternative alt in rule.alt) {
 			if (alt != null) {
 				// select first alt if token has a command
 				Tree rootNode = alt.ast.getChildCount() == 2 &&
@@ -363,7 +363,7 @@ public class SymbolChecks {
 				}
 
 				// Ignore alt if contains not only string literals (repetition, optional)
-				boolean ignore = false;
+				bool ignore = false;
 				StringBuilder currentValue = new StringBuilder();
 				for (int i = 0; i < rootNode.getChildCount(); i++) {
 					Tree child = rootNode.getChild(i);
@@ -399,12 +399,12 @@ public class SymbolChecks {
 	 * TOKEN2: 'asdf';
 	 */
 	private void checkForOverlap(Grammar g, Rule rule1, Rule rule2, List<String> firstTokenStringValues, List<String> secondTokenStringValues) {
-		for (int i = 0; i < firstTokenStringValues.size(); i++) {
+		for (int i = 0; i < firstTokenStringValues.Count; i++) {
 			int secondTokenInd = rule1 == rule2 ? i + 1 : 0;
 			String str1 = firstTokenStringValues.get(i);
-			for (int j = secondTokenInd; j < secondTokenStringValues.size(); j++) {
+			for (int j = secondTokenInd; j < secondTokenStringValues.Count; j++) {
 				String str2 = secondTokenStringValues.get(j);
-				if (str1.equals(str2)) {
+				if (str1.Equals(str2)) {
 					errMgr.grammarError(ErrorType.TOKEN_UNREACHABLE, g.fileName,
 							((GrammarAST) rule2.ast.getChild(0)).token, rule2.name, str2, rule1.name);
 				}
@@ -415,18 +415,18 @@ public class SymbolChecks {
 	// CAN ONLY CALL THE TWO NEXT METHODS AFTER GRAMMAR HAS RULE DEFS (see semanticpipeline)
 	public void checkRuleArgs(Grammar g, List<GrammarAST> rulerefs) {
 		if ( rulerefs==null ) return;
-		for (GrammarAST ref : rulerefs) {
-			String ruleName = ref.getText();
+		for (GrammarAST @ref : rulerefs) {
+			String ruleName = @ref.getText();
 			Rule r = g.getRule(ruleName);
-			GrammarAST arg = (GrammarAST)ref.getFirstChildWithType(ANTLRParser.ARG_ACTION);
+			GrammarAST arg = (GrammarAST)@ref.getFirstChildWithType(ANTLRParser.ARG_ACTION);
 			if ( arg!=null && (r==null || r.args==null) ) {
 				errMgr.grammarError(ErrorType.RULE_HAS_NO_ARGS,
-						g.fileName, ref.token, ruleName);
+						g.fileName, @ref.token, ruleName);
 
 			}
 			else if ( arg==null && (r!=null && r.args!=null) ) {
 				errMgr.grammarError(ErrorType.MISSING_RULE_ARGS,
-						g.fileName, ref.token, ruleName);
+						g.fileName, @ref.token, ruleName);
 			}
 		}
 	}

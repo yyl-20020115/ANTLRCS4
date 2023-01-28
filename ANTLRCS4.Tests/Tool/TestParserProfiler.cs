@@ -246,7 +246,7 @@ public class TestParserProfiler {
 //				e.printStackTrace();
 //			}
 //
-//			System.out.println(t.toStringTree(parser));
+//			Console.Out.WriteLine(t.toStringTree(parser));
 		}
 		return parser.getParseInfo().getDecisionInfo();
 	}

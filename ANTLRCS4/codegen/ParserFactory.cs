@@ -15,7 +15,7 @@ namespace org.antlr.v4.codegen;
 
 /** */
 public class ParserFactory : DefaultOutputModelFactory {
-	public ParserFactory(CodeGenerator gen) { super(gen); }
+	public ParserFactory(CodeGenerator gen) { base(gen); }
 
 	//@Override
 	public ParserFile parserFile(String fileName) {

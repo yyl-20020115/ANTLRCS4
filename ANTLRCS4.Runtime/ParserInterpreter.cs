@@ -204,7 +204,7 @@ public class ParserInterpreter : Parser {
 	}
 
 	protected void visitState(ATNState p) {
-//		System.out.println("visitState "+p.stateNumber);
+//		Console.Out.WriteLine("visitState "+p.stateNumber);
 		int predictedAlt = 1;
 		if ( p is DecisionState ) {
 			predictedAlt = visitDecisionState((DecisionState) p);

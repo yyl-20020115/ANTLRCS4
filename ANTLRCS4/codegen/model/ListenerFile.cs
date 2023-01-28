@@ -34,7 +34,7 @@ public class ListenerFile : OutputFile {
 		public Dictionary<String, Action> namedActions;
 
 	public ListenerFile(OutputModelFactory factory, String fileName) {
-		super(factory, fileName);
+		base(factory, fileName);
 		Grammar g = factory.getGrammar();
 		parserName = g.getRecognizerName();
 		grammarName = g.name;

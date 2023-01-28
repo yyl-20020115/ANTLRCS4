@@ -11,10 +11,10 @@ import org.antlr.runtime.Token;
 public class NotAST : GrammarAST implements RuleElementAST {
 
 	public NotAST(NotAST node) {
-		super(node);
+		base(node);
 	}
 
-	public NotAST(int type, Token t) { super(type, t); }
+	public NotAST(int type, Token t) { base(type, t); }
 
 	@Override
 	public NotAST dupNode() {

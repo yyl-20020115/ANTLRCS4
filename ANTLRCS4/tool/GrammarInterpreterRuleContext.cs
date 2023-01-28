@@ -18,7 +18,7 @@ public class GrammarInterpreterRuleContext : InterpreterRuleContext {
 	protected int outerAltNum = 1;
 
 	public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex) {
-		super(parent, invokingStateNumber, ruleIndex);
+		base(parent, invokingStateNumber, ruleIndex);
 	}
 
 	/** The predicted outermost alternative for the rule associated

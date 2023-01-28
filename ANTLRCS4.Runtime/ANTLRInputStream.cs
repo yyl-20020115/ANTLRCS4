@@ -85,7 +85,7 @@ public class ANTLRInputStream : CharStream {
 		if ( readChunkSize<=0 ) {
 			readChunkSize = READ_BUFFER_SIZE;
    		}
-   		// System.out.println("load "+size+" in chunks of "+readChunkSize);
+   		// Console.Out.WriteLine("load "+size+" in chunks of "+readChunkSize);
    		try {
    			// alloc initial buffer size.
    			data = new char[size];
@@ -94,17 +94,17 @@ public class ANTLRInputStream : CharStream {
    			int p = 0;
    			do {
    				if ( p+readChunkSize > data.Length ) { // overflow?
-   					// System.out.println("### overflow p="+p+", data.length="+data.length);
+   					// Console.Out.WriteLine("### overflow p="+p+", data.length="+data.length);
    					data = Arrays.CopyOf(data, data.Length * 2);
    				}
    				numRead = r.Read(data, p, readChunkSize);
-   				// System.out.println("read "+numRead+" chars; p was "+p+" is now "+(p+numRead));
+   				// Console.Out.WriteLine("read "+numRead+" chars; p was "+p+" is now "+(p+numRead));
    				p += numRead;
    			} while (numRead!=-1); // while not EOF
    			// set the actual size of the data available;
    			// EOF subtracted one above in p+=numRead; add one back
    			n = p+1;
-   			//System.out.println("n="+n);
+   			//Console.Out.WriteLine("n="+n);
    		}
    		finally {
    			r.Close();
@@ -127,10 +127,10 @@ public class ANTLRInputStream : CharStream {
 			throw new IllegalStateException("cannot consume EOF");
 		}
 
-		//System.out.println("prev p="+p+", c="+(char)data[p]);
+		//Console.Out.WriteLine("prev p="+p+", c="+(char)data[p]);
         if ( p < n ) {
             p++;
-			//System.out.println("p moves to "+p+" (c='"+(char)data[p]+"')");
+			//Console.Out.WriteLine("p moves to "+p+" (c='"+(char)data[p]+"')");
         }
     }
 
@@ -147,11 +147,11 @@ public class ANTLRInputStream : CharStream {
 		}
 
 		if ( (p+i-1) >= n ) {
-            //System.out.println("char LA("+i+")=EOF; p="+p);
+            //Console.Out.WriteLine("char LA("+i+")=EOF; p="+p);
             return IntStream.EOF;
         }
-        //System.out.println("char LA("+i+")="+(char)data[p+i-1]+"; p="+p);
-		//System.out.println("LA("+i+"); p="+p+" n="+n+" data.length="+data.length);
+        //Console.Out.WriteLine("char LA("+i+")="+(char)data[p+i-1]+"; p="+p);
+		//Console.Out.WriteLine("LA("+i+"); p="+p+" n="+n+" data.length="+data.length);
 		return data[p+i-1];
     }
 
@@ -206,7 +206,7 @@ public class ANTLRInputStream : CharStream {
 		if ( stop >= n ) stop = n-1;
 		int count = stop - start + 1;
 		if ( start >= n ) return "";
-//		System.err.println("data: "+Arrays.toString(data)+", n="+n+
+//		Console.Error.WriteLine("data: "+Arrays.toString(data)+", n="+n+
 //						   ", start="+start+
 //						   ", stop="+stop);
 		return new String(data, start, count);

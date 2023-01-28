@@ -9,7 +9,7 @@ public class ListenerDispatchMethod : DispatchMethod {
 	public bool isEnter;
 
 	public ListenerDispatchMethod(OutputModelFactory factory, bool isEnter) {
-		super(factory);
+		base(factory);
 		this.isEnter = isEnter;
 	}
 }

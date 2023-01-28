@@ -15,7 +15,7 @@ public class AltBlock : Choice {
 					GrammarAST blkOrEbnfRootAST,
 					List<CodeBlockForAlt> alts)
 	{
-		super(factory, blkOrEbnfRootAST, alts);
+		base(factory, blkOrEbnfRootAST, alts);
 		decision = ((BlockStartState)blkOrEbnfRootAST.atnState).decision;
 		// interp.predict() throws exception
 //		this.error = new ThrowNoViableAlt(factory, blkOrEbnfRootAST, null);

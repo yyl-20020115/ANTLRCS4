@@ -33,7 +33,7 @@ public class Graph<T> {
 	protected Dictionary<T,Node<T>> nodes = new ();
 
 	public void addEdge(T a, T b) {
-		//System.out.println("add edge "+a+" to "+b);
+		//Console.Out.WriteLine("add edge "+a+" to "+b);
 		Node<T> a_node = getNode(a);
 		Node<T> b_node = getNode(b);
 		a_node.addEdge(b_node);

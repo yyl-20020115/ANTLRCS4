@@ -475,7 +475,7 @@ public class TestATNParserPrediction {
 		LexerATNSimulator lexInterp =
 		new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState.get(Lexer.DEFAULT_MODE)) },new PredictionContextCache());
 		IntegerList types = getTokenTypesViaATN(inputString, lexInterp);
-//		System.out.println(types);
+//		Console.Out.WriteLine(types);
 
 		semanticProcess(lg);
 		g.importVocab(lg);
@@ -487,15 +487,15 @@ public class TestATNParserPrediction {
 		DOTGenerator dot = new DOTGenerator(g);
 
 		Rule r = g.getRule("a");
-//		if ( r!=null) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 		r = g.getRule("b");
-//		if ( r!=null) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 		r = g.getRule("e");
-//		if ( r!=null) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 		r = g.getRule("ifstat");
-//		if ( r!=null) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 		r = g.getRule("block");
-//		if ( r!=null) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
 		// Check ATN prediction
 //		ParserATNSimulator interp = new ParserATNSimulator(atn);
@@ -531,7 +531,7 @@ public class TestATNParserPrediction {
 		for (int i=0; i<inputString.Length; i++) {
 			// Check DFA
 			IntegerList types = getTokenTypesViaATN(inputString[i], lexInterp);
-//			System.out.println(types);
+//			Console.Out.WriteLine(types);
 			TokenStream input = new MockIntTokenStream(types);
 			try {
 				interp.adaptivePredict(input, decision, ParserRuleContext.EMPTY);

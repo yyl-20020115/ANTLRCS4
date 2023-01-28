@@ -159,7 +159,7 @@ public class ATNDeserializer {
 			int arg2 = data[p+4];
 			int arg3 = data[p+5];
 			Transition trans = edgeFactory(atn, ttype, src, trg, arg1, arg2, arg3, sets);
-//			System.out.println("EDGE "+trans.getClass().getSimpleName()+" "+
+//			Console.Out.WriteLine("EDGE "+trans.getClass().getSimpleName()+" "+
 //							   src+"->"+trg+
 //					   " "+Transition.serializationNames[ttype]+
 //					   " "+arg1+","+arg2+","+arg3);

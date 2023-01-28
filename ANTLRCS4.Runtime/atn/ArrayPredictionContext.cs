@@ -28,7 +28,7 @@ public class ArrayPredictionContext : PredictionContext {
     {
         //assert parents!=null && parents.length>0;
         //assert returnStates!=null && returnStates.length>0;
-        //		System.err.println("CREATE ARRAY: "+Arrays.toString(parents)+", "+Arrays.toString(returnStates));
+        //		Console.Error.WriteLine("CREATE ARRAY: "+Arrays.toString(parents)+", "+Arrays.toString(returnStates));
         this.parents = parents;
 		this.returnStates = returnStates;
 	}

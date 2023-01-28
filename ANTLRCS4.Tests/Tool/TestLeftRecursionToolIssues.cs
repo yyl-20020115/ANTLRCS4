@@ -15,7 +15,7 @@ public class TestLeftRecursionToolIssues {
 	[TestMethod] public void testCheckForNonLeftRecursiveRule(){
 		String grammar =
 			"grammar T;\n" +
-			"s @after {System.out.println($ctx.toStringTree(this));} : a ;\n" +
+			"s @after {Console.Out.WriteLine($ctx.toStringTree(this));} : a ;\n" +
 			"a : a ID\n" +
 			"  ;\n" +
 			"ID : 'a'..'z'+ ;\n" +
@@ -28,7 +28,7 @@ public class TestLeftRecursionToolIssues {
 	[TestMethod] public void testCheckForLeftRecursiveEmptyFollow(){
 		String grammar =
 			"grammar T;\n" +
-			"s @after {System.out.println($ctx.toStringTree(this));} : a ;\n" +
+			"s @after {Console.Out.WriteLine($ctx.toStringTree(this));} : a ;\n" +
 			"a : a ID?\n" +
 			"  | ID\n" +
 			"  ;\n" +

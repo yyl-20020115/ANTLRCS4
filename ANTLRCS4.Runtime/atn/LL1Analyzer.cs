@@ -29,7 +29,7 @@ public class LL1Analyzer {
 	 * @return the expected symbols for each outgoing transition of {@code s}.
 	 */
 	public IntervalSet[] getDecisionLookahead(ATNState s) {
-//		System.out.println("LOOK("+s.stateNumber+")");
+//		Console.Out.WriteLine("LOOK("+s.stateNumber+")");
 		if ( s==null ) {
 			return null;
 		}
@@ -136,7 +136,7 @@ public class LL1Analyzer {
 						 BitSet calledRuleStack,
 						 bool seeThruPreds, bool addEOF)
 	{
-//		System.out.println("_LOOK("+s.stateNumber+", ctx="+ctx);
+//		Console.Out.WriteLine("_LOOK("+s.stateNumber+", ctx="+ctx);
         ATNConfig c = new ATNConfig(s, 0, ctx);
         if ( !lookBusy.Add(c) ) return;
 
@@ -168,7 +168,7 @@ public class LL1Analyzer {
 					calledRuleStack.clear(s.ruleIndex);
 					for (int i = 0; i < ctx.size(); i++) {
 						ATNState returnState = atn.states[ctx.getReturnState(i)];
-//					    System.out.println("popping back to "+retState);
+//					    Console.Out.WriteLine("popping back to "+retState);
 						_LOOK(returnState, stopState, ctx.getParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 					}
 				}
@@ -215,7 +215,7 @@ public class LL1Analyzer {
 				look.addAll( IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
 			}
 			else {
-//				System.out.println("adding "+ t);
+//				Console.Out.WriteLine("adding "+ t);
 				IntervalSet set = t.label();
 				if (set != null) {
 					if (t is NotSetTransition) {

@@ -101,7 +101,7 @@ public class TestGrammarParserInterpreter {
 		ParseTree t = parser.parse(g.rules.get(startRule).index);
 		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
 		String treeStr = Trees.toStringTree(t, nodeTextProvider);
-//		System.out.println("parse tree: "+treeStr);
+//		Console.Out.WriteLine("parse tree: "+treeStr);
 		assertEquals(expectedParseTree, treeStr);
 		return (InterpreterRuleContext)t;
 	}

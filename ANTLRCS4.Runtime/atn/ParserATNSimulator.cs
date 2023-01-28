@@ -669,7 +669,7 @@ public class ParserATNSimulator : ATNSimulator {
 			}
 
 //			Console.WriteLine("altSubSets: "+altSubSets);
-//			System.err.println("reach="+reach+", "+reach.conflictingAlts);
+//			Console.Error.WriteLine("reach="+reach+", "+reach.conflictingAlts);
 			reach.uniqueAlt = getUniqueAlt(reach);
 			// unique prediction?
 			if ( reach.uniqueAlt!=ATN.INVALID_ALT_NUMBER ) {

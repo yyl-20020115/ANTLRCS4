@@ -5,9 +5,6 @@
  */
 namespace org.antlr.v4.tool;
 
-import org.antlr.v4.Tool;
-import org.antlr.v4.runtime.Lexer;
-
 /**
  * A complex enumeration of all the error messages that the tool can issue.
  * <p>

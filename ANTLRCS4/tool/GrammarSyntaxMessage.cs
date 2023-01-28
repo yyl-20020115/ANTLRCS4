@@ -19,7 +19,7 @@ public class GrammarSyntaxMessage : ANTLRMessage {
 								RecognitionException antlrException,
 								Object... args)
 	{
-		super(etype, antlrException, offendingToken, args);
+		base(etype, antlrException, offendingToken, args);
 		this.fileName = fileName;
 		this.offendingToken = offendingToken;
 		if ( offendingToken!=null ) {
@@ -31,6 +31,6 @@ public class GrammarSyntaxMessage : ANTLRMessage {
     @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
     @Override
     public RecognitionException getCause() {
-        return (RecognitionException)super.getCause();
+        return (RecognitionException)base.getCause();
     }
 }

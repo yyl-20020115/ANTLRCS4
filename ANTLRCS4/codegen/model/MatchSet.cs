@@ -17,7 +17,7 @@ public class MatchSet : MatchToken {
 		public CaptureNextTokenType capture;
 
 	public MatchSet(OutputModelFactory factory, GrammarAST ast) {
-		super(factory, ast);
+		base(factory, ast);
 		SetTransition st = (SetTransition)ast.atnState.transition(0);
 		int wordSize = factory.getGenerator().getTarget().getInlineTestSetWordSize();
 		expr = new TestSetInline(factory, null, st.set, wordSize);

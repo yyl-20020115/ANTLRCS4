@@ -14,7 +14,7 @@ public interface Tree {
 	 *  node is the root of the tree.
 	 */
 	Tree getParent();
-
+	int getType();
 	/**
 	 * This method returns whatever object represents the data at this node. For
 	 * example, for parse trees, the payload can be a {@link Token} representing

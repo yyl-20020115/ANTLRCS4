@@ -193,7 +193,7 @@ public class GrammarAST : CommonTree {
 
 //	//@Override
 //	public bool equals(Object obj) {
-//		return super.equals(obj);
+//		return base.equals(obj);
 //	}
 
 	//@Override

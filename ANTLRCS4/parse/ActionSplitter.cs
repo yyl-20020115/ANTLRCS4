@@ -3,6 +3,7 @@
 using org.antlr.runtime;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using System.Text;
 
 namespace org.antlr.v4.parse;
@@ -1232,6 +1233,8 @@ public class ActionSplitter : Lexer
         return success;
     }
 
-
-
+    public override ATN getATN()
+    {
+        throw new NotImplementedException();
+    }
 }

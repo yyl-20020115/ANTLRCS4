@@ -11,6 +11,6 @@ namespace org.antlr.v4.codegen.model.decl;
  */
 public class ContextTokenListGetterDecl : ContextGetterDecl {
 	public ContextTokenListGetterDecl(OutputModelFactory factory, String name) {
-		super(factory, name);
+		base(factory, name);
 	}
 }

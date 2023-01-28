@@ -18,13 +18,13 @@ public class BlockAST : GrammarASTWithOptions , RuleElementAST {
             new ();
 
 	public BlockAST(BlockAST node) {
-		super(node);
+		base(node);
 	}
 
-	public BlockAST(Token t) { super(t); }
-    public BlockAST(int type) { super(type); }
-    public BlockAST(int type, Token t) { super(type, t); }
-	public BlockAST(int type, Token t, String text) { super(type,t,text); }
+	public BlockAST(Token t) { base(t); }
+    public BlockAST(int type) { base(type); }
+    public BlockAST(int type, Token t) { base(type, t); }
+	public BlockAST(int type, Token t, String text) { base(type,t,text); }
 
 	//@Override
 	public BlockAST dupNode() { return new BlockAST(this); }

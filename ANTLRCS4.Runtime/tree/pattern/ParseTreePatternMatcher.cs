@@ -184,7 +184,7 @@ public class ParseTreePatternMatcher {
 		try {
 			parserInterp.setErrorHandler(new BailErrorStrategy());
 			tree = parserInterp.parse(patternRuleIndex);
-//			System.out.println("pattern tree = "+tree.toStringTree(parserInterp));
+//			Console.Out.WriteLine("pattern tree = "+tree.toStringTree(parserInterp));
 		}
 		catch (ParseCancellationException e) {
 			throw (RecognitionException)e.GetBaseException();
@@ -335,7 +335,7 @@ public class ParseTreePatternMatcher {
 			if ( r.getChildCount()==1 && r.getChild(0) is TerminalNode ) {
 				TerminalNode c = (TerminalNode)r.getChild(0);
 				if ( c.getSymbol() is RuleTagToken ) {
-//					System.out.println("rule tag subtree "+t.toStringTree(parser));
+//					Console.Out.WriteLine("rule tag subtree "+t.toStringTree(parser));
 					return (RuleTagToken)c.getSymbol();
 				}
 			}
@@ -385,7 +385,7 @@ public class ParseTreePatternMatcher {
 			}
 		}
 
-//		System.out.println("tokens="+tokens);
+//		Console.Out.WriteLine("tokens="+tokens);
 		return tokens;
 	}
 
@@ -418,9 +418,9 @@ public class ParseTreePatternMatcher {
 			}
 		}
 
-//		System.out.println("");
-//		System.out.println(starts);
-//		System.out.println(stops);
+//		Console.Out.WriteLine("");
+//		Console.Out.WriteLine(starts);
+//		Console.Out.WriteLine(stops);
 		if ( starts.Count > stops.Count ) {
 			throw new ArgumentException("unterminated tag in pattern: "+pattern);
 		}

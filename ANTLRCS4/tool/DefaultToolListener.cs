@@ -17,7 +17,7 @@ public class DefaultToolListener : ANTLRToolListener {
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			msg = msg.replace('\n', ' ');
 		}
-		System.out.println(msg);
+		Console.Out.WriteLine(msg);
 	}
 
 	//@Override
@@ -27,7 +27,7 @@ public class DefaultToolListener : ANTLRToolListener {
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.replace('\n', ' ');
 		}
-		System.err.println(outputMsg);
+		Console.Error.WriteLine(outputMsg);
 	}
 
 	//@Override
@@ -37,6 +37,6 @@ public class DefaultToolListener : ANTLRToolListener {
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.replace('\n', ' ');
 		}
-		System.err.println(outputMsg);
+		Console.Error.WriteLine(outputMsg);
 	}
 }

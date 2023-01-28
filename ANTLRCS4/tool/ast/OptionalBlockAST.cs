@@ -4,22 +4,19 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 
-package org.antlr.v4.tool.ast;
-
-import org.antlr.runtime.Token;
-
-public class OptionalBlockAST : GrammarAST implements RuleElementAST, QuantifierAST {
-	private final bool _greedy;
+public class OptionalBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
+	private readonly bool _greedy;
 
 	public OptionalBlockAST(OptionalBlockAST node) {
-		super(node);
+		base(node);
 		_greedy = node._greedy;
 	}
 
 	public OptionalBlockAST(int type, Token t, Token nongreedy) {
-		super(type, t);
+		base(type, t);
 		_greedy = nongreedy == null;
 	}
 

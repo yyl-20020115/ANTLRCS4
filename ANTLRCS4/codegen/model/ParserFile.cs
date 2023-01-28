@@ -24,7 +24,7 @@ public class ParserFile : OutputFile {
 	public String grammarName;
 
 	public ParserFile(OutputModelFactory factory, String fileName) {
-		super(factory, fileName);
+		base(factory, fileName);
 		Grammar g = factory.getGrammar();
 		namedActions = buildNamedActions(factory.getGrammar());
 		genPackage = g.tool.genPackage;

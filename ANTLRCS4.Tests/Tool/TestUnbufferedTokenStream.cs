@@ -156,10 +156,10 @@ public class TestUnbufferedTokenStream {
 		tokens.release(m);
     }
 
-	protected static class TestingUnbufferedTokenStream<T> : UnbufferedTokenStream<T> where T:Token {
+	protected class TestingUnbufferedTokenStream<T> : UnbufferedTokenStream<T> where T:Token {
 
 		public TestingUnbufferedTokenStream(TokenSource<T> tokenSource) {
-			super(tokenSource);
+			base(tokenSource);
 		}
 
 		/** For testing.  What's in moving window into token stream from

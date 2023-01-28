@@ -56,7 +56,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	public LeftRecursiveRuleAnalyzer(GrammarAST ruleAST,
 									 Tool tool, String ruleName, String language)
 	{
-		super(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.getInputStream()), ruleAST));
+		base(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.getInputStream()), ruleAST));
 		this.tool = tool;
 		this.ruleName = ruleName;
 		this.language = language;
@@ -97,7 +97,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		}
 		altAssociativity.put(alt, assoc);
 
-//		System.out.println("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
+//		Console.Out.WriteLine("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
 	}
 
 	//@Override
@@ -127,7 +127,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			new LeftRecursiveRuleAltInfo(alt, altText, label, altLabel, isListLabel, originalAltTree);
 		a.nextPrec = nextPrec;
 		binaryAlts.put(alt, a);
-		//System.out.println("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
+		//Console.Out.WriteLine("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
 	//@Override
@@ -145,7 +145,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			new LeftRecursiveRuleAltInfo(alt, altText, null, altLabel, false, originalAltTree);
 		a.nextPrec = nextPrec;
 		prefixAndOtherAlts.add(a);
-		//System.out.println("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
+		//Console.Out.WriteLine("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
 	//@Override
@@ -167,7 +167,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		LeftRecursiveRuleAltInfo a =
 			new LeftRecursiveRuleAltInfo(alt, altText, label, altLabel, isListLabel, originalAltTree);
 		suffixAlts.put(alt, a);
-//		System.out.println("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
+//		Console.Out.WriteLine("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
 	}
 
 	//@Override
@@ -181,7 +181,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		// We keep other alts with prefix alts since they are all added to the start of the generated rule, and
 		// we want to retain any prior ordering between them
 		prefixAndOtherAlts.add(a);
-//		System.out.println("otherAlt " + alt + ": " + altText);
+//		Console.Out.WriteLine("otherAlt " + alt + ": " + altText);
 	}
 
 	// --------- get transformed rules ----------------

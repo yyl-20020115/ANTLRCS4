@@ -85,7 +85,7 @@ public class TestParserExec {
 	 * https://github.com/antlr/antlr4/issues/563
 	 */
 	// TODO: port to test framework (missing templates)
-	[TestMethod] public void testAlternateQuotes(@TempDir Path tempDir) {
+	[TestMethod] public void testAlternateQuotes( Path tempDir) {
 		String lexerGrammar =
 			"lexer grammar ModeTagsLexer;\n" +
 			"\n" +

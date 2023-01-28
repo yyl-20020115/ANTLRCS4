@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -176,7 +177,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		checkInvalidRuleDef(ID.token);
 
 		if (modifiers != null) {
-			for (GrammarAST tree : modifiers) {
+			foreach (GrammarAST tree in modifiers) {
 				if (tree.getType() == ANTLRParser.FRAGMENT) {
 					inFragmentRule = true;
 				}
@@ -194,8 +195,8 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	}
 
 	//@Override
-	public void ruleRef(GrammarAST ref, ActionAST arg) {
-		checkInvalidRuleRef(ref.token);
+	public void ruleRef(GrammarAST @ref, ActionAST arg) {
+		checkInvalidRuleRef(@ref.token);
 	}
 
 	//@Override
@@ -323,7 +324,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if ( tokens!=null && tokens.size()>1 ) {
 			secondOptionTokens.add(tokens.get(1).token);
 		}
-		for (Token t : secondOptionTokens) {
+		foreach (Token t in secondOptionTokens) {
 			String fileName = t.getInputStream().getSourceName();
 			g.tool.errMgr.grammarError(ErrorType.REPEATED_PREQUEL,
 									   fileName, t);

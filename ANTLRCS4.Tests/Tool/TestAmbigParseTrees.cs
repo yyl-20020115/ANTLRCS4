@@ -213,7 +213,7 @@ public class TestAmbigParseTrees {
 		int ruleIndex = g.rules.get(startRule).index;
 		ParserRuleContext parseTree = parser.parse(ruleIndex);
 		assertEquals(overallTree, Trees.toStringTree(parseTree, nodeTextProvider));
-		System.out.println();
+		Console.Out.WriteLine();
 
 		DecisionInfo[] decisionInfo = parser.getParseInfo().getDecisionInfo();
 		List<AmbiguityInfo> ambiguities = decisionInfo[decision].ambiguities;

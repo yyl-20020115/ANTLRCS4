@@ -15,8 +15,8 @@ public class TestSetInline : SrcOp {
 	public readonly String varName;
 	public readonly Bitset[] bitsets;
 
-	public TestSetInline(OutputModelFactory factory, GrammarAST ast, IntervalSet set, int wordSize) {
-		super(factory, ast);
+	public TestSetInline(OutputModelFactory factory, GrammarAST ast, IntervalSet set, int wordSize): base(factory, ast)
+    {
 		bitsetWordSize = wordSize;
 		Bitset[] withZeroOffset = createBitsets(factory, set, wordSize, true);
 		Bitset[] withoutZeroOffset = createBitsets(factory, set, wordSize, false);
@@ -31,7 +31,7 @@ public class TestSetInline : SrcOp {
 		List<Bitset> bitsetList = new ();
 		Target target = factory.getGenerator().getTarget();
 		Bitset current = null;
-		for (int ttype : set.toArray()) {
+		foreach (int ttype in set.toArray()) {
 			if (current == null || ttype > (current.shift + wordSize-1)) {
 				int shift;
 				if (useZeroOffset && ttype >= 0 && ttype < wordSize-1) {
@@ -41,13 +41,13 @@ public class TestSetInline : SrcOp {
 					shift = ttype;
 				}
 				current = new Bitset(shift);
-				bitsetList.add(current);
+				bitsetList.Add(current);
 			}
 
 			current.addToken(ttype, target.getTokenTypeAsTargetLabel(factory.getGrammar(), ttype));
 		}
 
-		return bitsetList.toArray(new Bitset[0]);
+		return bitsetList.ToArray();
 	}
 
 	public class Bitset {
@@ -60,7 +60,7 @@ public class TestSetInline : SrcOp {
 		}
 
 		public void addToken(int type, String name) {
-			tokens.add(new TokenInfo(type, name));
+			tokens.Add(new TokenInfo(type, name));
 			calculated |= 1L << (type - shift);
 		}
 

@@ -12,6 +12,6 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public class ThrowEarlyExitException : ThrowRecognitionException {
 	public ThrowEarlyExitException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting) {
-		super(factory, ast, expecting);
+		base(factory, ast, expecting);
 	}
 }

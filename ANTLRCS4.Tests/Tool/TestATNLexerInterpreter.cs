@@ -510,12 +510,12 @@ public class TestATNLexerInterpreter {
 		CharStream input = CharStreams.fromString(inputString);
 		ATNState startState = atn.modeNameToStartState.get("DEFAULT_MODE");
 		DOTGenerator dot = new DOTGenerator(lg);
-//		System.out.println(dot.getDOT(startState, true));
+//		Console.Out.WriteLine(dot.getDOT(startState, true));
 
 		List<String> tokenTypes = getTokenTypes(lg, atn, input);
 
 		String result = Utils.join(tokenTypes.iterator(), ", ");
-//		System.out.println(tokenTypes);
+//		Console.Out.WriteLine(tokenTypes);
 		assertEquals(expecting, result);
 	}
 

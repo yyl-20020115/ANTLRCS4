@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.automata;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -547,7 +549,7 @@ public class TestATNConstruction {
 			threwException = true;
 			e.printStackTrace();
 		}
-		System.out.println(errorQueue);
+		Console.Out.WriteLine(errorQueue);
 		assertEquals(1, errorQueue.errors.size());
 		assertEquals(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors.get(0).getErrorType());
 		assertEquals("[a, A]", Arrays.ToString(errorQueue.errors.get(0).getArgs()));
@@ -802,7 +804,7 @@ public class TestATNConstruction {
 	}
 	void checkTokensRule(LexerGrammar g, String modeName, String expecting) {
 //		if ( g.ast!=null && !g.ast.hasErrors ) {
-//			System.out.println(g.ast.toStringTree());
+//			Console.Out.WriteLine(g.ast.toStringTree());
 //			Tool antlr = new Tool();
 //			SemanticPipeline sem = new SemanticPipeline(g);
 //			sem.process();
@@ -814,7 +816,7 @@ public class TestATNConstruction {
 //		}
 		if ( modeName==null ) modeName = "DEFAULT_MODE";
 		if ( g.modes.get(modeName)==null ) {
-			System.err.println("no such mode "+modeName);
+			Console.Error.WriteLine("no such mode "+modeName);
 			return;
 		}
 		ParserATNFactory f = new LexerATNFactory(g);

@@ -518,7 +518,7 @@ public abstract class Target {
 	 * @return the serialized ATN segment limit
 	 */
 	public int getSerializedATNSegmentLimit() {
-		return Integer.MAX_VALUE;
+		return int.MaxValue;
 	}
 
 	/** How many bits should be used to do inline token type tests? Java assumes

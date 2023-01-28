@@ -63,7 +63,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
                             RecognitionException e)
     {
         CommonErrorNode t = new CommonErrorNode(input, start, stop, e);
-        //System.out.println("returning error node '"+t+"' @index="+input.index());
+        //Console.Out.WriteLine("returning error node '"+t+"' @index="+input.index());
         return t;
     }
 
@@ -148,7 +148,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public Object becomeRoot(Object newRoot, Object oldRoot)
     {
-        //System.out.println("becomeroot new "+newRoot.toString()+" old "+oldRoot);
+        //Console.Out.WriteLine("becomeroot new "+newRoot.toString()+" old "+oldRoot);
         Tree newRootTree = (Tree)newRoot;
         Tree oldRootTree = (Tree)oldRoot;
         if (oldRoot == null)
@@ -177,7 +177,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public Object rulePostProcessing(Object root)
     {
-        //System.out.println("rulePostProcessing: "+((Tree)root).toStringTree());
+        //Console.Out.WriteLine("rulePostProcessing: "+((Tree)root).toStringTree());
         Tree r = (Tree)root;
         if (r != null && r.isNil())
         {

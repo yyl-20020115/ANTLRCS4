@@ -53,7 +53,7 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 			ops.add(setStopTokenAction);
 			return ops;
 		}
-		return super.rulePostamble(function, r);
+		return base.rulePostamble(function, r);
 	}
 
 	// Convenience methods

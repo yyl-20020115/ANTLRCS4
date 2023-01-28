@@ -21,7 +21,7 @@ public class ParserInterpreterForTesting {
 
 		public Grammar g;
 		public DummyParser(Grammar g, ATN atn, TokenStream input) {
-			super(input);
+			base(input);
 			this.g = g;
 			this.atn = atn;
 			this.decisionToDFA = new DFA[atn.getNumberOfDecisions()];

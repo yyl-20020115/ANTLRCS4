@@ -146,7 +146,7 @@ public class BufferedTokenStream : TokenStream {
     protected bool sync(int i) {
 		//assert i >= 0;
         int n = i - tokens.Count + 1; // how many more elements we need?
-        //System.out.println("sync("+i+") needs "+n);
+        //Console.Out.WriteLine("sync("+i+") needs "+n);
         if ( n > 0 ) {
 			int fetched = fetch(n);
 			return fetched >= n;

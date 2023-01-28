@@ -79,7 +79,7 @@ public class OrderedHashSet<T> : HashSet<T> {
 
 //		System.out.print("equals " + this + ", " + o+" = ");
 		bool same = _elements != null && _elements.Equals(((OrderedHashSet<T>)o).elements);
-//		System.out.println(same);
+//		Console.Out.WriteLine(same);
 		return same;
 	}
 

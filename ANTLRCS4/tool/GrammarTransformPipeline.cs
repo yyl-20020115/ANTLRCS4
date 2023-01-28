@@ -149,14 +149,14 @@ public class GrammarTransformPipeline {
 
 		// Compute list of rules in root grammar and ensure we have a RULES node
 		GrammarAST RULES = (GrammarAST)root.getFirstChildWithType(ANTLRParser.RULES);
-		Set<String> rootRuleNames = new HashSet<String>();
+		HashSet<String> rootRuleNames = new HashSet<String>();
 		// make list of rules we have in root grammar
 		List<GrammarAST> rootRules = RULES.getNodesWithType(ANTLRParser.RULE);
 		for (GrammarAST r : rootRules) rootRuleNames.add(r.getChild(0).getText());
 
 		// make list of modes we have in root grammar
 		List<GrammarAST> rootModes = root.getNodesWithType(ANTLRParser.MODE);
-		Set<String> rootModeNames = new HashSet<String>();
+		HashSet<String> rootModeNames = new HashSet<String>();
 		for (GrammarAST m : rootModes) rootModeNames.add(m.getChild(0).getText());
 		List<GrammarAST> addedModes = new ArrayList<GrammarAST>();
 
@@ -172,7 +172,7 @@ public class GrammarTransformPipeline {
 				} else {
 					for (int c = 0; c < imp_channelRoot.getChildCount(); ++c) {
 						String channel = imp_channelRoot.getChild(c).getText();
-						boolean channelIsInRootGrammar = false;
+						bool channelIsInRootGrammar = false;
 						for (int rc = 0; rc < channelsRoot.getChildCount(); ++rc) {
 							String rootChannel = channelsRoot.getChild(rc).getText();
 							if (rootChannel.equals(channel)) {
@@ -268,7 +268,7 @@ public class GrammarTransformPipeline {
 				for (GrammarAST m : modes) {
 					rootGrammar.tool.log("grammar", "imported mode: " + m.toStringTree());
 					String name = m.getChild(0).getText();
-					boolean rootAlreadyHasMode = rootModeNames.contains(name);
+					bool rootAlreadyHasMode = rootModeNames.contains(name);
 					GrammarAST destinationAST = null;
 					if (rootAlreadyHasMode) {
 		                for (GrammarAST m2 : rootModes) {
@@ -287,7 +287,7 @@ public class GrammarTransformPipeline {
 					for (GrammarAST r : modeRules) {
 					    rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
 						String ruleName = r.getChild(0).getText();
-					    boolean rootAlreadyHasRule = rootRuleNames.contains(ruleName);
+					    bool rootAlreadyHasRule = rootRuleNames.contains(ruleName);
 					    if (!rootAlreadyHasRule) {
 						    destinationAST.addChild(r);
 							addedRules++;
@@ -309,7 +309,7 @@ public class GrammarTransformPipeline {
 				for (GrammarAST r : rules) {
 					rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
 					String name = r.getChild(0).getText();
-					boolean rootAlreadyHasRule = rootRuleNames.contains(name);
+					bool rootAlreadyHasRule = rootRuleNames.contains(name);
 					if ( !rootAlreadyHasRule ) {
 						RULES.addChild(r); // merge in if not overridden
 						rootRuleNames.add(name);
@@ -323,7 +323,7 @@ public class GrammarTransformPipeline {
 				// in the root grammar
 				// https://github.com/antlr/antlr4/issues/707
 
-				boolean hasNewOption = false;
+				bool hasNewOption = false;
 				for (Dictionary.Entry<String, GrammarAST> option : imp.ast.getOptions().entrySet()) {
 					String importOption = imp.ast.getOptionString(option.getKey());
 					if (importOption == null) {
@@ -444,7 +444,7 @@ public class GrammarTransformPipeline {
 		List<Pair<GrammarAST,GrammarAST>> litAliases =
 			Grammar.getStringLiteralAliasesFromLexerRules(lexerAST);
 
-		Set<String> stringLiterals = combinedGrammar.getStringLiterals();
+		HashSet<String> stringLiterals = combinedGrammar.getStringLiterals();
 		// add strings from combined grammar (and imported grammars) into lexer
 		// put them first as they are keywords; must resolve ambigs to these rules
 //		tool.log("grammar", "strings from parser: "+stringLiterals);

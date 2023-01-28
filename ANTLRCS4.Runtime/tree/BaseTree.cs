@@ -106,8 +106,8 @@ public abstract class BaseTree : Tree
     //@Override
     public void addChild(Tree t)
     {
-        //System.out.println("add child "+t.toStringTree()+" "+this.toStringTree());
-        //System.out.println("existing children: "+children);
+        //Console.Out.WriteLine("add child "+t.toStringTree()+" "+this.toStringTree());
+        //Console.Out.WriteLine("existing children: "+children);
         if (t == null)
         {
             return; // do nothing upon addChild(null)
@@ -153,15 +153,15 @@ public abstract class BaseTree : Tree
             childTree.setParent(this);
             childTree.setChildIndex(children.Count - 1);
         }
-        // System.out.println("now children are: "+children);
+        // Console.Out.WriteLine("now children are: "+children);
     }
 
     /** Add all elements of kids list as children of this node */
     public void addChildren(List<Tree> kids)
     {
-        for (int i = 0; i < kids.size(); i++)
+        for (int i = 0; i < kids.Count; i++)
         {
-            Tree t = kids.get(i);
+            Tree t = kids[(i)];
             addChild(t);
         }
     }
@@ -231,9 +231,9 @@ public abstract class BaseTree : Tree
     public void replaceChildren(int startChildIndex, int stopChildIndex, Object t)
     {
         /*
-        System.out.println("replaceChildren "+startChildIndex+", "+stopChildIndex+
+        Console.Out.WriteLine("replaceChildren "+startChildIndex+", "+stopChildIndex+
                            " with "+((BaseTree)t).toStringTree());
-        System.out.println("in="+toStringTree());
+        Console.Out.WriteLine("in="+toStringTree());
         */
         if (children == null)
         {
@@ -289,26 +289,26 @@ public abstract class BaseTree : Tree
           // fill in as many children as we can (replacingHowMany) w/o moving data
             for (int j = 0; j < replacingHowMany; j++)
             {
-                children.set(startChildIndex + j, newChildren.get(j));
+                children[(startChildIndex + j)]=newChildren[(j)];
             }
             int numToInsert = replacingWithHowMany - replacingHowMany;
             for (int j = replacingHowMany; j < replacingWithHowMany; j++)
             {
-                children.add(startChildIndex + j, newChildren.get(j));
+                children.Add(startChildIndex + j, newChildren[(j))];
             }
             freshenParentAndChildIndexes(startChildIndex);
         }
-        //System.out.println("out="+toStringTree());
+        //Console.Out.WriteLine("out="+toStringTree());
     }
 
     /** Override in a subclass to change the impl of children list */
     protected List<Object> createChildrenList()
     {
-        return new ArrayList<Object>();
+        return new ();
     }
 
     //@Override
-    public boolean isNil()
+    public bool isNil()
     {
         return false;
     }

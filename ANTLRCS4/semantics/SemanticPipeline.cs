@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -63,7 +64,7 @@ public class SemanticPipeline {
 		if ( g.tool.errMgr.getNumErrors()>prevErrors ) return;
 
 		// STORE RULES IN GRAMMAR
-		for (Rule r : ruleCollector.rules.values()) {
+		for (Rule r in ruleCollector.rules.values()) {
 			g.defineRule(r);
 		}
 
@@ -75,12 +76,12 @@ public class SemanticPipeline {
 		SymbolChecks symcheck = new SymbolChecks(g, collector);
 		symcheck.process(); // side-effect: strip away redef'd rules.
 
-		for (GrammarAST a : collector.namedActions) {
+		foreach (GrammarAST a in collector.namedActions) {
 			g.defineAction(a);
 		}
 
 		// LINK (outermost) ALT NODES WITH Alternatives
-		for (Rule r : g.rules.values()) {
+		foreach (Rule r in g.rules.Values) {
 			for (int i=1; i<=r.numberOfAlts; i++) {
 				r.alt[i].ast.alt = r.alt[i];
 			}
@@ -135,18 +136,18 @@ public class SemanticPipeline {
 		/* Define token types for nonfragment rules which do not include a 'type(...)'
 		 * or 'more' lexer command.
 		 */
-		for (Rule r : g.rules.values()) {
+		foreach (Rule r in g.rules.Values) {
 			if ( !r.isFragment() && !hasTypeOrMoreCommand(r) ) {
 				G.defineTokenName(r.name);
 			}
 		}
 
-		// FOR ALL X : 'xxx'; RULES, DEFINE 'xxx' AS TYPE X
+		// FOR ALL X in 'xxx'; RULES, DEFINE 'xxx' AS TYPE X
 		List<Pair<GrammarAST,GrammarAST>> litAliases =
 			Grammar.getStringLiteralAliasesFromLexerRules(g.ast);
-		Set<String> conflictingLiterals = new HashSet<String>();
+		HashSet<String> conflictingLiterals = new HashSet<String>();
 		if ( litAliases!=null ) {
-			for (Pair<GrammarAST,GrammarAST> pair : litAliases) {
+			for (Pair<GrammarAST,GrammarAST> pair in litAliases) {
 				GrammarAST nameAST = pair.a;
 				GrammarAST litAST = pair.b;
 				if ( !G.stringLiteralToTypeMap.containsKey(litAST.getText()) ) {
@@ -154,10 +155,10 @@ public class SemanticPipeline {
 				}
 				else {
 					// oops two literal defs in two rules (within or across modes).
-					conflictingLiterals.add(litAST.getText());
+					conflictingLiterals.Add(litAST.getText());
 				}
 			}
-			for (String lit : conflictingLiterals) {
+			foreach (String lit in conflictingLiterals) {
 				// Remove literal if repeated across rules so it's not
 				// found by parser grammar.
 				Integer value = G.stringLiteralToTypeMap.remove(lit);
@@ -168,7 +169,7 @@ public class SemanticPipeline {
 		}
 	}
 
-	boolean hasTypeOrMoreCommand(Rule r) {
+	bool hasTypeOrMoreCommand(Rule r) {
 		GrammarAST ast = r.ast;
 		if (ast == null) {
 			return false;
@@ -202,7 +203,7 @@ public class SemanticPipeline {
 		//Grammar G = g.getOutermostGrammar(); // put in root, even if imported
 
 		// create token types for tokens { A, B, C } ALIASES
-		for (GrammarAST alias : tokensDefs) {
+		for (GrammarAST alias in tokensDefs) {
 			if (g.getTokenType(alias.getText()) != Token.INVALID_TYPE) {
 				g.tool.errMgr.grammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.getText());
 			}
@@ -211,7 +212,7 @@ public class SemanticPipeline {
 		}
 
 		// DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
-		for (GrammarAST idAST : tokenIDs) {
+		for (GrammarAST idAST in tokenIDs) {
 			if (g.getTokenType(idAST.getText()) == Token.INVALID_TYPE) {
 				g.tool.errMgr.grammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.getText());
 			}
@@ -220,7 +221,7 @@ public class SemanticPipeline {
 		}
 
 		// VERIFY TOKEN TYPES FOR STRING LITERAL REFS LIKE 'while', ';'
-		for (GrammarAST termAST : terminals) {
+		for (GrammarAST termAST in terminals) {
 			if (termAST.getType() != ANTLRParser.STRING_LITERAL) {
 				continue;
 			}
@@ -243,7 +244,7 @@ public class SemanticPipeline {
 	 */
 	void assignChannelTypes(Grammar g, List<GrammarAST> channelDefs) {
 		Grammar outermost = g.getOutermostGrammar();
-		for (GrammarAST channel : channelDefs) {
+		for (GrammarAST channel in channelDefs) {
 			String channelName = channel.getText();
 
 			// Channel names can't alias tokens or modes, because constant

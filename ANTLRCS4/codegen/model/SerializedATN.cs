@@ -14,11 +14,11 @@ public class SerializedATN : OutputModelObject {
 	public int[] serialized;
 
 	public SerializedATN(OutputModelFactory factory) {
-		super(factory);
+		base(factory);
 	}
 
 	public SerializedATN(OutputModelFactory factory, ATN atn) {
-		super(factory);
+		base(factory);
 		IntegerList data = ATNSerializer.getSerialized(atn);
 		serialized = data.toArray();
 	}

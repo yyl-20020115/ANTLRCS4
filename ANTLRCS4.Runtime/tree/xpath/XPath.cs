@@ -61,7 +61,7 @@ public class XPath {
 		this.parser = parser;
 		this.path = path;
 		elements = split(path);
-//		System.out.println(Arrays.toString(elements));
+//		Console.Out.WriteLine(Arrays.toString(elements));
 	}
 
 	// TODO: check for invalid token/rule names, bad syntax
@@ -100,7 +100,7 @@ public class XPath {
 		}
 
 		List<Token> tokens = tokenStream.getTokens();
-//		System.out.println("path="+path+"=>"+tokens);
+//		Console.Out.WriteLine("path="+path+"=>"+tokens);
 		List<XPathElement> elements = new ();
 		int n = tokens.Count;
 		int i=0;

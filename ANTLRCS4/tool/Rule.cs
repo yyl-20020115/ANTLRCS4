@@ -93,8 +93,9 @@ public class Rule : AttributeResolver {
 
 	public int actionIndex = -1; // if lexer; 0..n-1 for n actions in a rule
 
-	public Rule(Grammar g, String name, RuleAST ast, int numberOfAlts) {
-		this(g, name, ast, numberOfAlts, null, false);
+	public Rule(Grammar g, String name, RuleAST ast, int numberOfAlts)
+	: this(g, name, ast, numberOfAlts, null, false)
+    {
 	}
 
 	public Rule(Grammar g, String name, RuleAST ast, int numberOfAlts, String lexerMode, bool caseInsensitive) {
@@ -109,8 +110,8 @@ public class Rule : AttributeResolver {
 	}
 
 	public void defineActionInAlt(int currentAlt, ActionAST actionAST) {
-		actions.add(actionAST);
-		alt[currentAlt].actions.add(actionAST);
+		actions.Add(actionAST);
+		alt[currentAlt].actions.Add(actionAST);
 		if ( g.isLexer() ) {
 			defineLexerAction(actionAST);
 		}
@@ -125,8 +126,8 @@ public class Rule : AttributeResolver {
 	}
 
 	public void definePredicateInAlt(int currentAlt, PredAST predAST) {
-		actions.add(predAST);
-		alt[currentAlt].actions.add(predAST);
+		actions.Add(predAST);
+		alt[currentAlt].actions.Add(predAST);
 		if ( g.sempreds.get(predAST)==null ) {
 			g.sempreds.put(predAST, g.sempreds.size());
 		}

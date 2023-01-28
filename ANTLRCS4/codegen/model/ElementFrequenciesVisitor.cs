@@ -24,7 +24,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	private readonly Deque<FrequencySet<String>> minFrequencies;
 
 	public ElementFrequenciesVisitor(TreeNodeStream input) {
-		super(input);
+		base(input);
 		frequencies = new ArrayDeque<FrequencySet<String>>();
 		frequencies.push(new FrequencySet<String>());
 		minFrequencies = new ArrayDeque<FrequencySet<String>>();
@@ -41,7 +41,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 	/** During code gen, we can assume tree is in good shape */
 	//@Override
-	public ErrorManager getErrorManager() { return super.getErrorManager(); }
+	public ErrorManager getErrorManager() { return base.getErrorManager(); }
 
 	/*
 	 * Common
@@ -88,7 +88,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		}
 
 		//assert a != SENTINEL;
-		FrequencySet<String> result = combineAndClip(a, b, Integer.MAX_VALUE);
+		FrequencySet<String> result = combineAndClip(a, b, int.MaxValue);
 		foreach (Map.Entry<String, MutableInt> entry in result.entrySet()) {
 			entry.getValue().v = Math.Min(a.count(entry.getKey()), b.count(entry.getKey()));
 		}

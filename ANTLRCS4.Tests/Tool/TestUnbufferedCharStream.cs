@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree.pattern;
 
 namespace org.antlr.v4.test.tool;
 //@SuppressWarnings("unused")
@@ -31,7 +32,7 @@ public class TestUnbufferedCharStream {
 	[TestMethod]
 	public void testNegativeSeek() {
 		CharStream input = createStream("");
-		assertThrows(typeof(ArgumentException), () -> input.seek(-1));
+		assertThrows(typeof(ArgumentException), () => input.seek(-1));
 	}
 
 	[TestMethod]
@@ -53,7 +54,7 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("");
 		int m1 = input.mark();
 		int m2 = input.mark();
-		assertThrows(IllegalStateException, () -> input.release(m1));
+		assertThrows(IllegalStateException, () => input.release(m1));
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("");
 		int m1 = input.mark();
 		input.release(m1);
-		assertThrows(IllegalStateException, () -> input.release(m1));
+		assertThrows(IllegalStateException, () => input.release(m1));
 	}
 
 	/**
@@ -80,7 +81,7 @@ public class TestUnbufferedCharStream {
 		int m1 = input.mark();
 		int m2 = input.mark();
 		input.release(m2);
-		assertThrows(IllegalStateException, () -> input.release(m2));
+		assertThrows(IllegalStateException, () => input.release(m2));
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class TestUnbufferedCharStream {
 	public void testMarkPassedToSeek() {
 		CharStream input = createStream("");
 		int m1 = input.mark();
-		assertThrows(ArgumentException, () -> input.seek(m1));
+		assertThrows(ArgumentException, () => input.seek(m1));
 	}
 
 	[TestMethod]
@@ -102,7 +103,7 @@ public class TestUnbufferedCharStream {
 		int m1 = input.mark();
 		assertEquals(1, input.index());
 		input.consume();
-		assertThrows(ArgumentException, () -> input.seek(0));
+		assertThrows(ArgumentException, () => input.seek(0));
 	}
 
 	[TestMethod]
@@ -111,7 +112,7 @@ public class TestUnbufferedCharStream {
 		input.consume();
 		int m1 = input.mark();
 		assertEquals(1, input.index());
-		assertThrows(UnsupportedOperationException, () -> input.getText(new Interval(0, 1)));
+		assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
 	}
 
 	[TestMethod]
@@ -303,17 +304,17 @@ public class TestUnbufferedCharStream {
 
 	[TestMethod]
 	public void testDanglingHighSurrogateAtEOFThrows() {
-		assertThrows(RuntimeException, () -> createStream("\uD83C"));
+		assertThrows(RuntimeException, () => createStream("\uD83C"));
 	}
 
 	[TestMethod]
 	public void testDanglingHighSurrogateThrows() {
-		assertThrows(RuntimeException, () -> createStream("\uD83C\u0123"));
+		assertThrows(RuntimeException, () => createStream("\uD83C\u0123"));
 	}
 
 	[TestMethod]
 	public void testDanglingLowSurrogateThrows() {
-		assertThrows(RuntimeException, () -> createStream("\uDF0E"));
+		assertThrows(RuntimeException, () => createStream("\uDF0E"));
 	}
 
 	protected static TestingUnbufferedCharStream createStream(String text) {
@@ -324,14 +325,16 @@ public class TestUnbufferedCharStream {
 		return new TestingUnbufferedCharStream(new StringReader(text), bufferSize);
 	}
 
-	protected static class TestingUnbufferedCharStream extends UnbufferedCharStream {
+	protected class TestingUnbufferedCharStream : UnbufferedCharStream {
 
-		public TestingUnbufferedCharStream(Reader input) {
-			super(input);
+		public TestingUnbufferedCharStream(TextReader input): base(input)
+    {
+			;
 		}
 
-		public TestingUnbufferedCharStream(Reader input, int bufferSize) {
-			super(input, bufferSize);
+		public TestingUnbufferedCharStream(TextReader input, int bufferSize): base(input, bufferSize)
+        {
+			;
 		}
 
 		/** For testing.  What's in moving window into data stream from

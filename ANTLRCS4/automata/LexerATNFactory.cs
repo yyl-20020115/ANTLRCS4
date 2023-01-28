@@ -56,7 +56,7 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	public LexerATNFactory(LexerGrammar g, CodeGenerator codeGenerator) {
-		super(g);
+		base(g);
 		// use codegen to get correct language templates for lexer commands
 		codegenTemplates = (codeGenerator == null ? CodeGenerator.create(g) : codeGenerator).getTemplates();
 	}
@@ -112,7 +112,7 @@ public class LexerATNFactory : ParserATNFactory {
 	//@Override
 	public Handle rule(GrammarAST ruleAST, String name, Handle blk) {
 		ruleCommands.clear();
-		return super.rule(ruleAST, name, blk);
+		return base.rule(ruleAST, name, blk);
 	}
 
 	//@Override
@@ -371,7 +371,7 @@ public class LexerATNFactory : ParserATNFactory {
 		public String toString() {
 			return String.format(
 					"%s mode=%s inRange=%s prevCodePoint=%d prevProperty=%s",
-					super.toString(),
+					base.toString(),
 					mode,
 					inRange,
 					prevCodePoint,

@@ -206,7 +206,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 //			int before = PredictionContext.getAllContextNodes(config.context).size();
 			config.context = interpreter.getCachedContext(config.context);
 //			int after = PredictionContext.getAllContextNodes(config.context).size();
-//			System.out.println("configs "+before+"->"+after);
+//			Console.Out.WriteLine("configs "+before+"->"+after);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			this.hasSemanticContext == other.hasSemanticContext &&
 			this.dipsIntoOuterContext == other.dipsIntoOuterContext;
 
-//		System.out.println(same);
+//		Console.Out.WriteLine(same);
 		return same;
 	}
 

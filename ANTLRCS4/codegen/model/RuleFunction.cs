@@ -8,6 +8,7 @@ using org.antlr.runtime.tree;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -22,7 +23,7 @@ public class RuleFunction : OutputModelObject {
 	public readonly List<String> modifiers;
 	public String ctxType;
 	public readonly ICollection<String> ruleLabels;
-	public readonly Collection<String> tokenLabels;
+	public readonly ICollection<String> tokenLabels;
 	public readonly ATNState startState;
 	public readonly int index;
 	public readonly Rule rule;
@@ -49,7 +50,7 @@ public class RuleFunction : OutputModelObject {
     public List<SrcOp> postamble;
 
 	public RuleFunction(OutputModelFactory factory, Rule r) {
-		super(factory);
+		base(factory);
 		this.name = r.name;
 		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(r.name);
 		this.rule = r;
@@ -62,7 +63,7 @@ public class RuleFunction : OutputModelObject {
 		addContextGetters(factory, r);
 
 		if ( r.args!=null ) {
-			ICollection<Attribute> decls = r.args.attributes.values();
+			ICollection<Attribute> decls = r.args.attributes.Values;
 			if ( decls.size()>0 ) {
 				args = new ();
 				ruleCtx.addDecls(decls);
@@ -109,12 +110,12 @@ public class RuleFunction : OutputModelObject {
 			foreach (Map.Entry<String, List<Pair<int, AltAST>>> entry in labels.entrySet()) {
 				String label = entry.getKey();
 				List<AltAST> alts = new ArrayList<AltAST>();
-				for (Pair<int, AltAST> pair : entry.getValue()) {
+				for (Pair<int, AltAST> pair in entry.getValue()) {
 					alts.Add(pair.b);
 				}
 
 				HashSet<Decl> decls = getDeclsForAllElements(alts);
-				for (Pair<int, AltAST> pair : entry.getValue()) {
+				for (Pair<int, AltAST> pair in entry.getValue()) {
 					int altNum = pair.a;
 					altToContext[altNum] = new AltLabelStructDecl(factory, r, altNum, label);
 					if (!altLabelCtxs.containsKey(label)) {
@@ -136,7 +137,7 @@ public class RuleFunction : OutputModelObject {
 		}
 
 		namedActions = new HashMap<String, Action>();
-		for (String name : r.namedActions.keySet()) {
+		for (String name in r.namedActions.keySet()) {
 			ActionAST ast = r.namedActions.get(name);
 			namedActions.put(name, new Action(factory, ast));
 		}
@@ -149,16 +150,16 @@ public class RuleFunction : OutputModelObject {
 	public HashSet<Decl> getDeclsForAllElements(List<AltAST> altASTs) {
         HashSet<String> needsList = new HashSet<String>();
         HashSet<String> nonOptional = new HashSet<String>();
-		List<GrammarAST> allRefs = new ArrayList<GrammarAST>();
+		List<GrammarAST> allRefs = new ();
 		bool firstAlt = true;
 		IntervalSet reftypes = new IntervalSet(RULE_REF, TOKEN_REF, STRING_LITERAL);
-		for (AltAST ast : altASTs) {
+		for (AltAST ast in altASTs) {
 			List<GrammarAST> refs = getRuleTokens(ast.getNodesWithType(reftypes));
 			allRefs.addAll(refs);
 			Pair<FrequencySet<String>, FrequencySet<String>> minAndAltFreq = getElementFrequenciesForAlt(ast);
 			FrequencySet<String> minFreq = minAndAltFreq.a;
 			FrequencySet<String> altFreq = minAndAltFreq.b;
-			for (GrammarAST t : refs) {
+			for (GrammarAST t in refs) {
 				String refLabelName = getName(t);
 
 				if (refLabelName != null) {
@@ -199,7 +200,7 @@ public class RuleFunction : OutputModelObject {
 
 	private List<GrammarAST> getRuleTokens(List<GrammarAST> refs) {
 		List<GrammarAST> result = new (refs.size());
-		for (GrammarAST @ref : refs) {
+		for (GrammarAST @ref in refs) {
 			CommonTree r = @ref;
 
 			bool ignore = false;
@@ -213,7 +214,7 @@ public class RuleFunction : OutputModelObject {
 			}
 
 			if (!ignore) {
-				result.Add(ref);
+				result.Add(@ref);
 			}
 		}
 
@@ -284,10 +285,10 @@ public class RuleFunction : OutputModelObject {
 		CodeBlockForOuterMostAlt alt = d.getOuterMostAltCodeBlock();
 		// if we found code blk and might be alt label, try to Add to that label ctx
 		if ( alt!=null && altLabelCtxs!=null ) {
-//			System.out.println(d.name+" lives in alt "+alt.alt.altNum);
+//			Console.Out.WriteLine(d.name+" lives in alt "+alt.alt.altNum);
 			AltLabelStructDecl altCtx = altLabelCtxs.get(altLabel);
 			if ( altCtx!=null ) { // we have an alt ctx
-//				System.out.println("ctx is "+ altCtx.name);
+//				Console.Out.WriteLine("ctx is "+ altCtx.name);
 				altCtx.addDecl(d);
 				return;
 			}

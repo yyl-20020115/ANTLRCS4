@@ -13,7 +13,7 @@ public class TestCodeGeneration {
 				"grammar T;\n" +
 				"a[int xyz] : 'a' ;\n";
 		List<String> evals = getEvalInfoForString(g, "int xyz");
-		System.out.println(evals);
+		Console.Out.WriteLine(evals);
 		for (int i = 0; i < evals.size(); i++) {
 			String eval = evals.get(i);
 			assertFalse(eval.startsWith("<pojo:"), "eval should not be POJO: "+eval);
@@ -39,12 +39,12 @@ public class TestCodeGeneration {
 	}
 
 	/** Add tags around each attribute/template/value write */
-	public static class DebugInterpreter extends Interpreter {
+	public class DebugInterpreter : Interpreter {
 		List<String> evals = new ArrayList<String>();
 		ErrorManager myErrMgrCopy;
 		int tab = 0;
 		public DebugInterpreter(STGroup group, ErrorManager errMgr, bool debug) {
-			super(group, errMgr, debug);
+			base(group, errMgr, debug);
 			myErrMgrCopy = errMgr;
 		}
 
@@ -57,7 +57,7 @@ public class TestCodeGeneration {
 					try {
 						out.write("<ST:" + name + ">");
 						evals.add("<ST:" + name + ">");
-						int r = super.writeObject(out, scope, o, options);
+						int r = base.writeObject(out, scope, o, options);
 						out.write("</ST:" + name + ">");
 						evals.add("</ST:" + name + ">");
 						return r;
@@ -66,7 +66,7 @@ public class TestCodeGeneration {
 					}
 				}
 			}
-			return super.writeObject(out, scope, o, options);
+			return base.writeObject(out, scope, o, options);
 		}
 
 		//@Override
@@ -75,7 +75,7 @@ public class TestCodeGeneration {
 			String name = type.getSimpleName();
 			out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
-			return super.writePOJO(out, scope, o, options);
+			return base.writePOJO(out, scope, o, options);
 		}
 
 		public void indent(STWriter out){
@@ -125,7 +125,7 @@ public class TestCodeGeneration {
 			}
 		}
 		if ( equeue.size()>0 ) {
-			System.err.println(equeue.ToString());
+			Console.Error.WriteLine(equeue.ToString());
 		}
 		return evals;
 	}

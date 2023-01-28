@@ -17,7 +17,7 @@ public class LexerFile : OutputFile {
     public Dictionary<String, Action> namedActions;
 
 	public LexerFile(OutputModelFactory factory, String fileName) {
-		super(factory, fileName);
+		base(factory, fileName);
 		namedActions = buildNamedActions(factory.getGrammar());
 		genPackage = factory.getGrammar().tool.genPackage;
 		exportMacro = factory.getGrammar().getOptionString("exportMacro");

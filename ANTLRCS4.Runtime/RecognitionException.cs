@@ -30,8 +30,13 @@ public class RecognitionException : RuntimeException {
 	private Token offendingToken;
 
 	private int offendingState = -1;
+    internal bool approximateLineInfo;
+    internal string line;
+    internal string charPositionInLine;
+    internal Token token;
+    internal object node;
 
-	public RecognitionException(Recognizer recognizer,
+    public RecognitionException(Recognizer recognizer,
 								IntStream input,
 								ParserRuleContext ctx)
 	{

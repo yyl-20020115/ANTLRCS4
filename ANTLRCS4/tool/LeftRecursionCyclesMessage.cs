@@ -11,7 +11,7 @@ namespace org.antlr.v4.tool;
 
 public class LeftRecursionCyclesMessage : ANTLRMessage {
 	public LeftRecursionCyclesMessage(String fileName, ICollection<ICollection<Rule>> cycles) {
-		super(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles);
+		base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles);
 		this.fileName = fileName;
 	}
 

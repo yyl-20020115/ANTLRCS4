@@ -43,7 +43,7 @@ public class StructDecl : Decl {
 	}
 
 	protected StructDecl(OutputModelFactory factory, Rule r, String name) {
-		super(factory, name == null ? factory.getGenerator().getTarget().getRuleFunctionContextStructName(r) : name);
+		base(factory, name == null ? factory.getGenerator().getTarget().getRuleFunctionContextStructName(r) : name);
 		addDispatchMethods(r);
 		derivedFromName = r.name;
 		provideCopyFrom = r.hasAltSpecificContexts();

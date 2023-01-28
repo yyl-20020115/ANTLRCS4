@@ -175,7 +175,7 @@ public class Tool {
 						i++;
 					}
 					// use reflection to set field
-					Class<? extends Tool> c = this.getClass();
+					Class<? : Tool> c = this.getClass();
 					try {
 						Field f = c.getField(o.fieldName);
 						if ( argValue==null ) {
@@ -319,7 +319,7 @@ public class Tool {
 		processNonCombinedGrammar(g, gencode);
 	}
 
-	public void processNonCombinedGrammar(Grammar g, boolean gencode) {
+	public void processNonCombinedGrammar(Grammar g, bool gencode) {
 		if ( g.ast==null || g.ast.hasErrors ) return;
 
 		bool ruleFail = checkForRuleIssues(g);
@@ -374,34 +374,34 @@ public class Tool {
     {
         public bool badref = false;
         // @Override
-        public void tokenRef(TerminalAST ref)
+        public void tokenRef(TerminalAST @ref)
         {
-            if ("EOF".equals(ref.getText()))
+            if ("EOF".equals(@ref.getText()))
             {
                 // this is a special predefined reference
                 return;
             }
 
-            if (g.isLexer()) ruleRef(ref, null);
+            if (g.isLexer()) ruleRef(@ref, null);
         }
 
         //@Override
-        public void ruleRef(GrammarAST ref, ActionAST arg)
+        public void ruleRef(GrammarAST @ref, ActionAST arg)
         {
-            RuleAST ruleAST = ruleToAST.get(ref.getText());
-            String fileName = ref.getToken().getInputStream().getSourceName();
+            RuleAST ruleAST = ruleToAST.get(@ref.getText());
+            String fileName = @ref.getToken().getInputStream().getSourceName();
             if (Character.isUpperCase(currentRuleName.charAt(0)) &&
-                Character.isLowerCase(ref.getText().charAt(0)))
+                Character.isLowerCase(@ref.getText().charAt(0)))
             {
                 badref = true;
                 errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
-                                    fileName, ref.getToken(), ref.getText(), currentRuleName);
+                                    fileName, @ref.getToken(), @ref.getText(), currentRuleName);
             }
             else if (ruleAST == null)
             {
                 badref = true;
                 errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
-                                    fileName, ref.token, ref.getText());
+                                    fileName, @ref.token, @ref.getText());
             }
         }
         //@Override
@@ -543,8 +543,8 @@ public class Tool {
 				file = new File(inputDirectory, fileName);
 			}
 
-			ANTLRFileStream in = new ANTLRFileStream(file.getAbsolutePath(), grammarEncoding);
-			GrammarRootAST t = parse(fileName, in);
+			ANTLRFileStream @in = new ANTLRFileStream(file.getAbsolutePath(), grammarEncoding);
+			GrammarRootAST t = parse(fileName, @in);
 			return t;
 		}
 		catch (IOException ioe) {
@@ -592,8 +592,8 @@ public class Tool {
 			}
 
 			String absolutePath = importedFile.getAbsolutePath();
-			ANTLRFileStream in = new ANTLRFileStream(absolutePath, grammarEncoding);
-			GrammarRootAST root = parse(g.fileName, in);
+			ANTLRFileStream @in = new ANTLRFileStream(absolutePath, grammarEncoding);
+			GrammarRootAST root = parse(g.fileName, @in);
 			if (root == null) {
 				return null;
 			}
@@ -610,10 +610,10 @@ public class Tool {
 		return parse("<string>", new ANTLRStringStream(grammar));
 	}
 
-	public GrammarRootAST parse(String fileName, CharStream in) {
+	public GrammarRootAST parse(String fileName, CharStream @in) {
 		try {
-			GrammarASTAdaptor adaptor = new GrammarASTAdaptor(in);
-			ToolANTLRLexer lexer = new ToolANTLRLexer(in, this);
+			GrammarASTAdaptor adaptor = new GrammarASTAdaptor(@in);
+			ToolANTLRLexer lexer = new ToolANTLRLexer(@in, this);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			lexer.tokens = tokens;
 			ToolANTLRParser p = new ToolANTLRParser(tokens, this);
@@ -686,7 +686,7 @@ public class Tool {
 			content.Append("channel names:\n");
 			content.Append("DEFAULT_TOKEN_CHANNEL\n");
 			content.Append("HIDDEN\n");
-			for (String channel in g.channelValueToNameList) {
+			foreach (String channel in g.channelValueToNameList) {
 				content.Append(channel + "\n");
 			}
 			content.Append("\n");

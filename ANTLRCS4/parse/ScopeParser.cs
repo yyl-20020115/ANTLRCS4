@@ -74,7 +74,7 @@ public class ScopeParser {
 		Pair<int, int> p;
 		String text = decl.a;
 		text = text.replaceAll("::","");
-		if ( text.contains(":") ) {
+		if ( text.Contains(':') ) {
 			// declarator has type appearing after the name like "x:T"
 			p = _parsePostfixDecl(attr, declarator, action, g);
 		}
@@ -100,12 +100,12 @@ public class ScopeParser {
 				}
 			}
 
-			int[] charIndexes = new int[actionText.length()];
-			for (int i = 0, j = 0; i < actionText.length(); i++, j++) {
+			int[] charIndexes = new int[actionText.Length];
+			for (int i = 0, j = 0; i < actionText.Length; i++, j++) {
 				charIndexes[j] = i;
 				// skip comments
-				if (i < actionText.length() - 1 && actionText.charAt(i) == '/' && actionText.charAt(i + 1) == '/') {
-					while (i < actionText.length() && actionText.charAt(i) != '\n') {
+				if (i < actionText.Length - 1 && actionText[i] == '/' && actionText[(i + 1)] == '/') {
+					while (i < actionText.Length && actionText[i] != '\n') {
 						i++;
 					}
 				}
@@ -138,13 +138,13 @@ public class ScopeParser {
 		// walk backwards looking for start of an ID
 		bool inID = false;
 		int start = -1;
-		for (int i = decl.length() - 1; i >= 0; i--) {
-			char ch = decl.charAt(i);
+		for (int i = decl.Length - 1; i >= 0; i--) {
+			char ch = decl[(i)];
 			// if we haven't found the end yet, keep going
-			if (!inID && Character.isLetterOrDigit(ch)) {
+			if (!inID && char.IsLetterOrDigit(ch)) {
 				inID = true;
 			}
-			else if (inID && !(Character.isLetterOrDigit(ch) || ch == '_')) {
+			else if (inID && !(char.IsLetterOrDigit(ch) || ch == '_')) {
 				start = i + 1;
 				break;
 			}
@@ -265,17 +265,17 @@ public class ScopeParser {
 		}
 
 		actionText = actionText.replaceAll("//[^\\n]*", "");
-		int n = actionText.length();
-		//System.out.println("actionText@"+start+"->"+(char)targetChar+"="+actionText.substring(start,n));
+		int n = actionText.Length;
+		//Console.Out.WriteLine("actionText@"+start+"->"+(char)targetChar+"="+actionText.substring(start,n));
 		int p = start;
 		int last = p;
-		while (p < n && actionText.charAt(p) != targetChar) {
-			int c = actionText.charAt(p);
+		while (p < n && actionText[p] != targetChar) {
+			int c = actionText[p];
 			switch (c) {
 				case '\'':
 					p++;
-					while (p < n && actionText.charAt(p) != '\'') {
-						if (actionText.charAt(p) == '\\' && (p + 1) < n &&
+					while (p < n && actionText[p] != '\'') {
+						if (actionText[p] == '\\' && (p + 1) < n &&
 								actionText.charAt(p + 1) == '\'') {
 							p++; // skip escaped quote
 						}
@@ -285,8 +285,8 @@ public class ScopeParser {
 					break;
 				case '"':
 					p++;
-					while (p < n && actionText.charAt(p) != '\"') {
-						if (actionText.charAt(p) == '\\' && (p + 1) < n &&
+					while (p < n && actionText[p] != '\"') {
+						if (actionText[p] == '\\' && (p + 1) < n &&
 								actionText.charAt(p + 1) == '\"') {
 							p++; // skip escaped quote
 						}
@@ -320,7 +320,7 @@ public class ScopeParser {
 						while (index < p && Character.isWhitespace(actionText.charAt(index))) {
 							index++;
 						}
-						//System.out.println("arg="+arg);
+						//Console.Out.WriteLine("arg="+arg);
 						args.add(new Pair<String, int>(arg.trim(), index));
 						last = p + 1;
 					}
@@ -331,10 +331,10 @@ public class ScopeParser {
 		if (targetChar == -1 && p <= n) {
 			String arg = actionText.substring(last, p).trim();
 			int index = last;
-			while (index < p && Character.isWhitespace(actionText.charAt(index))) {
+			while (index < p && char.IsWhiteSpace(actionText[index])) {
 				index++;
 			}
-			//System.out.println("arg="+arg);
+			//Console.Out.WriteLine("arg="+arg);
 			if (arg.Length > 0) {
 				args.Add(new Pair<String, int>(arg.Trim(), index));
 			}

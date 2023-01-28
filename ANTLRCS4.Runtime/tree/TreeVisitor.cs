@@ -55,7 +55,7 @@ public class TreeVisitor
      */
     public Object visit(Object t, TreeVisitorAction action)
     {
-        // System.out.println("visit "+((Tree)t).toStringTree());
+        // Console.Out.WriteLine("visit "+((Tree)t).toStringTree());
         bool isNil = adaptor.isNil(t);
         if (action != null && !isNil)
         {

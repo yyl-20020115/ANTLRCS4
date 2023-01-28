@@ -10,12 +10,12 @@ namespace org.antlr.v4.tool.ast;
 
 public class PredAST : ActionAST {
 	public PredAST(PredAST node) {
-		super(node);
+		base(node);
 	}
 
-	public PredAST(Token t) { super(t); }
-    public PredAST(int type) { super(type); }
-    public PredAST(int type, Token t) { super(type, t); }
+	public PredAST(Token t) { base(t); }
+    public PredAST(int type) { base(type); }
+    public PredAST(int type, Token t) { base(type, t); }
 
 	//@Override
 	public PredAST dupNode() { return new PredAST(this); }

@@ -153,7 +153,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 */
 	//@Override
 	public void recover(Parser recognizer, RecognitionException e) {
-//		System.out.println("recover in "+recognizer.getRuleInvocationStack()+
+//		Console.Out.WriteLine("recover in "+recognizer.getRuleInvocationStack()+
 //						   " index="+recognizer.getInputStream().index()+
 //						   ", lastErrorIndex="+
 //						   lastErrorIndex+
@@ -165,9 +165,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			// state in ATN; must be a case where LT(1) is in the recovery
 			// token set so nothing got consumed. Consume a single token
 			// at least to prevent an infinite loop; this is a failsafe.
-//			System.err.println("seen error condition before index="+
+//			Console.Error.WriteLine("seen error condition before index="+
 //							   lastErrorIndex+", states="+lastErrorStates);
-//			System.err.println("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
+//			Console.Error.WriteLine("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
 			recognizer.consume();
 		}
 		lastErrorIndex = recognizer.getInputStream().index();
@@ -226,7 +226,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	//@Override
 	public void sync(Parser recognizer)  {
 		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
-//		System.err.println("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
+//		Console.Error.WriteLine("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
 		// If already recovering, don't try to sync
 		if (inErrorRecoveryMode(recognizer)) {
 			return;
@@ -268,7 +268,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 
 		case ATNState.PLUS_LOOP_BACK:
 		case ATNState.STAR_LOOP_BACK:
-//			System.err.println("at loop back: "+s.getClass().getSimpleName());
+//			Console.Error.WriteLine("at loop back: "+s.getClass().getSimpleName());
 			reportUnwantedToken(recognizer);
 			IntervalSet expecting = recognizer.getExpectedTokens();
 			IntervalSet whatFollowsLoopIterationOrRule =
@@ -511,7 +511,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		ATNState next = currentState.transition(0).target;
 		ATN atn = recognizer.getInterpreter().atn;
 		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer.GetCtx());
-//		System.out.println("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
+//		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
 		if ( expectingAtLL2.contains(currentSymbolType) ) {
 			reportMissingToken(recognizer);
 			return true;
@@ -544,7 +544,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		if ( expecting.contains(nextTokenType) ) {
 			reportUnwantedToken(recognizer);
 			/*
-			System.err.println("recoverFromMismatchedToken deleting "+
+			Console.Error.WriteLine("recoverFromMismatchedToken deleting "+
 							   ((TokenStream)recognizer.getInputStream()).LT(1)+
 							   " since "+((TokenStream)recognizer.getInputStream()).LT(2)+
 							   " is what we want");
@@ -748,16 +748,16 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			ctx = ctx.parent;
 		}
         recoverSet.remove(Token.EPSILON);
-//		System.out.println("recover set "+recoverSet.toString(recognizer.getTokenNames()));
+//		Console.Out.WriteLine("recover set "+recoverSet.toString(recognizer.getTokenNames()));
 		return recoverSet;
 	}
 
 	/** Consume tokens until one matches the given token set. */
 	protected void consumeUntil(Parser recognizer, IntervalSet set) {
-//		System.err.println("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
+//		Console.Error.WriteLine("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
 		int ttype = recognizer.getInputStream().LA(1);
 		while (ttype != Token.EOF && !set.contains(ttype) ) {
-            //System.out.println("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
+            //Console.Out.WriteLine("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
 //			recognizer.getInputStream().consume();
             recognizer.consume();
             ttype = recognizer.getInputStream().LA(1);

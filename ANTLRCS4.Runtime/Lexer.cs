@@ -321,7 +321,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 */
     public void emit(Token token)
     {
-        //System.err.println("emit "+token);
+        //Console.Error.WriteLine("emit "+token);
         this.token = token;
     }
 

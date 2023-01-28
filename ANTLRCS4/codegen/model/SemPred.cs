@@ -33,7 +33,7 @@ public class SemPred : Action {
 		public List<ActionChunk> failChunks;
 
 	public SemPred(OutputModelFactory factory, ActionAST ast) {
-		super(factory,ast);
+		base(factory,ast);
 
 		//assert ast.atnState != null
 		//	&& ast.atnState.getNumberOfTransitions() == 1

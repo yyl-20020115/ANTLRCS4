@@ -19,7 +19,7 @@ public class RuleActionFunction : OutputModelObject {
 		new LinkedHashMap<int, Action>();
 
 	public RuleActionFunction(OutputModelFactory factory, Rule r, String ctxType) {
-		super(factory);
+		base(factory);
 		name = r.name;
 		escapedName = factory.getGenerator().getTarget().escapeIfNeeded(name);
 		ruleIndex = r.index;

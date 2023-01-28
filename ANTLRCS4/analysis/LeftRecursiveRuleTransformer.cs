@@ -74,7 +74,7 @@ public class LeftRecursiveRuleTransformer {
 			new LeftRecursiveRuleAnalyzer(prevRuleAST, tool, ruleName, language);
 		bool isLeftRec;
 		try {
-//			System.out.println("TESTING ---------------\n"+
+//			Console.Out.WriteLine("TESTING ---------------\n"+
 //							   leftRecursiveRuleWalker.text(ruleAST));
 			isLeftRec = leftRecursiveRuleWalker.rec_rule();
 		}
@@ -86,7 +86,7 @@ public class LeftRecursiveRuleTransformer {
 		// replace old rule's AST; first create text of altered rule
 		GrammarAST RULES = (GrammarAST)ast.getFirstChildWithType(ANTLRParser.RULES);
 		String newRuleText = leftRecursiveRuleWalker.getArtificialOpPrecRule();
-//		System.out.println("created: "+newRuleText);
+//		Console.Out.WriteLine("created: "+newRuleText);
 		// now parse within the context of the grammar that originally created
 		// the AST we are transforming. This could be an imported grammar so
 		// we cannot just reference this.g because the role might come from
@@ -197,7 +197,7 @@ public class LeftRecursiveRuleTransformer {
 	 * </pre>
 	 */
 	public void setAltASTPointers(LeftRecursiveRule r, RuleAST t) {
-//		System.out.println("RULE: "+t.toStringTree());
+//		Console.Out.WriteLine("RULE: "+t.toStringTree());
 		BlockAST ruleBlk = (BlockAST)t.getFirstChildWithType(ANTLRParser.BLOCK);
 		AltAST mainAlt = (AltAST)ruleBlk.getChild(0);
 		BlockAST primaryBlk = (BlockAST)mainAlt.getChild(0);
@@ -208,7 +208,7 @@ public class LeftRecursiveRuleTransformer {
 			altInfo.altAST.leftRecursiveAltInfo = altInfo;
 			altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;
 //			altInfo.originalAltAST.parent = altInfo.altAST.parent;
-//			System.out.println(altInfo.altAST.toStringTree());
+//			Console.Out.WriteLine(altInfo.altAST.toStringTree());
 		}
 		for (int i = 0; i < r.recOpAlts.size(); i++) {
 			LeftRecursiveRuleAltInfo altInfo = r.recOpAlts.getElement(i);
@@ -216,7 +216,7 @@ public class LeftRecursiveRuleTransformer {
 			altInfo.altAST.leftRecursiveAltInfo = altInfo;
 			altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;
 //			altInfo.originalAltAST.parent = altInfo.altAST.parent;
-//			System.out.println(altInfo.altAST.toStringTree());
+//			Console.Out.WriteLine(altInfo.altAST.toStringTree());
 		}
 	}
 

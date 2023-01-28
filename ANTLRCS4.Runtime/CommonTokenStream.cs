@@ -86,7 +86,7 @@ public class CommonTokenStream : BufferedTokenStream {
 
     //@Override
     public Token LT(int k) {
-        //System.out.println("enter LT("+k+")");
+        //Console.Out.WriteLine("enter LT("+k+")");
         lazyInit();
         if ( k == 0 ) return null;
         if ( k < 0 ) return LB(-k);

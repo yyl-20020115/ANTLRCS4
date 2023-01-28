@@ -155,12 +155,12 @@ public class ATNOptimizer
             }
         }
 
-        //		System.out.println("ATN optimizer removed " + removedStates + " states by collapsing sets.");
+        //		Console.Out.WriteLine("ATN optimizer removed " + removedStates + " states by collapsing sets.");
     }
 
     private static void optimizeStates(ATN atn)
     {
-        //		System.out.println(atn.states);
+        //		Console.Out.WriteLine(atn.states);
         List<ATNState> compressed = new();
         int i = 0; // new state number
         foreach (ATNState s in atn.states)
@@ -172,8 +172,8 @@ public class ATNOptimizer
                 i++;
             }
         }
-        //		System.out.println(compressed);
-        //		System.out.println("ATN optimizer removed " + (atn.states.size() - compressed.size()) + " null states.");
+        //		Console.Out.WriteLine(compressed);
+        //		Console.Out.WriteLine("ATN optimizer removed " + (atn.states.size() - compressed.size()) + " null states.");
         atn.states.Clear();
         atn.states.AddRange(compressed);
     }

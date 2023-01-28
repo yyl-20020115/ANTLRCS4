@@ -185,7 +185,7 @@ public class TestTokenTypeAssignment {
 			assertNotNull(g.getRule(ruleName), "rule "+ruleName+" expected");
 			n++;
 		}
-		//System.out.println("rules="+rules);
+		//Console.Out.WriteLine("rules="+rules);
 		// make sure there are no extra rules
 		assertEquals(n, g.rules.size(), "number of rules mismatch; expecting "+n+"; found "+g.rules.size());
 	}

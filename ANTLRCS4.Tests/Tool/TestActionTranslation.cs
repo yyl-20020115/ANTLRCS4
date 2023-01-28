@@ -232,7 +232,7 @@ public class TestActionTranslation {
 			CodeGenerator gen = CodeGenerator.create(g);
 			ST outputFileST = gen.generateParser(false);
 			String output = outputFileST.render();
-			//System.out.println(output);
+			//Console.Out.WriteLine(output);
 			String b = "#" + actionName + "#";
 			int start = output.indexOf(b);
 			String e = "#end-" + actionName + "#";
@@ -241,7 +241,7 @@ public class TestActionTranslation {
 			assertEquals(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {
-//			System.err.println(equeue.ToString());
+//			Console.Error.WriteLine(equeue.ToString());
 		}
 	}
 }

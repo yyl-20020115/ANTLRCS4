@@ -9,7 +9,7 @@ namespace org.antlr.v4.codegen.model;
 public class CaptureNextToken : SrcOp {
 	public String varName;
 	public CaptureNextToken(OutputModelFactory factory, String varName) {
-		super(factory);
+		base(factory);
 		this.varName = varName;
 	}
 }

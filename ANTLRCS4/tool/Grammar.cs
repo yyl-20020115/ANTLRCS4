@@ -1184,7 +1184,7 @@ public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, AN
 
 		for (GrammarAST r : ruleNodes) {
 			//tool.log("grammar", r.toStringTree());
-//			System.out.println("chk: "+r.toStringTree());
+//			Console.Out.WriteLine("chk: "+r.toStringTree());
 			org.antlr.runtime.tree.Tree name = r.getChild(0);
 			if ( name.getType()==ANTLRParser.TOKEN_REF ) {
 				// check rule against patterns
@@ -1194,7 +1194,7 @@ public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, AN
 						defAlias(r, pattern, wiz, lexerRuleToStringLiteral);
 					if ( isLitRule ) break;
 				}
-//				if ( !isLitRule ) System.out.println("no pattern matched");
+//				if ( !isLitRule ) Console.Out.WriteLine("no pattern matched");
 			}
 		}
 		return lexerRuleToStringLiteral;

@@ -12,7 +12,7 @@ namespace org.antlr.v4.codegen.model;
 /** (A | B | C) */
 public class LL1AltBlock : LL1Choice {
 	public LL1AltBlock(OutputModelFactory factory, GrammarAST blkAST, List<CodeBlockForAlt> alts) {
-		super(factory, blkAST, alts);
+		base(factory, blkAST, alts);
 		this.decision = ((DecisionState)blkAST.atnState).decision;
 
 		/** Lookahead for each alt 1..n */

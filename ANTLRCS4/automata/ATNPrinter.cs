@@ -39,7 +39,7 @@ public class ATNPrinter {
 			work.RemoveAt(0);
 			if ( marked.Contains(s) ) continue;
 			int n = s.getNumberOfTransitions();
-//			System.out.println("visit "+s+"; edges="+n);
+//			Console.Out.WriteLine("visit "+s+"; edges="+n);
 			marked.Add(s);
 			for (int i=0; i<n; i++) {
 				Transition t = s.transition(i);

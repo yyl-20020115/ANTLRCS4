@@ -19,24 +19,24 @@ public class LexerGrammar : Grammar {
 	public MultiMap<String, Rule> modes;
 
 	public LexerGrammar(Tool tool, GrammarRootAST ast) {
-		super(tool, ast);
+		base(tool, ast);
 	}
 
 	public LexerGrammar(String grammarText) {
-		super(grammarText);
+		base(grammarText);
 	}
 
 	public LexerGrammar(String grammarText, ANTLRToolListener listener) {
-		super(grammarText, listener);
+		base(grammarText, listener);
 	}
 
 	public LexerGrammar(String fileName, String grammarText, ANTLRToolListener listener)  {
-		super(fileName, grammarText, listener);
+		base(fileName, grammarText, listener);
 	}
 
 	//@Override
 	public bool defineRule(Rule r) {
-		if (!super.defineRule(r)) {
+		if (!base.defineRule(r)) {
 			return false;
 		}
 
@@ -47,7 +47,7 @@ public class LexerGrammar : Grammar {
 
 	//@Override
 	public bool undefineRule(Rule r) {
-		if (!super.undefineRule(r)) {
+		if (!base.undefineRule(r)) {
 			return false;
 		}
 

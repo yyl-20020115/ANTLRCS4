@@ -38,12 +38,12 @@ public class GrammarParserInterpreter : ParserInterpreter {
 									ICollection<String> ruleNames,
 									ATN atn,
 									TokenStream input) {
-		super(grammarFileName, vocabulary, ruleNames, atn, input);
+		base(grammarFileName, vocabulary, ruleNames, atn, input);
 		this.g = g;
 	}
 
 	public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input) {
-		super(g.fileName, g.getVocabulary(),
+		base(g.fileName, g.getVocabulary(),
 			  Arrays.asList(g.getRuleNames()),
 			  atn, // must run ATN through serializer to set some state flags
 			  input);
@@ -62,7 +62,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 
 	//@Override
 	public void reset() {
-		super.reset();
+		base.reset();
 		overrideDecisionRoot = null;
 	}
 
@@ -135,9 +135,9 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 */
 	//@Override
 	protected int visitDecisionState(DecisionState p) {
-		int predictedAlt = super.visitDecisionState(p);
+		int predictedAlt = base.visitDecisionState(p);
 		if( p.getNumberOfTransitions() > 1) {
-//			System.out.println("decision "+p.decision+": "+predictedAlt);
+//			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
 			if( p.decision == this.overrideDecision &&
 				this.input.index() == this.overrideDecisionInputIndex )
 			{
@@ -402,7 +402,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  and let it fall out of the rule to finish constructing trees. For
 	 *  recovery in line, we throw InputMismatchException to engage recover().
 	 */
-	public static class BailButConsumeErrorStrategy : DefaultErrorStrategy {
+	public class BailButConsumeErrorStrategy : DefaultErrorStrategy {
 		public int firstErrorTokenIndex = -1;
 		////@Override
 		public void recover(Parser recognizer, RecognitionException e) {
@@ -410,7 +410,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}
-//			System.err.println("recover: error at " + errIndex);
+//			Console.Error.WriteLine("recover: error at " + errIndex);
 			TokenStream input = recognizer.getInputStream();
 			if ( input.index()<input.size()-1 ) { // don't consume() eof
 				recognizer.consume(); // just kill this bad token and let it continue.
@@ -423,7 +423,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}
-//			System.err.println("recoverInline: error at " + errIndex);
+//			Console.Error.WriteLine("recoverInline: error at " + errIndex);
 			InputMismatchException e = new InputMismatchException(recognizer);
 //			TokenStream input = recognizer.getInputStream(); // seek EOF
 //			input.seek(input.size() - 1);

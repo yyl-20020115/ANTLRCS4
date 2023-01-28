@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
+using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
+
 namespace org.antlr.v4.semantics;
 
 public class RuleCollector : GrammarTreeVisitor {
@@ -23,12 +27,12 @@ public class RuleCollector : GrammarTreeVisitor {
 		this.errMgr = g.tool.errMgr;
 	}
 
-	@Override
+	//@Override
 	public ErrorManager getErrorManager() { return errMgr; }
 
 	public void process(GrammarAST ast) { visitGrammar(ast); }
 
-	@Override
+	//@Override
 	public void discoverRule(RuleAST rule, GrammarAST ID,
 							 List<GrammarAST> modifiers, ActionAST arg,
 							 ActionAST returns, GrammarAST thrws,
@@ -65,7 +69,7 @@ public class RuleCollector : GrammarTreeVisitor {
 			r.locals.ast = locals;
 		}
 
-		for (GrammarAST a : actions) {
+		for (GrammarAST a in actions) {
 			// a = ^(AT ID ACTION)
 			ActionAST action = (ActionAST) a.getChild(1);
 			r.namedActions.put(a.getChild(0).getText(), action);
@@ -73,7 +77,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	@Override
+	//@Override
 	public void discoverOuterAlt(AltAST alt) {
 		if ( alt.altLabel!=null ) {
 			ruleToAltLabels.map(currentRuleName, alt.altLabel);
@@ -83,7 +87,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	@Override
+	//@Override
 	public void grammarOption(GrammarAST ID, GrammarAST valueAST) {
 		Boolean caseInsensitive = getCaseInsensitiveValue(ID, valueAST);
 		if (caseInsensitive != null) {
@@ -91,11 +95,11 @@ public class RuleCollector : GrammarTreeVisitor {
 		}
 	}
 
-	@Override
+	//@Override
 	public void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
 								  GrammarAST options, GrammarAST block)
 	{
-		boolean currentCaseInsensitive = grammarCaseInsensitive;
+		bool currentCaseInsensitive = grammarCaseInsensitive;
 		if (options != null) {
 			for (Object child : options.getChildren()) {
 				GrammarAST childAST = (GrammarAST) child;

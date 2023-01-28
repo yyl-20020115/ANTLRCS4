@@ -20,7 +20,7 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 	//@Override
 	public V put(K key, V value) {
 		elements.add(key);
-		return super.put(key, value);
+		return base.put(key, value);
 	}
 
     //@Override
@@ -39,6 +39,6 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
     //@Override
     public void clear() {
 		elements.Clear();
-		super.Clear();
+		base.Clear();
 	}
 }

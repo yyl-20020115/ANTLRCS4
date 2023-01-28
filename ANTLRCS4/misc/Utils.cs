@@ -84,7 +84,7 @@ public static class Utils {
 				histo.put(i, 1);
 			}
 		}
-		TreeMap<Integer,Integer> sorted = new TreeMap<>(histo);
+		TreeMap<int,int> sorted = new TreeMap<>(histo);
 
 		String output = "";
 		output += "value,count\n";
@@ -95,7 +95,7 @@ public static class Utils {
 			Files.write(Paths.get(filename), output.getBytes(StandardCharsets.UTF_8));
 		}
 		catch (IOException ioe) {
-			System.err.println(ioe);
+			Console.Error.WriteLine(ioe);
 		}
 	}
 

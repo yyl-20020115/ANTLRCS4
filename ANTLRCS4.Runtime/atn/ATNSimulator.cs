@@ -40,7 +40,7 @@ public abstract class ATNSimulator {
 
 	static ATNSimulator() {
 		ERROR = new DFAState(new ATNConfigSet());
-		ERROR.stateNumber = int.MaxValue;// Integer.MAX_VALUE;
+		ERROR.stateNumber = int.MaxValue;// int.MaxValue;
 	}
 
 	public ATNSimulator(ATN atn,

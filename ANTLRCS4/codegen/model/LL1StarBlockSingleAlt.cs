@@ -14,7 +14,7 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public class LL1StarBlockSingleAlt : LL1Loop {
 	public LL1StarBlockSingleAlt(OutputModelFactory factory, GrammarAST starRoot, List<CodeBlockForAlt> alts) {
-		super(factory, starRoot, alts);
+		base(factory, starRoot, alts);
 
 		StarLoopEntryState star = (StarLoopEntryState)starRoot.atnState;
 		loopBackStateNumber = star.loopBackState.stateNumber;

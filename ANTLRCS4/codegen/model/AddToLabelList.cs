@@ -15,7 +15,7 @@ public class AddToLabelList : SrcOp {
 	public readonly String listName;
 
 	public AddToLabelList(OutputModelFactory factory, String listName, Decl label) {
-		super(factory);
+		base(factory);
 		this.label = label;
 		this.listName = listName;
 	}

@@ -21,7 +21,7 @@ public class LL1OptionalBlockSingleAlt : LL1Choice {
 									 GrammarAST blkAST,
 									 List<CodeBlockForAlt> alts)
 	{
-		super(factory, blkAST, alts);
+		base(factory, blkAST, alts);
 		this.decision = ((DecisionState)blkAST.atnState).decision;
 
 		/** Lookahead for each alt 1..n */

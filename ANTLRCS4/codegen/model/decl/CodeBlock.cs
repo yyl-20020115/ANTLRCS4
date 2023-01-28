@@ -21,11 +21,11 @@ public class CodeBlock : SrcOp {
     public List<SrcOp> ops;
 
 	public CodeBlock(OutputModelFactory factory) {
-		super(factory);
+		base(factory);
 	}
 
 	public CodeBlock(OutputModelFactory factory, int treeLevel, int codeBlockLevel) {
-		super(factory);
+		base(factory);
 		this.treeLevel = treeLevel;
 		this.codeBlockLevel = codeBlockLevel;
 	}

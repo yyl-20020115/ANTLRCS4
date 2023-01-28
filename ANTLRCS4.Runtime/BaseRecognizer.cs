@@ -380,7 +380,7 @@ public abstract class BaseRecognizer
     /** Override this method to change where error messages go */
     public void emitErrorMessage(String msg)
     {
-        System.err.println(msg);
+        Console.Error.WriteLine(msg);
     }
 
     /** Recover from an error found on the input stream.  This is
@@ -646,7 +646,7 @@ public abstract class BaseRecognizer
         {
             e = new UnwantedTokenException(ttype, input);
             /*
-            System.err.println("recoverFromMismatchedToken deleting "+
+            Console.Error.WriteLine("recoverFromMismatchedToken deleting "+
                                ((TokenStream)input).LT(1)+
                                " since "+((TokenStream)input).LT(2)+" is what we want");
              */
@@ -915,11 +915,11 @@ public abstract class BaseRecognizer
         int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.index() - 1;
         if (state.ruleMemo == null)
         {
-            System.err.println("!!!!!!!!! memo array is null for " + getGrammarFileName());
+            Console.Error.WriteLine("!!!!!!!!! memo array is null for " + getGrammarFileName());
         }
         if (ruleIndex >= state.ruleMemo.Length)
         {
-            System.err.println("!!!!!!!!! memo size is " + state.ruleMemo.Length + ", but rule index is " + ruleIndex);
+            Console.Error.WriteLine("!!!!!!!!! memo size is " + state.ruleMemo.Length + ", but rule index is " + ruleIndex);
         }
         if (state.ruleMemo[ruleIndex] != null)
         {

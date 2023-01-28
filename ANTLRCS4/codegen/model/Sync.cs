@@ -19,7 +19,7 @@ public class Sync : SrcOp {
 				int decision,
 				String position)
 	{
-		super(factory, blkOrEbnfRootAST);
+		base(factory, blkOrEbnfRootAST);
 		this.decision = decision;
 //		this.expecting = factory.createExpectingBitSet(ast, decision, expecting, position);
 //		factory.defineBitSet(this.expecting);

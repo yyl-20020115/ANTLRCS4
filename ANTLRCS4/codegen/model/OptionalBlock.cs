@@ -14,6 +14,6 @@ public class OptionalBlock : AltBlock {
 						 GrammarAST questionAST,
 						 List<CodeBlockForAlt> alts)
 	{
-		super(factory, questionAST, alts);
+		base(factory, questionAST, alts);
 	}
 }

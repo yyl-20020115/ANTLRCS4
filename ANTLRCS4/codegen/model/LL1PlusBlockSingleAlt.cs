@@ -13,7 +13,7 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public class LL1PlusBlockSingleAlt : LL1Loop {
 	public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts) {
-		super(factory, plusRoot, alts);
+		base(factory, plusRoot, alts);
 
 		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
 		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;

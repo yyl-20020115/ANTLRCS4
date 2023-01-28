@@ -8,6 +8,6 @@ namespace org.antlr.v4.codegen.model;
 
 public class BaseListenerFile : ListenerFile {
 	public BaseListenerFile(OutputModelFactory factory, String fileName) {
-		super(factory, fileName);
+		base(factory, fileName);
 	}
 }

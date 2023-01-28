@@ -23,14 +23,14 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	public String fileName;
 
 	public GrammarRootAST(GrammarRootAST node) {
-		super(node);
+		base(node);
 		this.grammarType = node.grammarType;
 		this.hasErrors = node.hasErrors;
 		this.tokenStream = node.tokenStream;
 	}
 
 	public GrammarRootAST(Token t, TokenStream tokenStream) {
-		super(t);
+		base(t);
 		if (tokenStream == null) {
 			throw new NullPointerException("tokenStream");
 		}
@@ -39,7 +39,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	}
 
 	public GrammarRootAST(int type, Token t, TokenStream tokenStream) {
-		super(type, t);
+		base(type, t);
 		if (tokenStream == null) {
 			throw new NullPointerException("tokenStream");
 		}
@@ -48,7 +48,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	}
 
 	public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) {
-		super(type,t,text);
+		base(type,t,text);
 		if (tokenStream == null) {
 			throw new NullPointerException("tokenStream");
 		}
@@ -67,7 +67,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		if ( cmdLineOptions!=null && cmdLineOptions.containsKey(key) ) {
 			return cmdLineOptions.get(key);
 		}
-		String value = super.getOptionString(key);
+		String value = base.getOptionString(key);
 		if ( value==null ) {
 			value = defaultOptions.get(key);
 		}

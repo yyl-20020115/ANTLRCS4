@@ -70,7 +70,7 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
      */
     public Object nextNode()
     {
-        //System.out.println("nextNode: elements="+elements+", singleElement="+((Tree)singleElement).toStringTree());
+        //Console.Out.WriteLine("nextNode: elements="+elements+", singleElement="+((Tree)singleElement).toStringTree());
         int n = size();
         if (dirty || (cursor >= n && n == 1))
         {
@@ -83,7 +83,7 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
         Object tree = _next();
         while (adaptor.isNil(tree) && adaptor.getChildCount(tree) == 1)
             tree = adaptor.getChild(tree, 0);
-        //System.out.println("_next="+((Tree)tree).toStringTree());
+        //Console.Out.WriteLine("_next="+((Tree)tree).toStringTree());
         Object el = adaptor.dupNode(tree); // dup just the root (want node here)
         return el;
     }

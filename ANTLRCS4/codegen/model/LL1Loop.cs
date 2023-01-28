@@ -12,7 +12,7 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public abstract class LL1Loop : Choice {
 	/** The state associated wih the (A|B|...) block not loopback, which
-	 *  is super.stateNumber
+	 *  is base.stateNumber
 	 */
 	public int blockStartStateNumber;
 	public int loopBackStateNumber;
@@ -26,7 +26,7 @@ public abstract class LL1Loop : Choice {
 				   GrammarAST blkAST,
 				   List<CodeBlockForAlt> alts)
 	{
-		super(factory, blkAST, alts);
+		base(factory, blkAST, alts);
 	}
 
 	public void addIterationOp(SrcOp op) {

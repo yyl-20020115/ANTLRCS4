@@ -37,7 +37,7 @@ public class LeftRecursionDetector {
 
 			check(g.getRule(start.ruleIndex), start, new HashSet<ATNState>());
 		}
-		//System.out.println("cycles="+listOfRecursiveCycles);
+		//Console.Out.WriteLine("cycles="+listOfRecursiveCycles);
 		if ( listOfRecursiveCycles.Count > 0 ) {
 			g.tool.errMgr.leftRecursionCycles(g.fileName, listOfRecursiveCycles);
 		}
@@ -59,7 +59,7 @@ public class LeftRecursionDetector {
 		if ( visitedStates.Contains(s) ) return false;
 		visitedStates.Add(s);
 
-		//System.out.println("visit "+s);
+		//Console.Out.WriteLine("visit "+s);
 		int n = s.getNumberOfTransitions();
 		bool stateReachesStopState = false;
 		for (int i=0; i<n; i++) {
@@ -96,7 +96,7 @@ public class LeftRecursionDetector {
 	 *  cycle.
 	 */
 	protected void addRulesToCycle(Rule enclosingRule, Rule targetRule) {
-		//System.err.println("left-recursion to "+targetRule.name+" from "+enclosingRule.name);
+		//Console.Error.WriteLine("left-recursion to "+targetRule.name+" from "+enclosingRule.name);
 		bool foundCycle = false;
         foreach (var rulesInCycle in listOfRecursiveCycles) {
 			// ensure both rules are in same cycle

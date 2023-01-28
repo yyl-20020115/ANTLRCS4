@@ -260,15 +260,15 @@ public class ErrorManager {
     protected bool verifyFormat() {
         bool ok = true;
         if (!format.isDefined("location")) {
-            System.err.println("Format template 'location' not found in " + formatName);
+            Console.Error.WriteLine("Format template 'location' not found in " + formatName);
             ok = false;
         }
         if (!format.isDefined("message")) {
-            System.err.println("Format template 'message' not found in " + formatName);
+            Console.Error.WriteLine("Format template 'message' not found in " + formatName);
             ok = false;
         }
         if (!format.isDefined("report")) {
-            System.err.println("Format template 'report' not found in " + formatName);
+            Console.Error.WriteLine("Format template 'report' not found in " + formatName);
             ok = false;
         }
         return ok;
@@ -278,7 +278,7 @@ public class ErrorManager {
      *  but to go to System.err.
      */
     static void rawError(String msg) {
-        System.err.println(msg);
+        Console.Error.WriteLine(msg);
     }
 
     static void rawError(String msg, Throwable e) {

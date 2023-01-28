@@ -33,7 +33,7 @@ public class ActionSniffer : BlankActionSplitterListener {
 	}
 
 	public void examineAction() {
-		//System.out.println("examine "+actionToken);
+		//Console.Out.WriteLine("examine "+actionToken);
 		ANTLRStringStream @in = new ANTLRStringStream(actionToken.getText());
         @in.setLine(actionToken.getLine());
         @in.setCharPositionInLine(actionToken.getCharPositionInLine());

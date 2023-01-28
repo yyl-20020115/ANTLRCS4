@@ -843,8 +843,8 @@ public class GrammarTreeVisitor : TreeParser
 
 
         enterOption(((GrammarAST)retval.start));
-        boolean rule = inContext("RULE ...");
-        boolean block = inContext("BLOCK ...");
+        bool rule = inContext("RULE ...");
+        bool block = inContext("BLOCK ...");
 
         try
         {

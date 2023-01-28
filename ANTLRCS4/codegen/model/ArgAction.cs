@@ -11,7 +11,7 @@ public class ArgAction : Action {
 	/** Context type of invoked rule */
 	public String ctxType;
 	public ArgAction(OutputModelFactory factory, ActionAST ast, String ctxType) {
-		super(factory, ast);
+		base(factory, ast);
 		this.ctxType = ctxType;
 	}
 }

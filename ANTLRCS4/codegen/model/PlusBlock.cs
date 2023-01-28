@@ -16,7 +16,7 @@ public class PlusBlock : Loop {
 					 GrammarAST plusRoot,
 					 List<CodeBlockForAlt> alts)
 	{
-		super(factory, plusRoot, alts);
+		base(factory, plusRoot, alts);
 		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
 		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;
 		PlusLoopbackState loop = blkStart.loopBackState;

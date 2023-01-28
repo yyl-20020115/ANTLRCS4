@@ -18,7 +18,7 @@ public class MatchToken : RuleElement , LabeledOp {
 	public readonly List<Decl> labels = new ();
 
 	public MatchToken(OutputModelFactory factory, TerminalAST ast) {
-		super(factory, ast);
+		base(factory, ast);
 		Grammar g = factory.getGrammar();
 		CodeGenerator gen = factory.getGenerator();
 		ttype = g.getTokenType(ast.getText());
@@ -28,7 +28,7 @@ public class MatchToken : RuleElement , LabeledOp {
 	}
 
 	public MatchToken(OutputModelFactory factory, GrammarAST ast) {
-		super(factory, ast);
+		base(factory, ast);
 		ttype = 0;
 		name = null;
 		escapedName = null;

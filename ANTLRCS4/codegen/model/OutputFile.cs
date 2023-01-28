@@ -17,7 +17,7 @@ public abstract class OutputFile : OutputModelObject {
     public readonly String InputSymbolType;
 
     public OutputFile(OutputModelFactory factory, String fileName) {
-        super(factory);
+        base(factory);
         this.fileName = fileName;
         Grammar g = factory.getGrammar();
 		grammarFileName = g.fileName;

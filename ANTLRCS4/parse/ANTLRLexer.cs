@@ -947,7 +947,7 @@ public class ANTLRLexer : Lexer
                             if (state.backtracking == 0)
                             {
                                 // TODO: Report imbalanced {}
-                                System.out.println("Block starting  at line " + startLine + " offset " + (offset + 1) + " contains imbalanced {} or is missing a }");
+                                Console.Out.WriteLine("Block starting  at line " + startLine + " offset " + (offset + 1) + " contains imbalanced {} or is missing a }");
                             }
                         }
                         break;

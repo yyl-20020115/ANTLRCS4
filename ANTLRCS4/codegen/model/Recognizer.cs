@@ -38,7 +38,7 @@ public abstract class Recognizer : OutputModelObject {
 		new ();
 
 	public Recognizer(OutputModelFactory factory) {
-		super(factory);
+		base(factory);
 
 		Grammar g = factory.getGrammar();
 		CodeGenerator gen = factory.getGenerator();

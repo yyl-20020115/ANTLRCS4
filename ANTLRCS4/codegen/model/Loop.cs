@@ -20,7 +20,7 @@ public class Loop : Choice {
 				GrammarAST blkOrEbnfRootAST,
 				List<CodeBlockForAlt> alts)
 	{
-		super(factory, blkOrEbnfRootAST, alts);
+		base(factory, blkOrEbnfRootAST, alts);
 		bool nongreedy = (blkOrEbnfRootAST is QuantifierAST) && !((QuantifierAST)blkOrEbnfRootAST).isGreedy();
 		exitAlt = nongreedy ? 1 : alts.size() + 1;
 	}

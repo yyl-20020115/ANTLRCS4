@@ -48,19 +48,19 @@ public class DOTGenerator {
 
 		for (DFAState d : dfa.states.keySet()) {
 			if ( d.isAcceptState ) continue;
-			if ( d.stateNumber == Integer.MAX_VALUE ) continue;
+			if ( d.stateNumber == int.MaxValue ) continue;
 			ST st = stlib.getInstanceOf("state");
 			st.add("name", "s"+d.stateNumber);
 			st.add("label", getStateLabel(d));
 			dot.add("states", st);
 		}
 
-		for (DFAState d : dfa.states.keySet()) {
+		for (DFAState d in dfa.states.keySet()) {
 			if ( d.edges!=null ) {
 				for (int i = 0; i < d.edges.length; i++) {
 					DFAState target = d.edges[i];
 					if ( target==null) continue;
-					if ( target.stateNumber == Integer.MAX_VALUE ) continue;
+					if ( target.stateNumber == int.MaxValue ) continue;
 					int ttype = i-1; // we shift up for EOF as -1 for parser
 					String label = String.valueOf(ttype);
 					if ( isLexer ) label = "'"+getEdgeLabel(new StringBuilder().appendCodePoint(i).ToString())+"'";

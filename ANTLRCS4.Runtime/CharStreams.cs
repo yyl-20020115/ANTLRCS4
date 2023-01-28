@@ -246,9 +246,9 @@ public class CharStreams {
 	//		CharBuffer utf16CodeUnitsOut = CharBuffer.allocate(bufferSize);
 	//		if (inputSize == -1) {
 	//			inputSize = bufferSize;
-	//		} else if (inputSize > Integer.MAX_VALUE) {
+	//		} else if (inputSize > int.MaxValue) {
 	//			// ByteBuffer et al don't support long sizes
-	//			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, Integer.MAX_VALUE));
+	//			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, int.MaxValue));
 	//		}
 	//		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
 	//		CharsetDecoder decoder = charset

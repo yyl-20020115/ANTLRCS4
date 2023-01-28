@@ -142,7 +142,7 @@ public class ParserATNFactory : ATNFactory {
 		epsilon(blk.right, stop);
 		Handle h = new Handle(start, stop);
 //		ATNPrinter ser = new ATNPrinter(g, h.left);
-//		System.out.println(ruleAST.toStringTree()+":\n"+ser.asString());
+//		Console.Out.WriteLine(ruleAST.toStringTree()+":\n"+ser.asString());
 		ruleAST.atnState = start;
 		return h;
 	}
@@ -262,7 +262,7 @@ public class ParserATNFactory : ATNFactory {
 	public void addFollowLink(int ruleIndex, ATNState right) {
 		// add follow edge from end of invoked rule
 		RuleStopState stop = atn.ruleToStopState[ruleIndex];
-//        System.out.println("add follow link from "+ruleIndex+" to "+right);
+//        Console.Out.WriteLine("add follow link from "+ruleIndex+" to "+right);
 		epsilon(stop, right);
 	}
 
@@ -284,7 +284,7 @@ public class ParserATNFactory : ATNFactory {
 
 	//@Override
 	public Handle sempred(PredAST pred) {
-		//System.out.println("sempred: "+ pred);
+		//Console.Out.WriteLine("sempred: "+ pred);
 		ATNState left = newState(pred);
 		ATNState right = newState(pred);
 
@@ -310,7 +310,7 @@ public class ParserATNFactory : ATNFactory {
 
 	//@Override
 	public Handle action(ActionAST action) {
-		//System.out.println("action: "+action);
+		//Console.Out.WriteLine("action: "+action);
 		ATNState left = newState(action);
 		ATNState right = newState(action);
 		ActionTransition a = new ActionTransition(right, currentRule.index);
@@ -397,7 +397,7 @@ public class ParserATNFactory : ATNFactory {
 		}
 		Handle h = new Handle(start, end);
 //		FASerializer ser = new FASerializer(g, h.left);
-//		System.out.println(blkAST.toStringTree()+":\n"+ser);
+//		Console.Out.WriteLine(blkAST.toStringTree()+":\n"+ser);
 		blkAST.atnState = start;
 
 		return h;

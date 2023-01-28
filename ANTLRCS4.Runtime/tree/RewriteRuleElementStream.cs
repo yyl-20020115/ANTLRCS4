@@ -111,7 +111,7 @@ public abstract class RewriteRuleElementStream
 
     public void add(Object el)
     {
-        //System.out.println("add '"+elementDescription+"' is "+el);
+        //Console.Out.WriteLine("add '"+elementDescription+"' is "+el);
         if (el == null)
         {
             return;

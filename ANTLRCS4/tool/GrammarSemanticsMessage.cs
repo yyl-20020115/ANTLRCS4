@@ -17,7 +17,7 @@ public class GrammarSemanticsMessage : ANTLRMessage {
                                    Token offendingToken,
                                    Object... args)
     {
-        super(etype,offendingToken,args);
+        base(etype,offendingToken,args);
         this.fileName = fileName;
 		if ( offendingToken!=null ) {
             line = offendingToken.getLine();

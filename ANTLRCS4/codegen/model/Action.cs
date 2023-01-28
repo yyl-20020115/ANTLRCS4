@@ -28,7 +28,7 @@ public class Action : RuleElement {
 		else {
 			chunks = new ();
 		}
-		//System.out.println("actions="+chunks);
+		//Console.Out.WriteLine("actions="+chunks);
 	}
 
 	public Action(OutputModelFactory factory, StructDecl ctx, String action):base(factory,null)

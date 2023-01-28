@@ -53,7 +53,7 @@ public class TreeParser : BaseRecognizer
 
     public TreeParser(TreeNodeStream input) : base()
     {
-        // highlight that we go to super to set state object
+        // highlight that we go to base to set state object
         setTreeNodeStream(input);
     }
 
@@ -92,7 +92,7 @@ public class TreeParser : BaseRecognizer
     }
 
     ////@Override
-    protected override Object getCurrentInputSymbol(IntStream input)
+    protected virtual Object getCurrentInputSymbol(IntStream input)
     {
         return ((TreeNodeStream)input).LT(1);
     }
@@ -241,7 +241,7 @@ public class TreeParser : BaseRecognizer
             String name = tokenNames[adaptor.getType(t)];
             if (!name.Equals(nodes[ni]))
             {
-                //System.err.println("not matched: "+nodes[ni]+" at "+t);
+                //Console.Error.WriteLine("not matched: "+nodes[ni]+" at "+t);
                 return false;
             }
             // advance to parent and to previous element in context node list
@@ -273,10 +273,5 @@ public class TreeParser : BaseRecognizer
     public void traceOut(String ruleName, int ruleIndex)
     {
         base.traceOut(ruleName, ruleIndex, input.LT(1));
-    }
-
-    public override string getSourceName()
-    {
-        throw new NotImplementedException();
     }
 }

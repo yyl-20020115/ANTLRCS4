@@ -13,12 +13,12 @@ public class StarBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
 	private readonly bool _greedy;
 
 	public StarBlockAST(StarBlockAST node) {
-		super(node);
+		base(node);
 		_greedy = node._greedy;
 	}
 
 	public StarBlockAST(int type, Token t, Token nongreedy) {
-		super(type, t);
+		base(type, t);
 		_greedy = nongreedy == null;
 	}
 

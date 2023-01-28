@@ -344,7 +344,7 @@ public class TestATNInterpreter {
 		ATN lexatn = createATN(lg, true);
 		LexerATNSimulator lexInterp = new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState.get(Lexer.DEFAULT_MODE)) },null);
 		IntegerList types = getTokenTypesViaATN(inputString, lexInterp);
-//		System.out.println(types);
+//		Console.Out.WriteLine(types);
 
 		g.importVocab(lg);
 
@@ -352,7 +352,7 @@ public class TestATNInterpreter {
 		ATN atn = f.createATN();
 
 		TokenStream input = new MockIntTokenStream(types);
-//		System.out.println("input="+input.types);
+//		Console.Out.WriteLine("input="+input.types);
 		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, input);
 		ATNState startState = atn.ruleToStartState[g.getRule("a").index];
 		if ( startState.transition(0).target is BlockStartState ) {
@@ -360,9 +360,9 @@ public class TestATNInterpreter {
 		}
 
 		DOTGenerator dot = new DOTGenerator(g);
-//		System.out.println(dot.getDOT(atn.ruleToStartState[g.getRule("a").index]));
+//		Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[g.getRule("a").index]));
 		Rule r = g.getRule("e");
-//		if ( r!=null ) System.out.println(dot.getDOT(atn.ruleToStartState[r.index]));
+//		if ( r!=null ) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
 		int result = interp.matchATN(input, startState);
 		assertEquals(expected, result);

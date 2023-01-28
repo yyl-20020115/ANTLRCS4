@@ -21,7 +21,7 @@ public class PredictionContextCache {
 	public PredictionContext add(PredictionContext ctx) {
 		if ( ctx==EmptyPredictionContext.Instance ) return EmptyPredictionContext.Instance;
 		if ( cache.TryGetValue(ctx,out var existing) ) {
-//			System.out.println(name+" reuses "+existing);
+//			Console.Out.WriteLine(name+" reuses "+existing);
 			return existing;
 		}
 		cache[ctx] = ctx;

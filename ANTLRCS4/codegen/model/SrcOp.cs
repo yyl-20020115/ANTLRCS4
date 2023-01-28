@@ -27,7 +27,7 @@ public abstract class SrcOp : OutputModelObject {
 
 	public SrcOp(OutputModelFactory factory) { this(factory,null); }
 	public SrcOp(OutputModelFactory factory, GrammarAST ast) {
-		super(factory,ast);
+		base(factory,ast);
 		if ( ast!=null ) uniqueID = ast.token.getTokenIndex();
 		enclosingBlock = factory.getCurrentBlock();
 		enclosingRuleRunction = factory.getCurrentRuleFunction();

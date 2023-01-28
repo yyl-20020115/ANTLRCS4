@@ -264,7 +264,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 *  configuration information.
 	 */
 	public void setState(int atnState) {
-//		System.err.println("setState "+atnState);
+//		Console.Error.WriteLine("setState "+atnState);
 		_stateNumber = atnState;
 //		if ( traceATNStates ) _ctx.trace(atnState);
 	}

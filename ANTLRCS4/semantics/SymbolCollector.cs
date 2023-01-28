@@ -30,7 +30,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 	public List<GrammarAST> channelDefs = new ();
 
 	/** Track action name node in @parser::members {...} or @members {...} */
-	List<GrammarAST> namedActions = new ();
+	public List<GrammarAST> namedActions = new ();
 
 	public ErrorManager errMgr;
 

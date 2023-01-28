@@ -23,7 +23,7 @@ public class InvokeRule : RuleElement , LabeledOp {
 	public List<ActionChunk> argExprsChunks;
 
 	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST) {
-		super(factory, ast);
+		base(factory, ast);
 		if ( ast.atnState!=null ) {
 			stateNumber = ast.atnState.stateNumber;
 		}

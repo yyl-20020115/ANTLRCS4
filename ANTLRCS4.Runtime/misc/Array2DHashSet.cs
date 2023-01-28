@@ -145,7 +145,7 @@ public class Array2DHashSet<T> : HashSet<T> {
 		int[] newBucketLengths = new int[newTable.Length];
 		buckets = newTable;
 		threshold = (int)(newCapacity * LOAD_FACTOR);
-//		System.out.println("new size="+newCapacity+", thres="+threshold);
+//		Console.Out.WriteLine("new size="+newCapacity+", thres="+threshold);
 		// rehash all existing entries
 		int oldSize = size();
 		foreach (T[] bucket in old) {

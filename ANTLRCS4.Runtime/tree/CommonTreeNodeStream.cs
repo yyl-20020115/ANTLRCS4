@@ -100,7 +100,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     public override Object nextElement()
     {
         Object t = it.next();
-        //System.out.println("pulled "+adaptor.getType(t));
+        //Console.Out.WriteLine("pulled "+adaptor.getType(t));
         if (t == it.up)
         {
             level--;

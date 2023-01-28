@@ -19,7 +19,7 @@ public class AltLabelStructDecl : StructDecl {
 							  int altNum, String label)
 		: base(factory, r, factory.getGenerator().getTarget().getAltLabelContextStructName(label))
     {
-		// override name set in super to the label ctx
+		// override name set in base to the label ctx
 		this.altNum = altNum;
 		this.parentRule = r.name;
 		derivedFromName = label;

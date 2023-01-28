@@ -18,21 +18,21 @@ public class TestASTStructure {
 	
 	{
 		ANTLRStringStream @is = new ANTLRStringStream(input);
-		Class<? extends TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
-		Constructor<? extends TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
+		Class<? : TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
+		Constructor<? : TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
 		TokenSource lexer = lexConstructor.newInstance(@is);
         @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Class<? extends Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
-		Constructor<? extends Parser> parConstructor = parserClass.getConstructor(TokenStream);
+		Class<? : Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
+		Constructor<? : Parser> parConstructor = parserClass.getConstructor(TokenStream);
 		Parser parser = parConstructor.newInstance(tokens);
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
 			Method m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
-			Class<? extends TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
+			Class<? : TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
 			m.invoke(parser, adaptorClass.newInstance());
 		}
 

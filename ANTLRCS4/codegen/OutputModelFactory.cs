@@ -35,11 +35,11 @@ public interface OutputModelFactory {
 
 	// ELEMENT TRIGGERS
 
-	CodeBlockForAlt alternative(Alternative alt, boolean outerMost);
+	CodeBlockForAlt alternative(Alternative alt, bool outerMost);
 
 	CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops);
 
-	CodeBlockForAlt epsilon(Alternative alt, boolean outerMost);
+	CodeBlockForAlt epsilon(Alternative alt, bool outerMost);
 
 	List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args);
 
@@ -47,7 +47,7 @@ public interface OutputModelFactory {
 
 	List<SrcOp> stringRef(GrammarAST ID, GrammarAST label);
 
-	List<SrcOp> set(GrammarAST setAST, GrammarAST label, boolean invert);
+	List<SrcOp> set(GrammarAST setAST, GrammarAST label, bool invert);
 
 	List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST);
 
@@ -69,7 +69,7 @@ public interface OutputModelFactory {
 
 	List<SrcOp> getLL1Test(IntervalSet look, GrammarAST blkAST);
 
-	boolean needsImplicitLabel(GrammarAST ID, LabeledOp op);
+	bool needsImplicitLabel(GrammarAST ID, LabeledOp op);
 
 	// CONTEXT INFO
 

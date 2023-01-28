@@ -154,7 +154,7 @@ public class ToolTestUtils {
 
 	public static void semanticProcess(Grammar g) {
 		if ( g.ast!=null && !g.ast.hasErrors ) {
-//			System.out.println(g.ast.toStringTree());
+//			Console.Out.WriteLine(g.ast.toStringTree());
 			Tool antlr = new Tool();
 			SemanticPipeline sem = new SemanticPipeline(g);
 			sem.process();
