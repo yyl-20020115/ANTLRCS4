@@ -55,14 +55,14 @@ public class UseDefAnalyzer {
 
 	/** Find all rules reachable from r directly or indirectly for all r in g */
 	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g) {
-		return getRuleDependencies(g, g.rules.values());
+		return getRuleDependencies(g, g.rules.Values);
 	}
 
 	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(LexerGrammar g, String modeName) {
 		return getRuleDependencies(g, g.modes.get(modeName));
 	}
 
-	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g, Collection<Rule> rules) {
+	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g, ICollection<Rule> rules) {
 		Dictionary<Rule, HashSet<Rule>> dependencies = new HashMap<Rule, HashSet<Rule>>();
 
 		foreach (Rule r in rules) {

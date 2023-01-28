@@ -21,7 +21,7 @@ public class ListenerFile : OutputFile {
 	/**
 	 * The names of all listener contexts.
 	 */
-	public HashSet<String> listenerNames = new LinkedHashSet<String>();
+	public HashSet<String> listenerNames = new();
 	/**
 	 * For listener contexts created for a labeled outer alternative, maps from
 	 * a listener context name to the name of the rule which defines the
@@ -41,8 +41,8 @@ public class ListenerFile : OutputFile {
 		parserName = g.getRecognizerName();
 		grammarName = g.name;
 		namedActions = buildNamedActions(factory.getGrammar(), ast -> ast.getScope() == null);
-        foreach (Rule r in g.rules.values()) {
-			Map<String, List<Pair<int,AltAST>>> labels = r.getAltLabels();
+        foreach (Rule r in g.rules.Values) {
+			Dictionary<String, List<Pair<int,AltAST>>> labels = r.getAltLabels();
 			if ( labels!=null ) {
                 foreach (Map.Entry<String, List<Pair<int, AltAST>>> pair in labels.entrySet()) {
 					listenerNames.add(pair.getKey());

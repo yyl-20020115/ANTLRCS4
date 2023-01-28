@@ -395,7 +395,7 @@ public class TestATNConstruction {
 		RuleAST a = (RuleAST)ruleNodes.get(1);
 		List<GrammarAST> nodesInRule = a.getNodesWithType(null);
 		Dictionary<GrammarAST, ATNState> covered = new ();
-		for (GrammarAST node in nodesInRule) {
+        foreach (GrammarAST node in nodesInRule) {
 			if ( node.atnState != null ) {
 				covered.put(node, node.atnState);
 			}

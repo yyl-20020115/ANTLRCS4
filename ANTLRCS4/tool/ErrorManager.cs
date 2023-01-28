@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree.pattern;
 
 namespace org.antlr.v4.tool;
 
@@ -54,7 +55,7 @@ public class ErrorManager {
 		}
 		if (msg.fileName != null) {
 			String displayFileName = msg.fileName;
-			if (formatName.equals("antlr")) {
+			if (formatName.Equals("antlr")) {
 				// Don't show path to file in messages in ANTLR format;
 				// they're too long.
 				File f = new File(msg.fileName);
@@ -99,7 +100,7 @@ public class ErrorManager {
         return format.getInstanceOf("message");
     }
     public bool formatWantsSingleLineMessage() {
-        return format.getInstanceOf("wantsSingleLineMessage").render().equals("true");
+        return format.getInstanceOf("wantsSingleLineMessage").render().Equals("true");
     }
 
 	public void info(String msg) { tool.info(msg); }
@@ -114,7 +115,7 @@ public class ErrorManager {
 		emit(etype, msg);
 	}
 
-	public static void fatalInternalError(String error, Throwable e) {
+	public static void fatalInternalError(String error, Exception e) {
 		internalError(error, e);
 		throw new RuntimeException(error, e);
 	}
@@ -185,17 +186,17 @@ public class ErrorManager {
 	//@SuppressWarnings("fallthrough")
 	public void emit(ErrorType etype, ANTLRMessage msg) {
 		switch ( etype.severity ) {
-			case ErrorType.WARNING_ONE_OFF:
+			case ErrorSeverity.WARNING_ONE_OFF:
 				if ( errorTypes.Contains(etype) ) break;
 				// fall thru
-			case WARNING:
+			case ErrorSeverity.WARNING:
 				warnings++;
 				tool.warning(msg);
 				break;
-			case ERROR_ONE_OFF:
+			case ErrorSeverity.ERROR_ONE_OFF:
 				if ( errorTypes.Contains(etype) ) break;
 				// fall thru
-			case ERROR:
+			case ErrorSeverity.ERROR:
 				errors++;
 				tool.error(msg);
 				break;
@@ -221,7 +222,7 @@ public class ErrorManager {
 					cl = ErrorManager.getClassLoader();
 					url = cl.getResource(fileName);
 				}
-				if (url == null && formatName.equals("antlr")) {
+				if (url == null && formatName.Equals("antlr")) {
 					rawError("ANTLR installation corrupted; cannot find ANTLR messages format file " + fileName);
 					panic();
 				}
@@ -240,7 +241,7 @@ public class ErrorManager {
 		this.formatName = formatName;
 		this.format = loadedFormat;
 
-		if (!initSTListener.errors.isEmpty()) {
+		if (!initSTListener.errors.Count == 0) {
 			rawError("ANTLR installation corrupted; can't load messages format file:\n" +
 					initSTListener.toString());
 			panic();

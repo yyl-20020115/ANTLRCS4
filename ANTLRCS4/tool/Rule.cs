@@ -119,7 +119,7 @@ public class Rule : AttributeResolver {
 
 	/** Lexer actions are numbered across rules 0..n-1 */
 	public void defineLexerAction(ActionAST actionAST) {
-		actionIndex = g.lexerActions.size();
+		actionIndex = g.lexerActions.Count;
 		if ( g.lexerActions.get(actionAST)==null ) {
 			g.lexerActions.put(actionAST, actionIndex);
 		}
@@ -155,7 +155,7 @@ public class Rule : AttributeResolver {
         for (int i=1; i<=numberOfAlts; i++) {
             refs.addAll(alt[i].labelDefs.keySet());
         }
-		if ( refs.isEmpty() ) return null;
+		if ( refs.Count == 0 ) return null;
         return refs;
     }
 
@@ -201,7 +201,7 @@ public class Rule : AttributeResolver {
 				list.Add(new Pair<int, AltAST>(i, alt[i].ast));
 			}
 		}
-		if ( labels.isEmpty() ) return null;
+		if ( labels.Count == 0 ) return null;
 		return labels;
 	}
 
@@ -211,7 +211,7 @@ public class Rule : AttributeResolver {
 			GrammarAST altLabel = alt[i].ast.altLabel;
 			if ( altLabel==null ) alts.add(alt[i].ast);
 		}
-		if ( alts.isEmpty() ) return null;
+		if ( alts.Count == 0 ) return null;
 		return alts;
 	}
 
@@ -283,7 +283,7 @@ public class Rule : AttributeResolver {
 	}
 
 	public Rule resolveToRule(String x) {
-		if ( x.equals(this.name) ) return this;
+		if ( x.Equals(this.name) ) return this;
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) {
 			return g.getRule(anyLabelDef.element.getText());

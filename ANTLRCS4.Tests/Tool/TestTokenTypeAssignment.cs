@@ -77,8 +77,8 @@ public class TestTokenTypeAssignment {
 		Assert.AreEqual("['x']", foundLiterals); // pushed in lexer from parser
 
 		String[] typeToTokenName = g.getTokenDisplayNames();
-		Set<String> tokens = new LinkedHashSet<String>();
-		for (String t : typeToTokenName) if ( t!=null ) tokens.add(t);
+		HashSet<String> tokens = new ();
+		foreach (String t in typeToTokenName) if ( t!=null ) tokens.Add(t);
 		Assert.AreEqual("[<INVALID>, 'x', E]", tokens.ToString());
 	}
 
@@ -126,7 +126,7 @@ public class TestTokenTypeAssignment {
 				"a : '\\n';\n");
 		var literals = g.stringLiteralToTypeMap.Keys;
 		// must store literals how they appear in the antlr grammar
-		Assert.AreEqual("'\\n'", literals.toArray()[0]);
+		Assert.AreEqual("'\\n'", literals.ToArray()[0]);
 	}
 
 	[TestMethod] public void testParserCharLiteralWithBasicUnicodeEscape(){
@@ -135,7 +135,7 @@ public class TestTokenTypeAssignment {
 				"a : '\\uABCD';\n");
 		var literals = g.stringLiteralToTypeMap.Keys;
 		// must store literals how they appear in the antlr grammar
-		Assert.AreEqual("'\\uABCD'", literals.toArray()[0]);
+		Assert.AreEqual("'\\uABCD'", literals.ToArray()[0]);
 	}
 
 	[TestMethod] public void testParserCharLiteralWithExtendedUnicodeEscape(){
@@ -168,6 +168,7 @@ public class TestTokenTypeAssignment {
 
 		// make sure expected tokens are there
 		StringTokenizer st = new StringTokenizer(allValidTokensStr, ", ");
+		
 		while ( st.hasMoreTokens() ) {
 			String tokenName = st.nextToken();
 			Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");

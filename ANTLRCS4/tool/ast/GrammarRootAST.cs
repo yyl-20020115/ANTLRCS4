@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool.ast;
 
@@ -63,7 +64,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public String getOptionString(String key) {
 		if ( cmdLineOptions!=null && cmdLineOptions.containsKey(key) ) {
 			return cmdLineOptions.get(key);

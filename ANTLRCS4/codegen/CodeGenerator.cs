@@ -6,6 +6,7 @@
 
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen;
@@ -103,7 +104,7 @@ public class CodeGenerator {
 	 */
 	ST getTokenVocabOutput() {
 		ST vocabFileST = new ST(vocabFilePattern);
-		Map<String,int> tokens = new LinkedHashMap<String,int>();
+		Dictionary<String,int> tokens = new Dictionary<String,int>();
         // make constants for the token names
         foreach (String t in g.tokenNameToTypeMap.keySet()) {
 			int tokenType = g.tokenNameToTypeMap.get(t);
@@ -114,7 +115,7 @@ public class CodeGenerator {
 		vocabFileST.add("tokens", tokens);
 
 		// now dump the strings
-		Map<String,int> literals = new LinkedHashMap<String,int>();
+		Dictionary<String,int> literals = new Dictionary<String,int>();
 		foreach (String literal in g.stringLiteralToTypeMap.keySet()) {
 			int tokenType = g.stringLiteralToTypeMap.get(literal);
 			if ( tokenType>=Token.MIN_USER_TOKEN_TYPE) {

@@ -268,8 +268,8 @@ public abstract class Target {
 						break;
 
 					case    'u':    // Either unnnn or u{nnnnnn}
-						if (literal.charAt(i+toAdvance) == '{') {
-							while (literal.charAt(i+toAdvance) != '}') {
+						if (literal[(i+toAdvance)] == '{') {
+							while (literal[(i+toAdvance)] != '}') {
 								toAdvance++;
 							}
 							toAdvance++;
@@ -331,12 +331,12 @@ public abstract class Target {
 
 	/** Assume 16-bit char */
 	public String encodeInt16AsCharEscape(int v) {
-		if (v < char.MIN_VALUE || v > char.MAX_VALUE) {
-			throw new IllegalArgumentException(String.format("Cannot encode the specified value: %d", v));
+		if (v < char.MinValue || v > char.MaxValue) {
+			throw new ArgumentException(String.format("Cannot encode the specified value: %d", v));
 		}
 
 		if ( isATNSerializedAsInts() ) {
-			return Integer.ToString(v);
+			return v.ToString();// Integer.ToString(v);
 		}
 
 		char c = (char)v;

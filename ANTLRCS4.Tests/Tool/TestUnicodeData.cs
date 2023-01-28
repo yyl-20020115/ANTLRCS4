@@ -4,15 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.unicode;
+
 namespace org.antlr.v4.test.tool;
 [TestClass]
 public class TestUnicodeData {
 	[TestMethod]
 	public void testUnicodeGeneralCategoriesLatin() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Lu").contains('X'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains('x'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Lu").contains('x'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Ll").contains('x'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Ll").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Ll").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains('x'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("N").contains('0'));
@@ -22,58 +24,58 @@ public class TestUnicodeData {
 	[TestMethod]
 	public void testUnicodeGeneralCategoriesBMP() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Lu").contains('\u1E3A'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains('\u1E3B'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Lu").contains('\u1E3B'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Ll").contains('\u1E3B'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Ll").contains('\u1E3A'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Ll").contains('\u1E3A'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains('\u1E3A'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains('\u1E3B'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("N").contains('\u1BB0'));
-		assertFalse(UnicodeData.getPropertyCodePoints("N").contains('\u1E3A'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("N").contains('\u1E3A'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Z").contains('\u2028'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Z").contains('\u1E3A'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Z").contains('\u1E3A'));
 	}
 
 	[TestMethod]
 	public void testUnicodeGeneralCategoriesSMP() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Lu").contains(0x1D5D4));
-		assertFalse(UnicodeData.getPropertyCodePoints("Lu").contains(0x1D770));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Lu").contains(0x1D770));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Ll").contains(0x1D770));
-		assertFalse(UnicodeData.getPropertyCodePoints("Ll").contains(0x1D5D4));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Ll").contains(0x1D5D4));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains(0x1D5D4));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("L").contains(0x1D770));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("N").contains(0x11C50));
-		assertFalse(UnicodeData.getPropertyCodePoints("N").contains(0x1D5D4));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("N").contains(0x1D5D4));
 	}
 
 	[TestMethod]
 	public void testUnicodeCategoryAliases() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Lowercase_Letter").contains('x'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Lowercase_Letter").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Lowercase_Letter").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Letter").contains('x'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Letter").contains('0'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Letter").contains('0'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Enclosing_Mark").contains(0x20E2));
-		assertFalse(UnicodeData.getPropertyCodePoints("Enclosing_Mark").contains('x'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Enclosing_Mark").contains('x'));
 	}
 
 	[TestMethod]
 	public void testUnicodeBinaryProperties() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Emoji").contains(0x1F4A9));
-		assertFalse(UnicodeData.getPropertyCodePoints("Emoji").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Emoji").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("alnum").contains('9'));
-		assertFalse(UnicodeData.getPropertyCodePoints("alnum").contains(0x1F4A9));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("alnum").contains(0x1F4A9));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Dash").contains('-'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Hex").contains('D'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Hex").contains('Q'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Hex").contains('Q'));
 	}
 
 	[TestMethod]
 	public void testUnicodeBinaryPropertyAliases() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Ideo").contains('\u611B'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Ideo").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Ideo").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Soft_Dotted").contains('\u0456'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Soft_Dotted").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Soft_Dotted").contains('X'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Noncharacter_Code_Point").contains('\uFFFF'));
-		assertFalse(UnicodeData.getPropertyCodePoints("Noncharacter_Code_Point").contains('X'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("Noncharacter_Code_Point").contains('X'));
 	}
 
 	[TestMethod]
@@ -124,11 +126,11 @@ public class TestUnicodeData {
 
 	[TestMethod]
 	public void testEnumeratedPropertyEquals() {
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("Grapheme_Cluster_Break=E_Base").contains(0x1F47E),
 				"U+1F47E ALIEN MONSTER is not an emoji modifier");
 
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("Grapheme_Cluster_Break=E_Base").contains(0x1038),
 				"U+1038 MYANMAR SIGN VISARGA is not a spacing mark");
 
@@ -136,7 +138,7 @@ public class TestUnicodeData {
 				UnicodeData.getPropertyCodePoints("East_Asian_Width=Ambiguous").contains(0x00A1),
 				"U+00A1 INVERTED EXCLAMATION MARK has ambiguous East Asian Width");
 
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("East_Asian_Width=Ambiguous").contains(0x00A2),
 				"U+00A2 CENT SIGN does not have ambiguous East Asian Width");
 	}
@@ -146,7 +148,7 @@ public class TestUnicodeData {
 		Assert.IsTrue(
 				UnicodeData.getPropertyCodePoints("Extended_Pictographic").contains(0x1F588),
 				"U+1F588 BLACK PUSHPIN is in Extended Pictographic");
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("Extended_Pictographic").contains('0'),
 				"0 is not in Extended Pictographic");
         }
@@ -156,19 +158,19 @@ public class TestUnicodeData {
 		Assert.IsTrue(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=EmojiDefault").contains(0x1F4A9),
 				"U+1F4A9 PILE OF POO is in EmojiPresentation=EmojiDefault");
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=EmojiDefault").contains('0'),
 				"0 is not in EmojiPresentation=EmojiDefault");
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=EmojiDefault").contains('A'),
 				"A is not in EmojiPresentation=EmojiDefault");
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=TextDefault").contains(0x1F4A9),
 				"U+1F4A9 PILE OF POO is not in EmojiPresentation=TextDefault");
 		Assert.IsTrue(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=TextDefault").contains('0'),
 				"0 is in EmojiPresentation=TextDefault");
-		assertFalse(
+		Assert.IsFalse(
 				UnicodeData.getPropertyCodePoints("EmojiPresentation=TextDefault").contains('A'),
 				"A is not in EmojiPresentation=TextDefault");
         }
@@ -176,7 +178,7 @@ public class TestUnicodeData {
 	[TestMethod]
 	public void testPropertyCaseInsensitivity() {
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("l").contains('x'));
-		assertFalse(UnicodeData.getPropertyCodePoints("l").contains('0'));
+		Assert.IsFalse(UnicodeData.getPropertyCodePoints("l").contains('0'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("common").contains('0'));
 		Assert.IsTrue(UnicodeData.getPropertyCodePoints("Alnum").contains('0'));
 	}
@@ -188,7 +190,7 @@ public class TestUnicodeData {
 
 	[TestMethod]
 	public void modifyingUnicodeDataShouldThrow() {
-		IllegalStateException exception = assertThrows(IllegalStateException, () -> UnicodeData.getPropertyCodePoints("L").add(0x12345));
+		IllegalStateException exception = assertThrows(IllegalStateException, () => UnicodeData.getPropertyCodePoints("L").add(0x12345));
 		Assert.AreEqual("can't alter readonly IntervalSet", exception.Message);
 	}
 }

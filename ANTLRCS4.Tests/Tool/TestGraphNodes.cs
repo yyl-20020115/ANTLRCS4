@@ -790,13 +790,13 @@ public class TestGraphNodes {
 	private static String toDOTString(PredictionContext context, bool rootIsWildcard) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder edges = new StringBuilder();
-		Map<PredictionContext, PredictionContext> visited = new IdentityHashMap<PredictionContext, PredictionContext>();
-		Map<PredictionContext, Integer> contextIds = new IdentityHashMap<PredictionContext, Integer>();
+		Dictionary<PredictionContext, PredictionContext> visited = new IdentityHashMap<PredictionContext, PredictionContext>();
+		Dictionary<PredictionContext, Integer> contextIds = new IdentityHashMap<PredictionContext, Integer>();
 		Deque<PredictionContext> workList = new ();
 		visited.put(context, context);
-		contextIds.put(context, contextIds.size());
+		contextIds.put(context, contextIds.Count);
 		workList.add(context);
-		while (!workList.isEmpty()) {
+		while (workList.size() > 0) {
 			PredictionContext current = workList.pop();
 			nodes.Append("  s").Append(contextIds.get(current)).Append('[');
 
@@ -806,7 +806,7 @@ public class TestGraphNodes {
 
 			nodes.Append("label=\"");
 
-			if (current.isEmpty()) {
+			if (current.size() == 0) {
 				nodes.Append(rootIsWildcard ? '*' : '$');
 			} else if (current.size() > 1) {
 				for (int i = 0; i < current.size(); i++) {
@@ -825,7 +825,7 @@ public class TestGraphNodes {
 
 			nodes.Append("\"];\n");
 
-			if (current.isEmpty()) {
+			if (current.size() == 0) {
 				continue;
 			}
 

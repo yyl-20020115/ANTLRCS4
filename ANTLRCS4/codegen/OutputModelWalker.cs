@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen.model;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
@@ -39,7 +40,7 @@ public class OutputModelWalker {
 
 	public ST walk(OutputModelObject omo, bool header) {
 		// CREATE TEMPLATE FOR THIS OUTPUT OBJECT
-		Class<? : OutputModelObject> cl = omo.getClass();
+		Type cl = omo.getClass();
 		String templateName = cl.getSimpleName();
 		if ( templateName == null ) {
 			tool.errMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.getSimpleName());
@@ -58,16 +59,16 @@ public class OutputModelWalker {
 			return st;
 		}
 
-		Map<String,FormalArgument> formalArgs = st.impl.formalArguments;
+		Dictionary<String,FormalArgument> formalArgs = st.impl.formalArguments;
 
 		// PASS IN OUTPUT MODEL OBJECT TO TEMPLATE AS FIRST ARG
-		Set<String> argNames = formalArgs.keySet();
+		HashSet<String> argNames = formalArgs.keySet();
 		Iterator<String> arg_it = argNames.iterator();
 		String modelArgName = arg_it.next(); // ordered so this is first arg
 		st.add(modelArgName, omo);
 
 		// COMPUTE STs FOR EACH NESTED MODEL OBJECT MARKED WITH @ModelElement AND MAKE ST ATTRIBUTE
-		Set<String> usedFieldNames = new HashSet<String>();
+		HashSet<String> usedFieldNames = new HashSet<String>();
 		Field fields[] = cl.getFields();
 		for (Field fi : fields) {
 			ModelElement annotation = fi.getAnnotation(ModelElement);
@@ -93,13 +94,13 @@ public class OutputModelWalker {
 //					Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
 					st.add(fieldName, nestedST);
 				}
-				else if ( o is Collection || o is OutputModelObject[] ) {
+				else if ( o is ICollection || o is OutputModelObject[] ) {
 					// LIST OF MODEL OBJECTS?
 					if ( o is OutputModelObject[] ) {
 						o = Arrays.AsList((OutputModelObject[])o);
 					}
-					ICollection<?> nestedOmos = (Collection<?>)o;
-					for (Object nestedOmo in nestedOmos) {
+					ICollection nestedOmos = (Collection)o;
+                    foreach (Object nestedOmo in nestedOmos) {
 						if ( nestedOmo==null ) continue;
 						ST nestedST = walk((OutputModelObject)nestedOmo, header);
 //						Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
@@ -107,9 +108,9 @@ public class OutputModelWalker {
 					}
 				}
 				else if ( o is Map ) {
-					Map<?, ?> nestedOmoMap = (Map<?, ?>)o;
-					Dictionary<Object, ST> m = new LinkedHashMap<Object, ST>();
-					for (var entry : nestedOmoMap.entrySet()) {
+					Dictionary nestedOmoMap = (Dictionary)o;
+					Dictionary<Object, ST> m = new Dictionary<Object, ST>();
+					foreach (var entry in nestedOmoMap.entrySet()) {
 						ST nestedST = walk((OutputModelObject)entry.getValue(), header);
 //						Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
 						m.put(entry.getKey(), nestedST);

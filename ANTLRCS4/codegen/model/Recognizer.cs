@@ -56,7 +56,7 @@ public abstract class Recognizer : OutputModelObject {
 		}
 
 		ruleNames = g.rules.keySet();
-		rules = g.rules.values();
+		rules = g.rules.Values;
 		if ( gen.getTarget() is JavaTarget ) {
 			atn = new SerializedJavaATN(factory, g.atn);
 		}
@@ -98,7 +98,7 @@ public abstract class Recognizer : OutputModelObject {
 			return null;
 		}
 
-		if (tokenName.charAt(0) == '\'') {
+		if (tokenName[(0)] == '\'') {
 			String targetString =
 				gen.getTarget().getTargetStringLiteralFromANTLRStringLiteral(gen, tokenName, false, true);
 			return "\"'" + targetString + "'\"";

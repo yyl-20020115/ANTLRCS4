@@ -77,7 +77,7 @@ public abstract class UnicodeDataTemplateController {
 		addUnicodeIntPropertyCodesToNames(propertyAliases);
 		propertyAliases.put("EP", "Extended_Pictographic");
 
-        Dictionary<String, Object> properties = new LinkedHashMap<>();
+        Dictionary<String, Object> properties = new ();
 		properties.put("propertyCodePointRanges", propertyCodePointRanges);
 		properties.put("propertyAliases", propertyAliases);
 		return properties;

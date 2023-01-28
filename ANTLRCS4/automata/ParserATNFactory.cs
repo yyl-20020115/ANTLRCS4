@@ -10,6 +10,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using static org.antlr.v4.automata.ATNFactory;
@@ -54,7 +55,7 @@ public class ParserATNFactory : ATNFactory {
 
 	////@Override
 	public ATN createATN() {
-		_createATN(g.rules.values());
+		_createATN(g.rules.Values);
 		//assert atn.maxTokenType == g.getMaxTokenType();
         addRuleFollowLinks();
 		addEOFTransitionToStartRules();
@@ -608,7 +609,7 @@ public class ParserATNFactory : ATNFactory {
 	void createRuleStartAndStopATNStates() {
 		atn.ruleToStartState = new RuleStartState[g.rules.size()];
 		atn.ruleToStopState = new RuleStopState[g.rules.size()];
-        foreach (Rule r in g.rules.values()) {
+        foreach (Rule r in g.rules.Values) {
 			RuleStartState start = newState(RuleStartState, r.ast);
 			RuleStopState stop = newState(RuleStopState, r.ast);
 			start.stopState = stop;
@@ -643,7 +644,7 @@ public class ParserATNFactory : ATNFactory {
 	public int addEOFTransitionToStartRules() {
 		int n = 0;
 		ATNState eofTarget = newState(null); // one unique EOF target for all rules
-        foreach (Rule r in g.rules.values()) {
+        foreach (Rule r in g.rules.Values) {
 			ATNState stop = atn.ruleToStopState[r.index];
 			if ( stop.getNumberOfTransitions()>0 ) continue;
 			n++;
@@ -679,7 +680,7 @@ public class ParserATNFactory : ATNFactory {
 			cause = ex;
 		} catch (IllegalAccessException ex) {
 			cause = ex;
-		} catch (IllegalArgumentException ex) {
+		} catch (ArgumentException ex) {
 			cause = ex;
 		} catch (InvocationTargetException ex) {
 			cause = ex;

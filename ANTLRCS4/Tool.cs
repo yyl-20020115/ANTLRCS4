@@ -162,8 +162,8 @@ public class Tool {
 				handleOptionSetArg(arg);
 				continue;
 			}
-			if ( arg.charAt(0)!='-' ) { // file name
-				if ( !grammarFiles.Contains(arg) ) grammarFiles.add(arg);
+			if ( arg[(0)] !='-' ) { // file name
+				if ( !grammarFiles.Contains(arg) ) grammarFiles.Add(arg);
 				continue;
 			}
 			var found = false;
@@ -377,7 +377,7 @@ public class Tool {
         // @Override
         public void tokenRef(TerminalAST @ref)
         {
-            if ("EOF".equals(@ref.getText()))
+            if ("EOF".Equals(@ref.getText()))
             {
                 // this is a special predefined reference
                 return;
@@ -470,7 +470,7 @@ public class Tool {
 				String vocabName = tokenVocabNode.getText();
 				// Strip quote characters if any
 				int len = vocabName.Length;
-				int firstChar = vocabName.charAt(0);
+				int firstChar = vocabName[(0)];
 				int lastChar = vocabName[len - 1];
 				if (len >= 2 && firstChar == '\'' && lastChar == '\'') {
 					vocabName = vocabName.substring(1, len-1);
@@ -511,7 +511,7 @@ public class Tool {
             foreach (Object o in options.getChildren()) {
 				GrammarAST c = (GrammarAST)o;
 				if ( c.getType() == ANTLRParser.ASSIGN &&
-					 c.getChild(0).getText().equals(option) )
+					 c.getChild(0).getText().Equals(option) )
 				{
 					return (GrammarAST)c.getChild(1);
 				}
@@ -645,7 +645,7 @@ public class Tool {
 		List<Grammar> imported = g.getAllImportedGrammars();
 		if ( imported!=null ) grammars.addAll(imported);
 		foreach (Grammar ig in grammars) {
-			foreach (Rule r in ig.rules.values()) {
+			foreach (Rule r in ig.rules.Values) {
 				try {
 					String dot = dotGenerator.getDOT(g.atn.ruleToStartState[r.index], g.isLexer());
 					if (dot != null) {
@@ -693,7 +693,7 @@ public class Tool {
 			content.Append("\n");
 
 			content.Append("mode names:\n");
-			for (String mode in ((LexerGrammar)g).modes.keySet()) {
+            foreach (String mode in ((LexerGrammar)g).modes.keySet()) {
 				content.Append(mode + "\n");
 			}
 		}
@@ -888,28 +888,28 @@ public class Tool {
 	public int getNumErrors() { return errMgr.getNumErrors(); }
 
 	public void addListener(ANTLRToolListener tl) {
-		if ( tl!=null ) listeners.add(tl);
+		if ( tl!=null ) listeners.Add(tl);
 	}
-	public void removeListener(ANTLRToolListener tl) { listeners.remove(tl); }
-	public void removeListeners() { listeners.clear(); }
+	public void removeListener(ANTLRToolListener tl) { listeners.Remove(tl); }
+	public void removeListeners() { listeners.Clear(); }
 	public List<ANTLRToolListener> getListeners() { return listeners; }
 
 	public void info(String msg) {
-		if ( listeners.isEmpty() ) {
+		if ( listeners.Count == 0 ) {
 			defaultListener.info(msg);
 			return;
 		}
         foreach (ANTLRToolListener l in listeners) l.info(msg);
 	}
 	public void error(ANTLRMessage msg) {
-		if ( listeners.isEmpty() ) {
+		if ( listeners.Count == 0 ) {
 			defaultListener.error(msg);
 			return;
 		}
         foreach (ANTLRToolListener l in listeners) l.error(msg);
 	}
 	public void warning(ANTLRMessage msg) {
-		if ( listeners.isEmpty() ) {
+		if ( listeners.Count == 0 ) {
 			defaultListener.warning(msg);
 		}
 		else {

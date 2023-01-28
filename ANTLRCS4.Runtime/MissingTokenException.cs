@@ -47,4 +47,9 @@ public class MissingTokenException :RecognitionException
         this.input = input;
         this.inserted = inserted;
     }
+
+    internal string getMissingType()
+    {
+        throw new NotImplementedException();
+    }
 }

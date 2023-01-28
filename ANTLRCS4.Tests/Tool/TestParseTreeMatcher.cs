@@ -78,7 +78,7 @@ public class TestParseTreeMatcher {
 			"WS : [ \\r\\n\\t]+ -> skip ;\n";
 		ParseTreePatternMatcher m = getPatternMatcher("X1.g4", grammar, "X1Parser", "X1Lexer", "s");
 
-		List<? : Token> tokens = m.tokenize("<ID> = <expr> ;");
+		List<Token> tokens = m.tokenize("<ID> = <expr> ;");
 		Assert.AreEqual("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.ToString());
 	}
 
@@ -386,7 +386,7 @@ public class TestParseTreeMatcher {
 
 			ParseTreeMatch match = p.match(executedState.parseTree);
 			bool matched = match.succeeded();
-			if ( invertMatch ) assertFalse(matched);
+			if ( invertMatch ) Assert.IsFalse(matched);
 			else Assert.IsTrue(matched);
 			return match;
 		}

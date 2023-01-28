@@ -111,9 +111,9 @@ public class DOTGenerator {
 					// get a list of configs for just this alt
 					// it will help us print better later
 					List<ATNConfig> configsInAlt = new ();
-					for (ATNConfig c in configurations) {
+                    foreach (ATNConfig c in configurations) {
 						if (c.alt != alt) continue;
-						configsInAlt.add(c);
+						configsInAlt.Add(c);
 					}
 					int n = 0;
 					for (int cIndex = 0; cIndex < configsInAlt.size(); cIndex++) {
@@ -139,7 +139,7 @@ public class DOTGenerator {
 	}
 
 	public String getDOT(ATNState startState, bool isLexer) {
-		Set<String> ruleNames = grammar.rules.keySet();
+		HashSet<String> ruleNames = grammar.rules.keySet();
 		String[] names = new String[ruleNames.size()+1];
 		int i = 0;
 		for (String s : ruleNames) names[i++] = s;
@@ -161,7 +161,7 @@ public class DOTGenerator {
 
 		List<ATNState> work = new LinkedList<ATNState>();
 
-		work.add(startState);
+		work.Add(startState);
 		while ( !work.isEmpty() ) {
 			ATNState s = work.get(0);
 			if ( markedStates.contains(s) ) { work.remove(0); continue; }
@@ -270,18 +270,18 @@ public class DOTGenerator {
 			}
 		}
 
-		// define nodes we visited (they will appear first in DOT output)
-		// this is an example of ST's lazy eval :)
-		// define stop state first; seems to be a bug in DOT where doublecircle
-		// shape only works if we define them first. weird.
-//		ATNState stopState = startState.atn.ruleToStopState.get(startState.rule);
-//		if ( stopState!=null ) {
-//			ST st = stlib.getInstanceOf("stopstate");
-//			st.add("name", "s"+stopState.stateNumber);
-//			st.add("label", getStateLabel(stopState));
-//			dot.add("states", st);
-//		}
-		for (ATNState s in markedStates) {
+        // define nodes we visited (they will appear first in DOT output)
+        // this is an example of ST's lazy eval :)
+        // define stop state first; seems to be a bug in DOT where doublecircle
+        // shape only works if we define them first. weird.
+        //		ATNState stopState = startState.atn.ruleToStopState.get(startState.rule);
+        //		if ( stopState!=null ) {
+        //			ST st = stlib.getInstanceOf("stopstate");
+        //			st.add("name", "s"+stopState.stateNumber);
+        //			st.add("label", getStateLabel(stopState));
+        //			dot.add("states", st);
+        //		}
+        foreach (ATNState s in markedStates) {
 			if ( !(s is RuleStopState) ) continue;
 			ST st = stlib.getInstanceOf("stopstate");
 			st.add("name", "s"+s.stateNumber);
@@ -289,7 +289,7 @@ public class DOTGenerator {
 			dot.add("states", st);
 		}
 
-		for (ATNState s in markedStates) {
+        foreach (ATNState s in markedStates) {
 			if ( s is RuleStopState ) continue;
 			ST st = stlib.getInstanceOf("state");
 			st.add("name", "s"+s.stateNumber);

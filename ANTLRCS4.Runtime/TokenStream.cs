@@ -138,4 +138,19 @@ public interface TokenStream : IntStream {
 	 */
 	public String getText(Token start, Token stop);
     int range();
+
+    /** Return the text of all tokens from start to stop, inclusive.
+	 *  If the stream does not buffer all the tokens then it can just
+	 *  return "" or null;  Users should not access $ruleLabel.text in
+	 *  an action of course in that case.
+	 */
+    public String toString(int start, int stop);
+
+    /** Because the user is not required to use a token with an index stored
+	 *  in it, we must provide a means for two token objects themselves to
+	 *  indicate the start/end location.  Most often this will just delegate
+	 *  to the other toString(int,int).  This is also parallel with
+	 *  the TreeNodeStream.toString(Object,Object).
+	 */
+    public String toString(Token start, Token stop);
 }

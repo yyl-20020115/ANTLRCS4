@@ -21,7 +21,7 @@ public class TestCodeGeneration {
 		Console.Out.WriteLine(evals);
 		for (int i = 0; i < evals.size(); i++) {
 			String eval = evals.get(i);
-			assertFalse(eval.startsWith("<pojo:"), "eval should not be POJO: "+eval);
+			Assert.IsFalse(eval.startsWith("<pojo:"), "eval should not be POJO: "+eval);
 		}
 	}
 
@@ -63,10 +63,10 @@ public class TestCodeGeneration {
 				if ( !name.startsWith("_sub") ) {
 					try {
 						@out.write("<ST:" + name + ">");
-						evals.add("<ST:" + name + ">");
+						evals.Add("<ST:" + name + ">");
 						int r = base.writeObject(@out, scope, o, options);
 						@out.write("</ST:" + name + ">");
-						evals.add("</ST:" + name + ">");
+						evals.Add("</ST:" + name + ">");
 						return r;
 					} catch (IOException ioe) {
 						myErrMgrCopy.IOError(scope.st, ErrorType.WRITE_IO_ERROR, ioe);
@@ -78,7 +78,7 @@ public class TestCodeGeneration {
 
 		//@Override
 		protected int writePOJO(STWriter @out, InstanceScope scope, Object o, String[] options){
-			Class<?> type = o.getClass();
+			Class type = o.getClass();
 			String name = type.getSimpleName();
 			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
@@ -125,9 +125,9 @@ public class TestCodeGeneration {
 			AutoIndentWriter @out = new AutoIndentWriter(sw);
 			interp.exec(@out, scope);
 
-			for (String e : interp.evals) {
-				if (e.contains(pattern)) {
-					evals.add(e);
+			foreach (String e in interp.evals) {
+				if (e.Contains(pattern)) {
+					evals.Add(e);
 				}
 			}
 		}

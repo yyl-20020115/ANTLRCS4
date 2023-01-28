@@ -84,21 +84,21 @@ public class CharSupport {
 	public static String getStringFromGrammarStringLiteral(String literal) {
 		StringBuilder buf = new StringBuilder();
 		int i = 1; // skip first quote
-		int n = literal.length()-1; // skip last quote
+		int n = literal.Length -1; // skip last quote
 		while ( i < n ) { // scan all but last quote
 			int end = i+1;
-			if ( literal.charAt(i) == '\\' ) {
+			if ( literal[(i)] == '\\' ) {
 				end = i+2;
-				if ( i+1 < n && literal.charAt(i+1) == 'u' ) {
-					if ( i+2 < n && literal.charAt(i+2) == '{' ) { // extended escape sequence
+				if ( i+1 < n && literal[(i+1)] == 'u' ) {
+					if ( i+2 < n && literal[(i + 2)] == '{' ) { // extended escape sequence
 						end = i + 3;
 						while (true) {
 							if ( end + 1 > n ) return null; // invalid escape sequence.
-							char charAt = literal.charAt(end++);
+							char charAt = literal[(end++)];
 							if (charAt == '}') {
 								break;
 							}
-							if (!char.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
+							if (!char.IsDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
 								return null; // invalid escape sequence.
 							}
 						}
@@ -106,8 +106,8 @@ public class CharSupport {
 					else {
 						for (end = i + 2; end < i + 6; end++) {
 							if ( end>n ) return null; // invalid escape sequence.
-							char charAt = literal.charAt(end);
-							if (!char.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
+							char charAt = literal[(end)];
+							if (!char.IsDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
 								return null; // invalid escape sequence.
 							}
 						}
@@ -115,7 +115,7 @@ public class CharSupport {
 				}
 			}
 			if ( end>n ) return null; // invalid escape sequence.
-			String esc = literal.substring(i, end);
+			String esc = literal.Substring(i, end - i);
 			int c = getCharValueFromCharInGrammarLiteral(esc);
 			if ( c==-1 ) {
 				return null; // invalid escape sequence.
@@ -123,37 +123,37 @@ public class CharSupport {
 			else buf.appendCodePoint(c);
 			i = end;
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	/** Given char x or \\t or \\u1234 return the char value;
 	 *  Unnecessary escapes like '\{' yield -1.
 	 */
 	public static int getCharValueFromCharInGrammarLiteral(String cstr) {
-		switch ( cstr.length() ) {
+		switch ( cstr.Length ) {
 			case 1:
 				// 'x'
-				return cstr.charAt(0); // no escape char
+				return cstr[(0)]; // no escape char
 			case 2:
-				if ( cstr.charAt(0)!='\\' ) return -1;
+				if ( cstr[(0)] !='\\' ) return -1;
 				// '\x'  (antlr lexer will catch invalid char)
-				char escChar = cstr.charAt(1);
+				char escChar = cstr[(1)];
 				if (escChar == '\'') return escChar; // escape quote only in string literals.
 				int charVal = ANTLRLiteralEscapedCharValue[escChar];
 				if (charVal == 0) return -1;
 				return charVal;
 			case 6:
 				// '\\u1234' or '\\u{12}'
-				if ( !cstr.startsWith("\\u") ) return -1;
+				if ( !cstr.StartsWith("\\u") ) return -1;
 				int startOff;
 				int endOff;
-				if ( cstr.charAt(2) == '{' ) {
+				if ( cstr[(2)] == '{' ) {
 					startOff = 3;
-					endOff = cstr.indexOf('}');
+					endOff = cstr.IndexOf('}');
 				}
 				else {
 					startOff = 2;
-					endOff = cstr.length();
+					endOff = cstr.Length;
 				}
 				return parseHexValue(cstr, startOff, endOff);
 			default:
@@ -187,12 +187,12 @@ public class CharSupport {
 		Iterator<Interval> iter = intervalSet.getIntervals().iterator();
 		while (iter.hasNext()) {
 			Interval interval = iter.next();
-			buf.append(getRangeEscapedString(interval.a, interval.b));
+			buf.Append(getRangeEscapedString(interval.a, interval.b));
 			if (iter.hasNext()) {
-				buf.append(" | ");
+				buf.Append(" | ");
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public static String getRangeEscapedString(int codePointStart, int codePointEnd) {

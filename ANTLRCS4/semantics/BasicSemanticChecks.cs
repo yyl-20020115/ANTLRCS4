@@ -276,7 +276,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		}
 		List<GrammarAST> altLabels = ruleCollector.ruleToAltLabels.get(rule.getRuleName());
 		int numAltLabels = 0;
-		if ( altLabels!=null ) numAltLabels = altLabels.size();
+		if ( altLabels!=null ) numAltLabels = altLabels.Count;
 		if ( numAltLabels>0 && nalts != numAltLabels ) {
 			g.tool.errMgr.grammarError(ErrorType.RULE_WITH_TOO_FEW_ALT_LABELS,
 									   g.fileName, idAST.token, rule.getRuleName());
@@ -296,7 +296,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		File f = new File(fullyQualifiedName);
 		String fileName = f.getName();
 		if ( g.originalGrammar!=null ) return; // don't warn about diff if this is implicit lexer
-		if ( !Utils.stripFileExtension(fileName).equals(nameToken.getText()) &&
+		if ( !Utils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
 		     !fileName.Equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
 			g.tool.errMgr.grammarError(ErrorType.FILE_AND_GRAMMAR_NAME_DIFFER,
 									   fileName, nameToken, nameToken.getText(), fileName);
@@ -451,7 +451,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 
 	/** Check option is appropriate for grammar, rule, subrule */
 	void checkOptions(GrammarAST parent, Token optionID, GrammarAST valueAST) {
-		Set<String> optionsToCheck = null;
+		HashSet<String> optionsToCheck = null;
 		int parentType = parent.getType();
 		switch (parentType) {
 			case ANTLRParser.BLOCK:

@@ -368,9 +368,9 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
 		if (originalParser is ParserInterpreter) {
-			Class<? : ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter);
+			Class<ParserInterpreter> c = originalParser.getClass().asSubclass(ParserInterpreter);
 			try {
-				Constructor<? : ParserInterpreter> ctor = c.getConstructor(Grammar, ATN, TokenStream);
+				Constructor<ParserInterpreter> ctor = c.getConstructor(Grammar, ATN, TokenStream);
 				parser = ctor.newInstance(g, originalParser.getATN(), originalParser.getTokenStream());
 			}
 			catch (Exception e) {

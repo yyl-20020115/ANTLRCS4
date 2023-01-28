@@ -12,6 +12,7 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.tree.pattern;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -21,6 +22,7 @@ namespace org.antlr.v4.test.tool;
 [TestClass]
 public class TestPerformance
 {
+    public static readonly String NewLine = Environment.NewLine;
     /**
      * Parse all java files under this package within the JDK_SOURCE_ROOT
      * (environment variable or property defined on the Java command line).
@@ -390,7 +392,7 @@ public class TestPerformance
     public void compileJdk()
     {
         String jdkSourceRoot = getSourceRoot("JDK");
-        Assert.IsTrue(jdkSourceRoot != null && !jdkSourceRoot.isEmpty(),
+        Assert.IsTrue(jdkSourceRoot != null && jdkSourceRoot.Length > 0,
                 "The JDK_SOURCE_ROOT environment variable must be set for performance testing.");
 
         JavaCompiledState javaCompiledState = compileJavaParser(USE_LR_GRAMMAR);
@@ -400,7 +402,7 @@ public class TestPerformance
         String entryPoint = "compilationUnit";
         ParserFactory factory = getParserFactory(javaCompiledState, listenerName, entryPoint);
 
-        if (!TOP_PACKAGE.isEmpty())
+        if (TOP_PACKAGE.Length>0)
         {
             jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.replace('.', '/');
         }
@@ -416,24 +418,24 @@ public class TestPerformance
         {
             if (COMPUTE_TRANSITION_STATS)
             {
-                totalTransitionsPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
-                computedTransitionsPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+                totalTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+                computedTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
 
                 if (DETAILED_DFA_STATE_STATS)
                 {
-                    decisionInvocationsPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    fullContextFallbackPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    nonSllPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    totalTransitionsPerDecisionPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    computedTransitionsPerDecisionPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    fullContextTransitionsPerDecisionPerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    decisionInvocationsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    fullContextFallbackPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    nonSllPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    totalTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    computedTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+                    fullContextTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
                 }
             }
 
             if (COMPUTE_TIMING_STATS)
             {
-                timePerFile[i] = new long[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
-                tokensPerFile[i] = new int[Math.min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+                timePerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+                tokensPerFile[i] = new int[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
             }
         }
 
@@ -442,7 +444,7 @@ public class TestPerformance
 
         ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
-        List < Future <?>> passResults = new ();
+        List < Future > passResults = new ();
         passResults.add(executorService.submit(new R0()));
         for (int i = 0; i < PASSES - 1; i++)
         {
@@ -450,7 +452,7 @@ public class TestPerformance
             passResults.add(executorService.submit(new R1()));
         }
 
-        for (Future <?> passResult : passResults)
+        for (Future  passResult : passResults)
         {
             passResult.get();
         }
@@ -562,7 +564,7 @@ public class TestPerformance
                 }
             }
 
-            Arrays.sort(points);
+            Array.Sort(points);
 
             double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
             double value = 0;
@@ -572,13 +574,13 @@ public class TestPerformance
                 value += diff * diff;
             }
 
-            int ignoreCount95 = (int)Math.round(PASSES * (1 - 0.95) / 2.0);
-            int ignoreCount67 = (int)Math.round(PASSES * (1 - 0.667) / 2.0);
+            int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
+            int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
             low95[i] = points[ignoreCount95];
             high95[i] = points[points.Length - 1 - ignoreCount95];
             low67[i] = points[ignoreCount67];
             high67[i] = points[points.Length - 1 - ignoreCount67];
-            stddev[i] = Math.sqrt(value / PASSES);
+            stddev[i] = Math.Sqrt(value / PASSES);
         }
 
         Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
@@ -643,7 +645,7 @@ public class TestPerformance
                 points[j] = (double)timePerFile[j][i] / (double)tokensPerFile[j][i];
             }
 
-            Arrays.sort(points);
+            Array.Sort(points);
 
             double averageValue = average[i];
             double value = 0;
@@ -685,7 +687,7 @@ public class TestPerformance
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("Input=");
-        if (topPackage.isEmpty())
+        if (topPackage.Length == 0)
         {
             builder.Append("*");
         }
@@ -745,12 +747,12 @@ public class TestPerformance
 
     protected List<InputDescriptor> loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive)
     {
-        List<InputDescriptor> result = new ArrayList<InputDescriptor>();
+        List<InputDescriptor> result = new ();
         loadSources(directory, filesFilter, directoriesFilter, recursive, result);
         return result;
     }
 
-    protected void loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive, Collection<InputDescriptor> result)
+    protected void loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
     {
         //assert directory.isDirectory();
 
@@ -768,7 +770,7 @@ public class TestPerformance
         if (recursive)
         {
             File[] children = directory.listFiles(directoriesFilter);
-            for (File child in children)
+            foreach (File child in children)
             {
                 if (child.isDirectory())
                 {
@@ -780,7 +782,7 @@ public class TestPerformance
 
     int configOutputSize = 0;
 
-    protected void parseSources(int currentPass, ParserFactory factory, Collection<InputDescriptor> sources, bool shuffleSources)
+    protected void parseSources(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
     {
         if (shuffleSources)
         {
@@ -798,7 +800,7 @@ public class TestPerformance
         int inputSize = 0;
         int inputCount = 0;
 
-        ICollection<Future<FileParseResult>> results = new ArrayList<Future<FileParseResult>>();
+        ICollection<Future<FileParseResult>> results = new ();
         ExecutorService executorService;
         if (FILE_GRANULARITY)
         {
@@ -818,7 +820,7 @@ public class TestPerformance
 
             CharStream input = inputDescriptor.getInputStream();
             input.seek(0);
-            inputSize += input.Count;
+            inputSize += input.size();
             inputCount++;
             //TODO:
 #if false
@@ -914,7 +916,7 @@ public class TestPerformance
             {
                 int states = 0;
                 int configs = 0;
-                Set<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
+                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
                 for (int i = 0; i < modeToDFA.Length; i++)
                 {
@@ -925,10 +927,10 @@ public class TestPerformance
                     }
 
                     states += dfa.states.Count;
-                    for (DFAState state in dfa.states.values())
+                    foreach (DFAState state in dfa.states.Values)
                     {
                         configs += state.configs.Count;
-                        uniqueConfigs.addAll(state.configs);
+                        uniqueConfigs.UnionWith(state.configs);
                     }
                 }
 
@@ -940,13 +942,13 @@ public class TestPerformance
                     for (int i = 0; i < modeToDFA.Length; i++)
                     {
                         DFA dfa = modeToDFA[i];
-                        if (dfa == null || dfa.states.isEmpty())
+                        if (dfa == null || dfa.states.Count == 0)
                         {
                             continue;
                         }
 
                         int modeConfigs = 0;
-                        for (DFAState state in dfa.states.values())
+                        for (DFAState state in dfa.states.Values)
                         {
                             modeConfigs += state.configs.Count;
                         }
@@ -970,7 +972,7 @@ public class TestPerformance
             {
                 int states = 0;
                 int configs = 0;
-                Set<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
+                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
                 for (int i = 0; i < decisionToDFA.Length; i++)
                 {
@@ -981,7 +983,7 @@ public class TestPerformance
                     }
 
                     states += dfa.states.Count;
-                    for (DFAState state in dfa.states.values())
+                    for (DFAState state in dfa.states.Values)
                     {
                         configs += state.configs.Count;
                         uniqueConfigs.addAll(state.configs);
@@ -1004,13 +1006,13 @@ public class TestPerformance
                     for (int i = 0; i < decisionToDFA.Length; i++)
                     {
                         DFA dfa = decisionToDFA[i];
-                        if (dfa == null || dfa.states.isEmpty())
+                        if (dfa == null || dfa.states.Count == 0)
                         {
                             continue;
                         }
 
                         int decisionConfigs = 0;
-                        for (DFAState state in dfa.states.values())
+                        foreach (DFAState state in dfa.states.Values)
                         {
                             decisionConfigs += state.configs.Count;
                         }
@@ -1028,32 +1030,32 @@ public class TestPerformance
                         String formatString;
                         if (COMPUTE_TRANSITION_STATS)
                         {
-                            for (long[] data in decisionInvocationsPerFile[currentPass])
+                            foreach (long[] data in decisionInvocationsPerFile[currentPass])
                             {
                                 calls += data[i];
                             }
 
-                            for (long[] data in fullContextFallbackPerFile[currentPass])
+                            foreach (long[] data in fullContextFallbackPerFile[currentPass])
                             {
                                 fullContextCalls += data[i];
                             }
 
-                            for (long[] data in nonSllPerFile[currentPass])
+                            foreach (long[] data in nonSllPerFile[currentPass])
                             {
                                 nonSllCalls += data[i];
                             }
 
-                            for (long[] data in totalTransitionsPerDecisionPerFile[currentPass])
+                            foreach (long[] data in totalTransitionsPerDecisionPerFile[currentPass])
                             {
                                 transitions += data[i];
                             }
 
-                            for (long[] data in computedTransitionsPerDecisionPerFile[currentPass])
+                            foreach (long[] data in computedTransitionsPerDecisionPerFile[currentPass])
                             {
                                 computedTransitions += data[i];
                             }
 
-                            for (long[] data in fullContextTransitionsPerDecisionPerFile[currentPass])
+                            foreach (long[] data in fullContextTransitionsPerDecisionPerFile[currentPass])
                             {
                                 fullContextTransitions += data[i];
                             }
@@ -1097,7 +1099,7 @@ public class TestPerformance
 
                 if (SHOW_CONFIG_STATS)
                 {
-                    for (DFAState state in dfa.states.keySet())
+                    for (DFAState state in dfa.states.Keys)
                     {
                         if (state.configs.Count >= contextsInDFAState.Length)
                         {
@@ -1179,25 +1181,25 @@ public class TestPerformance
         String parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
         String lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
         String body = load(grammarFileName);
-        List<String> extraOptions = new ArrayList<String>();
-        extraOptions.add("-Werror");
+        List<String> extraOptions = new ();
+        extraOptions.Add("-Werror");
         if (FORCE_ATN)
         {
-            extraOptions.add("-Xforce-atn");
+            extraOptions.Add("-Xforce-atn");
         }
         if (EXPORT_ATN_GRAPHS)
         {
-            extraOptions.add("-atn");
+            extraOptions.Add("-atn");
         }
         if (DEBUG_TEMPLATES)
         {
-            extraOptions.add("-XdbgST");
+            extraOptions.Add("-XdbgST");
             if (DEBUG_TEMPLATES_WAIT)
             {
-                extraOptions.add("-XdbgSTWait");
+                extraOptions.Add("-XdbgSTWait");
             }
         }
-        String[] extraOptionsArray = extraOptions.toArray(new String[0]);
+        String[] extraOptionsArray = extraOptions.ToArray();
 
         RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, body, parserName, lexerName,
                 false, true, null, null,
@@ -1392,7 +1394,7 @@ public class TestPerformance
                         parseResult = parseMethod.invoke(parser);
                     }
                 }
-                catch (InvocationTargetException ex)
+                catch (Exception ex)
                 {
                     if (!TWO_STAGE_PARSING)
                     {
@@ -1400,7 +1402,7 @@ public class TestPerformance
                     }
 
                     String sourceName = tokens.getSourceName();
-                    sourceName = sourceName != null && !sourceName.isEmpty() ? sourceName + ": " : "";
+                    sourceName = sourceName != null && sourceName.Length> 0 ? sourceName + ": " : "";
                     if (REPORT_SECOND_STAGE_RETRY)
                     {
                         Console.Error.WriteLine(sourceName + "Forced to retry with full context.");
@@ -1494,10 +1496,10 @@ public class TestPerformance
         try
         {
             ClassLoader loader = javaCompiledState.loader;
-            Class <? : ParseTreeListener > listenerClass = loader.loadClass(listenerName).asSubclass(ParseTreeListener);
+            Class <ParseTreeListener > listenerClass = loader.loadClass(listenerName).asSubclass(ParseTreeListener);
 
-            Constructor <? : Lexer > lexerCtor = javaCompiledState.lexer.getConstructor(CharStream);
-            Constructor <? : Parser > parserCtor = javaCompiledState.parser.getConstructor(TokenStream);
+            Constructor <Lexer > lexerCtor = javaCompiledState.lexer.getConstructor(CharStream);
+            Constructor <Parser > parserCtor = javaCompiledState.parser.getConstructor(TokenStream);
 
             // construct initial instances of the lexer and parser to deserialize their ATNs
             javaCompiledState.initializeLexerAndParser("");
@@ -1758,7 +1760,7 @@ public class TestPerformance
             }
 
             String sourceName = recognizer.getInputStream().getSourceName();
-            if (!sourceName.isEmpty())
+            if (sourceName.Length > 0)
             {
                 sourceName = String.format("%s:%d:%d: ", sourceName, line, charPositionInLine);
             }
@@ -1953,11 +1955,11 @@ public class TestPerformance
         {
             if (caseSensitive)
             {
-                return name.equals(filename);
+                return name.Equals(filename);
             }
             else
             {
-                return name.ToLower().equals(filename);
+                return name.ToLower().Equals(filename);
             }
         }
     }
@@ -2225,7 +2227,7 @@ public class MurmurHashChecksum
 
 [TestMethod]
 //@Timeout(20)
-public void testExponentialInclude(Path tempDir)
+public void testExponentialInclude(string tempDir)
 {
     String tempDirPath = tempDir.ToString();
     String grammarFormat =
@@ -2253,7 +2255,7 @@ public void testExponentialInclude(Path tempDir)
     }
 
     ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
-    Assert.IsTrue(equeue.errors.isEmpty());
+    Assert.IsTrue(equeue.errors.Count == 0);
 
     long endTime = System.nanoTime();
     Console.Out.format("%s milliseconds.%n", (endTime - startTime) / 1000000.0);

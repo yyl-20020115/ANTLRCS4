@@ -16,6 +16,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool.ast;
 using System.Text;
+using Utils = org.antlr.v4.runtime.misc.Utils;
 
 namespace org.antlr.v4.tool;
 
@@ -776,7 +777,7 @@ public class Grammar : AttributeResolver
     {
         String[] result = new String[rules.size()];
         Array.Fill(result, INVALID_RULE_NAME);
-        foreach (Rule rule in rules.values())
+        foreach (Rule rule in rules.Values)
         {
             result[rule.index] = rule.name;
         }
@@ -905,9 +906,9 @@ public class Grammar : AttributeResolver
     public String joinPredicateOperands(SemanticContext.Operator op, String separator)
     {
         StringBuilder buf = new StringBuilder();
-        for (SemanticContext operand in op.getOperands())
+        foreach (SemanticContext operand in op.getOperands())
         {
-            if (buf.length() > 0)
+            if (buf.Length > 0)
             {
                 buf.Append(separator);
             }
@@ -915,15 +916,15 @@ public class Grammar : AttributeResolver
             buf.Append(getSemanticContextDisplayString(operand));
         }
 
-        return buf.toString();
+        return buf.ToString();
     }
 
     public Dictionary<int, PredAST> getIndexToPredicateMap()
     {
         Dictionary<int, PredAST> indexToPredMap = new Dictionary<int, PredAST>();
-        for (Rule r in rules.Values)
+        foreach (Rule r in rules.Values)
         {
-            for (ActionAST a in r.actions)
+            foreach (ActionAST a in r.actions)
             {
                 if (a is PredAST)
                 {
@@ -1005,7 +1006,7 @@ public class Grammar : AttributeResolver
             TokenVocabParser vparser = new TokenVocabParser(this);
             Dictionary<String, int> tokens = vparser.load();
             tool.log("grammar", "tokens=" + tokens);
-            for (String t in tokens.Keys)
+            foreach (String t in tokens.Keys)
             {
                 if (t.charAt(0) == '\'') defineStringLiteral(t, tokens.get(t));
                 else defineTokenName(t, tokens.get(t));
@@ -1015,33 +1016,33 @@ public class Grammar : AttributeResolver
 
     public void importVocab(Grammar importG)
     {
-        for (String tokenName in importG.tokenNameToTypeMap.Keys)
+        foreach (String tokenName in importG.tokenNameToTypeMap.Keys)
         {
             defineTokenName(tokenName, importG.tokenNameToTypeMap.get(tokenName));
         }
-        for (String tokenName in importG.stringLiteralToTypeMap.Keys)
+        foreach (String tokenName in importG.stringLiteralToTypeMap.Keys)
         {
             defineStringLiteral(tokenName, importG.stringLiteralToTypeMap.get(tokenName));
         }
-        for (Map.Entry<String, int> channel in importG.channelNameToValueMap.entrySet())
+        foreach (Map.Entry<String, int> channel in importG.channelNameToValueMap.entrySet())
         {
             defineChannelName(channel.getKey(), channel.getValue());
         }
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
-        int max = Math.max(this.typeToTokenList.size(), importG.typeToTokenList.size());
+        int max = Math.Max(this.typeToTokenList.size(), importG.typeToTokenList.size());
         Utils.setSize(typeToTokenList, max);
         for (int ttype = 0; ttype < importG.typeToTokenList.size(); ttype++)
         {
-            maxTokenType = Math.max(maxTokenType, ttype);
+            maxTokenType = Math.Max(maxTokenType, ttype);
             this.typeToTokenList.set(ttype, importG.typeToTokenList.get(ttype));
         }
 
-        max = Math.max(this.channelValueToNameList.size(), importG.channelValueToNameList.size());
+        max = Math.Max(this.channelValueToNameList.size(), importG.channelValueToNameList.size());
         Utils.setSize(channelValueToNameList, max);
         for (int channelValue = 0; channelValue < importG.channelValueToNameList.size(); channelValue++)
         {
-            maxChannelType = Math.max(maxChannelType, channelValue);
+            maxChannelType = Math.Max(maxChannelType, channelValue);
             this.channelValueToNameList.set(channelValue, importG.channelValueToNameList.get(channelValue));
         }
     }
@@ -1059,7 +1060,7 @@ public class Grammar : AttributeResolver
         if (prev != null) return prev;
         tokenNameToTypeMap.put(name, ttype);
         setTokenForType(ttype, name);
-        maxTokenType = Math.max(maxTokenType, ttype);
+        maxTokenType = Math.Max(maxTokenType, ttype);
         return ttype;
     }
 
@@ -1160,7 +1161,7 @@ public class Grammar : AttributeResolver
 
         channelNameToValueMap.put(name, value);
         setChannelNameForValue(value, name);
-        maxChannelType = Math.max(maxChannelType, value);
+        maxChannelType = Math.Max(maxChannelType, value);
         return value;
     }
 
@@ -1291,7 +1292,7 @@ public class Grammar : AttributeResolver
         if (options == null) return;
         GrammarASTWithOptions t = (GrammarASTWithOptions)node;
         if (t.getChildCount() == 0 || options.getChildCount() == 0) return;
-        for (Object o in options.getChildren())
+        foreach (Object o in options.getChildren())
         {
             GrammarAST c = (GrammarAST)o;
             if (c.getType() == ANTLRParser.ASSIGN)
@@ -1325,9 +1326,9 @@ public class Grammar : AttributeResolver
             new ();
 
         List<GrammarAST> ruleNodes = ast.getNodesWithType(ANTLRParser.RULE);
-        if (ruleNodes == null || ruleNodes.isEmpty()) return null;
+        if (ruleNodes == null || ruleNodes.Count == 0) return null;
 
-        for (GrammarAST r in ruleNodes)
+        foreach (GrammarAST r in ruleNodes)
         {
             //tool.log("grammar", r.toStringTree());
             //			Console.Out.WriteLine("chk: "+r.toStringTree());
@@ -1336,7 +1337,7 @@ public class Grammar : AttributeResolver
             {
                 // check rule against patterns
                 bool isLitRule;
-                for (String pattern in patterns)
+                foreach (String pattern in patterns)
                 {
                     isLitRule =
                         defAlias(r, pattern, wiz, lexerRuleToStringLiteral);
@@ -1388,18 +1389,18 @@ public void setLookaheadDFA(int decision, DFA lookaheadDFA)
     decisionDFAs.put(decision, lookaheadDFA);
 }
 
-public static Map<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
+public static Dictionary<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
 {
-    Map<int, Interval> stateToGrammarRegionMap = new HashMap<int, Interval>();
+    Dictionary<int, Interval> stateToGrammarRegionMap = new ();
     if (ast == null) return stateToGrammarRegionMap;
 
     List<GrammarAST> nodes = ast.getNodesWithType(grammarTokenTypes);
-    for (GrammarAST n in nodes)
+    foreach (GrammarAST n in nodes)
     {
         if (n.atnState != null)
         {
             Interval tokenRegion = Interval.of(n.getTokenStartIndex(), n.getTokenStopIndex());
-            org.antlr.runtime.tree.Tree ruleNode = null;
+            Tree ruleNode = null;
             // RULEs, BLOCKs of transformed recursive rules point to original token interval
             switch (n.getType())
             {

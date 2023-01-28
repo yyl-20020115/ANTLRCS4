@@ -22,7 +22,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 */
 	private static readonly FrequencySet<String> SENTINEL = new FrequencySet<String>();
 
-	readonly Deque<FrequencySet<String>> frequencies;
+	public readonly Deque<FrequencySet<String>> frequencies;
 	private readonly Deque<FrequencySet<String>> minFrequencies;
 
 	public ElementFrequenciesVisitor(TreeNodeStream input): base(input)
@@ -67,7 +67,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 		foreach (Map.Entry<String, MutableInt> entry in b.entrySet()) {
 			MutableInt slot = result.get(entry.getKey());
-			slot.v = Math.max(slot.v, entry.getValue().v);
+			slot.v = Math.Max(slot.v, entry.getValue().v);
 		}
 
 		return result;

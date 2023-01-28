@@ -1,3 +1,4 @@
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using System.Text;
@@ -40,12 +41,12 @@ public class ATNDescriber {
 		int version = data[p++];
 		if (version != ATNDeserializer.SERIALIZED_VERSION) {
 			String reason = String.format("Could not deserialize ATN with version %d (expected %d).", version, ATNDeserializer.SERIALIZED_VERSION);
-			throw new UnsupportedOperationException(new InvalidClassException(ATN.getName(), reason));
+			throw new UnsupportedOperationException(new InvalidOperationException(ATN.getName(), reason));
 		}
 
 		p++; // skip grammarType
 		int maxType = data[p++];
-		buf.Append("max type ").append(maxType).append("\n");
+		buf.Append("max type ").Append(maxType).Append("\n");
 		int nstates = data[p++];
 		for (int i=0; i<nstates; i++) {
 			int stype = data[p++];
@@ -111,14 +112,14 @@ public class ATNDescriber {
 			int arg3 = data[p + 5];
 			buf.Append(src).Append("->").Append(trg)
 					.Append(" ").Append(Transition.serializationNames.get(ttype))
-					.Append(" ").append(arg1).append(",").append(arg2).append(",").append(arg3)
-					.append("\n");
+					.Append(" ").Append(arg1).Append(",").Append(arg2).Append(",").Append(arg3)
+					.Append("\n");
 			p += 6;
 		}
 		int ndecisions = data[p++];
 		for (int i=0; i<ndecisions; i++) {
 			int s = data[p++];
-			buf.append(i).append(":").append(s).append("\n");
+			buf.Append(i).Append(":").Append(s).Append("\n");
 		}
 		if (atn.grammarType == ATNType.LEXER) {
 			// this code is meant to model the form of ATNDeserializer.deserialize,
@@ -128,7 +129,7 @@ public class ATNDescriber {
 			// improved maintainability.
 			int lexerActionCount = data[p++];
 			for (int i = 0; i < lexerActionCount; i++) {
-				LexerActionType actionType = LexerActionType.values()[data[p++]];
+				LexerActionType actionType = LexerActionType.Values[data[p++]];
 				int data1 = data[p++];
 				int data2 = data[p++];
 			}
@@ -139,22 +140,22 @@ public class ATNDescriber {
 	private int appendSets(StringBuilder buf, int[] data, int p, int nsets) {
 		for (int i=0; i<nsets; i++) {
 			int nintervals = data[p++];
-			buf.append(i).append(":");
+			buf.Append(i).Append(":");
 			bool containsEof = data[p++] != 0;
 			if (containsEof) {
-				buf.append(getTokenName(Token.EOF));
+				buf.Append(getTokenName(Token.EOF));
 			}
 
 			for (int j=0; j<nintervals; j++) {
 				if ( containsEof || j>0 ) {
-					buf.append(", ");
+					buf.Append(", ");
 				}
 
 				int a = data[p++];
 				int b = data[p++];
-				buf.append(getTokenName(a)).append("..").append(getTokenName(b));
+				buf.Append(getTokenName(a)).Append("..").Append(getTokenName(b));
 			}
-			buf.append("\n");
+			buf.Append("\n");
 		}
 		return p;
 	}
@@ -163,7 +164,7 @@ public class ATNDescriber {
 		if ( t==-1 ) return "EOF";
 
 		if ( atn.grammarType == ATNType.LEXER &&
-				t >= Character.MIN_VALUE && t <= Character.MAX_VALUE )
+				t >= char.MinValue && t <= char.MaxValue )
 		{
 			switch (t) {
 				case '\n':
@@ -193,11 +194,11 @@ public class ATNDescriber {
 			}
 		}
 
-		if (tokenNames != null && t >= 0 && t < tokenNames.size()) {
-			return tokenNames.get(t);
+		if (tokenNames != null && t >= 0 && t < tokenNames.Count) {
+			return tokenNames[(t)];
 		}
 
-		return String.valueOf(t);
+		return t.ToString();
 	}
 
 }

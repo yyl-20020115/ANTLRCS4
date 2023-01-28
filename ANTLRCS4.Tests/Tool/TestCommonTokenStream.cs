@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
 using System.Threading.Channels;
 
 namespace org.antlr.v4.test.tool;
@@ -16,7 +17,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream {
 	}
 
 	public class CHTokenSource<T>:
-        TokenSource<T>
+        TokenSource
     {
         int i = 0;
 
@@ -62,7 +63,7 @@ public void setTokenFactory(TokenFactory<T> factory)
 }
 
 ////@Override
-public TokenFactory<?> getTokenFactory()
+public TokenFactory getTokenFactory()
 {
     return null;
 }
@@ -134,11 +135,11 @@ public TokenFactory<?> getTokenFactory()
 				}
 
 				//@Override
-				public void setTokenFactory(TokenFactory<?> factory) {
+				public void setTokenFactory(TokenFactory factory) {
 				}
 
 				//@Override
-				public TokenFactory<?> getTokenFactory() {
+				public TokenFactory getTokenFactory() {
 					return null;
 				}
 			};
@@ -216,12 +217,12 @@ public TokenFactory<?> getTokenFactory()
 			}
 
 			//@Override
-			public TokenFactory<?> getTokenFactory() {
+			public TokenFactory getTokenFactory() {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 
 			//@Override
-			public void setTokenFactory(TokenFactory<?> factory) {
+			public void setTokenFactory(TokenFactory factory) {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 		};
@@ -264,12 +265,12 @@ public TokenFactory<?> getTokenFactory()
 			}
 
 			//@Override
-			public TokenFactory<?> getTokenFactory() {
+			public TokenFactory getTokenFactory() {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 
 			//@Override
-			public void setTokenFactory(TokenFactory<?> factory) {
+			public void setTokenFactory(TokenFactory factory) {
 				throw new UnsupportedOperationException("Not supported yet.");
 			}
 		};

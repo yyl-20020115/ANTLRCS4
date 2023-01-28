@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.parse;
 
@@ -57,7 +59,7 @@ public class TokenVocabParser {
 					}
 					tool.log("grammar", "import "+tokenID+"="+tokenType);
 					tokens.put(tokenID, tokenType);
-					maxTokenType = Math.max(maxTokenType,tokenType);
+					maxTokenType = Math.Max(maxTokenType,tokenType);
 					lineNum++;
 				}
 				else {
@@ -74,7 +76,7 @@ public class TokenVocabParser {
 		catch (FileNotFoundException fnfe) {
 			GrammarAST inTree = g.ast.getOptionAST("tokenVocab");
 			String inTreeValue = inTree.getToken().getText();
-			if ( vocabName.equals(inTreeValue) ) {
+			if ( vocabName.Equals(inTreeValue) ) {
 				tool.errMgr.grammarError(ErrorType.CANNOT_FIND_TOKENS_FILE_REFD_IN_GRAMMAR,
 										 g.fileName,
 										 inTree.getToken(),

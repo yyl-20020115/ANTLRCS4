@@ -94,7 +94,7 @@ public class GrammarTransformPipeline {
 		if ( tree==null ) return;
 
 		List<GrammarAST> optionsSubTrees = tree.getNodesWithType(ANTLRParser.ELEMENT_OPTIONS);
-		for (int i = 0; i < optionsSubTrees.size(); i++) {
+		for (int i = 0; i < optionsSubTrees.Count; i++) {
 			GrammarAST t = optionsSubTrees.get(i);
 			CommonTree elWithOpt = t.parent;
 			if ( elWithOpt is GrammarASTWithOptions ) {
@@ -204,8 +204,8 @@ public class GrammarTransformPipeline {
 
 			List<GrammarAST> all_actionRoots = new ();
 			List<GrammarAST> imp_actionRoots = imp.ast.getAllChildrenWithType(ANTLRParser.AT);
-			if ( actionRoots!=null ) all_actionRoots.addAll(actionRoots);
-			all_actionRoots.addAll(imp_actionRoots);
+			if ( actionRoots!=null ) all_actionRoots.AddRange(actionRoots);
+			all_actionRoots.AddRange(imp_actionRoots);
 
 			// COPY ACTIONS
 			if ( imp_actionRoots!=null ) {
@@ -213,7 +213,7 @@ public class GrammarTransformPipeline {
 					new DoubleKeyMap<String, String, GrammarAST>();
 
 				rootGrammar.tool.log("grammar", "imported actions: "+imp_actionRoots);
-				for (GrammarAST at in all_actionRoots) {
+				foreach (GrammarAST at in all_actionRoots) {
 					String scopeName = rootGrammar.getDefaultActionScope();
 					GrammarAST scope, name, action;
 					if ( at.getChildCount()>2 ) { // must have a scope
@@ -245,11 +245,11 @@ public class GrammarTransformPipeline {
 						}
 					}
 				}
-				// at this point, we have complete list of combined actions,
-				// some of which are already living in root grammar.
-				// Merge in any actions not in root grammar into root's tree.
-				for (String scopeName in namedActions.keySet()) {
-					for (String name in namedActions.keySet(scopeName)) {
+                // at this point, we have complete list of combined actions,
+                // some of which are already living in root grammar.
+                // Merge in any actions not in root grammar into root's tree.
+                foreach (String scopeName in namedActions.keySet()) {
+                    foreach (String name in namedActions.keySet(scopeName)) {
 						GrammarAST action = namedActions.get(scopeName, name);
 						rootGrammar.tool.log("grammar", action.g.name+" "+scopeName+":"+name+"="+action.getText());
 						if ( action.g != rootGrammar ) {
@@ -334,7 +334,7 @@ public class GrammarTransformPipeline {
 					}
 
 					String rootOption = rootGrammar.ast.getOptionString(option.getKey());
-					if (!importOption.equals(rootOption)) {
+					if (!importOption.Equals(rootOption)) {
 						hasNewOption = true;
 						break;
 					}
@@ -410,7 +410,7 @@ public class GrammarTransformPipeline {
 			}
 		}
 
-		for (GrammarAST r in actionsWeMoved) {
+        foreach (GrammarAST r in actionsWeMoved) {
 			combinedAST.deleteChild( r );
 		}
 
@@ -432,14 +432,14 @@ public class GrammarTransformPipeline {
 			rules = new GrammarASTWithOptions[0];
 		}
 
-		for (GrammarASTWithOptions r in rules) {
+        foreach (GrammarASTWithOptions r in rules) {
 			String ruleName = r.getChild(0).getText();
 			if (Grammar.isTokenName(ruleName)) {
 				lexerRulesRoot.addChild((Tree)adaptor.dupTree(r));
-				rulesWeMoved.add(r);
+				rulesWeMoved.Add(r);
 			}
 		}
-		for (GrammarAST r in rulesWeMoved) {
+        foreach (GrammarAST r in rulesWeMoved) {
 			combinedRulesRoot.deleteChild( r );
 		}
 

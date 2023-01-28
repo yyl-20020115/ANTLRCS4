@@ -9,6 +9,7 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using System.Text;
 
 namespace org.antlr.v4.test.tool;
 
@@ -538,10 +539,10 @@ public class TestATNLexerInterpreter {
 			int t = input.LA(1);
 			ttype = interp.match(input, Lexer.DEFAULT_MODE);
 			if ( ttype== Token.EOF ) {
-				tokenTypes.add("EOF");
+				tokenTypes.Add("EOF");
 			}
 			else {
-				tokenTypes.add(lg.typeToTokenList.get(ttype));
+				tokenTypes.Add(lg.typeToTokenList.get(ttype));
 			}
 
 			if ( t== IntStream.EOF ) {

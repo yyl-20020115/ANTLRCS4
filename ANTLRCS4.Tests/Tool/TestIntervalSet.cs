@@ -211,7 +211,7 @@ public class TestIntervalSet {
         Assert.AreEqual(s, s2);
 
         IntervalSet s3 = IntervalSet.of(15,55);
-        assertFalse(s.equals(s3));
+        Assert.IsFalse(s.Equals(s3));
     }
 
     [TestMethod] public void testEquals(){
@@ -225,7 +225,7 @@ public class TestIntervalSet {
 
         IntervalSet s3 = IntervalSet.of(10,20);
         s3.add(2);
-		assertFalse(s.equals(s3));
+		Assert.IsFalse(s.Equals(s3));
     }
 
     [TestMethod] public void testSingleElementMinusDisjointSet(){

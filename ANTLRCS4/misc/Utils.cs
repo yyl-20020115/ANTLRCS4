@@ -49,8 +49,8 @@ public static class Utils {
 	}
 
 	public static String sortLinesInString(String s) {
-		String[] lines = s.split("\n");
-		Arrays.sort(lines);
+		String[] lines = s.Split("\n");
+		Array.Sort(lines);
 		List<String> linesL = Arrays.AsList(lines);
 		StringBuilder buf = new StringBuilder();
 		foreach (String l in linesL) {

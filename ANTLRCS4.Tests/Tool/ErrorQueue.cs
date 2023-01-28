@@ -8,7 +8,7 @@ namespace org.antlr.v4.test.tool
 {
     internal class ErrorQueue
     {
-        internal object size()
+        internal int size()
         {
             throw new NotImplementedException();
         }

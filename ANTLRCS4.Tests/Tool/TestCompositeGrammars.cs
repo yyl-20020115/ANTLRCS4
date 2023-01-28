@@ -34,7 +34,7 @@ public class TestCompositeGrammars {
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/1317
-	[TestMethod] public void testImportSelfLoop( Path tempDir) {
+	[TestMethod] public void testImportSelfLoop( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 		String master =
@@ -46,7 +46,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.size());
 	}
 
-	[TestMethod] public void testImportIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testImportIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -66,7 +66,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testImportModesIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testImportModesIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -88,7 +88,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testImportChannelsIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testImportChannelsIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -109,7 +109,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testImportMixedChannelsIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testImportMixedChannelsIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -131,7 +131,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testImportClashingChannelsIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testImportClashingChannelsIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -154,7 +154,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testMergeModesIntoLexerGrammar( Path tempDir) {
+	[TestMethod] public void testMergeModesIntoLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -177,7 +177,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testEmptyModesInLexerGrammar( Path tempDir) {
+	[TestMethod] public void testEmptyModesInLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -200,7 +200,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size());
 	}
 
-	[TestMethod] public void testCombinedGrammarImportsModalLexerGrammar( Path tempDir) {
+	[TestMethod] public void testCombinedGrammarImportsModalLexerGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		FileUtils.mkdir(tempDirPath);
 
@@ -229,7 +229,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual("M.g4", new File(msg.fileName).getName());
 	}
 
-	[TestMethod] public void testDelegatesSeeSameTokenType( Path tempDir)  {
+	[TestMethod] public void testDelegatesSeeSameTokenType( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		String slaveS =
 			"parser grammar S;\n"+
@@ -274,7 +274,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
 	}
 
-	[TestMethod] public void testErrorInImportedGetsRightFilename( Path tempDir) {
+	[TestMethod] public void testErrorInImportedGetsRightFilename( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -294,7 +294,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual("S.g4", new File(msg.fileName).getName());
 	}
 
-	[TestMethod] public void testImportFileNotSearchedForInOutputDir( Path tempDir) {
+	[TestMethod] public void testImportFileNotSearchedForInOutputDir( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -314,7 +314,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, equeue.errors.get(0).getErrorType());
 	}
 
-	[TestMethod] public void testOutputDirShouldNotEffectImports( Path tempDir) {
+	[TestMethod] public void testOutputDirShouldNotEffectImports( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -336,7 +336,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.size());
 	}
 
-	[TestMethod] public void testTokensFileInOutputDirAndImportFileInSubdir( Path tempDir) {
+	[TestMethod] public void testTokensFileInOutputDirAndImportFileInSubdir( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -364,7 +364,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.size());
 	}
 
-	[TestMethod] public void testImportedTokenVocabIgnoredWithWarning( Path tempDir)  {
+	[TestMethod] public void testImportedTokenVocabIgnoredWithWarning( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		ErrorQueue equeue = new ErrorQueue();
 		String slave =
@@ -393,7 +393,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(1, equeue.warnings.size(), "unexpected warnings: "+equeue);
 	}
 
-	[TestMethod] public void testSyntaxErrorsInImportsNotThrownOut( Path tempDir)  {
+	[TestMethod] public void testSyntaxErrorsInImportsNotThrownOut( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		ErrorQueue equeue = new ErrorQueue();
 		String slave =
@@ -414,7 +414,7 @@ public class TestCompositeGrammars {
 	}
 
 	// Make sure that M can import S that imports T.
-	[TestMethod] public void test3LevelImport( Path tempDir)  {
+	[TestMethod] public void test3LevelImport( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		ErrorQueue equeue = new ErrorQueue();
 		String slave =
@@ -450,7 +450,7 @@ public class TestCompositeGrammars {
 		Assert.IsTrue(compile("M.g4", master, "MParser", "a", tempDir));
 	}
 
-	[TestMethod] public void testBigTreeOfImports( Path tempDir)  {
+	[TestMethod] public void testBigTreeOfImports( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		ErrorQueue equeue = new ErrorQueue();
 		String slave =
@@ -509,7 +509,7 @@ public class TestCompositeGrammars {
 		Assert.IsTrue(compile("M.g4", master, "MParser", "a", tempDir));
 	}
 
-	[TestMethod] public void testRulesVisibleThroughMultilevelImport( Path tempDir)  {
+	[TestMethod] public void testRulesVisibleThroughMultilevelImport( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		ErrorQueue equeue = new ErrorQueue();
 		String slave =
@@ -544,7 +544,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
 	}
 
-	[TestMethod] public void testNestedComposite( Path tempDir)  {
+	[TestMethod] public void testNestedComposite( string tempDir)  {
 		String tempDirPath = tempDir.ToString();
 		// Wasn't compiling. http://www.antlr.org/jira/browse/ANTLR-438
 		ErrorQueue equeue = new ErrorQueue();
@@ -594,7 +594,7 @@ public class TestCompositeGrammars {
 		Assert.IsTrue(compile("G3.g4", G3str, "G3Parser", "b", tempDir));
 	}
 
-	[TestMethod] public void testHeadersPropogatedCorrectlyToImportedGrammars( Path tempDir) {
+	[TestMethod] public void testHeadersPropogatedCorrectlyToImportedGrammars( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"parser grammar S;\n" +
@@ -621,7 +621,7 @@ public class TestCompositeGrammars {
 	 */
 	// TODO: migrate to test framework
 	[TestMethod]
-	public void testImportLargeGrammar( Path tempDir){
+	public void testImportLargeGrammar( string tempDir){
 		String tempDirPath = tempDir.ToString();
 		String slave = load("Java.g4");
 		String master =
@@ -644,7 +644,7 @@ public class TestCompositeGrammars {
 	 */
 	// TODO: migrate to test framework
 	[TestMethod]
-	public void testImportLeftRecursiveGrammar( Path tempDir) {
+	public void testImportLeftRecursiveGrammar( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String slave =
 			"grammar Java;\n" +
@@ -669,7 +669,7 @@ public class TestCompositeGrammars {
 
 	// ISSUE: https://github.com/antlr/antlr4/issues/2296
 	[TestMethod]
-	public void testCircularGrammarInclusion( Path tempDir) {
+	public void testCircularGrammarInclusion( string tempDir) {
 		String tempDirPath = tempDir.ToString();
 		String g1 =
 				"grammar G1;\n" +
@@ -704,7 +704,7 @@ public class TestCompositeGrammars {
 	}
 
 	private static bool compile(String grammarFileName, String grammarStr, String parserName, String startRuleName,
-							Path tempDirPath
+							string tempDirPath
 	) {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, null,
 				false, false, startRuleName, null,
@@ -715,11 +715,11 @@ public class TestCompositeGrammars {
 		}
 	}
 
-	public static <K : Comparable<? super K>,V> LinkedHashMap<K,V> sort(Map<K,V> data) {
-		Dictionary<K,V> dup = new LinkedHashMap<K, V>();
-		List<K> keys = new (data.keySet());
-		Collections.sort(keys);
-		for (K k : keys) {
+	public static Dictionary<K,V> sort<K,V>(Dictionary<K,V> data) {
+		Dictionary<K,V> dup = new Dictionary<K, V>();
+		List<K> keys = new (data.Keys);
+		keys.Sort();
+		foreach (K k in keys) {
 			dup.put(k, data.get(k));
 		}
 		return dup;

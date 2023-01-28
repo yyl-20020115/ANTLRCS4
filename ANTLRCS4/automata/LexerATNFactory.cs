@@ -14,8 +14,8 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using System.Reflection.Metadata;
 using System.Text;
+using static org.antlr.v4.automata.ATNFactory;
 
 namespace org.antlr.v4.automata;
 
@@ -78,12 +78,12 @@ public class LexerATNFactory : ParserATNFactory {
 
 		// INIT ACTION, RULE->TOKEN_TYPE MAP
 		atn.ruleToTokenType = new int[g.rules.size()];
-		foreach (Rule r in g.rules.values()) {
+		foreach (Rule r in g.rules.Values) {
 			atn.ruleToTokenType[r.index] = g.getTokenType(r.name);
 		}
 
 		// CREATE ATN FOR EACH RULE
-		_createATN(g.rules.values());
+		_createATN(g.rules.Values);
 
 		atn.lexerActions = new LexerAction[indexToActionMap.size()];
 		foreach (Map.Entry<int, LexerAction> entry in indexToActionMap.entrySet()) {
@@ -109,7 +109,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 	//@Override
 	public Handle rule(GrammarAST ruleAST, String name, Handle blk) {
-		ruleCommands.clear();
+		ruleCommands.Clear();
 		return base.rule(ruleAST, name, blk);
 	}
 
@@ -134,7 +134,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 	////@Override
 	public Handle action(String action) {
-		if (action.trim().isEmpty()) {
+		if (action.trim().Count == 0) {
 			ATNState left = newState(null);
 			ATNState right = newState(null);
 			epsilon(left, right);
@@ -258,8 +258,8 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 		else {
 			Transition transition;
-			if (set.getIntervals().size() == 1) {
-				Interval interval = set.getIntervals().get(0);
+			if (set.getIntervals().Count == 1) {
+				Interval interval = set.getIntervals()[(0)];
 				transition = CodePointTransitions.createWithCodePointRange(right, interval.a, interval.b);
 			}
 			else {
@@ -312,7 +312,7 @@ public class LexerATNFactory : ParserATNFactory {
 			return new Handle(left, left);
 		}
 
-		int n = s.length();
+		int n = s.Length;
 		ATNState prev = left;
 		right = null;
 		for (int i = 0; i < n; ) {
@@ -377,7 +377,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		//@Override
-		public bool equals(Object other) {
+		public bool Equals(Object other) {
 			if (!(other is CharSetParseState)) {
 				return false;
 			}
@@ -385,10 +385,10 @@ public class LexerATNFactory : ParserATNFactory {
 			if (this == that) {
 				return true;
 			}
-			return Objects.equals(this.mode, that.mode) &&
-				Objects.equals(this.inRange, that.inRange) &&
-				Objects.equals(this.prevCodePoint, that.prevCodePoint) &&
-				Objects.equals(this.prevProperty, that.prevProperty);
+			return Objects.Equals(this.mode, that.mode) &&
+				Objects.Equals(this.inRange, that.inRange) &&
+				Objects.Equals(this.prevCodePoint, that.prevCodePoint) &&
+				Objects.Equals(this.prevProperty, that.prevProperty);
 		}
 
 		//@Override
@@ -679,29 +679,29 @@ public class LexerATNFactory : ParserATNFactory {
 				if (ruleCommands.Contains("more")) {
 					firstCommand = "more";
 				}
-				else if (ruleCommands.contains("type")) {
+				else if (ruleCommands.Contains("type")) {
 					firstCommand = "type";
 				}
-				else if (ruleCommands.contains("channel")) {
+				else if (ruleCommands.Contains("channel")) {
 					firstCommand = "channel";
 				}
 			}
 			else if (command.Equals("more")) {
-				if (ruleCommands.contains("skip")) {
+				if (ruleCommands.Contains("skip")) {
 					firstCommand = "skip";
 				}
-				else if (ruleCommands.contains("type")) {
+				else if (ruleCommands.Contains("type")) {
 					firstCommand = "type";
 				}
-				else if (ruleCommands.contains("channel")) {
+				else if (ruleCommands.Contains("channel")) {
 					firstCommand = "channel";
 				}
 			}
 			else if (command.Equals("type") || command.Equals("channel")) {
-				if (ruleCommands.contains("more")) {
+				if (ruleCommands.Contains("more")) {
 					firstCommand = "more";
 				}
-				else if (ruleCommands.contains("skip")) {
+				else if (ruleCommands.Contains("skip")) {
 					firstCommand = "skip";
 				}
 			}
@@ -711,7 +711,7 @@ public class LexerATNFactory : ParserATNFactory {
 			}
 		}
 
-		ruleCommands.add(command);
+		ruleCommands.Add(command);
 	}
 
 	private int getModeConstantValue(String modeName, Token token) {

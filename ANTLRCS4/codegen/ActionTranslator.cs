@@ -235,7 +235,7 @@ public class ActionTranslator : ActionSplitterListener {
 	RulePropertyRef getRulePropertyRef(Token x, Token prop) {
 		try {
 			Type c = (x != null ? rulePropToModelMap : thisRulePropToModelMap).get(prop.getText());
-			ConstructorInfo ctor = c.getConstructor(StructDecl, typeof(String));
+			ConstructorInfo ctor = c.getConstructor(typeof(StructDecl), typeof(String));
 			return ctor.newInstance(nodeContext, getRuleLabel((x != null ? x : prop).getText()));
 		}
 		catch (Exception e) {

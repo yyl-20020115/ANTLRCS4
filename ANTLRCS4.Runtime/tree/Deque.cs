@@ -4,10 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+
 namespace org.antlr.v4.runtime.tree;
 
 public class Deque<T>
 {
+    public int size()
+    {
+        throw new NotImplementedException();
+    }
     public bool isEmpty()
     {
         throw new NotImplementedException();
@@ -24,6 +30,11 @@ public class Deque<T>
     }
 
     public void push(T currentNode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void add(PredictionContext context)
     {
         throw new NotImplementedException();
     }

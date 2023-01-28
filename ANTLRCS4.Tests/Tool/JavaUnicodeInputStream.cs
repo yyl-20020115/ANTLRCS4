@@ -59,7 +59,7 @@ public class JavaUnicodeInputStream : CharStream {
 		if (la1 != '\\') {
 			source.consume();
 			la1 = source.LA(1);
-			range = Math.max(range, source.index());
+			range = Math.Max(range, source.index());
 			slashCount = 0;
 			return;
 		}
@@ -82,7 +82,7 @@ public class JavaUnicodeInputStream : CharStream {
 		}
 
 		la1 = source.LA(1);
-		assert range >= index();
+		//assert range >= index();
 	}
 
 	////@Override
@@ -197,11 +197,11 @@ public class JavaUnicodeInputStream : CharStream {
 	}
 
 	private int readCharAt(int[] nextIndexPtr, int[] slashCountPtr, int[] indirectionLevelPtr) {
-		assert nextIndexPtr != null && nextIndexPtr.Length == 1;
-		assert slashCountPtr != null && slashCountPtr.Length == 1;
-		assert indirectionLevelPtr != null && indirectionLevelPtr.Length == 1;
+        //assert nextIndexPtr != null && nextIndexPtr.Length == 1;
+        //assert slashCountPtr != null && slashCountPtr.Length == 1;
+        //assert indirectionLevelPtr != null && indirectionLevelPtr.Length == 1;
 
-		bool blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
+        bool blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
 
 		int c0 = source.LA(nextIndexPtr[0] - index() + 1);
 		if (c0 == '\\') {

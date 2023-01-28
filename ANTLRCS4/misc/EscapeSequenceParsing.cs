@@ -59,10 +59,10 @@ public abstract class EscapeSequenceParsing {
 			if (this == that) {
 				return true;
 			}
-			return Objects.equals(this.type, that.type) &&
-				Objects.equals(this.codePoint, that.codePoint) &&
-				Objects.equals(this.propertyIntervalSet, that.propertyIntervalSet) &&
-				Objects.equals(this.parseLength, that.parseLength);
+			return Objects.Equals(this.type, that.type) &&
+				Objects.Equals(this.codePoint, that.codePoint) &&
+				Objects.Equals(this.propertyIntervalSet, that.propertyIntervalSet) &&
+				Objects.Equals(this.parseLength, that.parseLength);
 		}
 
 		public override int GetHashCode() {

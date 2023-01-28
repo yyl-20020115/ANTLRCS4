@@ -799,15 +799,15 @@ public abstract class BaseRecognizer
             {
                 continue; // skip support code such as this method
             }
-            if (t.getMethodName().equals(NEXT_TOKEN_RULE_NAME))
+            if (t.getMethodName().Equals(NEXT_TOKEN_RULE_NAME))
             {
                 continue;
             }
-            if (!t.getClassName().equals(recognizerClassName))
+            if (!t.getClassName().Equals(recognizerClassName))
             {
                 continue; // must not be part of this parser
             }
-            rules.add(t.getMethodName());
+            rules.Add(t.getMethodName());
         }
         return rules;
     }

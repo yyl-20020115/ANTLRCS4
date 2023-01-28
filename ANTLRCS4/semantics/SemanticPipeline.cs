@@ -59,14 +59,14 @@ public class SemanticPipeline {
 		// TRANSFORM LEFT-RECURSIVE RULES
 		prevErrors = g.tool.errMgr.getNumErrors();
 		LeftRecursiveRuleTransformer lrtrans =
-			new LeftRecursiveRuleTransformer(g.ast, ruleCollector.rules.values(), g);
+			new LeftRecursiveRuleTransformer(g.ast, ruleCollector.rules.Values, g);
 		lrtrans.translateLeftRecursiveRules();
 
 		// don't continue if we got errors during left-recursion elimination
 		if ( g.tool.errMgr.getNumErrors()>prevErrors ) return;
 
-		// STORE RULES IN GRAMMAR
-		for (Rule r in ruleCollector.rules.values()) {
+        // STORE RULES IN GRAMMAR
+        foreach (Rule r in ruleCollector.rules.Values) {
 			g.defineRule(r);
 		}
 
@@ -128,7 +128,7 @@ public class SemanticPipeline {
 
 	void assignLexerTokenTypes(Grammar g, List<GrammarAST> tokensDefs) {
 		Grammar G = g.getOutermostGrammar(); // put in root, even if imported
-		for (GrammarAST def in tokensDefs) {
+        foreach (GrammarAST def in tokensDefs) {
 			// tokens { id (',' id)* } so must check IDs not TOKEN_REF
 			if ( Grammar.isTokenName(def.getText()) ) {
 				G.defineTokenName(def.getText());
@@ -149,7 +149,7 @@ public class SemanticPipeline {
 			Grammar.getStringLiteralAliasesFromLexerRules(g.ast);
 		HashSet<String> conflictingLiterals = new HashSet<String>();
 		if ( litAliases!=null ) {
-			for (Pair<GrammarAST,GrammarAST> pair in litAliases) {
+            foreach (Pair<GrammarAST,GrammarAST> pair in litAliases) {
 				GrammarAST nameAST = pair.a;
 				GrammarAST litAST = pair.b;
 				if ( !G.stringLiteralToTypeMap.containsKey(litAST.getText()) ) {
@@ -164,7 +164,7 @@ public class SemanticPipeline {
 				// Remove literal if repeated across rules so it's not
 				// found by parser grammar.
 				int value = G.stringLiteralToTypeMap.remove(lit);
-				if (value != null && value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList.get(value))) {
+				if (value != null && value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList[(value)])) {
 					G.typeToStringLiteralList.Set(value, null);
 				}
 			}
@@ -202,10 +202,10 @@ public class SemanticPipeline {
 	void assignTokenTypes(Grammar g, List<GrammarAST> tokensDefs,
 						  List<GrammarAST> tokenIDs, List<GrammarAST> terminals)
 	{
-		//Grammar G = g.getOutermostGrammar(); // put in root, even if imported
+        //Grammar G = g.getOutermostGrammar(); // put in root, even if imported
 
-		// create token types for tokens { A, B, C } ALIASES
-		for (GrammarAST alias in tokensDefs) {
+        // create token types for tokens { A, B, C } ALIASES
+        foreach (GrammarAST alias in tokensDefs) {
 			if (g.getTokenType(alias.getText()) != Token.INVALID_TYPE) {
 				g.tool.errMgr.grammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.getText());
 			}
@@ -213,8 +213,8 @@ public class SemanticPipeline {
 			g.defineTokenName(alias.getText());
 		}
 
-		// DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
-		for (GrammarAST idAST in tokenIDs) {
+        // DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
+        foreach (GrammarAST idAST in tokenIDs) {
 			if (g.getTokenType(idAST.getText()) == Token.INVALID_TYPE) {
 				g.tool.errMgr.grammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.getText());
 			}
@@ -222,8 +222,8 @@ public class SemanticPipeline {
 			g.defineTokenName(idAST.getText());
 		}
 
-		// VERIFY TOKEN TYPES FOR STRING LITERAL REFS LIKE 'while', ';'
-		for (GrammarAST termAST in terminals) {
+        // VERIFY TOKEN TYPES FOR STRING LITERAL REFS LIKE 'while', ';'
+        foreach (GrammarAST termAST in terminals) {
 			if (termAST.getType() != ANTLRParser.STRING_LITERAL) {
 				continue;
 			}
@@ -246,7 +246,7 @@ public class SemanticPipeline {
 	 */
 	void assignChannelTypes(Grammar g, List<GrammarAST> channelDefs) {
 		Grammar outermost = g.getOutermostGrammar();
-		for (GrammarAST channel in channelDefs) {
+        foreach (GrammarAST channel in channelDefs) {
 			String channelName = channel.getText();
 
 			// Channel names can't alias tokens or modes, because constant

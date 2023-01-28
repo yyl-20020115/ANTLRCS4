@@ -170,7 +170,7 @@ public class ATNConfig {
 
 		return this.state.stateNumber==other.state.stateNumber
 			&& this.alt==other.alt
-			&& Objects.equals(this.context, other.context)
+			&& Objects.Equals(this.context, other.context)
 			&& this.semanticContext.Equals(other.semanticContext)
 			&& this.isPrecedenceFilterSuppressed() == other.isPrecedenceFilterSuppressed();
 	}

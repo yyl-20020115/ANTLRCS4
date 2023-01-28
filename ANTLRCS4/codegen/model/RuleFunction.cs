@@ -7,6 +7,7 @@
 using org.antlr.runtime.tree;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.misc;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
@@ -77,10 +78,10 @@ public class RuleFunction : OutputModelObject {
 			}
 		}
 		if ( r.retvals!=null ) {
-			ruleCtx.addDecls(r.retvals.attributes.values());
+			ruleCtx.addDecls(r.retvals.attributes.Values);
 		}
 		if ( r.locals!=null ) {
-			ruleCtx.addDecls(r.locals.attributes.values());
+			ruleCtx.addDecls(r.locals.attributes.Values);
 		}
 
 		ruleLabels = r.getElementLabelNames();
@@ -107,8 +108,8 @@ public class RuleFunction : OutputModelObject {
 		}
 
 		// make structs for -> labeled alts, define ctx labels for elements
-		altLabelCtxs = new HashMap<String,AltLabelStructDecl>();
-		Map<String, List<Pair<Integer, AltAST>>> labels = r.getAltLabels();
+		altLabelCtxs = new ();
+		Dictionary<String, List<Pair<Integer, AltAST>>> labels = r.getAltLabels();
 		if ( labels!=null ) {
 			foreach (Map.Entry<String, List<Pair<int, AltAST>>> entry in labels.entrySet()) {
 				String label = entry.getKey();
@@ -237,14 +238,14 @@ public class RuleFunction : OutputModelObject {
 			visitor.outerAlternative();
 			if (visitor.frequencies.size() != 1) {
 				factory.getGrammar().tool.errMgr.toolError(ErrorType.INTERNAL_ERROR);
-				return new Pair<>(new FrequencySet<String>(), new FrequencySet<String>());
+				return new (new FrequencySet<String>(), new FrequencySet<String>());
 			}
 
 			return new (visitor.getMinFrequencies(), visitor.frequencies.peek());
 		}
 		catch (RecognitionException ex) {
 			factory.getGrammar().tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
-			return new Pair<>(new FrequencySet<String>(), new FrequencySet<String>());
+			return new (new FrequencySet<String>(), new FrequencySet<String>());
 		}
 	}
 

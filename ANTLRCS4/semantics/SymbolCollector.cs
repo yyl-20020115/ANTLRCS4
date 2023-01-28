@@ -56,9 +56,9 @@ public class SymbolCollector : GrammarTreeVisitor {
 
 	//@Override
 	public void defineToken(GrammarAST ID) {
-		terminals.add(ID);
-		tokenIDRefs.add(ID);
-		tokensDefs.add(ID);
+		terminals.Add(ID);
+		tokenIDRefs.Add(ID);
+		tokensDefs.Add(ID);
 	}
 
 	//@Override

@@ -200,7 +200,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		ruleST.add("setResultAction", setResultST);
 		ruleST.add("userRetvals", retvals);
 
-		LinkedHashMap<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new LinkedHashMap<int, LeftRecursiveRuleAltInfo>();
+		Dictionary<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new Dictionary<int, LeftRecursiveRuleAltInfo>();
 		opPrecRuleAlts.putAll(binaryAlts);
 		opPrecRuleAlts.putAll(ternaryAlts);
 		opPrecRuleAlts.putAll(suffixAlts);
@@ -259,9 +259,9 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 					continue;
 				}
 			}
-			if ( first.getType()==RULE_REF && first.getText().equals(ruleName) ) return true;
+			if ( first.getType()==RULE_REF && first.getText().Equals(ruleName) ) return true;
 			Tree rref = first.getChild(1);
-			if ( rref!=null && rref.getType()==RULE_REF && rref.getText().equals(ruleName) ) return true;
+			if ( rref!=null && rref.getType()==RULE_REF && rref.getText().Equals(ruleName) ) return true;
 		}
 		return false;
 	}
@@ -279,7 +279,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		}
 		Tree rref = first.getChild(1); // if label=rule
 		if ( (first.getType()==RULE_REF && first.getText().Equals(ruleName)) ||
-			 (rref!=null && rref.getType()==RULE_REF && rref.getText().equals(ruleName)) )
+			 (rref!=null && rref.getType()==RULE_REF && rref.getText().Equals(ruleName)) )
 		{
 			if ( first.getType()==ASSIGN || first.getType()==PLUS_ASSIGN ) lrlabel = (GrammarAST)first.getChild(0);
 			// remove rule ref (first child unless options present)
@@ -355,14 +355,14 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 				if ( node is GrammarASTWithOptions ) {
 					GrammarASTWithOptions o = (GrammarASTWithOptions)node;
-                    foreach (Map.Entry<String, GrammarAST> entry in o.getOptions().entrySet()) {
+                    foreach (var entry in o.getOptions()) {
 						if (elementOptions.Length > 0) {
 							elementOptions.Append(',');
 						}
 
-						elementOptions.Append(entry.getKey());
+						elementOptions.Append(entry.Key);
 						elementOptions.Append('=');
-						elementOptions.Append(entry.getValue().getText());
+						elementOptions.Append(entry.Value.getText());
 					}
 				}
 			}

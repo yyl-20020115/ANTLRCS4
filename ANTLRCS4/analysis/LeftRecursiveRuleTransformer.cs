@@ -9,6 +9,7 @@ using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -44,7 +45,7 @@ public class LeftRecursiveRuleTransformer {
 				if ( LeftRecursiveRuleAnalyzer.hasImmediateRecursiveRuleRefs(r.ast, r.name) ) {
 					bool fitsPattern = translateLeftRecursiveRule(ast, (LeftRecursiveRule)r, language);
 					if ( fitsPattern ) {
-						leftRecursiveRuleNames.add(r.name);
+						leftRecursiveRuleNames.Add(r.name);
 					}
 					else { // better given an error that non-conforming left-recursion exists
 						tool.errMgr.grammarError(ErrorType.NONCONFORMING_LR_RULE, g.fileName, ((GrammarAST)r.ast.getChild(0)).token, r.name);
@@ -57,7 +58,7 @@ public class LeftRecursiveRuleTransformer {
         foreach (GrammarAST r in ast.getNodesWithType(ANTLRParser.RULE_REF)) {
 			if ( r.getParent().getType()==ANTLRParser.RULE ) continue; // must be rule def
 			if ( ((GrammarASTWithOptions)r).getOptionString(PRECEDENCE_OPTION_NAME) != null ) continue; // already has arg; must be in rewritten rule
-			if ( leftRecursiveRuleNames.contains(r.getText()) ) {
+			if ( leftRecursiveRuleNames.Contains(r.getText()) ) {
 				// found ref to recursive rule not already rewritten with arg
 				((GrammarASTWithOptions)r).setOption(PRECEDENCE_OPTION_NAME, (GrammarAST)new GrammarASTAdaptor().create(ANTLRParser.INT, "0"));
 			}
@@ -118,8 +119,8 @@ public class LeftRecursiveRuleTransformer {
 
 		// track recursive alt info for codegen
 		r.recPrimaryAlts = new ();
-		r.recPrimaryAlts.addAll(leftRecursiveRuleWalker.prefixAndOtherAlts);
-		if (r.recPrimaryAlts.isEmpty()) {
+		r.recPrimaryAlts.AddRange(leftRecursiveRuleWalker.prefixAndOtherAlts);
+		if (r.recPrimaryAlts.Count==0) {
 			tool.errMgr.grammarError(ErrorType.NO_NON_LR_ALTS, g.fileName, ((GrammarAST)r.ast.getChild(0)).getToken(), r.name);
 		}
 

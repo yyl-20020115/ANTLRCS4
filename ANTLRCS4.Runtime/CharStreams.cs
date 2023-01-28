@@ -265,7 +265,7 @@ public class CharStreams {
 	//				utf8BytesIn,
 	//				utf16CodeUnitsOut,
 	//				endOfInput);
-	//			if (result.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
+	//			if (result.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
 	//				result.throwException();
 	//			}
 	//			utf16CodeUnitsOut.flip();
@@ -276,7 +276,7 @@ public class CharStreams {
 	//		// Handle any bytes at the end of the file which need to
 	//		// be represented as errors or substitution characters.
 	//		CoderResult flushResult = decoder.flush(utf16CodeUnitsOut);
-	//		if (flushResult.isError() && decodingErrorAction.equals(CodingErrorAction.REPORT)) {
+	//		if (flushResult.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
 	//			flushResult.throwException();
 	//		}
 	//		utf16CodeUnitsOut.flip();

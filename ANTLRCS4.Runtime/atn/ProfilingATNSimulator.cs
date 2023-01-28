@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
 
@@ -163,10 +164,10 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 	//@Override
 	protected void reportAttemptingFullContext(DFA dfa, BitSet conflictingAlts, ATNConfigSet configs, int startIndex, int stopIndex) {
 		if ( conflictingAlts!=null ) {
-			conflictingAltResolvedBySLL = conflictingAlts.nextSetBit(0);
+			conflictingAltResolvedBySLL = conflictingAlts.NextSetBit(0);
 		}
 		else {
-			conflictingAltResolvedBySLL = configs.getAlts().nextSetBit(0);
+			conflictingAltResolvedBySLL = configs.getAlts().NextSetBit(0);
 		}
 		decisions[currentDecision].LL_Fallback++;
 		base.reportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
@@ -188,10 +189,10 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 	{
 		int prediction;
 		if ( ambigAlts!=null ) {
-			prediction = ambigAlts.nextSetBit(0);
+			prediction = ambigAlts.NextSetBit(0);
 		}
 		else {
-			prediction = configs.getAlts().nextSetBit(0);
+			prediction = configs.getAlts().NextSetBit(0);
 		}
 		if ( configs.fullCtx && prediction != conflictingAltResolvedBySLL ) {
 			// Even though this is an ambiguity we are reporting, we can

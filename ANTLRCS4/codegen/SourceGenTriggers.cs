@@ -451,7 +451,7 @@ public class SourceGenTriggers : TreeParser
                                         element2 = element();
                                         state._fsp--;
 
-                                        if (element2 != null) elems.addAll(element2);
+                                        if (element2 != null) elems.AddRange(element2);
                                     }
                                     break;
 

@@ -21,7 +21,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	// stuff to collect. this is the output
 	public OrderedHashMap<String, Rule> rules = new OrderedHashMap<String, Rule>();
 	public MultiMap<String,GrammarAST> ruleToAltLabels = new MultiMap<String, GrammarAST>();
-	public Map<String,String> altLabelToRuleName = new HashMap<String, String>();
+	public Dictionary<String,String> altLabelToRuleName = new HashMap<String, String>();
 
 	public RuleCollector(Grammar g) {
 		this.g = g;
@@ -70,7 +70,7 @@ public class RuleCollector : GrammarTreeVisitor {
 			r.locals.ast = locals;
 		}
 
-		for (GrammarAST a in actions) {
+        foreach (GrammarAST a in actions) {
 			// a = ^(AT ID ACTION)
 			ActionAST action = (ActionAST) a.getChild(1);
 			r.namedActions.put(a.getChild(0).getText(), action);
@@ -121,7 +121,7 @@ public class RuleCollector : GrammarTreeVisitor {
 		String optionName = optionID.getText();
 		if (optionName.Equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
-			if (valueText.equals("true") || valueText.equals("false")) {
+			if (valueText.Equals("true") || valueText.Equals("false")) {
 				return Boolean.parseBoolean(valueText);
 			}
 		}

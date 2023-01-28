@@ -552,7 +552,7 @@ public static class PredictionModeTools
 			}
 			alts.Set(c.alt);
 		}
-		return configToAlts.values();
+		return configToAlts.Values;
 	}
 
 	/**

@@ -237,7 +237,7 @@ public abstract class BaseTree : Tree
         */
         if (children == null)
         {
-            throw new IllegalArgumentException("indexes invalid; no children in list");
+            throw new ArgumentException("indexes invalid; no children in list");
         }
         int replacingHowMany = stopChildIndex - startChildIndex + 1;
         int replacingWithHowMany;

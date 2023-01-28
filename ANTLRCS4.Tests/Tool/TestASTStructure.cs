@@ -7,6 +7,7 @@
 using org.antlr.runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.test.tool;
 
@@ -22,21 +23,21 @@ public class TestASTStructure {
 	
 	{
 		ANTLRStringStream @is = new ANTLRStringStream(input);
-		Class<? : TokenSource> lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
-		Constructor<? : TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
+		Type lexerClass = Class.forName(lexerClassName).asSubclass(TokenSource);
+		Constructor<TokenSource> lexConstructor = lexerClass.getConstructor(CharStream);
 		TokenSource lexer = lexConstructor.newInstance(@is);
         @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Class<? : Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
-		Constructor<? : Parser> parConstructor = parserClass.getConstructor(TokenStream);
+		Class<Parser> parserClass = Class.forName(parserClassName).asSubclass(Parser);
+		Constructor<Parser> parConstructor = parserClass.getConstructor(TokenStream);
 		Parser parser = parConstructor.newInstance(tokens);
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
 			Method m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
-			Class<? : TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
+			Class<TreeAdaptor> adaptorClass = Class.forName(adaptorClassName).asSubclass(TreeAdaptor);
 			m.invoke(parser, adaptorClass.newInstance());
 		}
 

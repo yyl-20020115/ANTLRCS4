@@ -10,6 +10,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
+using System.Text;
 
 namespace org.antlr.v4.tool.ast;
 
@@ -84,7 +85,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public void getNodesWithTypePreorderDFS_(List<GrammarAST> nodes, IntervalSet types) {
-		if ( types.contains(this.getType()) ) nodes.add(this);
+		if ( types.contains(this.getType()) ) nodes.Add(this);
 		// walk all children of root.
 		for (int i= 0; i < getChildCount(); i++) {
 			GrammarAST child = (GrammarAST)getChild(i);
@@ -152,7 +153,7 @@ public class GrammarAST : CommonTree {
     public CommonTree getFirstDescendantWithType(int type) {
         if ( getType()==type ) return this;
         if ( children==null ) return null;
-        for (Object c in children) {
+        foreach (Object c in children) {
             GrammarAST t = (GrammarAST)c;
             if ( t.getType()==type ) return t;
             CommonTree d = t.getFirstDescendantWithType(type);
@@ -194,7 +195,7 @@ public class GrammarAST : CommonTree {
 
 //	//@Override
 //	public bool equals(Object obj) {
-//		return base.equals(obj);
+//		return base.Equals(obj);
 //	}
 
 	//@Override
@@ -218,13 +219,13 @@ public class GrammarAST : CommonTree {
 		GrammarAST o = (GrammarAST)nodes.LT(1);
 		int type = adaptor.getType(o);
 		while ( type!=Token.EOF ) {
-			buf.append(" ");
-			buf.append(o.getText());
+			buf.Append(" ");
+			buf.Append(o.getText());
 			nodes.consume();
 			o = (GrammarAST)nodes.LT(1);
 			type = adaptor.getType(o);
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }

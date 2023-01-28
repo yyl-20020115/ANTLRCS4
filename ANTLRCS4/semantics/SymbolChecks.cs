@@ -11,6 +11,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Text;
 
 namespace org.antlr.v4.semantics;
 
@@ -23,9 +24,9 @@ namespace org.antlr.v4.semantics;
 public class SymbolChecks {
 	Grammar g;
 	SymbolCollector collector;
-	Map<String, Rule> nameToRuleMap = new HashMap<String, Rule>();
-	Set<String> tokenIDs = new HashSet<String>();
-	Map<String, Set<String>> actionScopeToActionNames = new HashMap<String, Set<String>>();
+	Dictionary<String, Rule> nameToRuleMap = new HashMap<String, Rule>();
+	HashSet<String> tokenIDs = new HashSet<String>();
+	Dictionary<String, HashSet<String>> actionScopeToActionNames = new HashMap<String, HashSet<String>>();
 
 	public ErrorManager errMgr;
 
@@ -46,11 +47,11 @@ public class SymbolChecks {
 		// So, call order sensitive
 		// First collect all rules for later use in checkForLabelConflict()
 		if (g.rules != null) {
-			foreach (Rule r in g.rules.values()) nameToRuleMap.put(r.name, r);
+			foreach (Rule r in g.rules.Values) nameToRuleMap.put(r.name, r);
 		}
-		checkReservedNames(g.rules.values());
+		checkReservedNames(g.rules.Values);
 		checkActionRedefinitions(collector.namedActions);
-		checkForLabelConflicts(g.rules.values());
+		checkForLabelConflicts(g.rules.Values);
 	}
 
 	public void checkActionRedefinitions(List<GrammarAST> actions) {
@@ -58,7 +59,7 @@ public class SymbolChecks {
 		String scope = g.getDefaultActionScope();
 		String name;
 		GrammarAST nameNode;
-		for (GrammarAST ampersandAST in actions) {
+		foreach (GrammarAST ampersandAST in actions) {
 			nameNode = (GrammarAST) ampersandAST.getChild(0);
 			if (ampersandAST.getChildCount() == 2) {
 				name = nameNode.getText();
@@ -67,7 +68,7 @@ public class SymbolChecks {
 				scope = nameNode.getText();
 				name = ampersandAST.getChild(1).getText();
 			}
-			Set<String> scopeActions = actionScopeToActionNames.get(scope);
+			HashSet<String> scopeActions = actionScopeToActionNames.get(scope);
 			if (scopeActions == null) { // init scope
 				scopeActions = new HashSet<String>();
 				actionScopeToActionNames.put(scope, scopeActions);
@@ -93,7 +94,7 @@ public class SymbolChecks {
 		foreach(Rule r in rules) {
 			checkForAttributeConflicts(r);
 
-			Map<String, LabelElementPair> labelNameSpace = new ();
+			Dictionary<String, LabelElementPair> labelNameSpace = new ();
 			for (int i = 1; i <= r.numberOfAlts; i++) {
 				Alternative a = r.alt[i];
 				foreach (List<LabelElementPair> pairs in a.labelDefs.Values) {
@@ -128,8 +129,8 @@ public class SymbolChecks {
 		}
 	}
 
-	private void checkLabelPairs(Rule r, Map<String, LabelElementPair> labelNameSpace, List<LabelElementPair> pairs) {
-		for (LabelElementPair p in pairs) {
+	private void checkLabelPairs(Rule r, Dictionary<String, LabelElementPair> labelNameSpace, List<LabelElementPair> pairs) {
+        foreach (LabelElementPair p in pairs) {
 			checkForLabelConflict(r, p.label);
 			String name = p.label.getText();
 			LabelElementPair prev = labelNameSpace.get(name);
@@ -242,7 +243,7 @@ public class SymbolChecks {
 		checkLocalConflictingDeclarations(r, r.locals, r.retvals, ErrorType.LOCAL_CONFLICTS_WITH_RETVAL);
 	}
 
-	protected void checkDeclarationRuleConflicts(Rule r, AttributeDict attributes, Set<String> ruleNames, ErrorType errorType) {
+	protected void checkDeclarationRuleConflicts(Rule r, AttributeDict attributes, HashSet<String> ruleNames, ErrorType errorType) {
 		if (attributes == null) {
 			return;
 		}
@@ -264,8 +265,8 @@ public class SymbolChecks {
 			return;
 		}
 
-		Set<String> conflictingKeys = attributes.intersection(referenceAttributes);
-		for (String key : conflictingKeys) {
+		HashSet<String> conflictingKeys = attributes.intersection(referenceAttributes);
+        foreach (String key in conflictingKeys) {
 			errMgr.grammarError(
 					errorType,
 					g.fileName,
@@ -329,16 +330,16 @@ public class SymbolChecks {
 
 				// Check string sets intersection
 				for (int i = 0; i < stringLiteralRules.Count; i++) {
-					List<String> firstTokenStringValues = stringLiteralValues.get(i);
-					Rule rule1 =  stringLiteralRules.get(i);
-					checkForOverlap(g, rule1, rule1, firstTokenStringValues, stringLiteralValues.get(i));
+					List<String> firstTokenStringValues = stringLiteralValues[(i)];
+					Rule rule1 =  stringLiteralRules[(i)];
+					checkForOverlap(g, rule1, rule1, firstTokenStringValues, stringLiteralValues[(i)]);
 
 					// Check fragment rules only with themself
 					if (!rule1.isFragment()) {
-						for (int j = i + 1; j < stringLiteralRules.size(); j++) {
-							Rule rule2 = stringLiteralRules.get(j);
+						for (int j = i + 1; j < stringLiteralRules.Count; j++) {
+							Rule rule2 = stringLiteralRules[(j)];
 							if (!rule2.isFragment()) {
-								checkForOverlap(g, rule1, stringLiteralRules.get(j), firstTokenStringValues, stringLiteralValues.get(j));
+								checkForOverlap(g, rule1, stringLiteralRules[(j)], firstTokenStringValues, stringLiteralValues.get(j));
 							}
 						}
 					}
@@ -382,12 +383,12 @@ public class SymbolChecks {
 					}
 					else {
 						String text = terminalAST.token.getText();
-						currentValue.append(text.substring(1, text.length() - 1));
+						currentValue.Append(text.substring(1, text.length() - 1));
 					}
 				}
 
 				if (!ignore) {
-					values.add(currentValue.toString());
+					values.Add(currentValue.ToString());
 				}
 			}
 		}
@@ -418,7 +419,7 @@ public class SymbolChecks {
 	// CAN ONLY CALL THE TWO NEXT METHODS AFTER GRAMMAR HAS RULE DEFS (see semanticpipeline)
 	public void checkRuleArgs(Grammar g, List<GrammarAST> rulerefs) {
 		if ( rulerefs==null ) return;
-		for (GrammarAST @ref in rulerefs) {
+        foreach (GrammarAST @ref in rulerefs) {
 			String ruleName = @ref.getText();
 			Rule r = g.getRule(ruleName);
 			GrammarAST arg = (GrammarAST)@ref.getFirstChildWithType(ANTLRParser.ARG_ACTION);

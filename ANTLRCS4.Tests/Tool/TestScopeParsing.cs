@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.tool;
+using Attribute = org.antlr.v4.tool.Attribute;
 
 namespace org.antlr.v4.test.tool;
 
@@ -53,10 +54,10 @@ public class TestScopeParsing {
 		Grammar dummy = new Grammar("grammar T; a:'a';");
 
 		Dictionary<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
-		List<String> @out = new ArrayList<>();
-		for (String arg : attributes.keySet()) {
+		List<String> @out = new ();
+		foreach (String arg in attributes.Keys) {
 			Attribute attr = attributes.get(arg);
-            @out.add(attr.ToString());
+            @out.Add(attr.ToString());
 		}
 		String actual = Utils.join(@out.toArray(), ", ");
 		Assert.AreEqual(parameter.output, actual);

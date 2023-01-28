@@ -35,7 +35,7 @@ public class ToolTestUtils {
 
 	public static ExecutedState execParser(String grammarFileName, String grammarStr,
 									String parserName, String lexerName, String startRuleName,
-									String input, bool showDiagnosticErrors, Path workingDir
+									String input, bool showDiagnosticErrors, string workingDir
 	) {
 		return execRecognizer(grammarFileName, grammarStr, parserName, lexerName,
 				startRuleName, input, showDiagnosticErrors, workingDir, false);

@@ -129,7 +129,7 @@ public class ScopeParser {
 			attr.token = new CommonToken(action.getToken().getInputStream(), ANTLRParser.ID, BaseRecognizer.DEFAULT_TOKEN_CHANNEL, offset + declOffset + idStart + 1, offset + declOffset + idStop);
 			attr.token.setLine(line);
 			attr.token.setCharPositionInLine(charPositionInLine);
-			//assert attr.name.equals(attr.token.getText()) : "Attribute text should match the pseudo-token text at this point.";
+			//assert attr.name.Equals(attr.token.getText()) : "Attribute text should match the pseudo-token text at this point.";
 		}
 
 		return attr;
@@ -159,14 +159,14 @@ public class ScopeParser {
 
 		// walk forward looking for end of an ID
 		int stop = -1;
-		for (int i = start; i < decl.length(); i++) {
-			char ch = decl.charAt(i);
+		for (int i = start; i < decl.Length; i++) {
+			char ch = decl[(i)];
 			// if we haven't found the end yet, keep going
-			if (!(char.isLetterOrDigit(ch) || ch == '_')) {
+			if (!(char.IsLetterOrDigit(ch) || ch == '_')) {
 				stop = i;
 				break;
 			}
-			if (i == decl.length() - 1) {
+			if (i == decl.Length - 1) {
 				stop = i + 1;
 			}
 		}
@@ -191,12 +191,12 @@ public class ScopeParser {
 		int start = -1;
 		int stop = -1;
 		int colon = decl.indexOf(':');
-		int namePartEnd = colon == -1 ? decl.length() : colon;
+		int namePartEnd = colon == -1 ? decl.Length : colon;
 
 		// look for start of name
 		for (int i = 0; i < namePartEnd; ++i) {
-			char ch = decl.charAt(i);
-			if (char.isLetterOrDigit(ch) || ch == '_') {
+			char ch = decl[(i)];
+			if (char.IsLetterOrDigit(ch) || ch == '_') {
 				start = i;
 				break;
 			}
@@ -209,8 +209,8 @@ public class ScopeParser {
 
 		// look for stop of name
 		for (int i = start; i < namePartEnd; ++i) {
-			char ch = decl.charAt(i);
-			if (!(char.isLetterOrDigit(ch) || ch == '_')) {
+			char ch = decl[(i)];
+			if (!(char.IsLetterOrDigit(ch) || ch == '_')) {
 				stop = i;
 				break;
 			}
@@ -277,7 +277,7 @@ public class ScopeParser {
 					p++;
 					while (p < n && actionText[p] != '\'') {
 						if (actionText[p] == '\\' && (p + 1) < n &&
-								actionText.charAt(p + 1) == '\'') {
+								actionText[(p + 1)] == '\'') {
 							p++; // skip escaped quote
 						}
 						p++;
@@ -288,7 +288,7 @@ public class ScopeParser {
 					p++;
 					while (p < n && actionText[p] != '\"') {
 						if (actionText[p] == '\\' && (p + 1) < n &&
-								actionText.charAt(p + 1) == '\"') {
+								actionText[(p + 1)] == '\"') {
 							p++; // skip escaped quote
 						}
 						p++;
@@ -318,11 +318,11 @@ public class ScopeParser {
 					if (c == separatorChar && targetChar == -1) {
 						String arg = actionText.substring(last, p);
 						int index = last;
-						while (index < p && char.isWhitespace(actionText.charAt(index))) {
+						while (index < p && char.isWhitespace(actionText[(index)])) {
 							index++;
 						}
 						//Console.Out.WriteLine("arg="+arg);
-						args.add(new Pair<String, int>(arg.trim(), index));
+						args.Add(new Pair<String, int>(arg.Trim(), index));
 						last = p + 1;
 					}
 					p++;
