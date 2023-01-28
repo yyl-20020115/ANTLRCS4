@@ -11,9 +11,9 @@ public class LexerFile : OutputFile {
 	public String exportMacro; // from -DexportMacro cmd-line
 	public bool genListener; // from -listener cmd-line
 	public bool genVisitor; // from -visitor cmd-line
-	//@ModelElement 
+	[ModelElement] 
 		public Lexer lexer;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<String, Action> namedActions;
 
 	public LexerFile(OutputModelFactory factory, String fileName): base(factory, fileName)

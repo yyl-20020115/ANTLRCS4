@@ -29,9 +29,9 @@ public class ListenerFile : OutputFile {
 	 */
 	public Dictionary<String, String> listenerLabelRuleNames = new ();
 
-	//@ModelElement 
+	[ModelElement] 
 		public Action header;
-	//@ModelElement
+	[ModelElement]
 		public Dictionary<String, Action> namedActions;
 
 	public ListenerFile(OutputModelFactory factory, String fileName): base(factory, fileName)

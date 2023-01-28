@@ -257,7 +257,15 @@ public class ParserATNFactory : ATNFactory {
 		ATNState right = newState(node);
 		int precedence = 0;
 		if (((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			precedence = int.parseInt(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+			if(int.TryParse(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME)
+				,out var pre))
+			{
+				precedence = pre;
+			}
+			else
+			{
+				throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+			}
 		}
 		RuleTransition call = new RuleTransition(start, r.index, precedence, right);
 		left.addTransition(call);
@@ -297,13 +305,28 @@ public class ParserATNFactory : ATNFactory {
 
 		AbstractPredicateTransition p;
 		if (pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			int precedence = int.parseInt(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
-			p = new PrecedencePredicateTransition(right, precedence);
-		}
+			if(int.TryParse(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME),out var pre))
+			{
+                int precedence = pre;
+
+                p = new PrecedencePredicateTransition(right, precedence);
+			}
+			else
+			{
+				throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+			}
+        }
 		else {
 			bool isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
-			p = new PredicateTransition(right, currentRule.index, g.sempreds.get(pred), isCtxDependent);
-		}
+			if(g.sempreds.TryGetValue(pred,out var r))
+			{
+                p = new PredicateTransition(right, currentRule.index, r, isCtxDependent);
+			}
+			else
+			{
+				throw new InvalidOperationException(nameof(g.sempreds));
+			}
+        }
 
 		left.addTransition(p);
 		pred.atnState = left;
@@ -376,14 +399,14 @@ public class ParserATNFactory : ATNFactory {
 				Handle h = makeBlock(start, blkAST, alts);
 				return optional(ebnfRoot, h);
 			case ANTLRParser.CLOSURE :
-				BlockStartState star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
-				if ( alts.Count>1 ) atn.defineDecisionState(star);
-				h = makeBlock(star, blkAST, alts);
+				BlockStartState _star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
+				if ( alts.Count>1 ) atn.defineDecisionState(_star);
+				h = makeBlock(_star, blkAST, alts);
 				return star(ebnfRoot, h);
 			case ANTLRParser.POSITIVE_CLOSURE :
-				PlusBlockStartState plus = newState(PlusBlockStartState, ebnfRoot);
-				if ( alts.Count>1 ) atn.defineDecisionState(plus);
-				h = makeBlock(plus, blkAST, alts);
+				PlusBlockStartState _plus = newState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
+				if ( alts.Count>1 ) atn.defineDecisionState(_plus);
+				h = makeBlock(_plus, blkAST, alts);
 				return plus(ebnfRoot, h);
 		}
 		return null;
@@ -445,11 +468,11 @@ public class ParserATNFactory : ATNFactory {
 				atn.removeState(el.right); // we skipped over this state
 			}
 			else { // need epsilon if previous block's right end node is complicated
-				epsilon(el.right, els.get(i+1).left);
+				epsilon(el.right, els[(i+1)].left);
 			}
 		}
-		Handle first = els.get(0);
-		Handle last = els.get(n - 1);
+		Handle first = els[(0)];
+		Handle last = els[(n - 1)];
 		ATNState left = null;
 		if (first != null) {
 			left = first.left;
@@ -478,7 +501,7 @@ public class ParserATNFactory : ATNFactory {
 	public Handle optional(GrammarAST optAST, Handle blk) {
 		BlockStartState blkStart = (BlockStartState)blk.left;
 		ATNState blkEnd = blk.right;
-		preventEpsilonOptionalBlocks.add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+		preventEpsilonOptionalBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
 		bool greedy = ((QuantifierAST)optAST).isGreedy();
 		blkStart.nonGreedy = !greedy;
@@ -507,10 +530,10 @@ public class ParserATNFactory : ATNFactory {
 		BlockEndState blkEnd = (BlockEndState)blk.right;
 		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-		PlusLoopbackState loop = newState(PlusLoopbackState, plusAST);
+		PlusLoopbackState loop = newState<PlusLoopbackState>(plusAST);
 		loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
 		atn.defineDecisionState(loop);
-		LoopEndState end = newState(LoopEndState, plusAST);
+		LoopEndState end = newState<LoopEndState>(plusAST);
 		blkStart.loopBackState = loop;
 		end.loopBackState = loop;
 
@@ -557,11 +580,11 @@ public class ParserATNFactory : ATNFactory {
 		BlockEndState blkEnd = (BlockEndState)elem.right;
 		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-		StarLoopEntryState entry = newState(StarLoopEntryState, starAST);
+		StarLoopEntryState entry = newState<StarLoopEntryState>(starAST);
 		entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
 		atn.defineDecisionState(entry);
-		LoopEndState end = newState(LoopEndState, starAST);
-		StarLoopbackState loop = newState(StarLoopbackState, starAST);
+		LoopEndState end = newState<LoopEndState>(starAST);
+		StarLoopbackState loop = newState<StarLoopbackState>(starAST);
 		entry.loopBackState = loop;
 		end.loopBackState = loop;
 
@@ -612,11 +635,11 @@ public class ParserATNFactory : ATNFactory {
 	 *  issues.
 	 */
 	void createRuleStartAndStopATNStates() {
-		atn.ruleToStartState = new RuleStartState[g.rules.size()];
-		atn.ruleToStopState = new RuleStopState[g.rules.size()];
+		atn.ruleToStartState = new RuleStartState[g.rules.Count];
+		atn.ruleToStopState = new RuleStopState[g.rules.Count];
         foreach (Rule r in g.rules.Values) {
-			RuleStartState start = newState(RuleStartState, r.ast);
-			RuleStopState stop = newState(RuleStopState, r.ast);
+			RuleStartState start = newState<RuleStartState>(r.ast);
+			RuleStopState stop = newState<RuleStopState>(r.ast);
 			start.stopState = stop;
 			start.isLeftRecursiveRule = r is LeftRecursiveRule;
 			start.setRuleIndex(r.index);
@@ -671,21 +694,22 @@ public class ParserATNFactory : ATNFactory {
 		return t;
 	}
 
+    public T newState<T>(GrammarAST node) where T : ATNState => newState<T>(typeof(T), node);
 
-	public T newState<T>(Type nodeType, GrammarAST node) where T: ATNState {
+    protected T newState<T>(Type nodeType, GrammarAST node) where T: ATNState {
 		Exception cause;
 		try {
-			ConstructorInfo ctor = nodeType.getConstructor();
-			T s = ctor.newInstance();
-			if ( currentRule==null ) s.setRuleIndex(-1);
-			else s.setRuleIndex(currentRule.index);
-			atn.addState(s);
-			return s;
+            ConstructorInfo ctor = nodeType.GetConstructor(Array.Empty<Type>());
+            T s = ctor.Invoke(Array.Empty<object>()) as T;
+            if (currentRule == null) s.setRuleIndex(-1);
+            else s.setRuleIndex(currentRule.index);
+            atn.addState(s);
+            return s;
 		} catch (Exception ex) {
 			cause = ex;
 		} 
 
-		String message = String.format("Could not create %s of type %s.", ATNState.getName(), nodeType.getName());
+		String message = $"Could not create {typeof(ATNState).Name} of type {nodeType.Name}.";
 		throw new UnsupportedOperationException(message, cause);
 	}
 

@@ -13,11 +13,11 @@ public class CodeBlock : SrcOp {
 	public int codeBlockLevel;
 	public int treeLevel;
 
-	//@ModelElement 
-		public OrderedHashSet<Decl> locals;
-    //@ModelElement
+	[ModelElement] 
+	public OrderedHashSet<Decl> locals;
+    [ModelElement]
     public List<SrcOp> preamble;
-    //@ModelElement
+    [ModelElement]
     public List<SrcOp> ops;
 
 	public CodeBlock(OutputModelFactory factory):base(factory) {

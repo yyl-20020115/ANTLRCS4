@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.misc;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -26,9 +27,9 @@ public abstract class Choice : RuleElement {
 	public int decision = -1;
 	public Decl label;
 
-	//@ModelElement 
+	[ModelElement] 
 	public List<CodeBlockForAlt> alts;
-	//@ModelElement
+	[ModelElement]
 	public List<SrcOp> preamble = new ();
 
 	public Choice(OutputModelFactory factory,
@@ -60,7 +61,8 @@ public abstract class Choice : RuleElement {
 
 	public TestSetInline addCodeForLookaheadTempVar(IntervalSet look) {
 		List<SrcOp> testOps = factory.getLL1Test(look, ast);
-		TestSetInline expr = RuntimeUtils.find(testOps, typeof(TestSetInline));
+		TestSetInline expr = testOps.FirstOrDefault(op => op is TestSetInline) as TestSetInline;//
+							 //Utils.find(testOps, typeof(TestSetInline));
 		if (expr != null) {
 			Decl d = new TokenTypeDecl(factory, expr.varName);
 			factory.getCurrentRuleFunction().addLocalDecl(d);

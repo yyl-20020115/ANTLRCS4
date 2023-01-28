@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.parse;
@@ -16,7 +17,7 @@ namespace org.antlr.v4.codegen.model;
 
 /** */
 public class Action : RuleElement {
-	//@ModelElement
+	[ModelElement]
 	public List<ActionChunk> chunks;
 
 	public Action(OutputModelFactory factory, ActionAST ast) :base(factory, ast)
@@ -46,9 +47,8 @@ public class Action : RuleElement {
 		}
 	}
 
-	public Action(OutputModelFactory factory, StructDecl ctx, ST actionST) :base(factory, null)
+	public Action(OutputModelFactory factory, StructDecl ctx, Template actionST) :base(factory, null)
     {
-		;
 		chunks = new ();
 		chunks.Add(new ActionTemplate(ctx, actionST));
 	}

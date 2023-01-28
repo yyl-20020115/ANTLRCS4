@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
+using Antlr4.StringTemplate.Misc;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.misc;
 using org.antlr.v4.parse;
@@ -18,7 +20,7 @@ namespace org.antlr.v4.codegen;
 /** */
 public abstract class Target
 {
-    private readonly static Dictionary<String, STGroup> languageTemplates = new();
+    private readonly static Dictionary<String, TemplateGroup> languageTemplates = new();
 
     protected readonly CodeGenerator gen;
 
@@ -85,23 +87,22 @@ public abstract class Target
         return Tool.VERSION;
     }
 
-    public STGroup getTemplates()
+    public TemplateGroup getTemplates()
     {
         lock (this)
         {
             String language = getLanguage();
-            STGroup templates = languageTemplates.get(language);
-
-            if (templates == null)
+            
+            if (!languageTemplates.TryGetValue(language,out var templates))
             {
                 String version = getVersion();
                 if (version == null ||
                         !RuntimeMetaData.getMajorMinorVersion(version).Equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
                 {
-                    gen.tool.errMgr.toolError(ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+                    gen.tool.errMgr.toolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
                 }
                 templates = loadTemplates();
-                languageTemplates.put(language, templates);
+                languageTemplates.Add(language, templates);
             }
 
             return templates;
@@ -120,7 +121,7 @@ public abstract class Target
         return word + "_";
     }
 
-    public void genFile(Grammar g, ST outputFileST, String fileName)
+    public void genFile(Grammar g, Template outputFileST, String fileName)
     {
         getCodeGenerator().write(outputFileST, fileName);
     }
@@ -186,8 +187,9 @@ public abstract class Target
         }
         for (int i = 0; i < s.Length;)
         {
-            int c = s.codePointAt(i);
-            String escaped = c <= char.MaxValue ? getTargetCharValueEscape().get((char)c) : null;
+            int c = char.ConvertToUtf32(s, i); // s.codePointAt(i);
+            String? escaped = c <= char.MaxValue ?
+                (getTargetCharValueEscape().TryGetValue((char)c, out var v) ? v : null) : null;
             if (c != '\'' && escaped != null)
             { // don't escape single quotes in strings for java
                 buf.Append(escaped);
@@ -198,9 +200,9 @@ public abstract class Target
             }
             else
             {
-                buf.appendCodePoint(c);
+                buf.Append(char.ConvertFromUtf32(c));//.appendCodePoint(c);
             }
-            i += char.charCount(c);
+            i += new Rune(c).Utf16SequenceLength;
         }
         if (quoted)
         {
@@ -268,8 +270,8 @@ public abstract class Target
 
         for (int i = 1; i < literal.Length - 1;)
         {
-            int codePoint = literal.codePointAt(i);
-            int toAdvance = char.charCount(codePoint);
+            int codePoint = char.ConvertToUtf32(literal,i);
+            int toAdvance = new Rune(codePoint).Utf16SequenceLength;
             if (codePoint == '\\')
             {
                 // Anything escaped is what it is! We assume that
@@ -278,7 +280,7 @@ public abstract class Target
                 // is what the default implementation is dealing with and remove
                 // the escape. The C target does this for instance.
                 //
-                int escapedCodePoint = literal.codePointAt(i + toAdvance);
+                int escapedCodePoint = char.ConvertToUtf32(literal,(i + toAdvance));
                 toAdvance++;
                 switch (escapedCodePoint)
                 {
@@ -296,7 +298,7 @@ public abstract class Target
                             sb.Append('\\');
                         }
                         sb.Append('\\');
-                        sb.appendCodePoint(escapedCodePoint);
+                        sb.Append(char.ConvertFromUtf32(escapedCodePoint));
                         break;
 
                     case 'u':    // Either unnnn or u{nnnnnn}
@@ -314,7 +316,7 @@ public abstract class Target
                         }
                         if (i + toAdvance <= literal.Length)
                         { // we might have an invalid \\uAB or something
-                            String fullEscape = literal.substring(i, i + toAdvance);
+                            String fullEscape = literal.Substring(i,toAdvance);
                             appendUnicodeEscapedCodePoint(
                                 CharSupport.getCharValueFromCharInGrammarLiteral(fullEscape),
                                 sb,
@@ -328,7 +330,7 @@ public abstract class Target
                         }
                         else
                         {
-                            sb.appendCodePoint(escapedCodePoint);
+                            sb.Append(new Rune(escapedCodePoint).ToString());
                         }
                         break;
                 }
@@ -347,7 +349,7 @@ public abstract class Target
                 }
                 else
                 {
-                    sb.appendCodePoint(codePoint);
+                    sb.Append(new Rune(codePoint).ToString());
                 }
             }
             i += toAdvance;
@@ -377,7 +379,7 @@ public abstract class Target
     {
         if (v < char.MinValue || v > char.MaxValue)
         {
-            throw new ArgumentException(String.format("Cannot encode the specified value: %d", v));
+            throw new ArgumentException($"Cannot encode the specified value: {v}");
         }
 
         if (isATNSerializedAsInts())
@@ -386,22 +388,22 @@ public abstract class Target
         }
 
         char c = (char)v;
-        String escaped = getTargetCharValueEscape().get(c);
-        if (escaped != null)
+        //String escaped = getTargetCharValueEscape().get(c);
+        if (getTargetCharValueEscape().TryGetValue(c,out var escaped))
         {
             return escaped;
         }
 
-        switch (char.getType(c))
+        switch (char.GetUnicodeCategory(c))
         {
-            case char.CONTROL:
-            case char.LINE_SEPARATOR:
-            case char.PARAGRAPH_SEPARATOR:
+            case System.Globalization.UnicodeCategory.Control:
+            case System.Globalization.UnicodeCategory.LineSeparator:
+            case System.Globalization.UnicodeCategory.ParagraphSeparator:
                 return escapeChar(v);
             default:
                 if (v <= 127)
                 {
-                    return String.valueOf(c);  // ascii chars can be as-is, no encoding
+                    return c.ToString();  // ascii chars can be as-is, no encoding
                 }
                 // else we use hex encoding to ensure pure ascii chars generated
                 return escapeChar(v);
@@ -410,7 +412,7 @@ public abstract class Target
 
     protected String escapeChar(int v)
     {
-        return String.format("\\u%04x", v);
+        return $"\\u%{v:X4}";
     }
 
     public String getLoopLabel(GrammarAST ast)
@@ -425,23 +427,23 @@ public abstract class Target
 
     public String getListLabel(String label)
     {
-        ST st = getTemplates().getInstanceOf("ListLabelName");
-        st.add("label", label);
-        return st.render();
+        var st = getTemplates().GetInstanceOf("ListLabelName");
+        st.Add("label", label);
+        return st.Render();
     }
 
     public String getRuleFunctionContextStructName(Rule r)
     {
         if (r.g.isLexer())
         {
-            return getTemplates().getInstanceOf("LexerRuleContext").render();
+            return getTemplates().GetInstanceOf("LexerRuleContext").Render();
         }
-        return Utils.capitalize(r.name) + getTemplates().getInstanceOf("RuleContextNameSuffix").render();
+        return Utils.capitalize(r.name) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     public String getAltLabelContextStructName(String label)
     {
-        return Utils.capitalize(label) + getTemplates().getInstanceOf("RuleContextNameSuffix").render();
+        return Utils.capitalize(label) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     /** If we know which actual function, we can provide the actual ctx type.
@@ -454,46 +456,46 @@ public abstract class Target
         Rule r = function.rule;
         if (r.g.isLexer())
         {
-            return getTemplates().getInstanceOf("LexerRuleContext").render();
+            return getTemplates().GetInstanceOf("LexerRuleContext").Render();
         }
-        return Utils.capitalize(r.name) + getTemplates().getInstanceOf("RuleContextNameSuffix").render();
+        return Utils.capitalize(r.name) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     // should be same for all refs to same token like ctx.ID within single rule function
     // for literals like 'while', we gen _s<ttype>
     public String getImplicitTokenLabel(String tokenName)
     {
-        ST st = getTemplates().getInstanceOf("ImplicitTokenLabel");
+        var st = getTemplates().GetInstanceOf("ImplicitTokenLabel");
         int ttype = getCodeGenerator().g.getTokenType(tokenName);
         if (tokenName.StartsWith("'"))
         {
             return "s" + ttype;
         }
         String text = getTokenTypeAsTargetLabel(getCodeGenerator().g, ttype);
-        st.add("tokenName", text);
-        return st.render();
+        st.Add("tokenName", text);
+        return st.Render();
     }
 
     // x=(A|B)
     public String getImplicitSetLabel(String id)
     {
-        ST st = getTemplates().getInstanceOf("ImplicitSetLabel");
-        st.add("id", id);
-        return st.render();
+        var st = getTemplates().GetInstanceOf("ImplicitSetLabel");
+        st.Add("id", id);
+        return st.Render();
     }
 
     public String getImplicitRuleLabel(String ruleName)
     {
-        ST st = getTemplates().getInstanceOf("ImplicitRuleLabel");
-        st.add("ruleName", ruleName);
-        return st.render();
+        var st = getTemplates().GetInstanceOf("ImplicitRuleLabel");
+        st.Add("ruleName", ruleName);
+        return st.Render();
     }
 
     public String getElementListName(String name)
     {
-        ST st = getTemplates().getInstanceOf("ElementListName");
-        st.add("elemName", getElementName(name));
-        return st.render();
+        var st = getTemplates().GetInstanceOf("ElementListName");
+        st.Add("elemName", getElementName(name));
+        return st.Render();
     }
 
     public String getElementName(String name)
@@ -514,9 +516,9 @@ public abstract class Target
 	 */
     public String getRecognizerFileName(bool header)
     {
-        ST extST = getTemplates().getInstanceOf("codeFileExtension");
+        var extST = getTemplates().GetInstanceOf("codeFileExtension");
         String recognizerName = gen.g.getRecognizerName();
-        return recognizerName + extST.render();
+        return recognizerName + extST.Render();
     }
 
     /** A given grammar T, return the listener name such as
@@ -525,9 +527,9 @@ public abstract class Target
     public String getListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        ST extST = getTemplates().getInstanceOf("codeFileExtension");
+        var extST = getTemplates().GetInstanceOf("codeFileExtension");
         String listenerName = gen.g.name + "Listener";
-        return listenerName + extST.render();
+        return listenerName + extST.Render();
     }
 
     /** A given grammar T, return the visitor name such as
@@ -536,9 +538,9 @@ public abstract class Target
     public String getVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        ST extST = getTemplates().getInstanceOf("codeFileExtension");
+        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
         String listenerName = gen.g.name + "Visitor";
-        return listenerName + extST.render();
+        return listenerName + extST.Render();
     }
 
     /** A given grammar T, return a blank listener implementation
@@ -547,9 +549,9 @@ public abstract class Target
     public String getBaseListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        ST extST = getTemplates().getInstanceOf("codeFileExtension");
+        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
         String listenerName = gen.g.name + "BaseListener";
-        return listenerName + extST.render();
+        return listenerName + extST.Render();
     }
 
     /** A given grammar T, return a blank listener implementation
@@ -558,9 +560,9 @@ public abstract class Target
     public String getBaseVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        ST extST = getTemplates().getInstanceOf("codeFileExtension");
+        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
         String listenerName = gen.g.name + "BaseVisitor";
-        return listenerName + extST.render();
+        return listenerName + extST.Render();
     }
 
     /**
@@ -648,64 +650,71 @@ public abstract class Target
     {
         return loadTemplatesHelper(false) != null;
     }
-    public class STE : STErrorListener
+    public class STE : ITemplateErrorListener
     {
-        //@Override
-        public void compileTimeError(STMessage msg)
+        public readonly Target target;
+        public STE(Target target)
         {
-            reportError(msg);
+            this.target = target;
         }
 
         //@Override
-        public void runTimeError(STMessage msg)
+        public void CompiletimeError(TemplateMessage msg)
         {
-            reportError(msg);
+            ReportError(msg);
         }
 
         //@Override
-        public void IOError(STMessage msg)
+        public void RuntimeError(TemplateMessage msg)
         {
-            reportError(msg);
+            ReportError(msg);
         }
 
         //@Override
-        public void internalError(STMessage msg)
+        public void IOError(TemplateMessage msg)
         {
-            reportError(msg);
+            ReportError(msg);
         }
 
-        private void reportError(STMessage msg)
+        //@Override
+        public void InternalError(TemplateMessage msg)
         {
-            getCodeGenerator().tool.errMgr.toolError(ErrorType.STRING_TEMPLATE_WARNING, msg.cause, msg.ToString());
+            ReportError(msg);
         }
+
+        private void ReportError(TemplateMessage msg)
+        {
+            target.getCodeGenerator().tool.errMgr.toolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
+        }
+
     }
-    protected STGroup loadTemplates()
+    protected TemplateGroup loadTemplates()
     {
-        STGroup result = loadTemplatesHelper(true);
+        TemplateGroup result = loadTemplatesHelper(true);
         if (result == null)
         {
             return null;
         }
-        result.registerRenderer(Integer, new NumberRenderer());
-        result.registerRenderer(Strings, new StringRenderer());
-        result.setListener(new STE());
+        result.RegisterRenderer(typeof(int), new NumberRenderer());
+        result.RegisterRenderer(typeof(string), new StringRenderer());
+        result.Listener=(new STE(this));
 
         return result;
     }
 
-    private STGroup loadTemplatesHelper(bool reportErrorIfFail)
+    private TemplateGroup loadTemplatesHelper(bool reportErrorIfFail)
     {
         String language = getLanguage();
-        String groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + STGroup.GROUP_FILE_EXTENSION;
+        String groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + TemplateGroup.GroupFileExtension;
         try
         {
-            return new STGroupFile(groupFileName);
+            return new TemplateGroupFile(groupFileName);
         }
         catch (ArgumentException iae)
         {
             if (reportErrorIfFail)
             {
-                gen.tool.errMgr.toolError(ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, getLanguage());
+                gen.tool.errMgr.toolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, getLanguage());
             }
             return null;
         }

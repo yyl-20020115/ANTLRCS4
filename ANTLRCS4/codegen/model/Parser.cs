@@ -9,7 +9,7 @@ namespace org.antlr.v4.codegen.model;
 public class Parser : Recognizer {
 	public ParserFile file;
 
-	//@ModelElement 
+	[ModelElement] 
 	public List<RuleFunction> funcs = new ();
 
 	public Parser(OutputModelFactory factory, ParserFile file):base(factory) {

@@ -56,7 +56,7 @@ public abstract class BaseRecognizer
 	 *  and other state variables.  It's a kind of explicit multiple
 	 *  inheritance via delegation of methods and shared state.
 	 */
-    protected RecognizerSharedState state;
+    public RecognizerSharedState state;
 
     public BaseRecognizer()
     {

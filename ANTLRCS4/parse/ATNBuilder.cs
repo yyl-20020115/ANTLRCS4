@@ -142,6 +142,7 @@ public class ATNBuilder : TreeParser
 
     // delegators
 
+    protected DFA10 dfa10;
 
     public ATNBuilder(TreeNodeStream input)
         : this(input, new RecognizerSharedState())
@@ -150,6 +151,7 @@ public class ATNBuilder : TreeParser
     public ATNBuilder(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
+        dfa10 = new DFA10(this);
     }
 
     //@Override
@@ -298,13 +300,13 @@ public class ATNBuilder : TreeParser
                             break;
 
                         default:
-                            if (cnt3 >= 1) break loop3;
+                            if (cnt3 >= 1) goto exit3;// break loop3;
                             EarlyExitException eee = new EarlyExitException(3, input);
                             throw eee;
                     }
                     cnt3++;
                 }
-
+            exit3:
                 match(input, Token.UP, null);
 
                 p = factory.block((BlockAST)BLOCK1, ebnfRoot, alts);
@@ -2332,10 +2334,11 @@ public class ATNBuilder : TreeParser
                                 break;
 
                             default:
-                                break loop25;
+                                goto exit25;
+                                //break loop25;
                         }
                     }
-
+                exit25:
                     match(input, Token.UP, null);
                 }
 
@@ -2533,7 +2536,6 @@ public class ATNBuilder : TreeParser
     // Delegated rules
 
 
-    protected DFA10 dfa10 = new DFA10(this);
 
     //static final short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
     //static final short[] DFA10_eof = DFA.unpackEncodedString(DFA10_eofS);
@@ -2574,7 +2576,7 @@ public class ATNBuilder : TreeParser
 
 
 
-    protected class DFA10 : DFA
+    protected class DFA10 : antlr.runtime.DFA
     {
 
 

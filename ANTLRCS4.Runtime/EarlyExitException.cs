@@ -29,13 +29,13 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.runtime;
 
-public class EarlyExitException : RecognitionException
-{
-    public EarlyExitException(Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(recognizer, input, ctx)
-    {
-    }
+//public class EarlyExitException : RecognitionException
+//{
+//    public EarlyExitException(Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(recognizer, input, ctx)
+//    {
+//    }
 
-    public EarlyExitException(string message, Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(message, recognizer, input, ctx)
-    {
-    }
-}
+//    public EarlyExitException(string message, Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(message, recognizer, input, ctx)
+//    {
+//    }
+//}

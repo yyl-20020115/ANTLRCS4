@@ -119,6 +119,8 @@ public class LeftRecursiveRuleWalker : TreeParser
     }
 
     // delegators
+    protected DFA11 dfa11;
+    protected DFA14 dfa14;
 
 
     public LeftRecursiveRuleWalker(TreeNodeStream input)
@@ -128,6 +130,8 @@ public class LeftRecursiveRuleWalker : TreeParser
     public LeftRecursiveRuleWalker(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
+        dfa11 = new DFA11(this);
+        dfa14 = new DFA14(this);
     }
 
     //@Override
@@ -1785,14 +1789,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt24 >= 1) break loop24;
+                                    if (cnt24 >= 1) goto exit24; // break loop24;
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     EarlyExitException eee = new EarlyExitException(24, input);
                                     throw eee;
                             }
                             cnt24++;
                         }
-
+                    exit24:
                         match(input, Token.UP, null); if (state.failed) return;
 
                     }
@@ -2720,8 +2724,6 @@ public class LeftRecursiveRuleWalker : TreeParser
     }
 
 
-    protected DFA11 dfa11 = new DFA11(this);
-    protected DFA14 dfa14 = new DFA14(this);
 
     //static final short[] DFA11_eot = DFA.unpackEncodedString(DFA11_eotS);
     //static final short[] DFA11_eof = DFA.unpackEncodedString(DFA11_eofS);
@@ -2829,7 +2831,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
 
 
-    protected class DFA11 : DFA
+    protected class DFA11 : antlr.runtime.DFA
     {
 
 
@@ -2958,7 +2960,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
 
 
-    protected class DFA14 : DFA
+    protected class DFA14 : antlr.runtime.DFA
     {
 
 

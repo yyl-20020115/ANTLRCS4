@@ -98,10 +98,16 @@ public class TreeRewriter : TreeParser
 
     public class TVA : TreeVisitorAction
     {
+        public readonly TreeRewriter treeRewriter;
+        public TVA(TreeRewriter treeRewriter)
+        {
+            this.treeRewriter = treeRewriter;
+        }
+
         //@Override
-        public Object pre(Object t) { return applyOnce(t, topdown_fptr); }
+        public Object pre(Object t) { return treeRewriter.applyOnce(t, treeRewriter.topdown_fptr); }
         //@Override
-        public Object post(Object t) { return applyRepeatedly(t, bottomup_ftpr); }
+        public Object post(Object t) { return treeRewriter.applyRepeatedly(t, treeRewriter.bottomup_ftpr); }
     }
     public class CFPTR1 : fptr
     {
@@ -119,7 +125,7 @@ public class TreeRewriter : TreeParser
     {
         this.showTransformations = showTransformations;
         TreeVisitor v = new TreeVisitor(new CommonTreeAdaptor());
-        TreeVisitorAction actions = new TVA();
+        TreeVisitorAction actions = new TVA(this);
         t = v.visit(t, actions);
         return t;
     }

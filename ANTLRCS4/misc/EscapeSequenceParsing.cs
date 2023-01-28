@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.unicode;
+using System.Text;
 
 namespace org.antlr.v4.misc;
 
@@ -42,13 +43,7 @@ public abstract class EscapeSequenceParsing {
 		}
 
 		public override String ToString() {
-			return String.format(
-					"%s type=%s codePoint=%d propertyIntervalSet=%s parseLength=%d",
-					base.ToString(),
-					type,
-					codePoint,
-					propertyIntervalSet,
-					parseLength);
+			return $"{base.ToString()} type={type} codePoint={codePoint} propertyIntervalSet={propertyIntervalSet} parseLength={parseLength}";
 		}
 
 		public override bool Equals(Object other) {
@@ -59,14 +54,13 @@ public abstract class EscapeSequenceParsing {
 			if (this == that) {
 				return true;
 			}
-			return Objects.Equals(this.type, that.type) &&
-				Objects.Equals(this.codePoint, that.codePoint) &&
-				Objects.Equals(this.propertyIntervalSet, that.propertyIntervalSet) &&
-				Objects.Equals(this.parseLength, that.parseLength);
+			return RuntimeUtils.ObjectsEquals(this.type, that.type) &&
+				RuntimeUtils.ObjectsEquals(this.codePoint, that.codePoint) &&
+				RuntimeUtils.ObjectsEquals(this.propertyIntervalSet, that.propertyIntervalSet) &&
+				RuntimeUtils.ObjectsEquals(this.parseLength, that.parseLength);
 		}
-
 		public override int GetHashCode() {
-			return Objects.hash(type, codePoint, propertyIntervalSet, parseLength);
+			return RuntimeUtils.ObjectsHash(type, codePoint, propertyIntervalSet, parseLength);
 		}
 	}
 
@@ -77,14 +71,14 @@ public abstract class EscapeSequenceParsing {
 	 */
 	public static Result parseEscape(String s, int startOff) {
 		int offset = startOff;
-		if (offset + 2 > s.Length || s.codePointAt(offset) != '\\') {
+		if (offset + 2 > s.Length || char.ConvertToUtf32(s, offset) != '\\') {
 			return invalid(startOff, s.Length -1);
 		}
 		// Move past backslash
 		offset++;
-		int escaped = s.codePointAt(offset);
+		int escaped = char.ConvertToUtf32(s, offset);// s.codePointAt(offset);
 		// Move past escaped code point
-		offset += char.charCount(escaped);
+		offset += new Rune(escaped).Utf16SequenceLength;
 		if (escaped == 'u') {
 			// \\u{1} is the shortest we support
 			if (offset + 3 > s.Length) {
@@ -92,9 +86,9 @@ public abstract class EscapeSequenceParsing {
 			}
 			int hexStartOffset;
 			int hexEndOffset; // appears to be exclusive
-			if (s.codePointAt(offset) == '{') {
+			if (char.ConvertToUtf32(s,offset) == '{') {
 				hexStartOffset = offset + 1;
-				hexEndOffset = s.indexOf('}', hexStartOffset);
+				hexEndOffset = s.IndexOf('}', hexStartOffset);
 				if (hexEndOffset == -1) {
 					return invalid(startOff, s.Length -1);
 				}
@@ -109,7 +103,7 @@ public abstract class EscapeSequenceParsing {
 				offset = hexEndOffset;
 			}
 			int codePointValue = CharSupport.parseHexValue(s, hexStartOffset, hexEndOffset);
-			if (codePointValue == -1 || codePointValue > char.MAX_CODE_POINT) {
+			if (codePointValue == -1 || codePointValue > char.MaxValue) {
 				return invalid(startOff, startOff+6-1);
 			}
 			return new Result(
@@ -124,15 +118,15 @@ public abstract class EscapeSequenceParsing {
 			if (offset + 3 > s.Length) {
 				return invalid(startOff, s.Length -1);
 			}
-			if (s.codePointAt(offset) != '{') {
+			if (char.ConvertToUtf32(s,offset) != '{') {
 				return invalid(startOff, offset);
 			}
 			int openBraceOffset = offset;
-			int closeBraceOffset = s.indexOf('}', openBraceOffset);
+			int closeBraceOffset = s.IndexOf('}', openBraceOffset);
 			if (closeBraceOffset == -1) {
 				return invalid(startOff, s.Length -1);
 			}
-			String propertyName = s.substring(openBraceOffset + 1, closeBraceOffset);
+			String propertyName = s[(openBraceOffset + 1)..closeBraceOffset];
 			IntervalSet propertyIntervalSet = UnicodeData.getPropertyCodePoints(propertyName);
 			if (propertyIntervalSet == null || propertyIntervalSet.isNil()) {
 				return invalid(startOff, closeBraceOffset);
@@ -148,7 +142,7 @@ public abstract class EscapeSequenceParsing {
 				startOff,
 				offset - startOff);
 		}
-		else if (escaped < CharSupport.ANTLRLiteralEscapedCharValue.length) {
+		else if (escaped < CharSupport.ANTLRLiteralEscapedCharValue.Length) {
 			int codePoint = CharSupport.ANTLRLiteralEscapedCharValue[escaped];
 			if (codePoint == 0) {
 				if (escaped != ']' && escaped != '-') { // escape ']' and '-' only in char sets.

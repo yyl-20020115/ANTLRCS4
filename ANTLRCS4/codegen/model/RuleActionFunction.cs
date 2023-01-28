@@ -14,7 +14,7 @@ public class RuleActionFunction : OutputModelObject {
 	public readonly int ruleIndex;
 	public readonly string name;
 	/** Map actionIndex to Action */
-	//@ModelElement 
+	[ModelElement] 
 	public Dictionary<int, Action> actions =new ();
 
 	public RuleActionFunction(OutputModelFactory factory, Rule r, String ctxType): base(factory)

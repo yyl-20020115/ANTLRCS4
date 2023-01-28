@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -90,5 +91,62 @@ public abstract class BlankOutputModelFactory : OutputModelFactory {
 
 	//@Override
 	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
+
+    public Grammar getGrammar()
+    {
+        throw new NotImplementedException();
+    }
+
+    public CodeGenerator getGenerator()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setController(OutputModelController controller)
+    {
+        throw new NotImplementedException();
+    }
+
+    public OutputModelController getController()
+    {
+        throw new NotImplementedException();
+    }
+
+    
+
+    public OutputModelObject getRoot()
+    {
+        throw new NotImplementedException();
+    }
+
+    public RuleFunction getCurrentRuleFunction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Alternative getCurrentOuterMostAlt()
+    {
+        throw new NotImplementedException();
+    }
+
+    public CodeBlock getCurrentBlock()
+    {
+        throw new NotImplementedException();
+    }
+
+    public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getCodeBlockLevel()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getTreeLevel()
+    {
+        throw new NotImplementedException();
+    }
 }
 

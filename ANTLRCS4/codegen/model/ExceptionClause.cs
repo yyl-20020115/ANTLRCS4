@@ -7,18 +7,19 @@
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
-public class ExceptionClause : SrcOp {
-	//@ModelElement 
-		public Action catchArg;
-	//@ModelElement 
-		public Action catchAction;
+public class ExceptionClause : SrcOp
+{
+    [ModelElement]
+    public Action catchArg;
+    [ModelElement]
+    public Action catchAction;
 
-	public ExceptionClause(OutputModelFactory factory,
-						   ActionAST catchArg,
-						   ActionAST catchAction)
-		: base(factory, catchArg)
+    public ExceptionClause(OutputModelFactory factory,
+                           ActionAST catchArg,
+                           ActionAST catchAction)
+        : base(factory, catchArg)
     {
-		this.catchArg = new Action(factory, catchArg);
-		this.catchAction = new Action(factory, catchAction);
-	}
+        this.catchArg = new Action(factory, catchArg);
+        this.catchAction = new Action(factory, catchAction);
+    }
 }

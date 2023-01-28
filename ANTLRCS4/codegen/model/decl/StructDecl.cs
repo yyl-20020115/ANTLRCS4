@@ -16,17 +16,17 @@ namespace org.antlr.v4.codegen.model.decl;
 public class StructDecl : Decl {
 	public String derivedFromName; // rule name or label name
 	public bool provideCopyFrom;
-    //@ModelElement 
+    [ModelElement] 
     public OrderedHashSet<Decl> attrs = new OrderedHashSet<Decl>();
-    //@ModelElement 
+    [ModelElement] 
     public OrderedHashSet<Decl> getters = new OrderedHashSet<Decl>();
-    //@ModelElement 
+    [ModelElement] 
     public ICollection<AttributeDecl> ctorAttrs;
-    //@ModelElement 
+    [ModelElement] 
     public List<DispatchMethod> dispatchMethods;
-    //@ModelElement 
+    [ModelElement] 
     public List<OutputModelObject> interfaces;
-    //@ModelElement 
+    [ModelElement] 
     public List<OutputModelObject> extensionMembers;
 
 	// Track these separately; Go target needs to generate getters/setters
@@ -115,5 +115,5 @@ public class StructDecl : Decl {
 		extensionMembers.Add(member);
 	}
 
-	public bool isEmpty() { return attrs.isEmpty(); }
+	public bool isEmpty() { return attrs.Count==0; }
 }

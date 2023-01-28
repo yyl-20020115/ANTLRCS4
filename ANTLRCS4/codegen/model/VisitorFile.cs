@@ -25,9 +25,9 @@ public class VisitorFile : OutputFile {
 	 */
 	public Dictionary<String, String> visitorLabelRuleNames = new ();
 
-	//@ModelElement 
+	[ModelElement] 
 		public Action header;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<String, Action> namedActions;
 
 	public VisitorFile(OutputModelFactory factory, String fileName): base(factory, fileName)

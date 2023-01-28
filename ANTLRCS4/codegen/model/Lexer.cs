@@ -16,7 +16,7 @@ public class Lexer : Recognizer {
 	public ICollection<String> modes;
 	public ICollection<String> escapedModeNames;
 
-	//@ModelElement
+	[ModelElement]
 	public Dictionary<Rule, RuleActionFunction> actionFuncs =
 		new ();
 

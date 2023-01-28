@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen;
 

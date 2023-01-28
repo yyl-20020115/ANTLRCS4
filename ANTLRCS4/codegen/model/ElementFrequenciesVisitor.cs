@@ -33,7 +33,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		minFrequencies.push(SENTINEL);
 	}
 
-	FrequencySet<String> getMinFrequencies() {
+	public FrequencySet<String> getMinFrequencies() {
         //assert minFrequencies.size() == 1;
         //assert minFrequencies.peek() != SENTINEL;
         //assert SENTINEL.isEmpty();
@@ -92,7 +92,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 		//assert a != SENTINEL;
 		FrequencySet<String> result = combineAndClip(a, b, int.MaxValue);
 		foreach (var entry in result) {
-			entry.getValue().v = Math.Min(a.count(entry.getKey()), b.count(entry.getKey()));
+			entry.Value.v = Math.Min(a.count(entry.Key), b.count(entry.Key));
 		}
 
 		return result;

@@ -11,6 +11,22 @@ namespace org.antlr.v4.runtime.misc;
 
 public static class RuntimeUtils
 {
+    public static int ObjectsHash(params object[] array)
+    {
+        if (array == null)
+            return 0;
+
+        int result = 1;
+
+        foreach (Object element in array)
+            result = 31 * result + (element == null ? 0 : element.GetHashCode());
+
+        return result;
+    }
+    public static bool ObjectsEquals(object a, object b)
+    {
+        return (a == b) || (a != null && a.Equals(b));
+    }
     public static short[] Convert(char[] chars)
     {
         short[] shorts = new short[chars.Length];

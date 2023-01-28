@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.runtime.tree;
 using org.antlr.v4.analysis;
 using org.antlr.v4.codegen.model;
@@ -15,7 +16,7 @@ using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using Action = org.antlr.v4.codegen.model.Action;
 using Lexer = org.antlr.v4.codegen.model.Lexer;
-using Parser = org.antlr.v4.runtime.Parser;
+using Parser = org.antlr.v4.codegen.model.Parser;
 
 namespace org.antlr.v4.codegen;
 
@@ -48,7 +49,7 @@ public class OutputModelController {
 		this.@delegate = factory;
 	}
 
-	public void addExtension(CodeGeneratorExtension ext) { extensions.add(ext); }
+	public void addExtension(CodeGeneratorExtension ext) { extensions.Add(ext); }
 
 	/** Build a file with a parser containing rule functions. Use the
 	 *  controller as factory in SourceGenTriggers so it triggers codegen
@@ -125,7 +126,7 @@ public class OutputModelController {
 	/** Create RuleFunction per rule and update sempreds,actions of parser
 	 *  output object with stuff found in r.
 	 */
-	public void buildRuleFunction(Parser parser, Rule r) {
+	public void buildRuleFunction(model.Parser parser, Rule r) {
 		RuleFunction function = rule(r);
 		parser.funcs.Add(function);
 		pushCurrentRule(function);
@@ -143,12 +144,11 @@ public class OutputModelController {
         foreach (ActionAST a in r.actions) {
 			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
-				RuleSempredFunction rsf = parser.sempredFuncs.get(r);
-				if ( rsf==null ) {
+				if (!parser.sempredFuncs.TryGetValue(r,out var rsf)) {
 					rsf = new RuleSempredFunction(@delegate, r, function.ctxType);
-					parser.sempredFuncs.put(r, rsf);
+					parser.sempredFuncs[r]=rsf;
 				}
-				rsf.actions.put(g.sempreds.get(p), new Action(@delegate, p));
+				rsf.actions[g.sempreds[(p)]]= new Action(@delegate, p);
 			}
 		}
 
@@ -160,7 +160,7 @@ public class OutputModelController {
 
 		// now inject code to start alts
 		CodeGenerator gen = @delegate.getGenerator();
-		STGroup codegenTemplates = gen.getTemplates();
+		var codegenTemplates = gen.getTemplates();
 
 		// pick out alt(s) for primaries
 		CodeBlockForOuterMostAlt outerAlt = (CodeBlockForOuterMostAlt)function.code[(0)];
@@ -189,53 +189,53 @@ public class OutputModelController {
 
 		// Insert code in front of each primary alt to create specialized ctx if there was a label
 		for (int i = 0; i < primaryAltsCode.Count; i++) {
-			LeftRecursiveRuleAltInfo altInfo = r.recPrimaryAlts.get(i);
+			LeftRecursiveRuleAltInfo altInfo = r.recPrimaryAlts[(i)];
 			if ( altInfo.altLabel==null ) continue;
-			ST altActionST = codegenTemplates.getInstanceOf("recRuleReplaceContext");
-			altActionST.add("ctxName", Utils.capitalize(altInfo.altLabel));
+			var altActionST = codegenTemplates.GetInstanceOf("recRuleReplaceContext");
+			altActionST.Add("ctxName", Utils.capitalize(altInfo.altLabel));
 			Action altAction =
-				new Action(@delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
-			CodeBlockForAlt alt = primaryAltsCode.get(i);
+				new Action(@delegate, function.altLabelCtxs[(altInfo.altLabel)], altActionST);
+			CodeBlockForAlt alt = primaryAltsCode[(i)];
 			alt.insertOp(0, altAction);
 		}
 
 		// Insert code to set ctx.stop after primary block and before op * loop
-		ST setStopTokenAST = codegenTemplates.getInstanceOf("recRuleSetStopToken");
+		Template setStopTokenAST = codegenTemplates.GetInstanceOf("recRuleSetStopToken");
 		Action setStopTokenAction = new Action(@delegate, function.ruleCtx, setStopTokenAST);
 		outerAlt.insertOp(1, setStopTokenAction);
 
 		// Insert code to set _prevctx at start of * loop
-		ST setPrevCtx = codegenTemplates.getInstanceOf("recRuleSetPrevCtx");
+		var setPrevCtx = codegenTemplates.GetInstanceOf("recRuleSetPrevCtx");
 		Action setPrevCtxAction = new Action(@delegate, function.ruleCtx, setPrevCtx);
 		opAltStarBlock.addIterationOp(setPrevCtxAction);
 
 		// Insert code in front of each op alt to create specialized ctx if there was an alt label
-		for (int i = 0; i < opAltsCode.size(); i++) {
-			ST altActionST;
+		for (int i = 0; i < opAltsCode.Count; i++) {
+			Template altActionST;
 			LeftRecursiveRuleAltInfo altInfo = r.recOpAlts.getElement(i);
 			String templateName;
 			if ( altInfo.altLabel!=null ) {
 				templateName = "recRuleLabeledAltStartAction";
-				altActionST = codegenTemplates.getInstanceOf(templateName);
-				altActionST.add("currentAltLabel", altInfo.altLabel);
+				altActionST = codegenTemplates.GetInstanceOf(templateName);
+				altActionST.Add("currentAltLabel", altInfo.altLabel);
 			}
 			else {
 				templateName = "recRuleAltStartAction";
-				altActionST = codegenTemplates.getInstanceOf(templateName);
-				altActionST.add("ctxName", Utils.capitalize(r.name));
+				altActionST = codegenTemplates.GetInstanceOf(templateName);
+				altActionST.Add("ctxName", Utils.capitalize(r.name));
 			}
-			altActionST.add("ruleName", r.name);
+			altActionST.Add("ruleName", r.name);
 			// add label of any lr ref we deleted
-			altActionST.add("label", altInfo.leftRecursiveRuleRefLabel);
-			if (altActionST.impl.formalArguments.containsKey("isListLabel")) {
-				altActionST.add("isListLabel", altInfo.isListLabel);
+			altActionST.Add("label", altInfo.leftRecursiveRuleRefLabel);
+			if (altActionST.impl.FormalArguments.Any(f=>f.Name== "isListLabel")) {
+				altActionST.Add("isListLabel", altInfo.isListLabel);
 			}
 			else if (altInfo.isListLabel) {
 				@delegate.getGenerator().tool.errMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "isListLabel");
 			}
 			Action altAction =
-				new Action(@delegate, function.altLabelCtxs.get(altInfo.altLabel), altActionST);
-			CodeBlockForAlt alt = opAltsCode.get(i);
+				new Action(@delegate, function.altLabelCtxs[(altInfo.altLabel)], altActionST);
+			CodeBlockForAlt alt = opAltsCode[i];
 			alt.insertOp(0, altAction);
 		}
 	}
@@ -262,36 +262,34 @@ public class OutputModelController {
 	}
 
 	public void buildLexerRuleActions(Lexer lexer, Rule r) {
-		if (r.actions.isEmpty()) {
+		if (r.actions.Count==0) {
 			return;
 		}
 
 		CodeGenerator gen = @delegate.getGenerator();
 		Grammar g = @delegate.getGrammar();
 		String ctxType = gen.getTarget().getRuleFunctionContextStructName(r);
-		RuleActionFunction raf = lexer.actionFuncs.get(r);
-		if ( raf==null ) {
+		if ( !lexer.actionFuncs.TryGetValue(r,out var raf) ) {
 			raf = new RuleActionFunction(@delegate, r, ctxType);
 		}
 
 		foreach (ActionAST a in r.actions) {
 			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
-				RuleSempredFunction rsf = lexer.sempredFuncs.get(r);
-				if ( rsf==null ) {
+				if ( lexer.sempredFuncs.TryGetValue(r,out var rsf)) {
 					rsf = new RuleSempredFunction(@delegate, r, ctxType);
-					lexer.sempredFuncs.put(r, rsf);
+					lexer.sempredFuncs.Add(r, rsf);
 				}
-				rsf.actions.put(g.sempreds.get(p), new Action(@delegate, p));
+				rsf.actions[g.sempreds[(p)]]= new Action(@delegate, p);
 			}
 			else if ( a.getType()== ANTLRParser.ACTION ) {
-				raf.actions.put(g.lexerActions.get(a), new Action(@delegate, a));
+				raf.actions[g.lexerActions[(a)]]= new Action(@delegate, a);
 			}
 		}
 
 		if (raf.actions.Count>0 && !lexer.actionFuncs.ContainsKey(r)) {
 			// only add to lexer if the function actually contains actions
-			lexer.actionFuncs.put(r, raf);
+			lexer.actionFuncs[r]= raf;
 		}
 	}
 
@@ -411,14 +409,14 @@ public class OutputModelController {
 	public void setRoot(OutputModelObject root) { this.root = root; }
 
 	public RuleFunction getCurrentRuleFunction() {
-		if ( !currentRule.isEmpty() )	return currentRule.peek();
+		if (currentRule.Count > 0)	return currentRule.Peek();
 		return null;
 	}
 
-	public void pushCurrentRule(RuleFunction r) { currentRule.push(r); }
+	public void pushCurrentRule(RuleFunction r) { currentRule.Push(r); }
 
 	public RuleFunction popCurrentRule() {
-		if ( !currentRule.isEmpty() ) return currentRule.pop();
+		if ( currentRule.Count>0 ) return currentRule.Pop();
 		return null;
 	}
 

@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.runtime.tree;
 using org.antlr.v4.codegen;
 using org.antlr.v4.codegen.model.chunk;
@@ -39,16 +40,16 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 	public GrammarAST retvals;
 
-	public readonly static STGroup recRuleTemplates;
-	public readonly STGroup codegenTemplates;
+	public readonly static TemplateGroup recRuleTemplates;
+	public readonly TemplateGroup codegenTemplates;
 	public readonly String language;
 
 	public Dictionary<int, ASSOC> altAssociativity = new ();
 
 	static LeftRecursiveRuleAnalyzer(){
 		String templateGroupFile = "org/antlr/v4/tool/templates/LeftRecursiveRules.stg";
-		recRuleTemplates = new STGroupFile(templateGroupFile);
-		if (!recRuleTemplates.isDefined("recRule")) {
+		recRuleTemplates = new TemplateGroupFile(templateGroupFile);
+		if (!recRuleTemplates.IsDefined("recRule")) {
 			try {
 				throw new FileNotFoundException("can't find code generation templates: LeftRecursiveRules");
 			} catch (FileNotFoundException e) {
@@ -192,36 +193,38 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	// --------- get transformed rules ----------------
 
 	public String getArtificialOpPrecRule() {
-		ST ruleST = recRuleTemplates.getInstanceOf("recRule");
-		ruleST.add("ruleName", ruleName);
-		ST ruleArgST = codegenTemplates.getInstanceOf("recRuleArg");
-		ruleST.add("argName", ruleArgST);
-		ST setResultST = codegenTemplates.getInstanceOf("recRuleSetResultAction");
-		ruleST.add("setResultAction", setResultST);
-		ruleST.add("userRetvals", retvals);
+		var ruleST = recRuleTemplates.GetInstanceOf("recRule");
+		ruleST.Add("ruleName", ruleName);
+		var ruleArgST = codegenTemplates.GetInstanceOf("recRuleArg");
+		ruleST.Add("argName", ruleArgST);
+		var setResultST = codegenTemplates.GetInstanceOf("recRuleSetResultAction");
+		ruleST.Add("setResultAction", setResultST);
+		ruleST.Add("userRetvals", retvals);
 
-		Dictionary<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new ();
-		opPrecRuleAlts.putAll(binaryAlts);
-		opPrecRuleAlts.putAll(ternaryAlts);
-		opPrecRuleAlts.putAll(suffixAlts);
+		var opPrecRuleAlts = 
+			new Dictionary<int, LeftRecursiveRuleAltInfo>()
+				.AddRange(binaryAlts)
+				.AddRange(ternaryAlts)
+				.AddRange(suffixAlts);
+
         foreach (int alt in opPrecRuleAlts.Keys) {
 			LeftRecursiveRuleAltInfo altInfo = opPrecRuleAlts[alt];
-			ST altST = recRuleTemplates.getInstanceOf("recRuleAlt");
-			ST predST = codegenTemplates.getInstanceOf("recRuleAltPredicate");
-			predST.add("opPrec", precedence(alt));
-			predST.add("ruleName", ruleName);
-			altST.add("pred", predST);
-			altST.add("alt", altInfo);
-			altST.add("precOption", LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
-			altST.add("opPrec", precedence(alt));
-			ruleST.add("opAlts", altST);
+			var altST = recRuleTemplates.GetInstanceOf("recRuleAlt");
+			var predST = codegenTemplates.GetInstanceOf("recRuleAltPredicate");
+			predST.Add("opPrec", precedence(alt));
+			predST.Add("ruleName", ruleName);
+			altST.Add("pred", predST);
+			altST.Add("alt", altInfo);
+			altST.Add("precOption", LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME);
+			altST.Add("opPrec", precedence(alt));
+			ruleST.Add("opAlts", altST);
 		}
 
-		ruleST.add("primaryAlts", prefixAndOtherAlts);
+		ruleST.Add("primaryAlts", prefixAndOtherAlts);
 
-		tool.log("left-recursion", ruleST.render());
+		tool.log("left-recursion", ruleST.Render());
 
-		return ruleST.render();
+		return ruleST.Render();
 	}
 
 	public AltAST addPrecedenceArgToRules(AltAST t, int prec) {
@@ -391,7 +394,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	// Assumes left assoc
 	public int nextPrecedence(int alt) {
 		int p = precedence(alt);
-		if ( altAssociativity.get(alt)==ASSOC.right ) return p;
+		if ( altAssociativity.TryGetValue(alt,out var r)&& r ==ASSOC.right ) return p;
 		return p+1;
 	}
 

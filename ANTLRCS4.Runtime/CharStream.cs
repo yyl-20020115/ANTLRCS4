@@ -31,4 +31,5 @@ public interface CharStream : IntStream {
 */
     public String getText(Interval interval);
     void rewind(int start);
+    object[] substring(int tokenStartCharIndex, int v);
 }

@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -35,8 +36,7 @@ public class LeftRecursiveRuleFunction : RuleFunction {
 
 				StructDecl @struct = ruleCtx;
 				if ( altLabelCtxs!=null ) {
-					StructDecl s = altLabelCtxs.get(altLabel);
-					if ( s!=null ) @struct = s; // if alt label, use subctx
+					if (altLabelCtxs.TryGetValue(altLabel,out var s)) @struct = s; // if alt label, use subctx
 				}
                 @struct.addDecl(d); // stick in overall rule's ctx
 			}

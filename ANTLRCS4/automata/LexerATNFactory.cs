@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using ANTLRCS4.Runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.automata;
@@ -22,7 +23,7 @@ namespace org.antlr.v4.automata;
 
 
 public class LexerATNFactory : ParserATNFactory {
-	public STGroup codegenTemplates;
+	public TemplateGroup codegenTemplates;
 
 	/**
 	 * Provides a map of names of predefined constants which are likely to
@@ -185,7 +186,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		// fall back to standard action generation for the command
-		ST cmdST = codegenTemplates.getInstanceOf("Lexer" +
+		var cmdST = codegenTemplates.GetInstanceOf("Lexer" +
 				CharSupport.capitalize(ID.getText())+
 				"Command");
 		if (cmdST == null) {
@@ -194,7 +195,8 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		bool callCommand = arg != null;
-		bool containsArg = cmdST.impl.formalArguments != null && cmdST.impl.formalArguments.containsKey("arg");
+		bool containsArg = cmdST.impl.FormalArguments != null && 
+			cmdST.impl.FormalArguments.Any(f=>f.Name=="arg");
 		if (callCommand != containsArg) {
 			ErrorType errorType = callCommand ? ErrorType.UNWANTED_LEXER_COMMAND_ARGUMENT : ErrorType.MISSING_LEXER_COMMAND_ARGUMENT;
 			g.tool.errMgr.grammarError(errorType, g.fileName, ID.token, ID.getText());
@@ -202,11 +204,11 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		if (callCommand) {
-			cmdST.add("arg", arg.getText());
-			cmdST.add("grammar", arg.g);
+			cmdST.Add("arg", arg.getText());
+			cmdST.Add("grammar", arg.g);
 		}
 
-		return action(cmdST.render());
+		return action(cmdST.Render());
 	}
 
 	//@Override
@@ -367,14 +369,8 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		//@Override
-		public String ToString() {
-			return String.format(
-					"%s mode=%s inRange=%s prevCodePoint=%d prevProperty=%s",
-					base.ToString(),
-					mode,
-					inRange,
-					prevCodePoint,
-					prevProperty);
+		public override String ToString() {
+			return $"{base.ToString()} mode={mode} inRange={inRange} prevCodePoint={prevCodePoint} prevProperty={prevProperty}";
 		}
 
 		//@Override
@@ -393,8 +389,8 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		//@Override
-		public int hashCode() {
-			return Objects.GetHashCode(mode, inRange, prevCodePoint, prevProperty);
+		public override int GetHashCode() {
+			return RuntimeUtils.ObjectsHash(mode, inRange, prevCodePoint, prevProperty);
 		}
 	}
 
@@ -415,17 +411,17 @@ public class LexerATNFactory : ParserATNFactory {
 				EscapeSequenceParsing.Result escapeParseResult =
 					EscapeSequenceParsing.parseEscape(chars, i);
 				switch (escapeParseResult.type) {
-					case INVALID:
+					case EscapeSequenceParsing.Result.Type.INVALID:
 						String invalid = chars.Substring(escapeParseResult.startOffset,
 						                                 escapeParseResult.parseLength);
 						g.tool.errMgr.grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE,
 						                           g.fileName, charSetAST.getToken(), invalid);
 						state = CharSetParseState.ERROR;
 						break;
-					case CODE_POINT:
+					case EscapeSequenceParsing.Result.Type.CODE_POINT:
 						state = applyPrevStateAndMoveToCodePoint(charSetAST, set, state, escapeParseResult.codePoint);
 						break;
-					case PROPERTY:
+					case EscapeSequenceParsing.Result.Type.PROPERTY:
 						state = applyPrevStateAndMoveToProperty(charSetAST, set, state, escapeParseResult.propertyIntervalSet);
 						break;
 				}
@@ -566,10 +562,11 @@ public class LexerATNFactory : ParserATNFactory {
 								}
 								sb.Append(" | ");
 							}
-							sb.replace(sb.Length - 3, sb.Length, "");
+							sb.Length -= 3;
+							//sb.replace(sb.Length - 3, sb.Length, "");
 							setText = sb.ToString();
 						}
-						String charsString = a == b ? String.valueOf((char)a) : (char) a + "-" + (char) b;
+						String charsString = a == b ? ((char)a).ToString() : (char) a + "-" + (char) b;
 						g.tool.errMgr.grammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName, ast.getToken(),
 								charsString, setText);
 						charactersCollision = true;

@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime;
 
@@ -61,27 +62,27 @@ public class ANTLRMessage {
 		return args;
     }
 
-	public ST getMessageTemplate(bool verbose) {
-		ST messageST = new ST(getErrorType().msg);
-		messageST.impl.name = errorType.name();
+	public Template getMessageTemplate(bool verbose) {
+        Template messageST = new Template(getErrorType().msg);
+		messageST.impl.Name = errorType.name;
 
-		messageST.add("verbose", verbose);
+		messageST.Add("verbose", verbose);
 		Object[] args = getArgs();
-		for (int i=0; i<args.length; i++) {
+		for (int i=0; i<args.Length; i++) {
 			String attr = "arg";
 			if ( i>0 ) attr += i + 1;
-			messageST.add(attr, args[i]);
+			messageST.Add(attr, args[i]);
 		}
-		if ( args.length<2 ) messageST.add("arg2", null); // some messages ref arg2
+		if ( args.Length <2 ) messageST.Add("arg2", null); // some messages ref arg2
 
 		Exception cause = getCause();
 		if ( cause!=null ) {
-			messageST.add("exception", cause);
-			messageST.add("stackTrace", cause.getStackTrace());
+			messageST.Add("exception", cause);
+			messageST.Add("stackTrace", cause.StackTrace);
 		}
 		else {
-			messageST.add("exception", null); // avoid ST error msg
-			messageST.add("stackTrace", null);
+			messageST.Add("exception", null); // avoid ST error msg
+			messageST.Add("stackTrace", null);
 		}
 
 		return messageST;

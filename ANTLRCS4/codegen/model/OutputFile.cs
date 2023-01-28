@@ -33,9 +33,9 @@ public abstract class OutputFile : OutputModelObject {
 	public Dictionary<String, Action> buildNamedActions(Grammar g, Predicate<ActionAST> filter) {
 		Dictionary<String, Action> namedActions = new ();
         foreach (String name in g.namedActions.Keys) {
-			ActionAST ast = g.namedActions.get(name);
-			if(filter==null || filter.test(ast))
-				namedActions.put(name, new Action(factory, ast));
+			ActionAST ast = g.namedActions[(name)];
+			if(filter==null || filter(ast))
+				namedActions[name]=new Action(factory, ast);
 		}
 		return namedActions;
 	}

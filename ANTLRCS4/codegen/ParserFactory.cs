@@ -159,7 +159,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 	public Choice getChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST labelAST) {
 		int decision = ((DecisionState)blkAST.atnState).decision;
 		Choice c;
-		if ( !g.tool.force_atn && AnalysisPipeline.disjoint(g.decisionLOOK.get(decision)) ) {
+		if ( !g.tool.force_atn && AnalysisPipeline.disjoint(g.decisionLOOK[decision]) ) {
 			c = getLL1ChoiceBlock(blkAST, alts);
 		}
 		else {
@@ -195,7 +195,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 				decision = ((DecisionState)ebnfRoot.atnState).decision;
 			}
 
-			if ( AnalysisPipeline.disjoint(g.decisionLOOK.get(decision)) ) {
+			if ( AnalysisPipeline.disjoint(g.decisionLOOK[decision]) ) {
 				return getLL1EBNFBlock(ebnfRoot, alts);
 			}
 		}
@@ -220,15 +220,15 @@ public class ParserFactory : DefaultOutputModelFactory {
 		Choice c = null;
 		switch ( ebnf ) {
 			case ANTLRParser.OPTIONAL :
-				if ( alts.size()==1 ) c = new LL1OptionalBlockSingleAlt(this, ebnfRoot, alts);
+				if ( alts.Count==1 ) c = new LL1OptionalBlockSingleAlt(this, ebnfRoot, alts);
 				else c = new LL1OptionalBlock(this, ebnfRoot, alts);
 				break;
 			case ANTLRParser.CLOSURE :
-				if ( alts.size()==1 ) c = new LL1StarBlockSingleAlt(this, ebnfRoot, alts);
+				if ( alts.Count==1 ) c = new LL1StarBlockSingleAlt(this, ebnfRoot, alts);
 				else c = getComplexEBNFBlock(ebnfRoot, alts);
 				break;
 			case ANTLRParser.POSITIVE_CLOSURE :
-				if ( alts.size()==1 ) c = new LL1PlusBlockSingleAlt(this, ebnfRoot, alts);
+				if ( alts.Count ==1 ) c = new LL1PlusBlockSingleAlt(this, ebnfRoot, alts);
 				else c = getComplexEBNFBlock(ebnfRoot, alts);
 				break;
 		}
@@ -264,7 +264,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		Alternative currentOuterMostAlt = getCurrentOuterMostAlt();
 		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.getText());
 		bool actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.getText());
-		return	op.getLabels().isEmpty() &&	(actionRefsAsToken || actionRefsAsRule);
+		return	op.getLabels().Count==0 &&	(actionRefsAsToken || actionRefsAsRule);
 	}
 
 	// support
@@ -273,7 +273,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		Decl d;
 		if ( ast.getType()==ANTLRParser.SET || ast.getType()==ANTLRParser.WILDCARD ) {
 			String implLabel =
-				gen.getTarget().getImplicitSetLabel(String.valueOf(ast.token.getTokenIndex()));
+				gen.getTarget().getImplicitSetLabel((ast.token.getTokenIndex().ToString()));
 			d = getTokenLabelDecl(implLabel);
 			((TokenDecl)d).isImplicit = true;
 		}
@@ -301,7 +301,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 			Target target = gen.getTarget();
 			String listLabel = target.getListLabel(label.getText());
 			String listRuntimeName = target.escapeIfNeeded(listLabel);
-			labelOp = new AddToLabelList(this, listRuntimeName, op.getLabels().get(0));
+			labelOp = new AddToLabelList(this, listRuntimeName, op.getLabels()[0]);
 		}
 		return labelOp;
 	}

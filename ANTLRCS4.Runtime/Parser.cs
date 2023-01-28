@@ -992,7 +992,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             List<String> s = new();
             for (int d = 0; d < _interp.decisionToDFA.Length; d++)
             {
-                DFA dfa = _interp.decisionToDFA[d];
+                var dfa = _interp.decisionToDFA[d];
                 s.Add(dfa.toString(getVocabulary()));
             }
             return s;
@@ -1012,7 +1012,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             bool seenOne = false;
             for (int d = 0; d < _interp.decisionToDFA.Length; d++)
             {
-                DFA dfa = _interp.decisionToDFA[d];
+                var dfa = _interp.decisionToDFA[d];
                 if (dfa.states.Count > 0)
                 {
                     if (seenOne) dumpStream.WriteLine();

@@ -29,12 +29,12 @@ public abstract class Recognizer : OutputModelObject {
 	public List<String> symbolicNames;
 	public HashSet<String> ruleNames;
 	public ICollection<Rule> rules;
-	//@ModelElement 
+	[ModelElement] 
 		public ActionChunk superClass;
 
-    //@ModelElement 
+    [ModelElement] 
     public SerializedATN atn;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<Rule, RuleSempredFunction> sempredFuncs =
 		new ();
 
@@ -43,19 +43,19 @@ public abstract class Recognizer : OutputModelObject {
 
 		Grammar g = factory.getGrammar();
 		CodeGenerator gen = factory.getGenerator();
-		grammarFileName = new File(g.fileName).getName();
-		grammarName = g.name;
+		grammarFileName = g.fileName;
+        grammarName = g.name;
 		name = g.getRecognizerName();
 		accessLevel = g.getOptionString("accessLevel");
 		tokens = new ();
         foreach (var entry in g.tokenNameToTypeMap) {
-			int ttype = entry.getValue();
+			int ttype = entry.Value;
 			if ( ttype>0 ) {
-				tokens.put(entry.getKey(), ttype);
+				tokens[entry.Key]= ttype;
 			}
 		}
 
-		ruleNames = g.rules.keySet();
+		ruleNames = g.rules.Keys.ToHashSet();
 		rules = g.rules.Values;
 		if ( gen.getTarget() is JavaTarget ) {
 			atn = new SerializedJavaATN(factory, g.atn);
@@ -76,7 +76,7 @@ public abstract class Recognizer : OutputModelObject {
 	}
 
 	protected static List<String> translateTokenStringsToTarget(String[] tokenStrings, CodeGenerator gen) {
-		String[] result = tokenStrings.clone();
+		String[] result = (string[])tokenStrings.Clone();
 		for (int i = 0; i < tokenStrings.Length; i++) {
 			result[i] = translateTokenStringToTarget(tokenStrings[i], gen);
 		}

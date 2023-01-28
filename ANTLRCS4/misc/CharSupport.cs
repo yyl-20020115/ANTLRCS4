@@ -47,12 +47,13 @@ public class CharSupport {
 			result = "<INVALID>";
 		}
 		else {
-			String charValueEscape = c < ANTLRLiteralCharValueEscape.length ? ANTLRLiteralCharValueEscape[c] : null;
+			String charValueEscape = c < ANTLRLiteralCharValueEscape.Length ? ANTLRLiteralCharValueEscape[c] : null;
 			if (charValueEscape != null) {
 				result = charValueEscape;
 			}
-			else if (char.UnicodeBlock.of((char) c) == char.UnicodeBlock.BASIC_LATIN &&
-					!char.isISOControl((char) c)) {
+			else if (/*char.UnicodeBlock.of((char) c) == char.UnicodeBlock.BASIC_LATIN*/
+				(c>=0x20 && c<=0x7f )&&
+					!char.IsControl((char) c)) {
 				if (c == '\\') {
 					result = "\\\\";
 				}
@@ -64,9 +65,9 @@ public class CharSupport {
 				}
 			}
 			else if (c <= 0xFFFF) {
-				result = String.format("\\u%04X", c);
+				result = $"\\u{c:X4}";// String.format("\\u%04X", c);
 			} else {
-				result = String.format("\\u{%06X}", c);
+				result = $"\\u{c:X6}";// String.format("\\u{%06X}", c);
 			}
 		}
 		return '\'' + result + '\'';
@@ -78,7 +79,7 @@ public class CharSupport {
 	 */
 	public static int getCharValueFromGrammarCharLiteral(String literal) {
 		if ( literal==null || literal.Length<3 ) return -1;
-		return getCharValueFromCharInGrammarLiteral(literal.substring(1,literal.Length -1));
+		return getCharValueFromCharInGrammarLiteral(literal.Substring(1,literal.Length -1 - 1));
 	}
 
 	public static String getStringFromGrammarStringLiteral(String literal) {
@@ -117,10 +118,10 @@ public class CharSupport {
 			if ( end>n ) return null; // invalid escape sequence.
 			String esc = literal.Substring(i, end - i);
 			int c = getCharValueFromCharInGrammarLiteral(esc);
-			if ( c==-1 ) {
+			if (c == -1) {
 				return null; // invalid escape sequence.
 			}
-			else buf.appendCodePoint(c);
+			else buf.Append(char.ConvertFromUtf32(c));//.appendCodePoint(c);
 			i = end;
 		}
 		return buf.ToString();
@@ -158,7 +159,7 @@ public class CharSupport {
 				return parseHexValue(cstr, startOff, endOff);
 			default:
 				if ( cstr.StartsWith("\\u{") ) {
-					return parseHexValue(cstr, 3, cstr.indexOf('}'));
+					return parseHexValue(cstr, 3, cstr.IndexOf('}'));
 				}
 				return -1;
 		}
@@ -168,10 +169,11 @@ public class CharSupport {
 		if (startOff < 0 || endOff < 0) {
 			return -1;
 		}
-		String unicodeChars = cstr.substring(startOff, endOff);
+		String unicodeChars = cstr.Substring(startOff, endOff-startOff);
 		int result = -1;
 		try {
-			result = Integer.parseInt(unicodeChars, 16);
+			result = int.TryParse(unicodeChars, System.Globalization.NumberStyles.HexNumber,null, out var r) 
+				? r : -1; //Integer.parseInt(unicodeChars, 16);
 		}
 		catch (Exception e) {
 		}
@@ -184,13 +186,12 @@ public class CharSupport {
 
 	public static String getIntervalSetEscapedString(IntervalSet intervalSet) {
 		StringBuilder buf = new StringBuilder();
-		Iterator<Interval> iter = intervalSet.getIntervals().iterator();
-		while (iter.hasNext()) {
-			Interval interval = iter.next();
-			buf.Append(getRangeEscapedString(interval.a, interval.b));
-			if (iter.hasNext()) {
-				buf.Append(" | ");
-			}
+		bool first = true;
+		foreach(var interval in intervalSet.getIntervals())
+		{
+			if (!first) buf.Append(" | ");
+			first= false;
+            buf.Append(getRangeEscapedString(interval.a, interval.b));			
 		}
 		return buf.ToString();
 	}

@@ -91,10 +91,10 @@ public static class Utils {
 		String output = "";
 		output += "value,count\n";
 		foreach (int key in sorted.Keys) {
-			output += key+","+sorted.get(key)+"\n";
+			output += key+","+sorted[(key)]+"\n";
 		}
 		try {
-			Files.write(Paths.get(filename), output.getBytes(StandardCharsets.UTF_8));
+			File.WriteAllText((filename), output,Encoding.UTF8);
 		}
 		catch (IOException ioe) {
 			Console.Error.WriteLine(ioe);
@@ -146,7 +146,8 @@ public static class Utils {
 
 	public static void setSize<T>(List<T> list, int size) {
 		if (size < list.Count) {
-			list.subList(size, list.Count).clear();
+			list.Capacity = size;
+			//list.subList(size, list.Count).clear();
 		}
 		else {
 			while (size > list.Count) {

@@ -27,24 +27,31 @@ public class UnicodeEscapes {
 			case "Cpp":
 			case "Go":
 			case "PHP":
-				String format = char.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
-				sb.Append(String.format(format, codePoint));
-				break;
+				{
+					//String format = char.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
+					int n = new Rune(codePoint).Utf16SequenceLength;
+
+					sb.Append(n==1?$"\\u{codePoint & 0xffff:X4}": $"\\U{codePoint:X8}");
+					break;
+				}
 			case "Swift":
-				sb.Append(String.format("\\u{%04X}", codePoint));
+				sb.Append($"\\u{codePoint & 0xffff:X4}");
 				break;
 			case "Java":
 			case "JavaScript":
 			case "Dart":
 			default:
-				if (char.isSupplementaryCodePoint(codePoint)) {
-					// char is not an 'integral' type, so we have to explicitly convert
-					// to int before passing to the %X formatter or else it throws.
-					sb.Append(String.format("\\u%04X", (int)char.highSurrogate(codePoint)));
-					sb.Append(String.format("\\u%04X", (int)char.lowSurrogate(codePoint)));
-				}
-				else {
-					sb.Append(String.format("\\u%04X", codePoint));
+				string s = char.ConvertFromUtf32(codePoint);
+				if (s.Length>1) {
+                    // char is not an 'integral' type, so we have to explicitly convert
+                    // to int before passing to the %X formatter or else it throws.
+                    //sb.Append(String.format("\\u%04X", (int)char.highSurrogate(codePoint)));
+                    //sb.Append(String.format("\\u%04X", (int)char.lowSurrogate(codePoint)));
+                    sb.Append($"\\u{(int)s[0] & 0xffff:X4}");//highSurrogate
+                    sb.Append($"\\u{(int)s[1] & 0xffff:X4}");//lowSurrogate
+                }
+                else {
+					sb.Append($"\\u{codePoint&0xffff:X4}");
 				}
 				break;
 		}

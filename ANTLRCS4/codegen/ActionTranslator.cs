@@ -98,7 +98,10 @@ public class ActionTranslator : ActionSplitterListener {
 		String altLabel = node.getAltLabel();
 		if ( rf!=null ) {
 		    translator.nodeContext = rf.ruleCtx;
-	        if ( altLabel!=null ) translator.nodeContext = rf.altLabelCtxs.get(altLabel);
+			if (altLabel != null)
+			{
+				translator.nodeContext = rf.altLabelCtxs.TryGetValue(altLabel, out var r) ? r : null; 
+			}
 		}
 		ANTLRStringStream @in = new ANTLRStringStream(action);
 		@in.setLine(tokenWithinAction.getLine());
@@ -222,9 +225,9 @@ public class ActionTranslator : ActionSplitterListener {
 
 	TokenPropertyRef getTokenPropertyRef(Token x, Token y) {
 		try {
-			Type c = tokenPropToModelMap.get(y.getText());
-			ConstructorInfo ctor = c.getConstructor(typeof(StructDecl), String);
-			return ctor.newInstance(nodeContext, getTokenLabel(x.getText()));
+			Type c = tokenPropToModelMap[y.getText()];
+			ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(String) });
+			return ctor.Invoke(new object[] { nodeContext, getTokenLabel(x.getText()) }) as TokenPropertyRef;
 		}
 		catch (Exception e) {
 			factory.getGrammar().tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, e);
@@ -234,9 +237,9 @@ public class ActionTranslator : ActionSplitterListener {
 
 	RulePropertyRef getRulePropertyRef(Token x, Token prop) {
 		try {
-			Type c = (x != null ? rulePropToModelMap : thisRulePropToModelMap).get(prop.getText());
-			ConstructorInfo ctor = c.getConstructor(typeof(StructDecl), typeof(String));
-			return ctor.newInstance(nodeContext, getRuleLabel((x != null ? x : prop).getText()));
+			Type c = (x != null ? rulePropToModelMap : thisRulePropToModelMap)[prop.getText()];
+			ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(String) });
+			return ctor.Invoke(new object[] { nodeContext, getRuleLabel((x != null ? x : prop).getText()) }) as RulePropertyRef;
 		}
 		catch (Exception e) {
 			factory.getGrammar().tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, e, prop.getText());

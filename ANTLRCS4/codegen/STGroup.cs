@@ -6,7 +6,4 @@
 
 namespace org.antlr.v4.codegen
 {
-    public class STGroup
-    {
-    }
 }

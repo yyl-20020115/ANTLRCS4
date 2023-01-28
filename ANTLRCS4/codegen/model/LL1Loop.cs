@@ -17,9 +17,9 @@ public abstract class LL1Loop : Choice {
 	public int blockStartStateNumber;
 	public int loopBackStateNumber;
 
-	//@ModelElement 
+	[ModelElement] 
 	public OutputModelObject loopExpr;
-	//@ModelElement
+	[ModelElement]
 	public List<SrcOp> iteration;
 
 	public LL1Loop(OutputModelFactory factory,

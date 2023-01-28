@@ -140,7 +140,7 @@ public class RecognizerSharedState
         this.backtracking = state.backtracking;
         if (state.ruleMemo != null)
         {
-            this.ruleMemo = new Dictionary<int, int>()[state.ruleMemo.Length];
+            this.ruleMemo = new Dictionary<int, int>[state.ruleMemo.Length];
             Array.Copy(state.ruleMemo, 0, this.ruleMemo, 0, state.ruleMemo.Length);
         }
         this.token = state.token;

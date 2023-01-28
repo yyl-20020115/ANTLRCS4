@@ -12,9 +12,9 @@ namespace org.antlr.v4.codegen.model;
 
 /** (A B C)? */
 public class LL1OptionalBlockSingleAlt : LL1Choice {
-	//@ModelElement 
+	[ModelElement] 
 		public SrcOp expr;
-	//@ModelElement 
+	[ModelElement] 
 		public List<SrcOp> followExpr; // might not work in template if size>1
 
 	public LL1OptionalBlockSingleAlt(OutputModelFactory factory,

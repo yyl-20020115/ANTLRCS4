@@ -10,7 +10,7 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen.model;
 
 public class PlusBlock : Loop {
-    //@ModelElement 
+    [ModelElement] 
     public ThrowNoViableAlt error;
 
 	public PlusBlock(OutputModelFactory factory,

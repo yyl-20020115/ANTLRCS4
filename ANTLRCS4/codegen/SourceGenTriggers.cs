@@ -3,15 +3,9 @@
 using org.antlr.runtime.tree;
 using org.antlr.runtime;
 using org.antlr.v4.codegen.model;
-using org.antlr.v4.codegen;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
-using org.antlr.v4.tool;
-using static org.antlr.v4.tool.Grammar;
-using System.Reflection.Emit;
-using System.Xml.Linq;
-using System;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.parse;
 
@@ -124,14 +118,22 @@ public class SourceGenTriggers : TreeParser
 
     // delegators
 
+    protected DFA7 dfa7;
 
+    public SourceGenTriggers(TreeNodeStream input, OutputModelController controller)
+        : this(input)
+    {
+        this.controller = controller;
+    }
     public SourceGenTriggers(TreeNodeStream input)
         : this(input, new RecognizerSharedState())
     {
     }
+
     public SourceGenTriggers(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
+        dfa7 = new DFA7(this);
     }
 
     //@Override 
@@ -142,11 +144,6 @@ public class SourceGenTriggers : TreeParser
 
     public OutputModelController controller;
     public bool hasLookaheadBlock;
-    public SourceGenTriggers(TreeNodeStream input, OutputModelController controller)
-        : this(input)
-    {
-        this.controller = controller;
-    }
 
 
 
@@ -290,7 +287,7 @@ public class SourceGenTriggers : TreeParser
                 match(input, Token.UP, null);
 
 
-                if (alts.Count == 1 && ebnfRoot == null) return alts;
+                if (alts.Count == 1 && ebnfRoot == null) return alts.Cast<SrcOp>().ToList();
                 if (ebnfRoot == null)
                 {
                     omos = DefaultOutputModelFactory.list(controller.getChoiceBlock((BlockAST)blk, alts, label));
@@ -2059,7 +2056,6 @@ public class SourceGenTriggers : TreeParser
     // Delegated rules
 
 
-    protected DFA7 dfa7 = new DFA7(this);
 
 
     //static final short[] DFA7_eot = DFA.unpackEncodedString(DFA7_eotS);
@@ -2090,13 +2086,13 @@ public class SourceGenTriggers : TreeParser
         return shorts;
     }
 
-    static readonly short[] DFA7_eotS = Convert(new char[] { '\u0014', '\uffff' });
-    static readonly short[] DFA7_eofS = Convert(new char[] { '\u0014', '\uffff' });
-    static readonly char[] DFA7_minS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0001', '\u000a', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
-    static readonly char[] DFA7_maxS = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
-    static readonly short[] DFA7_acceptS = Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
-    static readonly short[] DFA7_specialS = Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
-    static readonly short[][] DFA7_transitionS = new short[][]{
+    static readonly short[] DFA7_eot = Convert(new char[] { '\u0014', '\uffff' });
+    static readonly short[] DFA7_eof = Convert(new char[] { '\u0014', '\uffff' });
+    static readonly char[] DFA7_min = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0001', '\u000a', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
+    static readonly char[] DFA7_max = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
+    static readonly short[] DFA7_accept = Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
+    static readonly short[] DFA7_special = Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
+    static readonly short[][] DFA7_transition = new short[][]{
     Convert(new char[] {'\u0001','\u0001'}),
     Convert(new char[] {'\u0001','\u0002'}),
     Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0001','\uffff','\u0001','\u0003','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
@@ -2120,7 +2116,7 @@ public class SourceGenTriggers : TreeParser
 };
 
 
-    protected class DFA7 : DFA
+    protected class DFA7 : antlr.runtime.DFA
     {
 
         public DFA7(BaseRecognizer recognizer)
@@ -2136,7 +2132,7 @@ public class SourceGenTriggers : TreeParser
             this.transition = DFA7_transition;
         }
         //@Override
-        public String getDescription()
+        public override String getDescription()
         {
             return "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
         }

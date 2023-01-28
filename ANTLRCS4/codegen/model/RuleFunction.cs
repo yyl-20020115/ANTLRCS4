@@ -33,23 +33,23 @@ public class RuleFunction : OutputModelObject {
 	public readonly AltLabelStructDecl[] altToContext;
 	public bool hasLookaheadBlock;
 
-	//@ModelElement 
+	[ModelElement] 
 		public List<SrcOp> code;
-    //@ModelElement 
+    [ModelElement] 
     public OrderedHashSet<Decl> locals; // TODO: move into ctx?
-	//@ModelElement 
+	[ModelElement] 
 		public ICollection<AttributeDecl> args = null;
-    //@ModelElement 
+    [ModelElement] 
     public StructDecl ruleCtx;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<String,AltLabelStructDecl> altLabelCtxs;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<String,Action> namedActions;
-    //@ModelElement 
+    [ModelElement] 
     public Action finallyAction;
-    //@ModelElement 
+    [ModelElement] 
     public List<ExceptionClause> exceptions;
-    //@ModelElement 
+    [ModelElement] 
     public List<SrcOp> postamble;
 
 	public RuleFunction(OutputModelFactory factory, Rule r): base(factory)
@@ -58,7 +58,7 @@ public class RuleFunction : OutputModelObject {
 		this.name = r.name;
 		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(r.name);
 		this.rule = r;
-		modifiers = RuntimeUtils.nodesToStrings(r.modifiers);
+		modifiers = Utils.nodesToStrings(r.modifiers);
 
 		index = r.index;
 
@@ -156,7 +156,7 @@ public class RuleFunction : OutputModelObject {
         HashSet<String> nonOptional = new HashSet<String>();
 		List<GrammarAST> allRefs = new ();
 		bool firstAlt = true;
-		IntervalSet reftypes = new IntervalSet(RULE_REF, TOKEN_REF, STRING_LITERAL);
+		IntervalSet reftypes = new IntervalSet(ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF, ANTLRParser.STRING_LITERAL);
 		foreach(AltAST ast in altASTs) {
 			List<GrammarAST> refs = getRuleTokens(ast.getNodesWithType(reftypes));
 			allRefs.AddRange(refs);
@@ -227,7 +227,7 @@ public class RuleFunction : OutputModelObject {
 
 	private String getName(GrammarAST token) {
 		String tokenText = token.getText();
-		String tokenName = token.getType() != STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
+		String tokenName = token.getType() != ANTLRParser.STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
 		return tokenName == null || tokenName.StartsWith("T__") ? null : tokenName; // Do not include tokens with auto generated names
 	}
 
@@ -251,7 +251,7 @@ public class RuleFunction : OutputModelObject {
 
 	public List<Decl> getDeclForAltElement(GrammarAST t, String refLabelName, bool needList, bool optional) {
 		List<Decl> decls = new ();
-		if ( t.getType()==RULE_REF ) {
+		if ( t.getType()== ANTLRParser.RULE_REF) {
 			Rule rref = factory.getGrammar().getRule(t.getText());
 			String ctxName = factory.getGenerator().getTarget()
 							 .getRuleFunctionContextStructName(rref);
@@ -290,8 +290,7 @@ public class RuleFunction : OutputModelObject {
 		// if we found code blk and might be alt label, try to Add to that label ctx
 		if ( alt!=null && altLabelCtxs!=null ) {
 //			Console.Out.WriteLine(d.name+" lives in alt "+alt.alt.altNum);
-			AltLabelStructDecl altCtx = altLabelCtxs.get(altLabel);
-			if ( altCtx!=null ) { // we have an alt ctx
+			if (altLabelCtxs.TryGetValue(altLabel,out var altCtx)) { // we have an alt ctx
 //				Console.Out.WriteLine("ctx is "+ altCtx.name);
 				altCtx.addDecl(d);
 				return;

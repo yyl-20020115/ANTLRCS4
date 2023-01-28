@@ -29,7 +29,7 @@ public class SemPred : Action {
 	 * <p>
 	 * {@code {pred}?<fail={"Java literal"}>}</p>
 	 */
-	//@ModelElement 
+	[ModelElement] 
 		public List<ActionChunk> failChunks;
 
 	public SemPred(OutputModelFactory factory, ActionAST ast): base(factory, ast)

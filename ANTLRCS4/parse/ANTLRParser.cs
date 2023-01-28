@@ -1631,10 +1631,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop11;
+                            goto exit11;
+                            //break loop11;
                     }
                 }
-
+            exit11:
                 RBRACE46 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_channelsSpec1040);
             }
 
@@ -2277,6 +2278,27 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    private void endResync()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void consumeUntil(TokenStream input, BitSet followSet)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void beginResync()
+    {
+        throw new NotImplementedException();
+    }
+
+    private BitSet computeErrorRecoverySet()
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "sync"
 
 

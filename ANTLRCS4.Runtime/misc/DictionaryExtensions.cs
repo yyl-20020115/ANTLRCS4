@@ -28,4 +28,14 @@ public static class DictionaryExtensions
         dictionary[key] = value;
         return previous;
     }
+    public static IDictionary<TKey, TValue> AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IDictionary<TKey, TValue> other)
+        where TValue : class
+    {
+        foreach(var p in other)
+        {
+            dictionary[p.Key] = p.Value;
+        }
+
+        return dictionary;
+    }
 }

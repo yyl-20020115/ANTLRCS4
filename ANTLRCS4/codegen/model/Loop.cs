@@ -13,7 +13,7 @@ public class Loop : Choice {
 	public int loopBackStateNumber;
 	public readonly int exitAlt;
 
-	//@ModelElement 
+	[ModelElement] 
 		public List<SrcOp> iteration;
 
 	public Loop(OutputModelFactory factory,

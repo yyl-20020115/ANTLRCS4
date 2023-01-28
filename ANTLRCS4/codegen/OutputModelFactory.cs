@@ -10,8 +10,8 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using Lexer = org.antlr.v4.runtime.Lexer;
-using Parser = org.antlr.v4.runtime.Parser;
+using Lexer = org.antlr.v4.codegen.model.Lexer;
+using Parser = org.antlr.v4.codegen.model.Parser;
 
 namespace org.antlr.v4.codegen;
 

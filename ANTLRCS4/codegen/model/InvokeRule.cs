@@ -20,7 +20,7 @@ public class InvokeRule : RuleElement , LabeledOp {
 	public readonly OrderedHashSet<Decl> labels = new OrderedHashSet<Decl>(); // TODO: should need just 1
 	public readonly String ctxName;
 
-	//@ModelElement
+	[ModelElement]
 	public List<ActionChunk> argExprsChunks;
 
 	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST): base(factory, ast)

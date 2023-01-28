@@ -12,9 +12,9 @@ namespace org.antlr.v4.codegen.model;
 
 public class MatchSet : MatchToken
 {
-    //@ModelElement 
+    [ModelElement] 
     public TestSetInline expr;
-    //@ModelElement 
+    [ModelElement] 
     public CaptureNextTokenType capture;
 
     public MatchSet(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)

@@ -10,7 +10,7 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
 public class SetAttr : SymbolRefChunk {
-	//@ModelElement 
+	[ModelElement] 
 	public List<ActionChunk> rhsChunks;
 
 	public SetAttr(StructDecl ctx, String name, String escapedName, List<ActionChunk> rhsChunks)

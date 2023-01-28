@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool;
 
@@ -25,48 +26,48 @@ public class CodeGenPipeline {
 
 		if ( g.isLexer() ) {
 			if (gen.getTarget().needsHeader()) {
-				ST lexer = gen.generateLexer(true); // Header file if needed.
+                Template lexer2 = gen.generateLexer(true); // Header file if needed.
 				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					writeRecognizer(lexer, gen, true);
+					writeRecognizer(lexer2, gen, true);
 				}
 			}
-			ST lexer = gen.generateLexer(false);
+            Template lexer = gen.generateLexer(false);
 			if (g.tool.errMgr.getNumErrors() == errorCount) {
 				writeRecognizer(lexer, gen, false);
 			}
 		}
 		else {
 			if (gen.getTarget().needsHeader()) {
-				ST parser = gen.generateParser(true);
+                Template parser2 = gen.generateParser(true);
 				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					writeRecognizer(parser, gen, true);
+					writeRecognizer(parser2, gen, true);
 				}
 			}
-			ST parser = gen.generateParser(false);
+            Template parser = gen.generateParser(false);
 			if (g.tool.errMgr.getNumErrors() == errorCount) {
 				writeRecognizer(parser, gen, false);
 			}
 
 			if ( g.tool.gen_listener ) {
 				if (gen.getTarget().needsHeader()) {
-					ST listener = gen.generateListener(true);
+                    Template listener2 = gen.generateListener(true);
 					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeListener(listener, true);
+						gen.writeListener(listener2, true);
 					}
 				}
-				ST listener = gen.generateListener(false);
+                Template listener3 = gen.generateListener(false);
 				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					gen.writeListener(listener, false);
+					gen.writeListener(listener3, false);
 				}
 
 				if (gen.getTarget().needsHeader()) {
-					ST baseListener = gen.generateBaseListener(true);
+                    Template baseListener = gen.generateBaseListener(true);
 					if (g.tool.errMgr.getNumErrors() == errorCount) {
 						gen.writeBaseListener(baseListener, true);
 					}
 				}
 				if (gen.getTarget().wantsBaseListener()) {
-					ST baseListener = gen.generateBaseListener(false);
+                    Template baseListener = gen.generateBaseListener(false);
 					if ( g.tool.errMgr.getNumErrors()==errorCount ) {
 						gen.writeBaseListener(baseListener, false);
 					}
@@ -74,24 +75,24 @@ public class CodeGenPipeline {
 			}
 			if ( g.tool.gen_visitor ) {
 				if (gen.getTarget().needsHeader()) {
-					ST visitor = gen.generateVisitor(true);
+                    Template visitor2 = gen.generateVisitor(true);
 					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeVisitor(visitor, true);
+						gen.writeVisitor(visitor2, true);
 					}
 				}
-				ST visitor = gen.generateVisitor(false);
+                Template visitor = gen.generateVisitor(false);
 				if (g.tool.errMgr.getNumErrors() == errorCount) {
 					gen.writeVisitor(visitor, false);
 				}
 
 				if (gen.getTarget().needsHeader()) {
-					ST baseVisitor = gen.generateBaseVisitor(true);
+                    Template baseVisitor = gen.generateBaseVisitor(true);
 					if (g.tool.errMgr.getNumErrors() == errorCount) {
 						gen.writeBaseVisitor(baseVisitor, true);
 					}
 				}
 				if (gen.getTarget().wantsBaseVisitor()) {
-					ST baseVisitor = gen.generateBaseVisitor(false);
+                    Template baseVisitor = gen.generateBaseVisitor(false);
 					if ( g.tool.errMgr.getNumErrors()==errorCount ) {
 						gen.writeBaseVisitor(baseVisitor, false);
 					}
@@ -101,17 +102,18 @@ public class CodeGenPipeline {
 		gen.writeVocabFile();
 	}
 
-	protected void writeRecognizer(ST template, CodeGenerator gen, bool header) {
+	protected void writeRecognizer(Template template, CodeGenerator gen, bool header) {
 		if ( g.tool.launch_ST_inspector ) {
-			STViz viz = template.inspect();
-			if (g.tool.ST_inspector_wait_for_close) {
-				try {
-					viz.waitForClose();
-				}
-				catch (InterruptedException ex) {
-					g.tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
-				}
-			}
+			//NOTICE: not supported
+			//STViz viz = template.Inspect();
+			//if (g.tool.ST_inspector_wait_for_close) {
+			//	try {
+			//		viz.waitForClose();
+			//	}
+			//	catch (Exception ex) {
+			//		g.tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
+			//	}
+			//}
 		}
 
 		gen.writeRecognizer(template, header);

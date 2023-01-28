@@ -1,3 +1,4 @@
+using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using System.Text;
@@ -33,7 +34,7 @@ public class RangeBorderCharactersData {
 		if (reportRangeContainsNotImpliedCharacters && mixOfLowerAndUpperCharCase && from <= 0x7F && to <= 0x7F) {
 			StringBuilder notImpliedCharacters = new StringBuilder();
 			for (int i = from; i < to; i++) {
-				if (!char.IsLetter(i)) {
+				if (!char.IsLetter((char)i)) {
 					notImpliedCharacters.Append((char)i);
 				}
 			}

@@ -178,15 +178,17 @@ public class ANTLRLexer : Lexer
     {
         return new Lexer[] { };
     }
+    protected DFA2 dfa2;
+    protected DFA32 dfa32;
 
-    public ANTLRLexer() { }
     public ANTLRLexer(CharStream input) : this(input, new RecognizerSharedState())
     {
         ;
     }
     public ANTLRLexer(CharStream input, RecognizerSharedState state) : base(input, state)
     {
-        ;
+        dfa2 = new DFA2(this);
+        dfa32 = new DFA32(this);
     }
     //@Override 
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRLexer.g"; }
@@ -246,6 +248,7 @@ public class ANTLRLexer : Lexer
                         break;
                     default:
                         alt6 = 3;
+                        break;
                 }
                 switch (alt6)
                 {
@@ -302,10 +305,12 @@ public class ANTLRLexer : Lexer
                                                     break;
 
                                                 default:
-                                                    break loop1;
+                                                    goto exit1;
+                                                    //break loop1;
                                             }
                                         }
-
+                                    exit1:
+                                        ;
                                     }
                                     break;
 
@@ -422,10 +427,11 @@ public class ANTLRLexer : Lexer
                                         break;
 
                                     default:
-                                        break loop4;
+                                        goto exit4;
+                                        //break loop4;
                                 }
                             }
-
+                        exit4:
                             // org\\antlr\\v4\\parse\\ANTLRLexer.g:255:13: ( '*/' |)
                             int alt5 = 2;
                             int LA5_0 = input.LA(1);
@@ -566,7 +572,7 @@ public class ANTLRLexer : Lexer
                             _type = ARG_ACTION;
                             // Set the token text to our gathered string minus outer [ ]
                             String t = getText();
-                            t = t.substring(1, t.Length - 1);
+                            t = t.Substring(1, t.Length - 1 - 1);
                             setText(t);
                         }
                     }
@@ -646,10 +652,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop8;
+                            goto exit8;
+                            //break loop8;
                     }
                 }
-
+                exit8:
                 match(']'); if (state.failed) return;
             }
 
@@ -753,10 +760,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop9;
+                            goto exit9;
+                            //break loop9;
                     }
                 }
-
+                exit9:
                 match(']'); if (state.failed) return;
             }
 
@@ -917,10 +925,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop11;
+                            goto exit11;
+                            //break loop11;
                     }
                 }
-
+                exit11:
                 // org\\antlr\\v4\\parse\\ANTLRLexer.g:416:2: ( '}' |)
                 int alt12 = 2;
                 int LA12_0 = input.LA(1);
@@ -1009,10 +1018,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop13;
+                            goto exit13;
+                            //break loop13;
                     }
                 }
-
+                exit13:
                 match('{'); if (state.failed) return;
             }
 
@@ -1070,10 +1080,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop14;
+                            goto exit14;
+                            //break loop14;
                     }
                 }
-
+                exit14:
                 match('{'); if (state.failed) return;
             }
 
@@ -2171,10 +2182,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop17;
+                            goto exit17;
+                            //break loop17;
                     }
                 }
-
+            exit17:
                 match('\''); if (state.failed) return;
             }
 
@@ -2286,10 +2298,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop18;
+                            goto exit18;
+                            //break loop18;
                     }
                 }
-
+            exit18:
                 match('\"'); if (state.failed) return;
             }
 
@@ -2364,14 +2377,15 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            if (cnt19 >= 1) break loop19;
+                            if (cnt19 >= 1) goto exit19;// break loop19;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(19, input);
                             throw eee;
                     }
                     cnt19++;
                 }
-
+            exit19:
+                ;
             }
 
             state.type = _type;
@@ -2987,7 +3001,7 @@ public class ANTLRLexer : Lexer
                     {
                         Interval badRange = Interval.of(getCharIndex() - 2 - hCount, getCharIndex());
                         String lastChar = input.substring(badRange.b, badRange.b);
-                        if (lastChar.codePointAt(0) == '\'')
+                        if (char.ConvertToUtf32( lastChar,0) == '\'')
                         {
                             badRange.b--;
                         }
@@ -3783,8 +3797,11 @@ public class ANTLRLexer : Lexer
         throw new NotImplementedException();
     }
 
-    protected DFA2 dfa2 = new DFA2(this);
-    protected DFA32 dfa32 = new DFA32(this);
+    internal CharStream getCharStream()
+    {
+        throw new NotImplementedException();
+    }
+
 
     //static final short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
     //    static final short[] DFA2_eof = DFA.unpackEncodedString(DFA2_eofS);
@@ -3804,13 +3821,13 @@ public class ANTLRLexer : Lexer
     //    }
     //}
 
-    static readonly short[] DFA2_eotS = RuntimeUtils.Convert(new char[] { '\u0002', '\u0002', '\u0001', '\uffff', '\u000e', '\u0002', '\u0001', '\uffff', '\u0003', '\u0002', '\u0001', '\uffff', '\u0002', '\u0002', '\u0002', '\uffff' });
-    static readonly short[] DFA2_eofS = RuntimeUtils.Convert(new char[] { '\u001a', '\uffff' });
-    static readonly char[] DFA2_minS = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0002', '\u0009', '\u0003', '\u0000', '\u0001', '\u0009', '\u0001', '\uffff', '\u0003', '\u0000', '\u0001', '\uffff', '\u0001', '\u0009', '\u0003', '\u0000' };
-    static readonly char[] DFA2_maxS = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0001', '\u0020', '\u0001', '\u0022', '\u0003', '\uffff', '\u0001', '\u0020', '\u0001', '\uffff', '\u0003', '\uffff', '\u0001', '\uffff', '\u0001', '\u0039', '\u0001', '\uffff', '\u0002', '\u0000' };
-    static readonly short[] DFA2_acceptS = RuntimeUtils.Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0002', '\u000e', '\uffff', '\u0001', '\u0001', '\u0003', '\uffff', '\u0001', '\u0001', '\u0004', '\uffff' });
-    static readonly short[] DFA2_specialS = RuntimeUtils.Convert(new char[] { '\u000d', '\uffff', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0005', '\u0002', '\uffff', '\u0001', '\u0003', '\u0001', '\u0007', '\u0001', '\u0008', '\u0002', '\uffff', '\u0001', '\u0006', '\u0001', '\u0001', '\u0001', '\u0000', '\u007d', '\u003e' });
-    static readonly short[][] DFA2_transitionS = new short[][]{
+    static readonly short[] DFA2_eot = RuntimeUtils.Convert(new char[] { '\u0002', '\u0002', '\u0001', '\uffff', '\u000e', '\u0002', '\u0001', '\uffff', '\u0003', '\u0002', '\u0001', '\uffff', '\u0002', '\u0002', '\u0002', '\uffff' });
+    static readonly short[] DFA2_eof = RuntimeUtils.Convert(new char[] { '\u001a', '\uffff' });
+    static readonly char[] DFA2_min = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0002', '\u0009', '\u0003', '\u0000', '\u0001', '\u0009', '\u0001', '\uffff', '\u0003', '\u0000', '\u0001', '\uffff', '\u0001', '\u0009', '\u0003', '\u0000' };
+    static readonly char[] DFA2_max = new char[] { '\u0001', '\u0020', '\u0001', '\u0024', '\u0001', '\uffff', '\u0001', '\u0041', '\u0001', '\u004e', '\u0001', '\u0054', '\u0001', '\u004c', '\u0001', '\u0052', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0063', '\u0001', '\u0020', '\u0001', '\u0022', '\u0003', '\uffff', '\u0001', '\u0020', '\u0001', '\uffff', '\u0003', '\uffff', '\u0001', '\uffff', '\u0001', '\u0039', '\u0001', '\uffff', '\u0002', '\u0000' };
+    static readonly short[] DFA2_accept = RuntimeUtils.Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0002', '\u000e', '\uffff', '\u0001', '\u0001', '\u0003', '\uffff', '\u0001', '\u0001', '\u0004', '\uffff' });
+    static readonly short[] DFA2_special = RuntimeUtils.Convert(new char[] { '\u000d', '\uffff', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0005', '\u0002', '\uffff', '\u0001', '\u0003', '\u0001', '\u0007', '\u0001', '\u0008', '\u0002', '\uffff', '\u0001', '\u0006', '\u0001', '\u0001', '\u0001', '\u0000', '\u007d', '\u003e' });
+    static readonly short[][] DFA2_transition = new short[][]{
     RuntimeUtils.Convert(new char[] {'\u0001','\u0001'}),
     RuntimeUtils.Convert(new char[] {'\u0001','\u0003'}),
     RuntimeUtils.Convert(new char[0]),
@@ -3841,12 +3858,14 @@ public class ANTLRLexer : Lexer
 
 
 
-    protected class DFA2 : DFA
+    protected class DFA2 : antlr.runtime.DFA
     {
 
+        protected readonly ANTLRLexer lexer;
 
-        public DFA2(BaseRecognizer recognizer)
+        public DFA2(BaseRecognizer recognizer, ANTLRLexer lexer)
         {
+            this.lexer = lexer;
             this.recognizer = recognizer;
             this.decisionNumber = 2;
             this.eot = DFA2_eot;
@@ -3875,7 +3894,7 @@ public class ANTLRLexer : Lexer
                     int index2_25 = input.index();
                     input.rewind();
                     s = -1;
-                    if ((synpred1_ANTLRLexer())) { s = 21; }
+                    if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
                     else if ((true)) { s = 2; }
 
                     input.seek(index2_25);
@@ -3887,7 +3906,7 @@ public class ANTLRLexer : Lexer
                     int index2_24 = input.index();
                     input.rewind();
                     s = -1;
-                    if ((synpred1_ANTLRLexer())) { s = 21; }
+                    if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
                     else if ((true)) { s = 2; }
 
                     input.seek(index2_24);
@@ -3902,7 +3921,7 @@ public class ANTLRLexer : Lexer
                     if ((LA2_13 == '\\')) { s = 14; }
                     else if (((LA2_13 >= '\u0000' && LA2_13 <= '\t') || (LA2_13 >= '\u000B' && LA2_13 <= '\f') || (LA2_13 >= '\u000E' && LA2_13 <= '!') || (LA2_13 >= '#' && LA2_13 <= '[') || (LA2_13 >= ']' && LA2_13 <= '\uFFFF'))) { s = 15; }
                     else if ((LA2_13 == '\"')) { s = 16; }
-                    else if ((LA2_13 == '\n' || LA2_13 == '\r') && (synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_13 == '\n' || LA2_13 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.seek(index2_13);
@@ -3918,7 +3937,7 @@ public class ANTLRLexer : Lexer
                     else if ((LA2_18 == '\\')) { s = 14; }
                     else if ((LA2_18 == '\t' || LA2_18 == '\f' || LA2_18 == ' ')) { s = 23; }
                     else if (((LA2_18 >= '\u0000' && LA2_18 <= '\b') || LA2_18 == '\u000B' || (LA2_18 >= '\u000E' && LA2_18 <= '\u001F') || LA2_18 == '!' || (LA2_18 >= '#' && LA2_18 <= '[') || (LA2_18 >= ']' && LA2_18 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_18 == '\n' || LA2_18 == '\r') && (synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_18 == '\n' || LA2_18 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.seek(index2_18);
@@ -3933,7 +3952,7 @@ public class ANTLRLexer : Lexer
                     if ((LA2_14 == '\"')) { s = 18; }
                     else if ((LA2_14 == '\\')) { s = 19; }
                     else if (((LA2_14 >= '\u0000' && LA2_14 <= '\t') || (LA2_14 >= '\u000B' && LA2_14 <= '\f') || (LA2_14 >= '\u000E' && LA2_14 <= '!') || (LA2_14 >= '#' && LA2_14 <= '[') || (LA2_14 >= ']' && LA2_14 <= '\uFFFF'))) { s = 20; }
-                    else if ((LA2_14 == '\n' || LA2_14 == '\r') && (synpred1_ANTLRLexer())) { s = 21; }
+                    else if ((LA2_14 == '\n' || LA2_14 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 21; }
                     else s = 2;
 
                     input.seek(index2_14);
@@ -3948,7 +3967,7 @@ public class ANTLRLexer : Lexer
                     if ((LA2_15 == '\"')) { s = 16; }
                     else if ((LA2_15 == '\\')) { s = 14; }
                     else if (((LA2_15 >= '\u0000' && LA2_15 <= '\t') || (LA2_15 >= '\u000B' && LA2_15 <= '\f') || (LA2_15 >= '\u000E' && LA2_15 <= '!') || (LA2_15 >= '#' && LA2_15 <= '[') || (LA2_15 >= ']' && LA2_15 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_15 == '\n' || LA2_15 == '\r') && (synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_15 == '\n' || LA2_15 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.seek(index2_15);
@@ -3965,7 +3984,7 @@ public class ANTLRLexer : Lexer
                     else if (((LA2_23 >= '0' && LA2_23 <= '9'))) { s = 25; }
                     else if ((LA2_23 == '\t' || LA2_23 == '\f' || LA2_23 == ' ')) { s = 23; }
                     else if (((LA2_23 >= '\u0000' && LA2_23 <= '\b') || LA2_23 == '\u000B' || (LA2_23 >= '\u000E' && LA2_23 <= '\u001F') || LA2_23 == '!' || (LA2_23 >= '#' && LA2_23 <= '/') || (LA2_23 >= ':' && LA2_23 <= '[') || (LA2_23 >= ']' && LA2_23 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_23 == '\n' || LA2_23 == '\r') && (synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_23 == '\n' || LA2_23 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.seek(index2_23);
@@ -3980,7 +3999,7 @@ public class ANTLRLexer : Lexer
                     if ((LA2_19 == '\"')) { s = 18; }
                     else if ((LA2_19 == '\\')) { s = 19; }
                     else if (((LA2_19 >= '\u0000' && LA2_19 <= '\t') || (LA2_19 >= '\u000B' && LA2_19 <= '\f') || (LA2_19 >= '\u000E' && LA2_19 <= '!') || (LA2_19 >= '#' && LA2_19 <= '[') || (LA2_19 >= ']' && LA2_19 <= '\uFFFF'))) { s = 20; }
-                    else if ((LA2_19 == '\n' || LA2_19 == '\r') && (synpred1_ANTLRLexer())) { s = 21; }
+                    else if ((LA2_19 == '\n' || LA2_19 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 21; }
                     else s = 2;
 
                     input.seek(index2_19);
@@ -3995,14 +4014,14 @@ public class ANTLRLexer : Lexer
                     if ((LA2_20 == '\"')) { s = 16; }
                     else if ((LA2_20 == '\\')) { s = 14; }
                     else if (((LA2_20 >= '\u0000' && LA2_20 <= '\t') || (LA2_20 >= '\u000B' && LA2_20 <= '\f') || (LA2_20 >= '\u000E' && LA2_20 <= '!') || (LA2_20 >= '#' && LA2_20 <= '[') || (LA2_20 >= ']' && LA2_20 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_20 == '\n' || LA2_20 == '\r') && (synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_20 == '\n' || LA2_20 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.seek(index2_20);
                     if (s >= 0) return s;
                     break;
             }
-            if (state.backtracking > 0) { state.failed = true; return -1; }
+            if (lexer.state.backtracking > 0) { lexer.state.failed = true; return -1; }
             NoViableAltException nvae =
 
                         new NoViableAltException(getDescription(), 2, _s, input);
@@ -4029,13 +4048,13 @@ public class ANTLRLexer : Lexer
     //        DFA32_transition[i] = DFA.unpackEncodedString(DFA32_transitionS[i]);
     //    }
     //}
-    static readonly short[] DFA32_eotS = RuntimeUtils.Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0026', '\u0001', '\uffff', '\u000a', '\u002c', '\u0001', '\u003b', '\u0004', '\uffff', '\u0001', '\u0026', '\u0005', '\uffff', '\u0001', '\u0047', '\u0002', '\uffff', '\u0001', '\u004b', '\u000e', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u000d', '\u002c', '\u001a', '\uffff', '\u001b', '\u002c', '\u0001', '\u007d', '\u0004', '\u002c', '\u0001', '\u0082', '\u0003', '\u002c', '\u0001', '\u0086', '\u0004', '\u002c', '\u0001', '\uffff', '\u0002', '\u002c', '\u0001', '\u008d', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u008f', '\u0002', '\u002c', '\u0001', '\uffff', '\u0001', '\u0092', '\u0001', '\u0093', '\u0003', '\u002c', '\u0002', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u0099', '\u0002', '\uffff', '\u0001', '\u009a', '\u0001', '\u009b', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u009d', '\u0005', '\uffff' });
-    static readonly short[] DFA32_eofS = RuntimeUtils.Convert(new char[] { '\u009e', '\uffff' });
-    static readonly char[] DFA32_minS = new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u0068', '\u0001', '\u0061', '\u0001', '\u006d', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u0030', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\u0030', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\u0030', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u0009', '\u0001', '\u0030', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\u0030', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\u0030', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u0009', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\u0030', '\u0002', '\uffff', '\u0002', '\u0030', '\u0001', '\uffff', '\u0001', '\u0009', '\u0001', '\u0030', '\u0005', '\uffff' };
-    static readonly char[] DFA32_maxS = new char[] { '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u006f', '\u0001', '\u0068', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u006f', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\ufffd', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\ufffd', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\ufffd', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u007b', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\ufffd', '\u0002', '\uffff', '\u0002', '\ufffd', '\u0001', '\uffff', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0005', '\uffff' };
-    static readonly short[] DFA32_acceptS = RuntimeUtils.Convert(new char[] { '\u0001', '\uffff', '\u0001', '\u0001', '\u0001', '\uffff', '\u0001', '\u0003', '\u000b', '\uffff', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\uffff', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\uffff', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\uffff', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0028', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0001', '\u002d', '\u0001', '\u0001', '\u0002', '\u0002', '\u0001', '\u0003', '\u0001', '\uffff', '\u0001', '\u0028', '\u000d', '\uffff', '\u0001', '\u0013', '\u0001', '\u0012', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\u0018', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\u001f', '\u0001', '\u001e', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\u0023', '\u0001', '\u0022', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0029', '\uffff', '\u0001', '\u0011', '\u0004', '\uffff', '\u0001', '\u000f', '\u0003', '\uffff', '\u0001', '\u0009', '\u0005', '\uffff', '\u0001', '\u0005', '\u0001', '\u000e', '\u0001', '\uffff', '\u0001', '\u0007', '\u0002', '\uffff', '\u0001', '\u000d', '\u0001', '\u000a', '\u0002', '\uffff', '\u0001', '\u0004', '\u0002', '\uffff', '\u0001', '\u0010', '\u0001', '\u000b', '\u0001', '\u000c', '\u0001', '\u0006', '\u0001', '\u0008' });
-    static readonly short[] DFA32_specialS = RuntimeUtils.Convert(new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0001', '\u009b', '\uffff', '\u007d', '\u003e' });
-    static readonly short[][] DFA32_transitionS = new short[][]{
+    static readonly short[] DFA32_eot = RuntimeUtils.Convert(new char[] { '\u0002', '\uffff', '\u0001', '\u0026', '\u0001', '\uffff', '\u000a', '\u002c', '\u0001', '\u003b', '\u0004', '\uffff', '\u0001', '\u0026', '\u0005', '\uffff', '\u0001', '\u0047', '\u0002', '\uffff', '\u0001', '\u004b', '\u000e', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u000d', '\u002c', '\u001a', '\uffff', '\u001b', '\u002c', '\u0001', '\u007d', '\u0004', '\u002c', '\u0001', '\u0082', '\u0003', '\u002c', '\u0001', '\u0086', '\u0004', '\u002c', '\u0001', '\uffff', '\u0002', '\u002c', '\u0001', '\u008d', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u008f', '\u0002', '\u002c', '\u0001', '\uffff', '\u0001', '\u0092', '\u0001', '\u0093', '\u0003', '\u002c', '\u0002', '\uffff', '\u0001', '\u002c', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u0099', '\u0002', '\uffff', '\u0001', '\u009a', '\u0001', '\u009b', '\u0001', '\uffff', '\u0001', '\u002c', '\u0001', '\u009d', '\u0005', '\uffff' });
+    static readonly short[] DFA32_eof = RuntimeUtils.Convert(new char[] { '\u009e', '\uffff' });
+    static readonly char[] DFA32_min = new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u0068', '\u0001', '\u0061', '\u0001', '\u006d', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u0030', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\u0030', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\u0030', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u0009', '\u0001', '\u0030', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\u0030', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\u0030', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u0009', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\u0030', '\u0002', '\uffff', '\u0002', '\u0030', '\u0001', '\uffff', '\u0001', '\u0009', '\u0001', '\u0030', '\u0005', '\uffff' };
+    static readonly char[] DFA32_max = new char[] { '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\uffff', '\u0001', '\u0070', '\u0001', '\u006f', '\u0001', '\u0068', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\u006f', '\u0001', '\u0061', '\u0001', '\u0072', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u003a', '\u0004', '\uffff', '\u0001', '\u003e', '\u0005', '\uffff', '\u0001', '\u003d', '\u0002', '\uffff', '\u0001', '\u002e', '\u000e', '\uffff', '\u0001', '\u0074', '\u0001', '\uffff', '\u0001', '\u006b', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0070', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\u0078', '\u0001', '\u0063', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u0074', '\u0001', '\u0064', '\u001a', '\uffff', '\u0001', '\u0069', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0063', '\u0001', '\u006f', '\u0001', '\u0067', '\u0001', '\u0061', '\u0001', '\u0065', '\u0001', '\u0061', '\u0001', '\u0073', '\u0001', '\u006d', '\u0001', '\u0075', '\u0001', '\u0065', '\u0001', '\u006f', '\u0001', '\u006e', '\u0001', '\u0077', '\u0001', '\u006e', '\u0001', '\u0068', '\u0001', '\u0072', '\u0001', '\u006d', '\u0001', '\u006c', '\u0001', '\u0072', '\u0001', '\u006c', '\u0001', '\u0065', '\u0001', '\u006d', '\u0001', '\u0072', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0002', '\u0073', '\u0001', '\u0065', '\u0001', '\ufffd', '\u0001', '\u0074', '\u0001', '\u0065', '\u0001', '\u006c', '\u0001', '\ufffd', '\u0001', '\u0073', '\u0001', '\u0072', '\u0001', '\u0061', '\u0001', '\u006e', '\u0001', '\uffff', '\u0001', '\u0073', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0001', '\u006c', '\u0001', '\uffff', '\u0001', '\ufffd', '\u0001', '\u006e', '\u0001', '\u0079', '\u0001', '\uffff', '\u0002', '\ufffd', '\u0001', '\u0072', '\u0001', '\u0073', '\u0001', '\u007b', '\u0002', '\uffff', '\u0001', '\u0073', '\u0001', '\uffff', '\u0001', '\u0074', '\u0001', '\ufffd', '\u0002', '\uffff', '\u0002', '\ufffd', '\u0001', '\uffff', '\u0001', '\u007b', '\u0001', '\ufffd', '\u0005', '\uffff' };
+    static readonly short[] DFA32_accept = RuntimeUtils.Convert(new char[] { '\u0001', '\uffff', '\u0001', '\u0001', '\u0001', '\uffff', '\u0001', '\u0003', '\u000b', '\uffff', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\uffff', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\uffff', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\uffff', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0028', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0001', '\u002d', '\u0001', '\u0001', '\u0002', '\u0002', '\u0001', '\u0003', '\u0001', '\uffff', '\u0001', '\u0028', '\u000d', '\uffff', '\u0001', '\u0013', '\u0001', '\u0012', '\u0001', '\u0014', '\u0001', '\u0015', '\u0001', '\u0016', '\u0001', '\u0017', '\u0001', '\u0018', '\u0001', '\u0019', '\u0001', '\u001a', '\u0001', '\u001b', '\u0001', '\u001c', '\u0001', '\u001d', '\u0001', '\u001f', '\u0001', '\u001e', '\u0001', '\u0020', '\u0001', '\u0021', '\u0001', '\u0023', '\u0001', '\u0022', '\u0001', '\u0024', '\u0001', '\u0025', '\u0001', '\u0026', '\u0001', '\u0027', '\u0001', '\u0029', '\u0001', '\u002a', '\u0001', '\u002b', '\u0001', '\u002c', '\u0029', '\uffff', '\u0001', '\u0011', '\u0004', '\uffff', '\u0001', '\u000f', '\u0003', '\uffff', '\u0001', '\u0009', '\u0005', '\uffff', '\u0001', '\u0005', '\u0001', '\u000e', '\u0001', '\uffff', '\u0001', '\u0007', '\u0002', '\uffff', '\u0001', '\u000d', '\u0001', '\u000a', '\u0002', '\uffff', '\u0001', '\u0004', '\u0002', '\uffff', '\u0001', '\u0010', '\u0001', '\u000b', '\u0001', '\u000c', '\u0001', '\u0006', '\u0001', '\u0008' });
+    static readonly short[] DFA32_special = RuntimeUtils.Convert(new char[] { '\u0001', '\u0000', '\u0001', '\uffff', '\u0001', '\u0001', '\u009b', '\uffff', '\u007d', '\u003e' });
+    static readonly short[][] DFA32_transition = new short[][]{
     RuntimeUtils.Convert(new char[] {'\u0009','\u0026','\u0002','\u0024','\u0001','\u0026','\u0002','\u0024','\u0012','\u0026','\u0001','\u0024','\u0002','\u0026','\u0001','\u001e','\u0001','\u001b','\u0002','\u0026','\u0001','\u0023','\u0001','\u0011','\u0001','\u0012','\u0001','\u0018','\u0001','\u0019','\u0001','\u000f','\u0001','\u0013','\u0001','\u001c','\u0001','\u0001','\u000a','\u0022','\u0001','\u000e','\u0001','\u0010','\u0001','\u0014','\u0001','\u0016','\u0001','\u0015','\u0001','\u0017','\u0001','\u001d','\u001a','\u0021','\u0001','\u0002','\u0005','\u0026','\u0002','\u0021','\u0001','\u0006','\u0002','\u0021','\u0001','\u0008','\u0001','\u000b','\u0001','\u0021','\u0001','\u0007','\u0002','\u0021','\u0001','\u0009','\u0001','\u000d','\u0001','\u0021','\u0001','\u0004','\u0001','\u000a','\u0001','\u0021','\u0001','\u000c','\u0001','\u0021','\u0001','\u0005','\u0006','\u0021','\u0001','\u0003','\u0001','\u001a','\u0001','\u0020','\u0001','\u001f','\u0041','\u0026','\u0017','\u0021','\u0001','\u0026','\u001f','\u0021','\u0001','\u0026','\u0208','\u0021','\u0070','\u0026','\u000e','\u0021','\u0001','\u0026','\u1c81','\u0021','\u000c','\u0026','\u0002','\u0021','\u0062','\u0026','\u0120','\u0021','\u0a70','\u0026','\u03f0','\u0021','\u0011','\u0026','\ua7ff','\u0021','\u2100','\u0026','\u04d0','\u0021','\u0020','\u0026','\u010f','\u0021','\u0001','\u0025','\u00fe','\u0021','\u0002','\u0026'}),
     RuntimeUtils.Convert(new char[0]),
     RuntimeUtils.Convert(new char[] {'\u000a','\u0028','\u0001','\u0029','\u0002','\u0028','\u0001','\u0029','\ufff2','\u0028'}),
@@ -4198,98 +4217,99 @@ public class ANTLRLexer : Lexer
 
 
 
-    protected class DFA32 : DFA
-{
-
-
-    public DFA32(BaseRecognizer recognizer)
+    protected class DFA32 : antlr.runtime.DFA
     {
-        this.recognizer = recognizer;
-        this.decisionNumber = 32;
-        this.eot = DFA32_eot;
-        this.eof = DFA32_eof;
-        this.min = DFA32_min;
-        this.max = DFA32_max;
-        this.accept = DFA32_accept;
-        this.special = DFA32_special;
-        this.transition = DFA32_transition;
-    }
-    //@Override
-    public String getDescription()
-    {
-        return "1:1: Tokens : ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR );";
-    }
-    //@Override
-    public int specialStateTransition(int s, IntStream _input)
-    {
-        IntStream input = _input;
-        int _s = s;
-        switch (s)
+        protected readonly ANTLRLexer lexer;
+        
+        public DFA32(BaseRecognizer recognizer, ANTLRLexer lexer)
         {
-            case 0:
-                int LA32_0 = input.LA(1);
-                s = -1;
-                if ((LA32_0 == '/')) { s = 1; }
-                else if ((LA32_0 == '[')) { s = 2; }
-                else if ((LA32_0 == '{')) { s = 3; }
-                else if ((LA32_0 == 'o')) { s = 4; }
-                else if ((LA32_0 == 't')) { s = 5; }
-                else if ((LA32_0 == 'c')) { s = 6; }
-                else if ((LA32_0 == 'i')) { s = 7; }
-                else if ((LA32_0 == 'f')) { s = 8; }
-                else if ((LA32_0 == 'l')) { s = 9; }
-                else if ((LA32_0 == 'p')) { s = 10; }
-                else if ((LA32_0 == 'g')) { s = 11; }
-                else if ((LA32_0 == 'r')) { s = 12; }
-                else if ((LA32_0 == 'm')) { s = 13; }
-                else if ((LA32_0 == ':')) { s = 14; }
-                else if ((LA32_0 == ',')) { s = 15; }
-                else if ((LA32_0 == ';')) { s = 16; }
-                else if ((LA32_0 == '(')) { s = 17; }
-                else if ((LA32_0 == ')')) { s = 18; }
-                else if ((LA32_0 == '-')) { s = 19; }
-                else if ((LA32_0 == '<')) { s = 20; }
-                else if ((LA32_0 == '>')) { s = 21; }
-                else if ((LA32_0 == '=')) { s = 22; }
-                else if ((LA32_0 == '?')) { s = 23; }
-                else if ((LA32_0 == '*')) { s = 24; }
-                else if ((LA32_0 == '+')) { s = 25; }
-                else if ((LA32_0 == '|')) { s = 26; }
-                else if ((LA32_0 == '$')) { s = 27; }
-                else if ((LA32_0 == '.')) { s = 28; }
-                else if ((LA32_0 == '@')) { s = 29; }
-                else if ((LA32_0 == '#')) { s = 30; }
-                else if ((LA32_0 == '~')) { s = 31; }
-                else if ((LA32_0 == '}')) { s = 32; }
-                else if (((LA32_0 >= 'A' && LA32_0 <= 'Z') || (LA32_0 >= 'a' && LA32_0 <= 'b') || (LA32_0 >= 'd' && LA32_0 <= 'e') || LA32_0 == 'h' || (LA32_0 >= 'j' && LA32_0 <= 'k') || LA32_0 == 'n' || LA32_0 == 'q' || LA32_0 == 's' || (LA32_0 >= 'u' && LA32_0 <= 'z') || (LA32_0 >= '\u00C0' && LA32_0 <= '\u00D6') || (LA32_0 >= '\u00D8' && LA32_0 <= '\u00F6') || (LA32_0 >= '\u00F8' && LA32_0 <= '\u02FF') || (LA32_0 >= '\u0370' && LA32_0 <= '\u037D') || (LA32_0 >= '\u037F' && LA32_0 <= '\u1FFF') || (LA32_0 >= '\u200C' && LA32_0 <= '\u200D') || (LA32_0 >= '\u2070' && LA32_0 <= '\u218F') || (LA32_0 >= '\u2C00' && LA32_0 <= '\u2FEF') || (LA32_0 >= '\u3001' && LA32_0 <= '\uD7FF') || (LA32_0 >= '\uF900' && LA32_0 <= '\uFDCF') || (LA32_0 >= '\uFDF0' && LA32_0 <= '\uFEFE') || (LA32_0 >= '\uFF00' && LA32_0 <= '\uFFFD'))) { s = 33; }
-                else if (((LA32_0 >= '0' && LA32_0 <= '9'))) { s = 34; }
-                else if ((LA32_0 == '\'')) { s = 35; }
-                else if (((LA32_0 >= '\t' && LA32_0 <= '\n') || (LA32_0 >= '\f' && LA32_0 <= '\r') || LA32_0 == ' ')) { s = 36; }
-                else if ((LA32_0 == '\uFEFF')) { s = 37; }
-                else if (((LA32_0 >= '\u0000' && LA32_0 <= '\b') || LA32_0 == '\u000B' || (LA32_0 >= '\u000E' && LA32_0 <= '\u001F') || (LA32_0 >= '!' && LA32_0 <= '\"') || (LA32_0 >= '%' && LA32_0 <= '&') || (LA32_0 >= '\\' && LA32_0 <= '`') || (LA32_0 >= '\u007F' && LA32_0 <= '\u00BF') || LA32_0 == '\u00D7' || LA32_0 == '\u00F7' || (LA32_0 >= '\u0300' && LA32_0 <= '\u036F') || LA32_0 == '\u037E' || (LA32_0 >= '\u2000' && LA32_0 <= '\u200B') || (LA32_0 >= '\u200E' && LA32_0 <= '\u206F') || (LA32_0 >= '\u2190' && LA32_0 <= '\u2BFF') || (LA32_0 >= '\u2FF0' && LA32_0 <= '\u3000') || (LA32_0 >= '\uD800' && LA32_0 <= '\uF8FF') || (LA32_0 >= '\uFDD0' && LA32_0 <= '\uFDEF') || (LA32_0 >= '\uFFFE' && LA32_0 <= '\uFFFF'))) { s = 38; }
-                if (s >= 0) return s;
-                break;
-            case 1:
-                int LA32_2 = input.LA(1);
-
-                int index32_2 = input.index();
-                input.rewind();
-                s = -1;
-                if (((LA32_2 >= '\u0000' && LA32_2 <= '\t') || (LA32_2 >= '\u000B' && LA32_2 <= '\f') || (LA32_2 >= '\u000E' && LA32_2 <= '\uFFFF')) && (((!isLexerRule) || (isLexerRule)))) { s = 40; }
-                else if ((LA32_2 == '\n' || LA32_2 == '\r') && ((!isLexerRule))) { s = 41; }
-                else s = 38;
-
-                input.seek(index32_2);
-                if (s >= 0) return s;
-                break;
+            this.lexer = lexer;
+            this.recognizer = recognizer;
+            this.decisionNumber = 32;
+            this.eot = DFA32_eot;
+            this.eof = DFA32_eof;
+            this.min = DFA32_min;
+            this.max = DFA32_max;
+            this.accept = DFA32_accept;
+            this.special = DFA32_special;
+            this.transition = DFA32_transition;
         }
-        if (state.backtracking > 0) { state.failed = true; return -1; }
-        NoViableAltException nvae =
+        //@Override
+        public override String getDescription()
+        {
+            return "1:1: Tokens : ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR );";
+        }
+        //@Override
+        public int specialStateTransition(int s, IntStream _input)
+        {
+            IntStream input = _input;
+            int _s = s;
+            switch (s)
+            {
+                case 0:
+                    int LA32_0 = input.LA(1);
+                    s = -1;
+                    if ((LA32_0 == '/')) { s = 1; }
+                    else if ((LA32_0 == '[')) { s = 2; }
+                    else if ((LA32_0 == '{')) { s = 3; }
+                    else if ((LA32_0 == 'o')) { s = 4; }
+                    else if ((LA32_0 == 't')) { s = 5; }
+                    else if ((LA32_0 == 'c')) { s = 6; }
+                    else if ((LA32_0 == 'i')) { s = 7; }
+                    else if ((LA32_0 == 'f')) { s = 8; }
+                    else if ((LA32_0 == 'l')) { s = 9; }
+                    else if ((LA32_0 == 'p')) { s = 10; }
+                    else if ((LA32_0 == 'g')) { s = 11; }
+                    else if ((LA32_0 == 'r')) { s = 12; }
+                    else if ((LA32_0 == 'm')) { s = 13; }
+                    else if ((LA32_0 == ':')) { s = 14; }
+                    else if ((LA32_0 == ',')) { s = 15; }
+                    else if ((LA32_0 == ';')) { s = 16; }
+                    else if ((LA32_0 == '(')) { s = 17; }
+                    else if ((LA32_0 == ')')) { s = 18; }
+                    else if ((LA32_0 == '-')) { s = 19; }
+                    else if ((LA32_0 == '<')) { s = 20; }
+                    else if ((LA32_0 == '>')) { s = 21; }
+                    else if ((LA32_0 == '=')) { s = 22; }
+                    else if ((LA32_0 == '?')) { s = 23; }
+                    else if ((LA32_0 == '*')) { s = 24; }
+                    else if ((LA32_0 == '+')) { s = 25; }
+                    else if ((LA32_0 == '|')) { s = 26; }
+                    else if ((LA32_0 == '$')) { s = 27; }
+                    else if ((LA32_0 == '.')) { s = 28; }
+                    else if ((LA32_0 == '@')) { s = 29; }
+                    else if ((LA32_0 == '#')) { s = 30; }
+                    else if ((LA32_0 == '~')) { s = 31; }
+                    else if ((LA32_0 == '}')) { s = 32; }
+                    else if (((LA32_0 >= 'A' && LA32_0 <= 'Z') || (LA32_0 >= 'a' && LA32_0 <= 'b') || (LA32_0 >= 'd' && LA32_0 <= 'e') || LA32_0 == 'h' || (LA32_0 >= 'j' && LA32_0 <= 'k') || LA32_0 == 'n' || LA32_0 == 'q' || LA32_0 == 's' || (LA32_0 >= 'u' && LA32_0 <= 'z') || (LA32_0 >= '\u00C0' && LA32_0 <= '\u00D6') || (LA32_0 >= '\u00D8' && LA32_0 <= '\u00F6') || (LA32_0 >= '\u00F8' && LA32_0 <= '\u02FF') || (LA32_0 >= '\u0370' && LA32_0 <= '\u037D') || (LA32_0 >= '\u037F' && LA32_0 <= '\u1FFF') || (LA32_0 >= '\u200C' && LA32_0 <= '\u200D') || (LA32_0 >= '\u2070' && LA32_0 <= '\u218F') || (LA32_0 >= '\u2C00' && LA32_0 <= '\u2FEF') || (LA32_0 >= '\u3001' && LA32_0 <= '\uD7FF') || (LA32_0 >= '\uF900' && LA32_0 <= '\uFDCF') || (LA32_0 >= '\uFDF0' && LA32_0 <= '\uFEFE') || (LA32_0 >= '\uFF00' && LA32_0 <= '\uFFFD'))) { s = 33; }
+                    else if (((LA32_0 >= '0' && LA32_0 <= '9'))) { s = 34; }
+                    else if ((LA32_0 == '\'')) { s = 35; }
+                    else if (((LA32_0 >= '\t' && LA32_0 <= '\n') || (LA32_0 >= '\f' && LA32_0 <= '\r') || LA32_0 == ' ')) { s = 36; }
+                    else if ((LA32_0 == '\uFEFF')) { s = 37; }
+                    else if (((LA32_0 >= '\u0000' && LA32_0 <= '\b') || LA32_0 == '\u000B' || (LA32_0 >= '\u000E' && LA32_0 <= '\u001F') || (LA32_0 >= '!' && LA32_0 <= '\"') || (LA32_0 >= '%' && LA32_0 <= '&') || (LA32_0 >= '\\' && LA32_0 <= '`') || (LA32_0 >= '\u007F' && LA32_0 <= '\u00BF') || LA32_0 == '\u00D7' || LA32_0 == '\u00F7' || (LA32_0 >= '\u0300' && LA32_0 <= '\u036F') || LA32_0 == '\u037E' || (LA32_0 >= '\u2000' && LA32_0 <= '\u200B') || (LA32_0 >= '\u200E' && LA32_0 <= '\u206F') || (LA32_0 >= '\u2190' && LA32_0 <= '\u2BFF') || (LA32_0 >= '\u2FF0' && LA32_0 <= '\u3000') || (LA32_0 >= '\uD800' && LA32_0 <= '\uF8FF') || (LA32_0 >= '\uFDD0' && LA32_0 <= '\uFDEF') || (LA32_0 >= '\uFFFE' && LA32_0 <= '\uFFFF'))) { s = 38; }
+                    if (s >= 0) return s;
+                    break;
+                case 1:
+                    int LA32_2 = input.LA(1);
 
-                    new NoViableAltException(getDescription(), 32, _s, input);
-        error(nvae);
-        throw nvae;
+                    int index32_2 = input.index();
+                    input.rewind();
+                    s = -1;
+                    if (((LA32_2 >= '\u0000' && LA32_2 <= '\t') || (LA32_2 >= '\u000B' && LA32_2 <= '\f') || (LA32_2 >= '\u000E' && LA32_2 <= '\uFFFF')) && (((!lexer.isLexerRule) || (lexer.isLexerRule)))) { s = 40; }
+                    else if ((LA32_2 == '\n' || LA32_2 == '\r') && ((!lexer.isLexerRule))) { s = 41; }
+                    else s = 38;
+
+                    input.seek(index32_2);
+                    if (s >= 0) return s;
+                    break;
+            }
+            if (lexer.state.backtracking > 0) { lexer.state.failed = true; return -1; }
+            NoViableAltException nvae =
+
+                        new NoViableAltException(getDescription(), 32, _s, input);
+            error(nvae);
+            throw nvae;
+        }
     }
-}
 
 }

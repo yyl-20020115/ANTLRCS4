@@ -15,11 +15,11 @@ public class ParserFile : OutputFile {
 	public String exportMacro; // from -DexportMacro cmd-line
 	public bool genListener; // from -listener cmd-line
 	public bool genVisitor; // from -visitor cmd-line
-	//@ModelElement
+	[ModelElement]
 		public Parser parser;
-    //@ModelElement 
+    [ModelElement] 
     public Dictionary<String, Action> namedActions;
-    //@ModelElement
+    [ModelElement]
     public ActionChunk contextSuperClass;
 	public String grammarName;
 

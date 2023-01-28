@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.tool;
@@ -47,9 +48,9 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 			// See OutputModelController.buildLeftRecursiveRuleFunction
 			// and Parser.exitRule for other places which set stop.
 			CodeGenerator gen = getGenerator();
-			STGroup codegenTemplates = gen.getTemplates();
-			ST setStopTokenAST = codegenTemplates.getInstanceOf("recRuleSetStopToken");
-			Action setStopTokenAction = new System.Action(this, function.ruleCtx, setStopTokenAST);
+			TemplateGroup codegenTemplates = gen.getTemplates();
+			Template setStopTokenAST = codegenTemplates.GetInstanceOf("recRuleSetStopToken");
+			Action setStopTokenAction = new Action(this, function.ruleCtx, setStopTokenAST);
 			List<SrcOp> ops = new (1);
 			ops.Add(setStopTokenAction);
 			return ops;

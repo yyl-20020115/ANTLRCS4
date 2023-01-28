@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANTLRCS4.Tests", "ANTLRCS4.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANTLRCS4.Runtime", "ANTLRCS4.Runtime\ANTLRCS4.Runtime.csproj", "{8AAD0B3A-E8AD-48D4-941A-646207D025C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANTLRCS4.Runtime.Tests", "ANTLRCS4.Runtime.Tests\ANTLRCS4.Runtime.Tests.csproj", "{B280B041-F0E9-4A27-9E5D-316B97240E41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANTLRCS4.Runtime.Tests", "ANTLRCS4.Runtime.Tests\ANTLRCS4.Runtime.Tests.csproj", "{B280B041-F0E9-4A27-9E5D-316B97240E41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antlr4.StringTemplate", "Antlr4.StringTemplate\Antlr4.StringTemplate.csproj", "{2B2F565D-099B-4027-841D-3381AFD34564}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B280B041-F0E9-4A27-9E5D-316B97240E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B280B041-F0E9-4A27-9E5D-316B97240E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B280B041-F0E9-4A27-9E5D-316B97240E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B2F565D-099B-4027-841D-3381AFD34564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2F565D-099B-4027-841D-3381AFD34564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2F565D-099B-4027-841D-3381AFD34564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2F565D-099B-4027-841D-3381AFD34564}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
