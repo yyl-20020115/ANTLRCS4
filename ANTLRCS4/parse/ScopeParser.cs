@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -89,13 +90,13 @@ public class ScopeParser {
 
 		if (action != null) {
 			String actionText = action.getText();
-			int[] lines = new int[actionText.length()];
-			int[] charPositionInLines = new int[actionText.length()];
-			for (int i = 0, line = 0, col = 0; i < actionText.length(); i++, col++) {
-				lines[i] = line;
+			int[] lines = new int[actionText.Length];
+			int[] charPositionInLines = new int[actionText.Length];
+			for (int i = 0, _line = 0, col = 0; i < actionText.Length; i++, col++) {
+				lines[i] = _line;
 				charPositionInLines[i] = col;
-				if (actionText.charAt(i) == '\n') {
-					line++;
+				if (actionText[(i)] == '\n') {
+					_line++;
 					col = -1;
 				}
 			}

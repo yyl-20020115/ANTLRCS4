@@ -19,10 +19,10 @@ public class Loop : Choice {
 	public Loop(OutputModelFactory factory,
 				GrammarAST blkOrEbnfRootAST,
 				List<CodeBlockForAlt> alts)
-	{
-		base(factory, blkOrEbnfRootAST, alts);
+		: base(factory, blkOrEbnfRootAST, alts)
+    {
 		bool nongreedy = (blkOrEbnfRootAST is QuantifierAST) && !((QuantifierAST)blkOrEbnfRootAST).isGreedy();
-		exitAlt = nongreedy ? 1 : alts.size() + 1;
+		exitAlt = nongreedy ? 1 : alts.Count + 1;
 	}
 
 	public void addIterationOp(SrcOp op) {

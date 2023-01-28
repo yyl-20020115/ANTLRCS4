@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.misc;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -23,11 +25,11 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	readonly Deque<FrequencySet<String>> frequencies;
 	private readonly Deque<FrequencySet<String>> minFrequencies;
 
-	public ElementFrequenciesVisitor(TreeNodeStream input) {
-		base(input);
-		frequencies = new ArrayDeque<FrequencySet<String>>();
-		frequencies.push(new FrequencySet<String>());
-		minFrequencies = new ArrayDeque<FrequencySet<String>>();
+	public ElementFrequenciesVisitor(TreeNodeStream input): base(input)
+    {
+		frequencies = new ();
+		frequencies.push(new ());
+		minFrequencies = new ();
 		minFrequencies.push(SENTINEL);
 	}
 

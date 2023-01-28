@@ -13,7 +13,7 @@ public class OptionalBlock : AltBlock {
 	public OptionalBlock(OutputModelFactory factory,
 						 GrammarAST questionAST,
 						 List<CodeBlockForAlt> alts)
-	{
-		base(factory, questionAST, alts);
+		: base(factory, questionAST, alts)
+    {
 	}
 }

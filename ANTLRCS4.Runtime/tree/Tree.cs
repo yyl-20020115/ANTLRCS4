@@ -36,4 +36,5 @@ public interface Tree {
 	 *  {@code (root child1 .. childN)}. Print just a node if this is a leaf.
 	 */
 	String toStringTree();
+    string getText();
 }

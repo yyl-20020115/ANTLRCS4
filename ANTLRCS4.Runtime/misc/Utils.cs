@@ -129,11 +129,11 @@ public static class Utils
     public static IntervalSet toSet(BitSet bits)
     {
         var s = new IntervalSet();
-        int i = bits.nextSetBit(0);
+        int i = bits.NextSetBit(0);
         while (i >= 0)
         {
             s.add(i);
-            i = bits.nextSetBit(i + 1);
+            i = bits.NextSetBit(i + 1);
         }
         return s;
     }

@@ -7,21 +7,21 @@ public class TestUtils {
 	[TestMethod]
 	public void testStripFileExtension() {
 		assertNull(Utils.stripFileExtension(null));
-		assertEquals("foo", Utils.stripFileExtension("foo"));
-		assertEquals("foo", Utils.stripFileExtension("foo.txt"));
+		Assert.AreEqual("foo", Utils.stripFileExtension("foo"));
+		Assert.AreEqual("foo", Utils.stripFileExtension("foo.txt"));
 	}
 
 	[TestMethod]
 	public void testJoin() {
-		assertEquals("foobbar",
+		Assert.AreEqual("foobbar",
 			Utils.join(new String[]{"foo", "bar"}, "b"));
-		assertEquals("foo,bar",
+		Assert.AreEqual("foo,bar",
 			Utils.join(new String[]{"foo", "bar"}, ","));
 	}
 
 	[TestMethod]
 	public void testSortLinesInString() {
-		assertEquals("bar\nbaz\nfoo\n",
+		Assert.AreEqual("bar\nbaz\nfoo\n",
 			Utils.sortLinesInString("foo\nbar\nbaz"));
 	}
 
@@ -38,12 +38,12 @@ public class TestUtils {
 
 	[TestMethod]
 	public void testCapitalize() {
-		assertEquals("Foo", Utils.capitalize("foo"));
+		Assert.AreEqual("Foo", Utils.capitalize("foo"));
 	}
 
 	[TestMethod]
 	public void testDecapitalize() {
-		assertEquals("fOO", Utils.decapitalize("FOO"));
+		Assert.AreEqual("fOO", Utils.decapitalize("FOO"));
 	}
 
 	[TestMethod]
@@ -63,7 +63,7 @@ public class TestUtils {
 		retval.add("baz");
 		retval.add("baz");
 
-		assertEquals(retval, Utils.select(strings, func1));
+		Assert.AreEqual(retval, Utils.select(strings, func1));
 		assertNull(Utils.select(null, null));
 	}
 
@@ -72,7 +72,7 @@ public class TestUtils {
 		ArrayList<String> strings = new ArrayList<>();
 		strings.add("foo");
 		strings.add("bar");
-		assertEquals("foo", Utils.find(strings, String));
+		Assert.AreEqual("foo", Utils.find(strings, String));
 
 		assertNull(Utils.find(new ArrayList<>(), String));
 	}
@@ -88,8 +88,8 @@ public class TestUtils {
 				return true;
 			}
 		};
-		assertEquals(0, Utils.indexOf(strings, filter));
-		assertEquals(-1, Utils.indexOf(new ArrayList<>(), null));
+		Assert.AreEqual(0, Utils.indexOf(strings, filter));
+		Assert.AreEqual(-1, Utils.indexOf(new ArrayList<>(), null));
 	}
 
 	[TestMethod]
@@ -103,8 +103,8 @@ public class TestUtils {
 				return true;
 			}
 		};
-		assertEquals(1, Utils.lastIndexOf(strings, filter));
-		assertEquals(-1, Utils.lastIndexOf(new ArrayList<>(), null));
+		Assert.AreEqual(1, Utils.lastIndexOf(strings, filter));
+		Assert.AreEqual(-1, Utils.lastIndexOf(new ArrayList<>(), null));
 	}
 
 	[TestMethod]
@@ -113,12 +113,12 @@ public class TestUtils {
 		strings.add("foo");
 		strings.add("bar");
 		strings.add("baz");
-		assertEquals(3, strings.size());
+		Assert.AreEqual(3, strings.size());
 
 		Utils.setSize(strings, 2);
-		assertEquals(2, strings.size());
+		Assert.AreEqual(2, strings.size());
 
 		Utils.setSize(strings, 4);
-		assertEquals(4, strings.size());
+		Assert.AreEqual(4, strings.size());
 	}
 }

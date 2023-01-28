@@ -25,13 +25,15 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+using org.antlr.v4.runtime;
 using System.Runtime.Serialization;
 
 namespace org.antlr.runtime.tree
 {
     [Serializable]
-    internal class MismatchedTreeNodeException : Exception
+    internal class MismatchedTreeNodeException : RecognitionException
     {
+        internal int expecting;
         private int ttype;
         private TreeNodeStream input;
 

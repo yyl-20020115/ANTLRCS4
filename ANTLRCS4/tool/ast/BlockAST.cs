@@ -17,17 +17,17 @@ public class BlockAST : GrammarASTWithOptions , RuleElementAST {
     public static readonly Dictionary<String, String> defaultLexerBlockOptions =
             new ();
 
-	public BlockAST(BlockAST node) {
-		base(node);
+	public BlockAST(BlockAST node): base(node)
+    {
 	}
 
-	public BlockAST(Token t) { base(t); }
-    public BlockAST(int type) { base(type); }
-    public BlockAST(int type, Token t) { base(type, t); }
-	public BlockAST(int type, Token t, String text) { base(type,t,text); }
+	public BlockAST(Token t) : base(t) {  }
+    public BlockAST(int type): base(type) {  }
+    public BlockAST(int type, Token t): base(type, t) { }
+	public BlockAST(int type, Token t, String text) : base(type, t, text) { }
 
 	//@Override
-	public BlockAST dupNode() { return new BlockAST(this); }
+	public override BlockAST dupNode() { return new BlockAST(this); }
 
 	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }

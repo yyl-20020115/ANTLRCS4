@@ -68,7 +68,7 @@ public interface TokenStream : IntStream {
 	 * @return The text of all tokens within the specified interval in this
 	 * stream.
 	 *
-	 * @throws NullPointerException if {@code interval} is {@code null}
+	 * @throws NullReferenceException if {@code interval} is {@code null}
 	 */
 	public String getText(Interval interval);
 
@@ -137,4 +137,5 @@ public interface TokenStream : IntStream {
 	 * this method for the specified tokens
 	 */
 	public String getText(Token start, Token stop);
+    int range();
 }

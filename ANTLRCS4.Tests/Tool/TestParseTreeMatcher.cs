@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 
 namespace org.antlr.v4.test.tool;
@@ -12,19 +14,19 @@ namespace org.antlr.v4.test.tool;
 public class TestParseTreeMatcher {
 	[TestMethod] public void testChunking() {
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
-		assertEquals("[ID, ' = ', expr, ' ;']", m.split("<ID> = <expr> ;").ToString());
-		assertEquals("[' ', ID, ' = ', expr]", m.split(" <ID> = <expr>").ToString());
-		assertEquals("[ID, ' = ', expr]", m.split("<ID> = <expr>").ToString());
-		assertEquals("[expr]", m.split("<expr>").ToString());
-		assertEquals("['<x> foo']", m.split("\\<x\\> foo").ToString());
-		assertEquals("['foo <x> bar ', tag]", m.split("foo \\<x\\> bar <tag>").ToString());
+		Assert.AreEqual("[ID, ' = ', expr, ' ;']", m.split("<ID> = <expr> ;").ToString());
+		Assert.AreEqual("[' ', ID, ' = ', expr]", m.split(" <ID> = <expr>").ToString());
+		Assert.AreEqual("[ID, ' = ', expr]", m.split("<ID> = <expr>").ToString());
+		Assert.AreEqual("[expr]", m.split("<expr>").ToString());
+		Assert.AreEqual("['<x> foo']", m.split("\\<x\\> foo").ToString());
+		Assert.AreEqual("['foo <x> bar ', tag]", m.split("foo \\<x\\> bar <tag>").ToString());
 	}
 
 	[TestMethod] public void testDelimiters() {
 		ParseTreePatternMatcher m = new ParseTreePatternMatcher(null, null);
 		m.setDelimiters("<<", ">>", "$");
 		String result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
-		assertEquals("[ID, ' = ', expr, ' ;<< ick >>']", result);
+		Assert.AreEqual("[ID, ' = ', expr, ' ;<< ick >>']", result);
 	}
 
 	[TestMethod] public void testInvertedTags(){
@@ -37,7 +39,7 @@ public class TestParseTreeMatcher {
 			result = iae.Message;
 		}
 		String expected = "tag delimiters out of order in pattern: >expr<";
-		assertEquals(expected, result);
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod] public void testUnclosedTag(){
@@ -50,7 +52,7 @@ public class TestParseTreeMatcher {
 			result = iae.Message;
 		}
 		String expected = "unterminated tag in pattern: <expr hi mom";
-		assertEquals(expected, result);
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod] public void testExtraClose(){
@@ -63,7 +65,7 @@ public class TestParseTreeMatcher {
 			result = iae.Message;
 		}
 		String expected = "missing start tag in pattern: <expr> >";
-		assertEquals(expected, result);
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod] public void testTokenizingPattern(){
@@ -77,7 +79,7 @@ public class TestParseTreeMatcher {
 		ParseTreePatternMatcher m = getPatternMatcher("X1.g4", grammar, "X1Parser", "X1Lexer", "s");
 
 		List<? : Token> tokens = m.tokenize("<ID> = <expr> ;");
-		assertEquals("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.ToString());
+		Assert.AreEqual("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.ToString());
 	}
 
 	[TestMethod]
@@ -92,7 +94,7 @@ public class TestParseTreeMatcher {
 		ParseTreePatternMatcher m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
 		ParseTreePattern t = m.compile("<ID> = <expr> ;", m.getParser().getRuleIndex("s"));
-		assertEquals("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
+		Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
 	}
 
 	[TestMethod]
@@ -113,7 +115,7 @@ public class TestParseTreeMatcher {
 		catch (ParseTreePatternMatcher.StartRuleDoesNotConsumeFullPattern e) {
 			failed = true;
 		}
-		assertTrue(failed);
+		Assert.IsTrue(failed);
 	}
 
 	[TestMethod]
@@ -134,7 +136,7 @@ public class TestParseTreeMatcher {
 		catch (InputMismatchException e) {
 			failed = true;
 		}
-		assertTrue(failed);
+		Assert.IsTrue(failed);
 	}
 
 	[TestMethod]
@@ -155,7 +157,7 @@ public class TestParseTreeMatcher {
 		catch (NoViableAltException e) {
 			failed = true;
 		}
-		assertTrue(failed);
+		Assert.IsTrue(failed);
 	}
 
 	[TestMethod]
@@ -170,7 +172,7 @@ public class TestParseTreeMatcher {
 		ParseTreePatternMatcher m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
 		ParseTreePattern t = m.compile("<ID> = <expr> ;", m.getParser().getRuleIndex("s"));
-		assertEquals("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
+		Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
 	}
 
 	[TestMethod]
@@ -185,7 +187,7 @@ public class TestParseTreeMatcher {
 		ParseTreePattern t = m.compile("<ID> = <ID> ;", m.getParser().getRuleIndex("s"));
 		String results = t.getPatternTree().toStringTree(m.getParser());
 		String expected = "(s <ID> = <ID> ;)";
-		assertEquals(expected, results);
+		Assert.AreEqual(expected, results);
 	}
 
 	[TestMethod] public void testIDNodeMatches(){
@@ -210,16 +212,16 @@ public class TestParseTreeMatcher {
 		String input = "x ;";
 		String pattern = "<id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X8");
-		assertEquals("{ID=[x], id=[x]}", m.getLabels().ToString());
+		Assert.AreEqual("{ID=[x], id=[x]}", m.getLabels().ToString());
 		assertNotNull(m.get("id"));
 		assertNotNull(m.get("ID"));
-		assertEquals("x", m.get("id").getText());
-		assertEquals("x", m.get("ID").getText());
-		assertEquals("[x]", m.getAll("id").ToString());
-		assertEquals("[x]", m.getAll("ID").ToString());
+		Assert.AreEqual("x", m.get("id").getText());
+		Assert.AreEqual("x", m.get("ID").getText());
+		Assert.AreEqual("[x]", m.getAll("id").ToString());
+		Assert.AreEqual("[x]", m.getAll("ID").ToString());
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").ToString());
+		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 
 	[TestMethod] public void testLabelGetsLastIDNode(){
@@ -232,16 +234,16 @@ public class TestParseTreeMatcher {
 		String input = "x y;";
 		String pattern = "<id:ID> <id:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X9");
-		assertEquals("{ID=[x, y], id=[x, y]}", m.getLabels().ToString());
+		Assert.AreEqual("{ID=[x, y], id=[x, y]}", m.getLabels().ToString());
 		assertNotNull(m.get("id"));
 		assertNotNull(m.get("ID"));
-		assertEquals("y", m.get("id").getText());
-		assertEquals("y", m.get("ID").getText());
-		assertEquals("[x, y]", m.getAll("id").ToString());
-		assertEquals("[x, y]", m.getAll("ID").ToString());
+		Assert.AreEqual("y", m.get("id").getText());
+		Assert.AreEqual("y", m.get("ID").getText());
+		Assert.AreEqual("[x, y]", m.getAll("id").ToString());
+		Assert.AreEqual("[x, y]", m.getAll("ID").ToString());
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").ToString());
+		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 
 	[TestMethod] public void testIDNodeWithMultipleLabelMatches(){
@@ -254,21 +256,21 @@ public class TestParseTreeMatcher {
 		String input = "x y z;";
 		String pattern = "<a:ID> <b:ID> <a:ID>;";
 		ParseTreeMatch m = checkPatternMatch(grammar, "s", input, pattern, "X7");
-		assertEquals("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().ToString());
+		Assert.AreEqual("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().ToString());
 		assertNotNull(m.get("a")); // get first
 		assertNotNull(m.get("b"));
 		assertNotNull(m.get("ID"));
-		assertEquals("z", m.get("a").getText());
-		assertEquals("y", m.get("b").getText());
-		assertEquals("z", m.get("ID").getText()); // get last
-		assertEquals("[x, z]", m.getAll("a").ToString());
-		assertEquals("[y]", m.getAll("b").ToString());
-		assertEquals("[x, y, z]", m.getAll("ID").ToString()); // ordered
+		Assert.AreEqual("z", m.get("a").getText());
+		Assert.AreEqual("y", m.get("b").getText());
+		Assert.AreEqual("z", m.get("ID").getText()); // get last
+		Assert.AreEqual("[x, z]", m.getAll("a").ToString());
+		Assert.AreEqual("[y]", m.getAll("b").ToString());
+		Assert.AreEqual("[x, y, z]", m.getAll("ID").ToString()); // ordered
 
-		assertEquals("xyz;", m.getTree().getText()); // whitespace stripped by lexer
+		Assert.AreEqual("xyz;", m.getTree().getText()); // whitespace stripped by lexer
 
 		assertNull(m.get("undefined"));
-		assertEquals("[]", m.getAll("undefined").ToString());
+		Assert.AreEqual("[]", m.getAll("undefined").ToString());
 	}
 
 	[TestMethod] public void testTokenAndRuleMatch(){
@@ -375,7 +377,7 @@ public class TestParseTreeMatcher {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, input,
 				false, false, Stage.Execute, true);
-		try (JavaRunner runner = new JavaRunner()) {
+		using(JavaRunner runner = new JavaRunner()) {
 			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
 			Parser parser = compiledState.initializeLexerAndParser("").b;
@@ -385,7 +387,7 @@ public class TestParseTreeMatcher {
 			ParseTreeMatch match = p.match(executedState.parseTree);
 			bool matched = match.succeeded();
 			if ( invertMatch ) assertFalse(matched);
-			else assertTrue(matched);
+			else Assert.IsTrue(matched);
 			return match;
 		}
 	}
@@ -396,7 +398,7 @@ public class TestParseTreeMatcher {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, null,
 				false, false, Stage.Compile, false);
-		try (JavaRunner runner = new JavaRunner()) {
+		using (JavaRunner runner = new JavaRunner()) {
 			JavaCompiledState compiledState = (JavaCompiledState) runner.run(runOptions);
 
 			Pair<Lexer, Parser> lexerParserPair = compiledState.initializeLexerAndParser("");

@@ -32,6 +32,7 @@ using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.atn;
 
 namespace org.antlr.v4.parse;
 
@@ -3772,6 +3773,15 @@ public class ANTLRLexer : Lexer
         return success;
     }
 
+    public override string[] getRuleNames()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ATN getATN()
+    {
+        throw new NotImplementedException();
+    }
 
     protected DFA2 dfa2 = new DFA2(this);
     protected DFA32 dfa32 = new DFA32(this);

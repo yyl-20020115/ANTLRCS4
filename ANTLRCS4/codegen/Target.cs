@@ -86,7 +86,7 @@ public abstract class Target {
 			{
 				String version = getVersion();
 				if (version == null ||
-						!RuntimeMetaData.getMajorMinorVersion(version).equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
+						!RuntimeMetaData.getMajorMinorVersion(version).Equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
 				{
 					gen.tool.errMgr.toolError(ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
 				}
@@ -434,7 +434,7 @@ public abstract class Target {
 	}
 
 	public String getElementName(String name) {
-		if (".".equals(name)) {
+		if (".".Equals(name)) {
 			return "_wild";
 		}
 
@@ -467,7 +467,7 @@ public abstract class Target {
 	 *  TVisitor.java, if we're using the Java target.
  	 */
 	public String getVisitorFileName(bool header) {
-		assert gen.g.name != null;
+		//assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "Visitor";
 		return listenerName+extST.render();
@@ -477,7 +477,7 @@ public abstract class Target {
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
 	public String getBaseListenerFileName(bool header) {
-		assert gen.g.name != null;
+		//assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "BaseListener";
 		return listenerName+extST.render();
@@ -487,7 +487,7 @@ public abstract class Target {
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
 	public String getBaseVisitorFileName(bool header) {
-		assert gen.g.name != null;
+		//assert gen.g.name != null;
 		ST extST = getTemplates().getInstanceOf("codeFileExtension");
 		String listenerName = gen.g.name + "BaseVisitor";
 		return listenerName+extST.render();
@@ -560,7 +560,7 @@ public abstract class Target {
 				break;
 		}
 
-		return getReservedWords().contains(idNode.getText());
+		return getReservedWords().Contains(idNode.getText());
 	}
 
 	//@Deprecated

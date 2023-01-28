@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.tool;
 
@@ -18,20 +19,19 @@ public class LexerGrammar : Grammar {
 	/** DEFAULT_MODE rules are added first due to grammar syntax order */
 	public MultiMap<String, Rule> modes;
 
-	public LexerGrammar(Tool tool, GrammarRootAST ast) {
-		base(tool, ast);
+	public LexerGrammar(Tool tool, GrammarRootAST ast): base(tool, ast)
+    {
 	}
 
-	public LexerGrammar(String grammarText) {
-		base(grammarText);
+	public LexerGrammar(String grammarText): base(grammarText)
+    {
 	}
 
-	public LexerGrammar(String grammarText, ANTLRToolListener listener) {
-		base(grammarText, listener);
+	public LexerGrammar(String grammarText, ANTLRToolListener listener):base(grammarText,listener) {
 	}
 
-	public LexerGrammar(String fileName, String grammarText, ANTLRToolListener listener)  {
-		base(fileName, grammarText, listener);
+	public LexerGrammar(String fileName, String grammarText, ANTLRToolListener listener): base(fileName, grammarText, listener)
+    {
 	}
 
 	//@Override

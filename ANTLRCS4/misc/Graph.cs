@@ -17,13 +17,12 @@ public class Graph<T> {
 	public class Node<T> {
 		public T payload;
 
-		public List<Node<T>> edges = Collections.EMPTY_LIST; // points at which nodes?
+		public List<Node<T>> edges = new(); // points at which nodes?
 
 		public Node(T payload) { this.payload = payload; }
 
 		public void addEdge(Node<T> n) {
-			if ( edges==Collections.EMPTY_LIST ) edges = new ArrayList<Node<T>>();
-			if ( !edges.contains(n) ) edges.add(n);
+			if ( !edges.Contains(n) ) edges.Add(n);
 		}
 
 		public override String ToString() { return payload.toString(); }
@@ -61,12 +60,12 @@ public class Graph<T> {
 	public List<T> sort() {
 		HashSet<Node<T>> visited = new OrderedHashSet<Node<T>>();
 		List<T> sorted = new ();
-		while ( visited.size() < nodes.size() ) {
+		while ( visited.Count < nodes.Count ) {
 			// pick any unvisited node, n
 			Node<T> n = null;
-			for (Node<T> tNode : nodes.values()) {
+			foreach (Node<T> tNode in nodes.Values) {
 				n = tNode;
-				if ( !visited.contains(n) ) break;
+				if ( !visited.Contains(n) ) break;
 			}
 			if (n!=null) { // if at least one unvisited
 				DFS(n, visited, sorted);
@@ -75,14 +74,14 @@ public class Graph<T> {
 		return sorted;
 	}
 
-	public void DFS(Node<T> n, Set<Node<T>> visited, ArrayList<T> sorted) {
-		if ( visited.contains(n) ) return;
-		visited.add(n);
+	public void DFS(Node<T> n, HashSet<Node<T>> visited, List<T> sorted) {
+		if ( visited.Contains(n) ) return;
+		visited.Add(n);
 		if ( n.edges!=null ) {
-			for (Node<T> target : n.edges) {
+			foreach (Node<T> target in n.edges) {
 				DFS(target, visited, sorted);
 			}
 		}
-		sorted.add(n.payload);
+		sorted.Add(n.payload);
 	}
 }

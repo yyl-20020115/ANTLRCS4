@@ -54,7 +54,7 @@ public class ListTokenSource : TokenSource {
 	 *
 	 * @param tokens The collection of {@link Token} objects to provide as a
 	 * {@link TokenSource}.
-	 * @exception NullPointerException if {@code tokens} is {@code null}
+	 * @exception NullReferenceException if {@code tokens} is {@code null}
 	 */
 	public ListTokenSource(List<Token> tokens): this(tokens, null)
     {
@@ -71,7 +71,7 @@ public class ListTokenSource : TokenSource {
 	 * the next {@link Token} (or the previous token if the end of the input has
 	 * been reached).
 	 *
-	 * @exception NullPointerException if {@code tokens} is {@code null}
+	 * @exception NullReferenceException if {@code tokens} is {@code null}
 	 */
 	public ListTokenSource(List<Token> tokens, String sourceName) {
 		if (tokens == null) {

@@ -10,7 +10,7 @@ namespace org.antlr.v4.codegen.model;
 
 public class MatchNotSet : MatchSet {
 	public String varName = "_la";
-	public MatchNotSet(OutputModelFactory factory, GrammarAST ast) {
-		base(factory, ast);
+	public MatchNotSet(OutputModelFactory factory, GrammarAST ast): base(factory, ast)
+    {
 	}
 }

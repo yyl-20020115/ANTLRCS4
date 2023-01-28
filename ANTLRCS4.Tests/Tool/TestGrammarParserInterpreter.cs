@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -102,7 +104,7 @@ public class TestGrammarParserInterpreter {
 		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
 		String treeStr = Trees.toStringTree(t, nodeTextProvider);
 //		Console.Out.WriteLine("parse tree: "+treeStr);
-		assertEquals(expectedParseTree, treeStr);
+		Assert.AreEqual(expectedParseTree, treeStr);
 		return (InterpreterRuleContext)t;
 	}
 }

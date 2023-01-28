@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -152,15 +155,15 @@ public class GrammarTransformPipeline {
 		HashSet<String> rootRuleNames = new HashSet<String>();
 		// make list of rules we have in root grammar
 		List<GrammarAST> rootRules = RULES.getNodesWithType(ANTLRParser.RULE);
-		for (GrammarAST r : rootRules) rootRuleNames.add(r.getChild(0).getText());
+		foreach (GrammarAST r in rootRules) rootRuleNames.add(r.getChild(0).getText());
 
 		// make list of modes we have in root grammar
 		List<GrammarAST> rootModes = root.getNodesWithType(ANTLRParser.MODE);
 		HashSet<String> rootModeNames = new HashSet<String>();
-		for (GrammarAST m : rootModes) rootModeNames.add(m.getChild(0).getText());
-		List<GrammarAST> addedModes = new ArrayList<GrammarAST>();
+        foreach (GrammarAST m in rootModes) rootModeNames.Add(m.getChild(0).getText());
+		List<GrammarAST> addedModes = new ();
 
-		for (Grammar imp : imports) {
+        foreach (Grammar imp in imports) {
 			// COPY CHANNELS
 			GrammarAST imp_channelRoot = (GrammarAST)imp.ast.getFirstChildWithType(ANTLRParser.CHANNELS);
 			if ( imp_channelRoot != null) {
@@ -175,7 +178,7 @@ public class GrammarTransformPipeline {
 						bool channelIsInRootGrammar = false;
 						for (int rc = 0; rc < channelsRoot.getChildCount(); ++rc) {
 							String rootChannel = channelsRoot.getChild(rc).getText();
-							if (rootChannel.equals(channel)) {
+							if (rootChannel.Equals(channel)) {
 								channelIsInRootGrammar = true;
 								break;
 							}
@@ -196,10 +199,10 @@ public class GrammarTransformPipeline {
 					tokensRoot.g = rootGrammar;
 					root.insertChild(1, tokensRoot); // ^(GRAMMAR ID TOKENS...)
 				}
-				tokensRoot.addChildren(Arrays.asList(imp_tokensRoot.getChildren().toArray(new Tree[0])));
+				tokensRoot.addChildren(Arrays.AsList(imp_tokensRoot.getChildren().ToArray()));
 			}
 
-			List<GrammarAST> all_actionRoots = new ArrayList<GrammarAST>();
+			List<GrammarAST> all_actionRoots = new ();
 			List<GrammarAST> imp_actionRoots = imp.ast.getAllChildrenWithType(ANTLRParser.AT);
 			if ( actionRoots!=null ) all_actionRoots.addAll(actionRoots);
 			all_actionRoots.addAll(imp_actionRoots);
@@ -210,7 +213,7 @@ public class GrammarTransformPipeline {
 					new DoubleKeyMap<String, String, GrammarAST>();
 
 				rootGrammar.tool.log("grammar", "imported actions: "+imp_actionRoots);
-				for (GrammarAST at : all_actionRoots) {
+				for (GrammarAST at in all_actionRoots) {
 					String scopeName = rootGrammar.getDefaultActionScope();
 					GrammarAST scope, name, action;
 					if ( at.getChildCount()>2 ) { // must have a scope
@@ -245,8 +248,8 @@ public class GrammarTransformPipeline {
 				// at this point, we have complete list of combined actions,
 				// some of which are already living in root grammar.
 				// Merge in any actions not in root grammar into root's tree.
-				for (String scopeName : namedActions.keySet()) {
-					for (String name : namedActions.keySet(scopeName)) {
+				for (String scopeName in namedActions.keySet()) {
+					for (String name in namedActions.keySet(scopeName)) {
 						GrammarAST action = namedActions.get(scopeName, name);
 						rootGrammar.tool.log("grammar", action.g.name+" "+scopeName+":"+name+"="+action.getText());
 						if ( action.g != rootGrammar ) {
@@ -265,14 +268,14 @@ public class GrammarTransformPipeline {
 			// grammar.
             List<GrammarAST> modes = imp.ast.getNodesWithType(ANTLRParser.MODE);
 			if (modes != null) {
-				for (GrammarAST m : modes) {
+				foreach (GrammarAST m in modes) {
 					rootGrammar.tool.log("grammar", "imported mode: " + m.toStringTree());
 					String name = m.getChild(0).getText();
-					bool rootAlreadyHasMode = rootModeNames.contains(name);
+					bool rootAlreadyHasMode = rootModeNames.Contains(name);
 					GrammarAST destinationAST = null;
 					if (rootAlreadyHasMode) {
-		                for (GrammarAST m2 : rootModes) {
-							if (m2.getChild(0).getText().equals(name)) {
+		                foreach (GrammarAST m2 in rootModes) {
+							if (m2.getChild(0).getText().Equals(name)) {
                                 destinationAST = m2;
 								break;
 							}
@@ -284,20 +287,20 @@ public class GrammarTransformPipeline {
 
 					int addedRules = 0;
 					List<GrammarAST> modeRules = m.getAllChildrenWithType(ANTLRParser.RULE);
-					for (GrammarAST r : modeRules) {
+					foreach (GrammarAST r in modeRules) {
 					    rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
 						String ruleName = r.getChild(0).getText();
-					    bool rootAlreadyHasRule = rootRuleNames.contains(ruleName);
+					    bool rootAlreadyHasRule = rootRuleNames.Contains(ruleName);
 					    if (!rootAlreadyHasRule) {
 						    destinationAST.addChild(r);
 							addedRules++;
-						    rootRuleNames.add(ruleName);
+						    rootRuleNames.Add(ruleName);
 					    }
 					}
 					if (!rootAlreadyHasMode && addedRules > 0) {
 						rootGrammar.ast.addChild(destinationAST);
-						rootModeNames.add(name);
-						rootModes.add(destinationAST);
+						rootModeNames.Add(name);
+						rootModes.Add(destinationAST);
 					}
 				}
 			}
@@ -306,13 +309,13 @@ public class GrammarTransformPipeline {
 			// Rules copied in the mode copy phase are not copied again.
 			List<GrammarAST> rules = imp.ast.getNodesWithType(ANTLRParser.RULE);
 			if ( rules!=null ) {
-				for (GrammarAST r : rules) {
+				foreach (GrammarAST r in rules) {
 					rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
 					String name = r.getChild(0).getText();
-					bool rootAlreadyHasRule = rootRuleNames.contains(name);
+					bool rootAlreadyHasRule = rootRuleNames.Contains(name);
 					if ( !rootAlreadyHasRule ) {
 						RULES.addChild(r); // merge in if not overridden
-						rootRuleNames.add(name);
+						rootRuleNames.Add(name);
 					}
 				}
 			}
@@ -324,7 +327,7 @@ public class GrammarTransformPipeline {
 				// https://github.com/antlr/antlr4/issues/707
 
 				bool hasNewOption = false;
-				for (Dictionary.Entry<String, GrammarAST> option : imp.ast.getOptions().entrySet()) {
+				for (Dictionary.Entry<String, GrammarAST> option in imp.ast.getOptions().entrySet()) {
 					String importOption = imp.ast.getOptionString(option.getKey());
 					if (importOption == null) {
 						continue;
@@ -397,17 +400,17 @@ public class GrammarTransformPipeline {
 		}
 
 		// COPY all named actions, but only move those with lexer:: scope
-		List<GrammarAST> actionsWeMoved = new ArrayList<GrammarAST>();
-		for (GrammarAST e : elements) {
+		List<GrammarAST> actionsWeMoved = new ();
+		foreach (GrammarAST e in elements) {
 			if ( e.getType()==ANTLRParser.AT ) {
 				lexerAST.addChild((Tree)adaptor.dupTree(e));
-				if ( e.getChild(0).getText().equals("lexer") ) {
-					actionsWeMoved.add(e);
+				if ( e.getChild(0).getText().Equals("lexer") ) {
+					actionsWeMoved.Add(e);
 				}
 			}
 		}
 
-		for (GrammarAST r : actionsWeMoved) {
+		for (GrammarAST r in actionsWeMoved) {
 			combinedAST.deleteChild( r );
 		}
 
@@ -420,23 +423,23 @@ public class GrammarTransformPipeline {
 		GrammarAST lexerRulesRoot =
 			(GrammarAST)adaptor.create(ANTLRParser.RULES, "RULES");
 		lexerAST.addChild(lexerRulesRoot);
-		List<GrammarAST> rulesWeMoved = new ArrayList<GrammarAST>();
+		List<GrammarAST> rulesWeMoved = new ();
 		GrammarASTWithOptions[] rules;
 		if (combinedRulesRoot.getChildCount() > 0) {
-			rules = combinedRulesRoot.getChildren().toArray(new GrammarASTWithOptions[0]);
+			rules = combinedRulesRoot.getChildren().ToArray();
 		}
 		else {
 			rules = new GrammarASTWithOptions[0];
 		}
 
-		for (GrammarASTWithOptions r : rules) {
+		for (GrammarASTWithOptions r in rules) {
 			String ruleName = r.getChild(0).getText();
 			if (Grammar.isTokenName(ruleName)) {
 				lexerRulesRoot.addChild((Tree)adaptor.dupTree(r));
 				rulesWeMoved.add(r);
 			}
 		}
-		for (GrammarAST r : rulesWeMoved) {
+		for (GrammarAST r in rulesWeMoved) {
 			combinedRulesRoot.deleteChild( r );
 		}
 

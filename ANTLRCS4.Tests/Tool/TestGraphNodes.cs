@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -23,7 +24,7 @@ public class TestGraphNodes {
 			"rankdir=LR;\n" +
 			"  s0[label=\"*\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_dollar_dollar_fullctx() {
@@ -35,7 +36,7 @@ public class TestGraphNodes {
 			"rankdir=LR;\n" +
 			"  s0[label=\"$\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_x_dollar() {
@@ -46,7 +47,7 @@ public class TestGraphNodes {
 			"rankdir=LR;\n" +
 			"  s0[label=\"*\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_x_dollar_fullctx() {
@@ -59,7 +60,7 @@ public class TestGraphNodes {
 			"  s1[label=\"$\"];\n" +
 			"  s0:p0->s1[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_dollar_x() {
@@ -70,7 +71,7 @@ public class TestGraphNodes {
 			"rankdir=LR;\n" +
 			"  s0[label=\"*\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_dollar_x_fullctx() {
@@ -83,7 +84,7 @@ public class TestGraphNodes {
 			"  s1[label=\"$\"];\n" +
 			"  s0:p0->s1[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_a_a() {
@@ -96,7 +97,7 @@ public class TestGraphNodes {
 			"  s1[label=\"*\"];\n" +
 			"  s0->s1[label=\"1\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_adollar_ax() {
@@ -112,7 +113,7 @@ public class TestGraphNodes {
 			"  s1[label=\"*\"];\n" +
 			"  s0->s1[label=\"1\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_adollar_ax_fullctx() {
@@ -130,7 +131,7 @@ public class TestGraphNodes {
 			"  s0->s1[label=\"1\"];\n" +
 			"  s1:p0->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_axdollar_adollar() {
@@ -146,7 +147,7 @@ public class TestGraphNodes {
 			"  s1[label=\"*\"];\n" +
 			"  s0->s1[label=\"1\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_aadollar_adollar_dollar_fullCtx() {
@@ -166,7 +167,7 @@ public class TestGraphNodes {
 			"  s0:p0->s1[label=\"8\"];\n" +
 			"  s1:p0->s2[label=\"8\"];\n" +
 			"}\n";
-		assertEquals(expecting, actual);
+		Assert.AreEqual(expecting, actual);
 	}
 
 	[TestMethod] public void test_axdollar_adollar_fullctx() {
@@ -184,7 +185,7 @@ public class TestGraphNodes {
 			"  s0->s1[label=\"1\"];\n" +
 			"  s1:p0->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_a_b() {
@@ -198,7 +199,7 @@ public class TestGraphNodes {
 			"  s0:p0->s1[label=\"1\"];\n" +
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_ax_ax_same() {
@@ -216,7 +217,7 @@ public class TestGraphNodes {
 			"  s0->s1[label=\"1\"];\n" +
 			"  s1->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_ax_ax() {
@@ -235,7 +236,7 @@ public class TestGraphNodes {
 			"  s0->s1[label=\"1\"];\n" +
 			"  s1->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_abx_abx() {
@@ -258,7 +259,7 @@ public class TestGraphNodes {
 			"  s1->s2[label=\"2\"];\n" +
 			"  s2->s3[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_abx_acx() {
@@ -282,7 +283,7 @@ public class TestGraphNodes {
 			"  s1:p1->s2[label=\"3\"];\n" +
 			"  s2->s3[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_ax_bx_same() {
@@ -301,7 +302,7 @@ public class TestGraphNodes {
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"  s1->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_ax_bx() {
@@ -321,7 +322,7 @@ public class TestGraphNodes {
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"  s1->s2[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_ax_by() {
@@ -341,7 +342,7 @@ public class TestGraphNodes {
 			"  s2->s3[label=\"10\"];\n" +
 			"  s1->s3[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_adollar_bx() {
@@ -360,7 +361,7 @@ public class TestGraphNodes {
 			"  s0:p1->s2[label=\"2\"];\n" +
 			"  s2->s1[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_adollar_bx_fullctx() {
@@ -379,7 +380,7 @@ public class TestGraphNodes {
 			"  s0:p1->s2[label=\"2\"];\n" +
 			"  s2->s1[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	@Disabled("Known inefficiency but deferring resolving the issue for now")
@@ -407,7 +408,7 @@ public class TestGraphNodes {
 			"  s3->s4[label=\"9\"];\n" +
 			"  s1->s3[label=\"5\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	// Array merges
@@ -422,7 +423,7 @@ public class TestGraphNodes {
 			"rankdir=LR;\n" +
 			"  s0[label=\"$\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, fullCtx()));
+		Assert.AreEqual(expecting, toDOTString(r, fullCtx()));
 	}
 
 	[TestMethod] public void test_Aab_Ac() { // a,b + c
@@ -442,7 +443,7 @@ public class TestGraphNodes {
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"  s0:p2->s1[label=\"3\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aa_Aa() {
@@ -459,7 +460,7 @@ public class TestGraphNodes {
 			"  s1[label=\"*\"];\n" +
 			"  s0->s1[label=\"1\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aa_Abc() { // a + b,c
@@ -479,7 +480,7 @@ public class TestGraphNodes {
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"  s0:p2->s1[label=\"3\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aac_Ab() { // a,c + b
@@ -499,7 +500,7 @@ public class TestGraphNodes {
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"  s0:p2->s1[label=\"3\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aab_Aa() { // a,b + a
@@ -515,7 +516,7 @@ public class TestGraphNodes {
 			"  s0:p0->s1[label=\"1\"];\n" +
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aab_Ab() { // a,b + b
@@ -531,7 +532,7 @@ public class TestGraphNodes {
 			"  s0:p0->s1[label=\"1\"];\n" +
 			"  s0:p1->s1[label=\"2\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aax_Aby() { // ax + by but in arrays
@@ -553,7 +554,7 @@ public class TestGraphNodes {
 			"  s2->s3[label=\"10\"];\n" +
 			"  s1->s3[label=\"9\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aax_Aay() { // ax + ay -> merged singleton a, array parent
@@ -573,7 +574,7 @@ public class TestGraphNodes {
 			"  s1:p0->s2[label=\"9\"];\n" +
 			"  s1:p1->s2[label=\"10\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaxc_Aayd() { // ax,c + ay,d -> merged a, array parent
@@ -595,7 +596,7 @@ public class TestGraphNodes {
 			"  s1:p0->s2[label=\"9\"];\n" +
 			"  s1:p1->s2[label=\"10\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaubv_Acwdx() { // au,bv + cw,dx -> [a,b,c,d]->[u,v,w,x]
@@ -625,7 +626,7 @@ public class TestGraphNodes {
 			"  s2->s5[label=\"7\"];\n" +
 			"  s1->s5[label=\"6\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaubv_Abvdx() { // au,bv + bv,dx -> [a,b,d]->[u,v,x]
@@ -652,7 +653,7 @@ public class TestGraphNodes {
 			"  s2->s4[label=\"7\"];\n" +
 			"  s1->s4[label=\"6\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaubv_Abwdx() { // au,bv + bw,dx -> [a,b,d]->[u,[v,w],x]
@@ -680,7 +681,7 @@ public class TestGraphNodes {
 			"  s2:p1->s4[label=\"8\"];\n" +
 			"  s1->s4[label=\"6\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaubv_Abvdu() { // au,bv + bv,du -> [a,b,d]->[u,v,u]; u,v shared
@@ -705,7 +706,7 @@ public class TestGraphNodes {
 			"  s2->s3[label=\"7\"];\n" +
 			"  s1->s3[label=\"6\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 	[TestMethod] public void test_Aaubu_Acudu() { // au,bu + cu,du -> [a,b,c,d]->[u,u,u,u]
@@ -729,7 +730,7 @@ public class TestGraphNodes {
 			"  s0:p3->s1[label=\"4\"];\n" +
 			"  s1->s2[label=\"6\"];\n" +
 			"}\n";
-		assertEquals(expecting, toDOTString(r, rootIsWildcard()));
+		Assert.AreEqual(expecting, toDOTString(r, rootIsWildcard()));
 	}
 
 
@@ -791,7 +792,7 @@ public class TestGraphNodes {
 		StringBuilder edges = new StringBuilder();
 		Map<PredictionContext, PredictionContext> visited = new IdentityHashMap<PredictionContext, PredictionContext>();
 		Map<PredictionContext, Integer> contextIds = new IdentityHashMap<PredictionContext, Integer>();
-		Deque<PredictionContext> workList = new ArrayDeque<PredictionContext>();
+		Deque<PredictionContext> workList = new ();
 		visited.put(context, context);
 		contextIds.put(context, contextIds.size());
 		workList.add(context);

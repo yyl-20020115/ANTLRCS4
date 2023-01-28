@@ -8,6 +8,7 @@ using org.antlr.v4.analysis;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.misc;
+using org.antlr.v4.parse;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using Action = org.antlr.v4.codegen.model.Action;
@@ -56,7 +57,7 @@ public class OutputModelController {
 		file.parser = parser(file);
 
 		Grammar g = @delegate.getGrammar();
-		for (Rule r : g.rules.values()) {
+		for (Rule r in g.rules.values()) {
 			buildRuleFunction(file.parser, r);
 		}
 
@@ -70,7 +71,7 @@ public class OutputModelController {
 		file.lexer = lexer(file);
 
 		Grammar g = @delegate.getGrammar();
-		for (Rule r : g.rules.values()) {
+		for (Rule r in g.rules.values()) {
 			buildLexerRuleActions(file.lexer, r);
 		}
 
@@ -99,13 +100,13 @@ public class OutputModelController {
 
 	public ParserFile parserFile(String fileName) {
 		ParserFile f = @delegate.parserFile(fileName);
-		for (CodeGeneratorExtension ext : extensions) f = ext.parserFile(f);
+		for (CodeGeneratorExtension ext in extensions) f = ext.parserFile(f);
 		return f;
 	}
 
 	public Parser parser(ParserFile file) {
 		Parser p = @delegate.parser(file);
-		for (CodeGeneratorExtension ext : extensions) p = ext.parser(p);
+		for (CodeGeneratorExtension ext in extensions) p = ext.parser(p);
 		return p;
 	}
 
@@ -122,7 +123,7 @@ public class OutputModelController {
 	 */
 	public void buildRuleFunction(Parser parser, Rule r) {
 		RuleFunction function = rule(r);
-		parser.funcs.add(function);
+		parser.funcs.Add(function);
 		pushCurrentRule(function);
 		function.fillNamedActions(@delegate, r);
 
@@ -135,7 +136,7 @@ public class OutputModelController {
 		}
 
 		Grammar g = getGrammar();
-		for (ActionAST a : r.actions) {
+		for (ActionAST a in r.actions) {
 			if ( a is PredAST ) {
 				PredAST p = (PredAST)a;
 				RuleSempredFunction rsf = parser.sempredFuncs.get(r);
@@ -159,7 +160,7 @@ public class OutputModelController {
 
 		// pick out alt(s) for primaries
 		CodeBlockForOuterMostAlt outerAlt = (CodeBlockForOuterMostAlt)function.code.get(0);
-		List<CodeBlockForAlt> primaryAltsCode = new ArrayList<CodeBlockForAlt>();
+		List<CodeBlockForAlt> primaryAltsCode = new ();
 		SrcOp primaryStuff = outerAlt.ops.get(0);
 		if ( primaryStuff is Choice ) {
 			Choice primaryAltBlock = (Choice) primaryStuff;
@@ -172,7 +173,7 @@ public class OutputModelController {
 		// pick out alt(s) for op alts
 		StarBlock opAltStarBlock = (StarBlock)outerAlt.ops.get(1);
 		CodeBlockForAlt altForOpAltBlock = opAltStarBlock.alts.get(0);
-		List<CodeBlockForAlt> opAltsCode = new ArrayList<CodeBlockForAlt>();
+		List<CodeBlockForAlt> opAltsCode = new ();
 		SrcOp opStuff = altForOpAltBlock.ops.get(0);
 		if ( opStuff is AltBlock ) {
 			AltBlock opAltBlock = (AltBlock)opStuff;
@@ -284,7 +285,7 @@ public class OutputModelController {
 			}
 		}
 
-		if (!raf.actions.isEmpty() && !lexer.actionFuncs.containsKey(r)) {
+		if (!raf.actions.isEmpty() && !lexer.actionFuncs.ContainsKey(r)) {
 			// only add to lexer if the function actually contains actions
 			lexer.actionFuncs.put(r, raf);
 		}
@@ -292,13 +293,13 @@ public class OutputModelController {
 
 	public RuleFunction rule(Rule r) {
 		RuleFunction rf = @delegate.rule(r);
-		for (CodeGeneratorExtension ext : extensions) rf = ext.rule(rf);
+		for (CodeGeneratorExtension ext in extensions) rf = ext.rule(rf);
 		return rf;
 	}
 
 	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) {
 		List<SrcOp> ops = @delegate.rulePostamble(function, r);
-		for (CodeGeneratorExtension ext : extensions) ops = ext.rulePostamble(ops);
+		for (CodeGeneratorExtension ext in extensions) ops = ext.rulePostamble(ops);
 		return ops;
 	}
 
@@ -319,13 +320,13 @@ public class OutputModelController {
 											 bool outerMost)
 	{
 		blk = @delegate.finishAlternative(blk, ops);
-		for (CodeGeneratorExtension ext : extensions) blk = ext.finishAlternative(blk, outerMost);
+		for (CodeGeneratorExtension ext in extensions) blk = ext.finishAlternative(blk, outerMost);
 		return blk;
 	}
 
 	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) {
 		List<SrcOp> ops = @delegate.ruleRef(ID, label, args);
-		for (CodeGeneratorExtension ext : extensions) {
+		for (CodeGeneratorExtension ext in extensions) {
 			ops = ext.ruleRef(ops);
 		}
 		return ops;
@@ -334,7 +335,7 @@ public class OutputModelController {
 	public List<SrcOp> tokenRef(GrammarAST ID, GrammarAST label, GrammarAST args)
 	{
 		List<SrcOp> ops = @delegate.tokenRef(ID, label, args);
-		for (CodeGeneratorExtension ext : extensions) {
+		for (CodeGeneratorExtension ext in extensions) {
 			ops = ext.tokenRef(ops);
 		}
 		return ops;
@@ -342,7 +343,7 @@ public class OutputModelController {
 
 	public List<SrcOp> stringRef(GrammarAST ID, GrammarAST label) {
 		List<SrcOp> ops = @delegate.stringRef(ID, label);
-		for (CodeGeneratorExtension ext : extensions) {
+		for (CodeGeneratorExtension ext in extensions) {
 			ops = ext.stringRef(ops);
 		}
 		return ops;
@@ -351,7 +352,7 @@ public class OutputModelController {
 	/** (A|B|C) possibly with ebnfRoot and label */
 	public List<SrcOp> set(GrammarAST setAST, GrammarAST labelAST, bool invert) {
 		List<SrcOp> ops = @delegate.set(setAST, labelAST, invert);
-		for (CodeGeneratorExtension ext : extensions) {
+		for (CodeGeneratorExtension ext in extensions) {
 			ops = ext.set(ops);
 		}
 		return ops;
@@ -359,13 +360,13 @@ public class OutputModelController {
 
 	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) {
 		CodeBlockForAlt blk = @delegate.epsilon(alt, outerMost);
-		for (CodeGeneratorExtension ext : extensions) blk = ext.epsilon(blk);
+		for (CodeGeneratorExtension ext in extensions) blk = ext.epsilon(blk);
 		return blk;
 	}
 
 	public List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST) {
 		List<SrcOp> ops = @delegate.wildcard(ast, labelAST);
-		for (CodeGeneratorExtension ext : extensions) {
+		for (CodeGeneratorExtension ext in extensions) {
 			ops = ext.wildcard(ops);
 		}
 		return ops;
@@ -391,13 +392,13 @@ public class OutputModelController {
 
 	public Choice getEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
 		Choice c = @delegate.getEBNFBlock(ebnfRoot, alts);
-		for (CodeGeneratorExtension ext : extensions) c = ext.getEBNFBlock(c);
+		for (CodeGeneratorExtension ext in extensions) c = ext.getEBNFBlock(c);
 		return c;
 	}
 
 	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
 		bool needs = @delegate.needsImplicitLabel(ID, op);
-		for (CodeGeneratorExtension ext : extensions) needs |= ext.needsImplicitLabel(ID, op);
+		for (CodeGeneratorExtension ext in extensions) needs |= ext.needsImplicitLabel(ID, op);
 		return needs;
 	}
 

@@ -4,8 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.codegen.model;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.tool.ast;
 
+namespace org.antlr.v4.codegen.model;
 
 
 public class AltBlock : Choice {
@@ -14,8 +16,9 @@ public class AltBlock : Choice {
 	public AltBlock(OutputModelFactory factory,
 					GrammarAST blkOrEbnfRootAST,
 					List<CodeBlockForAlt> alts)
-	{
-		base(factory, blkOrEbnfRootAST, alts);
+		: base(factory, blkOrEbnfRootAST, alts)
+    {
+		;
 		decision = ((BlockStartState)blkOrEbnfRootAST.atnState).decision;
 		// interp.predict() throws exception
 //		this.error = new ThrowNoViableAlt(factory, blkOrEbnfRootAST, null);

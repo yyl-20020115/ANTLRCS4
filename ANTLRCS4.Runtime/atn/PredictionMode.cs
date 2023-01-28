@@ -446,7 +446,7 @@ public static class PredictionModeTools
 	 */
 	public static bool hasNonConflictingAltSet(ICollection<BitSet> altsets) {
 		foreach (BitSet alts in altsets) {
-			if ( alts.cardinality()==1 ) {
+			if ( alts.Cardinality()==1 ) {
 				return true;
 			}
 		}
@@ -463,7 +463,7 @@ public static class PredictionModeTools
 	 */
 	public static bool hasConflictingAltSet(ICollection<BitSet> altsets) {
 		foreach (BitSet alts in altsets) {
-			if ( alts.cardinality()>1 ) {
+			if ( alts.Cardinality()>1 ) {
 				return true;
 			}
 		}
@@ -500,7 +500,7 @@ public static class PredictionModeTools
 	 */
 	public static int getUniqueAlt(ICollection<BitSet> altsets) {
 		BitSet all = getAlts(altsets);
-		if ( all.cardinality()==1 ) return all.nextSetBit(0);
+		if ( all.Cardinality()==1 ) return all.NextSetBit(0);
 		return ATN.INVALID_ALT_NUMBER;
 	}
 
@@ -528,7 +528,7 @@ public static class PredictionModeTools
 	public static BitSet getAlts(ATNConfigSet configs) {
 		BitSet alts = new BitSet();
 		foreach (ATNConfig config in configs) {
-			alts.set(config.alt);
+			alts.Set(config.alt);
 		}
 		return alts;
 	}
@@ -550,7 +550,7 @@ public static class PredictionModeTools
 				alts = new BitSet();
 				configToAlts.put(c, alts);
 			}
-			alts.set(c.alt);
+			alts.Set(c.alt);
 		}
 		return configToAlts.values();
 	}
@@ -570,7 +570,7 @@ public static class PredictionModeTools
 				alts = new BitSet();
 				m.Add(c.state, alts);
 			}
-			alts.set(c.alt);
+			alts.Set(c.alt);
 		}
 		return m;
 	}
@@ -578,7 +578,7 @@ public static class PredictionModeTools
 	public static bool hasStateAssociatedWithOneAlt(ATNConfigSet configs) {
 		Dictionary<ATNState, BitSet> x = getStateToAltMap(configs);
 		foreach(BitSet alts in x.Values) {
-			if ( alts.cardinality()==1 ) return true;
+			if ( alts.Cardinality()==1 ) return true;
 		}
 		return false;
 	}
@@ -586,13 +586,13 @@ public static class PredictionModeTools
 	public static int getSingleViableAlt(ICollection<BitSet> altsets) {
 		BitSet viableAlts = new BitSet();
 		foreach (BitSet alts in altsets) {
-			int minAlt = alts.nextSetBit(0);
-			viableAlts.set(minAlt);
-			if ( viableAlts.cardinality()>1 ) { // more than 1 viable alt
+			int minAlt = alts.NextSetBit(0);
+			viableAlts.Set(minAlt);
+			if ( viableAlts.Cardinality()>1 ) { // more than 1 viable alt
 				return ATN.INVALID_ALT_NUMBER;
 			}
 		}
-		return viableAlts.nextSetBit(0);
+		return viableAlts.NextSetBit(0);
 	}
 
 }

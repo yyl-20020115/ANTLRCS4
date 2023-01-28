@@ -13,8 +13,8 @@ namespace org.antlr.v4.test.tool;
 public class TestUnbufferedCharStream {
 	[TestMethod] public void testNoChar() {
 		CharStream input = createStream("");
-		assertEquals(IntStream.EOF, input.LA(1));
-		assertEquals(IntStream.EOF, input.LA(2));
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
+		Assert.AreEqual(IntStream.EOF, input.LA(2));
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class TestUnbufferedCharStream {
 	[TestMethod]
 	public void testConsumeEOF() {
 		CharStream input = createStream("");
-		assertEquals(IntStream.EOF, input.LA(1));
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
 		assertThrows(IllegalStateException, input::consume);
 	}
 
@@ -38,9 +38,9 @@ public class TestUnbufferedCharStream {
 	[TestMethod]
 	public void testSeekPastEOF() {
 		CharStream input = createStream("");
-		assertEquals(0, input.index());
+		Assert.AreEqual(0, input.index());
 		input.seek(1);
-		assertEquals(0, input.index());
+		Assert.AreEqual(0, input.index());
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("xyz");
 		input.consume();
 		int m1 = input.mark();
-		assertEquals(1, input.index());
+		Assert.AreEqual(1, input.index());
 		input.consume();
 		assertThrows(ArgumentException, () => input.seek(0));
 	}
@@ -111,7 +111,7 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("xyz");
 		input.consume();
 		int m1 = input.mark();
-		assertEquals(1, input.index());
+		Assert.AreEqual(1, input.index());
 		assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
 	}
 
@@ -120,10 +120,10 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("xyz");
 		input.consume();
 		int m1 = input.mark();
-		assertEquals(1, input.index());
+		Assert.AreEqual(1, input.index());
 		input.consume();
 		input.consume();
-		assertEquals("yz", input.getText(new Interval(1, 2)));
+		Assert.AreEqual("yz", input.getText(new Interval(1, 2)));
 	}
 
 	[TestMethod]
@@ -131,106 +131,106 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("abcdef");
 
 		input.consume();
-		assertEquals('a', input.LA(-1));
+		Assert.AreEqual('a', input.LA(-1));
 
 		int m1 = input.mark();
 		input.consume();
 		input.consume();
 		input.consume();
-		assertEquals('d', input.LA(-1));
+		Assert.AreEqual('d', input.LA(-1));
 
 		input.seek(2);
-		assertEquals('b', input.LA(-1));
+		Assert.AreEqual('b', input.LA(-1));
 
 		input.release(m1);
 		input.seek(3);
-		assertEquals('c', input.LA(-1));
+		Assert.AreEqual('c', input.LA(-1));
 		// this special case is not required by the IntStream interface, but
 		// UnbufferedCharStream allows it so we have to make sure the resulting
 		// state is consistent
 		input.seek(2);
-		assertEquals('b', input.LA(-1));
+		Assert.AreEqual('b', input.LA(-1));
 	}
 
 	[TestMethod] public void test1Char(){
 		TestingUnbufferedCharStream input = createStream("x");
-		assertEquals('x', input.LA(1));
+		Assert.AreEqual('x', input.LA(1));
 		input.consume();
-		assertEquals(IntStream.EOF, input.LA(1));
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
 		String r = input.getRemainingBuffer();
-		assertEquals("\uFFFF", r); // shouldn't include x
-		assertEquals("\uFFFF", input.getBuffer()); // whole buffer
+		Assert.AreEqual("\uFFFF", r); // shouldn't include x
+		Assert.AreEqual("\uFFFF", input.getBuffer()); // whole buffer
 	}
 
 	[TestMethod] public void test2Char(){
 		TestingUnbufferedCharStream input = createStream("xy");
-		assertEquals('x', input.LA(1));
+		Assert.AreEqual('x', input.LA(1));
 		input.consume();
-		assertEquals('y', input.LA(1));
-		assertEquals("y", input.getRemainingBuffer()); // shouldn't include x
-		assertEquals("y", input.getBuffer());
+		Assert.AreEqual('y', input.LA(1));
+		Assert.AreEqual("y", input.getRemainingBuffer()); // shouldn't include x
+		Assert.AreEqual("y", input.getBuffer());
 		input.consume();
-		assertEquals(IntStream.EOF, input.LA(1));
-		assertEquals("\uFFFF", input.getBuffer());
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
+		Assert.AreEqual("\uFFFF", input.getBuffer());
 	}
 
     [TestMethod] public void test2CharAhead(){
    		CharStream input = createStream("xy");
-   		assertEquals('x', input.LA(1));
-   		assertEquals('y', input.LA(2));
-   		assertEquals(IntStream.EOF, input.LA(3));
+   		Assert.AreEqual('x', input.LA(1));
+   		Assert.AreEqual('y', input.LA(2));
+   		Assert.AreEqual(IntStream.EOF, input.LA(3));
    	}
 
     [TestMethod] public void testBufferExpand(){
 		TestingUnbufferedCharStream input = createStream("01234", 2);
-   		assertEquals('0', input.LA(1));
-        assertEquals('1', input.LA(2));
-        assertEquals('2', input.LA(3));
-        assertEquals('3', input.LA(4));
-        assertEquals('4', input.LA(5));
-		assertEquals("01234", input.getBuffer());
-   		assertEquals(IntStream.EOF, input.LA(6));
+   		Assert.AreEqual('0', input.LA(1));
+        Assert.AreEqual('1', input.LA(2));
+        Assert.AreEqual('2', input.LA(3));
+        Assert.AreEqual('3', input.LA(4));
+        Assert.AreEqual('4', input.LA(5));
+		Assert.AreEqual("01234", input.getBuffer());
+   		Assert.AreEqual(IntStream.EOF, input.LA(6));
    	}
 
     [TestMethod] public void testBufferWrapSize1(){
    		CharStream input = createStream("01234", 1);
-        assertEquals('0', input.LA(1));
+        Assert.AreEqual('0', input.LA(1));
         input.consume();
-        assertEquals('1', input.LA(1));
+        Assert.AreEqual('1', input.LA(1));
         input.consume();
-        assertEquals('2', input.LA(1));
+        Assert.AreEqual('2', input.LA(1));
         input.consume();
-        assertEquals('3', input.LA(1));
+        Assert.AreEqual('3', input.LA(1));
         input.consume();
-        assertEquals('4', input.LA(1));
+        Assert.AreEqual('4', input.LA(1));
         input.consume();
-   		assertEquals(IntStream.EOF, input.LA(1));
+   		Assert.AreEqual(IntStream.EOF, input.LA(1));
    	}
 
     [TestMethod] public void testBufferWrapSize2(){
    		CharStream input = createStream("01234", 2);
-        assertEquals('0', input.LA(1));
+        Assert.AreEqual('0', input.LA(1));
         input.consume();
-        assertEquals('1', input.LA(1));
+        Assert.AreEqual('1', input.LA(1));
         input.consume();
-        assertEquals('2', input.LA(1));
+        Assert.AreEqual('2', input.LA(1));
         input.consume();
-        assertEquals('3', input.LA(1));
+        Assert.AreEqual('3', input.LA(1));
         input.consume();
-        assertEquals('4', input.LA(1));
+        Assert.AreEqual('4', input.LA(1));
         input.consume();
-   		assertEquals(IntStream.EOF, input.LA(1));
+   		Assert.AreEqual(IntStream.EOF, input.LA(1));
    	}
 
 	[TestMethod] public void test1Mark(){
 		TestingUnbufferedCharStream input = createStream("xyz");
 		int m = input.mark();
-		assertEquals('x', input.LA(1));
-		assertEquals('y', input.LA(2));
-		assertEquals('z', input.LA(3));
+		Assert.AreEqual('x', input.LA(1));
+		Assert.AreEqual('y', input.LA(2));
+		Assert.AreEqual('z', input.LA(3));
 		input.release(m);
-		assertEquals(IntStream.EOF, input.LA(4));
-		assertEquals("xyz\uFFFF", input.getBuffer());
+		Assert.AreEqual(IntStream.EOF, input.LA(4));
+		Assert.AreEqual("xyz\uFFFF", input.getBuffer());
 	}
 
 	[TestMethod] public void test1MarkWithConsumesInSequence(){
@@ -239,26 +239,26 @@ public class TestUnbufferedCharStream {
 		input.consume(); // x, moves to y
 		input.consume(); // y
 		input.consume(); // z, moves to EOF
-		assertEquals(IntStream.EOF, input.LA(1));
-		assertEquals("xyz\uFFFF", input.getBuffer());
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
+		Assert.AreEqual("xyz\uFFFF", input.getBuffer());
 		input.release(m); // wipes buffer
-		assertEquals("\uFFFF", input.getBuffer());
+		Assert.AreEqual("\uFFFF", input.getBuffer());
 	}
 
     [TestMethod] public void test2Mark(){
 		TestingUnbufferedCharStream input = createStream("xyz", 100);
-   		assertEquals('x', input.LA(1));
+   		Assert.AreEqual('x', input.LA(1));
         input.consume(); // reset buffer index (p) to 0
         int m1 = input.mark();
-   		assertEquals('y', input.LA(1));
+   		Assert.AreEqual('y', input.LA(1));
         input.consume();
         int m2 = input.mark();
-		assertEquals("yz", input.getBuffer());
+		Assert.AreEqual("yz", input.getBuffer());
         input.release(m2); // drop to 1 marker
         input.consume();
         input.release(m1); // shifts remaining char to beginning
-   		assertEquals(IntStream.EOF, input.LA(1));
-		assertEquals("\uFFFF", input.getBuffer());
+   		Assert.AreEqual(IntStream.EOF, input.LA(1));
+		Assert.AreEqual("\uFFFF", input.getBuffer());
    	}
 
     [TestMethod] public void testAFewTokens(){
@@ -280,7 +280,7 @@ public class TestUnbufferedCharStream {
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
         String result = tokens.LT(1).getText();
         String expecting = "x";
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
 		tokens.fill();
 		expecting =
 			"[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1], [@2,2:2='=',<4>,1:2]," +
@@ -290,16 +290,16 @@ public class TestUnbufferedCharStream {
 			" [@12,15:22='20234234',<2>,1:15], [@13,23:23=' ',<7>,1:23]," +
 			" [@14,24:24='*',<6>,1:24], [@15,25:25=' ',<7>,1:25], [@16,26:26='0',<2>,1:26]," +
 			" [@17,27:27=';',<3>,1:27], [@18,28:27='',<-1>,1:28]]";
-		assertEquals(expecting, tokens.getTokens().ToString());
+		Assert.AreEqual(expecting, tokens.getTokens().ToString());
     }
 
 	[TestMethod] public void testUnicodeSMP(){
 		TestingUnbufferedCharStream input = createStream("\uD83C\uDF0E");
-		assertEquals(0x1F30E, input.LA(1));
-		assertEquals("\uD83C\uDF0E", input.getBuffer());
+		Assert.AreEqual(0x1F30E, input.LA(1));
+		Assert.AreEqual("\uD83C\uDF0E", input.getBuffer());
 		input.consume();
-		assertEquals(IntStream.EOF, input.LA(1));
-		assertEquals("\uFFFF", input.getBuffer());
+		Assert.AreEqual(IntStream.EOF, input.LA(1));
+		Assert.AreEqual("\uFFFF", input.getBuffer());
 	}
 
 	[TestMethod]

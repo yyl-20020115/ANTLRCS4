@@ -613,7 +613,7 @@ public class ActionSplitter : Lexer
                                     recover(mse);
                                     throw mse;
                                 }
-                                if (state.backtracking == 1) { buf.append((char)c); }
+                                if (state.backtracking == 1) { buf.Append((char)c); }
                             }
                             break;
                         case 2:
@@ -621,7 +621,7 @@ public class ActionSplitter : Lexer
                             {
                                 match("\\$"); if (state.failed) return;
 
-                                if (state.backtracking == 1) { buf.append('$'); }
+                                if (state.backtracking == 1) { buf.Append('$'); }
                             }
                             break;
                         case 3:
@@ -641,7 +641,7 @@ public class ActionSplitter : Lexer
                                     recover(mse);
                                     throw mse;
                                 }
-                                if (state.backtracking == 1) { buf.append('\\').append((char)c); }
+                                if (state.backtracking == 1) { buf.Append('\\').Append((char)c); }
                             }
                             break;
                         case 4:
@@ -653,7 +653,7 @@ public class ActionSplitter : Lexer
                                     throw new FailedPredicateException(input, "TEXT", "!isIDStartChar(input.LA(2))");
                                 }
                                 match('$'); if (state.failed) return;
-                                if (state.backtracking == 1) { buf.append('$'); }
+                                if (state.backtracking == 1) { buf.Append('$'); }
                             }
                             break;
 

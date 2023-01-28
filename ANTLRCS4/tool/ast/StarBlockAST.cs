@@ -12,13 +12,13 @@ namespace org.antlr.v4.tool.ast;
 public class StarBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
 	private readonly bool _greedy;
 
-	public StarBlockAST(StarBlockAST node) {
-		base(node);
+	public StarBlockAST(StarBlockAST node) : base(node)
+    {
 		_greedy = node._greedy;
 	}
 
-	public StarBlockAST(int type, Token t, Token nongreedy) {
-		base(type, t);
+	public StarBlockAST(int type, Token t, Token nongreedy): base(type, t)
+    {
 		_greedy = nongreedy == null;
 	}
 

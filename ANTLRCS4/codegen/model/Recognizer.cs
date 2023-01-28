@@ -5,6 +5,7 @@
  */
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen.model;
@@ -37,8 +38,8 @@ public abstract class Recognizer : OutputModelObject {
     public Dictionary<Rule, RuleSempredFunction> sempredFuncs =
 		new ();
 
-	public Recognizer(OutputModelFactory factory) {
-		base(factory);
+	public Recognizer(OutputModelFactory factory) : base(factory)
+    {
 
 		Grammar g = factory.getGrammar();
 		CodeGenerator gen = factory.getGenerator();
@@ -47,7 +48,7 @@ public abstract class Recognizer : OutputModelObject {
 		name = g.getRecognizerName();
 		accessLevel = g.getOptionString("accessLevel");
 		tokens = new ();
-        foreach (Map.Entry<String, int> entry in g.tokenNameToTypeMap.entrySet()) {
+        foreach (var entry in g.tokenNameToTypeMap) {
 			int ttype = entry.getValue();
 			if ( ttype>0 ) {
 				tokens.put(entry.getKey(), ttype);
@@ -86,10 +87,10 @@ public abstract class Recognizer : OutputModelObject {
 		}
 
 		if (lastTrueEntry < result.Length - 1) {
-			result = Arrays.copyOf(result, lastTrueEntry + 1);
+			result = Arrays.CopyOf(result, lastTrueEntry + 1);
 		}
 
-		return Arrays.asList(result);
+		return Arrays.AsList(result);
 	}
 
 	protected static String translateTokenStringToTarget(String tokenName, CodeGenerator gen) {

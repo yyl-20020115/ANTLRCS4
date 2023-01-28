@@ -6,6 +6,7 @@
 
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 

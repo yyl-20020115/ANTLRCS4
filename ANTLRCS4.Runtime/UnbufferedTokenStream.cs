@@ -186,7 +186,7 @@ public class UnbufferedTokenStream : TokenStream {
 
 	protected void add(Token t) {
 		if ( n>=tokens.Length ) {
-			tokens = Arrays.copyOf(tokens, tokens.Length * 2);
+			tokens = Arrays.CopyOf(tokens, tokens.Length * 2);
 		}
 
 		if (t is WritableToken) {

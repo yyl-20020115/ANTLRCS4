@@ -170,6 +170,6 @@ public class TestATNDeserialization {
 		IntegerList serialized1 = ATNSerializer.getSerialized(atn2);
 		String atn2Data = new ATNDescriber(atn2, Arrays.asList(g.getTokenNames())).decode(serialized1.toArray());
 
-		assertEquals(atnData, atn2Data);
+		Assert.AreEqual(atnData, atn2Data);
 	}
 }

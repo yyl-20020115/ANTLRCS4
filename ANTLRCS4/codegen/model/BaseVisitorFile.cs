@@ -7,7 +7,8 @@ namespace org.antlr.v4.codegen.model;
 
 
 public class BaseVisitorFile : VisitorFile {
-	public BaseVisitorFile(OutputModelFactory factory, String fileName) {
-		base(factory, fileName);
+	public BaseVisitorFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    {
+		
 	}
 }

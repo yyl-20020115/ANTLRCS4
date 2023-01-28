@@ -61,8 +61,8 @@ public class TestParserExec {
 			"s0-ID->s1\n" +
 			"s1-INT->s2\n" +
 			"s2-EOF->:s3=>1\n"; // Must point at accept state
-		assertEquals(expecting, executedState.output);
-		assertEquals("", executedState.errors);
+		Assert.AreEqual(expecting, executedState.output);
+		Assert.AreEqual("", executedState.errors);
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class TestParserExec {
 		String grammar = load("Psl.g4");
 		ExecutedState executedState = execParser("Psl.g4", grammar,
 				"PslParser", "PslLexer", "floating_constant", " . 234", false);
-		assertEquals("", executedState.output);
-		assertEquals("line 1:6 rule floating_constant DEC:A floating-point constant cannot have internal white space\n", executedState.errors);
+		Assert.AreEqual("", executedState.output);
+		Assert.AreEqual("line 1:6 rule floating_constant DEC:A floating-point constant cannot have internal white space\n", executedState.errors);
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class TestParserExec {
 				"ModeTagsParser", "ModeTagsLexer",
 				"file", "", false,
 				tempDir);
-		assertEquals("", executedState.output);
-		assertEquals("", executedState.errors);
+		Assert.AreEqual("", executedState.output);
+		Assert.AreEqual("", executedState.errors);
 	}
 
 	/**
@@ -143,8 +143,8 @@ public class TestParserExec {
 		String input = "2 9 10 3 1 2 3";
 		ExecutedState executedState = execParser("Data.g4", grammar,
 				"DataParser", "DataLexer", "file", input, false);
-		assertEquals("6\n", executedState.output);
-		assertEquals("", executedState.errors);
+		Assert.AreEqual("6\n", executedState.output);
+		Assert.AreEqual("", executedState.errors);
 	}
 
 	[TestMethod] public void testCaseInsensitiveInCombinedGrammar(){
@@ -165,7 +165,7 @@ public class TestParserExec {
 				"CaseInsensitiveGrammar.g4", grammar,
 				"CaseInsensitiveGrammarParser", "CaseInsensitiveGrammarLexer",
 				"e", input, false);
-		assertEquals("", executedState.output);
-		assertEquals("", executedState.errors);
+		Assert.AreEqual("", executedState.output);
+		Assert.AreEqual("", executedState.errors);
 	}
 }

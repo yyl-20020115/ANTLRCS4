@@ -4,29 +4,27 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.tool.ast;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.Token;
-import org.antlr.runtime.TokenStream;
-import org.antlr.runtime.tree.CommonErrorNode;
+namespace org.antlr.v4.tool.ast;
 
 /** A node representing erroneous token range in token stream */
 public class GrammarASTErrorNode : GrammarAST {
-    CommonErrorNode delegate;
+    CommonErrorNode @delegate;
     public GrammarASTErrorNode(TokenStream input, Token start, Token stop,
-                               org.antlr.runtime.RecognitionException e)
+                               RecognitionException e)
     {
-        delegate = new CommonErrorNode(input,start,stop,e);
+        @delegate = new CommonErrorNode(input,start,stop,e);
     }
 
-    @Override
-    public bool isNil() { return delegate.isNil(); }
+    //@Override
+    public bool isNil() { return @delegate.isNil(); }
 
-    @Override
-    public int getType() { return delegate.getType(); }
+    //@Override
+    public int getType() { return @delegate.getType(); }
 
-    @Override
-    public String getText() { return delegate.getText(); }
-    @Override
-    public String toString() { return delegate.toString(); }
+    //@Override
+    public String getText() { return @delegate.getText(); }
+    //@Override
+    public String toString() { return @delegate.toString(); }
 }

@@ -15,8 +15,8 @@ public class TestVocabulary {
 	[TestMethod]
 	public void testEmptyVocabulary() {
 		assertNotNull(VocabularyImpl.EMPTY_VOCABULARY);
-		assertEquals("EOF", VocabularyImpl.EMPTY_VOCABULARY.getSymbolicName(Token.EOF));
-		assertEquals("0", VocabularyImpl.EMPTY_VOCABULARY.getDisplayName(Token.INVALID_TYPE));
+		Assert.AreEqual("EOF", VocabularyImpl.EMPTY_VOCABULARY.getSymbolicName(Token.EOF));
+		Assert.AreEqual("0", VocabularyImpl.EMPTY_VOCABULARY.getDisplayName(Token.INVALID_TYPE));
 	}
 
 	[TestMethod]
@@ -28,17 +28,17 @@ public class TestVocabulary {
 
 		Vocabulary vocabulary = VocabularyImpl.fromTokenNames(tokenNames);
 		assertNotNull(vocabulary);
-		assertEquals("EOF", vocabulary.getSymbolicName(Token.EOF));
+		Assert.AreEqual("EOF", vocabulary.getSymbolicName(Token.EOF));
 		for (int i = 0; i < tokenNames.Length; i++) {
-			assertEquals(tokenNames[i], vocabulary.getDisplayName(i));
+			Assert.AreEqual(tokenNames[i], vocabulary.getDisplayName(i));
 
 			if (tokenNames[i].startsWith("'")) {
-				assertEquals(tokenNames[i], vocabulary.getLiteralName(i));
+				Assert.AreEqual(tokenNames[i], vocabulary.getLiteralName(i));
 				assertNull(vocabulary.getSymbolicName(i));
 			}
 			else if (Character.isUpperCase(tokenNames[i].charAt(0))) {
 				assertNull(vocabulary.getLiteralName(i));
-				assertEquals(tokenNames[i], vocabulary.getSymbolicName(i));
+				Assert.AreEqual(tokenNames[i], vocabulary.getSymbolicName(i));
 			}
 			else {
 				assertNull(vocabulary.getLiteralName(i));

@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.codegen;
 
 /** Convert an output model tree to template hierarchy by walking
@@ -93,10 +96,10 @@ public class OutputModelWalker {
 				else if ( o is Collection || o is OutputModelObject[] ) {
 					// LIST OF MODEL OBJECTS?
 					if ( o is OutputModelObject[] ) {
-						o = Arrays.asList((OutputModelObject[])o);
+						o = Arrays.AsList((OutputModelObject[])o);
 					}
-					Collection<?> nestedOmos = (Collection<?>)o;
-					for (Object nestedOmo : nestedOmos) {
+					ICollection<?> nestedOmos = (Collection<?>)o;
+					for (Object nestedOmo in nestedOmos) {
 						if ( nestedOmo==null ) continue;
 						ST nestedST = walk((OutputModelObject)nestedOmo, header);
 //						Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
@@ -105,8 +108,8 @@ public class OutputModelWalker {
 				}
 				else if ( o is Map ) {
 					Map<?, ?> nestedOmoMap = (Map<?, ?>)o;
-					Map<Object, ST> m = new LinkedHashMap<Object, ST>();
-					for (Map.Entry<?, ?> entry : nestedOmoMap.entrySet()) {
+					Dictionary<Object, ST> m = new LinkedHashMap<Object, ST>();
+					for (var entry : nestedOmoMap.entrySet()) {
 						ST nestedST = walk((OutputModelObject)entry.getValue(), header);
 //						Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
 						m.put(entry.getKey(), nestedST);

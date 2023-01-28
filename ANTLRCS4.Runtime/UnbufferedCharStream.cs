@@ -207,7 +207,7 @@ public class UnbufferedCharStream : CharStream {
 
 	protected void add(int c) {
 		if ( n>=data.Length ) {
-			data = Arrays.copyOf(data, data.Length * 2);
+			data = Arrays.CopyOf(data, data.Length * 2);
         }
         data[n++] = c;
     }

@@ -59,7 +59,7 @@ public class TestScopeParsing {
             @out.add(attr.ToString());
 		}
 		String actual = Utils.join(@out.toArray(), ", ");
-		assertEquals(parameter.output, actual);
+		Assert.AreEqual(parameter.output, actual);
 	}
 
 	private static ICollection<Parameter> getAllTestDescriptors() {

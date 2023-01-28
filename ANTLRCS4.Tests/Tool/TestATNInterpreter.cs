@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -88,8 +91,8 @@ public class TestATNInterpreter {
 			fail();
 		}
 		catch (NoViableAltException re) {
-			assertEquals(1, re.getOffendingToken().getTokenIndex());
-			assertEquals(3, re.getOffendingToken().getType());
+			Assert.AreEqual(1, re.getOffendingToken().getTokenIndex());
+			Assert.AreEqual(3, re.getOffendingToken().getType());
 		}
 	}
 
@@ -134,8 +137,8 @@ public class TestATNInterpreter {
 			fail();
 		}
 		catch (NoViableAltException re) {
-			assertEquals(2, re.getOffendingToken().getTokenIndex());
-			assertEquals(4, re.getOffendingToken().getType());
+			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+			Assert.AreEqual(4, re.getOffendingToken().getType());
 		}
 	}
 
@@ -180,8 +183,8 @@ public class TestATNInterpreter {
 			fail();
 		}
 		catch (NoViableAltException re) {
-			assertEquals(2, re.getOffendingToken().getTokenIndex());
-			assertEquals(4, re.getOffendingToken().getType());
+			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+			Assert.AreEqual(4, re.getOffendingToken().getType());
 		}
 	}
 
@@ -266,8 +269,8 @@ public class TestATNInterpreter {
 			fail();
 		}
 		catch (NoViableAltException re) {
-			assertEquals(2, re.getOffendingToken().getTokenIndex());
-			assertEquals(4, re.getOffendingToken().getType());
+			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+			Assert.AreEqual(4, re.getOffendingToken().getType());
 		}
 	}
 
@@ -337,7 +340,7 @@ public class TestATNInterpreter {
 		checkMatchedAlt(lg, g, "((34))c", 2);
 	}
 
-	public void checkMatchedAlt(LexerGrammar lg, final Grammar g,
+	public void checkMatchedAlt(LexerGrammar lg, Grammar g,
 								String inputString,
 								int expected)
 	{
@@ -365,6 +368,6 @@ public class TestATNInterpreter {
 //		if ( r!=null ) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
 		int result = interp.matchATN(input, startState);
-		assertEquals(expected, result);
+		Assert.AreEqual(expected, result);
 	}
 }

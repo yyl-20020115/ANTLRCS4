@@ -14,7 +14,8 @@ namespace org.antlr.v4.codegen.model;
  *  (A | B | C)?
  */
 public class LL1OptionalBlock : LL1AltBlock {
-	public LL1OptionalBlock(OutputModelFactory factory, GrammarAST blkAST, List<CodeBlockForAlt> alts) {
-		base(factory, blkAST, alts);
+	public LL1OptionalBlock(OutputModelFactory factory, GrammarAST blkAST, List<CodeBlockForAlt> alts) 
+	: base(factory, blkAST, alts)
+    {
 	}
 }

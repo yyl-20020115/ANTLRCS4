@@ -12,6 +12,8 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using Attribute = org.antlr.v4.tool.Attribute;
+using Utils = org.antlr.v4.runtime.misc.Utils;
 
 namespace org.antlr.v4.codegen.model;
 
@@ -49,8 +51,9 @@ public class RuleFunction : OutputModelObject {
     //@ModelElement 
     public List<SrcOp> postamble;
 
-	public RuleFunction(OutputModelFactory factory, Rule r) {
-		base(factory);
+	public RuleFunction(OutputModelFactory factory, Rule r): base(factory)
+    {
+		;
 		this.name = r.name;
 		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(r.name);
 		this.rule = r;
@@ -64,8 +67,8 @@ public class RuleFunction : OutputModelObject {
 
 		if ( r.args!=null ) {
 			ICollection<Attribute> decls = r.args.attributes.Values;
-			if ( decls.size()>0 ) {
-				args = new ();
+			if ( decls.Count>0 ) {
+				args = new List<AttributeDecl>();
 				ruleCtx.addDecls(decls);
 				foreach (var a in decls) {
 					args.Add(new AttributeDecl(factory, a));
@@ -83,7 +86,7 @@ public class RuleFunction : OutputModelObject {
 		ruleLabels = r.getElementLabelNames();
 		tokenLabels = r.getTokenRefs();
 		if ( r.exceptions!=null ) {
-			exceptions = new ArrayList<ExceptionClause>();
+			exceptions = new ();
 			foreach (GrammarAST e in r.exceptions) {
 				ActionAST catchArg = (ActionAST)e.getChild(0);
 				ActionAST catchAction = (ActionAST)e.getChild(1);
@@ -109,13 +112,13 @@ public class RuleFunction : OutputModelObject {
 		if ( labels!=null ) {
 			foreach (Map.Entry<String, List<Pair<int, AltAST>>> entry in labels.entrySet()) {
 				String label = entry.getKey();
-				List<AltAST> alts = new ArrayList<AltAST>();
-				for (Pair<int, AltAST> pair in entry.getValue()) {
+				List<AltAST> alts = new ();
+				foreach (Pair<int, AltAST> pair in entry.getValue()) {
 					alts.Add(pair.b);
 				}
 
 				HashSet<Decl> decls = getDeclsForAllElements(alts);
-				for (Pair<int, AltAST> pair in entry.getValue()) {
+				foreach (Pair<int, AltAST> pair in entry.getValue()) {
 					int altNum = pair.a;
 					altToContext[altNum] = new AltLabelStructDecl(factory, r, altNum, label);
 					if (!altLabelCtxs.containsKey(label)) {
@@ -136,10 +139,10 @@ public class RuleFunction : OutputModelObject {
 			finallyAction = new Action(factory, r.finallyAction);
 		}
 
-		namedActions = new HashMap<String, Action>();
-		for (String name in r.namedActions.keySet()) {
-			ActionAST ast = r.namedActions.get(name);
-			namedActions.put(name, new Action(factory, ast));
+		namedActions = new();
+        foreach (String name in r.namedActions.Keys) {
+			ActionAST ast = r.namedActions[(name)];
+			namedActions[name]= new Action(factory, ast);
 		}
 	}
 
@@ -153,13 +156,13 @@ public class RuleFunction : OutputModelObject {
 		List<GrammarAST> allRefs = new ();
 		bool firstAlt = true;
 		IntervalSet reftypes = new IntervalSet(RULE_REF, TOKEN_REF, STRING_LITERAL);
-		for (AltAST ast in altASTs) {
+		foreach(AltAST ast in altASTs) {
 			List<GrammarAST> refs = getRuleTokens(ast.getNodesWithType(reftypes));
-			allRefs.addAll(refs);
+			allRefs.AddRange(refs);
 			Pair<FrequencySet<String>, FrequencySet<String>> minAndAltFreq = getElementFrequenciesForAlt(ast);
 			FrequencySet<String> minFreq = minAndAltFreq.a;
 			FrequencySet<String> altFreq = minAndAltFreq.b;
-			for (GrammarAST t in refs) {
+			foreach (GrammarAST t in refs) {
 				String refLabelName = getName(t);
 
 				if (refLabelName != null) {
@@ -173,9 +176,9 @@ public class RuleFunction : OutputModelObject {
 				}
 			}
 
-			foreach (String @ref in nonOptional.toArray(new String[0])) {
+			foreach (String @ref in nonOptional.ToArray()) {
 				if (minFreq.count(@ref) == 0) {
-					nonOptional.remove(@ref);
+					nonOptional.Remove(@ref);
 				}
 			}
 
@@ -191,16 +194,16 @@ public class RuleFunction : OutputModelObject {
 
 			List<Decl> d = getDeclForAltElement(t,
 												refLabelName,
-												needsList.contains(refLabelName),
-												!nonOptional.contains(refLabelName));
-			decls.addAll(d);
+												needsList.Contains(refLabelName),
+												!nonOptional.Contains(refLabelName));
+			decls.UnionWith(d);
 		}
 		return decls;
 	}
 
 	private List<GrammarAST> getRuleTokens(List<GrammarAST> refs) {
-		List<GrammarAST> result = new (refs.size());
-		for (GrammarAST @ref in refs) {
+		List<GrammarAST> result = new (refs.Count);
+		foreach (GrammarAST @ref in refs) {
 			CommonTree r = @ref;
 
 			bool ignore = false;

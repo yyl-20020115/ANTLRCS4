@@ -90,7 +90,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(g.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testWildcard(){
@@ -259,7 +259,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeSMPLiteralSerializedToSet(){
@@ -283,7 +283,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeSMPRangeSerializedToSet(){
@@ -307,7 +307,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeSMPAndBMPSetSerialized(){
@@ -343,7 +343,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerWith0xFFFCInSet(){
@@ -387,7 +387,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerNotLiteral(){
@@ -412,7 +412,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerRange(){
@@ -436,7 +436,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerEOF(){
@@ -462,7 +462,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerEOFInSet(){
@@ -492,7 +492,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerLoops(){
@@ -524,7 +524,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerAction(){
@@ -572,7 +572,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerNotSet(){
@@ -619,7 +619,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerNotSetWithRange(){
@@ -644,7 +644,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeUnescapedBMPNotSet(){
@@ -669,7 +669,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeUnescapedBMPSetWithRange(){
@@ -694,7 +694,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeUnescapedBMPNotSetWithRange(){
@@ -719,7 +719,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedBMPNotSet(){
@@ -744,7 +744,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedBMPSetWithRange(){
@@ -769,7 +769,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedBMPNotSetWithRange(){
@@ -794,7 +794,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedSMPNotSet(){
@@ -819,7 +819,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedSMPSetWithRange(){
@@ -844,7 +844,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerUnicodeEscapedSMPNotSetWithRange(){
@@ -869,7 +869,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerWildcardWithMode(){
@@ -933,7 +933,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testLexerNotSetWithRange2(){
@@ -961,7 +961,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void testModeInLexer(){
@@ -1019,7 +1019,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	[TestMethod] public void test2ModesInLexer(){
@@ -1075,7 +1075,7 @@ public class TestATNSerialization {
 		ATN atn = createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.asList(g.getTokenNames())).decode(serialized.toArray());
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 
 		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);
 		int[] ints16 = serialized16.toArray();

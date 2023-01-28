@@ -5,6 +5,8 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -212,13 +214,13 @@ public class TestAmbigParseTrees {
 		// PARSE
 		int ruleIndex = g.rules.get(startRule).index;
 		ParserRuleContext parseTree = parser.parse(ruleIndex);
-		assertEquals(overallTree, Trees.toStringTree(parseTree, nodeTextProvider));
+		Assert.AreEqual(overallTree, Trees.toStringTree(parseTree, nodeTextProvider));
 		Console.Out.WriteLine();
 
 		DecisionInfo[] decisionInfo = parser.getParseInfo().getDecisionInfo();
 		List<AmbiguityInfo> ambiguities = decisionInfo[decision].ambiguities;
-		assertEquals(1, ambiguities.size());
-		AmbiguityInfo ambiguityInfo = ambiguities.get(0);
+		Assert.AreEqual(1, ambiguities.Count);
+		AmbiguityInfo ambiguityInfo = ambiguities[(0)];
 
 		List<ParserRuleContext> ambiguousParseTrees =
 			GrammarParserInterpreter.getAllPossibleParseTrees(g,
@@ -229,12 +231,12 @@ public class TestAmbigParseTrees {
 															  ambiguityInfo.startIndex,
 															  ambiguityInfo.stopIndex,
 															  ruleIndex);
-		assertEquals(expectedAmbigAlts, ambiguityInfo.ambigAlts.ToString());
-		assertEquals(ambiguityInfo.ambigAlts.cardinality(), ambiguousParseTrees.size());
+		Assert.AreEqual(expectedAmbigAlts, ambiguityInfo.ambigAlts.ToString());
+		Assert.AreEqual(ambiguityInfo.ambigAlts.cardinality(), ambiguousParseTrees.size());
 
 		for (int i = 0; i<ambiguousParseTrees.size(); i++) {
 			ParserRuleContext t = ambiguousParseTrees.get(i);
-			assertEquals(expectedParseTrees[i], Trees.toStringTree(t, nodeTextProvider));
+			Assert.AreEqual(expectedParseTrees[i], Trees.toStringTree(t, nodeTextProvider));
 		}
 	}
 
@@ -255,6 +257,6 @@ public class TestAmbigParseTrees {
 		parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
 		ParseTree t = parser.parse(g.rules.get(startRule).index);
 		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
-		assertEquals(expectedParseTree, Trees.toStringTree(t, nodeTextProvider));
+		Assert.AreEqual(expectedParseTree, Trees.toStringTree(t, nodeTextProvider));
 	}
 }

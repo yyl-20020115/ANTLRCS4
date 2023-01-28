@@ -1155,7 +1155,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:151:16: ({...}? RULE_REF )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:151:18: {...}? RULE_REF
             {
-                if (!((((CommonTree)input.LT(1)).getText().equals(ruleName))))
+                if (!((((CommonTree)input.LT(1)).getText().Equals(ruleName))))
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
                     throw new FailedPredicateException(input, "recurseNoLabel", "((CommonTree)input.LT(1)).getText().equals(ruleName)");
@@ -1620,9 +1620,9 @@ public class LeftRecursiveRuleWalker : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 25, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -2397,9 +2397,9 @@ public class LeftRecursiveRuleWalker : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 35, 2, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -2428,9 +2428,9 @@ public class LeftRecursiveRuleWalker : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 35, 3, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {

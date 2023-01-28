@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -69,16 +70,16 @@ public class TestTokenTypeAssignment {
 				"E: 'x' '0' ;\n");
 
 		String literals = "['x']";
-		String foundLiterals = g.stringLiteralToTypeMap.keySet().ToString();
-		assertEquals(literals, foundLiterals);
+		String foundLiterals = g.stringLiteralToTypeMap.Keys.ToString();
+		Assert.AreEqual(literals, foundLiterals);
 
-		foundLiterals = g.implicitLexer.stringLiteralToTypeMap.keySet().ToString();
-		assertEquals("['x']", foundLiterals); // pushed in lexer from parser
+		foundLiterals = g.implicitLexer.stringLiteralToTypeMap.Keys.ToString();
+		Assert.AreEqual("['x']", foundLiterals); // pushed in lexer from parser
 
 		String[] typeToTokenName = g.getTokenDisplayNames();
 		Set<String> tokens = new LinkedHashSet<String>();
 		for (String t : typeToTokenName) if ( t!=null ) tokens.add(t);
-		assertEquals("[<INVALID>, 'x', E]", tokens.ToString());
+		Assert.AreEqual("[<INVALID>, 'x', E]", tokens.ToString());
 	}
 
 	[TestMethod] public void testPredDoesNotHideNameToLiteralMapInLexer(){
@@ -88,12 +89,12 @@ public class TestTokenTypeAssignment {
 				"a : 'x' X ; \n" +
 				"X: 'x' {true}?;\n"); // must match as alias even with pred
 
-		assertEquals("{'x'=1}", g.stringLiteralToTypeMap.ToString());
-		assertEquals("{EOF=-1, X=1}", g.tokenNameToTypeMap.ToString());
+		Assert.AreEqual("{'x'=1}", g.stringLiteralToTypeMap.ToString());
+		Assert.AreEqual("{EOF=-1, X=1}", g.tokenNameToTypeMap.ToString());
 
 		// pushed in lexer from parser
-		assertEquals("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.ToString());
-		assertEquals("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.ToString());
+		Assert.AreEqual("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.ToString());
+		Assert.AreEqual("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.ToString());
 	}
 
 	[TestMethod] public void testCombinedGrammarWithRefToLiteralButNoTokenIDRef(){
@@ -123,27 +124,27 @@ public class TestTokenTypeAssignment {
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\n';\n");
-		Set<?> literals = g.stringLiteralToTypeMap.keySet();
+		var literals = g.stringLiteralToTypeMap.Keys;
 		// must store literals how they appear in the antlr grammar
-		assertEquals("'\\n'", literals.toArray()[0]);
+		Assert.AreEqual("'\\n'", literals.toArray()[0]);
 	}
 
 	[TestMethod] public void testParserCharLiteralWithBasicUnicodeEscape(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\uABCD';\n");
-		Set<?> literals = g.stringLiteralToTypeMap.keySet();
+		var literals = g.stringLiteralToTypeMap.Keys;
 		// must store literals how they appear in the antlr grammar
-		assertEquals("'\\uABCD'", literals.toArray()[0]);
+		Assert.AreEqual("'\\uABCD'", literals.toArray()[0]);
 	}
 
 	[TestMethod] public void testParserCharLiteralWithExtendedUnicodeEscape(){
 		Grammar g = new Grammar(
 				"grammar t;\n"+
 				"a : '\\u{1ABCD}';\n");
-		Set<?> literals = g.stringLiteralToTypeMap.keySet();
+		var literals = g.stringLiteralToTypeMap.Keys;
 		// must store literals how they appear in the antlr grammar
-		assertEquals("'\\u{1ABCD}'", literals.toArray()[0]);
+		Assert.AreEqual("'\\u{1ABCD}'", literals.ToArray()[0]);
 	}
 
 	protected void checkSymbols(Grammar g,
@@ -156,11 +157,11 @@ public class TestTokenTypeAssignment {
 		for (int i = 0; i < typeToTokenName.Length; i++) {
 			String t = typeToTokenName[i];
 			if ( t!=null ) {
-				if (t.startsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX)) {
-					tokens.add(g.getTokenDisplayName(i));
+				if (t.StartsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX)) {
+					tokens.Add(g.getTokenDisplayName(i));
 				}
 				else {
-					tokens.add(t);
+					tokens.Add(t);
 				}
 			}
 		}
@@ -169,12 +170,12 @@ public class TestTokenTypeAssignment {
 		StringTokenizer st = new StringTokenizer(allValidTokensStr, ", ");
 		while ( st.hasMoreTokens() ) {
 			String tokenName = st.nextToken();
-			assertTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");
+			Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");
 			tokens.remove(tokenName);
 		}
 		// make sure there are not any others (other than <EOF> etc...)
 		for (String tokenName : tokens) {
-			assertTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name "+tokenName);
+			Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name "+tokenName);
 		}
 
 		// make sure all expected rules are there
@@ -187,6 +188,6 @@ public class TestTokenTypeAssignment {
 		}
 		//Console.Out.WriteLine("rules="+rules);
 		// make sure there are no extra rules
-		assertEquals(n, g.rules.size(), "number of rules mismatch; expecting "+n+"; found "+g.rules.size());
+		Assert.AreEqual(n, g.rules.size(), "number of rules mismatch; expecting "+n+"; found "+g.rules.size());
 	}
 }

@@ -163,9 +163,9 @@ public class LL1Analyzer {
 
 			if ( ctx != EmptyPredictionContext.Instance ) {
 				// run thru all possible stack tops in ctx
-				bool removed = calledRuleStack.get(s.ruleIndex);
+				bool removed = calledRuleStack.Get(s.ruleIndex);
 				try {
-					calledRuleStack.clear(s.ruleIndex);
+					calledRuleStack.Clear(s.ruleIndex);
 					for (int i = 0; i < ctx.size(); i++) {
 						ATNState returnState = atn.states[ctx.getReturnState(i)];
 //					    Console.Out.WriteLine("popping back to "+retState);
@@ -174,7 +174,7 @@ public class LL1Analyzer {
 				}
 				finally {
 					if (removed) {
-						calledRuleStack.set(s.ruleIndex);
+						calledRuleStack.Set(s.ruleIndex);
 					}
 				}
 				return;
@@ -185,7 +185,7 @@ public class LL1Analyzer {
         for (int i=0; i<n; i++) {
 			Transition t = s.transition(i);
 			if ( t.GetType() == typeof(RuleTransition) ) {
-				if (calledRuleStack.get(((RuleTransition)t).target.ruleIndex)) {
+				if (calledRuleStack.Get(((RuleTransition)t).target.ruleIndex)) {
 					continue;
 				}
 
@@ -193,11 +193,11 @@ public class LL1Analyzer {
 					SingletonPredictionContext.create(ctx, ((RuleTransition)t).followState.stateNumber);
 
 				try {
-					calledRuleStack.set(((RuleTransition)t).target.ruleIndex);
+					calledRuleStack.Set(((RuleTransition)t).target.ruleIndex);
 					_LOOK(t.target, stopState, newContext, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 				}
 				finally {
-					calledRuleStack.clear(((RuleTransition)t).target.ruleIndex);
+					calledRuleStack.Clear(((RuleTransition)t).target.ruleIndex);
 				}
 			}
 			else if ( t is AbstractPredicateTransition ) {

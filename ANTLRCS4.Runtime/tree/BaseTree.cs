@@ -294,7 +294,7 @@ public abstract class BaseTree : Tree
             int numToInsert = replacingWithHowMany - replacingHowMany;
             for (int j = replacingHowMany; j < replacingWithHowMany; j++)
             {
-                children.Add(startChildIndex + j, newChildren[(j))];
+                children.Insert(startChildIndex + j, newChildren[(j)]);
             }
             freshenParentAndChildIndexes(startChildIndex);
         }

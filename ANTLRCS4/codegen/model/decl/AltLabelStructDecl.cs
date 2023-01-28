@@ -29,11 +29,11 @@ public class AltLabelStructDecl : StructDecl {
 	public void addDispatchMethods(Rule r) {
 		dispatchMethods = new ();
 		if ( factory.getGrammar().tool.gen_listener ) {
-			dispatchMethods.add(new ListenerDispatchMethod(factory, true));
-			dispatchMethods.add(new ListenerDispatchMethod(factory, false));
+			dispatchMethods.Add(new ListenerDispatchMethod(factory, true));
+			dispatchMethods.Add(new ListenerDispatchMethod(factory, false));
 		}
 		if ( factory.getGrammar().tool.gen_visitor ) {
-			dispatchMethods.add(new VisitorDispatchMethod(factory));
+			dispatchMethods.Add(new VisitorDispatchMethod(factory));
 		}
 	}
 

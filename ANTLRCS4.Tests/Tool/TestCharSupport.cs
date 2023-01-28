@@ -10,31 +10,31 @@ namespace org.antlr.v4.test.tool;
 public class TestCharSupport {
 	[TestMethod]
 	public void testGetANTLRCharLiteralForChar() {
-		assertEquals("'<INVALID>'",
+		Assert.AreEqual("'<INVALID>'",
 			CharSupport.getANTLRCharLiteralForChar(-1));
-		assertEquals("'\\n'",
+		Assert.AreEqual("'\\n'",
 			CharSupport.getANTLRCharLiteralForChar('\n'));
-		assertEquals("'\\\\'",
+		Assert.AreEqual("'\\\\'",
 			CharSupport.getANTLRCharLiteralForChar('\\'));
-		assertEquals("'\\''",
+		Assert.AreEqual("'\\''",
 			CharSupport.getANTLRCharLiteralForChar('\''));
-		assertEquals("'b'",
+		Assert.AreEqual("'b'",
 			CharSupport.getANTLRCharLiteralForChar('b'));
-		assertEquals("'\\uFFFF'",
+		Assert.AreEqual("'\\uFFFF'",
 			CharSupport.getANTLRCharLiteralForChar(0xFFFF));
-		assertEquals("'\\u{10FFFF}'",
+		Assert.AreEqual("'\\u{10FFFF}'",
 			CharSupport.getANTLRCharLiteralForChar(0x10FFFF));
 	}
 
 	[TestMethod]
 	public void testGetCharValueFromGrammarCharLiteral() {
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromGrammarCharLiteral(null));
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromGrammarCharLiteral(""));
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromGrammarCharLiteral("b"));
-		assertEquals(111,
+		Assert.AreEqual(111,
 			CharSupport.getCharValueFromGrammarCharLiteral("foo"));
 	}
 
@@ -49,65 +49,65 @@ public class TestCharSupport {
 		assertNull(CharSupport
 			.getStringFromGrammarStringLiteral("foo\\ubb"));
 
-		assertEquals("oo»b", CharSupport
+		Assert.AreEqual("oo»b", CharSupport
 			.getStringFromGrammarStringLiteral("foo\\u{bb}bb"));
 	}
 
 	[TestMethod]
 	public void testGetCharValueFromCharInGrammarLiteral() {
-		assertEquals(102,
+		Assert.AreEqual(102,
 			CharSupport.getCharValueFromCharInGrammarLiteral("f"));
 
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\' "));
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\ "));
-		assertEquals(39,
+		Assert.AreEqual(39,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\\'"));
-		assertEquals(10,
+		Assert.AreEqual(10,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\n"));
 
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromCharInGrammarLiteral("foobar"));
-		assertEquals(4660,
+		Assert.AreEqual(4660,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\u1234"));
-		assertEquals(18,
+		Assert.AreEqual(18,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\u{12}"));
 
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromCharInGrammarLiteral("\\u{"));
-		assertEquals(-1,
+		Assert.AreEqual(-1,
 			CharSupport.getCharValueFromCharInGrammarLiteral("foo"));
 	}
 
 	[TestMethod]
 	public void testParseHexValue() {
-		assertEquals(-1, CharSupport.parseHexValue("foobar", -1, 3));
-		assertEquals(-1, CharSupport.parseHexValue("foobar", 1, -1));
-		assertEquals(-1, CharSupport.parseHexValue("foobar", 1, 3));
-		assertEquals(35, CharSupport.parseHexValue("123456", 1, 3));
+		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", -1, 3));
+		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", 1, -1));
+		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", 1, 3));
+		Assert.AreEqual(35, CharSupport.parseHexValue("123456", 1, 3));
 	}
 
 	[TestMethod]
 	public void testCapitalize() {
-		assertEquals("Foo", CharSupport.capitalize("foo"));
+		Assert.AreEqual("Foo", CharSupport.capitalize("foo"));
 	}
 
 	[TestMethod]
 	public void testGetIntervalSetEscapedString() {
-		assertEquals("",
+		Assert.AreEqual("",
 			CharSupport.getIntervalSetEscapedString(new IntervalSet()));
-		assertEquals("'\\u0000'",
+		Assert.AreEqual("'\\u0000'",
 			CharSupport.getIntervalSetEscapedString(new IntervalSet(0)));
-		assertEquals("'\\u0001'..'\\u0003'",
+		Assert.AreEqual("'\\u0001'..'\\u0003'",
 			CharSupport.getIntervalSetEscapedString(new IntervalSet(3, 1, 2)));
 	}
 
 	[TestMethod]
 	public void testGetRangeEscapedString() {
-		assertEquals("'\\u0002'..'\\u0004'",
+		Assert.AreEqual("'\\u0002'..'\\u0004'",
 			CharSupport.getRangeEscapedString(2, 4));
-		assertEquals("'\\u0002'",
+		Assert.AreEqual("'\\u0002'",
 			CharSupport.getRangeEscapedString(2, 2));
 	}
 }

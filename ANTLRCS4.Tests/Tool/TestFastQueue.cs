@@ -16,7 +16,7 @@ public class TestFastQueue {
         q.add("e");
         String expecting = "a b c d e";
         String found = q.ToString();
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 
     [TestMethod] public void testQueueThenRemoveAll(){
@@ -32,10 +32,10 @@ public class TestFastQueue {
             buf.append(o);
             if ( q.size()>0 ) buf.append(" ");
         }
-        assertEquals(0, q.size(), "queue should be empty");
+        Assert.AreEqual(0, q.size(), "queue should be empty");
         String expecting = "a b c d e";
         String found = buf.ToString();
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 
     [TestMethod] public void testQueueThenRemoveOneByOne(){
@@ -51,10 +51,10 @@ public class TestFastQueue {
         buf.append(q.remove());
         q.add("e");
         buf.append(q.remove());
-        assertEquals(0, q.size(), "queue should be empty");
+        Assert.AreEqual(0, q.size(), "queue should be empty");
         String expecting = "abcde";
         String found = buf.ToString();
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 
     // E r r o r s
@@ -68,7 +68,7 @@ public class TestFastQueue {
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 
     [TestMethod] public void testGetFromEmptyQueueAfterSomeAdds(){
@@ -84,7 +84,7 @@ public class TestFastQueue {
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 
     [TestMethod] public void testGetFromEmptyQueueAfterClear(){
@@ -99,6 +99,6 @@ public class TestFastQueue {
         }
         String expecting = "queue index 0 > last index -1";
         String found = msg;
-        assertEquals(expecting, found);
+        Assert.AreEqual(expecting, found);
     }
 }

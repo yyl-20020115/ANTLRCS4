@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.automata;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -86,33 +89,33 @@ public class SymbolChecks {
 	 * defined in surrounding rule.  Also they must have same type
 	 * for repeated defs.
 	 */
-	public void checkForLabelConflicts(Collection<Rule> rules) {
-		for (Rule r in rules) {
+	public void checkForLabelConflicts(ICollection<Rule> rules) {
+		foreach(Rule r in rules) {
 			checkForAttributeConflicts(r);
 
-			Map<String, LabelElementPair> labelNameSpace = new HashMap<>();
+			Map<String, LabelElementPair> labelNameSpace = new ();
 			for (int i = 1; i <= r.numberOfAlts; i++) {
 				Alternative a = r.alt[i];
-				for (List<LabelElementPair> pairs in a.labelDefs.values()) {
+				foreach (List<LabelElementPair> pairs in a.labelDefs.Values) {
 					if (r.hasAltSpecificContexts()) {
 						// Collect labelName-labeledRules map for rule with alternative labels.
-						Map<String, List<LabelElementPair>> labelPairs = new HashMap<>();
-						for (LabelElementPair p in pairs) {
+						Dictionary<String, List<LabelElementPair>> labelPairs = new ();
+						foreach (LabelElementPair p in pairs) {
 							String labelName = findAltLabelName(p.label);
 							if (labelName != null) {
 								List<LabelElementPair> list;
-								if (labelPairs.containsKey(labelName)) {
+								if (labelPairs.ContainsKey(labelName)) {
 									list = labelPairs.get(labelName);
 								}
 								else {
-									list = new ArrayList<>();
+									list = new ();
 									labelPairs.put(labelName, list);
 								}
 								list.Add(p);
 							}
 						}
 
-						foreachs (List<LabelElementPair> internalPairs in labelPairs.values()) {
+						foreach (List<LabelElementPair> internalPairs in labelPairs.Values) {
 							labelNameSpace.clear();
 							checkLabelPairs(r, labelNameSpace, internalPairs);
 						}
@@ -244,7 +247,7 @@ public class SymbolChecks {
 			return;
 		}
 
-		for (Attribute attribute in attributes.attributes.values()) {
+		foreach (tool.Attribute attribute in attributes.attributes.Values) {
 			if (ruleNames.contains(attribute.name)) {
 				errMgr.grammarError(
 						errorType,
@@ -349,8 +352,8 @@ public class SymbolChecks {
 	 */
 	private List<String> getSingleTokenValues(Rule rule)
 	{
-		List<String> values = new ArrayList<>();
-		for (Alternative alt in rule.alt) {
+		List<String> values = new ();
+		foreach (Alternative alt in rule.alt) {
 			if (alt != null) {
 				// select first alt if token has a command
 				Tree rootNode = alt.ast.getChildCount() == 2 &&
@@ -415,7 +418,7 @@ public class SymbolChecks {
 	// CAN ONLY CALL THE TWO NEXT METHODS AFTER GRAMMAR HAS RULE DEFS (see semanticpipeline)
 	public void checkRuleArgs(Grammar g, List<GrammarAST> rulerefs) {
 		if ( rulerefs==null ) return;
-		for (GrammarAST @ref : rulerefs) {
+		for (GrammarAST @ref in rulerefs) {
 			String ruleName = @ref.getText();
 			Rule r = g.getRule(ruleName);
 			GrammarAST arg = (GrammarAST)@ref.getFirstChildWithType(ANTLRParser.ARG_ACTION);

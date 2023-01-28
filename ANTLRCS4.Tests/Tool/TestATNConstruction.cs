@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.automata;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.test.tool;
 
@@ -391,13 +394,13 @@ public class TestATNConstruction {
 		List<GrammarAST> ruleNodes = g.ast.getNodesWithType(ANTLRParser.RULE);
 		RuleAST a = (RuleAST)ruleNodes.get(1);
 		List<GrammarAST> nodesInRule = a.getNodesWithType(null);
-		Map<GrammarAST, ATNState> covered = new LinkedHashMap<GrammarAST, ATNState>();
-		for (GrammarAST node : nodesInRule) {
+		Dictionary<GrammarAST, ATNState> covered = new ();
+		for (GrammarAST node in nodesInRule) {
 			if ( node.atnState != null ) {
 				covered.put(node, node.atnState);
 			}
 		}
-		assertEquals("{RULE=2, BLOCK=8, +=10, BLOCK=8, A=7}", covered.ToString());
+		Assert.AreEqual("{RULE=2, BLOCK=8, +=10, BLOCK=8, A=7}", covered.ToString());
 	}
 	[TestMethod] public void testAorBplus(){
 		Grammar g = new Grammar(
@@ -537,11 +540,11 @@ public class TestATNConstruction {
 			Tool tool = new Tool();
 			tool.removeListeners();
 			tool.addListener(errorQueue);
-			assertEquals(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.size());
 			GrammarRootAST grammarRootAST = tool.parseGrammarFromString(gstr);
-			assertEquals(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.size());
 			Grammar g = tool.createGrammar(grammarRootAST);
-			assertEquals(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.size());
 			g.fileName = "<string>";
 			tool.process(g, false);
 		}
@@ -550,10 +553,10 @@ public class TestATNConstruction {
 			e.printStackTrace();
 		}
 		Console.Out.WriteLine(errorQueue);
-		assertEquals(1, errorQueue.errors.size());
-		assertEquals(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors.get(0).getErrorType());
-		assertEquals("[a, A]", Arrays.ToString(errorQueue.errors.get(0).getArgs()));
-		assertTrue(!threwException);
+		Assert.AreEqual(1, errorQueue.errors.size());
+		Assert.AreEqual(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors.get(0).getErrorType());
+		Assert.AreEqual("[a, A]", Arrays.ToString(errorQueue.errors.get(0).getArgs()));
+		Assert.IsTrue(!threwException);
 	}
 
 	/** Test for https://github.com/antlr/antlr4/issues/1369
@@ -825,6 +828,6 @@ public class TestATNConstruction {
 		ATNPrinter serializer = new ATNPrinter(g, startState);
 		String result = serializer.asString();
 		//System.out.print(result);
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 }

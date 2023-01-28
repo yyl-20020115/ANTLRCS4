@@ -5,6 +5,8 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -161,8 +163,8 @@ public class SemanticPipeline {
 			foreach (String lit in conflictingLiterals) {
 				// Remove literal if repeated across rules so it's not
 				// found by parser grammar.
-				Integer value = G.stringLiteralToTypeMap.remove(lit);
-				if (value != null && value > 0 && value < G.typeToStringLiteralList.size() && lit.equals(G.typeToStringLiteralList.get(value))) {
+				int value = G.stringLiteralToTypeMap.remove(lit);
+				if (value != null && value > 0 && value < G.typeToStringLiteralList.size() && lit.Equals(G.typeToStringLiteralList.get(value))) {
 					G.typeToStringLiteralList.set(value, null);
 				}
 			}
@@ -185,11 +187,11 @@ public class SemanticPipeline {
 		for (int i = 1; i < altActionAst.getChildCount(); i++) {
 			GrammarAST node = (GrammarAST)altActionAst.getChild(i);
 			if (node.getType() == ANTLRParser.LEXER_ACTION_CALL) {
-				if ("type".equals(node.getChild(0).getText())) {
+				if ("type".Equals(node.getChild(0).getText())) {
 					return true;
 				}
 			}
-			else if ("more".equals(node.getText())) {
+			else if ("more".Equals(node.getText())) {
 				return true;
 			}
 		}

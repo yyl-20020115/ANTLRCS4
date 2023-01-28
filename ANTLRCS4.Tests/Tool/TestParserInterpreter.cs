@@ -34,7 +34,7 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s a)");
-		assertEquals("0..0", t.getSourceInterval().ToString());
+		Assert.AreEqual("0..0", t.getSourceInterval().ToString());
 	}
 
 	[TestMethod] public void testEOF(){
@@ -47,7 +47,7 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s a <EOF>)");
-		assertEquals("0..1", t.getSourceInterval().ToString());
+		Assert.AreEqual("0..1", t.getSourceInterval().ToString());
 	}
 
 	[TestMethod] public void testEOFInChild(){
@@ -61,8 +61,8 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>))");
-		assertEquals("0..1", t.getSourceInterval().ToString());
-		assertEquals("0..1", t.getChild(0).getSourceInterval().ToString());
+		Assert.AreEqual("0..1", t.getSourceInterval().ToString());
+		Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString());
 	}
 
 	[TestMethod] public void testEmptyRuleAfterEOFInChild(){
@@ -77,9 +77,9 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>) y)");
-		assertEquals("0..1", t.getSourceInterval().ToString()); // s
-		assertEquals("0..1", t.getChild(0).getSourceInterval().ToString()); // x
-// unspecified		assertEquals("1..0", t.getChild(1).getSourceInterval().ToString()); // y
+		Assert.AreEqual("0..1", t.getSourceInterval().ToString()); // s
+		Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString()); // x
+// unspecified		Assert.AreEqual("1..0", t.getChild(1).getSourceInterval().ToString()); // y
 	}
 
 	[TestMethod] public void testEmptyRuleAfterJustEOFInChild(){
@@ -94,10 +94,10 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) y)");
-		assertEquals("0..0", t.getSourceInterval().ToString()); // s
-		assertEquals("0..0", t.getChild(0).getSourceInterval().ToString()); // x
+		Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
+		Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
 		// this next one is a weird special case where somebody tries to match beyond in the file
-// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().ToString()); // y
+// unspecified		Assert.AreEqual("0..-1", t.getChild(1).getSourceInterval().ToString()); // y
 	}
 
 	[TestMethod] public void testEmptyInput(){
@@ -111,8 +111,8 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s x <EOF>)");
-		assertEquals("0..0", t.getSourceInterval().ToString()); // s
-		assertEquals("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
+		Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
+		Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
 	}
 
 	[TestMethod] public void testEmptyInputWithCallsAfter(){
@@ -128,9 +128,9 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) (y z))");
-		assertEquals("0..0", t.getSourceInterval().ToString()); // s
-		assertEquals("0..0", t.getChild(0).getSourceInterval().ToString()); // x
-// unspecified		assertEquals("0..-1", t.getChild(1).getSourceInterval().ToString()); // x
+		Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
+		Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
+// unspecified		Assert.AreEqual("0..-1", t.getChild(1).getSourceInterval().ToString()); // x
 	}
 
 	[TestMethod] public void testEmptyFirstRule(){
@@ -144,9 +144,9 @@ public class TestParserInterpreter {
 			lg);
 
 		ParseTree t = testInterp(lg, g, "s", "a", "(s x a)");
-		assertEquals("0..0", t.getSourceInterval().ToString()); // s
+		Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
 		// This gets an empty interval because the stop token is null for x
-		assertEquals("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
+		Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
 	}
 
 	[TestMethod] public void testAorB(){
@@ -347,7 +347,7 @@ public class TestParserInterpreter {
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 		ParserInterpreter parser = g.createParserInterpreter(tokens);
 		ParseTree t = parser.parse(g.rules.get(startRule).index);
-		assertEquals(expectedParseTree, t.toStringTree(parser));
+		Assert.AreEqual(expectedParseTree, t.toStringTree(parser));
 		return t;
 	}
 }

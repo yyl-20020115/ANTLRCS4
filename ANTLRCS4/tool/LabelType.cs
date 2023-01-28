@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+namespace org.antlr.v4.tool;
 
 /** the various kinds of labels. t=type, id=ID, types+=type ids+=ID */
 public enum LabelType {

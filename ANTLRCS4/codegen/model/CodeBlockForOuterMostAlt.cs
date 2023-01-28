@@ -21,8 +21,7 @@ public class CodeBlockForOuterMostAlt : CodeBlockForAlt {
 	 */
 	public Alternative alt;
 
-	public CodeBlockForOuterMostAlt(OutputModelFactory factory, Alternative alt) {
-		base(factory);
+	public CodeBlockForOuterMostAlt(OutputModelFactory factory, Alternative alt) :base(factory){
 		this.alt = alt;
 		altLabel = alt.ast.altLabel!=null ? alt.ast.altLabel.getText() : null;
 	}

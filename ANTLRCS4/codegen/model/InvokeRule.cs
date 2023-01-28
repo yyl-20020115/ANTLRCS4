@@ -6,6 +6,7 @@
 
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -22,8 +23,8 @@ public class InvokeRule : RuleElement , LabeledOp {
 	//@ModelElement
 	public List<ActionChunk> argExprsChunks;
 
-	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST) {
-		base(factory, ast);
+	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST): base(factory, ast)
+    {
 		if ( ast.atnState!=null ) {
 			stateNumber = ast.atnState.stateNumber;
 		}

@@ -10,8 +10,9 @@ namespace org.antlr.v4.tool;
 
 
 public class LeftRecursionCyclesMessage : ANTLRMessage {
-	public LeftRecursionCyclesMessage(String fileName, ICollection<ICollection<Rule>> cycles) {
-		base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles);
+	public LeftRecursionCyclesMessage(String fileName, ICollection<ICollection<Rule>> cycles) 
+	: base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles)
+    {
 		this.fileName = fileName;
 	}
 
@@ -20,12 +21,12 @@ public class LeftRecursionCyclesMessage : ANTLRMessage {
 	        return null;
 	    }
 
-	    for (Collection<Rule> collection : cycles) {
+	    foreach (ICollection<Rule> collection in cycles) {
 	        if (collection == null) {
 	            return null;
 	        }
 
-	        for (Rule rule : collection) {
+	        foreach (Rule rule in collection) {
 	            if (rule.ast != null) {
 	                return rule.ast.getToken();
 	            }

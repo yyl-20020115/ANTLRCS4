@@ -9,9 +9,9 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 public class GrammarRootAST : GrammarASTWithOptions {
-	public static readonly Map<String, String> defaultOptions = new HashMap<String, String>();
+	public static readonly Dictionary<String, String> defaultOptions = new ();
 	static GrammarRootAST(){
-		defaultOptions.put("language","Java");
+		defaultOptions.Add("language","Java");
 	}
 
     public int grammarType; // LEXER, PARSER, GRAMMAR (combined)
@@ -19,7 +19,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	/** Track stream used to create this tree */
 
 	public readonly TokenStream tokenStream;
-	public Map<String, String> cmdLineOptions; // -DsuperClass=T on command line
+	public Dictionary<String, String> cmdLineOptions; // -DsuperClass=T on command line
 	public String fileName;
 
 	public GrammarRootAST(GrammarRootAST node) {
@@ -32,16 +32,17 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	public GrammarRootAST(Token t, TokenStream tokenStream) {
 		base(t);
 		if (tokenStream == null) {
-			throw new NullPointerException("tokenStream");
+			throw new NullReferenceException("tokenStream");
 		}
 
 		this.tokenStream = tokenStream;
 	}
 
-	public GrammarRootAST(int type, Token t, TokenStream tokenStream) {
-		base(type, t);
+	public GrammarRootAST(int type, Token t, TokenStream tokenStream): base(type, t)
+    {
+		;
 		if (tokenStream == null) {
-			throw new NullPointerException("tokenStream");
+			throw new NullReferenceException("tokenStream");
 		}
 
 		this.tokenStream = tokenStream;
@@ -50,7 +51,7 @@ public class GrammarRootAST : GrammarASTWithOptions {
 	public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) {
 		base(type,t,text);
 		if (tokenStream == null) {
-			throw new NullPointerException("tokenStream");
+			throw new NullReferenceException("tokenStream");
 		}
 
 		this.tokenStream = tokenStream;
@@ -74,9 +75,9 @@ public class GrammarRootAST : GrammarASTWithOptions {
 		return value;
 	}
 
-	@Override
+	//@Override
 	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 
-	@Override
-	public GrammarRootAST dupNode() { return new GrammarRootAST(this); }
+    //@Override
+    public GrammarRootAST dupNode() { return new GrammarRootAST(this); }
 }

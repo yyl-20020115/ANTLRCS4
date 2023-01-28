@@ -20,8 +20,8 @@ public class LL1OptionalBlockSingleAlt : LL1Choice {
 	public LL1OptionalBlockSingleAlt(OutputModelFactory factory,
 									 GrammarAST blkAST,
 									 List<CodeBlockForAlt> alts)
-	{
-		base(factory, blkAST, alts);
+		: base(factory, blkAST, alts)
+    {
 		this.decision = ((DecisionState)blkAST.atnState).decision;
 
 		/** Lookahead for each alt 1..n */

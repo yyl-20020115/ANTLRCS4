@@ -11,8 +11,8 @@ namespace org.antlr.v4.codegen.model.decl;
 public class AttributeDecl : Decl {
 	public String type;
 	public String initValue;
-	public AttributeDecl(OutputModelFactory factory, Attribute a) {
-		base(factory, a.name, a.decl);
+	public AttributeDecl(OutputModelFactory factory, tool.Attribute a) : base(factory, a.name, a.decl)
+    {
 		this.type = a.type;
 		this.initValue = a.initValue;
 	}

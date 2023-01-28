@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;

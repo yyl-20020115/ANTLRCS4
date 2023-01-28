@@ -4,6 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.analysis;
+using org.antlr.v4.automata;
+using org.antlr.v4.codegen;
+using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -40,7 +44,7 @@ public class TestActionTranslation {
 		testActions(attributeTemplate, "inline2", action, expected);
     }
 
-    [TestMethod] public void testEscaped$InAction(){
+    [TestMethod] public void testEscaped_dollar_InAction(){
 		String action = "int \\$n; \"\\$in string\\$\"";
 		String expected = "int $n; \"$in string$\"";
 		testActions(attributeTemplate, "members", action, expected);
@@ -54,7 +58,7 @@ public class TestActionTranslation {
 	 * Regression test for "in antlr v4 lexer, $ translation issue in action".
 	 * https://github.com/antlr/antlr4/issues/176
 	 */
-	[TestMethod] public void testUnescaped$InAction(){
+	[TestMethod] public void testUnescaped_dollar_InAction(){
 		String action = "\\$string$";
 		String expected = "$string$";
 		testActions(attributeTemplate, "members", action, expected);
@@ -238,7 +242,7 @@ public class TestActionTranslation {
 			String e = "#end-" + actionName + "#";
 			int end = output.indexOf(e);
 			String snippet = output.substring(start+b.Length(),end);
-			assertEquals(expected, snippet);
+			Assert.AreEqual(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {
 //			Console.Error.WriteLine(equeue.ToString());

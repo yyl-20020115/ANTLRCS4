@@ -10,11 +10,11 @@ namespace org.antlr.v4.tool.ast;
 
 public class RangeAST : GrammarAST , RuleElementAST {
 
-	public RangeAST(RangeAST node) {
-		base(node);
+	public RangeAST(RangeAST node) : base(node)
+    {
 	}
 
-	public RangeAST(Token t) { base(t); }
+	public RangeAST(Token t) : base(t) {  }
 
 	//@Override
 	public RangeAST dupNode() {

@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -26,23 +27,24 @@ public class ListenerFile : OutputFile {
 	 * a listener context name to the name of the rule which defines the
 	 * context.
 	 */
-	public Dictionary<String, String> listenerLabelRuleNames = new LinkedHashMap<String, String>();
+	public Dictionary<String, String> listenerLabelRuleNames = new ();
 
 	//@ModelElement 
 		public Action header;
 	//@ModelElement
 		public Dictionary<String, Action> namedActions;
 
-	public ListenerFile(OutputModelFactory factory, String fileName) {
-		base(factory, fileName);
+	public ListenerFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    {
+		;
 		Grammar g = factory.getGrammar();
 		parserName = g.getRecognizerName();
 		grammarName = g.name;
 		namedActions = buildNamedActions(factory.getGrammar(), ast -> ast.getScope() == null);
         foreach (Rule r in g.rules.values()) {
-			Map<String, List<Pair<Integer,AltAST>>> labels = r.getAltLabels();
+			Map<String, List<Pair<int,AltAST>>> labels = r.getAltLabels();
 			if ( labels!=null ) {
-                foreach (Map.Entry<String, List<Pair<Integer, AltAST>>> pair in labels.entrySet()) {
+                foreach (Map.Entry<String, List<Pair<int, AltAST>>> pair in labels.entrySet()) {
 					listenerNames.add(pair.getKey());
 					listenerLabelRuleNames.put(pair.getKey(), r.name);
 				}

@@ -224,4 +224,18 @@ public class ANTLRInputStream : CharStream {
     //@Override
     public override String ToString() { return new String(data); }
 
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int start)
+    {
+        throw new NotImplementedException();
+    }
 }

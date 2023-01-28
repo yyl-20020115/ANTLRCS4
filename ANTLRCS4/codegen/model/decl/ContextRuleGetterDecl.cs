@@ -11,8 +11,8 @@ public class ContextRuleGetterDecl : ContextGetterDecl {
 	public String ctxName;
 	public bool optional;
 
-	public ContextRuleGetterDecl(OutputModelFactory factory, String name, String ctxName, bool optional) {
-		base(factory, name);
+	public ContextRuleGetterDecl(OutputModelFactory factory, String name, String ctxName, bool optional): base(factory, name)
+    {
 		this.ctxName = ctxName;
 		this.optional = optional;
 	}

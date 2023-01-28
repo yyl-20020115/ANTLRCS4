@@ -34,6 +34,7 @@ using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using org.antlr.runtime.tree;
+using org.antlr.v4.runtime.atn;
 
 namespace org.antlr.v4.parse;
 
@@ -5133,9 +5134,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae3 =
                                     new NoViableAltException("", 39, 1, input);
-                                throw nvae;
+                                throw nvae3;
                             }
                             finally
                             {
@@ -5163,9 +5164,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae5 =
                                     new NoViableAltException("", 39, 2, input);
-                                throw nvae;
+                                throw nvae5;
                             }
                             finally
                             {
@@ -5193,9 +5194,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae4 =
                                     new NoViableAltException("", 39, 3, input);
-                                throw nvae;
+                                throw nvae4;
                             }
                             finally
                             {
@@ -5902,9 +5903,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 48, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -5932,9 +5933,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae4 =
                                     new NoViableAltException("", 48, 2, input);
-                                throw nvae;
+                                throw nvae4;
                             }
                             finally
                             {
@@ -7187,9 +7188,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae3 =
                                     new NoViableAltException("", 57, 1, input);
-                                throw nvae;
+                                throw nvae3;
                             }
                             finally
                             {
@@ -7382,9 +7383,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 58, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -8011,9 +8012,9 @@ public class ANTLRParser : Parser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae6 =
                                     new NoViableAltException("", 64, 2, input);
-                                throw nvae;
+                                throw nvae6;
                             }
                             finally
                             {
@@ -9569,6 +9570,17 @@ public class ANTLRParser : Parser
         }
         return retval;
     }
+
+    public override string[] getRuleNames()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override ATN getATN()
+    {
+        throw new NotImplementedException();
+    }
+
     // $ANTLR end "blockEntry"
 
     // Delegated rules

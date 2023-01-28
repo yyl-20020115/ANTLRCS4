@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -17,8 +18,8 @@ public class MatchToken : RuleElement , LabeledOp {
 	public readonly int ttype;
 	public readonly List<Decl> labels = new ();
 
-	public MatchToken(OutputModelFactory factory, TerminalAST ast) {
-		base(factory, ast);
+	public MatchToken(OutputModelFactory factory, TerminalAST ast): base(factory, ast)
+    {
 		Grammar g = factory.getGrammar();
 		CodeGenerator gen = factory.getGenerator();
 		ttype = g.getTokenType(ast.getText());
@@ -27,8 +28,8 @@ public class MatchToken : RuleElement , LabeledOp {
 		escapedName = target.escapeIfNeeded(name);
 	}
 
-	public MatchToken(OutputModelFactory factory, GrammarAST ast) {
-		base(factory, ast);
+	public MatchToken(OutputModelFactory factory, GrammarAST ast): base(factory, ast)
+    {
 		ttype = 0;
 		name = null;
 		escapedName = null;

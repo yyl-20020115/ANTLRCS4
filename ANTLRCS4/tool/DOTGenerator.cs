@@ -7,6 +7,7 @@
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.tool;
@@ -55,9 +56,9 @@ public class DOTGenerator {
 			dot.add("states", st);
 		}
 
-		for (DFAState d in dfa.states.keySet()) {
+		foreach (DFAState d in dfa.states.keySet()) {
 			if ( d.edges!=null ) {
-				for (int i = 0; i < d.edges.length; i++) {
+				for (int i = 0; i < d.edges.Length; i++) {
 					DFAState target = d.edges[i];
 					if ( target==null) continue;
 					if ( target.stateNumber == int.MaxValue ) continue;
@@ -91,14 +92,14 @@ public class DOTGenerator {
 			buf.Append("^");
 		}
 		if ( grammar!=null ) {
-			Set<Integer> alts = s.getAltSet();
+            HashSet<Integer> alts = s.getAltSet();
 			if ( alts!=null ) {
 				buf.Append("\\n");
 				// separate alts
 				IntegerList altList = new IntegerList();
 				altList.addAll(alts);
 				altList.sort();
-				Set<ATNConfig> configurations = s.configs;
+				HashSet<ATNConfig> configurations = s.configs;
 				for (int altIndex = 0; altIndex < altList.size(); altIndex++) {
 					int alt = altList.get(altIndex);
 					if ( altIndex>0 ) {
@@ -109,8 +110,8 @@ public class DOTGenerator {
 					buf.Append(':');
 					// get a list of configs for just this alt
 					// it will help us print better later
-					List<ATNConfig> configsInAlt = new ArrayList<ATNConfig>();
-					for (ATNConfig c : configurations) {
+					List<ATNConfig> configsInAlt = new ();
+					for (ATNConfig c in configurations) {
 						if (c.alt != alt) continue;
 						configsInAlt.add(c);
 					}
@@ -153,7 +154,7 @@ public class DOTGenerator {
 		if ( startState==null )	return null;
 
 		// The output DOT graph for visualization
-		Set<ATNState> markedStates = new HashSet<ATNState>();
+		HashSet<ATNState> markedStates = new HashSet<ATNState>();
 		ST dot = stlib.getInstanceOf("atn");
 		dot.add("startState", startState.stateNumber);
 		dot.add("rankdir", rankdir);
@@ -219,10 +220,10 @@ public class DOTGenerator {
 					edgeST.add("label", getEdgeLabel(edge.ToString()));
 					bool loopback = false;
 					if (edge.target is PlusBlockStartState) {
-						loopback = s.equals(((PlusBlockStartState)edge.target).loopBackState);
+						loopback = s.Equals(((PlusBlockStartState)edge.target).loopBackState);
 					}
 					else if (edge.target is StarLoopEntryState) {
-						loopback = s.equals(((StarLoopEntryState)edge.target).loopBackState);
+						loopback = s.Equals(((StarLoopEntryState)edge.target).loopBackState);
 					}
 					edgeST.add("loopback", loopback);
 				}
@@ -280,7 +281,7 @@ public class DOTGenerator {
 //			st.add("label", getStateLabel(stopState));
 //			dot.add("states", st);
 //		}
-		for (ATNState s : markedStates) {
+		for (ATNState s in markedStates) {
 			if ( !(s is RuleStopState) ) continue;
 			ST st = stlib.getInstanceOf("stopstate");
 			st.add("name", "s"+s.stateNumber);
@@ -288,7 +289,7 @@ public class DOTGenerator {
 			dot.add("states", st);
 		}
 
-		for (ATNState s : markedStates) {
+		for (ATNState s in markedStates) {
 			if ( s is RuleStopState ) continue;
 			ST st = stlib.getInstanceOf("state");
 			st.add("name", "s"+s.stateNumber);

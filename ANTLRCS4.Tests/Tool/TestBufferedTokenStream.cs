@@ -29,7 +29,7 @@ public class TestBufferedTokenStream {
 
         String result = tokens.LT(1).getText();
         String expecting = "x";
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod] public void test2ndToken(){
@@ -50,7 +50,7 @@ public class TestBufferedTokenStream {
 
         String result = tokens.LT(2).getText();
         String expecting = " ";
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod] public void testCompleteBuffer(){
@@ -80,7 +80,7 @@ public class TestBufferedTokenStream {
 
         String result = tokens.getText();
         String expecting = "x = 3 * 0 + 2 * 0;";
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod] public void testCompleteBufferAfterConsuming(){
@@ -107,7 +107,7 @@ public class TestBufferedTokenStream {
 
         String result = tokens.getText();
         String expecting = "x = 3 * 0 + 2 * 0;";
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod] public void testLookback(){
@@ -128,16 +128,16 @@ public class TestBufferedTokenStream {
 
         tokens.consume(); // get x into buffer
         Token t = tokens.LT(-1);
-        assertEquals("x", t.getText());
+        Assert.AreEqual("x", t.getText());
 
         tokens.consume();
         tokens.consume(); // consume '='
         t = tokens.LT(-3);
-        assertEquals("x", t.getText());
+        Assert.AreEqual("x", t.getText());
         t = tokens.LT(-2);
-        assertEquals(" ", t.getText());
+        Assert.AreEqual(" ", t.getText());
         t = tokens.LT(-1);
-        assertEquals("=", t.getText());
+        Assert.AreEqual("=", t.getText());
     }
 
 }

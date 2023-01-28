@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -33,13 +35,13 @@ public class AttributeChecks : ActionSplitterListener {
     }
 
     public static void checkAllAttributeExpressions(Grammar g) {
-        foreach (ActionAST act in g.namedActions.values()) {
+        foreach (ActionAST act in g.namedActions.Values) {
             AttributeChecks checker = new AttributeChecks(g, null, null, act, act.token);
             checker.examineAction();
         }
 
-        foreach (Rule r in g.rules.values()) {
-            foreach (ActionAST a in r.namedActions.values()) {
+        foreach (Rule r in g.rules.Values) {
+            foreach (ActionAST a in r.namedActions.Values) {
                 AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
                 checker.examineAction();
             }
@@ -200,7 +202,7 @@ public class AttributeChecks : ActionSplitterListener {
 	public Rule isolatedRuleRef(String x) {
 		if ( node.resolver is Grammar ) return null;
 
-		if ( x.equals(r.name) ) return r;
+		if ( x.Equals(r.name) ) return r;
 		List<LabelElementPair> labels = null;
 		if ( node.resolver is Rule ) {
 			labels = r.getElementLabelDefs().get(x);
@@ -209,7 +211,7 @@ public class AttributeChecks : ActionSplitterListener {
 			labels = ((Alternative)node.resolver).labelDefs.get(x);
 		}
 		if ( labels!=null ) {  // it's a label ref. is it a rule label?
-			LabelElementPair anyLabelDef = labels.get(0);
+			LabelElementPair anyLabelDef = labels[(0)];
 			if ( anyLabelDef.type==LabelType.RULE_LABEL ) {
 				return g.getRule(anyLabelDef.element.getText());
 			}

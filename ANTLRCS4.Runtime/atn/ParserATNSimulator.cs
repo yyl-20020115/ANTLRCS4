@@ -463,9 +463,9 @@ public class ParserATNSimulator : ATNSimulator {
 					}
 
 					conflictingAlts = evalSemanticContext(D.predicates, outerContext, true);
-					if ( conflictingAlts.cardinality()==1 ) {
+					if ( conflictingAlts.Cardinality()==1 ) {
 						if ( debug ) Console.WriteLine("Full LL avoided");
-						return conflictingAlts.nextSetBit(0);
+						return conflictingAlts.NextSetBit(0);
 					}
 
 					if (conflictIndex != startIndex) {
@@ -495,18 +495,18 @@ public class ParserATNSimulator : ATNSimulator {
 				int stopIndex = input.index();
 				input.seek(startIndex);
 				BitSet alts = evalSemanticContext(D.predicates, outerContext, true);
-				switch (alts.cardinality()) {
+				switch (alts.Cardinality()) {
 				case 0:
 					throw noViableAlt(input, outerContext, D.configs, startIndex);
 
 				case 1:
-					return alts.nextSetBit(0);
+					return alts.NextSetBit(0);
 
 				default:
 					// report ambiguity after predicate evaluation to make sure the correct
 					// set of ambig alts is reported.
 					reportAmbiguity(dfa, D, startIndex, stopIndex, false, alts, D.configs);
-					return alts.nextSetBit(0);
+					return alts.NextSetBit(0);
 				}
 			}
 
@@ -584,7 +584,7 @@ public class ParserATNSimulator : ATNSimulator {
 			D.requiresFullContext = true;
 			// in SLL-only mode, we will stop at this state and return the minimum alt
 			D.isAcceptState = true;
-			D.prediction = D.configs.conflictingAlts.nextSetBit(0);
+			D.prediction = D.configs.conflictingAlts.NextSetBit(0);
 		}
 
 		if ( D.isAcceptState && D.configs.hasSemanticContext ) {
@@ -615,7 +615,7 @@ public class ParserATNSimulator : ATNSimulator {
 			// There are preds in configs but they might go away
 			// when OR'd together like {p}? || NONE == NONE. If neither
 			// alt has preds, resolve to min alt
-			dfaState.prediction = altsToCollectPredsFrom.nextSetBit(0);
+			dfaState.prediction = altsToCollectPredsFrom.NextSetBit(0);
 		}
 	}
 
@@ -1175,7 +1175,7 @@ public class ParserATNSimulator : ATNSimulator {
 		 */
 		SemanticContext[] altToPred = new SemanticContext[nalts + 1];
 		foreach (ATNConfig c in configs) {
-			if ( ambigAlts.get(c.alt) ) {
+			if ( ambigAlts.Get(c.alt) ) {
 				altToPred[c.alt] = SemanticContext.or(altToPred[c.alt], c.semanticContext);
 			}
 		}
@@ -1212,7 +1212,7 @@ public class ParserATNSimulator : ATNSimulator {
 			// unpredicated is indicated by SemanticContext.NONE
 			//assert pred != null;
 
-			if (ambigAlts!=null && ambigAlts.get(i)) {
+			if (ambigAlts!=null && ambigAlts.Get(i)) {
 				pairs.Add(new DFAState.PredPrediction(pred, i));
 			}
 			if ( pred!=SemanticContext.Empty.Instance ) containsPredicate = true;
@@ -1349,7 +1349,7 @@ public class ParserATNSimulator : ATNSimulator {
 		BitSet predictions = new BitSet();
         foreach (DFAState.PredPrediction pair in predPredictions) {
 			if ( pair.pred==SemanticContext.Empty.Instance ) {
-				predictions.set(pair.alt);
+				predictions.Set(pair.alt);
 				if (!complete) {
 					break;
 				}
@@ -1364,7 +1364,7 @@ public class ParserATNSimulator : ATNSimulator {
 
 			if ( predicateEvaluationResult ) {
 				if ( debug || dfa_debug ) Console.WriteLine("PREDICT "+pair.alt);
-				predictions.set(pair.alt);
+				predictions.Set(pair.alt);
 				if (!complete) {
 					break;
 				}
@@ -1944,7 +1944,7 @@ public class ParserATNSimulator : ATNSimulator {
 		BitSet conflictingAlts;
 		if ( configs.uniqueAlt!= ATN.INVALID_ALT_NUMBER ) {
 			conflictingAlts = new BitSet();
-			conflictingAlts.set(configs.uniqueAlt);
+			conflictingAlts.Set(configs.uniqueAlt);
 		}
 		else {
 			conflictingAlts = configs.conflictingAlts;

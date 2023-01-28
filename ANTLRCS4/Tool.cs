@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
@@ -166,8 +167,8 @@ public class Tool {
 				continue;
 			}
 			var found = false;
-			for (Option o : optionDefs) {
-				if ( arg.equals(o.name) ) {
+			foreach (Option o in optionDefs) {
+				if ( arg.Equals(o.name) ) {
 					found = true;
 					String argValue = null;
 					if ( o.argType==OptionArgType.STRING ) {
@@ -175,7 +176,7 @@ public class Tool {
 						i++;
 					}
 					// use reflection to set field
-					Class<? : Tool> c = this.getClass();
+					Type c = this.GetType();
 					try {
 						Field f = c.getField(o.fieldName);
 						if ( argValue==null ) {
@@ -210,9 +211,9 @@ public class Tool {
 			outputDirectory = ".";
 		}
 		if ( libDirectory!=null ) {
-			if (libDirectory.endsWith("/") ||
-				libDirectory.endsWith("\\")) {
-				libDirectory = libDirectory.substring(0, libDirectory.Length - 1);
+			if (libDirectory.EndsWith("/") ||
+				libDirectory.EndsWith("\\")) {
+				libDirectory = libDirectory.Substring(0, libDirectory.Length - 1);
 			}
 			File outDir = new File(libDirectory);
 			if (!outDir.exists()) {
@@ -347,12 +348,12 @@ public class Tool {
 
 		if (gencode && g.tool.getNumErrors()==0 ) {
 			String interpFile = generateInterpreterData(g);
-			try (Writer fw = getOutputFileWriter(g, g.name + ".interp")) {
+			using (Writer fw = getOutputFileWriter(g, g.name + ".interp")) {
 				fw.write(interpFile);
 			}
-			catch (IOException ioe) {
-				errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
-			}
+			//catch (IOException ioe) {
+			//	errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
+			//}
 		}
 
 		// PERFORM GRAMMAR ANALYSIS ON ATN: BUILD DECISION DFAs
@@ -390,8 +391,8 @@ public class Tool {
         {
             RuleAST ruleAST = ruleToAST.get(@ref.getText());
             String fileName = @ref.getToken().getInputStream().getSourceName();
-            if (Character.isUpperCase(currentRuleName.charAt(0)) &&
-                Character.isLowerCase(@ref.getText().charAt(0)))
+            if (Character.isUpperCase(currentRuleName[(0)]) &&
+                Character.isLowerCase(@ref.getText()[(0)]))
             {
                 badref = true;
                 errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
@@ -419,13 +420,13 @@ public class Tool {
     public bool checkForRuleIssues( Grammar g) {
 		// check for redefined rules
 		GrammarAST RULES = (GrammarAST)g.ast.getFirstChildWithType(ANTLRParser.RULES);
-		List<GrammarAST> rules = new ArrayList<GrammarAST>(RULES.getAllChildrenWithType(ANTLRParser.RULE));
-		for (GrammarAST mode : g.ast.getAllChildrenWithType(ANTLRParser.MODE)) {
-			rules.addAll(mode.getAllChildrenWithType(ANTLRParser.RULE));
+		List<GrammarAST> rules = new (RULES.getAllChildrenWithType(ANTLRParser.RULE));
+        foreach (GrammarAST mode in g.ast.getAllChildrenWithType(ANTLRParser.MODE)) {
+			rules.AddRange(mode.getAllChildrenWithType(ANTLRParser.RULE));
 		}
 
 		bool redefinition = false;
-		 Map<String, RuleAST> ruleToAST = new HashMap<String, RuleAST>();
+		 Dictionary<String, RuleAST> ruleToAST = new ();
 		foreach (GrammarAST r in rules) {
 			RuleAST ruleAST = (RuleAST)r;
 			GrammarAST ID = (GrammarAST)ruleAST.getChild(0);
@@ -454,12 +455,12 @@ public class Tool {
 //		Console.WriteLine(fileNames);
 		Graph<String> g = new Graph<String>();
 		List<GrammarRootAST> roots = new ();
-		for (String fileName : fileNames) {
+        foreach (String fileName in fileNames) {
 			GrammarAST t = parseGrammar(fileName);
 			if ( t==null || t is GrammarASTErrorNode) continue; // came back as error node
 			if ( ((GrammarRootAST)t).hasErrors ) continue;
 			GrammarRootAST root = (GrammarRootAST)t;
-			roots.add(root);
+			roots.Add(root);
 			root.fileName = fileName;
 			String grammarName = root.getChild(0).getText();
 
@@ -470,7 +471,7 @@ public class Tool {
 				// Strip quote characters if any
 				int len = vocabName.Length;
 				int firstChar = vocabName.charAt(0);
-				int lastChar = vocabName.charAt(len - 1);
+				int lastChar = vocabName[len - 1];
 				if (len >= 2 && firstChar == '\'' && lastChar == '\'') {
 					vocabName = vocabName.substring(1, len-1);
 				}
@@ -507,7 +508,7 @@ public class Tool {
 	public static GrammarAST findOptionValueAST(GrammarRootAST root, String option) {
 		GrammarAST options = (GrammarAST)root.getFirstChildWithType(ANTLRParser.OPTIONS);
 		if ( options!=null && options.getChildCount() > 0 ) {
-			for (Object o : options.getChildren()) {
+            foreach (Object o in options.getChildren()) {
 				GrammarAST c = (GrammarAST)o;
 				if ( c.getType() == ANTLRParser.ASSIGN &&
 					 c.getChild(0).getText().equals(option) )
@@ -579,7 +580,7 @@ public class Tool {
 		if (imported == null) {
 			g.tool.log("grammar", "load " + name + " from " + g.fileName);
 			File importedFile = null;
-			for (String extension : ALL_GRAMMAR_EXTENSIONS) {
+            foreach (String extension in ALL_GRAMMAR_EXTENSIONS) {
 				importedFile = getImportedGrammarFile(g, name + extension);
 				if (importedFile != null) {
 					break;
@@ -663,21 +664,21 @@ public class Tool {
 
 		content.Append("token literal names:\n");
 		String[] names = g.getTokenLiteralNames();
-		for (String name : names) {
+        foreach (String name in names) {
 			content.Append(name + "\n");
 		}
 		content.Append("\n");
 
 		content.Append("token symbolic names:\n");
 		names = g.getTokenSymbolicNames();
-		for (String name : names) {
+        foreach (String name in names) {
 			content.Append(name + "\n");
 		}
 		content.Append("\n");
 
 		content.Append("rule names:\n");
 		names = g.getRuleNames();
-		for (String name : names) {
+        foreach (String name in names) {
 			content.Append(name + "\n");
 		}
 		content.Append("\n");
@@ -874,7 +875,7 @@ public class Tool {
 
 	public void help() {
 		info("ANTLR Parser Generator  Version " + Tool.VERSION);
-		for (Option o : optionDefs) {
+        foreach (Option o in optionDefs) {
 			String name = o.name + (o.argType!=OptionArgType.NONE? " ___" : "");
 			String s = String.format(" %-19s %s", name, o.description);
 			info(s);
@@ -898,14 +899,14 @@ public class Tool {
 			defaultListener.info(msg);
 			return;
 		}
-		for (ANTLRToolListener l : listeners) l.info(msg);
+        foreach (ANTLRToolListener l in listeners) l.info(msg);
 	}
 	public void error(ANTLRMessage msg) {
 		if ( listeners.isEmpty() ) {
 			defaultListener.error(msg);
 			return;
 		}
-		for (ANTLRToolListener l : listeners) l.error(msg);
+        foreach (ANTLRToolListener l in listeners) l.error(msg);
 	}
 	public void warning(ANTLRMessage msg) {
 		if ( listeners.isEmpty() ) {

@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using Attribute = org.antlr.v4.tool.Attribute;
 
 namespace org.antlr.v4.codegen.model.decl;
 
@@ -38,19 +39,19 @@ public class StructDecl : Decl {
 	public OrderedHashSet<Decl> ruleContextListDecls = new OrderedHashSet<Decl>();
 	public OrderedHashSet<Decl> attributeDecls = new OrderedHashSet<Decl>();
 
-	public StructDecl(OutputModelFactory factory, Rule r) {
-		this(factory, r, null);
+	public StructDecl(OutputModelFactory factory, Rule r): this(factory, r, null)
+    {
 	}
 
-	protected StructDecl(OutputModelFactory factory, Rule r, String name) {
-		base(factory, name == null ? factory.getGenerator().getTarget().getRuleFunctionContextStructName(r) : name);
+	protected StructDecl(OutputModelFactory factory, Rule r, String name) : base(factory, name == null ? factory.getGenerator().getTarget().getRuleFunctionContextStructName(r) : name)
+	{
 		addDispatchMethods(r);
 		derivedFromName = r.name;
 		provideCopyFrom = r.hasAltSpecificContexts();
 	}
 
 	public void addDispatchMethods(Rule r) {
-		dispatchMethods = new ArrayList<DispatchMethod>();
+		dispatchMethods = new ();
 		if ( !r.hasAltSpecificContexts() ) {
 			// no enter/exit for this ruleContext if rule has labels
 			if ( factory.getGrammar().tool.gen_listener ) {

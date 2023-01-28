@@ -4,7 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -422,10 +425,10 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e is LeftRecursiveRule);
+		Assert.IsTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 2, 4]", Arrays.ToString(lr.getPrimaryAlts()));
-		assertEquals("[0, 1, 3]", Arrays.ToString(lr.getRecursiveOpAlts()));
+		Assert.AreEqual("[0, 2, 4]", Arrays.ToString(lr.getPrimaryAlts()));
+		Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
 	[TestMethod] public void testAltsForLRRuleComputation2(){
@@ -439,10 +442,10 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e is LeftRecursiveRule);
+		Assert.IsTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 1, 3]", Arrays.ToString(lr.getPrimaryAlts()));
-		assertEquals("[0, 2]", Arrays.ToString(lr.getRecursiveOpAlts()));
+		Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.getPrimaryAlts()));
+		Assert.AreEqual("[0, 2]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
 	[TestMethod] public void testAltsForLRRuleComputation3(){
@@ -459,10 +462,10 @@ public class TestATNParserPrediction {
 		"INT : [0-9]+ ;\n" +
 		"WS : [ \\r\\t\\n]+ ;");
 		Rule e = g.getRule("e");
-		assertTrue(e is LeftRecursiveRule);
+		Assert.IsTrue(e is LeftRecursiveRule);
 		LeftRecursiveRule lr = (LeftRecursiveRule)e;
-		assertEquals("[0, 1, 5]", Arrays.ToString(lr.getPrimaryAlts()));
-		assertEquals("[0, 2, 3, 4]", Arrays.ToString(lr.getRecursiveOpAlts()));
+		Assert.AreEqual("[0, 1, 5]", Arrays.ToString(lr.getPrimaryAlts()));
+		Assert.AreEqual("[0, 2, 3, 4]", Arrays.ToString(lr.getRecursiveOpAlts()));
 	}
 
 	/** first check that the ATN predicts right alt.
@@ -503,16 +506,16 @@ public class TestATNParserPrediction {
 		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, input);
 		int alt = interp.adaptivePredict(input, decision, ParserRuleContext.EMPTY);
 
-		assertEquals(expectedAlt, alt);
+		Assert.AreEqual(expectedAlt, alt);
 
 		// Check adaptive prediction
 		input.seek(0);
 		alt = interp.adaptivePredict(input, decision, null);
-		assertEquals(expectedAlt, alt);
+		Assert.AreEqual(expectedAlt, alt);
 		// run 2x; first time creates DFA in atn
 		input.seek(0);
 		alt = interp.adaptivePredict(input, decision, null);
-		assertEquals(expectedAlt, alt);
+		Assert.AreEqual(expectedAlt, alt);
 	}
 
 	public void checkDFAConstruction(LexerGrammar lg, Grammar g, int decision,
@@ -540,7 +543,7 @@ public class TestATNParserPrediction {
 				nvae.printStackTrace(System.err);
 			}
 			DFA dfa = interp.parser.decisionToDFA[decision];
-			assertEquals(dfaString[i], dfa.ToString(g.getVocabulary()));
+			Assert.AreEqual(dfaString[i], dfa.ToString(g.getVocabulary()));
 		}
 	}
 }

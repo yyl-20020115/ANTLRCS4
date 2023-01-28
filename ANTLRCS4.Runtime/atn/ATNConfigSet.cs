@@ -181,7 +181,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 	public BitSet getAlts() {
 		BitSet alts = new BitSet();
 		foreach (ATNConfig config in configs) {
-			alts.set(config.alt);
+			alts.Set(config.alt);
 		}
 		return alts;
 	}

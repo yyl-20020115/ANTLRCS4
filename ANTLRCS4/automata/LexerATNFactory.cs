@@ -4,9 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.misc;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
@@ -51,18 +53,14 @@ public class LexerATNFactory : ParserATNFactory {
 	 */
 	protected Dictionary<LexerAction, int> actionToIndexMap = new Dictionary<LexerAction, int>();
 
-	public LexerATNFactory(LexerGrammar g) {
-		this(g, null);
-	}
-
-	public LexerATNFactory(LexerGrammar g, CodeGenerator codeGenerator) {
-		base(g);
+	public LexerATNFactory(LexerGrammar g, CodeGenerator codeGenerator = null) :base(g){
+		
 		// use codegen to get correct language templates for lexer commands
 		codegenTemplates = (codeGenerator == null ? CodeGenerator.create(g) : codeGenerator).getTemplates();
 	}
 
 	public static HashSet<String> getCommonConstants() {
-		return COMMON_CONSTANTS.keySet();
+		return COMMON_CONSTANTS.Keys.ToHashSet();
 	}
 
 	////@Override
@@ -558,17 +556,17 @@ public class LexerATNFactory : ParserATNFactory {
 							StringBuilder sb = new StringBuilder();
 							foreach (Object child in rootAst.getChildren()) {
 								if (child is RangeAST) {
-									sb.append(((RangeAST) child).getChild(0).getText());
-									sb.append("..");
-									sb.append(((RangeAST) child).getChild(1).getText());
+									sb.Append(((RangeAST) child).getChild(0).getText());
+									sb.Append("..");
+									sb.Append(((RangeAST) child).getChild(1).getText());
 								}
 								else {
-									sb.append(((GrammarAST) child).getText());
+									sb.Append(((GrammarAST) child).getText());
 								}
-								sb.append(" | ");
+								sb.Append(" | ");
 							}
-							sb.replace(sb.length() - 3, sb.length(), "");
-							setText = sb.toString();
+							sb.replace(sb.Length - 3, sb.Length, "");
+							setText = sb.ToString();
 						}
 						String charsString = a == b ? String.valueOf((char)a) : (char) a + "-" + (char) b;
 						g.tool.errMgr.grammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName, ast.getToken(),
@@ -605,7 +603,7 @@ public class LexerATNFactory : ParserATNFactory {
 	////@Override
 	public Handle tokenRef(TerminalAST node) {
 		// Ref to EOF in lexer yields char transition on -1
-		if (node.getText().equals("EOF") ) {
+		if (node.getText().Equals("EOF") ) {
 			ATNState left = newState(node);
 			ATNState right = newState(node);
 			left.addTransition(new AtomTransition(right, IntStream.EOF));
@@ -618,16 +616,16 @@ public class LexerATNFactory : ParserATNFactory {
 		String command = ID.getText();
 		checkCommands(command, ID.getToken());
 
-		if ("skip".equals(command) && arg == null) {
+		if ("skip".Equals(command) && arg == null) {
 			return LexerSkipAction.INSTANCE;
 		}
-		else if ("more".equals(command) && arg == null) {
+		else if ("more".Equals(command) && arg == null) {
 			return LexerMoreAction.INSTANCE;
 		}
-		else if ("popMode".equals(command) && arg == null) {
+		else if ("popMode".Equals(command) && arg == null) {
 			return LexerPopModeAction.INSTANCE;
 		}
-		else if ("mode".equals(command) && arg != null) {
+		else if ("mode".Equals(command) && arg != null) {
 			String modeName = arg.getText();
 			int mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
@@ -636,7 +634,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 			return new LexerModeAction(mode);
 		}
-		else if ("pushMode".equals(command) && arg != null) {
+		else if ("pushMode".Equals(command) && arg != null) {
 			String modeName = arg.getText();
 			int mode = getModeConstantValue(modeName, arg.getToken());
 			if (mode == null) {
@@ -645,7 +643,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 			return new LexerPushModeAction(mode);
 		}
-		else if ("type".equals(command) && arg != null) {
+		else if ("type".Equals(command) && arg != null) {
 			String typeName = arg.getText();
 			int type = getTokenConstantValue(typeName, arg.getToken());
 			if (type == null) {
@@ -654,7 +652,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 			return new LexerTypeAction(type);
 		}
-		else if ("channel".equals(command) && arg != null) {
+		else if ("channel".Equals(command) && arg != null) {
 			String channelName = arg.getText();
 			int channel = getChannelConstantValue(channelName, arg.getToken());
 			if (channel == null) {
@@ -688,7 +686,7 @@ public class LexerATNFactory : ParserATNFactory {
 					firstCommand = "channel";
 				}
 			}
-			else if (command.equals("more")) {
+			else if (command.Equals("more")) {
 				if (ruleCommands.contains("skip")) {
 					firstCommand = "skip";
 				}
@@ -699,7 +697,7 @@ public class LexerATNFactory : ParserATNFactory {
 					firstCommand = "channel";
 				}
 			}
-			else if (command.equals("type") || command.equals("channel")) {
+			else if (command.Equals("type") || command.Equals("channel")) {
 				if (ruleCommands.contains("more")) {
 					firstCommand = "more";
 				}
@@ -721,7 +719,7 @@ public class LexerATNFactory : ParserATNFactory {
 			return null;
 		}
 
-		if (modeName.equals("DEFAULT_MODE")) {
+		if (modeName.Equals("DEFAULT_MODE")) {
 			return Lexer.DEFAULT_MODE;
 		}
 		if (COMMON_CONSTANTS.containsKey(modeName)) {
@@ -729,7 +727,7 @@ public class LexerATNFactory : ParserATNFactory {
 			return null;
 		}
 
-		List<String> modeNames = new ArrayList<String>(((LexerGrammar)g).modes.keySet());
+		List<String> modeNames = new (((LexerGrammar)g).modes.keySet());
 		int mode = modeNames.indexOf(modeName);
 		if (mode >= 0) {
 			return mode;
@@ -737,7 +735,7 @@ public class LexerATNFactory : ParserATNFactory {
 
 		try {
 			return int.parseInt(modeName);
-		} catch (NumberFormatException ex) {
+		} catch (Exception ex) {
 			g.tool.errMgr.grammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME, g.fileName, token, token.getText());
 			return null;
 		}
@@ -748,7 +746,7 @@ public class LexerATNFactory : ParserATNFactory {
 			return null;
 		}
 
-		if (tokenName.equals("EOF")) {
+		if (tokenName.Equals("EOF")) {
 			return Lexer.EOF;
 		}
 		if (COMMON_CONSTANTS.containsKey(tokenName)) {
@@ -774,10 +772,10 @@ public class LexerATNFactory : ParserATNFactory {
 			return null;
 		}
 
-		if (channelName.equals("HIDDEN")) {
+		if (channelName.Equals("HIDDEN")) {
 			return Lexer.HIDDEN;
 		}
-		if (channelName.equals("DEFAULT_TOKEN_CHANNEL")) {
+		if (channelName.Equals("DEFAULT_TOKEN_CHANNEL")) {
 			return Lexer.DEFAULT_TOKEN_CHANNEL;
 		}
 		if (COMMON_CONSTANTS.containsKey(channelName)) {

@@ -28,6 +28,7 @@
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime;
+using org.antlr.runtime.tree;
 
 namespace org.antlr.runtime;
 
@@ -151,7 +152,7 @@ public abstract class BaseRecognizer
         if (follow.member(Token.EOR_TOKEN_TYPE))
         {
             BitSet viableTokensFollowingThisRule = computeContextSensitiveRuleFOLLOW();
-            follow = follow.or(viableTokensFollowingThisRule);
+            follow.Or(viableTokensFollowingThisRule);
             if (state._fsp >= 0)
             { // remove EOR if we're not the start symbol
                 follow.remove(Token.EOR_TOKEN_TYPE);
@@ -371,9 +372,9 @@ public abstract class BaseRecognizer
                 s = "<" + t.getType() + ">";
             }
         }
-        s = s.replaceAll("\n", "\\\\n");
-        s = s.replaceAll("\r", "\\\\r");
-        s = s.replaceAll("\t", "\\\\t");
+        s = s.Replace("\n", "\\\\n");
+        s = s.Replace("\r", "\\\\r");
+        s = s.Replace("\t", "\\\\t");
         return "'" + s + "'";
     }
 
@@ -585,7 +586,7 @@ public abstract class BaseRecognizer
             Console.Out.println("local follow depth "+i+"="+
                                localFollowSet.toString(getTokenNames())+")");
              */
-            followSet.orInPlace(localFollowSet);
+            followSet.Or(localFollowSet);
             if (exact)
             {
                 // can we see end of rule?
@@ -775,7 +776,7 @@ public abstract class BaseRecognizer
     public List<String> getRuleInvocationStack()
     {
         String parserClassName = getClass().getName();
-        return getRuleInvocationStack(new Throwable(), parserClassName);
+        return getRuleInvocationStack(new Exception(), parserClassName);
     }
 
     /** A more general version of getRuleInvocationStack where you can
@@ -785,10 +786,10 @@ public abstract class BaseRecognizer
      *
      *  TODO: move to a utility class or something; weird having lexer call this
      */
-    public static List<String> getRuleInvocationStack(Throwable e,
+    public static List<String> getRuleInvocationStack(Exception e,
                                               String recognizerClassName)
     {
-        List<String> rules = new ArrayList<String>();
+        List<String> rules = new ();
         StackTraceElement[] stack = e.getStackTrace();
         int i;
         for (i = stack.Length - 1; i >= 0; i--)
@@ -844,9 +845,9 @@ public abstract class BaseRecognizer
     {
         if (tokens == null) return null;
         List<String> strings = new (tokens.Count);
-        for (int i = 0; i < tokens.size(); i++)
+        for (int i = 0; i < tokens.Count; i++)
         {
-            strings.add(tokens.get(i).getText());
+            strings.Add(tokens[i].getText());
         }
         return strings;
     }
@@ -865,7 +866,7 @@ public abstract class BaseRecognizer
     {
         if (state.ruleMemo[ruleIndex] == null)
         {
-            state.ruleMemo[ruleIndex] = new HashMap<Integer, Integer>();
+            state.ruleMemo[ruleIndex] = new ();
         }
         Integer stopIndexI =
             state.ruleMemo[ruleIndex].get(ruleStartIndex);
@@ -946,12 +947,12 @@ public abstract class BaseRecognizer
 
     public void traceIn(String ruleName, int ruleIndex, Object inputSymbol)
     {
-        Console.Out.print("enter " + ruleName + " " + inputSymbol);
+        Console.Out.Write("enter " + ruleName + " " + inputSymbol);
         if (state.backtracking > 0)
         {
-            Console.Out.print(" backtracking=" + state.backtracking);
+            Console.Out.Write(" backtracking=" + state.backtracking);
         }
-        Console.Out.println();
+        Console.Out.WriteLine();
     }
 
     public void traceOut(String ruleName,

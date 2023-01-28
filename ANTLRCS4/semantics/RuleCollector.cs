@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -118,7 +119,7 @@ public class RuleCollector : GrammarTreeVisitor {
 
 	private Boolean getCaseInsensitiveValue(GrammarAST optionID, GrammarAST valueAST) {
 		String optionName = optionID.getText();
-		if (optionName.equals(Grammar.caseInsensitiveOptionName)) {
+		if (optionName.Equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
 			if (valueText.equals("true") || valueText.equals("false")) {
 				return Boolean.parseBoolean(valueText);

@@ -3,6 +3,11 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.automata;
+using org.antlr.v4.codegen;
+using org.antlr.v4.semantics;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.tool;
 
 
@@ -40,25 +45,27 @@ public class TestCodeGeneration {
 
 	/** Add tags around each attribute/template/value write */
 	public class DebugInterpreter : Interpreter {
-		List<String> evals = new ArrayList<String>();
+		List<String> evals = new ();
 		ErrorManager myErrMgrCopy;
 		int tab = 0;
-		public DebugInterpreter(STGroup group, ErrorManager errMgr, bool debug) {
-			base(group, errMgr, debug);
+		public DebugInterpreter(STGroup group, ErrorManager errMgr, bool debug)
+		: base(group, errMgr, debug)
+        {
+			;
 			myErrMgrCopy = errMgr;
 		}
 
 		//@Override
-		protected int writeObject(STWriter out, InstanceScope scope, Object o, String[] options) {
+		protected int writeObject(STWriter @out, InstanceScope scope, Object o, String[] options) {
 			if ( o is ST ) {
 				String name = ((ST)o).getName();
 				name = name.substring(1);
 				if ( !name.startsWith("_sub") ) {
 					try {
-						out.write("<ST:" + name + ">");
+						@out.write("<ST:" + name + ">");
 						evals.add("<ST:" + name + ">");
-						int r = base.writeObject(out, scope, o, options);
-						out.write("</ST:" + name + ">");
+						int r = base.writeObject(@out, scope, o, options);
+						@out.write("</ST:" + name + ">");
 						evals.add("</ST:" + name + ">");
 						return r;
 					} catch (IOException ioe) {
@@ -66,21 +73,21 @@ public class TestCodeGeneration {
 					}
 				}
 			}
-			return base.writeObject(out, scope, o, options);
+			return base.writeObject(@out, scope, o, options);
 		}
 
 		//@Override
-		protected int writePOJO(STWriter out, InstanceScope scope, Object o, String[] options){
+		protected int writePOJO(STWriter @out, InstanceScope scope, Object o, String[] options){
 			Class<?> type = o.getClass();
 			String name = type.getSimpleName();
-			out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
-			evals.add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
-			return base.writePOJO(out, scope, o, options);
+			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
+			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
+			return base.writePOJO(@out, scope, o, options);
 		}
 
-		public void indent(STWriter out){
+		public void indent(STWriter @out){
 			for (int i=1; i<=tab; i++) {
-				out.write("\t");
+				@out.write("\t");
 			}
 		}
 	}
@@ -88,7 +95,7 @@ public class TestCodeGeneration {
 	public List<String> getEvalInfoForString(String grammarString, String pattern)  {
 		ErrorQueue equeue = new ErrorQueue();
 		Grammar g = new Grammar(grammarString);
-		List<String> evals = new ArrayList<String>();
+		List<String> evals = new ();
 		if ( g.ast!=null && !g.ast.hasErrors ) {
 			SemanticPipeline sem = new SemanticPipeline(g);
 			sem.process();
@@ -115,8 +122,8 @@ public class TestCodeGeneration {
 							debug);
 			InstanceScope scope = new InstanceScope(null, outputFileST);
 			StringWriter sw = new StringWriter();
-			AutoIndentWriter out = new AutoIndentWriter(sw);
-			interp.exec(out, scope);
+			AutoIndentWriter @out = new AutoIndentWriter(sw);
+			interp.exec(@out, scope);
 
 			for (String e : interp.evals) {
 				if (e.contains(pattern)) {

@@ -10,8 +10,5 @@ namespace org.antlr.v4.codegen.model.decl;
 public class ContextTokenGetterDecl : ContextGetterDecl {
 	public bool optional;
 
-	public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) {
-		base(factory, name);
-		this.optional = optional;
-	}
+	public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) : base(factory, name) { this.optional = optional; }
 }

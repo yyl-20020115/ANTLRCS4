@@ -130,10 +130,10 @@ public class TestLookaheadTrees {
 			GrammarParserInterpreter.getLookaheadParseTrees(g, parser, tokens, startRuleIndex, lookaheadEventInfo.decision,
 															lookaheadEventInfo.startIndex, lookaheadEventInfo.stopIndex);
 
-		assertEquals(expectedTrees.Length, lookaheadParseTrees.size());
+		Assert.AreEqual(expectedTrees.Length, lookaheadParseTrees.size());
 		for (int i = 0; i < lookaheadParseTrees.size(); i++) {
 			ParserRuleContext lt = lookaheadParseTrees.get(i);
-			assertEquals(expectedTrees[i], Trees.toStringTree(lt, nodeTextProvider));
+			Assert.AreEqual(expectedTrees[i], Trees.toStringTree(lt, nodeTextProvider));
 		}
 	}
 }

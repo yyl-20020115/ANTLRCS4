@@ -10,19 +10,20 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
-public class MatchSet : MatchToken {
-	//@ModelElement 
-		public TestSetInline expr;
-	//@ModelElement 
-		public CaptureNextTokenType capture;
+public class MatchSet : MatchToken
+{
+    //@ModelElement 
+    public TestSetInline expr;
+    //@ModelElement 
+    public CaptureNextTokenType capture;
 
-	public MatchSet(OutputModelFactory factory, GrammarAST ast) {
-		base(factory, ast);
-		SetTransition st = (SetTransition)ast.atnState.transition(0);
-		int wordSize = factory.getGenerator().getTarget().getInlineTestSetWordSize();
-		expr = new TestSetInline(factory, null, st.set, wordSize);
-		Decl d = new TokenTypeDecl(factory, expr.varName);
-		factory.getCurrentRuleFunction().addLocalDecl(d);
-		capture = new CaptureNextTokenType(factory,expr.varName);
-	}
+    public MatchSet(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)
+    {
+        SetTransition st = (SetTransition)ast.atnState.transition(0);
+        int wordSize = factory.getGenerator().getTarget().getInlineTestSetWordSize();
+        expr = new TestSetInline(factory, null, st.set, wordSize);
+        Decl d = new TokenTypeDecl(factory, expr.varName);
+        factory.getCurrentRuleFunction().addLocalDecl(d);
+        capture = new CaptureNextTokenType(factory, expr.varName);
+    }
 }

@@ -27,7 +27,7 @@ public class TestTokenPositionOptions {
 
 		String expectedTree =
 				"(COMBINED_GRAMMAR T (RULES (RULE s (BLOCK (ALT e ';'))) (RULE e (BLOCK (ALT (BLOCK (ALT {} ('-' (ELEMENT_OPTIONS (= tokenIndex 43))) (e (ELEMENT_OPTIONS (= tokenIndex 45) (= p 2)))) (ALT (ID (ELEMENT_OPTIONS (= tokenIndex 49))))) (* (BLOCK (ALT ({precpred(_ctx, 5)}? (ELEMENT_OPTIONS (= p 5))) ('*' (ELEMENT_OPTIONS (= tokenIndex 21))) (e (ELEMENT_OPTIONS (= tokenIndex 23) (= p 6)))) (ALT ({precpred(_ctx, 4)}? (ELEMENT_OPTIONS (= p 4))) ('+' (ELEMENT_OPTIONS (= tokenIndex 29))) (e (ELEMENT_OPTIONS (= tokenIndex 31) (= p 5)))) (ALT ({precpred(_ctx, 3)}? (ELEMENT_OPTIONS (= p 3))) ('.' (ELEMENT_OPTIONS (= tokenIndex 37))) (ID (ELEMENT_OPTIONS (= tokenIndex 39)))))))))))";
-		assertEquals(expectedTree, g.ast.toStringTree());
+		Assert.AreEqual(expectedTree, g.ast.toStringTree());
 
 		String expectedElementTokens =
 				"[@5,11:11='s',<54>,2:0]\n" +
@@ -53,7 +53,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		assertEquals(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithLabels(){
@@ -71,7 +71,7 @@ public class TestTokenPositionOptions {
 
 		String expectedTree =
 				"(COMBINED_GRAMMAR T (RULES (RULE s (BLOCK (ALT e ';'))) (RULE e (BLOCK (ALT (BLOCK (ALT {} ('-' (ELEMENT_OPTIONS (= tokenIndex 47))) (e (ELEMENT_OPTIONS (= tokenIndex 49) (= p 2)))) (ALT (ID (ELEMENT_OPTIONS (= tokenIndex 53))))) (* (BLOCK (ALT ({precpred(_ctx, 5)}? (ELEMENT_OPTIONS (= p 5))) ('*' (ELEMENT_OPTIONS (= tokenIndex 21))) (= x (e (ELEMENT_OPTIONS (= tokenIndex 25) (= p 6))))) (ALT ({precpred(_ctx, 4)}? (ELEMENT_OPTIONS (= p 4))) ('+' (ELEMENT_OPTIONS (= tokenIndex 31))) (e (ELEMENT_OPTIONS (= tokenIndex 33) (= p 5)))) (ALT ({precpred(_ctx, 3)}? (ELEMENT_OPTIONS (= p 3))) ('.' (ELEMENT_OPTIONS (= tokenIndex 39))) (= y (ID (ELEMENT_OPTIONS (= tokenIndex 43))))))))))))";
-		assertEquals(expectedTree, g.ast.toStringTree());
+		Assert.AreEqual(expectedTree, g.ast.toStringTree());
 
 		String expectedElementTokens =
 				"[@5,11:11='s',<54>,2:0]\n" +
@@ -97,7 +97,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		assertEquals(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithSet(){
@@ -115,7 +115,7 @@ public class TestTokenPositionOptions {
 
 		String expectedTree =
 				"(COMBINED_GRAMMAR T (RULES (RULE s (BLOCK (ALT e ';'))) (RULE e (BLOCK (ALT (BLOCK (ALT {} ('-' (ELEMENT_OPTIONS (= tokenIndex 49))) (e (ELEMENT_OPTIONS (= tokenIndex 51) (= p 2)))) (ALT (ID (ELEMENT_OPTIONS (= tokenIndex 55))))) (* (BLOCK (ALT ({precpred(_ctx, 5)}? (ELEMENT_OPTIONS (= p 5))) (= op (SET ('*' (ELEMENT_OPTIONS (= tokenIndex 24))) ('/' (ELEMENT_OPTIONS (= tokenIndex 26))))) (e (ELEMENT_OPTIONS (= tokenIndex 29) (= p 6)))) (ALT ({precpred(_ctx, 4)}? (ELEMENT_OPTIONS (= p 4))) ('+' (ELEMENT_OPTIONS (= tokenIndex 35))) (e (ELEMENT_OPTIONS (= tokenIndex 37) (= p 5)))) (ALT ({precpred(_ctx, 3)}? (ELEMENT_OPTIONS (= p 3))) ('.' (ELEMENT_OPTIONS (= tokenIndex 43))) (ID (ELEMENT_OPTIONS (= tokenIndex 45)))))))))))";
-		assertEquals(expectedTree, g.ast.toStringTree());
+		Assert.AreEqual(expectedTree, g.ast.toStringTree());
 
 		String expectedElementTokens =
 				"[@5,11:11='s',<54>,2:0]\n" +
@@ -142,7 +142,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		assertEquals(expectedElementTokens, Utils.join(tokens.ToArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.ToArray(), "\n"));
 	}
 
 }

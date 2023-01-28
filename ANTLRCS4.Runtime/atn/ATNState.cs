@@ -197,4 +197,9 @@ public abstract class ATNState {
 	}
 
 	public void setRuleIndex(int ruleIndex) { this.ruleIndex = ruleIndex; }
+
+    public static object getName()
+    {
+        throw new NotImplementedException();
+    }
 }

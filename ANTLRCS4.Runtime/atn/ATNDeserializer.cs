@@ -649,7 +649,7 @@ public class ATNDeserializer {
 			}
 		}
 		if ( trimToSize ) {
-			return Arrays.copyOf(data, i2);
+			return Arrays.CopyOf(data, i2);
 		}
 		return data;
 	}

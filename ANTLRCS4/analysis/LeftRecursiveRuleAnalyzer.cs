@@ -4,10 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.codegen;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.parse;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
+using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using System.Text;
 
@@ -55,14 +59,15 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 
 	public LeftRecursiveRuleAnalyzer(GrammarAST ruleAST,
 									 Tool tool, String ruleName, String language)
-	{
-		base(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.getInputStream()), ruleAST));
+		: base(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.getInputStream()), ruleAST))
+    {
+		;
 		this.tool = tool;
 		this.ruleName = ruleName;
 		this.language = language;
 		this.tokenStream = ruleAST.g.tokenStream;
 		if (this.tokenStream == null) {
-			throw new NullPointerException("grammar must have a token stream");
+			throw new NullReferenceException("grammar must have a token stream");
 		}
 
 		// use codegen to get correct language templates; that's it though
@@ -80,10 +85,10 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		if ( t.getOptions()!=null ) {
 			String a = t.getOptionString("assoc");
 			if ( a!=null ) {
-				if ( a.equals(ASSOC.right.toString()) ) {
+				if ( a.Equals(ASSOC.right.ToString()) ) {
 					assoc = ASSOC.right;
 				}
-				else if ( a.equals(ASSOC.left.toString()) ) {
+				else if ( a.Equals(ASSOC.left.ToString()) ) {
 					assoc = ASSOC.left;
 				}
 				else {
@@ -225,8 +230,8 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		List<GrammarAST> outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.of(RULE_REF));
         foreach (GrammarAST x in outerAltRuleRefs) {
 			RuleRefAST rref = (RuleRefAST)x;
-			bool recursive = rref.getText().equals(ruleName);
-			bool rightmost = rref == outerAltRuleRefs.get(outerAltRuleRefs.size()-1);
+			bool recursive = rref.getText().Equals(ruleName);
+			bool rightmost = rref == outerAltRuleRefs[(outerAltRuleRefs.Count-1)];
 			if ( recursive && rightmost ) {
 				GrammarAST dummyValueNode = new GrammarAST(new CommonToken(ANTLRParser.INT, ""+prec));
 				rref.setOption(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME, dummyValueNode);
@@ -273,7 +278,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			leftRecurRuleIndex = 1;
 		}
 		Tree rref = first.getChild(1); // if label=rule
-		if ( (first.getType()==RULE_REF && first.getText().equals(ruleName)) ||
+		if ( (first.getType()==RULE_REF && first.getText().Equals(ruleName)) ||
 			 (rref!=null && rref.getType()==RULE_REF && rref.getText().equals(ruleName)) )
 		{
 			if ( first.getType()==ASSIGN || first.getType()==PLUS_ASSIGN ) lrlabel = (GrammarAST)first.getChild(0);
@@ -345,38 +350,38 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 					  tok.getType()==STRING_LITERAL ||
 					  tok.getType()==RULE_REF) )
 				{
-					elementOptions.append("tokenIndex=").append(tok.getTokenIndex());
+					elementOptions.Append("tokenIndex=").Append(tok.getTokenIndex());
 				}
 
 				if ( node is GrammarASTWithOptions ) {
 					GrammarASTWithOptions o = (GrammarASTWithOptions)node;
                     foreach (Map.Entry<String, GrammarAST> entry in o.getOptions().entrySet()) {
-						if (elementOptions.length() > 0) {
-							elementOptions.append(',');
+						if (elementOptions.Length > 0) {
+							elementOptions.Append(',');
 						}
 
-						elementOptions.append(entry.getKey());
-						elementOptions.append('=');
-						elementOptions.append(entry.getValue().getText());
+						elementOptions.Append(entry.getKey());
+						elementOptions.Append('=');
+						elementOptions.Append(entry.getValue().getText());
 					}
 				}
 			}
 
-			buf.append(tok.getText()); // add actual text of the current token to the rewritten alternative
+			buf.Append(tok.getText()); // add actual text of the current token to the rewritten alternative
 			i++;                       // move to the next token
 
 			// Are there args on a rule?
 			if ( tok.getType()==RULE_REF && i<=tokenStopIndex && tokenStream.get(i).getType()==ARG_ACTION ) {
-				buf.append('['+tokenStream.get(i).getText()+']');
+				buf.Append('['+tokenStream.get(i).getText()+']');
 				i++;
 			}
 
 			// now that we have the actual element, we can add the options.
-			if (elementOptions.length() > 0) {
-				buf.append('<').append(elementOptions).append('>');
+			if (elementOptions.Length > 0) {
+				buf.Append('<').Append(elementOptions).Append('>');
 			}
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public int precedence(int alt) {
@@ -391,7 +396,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 	}
 
 	//@Override
-	public String toString() {
+	public String ToString() {
 		return "PrecRuleOperatorCollector{" +
 			   "binaryAlts=" + binaryAlts +
 			   ", ternaryAlts=" + ternaryAlts +

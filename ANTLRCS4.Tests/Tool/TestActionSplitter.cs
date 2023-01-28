@@ -33,7 +33,7 @@ public class TestActionSplitter {
 			String input = exprs[i];
 			String expect = exprs[i + 1];
 			List<String> chunks = getActionChunks(input);
-			assertEquals(expect, chunks.ToString(), "input: " + input);
+			Assert.AreEqual(expect, chunks.ToString(), "input: " + input);
 		}
 	}
 

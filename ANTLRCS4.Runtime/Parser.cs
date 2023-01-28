@@ -334,7 +334,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator> {
 	 *
 	 * @param listener the listener to add
 	 *
-	 * @throws NullPointerException if {@code} listener is {@code null}
+	 * @throws NullReferenceException if {@code} listener is {@code null}
 	 */
 	public void addParseListener(ParseTreeListener listener) {
 		if (listener == null) {

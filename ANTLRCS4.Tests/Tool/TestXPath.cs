@@ -98,7 +98,7 @@ public class TestXPath {
 		for (int i=0; i<xpath.Length; i++) {
 			List<String> nodes = getNodeStrings("Expr.g4", grammar, SAMPLE_PROGRAM, xpath[i], "prog", "ExprParser", "ExprLexer");
 			String result = nodes.ToString();
-			assertEquals(expected[i], result, "path "+xpath[i]+" failed");
+			Assert.AreEqual(expected[i], result, "path "+xpath[i]+" failed");
 		}
 	}
 
@@ -156,7 +156,7 @@ public class TestXPath {
 			e = iae;
 		}
 		assertNotNull(e);
-		assertEquals(expected, e.Message);
+		Assert.AreEqual(expected, e.Message);
 	}
 
 	private List<String> getNodeStrings(String grammarFileName, String grammar, String input, String xpath,

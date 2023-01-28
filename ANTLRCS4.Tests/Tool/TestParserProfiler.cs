@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.tool;
 
@@ -41,11 +42,11 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", ";");
-		assertEquals(1, info.Length);
+		Assert.AreEqual(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=1, " +
 				"SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].ToString());
+		Assert.AreEqual(expecting, info[0].ToString());
 	}
 
 	[TestMethod] public void testLL2(){
@@ -57,11 +58,11 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;");
-		assertEquals(1, info.Length);
+		Assert.AreEqual(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].ToString());
+		Assert.AreEqual(expecting, info[0].ToString());
 	}
 
 	[TestMethod] public void testRepeatedLL2(){
@@ -73,11 +74,11 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;", "abc;");
-		assertEquals(1, info.Length);
+		Assert.AreEqual(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 				"SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].ToString());
+		Assert.AreEqual(expecting, info[0].ToString());
 	}
 
 	[TestMethod] public void test3xLL2(){
@@ -90,11 +91,11 @@ public class TestParserProfiler {
 
 		// The '.' vs ';' causes another ATN transition
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "xyz;", "abc;", "z.");
-		assertEquals(1, info.Length);
+		Assert.AreEqual(1, info.Length);
 		String expecting =
 				"{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 				"SLL_ATNTransitions=3, SLL_DFATransitions=3, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}";
-		assertEquals(expecting, info[0].ToString());
+		Assert.AreEqual(expecting, info[0].ToString());
 	}
 
 	[TestMethod] public void testOptional(){
@@ -106,13 +107,13 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a.b;");
-		assertEquals(2, info.Length);
+		Assert.AreEqual(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=1, " +
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.ToString(info));
+		Assert.AreEqual(expecting, Arrays.ToString(info));
 	}
 
 	[TestMethod] public void test2xOptional(){
@@ -124,13 +125,13 @@ public class TestParserProfiler {
 				lg);
 
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a.b;", "a.b;");
-		assertEquals(2, info.Length);
+		Assert.AreEqual(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=2, " +
 			  "SLL_ATNTransitions=1, SLL_DFATransitions=1, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.ToString(info));
+		Assert.AreEqual(expecting, Arrays.ToString(info));
 	}
 
 	[TestMethod] public void testContextSensitivity(){
@@ -141,10 +142,10 @@ public class TestParserProfiler {
 			"e : INT | ;\n",
 			lg);
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "a", "; 1 x");
-		assertEquals(2, info.Length);
+		Assert.AreEqual(2, info.Length);
 		String expecting =
 			"{decision=1, contextSensitivities=1, errors=0, ambiguities=0, SLL_lookahead=3, SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_lookahead=3, LL_ATNTransitions=2}";
-		assertEquals(expecting, info[1].ToString());
+		Assert.AreEqual(expecting, info[1].ToString());
 	}
 
 	@Disabled
@@ -160,11 +161,11 @@ public class TestParserProfiler {
 			"SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_ATNTransitions=1}]";
 
 
-		assertEquals(expecting, Arrays.ToString(info));
-		assertEquals(1, info.Length);
+		Assert.AreEqual(expecting, Arrays.ToString(info));
+		Assert.AreEqual(1, info.Length);
 	}
 
-	@Disabled
+	//@Disabled
 	[TestMethod] public void testDeepLookahead(){
 		Grammar g = new Grammar(
 				"parser grammar T;\n" +
@@ -181,13 +182,13 @@ public class TestParserProfiler {
 		DecisionInfo[] info = interpAndGetDecisionInfo(lg, g, "s", "a+b+c;");
 		// at "+b" it uses k=1 and enters loop then calls e for b...
 		// e matches and d=2 uses "+c;" for k=3
-		assertEquals(2, info.Length);
+		Assert.AreEqual(2, info.Length);
 		String expecting =
 			"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 			  "SLL_ATNTransitions=6, SLL_DFATransitions=0, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}, " +
 			 "{decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=4, " +
 			  "SLL_ATNTransitions=2, SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]";
-		assertEquals(expecting, Arrays.ToString(info));
+		Assert.AreEqual(expecting, Arrays.ToString(info));
 	}
 
 	[TestMethod] public void testProfilerGeneratedCode() {
@@ -208,27 +209,27 @@ public class TestParserProfiler {
 		RunOptions runOptions = createOptionsForJavaToolTests("T.g4", grammar, "TParser", "TLexer",
 				false, false, "s", "xyz;abc;z.q",
 				true, false, Stage.Execute, false);
-		try (JavaRunner runner = new JavaRunner()) {
+		using (JavaRunner runner = new JavaRunner()) {
 			ExecutedState state = (ExecutedState) runner.run(runOptions);
 			String expecting =
 					"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, SLL_ATNTransitions=4, " +
 							"SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}," +
 							" {decision=1, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, " +
 							"SLL_ATNTransitions=3, SLL_DFATransitions=3, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}]\n";
-			assertEquals(expecting, state.output);
-			assertEquals("", state.errors);
+			Assert.AreEqual(expecting, state.output);
+			Assert.AreEqual("", state.errors);
 		}
 	}
 
 	public DecisionInfo[] interpAndGetDecisionInfo(
 			LexerGrammar lg, Grammar g,
-			String startRule, String... input)
+			String startRule, params String[] input)
 	{
 
 		LexerInterpreter lexEngine = lg.createLexerInterpreter(null);
 		ParserInterpreter parser = g.createParserInterpreter(null);
 		parser.setProfile(true);
-		for (String s : input) {
+		foreach (String s in input) {
 			lexEngine.reset();
 			parser.reset();
 			lexEngine.setInputStream(new ANTLRInputStream(s));

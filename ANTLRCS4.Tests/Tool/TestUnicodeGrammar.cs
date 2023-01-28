@@ -21,7 +21,7 @@ public class TestUnicodeGrammar {
 			"WORLD : ('world' | '\\u4E16\\u754C' | '\\u1000\\u1019\\u1039\\u1018\\u102C' );\n" +
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = "hello \u4E16\u754C";
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
 						grammarText,
@@ -47,7 +47,7 @@ public class TestUnicodeGrammar {
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
 				.ToString();
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
 						grammarText,
@@ -65,7 +65,7 @@ public class TestUnicodeGrammar {
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
 				.ToString();
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
 						grammarText,
@@ -83,7 +83,7 @@ public class TestUnicodeGrammar {
 		String inputText = new StringBuilder("hello ")
 				.appendCodePoint(0x1F30E)
 				.ToString();
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
 						grammarText,
@@ -99,7 +99,7 @@ public class TestUnicodeGrammar {
 			"WORLD : ('\\uD83C' | '\\uD83D' | '\\uD83E' );\n" +
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = "hello \uD83C";
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
 				parseTreeForGrammarWithInput(
 						grammarText,
@@ -137,7 +137,7 @@ public class TestUnicodeGrammar {
 				new InterpreterTreeTextProvider(grammar.getRuleNames());
 		String result = Trees.toStringTree(parseTree, nodeTextProvider);
 
-		assertEquals(
+		Assert.AreEqual(
 				"(r:1 \u0002\u0000\u0001\u0007 \u00D0\u00D2\u00D2\u00D3\u00D3\u00D3 \u00D0\u00D3\u00D3\u00D1 \u00FF)",
 				result);
 	}

@@ -16,8 +16,8 @@ public class ExceptionClause : SrcOp {
 	public ExceptionClause(OutputModelFactory factory,
 						   ActionAST catchArg,
 						   ActionAST catchAction)
-	{
-		base(factory, catchArg);
+		: base(factory, catchArg)
+    {
 		this.catchArg = new Action(factory, catchArg);
 		this.catchAction = new Action(factory, catchAction);
 	}

@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.unicode;
 
 namespace org.antlr.v4.misc;
 

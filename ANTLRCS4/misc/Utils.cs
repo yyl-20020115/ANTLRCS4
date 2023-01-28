@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool.ast;
 using System.Text;
 
 namespace org.antlr.v4.misc;
@@ -47,15 +49,15 @@ public static class Utils {
 	}
 
 	public static String sortLinesInString(String s) {
-		String lines[] = s.split("\n");
+		String[] lines = s.split("\n");
 		Arrays.sort(lines);
-		List<String> linesL = Arrays.asList(lines);
+		List<String> linesL = Arrays.AsList(lines);
 		StringBuilder buf = new StringBuilder();
-		for (String l : linesL) {
-			buf.append(l);
-			buf.append('\n');
+		foreach (String l in linesL) {
+			buf.Append(l);
+			buf.Append('\n');
 		}
-		return buf.toString();
+		return buf.ToString();
 	}
 
 	public static List<String> nodesToStrings<T>(List<T> nodes) where T : GrammarAST
@@ -76,19 +78,19 @@ public static class Utils {
 
 	public static void writeSerializedATNIntegerHistogram(String filename, IntegerList serializedATN) {
 		Dictionary<int, int> histo = new ();
-		for (int i : serializedATN.toArray()) {
-			if ( histo.containsKey(i) ) {
+		foreach (int i in serializedATN.toArray()) {
+			if ( histo.ContainsKey(i) ) {
 				histo.put(i, histo.get(i) + 1);
 			}
 			else {
 				histo.put(i, 1);
 			}
 		}
-		TreeMap<int,int> sorted = new TreeMap<>(histo);
+		Dictionary<int,int> sorted = new (histo);
 
 		String output = "";
 		output += "value,count\n";
-		for (int key : sorted.keySet()) {
+		foreach (int key in sorted.Keys) {
 			output += key+","+sorted.get(key)+"\n";
 		}
 		try {
@@ -100,11 +102,11 @@ public static class Utils {
 	}
 
 	public static String capitalize(String s) {
-		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+		return char.ToUpper(s[0]) + s.Substring(1);
 	}
 
 	public static String decapitalize(String s) {
-		return Character.toLowerCase(s.charAt(0)) + s.substring(1);
+		return char.ToLower(s[0]) + s.Substring(1);
 	}
 
 	/** apply methodName to list and return list of results. method has

@@ -65,7 +65,7 @@ public class ATNPrinter {
 						buf.Append("-").Append(not?"~":"").Append(st.ToString()).Append("->").Append(getStateString(t.target)).Append('\n');
 					}
 					else {
-						buf.Append("-").Append(not?"~":"").Append(st.label().toString(g.getVocabulary())).Append("->").Append(getStateString(t.target)).append('\n');
+						buf.Append("-").Append(not?"~":"").Append(st.label().toString(g.getVocabulary())).Append("->").Append(getStateString(t.target)).Append('\n');
 					}
 				}
 				else if ( t is AtomTransition ) {

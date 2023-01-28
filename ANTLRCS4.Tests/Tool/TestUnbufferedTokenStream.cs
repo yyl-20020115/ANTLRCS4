@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -31,12 +32,12 @@ public class TestUnbufferedTokenStream {
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
         TokenStream tokens = new UnbufferedTokenStream<Token>(lexEngine);
 
-		assertEquals("x", tokens.LT(1).getText());
-		assertEquals(" ", tokens.LT(2).getText());
-		assertEquals("=", tokens.LT(3).getText());
-		assertEquals(" ", tokens.LT(4).getText());
-		assertEquals("302", tokens.LT(5).getText());
-		assertEquals(";", tokens.LT(6).getText());
+		Assert.AreEqual("x", tokens.LT(1).getText());
+		Assert.AreEqual(" ", tokens.LT(2).getText());
+		Assert.AreEqual("=", tokens.LT(3).getText());
+		Assert.AreEqual(" ", tokens.LT(4).getText());
+		Assert.AreEqual("302", tokens.LT(5).getText());
+		Assert.AreEqual(";", tokens.LT(6).getText());
     }
 
 	[TestMethod] public void testNoBuffering(){
@@ -57,23 +58,23 @@ public class TestUnbufferedTokenStream {
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
-		assertEquals("x", tokens.LT(1).getText());
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
+		Assert.AreEqual("x", tokens.LT(1).getText());
 		tokens.consume(); // move to WS
-		assertEquals(" ", tokens.LT(1).getText());
-		assertEquals("[[@1,1:1=' ',<7>,1:1]]", tokens.getRemainingBuffer().ToString());
+		Assert.AreEqual(" ", tokens.LT(1).getText());
+		Assert.AreEqual("[[@1,1:1=' ',<7>,1:1]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
-		assertEquals("=", tokens.LT(1).getText());
-		assertEquals("[[@2,2:2='=',<4>,1:2]]", tokens.getRemainingBuffer().ToString());
+		Assert.AreEqual("=", tokens.LT(1).getText());
+		Assert.AreEqual("[[@2,2:2='=',<4>,1:2]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
-		assertEquals(" ", tokens.LT(1).getText());
-		assertEquals("[[@3,3:3=' ',<7>,1:3]]", tokens.getRemainingBuffer().ToString());
+		Assert.AreEqual(" ", tokens.LT(1).getText());
+		Assert.AreEqual("[[@3,3:3=' ',<7>,1:3]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
-		assertEquals("302", tokens.LT(1).getText());
-		assertEquals("[[@4,4:6='302',<2>,1:4]]", tokens.getRemainingBuffer().ToString());
+		Assert.AreEqual("302", tokens.LT(1).getText());
+		Assert.AreEqual("[[@4,4:6='302',<2>,1:4]]", tokens.getRemainingBuffer().ToString());
 		tokens.consume();
-		assertEquals(";", tokens.LT(1).getText());
-		assertEquals("[[@5,7:7=';',<3>,1:7]]", tokens.getRemainingBuffer().ToString());
+		Assert.AreEqual(";", tokens.LT(1).getText());
+		Assert.AreEqual("[[@5,7:7=';',<3>,1:7]]", tokens.getRemainingBuffer().ToString());
     }
 
 	[TestMethod] public void testMarkStart(){
@@ -95,16 +96,16 @@ public class TestUnbufferedTokenStream {
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
 		int m = tokens.mark();
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
-		assertEquals("x", tokens.LT(1).getText());
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
+		Assert.AreEqual("x", tokens.LT(1).getText());
 		tokens.consume(); // consume x
-		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
 		tokens.consume(); // ' '
 		tokens.consume(); // =
 		tokens.consume(); // ' '
 		tokens.consume(); // 302
 		tokens.consume(); // ;
-		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]," +
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]," +
 					 " [@2,2:2='=',<4>,1:2], [@3,3:3=' ',<7>,1:3]," +
 					 " [@4,4:6='302',<2>,1:4], [@5,7:7=';',<3>,1:7]," +
 					 " [@6,8:7='<EOF>',<-1>,1:8]]",
@@ -130,26 +131,26 @@ public class TestUnbufferedTokenStream {
 		TestingUnbufferedTokenStream<Token> tokens = new TestingUnbufferedTokenStream<Token>(lexEngine);
 
 		int m = tokens.mark();
-		assertEquals("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
-		assertEquals("x", tokens.LT(1).getText());
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());
+		Assert.AreEqual("x", tokens.LT(1).getText());
 		tokens.consume(); // consume x
-		assertEquals("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
+		Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.getBuffer().ToString());
 		tokens.consume(); // ' '
 		tokens.consume(); // =
 		tokens.consume(); // ' '
-		assertEquals("302", tokens.LT(1).getText());
+		Assert.AreEqual("302", tokens.LT(1).getText());
 		tokens.release(m); // "x = 302" is in buffer. will kill buffer
 		tokens.consume(); // 302
 		tokens.consume(); // ' '
 		m = tokens.mark(); // mark at the +
-		assertEquals("+", tokens.LT(1).getText());
+		Assert.AreEqual("+", tokens.LT(1).getText());
 		tokens.consume(); // '+'
 		tokens.consume(); // ' '
 		tokens.consume(); // 1
 		tokens.consume(); // ;
-		assertEquals("<EOF>", tokens.LT(1).getText());
+		Assert.AreEqual("<EOF>", tokens.LT(1).getText());
 		// we marked at the +, so that should be the start of the buffer
-		assertEquals("[[@6,8:8='+',<5>,1:8], [@7,9:9=' ',<7>,1:9]," +
+		Assert.AreEqual("[[@6,8:8='+',<5>,1:8], [@7,9:9=' ',<7>,1:9]," +
 					 " [@8,10:10='1',<2>,1:10], [@9,11:11=';',<3>,1:11]," +
 					 " [@10,12:11='<EOF>',<-1>,1:12]]",
 					 tokens.getBuffer().ToString());
@@ -158,8 +159,9 @@ public class TestUnbufferedTokenStream {
 
 	protected class TestingUnbufferedTokenStream<T> : UnbufferedTokenStream<T> where T:Token {
 
-		public TestingUnbufferedTokenStream(TokenSource<T> tokenSource) {
-			base(tokenSource);
+		public TestingUnbufferedTokenStream(TokenSource tokenSource) : base(tokenSource)
+        {
+			;
 		}
 
 		/** For testing.  What's in moving window into token stream from
@@ -170,7 +172,7 @@ public class TestUnbufferedTokenStream {
 				return Collections.emptyList();
 			}
 
-			return Arrays.asList(tokens).subList(p, n);
+			return Arrays.AsList(tokens).subList(p, n);
 		}
 
 		/** For testing.  What's in moving window buffer into data stream.
@@ -181,7 +183,7 @@ public class TestUnbufferedTokenStream {
 				return Collections.emptyList();
 			}
 
-			return Arrays.asList(tokens).subList(0, n);
+			return Arrays.AsList(tokens).subList(0, n);
 		}
 
 	}

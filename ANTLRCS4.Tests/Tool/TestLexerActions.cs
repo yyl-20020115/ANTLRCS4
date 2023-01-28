@@ -22,7 +22,7 @@ public class TestLexerActions {
 			"[@0,0:1='34',<1>,1:0]\n" +
 			"[@1,3:4='34',<1>,1:3]\n" +
 			"[@2,5:4='<EOF>',<-1>,1:5]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testActionEvalsAtCorrectIndex(){
@@ -37,7 +37,7 @@ public class TestLexerActions {
 			"[@0,0:2='123',<1>,1:0]\n" +
 			"[@1,4:5='45',<1>,1:4]\n" +
 			"[@2,6:5='<EOF>',<-1>,1:6]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class TestLexerActions {
 			"\n" +
 			"[@0,0:11='hello Steve\\n',<1>,1:0]\n" +
 			"[@1,12:11='<EOF>',<-1>,2:0]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void test2ActionsIn1Rule(){
@@ -100,7 +100,7 @@ public class TestLexerActions {
 			"[@0,0:2='123',<1>,1:0]\n" +
 			"[@1,4:5='45',<1>,1:4]\n" +
 			"[@2,6:5='<EOF>',<-1>,1:6]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testAltActionsIn1Rule(){
@@ -119,7 +119,7 @@ public class TestLexerActions {
 			"[@0,0:2='123',<1>,1:0]\n" +
 			"[@1,4:5='ab',<1>,1:4]\n" +
 			"[@2,6:5='<EOF>',<-1>,1:6]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testActionPlusCommand(){
@@ -132,7 +132,7 @@ public class TestLexerActions {
 			"I\n" +
 			"I\n" +
 			"[@0,5:4='<EOF>',<-1>,1:5]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	// ----- COMMANDS --------------------------------------------------------
@@ -149,7 +149,7 @@ public class TestLexerActions {
 			"[@0,0:1='34',<1>,1:0]\n" +
 			"[@1,3:4='34',<1>,1:3]\n" +
 			"[@2,5:4='<EOF>',<-1>,1:5]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testMoreCommand(){
@@ -164,7 +164,7 @@ public class TestLexerActions {
 			"[@0,0:1='34',<1>,1:0]\n" +
 			"[@1,2:4='#10',<1>,1:2]\n" +
 			"[@2,5:4='<EOF>',<-1>,1:5]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testTypeCommand(){
@@ -178,7 +178,7 @@ public class TestLexerActions {
 			"[@0,0:1='34',<1>,1:0]\n" +
 			"[@1,2:2='#',<2>,1:2]\n" +
 			"[@2,3:2='<EOF>',<-1>,1:3]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testCombinedCommand(){
@@ -193,7 +193,7 @@ public class TestLexerActions {
 			"[@0,0:1='34',<1>,1:0]\n" +
 			"[@1,2:4='#11',<1>,1:2]\n" +
 			"[@2,5:4='<EOF>',<-1>,1:5]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testLexerMode(){
@@ -209,7 +209,7 @@ public class TestLexerActions {
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
 			"[@2,10:9='<EOF>',<-1>,1:10]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testLexerPushPopModeAction(){
@@ -225,7 +225,7 @@ public class TestLexerActions {
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
 			"[@2,10:9='<EOF>',<-1>,1:10]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	[TestMethod] public void testLexerModeAction(){
@@ -241,7 +241,7 @@ public class TestLexerActions {
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
 			"[@2,10:9='<EOF>',<-1>,1:10]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 	// ----- PREDICATES --------------------------------------------------------
@@ -280,7 +280,7 @@ public class TestLexerActions {
 			"[@4,32:45='Another line.\\n',<1>,3:0]\n" +
 			"[@5,46:56='More line.\\n',<1>,4:0]\n" +
 			"[@6,57:56='<EOF>',<-1>,5:0]\n";
-		assertEquals(expecting, executedState.output);
+		Assert.AreEqual(expecting, executedState.output);
 	}
 
 }

@@ -252,7 +252,7 @@ public class SourceGenTriggers : TreeParser
 
                 }
 
-                List<CodeBlockForAlt> alts = new ArrayList<CodeBlockForAlt>();
+                List<CodeBlockForAlt> alts = new ();
                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:64:7: ( alternative )+
                 int cnt3 = 0;
             loop3:
@@ -583,9 +583,9 @@ public class SourceGenTriggers : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 8, 4, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -1286,9 +1286,9 @@ public class SourceGenTriggers : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae =
+                                    NoViableAltException nvae2 =
                                         new NoViableAltException("", 13, 8, input);
-                                    throw nvae;
+                                    throw nvae2;
                                 }
                                 finally
                                 {

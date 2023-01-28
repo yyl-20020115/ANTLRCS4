@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -15,8 +16,9 @@ public class PlusBlock : Loop {
 	public PlusBlock(OutputModelFactory factory,
 					 GrammarAST plusRoot,
 					 List<CodeBlockForAlt> alts)
-	{
-		base(factory, plusRoot, alts);
+		: base(factory, plusRoot, alts)
+    {
+		;
 		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
 		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;
 		PlusLoopbackState loop = blkStart.loopBackState;

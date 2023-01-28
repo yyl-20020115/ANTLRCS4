@@ -4,6 +4,12 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.tool;
 
 /**
@@ -411,7 +417,7 @@ public class TestATNLexerInterpreter {
 				"LITERAL_WITH_NOT:   ~'f';\n";     // ~('f' | 'F)
 		ExecutedState executedState = execLexer("L.g4", grammar, "L", "F");
 
-		assertEquals("line 1:0 token recognition error at: 'F'\n", executedState.errors);
+		Assert.AreEqual("line 1:0 token recognition error at: 'F'\n", executedState.errors);
 	}
 
 	[TestMethod] public void testLexerCaseInsensitiveSetWithNegation() {
@@ -421,7 +427,7 @@ public class TestATNLexerInterpreter {
 				"SET_WITH_NOT: ~[a-c];\n";        // ~[a-cA-C]
 		ExecutedState executedState = execLexer("L.g4", grammar, "L", "B");
 
-		assertEquals("line 1:0 token recognition error at: 'B'\n", executedState.errors);
+		Assert.AreEqual("line 1:0 token recognition error at: 'B'\n", executedState.errors);
 	}
 
 	[TestMethod] public void testLexerCaseInsensitiveFragments(){
@@ -502,7 +508,7 @@ public class TestATNLexerInterpreter {
 				"STRING options { caseInsensitive=false; } : 'N'? '\\'' (~'\\'' | '\\'\\'')* '\\'';\n";
 
 		ExecutedState executedState = execLexer("L.g4", grammar, "L", "n'sample'");
-		assertEquals("line 1:0 token recognition error at: 'n'\n", executedState.errors);
+		Assert.AreEqual("line 1:0 token recognition error at: 'n'\n", executedState.errors);
 	}
 
 	private void checkLexerMatches(LexerGrammar lg, String inputString, String expecting) {
@@ -514,19 +520,19 @@ public class TestATNLexerInterpreter {
 
 		List<String> tokenTypes = getTokenTypes(lg, atn, input);
 
-		String result = Utils.join(tokenTypes.iterator(), ", ");
+		String result = Utils.join(tokenTypes, ", ");
 //		Console.Out.WriteLine(tokenTypes);
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	private static List<String> getTokenTypes(LexerGrammar lg, ATN atn, CharStream input) {
 		LexerATNSimulator interp = new LexerATNSimulator(atn, new DFA[]{new DFA(atn.modeToStartState.get(Lexer.DEFAULT_MODE))}, null);
-		List<String> tokenTypes = new ArrayList<>();
+		List<String> tokenTypes = new ();
 		int ttype;
 		bool hitEOF = false;
 		do {
 			if ( hitEOF ) {
-				tokenTypes.add("EOF");
+				tokenTypes.Add("EOF");
 				break;
 			}
 			int t = input.LA(1);

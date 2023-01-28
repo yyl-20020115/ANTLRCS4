@@ -18,8 +18,8 @@ public class Sync : SrcOp {
 				IntervalSet expecting,
 				int decision,
 				String position)
-	{
-		base(factory, blkOrEbnfRootAST);
+		: base(factory, blkOrEbnfRootAST)
+    {
 		this.decision = decision;
 //		this.expecting = factory.createExpectingBitSet(ast, decision, expecting, position);
 //		factory.defineBitSet(this.expecting);

@@ -20,12 +20,10 @@ public class CodeBlock : SrcOp {
     //@ModelElement
     public List<SrcOp> ops;
 
-	public CodeBlock(OutputModelFactory factory) {
-		base(factory);
+	public CodeBlock(OutputModelFactory factory):base(factory) {
 	}
 
-	public CodeBlock(OutputModelFactory factory, int treeLevel, int codeBlockLevel) {
-		base(factory);
+	public CodeBlock(OutputModelFactory factory, int treeLevel, int codeBlockLevel):base(factory) {
 		this.treeLevel = treeLevel;
 		this.codeBlockLevel = codeBlockLevel;
 	}
@@ -38,22 +36,22 @@ public class CodeBlock : SrcOp {
 	}
 
 	public void addPreambleOp(SrcOp op) {
-		if ( preamble==null ) preamble = new ArrayList<SrcOp>();
-		preamble.add(op);
+		if ( preamble==null ) preamble = new();
+		preamble.Add(op);
 	}
 
 	public void addOp(SrcOp op) {
-		if ( ops==null ) ops = new ArrayList<SrcOp>();
-		ops.add(op);
+		if ( ops==null ) ops = new();
+		ops.Add(op);
 	}
 
 	public void insertOp(int i, SrcOp op) {
-		if ( ops==null ) ops = new ArrayList<SrcOp>();
-		ops.add(i, op);
+		if ( ops==null ) ops = new();
+		ops.Insert(i, op);
 	}
 
 	public void addOps(List<SrcOp> ops) {
-		if ( this.ops==null ) this.ops = new ArrayList<SrcOp>();
-		this.ops.addAll(ops);
+		if ( this.ops==null ) this.ops = new();
+		this.ops.AddRange(ops);
 	}
 }

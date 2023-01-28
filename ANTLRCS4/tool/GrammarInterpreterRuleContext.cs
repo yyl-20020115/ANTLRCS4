@@ -3,10 +3,9 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime;
 
-import org.antlr.v4.runtime.InterpreterRuleContext;
-import org.antlr.v4.runtime.ParserRuleContext;
+namespace org.antlr.v4.tool;
 
 /** An {@link InterpreterRuleContext} that knows which alternative
  *  for a rule was matched.
@@ -15,10 +14,12 @@ import org.antlr.v4.runtime.ParserRuleContext;
  *  @since 4.5.1
  */
 public class GrammarInterpreterRuleContext : InterpreterRuleContext {
-	protected int outerAltNum = 1;
+	public int outerAltNum = 1;
 
-	public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex) {
-		base(parent, invokingStateNumber, ruleIndex);
+	public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex)
+	: base(parent, invokingStateNumber, ruleIndex)
+    {
+		
 	}
 
 	/** The predicted outermost alternative for the rule associated
@@ -31,14 +32,14 @@ public class GrammarInterpreterRuleContext : InterpreterRuleContext {
 		this.outerAltNum = outerAltNum;
 	}
 
-	@Override
+	//@Override
 	public int getAltNumber() {
 		// override here and called old functionality; makes it backward compatible vs changing names
 		return getOuterAltNum();
 	}
 
-	@Override
-	public void setAltNumber(int altNumber) {
+    //@Override
+    public void setAltNumber(int altNumber) {
 		setOuterAltNum(altNumber);
 	}
 }

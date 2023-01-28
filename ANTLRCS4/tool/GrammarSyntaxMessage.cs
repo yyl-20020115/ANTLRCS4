@@ -4,10 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-package org.antlr.v4.tool;
+using org.antlr.v4.runtime;
 
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.Token;
+namespace org.antlr.v4.tool;
+
 
 /** A problem with the syntax of your antlr grammar such as
  *  "The '{' came as a complete surprise to me at this point in your program"
@@ -17,9 +17,10 @@ public class GrammarSyntaxMessage : ANTLRMessage {
 								String fileName,
 								Token offendingToken,
 								RecognitionException antlrException,
-								Object... args)
-	{
-		base(etype, antlrException, offendingToken, args);
+								params Object[] args)
+		: base(etype, antlrException, offendingToken, args)
+    {
+		;
 		this.fileName = fileName;
 		this.offendingToken = offendingToken;
 		if ( offendingToken!=null ) {
@@ -28,8 +29,7 @@ public class GrammarSyntaxMessage : ANTLRMessage {
 		}
 	}
 
-    @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"})
-    @Override
+    //@Override
     public RecognitionException getCause() {
         return (RecognitionException)base.getCause();
     }

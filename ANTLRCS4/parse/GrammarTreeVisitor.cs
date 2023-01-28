@@ -1606,7 +1606,7 @@ public class GrammarTreeVisitor : TreeParser
 
 
         enterLexerRule(((GrammarAST)retval.start));
-        List<GrammarAST> mods = new ArrayList<GrammarAST>();
+        List<GrammarAST> mods = new ();
         currentOuterAltNumber = 0;
 
         try
@@ -1725,8 +1725,8 @@ public class GrammarTreeVisitor : TreeParser
 
 
         enterRule(((GrammarAST)retval.start));
-        List<GrammarAST> mods = new ArrayList<GrammarAST>();
-        List<GrammarAST> actions = new ArrayList<GrammarAST>(); // track roots
+        List<GrammarAST> mods = new ();
+        List<GrammarAST> actions = new (); // track roots
         currentOuterAltNumber = 0;
 
         try
@@ -2901,9 +2901,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 30, 3, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -2931,9 +2931,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 30, 4, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -3193,9 +3193,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 33, 4, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -3806,9 +3806,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 4, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -3836,9 +3836,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 5, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -3877,9 +3877,9 @@ public class GrammarTreeVisitor : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae =
+                                    NoViableAltException nvae2 =
                                         new NoViableAltException("", 40, 12, input);
-                                    throw nvae;
+                                    throw nvae2;
                                 }
                                 finally
                                 {
@@ -3895,9 +3895,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 7, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -4553,9 +4553,9 @@ public class GrammarTreeVisitor : TreeParser
                                         {
                                             input.consume();
                                         }
-                                        NoViableAltException nvae =
+                                        NoViableAltException nvae2 =
                                             new NoViableAltException("", 44, 9, input);
-                                        throw nvae;
+                                        throw nvae2;
                                     }
                                     finally
                                     {
@@ -4574,9 +4574,9 @@ public class GrammarTreeVisitor : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae =
+                                    NoViableAltException nvae2 =
                                         new NoViableAltException("", 44, 6, input);
-                                    throw nvae;
+                                    throw nvae2;
                                 }
                                 finally
                                 {
@@ -4592,9 +4592,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 44, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -4622,9 +4622,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 44, 2, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -4875,9 +4875,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 46, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -4905,9 +4905,9 @@ public class GrammarTreeVisitor : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 46, 2, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {

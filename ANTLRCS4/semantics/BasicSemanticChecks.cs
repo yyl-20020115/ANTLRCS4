@@ -4,9 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -263,7 +265,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				// Now verify that label X or x doesn't conflict with label
 				// in another rule. altLabelToRuleName has both X and x mapped.
 				String prevRuleForLabel = ruleCollector.altLabelToRuleName.get(altLabel);
-				if ( prevRuleForLabel!=null && !prevRuleForLabel.equals(rule.getRuleName()) ) {
+				if ( prevRuleForLabel!=null && !prevRuleForLabel.Equals(rule.getRuleName()) ) {
 					g.tool.errMgr.grammarError(ErrorType.ALT_LABEL_REDEF,
 											   g.fileName, altAST.altLabel.token,
 											   altLabel,
@@ -295,7 +297,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		String fileName = f.getName();
 		if ( g.originalGrammar!=null ) return; // don't warn about diff if this is implicit lexer
 		if ( !Utils.stripFileExtension(fileName).equals(nameToken.getText()) &&
-		     !fileName.equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
+		     !fileName.Equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
 			g.tool.errMgr.grammarError(ErrorType.FILE_AND_GRAMMAR_NAME_DIFFER,
 									   fileName, nameToken, nameToken.getText(), fileName);
 		}
@@ -314,15 +316,15 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 						  List<GrammarAST> imports,
 						  List<GrammarAST> tokens)
 	{
-		List<Token> secondOptionTokens = new ArrayList<Token>();
-		if ( options!=null && options.size()>1 ) {
-			secondOptionTokens.add(options.get(1).token);
+		List<Token> secondOptionTokens = new ();
+		if ( options!=null && options.Count >1 ) {
+			secondOptionTokens.Add(options[(1)].token);
 		}
-		if ( imports!=null && imports.size()>1 ) {
-			secondOptionTokens.add(imports.get(1).token);
+		if ( imports!=null && imports.Count >1 ) {
+			secondOptionTokens.Add(imports[(1)].token);
 		}
-		if ( tokens!=null && tokens.size()>1 ) {
-			secondOptionTokens.add(tokens.get(1).token);
+		if ( tokens!=null && tokens.Count>1 ) {
+			secondOptionTokens.Add(tokens[(1)].token);
 		}
 		foreach (Token t in secondOptionTokens) {
 			String fileName = t.getInputStream().getSourceName();
@@ -336,7 +338,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if ( ruleID.getInputStream()!=null ) {
 			fileName = ruleID.getInputStream().getSourceName();
 		}
-		if ( g.isLexer() && Character.isLowerCase(ruleID.getText().charAt(0)) ) {
+		if ( g.isLexer() && Character.isLowerCase(ruleID.getText()[(0)]) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULES_NOT_ALLOWED,
 									   fileName, ruleID, ruleID.getText());
 		}
@@ -442,7 +444,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	//@Override
 	protected void enterTerminal(GrammarAST tree) {
 		String text = tree.getText();
-		if (text.equals("''")) {
+		if (text.Equals("''")) {
 			g.tool.errMgr.grammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, tree.token, "''");
 		}
 	}
@@ -475,9 +477,9 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 
 	private void checkCaseInsensitiveOption(Token optionID, GrammarAST valueAST, int parentType) {
 		String optionName = optionID.getText();
-		if (optionName.equals(Grammar.caseInsensitiveOptionName)) {
+		if (optionName.Equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
-			if (valueText.equals("true") || valueText.equals("false")) {
+			if (valueText.Equals("true") || valueText.Equals("false")) {
 				bool currentValue = Boolean.parseBoolean(valueText);
 				if (parentType == ANTLRParser.GRAMMAR) {
 					grammarCaseInsensitive = currentValue;
@@ -501,7 +503,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 								GrammarAST ID,
 								GrammarAST valueAST)
 	{
-		if (checkAssocElementOption && ID != null && "assoc".equals(ID.getText())) {
+		if (checkAssocElementOption && ID != null && "assoc".Equals(ID.getText())) {
 			if (elem.getType() != ANTLRParser.ALT) {
 				Token optionID = ID.token;
 				String fileName = optionID.getInputStream().getSourceName();
@@ -524,7 +526,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if ( elem.getType()==ANTLRParser.SEMPRED ) {
 			Token optionID = ID.token;
 			String fileName = optionID.getInputStream().getSourceName();
-			if ( valueAST!=null && !Grammar.semPredOptions.contains(optionID.getText()) ) {
+			if ( valueAST!=null && !Grammar.semPredOptions.Contains(optionID.getText()) ) {
 				g.tool.errMgr.grammarError(ErrorType.ILLEGAL_OPTION,
 										   fileName,
 										   optionID,
@@ -539,7 +541,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		Token optionID = ID.token;
 		String fileName = optionID.getInputStream().getSourceName();
 		// don't care about id<SimpleValue> options
-		if ( valueAST!=null && !Grammar.ruleRefOptions.contains(optionID.getText()) ) {
+		if ( valueAST!=null && !Grammar.ruleRefOptions.Contains(optionID.getText()) ) {
 			g.tool.errMgr.grammarError(ErrorType.ILLEGAL_OPTION,
 									   fileName,
 									   optionID,
@@ -554,7 +556,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		Token optionID = ID.token;
 		String fileName = optionID.getInputStream().getSourceName();
 		// don't care about ID<ASTNodeName> options
-		if ( valueAST!=null && !Grammar.tokenOptions.contains(optionID.getText()) ) {
+		if ( valueAST!=null && !Grammar.tokenOptions.Contains(optionID.getText()) ) {
 			g.tool.errMgr.grammarError(ErrorType.ILLEGAL_OPTION,
 									   fileName,
 									   optionID,
@@ -566,23 +568,23 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	}
 
 	void checkImport(Token importID) {
-		Grammar delegate = g.getImportedGrammar(importID.getText());
-		if ( delegate==null ) return;
-		List<Integer> validDelegators = validImportTypes.get(delegate.getType());
+		Grammar @delegate = g.getImportedGrammar(importID.getText());
+		if ( @delegate==null ) return;
+		List<int> validDelegators = validImportTypes.get(@delegate.getType());
 		if ( validDelegators!=null && !validDelegators.contains(g.getType()) ) {
 			g.tool.errMgr.grammarError(ErrorType.INVALID_IMPORT,
 									   g.fileName,
 									   importID,
-									   g, delegate);
+									   g, @delegate);
 		}
 		if ( g.isCombined() &&
-			 (delegate.name.equals(g.name+Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.LEXER))||
-			  delegate.name.equals(g.name+Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.PARSER))) )
+			 (@delegate.name.Equals(g.name+Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.LEXER))||
+			  @delegate.name.Equals(g.name+Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.PARSER))) )
 		{
 			g.tool.errMgr.grammarError(ErrorType.IMPORT_NAME_CLASH,
 									   g.fileName,
 									   importID,
-									   g, delegate);
+									   g, @delegate);
 		}
 	}
 }

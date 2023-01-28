@@ -4,8 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
+using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.codegen.model.decl;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -73,11 +76,11 @@ public class ActionTranslator : ActionSplitterListener {
 													ActionAST node)
 	{
 		String action = tokenWithinAction.getText();
-		if ( action!=null && action.Length>0 && action.charAt(0)=='{' ) {
+		if ( action!=null && action.Length>0 && action[(0)]=='{' ) {
 			int firstCurly = action.IndexOf('{');
 			int lastCurly = action.LastIndexOf('}');
 			if ( firstCurly>=0 && lastCurly>=0 ) {
-				action = action.substring(firstCurly+1, lastCurly); // trim {...}
+				action = action.Substring(firstCurly+1, lastCurly-(firstCurly + 1)); // trim {...}
 			}
 		}
 		return translateActionChunk(factory, rf, action, node);
@@ -114,16 +117,16 @@ public class ActionTranslator : ActionSplitterListener {
 		String escapedName = target.escapeIfNeeded(name);
 		if ( a!=null ) {
 			switch ( a.dict.type ) {
-				case ARG:
+				case AttributeDict.DictType.ARG:
 					chunks.Add(new ArgRef(nodeContext, name, escapedName));
 					break;
-				case RET:
+				case AttributeDict.DictType.RET:
 					chunks.Add(new RetValueRef(rf.ruleCtx, name, escapedName));
 					break;
-				case LOCAL:
+				case AttributeDict.DictType.LOCAL:
 					chunks.Add(new LocalRef(nodeContext, name, escapedName));
 					break;
-				case PREDEFINED_RULE:
+				case AttributeDict.DictType.PREDEFINED_RULE:
 					chunks.Add(getRulePropertyRef(null, x));
 					break;
 				default:
@@ -170,14 +173,14 @@ public class ActionTranslator : ActionSplitterListener {
 			return;
 		}
 		switch ( a.dict.type ) {
-			case ARG: chunks.Add(new ArgRef(nodeContext, y.getText(), target.escapeIfNeeded(y.getText()))); break; // has to be current rule
-			case RET:
+			case AttributeDict.DictType.ARG: chunks.Add(new ArgRef(nodeContext, y.getText(), target.escapeIfNeeded(y.getText()))); break; // has to be current rule
+			case AttributeDict.DictType.RET:
 				chunks.Add(new QRetValueRef(nodeContext, getRuleLabel(x.getText()), y.getText(), target.escapeIfNeeded(y.getText())));
 				break;
-			case PREDEFINED_RULE:
+			case AttributeDict.DictType.PREDEFINED_RULE:
 				chunks.Add(getRulePropertyRef(x, y));
 				break;
-			case TOKEN:
+			case AttributeDict.DictType.TOKEN:
 				chunks.Add(getTokenPropertyRef(x, y));
 				break;
 			default:
@@ -220,7 +223,7 @@ public class ActionTranslator : ActionSplitterListener {
 	TokenPropertyRef getTokenPropertyRef(Token x, Token y) {
 		try {
 			Type c = tokenPropToModelMap.get(y.getText());
-			ConstructorInfo ctor = c.getConstructor(StructDecl, String);
+			ConstructorInfo ctor = c.getConstructor(typeof(StructDecl), String);
 			return ctor.newInstance(nodeContext, getTokenLabel(x.getText()));
 		}
 		catch (Exception e) {
@@ -232,7 +235,7 @@ public class ActionTranslator : ActionSplitterListener {
 	RulePropertyRef getRulePropertyRef(Token x, Token prop) {
 		try {
 			Type c = (x != null ? rulePropToModelMap : thisRulePropToModelMap).get(prop.getText());
-			ConstructorInfo ctor = c.getConstructor(StructDecl, String);
+			ConstructorInfo ctor = c.getConstructor(StructDecl, typeof(String));
 			return ctor.newInstance(nodeContext, getRuleLabel((x != null ? x : prop).getText()));
 		}
 		catch (Exception e) {

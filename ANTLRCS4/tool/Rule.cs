@@ -192,13 +192,13 @@ public class Rule : AttributeResolver {
 		for (int i=1; i<=numberOfAlts; i++) {
 			GrammarAST altLabel = alt[i].ast.altLabel;
 			if ( altLabel!=null ) {
-				List<Pair<Integer, AltAST>> list = labels.get(altLabel.getText());
+				List<Pair<int, AltAST>> list = labels.get(altLabel.getText());
 				if (list == null) {
-					list = new ArrayList<Pair<Integer, AltAST>>();
+					list = new ();
 					labels.put(altLabel.getText(), list);
 				}
 
-				list.add(new Pair<Integer, AltAST>(i, alt[i].ast));
+				list.Add(new Pair<int, AltAST>(i, alt[i].ast));
 			}
 		}
 		if ( labels.isEmpty() ) return null;
@@ -206,7 +206,7 @@ public class Rule : AttributeResolver {
 	}
 
 	public List<AltAST> getUnlabeledAltASTs() {
-		List<AltAST> alts = new ArrayList<AltAST>();
+		List<AltAST> alts = new();
 		for (int i=1; i<=numberOfAlts; i++) {
 			GrammarAST altLabel = alt[i].ast.altLabel;
 			if ( altLabel==null ) alts.add(alt[i].ast);
@@ -305,7 +305,7 @@ public class Rule : AttributeResolver {
 	public bool isFragment() {
 		if ( modifiers==null ) return false;
 		foreach (GrammarAST a in modifiers) {
-			if ( a.getText().equals("fragment") ) return true;
+			if ( a.getText().Equals("fragment") ) return true;
 		}
 		return false;
 	}

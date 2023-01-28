@@ -16,8 +16,8 @@ public abstract class OutputFile : OutputModelObject {
     public readonly String TokenLabelType;
     public readonly String InputSymbolType;
 
-    public OutputFile(OutputModelFactory factory, String fileName) {
-        base(factory);
+    public OutputFile(OutputModelFactory factory, String fileName): base(factory)
+    {
         this.fileName = fileName;
         Grammar g = factory.getGrammar();
 		grammarFileName = g.fileName;
@@ -31,8 +31,8 @@ public abstract class OutputFile : OutputModelObject {
 	}
 
 	public Dictionary<String, Action> buildNamedActions(Grammar g, Predicate<ActionAST> filter) {
-		Dictionary<String, Action> namedActions = new HashMap<String, Action>();
-        foreach (String name in g.namedActions.keySet()) {
+		Dictionary<String, Action> namedActions = new ();
+        foreach (String name in g.namedActions.Keys) {
 			ActionAST ast = g.namedActions.get(name);
 			if(filter==null || filter.test(ast))
 				namedActions.put(name, new Action(factory, ast));

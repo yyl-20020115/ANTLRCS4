@@ -6,6 +6,7 @@
 
 using org.antlr.v4.codegen;
 using org.antlr.v4.codegen.model.chunk;
+using org.antlr.v4.parse;
 
 namespace org.antlr.v4.tool;
 
@@ -184,7 +185,7 @@ public class BuildDependencyGenerator {
         // Handle imported grammars
         List<Grammar> imports = g.getAllImportedGrammars();
         if ( imports!=null ) {
-			for (Grammar g : imports) {
+			foreach (Grammar g in imports) {
 				String libdir = tool.libDirectory;
 				String fileName = groomQualifiedFileName(libdir, g.fileName);
 				files.Add(new File(fileName));
@@ -205,7 +206,7 @@ public class BuildDependencyGenerator {
      * @return List of dependencies other than imported grammars
      */
     public List<File> getNonImportDependenciesFileList() {
-        List<File> files = new ArrayList<File>();
+        List<File> files = new();
 
         // handle token vocabulary loads
         String tokenVocab = g.getOptionString("tokenVocab");

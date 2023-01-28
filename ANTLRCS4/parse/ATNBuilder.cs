@@ -1417,9 +1417,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae2 =
                                     new NoViableAltException("", 18, 1, input);
-                                throw nvae;
+                                throw nvae2;
                             }
                             finally
                             {
@@ -1447,9 +1447,9 @@ public class ATNBuilder : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae =
+                                NoViableAltException nvae3 =
                                     new NoViableAltException("", 18, 2, input);
-                                throw nvae;
+                                throw nvae3;
                             }
                             finally
                             {
@@ -1601,9 +1601,9 @@ public class ATNBuilder : TreeParser
                                         {
                                             input.consume();
                                         }
-                                        NoViableAltException nvae =
+                                        NoViableAltException nvae4 =
                                             new NoViableAltException("", 19, 10, input);
-                                        throw nvae;
+                                        throw nvae4;
                                     }
                                     finally
                                     {

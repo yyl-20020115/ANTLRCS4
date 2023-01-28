@@ -5,6 +5,7 @@
  */
 
 using org.antlr.runtime.tree;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
@@ -51,11 +52,11 @@ public class GrammarAST : CommonTree {
 	}
 
 	public List<GrammarAST> getAllChildrenWithType(int type) {
-		List<GrammarAST> nodes = new ArrayList<GrammarAST>();
-		for (int i = 0; children!=null && i < children.size(); i++) {
-			Tree t = (Tree) children.get(i);
+		List<GrammarAST> nodes = new ();
+		for (int i = 0; children!=null && i < children.Count; i++) {
+			Tree t = (Tree) children[(i)];
 			if ( t.getType()==type ) {
-				nodes.add((GrammarAST)t);
+				nodes.Add((GrammarAST)t);
 			}
 		}
 		return nodes;
@@ -70,7 +71,7 @@ public class GrammarAST : CommonTree {
 			t = work.remove(0);
 			if ( types==null || types.contains(t.getType()) ) nodes.add(t);
 			if ( t.children!=null ) {
-				work.addAll(Arrays.asList(t.getChildrenAsArray()));
+				work.AddRange(Arrays.AsList(t.getChildrenAsArray()));
 			}
 		}
 		return nodes;
@@ -151,7 +152,7 @@ public class GrammarAST : CommonTree {
     public CommonTree getFirstDescendantWithType(int type) {
         if ( getType()==type ) return this;
         if ( children==null ) return null;
-        for (Object c : children) {
+        for (Object c in children) {
             GrammarAST t = (GrammarAST)c;
             if ( t.getType()==type ) return t;
             CommonTree d = t.getFirstDescendantWithType(type);

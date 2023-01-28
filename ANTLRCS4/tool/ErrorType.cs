@@ -405,7 +405,7 @@ public enum ErrorType {
 	 *
 	 * @deprecated This warning is no longer applicable with the current syntax for specifying associativity.
 	 */
-	@Deprecated
+	//@Deprecated
 	ALL_OPS_NEED_SAME_ASSOC(118, "all operators of alt <arg> of left-recursive rule must have same associativity", ErrorSeverity.WARNING),
 	/**
 	 * Compiler Error 119.
@@ -496,7 +496,7 @@ public enum ErrorType {
 	 *
 	 * @deprecated This error is no longer issued by ANTLR 4.2.
 	 */
-	@Deprecated
+	//@Deprecated
 	LEXER_ACTION_PLACEMENT_ISSUE(132, "action in lexer rule <arg> must be last element of single outermost alt", ErrorSeverity.ERROR),
 	/**
 	 * Compiler Error 133.
@@ -513,7 +513,7 @@ public enum ErrorType {
 	 * symbol <em>symbol</em> conflicts with generated code in target language
 	 * or runtime</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	USE_OF_BAD_WORD(134, "symbol <arg> conflicts with generated code in target language or runtime", ErrorSeverity.ERROR),
 	/**
 	 * Compiler Error 183.
@@ -1149,7 +1149,7 @@ public enum ErrorType {
 	 * instead offers automatically generated parse tree listeners and visitors
 	 * as a more maintainable alternative.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_TREE_GRAMMAR(200, "tree grammars are not supported in ANTLR 4", ErrorSeverity.ERROR),
 	/**
 	 * Compiler Warning 201.
@@ -1165,7 +1165,7 @@ public enum ErrorType {
 	 * referenced within lexer rules are not tracked independently, and cannot
 	 * be assigned to labels.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_LEXER_LABEL(201, "labels in lexer rules are not supported in ANTLR 4; " +
 		"actions cannot reference elements of lexical rules but you can use " +
 		"getText() to get the entire text matched for the rule", ErrorSeverity.WARNING),
@@ -1185,7 +1185,7 @@ public enum ErrorType {
 	 * <strong>NOTE:</strong> ANTLR 4 does not allow a trailing comma to appear following the
 	 * last token declared in the {@code tokens{}} block.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_TOKENS_SYNTAX(202, "tokens {A; B;} syntax is now tokens {A, B} in ANTLR 4", ErrorSeverity.WARNING),
 	/**
 	 * Compiler Error 203.
@@ -1201,7 +1201,7 @@ public enum ErrorType {
 	 * value declared in the {@code tokens{}} block should be converted to
 	 * standard lexer rules.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_ASSIGN_IN_TOKENS(203, "assignments in tokens{} are not supported in ANTLR 4; use lexical rule <arg> : <arg2>; instead", ErrorSeverity.ERROR),
 	/**
 	 * Compiler Warning 204.
@@ -1217,7 +1217,7 @@ public enum ErrorType {
 	 * safely converted to the standard semantic predicated syntax, which is the
 	 * only form used by ANTLR 4.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_GATED_SEMPRED(204, "{...}?=> explicitly gated semantic predicates are deprecated in ANTLR 4; use {...}? instead", ErrorSeverity.WARNING),
 	/**
 	 * Compiler Error 205.
@@ -1230,7 +1230,7 @@ public enum ErrorType {
 	 * syntactic predicates should be removed when migrating a grammar from
 	 * ANTLR 3 to ANTLR 4.</p>
 	 */
-	@Deprecated
+	//@Deprecated
 	V3_SYNPRED(205, "(...)=> syntactic predicates are not supported in ANTLR 4", ErrorSeverity.ERROR),
 
     // Dependency sorting errors
@@ -1253,18 +1253,18 @@ public enum ErrorType {
 	 * <li>{@code stackTrace}: The stack trace for the exception, when available.</li>
 	 * </ul>
 	 */
-	public final String msg;
+	public readonly String msg;
 	/**
 	 * The error or warning number.
 	 *
 	 * <p>The code should be unique, and following its
 	 * use in a release should not be altered or reassigned.</p>
 	 */
-    public final int code;
+    public readonly int code;
 	/**
 	 * The error severity.
 	 */
-    public final ErrorSeverity severity;
+    public readonly ErrorSeverity severity;
 
 	/**
 	 * Constructs a new {@link ErrorType} with the specified code, message, and

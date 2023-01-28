@@ -7,6 +7,7 @@
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.tool;
+using Action = org.antlr.v4.codegen.model.Action;
 
 namespace org.antlr.v4.codegen;
 
@@ -42,15 +43,15 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
 
 	//@Override
 	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) {
-		if ( r.namedActions.containsKey("after") || r.namedActions.containsKey("finally") ) {
+		if ( r.namedActions.ContainsKey("after") || r.namedActions.ContainsKey("finally") ) {
 			// See OutputModelController.buildLeftRecursiveRuleFunction
 			// and Parser.exitRule for other places which set stop.
 			CodeGenerator gen = getGenerator();
 			STGroup codegenTemplates = gen.getTemplates();
 			ST setStopTokenAST = codegenTemplates.getInstanceOf("recRuleSetStopToken");
-			Action setStopTokenAction = new Action(this, function.ruleCtx, setStopTokenAST);
-			List<SrcOp> ops = new ArrayList<SrcOp>(1);
-			ops.add(setStopTokenAction);
+			Action setStopTokenAction = new System.Action(this, function.ruleCtx, setStopTokenAST);
+			List<SrcOp> ops = new (1);
+			ops.Add(setStopTokenAction);
 			return ops;
 		}
 		return base.rulePostamble(function, r);

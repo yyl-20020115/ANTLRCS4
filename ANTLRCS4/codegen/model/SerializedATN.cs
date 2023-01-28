@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
+
 namespace org.antlr.v4.codegen.model;
 
 
@@ -13,12 +16,12 @@ namespace org.antlr.v4.codegen.model;
 public class SerializedATN : OutputModelObject {
 	public int[] serialized;
 
-	public SerializedATN(OutputModelFactory factory) {
-		base(factory);
+	public SerializedATN(OutputModelFactory factory): base(factory)
+    {
 	}
 
-	public SerializedATN(OutputModelFactory factory, ATN atn) {
-		base(factory);
+	public SerializedATN(OutputModelFactory factory, ATN atn): base(factory)
+    {
 		IntegerList data = ATNSerializer.getSerialized(atn);
 		serialized = data.toArray();
 	}

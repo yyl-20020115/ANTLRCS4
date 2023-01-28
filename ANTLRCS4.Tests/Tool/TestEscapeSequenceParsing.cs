@@ -10,112 +10,112 @@ namespace org.antlr.v4.test.tool;
 public class TestEscapeSequenceParsing {
 	[TestMethod]
 	public void testParseEmpty() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseJustBackslash() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseInvalidEscape() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\z", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseNewline() {
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.CODE_POINT, '\n', IntervalSet.EMPTY_SET, 0,2),
 				EscapeSequenceParsing.parseEscape("\\n", 0));
 	}
 
 	[TestMethod]
 	public void testParseTab() {
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.CODE_POINT, '\t', IntervalSet.EMPTY_SET, 0,2),
 				EscapeSequenceParsing.parseEscape("\\t", 0));
 	}
 
 	[TestMethod]
 	public void testParseUnicodeTooShort() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\uABC", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodeBMP() {
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.CODE_POINT, 0xABCD, IntervalSet.EMPTY_SET, 0,6),
 				EscapeSequenceParsing.parseEscape("\\uABCD", 0));
 	}
 
 	[TestMethod]
 	public void testParseUnicodeSMPTooShort() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\u{}", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodeSMPMissingCloseBrace() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\u{12345", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodeTooBig() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\u{110000}", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodeSMP() {
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.CODE_POINT, 0x10ABCD, IntervalSet.EMPTY_SET, 0,10),
 				EscapeSequenceParsing.parseEscape("\\u{10ABCD}", 0));
 	}
 
 	[TestMethod]
 	public void testParseUnicodePropertyTooShort() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\p{}", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodePropertyMissingCloseBrace() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\p{1234", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodeProperty() {
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.PROPERTY, -1, IntervalSet.of(66560, 66639), 0,11),
 				EscapeSequenceParsing.parseEscape("\\p{Deseret}", 0));
 	}
 
 	[TestMethod]
 	public void testParseUnicodePropertyInvertedTooShort() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\P{}", 0).type);
 	}
 
 	[TestMethod]
 	public void testParseUnicodePropertyInvertedMissingCloseBrace() {
-		assertEquals(
+		Assert.AreEqual(
 				EscapeSequenceParsing.Result.Type.INVALID,
 				EscapeSequenceParsing.parseEscape("\\P{Deseret", 0).type);
 	}
@@ -124,7 +124,7 @@ public class TestEscapeSequenceParsing {
 	public void testParseUnicodePropertyInverted() {
 		IntervalSet expected = IntervalSet.of(0, 66559);
 		expected.add(66640, Character.MAX_CODE_POINT);
-		assertEquals(
+		Assert.AreEqual(
 				new Result(Result.Type.PROPERTY, -1, expected, 0, 11),
 				EscapeSequenceParsing.parseEscape("\\P{Deseret}", 0));
 	}

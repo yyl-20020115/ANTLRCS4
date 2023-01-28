@@ -16,7 +16,7 @@ public abstract class LL1Choice : Choice {
 
 	public LL1Choice(OutputModelFactory factory, GrammarAST blkAST,
 					 List<CodeBlockForAlt> alts)
-	{
-		base(factory, blkAST, alts);
+		: base(factory, blkAST, alts)
+    {
 	}
 }

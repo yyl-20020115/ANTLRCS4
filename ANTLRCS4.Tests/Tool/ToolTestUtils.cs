@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.automata;
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
@@ -84,11 +85,11 @@ public class ToolTestUtils {
 				String actual = equeue.ToString(true);
 				actual = actual.replace(tempTestDir + File.separator, "");
 				String msg = grammarStr;
-				msg = msg.replace("\n", "\\n");
-				msg = msg.replace("\r", "\\r");
-				msg = msg.replace("\t", "\\t");
+				msg = msg.Replace("\n", "\\n");
+				msg = msg.Replace("\r", "\\r");
+				msg = msg.Replace("\t", "\\t");
 
-				assertEquals(expect, actual, "error in: " + msg);
+				Assert.AreEqual(expect, actual, "error in: " + msg);
 			}
 			finally {
 				try {
@@ -134,12 +135,12 @@ public class ToolTestUtils {
 	public static ATN createATN(Grammar g, bool useSerializer) {
 		if ( g.atn==null ) {
 			semanticProcess(g);
-			assertEquals(0, g.tool.getNumErrors());
+			Assert.AreEqual(0, g.tool.getNumErrors());
 
 			ParserATNFactory f = g.isLexer() ? new LexerATNFactory((LexerGrammar) g) : new ParserATNFactory(g);
 
 			g.atn = f.createATN();
-			assertEquals(0, g.tool.getNumErrors());
+			Assert.AreEqual(0, g.tool.getNumErrors());
 		}
 
 		ATN atn = g.atn;
@@ -159,7 +160,7 @@ public class ToolTestUtils {
 			SemanticPipeline sem = new SemanticPipeline(g);
 			sem.process();
 			if ( g.getImportedGrammars()!=null ) { // process imported grammars (if any)
-				for (Grammar imp : g.getImportedGrammars()) {
+				foreach (Grammar imp in g.getImportedGrammars()) {
 					antlr.processNonCombinedGrammar(imp, false);
 				}
 			}

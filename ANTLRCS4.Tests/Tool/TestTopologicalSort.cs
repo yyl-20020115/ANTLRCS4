@@ -28,7 +28,7 @@ public class TestTopologicalSort {
         String expecting = "[H, F, G, E, D, A, B, C]";
         List<String> nodes = g.sort();
         String result = nodes.ToString();
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
@@ -42,7 +42,7 @@ public class TestTopologicalSort {
         String expecting = "[D, C, B, A]";
         List<String> nodes = g.sort();
         String result = nodes.ToString();
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class TestTopologicalSort {
         String expecting = "[D, C, B, A]";
         List<String> nodes = g.sort();
         String result = nodes.ToString();
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
@@ -70,7 +70,7 @@ public class TestTopologicalSort {
         String expecting = "[MyJava.tokens, Java.g4, Java.tokens, Def.g4, Ref.g4]";
         List<String> nodes = g.sort();
         String result = nodes.ToString();
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
@@ -84,6 +84,6 @@ public class TestTopologicalSort {
         String expecting = "[JavaLexer.g4, JavaLexer.tokens, JavaParser.g4, Def.g4, Ref.g4]";
         List<String> nodes = g.sort();
         String result = nodes.ToString();
-        assertEquals(expecting, result);
+        Assert.AreEqual(expecting, result);
     }
 }

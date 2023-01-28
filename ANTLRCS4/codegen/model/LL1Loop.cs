@@ -25,13 +25,13 @@ public abstract class LL1Loop : Choice {
 	public LL1Loop(OutputModelFactory factory,
 				   GrammarAST blkAST,
 				   List<CodeBlockForAlt> alts)
-	{
-		base(factory, blkAST, alts);
+		: base(factory, blkAST, alts)
+    {
 	}
 
 	public void addIterationOp(SrcOp op) {
 		if ( iteration==null ) iteration = new ();
-		iteration.add(op);
+		iteration.Add(op);
 	}
 
 	public SrcOp addCodeForLoopLookaheadTempVar(IntervalSet look) {

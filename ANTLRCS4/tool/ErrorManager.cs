@@ -185,7 +185,7 @@ public class ErrorManager {
 	//@SuppressWarnings("fallthrough")
 	public void emit(ErrorType etype, ANTLRMessage msg) {
 		switch ( etype.severity ) {
-			case WARNING_ONE_OFF:
+			case ErrorType.WARNING_ONE_OFF:
 				if ( errorTypes.Contains(etype) ) break;
 				// fall thru
 			case WARNING:
@@ -247,7 +247,7 @@ public class ErrorManager {
 		}
 
 		bool formatOK = verifyFormat();
-		if (!formatOK && formatName.equals("antlr")) {
+		if (!formatOK && formatName.Equals("antlr")) {
 			rawError("ANTLR installation corrupted; ANTLR messages format file " + formatName + ".stg incomplete");
 			panic();
 		}
@@ -281,17 +281,17 @@ public class ErrorManager {
         Console.Error.WriteLine(msg);
     }
 
-    static void rawError(String msg, Throwable e) {
+    static void rawError(String msg, Exception e) {
         rawError(msg);
         e.printStackTrace(System.err);
     }
 
-	public void panic(ErrorType errorType, Object... args) {
+	public void panic(ErrorType errorType, params Object[] args) {
 		ToolMessage msg = new ToolMessage(errorType, args);
 		ST msgST = getMessageTemplate(msg);
 		String outputMsg = msgST.render();
 		if ( formatWantsSingleLineMessage() ) {
-			outputMsg = outputMsg.replace('\n', ' ');
+			outputMsg = outputMsg.Replace('\n', ' ');
 		}
 		panic(outputMsg);
 	}

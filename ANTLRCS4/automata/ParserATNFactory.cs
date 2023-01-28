@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime.tree;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
@@ -384,7 +385,7 @@ public class ParserATNFactory : ATNFactory {
 
 
 	protected Handle makeBlock(BlockStartState start, BlockAST blkAST, List<Handle> alts) {
-		BlockEndState end = newState(BlockEndState, blkAST);
+		BlockEndState end = newState(typeof(BlockEndState), blkAST);
 		start.endState = end;
         foreach (Handle alt in alts) {
 			// hook alts up to decision block

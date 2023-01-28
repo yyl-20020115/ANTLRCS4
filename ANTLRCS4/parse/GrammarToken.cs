@@ -16,8 +16,8 @@ public class GrammarToken : CommonToken {
 	public Grammar g;
 	public int originalTokenIndex = -1;
 
-	public GrammarToken(Grammar g, Token oldToken) {
-		base(oldToken);
+	public GrammarToken(Grammar g, Token oldToken): base(oldToken)
+    {
 		this.g = g;
 	}
 
@@ -30,7 +30,7 @@ public class GrammarToken : CommonToken {
 	//@Override
 	public int getLine() {
 		if ( originalTokenIndex>=0 ) return g.originalTokenStream.get(originalTokenIndex).getLine();
-		return bases.getLine();
+		return base.getLine();
 	}
 
 	//@Override

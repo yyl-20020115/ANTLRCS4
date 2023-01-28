@@ -32,9 +32,8 @@ public class SemPred : Action {
 	//@ModelElement 
 		public List<ActionChunk> failChunks;
 
-	public SemPred(OutputModelFactory factory, ActionAST ast) {
-		base(factory,ast);
-
+	public SemPred(OutputModelFactory factory, ActionAST ast): base(factory, ast)
+    {
 		//assert ast.atnState != null
 		//	&& ast.atnState.getNumberOfTransitions() == 1
 		//	&& ast.atnState.transition(0) is AbstractPredicateTransition;
@@ -42,8 +41,8 @@ public class SemPred : Action {
 		GrammarAST failNode = ast.getOptionAST("fail");
 		CodeGenerator gen = factory.getGenerator();
 		predicate = ast.getText();
-		if (predicate.startsWith("{") && predicate.endsWith("}?")) {
-			predicate = predicate.substring(1, predicate.length() - 2);
+		if (predicate.StartsWith("{") && predicate.EndsWith("}?")) {
+			predicate = predicate.Substring(1, predicate.Length - 2 - 1);
 		}
 		predicate = gen.getTarget().getTargetStringLiteralFromString(predicate);
 

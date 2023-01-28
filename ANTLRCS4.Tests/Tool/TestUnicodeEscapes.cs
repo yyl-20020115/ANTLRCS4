@@ -57,6 +57,6 @@ public class TestUnicodeEscapes {
 	}
 
 	private void checkUnicodeEscape(String expected, int input, String language) {
-		assertEquals(expected, UnicodeEscapes.escapeCodePoint(input, language));
+		Assert.AreEqual(expected, UnicodeEscapes.escapeCodePoint(input, language));
 	}
 }

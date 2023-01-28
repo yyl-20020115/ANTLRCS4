@@ -9,5 +9,7 @@ namespace org.antlr.v4.runtime;
 public class MismatchedTokenException : RecognitionException
 {
 	public readonly int CharValue;
-	public MismatchedTokenException(int CharValue, CharStream input) : base(null,input,null) { this.CharValue = CharValue; }
+    internal int expecting;
+
+    public MismatchedTokenException(int CharValue, CharStream input) : base(null,input,null) { this.CharValue = CharValue; }
 }

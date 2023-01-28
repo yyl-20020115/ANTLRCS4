@@ -212,7 +212,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	}
 
 	/**
-	 * @exception NullPointerException if {@code listener} is {@code null}.
+	 * @exception NullReferenceException if {@code listener} is {@code null}.
 	 */
 	public void addErrorListener(ANTLRErrorListener listener) {
 		if (listener == null) {

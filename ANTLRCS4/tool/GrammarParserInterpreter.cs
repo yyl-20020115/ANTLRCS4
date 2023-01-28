@@ -6,6 +6,7 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool;
 
@@ -37,19 +38,20 @@ public class GrammarParserInterpreter : ParserInterpreter {
 									Vocabulary vocabulary,
 									ICollection<String> ruleNames,
 									ATN atn,
-									TokenStream input) {
-		base(grammarFileName, vocabulary, ruleNames, atn, input);
+									TokenStream input): base(grammarFileName, vocabulary, ruleNames, atn, input)
+    {
 		this.g = g;
 	}
 
-	public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input) {
-		base(g.fileName, g.getVocabulary(),
-			  Arrays.asList(g.getRuleNames()),
-			  atn, // must run ATN through serializer to set some state flags
-			  input);
+	public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input):
+        base(g.fileName, g.getVocabulary(),
+              Arrays.AsList(g.getRuleNames()),
+              atn, // must run ATN through serializer to set some state flags
+              input)
+    {
 		this.g = g;
 		decisionStatesThatSetOuterAltNumInContext = findOuterMostDecisionStates();
-		stateToAltsMap = new int[g.atn.states.size()][];
+		stateToAltsMap = new int[g.atn.states.Count][];
 	}
 
 	//@Override
@@ -73,7 +75,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  there even if 1 alt).
 	 */
 	public BitSet findOuterMostDecisionStates() {
-		BitSet track = new BitSet(atn.states.size());
+		BitSet track = new BitSet(atn.states.Count);
 		int numberOfDecisions = atn.getNumberOfDecisions();
 		for (int i = 0; i < numberOfDecisions; i++) {
 			DecisionState decisionState = atn.getDecisionState(i);
@@ -87,12 +89,12 @@ public class GrammarParserInterpreter : ParserInterpreter {
 					// even if just 1 recursive alt exists.
 					ATNState blockStart = loopEntry.transition(0).target;
 					// track the StarBlockStartState associated with the recursive alternatives
-					track.set(blockStart.stateNumber);
+					track.Set(blockStart.stateNumber);
 				}
 			}
 			else if ( startState.transition(0).target == decisionState ) {
 				// always track outermost block for any rule if it exists
-				track.set(decisionState.stateNumber);
+				track.Set(decisionState.stateNumber);
 			}
 		}
 		return track;
@@ -146,7 +148,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		}
 
 		GrammarInterpreterRuleContext ctx = (GrammarInterpreterRuleContext)_ctx;
-		if ( decisionStatesThatSetOuterAltNumInContext.get(p.stateNumber) ) {
+		if ( decisionStatesThatSetOuterAltNumInContext.Get(p.stateNumber) ) {
 			ctx.outerAltNum = predictedAlt;
 			Rule r = g.getRule(p.ruleIndex);
 			if ( atn.ruleToStartState[r.index].isLeftRecursiveRule ) {
@@ -252,7 +254,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	                                                               int stopIndex,
 	                                                               int startRuleIndex)
 		 {
-		List<ParserRuleContext> trees = new ArrayList<ParserRuleContext>();
+		List<ParserRuleContext> trees = new ();
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
@@ -262,7 +264,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		}
 
 		// get ambig trees
-		int alt = alts.nextSetBit(0);
+		int alt = alts.NextSetBit(0);
 		while ( alt>=0 ) {
 			// re-parse entire input for all ambiguous alternatives
 			// (don't have to do first as it's been parsed, but do again for simplicity
@@ -277,7 +279,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 				ambigSubTree = (GrammarInterpreterRuleContext) parser.getOverrideDecisionRoot();
 			}
 			trees.add(ambigSubTree);
-			alt = alts.nextSetBit(alt+1);
+			alt = alts.NextSetBit(alt+1);
 		}
 
 		return trees;
@@ -316,13 +318,13 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	                                                             int decision,
 	                                                             int startIndex,
 	                                                             int stopIndex) {
-		List<ParserRuleContext> trees = new ArrayList<ParserRuleContext>();
+		List<ParserRuleContext> trees = new ();
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
 		DecisionState decisionState = originalParser.getATN().decisionToState.get(decision);
 
-		for (int alt = 1; alt<=decisionState.getTransitions().length; alt++) {
+		for (int alt = 1; alt<=decisionState.getTransitions().Length; alt++) {
 			// re-parse entire input for all ambiguous alternatives
 			// (don't have to do first as it's been parsed, but do again for simplicity
 			//  using this temp parser.)
@@ -352,7 +354,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 				subtree = parser.getOverrideDecisionRoot();
 			}
 			Trees.stripChildrenOutOfRange(subtree, parser.getOverrideDecisionRoot(), startIndex, stopTreeAt);
-			trees.add(subtree);
+			trees.Add(subtree);
 		}
 
 		return trees;
@@ -380,7 +382,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 //			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
 			parser = new ParserInterpreter(originalParser.getGrammarFileName(),
 										   originalParser.getVocabulary(),
-										   Arrays.asList(originalParser.getRuleNames()),
+										   Arrays.AsList(originalParser.getRuleNames()),
 					                       originalParser.getATN(),
 										   tokens);
 		}

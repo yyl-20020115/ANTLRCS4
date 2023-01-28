@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
@@ -53,16 +54,16 @@ public class UseDefAnalyzer {
 	}
 
 	/** Find all rules reachable from r directly or indirectly for all r in g */
-	public static Map<Rule, Set<Rule>> getRuleDependencies(Grammar g) {
+	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g) {
 		return getRuleDependencies(g, g.rules.values());
 	}
 
-	public static Map<Rule, Set<Rule>> getRuleDependencies(LexerGrammar g, String modeName) {
+	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(LexerGrammar g, String modeName) {
 		return getRuleDependencies(g, g.modes.get(modeName));
 	}
 
-	public static Map<Rule, Set<Rule>> getRuleDependencies(Grammar g, Collection<Rule> rules) {
-		Map<Rule, Set<Rule>> dependencies = new HashMap<Rule, Set<Rule>>();
+	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g, Collection<Rule> rules) {
+		Dictionary<Rule, HashSet<Rule>> dependencies = new HashMap<Rule, HashSet<Rule>>();
 
 		foreach (Rule r in rules) {
 			List<GrammarAST> tokenRefs = r.ast.getNodesWithType(ANTLRParser.TOKEN_REF);

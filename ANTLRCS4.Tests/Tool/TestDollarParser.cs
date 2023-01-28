@@ -14,7 +14,7 @@ public class TestDollarParser {
                       "  ;\n" +
                       "ID : 'a'..'z'+ ;\n";
 		ExecutedState executedState = execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
-		assertTrue(executedState.output.contains("input"));
-		assertEquals("", executedState.errors);
+		Assert.IsTrue(executedState.output.contains("input"));
+		Assert.AreEqual("", executedState.errors);
 	}
 }

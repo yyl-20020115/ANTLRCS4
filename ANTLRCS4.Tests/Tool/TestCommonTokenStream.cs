@@ -73,26 +73,26 @@ public TokenFactory<?> getTokenFactory()
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        assertEquals("x", tokens.LT(1).getText()); // must skip first off channel token
+        Assert.AreEqual("x", tokens.LT(1).getText()); // must skip first off channel token
         tokens.consume();
-        assertEquals("=", tokens.LT(1).getText());
-        assertEquals("x", tokens.LT(-1).getText());
+        Assert.AreEqual("=", tokens.LT(1).getText());
+        Assert.AreEqual("x", tokens.LT(-1).getText());
 
         tokens.consume();
-        assertEquals("34", tokens.LT(1).getText());
-        assertEquals("=", tokens.LT(-1).getText());
+        Assert.AreEqual("34", tokens.LT(1).getText());
+        Assert.AreEqual("=", tokens.LT(-1).getText());
 
         tokens.consume();
-        assertEquals(";", tokens.LT(1).getText());
-        assertEquals("34", tokens.LT(-1).getText());
+        Assert.AreEqual(";", tokens.LT(1).getText());
+        Assert.AreEqual("34", tokens.LT(-1).getText());
 
         tokens.consume();
-        assertEquals(Token.EOF, tokens.LA(1));
-        assertEquals(";", tokens.LT(-1).getText());
+        Assert.AreEqual(Token.EOF, tokens.LA(1));
+        Assert.AreEqual(";", tokens.LT(-1).getText());
 
-        assertEquals("34", tokens.LT(-2).getText());
-        assertEquals("=", tokens.LT(-3).getText());
-        assertEquals("x", tokens.LT(-4).getText());
+        Assert.AreEqual("34", tokens.LT(-2).getText());
+        Assert.AreEqual("=", tokens.LT(-3).getText());
+        Assert.AreEqual("x", tokens.LT(-4).getText());
     }
 
 	[TestMethod] public void testFetchOffChannel(){
@@ -145,45 +145,45 @@ public TokenFactory<?> getTokenFactory()
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		tokens.fill();
-		assertEquals(null, tokens.getHiddenTokensToLeft(0));
-		assertEquals(null, tokens.getHiddenTokensToRight(0));
+		Assert.AreEqual(null, tokens.getHiddenTokensToLeft(0));
+		Assert.AreEqual(null, tokens.getHiddenTokensToRight(0));
 
-		assertEquals("[[@0,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@0,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToLeft(1).ToString());
-		assertEquals("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToRight(1).ToString());
 
-		assertEquals(null, tokens.getHiddenTokensToLeft(2));
-		assertEquals(null, tokens.getHiddenTokensToRight(2));
+		Assert.AreEqual(null, tokens.getHiddenTokensToLeft(2));
+		Assert.AreEqual(null, tokens.getHiddenTokensToRight(2));
 
-		assertEquals("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToLeft(3).ToString());
-		assertEquals(null, tokens.getHiddenTokensToRight(3));
+		Assert.AreEqual(null, tokens.getHiddenTokensToRight(3));
 
-		assertEquals(null, tokens.getHiddenTokensToLeft(4));
-		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual(null, tokens.getHiddenTokensToLeft(4));
+		Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToRight(4).ToString());
 
-		assertEquals(null, tokens.getHiddenTokensToLeft(5));
-		assertEquals("[[@6,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual(null, tokens.getHiddenTokensToLeft(5));
+		Assert.AreEqual("[[@6,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToRight(5).ToString());
 
-		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToLeft(6).ToString());
-		assertEquals(null, tokens.getHiddenTokensToRight(6));
+		Assert.AreEqual(null, tokens.getHiddenTokensToRight(6));
 
-		assertEquals("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToLeft(7).ToString());
-		assertEquals("[[@8,0:0=' ',<1>,channel=1,0:-1], [@9,0:0='\\n',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@8,0:0=' ',<1>,channel=1,0:-1], [@9,0:0='\\n',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToRight(7).ToString());
 
-		assertEquals(null, tokens.getHiddenTokensToLeft(8));
-		assertEquals("[[@9,0:0='\\n',<1>,channel=1,0:-1]]",
+		Assert.AreEqual(null, tokens.getHiddenTokensToLeft(8));
+		Assert.AreEqual("[[@9,0:0='\\n',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToRight(8).ToString());
 
-		assertEquals("[[@8,0:0=' ',<1>,channel=1,0:-1]]",
+		Assert.AreEqual("[[@8,0:0=' ',<1>,channel=1,0:-1]]",
 					 tokens.getHiddenTokensToLeft(9).ToString());
-		assertEquals(null, tokens.getHiddenTokensToRight(9));
+		Assert.AreEqual(null, tokens.getHiddenTokensToRight(9));
 	}
 
 	[TestMethod]
@@ -229,9 +229,9 @@ public TokenFactory<?> getTokenFactory()
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		tokens.fill();
 
-		assertEquals(Token.EOF, tokens.LA(1));
-		assertEquals(0, tokens.index());
-		assertEquals(1, tokens.size());
+		Assert.AreEqual(Token.EOF, tokens.LA(1));
+		Assert.AreEqual(0, tokens.index());
+		Assert.AreEqual(1, tokens.size());
 	}
 
 	[TestMethod]
@@ -277,9 +277,9 @@ public TokenFactory<?> getTokenFactory()
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		tokens.fill();
 
-		assertEquals(Token.EOF, tokens.LA(1));
-		assertEquals(0, tokens.index());
-		assertEquals(1, tokens.size());
+		Assert.AreEqual(Token.EOF, tokens.LA(1));
+		Assert.AreEqual(0, tokens.index());
+		Assert.AreEqual(1, tokens.size());
 		assertThrows(IllegalStateException, tokens::consume);
 	}
 }

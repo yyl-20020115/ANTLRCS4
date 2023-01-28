@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -70,11 +72,11 @@ public class ActionSniffer : BlankActionSplitterListener {
 	}
 
 	public void trackRef(Token x) {
-		List<TerminalAST> xRefs = alt.tokenRefs.get(x.getText());
+		List<TerminalAST> xRefs = alt.tokenRefs[x.getText()];
 		if ( xRefs!=null ) {
 			alt.tokenRefsInActions.map(x.getText(), node);
 		}
-		List<GrammarAST> rRefs = alt.ruleRefs.get(x.getText());
+		List<GrammarAST> rRefs = alt.ruleRefs[x.getText()];
 		if ( rRefs!=null ) {
 			alt.ruleRefsInActions.map(x.getText(), node);
 		}

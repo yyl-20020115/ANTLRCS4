@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
@@ -115,13 +117,13 @@ public class LeftRecursiveRuleTransformer {
 		basics.visit(t, "rule");
 
 		// track recursive alt info for codegen
-		r.recPrimaryAlts = new ArrayList<LeftRecursiveRuleAltInfo>();
+		r.recPrimaryAlts = new ();
 		r.recPrimaryAlts.addAll(leftRecursiveRuleWalker.prefixAndOtherAlts);
 		if (r.recPrimaryAlts.isEmpty()) {
 			tool.errMgr.grammarError(ErrorType.NO_NON_LR_ALTS, g.fileName, ((GrammarAST)r.ast.getChild(0)).getToken(), r.name);
 		}
 
-		r.recOpAlts = new OrderedHashMap<Integer, LeftRecursiveRuleAltInfo>();
+		r.recOpAlts = new OrderedHashMap<int, LeftRecursiveRuleAltInfo>();
 		r.recOpAlts.putAll(leftRecursiveRuleWalker.binaryAlts);
 		r.recOpAlts.putAll(leftRecursiveRuleWalker.ternaryAlts);
 		r.recOpAlts.putAll(leftRecursiveRuleWalker.suffixAlts);

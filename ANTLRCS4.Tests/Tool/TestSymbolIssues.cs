@@ -123,9 +123,9 @@ public class TestSymbolIssues {
 		String expectedStringLiteralToTypeMap = "{}";
 		String expectedTypeToTokenList = "[A, B, C]";
 
-		assertEquals(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
-		assertEquals(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
-		assertEquals(expectedTypeToTokenList, realElements(g.typeToTokenList).ToString());
+		Assert.AreEqual(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
+		Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
+		Assert.AreEqual(expectedTypeToTokenList, realElements(g.typeToTokenList).ToString());
 	}
 
 	[TestMethod] public void testEmptyLexerModeDetection(){
