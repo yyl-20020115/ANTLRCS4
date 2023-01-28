@@ -14,7 +14,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using Attribute = org.antlr.v4.tool.Attribute;
-using Utils = org.antlr.v4.runtime.misc.Utils;
+using RuntimeUtils = org.antlr.v4.runtime.misc.RuntimeUtils;
 
 namespace org.antlr.v4.codegen.model;
 
@@ -58,7 +58,7 @@ public class RuleFunction : OutputModelObject {
 		this.name = r.name;
 		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(r.name);
 		this.rule = r;
-		modifiers = Utils.nodesToStrings(r.modifiers);
+		modifiers = RuntimeUtils.nodesToStrings(r.modifiers);
 
 		index = r.index;
 
@@ -109,21 +109,21 @@ public class RuleFunction : OutputModelObject {
 
 		// make structs for -> labeled alts, define ctx labels for elements
 		altLabelCtxs = new ();
-		Dictionary<String, List<Pair<Integer, AltAST>>> labels = r.getAltLabels();
+		var labels = r.getAltLabels();
 		if ( labels!=null ) {
-			foreach (Map.Entry<String, List<Pair<int, AltAST>>> entry in labels.entrySet()) {
-				String label = entry.getKey();
+			foreach (var entry in labels) {
+				String label = entry.Key;
 				List<AltAST> alts = new ();
-				foreach (Pair<int, AltAST> pair in entry.getValue()) {
+				foreach (var pair in entry.Value) {
 					alts.Add(pair.b);
 				}
 
 				HashSet<Decl> decls = getDeclsForAllElements(alts);
-				foreach (Pair<int, AltAST> pair in entry.getValue()) {
+				foreach (var pair in entry.Value) {
 					int altNum = pair.a;
 					altToContext[altNum] = new AltLabelStructDecl(factory, r, altNum, label);
-					if (!altLabelCtxs.containsKey(label)) {
-						altLabelCtxs.put(label, altToContext[altNum]);
+					if (!altLabelCtxs.ContainsKey(label)) {
+						altLabelCtxs[label]= altToContext[altNum];
 					}
 
 					// we know which ctx to put in, so do it directly

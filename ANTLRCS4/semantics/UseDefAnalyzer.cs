@@ -71,7 +71,7 @@ public class UseDefAnalyzer {
 				HashSet<Rule> calls = dependencies.get(r);
 				if ( calls==null ) {
 					calls = new HashSet<Rule>();
-					dependencies.put(r, calls);
+					dependencies[r] = calls;
 				}
 				calls.Add(g.getRule(tref.getText()));
 			}

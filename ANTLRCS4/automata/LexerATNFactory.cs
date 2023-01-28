@@ -122,11 +122,11 @@ public class LexerATNFactory : ParserATNFactory {
 	}
 
 	protected int getLexerActionIndex(LexerAction lexerAction) {
-		int lexerActionIndex = actionToIndexMap.get(lexerAction);
+		int lexerActionIndex = actionToIndexMap[lexerAction];
 		if (lexerActionIndex == null) {
 			lexerActionIndex = actionToIndexMap.Count;
-			actionToIndexMap.put(lexerAction, lexerActionIndex);
-			indexToActionMap.put(lexerActionIndex, lexerAction);
+			actionToIndexMap[lexerAction] = lexerActionIndex;
+			indexToActionMap[lexerActionIndex] = lexerAction;
 		}
 
 		return lexerActionIndex;

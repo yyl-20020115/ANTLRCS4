@@ -60,7 +60,7 @@ public abstract class Choice : RuleElement {
 
 	public TestSetInline addCodeForLookaheadTempVar(IntervalSet look) {
 		List<SrcOp> testOps = factory.getLL1Test(look, ast);
-		TestSetInline expr = Utils.find(testOps, typeof(TestSetInline));
+		TestSetInline expr = RuntimeUtils.find(testOps, typeof(TestSetInline));
 		if (expr != null) {
 			Decl d = new TokenTypeDecl(factory, expr.varName);
 			factory.getCurrentRuleFunction().addLocalDecl(d);

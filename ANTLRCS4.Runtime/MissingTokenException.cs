@@ -36,12 +36,8 @@ public class MissingTokenException :RecognitionException
     private IntStream input;
     private object inserted;
 
-    public MissingTokenException()
-    {
-
-    }
-
     public MissingTokenException(int ttype, IntStream input, object inserted)
+        :base(null,input,null)
     {
         this.ttype = ttype;
         this.input = input;

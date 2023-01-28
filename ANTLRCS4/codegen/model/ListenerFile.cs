@@ -42,11 +42,11 @@ public class ListenerFile : OutputFile {
 		grammarName = g.name;
 		namedActions = buildNamedActions(factory.getGrammar(), ast => ast.getScope() == null);
         foreach (Rule r in g.rules.Values) {
-			Dictionary<String, List<Pair<int,AltAST>>> labels = r.getAltLabels();
+			var labels = r.getAltLabels();
 			if ( labels!=null ) {
-                foreach (Map.Entry<String, List<Pair<int, AltAST>>> pair in labels.entrySet()) {
-					listenerNames.add(pair.getKey());
-					listenerLabelRuleNames.put(pair.getKey(), r.name);
+                foreach (var pair in labels) {
+					listenerNames.Add(pair.Key);
+					listenerLabelRuleNames[pair.Key] = r.name;
 				}
 			}
 			else {

@@ -31,6 +31,7 @@ using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.runtime.tree;
 using System.Text;
 
+
 namespace org.antlr.runtime.tree;
 
 /** A generic tree implementation with no payload.  You must subclass to
@@ -147,7 +148,7 @@ public abstract class BaseTree : Tree
         { // child is not nil (don't care about children)
             if (children == null)
             {
-                children = createChildrenList(); // create children list on demand
+                children = createChildrenList().Cast<Tree>().ToList(); // create children list on demand
             }
             children.Add(t);
             childTree.setParent(this);
@@ -179,7 +180,7 @@ public abstract class BaseTree : Tree
         }
         if (children == null)
         {
-            children = createChildrenList();
+            children = createChildrenList().Cast<Tree>().ToList();
         }
         children[i]=t;
         t.setParent(this);
@@ -199,7 +200,7 @@ public abstract class BaseTree : Tree
 
         if (children == null)
         {
-            children = createChildrenList();
+            children = createChildrenList().Cast<Tree>().ToList();
         }
 
         children.Insert(i, t);

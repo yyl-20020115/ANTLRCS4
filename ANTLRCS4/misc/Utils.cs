@@ -79,11 +79,11 @@ public static class Utils {
 	public static void writeSerializedATNIntegerHistogram(String filename, IntegerList serializedATN) {
 		Dictionary<int, int> histo = new ();
 		foreach (int i in serializedATN.toArray()) {
-			if ( histo.ContainsKey(i) ) {
-				histo.put(i, histo.get(i) + 1);
+			if ( histo.TryGetValue(i,out var v)) {
+				histo[i] = v + 1;
 			}
 			else {
-				histo.put(i, 1);
+				histo.Add(i, 1);
 			}
 		}
 		Dictionary<int,int> sorted = new (histo);

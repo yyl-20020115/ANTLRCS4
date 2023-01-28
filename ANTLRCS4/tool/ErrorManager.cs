@@ -234,7 +234,7 @@ public class ErrorManager {
 				loadedFormat = new STGroupFile(url, "UTF-8", '<', '>');
 				loadedFormat.load();
 
-				loadedFormats.put(formatName, loadedFormat);
+				loadedFormats[formatName]= loadedFormat;
 			}
 		}
 
@@ -284,7 +284,7 @@ public class ErrorManager {
 
     static void rawError(String msg, Exception e) {
         rawError(msg);
-        e.printStackTrace(System.err);
+        //e.printStackTrace(System.err);
     }
 
 	public void panic(ErrorType errorType, params Object[] args) {

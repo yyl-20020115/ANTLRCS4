@@ -128,8 +128,8 @@ public class Rule : AttributeResolver {
 	public void definePredicateInAlt(int currentAlt, PredAST predAST) {
 		actions.Add(predAST);
 		alt[currentAlt].actions.Add(predAST);
-		if ( g.sempreds.get(predAST)==null ) {
-			g.sempreds.put(predAST, g.sempreds.size());
+		if (! g.sempreds.ContainsKey(predAST) ) {
+			g.sempreds[predAST]= g.sempreds.Count;
 		}
 	}
 
@@ -293,7 +293,7 @@ public class Rule : AttributeResolver {
 
 	public LabelElementPair getAnyLabelDef(String x) {
 		List<LabelElementPair> labels = getElementLabelDefs().get(x);
-		if ( labels!=null ) return labels.get(0);
+		if ( labels!=null ) return labels[(0)];
 		return null;
 	}
 

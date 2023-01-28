@@ -35,11 +35,11 @@ public static class Trees
 	 *  node payloads to get the text for the nodes.
 	 */
 	public static String toStringTree(Tree t, List<String> ruleNames) {
-		String s = Utils.escapeWhitespace(getNodeText(t, ruleNames), false);
+		String s = RuntimeUtils.escapeWhitespace(getNodeText(t, ruleNames), false);
 		if ( t.getChildCount()==0 ) return s;
 		StringBuilder buf = new StringBuilder();
 		buf.Append('(');
-		s = Utils.escapeWhitespace(getNodeText(t, ruleNames), false);
+		s = RuntimeUtils.escapeWhitespace(getNodeText(t, ruleNames), false);
 		buf.Append(s);
 		buf.Append(' ');
 		for (int i = 0; i<t.getChildCount(); i++) {

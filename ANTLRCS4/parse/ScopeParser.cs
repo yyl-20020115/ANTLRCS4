@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -318,7 +319,7 @@ public class ScopeParser {
 					if (c == separatorChar && targetChar == -1) {
 						String arg = actionText.substring(last, p);
 						int index = last;
-						while (index < p && char.isWhitespace(actionText[(index)])) {
+						while (index < p && char.IsWhiteSpace(actionText[(index)])) {
 							index++;
 						}
 						//Console.Out.WriteLine("arg="+arg);

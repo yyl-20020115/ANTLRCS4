@@ -253,7 +253,7 @@ public class OutputModelController {
 			function.hasLookaheadBlock = walker.hasLookaheadBlock;
 		}
 		catch (RecognitionException e){
-			e.printStackTrace(System.err);
+			//e.printStackTrace(System.err);
 		}
 
 		function.ctxType = gen.getTarget().getRuleFunctionContextStructName(function);
@@ -289,7 +289,7 @@ public class OutputModelController {
 			}
 		}
 
-		if (!raf.actions.isEmpty() && !lexer.actionFuncs.ContainsKey(r)) {
+		if (raf.actions.Count>0 && !lexer.actionFuncs.ContainsKey(r)) {
 			// only add to lexer if the function actually contains actions
 			lexer.actionFuncs.put(r, raf);
 		}

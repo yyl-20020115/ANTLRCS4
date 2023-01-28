@@ -5743,33 +5743,33 @@ public class GrammarTreeVisitor : TreeParser
     //static final short[] DFA38_accept = DFA.unpackEncodedString(DFA38_acceptS);
     //static final short[] DFA38_special = DFA.unpackEncodedString(DFA38_specialS);
     //static final short[][] DFA38_transition;
-    static readonly short[] DFA38_eot = Utils.Convert(new char[] { '\u0014', '\uffff' });
-    static readonly short[] DFA38_eof = Utils.Convert(new char[] { '\u0014', '\uffff' });
+    static readonly short[] DFA38_eot = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff' });
+    static readonly short[] DFA38_eof = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff' });
     static readonly char[] DFA38_min = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
     static readonly char[] DFA38_max = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
-    static readonly short[] DFA38_accept = Utils.Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
-    static readonly short[] DFA38_special = Utils.Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
+    static readonly short[] DFA38_accept = RuntimeUtils.Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
+    static readonly short[] DFA38_special = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
     static readonly short[][] DFA38_transition = new short[][]{
-    Utils.Convert(new char[] {'\u0001','\u0001'}),
-    Utils.Convert(new char[] {'\u0001','\u0002'}),
-    Utils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0001','\uffff','\u0001','\u0003','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
-    Utils.Convert(new char[] {'\u0001','\u0006'}),
-    Utils.Convert(new char[0]),
-    Utils.Convert(new char[0]),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Utils.Convert(new char[] {'\u0001','\u000a'}),
-    Utils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
-    Utils.Convert(new char[] {'\u0001','\u000b'}),
-    Utils.Convert(new char[] {'\u0001','\u000e','\u0017','\uffff','\u0001','\u000c','\u0001','\uffff','\u0001','\u000f','\u001c','\uffff','\u0001','\u000d'}),
-    Utils.Convert(new char[] {'\u0001','\u0010'}),
-    Utils.Convert(new char[] {'\u0001','\u0011'}),
-    Utils.Convert(new char[] {'\u0001','\u0012'}),
-    Utils.Convert(new char[] {'\u0001','\u0013'}),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Utils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'})
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0001'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0002'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0001','\uffff','\u0001','\u0003','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0006'}),
+    RuntimeUtils.Convert(new char[0]),
+    RuntimeUtils.Convert(new char[0]),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000a'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000b'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000e','\u0017','\uffff','\u0001','\u000c','\u0001','\uffff','\u0001','\u000f','\u001c','\uffff','\u0001','\u000d'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0010'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0011'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0012'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0013'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'})
 };
 
 

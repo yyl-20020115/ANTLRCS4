@@ -10,13 +10,15 @@ using org.antlr.v4.tool.ast;
 public class OptionalBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
 	private readonly bool _greedy;
 
-	public OptionalBlockAST(OptionalBlockAST node) {
-		base(node);
+	public OptionalBlockAST(OptionalBlockAST node): base(node)
+    {
+		
 		_greedy = node._greedy;
 	}
 
-	public OptionalBlockAST(int type, Token t, Token nongreedy) {
-		base(type, t);
+	public OptionalBlockAST(int type, Token t, Token nongreedy): base(type, t)
+    {
+		
 		_greedy = nongreedy == null;
 	}
 

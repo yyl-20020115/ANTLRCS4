@@ -66,7 +66,7 @@ public class AnalysisPipeline {
 			}
 
 			//assert s.decision + 1 >= g.decisionLOOK.size();
-			Utils.setSize(g.decisionLOOK, s.decision+1);
+			RuntimeUtils.setSize(g.decisionLOOK, s.decision+1);
 			g.decisionLOOK[s.decision]= look;
 			g.tool.log("LL1", "LL(1)? " + disjoint(look));
 		}

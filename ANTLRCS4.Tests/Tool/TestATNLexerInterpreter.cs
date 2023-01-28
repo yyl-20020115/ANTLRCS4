@@ -395,7 +395,7 @@ public class TestATNLexerInterpreter {
 			"A0bcDE93\n" +
 			"АБВабв\n";
 
-		String expecting = Utils.join(new String[] {
+		String expecting = RuntimeUtils.join(new String[] {
 			"SIMPLE_TOKEN", "SIMPLE_TOKEN", "SIMPLE_TOKEN",
 			"TOKEN_WITH_SPACES", "TOKEN_WITH_SPACES",
 			"TOKEN_WITH_DIGITS",
@@ -465,7 +465,7 @@ public class TestATNLexerInterpreter {
 
 		String inputString = "abcXYZ äéöüßÄÉÖÜß àâæçÙÛÜŸ ćčđĐŠŽ àèéÌÒÙ áéÚÜ¡¿ αβγΧΨΩ абвЭЮЯ ";
 
-		String expecting = Utils.join(new String[] {
+		String expecting = RuntimeUtils.join(new String[] {
 				"ENGLISH_TOKEN",
 				"GERMAN_TOKEN",
 				"FRENCH_TOKEN",
@@ -521,7 +521,7 @@ public class TestATNLexerInterpreter {
 
 		List<String> tokenTypes = getTokenTypes(lg, atn, input);
 
-		String result = Utils.join(tokenTypes, ", ");
+		String result = RuntimeUtils.join(tokenTypes, ", ");
 //		Console.Out.WriteLine(tokenTypes);
 		Assert.AreEqual(expecting, result);
 	}

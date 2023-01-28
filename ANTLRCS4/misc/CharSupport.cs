@@ -60,7 +60,7 @@ public class CharSupport {
 					result = "\\'";
 				}
 				else {
-					result = char.toString((char) c);
+					result = c.ToString();// char.toString((char) c);
 				}
 			}
 			else if (c <= 0xFFFF) {

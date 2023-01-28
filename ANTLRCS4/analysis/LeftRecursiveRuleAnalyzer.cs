@@ -52,7 +52,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 			try {
 				throw new FileNotFoundException("can't find code generation templates: LeftRecursiveRules");
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
@@ -200,12 +200,12 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker {
 		ruleST.add("setResultAction", setResultST);
 		ruleST.add("userRetvals", retvals);
 
-		Dictionary<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new Dictionary<int, LeftRecursiveRuleAltInfo>();
+		Dictionary<int, LeftRecursiveRuleAltInfo> opPrecRuleAlts = new ();
 		opPrecRuleAlts.putAll(binaryAlts);
 		opPrecRuleAlts.putAll(ternaryAlts);
 		opPrecRuleAlts.putAll(suffixAlts);
-        foreach (int alt in opPrecRuleAlts.keySet()) {
-			LeftRecursiveRuleAltInfo altInfo = opPrecRuleAlts.get(alt);
+        foreach (int alt in opPrecRuleAlts.Keys) {
+			LeftRecursiveRuleAltInfo altInfo = opPrecRuleAlts[alt];
 			ST altST = recRuleTemplates.getInstanceOf("recRuleAlt");
 			ST predST = codegenTemplates.getInstanceOf("recRuleAltPredicate");
 			predST.add("opPrec", precedence(alt));

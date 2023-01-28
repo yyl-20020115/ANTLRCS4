@@ -420,7 +420,7 @@ public class ParserATNFactory : ATNFactory {
 	public Handle elemList(List<Handle> els) {
 		int n = els.Count;
 		for (int i = 0; i < n - 1; i++) {	// hook up elements (visit all but last)
-			Handle el = els.get(i);
+			Handle el = els[(i)];
 			// if el is of form o-x->o for x in {rule, action, pred, token, ...}
 			// and not last in alt
             Transition tr = null;
@@ -505,7 +505,7 @@ public class ParserATNFactory : ATNFactory {
 	public Handle plus(GrammarAST plusAST, Handle blk) {
 		PlusBlockStartState blkStart = (PlusBlockStartState)blk.left;
 		BlockEndState blkEnd = (BlockEndState)blk.right;
-		preventEpsilonClosureBlocks.add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
 		PlusLoopbackState loop = newState(PlusLoopbackState, plusAST);
 		loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();

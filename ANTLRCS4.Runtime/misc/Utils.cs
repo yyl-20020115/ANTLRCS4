@@ -9,7 +9,7 @@ using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
 
-public static class Utils
+public static class RuntimeUtils
 {
     public static short[] Convert(char[] chars)
     {

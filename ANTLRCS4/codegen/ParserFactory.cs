@@ -18,7 +18,7 @@ namespace org.antlr.v4.codegen;
 
 /** */
 public class ParserFactory : DefaultOutputModelFactory {
-	public ParserFactory(CodeGenerator gen) { base(gen); }
+	public ParserFactory(CodeGenerator gen): base(gen) {  }
 
 	//@Override
 	public ParserFile parserFile(String fileName) {
@@ -262,8 +262,8 @@ public class ParserFactory : DefaultOutputModelFactory {
 	//@Override
 	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) {
 		Alternative currentOuterMostAlt = getCurrentOuterMostAlt();
-		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.containsKey(ID.getText());
-		bool actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.containsKey(ID.getText());
+		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.getText());
+		bool actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.getText());
 		return	op.getLabels().isEmpty() &&	(actionRefsAsToken || actionRefsAsRule);
 	}
 

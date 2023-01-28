@@ -123,8 +123,8 @@ public class GrammarAST : CommonTree {
 	public String getAltLabel() {
 		List<Tree> ancestors = this.getAncestors();
 		if ( ancestors==null ) return null;
-		for (int i=ancestors.size()-1; i>=0; i--) {
-			GrammarAST p = (GrammarAST)ancestors.get(i);
+		for (int i=ancestors.Count-1; i>=0; i--) {
+			GrammarAST p = (GrammarAST)ancestors[i];
 			if ( p.getType()== ANTLRParser.ALT ) {
 				AltAST a = (AltAST)p;
 				if ( a.altLabel!=null ) return a.altLabel.getText();
@@ -163,7 +163,7 @@ public class GrammarAST : CommonTree {
     }
 
 	// TODO: don't include this node!!
-	public CommonTree getFirstDescendantWithType(org.antlr.runtime.BitSet types) {
+	public CommonTree getFirstDescendantWithType(BitSet types) {
 		if ( types.member(getType()) ) return this;
 		if ( children==null ) return null;
 		foreach (Object c in children) {

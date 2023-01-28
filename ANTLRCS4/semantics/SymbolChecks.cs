@@ -110,14 +110,14 @@ public class SymbolChecks {
 								}
 								else {
 									list = new ();
-									labelPairs.put(labelName, list);
+									labelPairs[labelName] = list;
 								}
 								list.Add(p);
 							}
 						}
 
 						foreach (List<LabelElementPair> internalPairs in labelPairs.Values) {
-							labelNameSpace.clear();
+							labelNameSpace.Clear();
 							checkLabelPairs(r, labelNameSpace, internalPairs);
 						}
 					}
@@ -229,13 +229,13 @@ public class SymbolChecks {
 	}
 
 	public void checkForAttributeConflicts(Rule r) {
-		checkDeclarationRuleConflicts(r, r.args, nameToRuleMap.keySet(), ErrorType.ARG_CONFLICTS_WITH_RULE);
+		checkDeclarationRuleConflicts(r, r.args, nameToRuleMap.Keys.ToHashSet(), ErrorType.ARG_CONFLICTS_WITH_RULE);
 		checkDeclarationRuleConflicts(r, r.args, tokenIDs, ErrorType.ARG_CONFLICTS_WITH_TOKEN);
 
-		checkDeclarationRuleConflicts(r, r.retvals, nameToRuleMap.keySet(), ErrorType.RETVAL_CONFLICTS_WITH_RULE);
+		checkDeclarationRuleConflicts(r, r.retvals, nameToRuleMap.Keys.ToHashSet(), ErrorType.RETVAL_CONFLICTS_WITH_RULE);
 		checkDeclarationRuleConflicts(r, r.retvals, tokenIDs, ErrorType.RETVAL_CONFLICTS_WITH_TOKEN);
 
-		checkDeclarationRuleConflicts(r, r.locals, nameToRuleMap.keySet(), ErrorType.LOCAL_CONFLICTS_WITH_RULE);
+		checkDeclarationRuleConflicts(r, r.locals, nameToRuleMap.Keys.ToHashSet(), ErrorType.LOCAL_CONFLICTS_WITH_RULE);
 		checkDeclarationRuleConflicts(r, r.locals, tokenIDs, ErrorType.LOCAL_CONFLICTS_WITH_TOKEN);
 
 		checkLocalConflictingDeclarations(r, r.retvals, r.args, ErrorType.RETVAL_CONFLICTS_WITH_ARG);
@@ -405,9 +405,9 @@ public class SymbolChecks {
 	private void checkForOverlap(Grammar g, Rule rule1, Rule rule2, List<String> firstTokenStringValues, List<String> secondTokenStringValues) {
 		for (int i = 0; i < firstTokenStringValues.Count; i++) {
 			int secondTokenInd = rule1 == rule2 ? i + 1 : 0;
-			String str1 = firstTokenStringValues.get(i);
+			String str1 = firstTokenStringValues[i];
 			for (int j = secondTokenInd; j < secondTokenStringValues.Count; j++) {
-				String str2 = secondTokenStringValues.get(j);
+				String str2 = secondTokenStringValues[j];
 				if (str1.Equals(str2)) {
 					errMgr.grammarError(ErrorType.TOKEN_UNREACHABLE, g.fileName,
 							((GrammarAST) rule2.ast.getChild(0)).token, rule2.name, str2, rule1.name);

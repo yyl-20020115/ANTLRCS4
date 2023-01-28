@@ -23,8 +23,8 @@ public class ParserFile : OutputFile {
     public ActionChunk contextSuperClass;
 	public String grammarName;
 
-	public ParserFile(OutputModelFactory factory, String fileName) {
-		base(factory, fileName);
+	public ParserFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    {
 		Grammar g = factory.getGrammar();
 		namedActions = buildNamedActions(factory.getGrammar());
 		genPackage = g.tool.genPackage;

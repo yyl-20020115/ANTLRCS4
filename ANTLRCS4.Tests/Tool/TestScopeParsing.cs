@@ -60,7 +60,7 @@ public class TestScopeParsing {
 			Attribute attr = attributes.get(arg);
             @out.Add(attr.ToString());
 		}
-		String actual = Utils.join(@out.ToArray(), ", ");
+		String actual = RuntimeUtils.join(@out.ToArray(), ", ");
 		Assert.AreEqual(parameter.output, actual);
 	}
 

@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.analysis;
+using org.antlr.v4.automata;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
@@ -152,7 +153,7 @@ public class SemanticPipeline {
             foreach (Pair<GrammarAST,GrammarAST> pair in litAliases) {
 				GrammarAST nameAST = pair.a;
 				GrammarAST litAST = pair.b;
-				if ( !G.stringLiteralToTypeMap.containsKey(litAST.getText()) ) {
+				if ( !G.stringLiteralToTypeMap.ContainsKey(litAST.getText()) ) {
 					G.defineTokenAlias(nameAST.getText(), litAST.getText());
 				}
 				else {
@@ -260,13 +261,13 @@ public class SemanticPipeline {
 				g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_TOKEN, g.fileName, channel.token, channelName);
 			}
 
-			if (LexerATNFactory.COMMON_CONSTANTS.containsKey(channelName)) {
+			if (LexerATNFactory.COMMON_CONSTANTS.ContainsKey(channelName)) {
 				g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, channel.token, channelName);
 			}
 
 			if (outermost is LexerGrammar) {
 				LexerGrammar lexerGrammar = (LexerGrammar)outermost;
-				if (lexerGrammar.modes.containsKey(channelName)) {
+				if (lexerGrammar.modes.ContainsKey(channelName)) {
 					g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_MODE, g.fileName, channel.token, channelName);
 				}
 			}

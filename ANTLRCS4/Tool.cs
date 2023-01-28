@@ -66,7 +66,7 @@ public class Tool {
 	public bool launch_ST_inspector = false;
 	public bool ST_inspector_wait_for_close = false;
     public bool force_atn = false;
-    public bool log = false;
+    public bool dolog = false;
 	public bool gen_listener = true;
 	public bool gen_visitor = false;
 	public bool gen_dependencies = false;
@@ -125,7 +125,7 @@ public class Tool {
             antlr.processGrammarsOnCommandLine();
         }
         finally {
-            if ( antlr.log ) {
+            if ( antlr.dolog) {
                 try {
                     String logname = antlr.logMgr.save();
                     Console.WriteLine("wrote "+logname);
@@ -243,7 +243,7 @@ public class Tool {
 				 Grammar.lexerOptions.Contains(option) )
 			{
 				if ( grammarOptions==null ) grammarOptions = new ();
-				grammarOptions.put(option, value);
+				grammarOptions[option] = value;
 			}
 			else {
 				errMgr.grammarError(ErrorType.ILLEGAL_OPTION,
@@ -391,8 +391,8 @@ public class Tool {
         {
             RuleAST ruleAST = ruleToAST.get(@ref.getText());
             String fileName = @ref.getToken().getInputStream().getSourceName();
-            if (char.isUpperCase(currentRuleName[(0)]) &&
-                char.isLowerCase(@ref.getText()[(0)]))
+            if (char.IsUpper(currentRuleName[(0)]) &&
+                char.IsLower(@ref.getText()[(0)]))
             {
                 badref = true;
                 errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
@@ -442,7 +442,7 @@ public class Tool {
 				redefinition = true;
 				continue;
 			}
-			ruleToAST.put(ruleName, ruleAST);
+			ruleToAST[ruleName]= ruleAST;
 		}
 
 		UndefChecker chk = new UndefChecker();
@@ -601,7 +601,7 @@ public class Tool {
 
 			imported = createGrammar(root);
 			imported.fileName = absolutePath;
-			importedGrammars.put(root.getGrammarName(), imported);
+			importedGrammars[root.getGrammarName()]= imported;
 		}
 
 		return imported;

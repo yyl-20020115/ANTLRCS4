@@ -77,7 +77,7 @@ public class DOTGenerator {
 		}
 
 		String output = dot.render();
-		return Utils.sortLinesInString(output);
+		return RuntimeUtils.sortLinesInString(output);
 	}
 
 	protected String getStateLabel(DFAState s) {
@@ -116,14 +116,14 @@ public class DOTGenerator {
 						configsInAlt.Add(c);
 					}
 					int n = 0;
-					for (int cIndex = 0; cIndex < configsInAlt.size(); cIndex++) {
-						ATNConfig c = configsInAlt.get(cIndex);
+					for (int cIndex = 0; cIndex < configsInAlt.Count; cIndex++) {
+						ATNConfig c = configsInAlt[(cIndex)];
 						n++;
 						buf.Append(c.ToString(null, false));
-						if ( (cIndex+1)<configsInAlt.size() ) {
+						if ( (cIndex+1)<configsInAlt.Count ) {
 							buf.Append(", ");
 						}
-						if ( n%5==0 && (configsInAlt.size()-cIndex)>3 ) {
+						if ( n%5==0 && (configsInAlt.Count-cIndex)>3 ) {
 							buf.Append("\\n");
 						}
 					}

@@ -53,7 +53,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.toArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithLabels(){
@@ -97,7 +97,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.toArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithSet(){
@@ -142,7 +142,7 @@ public class TestTokenPositionOptions {
 		for (GrammarAST node : nodes) {
 			tokens.add(node.getToken());
 		}
-		Assert.AreEqual(expectedElementTokens, Utils.join(tokens.ToArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.ToArray(), "\n"));
 	}
 
 }

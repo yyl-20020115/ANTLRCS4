@@ -112,20 +112,20 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	 */
 	protected static FrequencySet<String> combineAndClip(FrequencySet<String> a, FrequencySet<String> b, int clip) {
 		FrequencySet<String> result = new FrequencySet<String>();
-		foreach (Map.Entry<String, MutableInt> entry in a.entrySet()) {
-			for (int i = 0; i < entry.getValue().v; i++) {
-				result.add(entry.getKey());
+		foreach (var entry in a) {
+			for (int i = 0; i < entry.Value.v; i++) {
+				result.add(entry.Key);
 			}
 		}
 
-        foreach (Map.Entry<String, MutableInt> entry in b.entrySet()) {
-			for (int i = 0; i < entry.getValue().v; i++) {
-				result.add(entry.getKey());
+        foreach (var entry in b) {
+			for (int i = 0; i < entry.Value.v; i++) {
+				result.add(entry.Key);
 			}
 		}
 
-        foreach (Map.Entry<String, MutableInt> entry in result.entrySet()) {
-			entry.getValue().v = Math.Min(entry.getValue().v, clip);
+        foreach (var entry in result) {
+			entry.Value.v = Math.Min(entry.Value.v, clip);
 		}
 
 		return result;
@@ -189,12 +189,12 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 
 	//@Override
 	protected void exitBlockSet(GrammarAST tree) {
-		foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
+		foreach (var entry in frequencies.peek()) {
 			// This visitor counts a block set as a sequence of elements, not a
 			// sequence of alternatives of elements. Reset the count back to 1
 			// for all items when leaving the set to ensure duplicate entries in
 			// the set are treated as a maximum of one item.
-			entry.getValue().v = 1;
+			entry.Value.v = 1;
 		}
 
 		if (minFrequencies.peek().Count > 1) {
@@ -209,8 +209,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	//@Override
 	protected void exitSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
-            foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
-				entry.getValue().v = 2;
+            foreach (var entry in frequencies.peek()) {
+				entry.Value.v = 2;
 			}
 		}
 
@@ -252,15 +252,15 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor {
 	//@Override
 	protected void exitLexerSubrule(GrammarAST tree) {
 		if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE) {
-            foreach (Map.Entry<String, MutableInt> entry in frequencies.peek().entrySet()) {
-				entry.getValue().v = 2;
+            foreach (var entry in frequencies.peek()) {
+				entry.Value.v = 2;
 			}
 		}
 
 		if (tree.getType() == CLOSURE) {
 			// Everything inside a closure is optional, so the minimum
 			// number of occurrences for all elements is 0.
-			minFrequencies.peek().clear();
+			minFrequencies.peek().Clear();
 		}
 	}
 }

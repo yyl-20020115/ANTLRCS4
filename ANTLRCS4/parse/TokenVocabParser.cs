@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.codegen;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -59,7 +60,7 @@ public class TokenVocabParser {
 						tokenType = Token.INVALID_TOKEN_TYPE;
 					}
 					tool.log("grammar", "import "+tokenID+"="+tokenType);
-					tokens.put(tokenID, tokenType);
+					tokens[tokenID] = tokenType;
 					maxTokenType = Math.Max(maxTokenType,tokenType);
 					lineNum++;
 				}
@@ -120,11 +121,11 @@ public class TokenVocabParser {
 	 */
 	public String getImportedVocabFile() {
 		String vocabName = g.getOptionString("tokenVocab");
-		File f = new File(g.tool.libDirectory,
-						  File.separator +
+		string f = (g.tool.libDirectory,
+						  Path.PathSeparator + //TODO
 						  vocabName +
 						  CodeGenerator.VOCAB_FILE_EXTENSION);
-		if (f.exists()) {
+		if (File.Exists(f)) {
 			return f;
 		}
 

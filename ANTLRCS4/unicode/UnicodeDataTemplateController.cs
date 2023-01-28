@@ -75,11 +75,11 @@ public abstract class UnicodeDataTemplateController {
 		addUnicodeScriptCodesToNames(propertyAliases);
 		addUnicodeBlocksToNames(propertyAliases);
 		addUnicodeIntPropertyCodesToNames(propertyAliases);
-		propertyAliases.put("EP", "Extended_Pictographic");
+		propertyAliases["EP"]= "Extended_Pictographic";
 
         Dictionary<String, Object> properties = new ();
-		properties.put("propertyCodePointRanges", propertyCodePointRanges);
-		properties.put("propertyAliases", propertyAliases);
+		properties["propertyCodePointRanges"] = propertyCodePointRanges;
+		properties["propertyAliases"] = propertyAliases;
 		return properties;
 	}
 
@@ -332,30 +332,30 @@ public abstract class UnicodeDataTemplateController {
 		UnicodeSet emojiRKUnicodeSet = new UnicodeSet("[\\p{GCB=Regional_Indicator}\\*#0-9\\u00a9\\u00ae\\u2122\\u3030\\u303d]");
 		IntervalSet emojiRKIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(emojiRKUnicodeSet, emojiRKIntervalSet);
-		propertyCodePointRanges.put("EmojiRK", emojiRKIntervalSet);
+		propertyCodePointRanges["EmojiRK"] = emojiRKIntervalSet;
 
 		UnicodeSet emojiNRKUnicodeSet = new UnicodeSet("[\\p{Emoji=Yes}]");
 		emojiNRKUnicodeSet.removeAll(emojiRKUnicodeSet);
 		IntervalSet emojiNRKIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(emojiNRKUnicodeSet, emojiNRKIntervalSet);
-		propertyCodePointRanges.put("EmojiNRK", emojiNRKIntervalSet);
+		propertyCodePointRanges["EmojiNRK"] = emojiNRKIntervalSet;
 	}
 
 	private static void addEmojiPresentationPropertyCodesToCodePointRanges(Dictionary<String, IntervalSet> propertyCodePointRanges) {
 		UnicodeSet emojiDefaultUnicodeSet = new UnicodeSet("[[\\p{Emoji=Yes}]&[\\p{Emoji_Presentation=Yes}]]");
 		IntervalSet emojiDefaultIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(emojiDefaultUnicodeSet, emojiDefaultIntervalSet);
-		propertyCodePointRanges.put("EmojiPresentation=EmojiDefault", emojiDefaultIntervalSet);
+		propertyCodePointRanges["EmojiPresentation=EmojiDefault"] = emojiDefaultIntervalSet;
 
 		UnicodeSet textDefaultUnicodeSet = new UnicodeSet("[[\\p{Emoji=Yes}]&[\\p{Emoji_Presentation=No}]]");
 		IntervalSet textDefaultIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(textDefaultUnicodeSet, textDefaultIntervalSet);
-		propertyCodePointRanges.put("EmojiPresentation=TextDefault", textDefaultIntervalSet);
+		propertyCodePointRanges["EmojiPresentation=TextDefault"] = textDefaultIntervalSet;
 
 		UnicodeSet textUnicodeSet = new UnicodeSet("[\\p{Emoji=No}]");
 		IntervalSet textIntervalSet = new IntervalSet();
 		addUnicodeSetToIntervalSet(textUnicodeSet, textIntervalSet);
-		propertyCodePointRanges.put("EmojiPresentation=Text", textIntervalSet);
+		propertyCodePointRanges["EmojiPresentation=Text"] = textIntervalSet;
         }
 
 	private static void addIntPropertyAliases(int property, String namePrefix, Dictionary<String, String> propertyAliases) {

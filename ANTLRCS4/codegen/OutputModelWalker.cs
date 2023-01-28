@@ -5,8 +5,10 @@
  */
 
 using org.antlr.v4.codegen.model;
+using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace org.antlr.v4.codegen;
@@ -80,7 +82,7 @@ public class OutputModelWalker {
 			String fieldName = fi.getName();
 
 			if (!usedFieldNames.Add(fieldName)) {
-				tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.getClass().getSimpleName() + " has multiple fields named '" + fieldName + "'");
+				tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
 				continue;
 			}
 
@@ -108,7 +110,7 @@ public class OutputModelWalker {
 						st.add(fieldName, nestedST);
 					}
 				}
-				else if ( o is Map ) {
+				else if ( o is Dictionary) {
 					Dictionary nestedOmoMap = (Dictionary)o;
 					Dictionary<Object, ST> m = new Dictionary<Object, ST>();
 					foreach (var entry in nestedOmoMap.entrySet()) {

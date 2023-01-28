@@ -61,7 +61,7 @@ public class InvokeRule : RuleElement , LabeledOp {
 		}
 
 		// If action refs rule as rulename not label, we need to define implicit label
-		if ( factory.getCurrentOuterMostAlt().ruleRefsInActions.containsKey(identifier) ) {
+		if ( factory.getCurrentOuterMostAlt().ruleRefsInActions.ContainsKey(identifier) ) {
 			String label = gen.getTarget().getImplicitRuleLabel(identifier);
 			RuleContextDecl d = new RuleContextDecl(factory,label,ctxName);
 			labels.add(d);

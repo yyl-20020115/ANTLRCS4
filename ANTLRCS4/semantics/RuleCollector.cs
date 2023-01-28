@@ -85,8 +85,8 @@ public class RuleCollector : GrammarTreeVisitor {
 		if ( alt.altLabel!=null ) {
 			ruleToAltLabels.map(currentRuleName, alt.altLabel);
 			String altLabel = alt.altLabel.getText();
-			altLabelToRuleName.put(Utils.capitalize(altLabel), currentRuleName);
-			altLabelToRuleName.put(Utils.decapitalize(altLabel), currentRuleName);
+			altLabelToRuleName[Utils.capitalize(altLabel)]= currentRuleName;
+			altLabelToRuleName[misc.Utils.decapitalize(altLabel)] = currentRuleName;
 		}
 	}
 
@@ -119,12 +119,12 @@ public class RuleCollector : GrammarTreeVisitor {
 		rules.put(r.name, r);
 	}
 
-	private Boolean getCaseInsensitiveValue(GrammarAST optionID, GrammarAST valueAST) {
+	private bool? getCaseInsensitiveValue(GrammarAST optionID, GrammarAST valueAST) {
 		String optionName = optionID.getText();
 		if (optionName.Equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
 			if (valueText.Equals("true") || valueText.Equals("false")) {
-				return Boolean.parseBoolean(valueText);
+				return bool.TryParse(valueText, out var ret1) && ret1;
 			}
 		}
 		return null;

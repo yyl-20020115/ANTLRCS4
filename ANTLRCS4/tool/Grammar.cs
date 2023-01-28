@@ -17,7 +17,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool.ast;
 using System.Text;
-using Utils = org.antlr.v4.runtime.misc.Utils;
+using RuntimeUtils = org.antlr.v4.runtime.misc.RuntimeUtils;
 
 namespace org.antlr.v4.tool;
 
@@ -694,14 +694,14 @@ public class Grammar : AttributeResolver
             return INVALID_TOKEN_NAME;
         }
 
-        if (ttype >= 0 && ttype < typeToStringLiteralList.Count && typeToStringLiteralList.get(ttype) != null)
+        if (ttype >= 0 && ttype < typeToStringLiteralList.Count && typeToStringLiteralList[ttype] != null)
         {
-            return typeToStringLiteralList.get(ttype);
+            return typeToStringLiteralList[ttype];
         }
 
-        if (ttype >= 0 && ttype < typeToTokenList.Count && typeToTokenList.get(ttype) != null)
+        if (ttype >= 0 && ttype < typeToTokenList.Count && typeToTokenList[ttype] != null)
         {
-            return typeToTokenList.get(ttype);
+            return typeToTokenList[ttype];
         }
 
         return ttype.ToString();// String.valueOf(ttype);
@@ -735,9 +735,9 @@ public class Grammar : AttributeResolver
             return "EOF";
         }
 
-        if (ttype >= 0 && ttype < typeToTokenList.Count && typeToTokenList.get(ttype) != null)
+        if (ttype >= 0 && ttype < typeToTokenList.Count && typeToTokenList[ttype] != null)
         {
-            return typeToTokenList.get(ttype);
+            return typeToTokenList[ttype];
         }
 
         return INVALID_TOKEN_NAME;
@@ -836,7 +836,7 @@ public class Grammar : AttributeResolver
         String[] literalNames = new String[numTokens + 1];
         for (int i = 0; i < Math.Min(literalNames.Length, typeToStringLiteralList.Count); i++)
         {
-            literalNames[i] = typeToStringLiteralList.get(i);
+            literalNames[i] = typeToStringLiteralList[i];
         }
 
         foreach (var entry in stringLiteralToTypeMap)
@@ -859,14 +859,14 @@ public class Grammar : AttributeResolver
     {
         int numTokens = getMaxTokenType();
         String[] symbolicNames = new String[numTokens + 1];
-        for (int i = 0; i < Math.Min(symbolicNames.length, typeToTokenList.Count); i++)
+        for (int i = 0; i < Math.Min(symbolicNames.Length, typeToTokenList.Count); i++)
         {
-            if (typeToTokenList.get(i) == null || typeToTokenList.get(i).startsWith(AUTO_GENERATED_TOKEN_NAME_PREFIX))
+            if (typeToTokenList[i] == null || typeToTokenList[(i)].StartsWith(AUTO_GENERATED_TOKEN_NAME_PREFIX))
             {
                 continue;
             }
 
-            symbolicNames[i] = typeToTokenList.get(i);
+            symbolicNames[i] = typeToTokenList[i];
         }
 
         return symbolicNames;
@@ -930,7 +930,7 @@ public class Grammar : AttributeResolver
                 if (a is PredAST)
                 {
                     PredAST p = (PredAST)a;
-                    indexToPredMap.put(sempreds.get(p), p);
+                    indexToPredMap[sempreds.get(p)]= p;
                 }
             }
         }
@@ -1032,7 +1032,7 @@ public class Grammar : AttributeResolver
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
         int max = Math.Max(this.typeToTokenList.Count, importG.typeToTokenList.Count);
-        Utils.setSize(typeToTokenList, max);
+        RuntimeUtils.setSize(typeToTokenList, max);
         for (int ttype = 0; ttype < importG.typeToTokenList.Count; ttype++)
         {
             maxTokenType = Math.Max(maxTokenType, ttype);
@@ -1040,7 +1040,7 @@ public class Grammar : AttributeResolver
         }
 
         max = Math.Max(this.channelValueToNameList.Count, importG.channelValueToNameList.Count);
-        Utils.setSize(channelValueToNameList, max);
+        RuntimeUtils.setSize(channelValueToNameList, max);
         for (int channelValue = 0; channelValue < importG.channelValueToNameList.Count; channelValue++)
         {
             maxChannelType = Math.Max(maxChannelType, channelValue);
@@ -1067,9 +1067,9 @@ public class Grammar : AttributeResolver
 
     public int defineStringLiteral(String lit)
     {
-        if (stringLiteralToTypeMap.containsKey(lit))
+        if (stringLiteralToTypeMap.ContainsKey(lit))
         {
-            return stringLiteralToTypeMap.get(lit);
+            return stringLiteralToTypeMap[(lit)];
         }
         return defineStringLiteral(lit, getNewTokenType());
 
@@ -1077,13 +1077,13 @@ public class Grammar : AttributeResolver
 
     public int defineStringLiteral(String lit, int ttype)
     {
-        if (!stringLiteralToTypeMap.containsKey(lit))
+        if (!stringLiteralToTypeMap.ContainsKey(lit))
         {
             stringLiteralToTypeMap.put(lit, ttype);
             // track in reverse index too
             if (ttype >= typeToStringLiteralList.Count)
             {
-                Utils.setSize(typeToStringLiteralList, ttype + 1);
+                RuntimeUtils.setSize(typeToStringLiteralList, ttype + 1);
             }
             typeToStringLiteralList.set(ttype, lit);
 
@@ -1111,9 +1111,9 @@ public class Grammar : AttributeResolver
 
         if (ttype >= typeToTokenList.Count)
         {
-            Utils.setSize(typeToTokenList, ttype + 1);
+            RuntimeUtils.setSize(typeToTokenList, ttype + 1);
         }
-        String prevToken = typeToTokenList.get(ttype);
+        String prevToken = typeToTokenList[ttype];
         if (prevToken == null || prevToken[(0)] == '\'')
         {
             // only record if nothing there before or if thing before was a literal
@@ -1160,7 +1160,7 @@ public class Grammar : AttributeResolver
             return prev;
         }
 
-        channelNameToValueMap.put(name, value);
+        channelNameToValueMap[name] = value;
         setChannelNameForValue(value, name);
         maxChannelType = Math.Max(maxChannelType, value);
         return value;
@@ -1180,13 +1180,13 @@ public class Grammar : AttributeResolver
     {
         if (channelValue >= channelValueToNameList.Count)
         {
-            Utils.setSize(channelValueToNameList, channelValue + 1);
+            RuntimeUtils.setSize(channelValueToNameList, channelValue + 1);
         }
 
-        String prevChannel = channelValueToNameList.get(channelValue);
+        String prevChannel = channelValueToNameList[channelValue];
         if (prevChannel == null)
         {
-            channelValueToNameList.set(channelValue, name);
+            channelValueToNameList[channelValue]= name;
         }
     }
 
@@ -1242,7 +1242,7 @@ public class Grammar : AttributeResolver
         return 0;
     }
 
-    public org.antlr.runtime.TokenStream getTokenStream()
+    public TokenStream getTokenStream()
     {
         if (ast != null) return ast.tokenStream;
         return null;
@@ -1255,7 +1255,7 @@ public class Grammar : AttributeResolver
     /** Is id a valid token name? Does id start with an uppercase letter? */
     public static bool isTokenName(String id)
     {
-        return char.isUpperCase(id.charAt(0));
+        return char.IsUpper(id[(0)]);
     }
 
     public String getTypeString()
@@ -1424,7 +1424,7 @@ public class Grammar : AttributeResolver
                         tokenRegion = Interval.of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
                     }
                 }
-                stateToGrammarRegionMap.put(n.atnState.stateNumber, tokenRegion);
+                stateToGrammarRegionMap[n.atnState.stateNumber]= tokenRegion;
             }
         }
         return stateToGrammarRegionMap;

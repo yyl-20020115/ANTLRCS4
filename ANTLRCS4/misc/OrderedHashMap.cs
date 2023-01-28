@@ -25,8 +25,8 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 
     //@Override
     public void putAll(Dictionary<K, V> m) {
-		foreach (Map.Entry<K,V> entry in m.entrySet()) {
-			put(entry.getKey(), entry.getValue());
+		foreach (var entry in m) {
+			put(entry.Key, entry.Value);
 		}
 	}
 

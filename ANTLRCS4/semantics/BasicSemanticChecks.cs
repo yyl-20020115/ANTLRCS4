@@ -5,6 +5,7 @@
  */
 
 using org.antlr.runtime.tree;
+using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
@@ -296,7 +297,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		File f = new File(fullyQualifiedName);
 		String fileName = f.getName();
 		if ( g.originalGrammar!=null ) return; // don't warn about diff if this is implicit lexer
-		if ( !Utils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
+		if ( !RuntimeUtils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
 		     !fileName.Equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
 			g.tool.errMgr.grammarError(ErrorType.FILE_AND_GRAMMAR_NAME_DIFFER,
 									   fileName, nameToken, nameToken.getText(), fileName);
@@ -338,7 +339,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if ( ruleID.getInputStream()!=null ) {
 			fileName = ruleID.getInputStream().getSourceName();
 		}
-		if ( g.isLexer() && char.isLowerCase(ruleID.getText()[(0)]) ) {
+		if ( g.isLexer() && char.IsLower(ruleID.getText()[(0)]) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULES_NOT_ALLOWED,
 									   fileName, ruleID, ruleID.getText());
 		}
@@ -352,7 +353,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 
 	void checkInvalidRuleRef(Token ruleID) {
 		String fileName = ruleID.getInputStream().getSourceName();
-		if ( g.isLexer() && char.isLowerCase(ruleID.getText().charAt(0)) ) {
+		if ( g.isLexer() && char.IsLower(ruleID.getText().charAt(0)) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
 									   fileName, ruleID, ruleID.getText(), currentRuleName);
 		}
@@ -480,7 +481,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if (optionName.Equals(Grammar.caseInsensitiveOptionName)) {
 			String valueText = valueAST.getText();
 			if (valueText.Equals("true") || valueText.Equals("false")) {
-				bool currentValue = Boolean.parseBoolean(valueText);
+				bool currentValue = bool.TryParse(valueText,out var ret1)&&ret1;
 				if (parentType == ANTLRParser.GRAMMAR) {
 					grammarCaseInsensitive = currentValue;
 				}

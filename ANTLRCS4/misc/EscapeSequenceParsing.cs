@@ -44,7 +44,7 @@ public abstract class EscapeSequenceParsing {
 		public override String ToString() {
 			return String.format(
 					"%s type=%s codePoint=%d propertyIntervalSet=%s parseLength=%d",
-					base.toString(),
+					base.ToString(),
 					type,
 					codePoint,
 					propertyIntervalSet,
