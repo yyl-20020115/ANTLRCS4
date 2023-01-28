@@ -1781,7 +1781,7 @@ public class TestPerformance
                 BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
                 int sllPrediction = sllPredictions.NextSetBit(0);
                 BitSet llPredictions = getConflictingAlts(ambigAlts, configs);
-                int llPrediction = llPredictions.cardinality() == 0 ? ATN.INVALID_ALT_NUMBER : llPredictions.NextSetBit(0);
+                int llPrediction = llPredictions.Cardinality() == 0 ? ATN.INVALID_ALT_NUMBER : llPredictions.NextSetBit(0);
                 if (sllPrediction != llPrediction)
                 {
                     ((StatisticsParserATNSimulator)recognizer.getInterpreter()).nonSll[dfa.decision]++;

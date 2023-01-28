@@ -232,10 +232,10 @@ public class TestAmbigParseTrees {
 															  ambiguityInfo.stopIndex,
 															  ruleIndex);
 		Assert.AreEqual(expectedAmbigAlts, ambiguityInfo.ambigAlts.ToString());
-		Assert.AreEqual(ambiguityInfo.ambigAlts.cardinality(), ambiguousParseTrees.size());
+		Assert.AreEqual(ambiguityInfo.ambigAlts.Cardinality(), ambiguousParseTrees.Count);
 
-		for (int i = 0; i<ambiguousParseTrees.size(); i++) {
-			ParserRuleContext t = ambiguousParseTrees.get(i);
+		for (int i = 0; i<ambiguousParseTrees.Count; i++) {
+			ParserRuleContext t = ambiguousParseTrees[i];
 			Assert.AreEqual(expectedParseTrees[i], Trees.toStringTree(t, nodeTextProvider));
 		}
 	}

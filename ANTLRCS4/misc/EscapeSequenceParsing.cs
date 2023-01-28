@@ -84,7 +84,7 @@ public abstract class EscapeSequenceParsing {
 		offset++;
 		int escaped = s.codePointAt(offset);
 		// Move past escaped code point
-		offset += Character.charCount(escaped);
+		offset += char.charCount(escaped);
 		if (escaped == 'u') {
 			// \\u{1} is the shortest we support
 			if (offset + 3 > s.length()) {
@@ -109,7 +109,7 @@ public abstract class EscapeSequenceParsing {
 				offset = hexEndOffset;
 			}
 			int codePointValue = CharSupport.parseHexValue(s, hexStartOffset, hexEndOffset);
-			if (codePointValue == -1 || codePointValue > Character.MAX_CODE_POINT) {
+			if (codePointValue == -1 || codePointValue > char.MAX_CODE_POINT) {
 				return invalid(startOff, startOff+6-1);
 			}
 			return new Result(

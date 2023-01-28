@@ -338,7 +338,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		if ( ruleID.getInputStream()!=null ) {
 			fileName = ruleID.getInputStream().getSourceName();
 		}
-		if ( g.isLexer() && Character.isLowerCase(ruleID.getText()[(0)]) ) {
+		if ( g.isLexer() && char.isLowerCase(ruleID.getText()[(0)]) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULES_NOT_ALLOWED,
 									   fileName, ruleID, ruleID.getText());
 		}
@@ -352,7 +352,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 
 	void checkInvalidRuleRef(Token ruleID) {
 		String fileName = ruleID.getInputStream().getSourceName();
-		if ( g.isLexer() && Character.isLowerCase(ruleID.getText().charAt(0)) ) {
+		if ( g.isLexer() && char.isLowerCase(ruleID.getText().charAt(0)) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
 									   fileName, ruleID, ruleID.getText(), currentRuleName);
 		}

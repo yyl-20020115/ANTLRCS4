@@ -1253,7 +1253,7 @@ public class Grammar : AttributeResolver
     /** Is id a valid token name? Does id start with an uppercase letter? */
     public static bool isTokenName(String id)
     {
-        return Character.isUpperCase(id.charAt(0));
+        return char.isUpperCase(id.charAt(0));
     }
 
     public String getTypeString()

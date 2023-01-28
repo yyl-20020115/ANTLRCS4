@@ -391,8 +391,8 @@ public class Tool {
         {
             RuleAST ruleAST = ruleToAST.get(@ref.getText());
             String fileName = @ref.getToken().getInputStream().getSourceName();
-            if (Character.isUpperCase(currentRuleName[(0)]) &&
-                Character.isLowerCase(@ref.getText()[(0)]))
+            if (char.isUpperCase(currentRuleName[(0)]) &&
+                char.isLowerCase(@ref.getText()[(0)]))
             {
                 badref = true;
                 errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,

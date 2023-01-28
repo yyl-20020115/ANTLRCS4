@@ -162,7 +162,7 @@ public class ScopeParser {
 		for (int i = start; i < decl.length(); i++) {
 			char ch = decl.charAt(i);
 			// if we haven't found the end yet, keep going
-			if (!(Character.isLetterOrDigit(ch) || ch == '_')) {
+			if (!(char.isLetterOrDigit(ch) || ch == '_')) {
 				stop = i;
 				break;
 			}
@@ -196,7 +196,7 @@ public class ScopeParser {
 		// look for start of name
 		for (int i = 0; i < namePartEnd; ++i) {
 			char ch = decl.charAt(i);
-			if (Character.isLetterOrDigit(ch) || ch == '_') {
+			if (char.isLetterOrDigit(ch) || ch == '_') {
 				start = i;
 				break;
 			}
@@ -210,7 +210,7 @@ public class ScopeParser {
 		// look for stop of name
 		for (int i = start; i < namePartEnd; ++i) {
 			char ch = decl.charAt(i);
-			if (!(Character.isLetterOrDigit(ch) || ch == '_')) {
+			if (!(char.isLetterOrDigit(ch) || ch == '_')) {
 				stop = i;
 				break;
 			}
@@ -318,7 +318,7 @@ public class ScopeParser {
 					if (c == separatorChar && targetChar == -1) {
 						String arg = actionText.substring(last, p);
 						int index = last;
-						while (index < p && Character.isWhitespace(actionText.charAt(index))) {
+						while (index < p && char.isWhitespace(actionText.charAt(index))) {
 							index++;
 						}
 						//Console.Out.WriteLine("arg="+arg);

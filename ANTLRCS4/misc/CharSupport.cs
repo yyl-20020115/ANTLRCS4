@@ -51,8 +51,8 @@ public class CharSupport {
 			if (charValueEscape != null) {
 				result = charValueEscape;
 			}
-			else if (Character.UnicodeBlock.of((char) c) == Character.UnicodeBlock.BASIC_LATIN &&
-					!Character.isISOControl((char) c)) {
+			else if (char.UnicodeBlock.of((char) c) == char.UnicodeBlock.BASIC_LATIN &&
+					!char.isISOControl((char) c)) {
 				if (c == '\\') {
 					result = "\\\\";
 				}
@@ -60,7 +60,7 @@ public class CharSupport {
 					result = "\\'";
 				}
 				else {
-					result = Character.toString((char) c);
+					result = char.toString((char) c);
 				}
 			}
 			else if (c <= 0xFFFF) {
@@ -98,7 +98,7 @@ public class CharSupport {
 							if (charAt == '}') {
 								break;
 							}
-							if (!Character.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
+							if (!char.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
 								return null; // invalid escape sequence.
 							}
 						}
@@ -107,7 +107,7 @@ public class CharSupport {
 						for (end = i + 2; end < i + 6; end++) {
 							if ( end>n ) return null; // invalid escape sequence.
 							char charAt = literal.charAt(end);
-							if (!Character.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
+							if (!char.isDigit(charAt) && !(charAt >= 'a' && charAt <= 'f') && !(charAt >= 'A' && charAt <= 'F')) {
 								return null; // invalid escape sequence.
 							}
 						}
@@ -179,7 +179,7 @@ public class CharSupport {
 	}
 
 	public static String capitalize(String s) {
-		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+		return char.ToUpper(s[(0)]) + s.Substring(1);
 	}
 
 	public static String getIntervalSetEscapedString(IntervalSet intervalSet) {

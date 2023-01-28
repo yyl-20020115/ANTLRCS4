@@ -320,7 +320,7 @@ public class LexerATNFactory : ParserATNFactory {
 			int codePoint = s.codePointAt(i);
 			prev.addTransition(createTransition(right, codePoint, codePoint, stringLiteralAST));
 			prev = right;
-			i += Character.charCount(codePoint);
+			i += char.charCount(codePoint);
 		}
 		stringLiteralAST.atnState = left;
 		return new Handle(left, right);
@@ -409,7 +409,7 @@ public class LexerATNFactory : ParserATNFactory {
 				return new IntervalSet();
 			}
 			int c = chars.codePointAt(i);
-			int offset = Character.charCount(c);
+			int offset = char.charCount(c);
 			if (c == '\\') {
 				EscapeSequenceParsing.Result escapeParseResult =
 					EscapeSequenceParsing.parseEscape(chars, i);

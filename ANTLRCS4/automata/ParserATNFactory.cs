@@ -355,23 +355,23 @@ public class ParserATNFactory : ATNFactory {
 	public Handle block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts) {
 		if ( ebnfRoot==null ) {
 			if ( alts.Count==1 ) {
-				Handle h = alts.get(0);
+				Handle h = alts[0];
 				blkAST.atnState = h.left;
 				return h;
 			}
-			BlockStartState start = newState(BasicBlockStartState, blkAST);
-			if ( alts.size()>1 ) atn.defineDecisionState(start);
+			BlockStartState start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
+			if ( alts.Count>1 ) atn.defineDecisionState(start);
 			return makeBlock(start, blkAST, alts);
 		}
 		switch ( ebnfRoot.getType() ) {
 			case ANTLRParser.OPTIONAL :
-				BlockStartState start = newState(BasicBlockStartState, blkAST);
+				BlockStartState start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
 				atn.defineDecisionState(start);
 				Handle h = makeBlock(start, blkAST, alts);
 				return optional(ebnfRoot, h);
 			case ANTLRParser.CLOSURE :
-				BlockStartState star = newState(StarBlockStartState, ebnfRoot);
-				if ( alts.size()>1 ) atn.defineDecisionState(star);
+				BlockStartState star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
+				if ( alts.Count>1 ) atn.defineDecisionState(star);
 				h = makeBlock(star, blkAST, alts);
 				return star(ebnfRoot, h);
 			case ANTLRParser.POSITIVE_CLOSURE :
@@ -385,7 +385,7 @@ public class ParserATNFactory : ATNFactory {
 
 
 	protected Handle makeBlock(BlockStartState start, BlockAST blkAST, List<Handle> alts) {
-		BlockEndState end = newState(typeof(BlockEndState), blkAST);
+		BlockEndState end = newState<BlockEndState>(typeof(BlockEndState), blkAST);
 		start.endState = end;
         foreach (Handle alt in alts) {
 			// hook alts up to decision block

@@ -27,7 +27,7 @@ public class UnicodeEscapes {
 			case "Cpp":
 			case "Go":
 			case "PHP":
-				String format = Character.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
+				String format = char.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
 				sb.Append(String.format(format, codePoint));
 				break;
 			case "Swift":
@@ -37,11 +37,11 @@ public class UnicodeEscapes {
 			case "JavaScript":
 			case "Dart":
 			default:
-				if (Character.isSupplementaryCodePoint(codePoint)) {
+				if (char.isSupplementaryCodePoint(codePoint)) {
 					// char is not an 'integral' type, so we have to explicitly convert
 					// to int before passing to the %X formatter or else it throws.
-					sb.Append(String.format("\\u%04X", (int)Character.highSurrogate(codePoint)));
-					sb.Append(String.format("\\u%04X", (int)Character.lowSurrogate(codePoint)));
+					sb.Append(String.format("\\u%04X", (int)char.highSurrogate(codePoint)));
+					sb.Append(String.format("\\u%04X", (int)char.lowSurrogate(codePoint)));
 				}
 				else {
 					sb.Append(String.format("\\u%04X", codePoint));
