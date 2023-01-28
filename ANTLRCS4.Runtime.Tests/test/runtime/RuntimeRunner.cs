@@ -11,25 +11,25 @@ namespace org.antlr.v4.test.runtime;
 public abstract class RuntimeRunner {
 	public abstract String getLanguage();
 
-	protected String getExtension() { return getLanguage().ToLower(); }
+	protected virtual String getExtension() { return getLanguage().ToLower(); }
 
-	protected String getTitleName() { return getLanguage(); }
+	protected virtual String getTitleName() { return getLanguage(); }
 
-	protected String getTestFileName() { return "Test"; }
+	protected virtual String getTestFileName() { return "Test"; }
 
-	protected String getLexerSuffix() { return "Lexer"; }
+	protected virtual String getLexerSuffix() { return "Lexer"; }
 
-	protected String getParserSuffix() { return "Parser"; }
+	protected virtual String getParserSuffix() { return "Parser"; }
 
-	protected String getBaseListenerSuffix() { return "BaseListener"; }
+	protected virtual String getBaseListenerSuffix() { return "BaseListener"; }
 
-	protected String getListenerSuffix() { return "Listener"; }
+	protected virtual String getListenerSuffix() { return "Listener"; }
 
-	protected String getBaseVisitorSuffix() { return "BaseVisitor"; }
+	protected virtual String getBaseVisitorSuffix() { return "BaseVisitor"; }
 
-	protected String getVisitorSuffix() { return "Visitor"; }
+	protected virtual String getVisitorSuffix() { return "Visitor"; }
 
-	protected String grammarNameToFileName(String grammarName) { return grammarName; }
+	protected virtual String grammarNameToFileName(String grammarName) { return grammarName; }
 
 	private static String runtimeToolPath;
 	private static String compilerPath;
@@ -38,8 +38,8 @@ public abstract class RuntimeRunner {
 		if (compilerPath == null) {
 			compilerPath = getCompilerName();
 			if (compilerPath != null) {
-				String compilerPathFromProperty = System.getProperty(getPropertyPrefix() + "-compiler");
-				if (compilerPathFromProperty != null && compilerPathFromProperty.length() > 0) {
+				String compilerPathFromProperty = Environment.GetEnvironmentVariable(getPropertyPrefix() + "-compiler");
+				if (compilerPathFromProperty != null && compilerPathFromProperty.Length > 0) {
 					compilerPath = compilerPathFromProperty;
 				}
 			}
@@ -52,8 +52,8 @@ public abstract class RuntimeRunner {
 		if (runtimeToolPath == null) {
 			runtimeToolPath = getRuntimeToolName();
 			if (runtimeToolPath != null) {
-				String runtimeToolPathFromProperty = System.getProperty(getPropertyPrefix() + "-exec");
-				if (runtimeToolPathFromProperty != null && runtimeToolPathFromProperty.length() > 0) {
+				String runtimeToolPathFromProperty = Environment.GetEnvironmentVariable(getPropertyPrefix() + "-exec");
+				if (runtimeToolPathFromProperty != null && runtimeToolPathFromProperty.Length > 0) {
 					runtimeToolPath = runtimeToolPathFromProperty;
 				}
 			}
@@ -72,7 +72,7 @@ public abstract class RuntimeRunner {
 
 	protected String[] getExtraRunArgs() { return null; }
 
-	protected Dictionary<String, String> getExecEnvironment() { return null; }
+	protected virtual Dictionary<String, String> getExecEnvironment() { return null; }
 
 	protected String getPropertyPrefix() {
 		return "antlr-" + getLanguage().ToLower();
@@ -84,10 +84,10 @@ public abstract class RuntimeRunner {
 
 	private bool saveTestDir;
 
-	protected readonly Path tempTestDir;
+	protected readonly string tempTestDir;
 
-	protected RuntimeRunner() {
-		this(null, false);
+	protected RuntimeRunner(): this(null, false)
+    {
 	}
 
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
@@ -117,10 +117,11 @@ public abstract class RuntimeRunner {
 		public Exception exception;
 	}
 
-	private static readonly HashMap<String, InitializationStatus> runtimeInitializationStatuses = new HashMap<>();
+	private static readonly Dictionary<String, InitializationStatus> runtimeInitializationStatuses = 
+		new ();
 
 	static RuntimeRunner() {
-		cacheDirectory = new File(System.getProperty("java.io.tmpdir"), "ANTLR-runtime-testsuite-cache").getAbsolutePath();
+		cacheDirectory = Environment.CurrentDirectory;// new File(System.getProperty("java.io.tmpdir"), "ANTLR-runtime-testsuite-cache").getAbsolutePath();
 	}
 
 	protected String getCachePath() {
@@ -128,7 +129,7 @@ public abstract class RuntimeRunner {
 	}
 
 	public static String getCachePath(String language) {
-		return cacheDirectory + FileSeparator + language;
+		return Path.Combine(cacheDirectory ,  language);
 	}
 
 	protected String getRuntimePath() {
@@ -136,19 +137,19 @@ public abstract class RuntimeRunner {
 	}
 
 	public static String getRuntimePath(String language) {
-		return runtimePath.ToString() + FileSeparator + language;
+		return Path.Combine(runtimePath, language);
 	}
 
 	public State run(RunOptions runOptions) {
-		List<String> options = new ;
+		List<String> options = new ();
 		if (runOptions.useVisitor) {
-			options.add("-visitor");
+			options.Add("-visitor");
 		}
 		if (runOptions.superClass != null && runOptions.superClass.length() > 0) {
-			options.add("-DsuperClass=" + runOptions.superClass);
+			options.Add("-DsuperClass=" + runOptions.superClass);
 		}
 		ErrorQueue errorQueue = Generator.antlrOnString(getTempDirPath(), getLanguage(),
-				runOptions.grammarFileName, runOptions.grammarStr, false, options.toArray(new String[0]));
+				runOptions.grammarFileName, runOptions.grammarStr, false, options.ToArray());
 
 		List<GeneratedFile> generatedFiles = getGeneratedFiles(runOptions);
 		GeneratedState generatedState = new GeneratedState(errorQueue, generatedFiles, null);
@@ -274,15 +275,15 @@ public abstract class RuntimeRunner {
 			List<String> args = new ();
 			String runtimeToolPath = getRuntimeToolPath();
 			if (runtimeToolPath != null) {
-				args.add(runtimeToolPath);
+				args.Add(runtimeToolPath);
 			}
 			String[] extraRunArgs = getExtraRunArgs();
 			if (extraRunArgs != null) {
-				args.addAll(Arrays.asList(extraRunArgs));
+				args.AddRange((extraRunArgs));
 			}
-			args.add(getExecFileName());
-			args.add("input");
-			ProcessorResult result = Processor.run(args.toArray(new String[0]), getTempDirPath(), getExecEnvironment());
+			args.Add(getExecFileName());
+			args.Add("input");
+			ProcessorResult result = Processor.run(args.ToArray(), getTempDirPath(), getExecEnvironment());
 			output = result.output;
 			errors = result.errors;
 		} catch (Exception e) {

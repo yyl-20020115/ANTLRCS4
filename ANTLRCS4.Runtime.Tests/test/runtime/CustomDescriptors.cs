@@ -9,22 +9,22 @@ using System.Text;
 namespace org.antlr.v4.test.runtime;
 
 public class CustomDescriptors {
-	public static readonly HashMap<String, RuntimeTestDescriptor[]> descriptors;
-	private static readonly URI uri;
+	public static readonly Dictionary<String, RuntimeTestDescriptor[]> descriptors;
+	private static readonly string uri;
 
 	static CustomDescriptors(){
-		uri = Paths.get(RuntimeTestUtils.runtimeTestsuitePath.ToString(),
+		uri = Path.Combine(RuntimeTestUtils.runtimeTestsuitePath.ToString(),
 						"test", "org", "antlr", "v4", "test", "runtime", "CustomDescriptors.java").toUri();
 
-		descriptors = new HashMap<>();
-		descriptors.put("LexerExec",
+		descriptors = new ();
+		descriptors.Add("LexerExec",
 				new RuntimeTestDescriptor[]{
 						getLineSeparatorLfDescriptor(),
 						getLineSeparatorCrLfDescriptor(),
 						getLargeLexerDescriptor(),
 						getAtnStatesSizeMoreThan65535Descriptor()
 				});
-		descriptors.put("ParserExec",
+		descriptors.Add("ParserExec",
 				new RuntimeTestDescriptor[] {
 						getMultiTokenAlternativeDescriptor()
 				});
@@ -103,7 +103,7 @@ public class CustomDescriptors {
 		// I tried playing around with different sizes, and I think 1002 works for Go but 1003 does not;
 		// the executing lexer gets a token syntax error for T208 or something like that
 		int tokensCount = 1024;
-		String suffix = String.join("", Collections.nCopies(70, "_"));
+		String suffix = String.Join("", Collections.nCopies(70, "_"));
 
 		String grammarName = "L";
 		StringBuilder grammar = new StringBuilder();
@@ -120,7 +120,7 @@ public class CustomDescriptors {
 			input.Append(value).Append('\n');
 
 			startOffset = stopOffset + 2;
-			stopOffset += value.length() + 1;
+			stopOffset += value.Length + 1;
 
 			output.Append("[@").Append(i).Append(',').Append(startOffset).Append(':').Append(stopOffset)
 					.Append("='").Append(value).Append("',<").Append(i + 1).Append(">,").Append(i + 1)
@@ -158,16 +158,16 @@ public class CustomDescriptors {
 		StringBuilder output = new StringBuilder();
 
 		for (int i = 0; i < tokensCount; i++) {
-			String currentToken = "T" + i;
-			rule.Append(currentToken);
+			String _currentToken = "T" + i;
+			rule.Append(_currentToken);
 			if (i < tokensCount - 1) {
 				rule.Append(" | ");
 			} else {
 				rule.Append(";");
 			}
-			tokens.Append(currentToken).Append(": '").Append(currentToken).Append("';\n");
-			input.Append(currentToken).Append(" ");
-			output.Append(currentToken);
+			tokens.Append(_currentToken).Append(": '").Append(_currentToken).Append("';\n");
+			input.Append(_currentToken).Append(" ");
+			output.Append(_currentToken);
 		}
 		String currentToken = "T" + tokensCount;
 		tokens.Append(currentToken).Append(": '").Append(currentToken).Append("';\n");

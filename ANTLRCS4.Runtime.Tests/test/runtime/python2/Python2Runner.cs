@@ -23,7 +23,7 @@ public class Python2Runner : PythonRunner {
 	}
 
 	////@Override
-	public override Dictionary<String, String> getExecEnvironment() {
+	protected override Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

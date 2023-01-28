@@ -25,7 +25,7 @@ public abstract class RuntimeTests {
 	static RuntimeTests(){
 		File descriptorsDir = new File(Paths.get(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
 		File[] directoryListing = descriptorsDir.listFiles();
-		assert directoryListing != null;
+		//assert directoryListing != null;
 		for (File directory : directoryListing) {
 			String groupName = directory.getName();
 			if (groupName.startsWith(".")) {
@@ -35,7 +35,7 @@ public abstract class RuntimeTests {
 			List<RuntimeTestDescriptor> descriptors = new ArrayList<>();
 
 			File[] descriptorFiles = directory.listFiles();
-			assert descriptorFiles != null;
+			//assert descriptorFiles != null;
 			for (File descriptorFile : descriptorFiles) {
 				String name = descriptorFile.getName().replace(".txt", "");
 				if (name.startsWith(".")) {
@@ -54,7 +54,7 @@ public abstract class RuntimeTests {
 			testDescriptors.put(groupName, descriptors.ToArray());
 		}
 
-		for (String key : CustomDescriptors.descriptors.keySet()) {
+		foreach (String key in CustomDescriptors.descriptors.Keys) {
 			RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
 			RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
 			if (existedDescriptors != null) {
@@ -84,8 +84,8 @@ public abstract class RuntimeTests {
 				}));
 			}
 
-			Path descriptorGroupPath = Paths.get(RuntimeTestUtils.resourcePath.ToString(), "descriptors", group);
-			result.add(dynamicContainer(group, descriptorGroupPath.toUri(), Arrays.stream(descriptorTests.toArray(new DynamicNode[0]))));
+			string descriptorGroupPath = Paths.get(RuntimeTestUtils.resourcePath.ToString(), "descriptors", group);
+			result.add(dynamicContainer(group, descriptorGroupPath, Arrays.stream(descriptorTests.toArray(new DynamicNode[0]))));
 		}
 
 		return result;

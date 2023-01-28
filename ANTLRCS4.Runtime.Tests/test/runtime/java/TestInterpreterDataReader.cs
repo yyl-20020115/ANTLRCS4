@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.test.runtime.java;
 
@@ -56,22 +57,22 @@ public class TestInterpreterDataReader {
         List<String> channels = castList(channelsField.get(interpreterData), String);
         List<String> modes = castList(modesField.get(interpreterData), String);
 
-		assertEquals(6, vocabulary.getMaxTokenType());
-		assertArrayEquals(new String[]{"s","expr"}, ruleNames.toArray());
+		Assert.AreEqual(6, vocabulary.getMaxTokenType());
+		assertArrayEquals(new String[]{"s","expr"}, ruleNames.ToArray());
 		assertArrayEquals(new String[]{"", "", "'*'", "'/'", "'+'", "'-'", ""}, literalNames);
 		assertArrayEquals(new String[]{"", "INT", "MUL", "DIV", "ADD", "SUB", "WS"}, symbolicNames);
-		assertNull(channels);
-		assertNull(modes);
+		Assert.IsNull(channels);
+		Assert.IsNull(modes);
 
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		assertEquals(ATNDeserializer.SERIALIZED_VERSION, serialized.get(0));
+		Assert.AreEqual(ATNDeserializer.SERIALIZED_VERSION, serialized.get(0));
     }
 
-    private <T> List<T> castList(Object obj, Class<T> clazz) {
-        List<T> result = new ArrayList<T>();
-        if (obj instanceof List<?>) {
-            for (Object o : (List<?>) obj) {
-                result.add(clazz.cast(o));
+    private List<T> castList<T>(Object obj, Type clazz) {
+        List<T> result = new ();
+        if (obj is List<T> list) {
+            foreach (var o in list) {
+                result.Add((T)o);
             }
             return result;
         }

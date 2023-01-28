@@ -50,14 +50,14 @@ public class RuntimeTestDescriptor {
 
 	public readonly String[] skipTargets;
 
-	public readonly URI uri;
+	public readonly string uri;
 
 	public RuntimeTestDescriptor(GrammarType testType, String name, String notes,
 								 String input, String output, String errors,
 								 String startRule,
 								 String grammarName, String grammar, List<Pair<String, String>> slaveGrammars,
 								 bool showDFA, bool showDiagnosticErrors, String[] skipTargets,
-								 URI uri) {
+								 string uri) {
 		this.testType = testType;
 		this.name = name;
 		this.notes = notes;
@@ -80,7 +80,7 @@ public class RuntimeTestDescriptor {
 	}
 
 	//@Override
-	public String ToString() {
+	public object String ToString() {
 		return name;
 	}
 }

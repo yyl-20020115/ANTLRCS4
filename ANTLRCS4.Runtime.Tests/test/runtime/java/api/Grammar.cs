@@ -5,7 +5,4 @@
  */
 namespace org.antlr.v4.test.runtime.java.api
 {
-    internal class Grammar
-    {
-    }
 }

@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.test.runtime;
+using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
@@ -66,7 +67,7 @@ public class RuntimeTestDescriptorParser {
 		String currentField = null;
 		StringBuilder currentValue = new StringBuilder();
 
-		List<Pair<String, String>> pairs = new ArrayList<>();
+		List<Pair<String, String>> pairs = new ();
 		String[] lines = text.Split("\r?\n");
 
 		for (String line : lines) {

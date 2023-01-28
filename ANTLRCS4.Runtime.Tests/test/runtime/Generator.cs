@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.runtime;
 
 public class Generator {
@@ -27,27 +29,26 @@ public class Generator {
 										   bool defaultListener,
 										   params String[] extraOptions)
 	{
-		List<String> options = new ();
-		Collections.addAll(options, extraOptions);
+		List<String> options = new (extraOptions);
 		if ( targetName!=null ) {
-			options.add("-Dlanguage="+targetName);
+			options.Add("-Dlanguage="+targetName);
 		}
-		if ( !options.contains("-o") ) {
-			options.add("-o");
-			options.add(workdir);
+		if ( !options.Contains("-o") ) {
+			options.Add("-o");
+			options.Add(workdir);
 		}
-		if ( !options.contains("-lib") ) {
-			options.add("-lib");
-			options.add(workdir);
+		if ( !options.Contains("-lib") ) {
+			options.Add("-lib");
+			options.Add(workdir);
 		}
-		if ( !options.contains("-encoding") ) {
-			options.add("-encoding");
-			options.add("UTF-8");
+		if ( !options.Contains("-encoding") ) {
+			options.Add("-encoding");
+			options.Add("UTF-8");
 		}
-		options.add(new File(workdir,grammarFileName).ToString());
+		options.Add(new File(workdir,grammarFileName).ToString());
 
-		 String[] optionsA = new String[options.size()];
-		options.toArray(optionsA);
+		 String[] optionsA = new String[options.Count];
+		options.ToArray();
 		Tool antlr = new Tool(optionsA);
 		ErrorQueue equeue = new ErrorQueue(antlr);
 		antlr.addListener(equeue);
@@ -62,7 +63,7 @@ public class Generator {
 			for (int i = 0; i < equeue.errors.size(); i++) {
 				ANTLRMessage msg = equeue.errors.get(i);
 				ST msgST = antlr.errMgr.getMessageTemplate(msg);
-				errors.add(msgST.render());
+				errors.Add(msgST.render());
 			}
 		}
 		if ( !defaultListener && !equeue.warnings.isEmpty() ) {

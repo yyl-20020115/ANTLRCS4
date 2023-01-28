@@ -12,18 +12,18 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromBMPStringHasExpectedSize() {
 		CharStream s = CharStreams.fromString("hello");
-		assertEquals(5, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello", s.ToString());
+		Assert.AreEqual(5, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello", s.ToString());
 	}
 
 	[TestMethod]
 	public void fromSMPStringHasExpectedSize() {
 		CharStream s = CharStreams.fromString(
 				"hello \uD83C\uDF0E");
-		assertEquals(7, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \uD83C\uDF0E", s.ToString());
+		Assert.AreEqual(7, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
 	}
 
 	[TestMethod]
@@ -31,10 +31,10 @@ public class TestCharStreams {
 		Path test = new File(tempDir.ToString(), "test").toPath();
 		Files.write(test, "hello".getBytes(StandardCharsets.UTF_8));
 		CharStream s = CharStreams.fromPath(test);
-		assertEquals(5, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello", s.ToString());
-		assertEquals(test.ToString(), s.getSourceName());
+		Assert.AreEqual(5, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello", s.ToString());
+		Assert.AreEqual(test.ToString(), s.getSourceName());
 	}
 
 	[TestMethod]
@@ -42,10 +42,10 @@ public class TestCharStreams {
 		Path p = getTestFile(tempDir);
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
 		CharStream s = CharStreams.fromPath(p);
-		assertEquals(7, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \uD83C\uDF0E", s.ToString());
-		assertEquals(p.ToString(), s.getSourceName());
+		Assert.AreEqual(7, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
+		Assert.AreEqual(p.ToString(), s.getSourceName());
 	}
 
 	[TestMethod]
@@ -54,9 +54,9 @@ public class TestCharStreams {
 		Files.write(p, "hello".getBytes(StandardCharsets.UTF_8));
 		using (InputStream @is = Files.newInputStream(p)) {
 			CharStream s = CharStreams.fromStream(@is);
-			assertEquals(5, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello", s.ToString());
+			Assert.AreEqual(5, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello", s.ToString());
 		}
 	}
 
@@ -66,9 +66,9 @@ public class TestCharStreams {
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
 		try (InputStream is = Files.newInputStream(p)) {
 			CharStream s = CharStreams.fromStream(is);
-			assertEquals(7, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello \uD83C\uDF0E", s.ToString());
+			Assert.AreEqual(7, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
 		}
 	}
 
@@ -79,10 +79,10 @@ public class TestCharStreams {
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
-			assertEquals(5, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello", s.ToString());
-			assertEquals("foo", s.getSourceName());
+			Assert.AreEqual(5, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello", s.ToString());
+			Assert.AreEqual("foo", s.getSourceName());
 		}
 	}
 
@@ -93,10 +93,10 @@ public class TestCharStreams {
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
-			assertEquals(7, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello \uD83C\uDF0E", s.ToString());
-			assertEquals("foo", s.getSourceName());
+			Assert.AreEqual(7, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
+			Assert.AreEqual("foo", s.getSourceName());
 		}
 	}
 
@@ -109,9 +109,9 @@ public class TestCharStreams {
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
-			assertEquals(4, s.size());
-			assertEquals(0, s.index());
-			assertEquals("\uFFFD\uFFFD\uFFFD\uFFFD", s.ToString());
+			Assert.AreEqual(4, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("\uFFFD\uFFFD\uFFFD\uFFFD", s.ToString());
 		}
 	}
 
@@ -140,21 +140,21 @@ public class TestCharStreams {
 					8,
 					CodingErrorAction.REPLACE,
 					"foo");
-			assertEquals(7, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello \uD83C\uDF0E", s.ToString());
+			Assert.AreEqual(7, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
 		}
 	}
 
 	[TestMethod]
 	public void fromFileName(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
 		CharStream s = CharStreams.fromFileName(p.ToString());
-		assertEquals(7, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \uD83C\uDF0E", s.ToString());
-		assertEquals(p.ToString(), s.getSourceName());
+		Assert.AreEqual(7, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
+		Assert.AreEqual(p.ToString(), s.getSourceName());
 
 	}
 
@@ -163,10 +163,10 @@ public class TestCharStreams {
 		Path p = getTestFile(tempDir);
 		Files.write(p, "hello \u00CA\u00FE".getBytes(StandardCharsets.ISO_8859_1));
 		CharStream s = CharStreams.fromFileName(p.ToString(), StandardCharsets.ISO_8859_1);
-		assertEquals(8, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \u00CA\u00FE", s.ToString());
-		assertEquals(p.ToString(), s.getSourceName());
+		Assert.AreEqual(8, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \u00CA\u00FE", s.ToString());
+		Assert.AreEqual(p.ToString(), s.getSourceName());
 	}
 
 	[TestMethod]
@@ -175,9 +175,9 @@ public class TestCharStreams {
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
 		using (Reader r = Files.newBufferedReader(p, StandardCharsets.UTF_8)) {
 			CharStream s = CharStreams.fromReader(r);
-			assertEquals(7, s.size());
-			assertEquals(0, s.index());
-			assertEquals("hello \uD83C\uDF0E", s.ToString());
+			Assert.AreEqual(7, s.size());
+			Assert.AreEqual(0, s.index());
+			Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
 		}
 	}
 
@@ -186,10 +186,10 @@ public class TestCharStreams {
 		Path p = getTestFile(tempDir);
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_16LE));
 		CharStream s = CharStreams.fromPath(p, StandardCharsets.UTF_16LE);
-		assertEquals(7, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \uD83C\uDF0E", s.ToString());
-		assertEquals(p.ToString(), s.getSourceName());
+		Assert.AreEqual(7, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
+		Assert.AreEqual(p.ToString(), s.getSourceName());
 	}
 
 	[TestMethod]
@@ -199,13 +199,13 @@ public class TestCharStreams {
 		Charset c = Charset.forName("UTF-32LE");
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(c));
 		CharStream s = CharStreams.fromPath(p, c);
-		assertEquals(7, s.size());
-		assertEquals(0, s.index());
-		assertEquals("hello \uD83C\uDF0E", s.ToString());
-		assertEquals(p.ToString(), s.getSourceName());
+		Assert.AreEqual(7, s.size());
+		Assert.AreEqual(0, s.index());
+		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
+		Assert.AreEqual(p.ToString(), s.getSourceName());
 	}
 
-	private Path getTestFile(Path dir) {
-		return new File(dir.ToString(), "test").toPath();
+	private string getTestFile(string dir) {
+		return Path.Combine(dir, "test");// new File(dir.ToString(), "test").toPath();
 	}
 }

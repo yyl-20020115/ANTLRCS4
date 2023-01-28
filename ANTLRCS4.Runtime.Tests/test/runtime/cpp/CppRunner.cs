@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.test.runtime.states;
+
 namespace org.antlr.v4.test.runtime.cpp;
 
 /**
@@ -31,7 +33,7 @@ public class CppRunner : RuntimeRunner {
 	}
 
 	////@Override
-	public override String getTitleName() { return "C++"; }
+	protected override String getTitleName() { return "C++"; }
 
 	private static readonly String runtimeSourcePath;
 	private static readonly String runtimeBinaryPath;
@@ -42,10 +44,10 @@ public class CppRunner : RuntimeRunner {
 
 	static CppRunner() {
 		String runtimePath = getRuntimePath("Cpp");
-		runtimeSourcePath = Paths.get(runtimePath, "runtime", "src").ToString();
+		runtimeSourcePath = Path.Combine(runtimePath, "runtime", "src").ToString();
 
-		environment = new HashMap<>();
-		if (isWindows()) {
+		environment = new ();
+		if (IsWindows()) {
 			runtimeBinaryPath = Paths.get(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
 			runtimeLibraryFileName = Paths.get(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
 			String path = System.getenv("PATH");
@@ -113,27 +115,27 @@ public class CppRunner : RuntimeRunner {
 				runCommand(linkCommand, getTempDirPath(), "sym link C++ runtime");
 			}
 
-			List<String> buildCommand = new ArrayList<>();
-			buildCommand.add(getCompilerPath());
+			List<String> buildCommand = new ();
+			buildCommand.Add(getCompilerPath());
 			if (isWindows()) {
-				buildCommand.add(getTestFileName() + ".vcxproj");
-				buildCommand.add("/p:configuration=Release");
-				buildCommand.add("/p:platform=x64");
+				buildCommand.Add(getTestFileName() + ".vcxproj");
+				buildCommand.Add("/p:configuration=Release");
+				buildCommand.Add("/p:platform=x64");
 			}
 			else {
-				buildCommand.add("-std=c++17");
-				buildCommand.add("-I");
-				buildCommand.add(runtimeSourcePath);
-				buildCommand.add("-L.");
-				buildCommand.add("-lantlr4-runtime");
-				buildCommand.add("-pthread");
-				buildCommand.add("-o");
-				buildCommand.add(getTestFileName() + ".out");
-				buildCommand.add(getTestFileWithExt());
-				buildCommand.addAll(generatedState.generatedFiles.stream().map(file -> file.name).collect(Collectors.toList()));
+				buildCommand.Add("-std=c++17");
+				buildCommand.Add("-I");
+				buildCommand.Add(runtimeSourcePath);
+				buildCommand.Add("-L.");
+				buildCommand.Add("-lantlr4-runtime");
+				buildCommand.Add("-pthread");
+				buildCommand.Add("-o");
+				buildCommand.Add(getTestFileName() + ".out");
+				buildCommand.Add(getTestFileWithExt());
+				buildCommand.AddRange(generatedState.generatedFiles.stream().map(file => file.name).collect(Collectors.toList()));
 			}
 
-			runCommand(buildCommand.toArray(new String[0]), getTempDirPath(), "build test c++ binary");
+			runCommand(buildCommand.ToArray(), getTempDirPath(), "build test c++ binary");
 		}
 		catch (Exception ex) {
 			exception = ex;
@@ -155,17 +157,17 @@ public class CppRunner : RuntimeRunner {
 	}
 
 	////@Override
-	public String getRuntimeToolName() {
+	protected override String getRuntimeToolName() {
 		return null;
 	}
 
 	////@Override
-	public String getExecFileName() {
+	protected override String getExecFileName() {
 		return Paths.get(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
 	}
 
 	////@Override
-	public Map<String, String> getExecEnvironment() {
+	protected object Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

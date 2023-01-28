@@ -4,21 +4,26 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.tree.pattern;
+using org.antlr.v4.test.runtime.java.api;
+using org.antlr.v4.tool;
 using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
 public abstract class RuntimeTestUtils {
-	public static readonly String NewLine = System.getProperty("line.separator");
-	public static readonly String PathSeparator = System.getProperty("path.separator");
-	public static readonly String FileSeparator = System.getProperty("file.separator");
-	public static readonly String TempDirectory = System.getProperty("java.io.tmpdir");
+	public static readonly String NewLine = Environment.NewLine;
+	public static readonly String PathSeparator = Path.PathSeparator.ToString();// System.getProperty("path.separator");
+	public static readonly String FileSeparator = Path.PathSeparator.ToString();// System.getProperty("file.separator");
+	public static readonly String TempDirectory = Environment.CurrentDirectory;// System.getProperty("java.io.tmpdir");
 
-	public static readonly Path runtimePath;
-	public static readonly Path runtimeTestsuitePath;
-	public static readonly Path resourcePath;
+	public static readonly string runtimePath;
+	public static readonly string runtimeTestsuitePath;
+	public static readonly string resourcePath;
 
-	private static readonly Map<String, String> resourceCache = new HashMap<>();
+	private static readonly Dictionary<String, String> resourceCache = new ();
 	private static OSType detectedOS;
 	private static Boolean isWindows;
 
@@ -27,21 +32,21 @@ public abstract class RuntimeTestUtils {
 		if (isWindows()) {
 			locationPath = locationPath.replaceFirst("/", "");
 		}
-		Path potentialRuntimeTestsuitePath = Paths.get(locationPath, "..", "..").normalize();
-		Path potentialResourcePath = Paths.get(potentialRuntimeTestsuitePath.ToString(), "resources");
+		string potentialRuntimeTestsuitePath = Path.Combine(locationPath, "..", "..");
+		string potentialResourcePath = Path.Combine(potentialRuntimeTestsuitePath.ToString(), "resources");
 
-		if (Files.exists(potentialResourcePath)) {
+		if (File.Exists(potentialResourcePath)) {
 			runtimeTestsuitePath = potentialRuntimeTestsuitePath;
 		}
 		else {
-			runtimeTestsuitePath = Paths.get("..", "runtime-testsuite").normalize();
+			runtimeTestsuitePath = Path.Combine("..", "runtime-testsuite");
 		}
 
-		runtimePath = Paths.get(runtimeTestsuitePath.ToString(), "..", "runtime").normalize();
-		resourcePath = Paths.get(runtimeTestsuitePath.ToString(), "resources");
+		runtimePath = Path.Combine(runtimeTestsuitePath.ToString(), "..", "runtime").normalize();
+		resourcePath = Path.Combine(runtimeTestsuitePath.ToString(), "resources");
 	}
 
-	public static bool isWindows() {
+	public static bool IsWindows() {
 		if (isWindows == null) {
 			isWindows = getOS() == OSType.Windows;
 		}
@@ -68,7 +73,7 @@ public abstract class RuntimeTestUtils {
 		return detectedOS;
 	}
 
-	public static synchronized String getTextFromResource(String name) {
+	public static String getTextFromResource(String name) {
 		try {
 			String text = resourceCache.get(name);
 			if (text == null) {
@@ -89,7 +94,7 @@ public abstract class RuntimeTestUtils {
 		ATNPrinter serializer = new ATNPrinter(g, startState);
 		String result = serializer.asString();
 
-		assertEquals(expecting, result);
+		Assert.AreEqual(expecting, result);
 	}
 
 	public static String joinLines(params Object[] args) {

@@ -3,23 +3,22 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
 public class ErrorQueue : ANTLRToolListener {
 	public readonly Tool tool;
-	public readonly List<String> infos = new ArrayList<String>();
-	public readonly List<ANTLRMessage> errors = new ArrayList<ANTLRMessage>();
-	public readonly List<ANTLRMessage> warnings = new ArrayList<ANTLRMessage>();
-	public readonly List<ANTLRMessage> all = new ArrayList<ANTLRMessage>();
+	public readonly List<String> infos = new ();
+	public readonly List<ANTLRMessage> errors = new ();
+	public readonly List<ANTLRMessage> warnings = new ();
+	public readonly List<ANTLRMessage> all = new ();
 
-	public ErrorQueue() {
-		this(null);
-	}
-
-	public ErrorQueue(Tool tool) {
+	
+	public ErrorQueue(Tool tool = null) {
 		this.tool = tool;
 	}
 
@@ -30,27 +29,27 @@ public class ErrorQueue : ANTLRToolListener {
 
 	////@Override
 	public void error(ANTLRMessage msg) {
-		errors.add(msg);
-        all.add(msg);
+		errors.Add(msg);
+        all.Add(msg);
 	}
 
 	////@Override
 	public void warning(ANTLRMessage msg) {
-		warnings.add(msg);
-        all.add(msg);
+		warnings.Add(msg);
+        all.Add(msg);
 	}
 
 	public void error(ToolMessage msg) {
-		errors.add(msg);
-		all.add(msg);
+		errors.Add(msg);
+		all.Add(msg);
 	}
 
 	public int size() {
-		return all.size() + infos.size();
+		return all.Count + infos.Count;
 	}
 
 	////@Override
-	public String ToString() {
+	public override String ToString() {
 		return toString(false);
 	}
 
@@ -64,7 +63,7 @@ public class ErrorQueue : ANTLRToolListener {
 		}
 
 		StringBuilder buf = new StringBuilder();
-		for (ANTLRMessage in all) {
+		foreach (ANTLRMessage m in all) {
 			ST st = tool.errMgr.getMessageTemplate(m);
 			buf.Append(st.render());
 			buf.Append("\n");

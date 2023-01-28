@@ -241,7 +241,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
 		GraphLayout olayout = GraphLayout.parseInstance((Object) input[0]);
 		long streamSize = olayout.totalSize();
-		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+olayout.toFootprint());
+		streamFootprints.Add(basename(resourceName)+" ("+size+" char): "+olayout.toFootprint());
 		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
 		                                tus/n,
@@ -268,7 +268,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long tus = (stop-start)/1000;
 		int size = input[0].size();
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
+		streamFootprints.Add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
 		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
@@ -299,7 +299,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long tus = (stop-start)/1000;
 		int size = input[0].size();
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
+		streamFootprints.Add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
 		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 		                                currentMethodName,
@@ -321,15 +321,15 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long streamLength = getResourceSize(loader, resourceName);
 		long start = System.nanoTime(); // track only time to suck data out of stream
 		for (int i = 0; i<n; i++) {
-			try (InputStream is = streams[i]) {
-				input[i] = CharStreams.fromStream(is, StandardCharsets.UTF_8, streamLength);
+			using (InputStream @is = streams[i]) {
+				input[i] = CharStreams.fromStream(@is, StandardCharsets.UTF_8, streamLength);
 			}
 		}
 		long stop = System.nanoTime();
 		long tus = (stop-start)/1000;
 		int size = input[0].size();
 		long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-		streamFootprints.add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
+		streamFootprints.Add(basename(resourceName)+" ("+size+" char): "+GraphLayout.parseInstance((Object)input[0]).toFootprint());
 		String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
 		if ( output ) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
 						currentMethodName,
@@ -341,9 +341,10 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 	}
 
 	public void lex_legacy_java_utf8(int n, bool clearLexerDFACache)  {
-		try (InputStream is = TimeLexerSpeed.getClassLoader().getResourceAsStream(Parser_java_file);
+		InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(Parser_java_file);
 		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.UTF_8);
-		     BufferedReader br = new BufferedReader(isr)) {
+		BufferedReader br = new BufferedReader(isr);
+		{
 			CharStream input = new ANTLRInputStream(br);
 			JavaLexer lexer = new JavaLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
@@ -359,10 +360,10 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public void lex_new_java_utf8(int n, bool clearLexerDFACache)  {
 		ClassLoader loader = TimeLexerSpeed.getClassLoader();
-		InputStream is = loader.getResourceAsStream(Parser_java_file);
+		InputStream @is = loader.getResourceAsStream(Parser_java_file);
 		{
 			long size = getResourceSize(loader, Parser_java_file);
-			CharStream input = CharStreams.fromStream(is, StandardCharsets.UTF_8, size);
+			CharStream input = CharStreams.fromStream(@is, StandardCharsets.UTF_8, size);
 			JavaLexer lexer = new JavaLexer(input);
 			double avg = tokenize(lexer, n, clearLexerDFACache);
 			String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
@@ -432,13 +433,13 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 //			if ( output ) Console.Out.printf("Tokenized %d char in %dus\n", size, times[i]);
 		}
 		Arrays.sort(times);
-		times = Arrays.copyOfRange(times, 0, times.length-(int)(n*.2)); // drop highest 20% of times
+		times = Arrays.copyOfRange(times, 0, times.Length-(int)(n*.2)); // drop highest 20% of times
 		return avg(times);
 	}
 
 	public double avg(long[] values) {
 		double sum = 0.0;
-		for (Long v : values) {
+		foreach (var v in values) {
 			sum += v;
 		}
 		return sum / values.length;
@@ -446,14 +447,14 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 
 	public double std(double mean, List<long> values) { // unbiased std dev
 		double sum = 0.0;
-		for (long v : values) {
+		foreach (long v in values) {
 			sum += (v-mean)*(v-mean);
 		}
-		return Math.sqrt(sum / (values.size() - 1));
+		return Math.Sqrt(sum / (values.Count - 1));
 	}
 
 	public static String basename(String fullyQualifiedFileName) {
-		Path path = Paths.get(fullyQualifiedFileName);
+		string path = (fullyQualifiedFileName);
 		return basename(path);
 	}
 
@@ -462,11 +463,11 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		return dirname(path);
 	}
 
-	public static String basename(Path path) {
+	public static String basename(string path) {
 		return path.getName(path.getNameCount()-1).ToString();
 	}
 
-	public static String dirname(Path path) {
+	public static String dirname(string path) {
 		return path.getName(0).ToString();
 	}
 
