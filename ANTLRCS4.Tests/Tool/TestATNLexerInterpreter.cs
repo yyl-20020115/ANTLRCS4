@@ -542,7 +542,7 @@ public class TestATNLexerInterpreter {
 				tokenTypes.Add("EOF");
 			}
 			else {
-				tokenTypes.Add(lg.typeToTokenList.get(ttype));
+				tokenTypes.Add(lg.typeToTokenList[(ttype)]);
 			}
 
 			if ( t== IntStream.EOF ) {

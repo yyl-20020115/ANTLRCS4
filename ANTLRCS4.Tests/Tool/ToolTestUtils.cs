@@ -82,7 +82,7 @@ public class ToolTestUtils {
 			try {
 				ErrorQueue equeue = antlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-				String actual = equeue.toString(true);
+				String actual = equeue.ToString(true);
 				actual = actual.Replace(tempTestDir + File.separator, "");
 				String msg = grammarStr;
 				msg = msg.Replace("\n", "\\n");
@@ -106,7 +106,7 @@ public class ToolTestUtils {
 		int semi = line.LastIndexOf(';');
 		if ( grIndex>=0 && semi>=0 ) {
 			int space = line.IndexOf(' ', grIndex);
-			fileName = line.substring(space+1, semi)+Tool.GRAMMAR_EXTENSION;
+			fileName = line.Substring(space+1, semi-(space+1))+Tool.GRAMMAR_EXTENSION;
 		}
 		if ( fileName.Length ==Tool.GRAMMAR_EXTENSION.Length ) fileName = "A" + Tool.GRAMMAR_EXTENSION;
 		return fileName;

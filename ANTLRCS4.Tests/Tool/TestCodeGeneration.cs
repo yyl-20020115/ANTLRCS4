@@ -20,7 +20,7 @@ public class TestCodeGeneration {
 		List<String> evals = getEvalInfoForString(g, "int xyz");
 		Console.Out.WriteLine(evals);
 		for (int i = 0; i < evals.Count; i++) {
-			String eval = evals.get(i);
+			String eval = evals[i];
 			Assert.IsFalse(eval.StartsWith("<pojo:"), "eval should not be POJO: "+eval);
 		}
 	}
@@ -59,7 +59,7 @@ public class TestCodeGeneration {
 		protected int writeObject(STWriter @out, InstanceScope scope, Object o, String[] options) {
 			if ( o is ST ) {
 				String name = ((ST)o).getName();
-				name = name.substring(1);
+				name = name.Substring(1);
 				if ( !name.StartsWith("_sub") ) {
 					try {
 						@out.write("<ST:" + name + ">");
@@ -78,8 +78,8 @@ public class TestCodeGeneration {
 
 		//@Override
 		protected int writePOJO(STWriter @out, InstanceScope scope, Object o, String[] options){
-			Type type = o.getClass();
-			String name = type.getSimpleName();
+			Type type = o.GetType();
+			String name = type.Name;
 			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
 			return base.writePOJO(@out, scope, o, options);

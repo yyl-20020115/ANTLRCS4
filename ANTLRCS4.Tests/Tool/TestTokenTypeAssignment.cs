@@ -189,6 +189,6 @@ public class TestTokenTypeAssignment {
 		}
 		//Console.Out.WriteLine("rules="+rules);
 		// make sure there are no extra rules
-		Assert.AreEqual(n, g.rules.size(), "number of rules mismatch; expecting "+n+"; found "+g.rules.size());
+		Assert.AreEqual(n, g.rules.Count, "number of rules mismatch; expecting "+n+"; found "+g.rules.Count);
 	}
 }

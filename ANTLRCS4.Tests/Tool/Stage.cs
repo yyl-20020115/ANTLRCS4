@@ -4,10 +4,11 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.test.tool
+namespace org.antlr.v4.test.tool;
+
+public enum Stage
 {
-    public class Stage
-    {
-        public static Stage Execute { get; internal set; }
-    }
+    Compile,
+
+    Execute,
 }

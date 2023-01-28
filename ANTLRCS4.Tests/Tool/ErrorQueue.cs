@@ -4,13 +4,16 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.test.tool
+using org.antlr.v4.tool;
+
+namespace org.antlr.v4.test.tool;
+
+public class ErrorQueue
 {
-    internal class ErrorQueue
+    public List<ANTLRMessage> errors = new();
+
+    public int size()
     {
-        internal int size()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

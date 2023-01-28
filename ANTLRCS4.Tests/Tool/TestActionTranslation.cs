@@ -214,8 +214,8 @@ public class TestActionTranslation {
     }
 
 	private static void testActions(String templates, String actionName, String action, String expected){
-		int lp = templates.indexOf('(');
-		String name = templates.substring(0, lp);
+		int lp = templates.IndexOf('(');
+		String name = templates.Substring(0, lp);
 		STGroup group = new STGroupString(templates);
 		ST st = group.getInstanceOf(name);
 		st.add(actionName, action);
@@ -238,10 +238,10 @@ public class TestActionTranslation {
 			String output = outputFileST.render();
 			//Console.Out.WriteLine(output);
 			String b = "#" + actionName + "#";
-			int start = output.indexOf(b);
+			int start = output.IndexOf(b);
 			String e = "#end-" + actionName + "#";
-			int end = output.indexOf(e);
-			String snippet = output.substring(start+b.Length,end);
+			int end = output.IndexOf(e);
+			String snippet = output.Substring(start+b.Length,end-(start + b.Length));
 			Assert.AreEqual(expected, snippet);
 		}
 		if ( equeue.size()>0 ) {

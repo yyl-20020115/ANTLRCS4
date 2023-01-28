@@ -15,6 +15,7 @@ using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
 using System.Reflection;
 using System.Text;
+using static org.antlr.v4.test.tool.TestPerformance.FilenameFilters;
 
 namespace org.antlr.v4.test.tool;
 
@@ -451,11 +452,11 @@ public class TestPerformance
         ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
         List<Future> passResults = new();
-        passResults.add(executorService.submit(new R0()));
+        passResults.Add(executorService.submit(new R0()));
         for (int i = 0; i < PASSES - 1; i++)
         {
             int currentPass = i + 1;
-            passResults.add(executorService.submit(new R1()));
+            passResults.Add(executorService.submit(new R1()));
         }
 
         foreach (Future passResult in passResults)
@@ -708,7 +709,7 @@ public class TestPerformance
         builder.Append(NewLine);
 
         builder.Append("Op=Lex").Append(RUN_PARSER ? "+Parse" : " only");
-        builder.Append(", Strategy=").Append(BAIL_ON_ERROR ? BailErrorStrategy.getSimpleName() : DefaultErrorStrategy.getSimpleName());
+        builder.Append(", Strategy=").Append(BAIL_ON_ERROR ? nameof(BailErrorStrategy) : nameof(DefaultErrorStrategy));
         builder.Append(", BuildParseTree=").Append(BUILD_PARSE_TREES);
         builder.Append(", WalkBlankListener=").Append(BLANK_LISTENER);
 
@@ -1023,7 +1024,7 @@ public class TestPerformance
                             decisionConfigs += state.configs.Count;
                         }
 
-                        String ruleName = parser.getRuleNames()[parser.getATN().decisionToState.get(dfa.decision).ruleIndex];
+                        String ruleName = parser.getRuleNames()[parser.getATN().decisionToState[(dfa.decision)].ruleIndex];
 
                         long calls = 0;
                         long fullContextCalls = 0;
@@ -1246,7 +1247,7 @@ public class TestPerformance
         {
             MurmurHashChecksum checksum = new MurmurHashChecksum();
 
-            long startTime = System.nanoTime();
+            long startTime = DateTime.Now.Millisecond;
             //assert thread >= 0 && thread < NUMBER_OF_THREADS;
 
             try
@@ -1311,7 +1312,7 @@ public class TestPerformance
 
                 if (!RUN_PARSER)
                 {
-                    return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), null, tokens.Count, startTime, lexer, null);
+                    return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), null, tokens.size(), startTime, lexer, null);
                 }
 
                 long parseStartTime = System.nanoTime();
@@ -1483,7 +1484,7 @@ public class TestPerformance
                     ParseTreeWalker.DEFAULT.walk(listener, (ParseTree)parseResult);
                 }
 
-                return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), (ParseTree)parseResult, tokens.Count, TIME_PARSE_ONLY ? parseStartTime : startTime, lexer, parser);
+                return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), (ParseTree)parseResult, tokens.size(), TIME_PARSE_ONLY ? parseStartTime : startTime, lexer, parser);
             }
             catch (Exception e)
             {
@@ -1492,8 +1493,8 @@ public class TestPerformance
                     return new FileParseResult("unknown", (int)checksum.getValue(), null, 0, startTime, null, null);
                 }
 
-                e.printStackTrace(Console.Out);
-                throw new IllegalStateException(e);
+                //e.printStackTrace(Console.Out);
+                throw new IllegalStateException(e.Message,e);
             }
         }
     }
@@ -1872,9 +1873,9 @@ public class TestPerformance
 
         }
         public static readonly FilenameFilter ALL_FILES = new ALL();
-        public static FilenameFilter extension(String extension)
+        public static FilenameFilter extension(String _extension)
         {
-            return extension(extension, true);
+            return extension(_extension, true);
         }
 
         public static FilenameFilter extension(String extension, bool caseSensitive)

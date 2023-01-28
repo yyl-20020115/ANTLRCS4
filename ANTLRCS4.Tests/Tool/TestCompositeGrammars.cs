@@ -63,7 +63,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testImportModesIntoLexerGrammar( string tempDir) {
@@ -85,7 +85,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testImportChannelsIntoLexerGrammar( string tempDir) {
@@ -106,7 +106,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testImportMixedChannelsIntoLexerGrammar( string tempDir) {
@@ -128,7 +128,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testImportClashingChannelsIntoLexerGrammar( string tempDir) {
@@ -151,7 +151,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testMergeModesIntoLexerGrammar( string tempDir) {
@@ -174,7 +174,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testEmptyModesInLexerGrammar( string tempDir) {
@@ -197,7 +197,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(0, equeue.errors.size());
+		Assert.AreEqual(0, equeue.errors.Count);
 	}
 
 	[TestMethod] public void testCombinedGrammarImportsModalLexerGrammar( string tempDir) {
@@ -220,8 +220,8 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "S.g4", slave);
 
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		Assert.AreEqual(1, equeue.errors.size());
-		ANTLRMessage msg = equeue.errors.get(0);
+		Assert.AreEqual(1, equeue.errors.Count);
+		ANTLRMessage msg = equeue.errors[0];
 		Assert.AreEqual(ErrorType.MODE_NOT_IN_LEXER, msg.getErrorType());
 		Assert.AreEqual("X", msg.getArgs()[0]);
 		Assert.AreEqual(3, msg.line);
@@ -271,7 +271,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
 		Assert.AreEqual(expectedStringLiteralToTypeMap, sort(g.stringLiteralToTypeMap).ToString());
 		Assert.AreEqual(expectedTypeToTokenList, realElements(g.typeToTokenList).ToString());
-		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
+		Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: "+equeue);
 	}
 
 	[TestMethod] public void testErrorInImportedGetsRightFilename( string tempDir) {
@@ -286,7 +286,7 @@ public class TestCompositeGrammars {
 			"import S;\n";
 		writeFile(tempDirPath, "M.g4", master);
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
-		ANTLRMessage msg = equeue.errors.get(0);
+		ANTLRMessage msg = equeue.errors[(0)];
 		Assert.AreEqual(ErrorType.UNDEFINED_RULE_REF, msg.getErrorType());
 		Assert.AreEqual("c", msg.getArgs()[0]);
 		Assert.AreEqual(2, msg.line);
@@ -311,7 +311,7 @@ public class TestCompositeGrammars {
 			"WS : (' '|'\\n') -> skip ;\n" ;
 		writeFile(tempDirPath, "M.g4", master);
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", false, "-o", outdir);
-		Assert.AreEqual(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, equeue.errors.get(0).getErrorType());
+		Assert.AreEqual(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, equeue.errors[0].getErrorType());
 	}
 
 	[TestMethod] public void testOutputDirShouldNotEffectImports( string tempDir) {
@@ -389,7 +389,7 @@ public class TestCompositeGrammars {
 			new GrammarSemanticsMessage(expectedMsgID, g.fileName, null, expectedArg);
 		checkGrammarSemanticsWarning(equeue, expectedMessage);
 
-		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
+		Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: "+equeue);
 		Assert.AreEqual(1, equeue.warnings.size(), "unexpected warnings: "+equeue);
 	}
 
@@ -410,7 +410,7 @@ public class TestCompositeGrammars {
 		writeFile(tempDirPath, "M.g4", master);
 		/*Grammar g =*/ new Grammar(tempDirPath+"/M.g4", master, equeue);
 
-		Assert.AreEqual(ErrorType.SYNTAX_ERROR, equeue.errors.get(0).getErrorType());
+		Assert.AreEqual(ErrorType.SYNTAX_ERROR, equeue.errors[0].getErrorType());
 	}
 
 	// Make sure that M can import S that imports T.
@@ -446,7 +446,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(expectedTypeToTokenList,
 					 realElements(g.typeToTokenList).ToString());
 
-		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
+		Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: "+equeue);
 		Assert.IsTrue(compile("M.g4", master, "MParser", "a", tempDir));
 	}
 
@@ -541,7 +541,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(expectedTypeToTokenList,
 					 realElements(g.typeToTokenList).ToString());
 
-		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
+		Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: "+equeue);
 	}
 
 	[TestMethod] public void testNestedComposite( string tempDir)  {
@@ -589,7 +589,7 @@ public class TestCompositeGrammars {
 		Assert.AreEqual(expectedTypeToTokenList,
 					 realElements(g.typeToTokenList).ToString());
 
-		Assert.AreEqual(0, equeue.errors.size(), "unexpected errors: "+equeue);
+		Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: "+equeue);
 
 		Assert.IsTrue(compile("G3.g4", G3str, "G3Parser", "b", tempDir));
 	}
@@ -610,7 +610,7 @@ public class TestCompositeGrammars {
 			"WS : (' '|'\\n') -> skip ;\n" ;
 		ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "M.g4", master, false);
 		int expecting = 0; // should be ok
-		Assert.AreEqual(expecting, equeue.errors.size());
+		Assert.AreEqual(expecting, equeue.errors.Count);
 	}
 
 	/**
@@ -720,7 +720,7 @@ public class TestCompositeGrammars {
 		List<K> keys = new (data.Keys);
 		keys.Sort();
 		foreach (K k in keys) {
-			dup.put(k, data.get(k));
+			dup[k]= data[k];
 		}
 		return dup;
 	}

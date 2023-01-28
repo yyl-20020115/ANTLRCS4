@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.unicode;
 using System.Threading.Channels;
 
 namespace org.antlr.v4.test.tool;
@@ -320,6 +321,8 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         Assert.AreEqual(Token.EOF, tokens.LA(1));
         Assert.AreEqual(0, tokens.index());
         Assert.AreEqual(1, tokens.size());
-        assertThrows(IllegalStateException, tokens::consume);
+        //assertThrows(IllegalStateException, tokens::consume);
+        Assert.ThrowsException<IllegalStateException>(()=>tokens.consume());
+
     }
 }

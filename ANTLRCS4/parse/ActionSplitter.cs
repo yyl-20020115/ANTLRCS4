@@ -470,7 +470,7 @@ public class ActionSplitter : Lexer
                 int xStartLine199 = getLine();
                 int xStartCharPos199 = getCharPositionInLine();
                 mID(); if (state.failed) return;
-                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart199, getCharIndex() - 1);
+                x = new CommonToken( input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart199, getCharIndex() - 1);
                 x.setLine(xStartLine199);
                 x.setCharPositionInLine(xStartCharPos199);
 

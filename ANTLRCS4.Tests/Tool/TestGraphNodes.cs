@@ -118,8 +118,8 @@ public class TestGraphNodes {
 
 	[TestMethod] public void test_adollar_ax_fullctx() {
 		PredictionContext a1 = a();
-		PredictionContext x = x();
-		PredictionContext a2 = createSingleton(x, 1);
+		PredictionContext _x = x();
+		PredictionContext a2 = createSingleton(_x, 1);
 		PredictionContext r = PredictionContext.merge(a1, a2, fullCtx(), null);
 //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
 		String expecting =
@@ -287,9 +287,9 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_ax_bx_same() {
-		PredictionContext x = x();
-		PredictionContext a = createSingleton(x, 1);
-		PredictionContext b = createSingleton(x, 2);
+		PredictionContext _x = x();
+		PredictionContext a = createSingleton(_x, 1);
+		PredictionContext b = createSingleton(_x, 2);
 		PredictionContext r = PredictionContext.merge(a, b, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -366,9 +366,9 @@ public class TestGraphNodes {
 
 	[TestMethod] public void test_adollar_bx_fullctx() {
 		PredictionContext x2 = x();
-		PredictionContext a = a();
+		PredictionContext _a = a();
 		PredictionContext b = createSingleton(x2, 2);
-		PredictionContext r = PredictionContext.merge(a, b, fullCtx(), null);
+		PredictionContext r = PredictionContext.merge(_a, b, fullCtx(), null);
 //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
 		String expecting =
 			"digraph G {\n" +
@@ -484,11 +484,11 @@ public class TestGraphNodes {
 	}
 
 	[TestMethod] public void test_Aac_Ab() { // a,c + b
-		SingletonPredictionContext a = a();
-		SingletonPredictionContext b = b();
-		SingletonPredictionContext c = c();
-		ArrayPredictionContext A1 = array(a, c);
-		ArrayPredictionContext A2 = array(b);
+		SingletonPredictionContext _a = a();
+		SingletonPredictionContext _b = b();
+		SingletonPredictionContext _c = c();
+		ArrayPredictionContext A1 = array(_a, _c);
+		ArrayPredictionContext A2 = array(_b);
 		PredictionContext r = PredictionContext.merge(A1, A2, rootIsWildcard(), null);
 //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
 		String expecting =
@@ -791,14 +791,14 @@ public class TestGraphNodes {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder edges = new StringBuilder();
 		Dictionary<PredictionContext, PredictionContext> visited = new ();
-		Dictionary<PredictionContext, Integer> contextIds = new ();
+		Dictionary<PredictionContext, int> contextIds = new ();
 		Deque<PredictionContext> workList = new ();
-		visited.put(context, context);
-		contextIds.put(context, contextIds.Count);
+		visited[context]= context;
+		contextIds[context]= contextIds.Count;
 		workList.add(context);
 		while (workList.size() > 0) {
 			PredictionContext current = workList.pop();
-			nodes.Append("  s").Append(contextIds.get(current)).Append('[');
+			nodes.Append("  s").Append(contextIds[(current)]).Append('[');
 
 			if (current.size() > 1) {
 				nodes.Append("shape=record, ");
@@ -820,7 +820,7 @@ public class TestGraphNodes {
 					}
 				}
 			} else {
-				nodes.Append(contextIds.get(current));
+				nodes.Append(contextIds[(current)]);
 			}
 
 			nodes.Append("\"];\n");
@@ -835,17 +835,17 @@ public class TestGraphNodes {
 				}
 
 				if (visited.put(current.getParent(i), current.getParent(i)) == null) {
-					contextIds.put(current.getParent(i), contextIds.size());
+					contextIds.put(current.getParent(i), contextIds.Cast);
 					workList.push(current.getParent(i));
 				}
 
-				edges.Append("  s").Append(contextIds.get(current));
+				edges.Append("  s").Append(contextIds[(current)]);
 				if (current.size() > 1) {
 					edges.Append(":p").Append(i);
 				}
 
 				edges.Append("->");
-				edges.Append('s').Append(contextIds.get(current.getParent(i)));
+				edges.Append('s').Append(contextIds[current.getParent(i)]);
 				edges.Append("[label=\"").Append(current.getReturnState(i)).Append("\"]");
 				edges.Append(";\n");
 			}

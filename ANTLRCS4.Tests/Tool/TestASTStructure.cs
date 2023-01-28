@@ -32,7 +32,7 @@ public class TestASTStructure {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
 		Type parserClass = Type.forName(parserClassName).asSubclass(Parser);
-		Constructor<Parser> parConstructor = parserClass.getConstructor(TokenStream);
+		ConstructorInfo parConstructor = parserClass.getConstructor(TokenStream);
 		Parser parser = parConstructor.newInstance(tokens);
 
 		// set up customized tree adaptor if necessary

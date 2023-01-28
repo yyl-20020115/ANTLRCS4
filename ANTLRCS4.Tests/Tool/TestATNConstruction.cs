@@ -392,12 +392,12 @@ public class TestATNConstruction {
 		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
 		// Get all AST -> ATNState relationships. Make sure loopback is covered when no loop entry decision
 		List<GrammarAST> ruleNodes = g.ast.getNodesWithType(ANTLRParser.RULE);
-		RuleAST a = (RuleAST)ruleNodes.get(1);
+		RuleAST a = (RuleAST)ruleNodes[(1)];
 		List<GrammarAST> nodesInRule = a.getNodesWithType(null);
 		Dictionary<GrammarAST, ATNState> covered = new ();
         foreach (GrammarAST node in nodesInRule) {
 			if ( node.atnState != null ) {
-				covered.put(node, node.atnState);
+				covered[node]= node.atnState;
 			}
 		}
 		Assert.AreEqual("{RULE=2, BLOCK=8, +=10, BLOCK=8, A=7}", covered.ToString());
@@ -550,12 +550,12 @@ public class TestATNConstruction {
 		}
 		catch (Exception e) {
 			threwException = true;
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		Console.Out.WriteLine(errorQueue);
-		Assert.AreEqual(1, errorQueue.errors.size());
-		Assert.AreEqual(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors.get(0).getErrorType());
-		Assert.AreEqual("[a, A]", Arrays.ToString(errorQueue.errors.get(0).getArgs()));
+		Assert.AreEqual(1, errorQueue.errors.Count);
+		Assert.AreEqual(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors[0].getErrorType());
+		Assert.AreEqual("[a, A]", Arrays.ToString(errorQueue.errors[0].getArgs()));
 		Assert.IsTrue(!threwException);
 	}
 

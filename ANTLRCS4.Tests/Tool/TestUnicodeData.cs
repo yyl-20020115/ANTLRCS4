@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.unicode;
 
 namespace org.antlr.v4.test.tool;
@@ -190,7 +191,9 @@ public class TestUnicodeData {
 
 	[TestMethod]
 	public void modifyingUnicodeDataShouldThrow() {
-		IllegalStateException exception = assertThrows(IllegalStateException, () => UnicodeData.getPropertyCodePoints("L").add(0x12345));
-		Assert.AreEqual("can't alter readonly IntervalSet", exception.Message);
+		//IllegalStateException exception = assertThrows(IllegalStateException, () => UnicodeData.getPropertyCodePoints("L").add(0x12345));
+		IllegalStateException exception = Assert.ThrowsException<IllegalStateException>(() => UnicodeData.getPropertyCodePoints("L").add(0x12345));
+
+        Assert.AreEqual("can't alter readonly IntervalSet", exception.Message);
 	}
 }

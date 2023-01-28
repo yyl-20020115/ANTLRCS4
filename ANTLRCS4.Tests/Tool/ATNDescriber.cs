@@ -41,7 +41,7 @@ public class ATNDescriber {
 		int version = data[p++];
 		if (version != ATNDeserializer.SERIALIZED_VERSION) {
 			String reason = String.format("Could not deserialize ATN with version %d (expected %d).", version, ATNDeserializer.SERIALIZED_VERSION);
-			throw new UnsupportedOperationException(new InvalidOperationException(ATN.getName(), reason));
+			throw new UnsupportedOperationException(new InvalidOperationException(typeof(ATN).Name, reason));
 		}
 
 		p++; // skip grammarType
@@ -66,7 +66,7 @@ public class ATNDescriber {
 				arg = " "+endStateNumber;
 			}
 			buf.Append(i).Append(":")
-					.Append(ATNState.serializationNames.get(stype)).Append(" ")
+					.Append(ATNState.serializationNames[(stype)]).Append(" ")
 					.Append(ruleIndex).Append(arg).Append("\n");
 		}
 		// this code is meant to model the form of ATNDeserializer.deserialize,
@@ -111,7 +111,7 @@ public class ATNDescriber {
 			int arg2 = data[p + 4];
 			int arg3 = data[p + 5];
 			buf.Append(src).Append("->").Append(trg)
-					.Append(" ").Append(Transition.serializationNames.get(ttype))
+					.Append(" ").Append(Transition.serializationNames[(ttype)])
 					.Append(" ").Append(arg1).Append(",").Append(arg2).Append(",").Append(arg3)
 					.Append("\n");
 			p += 6;
@@ -129,7 +129,7 @@ public class ATNDescriber {
 			// improved maintainability.
 			int lexerActionCount = data[p++];
 			for (int i = 0; i < lexerActionCount; i++) {
-				LexerActionType actionType = LexerActionType.Values[data[p++]];
+				LexerActionType actionType = LexerActionType.GetValues()[data[p++]];
 				int data1 = data[p++];
 				int data2 = data[p++];
 			}

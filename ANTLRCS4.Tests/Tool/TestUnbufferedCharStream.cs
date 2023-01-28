@@ -4,7 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Newtonsoft.Json.Linq;
 using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.tool;
@@ -28,13 +30,18 @@ public class TestUnbufferedCharStream {
 	public void testConsumeEOF() {
 		CharStream input = createStream("");
 		Assert.AreEqual(IntStream.EOF, input.LA(1));
-		assertThrows(IllegalStateException, input::consume);
-	}
 
-	[TestMethod]
+		//assertThrows(IllegalStateException, input::consume);
+        Assert.ThrowsException<IllegalStateException>(() => input.consume());
+
+    }
+
+    [TestMethod]
 	public void testNegativeSeek() {
+		
 		CharStream input = createStream("");
-		assertThrows(typeof(ArgumentException), () => input.seek(-1));
+		//assertThrows(typeof(ArgumentException), () => input.seek(-1));
+		Assert.ThrowsException<ArgumentException>(() => input.seek(-1));
 	}
 
 	[TestMethod]
@@ -56,56 +63,62 @@ public class TestUnbufferedCharStream {
 		CharStream input = createStream("");
 		int m1 = input.mark();
 		int m2 = input.mark();
-		assertThrows(IllegalStateException, () => input.release(m1));
-	}
+		//assertThrows(IllegalStateException, () => input.release(m1));
+        Assert.ThrowsException<IllegalStateException>(() => input.release(m1));
 
-	/**
+    }
+
+    /**
 	 * The {@link IntStream} interface does not specify the behavior when a mark
 	 * is released twice, but {@link UnbufferedCharStream} handles this case by
 	 * throwing an {@link IllegalStateException}.
 	 */
-	[TestMethod]
+    [TestMethod]
 	public void testMarkReleasedTwice() {
 		CharStream input = createStream("");
 		int m1 = input.mark();
 		input.release(m1);
-		assertThrows(IllegalStateException, () => input.release(m1));
-	}
+		//assertThrows(IllegalStateException, () => input.release(m1));
+        Assert.ThrowsException<IllegalStateException>(() => input.release(ml));
+    }
 
-	/**
+    /**
 	 * The {@link IntStream} interface does not specify the behavior when a mark
 	 * is released twice, but {@link UnbufferedCharStream} handles this case by
 	 * throwing an {@link IllegalStateException}.
 	 */
-	[TestMethod]
+    [TestMethod]
 	public void testNestedMarkReleasedTwice() {
 		CharStream input = createStream("");
 		int m1 = input.mark();
 		int m2 = input.mark();
 		input.release(m2);
-		assertThrows(IllegalStateException, () => input.release(m2));
-	}
+		//assertThrows(IllegalStateException, () => input.release(m2));
+        Assert.ThrowsException<IllegalStateException>(() => input.release(m2));
+    }
 
-	/**
+    /**
 	 * It is not valid to pass a mark to {@link IntStream#seek}, but
 	 * {@link UnbufferedCharStream} creates marks in such a way that this
 	 * invalid usage results in an {@link ArgumentException}.
 	 */
-	[TestMethod]
+    [TestMethod]
 	public void testMarkPassedToSeek() {
 		CharStream input = createStream("");
 		int m1 = input.mark();
-		assertThrows(ArgumentException, () => input.seek(m1));
-	}
+		//assertThrows(ArgumentException, () => input.seek(m1));
+        Assert.ThrowsException<ArgumentException>(() => input.seek(m1));
+    }
 
-	[TestMethod]
+    [TestMethod]
 	public void testSeekBeforeBufferStart() {
 		CharStream input = createStream("xyz");
 		input.consume();
 		int m1 = input.mark();
 		Assert.AreEqual(1, input.index());
 		input.consume();
-		assertThrows(ArgumentException, () => input.seek(0));
+        //assertThrows(ArgumentException, () => input.seek(0));
+        Assert.ThrowsException<ArgumentException>(() => input.seek(0));
 	}
 
 	[TestMethod]
@@ -114,10 +127,11 @@ public class TestUnbufferedCharStream {
 		input.consume();
 		int m1 = input.mark();
 		Assert.AreEqual(1, input.index());
-		assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
-	}
+		//assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
+        Assert.ThrowsException<ArgumentException>(() => input.getText(new Interval(0, 1)));
+    }
 
-	[TestMethod]
+    [TestMethod]
 	public void testGetTextInMarkedRange() {
 		CharStream input = createStream("xyz");
 		input.consume();
@@ -306,17 +320,21 @@ public class TestUnbufferedCharStream {
 
 	[TestMethod]
 	public void testDanglingHighSurrogateAtEOFThrows() {
-		assertThrows(RuntimeException, () => createStream("\uD83C"));
+        //assertThrows(RuntimeException, () => createStream("\uD83C"));
+        Assert.ThrowsException<RuntimeException>(() => createStream("\uD83C"));
+
 	}
 
 	[TestMethod]
 	public void testDanglingHighSurrogateThrows() {
-		assertThrows(RuntimeException, () => createStream("\uD83C\u0123"));
+        //assertThrows(RuntimeException, () => createStream("\uD83C\u0123"));
+        Assert.ThrowsException<RuntimeException>(() => createStream("\uD83C\u0123"));
 	}
 
 	[TestMethod]
 	public void testDanglingLowSurrogateThrows() {
-		assertThrows(RuntimeException, () => createStream("\uDF0E"));
+        //assertThrows(RuntimeException, () => createStream("\uDF0E"));
+        Assert.ThrowsException<RuntimeException>(() => createStream("\uDF0E"));
 	}
 
 	protected static TestingUnbufferedCharStream createStream(String text) {

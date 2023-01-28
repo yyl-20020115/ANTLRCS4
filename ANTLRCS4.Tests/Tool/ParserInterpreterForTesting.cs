@@ -13,15 +13,16 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.test.tool;
 
 public class ParserInterpreterForTesting {
-	public class DummyParser : Parser {
+	public class DummyParser : runtime.Parser
+    {
 		public readonly ATN atn;
 		public readonly DFA[] decisionToDFA; // not shared for interp
 		public readonly PredictionContextCache sharedContextCache =
 			new PredictionContextCache();
 
 		public Grammar g;
-		public DummyParser(Grammar g, ATN atn, TokenStream input) {
-			base(input);
+		public DummyParser(Grammar g, ATN atn, TokenStream input): base(input)
+        {
 			this.g = g;
 			this.atn = atn;
 			this.decisionToDFA = new DFA[atn.getNumberOfDecisions()];
@@ -37,7 +38,7 @@ public class ParserInterpreterForTesting {
 
 		//@Override
 		public String[] getRuleNames() {
-			return g.rules.keySet().toArray(new String[0]);
+			return g.rules.Keys.ToArray();//.toArray(new String[0]);
 		}
 
 		//@Override
