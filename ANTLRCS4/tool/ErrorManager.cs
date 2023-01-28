@@ -237,8 +237,10 @@ public class ErrorManager {
      *  Otherwise we just use the default "antlr".
      */
     public void setFormat(String formatName) {
-		lock (loadedFormats) {
-			if (!loadedFormats.TryGetValue(formatName,out var loadedFormat)) {
+		TemplateGroupFile loadedFormat = null;
+
+        lock (loadedFormats) {
+			if (!loadedFormats.TryGetValue(formatName,out loadedFormat)) {
 				String fileName = FORMATS_DIR + formatName + TemplateGroup.GroupFileExtension;
 				string url = fileName;// cl.getResource(fileName);
 				//if (url == null) {

@@ -30,6 +30,6 @@ public interface CharStream : IntStream {
 * getting the text of the specified interval
 */
     public String getText(Interval interval);
-    void rewind(int start);
-    object[] substring(int tokenStartCharIndex, int v);
+    char LT(int v);
+    String substring(int tokenStartCharIndex, int v);
 }

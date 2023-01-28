@@ -19,7 +19,13 @@ public class FailedPredicateException : RecognitionException {
 	private readonly String predicate;
     internal string predicateText;
     internal string ruleName;
+    public FailedPredicateException(CharStream input,
+                                    String predicate = null,
+                                    String message = null)
+		: base(formatMessage(predicate, message), null, null,null)
+    {
 
+    }
     public FailedPredicateException(Parser recognizer,
 									String predicate = null,
 									String message = null)

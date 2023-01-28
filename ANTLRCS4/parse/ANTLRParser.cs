@@ -269,10 +269,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop1;
+                            goto exit1;
+                            //break loop1;
                     }
                 }
-
+            exit1:
                 pushFollow(FOLLOW_rules_in_grammarSpec354);
                 rules7 = rules();
                 state._fsp--;
@@ -303,10 +304,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop2;
+                            goto exit2;
+                            //break loop2;
                     }
                 }
-
+            exit2:
                 EOF9 = (Token)match(input, EOF, FOLLOW_EOF_in_grammarSpec398);
                 stream_EOF.add(EOF9);
 
@@ -780,10 +782,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop5;
+                            goto exit5;
+                            //break loop5;
                     }
                 }
-
+            exit5:
                 RBRACE18 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_optionsSpec800);
                 stream_RBRACE.add(RBRACE18);
 
@@ -1118,10 +1121,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop7;
+                            goto exit7;
+                            //break loop7;
                     }
                 }
-
+            exit7:
                 SEMI30 = (Token)match(input, SEMI, FOLLOW_SEMI_in_delegateGrammars928);
                 stream_SEMI.add(SEMI30);
 
@@ -1460,10 +1464,11 @@ public class ANTLRParser : Parser
                                     break;
 
                                 default:
-                                    break loop9;
+                                    goto exit9;
+                                    //break loop9;
                             }
                         }
-
+                    exit9:
                         RBRACE39 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec995);
                         stream_RBRACE.add(RBRACE39);
 
@@ -2044,10 +2049,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop14;
+                            goto exit14;
+                            //break loop14;
                     }
                 }
-
+            exit14:
 
                 // AST REWRITE
                 // elements: MODE, lexerRule, id
@@ -2169,10 +2175,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop15;
+                            goto exit15;
+                            //break loop15;
                     }
                 }
-
+            exit15:
 
                 // AST REWRITE
                 // elements: rule
@@ -2723,10 +2730,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop21;
+                            goto exit21;
+                            //break loop21;
                     }
                 }
-
+            exit21:
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:390:25: ( finallyClause )?
                 int alt22 = 2;
                 int LA22_0 = input.LA(1);
@@ -3297,10 +3305,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop25;
+                            goto exit25;
+                            //break loop25;
                     }
                 }
-
+            exit25:
 
                 // AST REWRITE
                 // elements: qid, THROWS
@@ -3663,10 +3672,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop26;
+                            //break loop26;
+                            goto exit26;
                     }
                 }
-
+            exit26:
 
                 // AST REWRITE
                 // elements: labeledAlt
@@ -4127,11 +4137,12 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop30;
+                            goto exit30;
+                            //break loop30;
                     }
                 }
 
-
+            exit30:
                 // AST REWRITE
                 // elements: lexerAlt
                 // token labels: 
@@ -4399,13 +4410,13 @@ public class ANTLRParser : Parser
                                     break;
 
                                 default:
-                                    if (cnt32 >= 1) break loop32;
+                                    if (cnt32 >= 1) goto exit32;// break loop32;
                                     EarlyExitException eee = new EarlyExitException(32, input);
                                     throw eee;
                             }
                             cnt32++;
                         }
-
+                    exit32:
 
                         // AST REWRITE
                         // elements: lexerElement
@@ -5046,10 +5057,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop38;
+                            goto exit38;
+                            //break loop38;
                     }
                 }
-
+            exit38:
 
                 // AST REWRITE
                 // elements: lexerCommand
@@ -5589,10 +5601,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop42;
+                            goto exit42;
+                            //break loop42;
                     }
                 }
-
+            exit42:
 
                 // AST REWRITE
                 // elements: alternative
@@ -5748,13 +5761,13 @@ public class ANTLRParser : Parser
                                         break;
 
                                     default:
-                                        if (cnt44 >= 1) break loop44;
+                                        if (cnt44 >= 1) goto exit44;// break loop44;
                                         EarlyExitException eee = new EarlyExitException(44, input);
                                         throw eee;
                                 }
                                 cnt44++;
                             }
-
+                        exit44:
 
                             // AST REWRITE
                             // elements: elementOptions, e
@@ -7911,10 +7924,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop61;
+                            //break loop61;
+                            goto exit61;
                     }
                 }
-
+            exit61:
                 RPAREN187 = (Token)match(input, RPAREN, FOLLOW_RPAREN_in_blockSet3354);
                 stream_RPAREN.add(RPAREN187);
 
@@ -9298,7 +9312,7 @@ public class ANTLRParser : Parser
                             break loop77;
                     }
                 }
-
+            exit77:
 
                 // AST REWRITE
                 // elements: 

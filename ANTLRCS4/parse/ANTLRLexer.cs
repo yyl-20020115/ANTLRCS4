@@ -28,7 +28,6 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 using org.antlr.runtime;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.runtime.misc;
@@ -57,7 +56,7 @@ namespace org.antlr.v4.parse;
  *  Temporal Wave LLC
  *  2009
  */
-public class ANTLRLexer : Lexer
+public class ANTLRLexer : org.antlr.runtime.Lexer
 {
     public const int EOF = -1;
     public const int ACTION = 4;
@@ -174,9 +173,9 @@ public class ANTLRLexer : Lexer
 
     // delegates
     // delegators
-    public Lexer[] getDelegates()
+    public antlr.runtime.Lexer[] getDelegates()
     {
-        return new Lexer[] { };
+        return new antlr.runtime.Lexer[] { };
     }
     protected DFA2 dfa2;
     protected DFA32 dfa32;
@@ -1142,10 +1141,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop15;
+                            goto exit15;
+                            //break loop15;
                     }
                 }
-
+                exit15:
                 match('{'); if (state.failed) return;
             }
 
@@ -2001,10 +2001,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop16;
+                            goto exit16;
+                            //break loop16;
                     }
                 }
-
+            exit16:
                 if (state.backtracking == 0)
                 {
                     if (Grammar.isTokenName((a != null ? a.getText() : null))) _type = TOKEN_REF;
@@ -2444,14 +2445,14 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            if (cnt20 >= 1) break loop20;
+                            if (cnt20 >= 1) goto exit20;// break loop20;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(20, input);
                             throw eee;
                     }
                     cnt20++;
                 }
-
+            exit20:
                 int fileStart3345 = getCharIndex();
                 int fileStartLine3345 = getLine();
                 int fileStartCharPos3345 = getCharPositionInLine();
@@ -2493,14 +2494,14 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            if (cnt21 >= 1) break loop21;
+                            if (cnt21 >= 1) goto exit21;// break loop21;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(21, input);
                             throw eee;
                     }
                     cnt21++;
                 }
-
+            exit21:
                 int lineStart3352 = getCharIndex();
                 int lineStartLine3352 = getLine();
                 int lineStartCharPos3352 = getCharPositionInLine();
@@ -2604,10 +2605,11 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            break loop23;
+                            goto exit23;
+                            //break loop23;
                     }
                 }
-
+                exit23:
                 // org\\antlr\\v4\\parse\\ANTLRLexer.g:608:8: ( '\\'' |)
                 int alt24 = 2;
                 int LA24_0 = input.LA(1);
@@ -3065,14 +3067,14 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            if (cnt30 >= 1) break loop30;
+                            if (cnt30 >= 1) goto exit30;// break loop30;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(30, input);
                             throw eee;
                     }
                     cnt30++;
                 }
-
+            exit30:
                 match('}'); if (state.failed) return;
                 if (state.backtracking == 0)
                 {
@@ -3139,14 +3141,14 @@ public class ANTLRLexer : Lexer
                             break;
 
                         default:
-                            if (cnt31 >= 1) break loop31;
+                            if (cnt31 >= 1) goto exit31;// break loop31;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(31, input);
                             throw eee;
                     }
                     cnt31++;
                 }
-
+            exit31:
                 if (state.backtracking == 0) { _channel = HIDDEN; }
             }
 
@@ -3309,7 +3311,7 @@ public class ANTLRLexer : Lexer
     // $ANTLR end "ERRCHAR"
 
     //@Override
-    public void mTokens()
+    public override void mTokens()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:1:8: ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR )
         int alt32 = 45;
@@ -3860,12 +3862,8 @@ public class ANTLRLexer : Lexer
 
     protected class DFA2 : antlr.runtime.DFA
     {
-
-        protected readonly ANTLRLexer lexer;
-
-        public DFA2(BaseRecognizer recognizer, ANTLRLexer lexer)
+        public DFA2(ANTLRLexer recognizer)
         {
-            this.lexer = lexer;
             this.recognizer = recognizer;
             this.decisionNumber = 2;
             this.eot = DFA2_eot;

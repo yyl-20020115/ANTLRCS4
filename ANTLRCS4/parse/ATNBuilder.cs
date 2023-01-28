@@ -262,10 +262,11 @@ public class ATNBuilder : TreeParser
                                             break;
 
                                         default:
-                                            break loop1;
+                                            goto exit1;
+                                            //break loop1;
                                     }
                                 }
-
+                            exit1:
                                 match(input, Token.UP, null);
                             }
 
@@ -387,10 +388,11 @@ public class ATNBuilder : TreeParser
                                             break;
 
                                         default:
-                                            break loop4;
+                                            goto exit4;
+                                            //break loop4;
                                     }
                                 }
-
+                            exit4:
                                 match(input, Token.UP, null);
                             }
 
@@ -425,13 +427,13 @@ public class ATNBuilder : TreeParser
                             break;
 
                         default:
-                            if (cnt6 >= 1) break loop6;
+                            if (cnt6 >= 1) goto exit6;// break loop6;
                             EarlyExitException eee = new EarlyExitException(6, input);
                             throw eee;
                     }
                     cnt6++;
                 }
-
+            exit6:
                 match(input, Token.UP, null);
 
                 p = factory.block((BlockAST)BLOCK2, ebnfRoot, alts);
@@ -575,13 +577,13 @@ public class ATNBuilder : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt9 >= 1) break loop9;
+                                    if (cnt9 >= 1) goto exit9;// break loop9;
                                     EarlyExitException eee = new EarlyExitException(9, input);
                                     throw eee;
                             }
                             cnt9++;
                         }
-
+                    exit9:
                         match(input, Token.UP, null);
 
                         p = factory.alt(els);
@@ -646,13 +648,13 @@ public class ATNBuilder : TreeParser
                             break;
 
                         default:
-                            if (cnt11 >= 1) break loop11;
+                            if (cnt11 >= 1) goto exit11;// break loop11;
                             EarlyExitException eee = new EarlyExitException(11, input);
                             throw eee;
                     }
                     cnt11++;
                 }
-
+            exit11:
 
                 p = factory.alt(cmds);
 
@@ -1353,13 +1355,13 @@ public class ATNBuilder : TreeParser
                             break;
 
                         default:
-                            if (cnt17 >= 1) break loop17;
+                            if (cnt17 >= 1) goto exit17;// break loop17;
                             EarlyExitException eee = new EarlyExitException(17, input);
                             throw eee;
                     }
                     cnt17++;
                 }
-
+            exit17:
                 match(input, Token.UP, null);
 
                 retval.p = factory.set(((GrammarAST)retval.start), alts, invert);
@@ -1981,10 +1983,11 @@ public class ATNBuilder : TreeParser
                                         break;
 
                                     default:
-                                        break loop21;
+                                        goto exit12;
+                                        //break loop21;
                                 }
                             }
-
+                        exit12:
                             match(input, Token.UP, null);
                         }
 
