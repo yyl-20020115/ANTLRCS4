@@ -205,15 +205,15 @@ public class LeftRecursiveRuleTransformer {
 		AltAST mainAlt = (AltAST)ruleBlk.getChild(0);
 		BlockAST primaryBlk = (BlockAST)mainAlt.getChild(0);
 		BlockAST opsBlk = (BlockAST)mainAlt.getChild(1).getChild(0); // (* BLOCK ...)
-		for (int i = 0; i < r.recPrimaryAlts.size(); i++) {
-			LeftRecursiveRuleAltInfo altInfo = r.recPrimaryAlts.get(i);
+		for (int i = 0; i < r.recPrimaryAlts.Count; i++) {
+			LeftRecursiveRuleAltInfo altInfo = r.recPrimaryAlts[(i)];
 			altInfo.altAST = (AltAST)primaryBlk.getChild(i);
 			altInfo.altAST.leftRecursiveAltInfo = altInfo;
 			altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;
 //			altInfo.originalAltAST.parent = altInfo.altAST.parent;
 //			Console.Out.WriteLine(altInfo.altAST.toStringTree());
 		}
-		for (int i = 0; i < r.recOpAlts.size(); i++) {
+		for (int i = 0; i < r.recOpAlts.Count; i++) {
 			LeftRecursiveRuleAltInfo altInfo = r.recOpAlts.getElement(i);
 			altInfo.altAST = (AltAST)opsBlk.getChild(i);
 			altInfo.altAST.leftRecursiveAltInfo = altInfo;

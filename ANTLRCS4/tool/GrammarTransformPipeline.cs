@@ -459,7 +459,7 @@ public class GrammarTransformPipeline {
 			if ( litAliases!=null ) {
                 foreach (Pair<GrammarAST,GrammarAST> pair in litAliases) {
 					GrammarAST litAST = pair.b;
-					if ( lit.Equals(litAST.getText()) ) continue nextLit;
+					if (lit.Equals(litAST.getText())) continue;// nextLit;
 				}
 			}
 			// create for each literal: (RULE <uniquename> (BLOCK (ALT <lit>))

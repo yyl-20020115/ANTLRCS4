@@ -457,13 +457,13 @@ public class SourceGenTriggers : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt5 >= 1) break loop5;
+                                    if (cnt5 >= 1) goto exit5;// break loop5;
                                     EarlyExitException eee = new EarlyExitException(5, input);
                                     throw eee;
                             }
                             cnt5++;
                         }
-
+                    exit5:
                         match(input, Token.UP, null);
 
                     }
@@ -1179,13 +1179,13 @@ public class SourceGenTriggers : TreeParser
                             break;
 
                         default:
-                            if (cnt12 >= 1) break loop12;
+                            if (cnt12 >= 1) goto exit12;// break loop12;
                             EarlyExitException eee = new EarlyExitException(12, input);
                             throw eee;
                     }
                     cnt12++;
                 }
-
+            exit12:
                 match(input, Token.UP, null);
 
                 omos = controller.set(SET20, label, invert);
@@ -1855,13 +1855,13 @@ public class SourceGenTriggers : TreeParser
                             break;
 
                         default:
-                            if (cnt17 >= 1) break loop17;
+                            if (cnt17 >= 1) goto exit17;// break loop17;
                             EarlyExitException eee = new EarlyExitException(17, input);
                             throw eee;
                     }
                     cnt17++;
                 }
-
+            exit17:
                 match(input, Token.UP, null);
 
             }

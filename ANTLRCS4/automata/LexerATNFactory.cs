@@ -77,7 +77,7 @@ public class LexerATNFactory : ParserATNFactory {
 		}
 
 		// INIT ACTION, RULE->TOKEN_TYPE MAP
-		atn.ruleToTokenType = new int[g.rules.size()];
+		atn.ruleToTokenType = new int[g.rules.Count];
 		foreach (Rule r in g.rules.Values) {
 			atn.ruleToTokenType[r.index] = g.getTokenType(r.name);
 		}

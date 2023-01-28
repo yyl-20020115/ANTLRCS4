@@ -14,6 +14,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using Action = org.antlr.v4.codegen.model.Action;
+using Lexer = org.antlr.v4.codegen.model.Lexer;
 using Parser = org.antlr.v4.runtime.Parser;
 
 namespace org.antlr.v4.codegen;
