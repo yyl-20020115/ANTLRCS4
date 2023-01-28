@@ -52,4 +52,6 @@ public interface Tree {
     bool isNil();
     void addChild(Tree child);
     void setChild(int i, Tree child);
+    int getLine();
+    int getCharPositionInLine();
 }

@@ -151,4 +151,14 @@ public class TerminalNodeImpl : TerminalNode {
     {
         throw new NotImplementedException();
     }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
 }

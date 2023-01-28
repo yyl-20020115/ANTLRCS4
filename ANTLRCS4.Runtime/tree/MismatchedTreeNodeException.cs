@@ -28,35 +28,19 @@
 using org.antlr.v4.runtime;
 using System.Runtime.Serialization;
 
-namespace org.antlr.runtime.tree
+namespace org.antlr.runtime.tree;
+
+public class MismatchedTreeNodeException : RecognitionException
 {
-    [Serializable]
-    internal class MismatchedTreeNodeException : RecognitionException
+    internal int expecting;
+    private int ttype;
+    private TreeNodeStream input;
+
+    public MismatchedTreeNodeException(int ttype, TreeNodeStream input)
+        :base(null,input,null)
     {
-        internal int expecting;
-        private int ttype;
-        private TreeNodeStream input;
-
-        public MismatchedTreeNodeException()
-        {
-        }
-
-        public MismatchedTreeNodeException(string? message) : base(message)
-        {
-        }
-
-        public MismatchedTreeNodeException(int ttype, TreeNodeStream input)
-        {
-            this.ttype = ttype;
-            this.input = input;
-        }
-
-        public MismatchedTreeNodeException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected MismatchedTreeNodeException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        this.ttype = ttype;
+        this.input = input;
     }
+
 }

@@ -335,4 +335,14 @@ public class RuleContext : RuleNode {
     {
         throw new NotImplementedException();
     }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
 }

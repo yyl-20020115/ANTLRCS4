@@ -58,7 +58,7 @@ public abstract class UnicodeDataTemplateController {
             Dictionary<String, String> propertyAliases,
 			String alias,
 			String propertyName) {
-		propertyAliases.put(alias, propertyName);
+		propertyAliases.Add(alias, propertyName);
 	}
 
 	public static Dictionary<String, Object> getProperties() {

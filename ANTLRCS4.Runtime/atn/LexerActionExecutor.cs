@@ -65,7 +65,7 @@ public class LexerActionExecutor {
 			return new LexerActionExecutor(new LexerAction[] { lexerAction });
 		}
 
-		LexerAction[] lexerActions = Arrays.copyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
+		LexerAction[] lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
 		lexerActions[lexerActions.Length - 1] = lexerAction;
 		return new LexerActionExecutor(lexerActions);
 	}

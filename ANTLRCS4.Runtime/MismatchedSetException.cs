@@ -27,10 +27,17 @@
  */
 using org.antlr.v4.runtime;
 
-namespace org.antlr.runtime
+namespace org.antlr.runtime;
+
+public class MismatchedSetException : RecognitionException
 {
-    internal class MismatchedSetException : RecognitionException
+    public string expecting;
+
+    public MismatchedSetException(Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(recognizer, input, ctx)
     {
-        internal string expecting;
+    }
+
+    public MismatchedSetException(string message, Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(message, recognizer, input, ctx)
+    {
     }
 }

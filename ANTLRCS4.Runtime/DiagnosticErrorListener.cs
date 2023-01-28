@@ -138,7 +138,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 
 		BitSet result = new BitSet();
 		foreach (ATNConfig config in configs) {
-			result.set(config.alt);
+			result.Set(config.alt);
 		}
 
 		return result;

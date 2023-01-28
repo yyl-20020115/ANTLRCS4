@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
 
@@ -97,8 +98,8 @@ public class VocabularyImpl : Vocabulary {
 			return EMPTY_VOCABULARY;
 		}
 
-		String[] literalNames = Arrays.copyOf(tokenNames, tokenNames.Length);
-		String[] symbolicNames = Arrays.copyOf(tokenNames, tokenNames.Length);
+		String[] literalNames = Arrays.CopyOf(tokenNames, tokenNames.Length);
+		String[] symbolicNames = Arrays.CopyOf(tokenNames, tokenNames.Length);
 		for (int i = 0; i < tokenNames.Length; i++) {
 			String tokenName = tokenNames[i];
 			if (tokenName == null) {

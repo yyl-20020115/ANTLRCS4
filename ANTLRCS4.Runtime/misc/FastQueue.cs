@@ -83,7 +83,7 @@ public class FastQueue<T>
         int absIndex = p + i;
         if (absIndex >= data.Count)
         {
-            throw new NoSuchElementException("queue index " + absIndex + " > last index " + (data.size() - 1));
+            throw new NoSuchElementException("queue index " + absIndex + " > last index " + (data.Count - 1));
         }
         if (absIndex < 0)
         {

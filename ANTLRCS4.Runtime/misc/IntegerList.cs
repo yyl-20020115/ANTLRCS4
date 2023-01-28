@@ -148,7 +148,7 @@ public class IntegerList {
 			return;
 		}
 
-		_data = Arrays.copyOf(_data, _size);
+		_data = Arrays.CopyOf(_data, _size);
 	}
 
 	public void clear() {
@@ -161,7 +161,7 @@ public class IntegerList {
 			return EMPTY_DATA;
 		}
 
-		return Arrays.copyOf(_data, _size);
+		return Arrays.CopyOf(_data, _size);
 	}
 
 	public void sort() {
@@ -272,7 +272,7 @@ public class IntegerList {
 			}
 		}
 
-		_data = Arrays.copyOf(_data, newLength);
+		_data = Arrays.CopyOf(_data, newLength);
 	}
     public const int MIN_SUPPLEMENTARY_CODE_POINT = 0x010000;
     public const int MAX_CODE_POINT = 0X10FFFF;
@@ -299,7 +299,7 @@ public class IntegerList {
 			// a code point > 0xFFFF
 			if (!calculatedPreciseResultSize &&
 			    isSupplementaryCodePoint(codePoint)) {
-				resultArray = Arrays.copyOf(resultArray, charArraySize());
+				resultArray = Arrays.CopyOf(resultArray, charArraySize());
 				calculatedPreciseResultSize = true;
 			}
 			// This will throw IllegalArgumentException if
