@@ -164,8 +164,8 @@ public class SemanticPipeline {
 				// Remove literal if repeated across rules so it's not
 				// found by parser grammar.
 				int value = G.stringLiteralToTypeMap.remove(lit);
-				if (value != null && value > 0 && value < G.typeToStringLiteralList.size() && lit.Equals(G.typeToStringLiteralList.get(value))) {
-					G.typeToStringLiteralList.set(value, null);
+				if (value != null && value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList.get(value))) {
+					G.typeToStringLiteralList.Set(value, null);
 				}
 			}
 		}

@@ -692,7 +692,7 @@ public class Grammar : AttributeResolver
             return INVALID_TOKEN_NAME;
         }
 
-        if (ttype >= 0 && ttype < typeToStringLiteralList.size() && typeToStringLiteralList.get(ttype) != null)
+        if (ttype >= 0 && ttype < typeToStringLiteralList.Count && typeToStringLiteralList.get(ttype) != null)
         {
             return typeToStringLiteralList.get(ttype);
         }
@@ -1003,9 +1003,9 @@ public class Grammar : AttributeResolver
         if (vocab != null)
         {
             TokenVocabParser vparser = new TokenVocabParser(this);
-            Map<String, int> tokens = vparser.load();
+            Dictionary<String, int> tokens = vparser.load();
             tool.log("grammar", "tokens=" + tokens);
-            for (String t in tokens.keySet())
+            for (String t in tokens.Keys)
             {
                 if (t.charAt(0) == '\'') defineStringLiteral(t, tokens.get(t));
                 else defineTokenName(t, tokens.get(t));
@@ -1015,11 +1015,11 @@ public class Grammar : AttributeResolver
 
     public void importVocab(Grammar importG)
     {
-        for (String tokenName in importG.tokenNameToTypeMap.keySet())
+        for (String tokenName in importG.tokenNameToTypeMap.Keys)
         {
             defineTokenName(tokenName, importG.tokenNameToTypeMap.get(tokenName));
         }
-        for (String tokenName in importG.stringLiteralToTypeMap.keySet())
+        for (String tokenName in importG.stringLiteralToTypeMap.Keys)
         {
             defineStringLiteral(tokenName, importG.stringLiteralToTypeMap.get(tokenName));
         }
@@ -1464,7 +1464,7 @@ public LexerInterpreter createLexerInterpreter(CharStream input)
             getVocabulary(),
             Arrays.AsList(getRuleNames()),
             allChannels,
-            ((LexerGrammar)this).modes.keySet(),
+            ((LexerGrammar)this).modes.Keys,
             deserializedATN,
             input);
 }
