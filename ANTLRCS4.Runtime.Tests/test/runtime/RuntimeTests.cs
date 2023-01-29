@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
@@ -19,14 +20,14 @@ public abstract class RuntimeTests {
 	protected abstract RuntimeRunner createRuntimeRunner();
 
 	private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
-	private static readonly Dictionary<String, STGroup> cachedTargetTemplates = new ();
+	private static readonly Dictionary<String, TemplateGroup> cachedTargetTemplates = new ();
 	private static readonly StringRenderer rendered = new StringRenderer();
 
 	static RuntimeTests(){
-		File descriptorsDir = new File(Paths.get(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
-		File[] directoryListing = descriptorsDir.listFiles();
+		string descriptorsDir = (Paths.get(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
+        string[] directoryListing = descriptorsDir.listFiles();
 		//assert directoryListing != null;
-		for (File directory : directoryListing) {
+		for (string directory in directoryListing) {
 			String groupName = directory.getName();
 			if (groupName.startsWith(".")) {
 				continue; // Ignore service directories (like .DS_Store in Mac)
@@ -34,9 +35,9 @@ public abstract class RuntimeTests {
 
 			List<RuntimeTestDescriptor> descriptors = new ArrayList<>();
 
-			File[] descriptorFiles = directory.listFiles();
+            string[] descriptorFiles = directory.listFiles();
 			//assert descriptorFiles != null;
-			for (File descriptorFile : descriptorFiles) {
+			for (string descriptorFile : descriptorFiles) {
 				String name = descriptorFile.getName().replace(".txt", "");
 				if (name.startsWith(".")) {
 					continue;
@@ -72,7 +73,7 @@ public abstract class RuntimeTests {
 		foreach (String group in testDescriptors.Keys) {
 			List<DynamicNode> descriptorTests = new ();
 			RuntimeTestDescriptor[] descriptors = testDescriptors.get(group);
-			for (RuntimeTestDescriptor descriptor in descriptors) {
+			foreach (RuntimeTestDescriptor descriptor in descriptors) {
 				descriptorTests.add(dynamicTest(descriptor.name, descriptor.uri, () => {
 					using (RuntimeRunner runner = createRuntimeRunner()) {
 						String errorMessage = test(descriptor, runner);
@@ -154,15 +155,15 @@ public abstract class RuntimeTests {
 	private static String prepareGrammars(RuntimeTestDescriptor descriptor, RuntimeRunner runner) {
 		String targetName = runner.getLanguage();
 
-		STGroup targetTemplates;
+		TemplateGroup targetTemplates;
 		lock (cachedTargetTemplates) {
 			targetTemplates = cachedTargetTemplates.get(targetName);
 			if (targetTemplates == null) {
 				ClassLoader classLoader = RuntimeTests.getClassLoader();
 				URL templates = classLoader.getResource("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
-				assert templates != null;
-				targetTemplates = new STGroupFile(templates, "UTF-8", '<', '>');
-				targetTemplates.registerRenderer(String, rendered);
+				//assert templates != null;
+				targetTemplates = new TemplateGroupFile(templates, "UTF-8", '<', '>');
+				targetTemplates.RegisterRenderer(String, rendered);
 				cachedTargetTemplates.put(targetName, targetTemplates);
 			}
 		}
@@ -171,19 +172,19 @@ public abstract class RuntimeTests {
 		List<Pair<String, String>> slaveGrammars = descriptor.slaveGrammars;
 		if (slaveGrammars != null) {
 			for (Pair<String, String> spair : slaveGrammars) {
-				STGroup g = new STGroup('<', '>');
+				TemplateGroup g = new TemplateGroup('<', '>');
 				g.registerRenderer(String, rendered);
 				g.importTemplates(targetTemplates);
-				ST grammarST = new ST(g, spair.b);
-				writeFile(runner.getTempDirPath(), spair.a + ".g4", grammarST.render());
+				Template grammarST = new Template(g, spair.b);
+				writeFile(runner.getTempDirPath(), spair.a + ".g4", grammarST.Render());
 			}
 		}
 
-		STGroup g = new STGroup('<', '>');
+        TemplateGroup g = new TemplateGroup('<', '>');
 		g.importTemplates(targetTemplates);
 		g.registerRenderer(String, rendered);
-		ST grammarST = new ST(g, descriptor.grammar);
-		return grammarST.render();
+		Template grammarST = new Template(g, descriptor.grammar);
+		return grammarST.Render();
 	}
 
 	private static String assertCorrectOutput(RuntimeTestDescriptor descriptor, String targetName, State state) {

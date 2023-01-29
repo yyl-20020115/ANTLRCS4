@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
+
 namespace org.antlr.v4.test.runtime.swift;
 
 public class SwiftRunner : RuntimeRunner {
@@ -54,16 +56,16 @@ public class SwiftRunner : RuntimeRunner {
 		Exception exception = null;
 		try {
 			String tempDirPath = getTempDirPath();
-			File tempDirFile = new File(tempDirPath);
+			string tempDirFile = (tempDirPath);
 
 			File[] ignoredFiles = tempDirFile.listFiles(NoSwiftFileFilter.Instance);
-			assert ignoredFiles != null;
+			//assert ignoredFiles != null;
 			List<String> excludedFiles = Arrays.stream(ignoredFiles).map(File::getName).collect(Collectors.toList());
 
 			String text = getTextFromResource("org/antlr/v4/test/runtime/helpers/Package.swift.stg");
-			ST outputFileST = new ST(text);
-			outputFileST.add("excludedFiles", excludedFiles);
-			writeFile(tempDirPath, "Package.swift", outputFileST.render());
+			Template outputFileST = new Template(text);
+			outputFileST.Add("excludedFiles", excludedFiles);
+			writeFile(tempDirPath, "Package.swift", outputFileST.Render());
 
 			String[] buildProjectArgs = new String[]{
 					getCompilerPath(),
@@ -92,7 +94,7 @@ public class SwiftRunner : RuntimeRunner {
 	class NoSwiftFileFilter : FilenameFilter {
 		public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
 
-		public bool accept(File dir, String name) {
+		public bool accept(string dir, String name) {
 			return !name.endsWith(".swift");
 		}
 	}

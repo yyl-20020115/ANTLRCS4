@@ -559,7 +559,12 @@ public class TestToolSyntaxErrors {
 		testErrors(pair, true);
 	}
 
-	[TestMethod] public void testInvalidCharSetsAndStringLiterals() {
+    private void testErrors(string[] pair, bool v)
+    {
+        throw new NotImplementedException();
+    }
+
+    [TestMethod] public void testInvalidCharSetsAndStringLiterals() {
 		String grammar =
 				"lexer grammar Test;\n" +
 				"INVALID_STRING_LITERAL_RANGE: 'GH'..'LM';\n" +

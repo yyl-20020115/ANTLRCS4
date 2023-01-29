@@ -4,6 +4,9 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
+using System.Text;
+
 namespace org.antlr.v4.runtime;
 
 [TestClass]
@@ -279,21 +282,21 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void asciiContentsShouldUse8BitBuffer() {
 		CodePointCharStream s = CharStreams.fromString("hello");
-		assertTrue(s.getInternalStorage() instanceof byte[]);
+		Assert.IsTrue(s.getInternalStorage() is byte[]);
 		Assert.AreEqual(5, s.size());
 	}
 
 	[TestMethod]
 	public void bmpContentsShouldUse16BitBuffer() {
 		CodePointCharStream s = CharStreams.fromString("hello \u4E16\u754C");
-		assertTrue(s.getInternalStorage() instanceof char[]);
+		Assert.IsTrue(s.getInternalStorage() is char[]);
 		Assert.AreEqual(8, s.size());
 	}
 
 	[TestMethod]
 	public void smpContentsShouldUse32BitBuffer() {
 		CodePointCharStream s = CharStreams.fromString("hello \uD83C\uDF0D");
-		assertTrue(s.getInternalStorage() instanceof int[]);
+		Assert.IsTrue(s.getInternalStorage() is int[]);
 		Assert.AreEqual(7, s.size());
 	}
 }

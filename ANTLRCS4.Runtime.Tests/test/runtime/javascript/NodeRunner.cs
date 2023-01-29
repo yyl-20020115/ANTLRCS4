@@ -3,13 +3,14 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.javascript;
 
 public class NodeRunner : RuntimeRunner {
 	////@Override
-	public String getLanguage() {
+	public override String getLanguage() {
 		return "JavaScript";
 	}
 
@@ -48,7 +49,7 @@ public class NodeRunner : RuntimeRunner {
 	}
 
 	////@Override
-	protected void addExtraRecognizerParameters(ST template) {
-		template.add("runtimePath", normalizedRuntimePath);
+	protected void addExtraRecognizerParameters(Template template) {
+		template.Add("runtimePath", normalizedRuntimePath);
 	}
 }

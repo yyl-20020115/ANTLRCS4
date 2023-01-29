@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -89,7 +90,7 @@ public class TestATNSerialization {
 			"3->1 EPSILON 0,0,0\n";
 		ATN atn = createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(g.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -258,7 +259,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -282,7 +283,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -306,7 +307,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -342,7 +343,7 @@ public class TestATNSerialization {
 						"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -386,7 +387,7 @@ public class TestATNSerialization {
 				"3:9\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -411,7 +412,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -435,7 +436,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -461,7 +462,7 @@ public class TestATNSerialization {
 				"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -491,7 +492,7 @@ public class TestATNSerialization {
 				"1:5\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -523,7 +524,7 @@ public class TestATNSerialization {
 				"1:6\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -571,7 +572,7 @@ public class TestATNSerialization {
 				"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -618,7 +619,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -643,7 +644,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -668,7 +669,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -693,7 +694,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -718,7 +719,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -743,7 +744,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -768,7 +769,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -793,7 +794,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -818,7 +819,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -843,7 +844,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -868,7 +869,7 @@ public class TestATNSerialization {
 			"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -932,7 +933,7 @@ public class TestATNSerialization {
 				"2:11\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -960,7 +961,7 @@ public class TestATNSerialization {
 				"0:0\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -1018,7 +1019,7 @@ public class TestATNSerialization {
 			"1:1\n";
 		ATN atn = createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(lg.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 	}
 
@@ -1074,7 +1075,7 @@ public class TestATNSerialization {
 	private void checkResults(Grammar g, String expecting) {
 		ATN atn = createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String result = new ATNDescriber(atn, Arrays.asList(g.getTokenNames())).decode(serialized.toArray());
+		String result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 
 		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);

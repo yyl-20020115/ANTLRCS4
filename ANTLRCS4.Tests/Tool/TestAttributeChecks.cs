@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool;
 
@@ -239,11 +240,11 @@ public class TestAttributeChecks {
 		for (int i = 0; i < pairs.Length; i += 2) {
 			String action = pairs[i];
 			String expected = pairs[i + 1];
-			STGroup g = new STGroup('<', '>');
+            TemplateGroup g = new TemplateGroup('<', '>');
 			g.setListener(new ErrorBuffer()); // hush warnings
-			ST st = new ST(g, template);
+			Template st = new Template(g, template);
 			st.add(location, action);
-			String grammar = st.render();
+			String grammar = st.Render();
 			testErrors(new String[]{grammar, expected}, false);
 		}
 	}

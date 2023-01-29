@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.cpp;
@@ -145,15 +146,15 @@ public class CppRunner : RuntimeRunner {
 
 	private void writeVisualStudioProjectFile(String grammarName, String lexerName, String parserName,
 											  bool useListener, bool useVisitor) {
-		ST projectFileST = new ST(visualStudioProjectContent);
-		projectFileST.add("runtimeSourcePath", runtimeSourcePath);
-		projectFileST.add("runtimeBinaryPath", runtimeBinaryPath);
-		projectFileST.add("grammarName", grammarName);
-		projectFileST.add("lexerName", lexerName);
-		projectFileST.add("parserName", parserName);
-		projectFileST.add("useListener", useListener);
-		projectFileST.add("useVisitor", useVisitor);
-		writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.render());
+		Template projectFileST = new Template(visualStudioProjectContent);
+		projectFileST.Add("runtimeSourcePath", runtimeSourcePath);
+		projectFileST.Add("runtimeBinaryPath", runtimeBinaryPath);
+		projectFileST.Add("grammarName", grammarName);
+		projectFileST.Add("lexerName", lexerName);
+		projectFileST.Add("parserName", parserName);
+		projectFileST.Add("useListener", useListener);
+		projectFileST.Add("useVisitor", useVisitor);
+		writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.Render());
 	}
 
 	////@Override
@@ -162,12 +163,12 @@ public class CppRunner : RuntimeRunner {
 	}
 
 	////@Override
-	protected override String getExecFileName() {
+	public override String getExecFileName() {
 		return Paths.get(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
 	}
 
 	////@Override
-	protected object Dictionary<String, String> getExecEnvironment() {
+	protected override Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

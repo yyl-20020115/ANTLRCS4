@@ -121,7 +121,7 @@ public class RuntimeTestDescriptorParser {
 					notes = value;
 					break;
 				case "type":
-					testType = Enum.valueOf(GrammarType, value);
+					testType = Enum.GetValues(GrammarType, value);
 					break;
 				case "grammar":
 					grammarName = getGrammarName(value.Split("\n")[0]);
@@ -129,7 +129,7 @@ public class RuntimeTestDescriptorParser {
 					break;
 				case "slaveGrammar":
 					String gname = getGrammarName(value.Split("\n")[0]);
-					slaveGrammars.add(new Pair<>(gname, value));
+					slaveGrammars.Add(new (gname, value));
 				case "start":
 					startRule = value;
 					break;

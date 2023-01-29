@@ -183,12 +183,12 @@ public class ATNDescriber {
 					return "'\\''";
 				default:
 					if ( Character.UnicodeBlock.of((char)t)==Character.UnicodeBlock.BASIC_LATIN &&
-							!Character.isISOControl((char)t) ) {
-						return '\''+Character.ToString((char)t)+'\'';
+							!char.IsControl((char)t) ) {
+						return '\''+((char)t).ToString()+'\'';
 					}
 					// turn on the bit above max "\uFFFF" value so that we pad with zeros
 					// then only take last 4 digits
-					String hex = Integer.toHexString(t|0x10000).toUpperCase().substring(1,5);
+					String hex = Integer.toHexString(t|0x10000).ToUpper().substring(1,5);
 					String unicodeStr = "'\\u"+hex+"'";
 					return unicodeStr;
 			}

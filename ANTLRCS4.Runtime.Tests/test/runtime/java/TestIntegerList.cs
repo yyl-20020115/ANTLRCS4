@@ -20,7 +20,7 @@ public class TestIntegerList {
 		IntegerList l = new IntegerList();
 		l.add(-42);
 		assertThrows(
-				IllegalArgumentException,
+				ArgumentException,
 				l::toCharArray
 		);
 	}
@@ -40,7 +40,7 @@ public class TestIntegerList {
 		IntegerList l = new IntegerList();
 		l.add(0x110000);
 		assertThrows(
-				IllegalArgumentException,
+				ArgumentException,
 				l::toCharArray
 		);
 	}

@@ -3,6 +3,10 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.runtime.java.api;
 
 [TestClass]
@@ -282,12 +286,12 @@ public class TestTokenStreamRewriter {
 		try {
 			tokens.getText();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			exc = iae;
 		}
 		String expecting = "insert op <InsertBeforeOp@[@1,1:1='b',<2>,1:1]:\"0\"> within boundaries of previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@2,2:2='c',<3>,1:2]:\"x\">";
-		assertNotNull(exc);
-		Assert.AreEqual(expecting, exc.getMessage());
+		Assert.IsNotNull(exc);
+		Assert.AreEqual(expecting, exc.Message);
 	}
 
 	[TestMethod] public void testInsertThenReplaceSameIndex()  {
@@ -437,12 +441,12 @@ public class TestTokenStreamRewriter {
 		try {
 			tokens.getText();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			exc = iae;
 		}
 		String expecting = "insert op <InsertBeforeOp@[@4,4:4='c',<3>,1:4]:\"y\"> within boundaries of previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"x\">";
-		assertNotNull(exc);
-		Assert.AreEqual(expecting, exc.getMessage());
+		Assert.IsNotNull(exc);
+		Assert.AreEqual(expecting, exc.Message);
 	}
 
 	[TestMethod] public void testReplaceRangeThenInsertAfterRightEdge()  {
@@ -516,11 +520,11 @@ public class TestTokenStreamRewriter {
 		try {
 			tokens.getText();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			exc = iae;
 		}
 		String expecting = "replace op boundaries of <ReplaceOp@[@3,3:3='c',<3>,1:3]..[@5,5:5='b',<2>,1:5]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
-		assertNotNull(exc);
+		Assert.IsNotNull(exc);
 		Assert.AreEqual(expecting, exc.getMessage());
 	}
 
@@ -543,12 +547,12 @@ public class TestTokenStreamRewriter {
 		try {
 			tokens.getText();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			exc = iae;
 		}
 		String expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@3,3:3='c',<3>,1:3]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
-		assertNotNull(exc);
-		Assert.AreEqual(expecting, exc.getMessage());
+		Assert.IsNotNull(exc);
+		Assert.AreEqual(expecting, exc.Message);
 	}
 
 	[TestMethod] public void testReplaceSingleMiddleThenOverlappingSuperset()  {
@@ -706,12 +710,12 @@ public class TestTokenStreamRewriter {
 		try {
 			tokens.getText();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (ArgumentException iae) {
 			exc = iae;
 		}
 		String expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@2,2:2='c',<3>,1:2]:\"foo\"> overlap with previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@3,3:3='c',<3>,1:3]:\"bar\">";
-		assertNotNull(exc);
-		Assert.AreEqual(expecting, exc.getMessage());
+		Assert.IsNotNull(exc);
+		Assert.AreEqual(expecting, exc.Message);
 	}
 
 	[TestMethod] public void testOverlappingReplace3()  {

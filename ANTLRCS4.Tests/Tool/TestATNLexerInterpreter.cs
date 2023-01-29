@@ -527,7 +527,7 @@ public class TestATNLexerInterpreter {
 	}
 
 	private static List<String> getTokenTypes(LexerGrammar lg, ATN atn, CharStream input) {
-		LexerATNSimulator interp = new LexerATNSimulator(atn, new DFA[]{new DFA(atn.modeToStartState.get(Lexer.DEFAULT_MODE))}, null);
+		LexerATNSimulator interp = new LexerATNSimulator(atn, new DFA[]{new DFA(atn.modeToStartState[(Lexer.DEFAULT_MODE)])}, null);
 		List<String> tokenTypes = new ();
 		int ttype;
 		bool hitEOF = false;

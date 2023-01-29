@@ -8,12 +8,3 @@ using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 
-public class ErrorQueue
-{
-    public List<ANTLRMessage> errors = new();
-
-    public int size()
-    {
-        throw new NotImplementedException();
-    }
-}

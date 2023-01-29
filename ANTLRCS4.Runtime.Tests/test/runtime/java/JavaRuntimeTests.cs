@@ -8,7 +8,7 @@ namespace org.antlr.v4.test.runtime.java;
 
 public class JavaRuntimeTests : RuntimeTests {
 	//@Override
-	protected RuntimeRunner createRuntimeRunner() {
+	protected override RuntimeRunner createRuntimeRunner() {
 		return new JavaRunner();
 	}
 }

@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -49,11 +50,11 @@ public class TestTokenPositionOptions {
 				ANTLRParser.STRING_LITERAL,
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
-		List<Token> tokens = new ArrayList<Token>();
-		for (GrammarAST node : nodes) {
-			tokens.add(node.getToken());
+		List<Token> tokens = new ();
+		for (GrammarAST node in nodes) {
+			tokens.Add(node.getToken());
 		}
-		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.ToArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithLabels(){
@@ -94,8 +95,8 @@ public class TestTokenPositionOptions {
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
 		List<Token> tokens = new ArrayList<Token>();
-		for (GrammarAST node : nodes) {
-			tokens.add(node.getToken());
+		foreach (GrammarAST node in nodes) {
+			tokens.Add(node.getToken());
 		}
 		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.toArray(), "\n"));
 	}
@@ -139,8 +140,8 @@ public class TestTokenPositionOptions {
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
 		List<Token> tokens = new ();
-		for (GrammarAST node : nodes) {
-			tokens.add(node.getToken());
+		foreach (GrammarAST node in nodes) {
+			tokens.Add(node.getToken());
 		}
 		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.ToArray(), "\n"));
 	}

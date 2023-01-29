@@ -5,6 +5,8 @@
  */
 
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;

@@ -64,7 +64,7 @@ public class ErrorQueue : ANTLRToolListener {
 
 		StringBuilder buf = new StringBuilder();
 		foreach (ANTLRMessage m in all) {
-			ST st = tool.errMgr.getMessageTemplate(m);
+			Template st = tool.errMgr.getMessageTemplate(m);
 			buf.Append(st.render());
 			buf.Append("\n");
 		}

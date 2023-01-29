@@ -39,13 +39,13 @@ public class TestASTStructure {
 		if ( adaptorClassName!=null ) {
 			MethodInfo m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
 			Type adaptorClass = Type.forName(adaptorClassName).asSubclass(TreeAdaptor);
-			m.invoke(parser, adaptorClass.newInstance());
+			m.Invoke(parser, adaptorClass.newInstance());
 		}
 
 		MethodInfo ruleMethod = parserClass.getMethod(ruleName);
 
 		// INVOKE RULE
-		return ruleMethod.invoke(parser);
+		return ruleMethod.Invoke(parser);
 	}
 
 	[TestMethod] public void test_grammarSpec1(){

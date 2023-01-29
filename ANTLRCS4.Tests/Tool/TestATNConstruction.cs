@@ -7,6 +7,7 @@ using org.antlr.v4.automata;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.test.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
@@ -818,7 +819,7 @@ public class TestATNConstruction {
 //			}
 //		}
 		if ( modeName==null ) modeName = "DEFAULT_MODE";
-		if ( g.modes.get(modeName)==null ) {
+		if ( !g.modes.ContainsKey(modeName) ) {
 			Console.Error.WriteLine("no such mode "+modeName);
 			return;
 		}

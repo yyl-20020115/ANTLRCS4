@@ -21,9 +21,9 @@ public abstract class State {
 		String result = "State: " + getStage() + "; ";
 		if (exception != null) {
 			result += exception.ToString();
-			if ( exception.getCause()!=null ) {
+			if ( exception.InnerException!=null ) {
 				result += "\nCause:\n";
-				result += exception.getCause().ToString();
+				result += exception.InnerException.ToString();
 			}
 		}
 		return result;

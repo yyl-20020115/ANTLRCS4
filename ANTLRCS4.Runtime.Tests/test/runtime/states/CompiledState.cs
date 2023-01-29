@@ -8,12 +8,11 @@ namespace org.antlr.v4.test.runtime.states;
 
 public class CompiledState : State {
 	////@Override
-	public Stage getStage() {
+	public override Stage getStage() {
 		return Stage.Compile;
 	}
 
-	public CompiledState(GeneratedState previousState, Exception exception) {
-		base(previousState, exception);
-		base(previousState, exception);
+	public CompiledState(GeneratedState previousState, Exception exception) 
+		:base(previousState, exception) { 
 	}
 }

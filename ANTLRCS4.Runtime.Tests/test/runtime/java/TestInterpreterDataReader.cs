@@ -7,6 +7,7 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.runtime.java;
 

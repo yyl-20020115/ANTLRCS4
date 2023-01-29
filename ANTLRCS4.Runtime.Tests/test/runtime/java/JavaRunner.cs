@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.java;
@@ -85,7 +87,7 @@ public class JavaRunner : RuntimeRunner {
 			Iterable<? : JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
 
 			Iterable<String> compileOptions =
-					Arrays.asList("-g", "-source", "1.8", "-target", "1.8", "-implicit:class", "-Xlint:-options", "-d",
+					Arrays.AsList("-g", "-source", "1.8", "-target", "1.8", "-implicit:class", "-Xlint:-options", "-d",
 							tempTestDir, "-cp", tempTestDir + PathSeparator + classPath);
 
 			JavaCompiler.CompilationTask task =

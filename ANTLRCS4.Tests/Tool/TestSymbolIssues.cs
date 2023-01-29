@@ -104,7 +104,13 @@ public class TestSymbolIssues {
 
     [TestMethod] public void testA() { testErrors(A, false); }
     [TestMethod] public void testB() { testErrors(B, false); }
-	[TestMethod] public void testD() { testErrors(D, false); }
+
+    private void testErrors(string[] b, bool v)
+    {
+        throw new NotImplementedException();
+    }
+
+    [TestMethod] public void testD() { testErrors(D, false); }
 	[TestMethod] public void testE() { testErrors(E, false); }
 	[TestMethod] public void testF() { testErrors(F, false); }
 

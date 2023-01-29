@@ -13,6 +13,7 @@ using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
+using org.antlr.v4.test.runtime;
 using System.Reflection;
 using System.Text;
 using static org.antlr.v4.test.tool.TestPerformance.FilenameFilters;
@@ -414,7 +415,7 @@ public class TestPerformance
             jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.replace('.', '/');
         }
 
-        File directory = new File(jdkSourceRoot);
+        string directory = (jdkSourceRoot);
         Assert.IsTrue(directory.isDirectory());
 
         FilenameFilter filesFilter = FilenameFilters.extension(".java", false);
@@ -752,18 +753,18 @@ public class TestPerformance
         parseSources(currentPass, factory, sources, shuffleSources);
     }
 
-    protected List<InputDescriptor> loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive)
+    protected List<InputDescriptor> loadSources(string directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive)
     {
         List<InputDescriptor> result = new();
         loadSources(directory, filesFilter, directoriesFilter, recursive, result);
         return result;
     }
 
-    protected void loadSources(File directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
+    protected void loadSources(string directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
     {
         //assert directory.isDirectory();
 
-        File[] sources = directory.listFiles(filesFilter);
+        string[] sources = directory.listFiles(filesFilter);
         foreach (File file in sources)
         {
             if (!file.isFile())
@@ -771,13 +772,13 @@ public class TestPerformance
                 continue;
             }
 
-            result.add(new InputDescriptor(file.getAbsolutePath()));
+            result.Add(new InputDescriptor(file.getAbsolutePath()));
         }
 
         if (recursive)
         {
-            File[] children = directory.listFiles(directoriesFilter);
-            foreach (File child in children)
+            string[] children = directory.listFiles(directoriesFilter);
+            foreach (string child in children)
             {
                 if (child.isDirectory())
                 {
@@ -1398,7 +1399,7 @@ public class TestPerformance
                     }
                     else
                     {
-                        parseResult = parseMethod.invoke(parser);
+                        parseResult = parseMethod.Invoke(parser);
                     }
                 }
                 catch (Exception ex)
@@ -1415,7 +1416,7 @@ public class TestPerformance
                         Console.Error.WriteLine(sourceName + "Forced to retry with full context.");
                     }
 
-                    if (!(ex.getCause() is ParseCancellationException))
+                    if (!(ex.InnerException is ParseCancellationException))
                     {
                         throw ex;
                     }
@@ -1471,7 +1472,7 @@ public class TestPerformance
                         parser.setErrorHandler(new BailErrorStrategy());
                     }
 
-                    parseResult = parseMethod.invoke(parser);
+                    parseResult = parseMethod.Invoke(parser);
                 }
 
                 Assert.IsTrue(parseResult is ParseTree);
@@ -1866,7 +1867,7 @@ public class TestPerformance
         {
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 return true;
             }
@@ -1961,7 +1962,7 @@ public class TestPerformance
             }
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 if (caseSensitive)
                 {
@@ -1985,7 +1986,7 @@ public class TestPerformance
             }
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 foreach (FilenameFilter filter in filters)
                 {

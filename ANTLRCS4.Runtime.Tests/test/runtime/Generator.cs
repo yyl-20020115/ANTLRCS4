@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.runtime;
@@ -57,13 +58,13 @@ public class Generator {
 		}
 		antlr.processGrammarsOnCommandLine();
 
-		List<String> errors = new ArrayList<>();
+		List<String> errors = new ();
 
 		if ( !defaultListener && !equeue.errors.isEmpty() ) {
 			for (int i = 0; i < equeue.errors.size(); i++) {
 				ANTLRMessage msg = equeue.errors.get(i);
-				ST msgST = antlr.errMgr.getMessageTemplate(msg);
-				errors.Add(msgST.render());
+				Template msgST = antlr.errMgr.getMessageTemplate(msg);
+				errors.Add(msgST.Render());
 			}
 		}
 		if ( !defaultListener && !equeue.warnings.isEmpty() ) {

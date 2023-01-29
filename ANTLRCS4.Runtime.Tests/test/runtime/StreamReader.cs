@@ -26,7 +26,7 @@ public class StreamReader : Runnable {
 	public void run() {
 		try {
 			while (true) {
-				int c = in.read();
+				int c = @in.read();
 				if (c == -1) {
 					break;
 				}

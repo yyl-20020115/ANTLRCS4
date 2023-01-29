@@ -8,7 +8,7 @@ namespace org.antlr.v4.test.runtime.states;
 
 public class ExecutedState : State {
 	////@Override
-	public Stage getStage() {
+	public override Stage getStage() {
 		return Stage.Execute;
 	}
 
@@ -16,8 +16,9 @@ public class ExecutedState : State {
 
 	public readonly String errors;
 
-	public ExecutedState(CompiledState previousState, String output, String errors, Exception exception) {
-		base(previousState, exception);
+	public ExecutedState(CompiledState previousState, String output, String errors, Exception exception): base(previousState, exception)
+    {
+		;
 		this.output = output != null ? output : "";
 		this.errors = errors != null ? errors : "";
 	}

@@ -50,7 +50,7 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromBMPUTF8InputStreamHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		Files.write(p, "hello".getBytes(StandardCharsets.UTF_8));
 		using (InputStream @is = Files.newInputStream(p)) {
 			CharStream s = CharStreams.fromStream(@is);
@@ -117,7 +117,7 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromInvalidUTF8BytesThrowsInReportMode(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		byte[] toWrite = new byte[] { (byte)0xCA, (byte)0xFE };
 		Files.write(p, toWrite);
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {

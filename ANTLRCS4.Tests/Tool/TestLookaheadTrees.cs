@@ -131,8 +131,8 @@ public class TestLookaheadTrees {
 															lookaheadEventInfo.startIndex, lookaheadEventInfo.stopIndex);
 
 		Assert.AreEqual(expectedTrees.Length, lookaheadParseTrees.size());
-		for (int i = 0; i < lookaheadParseTrees.size(); i++) {
-			ParserRuleContext lt = lookaheadParseTrees.get(i);
+		for (int i = 0; i < lookaheadParseTrees.Count; i++) {
+			ParserRuleContext lt = lookaheadParseTrees[(i)];
 			Assert.AreEqual(expectedTrees[i], Trees.toStringTree(lt, nodeTextProvider));
 		}
 	}

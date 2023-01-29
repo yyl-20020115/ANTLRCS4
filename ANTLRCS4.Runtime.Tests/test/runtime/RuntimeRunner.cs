@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime;
@@ -92,7 +93,7 @@ public abstract class RuntimeRunner {
 
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
-			String dirName = getClass().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
+			String dirName = GetType().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
 			tempTestDir = Paths.get(TempDirectory, dirName);
 		}
 		else {
@@ -206,25 +207,25 @@ public abstract class RuntimeRunner {
 
 	protected void writeRecognizerFile(RunOptions runOptions) {
 		String text = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/" + getTestFileWithExt() + ".stg");
-		ST outputFileST = new ST(text);
-		outputFileST.add("grammarName", runOptions.grammarName);
-		outputFileST.add("lexerName", runOptions.lexerName);
-		outputFileST.add("parserName", runOptions.parserName);
-		outputFileST.add("parserStartRuleName", grammarParseRuleToRecognizerName(runOptions.startRuleName));
-		outputFileST.add("debug", runOptions.showDiagnosticErrors);
-		outputFileST.add("profile", runOptions.profile);
-		outputFileST.add("showDFA", runOptions.showDFA);
-		outputFileST.add("useListener", runOptions.useListener);
-		outputFileST.add("useVisitor", runOptions.useVisitor);
+		Template outputFileST = new Template(text);
+		outputFileST.Add("grammarName", runOptions.grammarName);
+		outputFileST.Add("lexerName", runOptions.lexerName);
+		outputFileST.Add("parserName", runOptions.parserName);
+		outputFileST.Add("parserStartRuleName", grammarParseRuleToRecognizerName(runOptions.startRuleName));
+		outputFileST.Add("debug", runOptions.showDiagnosticErrors);
+		outputFileST.Add("profile", runOptions.profile);
+		outputFileST.Add("showDFA", runOptions.showDFA);
+		outputFileST.Add("useListener", runOptions.useListener);
+		outputFileST.Add("useVisitor", runOptions.useVisitor);
 		addExtraRecognizerParameters(outputFileST);
-		writeFile(getTempDirPath(), getTestFileWithExt(), outputFileST.render());
+		writeFile(getTempDirPath(), getTestFileWithExt(), outputFileST.Render());
 	}
 
 	protected String grammarParseRuleToRecognizerName(String startRuleName) {
 		return startRuleName;
 	}
 
-	protected void addExtraRecognizerParameters(ST template) {}
+	protected void addExtraRecognizerParameters(Template template) {}
 
 	private bool initAntlrRuntimeIfRequired() {
 		String language = getLanguage();
@@ -306,12 +307,12 @@ public abstract class RuntimeRunner {
 
 	private void removeTempTestDirIfRequired() {
 		if (!saveTestDir) {
-			File dirFile = tempTestDir.toFile();
+			string dirFile = tempTestDir.toFile();
 			if (dirFile.exists()) {
 				try {
 					deleteDirectory(dirFile);
 				} catch (IOException e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		}

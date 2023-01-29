@@ -25,7 +25,12 @@ public class TestLeftRecursionToolIssues {
 		testErrors(new String[] { grammar, expected }, false);
 	}
 
-	[TestMethod] public void testCheckForLeftRecursiveEmptyFollow(){
+    private void testErrors(string[] strings, bool v)
+    {
+        throw new NotImplementedException();
+    }
+
+    [TestMethod] public void testCheckForLeftRecursiveEmptyFollow(){
 		String grammar =
 			"grammar T;\n" +
 			"s @after {Console.Out.WriteLine($ctx.toStringTree(this));} : a ;\n" +

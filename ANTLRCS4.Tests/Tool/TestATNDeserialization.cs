@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.atn;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -154,7 +156,7 @@ public class TestATNDeserialization {
 	protected void checkDeserializationIsStable(Grammar g) {
 		ATN atn = createATN(g, false);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		String atnData = new ATNDescriber(atn, Arrays.asList(g.getTokenNames())).decode(serialized.toArray());
+		String atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 
 		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);
 		int[] ints16 = serialized16.toArray();
@@ -168,7 +170,7 @@ public class TestATNDeserialization {
 
 		ATN atn2 = new ATNDeserializer().deserialize(serialized.toArray());
 		IntegerList serialized1 = ATNSerializer.getSerialized(atn2);
-		String atn2Data = new ATNDescriber(atn2, Arrays.asList(g.getTokenNames())).decode(serialized1.toArray());
+		String atn2Data = new ATNDescriber(atn2, Arrays.AsList(g.getTokenNames())).decode(serialized1.toArray());
 
 		Assert.AreEqual(atnData, atn2Data);
 	}

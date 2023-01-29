@@ -4,13 +4,14 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.dart;
 
 public class DartRunner : RuntimeRunner {
 	////@Override
-	public String getLanguage() {
+	public override String getLanguage() {
 		return "Dart";
 	}
 
@@ -21,10 +22,10 @@ public class DartRunner : RuntimeRunner {
 		String cachePath = getCachePath();
 		mkdir(cachePath);
 
-		ST projectTemplate = new ST(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/pubspec.yaml.stg"));
-		projectTemplate.add("runtimePath", getRuntimePath());
+		Template projectTemplate = new Template(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/pubspec.yaml.stg"));
+		projectTemplate.Add("runtimePath", getRuntimePath());
 
-		writeFile(cachePath, "pubspec.yaml", projectTemplate.render());
+		writeFile(cachePath, "pubspec.yaml", projectTemplate.Render());
 
 		runCommand(new String[]{getRuntimeToolPath(), "pub", "get"}, cachePath);
 

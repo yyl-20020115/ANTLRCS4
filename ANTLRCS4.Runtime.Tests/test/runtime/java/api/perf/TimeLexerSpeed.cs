@@ -262,7 +262,7 @@ public class TimeLexerSpeed { // don't call it Test else it'll run during "mvn t
 		long start = System.nanoTime(); // track only time to suck data out of stream
 		for (int i = 0; i<n; i++) {
 			try (InputStream is = streams[i]) {
-				input[i] = new ANTLRInputStream(is);
+				input[i] = new ANTLRInputStream(@is);
 			}
 		}
 		long stop = System.nanoTime();

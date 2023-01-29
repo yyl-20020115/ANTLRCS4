@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.semantics;
@@ -48,7 +49,7 @@ public class TestCodeGeneration {
 		List<String> evals = new ();
 		ErrorManager myErrMgrCopy;
 		int tab = 0;
-		public DebugInterpreter(STGroup group, ErrorManager errMgr, bool debug)
+		public DebugInterpreter(TemplateGroup group, ErrorManager errMgr, bool debug)
 		: base(group, errMgr, debug)
         {
 			;
@@ -56,8 +57,8 @@ public class TestCodeGeneration {
 		}
 
 		//@Override
-		protected int writeObject(STWriter @out, InstanceScope scope, Object o, String[] options) {
-			if ( o is ST ) {
+		protected int writeObject(ITemplateWriter @out, InstanceScope scope, Object o, String[] options) {
+			if ( o is Template ) {
 				String name = ((ST)o).getName();
 				name = name.Substring(1);
 				if ( !name.StartsWith("_sub") ) {

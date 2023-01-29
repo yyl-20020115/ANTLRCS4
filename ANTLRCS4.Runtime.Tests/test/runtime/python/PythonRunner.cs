@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
+
 namespace org.antlr.v4.test.runtime.python;
 
 public abstract class PythonRunner : RuntimeRunner {
@@ -10,7 +12,7 @@ public abstract class PythonRunner : RuntimeRunner {
 	public String getExtension() { return "py"; }
 
 	////@Override
-	protected void addExtraRecognizerParameters(ST template) {
+	protected void addExtraRecognizerParameters(Template template) {
 		template.Add("python3", getLanguage().Equals("Python3"));
 	}
 }

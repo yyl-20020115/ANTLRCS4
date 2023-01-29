@@ -9,7 +9,7 @@ namespace org.antlr.v4.test.runtime.csharp;
 
 public class CSharpRunner : RuntimeRunner {
 	////@Override
-	public String getLanguage() { return "CSharp"; }
+	public override String getLanguage() { return "CSharp"; }
 
 	////@Override
 	public String getTitleName() { return "C#"; }
@@ -30,7 +30,7 @@ public class CSharpRunner : RuntimeRunner {
 	private static readonly String cSharpTestProjectContent;
 
 	static CSharpRunner(){
-		ST projectTemplate = new ST(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Antlr4.Test.csproj.stg"));
+		Template projectTemplate = new Template(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Antlr4.Test.csproj.stg"));
 		projectTemplate.add("runtimeLibraryPath", cSharpAntlrRuntimeDllName);
 		cSharpTestProjectContent = projectTemplate.render();
 	}

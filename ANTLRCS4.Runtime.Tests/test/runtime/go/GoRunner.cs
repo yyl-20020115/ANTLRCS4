@@ -79,9 +79,9 @@ public class GoRunner : RuntimeRunner
     {
         String cachePath = getCachePath();
         mkdir(cachePath);
-        Path runtimeFilesPath = Paths.get(getRuntimePath("Go"), "antlr");
+        string runtimeFilesPath = Paths.get(getRuntimePath("Go"), "antlr");
         String runtimeToolPath = getRuntimeToolPath();
-        File goModFile = new File(cachePath, "go.mod");
+        string goModFile = new File(cachePath, "go.mod");
         if (goModFile.exists())
             if (!goModFile.delete())
                 throw new IOException("Can't delete " + goModFile);
@@ -107,7 +107,7 @@ public class GoRunner : RuntimeRunner
     {
         List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
         String tempDirPath = getTempDirPath();
-        File generatedParserDir = new File(tempDirPath, "parser");
+        string generatedParserDir = (tempDirPath, "parser");
         if (!generatedParserDir.mkdir())
         {
             return new CompiledState(generatedState, new Exception("can't make dir " + generatedParserDir));

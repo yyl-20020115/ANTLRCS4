@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
@@ -216,10 +217,10 @@ public class TestActionTranslation {
 	private static void testActions(String templates, String actionName, String action, String expected){
 		int lp = templates.IndexOf('(');
 		String name = templates.Substring(0, lp);
-		STGroup group = new STGroupString(templates);
-		ST st = group.getInstanceOf(name);
-		st.add(actionName, action);
-		String grammar = st.render();
+        TemplateGroup group = new TemplateGroupString(templates);
+		Template st = group.GetInstanceOf(name);
+		st.Add(actionName, action);
+		String grammar = st.Render();
 		ErrorQueue equeue = new ErrorQueue();
 		Grammar g = new Grammar(grammar, equeue);
 		if ( g.ast!=null && !g.ast.hasErrors ) {

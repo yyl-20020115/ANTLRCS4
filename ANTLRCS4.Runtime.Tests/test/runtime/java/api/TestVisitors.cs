@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
 
@@ -52,47 +54,54 @@ public class TestVisitors {
 			"[@1,1:0='<EOF>',<-1>,1:1]\n";
 		Assert.AreEqual(expected, result);
 	}
+	class BEL: BaseErrorListener
+    {
+        //@Override
+        public void syntaxError(Recognizer<Token, ATNSimulator> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e)
+        {
+            errors.add("line " + line + ":" + charPositionInLine + " " + msg);
+        }
+    }
+	class VBN : VisitorBasicBaseVisitor<String>
+    {
+        //@Override
+        public String visitErrorNode(ErrorNode node)
+        {
+            return "Error encountered: " + node.getSymbol();
+        }
 
-	/**
+        //@Override
+        protected String defaultResult()
+        {
+            return "";
+        }
+
+        //@Override
+        protected String aggregateResult(String aggregate, String nextResult)
+        {
+            return aggregate + nextResult;
+        }
+    }
+    /**
 	 * This test verifies the basic behavior of visitors, with an emphasis on
 	 * {@link AbstractParseTreeVisitor#visitErrorNode}.
 	 */
-	[TestMethod]
+    [TestMethod]
 	public void testVisitErrorNode() {
 		String input = "";
 		VisitorBasicLexer lexer = new VisitorBasicLexer(new ANTLRInputStream(input));
 		VisitorBasicParser parser = new VisitorBasicParser(new CommonTokenStream(lexer));
 
-		final List<String> errors = new ArrayList<>();
+		 List<String> errors = new ();
 		parser.removeErrorListeners();
-		parser.addErrorListener(new BaseErrorListener() {
-			//@Override
-			public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-				errors.add("line " + line + ":" + charPositionInLine + " " + msg);
-			}
-		});
+		parser.addErrorListener(new );
 
 		VisitorBasicParser.SContext context = parser.s();
 		Assert.AreEqual("(s <missing 'A'> <EOF>)", context.toStringTree(parser));
-		Assert.AreEqual(1, errors.size());
+		Assert.AreEqual(1, errors.Count);
 		Assert.AreEqual("line 1:0 missing 'A' at '<EOF>'", errors.get(0));
 
-		VisitorBasicVisitor<String> listener = new VisitorBasicBaseVisitor<String>() {
-			//@Override
-			public String visitErrorNode(ErrorNode node) {
-				return "Error encountered: " + node.getSymbol();
-			}
-
-			//@Override
-			protected String defaultResult() {
-				return "";
-			}
-
-			//@Override
-			protected String aggregateResult(String aggregate, String nextResult) {
-				return aggregate + nextResult;
-			}
-		};
+		VisitorBasicVisitor<String> listener = new;
 
 		String result = listener.visit(context);
 		String expected = "Error encountered: [@-1,-1:-1='<missing 'A'>',<1>,1:0]";

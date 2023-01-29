@@ -477,7 +477,7 @@ public class TestATNParserPrediction {
 	{
 		ATN lexatn = createATN(lg, true);
 		LexerATNSimulator lexInterp =
-		new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState.get(Lexer.DEFAULT_MODE)) },new PredictionContextCache());
+		new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) },new PredictionContextCache());
 		IntegerList types = getTokenTypesViaATN(inputString, lexInterp);
 //		Console.Out.WriteLine(types);
 
@@ -541,7 +541,7 @@ public class TestATNParserPrediction {
 				interp.adaptivePredict(input, decision, ParserRuleContext.EMPTY);
 			}
 			catch (NoViableAltException nvae) {
-				nvae.printStackTrace(System.err);
+				//nvae.printStackTrace(System.err);
 			}
 			DFA dfa = interp.parser.decisionToDFA[decision];
 			Assert.AreEqual(dfaString[i], dfa.ToString(g.getVocabulary()));
