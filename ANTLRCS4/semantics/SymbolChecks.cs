@@ -202,12 +202,12 @@ public class SymbolChecks {
 
 	public void checkForLabelConflict(Rule r, GrammarAST labelID) {
 		String name = labelID.getText();
-		if (nameToRuleMap.containsKey(name)) {
+		if (nameToRuleMap.ContainsKey(name)) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_RULE;
 			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 
-		if (tokenIDs.contains(name)) {
+		if (tokenIDs.Contains(name)) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_TOKEN;
 			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
 		}

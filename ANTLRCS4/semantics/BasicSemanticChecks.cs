@@ -572,7 +572,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		Grammar @delegate = g.getImportedGrammar(importID.getText());
 		if ( @delegate==null ) return;
 		List<int> validDelegators = validImportTypes.get(@delegate.getType());
-		if ( validDelegators!=null && !validDelegators.contains(g.getType()) ) {
+		if ( validDelegators!=null && !validDelegators.Contains(g.getType()) ) {
 			g.tool.errMgr.grammarError(ErrorType.INVALID_IMPORT,
 									   g.fileName,
 									   importID,

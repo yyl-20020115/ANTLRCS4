@@ -25,7 +25,7 @@ public class Graph<T> {
 			if ( !edges.Contains(n) ) edges.Add(n);
 		}
 
-		public override String ToString() { return payload.toString(); }
+		public override String ToString() { return payload.ToString(); }
 	}
 
 	/** Map from node payload to node containing it */
@@ -42,7 +42,7 @@ public class Graph<T> {
 		Node<T> existing = nodes.get(a);
 		if ( existing!=null ) return existing;
 		Node<T> n = new Node<T>(a);
-		nodes.put(a, n);
+		nodes[a] = n;
 		return n;
 	}
 

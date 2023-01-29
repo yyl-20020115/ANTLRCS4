@@ -94,7 +94,7 @@ public class TokenVocabParser {
 			tool.errMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
 								  e,
 								  fullFile,
-								  e.getMessage());
+								  e.Message);
 		}
 		finally {
 			try {

@@ -70,7 +70,7 @@ public class GrammarAST : CommonTree {
 		GrammarAST t;
 		while ( !work.isEmpty() ) {
 			t = work.remove(0);
-			if ( types==null || types.contains(t.getType()) ) nodes.add(t);
+			if ( types==null || types.contains(t.getType()) ) nodes.Add(t);
 			if ( t.children!=null ) {
 				work.AddRange(Arrays.AsList(t.getChildrenAsArray()));
 			}

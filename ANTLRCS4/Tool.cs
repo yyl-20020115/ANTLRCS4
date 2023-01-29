@@ -181,10 +181,10 @@ public class Tool {
 					try {
 						FieldInfo f = c.GetField(o.fieldName);
 						if ( argValue==null ) {
-							if ( arg.StartsWith("-no-") ) f.setBoolean(this, false);
-							else f.setBoolean(this, true);
+							if ( arg.StartsWith("-no-") ) f.SetValue(this, false);
+							else f.SetValue(this, true);
 						}
-						else f.set(this, argValue);
+						else f.SetValue(this, argValue);
 					}
 					catch (Exception e) {
 						errMgr.toolError(ErrorType.INTERNAL_ERROR, "can't access field "+o.fieldName);
@@ -201,7 +201,7 @@ public class Tool {
 				outputDirectory =
 					outputDirectory.substring(0, outputDirectory.Length - 1);
 			}
-			File outDir = new File(outputDirectory);
+			string outDir = outputDirectory;
 			haveOutputDir = true;
 			if (outDir.exists() && !outDir.isDirectory()) {
 				errMgr.toolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
@@ -216,8 +216,8 @@ public class Tool {
 				libDirectory.EndsWith("\\")) {
 				libDirectory = libDirectory.Substring(0, libDirectory.Length - 1);
 			}
-			File outDir = new File(libDirectory);
-			if (!outDir.exists()) {
+			string outDir = (libDirectory);
+			if (!File.Exists(outDir)) {
 				errMgr.toolError(ErrorType.DIR_NOT_FOUND, libDirectory);
 				libDirectory = ".";
 			}
@@ -547,12 +547,12 @@ public class Tool {
 
 	public GrammarRootAST parseGrammar(String fileName) {
 		try {
-			File file = new File(fileName);
-			if (!file.isAbsolute()) {
-				file = new File(inputDirectory, fileName);
+			String file = fileName;
+			if (!Path.IsPathFullyQualified(fileName)) {
+				file = Path.Combine(inputDirectory, fileName);
 			}
 
-			ANTLRFileStream @in = new ANTLRFileStream(file.getAbsolutePath(), grammarEncoding);
+			ANTLRFileStream @in = new ANTLRFileStream(file, grammarEncoding);
 			GrammarRootAST t = parse(fileName, @in);
 			return t;
 		}
@@ -741,11 +741,11 @@ public class Tool {
 		}
 		// output directory is a function of where the grammar file lives
 		// for subdir/T.g4, you get subdir here.  Well, depends on -o etc...
-		File outputDir = getOutputDirectory(g.fileName);
-		File outputFile = new File(outputDir, fileName);
+		String outputDir = getOutputDirectory(g.fileName);
+		String outputFile = Path.Combine(outputDir, fileName);
 
-		if (!outputDir.exists()) {
-			outputDir.mkdirs();
+		if (!File.Exists(outputDir)) {
+			Directory.CreateDirectory(outputDir);
 		}
 		FileOutputStream fos = new FileOutputStream(outputFile);
 		OutputStreamWriter osw;
@@ -759,14 +759,14 @@ public class Tool {
 	}
 
 	public string getImportedGrammarFile(Grammar g, String fileName) {
-		File importedFile = new File(inputDirectory, fileName);
-		if ( !importedFile.exists() ) {
-			File gfile = new File(g.fileName);
-			String parentDir = gfile.getParent();
-			importedFile = new File(parentDir, fileName);
-			if ( !importedFile.exists() ) { // try in lib dir
-				importedFile = new File(libDirectory, fileName);
-				if ( !importedFile.exists() ) {
+		string importedFile = Path.Combine(inputDirectory, fileName);
+		if ( !File.Exists(importedFile) ) {
+			string gfile = (g.fileName);
+			String parentDir = gfile;
+			importedFile = Path.Combine(parentDir, fileName);
+			if ( !File.Exists(importedFile) ) { // try in lib dir
+				importedFile = Path.Combine(libDirectory, fileName);
+				if ( !File.Exists(importedFile) ) {
 					return null;
 				}
 			}
@@ -837,8 +837,8 @@ public class Tool {
 	}
 
 	/** @since 4.7.1 in response to -Xexact-output-dir */
-	public File new_getOutputDirectory(String fileNameWithPath) {
-		File outputDir;
+	public string new_getOutputDirectory(String fileNameWithPath) {
+		string outputDir;
 		String fileDirectory;
 
 		if (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1) {
