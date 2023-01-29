@@ -292,10 +292,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                                                 break;
 
                                             default:
-                                                break loop4;
+                                                goto exit4;
+                                                //break loop4;
                                         }
                                     }
-
+                                    exit4:
                                     match(input, Token.UP, null); if (state.failed) return isLeftRec;
                                 }
 
@@ -314,10 +315,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            break loop5;
+                            goto exit5;
+                            //break loop5;
                     }
                 }
-
+            exit5:
                 pushFollow(FOLLOW_ruleBlock_in_rec_rule172);
                 ruleBlock1 = ruleBlock();
                 state._fsp--;
@@ -376,10 +378,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            break loop6;
+                            goto exit6;
+                            //break loop6;
                     }
                 }
-
+            exit6:
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:84:25: ( finallyClause )?
                 int alt7 = 2;
                 int LA7_0 = input.LA(1);
@@ -553,14 +556,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt8 >= 1) break loop8;
+                            if (cnt8 >= 1) goto exit8;// break loop8;
                             if (state.backtracking > 0) { state.failed = true; return retval; }
                             EarlyExitException eee = new EarlyExitException(8, input);
                             throw eee;
                     }
                     cnt8++;
                 }
-
+            exit8:
                 match(input, Token.UP, null); if (state.failed) return retval;
 
             }
@@ -738,10 +741,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            break loop11;
+                            goto exit11;
+                            //break loop11;
                     }
                 }
-
+                exit11:
                 pushFollow(FOLLOW_recurse_in_binary551);
                 recurse();
                 state._fsp--;
@@ -770,10 +774,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            break loop12;
+                            goto exit12;
+                            //break loop12;
                     }
                 }
-
+                exit12:
                 match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT2, currentOuterAltNumber); }
@@ -844,14 +849,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt14 >= 1) break loop14;
+                            if (cnt14 >= 1) goto exit14;// break loop14;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(14, input);
                             throw eee;
                     }
                     cnt14++;
                 }
-
+            exit14:
                 pushFollow(FOLLOW_recurse_in_prefix593);
                 recurse();
                 state._fsp--;
@@ -880,10 +885,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            break loop15;
+                            goto exit15;
+                            //break loop15;
                     }
                 }
-
+                exit15:
                 match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT3, currentOuterAltNumber); }
@@ -963,14 +969,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt17 >= 1) break loop17;
+                            if (cnt17 >= 1) goto exit17;// break loop17;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(17, input);
                             throw eee;
                     }
                     cnt17++;
                 }
-
+            exit17:
                 match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT4, currentOuterAltNumber); }
@@ -1044,14 +1050,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt19 >= 1) break loop19;
+                            if (cnt19 >= 1) goto exit19;// break loop19;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(19, input);
                             throw eee;
                     }
                     cnt19++;
                 }
-
+            exit19:
                 match(input, Token.UP, null); if (state.failed) return;
 
             }
@@ -1398,10 +1404,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 break;
 
                             default:
-                                break loop22;
+                                goto exit22;
+                                //break loop22;
                         }
                     }
-
+                    exit22:
                     match(input, Token.UP, null); if (state.failed) return;
                 }
 
@@ -2264,14 +2271,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt30 >= 1) break loop30;
+                            if (cnt30 >= 1) goto exit30;// break loop30;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(30, input);
                             throw eee;
                     }
                     cnt30++;
                 }
-
+            exit30:
                 match(input, Token.UP, null); if (state.failed) return;
 
             }
@@ -2344,14 +2351,14 @@ public class LeftRecursiveRuleWalker : TreeParser
                             break;
 
                         default:
-                            if (cnt32 >= 1) break loop32;
+                            if (cnt32 >= 1) goto exit32;// break loop32;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(32, input);
                             throw eee;
                     }
                     cnt32++;
                 }
-
+            exit32:
                 match(input, Token.UP, null); if (state.failed) return;
 
             }

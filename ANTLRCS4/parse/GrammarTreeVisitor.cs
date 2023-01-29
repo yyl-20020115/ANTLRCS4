@@ -160,6 +160,7 @@ public class GrammarTreeVisitor : TreeParser
 
     // delegators
 
+    protected DFA38 dfa38;
 
     public GrammarTreeVisitor(TreeNodeStream input)
         : this(input, new RecognizerSharedState())
@@ -169,6 +170,7 @@ public class GrammarTreeVisitor : TreeParser
     public GrammarTreeVisitor(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
+        dfa38 = new DFA38(this);
     }
 
     //@Override 
@@ -199,7 +201,7 @@ public class GrammarTreeVisitor : TreeParser
         try
         {
             MethodInfo m = this.GetType().GetMethod(ruleName);
-            m.Invoke(new object[] { this });
+            m.Invoke(this, new object[] {  });
         }
         catch (Exception e)
         {
@@ -1773,7 +1775,7 @@ public class GrammarTreeVisitor : TreeParser
                                             m = ruleModifier();
                                             state._fsp--;
 
-                                            mods.add((m != null ? ((GrammarAST)m.start) : null));
+                                            mods.Add((m != null ? ((GrammarAST)m.start) : null));
                                         }
                                         break;
 
@@ -1906,7 +1908,7 @@ public class GrammarTreeVisitor : TreeParser
                                 a = ruleAction();
                                 state._fsp--;
 
-                                actions.add((a != null ? ((GrammarAST)a.start) : null));
+                                actions.Add((a != null ? ((GrammarAST)a.start) : null));
                             }
                             break;
 
@@ -5734,7 +5736,6 @@ public class GrammarTreeVisitor : TreeParser
     // Delegated rules
 
 
-    protected DFA38 dfa38 = new DFA38(this);
 
     //static final short[] DFA38_eot = DFA.unpackEncodedString(DFA38_eotS);
     //static final short[] DFA38_eof = DFA.unpackEncodedString(DFA38_eofS);
@@ -5774,7 +5775,7 @@ public class GrammarTreeVisitor : TreeParser
 
 
 
-    protected class DFA38 : DFA
+    protected class DFA38 : antlr.runtime.DFA
     {
 
 

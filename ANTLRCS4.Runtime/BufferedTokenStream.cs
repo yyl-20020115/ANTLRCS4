@@ -507,4 +507,9 @@ public class BufferedTokenStream : TokenStream {
     {
         throw new NotImplementedException();
     }
+
+    public void rewind()
+    {
+        throw new NotImplementedException();
+    }
 }

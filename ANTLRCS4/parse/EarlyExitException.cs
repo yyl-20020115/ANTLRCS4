@@ -4,14 +4,3 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.v4.parse;
 
-public class EarlyExitException :RecognitionException
-{
-    private int v;
-    private IntStream input;
-
-    public EarlyExitException(int v, IntStream input) : base(null, input, null)
-    {
-        this.v = v;
-        this.input = input;
-    }
-}

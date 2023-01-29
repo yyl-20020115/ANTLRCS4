@@ -5,6 +5,8 @@
  */
 
 using Antlr4.Runtime.Sharpen;
+using org.antlr.v4.parse;
+using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.tool;
@@ -12,9 +14,9 @@ namespace org.antlr.v4.tool;
 public class LabelElementPair {
     public static readonly BitSet tokenTypeForTokens = new BitSet();
     static LabelElementPair(){
-        tokenTypeForTokens.add(ANTLRParser.TOKEN_REF);
-        tokenTypeForTokens.add(ANTLRParser.STRING_LITERAL);
-        tokenTypeForTokens.add(ANTLRParser.WILDCARD);
+        tokenTypeForTokens.Set(ANTLRParser.TOKEN_REF);
+        tokenTypeForTokens.Set(ANTLRParser.STRING_LITERAL);
+        tokenTypeForTokens.Set(ANTLRParser.WILDCARD);
     }
 
     public GrammarAST label;
@@ -42,7 +44,6 @@ public class LabelElementPair {
         }
     }
 
-    @Override
     public String toString() {
         return label.getText()+" "+type+" "+element.toString();
     }

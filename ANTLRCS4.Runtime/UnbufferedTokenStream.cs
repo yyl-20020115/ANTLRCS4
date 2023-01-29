@@ -329,4 +329,9 @@ public class UnbufferedTokenStream : TokenStream {
     {
         throw new NotImplementedException();
     }
+
+    public void rewind()
+    {
+        throw new NotImplementedException();
+    }
 }

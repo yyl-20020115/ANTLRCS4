@@ -360,4 +360,19 @@ public class UnbufferedCharStream : CharStream {
     {
         throw new NotImplementedException();
     }
+
+    public int LT(int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string substring(int tokenStartCharIndex, int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -2,7 +2,4 @@
 
 namespace org.antlr.v4.parse
 {
-    internal class RewriteRuleNodeStream
-    {
-    }
 }

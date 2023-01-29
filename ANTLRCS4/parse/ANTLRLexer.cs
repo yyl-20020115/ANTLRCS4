@@ -3789,17 +3789,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         return success;
     }
 
-    public override string[] getRuleNames()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override ATN getATN()
-    {
-        throw new NotImplementedException();
-    }
-
-    internal CharStream getCharStream()
+    public virtual CharStream getCharStream()
     {
         throw new NotImplementedException();
     }
@@ -3862,9 +3852,10 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
 
     protected class DFA2 : antlr.runtime.DFA
     {
+        public readonly ANTLRLexer lexer;
         public DFA2(ANTLRLexer recognizer)
         {
-            this.recognizer = recognizer;
+            this.recognizer = this.lexer = recognizer;
             this.decisionNumber = 2;
             this.eot = DFA2_eot;
             this.eof = DFA2_eof;
@@ -4219,10 +4210,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     {
         protected readonly ANTLRLexer lexer;
         
-        public DFA32(BaseRecognizer recognizer, ANTLRLexer lexer)
+        public DFA32(ANTLRLexer lexer)
         {
-            this.lexer = lexer;
-            this.recognizer = recognizer;
+            this.recognizer = this.lexer = lexer;
             this.decisionNumber = 32;
             this.eot = DFA32_eot;
             this.eof = DFA32_eof;

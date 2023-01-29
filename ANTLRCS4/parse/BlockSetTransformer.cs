@@ -119,6 +119,7 @@ public class BlockSetTransformer : TreeRewriter
 
     // delegators
 
+    protected DFA10 dfa10;
 
     public BlockSetTransformer(TreeNodeStream input)
         : this(input, new RecognizerSharedState())
@@ -127,6 +128,7 @@ public class BlockSetTransformer : TreeRewriter
     public BlockSetTransformer(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
+        dfa10 = new DFA10(this);
     }
 
     protected TreeAdaptor adaptor = new CommonTreeAdaptor();
@@ -340,14 +342,14 @@ public class BlockSetTransformer : TreeRewriter
                                         break;
 
                                     default:
-                                        if (cnt2 >= 1) break loop2;
+                                        if (cnt2 >= 1) goto exit2;// break loop2;
                                         if (state.backtracking > 0) { state.failed = true; return retval; }
                                         EarlyExitException eee = new EarlyExitException(2, input);
                                         throw eee;
                                 }
                                 cnt2++;
                             }
-
+                        exit2:
                             match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
@@ -867,7 +869,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 _last = (GrammarAST)input.LT(1);
                                                 ALT13 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet263); if (state.failed) return retval;
 
-                                                if (state.backtracking == 1) stream_ALT.Add(ALT13);
+                                                if (state.backtracking == 1) stream_ALT.add(ALT13);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT13;
@@ -924,14 +926,14 @@ public class BlockSetTransformer : TreeRewriter
                                         break;
 
                                     default:
-                                        if (cnt6 >= 1) break loop6;
+                                        if (cnt6 >= 1) goto exit6;// break loop6;
                                         if (state.backtracking > 0) { state.failed = true; return retval; }
                                         EarlyExitException eee = new EarlyExitException(6, input);
                                         throw eee;
                                 }
                                 cnt6++;
                             }
-
+                        exit6:
                             match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
@@ -1011,7 +1013,7 @@ public class BlockSetTransformer : TreeRewriter
                             _last = (GrammarAST)input.LT(1);
                             BLOCK16 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_blockSet313); if (state.failed) return retval;
 
-                            if (state.backtracking == 1) stream_BLOCK.Add(BLOCK16);
+                            if (state.backtracking == 1) stream_BLOCK.add(BLOCK16);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK16;
@@ -1150,14 +1152,14 @@ public class BlockSetTransformer : TreeRewriter
                                         break;
 
                                     default:
-                                        if (cnt9 >= 1) break loop9;
+                                        if (cnt9 >= 1) goto exit9;// break loop9;
                                         if (state.backtracking > 0) { state.failed = true; return retval; }
                                         EarlyExitException eee = new EarlyExitException(9, input);
                                         throw eee;
                                 }
                                 cnt9++;
                             }
-
+                        exit9:
                             match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
@@ -1612,10 +1614,11 @@ public class BlockSetTransformer : TreeRewriter
                                     break;
 
                                 default:
-                                    break loop12;
+                                    goto exit12;
+                                    //break loop12;
                             }
                         }
-
+                        exit12:
                         match(input, Token.UP, null); if (state.failed) return retval;
                     }
                     _last = _save_last_1;
@@ -1993,7 +1996,6 @@ public class BlockSetTransformer : TreeRewriter
     // Delegated rules
 
 
-    protected DFA10 dfa10 = new DFA10(this);
 
 
     //static final short[] DFA10_eot = DFA.unpackEncodedString(DFA10_eotS);
@@ -2138,13 +2140,13 @@ public class BlockSetTransformer : TreeRewriter
 
 
 
-    protected class DFA10 : DFA
+    protected class DFA10 : antlr.runtime.DFA
     {
+        protected readonly BlockSetTransformer transformer;
 
-
-        public DFA10(BaseRecognizer recognizer)
+        public DFA10(BlockSetTransformer transformer)
         {
-            this.recognizer = recognizer;
+            this.recognizer = this.transformer = transformer;
             this.decisionNumber = 10;
             this.eot = DFA10_eot;
             this.eof = DFA10_eof;
@@ -2172,14 +2174,14 @@ public class BlockSetTransformer : TreeRewriter
                     int index10_60 = input.index();
                     input.rewind();
                     s = -1;
-                    if (((inContext("RULE")))) { s = 70; }
-                    else if (((!inContext("RULE")))) { s = 71; }
+                    if (((this.transformer.inContext("RULE")))) { s = 70; }
+                    else if (((!this.transformer.inContext("RULE")))) { s = 71; }
 
                     input.seek(index10_60);
                     if (s >= 0) return s;
                     break;
             }
-            if (state.backtracking > 0) { state.failed = true; return -1; }
+            if (this.transformer.state.backtracking > 0) { this.transformer.state.failed = true; return -1; }
             NoViableAltException nvae =
 
                         new NoViableAltException(getDescription(), 10, _s, input);

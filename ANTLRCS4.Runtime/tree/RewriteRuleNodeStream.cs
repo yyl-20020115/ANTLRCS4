@@ -25,27 +25,52 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.v4.runtime;
+using org.antlr.v4.runtime.dfa;
 
-namespace org.antlr.runtime;
-public class EarlyExitException : RecognitionException
+namespace org.antlr.runtime.tree;
+
+/** Queues up nodes matched on left side of -&gt; in a tree parser. This is
+ *  the analog of RewriteRuleTokenStream for normal parsers. 
+ */
+public class RewriteRuleNodeStream : RewriteRuleElementStream
 {
-    private int v;
-    private IntStream input;
 
-    public EarlyExitException(int v, IntStream input) : base(null, input, null)
+    public RewriteRuleNodeStream(TreeAdaptor adaptor, String elementDescription)
+        : base(adaptor, elementDescription)
     {
-        this.v = v;
-        this.input = input;
+
+    }
+
+    /** Create a stream with one element */
+    public RewriteRuleNodeStream(TreeAdaptor adaptor,
+                                 String elementDescription,
+                                 Object oneElement)
+        : base(adaptor, elementDescription, oneElement)
+    {
+    }
+
+    /** Create a stream, but feed off an existing list */
+    public RewriteRuleNodeStream(TreeAdaptor adaptor,
+                                 String elementDescription,
+                                 List<Object> elements)
+        : base(adaptor, elementDescription, elements)
+    {
+    }
+
+    public Object nextNode()
+    {
+        return _next();
+    }
+
+    protected Object toTree(Object el)
+    {
+        return adaptor.dupNode(el);
+    }
+
+    protected override Object dup(Object el)
+    {
+        // we dup every node, so don't have to worry about calling dup; short-
+        // circuited next() so it doesn't call.
+        throw new UnsupportedOperationException("dup can't be called for a node stream.");
     }
 }
-//public class EarlyExitException : RecognitionException
-//{
-//    public EarlyExitException(Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(recognizer, input, ctx)
-//    {
-//    }
-
-//    public EarlyExitException(string message, Recognizer recognizer, IntStream input, ParserRuleContext ctx) : base(message, recognizer, input, ctx)
-//    {
-//    }
-//}

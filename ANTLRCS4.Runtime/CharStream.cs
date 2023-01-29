@@ -29,7 +29,7 @@ public interface CharStream : IntStream {
 * @throws UnsupportedOperationException if the stream does not support
 * getting the text of the specified interval
 */
-    public String getText(Interval interval);
-    char LT(int v);
+    String getText(Interval interval);
+    int LT(int v);
     String substring(int tokenStartCharIndex, int v);
 }

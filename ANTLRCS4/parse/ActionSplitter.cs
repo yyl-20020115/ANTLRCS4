@@ -7,7 +7,7 @@ using org.antlr.v4.runtime.atn;
 using System.Text;
 
 namespace org.antlr.v4.parse;
-public class ActionSplitter : Lexer
+public class ActionSplitter : antlr.runtime.Lexer
 {
 
     public const int EOF = -1;
@@ -53,9 +53,9 @@ public class ActionSplitter : Lexer
 
     // delegates
     // delegators
-    public Lexer[] getDelegates()
+    public antlr.runtime.Lexer[] getDelegates()
     {
-        return new Lexer[] { };
+        return new antlr.runtime.Lexer[] { };
     }
 
     public ActionSplitter() { }
@@ -67,15 +67,11 @@ public class ActionSplitter : Lexer
         : base(input, state) 
     {
     }
-    public override string[] getRuleNames()
-    {
-        throw new NotImplementedException();
-    }
     //@Override 
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
 
     //@Override
-    public override Token nextToken()
+    public virtual Token nextToken()
     {
         while (true)
         {
@@ -181,10 +177,11 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            break loop1;
+                            goto exit1;
+                            //break loop1;
                     }
                 }
-
+                exit1:
                 match("*/"); if (state.failed) return;
 
                 if (state.backtracking == 1) { @delegate.text(getText()); }
@@ -244,10 +241,11 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            break loop2;
+                            goto exit2;
+                            //break loop2;
                     }
                 }
-
+                exit2:
                 // org\\antlr\\v4\\parse\\ActionSplitter.g:72:26: ( '\\r' )?
                 int alt3 = 2;
                 int LA3_0 = input.LA(1);
@@ -658,14 +656,15 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            if (cnt6 >= 1) break loop6;
+                            if (cnt6 >= 1) goto exit6;// break loop6;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(6, input);
                             throw eee;
                     }
                     cnt6++;
                 }
-
+            exit6:
+                ;
             }
 
             state.type = _type;
@@ -731,10 +730,12 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            break loop7;
+                            goto exit7;
+                            //break loop7;
                     }
                 }
-
+            exit7:
+                ;
             }
 
         }
@@ -797,10 +798,12 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            break loop8;
+                            goto exit8;
+                            //break loop8;
                     }
                 }
-
+            exit8:
+                ;
             }
 
         }
@@ -852,14 +855,15 @@ public class ActionSplitter : Lexer
                             break;
 
                         default:
-                            if (cnt9 >= 1) break loop9;
+                            if (cnt9 >= 1) goto exit9;// break loop9;
                             if (state.backtracking > 0) { state.failed = true; return; }
                             EarlyExitException eee = new EarlyExitException(9, input);
                             throw eee;
                     }
                     cnt9++;
                 }
-
+            exit9:
+                ;
             }
 
         }
@@ -871,7 +875,7 @@ public class ActionSplitter : Lexer
     // $ANTLR end "WS"
 
     //@Override
-    public void mTokens()
+    public override void mTokens()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:39: ( COMMENT | LINE_COMMENT | SET_NONLOCAL_ATTR | NONLOCAL_ATTR | QUALIFIED_ATTR | SET_ATTR | ATTR | TEXT )
         int alt10 = 8;
@@ -1233,8 +1237,4 @@ public class ActionSplitter : Lexer
         return success;
     }
 
-    public override ATN getATN()
-    {
-        throw new NotImplementedException();
-    }
 }

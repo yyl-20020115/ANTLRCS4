@@ -396,4 +396,19 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         String inputSymbol = ((char)input.LT(1)) + " line=" + getLine() + ":" + getCharPositionInLine();
         base.traceOut(ruleName, ruleIndex, inputSymbol);
     }
+
+    public CharStream getInputStream()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void setTokenFactory(TokenFactory factory)
+    {
+        throw new NotImplementedException();
+    }
+
+    public TokenFactory getTokenFactory()
+    {
+        throw new NotImplementedException();
+    }
 }

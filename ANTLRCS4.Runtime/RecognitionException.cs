@@ -22,6 +22,7 @@ public class RecognitionException : RuntimeException {
 
 	private readonly IntStream input;
 
+	public readonly int c;
 	/**
 	 * The current {@link Token} when an error occurred. Since not all streams
 	 * support accessing symbols by index, we have to track the {@link Token}
@@ -40,7 +41,8 @@ public class RecognitionException : RuntimeException {
 								IntStream input,
 								ParserRuleContext ctx)
 	{
-		this.recognizer = recognizer;
+        this.c = 0;
+        this.recognizer = recognizer;
 		this.input = input;
 		this.ctx = ctx;
 		if ( recognizer!=null ) this.offendingState = recognizer.getState();
@@ -51,7 +53,7 @@ public class RecognitionException : RuntimeException {
 								ParserRuleContext ctx)
 		: base(message) 
 	{
-		;
+		this.c = 0;
 		this.recognizer = recognizer;
 		this.input = input;
 		this.ctx = ctx;

@@ -3025,10 +3025,11 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop23;
+                            goto exit23;
+                            //break loop23;
                     }
                 }
-
+            exit23:
 
                 // AST REWRITE
                 // elements: rulePrequel
@@ -8294,10 +8295,11 @@ public class ANTLRParser : Parser
                                         break;
 
                                     default:
-                                        break loop66;
+                                        goto exit66;
+                                        //break loop66;
                                 }
                             }
-
+                        exit66:
                             COLON196 = (Token)match(input, COLON, FOLLOW_COLON_in_block3462);
                             stream_COLON.add(COLON196);
 
@@ -8890,10 +8892,12 @@ public class ANTLRParser : Parser
                                         break;
 
                                     default:
-                                        break loop73;
+                                        goto exit73;
+                                        //break loop73;
                                 }
                             }
-
+                        exit73:
+                            ;
                         }
                         break;
 
@@ -9309,7 +9313,8 @@ public class ANTLRParser : Parser
                             break;
 
                         default:
-                            break loop77;
+                            goto exit77;
+                            //break loop77;
                     }
                 }
             exit77:

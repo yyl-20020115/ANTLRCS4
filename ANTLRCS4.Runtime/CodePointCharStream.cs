@@ -163,6 +163,21 @@ public abstract class CodePointCharStream : CharStream {
         throw new NotImplementedException();
     }
 
+    public int LT(int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string substring(int tokenStartCharIndex, int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind()
+    {
+        throw new NotImplementedException();
+    }
+
     // 8-bit storage for code points <= U+00FF.
     public class CodePoint8BitCharStream : CodePointCharStream {
 		private readonly byte[] byteArray;
