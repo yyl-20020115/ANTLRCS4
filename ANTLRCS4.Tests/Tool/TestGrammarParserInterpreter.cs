@@ -100,7 +100,7 @@ public class TestGrammarParserInterpreter {
 		LexerInterpreter lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 		GrammarParserInterpreter parser = g.createGrammarParserInterpreter(tokens);
-		ParseTree t = parser.parse(g.rules.get(startRule).index);
+		ParseTree t = parser.parse(g.rules[(startRule)].index);
 		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
 		String treeStr = Trees.toStringTree(t, nodeTextProvider);
 //		Console.Out.WriteLine("parse tree: "+treeStr);

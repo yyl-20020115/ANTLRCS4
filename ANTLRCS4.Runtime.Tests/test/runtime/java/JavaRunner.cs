@@ -76,17 +76,14 @@ public class JavaRunner : RuntimeRunner {
 		Exception exception = null;
 
 		try {
-			StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-
-			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
-
+			
 			List<string> files = new ();
             string f = Path.Combine(tempTestDir, getTestFileWithExt());
 			files.Add(f);
 
 			Iterable<JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
 
-			Iterable<String> compileOptions =
+			var compileOptions =
 					Arrays.AsList("-g", "-source", "1.8", "-target", "1.8", "-implicit:class", "-Xlint:-options", "-d",
 							tempTestDir, "-cp", tempTestDir + PathSeparator + classPath);
 

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="test\runtime\java\api\perf\Instrumentor.cs" />
     <Compile Remove="test\runtime\java\api\TestVisitors.cs" />
   </ItemGroup>
 

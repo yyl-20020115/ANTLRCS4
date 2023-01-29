@@ -34,7 +34,7 @@ public class JavaCompiledState : CompiledState
     {
         ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
 
-        ConstructorInfo lexerConstructor = lexer.getConstructor(CharStream);
+        ConstructorInfo lexerConstructor = lexer.GetConstructor(typeof(CharStream));
         Lexer lexer = lexerConstructor.newInstance(@in);
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
