@@ -174,7 +174,7 @@ public class ANTLRParser : Parser
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
 
 
-    Deque<String> paraphrases = new();
+    public Deque<String> paraphrases = new();
     public void grammarError(ErrorType etype, Token token, params Object[] args) { }
 
 

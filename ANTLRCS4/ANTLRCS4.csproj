@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="codegen\model\dbg.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="codegen\SourceGenTriggers.g" />
     <None Remove="parse\ActionSplitter.g" />
     <None Remove="parse\ANTLRLexer.g" />

@@ -52,7 +52,7 @@ public class Alternative : AttributeResolver {
 
 	//@Override
 	public bool resolvesToToken(String x, ActionAST node) {
-		if ( tokenRefs.get(x)!=null ) return true;
+		if ( tokenRefs.ContainsKey(x)) return true;
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
 		return false;

@@ -6,7 +6,7 @@
 
 namespace org.antlr.v4.misc;
 
-public class MutableInt : Number , Comparable<MutableInt> {
+public class MutableInt : Number , IComparable<MutableInt> {
 	public int v;
 
 	public MutableInt(int v) { this.v = v; }
@@ -18,13 +18,13 @@ public class MutableInt : Number , Comparable<MutableInt> {
 
 	public override int GetHashCode() { return v; }
 
-	public override int compareTo(MutableInt o) { return v-o.intValue(); }
+	public override int CompareTo(MutableInt o) { return v-o.intValue(); }
 	public override int intValue() { return v; }
 	public override long longValue() { return v; }
 	public override float floatValue() { return v; }
 	public override double doubleValue() { return v; }
 
 	public override String ToString() {
-		return String.valueOf(v);
+		return v.ToString();
 	}
 }

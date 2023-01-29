@@ -18,7 +18,7 @@ public class RuleRefAST : GrammarASTWithOptions , RuleElementAST {
 
 	/** Dup token too since we overwrite during LR rule transform */
 	//@Override
-	public RuleRefAST dupNode() {
+	public override RuleRefAST dupNode() {
 		RuleRefAST r = new RuleRefAST(this);
 		// In LR transform, we alter original token stream to make e -> e[n]
 		// Since we will be altering the dup, we need dup to have the

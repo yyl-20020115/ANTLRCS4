@@ -369,13 +369,13 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
 		ParserInterpreter parser;
 		if (originalParser is ParserInterpreter) {
-			Type c = originalParser.getClass().asSubclass(ParserInterpreter);
+			Type c = originalParser.GetType();
 			try {
-				ConstructorInfo ctor = c.getConstructor(Grammar, ATN, TokenStream);
-				parser = ctor.newInstance(g, originalParser.getATN(), originalParser.getTokenStream());
+				ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(Grammar), typeof(ATN), typeof(TokenStream) });
+				parser = ctor.Invoke(g,new object[] { originalParser.getATN(), originalParser.getTokenStream() }) as ParserInterpreter;
 			}
 			catch (Exception e) {
-				throw new ArgumentException("can't create parser to match incoming "+originalParser.getClass().getSimpleName(), e);
+				throw new ArgumentException("can't create parser to match incoming "+originalParser.GetType().Name, e);
 			}
 		}
 		else { // must've been a generated parser

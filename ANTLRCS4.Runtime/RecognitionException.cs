@@ -34,7 +34,7 @@ public class RecognitionException : RuntimeException {
     internal bool approximateLineInfo;
     internal string line;
     internal string charPositionInLine;
-    internal Token token;
+    public Token token;
     internal object node;
 
     public RecognitionException(Recognizer recognizer,

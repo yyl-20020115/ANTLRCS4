@@ -294,10 +294,10 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 			return;
 		}
 
-		File f = new File(fullyQualifiedName);
-		String fileName = f.getName();
+		string f = (fullyQualifiedName);
+		String fileName = f;
 		if ( g.originalGrammar!=null ) return; // don't warn about diff if this is implicit lexer
-		if ( !RuntimeUtils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
+		if ( !Utils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
 		     !fileName.Equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
 			g.tool.errMgr.grammarError(ErrorType.FILE_AND_GRAMMAR_NAME_DIFFER,
 									   fileName, nameToken, nameToken.getText(), fileName);
@@ -353,7 +353,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 
 	void checkInvalidRuleRef(Token ruleID) {
 		String fileName = ruleID.getInputStream().getSourceName();
-		if ( g.isLexer() && char.IsLower(ruleID.getText().charAt(0)) ) {
+		if ( g.isLexer() && char.IsLower(ruleID.getText()[(0)]) ) {
 			g.tool.errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
 									   fileName, ruleID, ruleID.getText(), currentRuleName);
 		}

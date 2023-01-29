@@ -65,7 +65,7 @@ public class ScopeParser {
 
 		Attribute attr = new Attribute();
 		int rightEdgeOfDeclarator = decl.a.Length - 1;
-		int equalsIndex = decl.a.indexOf('=');
+		int equalsIndex = decl.a.IndexOf('=');
 		if (equalsIndex > 0) {
 			// everything after the '=' is the init value
 			attr.initValue = decl.a.substring(equalsIndex + 1, decl.a.Length).Trim();
@@ -173,12 +173,12 @@ public class ScopeParser {
 		}
 
 		// the name is the last ID
-		attr.name = decl.substring(start, stop);
+		attr.name = decl.Substring(start, stop-start);
 
 		// the type is the decl minus the ID (could be empty)
-		attr.type = decl.substring(0, start);
+		attr.type = decl.Substring(0, start);
 		if (stop <= decl.Length	 - 1) {
-			attr.type += decl.substring(stop, decl.Length);
+			attr.type += decl.Substring(stop, decl.Length-stop);
 		}
 
 		attr.type = attr.type.Trim();
@@ -191,7 +191,7 @@ public class ScopeParser {
 	public static Pair<int, int> _parsePostfixDecl(tool.Attribute attr, String decl, ActionAST a, Grammar g) {
 		int start = -1;
 		int stop = -1;
-		int colon = decl.indexOf(':');
+		int colon = decl.IndexOf(':');
 		int namePartEnd = colon == -1 ? decl.Length : colon;
 
 		// look for start of name
@@ -303,7 +303,7 @@ public class ScopeParser {
 					p = _splitArgumentList(actionText, p + 1, '}', separatorChar, args);
 					break;
 				case '<':
-					if (actionText.indexOf('>', p + 1) >= p) {
+					if (actionText.IndexOf('>', p + 1) >= p) {
 						// do we see a matching '>' ahead?  if so, hope it's a generic
 						// and not less followed by expr with greater than
 						p = _splitArgumentList(actionText, p + 1, '>', separatorChar, args);

@@ -16,6 +16,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4;
@@ -178,7 +179,7 @@ public class Tool {
 					// use reflection to set field
 					Type c = this.GetType();
 					try {
-						Field f = c.getField(o.fieldName);
+						FieldInfo f = c.GetField(o.fieldName);
 						if ( argValue==null ) {
 							if ( arg.StartsWith("-no-") ) f.setBoolean(this, false);
 							else f.setBoolean(this, true);
@@ -272,7 +273,7 @@ public class Tool {
 					Console.WriteLine("output: "+outputFiles);
 					Console.WriteLine("dependents: "+dependents);
 					 */
-				Console.WriteLine(dep.getDependencies().render());
+				Console.WriteLine(dep.getDependencies().Render());
 
 			}
 			else if (errMgr.getNumErrors() == 0) {
@@ -373,8 +374,15 @@ public class Tool {
     // check for undefined rules
     class UndefChecker : GrammarTreeVisitor
     {
+		public Tool tool;
+
         public bool badref = false;
-        // @Override
+
+		public UndefChecker(Tool tool)
+		{
+			this.tool = tool;
+		}
+		// @Override
         public void tokenRef(TerminalAST @ref)
         {
             if ("EOF".Equals(@ref.getText()))
@@ -395,18 +403,18 @@ public class Tool {
                 char.IsLower(@ref.getText()[(0)]))
             {
                 badref = true;
-                errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
+                this.tool.errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
                                     fileName, @ref.getToken(), @ref.getText(), currentRuleName);
             }
             else if (ruleAST == null)
             {
                 badref = true;
-                errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
+                this.tool.errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
                                     fileName, @ref.token, @ref.getText());
             }
         }
         //@Override
-        public ErrorManager getErrorManager() { return errMgr; }
+        public ErrorManager getErrorManager() { return this.tool.errMgr; }
     }
 
 
@@ -445,7 +453,7 @@ public class Tool {
 			ruleToAST[ruleName]= ruleAST;
 		}
 
-		UndefChecker chk = new UndefChecker();
+		UndefChecker chk = new UndefChecker(this);
 		chk.visitGrammar(g.ast);
 
 		return redefinition || chk.badref;
@@ -641,9 +649,9 @@ public class Tool {
 	public void generateATNs(Grammar g) {
 		DOTGenerator dotGenerator = new DOTGenerator(g);
 		List<Grammar> grammars = new ();
-		grammars.add(g);
+		grammars.Add(g);
 		List<Grammar> imported = g.getAllImportedGrammars();
-		if ( imported!=null ) grammars.addAll(imported);
+		if ( imported!=null ) grammars.AddRange(imported);
 		foreach (Grammar ig in grammars) {
 			foreach (Rule r in ig.rules.Values) {
 				try {
@@ -788,7 +796,7 @@ public class Tool {
 		// or just or the relative path recorded for the parent grammar. This means
 		// that when we write the tokens files, or the .java files for imported grammars
 		// taht we will write them in the correct place.
-		if ((fileNameWithPath == null) || (fileNameWithPath.LastIndexOf(File.separatorChar) == -1)) {
+		if ((fileNameWithPath == null) || (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1)) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might sitll be just ""
 			// but when it is not, we will write the file in the correct place.
@@ -796,22 +804,22 @@ public class Tool {
 
 		}
 		else {
-			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(File.separatorChar));
+			fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
 		}
 		if ( haveOutputDir ) {
 			// -o /tmp /var/lib/t.g4 => /tmp/T.java
 			// -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
 			// -o . /usr/lib/t.g4 => ./T.java
 			if (fileDirectory != null &&
-				(new File(fileDirectory).isAbsolute() ||
-					fileDirectory.StartsWith("~"))) { // isAbsolute doesn't count this :(
+				 
+					fileDirectory.StartsWith("~")) { // isAbsolute doesn't count this :(
 				// somebody set the dir, it takes precendence; write new file there
-				outputDir = new File(outputDirectory);
+				outputDir = (outputDirectory);
 			}
 			else {
 				// -o /tmp subdir/t.g4 => /tmp/subdir/T.java
 				if (fileDirectory != null) {
-					outputDir = new File(outputDirectory, fileDirectory);
+					outputDir = Path.Combine(outputDirectory, fileDirectory);
 				}
 				else {
 					outputDir = new File(outputDirectory);
@@ -833,14 +841,14 @@ public class Tool {
 		File outputDir;
 		String fileDirectory;
 
-		if (fileNameWithPath.LastIndexOf(File.separatorChar) == -1) {
+		if (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might still be just ""
 			// but when it is not, we will write the file in the correct place.
 			fileDirectory = ".";
 		}
 		else {
-			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(File.separatorChar));
+			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
 		}
 		if ( haveOutputDir ) {
 			// -o /tmp /var/lib/t.g4 => /tmp/T.java

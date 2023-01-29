@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
 
 namespace org.antlr.v4.tool.ast;
@@ -33,7 +34,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 		}
 		else {
 			String v = value.getText();
-			if ( v.startsWith("'") || v.startsWith("\"") ) {
+			if ( v.StartsWith("'") || v.StartsWith("\"") ) {
 				v = CharSupport.getStringFromGrammarStringLiteral(v);
 				if (v == null) {
 					g.tool.errMgr.grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.getToken(), value.getText());

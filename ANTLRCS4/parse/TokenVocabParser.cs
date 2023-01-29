@@ -104,7 +104,7 @@ public class TokenVocabParser {
 				tool.errMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
 									  ioe,
 									  fullFile,
-									  ioe.getMessage());
+									  ioe.Message);
 			}
 		}
 		return tokens;
@@ -121,9 +121,8 @@ public class TokenVocabParser {
 	 */
 	public String getImportedVocabFile() {
 		String vocabName = g.getOptionString("tokenVocab");
-		string f = (g.tool.libDirectory,
-						  Path.PathSeparator + //TODO
-						  vocabName +
+		string f = Path.Combine(g.tool.libDirectory,
+						  vocabName,
 						  CodeGenerator.VOCAB_FILE_EXTENSION);
 		if (File.Exists(f)) {
 			return f;
@@ -133,23 +132,23 @@ public class TokenVocabParser {
 		// to look for it in the output directory which is where .tokens
 		// files are generated (in the base, not relative to the input
 		// location.)
-		f = new File(g.tool.outputDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
-		if ( f.exists() ) {
+		f = Path.Combine(g.tool.outputDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
+		if ( File.Exists(f) ) {
 			return f;
 		}
 		
 		// Still not found? Use the grammar's subfolder then.
 		String fileDirectory;
 
-		if (g.fileName.LastIndexOf(File.separatorChar) == -1) {
+		if (g.fileName.LastIndexOf(Path.PathSeparator) == -1) {
 			// No path is included in the file name, so make the file
 			// directory the same as the parent grammar (which might still be just ""
 			// but when it is not, we will write the file in the correct place.
 			fileDirectory = ".";
 		}
 		else {
-			fileDirectory = g.fileName.substring(0, g.fileName.LastIndexOf(File.separatorChar));
+			fileDirectory = g.fileName.Substring(0, g.fileName.LastIndexOf(Path.PathSeparator));
 		}
-		return new File(fileDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
+		return Path.Combine(fileDirectory, vocabName , CodeGenerator.VOCAB_FILE_EXTENSION);
 	}
 }

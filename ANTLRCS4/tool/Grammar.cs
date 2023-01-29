@@ -901,7 +901,7 @@ public class Grammar : AttributeResolver
             SemanticContext.OR or = (SemanticContext.OR)semctx;
             return joinPredicateOperands(or, " or ");
         }
-        return semctx.toString();
+        return semctx.ToString();
     }
 
     public String joinPredicateOperands(SemanticContext.Operator op, String separator)
@@ -1032,7 +1032,7 @@ public class Grammar : AttributeResolver
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
         int max = Math.Max(this.typeToTokenList.Count, importG.typeToTokenList.Count);
-        RuntimeUtils.setSize(typeToTokenList, max);
+        Utils.setSize(typeToTokenList, max);
         for (int ttype = 0; ttype < importG.typeToTokenList.Count; ttype++)
         {
             maxTokenType = Math.Max(maxTokenType, ttype);
@@ -1040,7 +1040,7 @@ public class Grammar : AttributeResolver
         }
 
         max = Math.Max(this.channelValueToNameList.Count, importG.channelValueToNameList.Count);
-        RuntimeUtils.setSize(channelValueToNameList, max);
+        Utils.setSize(channelValueToNameList, max);
         for (int channelValue = 0; channelValue < importG.channelValueToNameList.Count; channelValue++)
         {
             maxChannelType = Math.Max(maxChannelType, channelValue);
@@ -1083,7 +1083,7 @@ public class Grammar : AttributeResolver
             // track in reverse index too
             if (ttype >= typeToStringLiteralList.Count)
             {
-                RuntimeUtils.setSize(typeToStringLiteralList, ttype + 1);
+                Utils.setSize(typeToStringLiteralList, ttype + 1);
             }
             typeToStringLiteralList.set(ttype, lit);
 
@@ -1111,7 +1111,7 @@ public class Grammar : AttributeResolver
 
         if (ttype >= typeToTokenList.Count)
         {
-            RuntimeUtils.setSize(typeToTokenList, ttype + 1);
+            Utils.setSize(typeToTokenList, ttype + 1);
         }
         String prevToken = typeToTokenList[ttype];
         if (prevToken == null || prevToken[(0)] == '\'')
@@ -1180,7 +1180,7 @@ public class Grammar : AttributeResolver
     {
         if (channelValue >= channelValueToNameList.Count)
         {
-            RuntimeUtils.setSize(channelValueToNameList, channelValue + 1);
+            Utils.setSize(channelValueToNameList, channelValue + 1);
         }
 
         String prevChannel = channelValueToNameList[channelValue];
@@ -1368,6 +1368,12 @@ public class Grammar : AttributeResolver
     }
     public class GTV : GrammarTreeVisitor
     {
+        public readonly Grammar g;
+        public GTV(Grammar g)
+        {
+            this.g = g;
+        }
+
         //@Override
 
         public void stringRef(TerminalAST @ref)
@@ -1376,7 +1382,7 @@ public class Grammar : AttributeResolver
         }
         //@Override
 
-        public ErrorManager getErrorManager() { return tool.errMgr; }
+        public ErrorManager getErrorManager() { return g.tool.errMgr; }
     }
     public HashSet<String> getStringLiterals()
     {

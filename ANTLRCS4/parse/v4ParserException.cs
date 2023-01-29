@@ -12,9 +12,8 @@ namespace org.antlr.v4.parse;
 public class v4ParserException : RecognitionException {
 	public String msg;
 	/** Used for remote debugger deserialization */
-	public v4ParserException() {}
-
-	public v4ParserException(String msg, IntStream input):base(input) {
+	public v4ParserException(String msg, IntStream input)
+		:base(null,input,null) {
 		this.msg = msg;
 	}
 

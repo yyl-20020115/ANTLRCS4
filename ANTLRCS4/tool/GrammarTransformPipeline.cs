@@ -371,7 +371,7 @@ public class GrammarTransformPipeline {
 		GrammarRootAST combinedAST = combinedGrammar.ast;
 		//tool.log("grammar", "before="+combinedAST.toStringTree());
 		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(combinedAST.token.getInputStream());
-		GrammarAST[] elements = combinedAST.getChildren().toArray(new GrammarAST[0]);
+		GrammarAST[] elements = combinedAST.getChildren().ToArray();
 
 		// MAKE A GRAMMAR ROOT and ID
 		String lexerName = combinedAST.getChild(0).getText()+"Lexer";
