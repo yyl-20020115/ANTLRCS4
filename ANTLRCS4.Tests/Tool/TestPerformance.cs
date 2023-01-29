@@ -591,7 +591,7 @@ public class TestPerformance
             stddev[i] = Math.Sqrt(value / PASSES);
         }
 
-        Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
+        Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
         for (int i = 0; i < stddev.Length; i++)
         {
             double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
@@ -672,21 +672,21 @@ public class TestPerformance
             stddev[i] = Math.Sqrt(value / PASSES);
         }
 
-        Console.Out.format("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
+        Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
         for (int i = 0; i < stddev.Length; i++)
         {
             double averageValue = average[i];
-            Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
+            Console.Out.WriteLine("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
         }
     }
 
     private String getSourceRoot(String prefix)
     {
-        String sourceRoot = System.getenv(prefix + "_SOURCE_ROOT");
-        if (sourceRoot == null)
-        {
-            sourceRoot = System.getProperty(prefix + "_SOURCE_ROOT");
-        }
+        String sourceRoot =Environment.GetEnvironmentVariable(prefix + "_SOURCE_ROOT");
+        //if (sourceRoot == null)
+        //{
+        //    sourceRoot = System.getProperty(prefix + "_SOURCE_ROOT");
+        //}
 
         return sourceRoot;
     }
@@ -1004,11 +1004,11 @@ public class TestPerformance
                 {
                     if (COMPUTE_TRANSITION_STATS)
                     {
-                        Console.Out.format("\tDecision\tStates\tConfigs\tPredict (ALL)\tPredict (LL)\tNon-SLL\tTransitions\tTransitions (ATN)\tTransitions (LL)\tLA (SLL)\tLA (LL)\tRule%n");
+                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tPredict (ALL)\tPredict (LL)\tNon-SLL\tTransitions\tTransitions (ATN)\tTransitions (LL)\tLA (SLL)\tLA (LL)\tRule%n");
                     }
                     else
                     {
-                        Console.Out.format("\tDecision\tStates\tConfigs\tRule%n");
+                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tRule%n");
                     }
 
                     for (int i = 0; i < decisionToDFA.Length; i++)
@@ -1515,7 +1515,7 @@ public class TestPerformance
         }
         catch (Exception e)
         {
-            e.printStackTrace(Console.Out);
+            //e.printStackTrace(Console.Out);
             Assert.Fail(e.Message);
             throw new IllegalStateException(e);
         }
@@ -1936,7 +1936,7 @@ public class TestPerformance
             }
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 if (caseSensitive)
                 {
@@ -2011,7 +2011,7 @@ public class TestPerformance
             }
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 foreach (FilenameFilter filter in filters)
                 {
@@ -2036,7 +2036,7 @@ public class TestPerformance
             }
 
             //@Override
-            public bool accept(File dir, String name)
+            public bool accept(string dir, String name)
             {
                 return !filter.accept(dir, name);
             }

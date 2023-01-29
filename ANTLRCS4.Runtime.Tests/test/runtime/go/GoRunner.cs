@@ -94,7 +94,7 @@ public class GoRunner : RuntimeRunner
     ////@Override
     protected String grammarParseRuleToRecognizerName(String startRuleName)
     {
-        if (startRuleName == null || startRuleName.length() == 0)
+        if (startRuleName == null || startRuleName.Length == 0)
         {
             return null;
         }

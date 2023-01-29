@@ -525,7 +525,7 @@ public class TestTokenStreamRewriter {
 		}
 		String expecting = "replace op boundaries of <ReplaceOp@[@3,3:3='c',<3>,1:3]..[@5,5:5='b',<2>,1:5]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
 		Assert.IsNotNull(exc);
-		Assert.AreEqual(expecting, exc.getMessage());
+		Assert.AreEqual(expecting, exc.Message);
 	}
 
 	[TestMethod] public void testReplaceThenReplaceLowerIndexedSuperset()  {

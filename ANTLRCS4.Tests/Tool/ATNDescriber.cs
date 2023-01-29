@@ -129,7 +129,7 @@ public class ATNDescriber {
 			// improved maintainability.
 			int lexerActionCount = data[p++];
 			for (int i = 0; i < lexerActionCount; i++) {
-				LexerActionType actionType = LexerActionType.GetValues()[data[p++]];
+				LexerActionType actionType = (LexerActionType)data[p++];
 				int data1 = data[p++];
 				int data2 = data[p++];
 			}
@@ -182,14 +182,14 @@ public class ATNDescriber {
 				case '\'':
 					return "'\\''";
 				default:
-					if ( Character.UnicodeBlock.of((char)t)==Character.UnicodeBlock.BASIC_LATIN &&
+					if ( (t>=0x20&&t<=0x7f) &&
 							!char.IsControl((char)t) ) {
 						return '\''+((char)t).ToString()+'\'';
 					}
 					// turn on the bit above max "\uFFFF" value so that we pad with zeros
 					// then only take last 4 digits
-					String hex = Integer.toHexString(t|0x10000).ToUpper().substring(1,5);
-					String unicodeStr = "'\\u"+hex+"'";
+					//String hex = Integer.toHexString(t|0x10000).ToUpper().substring(1,5-1);
+					String unicodeStr = $"'\\u{t:X4}'";
 					return unicodeStr;
 			}
 		}

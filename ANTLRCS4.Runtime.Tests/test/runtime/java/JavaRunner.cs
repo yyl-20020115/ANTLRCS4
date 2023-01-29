@@ -80,8 +80,8 @@ public class JavaRunner : RuntimeRunner {
 
 			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
-			List<File> files = new ArrayList<>();
-			File f = new File(tempTestDir, getTestFileWithExt());
+			List<string> files = new ArrayList<>();
+            string f = (tempTestDir, getTestFileWithExt());
 			files.add(f);
 
 			Iterable<? : JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);

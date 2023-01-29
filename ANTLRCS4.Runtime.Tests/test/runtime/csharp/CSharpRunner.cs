@@ -25,7 +25,7 @@ public class CSharpRunner : RuntimeRunner {
 
 	private static readonly String testProjectFileName = "Antlr4.Test.csproj";
 	private static readonly String cSharpAntlrRuntimeDllName =
-			Paths.get(getCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").ToString();
+			Path.Combine(getCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").ToString();
 
 	private static readonly String cSharpTestProjectContent;
 
@@ -39,7 +39,7 @@ public class CSharpRunner : RuntimeRunner {
 	protected void initRuntime()  {
 		String cachePath = getCachePath();
 		mkdir(cachePath);
-		String projectPath = Paths.get(getRuntimePath(), "src", "Antlr4.csproj").ToString();
+		String projectPath = Path.Combine(getRuntimePath(), "src", "Antlr4.csproj").ToString();
 		String[] args = new String[]{getRuntimeToolPath(), "build", projectPath, "-c", "Release", "-o", cachePath};
 		runCommand(args, cachePath, "build " + getTitleName() + " ANTLR runtime");
 	}

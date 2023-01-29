@@ -49,16 +49,16 @@ public class CppRunner : RuntimeRunner {
 
 		environment = new ();
 		if (IsWindows()) {
-			runtimeBinaryPath = Paths.get(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
-			runtimeLibraryFileName = Paths.get(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
+			runtimeBinaryPath = Path.Combine(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
+			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
 			String path = Environment.GetEnvironmentVariable("PATH");
 			environment.Add("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
 		}
 		else {
-			runtimeBinaryPath = Paths.get(runtimePath, "dist").ToString();
-			runtimeLibraryFileName = Paths.get(runtimeBinaryPath,
+			runtimeBinaryPath = Path.Combine(runtimePath, "dist").ToString();
+			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath,
 					"libantlr4-runtime." + (getOS() == OSType.Mac ? "dylib" : "so")).ToString();
-			environment.put("LD_PRELOAD", runtimeLibraryFileName);
+			environment.Add("LD_PRELOAD", runtimeLibraryFileName);
 		}
 
 		if (isWindows()) {
@@ -158,13 +158,13 @@ public class CppRunner : RuntimeRunner {
 	}
 
 	////@Override
-	protected override String getRuntimeToolName() {
+	protected String getRuntimeToolName() {
 		return null;
 	}
 
 	////@Override
-	public override String getExecFileName() {
-		return Paths.get(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
+	public String getExecFileName() {
+		return Path.Combine(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
 	}
 
 	////@Override

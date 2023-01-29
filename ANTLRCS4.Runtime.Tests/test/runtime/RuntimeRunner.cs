@@ -146,7 +146,7 @@ public abstract class RuntimeRunner {
 		if (runOptions.useVisitor) {
 			options.Add("-visitor");
 		}
-		if (runOptions.superClass != null && runOptions.superClass.length() > 0) {
+		if (runOptions.superClass != null && runOptions.superClass.Length > 0) {
 			options.Add("-DsuperClass=" + runOptions.superClass);
 		}
 		ErrorQueue errorQueue = Generator.antlrOnString(getTempDirPath(), getLanguage(),

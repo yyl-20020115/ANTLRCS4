@@ -63,10 +63,10 @@ public class TestCodeGeneration {
 				name = name.Substring(1);
 				if ( !name.StartsWith("_sub") ) {
 					try {
-						@out.write("<ST:" + name + ">");
+						@out.Write("<ST:" + name + ">");
 						evals.Add("<ST:" + name + ">");
 						int r = base.writeObject(@out, scope, o, options);
-						@out.write("</ST:" + name + ">");
+						@out.Write("</ST:" + name + ">");
 						evals.Add("</ST:" + name + ">");
 						return r;
 					} catch (IOException ioe) {

@@ -5,6 +5,7 @@
  */
 
 using Antlr4.StringTemplate;
+using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.swift;
 
@@ -58,7 +59,7 @@ public class SwiftRunner : RuntimeRunner {
 			String tempDirPath = getTempDirPath();
 			string tempDirFile = (tempDirPath);
 
-			File[] ignoredFiles = tempDirFile.listFiles(NoSwiftFileFilter.Instance);
+			string[] ignoredFiles = tempDirFile.listFiles(NoSwiftFileFilter.Instance);
 			//assert ignoredFiles != null;
 			List<String> excludedFiles = Arrays.stream(ignoredFiles).map(File::getName).collect(Collectors.toList());
 

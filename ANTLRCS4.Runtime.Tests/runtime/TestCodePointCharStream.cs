@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
@@ -33,7 +34,7 @@ public class TestCodePointCharStream {
 				IllegalStateException,
 				s::consume
 		);
-		Assert.AreEqual("cannot consume EOF", illegalStateException.getMessage());
+		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
 	[TestMethod]
@@ -55,7 +56,7 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString("X");
 		s.consume();
 		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
-		Assert.AreEqual("cannot consume EOF", illegalStateException.getMessage());
+		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
 	[TestMethod]
@@ -102,7 +103,7 @@ public class TestCodePointCharStream {
 		CodePointCharStream s = CharStreams.fromString("\u611B");
 		s.consume();
 		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
-		Assert.AreEqual("cannot consume EOF", illegalStateException.getMessage());
+		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
 	[TestMethod]
@@ -144,7 +145,7 @@ public class TestCodePointCharStream {
 		s.consume();
 		Assert.AreEqual(1, s.index());
 		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
-		Assert.AreEqual("cannot consume EOF", illegalStateException.getMessage());
+		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
 	[TestMethod]

@@ -10,34 +10,36 @@ using System.Reflection;
 
 namespace org.antlr.v4.test.runtime.states;
 
-public class JavaCompiledState : CompiledState {
-	public readonly Assembly assembly;
-	public readonly Type lexer;
-	public readonly Type parser;
+public class JavaCompiledState : CompiledState
+{
+    public readonly Assembly assembly;
+    public readonly Type lexer;
+    public readonly Type parser;
 
-	public JavaCompiledState(GeneratedState previousState,
+    public JavaCompiledState(GeneratedState previousState,
                              Assembly assembly,
-							 Type lexer,
-							 Type parser,
-							 Exception exception
-	) {
-		base(previousState, exception);
-		this.assembly = assembly;
-		this.lexer = lexer;
-		this.parser = parser;
-	}
+                             Type lexer,
+                             Type parser,
+                             Exception exception
+    )
+    {
+        base(previousState, exception);
+        this.assembly = assembly;
+        this.lexer = lexer;
+        this.parser = parser;
+    }
 
-	public Pair<Lexer, Parser> initializeLexerAndParser(String input)
-			{
-		ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
+    public Pair<Lexer, Parser> initializeLexerAndParser(String input)
+    {
+        ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
 
-		ConstructorInfo lexerConstructor = lexer.GetConstructor(CharStream);
-		Lexer lexer = lexerConstructor.newInstance(@in);
+        ConstructorInfo lexerConstructor = lexer.getConstructor(CharStream);
+        Lexer lexer = lexerConstructor.newInstance(@in);
 
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		ConstructorInfo parserConstructor = parser.getConstructor(TokenStream);
-		Parser parser = parserConstructor.newInstance(tokens);
-		return new Pair<>(lexer, parser);
-	}
+        ConstructorInfo parserConstructor = parser.getConstructor(TokenStream);
+        Parser parser = parserConstructor.newInstance(tokens);
+        return new Pair<>(lexer, parser);
+    }
 }

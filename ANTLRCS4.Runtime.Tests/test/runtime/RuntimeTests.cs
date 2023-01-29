@@ -74,7 +74,7 @@ public abstract class RuntimeTests {
 			List<DynamicNode> descriptorTests = new ();
 			RuntimeTestDescriptor[] descriptors = testDescriptors.get(group);
 			foreach (RuntimeTestDescriptor descriptor in descriptors) {
-				descriptorTests.add(dynamicTest(descriptor.name, descriptor.uri, () => {
+				descriptorTests.Add(dynamicTest(descriptor.name, descriptor.uri, () => {
 					using (RuntimeRunner runner = createRuntimeRunner()) {
 						String errorMessage = test(descriptor, runner);
 						if (errorMessage != null) {

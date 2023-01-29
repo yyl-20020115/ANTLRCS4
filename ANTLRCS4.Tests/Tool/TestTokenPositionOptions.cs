@@ -98,7 +98,7 @@ public class TestTokenPositionOptions {
 		foreach (GrammarAST node in nodes) {
 			tokens.Add(node.getToken());
 		}
-		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.toArray(), "\n"));
+		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.ToArray(), "\n"));
 	}
 
 	[TestMethod] public void testLeftRecursionWithSet(){

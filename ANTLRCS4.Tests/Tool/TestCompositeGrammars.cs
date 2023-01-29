@@ -691,7 +691,7 @@ public class TestCompositeGrammars {
 
 	private static void checkGrammarSemanticsWarning(ErrorQueue equeue, GrammarSemanticsMessage expectedMessage) {
 		ANTLRMessage foundMsg = null;
-		for (int i = 0; i < equeue.warnings.size(); i++) {
+		for (int i = 0; i < equeue.warnings.Count; i++) {
 			ANTLRMessage m = equeue.warnings.get(i);
 			if (m.getErrorType()==expectedMessage.getErrorType() ) {
 				foundMsg = m;

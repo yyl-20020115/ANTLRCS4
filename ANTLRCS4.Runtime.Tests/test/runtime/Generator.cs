@@ -60,9 +60,9 @@ public class Generator {
 
 		List<String> errors = new ();
 
-		if ( !defaultListener && !equeue.errors.isEmpty() ) {
-			for (int i = 0; i < equeue.errors.size(); i++) {
-				ANTLRMessage msg = equeue.errors.get(i);
+		if ( !defaultListener && equeue.errors.Count>0 ) {
+			for (int i = 0; i < equeue.errors.Count; i++) {
+				ANTLRMessage msg = equeue.errors[(i)];
 				Template msgST = antlr.errMgr.getMessageTemplate(msg);
 				errors.Add(msgST.Render());
 			}
