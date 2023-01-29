@@ -1211,7 +1211,7 @@ public class TestPerformance
         RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, body, parserName, lexerName,
                 false, true, null, null,
                 false, false, Stage.Compile, false);
-        using (RuntimeRunner runner = new JavaRunner())
+        RuntimeRunner runner = new JavaRunner();
         {
             return (JavaCompiledState)runner.run(runOptions);
         }

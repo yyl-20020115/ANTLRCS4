@@ -10,6 +10,7 @@ using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.tool;
+using System.Text;
 
 namespace org.antlr.v4.test.tool;
 //@SuppressWarnings("unused")
@@ -79,7 +80,7 @@ public class TestUnbufferedCharStream {
 		int m1 = input.mark();
 		input.release(m1);
 		//assertThrows(IllegalStateException, () => input.release(m1));
-        Assert.ThrowsException<IllegalStateException>(() => input.release(ml));
+        Assert.ThrowsException<IllegalStateException>(() => input.release(m1));
     }
 
     /**
@@ -365,11 +366,12 @@ public class TestUnbufferedCharStream {
 			int len = n;
 			if (data[len-1] == IntStream.EOF) {
 				// Don't pass -1 to new String().
-				return new String(data,p,len-p-1) + "\uFFFF";
+				return string.Join("", data[p..(len-1)].Select(d => new Rune(d).ToString())) + "\uffff";
+				//return new String(data,p,len-p-1) + "\uFFFF";
 			} else {
-				return new String(data,p,len-p);
-			}
-		}
+                return string.Join("", data[p..].Select(d => new Rune(d).ToString()));
+            }
+        }
 
 		/** For testing.  What's in moving window buffer into data stream.
 		 *  From 0..p-1 have been consume.

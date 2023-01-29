@@ -95,7 +95,7 @@ public class TestCharStreams {
 		string p = getTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
 
-		(SeekableByteChannel c = Files.newByteChannel(p);
+		SeekableByteChannel c = Files.newByteChannel(p);
 		{
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");

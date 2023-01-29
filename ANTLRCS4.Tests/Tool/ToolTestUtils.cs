@@ -80,13 +80,14 @@ public class ToolTestUtils {
 			String[] lines = grammarStr.Split('\n');
 			String fileName = getFilenameFromFirstLineOfGrammar(lines[0]);
 
-			String tempDirName = "AntlrTestErrors-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
+			String tempDirName = "AntlrTestErrors-" + Thread.CurrentThread.Name + "-"
+				+ DateTime.Now.Millisecond;
 			String tempTestDir = Path.Combine(TempDirectory, tempDirName);
 
 			try {
 				ErrorQueue equeue = antlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-				String actual = equeue.ToString(true);
+				String actual = equeue.toString(true);
 				actual = actual.Replace(tempTestDir + Path.DirectorySeparatorChar, "");
 				String msg = grammarStr;
 				msg = msg.Replace("\n", "\\n");

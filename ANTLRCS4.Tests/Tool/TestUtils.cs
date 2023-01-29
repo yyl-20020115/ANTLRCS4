@@ -70,7 +70,7 @@ public class TestUtils
         strings.Add("foo");
         strings.Add("bar");
 
-        Utils.Func1<String, String> func1 = new UFA();
+        Utils.Func1<String, String> func1 = new UFA<string>();
 
         List<String> retval = new();
         retval.Add("baz");

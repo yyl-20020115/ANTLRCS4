@@ -102,17 +102,13 @@ public class TestSymbolIssues {
 		"error(" + ErrorType.MODE_CONFLICTS_WITH_TOKEN + "): F.g4:3:0: mode M1 conflicts with token with same name\n"
 	};
 
-    [TestMethod] public void testA() { testErrors(A, false); }
-    [TestMethod] public void testB() { testErrors(B, false); }
+    [TestMethod] public void testA() { ToolTestUtils.testErrors(A, false); }
+    [TestMethod] public void testB() { ToolTestUtils.testErrors(B, false); }
 
-    private void testErrors(string[] b, bool v)
-    {
-        throw new NotImplementedException();
-    }
 
-    [TestMethod] public void testD() { testErrors(D, false); }
-	[TestMethod] public void testE() { testErrors(E, false); }
-	[TestMethod] public void testF() { testErrors(F, false); }
+    [TestMethod] public void testD() { ToolTestUtils.testErrors(D, false); }
+	[TestMethod] public void testE() { ToolTestUtils.testErrors(E, false); }
+	[TestMethod] public void testF() { ToolTestUtils.testErrors(F, false); }
 
 	[TestMethod] public void testStringLiteralRedefs(){
 		String grammar =
@@ -144,7 +140,7 @@ public class TestSymbolIssues {
 			"error(" + ErrorType.MODE_WITHOUT_RULES + "): L.g4:3:5: lexer mode X must contain at least one non-fragment rule\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testEmptyLexerRuleDetection(){
@@ -160,7 +156,7 @@ public class TestSymbolIssues {
 			"warning(" + ErrorType.EPSILON_TOKEN + "): L.g4:5:2: non-fragment lexer rule B can match the empty string\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testTokensModesChannelsDeclarationConflictsWithReserved(){
@@ -181,7 +177,7 @@ public class TestSymbolIssues {
 			"error(" + ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:2:17: cannot use or declare channel with reserved name HIDDEN\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testTokensModesChannelsUsingConflictsWithReserved(){
@@ -199,7 +195,7 @@ public class TestSymbolIssues {
 			"error(" + ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS + "): L.g4:4:15: cannot use or declare mode with reserved name SKIP\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1411
@@ -217,7 +213,7 @@ public class TestSymbolIssues {
 			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME + "): L.g4:4:54: TOKEN1 is not a recognized mode name\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1388
@@ -243,7 +239,7 @@ public class TestSymbolIssues {
 			"warning(" + ErrorType.DUPLICATED_COMMAND + "): Lexer.g4:13:59: duplicated command channel\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1388
@@ -279,7 +275,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.INCOMPATIBLE_COMMANDS + "): L.g4:14:33: incompatible commands channel and more\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1409
@@ -333,7 +329,7 @@ public class TestSymbolIssues {
 				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:24:0: label t72 type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
 		};
 
-		testErrors(test, false);
+			ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1543
@@ -353,7 +349,7 @@ public class TestSymbolIssues {
 				""
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// https://github.com/antlr/antlr4/issues/1543
@@ -375,7 +371,7 @@ public class TestSymbolIssues {
 				"error(" + ErrorType.LABEL_TYPE_CONFLICT + "): L.g4:3:0: label right type mismatch with previous definition: RULE_LABEL!=TOKEN_LABEL\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testCharsCollision(){
@@ -395,7 +391,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars '\\n' used multiple times in set '\\n'..'\\r'\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testCaseInsensitiveCharsCollision() {
@@ -412,7 +408,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET + "): L.g4::: chars 'm' used multiple times in set 'M'..'Q' | 'm'..'q'\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testCaseInsensitiveWithUnicodeRanges() {
@@ -430,7 +426,7 @@ public class TestSymbolIssues {
 		// Don't transform øùúûüýþÿ to uppercase
 		// ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸ
 		// because of different Length of lower and UPPER range
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testUnreachableTokens() {
@@ -465,7 +461,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.TOKEN_UNREACHABLE + "): Test.g4:13:0: One of the token TOKEN11 values unreachable. \\r\\n is always overlapped by token TOKEN10\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testIllegalCaseInsensitiveOptionValue() {
@@ -478,7 +474,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.ILLEGAL_OPTION_VALUE + "): L.g4:3:36: unsupported option value caseInsensitive=badValue\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testRedundantCaseInsensitiveLexerRuleOption() {
@@ -489,7 +485,7 @@ public class TestSymbolIssues {
 
 				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (true)\n"
 		};
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 
 		String[] test2 = {
 				"lexer grammar L;\n" +
@@ -498,7 +494,7 @@ public class TestSymbolIssues {
 
 				"warning(" + ErrorType.REDUNDANT_CASE_INSENSITIVE_LEXER_RULE_OPTION + "): L.g4:3:16: caseInsensitive lexer rule option is redundant because its value equals to global value (false)\n"
 		};
-		testErrors(test2, false);
+		ToolTestUtils.testErrors(test2, false);
 	}
 
 	[TestMethod] public void testCaseInsensitiveOptionInParseRule() {
@@ -509,7 +505,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.ILLEGAL_OPTION + "): G.g4:2:15: unsupported option caseInsensitive\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testNotImpliedCharacters() {
@@ -524,7 +520,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS + "): Test.g4:3:8: Range C..m probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	[TestMethod] public void testNotImpliedCharactersWithCaseInsensitiveOption() {
@@ -536,7 +532,7 @@ public class TestSymbolIssues {
 				"warning(" + ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS + "): Test.g4:3:7: Range A..z probably contains not implied characters [\\]^_`. Both bounds should be defined in lower or UPPER case\n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 
 	// ISSUE: https://github.com/antlr/antlr4/issues/2788
@@ -554,6 +550,6 @@ public class TestSymbolIssues {
 				"error(" + ErrorType.INTERNAL_ERROR + "): Test.g4:2:30: internal error: Rule error undefined \n"
 		};
 
-		testErrors(test, false);
+		ToolTestUtils.testErrors(test, false);
 	}
 }

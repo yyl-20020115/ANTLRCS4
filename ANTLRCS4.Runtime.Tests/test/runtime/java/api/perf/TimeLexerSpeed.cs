@@ -231,7 +231,7 @@ public class TimeLexerSpeed
 
     public void load_legacy_java_ascii_file(String resourceName, int n)
     {
-        streamFootprints sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
+        var sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
         if (sampleJavaFile == null)
         {
             Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
@@ -252,8 +252,8 @@ public class TimeLexerSpeed
         long tus = (stop - start) / 1000;
         int size = input[0].size();
         String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-        GraphLayout olayout = GraphLayout.parseInstance((Object)input[0]);
-        long streamSize = olayout.totalSize();
+        //GraphLayout olayout = GraphLayout.parseInstance((Object)input[0]);
+        long streamSize = 0;// olayout.totalSize();
         streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + olayout.toFootprint());
         if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
                                         currentMethodName,

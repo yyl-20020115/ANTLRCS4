@@ -62,7 +62,7 @@ public class TestToolSyntaxErrors {
 		}
 	}
 
-	[TestMethod] public void testA() { testErrors(A, true); }
+	[TestMethod] public void testA() { ToolTestUtils.testErrors(A, true); }
 
 	[TestMethod] public void testExtraColon() {
 		String[] pair = new String[] {
@@ -71,7 +71,7 @@ public class TestToolSyntaxErrors {
 			"b : B ;",
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:4: syntax error: ':' came as a complete surprise to me while matching alternative\n",
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testMissingRuleSemi() {
@@ -81,7 +81,7 @@ public class TestToolSyntaxErrors {
 			"b : B ;",
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:3:0: syntax error: unterminated rule (missing ';') detected at 'b :' while looking for rule element\n",
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testMissingRuleSemi2() {
@@ -91,7 +91,7 @@ public class TestToolSyntaxErrors {
 			"B : 'b' ;",
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:3:2: syntax error: unterminated rule (missing ';') detected at ': 'b'' while looking for lexer rule element\n",
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testMissingRuleSemi3() {
@@ -101,7 +101,7 @@ public class TestToolSyntaxErrors {
 			"b[int i] returns [int y] : B ;",
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:3:9: syntax error: unterminated rule (missing ';') detected at 'returns int y' while looking for rule element\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testMissingRuleSemi4() {
@@ -113,7 +113,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:4: syntax error: unterminated rule (missing ';') detected at 'b catch' while looking for rule element\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testMissingRuleSemi5() {
@@ -124,7 +124,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:4: syntax error: unterminated rule (missing ';') detected at 'A catch' while looking for rule element\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testBadRulePrequelStart() {
@@ -135,7 +135,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:4: syntax error: 'options {' came as a complete surprise to me while looking for an identifier\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testBadRulePrequelStart2() {
@@ -146,7 +146,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:2: syntax error: '}' came as a complete surprise to me while matching rule preamble\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testModeInParser() {
@@ -159,7 +159,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:4:0: syntax error: 'b' came as a complete surprise to me\n" +
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:4:6: syntax error: mismatched input ';' expecting COLON while matching a lexer rule\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.UNTERMINATED_STRING_LITERAL + "): A.g4:2:4: unterminated string literal\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:0: syntax error: '_' came as a complete surprise to me\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class TestToolSyntaxErrors {
 
 			""
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class TestToolSyntaxErrors {
 
 			""
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class TestToolSyntaxErrors {
 
 			""
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testEmptyTokensBlock() {
@@ -247,7 +247,7 @@ public class TestToolSyntaxErrors {
 
 			""
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.INVALID_LEXER_COMMAND + "): A.g4:4:14: lexer command popmode does not exist or is not supported by the current target\n" +
 			"error(" + ErrorType.INVALID_LEXER_COMMAND + "): A.g4:5:14: lexer command token does not exist or is not supported by the current target\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testLexerCommandArgumentValidation() {
@@ -280,7 +280,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.UNWANTED_LEXER_COMMAND_ARGUMENT + "): A.g4:4:14: lexer command popMode does not take any arguments\n" +
 			"error(" + ErrorType.MISSING_LEXER_COMMAND_ARGUMENT + "): A.g4:5:14: missing argument for lexer command type\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testRuleRedefinition() {
@@ -295,7 +295,7 @@ public class TestToolSyntaxErrors {
 
 			"error(" + ErrorType.RULE_REDEFINITION + "): Oops.g4:4:0: rule ret_ty redefinition; previous at line 3\n"
 		};
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testEpsilonClosureAnalysis() {
@@ -316,7 +316,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/1203
@@ -333,7 +333,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/2860, https://github.com/antlr/antlr4/issues/1105
@@ -351,7 +351,7 @@ public class TestToolSyntaxErrors {
 				expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/3359
@@ -369,7 +369,7 @@ public class TestToolSyntaxErrors {
 				expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/1203
@@ -386,7 +386,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testEpsilonOptionalAnalysis() {
@@ -405,7 +405,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -435,7 +435,7 @@ public class TestToolSyntaxErrors {
 			"";
 
 		String[] pair = new String[] { grammar, expected };
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -467,7 +467,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+			ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -487,7 +487,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -507,7 +507,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -529,7 +529,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -556,13 +556,9 @@ public class TestToolSyntaxErrors {
 				expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
-    private void testErrors(string[] pair, bool v)
-    {
-        throw new NotImplementedException();
-    }
 
     [TestMethod] public void testInvalidCharSetsAndStringLiterals() {
 		String grammar =
@@ -593,7 +589,7 @@ public class TestToolSyntaxErrors {
 				expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testInvalidUnicodeEscapesInCharSet() {
@@ -633,7 +629,7 @@ public class TestToolSyntaxErrors {
 				expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -655,7 +651,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -684,7 +680,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -705,7 +701,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -727,7 +723,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -748,7 +744,7 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testChannelDefinitionInLexer(){
@@ -766,7 +762,7 @@ public class TestToolSyntaxErrors {
 		String expected = "";
 
 		String[] pair = { grammar, expected };
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testChannelDefinitionInParser(){
@@ -784,7 +780,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.CHANNELS_BLOCK_IN_PARSER_GRAMMAR + "): T.g4:3:0: custom channels are not supported in parser grammars\n";
 
 		String[] pair = { grammar, expected };
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testChannelDefinitionInCombined(){
@@ -807,7 +803,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.CHANNELS_BLOCK_IN_COMBINED_GRAMMAR + "): T.g4:3:0: custom channels are not supported in combined grammars\n";
 
 		String[] pair = { grammar, expected };
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	/**
@@ -834,7 +830,7 @@ public class TestToolSyntaxErrors {
 			"error(" + ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_CHANNEL_NAME + "): T.g4:10:34: NEWLINE_CHANNEL is not a recognized channel name\n";
 
 		String[] pair = { grammar, expected };
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	// Test for https://github.com/antlr/antlr4/issues/1556
@@ -850,14 +846,14 @@ public class TestToolSyntaxErrors {
 			expected
 		};
 
-		testErrors(pair, true);
+		ToolTestUtils.testErrors(pair, true);
 	}
 
 	[TestMethod] public void testRuleNamesAsTree() {
 		String grammar =
 				"grammar T;\n" +
 				"tree : 'X';";
-		testErrors(new String[] { grammar, "" }, true);
+		ToolTestUtils.testErrors(new String[] { grammar, "" }, true);
 	}
 
 	[TestMethod] public void testLexerRuleLabel() {
@@ -865,7 +861,7 @@ public class TestToolSyntaxErrors {
 				"grammar T;\n" +
 				"a : A;\n" +
 				"A : h=~('b'|'c') ;";
-		testErrors(new String[] {
+			ToolTestUtils.testErrors(new String[] {
 				grammar,
 				"error(" + ErrorType.SYNTAX_ERROR + "): T.g4:3:5: syntax error: '=' came as a complete surprise to me while looking for lexer rule element\n" }, false);
 	}
