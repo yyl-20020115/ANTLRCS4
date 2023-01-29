@@ -1817,12 +1817,13 @@ public class TestPerformance
             }
 
             // show the rule name and viable configs along with the base info
-            String format = "reportAttemptingFullContext d=%d (%s), input='%s', viable=%s";
             int decision = dfa.decision;
             String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
             String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
             BitSet representedAlts = getConflictingAlts(conflictingAlts, configs);
-            recognizer.notifyErrorListeners(String.format(format, decision, rule, input, representedAlts));
+            String format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
+            //String.Format(format, decision, rule, input, representedAlts)
+            recognizer.notifyErrorListeners(format);
         }
 
         //@Override
@@ -1950,7 +1951,7 @@ public class TestPerformance
     public class InputDescriptor
     {
         private readonly String source;
-        private StrongReference<CloneableANTLRFileStream> inputStream;
+        private Reference<CloneableANTLRFileStream> inputStream;
 
         public InputDescriptor(String source)
         {
@@ -1982,7 +1983,7 @@ public class TestPerformance
                 }
                 else
                 {
-                    inputStream = (stream);
+                    inputStream = new SoftReference<CloneableANTLRFileStream>(stream);
                 }
             }
 
@@ -2005,8 +2006,11 @@ public class TestPerformance
             return stream;
         }
     }
-
-    public class StrongReference<T>
+    public interface Reference<T>
+    {
+        T get();
+    }
+    public class StrongReference<T>:Reference<T> 
     {
         public readonly T referent;
 
@@ -2022,6 +2026,23 @@ public class TestPerformance
             return referent;
         }
     }
+    public class SoftReference<T> : Reference<T>
+    {
+        public readonly T referent;
+
+        public SoftReference(T referent)
+        {
+            ;
+            this.referent = referent;
+        }
+
+        //@Override
+        public T get()
+        {
+            return referent;
+        }
+    }
+
 
     public class MurmurHashChecksum
     {

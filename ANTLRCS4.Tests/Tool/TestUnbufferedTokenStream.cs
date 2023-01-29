@@ -93,7 +93,7 @@ public class TestUnbufferedTokenStream {
 			new StringReader("x = 302;")
 		);
         LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-		TestingUnbufferedTokenStream tokens = new UnbufferedTokenStream(lexEngine);
+		TestingUnbufferedTokenStream tokens = new TestingUnbufferedTokenStream(lexEngine);
 
 		int m = tokens.mark();
 		Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.getBuffer().ToString());

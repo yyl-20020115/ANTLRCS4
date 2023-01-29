@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using System.Diagnostics;
+
 namespace org.antlr.v4.test.runtime;
 
 public class Processor {
@@ -31,31 +33,37 @@ public class Processor {
 	}
 
 	public ProcessorResult start() {
-		ProcessBuilder builder = new ProcessBuilder(arguments);
-		if (workingDirectory != null) {
-			builder.directory(workingDirectory);
-		}
-		if (environmentVariables != null && environmentVariables.Count > 0) {
-			Dictionary<String, String> environment = builder.environment();
-			foreach (String key in environmentVariables.Keys) {
+        ProcessStartInfo processStartInfo
+            = new()
+            {
+                WorkingDirectory = workingDirectory
+            };
+
+        if (environmentVariables != null && environmentVariables.Count > 0) {
+			var environment = processStartInfo.EnvironmentVariables;
+            foreach (String key in environmentVariables.Keys) {
 				environment.Add(key, environmentVariables[(key)]);
 			}
 		}
+        
+        Process process = Process.Start(processStartInfo);
 
-		Process process = builder.start();
-		RunnableStreamReader stdoutReader = new RunnableStreamReader(process.getInputStream());
-        RunnableStreamReader stderrReader = new RunnableStreamReader(process.getErrorStream());
-		stdoutReader.start();
+        RunnableStreamReader stdoutReader = new (process.StandardOutput);
+        RunnableStreamReader stderrReader = new (process.StandardError);
+
+        stdoutReader.start();
 		stderrReader.start();
-		process.waitFor();
+
+		process.WaitForExit();
+
 		stdoutReader.join();
 		stderrReader.join();
 
 		String output = stdoutReader.ToString();
 		String errors = stderrReader.ToString();
-		if (throwOnNonZeroErrorCode && process.exitValue() != 0) {
+		if (throwOnNonZeroErrorCode && process.ExitCode != 0) {
 			throw new Exception(RuntimeTestUtils.joinLines(output, errors));
 		}
-		return new ProcessorResult(process.exitValue(), output, errors);
+		return new ProcessorResult(process.ExitCode, output, errors);
 	}
 }

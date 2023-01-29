@@ -137,8 +137,9 @@ public class ToolTestUtils
 
     public static List<String> realElements(List<String> elements)
     {
+        return elements.ToArray()[Token.MIN_USER_TOKEN_TYPE..elements.Count].ToList();
 
-        return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.Count);
+        //return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.Count);
     }
 
     public static String load(String fileName)

@@ -94,7 +94,7 @@ public abstract class RuntimeRunner {
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
 			String dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond;
-			tempTestDir = Path.Combine(TempDirectory, dirName);
+			tempTestDir = Path.Combine(RuntimeTestUtils.TempDirectory, dirName);
 		}
 		else {
 			tempTestDir = tempDir;
@@ -138,7 +138,7 @@ public abstract class RuntimeRunner {
 	}
 
 	public static String getRuntimePath(String language) {
-		return Path.Combine(_runtimePath, language);
+		return Path.Combine(RuntimeTestUtils.runtimePath, language);
 	}
 
 	public State run(RunOptions runOptions) {

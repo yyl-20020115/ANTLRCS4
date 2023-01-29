@@ -3,10 +3,12 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr.Runtime;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.test.runtime.states;
+using System.IO.Pipes;
 using System.Reflection;
 
 namespace org.antlr.v4.test.runtime.java;
@@ -125,7 +127,7 @@ public class JavaRunner : RuntimeRunner {
 		ParseTree parseTree = null;
 		Exception exception = null;
 		try {
-			Pair<Lexer, Parser> lexerParser = javaCompiledState.initializeLexerAndParser(runOptions.input);
+			var lexerParser = javaCompiledState.initializeLexerAndParser(runOptions.input);
 
 			if (runOptions.parserName != null) {
 				MethodInfo startRule;
@@ -151,22 +153,31 @@ public class JavaRunner : RuntimeRunner {
 		String errors = null;
 		try {
 			 Type mainClass = this.GetType().Assembly.GetType(getTestFileName());
-			 MethodInfo recognizeMethod = mainClass.GetMethod("recognize",new Type[] { typeof(String) });
+			 MethodInfo recognizeMethod = mainClass.GetMethod("recognize",
+					new Type[] { typeof(String),typeof(TextWriter),typeof(TextWriter) });
 
 			//PipedInputStream stdoutIn = new PipedInputStream();
 			//PipedInputStream stderrIn = new PipedInputStream();
 			//PipedOutputStream stdoutOut = new PipedOutputStream(stdoutIn);
 			//PipedOutputStream stderrOut = new PipedOutputStream(stderrIn);
-			RunnableStreamReader stdoutReader = new RunnableStreamReader(stdoutIn);
+
+			//TODO: how about pipes			
+			var stdoutIn = new StringReader("");
+			var stderrIn = new StringReader("");
+
+            var stdoutOut = new StringWriter();
+            var stderrOut = new StringWriter();
+			//TODO: pipe
+            RunnableStreamReader stdoutReader = new RunnableStreamReader(stdoutIn);
             RunnableStreamReader stderrReader = new RunnableStreamReader(stderrIn);
 			stdoutReader.start();
 			stderrReader.start();
 
-			recognizeMethod.Invoke(null, (getTempDirPath(), "input"),
-					new PrintStream(stdoutOut), new PrintStream(stderrOut));
+			recognizeMethod.Invoke(null,new object[]{ Path.Combine(getTempDirPath(), "input"),
+					stdoutOut, stderrOut });
 
-			//stdoutOut.close();
-			//stderrOut.close();
+			stdoutOut.Close();
+			stderrOut.Close();
 			stdoutReader.join();
 			stderrReader.join();
 			output = stdoutReader.ToString();
