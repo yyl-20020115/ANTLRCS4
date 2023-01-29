@@ -7,6 +7,7 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
+using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.tool;
 
@@ -374,7 +375,7 @@ public class TestParseTreeMatcher {
 		String grammarFileName = grammarName+".g4";
 		String parserName = grammarName+"Parser";
 		String lexerName = grammarName+"Lexer";
-		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
+		RunOptions runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, input,
 				false, false, Stage.Execute, true);
 		using(JavaRunner runner = new JavaRunner()) {
@@ -395,7 +396,7 @@ public class TestParseTreeMatcher {
 	private static ParseTreePatternMatcher getPatternMatcher(
 			String grammarFileName, String grammar, String parserName, String lexerName, String startRule
 	){
-		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
+		RunOptions runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, null,
 				false, false, Stage.Compile, false);
 		using (JavaRunner runner = new JavaRunner()) {

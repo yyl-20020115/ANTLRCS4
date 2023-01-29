@@ -8,6 +8,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 using System.Text;
 
@@ -416,7 +417,7 @@ public class TestATNLexerInterpreter {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
 				"LITERAL_WITH_NOT:   ~'f';\n";     // ~('f' | 'F)
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "F");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "F");
 
 		Assert.AreEqual("line 1:0 token recognition error at: 'F'\n", executedState.errors);
 	}
@@ -426,7 +427,7 @@ public class TestATNLexerInterpreter {
 				"lexer grammar L;\n" +
 				"options { caseInsensitive = true; }\n" +
 				"SET_WITH_NOT: ~[a-c];\n";        // ~[a-cA-C]
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "B");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "B");
 
 		Assert.AreEqual("line 1:0 token recognition error at: 'B'\n", executedState.errors);
 	}
@@ -508,7 +509,7 @@ public class TestATNLexerInterpreter {
 				"options { caseInsensitive=true; }\n" +
 				"STRING options { caseInsensitive=false; } : 'N'? '\\'' (~'\\'' | '\\'\\'')* '\\'';\n";
 
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "n'sample'");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "n'sample'");
 		Assert.AreEqual("line 1:0 token recognition error at: 'n'\n", executedState.errors);
 	}
 

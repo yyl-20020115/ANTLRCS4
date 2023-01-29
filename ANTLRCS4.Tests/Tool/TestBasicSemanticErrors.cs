@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -82,11 +83,16 @@ public class TestBasicSemanticErrors {
 			"error(" + ErrorType.LABEL_CONFLICTS_WITH_ARG + "): T.g4:4:4: label expr conflicts with parameter with same name\n" +
 			"error(" + ErrorType.LABEL_CONFLICTS_WITH_RETVAL + "): T.g4:4:4: label expr conflicts with return value with same name\n" +
 			"error(" + ErrorType.LABEL_CONFLICTS_WITH_LOCAL + "): T.g4:4:4: label expr conflicts with local with same name\n";
-		ST grammarST = new ST(grammarTemplate);
-		grammarST.add("args", "int expr");
-		grammarST.add("retvals", "int expr");
-		grammarST.add("locals", "int expr");
-		grammarST.add("body", "expr=expr");
-		testErrors(new String[] { grammarST.render(), expected }, false);
+		Template grammarST = new Template(grammarTemplate);
+		grammarST.Add("args", "int expr");
+		grammarST.Add("retvals", "int expr");
+		grammarST.Add("locals", "int expr");
+		grammarST.Add("body", "expr=expr");
+		testErrors(new String[] { grammarST.Render(), expected }, false);
 	}
+
+    private void testErrors(string[] strings, bool v)
+    {
+        throw new NotImplementedException();
+    }
 }

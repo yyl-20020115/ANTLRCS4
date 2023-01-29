@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Antlr4.StringTemplate;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -59,13 +60,14 @@ public class ErrorQueue : ANTLRToolListener {
 		}
 
 		if (tool == null) {
-			throw new IllegalStateException(String.format("No %s instance is available.", typeof(Tool).Name));
+			throw new IllegalStateException(
+				$"No {nameof(Tool)} instance is available.");
 		}
 
 		StringBuilder buf = new StringBuilder();
 		foreach (ANTLRMessage m in all) {
 			Template st = tool.errMgr.getMessageTemplate(m);
-			buf.Append(st.render());
+			buf.Append(st.Render());
 			buf.Append("\n");
 		}
 

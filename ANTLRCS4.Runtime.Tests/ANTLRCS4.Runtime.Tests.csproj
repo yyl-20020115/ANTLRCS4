@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="test\runtime\java\api\TestVisitors.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="test\runtime\java\api\Java.g4" />
     <None Remove="test\runtime\java\api\VisitorBasic.g4" />
     <None Remove="test\runtime\java\api\VisitorCalc.g4" />

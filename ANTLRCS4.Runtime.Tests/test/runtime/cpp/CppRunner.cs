@@ -48,7 +48,7 @@ public class CppRunner : RuntimeRunner {
 		runtimeSourcePath = Path.Combine(runtimePath, "runtime", "src").ToString();
 
 		environment = new ();
-		if (IsWindows()) {
+		if (RuntimeTestUtils.IsWindows()) {
 			runtimeBinaryPath = Path.Combine(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
 			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
 			String path = Environment.GetEnvironmentVariable("PATH");
@@ -57,11 +57,11 @@ public class CppRunner : RuntimeRunner {
 		else {
 			runtimeBinaryPath = Path.Combine(runtimePath, "dist").ToString();
 			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath,
-					"libantlr4-runtime." + (getOS() == OSType.Mac ? "dylib" : "so")).ToString();
+					"libantlr4-runtime." + (RuntimeTestUtils.getOS() == OSType.Mac ? "dylib" : "so")).ToString();
 			environment.Add("LD_PRELOAD", runtimeLibraryFileName);
 		}
 
-		if (isWindows()) {
+		if (RuntimeTestUtils.IsWindows()) {
 			visualStudioProjectContent = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Test.vcxproj.stg");
 		} else {
 			visualStudioProjectContent = null;
@@ -71,7 +71,7 @@ public class CppRunner : RuntimeRunner {
 	////@Override
 	protected String getCompilerName() {
 		if (compilerName == null) {
-			if (isWindows()) {
+			if (RuntimeTestUtils.IsWindows()) {
 				compilerName = "MSBuild";
 			}
 			else {
@@ -86,7 +86,7 @@ public class CppRunner : RuntimeRunner {
 	protected void initRuntime()  {
 		String runtimePath = getRuntimePath();
 
-		if (isWindows()) {
+		if (RuntimeTestUtils.IsWindows()) {
 			String[] command = {
 				getCompilerPath(), "antlr4cpp-vs2022.vcxproj", "/p:configuration=Release DLL", "/p:platform=x64"
 			};
@@ -97,28 +97,28 @@ public class CppRunner : RuntimeRunner {
 			String[] command = {"cmake", ".", "-DCMAKE_BUILD_TYPE=Release"};
 			runCommand(command, runtimePath, "run cmake on antlr c++ runtime");
 
-			command = new String[] {"make", "-j", Integer.toString(Runtime.getRuntime().availableProcessors())};
+			command = new String[] {"make", "-j", (Environment.ProcessorCount.ToString())};
 			runCommand(command, runtimePath, "run make on antlr c++ runtime");
 		}
 	}
 
 	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		if (isWindows()) {
+		if (RuntimeTestUtils.IsWindows()) {
 			writeVisualStudioProjectFile(runOptions.grammarName, runOptions.lexerName, runOptions.parserName,
 					runOptions.useListener, runOptions.useVisitor);
 		}
 
 		Exception exception = null;
 		try {
-			if (!isWindows()) {
+			if (!RuntimeTestUtils.IsWindows()) {
 				String[] linkCommand = new String[]{"ln", "-s", runtimeLibraryFileName};
 				runCommand(linkCommand, getTempDirPath(), "sym link C++ runtime");
 			}
 
 			List<String> buildCommand = new ();
 			buildCommand.Add(getCompilerPath());
-			if (isWindows()) {
+			if (RuntimeTestUtils.IsWindows()) {
 				buildCommand.Add(getTestFileName() + ".vcxproj");
 				buildCommand.Add("/p:configuration=Release");
 				buildCommand.Add("/p:platform=x64");
@@ -133,7 +133,8 @@ public class CppRunner : RuntimeRunner {
 				buildCommand.Add("-o");
 				buildCommand.Add(getTestFileName() + ".out");
 				buildCommand.Add(getTestFileWithExt());
-				buildCommand.AddRange(generatedState.generatedFiles.stream().map(file => file.name).collect(Collectors.toList()));
+				buildCommand.AddRange(
+					generatedState.generatedFiles.Select(f=>f.name));
 			}
 
 			runCommand(buildCommand.ToArray(), getTempDirPath(), "build test c++ binary");
@@ -154,7 +155,7 @@ public class CppRunner : RuntimeRunner {
 		projectFileST.Add("parserName", parserName);
 		projectFileST.Add("useListener", useListener);
 		projectFileST.Add("useVisitor", useVisitor);
-		writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.Render());
+		FileUtils.writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.Render());
 	}
 
 	////@Override
@@ -164,7 +165,7 @@ public class CppRunner : RuntimeRunner {
 
 	////@Override
 	public String getExecFileName() {
-		return Path.Combine(getTempDirPath(), getTestFileName() + "." + (isWindows() ? "exe" : "out")).ToString();
+		return Path.Combine(getTempDirPath(), getTestFileName() + "." + (RuntimeTestUtils.IsWindows() ? "exe" : "out")).ToString();
 	}
 
 	////@Override

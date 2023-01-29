@@ -8,13 +8,13 @@ using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
-public class StreamReader : Runnable {
+public class RunnableStreamReader : Runnable {
 	private readonly StringBuilder buffer = new StringBuilder();
-	private readonly BufferedReader @in;
+	private readonly TextReader reader;
 	private readonly Thread worker;
 
-	public StreamReader(InputStream @in) {
-		this.in = new BufferedReader(new InputStreamReader(@in, StandardCharsets.UTF_8) );
+	public RunnableStreamReader(TextReader reader) {
+		this.reader = reader;
 		worker = new Thread(this);
 	}
 
@@ -26,7 +26,7 @@ public class StreamReader : Runnable {
 	public void run() {
 		try {
 			while (true) {
-				int c = @in.read();
+				int c = in.read();
 				if (c == -1) {
 					break;
 				}
@@ -37,7 +37,7 @@ public class StreamReader : Runnable {
 			}
 		}
 		catch (IOException ioe) {
-			System.err.println("can't read output from process");
+			Console.Error.WriteLine("can't read output from process");
 		}
 	}
 
@@ -47,7 +47,7 @@ public class StreamReader : Runnable {
 	}
 
 	////@Override
-	public String ToString() {
+	public override String ToString() {
 		return buffer.ToString();
 	}
 }

@@ -24,9 +24,9 @@ public class TestASTStructure {
 	
 	{
 		ANTLRStringStream @is = new ANTLRStringStream(input);
-		Type lexerClass = Type.forName(lexerClassName).asSubclass(TokenSource);
-		ConstructorInfo lexConstructor = lexerClass.getConstructor(CharStream);
-		TokenSource lexer = lexConstructor.newInstance(@is);
+		Type lexerClass = Type.GetType(lexerClassName);
+		ConstructorInfo lexConstructor = lexerClass.GetConstructor(CharStream);
+		TokenSource lexer = lexConstructor.Invoke(@is);
         @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -38,7 +38,7 @@ public class TestASTStructure {
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
 			MethodInfo m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
-			Type adaptorClass = Type.forName(adaptorClassName).asSubclass(TreeAdaptor);
+			Type adaptorClass = Type.GetType(adaptorClassName).asSubclass(TreeAdaptor);
 			m.Invoke(parser, adaptorClass.newInstance());
 		}
 

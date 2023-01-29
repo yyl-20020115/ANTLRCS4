@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.test.runtime.states;
+
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
@@ -15,7 +17,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34 34");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34 34");
 		String expecting =
 			"I\n" +
 			"I\n" +
@@ -30,7 +32,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : [0-9] {outStream.println(\"2nd char: \"+(char)_input.LA(1));} [0-9]+ ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "123 45");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "123 45");
 		String expecting =
 			"2nd char: 2\n" +
 			"2nd char: 5\n" +
@@ -75,7 +77,7 @@ public class TestLexerActions {
 			"NAME: ('a'..'z' | 'A'..'Z')+ ('\\n')?;\n" +
 			"\n" +
 			"fragment WS: [ \\r\\t\\n]+ ;\n";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "hello Steve\n");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "hello Steve\n");
 		String expecting =
 			"Start:6\n" +
 			"Stop:11\n" +
@@ -91,7 +93,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : [0-9] {outStream.println(\"x\");} [0-9]+ {outStream.println(\"y\");} ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "123 45");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "123 45");
 		String expecting =
 			"x\n" +
 			"y\n" +
@@ -112,7 +114,7 @@ public class TestLexerActions {
 			"    {outStream.println(\" last\");}\n" +
 			"    ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "123 ab");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "123 ab");
 		String expecting =
 			"int last\n" +
 			"id last\n" +
@@ -127,7 +129,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} -> skip ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34 34");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34 34");
 		String expecting =
 			"I\n" +
 			"I\n" +
@@ -142,7 +144,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
 			"WS : (' '|'\\n') -> skip ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34 34");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34 34");
 		String expecting =
 			"I\n" +
 			"I\n" +
@@ -157,7 +159,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
 			"WS : '#' -> more ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34#10");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34#10");
 		String expecting =
 			"I\n" +
 			"I\n" +
@@ -172,7 +174,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n"+
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
 			"HASH : '#' -> type(HASH) ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34#");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34#");
 		String expecting =
 			"I\n" +
 			"[@0,0:1='34',<1>,1:0]\n" +
@@ -186,7 +188,7 @@ public class TestLexerActions {
 			"lexer grammar L;\n" +
 			"I : '0'..'9'+ {outStream.println(\"I\");} ;\n"+
 			"HASH : '#' -> type(100), skip, more  ;";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "34#11");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "34#11");
 		String expecting =
 			"I\n" +
 			"I\n" +
@@ -204,7 +206,7 @@ public class TestLexerActions {
 			"mode STRING_MODE;\n"+
 			"STRING : '\"' -> popMode;\n"+
 			"ANY : . -> more;\n";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
 		String expecting =
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
@@ -220,7 +222,7 @@ public class TestLexerActions {
 			"mode STRING_MODE;\n"+
 			"STRING : '\"' -> popMode ;\n"+  // token type 2
 			"ANY : . -> more ;\n";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
 		String expecting =
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
@@ -236,7 +238,7 @@ public class TestLexerActions {
 			"mode STRING_MODE;\n"+
 			"STRING : '\"' -> mode(DEFAULT_MODE) ;\n"+ // ttype 2 since '"' ambiguity
 			"ANY : . -> more ;\n";
-		ExecutedState executedState = execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
+		ExecutedState executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "\"abc\" \"ab\"");
 		String expecting =
 			"[@0,0:4='\"abc\"',<2>,1:0]\n" +
 			"[@1,6:9='\"ab\"',<2>,1:6]\n" +
@@ -271,7 +273,7 @@ public class TestLexerActions {
 			"Item: name of item\n" +
 			"Another line.\n" +
 			"More line.\n";
-		ExecutedState executedState = execLexer("TestLexer.g4", grammar, "TestLexer", input);
+		ExecutedState executedState = ToolTestUtils.execLexer("TestLexer.g4", grammar, "TestLexer", input);
 		String expecting =
 			"[@0,0:12='A line here.\\n',<1>,1:0]\n" +
 			"[@1,13:17='Item:',<2>,2:0]\n" +

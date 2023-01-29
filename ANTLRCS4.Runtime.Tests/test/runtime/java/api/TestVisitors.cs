@@ -13,7 +13,7 @@ namespace org.antlr.v4.test.runtime.java.api;
 [TestClass]
 public class TestVisitors {
 
-	public class VBV: VisitorBasicBaseVisitor<String>()
+	public class VBV: VisitorBasicBaseVisitor<String>
     {
         //@Override
         public String visitTerminal(TerminalNode node)
@@ -94,14 +94,14 @@ public class TestVisitors {
 
 		 List<String> errors = new ();
 		parser.removeErrorListeners();
-		parser.addErrorListener(new );
+		parser.addErrorListener(new BEL());
 
 		VisitorBasicParser.SContext context = parser.s();
 		Assert.AreEqual("(s <missing 'A'> <EOF>)", context.toStringTree(parser));
 		Assert.AreEqual(1, errors.Count);
 		Assert.AreEqual("line 1:0 missing 'A' at '<EOF>'", errors.get(0));
 
-		VisitorBasicVisitor<String> listener = new;
+		VisitorBasicVisitor<String> listener = new VisitorBasicVisitor<string>();
 
 		String result = listener.visit(context);
 		String expected = "Error encountered: [@-1,-1:-1='<missing 'A'>',<1>,1:0]";

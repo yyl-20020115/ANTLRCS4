@@ -20,23 +20,24 @@ public class DartRunner : RuntimeRunner {
 	////@Override
 	protected void initRuntime()  {
 		String cachePath = getCachePath();
-		mkdir(cachePath);
+        FileUtils.mkdir(cachePath);
 
 		Template projectTemplate = new Template(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/pubspec.yaml.stg"));
 		projectTemplate.Add("runtimePath", getRuntimePath());
 
-		writeFile(cachePath, "pubspec.yaml", projectTemplate.Render());
+		FileUtils.writeFile(cachePath, "pubspec.yaml", projectTemplate.Render());
 
 		runCommand(new String[]{getRuntimeToolPath(), "pub", "get"}, cachePath);
 
-		cacheDartPackageConfig = readFile(cachePath + FileSeparator + ".dart_tool", "package_config.json");
+		cacheDartPackageConfig = FileUtils.readFile(
+			Path.Combine(cachePath , ".dart_tool"), "package_config.json");
 	}
 
 	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		String dartToolDirPath = new File(getTempDirPath(), ".dart_tool").getAbsolutePath();
-		mkdir(dartToolDirPath);
-		writeFile(dartToolDirPath, "package_config.json", cacheDartPackageConfig);
+		String dartToolDirPath = Path.Combine(getTempDirPath(), ".dart_tool");
+		FileUtils.mkdir(dartToolDirPath);
+		FileUtils.writeFile(dartToolDirPath, "package_config.json", cacheDartPackageConfig);
 
 		return new CompiledState(generatedState, null);
 	}

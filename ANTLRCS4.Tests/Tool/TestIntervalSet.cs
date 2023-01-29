@@ -364,7 +364,7 @@ public class TestIntervalSet {
 		s.add(50,55);
 		s.add(5,5);
 		String expecting = "[5, 20, 21, 22, 23, 24, 25, 50, 51, 52, 53, 54, 55]";
-		String result = String.valueOf(s.toList());
+		String result ="[" +string.Join(", ",(s.toList()))+"]";
 		Assert.AreEqual(expecting, result);
 	}
 

@@ -4,9 +4,3 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.test.tool
-{
-    internal class State
-    {
-    }
-}

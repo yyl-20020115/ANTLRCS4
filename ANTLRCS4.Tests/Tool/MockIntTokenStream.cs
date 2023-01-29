@@ -42,7 +42,7 @@ public class MockIntTokenStream : TokenStream {
 
 	////@Override
 	public String getSourceName() {
-		return UNKNOWN_SOURCE_NAME;
+		return IntStream.UNKNOWN_SOURCE_NAME;
 	}
 
 	////@Override

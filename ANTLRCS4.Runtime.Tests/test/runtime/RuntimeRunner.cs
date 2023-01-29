@@ -93,7 +93,7 @@ public abstract class RuntimeRunner {
 
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
-			String dirName = GetType().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
+			String dirName = GetType().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + DateTime.Now.Millisecond);
 			tempTestDir = Paths.get(TempDirectory, dirName);
 		}
 		else {
@@ -172,7 +172,7 @@ public abstract class RuntimeRunner {
 			return compiledState;
 		}
 
-		writeFile(getTempDirPath(), "input", runOptions.input);
+		FileUtils.writeFile(getTempDirPath(), "input", runOptions.input);
 
 		return execute(runOptions, compiledState);
 	}
@@ -218,7 +218,7 @@ public abstract class RuntimeRunner {
 		outputFileST.Add("useListener", runOptions.useListener);
 		outputFileST.Add("useVisitor", runOptions.useVisitor);
 		addExtraRecognizerParameters(outputFileST);
-		writeFile(getTempDirPath(), getTestFileWithExt(), outputFileST.Render());
+		FileUtils.writeFile(getTempDirPath(), getTestFileWithExt(), outputFileST.Render());
 	}
 
 	protected String grammarParseRuleToRecognizerName(String startRuleName) {
@@ -307,10 +307,10 @@ public abstract class RuntimeRunner {
 
 	private void removeTempTestDirIfRequired() {
 		if (!saveTestDir) {
-			string dirFile = tempTestDir.toFile();
-			if (dirFile.exists()) {
+			string dirFile = tempTestDir;
+			if (File.Exists(dirFile)) {
 				try {
-					deleteDirectory(dirFile);
+					FileUtils.deleteDirectory(dirFile);
 				} catch (IOException e) {
 					//e.printStackTrace();
 				}

@@ -15,7 +15,7 @@ public class GoRunner : RuntimeRunner
     }
 
     ////@Override
-    public override String getLexerSuffix()
+    protected override String getLexerSuffix()
     {
         return "_lexer";
     }
@@ -78,17 +78,18 @@ public class GoRunner : RuntimeRunner
     protected void initRuntime()
     {
         String cachePath = getCachePath();
-        mkdir(cachePath);
-        string runtimeFilesPath = Paths.get(getRuntimePath("Go"), "antlr");
+        FileUtils.mkdir(cachePath);
+        string runtimeFilesPath = Path.Combine(getRuntimePath("Go"), "antlr");
         String runtimeToolPath = getRuntimeToolPath();
-        string goModFile = new File(cachePath, "go.mod");
-        if (goModFile.exists())
-            if (!goModFile.delete())
+        string goModFile = Path.Combine(cachePath, "go.mod");
+        if (File.Exists(goModFile))
+            File.Delete(goModFile);
+            if (File.Exists(goModFile))
                 throw new IOException("Can't delete " + goModFile);
         Processor.run(new String[] { runtimeToolPath, "mod", "init", "test" }, cachePath, environment);
         Processor.run(new String[] {runtimeToolPath, "mod", "edit",
                 "-replace=" + GoRuntimeImportPath + "=" + runtimeFilesPath}, cachePath, environment);
-        cachedGoMod = readFile(cachePath + FileSeparator, "go.mod");
+        cachedGoMod = FileUtils.readFile(cachePath, "go.mod");
     }
 
     ////@Override
@@ -107,8 +108,8 @@ public class GoRunner : RuntimeRunner
     {
         List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
         String tempDirPath = getTempDirPath();
-        string generatedParserDir = (tempDirPath, "parser");
-        if (!generatedParserDir.mkdir())
+        string generatedParserDir = Path.Combine(tempDirPath, "parser");
+        if (!Directory.CreateDirectory(generatedParserDir).Exists)
         {
             return new CompiledState(generatedState, new Exception("can't make dir " + generatedParserDir));
         }
@@ -122,8 +123,9 @@ public class GoRunner : RuntimeRunner
         {
             try
             {
-                Path originalFile = Paths.get(tempDirPath, generatedFile.name);
-                Files.move(originalFile, Paths.get(tempDirPath, "parser", generatedFile.name));
+                string originalFile = Path.Combine(tempDirPath, generatedFile.name);
+                File.Move(originalFile, 
+                    Path.Combine(tempDirPath, "parser", generatedFile.name));
             }
             catch (IOException e)
             {
@@ -131,7 +133,7 @@ public class GoRunner : RuntimeRunner
             }
         }
 
-        writeFile(tempDirPath, "go.mod", cachedGoMod);
+        FileUtils.writeFile(tempDirPath, "go.mod", cachedGoMod);
         Exception ex = null;
         try
         {

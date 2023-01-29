@@ -35,15 +35,15 @@ public class TestInterpreterDataReader {
 				"SUB : '-';\n" +
 				"WS : [ \\t]+ -> channel(HIDDEN);");
 		String interpString = Tool.generateInterpreterData(g);
-		Path interpFile = Files.createTempFile(null, null);
-		Files.write(interpFile, interpString.getBytes(StandardCharsets.UTF_8));
+		string interpFile = Files.createTempFile(null, null);
+		Files.write(interpFile, interpString.getBytes(Encoding.UTF8));
 
         InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
-        FieldInfo atnField = interpreterData.GetType().getDeclaredField("atn");
-        FieldInfo vocabularyField = interpreterData.GetType().getDeclaredField("vocabulary");
-        FieldInfo ruleNamesField = interpreterData.GetType().getDeclaredField("ruleNames");
-        FieldInfo channelsField = interpreterData.GetType().getDeclaredField("channels");
-        FieldInfo modesField = interpreterData.GetType().getDeclaredField("modes");
+        FieldInfo atnField = interpreterData.GetType().GetField("atn");
+        FieldInfo vocabularyField = interpreterData.GetType().GetField("vocabulary");
+        FieldInfo ruleNamesField = interpreterData.GetType().GetField("ruleNames");
+        FieldInfo channelsField = interpreterData.GetType().GetField("channels");
+        FieldInfo modesField = interpreterData.GetType().GetField("modes");
 
         atnField.setAccessible(true);
         vocabularyField.setAccessible(true);

@@ -54,7 +54,7 @@ public class TestUtils
     {
         Assert.AreEqual("fOO", Utils.decapitalize("FOO"));
     }
-    public class UFA : Utils.Func1
+    public class UFA<T,TResult> : Utils.Func1<T,TResult>
     {
         //@Override
         public Object exec(Object arg1)

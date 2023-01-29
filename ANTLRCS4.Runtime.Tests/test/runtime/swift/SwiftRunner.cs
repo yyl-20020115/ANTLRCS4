@@ -11,7 +11,7 @@ namespace org.antlr.v4.test.runtime.swift;
 
 public class SwiftRunner : RuntimeRunner {
 	////@Override
-	public String getLanguage() {
+	public override String getLanguage() {
 		return "Swift";
 	}
 
@@ -29,13 +29,13 @@ public class SwiftRunner : RuntimeRunner {
 
 	static SwiftRunner(){
 		swiftRuntimePath = getRuntimePath("Swift");
-		buildSuffix = isWindows() ? "x86_64-unknown-windows-msvc" : "";
-		includePath = Paths.get(swiftRuntimePath, ".build", buildSuffix, "release").ToString();
-		environment = new HashMap<>();
-		if (isWindows()) {
-			libraryPath = Paths.get(includePath, "Antlr4.lib").ToString();
-			String path = System.getenv("PATH");
-			environment.put("PATH", path == null ? includePath : path + ";" + includePath);
+		buildSuffix = RuntimeTestUtils.IsWindows() ? "x86_64-unknown-windows-msvc" : "";
+		includePath = Path.Combine(swiftRuntimePath, ".build", buildSuffix, "release").ToString();
+		environment = new ();
+		if (RuntimeTestUtils.IsWindows()) {
+			libraryPath = Path.Combine(includePath, "Antlr4.lib");
+			String path = Environment.GetEnvironmentVariable("PATH");
+			environment.Add("PATH", path == null ? includePath : path + ";" + includePath);
 		}
 		else {
 			libraryPath = includePath;
@@ -59,14 +59,16 @@ public class SwiftRunner : RuntimeRunner {
 			String tempDirPath = getTempDirPath();
 			string tempDirFile = (tempDirPath);
 
-			string[] ignoredFiles = tempDirFile.listFiles(NoSwiftFileFilter.Instance);
+			string[] ignoredFiles =
+				new DirectoryInfo(tempDirFile).GetFiles("*.*").Where(f => f.Name.EndsWith(".swift")).Select(f => f.FullName).ToArray()
+				;// ;.listFiles(NoSwiftFileFilter.Instance);
 			//assert ignoredFiles != null;
-			List<String> excludedFiles = Arrays.stream(ignoredFiles).map(File::getName).collect(Collectors.toList());
+			List<String> excludedFiles = ignoredFiles.ToList();// Arrays.stream().map(File::getName).collect(Collectors.toList());
 
 			String text = getTextFromResource("org/antlr/v4/test/runtime/helpers/Package.swift.stg");
 			Template outputFileST = new Template(text);
 			outputFileST.Add("excludedFiles", excludedFiles);
-			writeFile(tempDirPath, "Package.swift", outputFileST.Render());
+			FileUtils.writeFile(tempDirPath, "Package.swift", outputFileST.Render());
 
 			String[] buildProjectArgs = new String[]{
 					getCompilerPath(),
@@ -96,7 +98,7 @@ public class SwiftRunner : RuntimeRunner {
 		public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
 
 		public bool accept(string dir, String name) {
-			return !name.endsWith(".swift");
+			return !name.EndsWith(".swift");
 		}
 	}
 
@@ -118,4 +120,8 @@ public class SwiftRunner : RuntimeRunner {
 	public Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
+}
+
+internal class FilenameFilter
+{
 }

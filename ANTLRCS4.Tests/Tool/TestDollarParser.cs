@@ -4,6 +4,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.test.runtime.states;
+
 namespace org.antlr.v4.test.tool;
 
 public class TestDollarParser {
@@ -13,7 +15,7 @@ public class TestDollarParser {
                       "a : ID  { outStream.println(new java.io.File($parser.getSourceName()).getAbsolutePath()); }\n" +
                       "  ;\n" +
                       "ID : 'a'..'z'+ ;\n";
-		ExecutedState executedState = execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
+		ExecutedState executedState = ToolTestUtils.execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
 		Assert.IsTrue(executedState.output.contains("input"));
 		Assert.AreEqual("", executedState.errors);
 	}

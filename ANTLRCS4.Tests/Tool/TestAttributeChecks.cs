@@ -5,8 +5,10 @@
  */
 
 using Antlr4.StringTemplate;
+using Antlr4.StringTemplate.Misc;
 using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool;
+using ErrorType = org.antlr.v4.tool.ErrorType;
 
 namespace org.antlr.v4.test.tool;
 
@@ -241,11 +243,16 @@ public class TestAttributeChecks {
 			String action = pairs[i];
 			String expected = pairs[i + 1];
             TemplateGroup g = new TemplateGroup('<', '>');
-			g.setListener(new ErrorBuffer()); // hush warnings
+			g.Listener=(new ErrorBuffer()); // hush warnings
 			Template st = new Template(g, template);
-			st.add(location, action);
+			st.Add(location, action);
 			String grammar = st.Render();
 			testErrors(new String[]{grammar, expected}, false);
 		}
 	}
+
+    private static void testErrors(string[] strings, bool v)
+    {
+        throw new NotImplementedException();
+    }
 }

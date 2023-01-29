@@ -9,7 +9,7 @@ namespace org.antlr.v4.test.runtime.states;
 
 public class GeneratedState : State {
 	////@Override
-	public Stage getStage() {
+	public override Stage getStage() {
 		return Stage.Generate;
 	}
 
@@ -18,21 +18,22 @@ public class GeneratedState : State {
 
 	////@Override
 	public bool containsErrors() {
-		return errorQueue.errors.size() > 0 || base.containsErrors();
+		return errorQueue.errors.Count > 0 || base.containsErrors();
 	}
 
 	public String getErrorMessage() {
 		String result = base.getErrorMessage();
 
-		if (errorQueue.errors.size() > 0) {
-			result = joinLines(result, errorQueue.toString(true));
+		if (errorQueue.errors.Count > 0) {
+			result = RuntimeTestUtils.joinLines(result, errorQueue.toString(true));
 		}
 
 		return result;
 	}
 
-	public GeneratedState(ErrorQueue errorQueue, List<GeneratedFile>  generatedFiles, Exception exception) {
-		base(null, exception);
+	public GeneratedState(ErrorQueue errorQueue, List<GeneratedFile>  generatedFiles, Exception exception) 
+	: base(null, exception)
+    {
 		this.errorQueue = errorQueue;
 		this.generatedFiles = generatedFiles;
 	}

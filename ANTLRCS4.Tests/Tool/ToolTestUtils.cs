@@ -9,6 +9,9 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
+using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.java;
+using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -48,7 +51,8 @@ public class ToolTestUtils {
 		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, lexerName,
 				false, true, startRuleName, input,
 				false, showDiagnosticErrors, Stage.Execute, false);
-		using (JavaRunner runner = new JavaRunner(workingDir, saveTestDir)) {
+		JavaRunner runner = new JavaRunner(workingDir, saveTestDir);
+		{
 			State result = runner.run(runOptions);
 			if (!(result is ExecutedState)) {
 				Assert.Fail(result.getErrorMessage());
@@ -77,7 +81,7 @@ public class ToolTestUtils {
 			String fileName = getFilenameFromFirstLineOfGrammar(lines[0]);
 
 			String tempDirName = "AntlrTestErrors-" + Thread.currentThread().getName() + "-" + System.currentTimeMillis();
-			String tempTestDir = Paths.get(TempDirectory, tempDirName).ToString();
+			String tempTestDir = Path.Combine(TempDirectory, tempDirName);
 
 			try {
 				ErrorQueue equeue = antlrOnString(tempTestDir, null, fileName, grammarStr, false);
@@ -93,7 +97,7 @@ public class ToolTestUtils {
 			}
 			finally {
 				try {
-					deleteDirectory(new File(tempTestDir));
+					FileUtils.deleteDirectory(tempTestDir);
 				} catch (IOException ignored) {
 				}
 			}
@@ -113,6 +117,7 @@ public class ToolTestUtils {
 	}
 
 	public static List<String> realElements(List<String> elements) {
+
 		return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.Count);
 	}
 

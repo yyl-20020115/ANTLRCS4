@@ -6,6 +6,7 @@
 
 using Antlr4.StringTemplate;
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
 
@@ -24,32 +25,32 @@ public abstract class RuntimeTests {
 	private static readonly StringRenderer rendered = new StringRenderer();
 
 	static RuntimeTests(){
-		string descriptorsDir = (Paths.get(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
+		string descriptorsDir = (Path.Combine(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
         string[] directoryListing = descriptorsDir.listFiles();
 		//assert directoryListing != null;
-		for (string directory in directoryListing) {
-			String groupName = directory.getName();
-			if (groupName.startsWith(".")) {
+		foreach (string directory in directoryListing) {
+			String groupName = directory;
+			if (groupName.StartsWith(".")) {
 				continue; // Ignore service directories (like .DS_Store in Mac)
 			}
 
-			List<RuntimeTestDescriptor> descriptors = new ArrayList<>();
+			List<RuntimeTestDescriptor> descriptors = new ();
 
             string[] descriptorFiles = directory.listFiles();
 			//assert descriptorFiles != null;
-			for (string descriptorFile : descriptorFiles) {
-				String name = descriptorFile.getName().replace(".txt", "");
-				if (name.startsWith(".")) {
+			foreach (string descriptorFile in descriptorFiles) {
+				String name = descriptorFile.Replace(".txt", "");
+				if (name.StartsWith(".")) {
 					continue;
 				}
 
 				String text;
 				try {
-					text = new String(Files.readAllBytes(descriptorFile.toPath()));
+					text = File.ReadAllText(descriptorFile);
 				} catch (IOException e) {
-					throw new RuntimeException(e);
+					throw new RuntimeException(e.Message, e);
 				}
-				descriptors.add(RuntimeTestDescriptorParser.parse(name, text, descriptorFile.toURI()));
+				descriptors.Add(RuntimeTestDescriptorParser.parse(name, text, descriptorFile));
 			}
 
 			testDescriptors.put(groupName, descriptors.ToArray());
@@ -68,7 +69,7 @@ public abstract class RuntimeTests {
 	//@TestFactory
 	//@Execution(ExecutionMode.CONCURRENT)
 	public List<DynamicNode> runtimeTests() {
-		List<DynamicNode> result = new ArrayList<>();
+		List<DynamicNode> result = new ();
 
 		foreach (String group in testDescriptors.Keys) {
 			List<DynamicNode> descriptorTests = new ();
@@ -171,18 +172,18 @@ public abstract class RuntimeTests {
 		// write out any slave grammars
 		List<Pair<String, String>> slaveGrammars = descriptor.slaveGrammars;
 		if (slaveGrammars != null) {
-			for (Pair<String, String> spair : slaveGrammars) {
+			foreach (Pair<String, String> spair in slaveGrammars) {
 				TemplateGroup g = new TemplateGroup('<', '>');
-				g.registerRenderer(String, rendered);
-				g.importTemplates(targetTemplates);
-				Template grammarST = new Template(g, spair.b);
-				writeFile(runner.getTempDirPath(), spair.a + ".g4", grammarST.Render());
+				g.RegisterRenderer(typeof(String), rendered);
+				g.ImportTemplates(targetTemplates);
+				Template _grammarST = new Template(g, spair.b);
+				FileUtils.writeFile(runner.getTempDirPath(), spair.a + ".g4", _grammarST.Render());
 			}
 		}
 
         TemplateGroup g = new TemplateGroup('<', '>');
-		g.importTemplates(targetTemplates);
-		g.registerRenderer(String, rendered);
+		g.ImportTemplates(targetTemplates);
+		g.RegisterRenderer(String, rendered);
 		Template grammarST = new Template(g, descriptor.grammar);
 		return grammarST.Render();
 	}

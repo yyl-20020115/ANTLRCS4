@@ -25,16 +25,17 @@ public class JavaRunner : RuntimeRunner {
 	private static JavaCompiler compiler;
 
 	static JavaRunner(){
-		testLexerContent = getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestLexerName + ".java");
-		testParserContent = getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestParserName + ".java");
+		testLexerContent = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestLexerName + ".java");
+		testParserContent = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestParserName + ".java");
 	}
 
-	public JavaRunner(string tempDir, bool saveTestDir) {
-		base(tempDir, saveTestDir);
+	public JavaRunner(string tempDir, bool saveTestDir): base(tempDir, saveTestDir)
+    {
+		;
 	}
 
-	public JavaRunner() {
-		base();
+	public JavaRunner(): base()
+    {
 	}
 
 	//@Override
@@ -70,9 +71,8 @@ public class JavaRunner : RuntimeRunner {
 			FileUtils.writeFile(tempTestDir,  runtimeTestParserName + ".java", testParserContent);
 		}
 
-		ClassLoader loader = null;
-		Class<? : Lexer> lexer = null;
-		Class<? : Parser> parser = null;
+		Type lexer = null;
+        Type parser = null;
 		Exception exception = null;
 
 		try {
@@ -80,11 +80,11 @@ public class JavaRunner : RuntimeRunner {
 
 			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
-			List<string> files = new ArrayList<>();
-            string f = (tempTestDir, getTestFileWithExt());
-			files.add(f);
+			List<string> files = new ();
+            string f = Path.Combine(tempTestDir, getTestFileWithExt());
+			files.Add(f);
 
-			Iterable<? : JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
+			Iterable<JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
 
 			Iterable<String> compileOptions =
 					Arrays.AsList("-g", "-source", "1.8", "-target", "1.8", "-implicit:class", "-Xlint:-options", "-d",
@@ -95,7 +95,7 @@ public class JavaRunner : RuntimeRunner {
 							compilationUnits);
 			task.call();
 
-			loader = new URLClassLoader(new URL[]{new File(tempTestDir).toURI().toURL()}, systemClassLoader);
+			//loader = new URLClassLoader(new URL[]{new File(tempTestDir).toURI().toURL()}, systemClassLoader);
 			if (runOptions.lexerName != null) {
 				lexer = loader.loadClass(runOptions.lexerName).asSubclass(Lexer);
 			}
@@ -136,7 +136,7 @@ public class JavaRunner : RuntimeRunner {
 				} catch (NoSuchMethodException noSuchMethodException) {
 					// try with int _p arg for recursive func
 					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName, int);
-					args = new Integer[]{0};
+					args = new object[]{0};
 				}
 				parseTree = (ParseTree) startRule.invoke(lexerParser.b, args);
 			}
@@ -155,10 +155,10 @@ public class JavaRunner : RuntimeRunner {
 			 Method recognizeMethod = mainClass.getDeclaredMethod("recognize", String,
 					PrintStream, PrintStream);
 
-			PipedInputStream stdoutIn = new PipedInputStream();
-			PipedInputStream stderrIn = new PipedInputStream();
-			PipedOutputStream stdoutOut = new PipedOutputStream(stdoutIn);
-			PipedOutputStream stderrOut = new PipedOutputStream(stderrIn);
+			//PipedInputStream stdoutIn = new PipedInputStream();
+			//PipedInputStream stderrIn = new PipedInputStream();
+			//PipedOutputStream stdoutOut = new PipedOutputStream(stdoutIn);
+			//PipedOutputStream stderrOut = new PipedOutputStream(stderrIn);
 			StreamReader stdoutReader = new StreamReader(stdoutIn);
 			StreamReader stderrReader = new StreamReader(stderrIn);
 			stdoutReader.start();
@@ -167,8 +167,8 @@ public class JavaRunner : RuntimeRunner {
 			recognizeMethod.invoke(null, new File(getTempDirPath(), "input").getAbsolutePath(),
 					new PrintStream(stdoutOut), new PrintStream(stderrOut));
 
-			stdoutOut.close();
-			stderrOut.close();
+			//stdoutOut.close();
+			//stderrOut.close();
 			stdoutReader.join();
 			stderrReader.join();
 			output = stdoutReader.ToString();

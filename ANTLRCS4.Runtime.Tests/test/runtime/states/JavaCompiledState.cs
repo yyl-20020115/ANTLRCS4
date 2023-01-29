@@ -22,8 +22,9 @@ public class JavaCompiledState : CompiledState
                              Type parser,
                              Exception exception
     )
+        : base(previousState, exception)
     {
-        base(previousState, exception);
+        ;
         this.assembly = assembly;
         this.lexer = lexer;
         this.parser = parser;
@@ -40,6 +41,6 @@ public class JavaCompiledState : CompiledState
 
         ConstructorInfo parserConstructor = parser.getConstructor(TokenStream);
         Parser parser = parserConstructor.newInstance(tokens);
-        return new Pair<>(lexer, parser);
+        return new (lexer, parser);
     }
 }

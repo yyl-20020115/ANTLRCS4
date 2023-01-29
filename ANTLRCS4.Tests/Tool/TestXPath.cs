@@ -9,6 +9,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.xpath;
+using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.tool;
 
@@ -185,13 +186,13 @@ public class TestXPath {
 																	String input, String xpath, String startRuleName,
 																	String parserName, String lexerName
 	){
-		RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
+		RunOptions runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRuleName, input,
 				false, false, Stage.Execute, true);
 		using (JavaRunner runner = new JavaRunner()) {
 			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
-			Parser parser = compiledState.initializeLexerAndParser(input).b;
+            var parser = compiledState.initializeLexerAndParser(input).b;
 			ICollection<ParseTree> found = XPath.findAll(executedState.parseTree, xpath, parser);
 
 			return new (parser.getRuleNames(), found);

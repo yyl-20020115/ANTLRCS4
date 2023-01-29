@@ -8,6 +8,8 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
+using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -29,7 +31,7 @@ public class TestParserProfiler {
 							"PLUS : '+' ;\n" +
 							"MULT : '*' ;\n");
 		} catch (RecognitionException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.Message,e);
 		}
 	}
 
@@ -148,7 +150,7 @@ public class TestParserProfiler {
 		Assert.AreEqual(expecting, info[1].ToString());
 	}
 
-	@Disabled
+	
 	[TestMethod] public void testSimpleLanguage(){
 		Grammar g = new Grammar(TestXPath.grammar);
 		String input =
@@ -206,7 +208,7 @@ public class TestParserProfiler {
 			"PLUS : '+' ;\n" +
 			"MULT : '*' ;\n";
 
-		RunOptions runOptions = createOptionsForJavaToolTests("T.g4", grammar, "TParser", "TLexer",
+		RunOptions runOptions =ToolTestUtils.createOptionsForJavaToolTests("T.g4", grammar, "TParser", "TLexer",
 				false, false, "s", "xyz;abc;z.q",
 				true, false, Stage.Execute, false);
 		using (JavaRunner runner = new JavaRunner()) {
@@ -235,8 +237,7 @@ public class TestParserProfiler {
 			lexEngine.setInputStream(new ANTLRInputStream(s));
 			CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 			parser.setInputStream(tokens);
-			Rule r = g.rules.get(startRule);
-			if ( r==null ) {
+			if ( !g.rules.TryGetValue(startRule,out var r)) {
 				return parser.getParseInfo().getDecisionInfo();
 			}
 			ParserRuleContext t = parser.parse(r.index);

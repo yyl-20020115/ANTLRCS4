@@ -4,30 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.test.runtime.states;
+
 namespace org.antlr.v4.test.tool;
 
-public class JavaRunner:IDisposable
-{
-    public JavaRunner()
-    {
-    }
-
-    public JavaRunner(string workingDir, bool saveTestDir)
-    {
-        WorkingDir = workingDir;
-        SaveTestDir = saveTestDir;
-    }
-
-    public string WorkingDir { get; }
-    public bool SaveTestDir { get; }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
-    internal State run(RunOptions runOptions)
-    {
-        throw new NotImplementedException();
-    }
-}

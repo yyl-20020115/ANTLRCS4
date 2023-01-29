@@ -14,6 +14,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.states;
 using System.Reflection;
 using System.Text;
 using static org.antlr.v4.test.tool.TestPerformance.FilenameFilters;
@@ -412,7 +413,7 @@ public class TestPerformance
 
         if (TOP_PACKAGE.Length > 0)
         {
-            jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.replace('.', '/');
+            jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.Replace('.', '/');
         }
 
         string directory = (jdkSourceRoot);
@@ -447,8 +448,8 @@ public class TestPerformance
             }
         }
 
-        Console.Out.format("Located %d source files.%n", sources.Count);
-        Console.Out.print(getOptionsDescription(TOP_PACKAGE));
+        Console.Out.Write($"Located {sources.Count} source files.%n");
+        Console.Out.Write(getOptionsDescription(TOP_PACKAGE));
 
         ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
@@ -733,7 +734,7 @@ public class TestPerformance
     {
         if (FILE_GRANULARITY)
         {
-            System.gc();
+            GC.Collect();
         }
 
         parseSources(currentPass, factory, sources, shuffleSources);
@@ -765,7 +766,7 @@ public class TestPerformance
         //assert directory.isDirectory();
 
         string[] sources = directory.listFiles(filesFilter);
-        foreach (File file in sources)
+        foreach (var file in sources)
         {
             if (!file.isFile())
             {
@@ -803,7 +804,7 @@ public class TestPerformance
             sources = sourcesList;
         }
 
-        long startTime = System.nanoTime();
+        long startTime = DateTime.Now.Nanosecond;
         tokenCount.set(currentPass, 0);
         int inputSize = 0;
         int inputCount = 0;
@@ -856,7 +857,7 @@ public class TestPerformance
             }
         });
 #endif
-            results.add(futureChecksum);
+            results.Add(futureChecksum);
         }
 
         MurmurHashChecksum checksum = new MurmurHashChecksum();
@@ -904,7 +905,7 @@ public class TestPerformance
         }
 
         executorService.shutdown();
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        executorService.awaitTermination(long.MaxValue, TimeUnit.NANOSECONDS);
 
         Console.Out.format("%d. Total parse time for %d files (%d KB, %d tokens%s): %.0fms%n",
                           currentPass + 1,
@@ -912,7 +913,7 @@ public class TestPerformance
                           inputSize / 1024,
                           tokenCount.get(currentPass),
                           COMPUTE_CHECKSUM ? String.format(", checksum 0x%8X", checksum.getValue()) : "",
-                          (double)(System.nanoTime() - startTime) / 1000000.0);
+                          (double)(DateTime.Now.Nanosecond - startTime) / 1000000.0);
 
         if (sharedLexers.Length > 0)
         {
@@ -946,7 +947,7 @@ public class TestPerformance
 
                 if (DETAILED_DFA_STATE_STATS)
                 {
-                    Console.Out.format("\tMode\tStates\tConfigs\tMode%n");
+                    Console.Out.WriteLine("\tMode\tStates\tConfigs\tMode%n");
                     for (int i = 0; i < modeToDFA.Length; i++)
                     {
                         DFA dfa = modeToDFA[i];
@@ -1316,7 +1317,7 @@ public class TestPerformance
                     return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), null, tokens.size(), startTime, lexer, null);
                 }
 
-                long parseStartTime = System.nanoTime();
+                long parseStartTime = DateTime.Now.Nanosecond;
                 Parser parser = sharedParsers[thread];
                 if (REUSE_PARSER && parser != null)
                 {
@@ -1554,7 +1555,7 @@ public class TestPerformance
             this.parseTree = parseTree;
             this.tokenCount = tokenCount;
             this.startTime = startTime;
-            this.endTime = System.nanoTime();
+            this.endTime = DateTime.Now.Nanosecond;
 
             if (lexer != null)
             {
@@ -1861,7 +1862,10 @@ public class TestPerformance
     {
         public class FilenameFilter
         {
-
+            internal bool accept(string dir, string name)
+            {
+                throw new NotImplementedException();
+            }
         }
         public class ALL : FilenameFilter
         {
@@ -2250,18 +2254,18 @@ public class TestPerformance
 
         FileUtils.mkdir(tempDirPath);
 
-        long startTime = System.nanoTime();
+        long startTime = DateTime.Now.Nanosecond;
 
         int levels = 20;
         for (int level = 0; level < levels; level++)
         {
             String leafPrefix = level == levels - 1 ? "//" : "";
             String grammar1 = String.format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
-            writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
+                FileUtils.writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
             if (level > 0)
             {
                 String grammar2 = String.format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
-                writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
+                FileUtils.writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
             }
         }
 

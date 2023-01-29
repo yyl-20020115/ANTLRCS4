@@ -9,20 +9,20 @@ namespace org.antlr.v4.test.runtime;
 public class Processor {
 	public readonly String[] arguments;
 	public readonly String workingDirectory;
-	public readonly Map<String, String> environmentVariables;
+	public readonly Dictionary<String, String> environmentVariables;
 	public readonly bool throwOnNonZeroErrorCode;
 
-	public static ProcessorResult run(String[] arguments, String workingDirectory, Map<String, String> environmentVariables)
+	public static ProcessorResult run(String[] arguments, String workingDirectory, Dictionary<String, String> environmentVariables)
 			
 	{
 		return new Processor(arguments, workingDirectory, environmentVariables, true).start();
 	}
 
 	public static ProcessorResult run(String[] arguments, String workingDirectory) {
-		return new Processor(arguments, workingDirectory, new HashMap<>(), true).start();
+		return new Processor(arguments, workingDirectory, new (), true).start();
 	}
 
-	public Processor(String[] arguments, String workingDirectory, Map<String, String> environmentVariables,
+	public Processor(String[] arguments, String workingDirectory, Dictionary<String, String> environmentVariables,
 					 bool throwOnNonZeroErrorCode) {
 		this.arguments = arguments;
 		this.workingDirectory = workingDirectory;
@@ -33,12 +33,12 @@ public class Processor {
 	public ProcessorResult start() {
 		ProcessBuilder builder = new ProcessBuilder(arguments);
 		if (workingDirectory != null) {
-			builder.directory(new File(workingDirectory));
+			builder.directory(workingDirectory);
 		}
-		if (environmentVariables != null && environmentVariables.size() > 0) {
-			Map<String, String> environment = builder.environment();
-			for (String key : environmentVariables.keySet()) {
-				environment.put(key, environmentVariables.get(key));
+		if (environmentVariables != null && environmentVariables.Count > 0) {
+			Dictionary<String, String> environment = builder.environment();
+			foreach (String key in environmentVariables.Keys) {
+				environment.Add(key, environmentVariables[(key)]);
 			}
 		}
 
@@ -54,7 +54,7 @@ public class Processor {
 		String output = stdoutReader.ToString();
 		String errors = stderrReader.ToString();
 		if (throwOnNonZeroErrorCode && process.exitValue() != 0) {
-			throw new InterruptedException(joinLines(output, errors));
+			throw new InterruptedException( joinLines(output, errors));
 		}
 		return new ProcessorResult(process.exitValue(), output, errors);
 	}

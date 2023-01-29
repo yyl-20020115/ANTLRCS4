@@ -3,6 +3,8 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.tool;
+
 namespace org.antlr.v4.test.tool;
 
 
@@ -23,7 +25,12 @@ public class TestErrorSets {
 		testErrors(pair, true);
 	}
 
-	[TestMethod] public void testNotCharSetWithString(){
+    private void testErrors(string[] pair, bool v)
+    {
+        throw new NotImplementedException();
+    }
+
+    [TestMethod] public void testNotCharSetWithString(){
 		// might be a useful feature to add someday
 		String[] pair = new String[] {
 			"grammar T;\n" +

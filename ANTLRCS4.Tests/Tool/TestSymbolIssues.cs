@@ -131,7 +131,7 @@ public class TestSymbolIssues {
 
 		Assert.AreEqual(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
 		Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
-		Assert.AreEqual(expectedTypeToTokenList, realElements(g.typeToTokenList).ToString());
+		Assert.AreEqual(expectedTypeToTokenList, ToolTestUtils.realElements(g.typeToTokenList).ToString());
 	}
 
 	[TestMethod] public void testEmptyLexerModeDetection(){

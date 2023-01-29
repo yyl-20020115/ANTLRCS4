@@ -40,8 +40,8 @@ public class ATNDescriber {
 		int p = 0;
 		int version = data[p++];
 		if (version != ATNDeserializer.SERIALIZED_VERSION) {
-			String reason = String.format("Could not deserialize ATN with version %d (expected %d).", version, ATNDeserializer.SERIALIZED_VERSION);
-			throw new UnsupportedOperationException(new InvalidOperationException(typeof(ATN).Name, reason));
+			String reason = $"Could not deserialize ATN with version {version} (expected {ATNDeserializer.SERIALIZED_VERSION}).";
+			throw new UnsupportedOperationException(reason,new InvalidOperationException(typeof(ATN).Name));
 		}
 
 		p++; // skip grammarType

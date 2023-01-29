@@ -7,6 +7,7 @@ using Antlr4.StringTemplate;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.semantics;
+using org.antlr.v4.test.runtime;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -59,7 +60,7 @@ public class TestCodeGeneration {
 		//@Override
 		protected int writeObject(ITemplateWriter @out, InstanceScope scope, Object o, String[] options) {
 			if ( o is Template ) {
-				String name = ((ST)o).getName();
+				String name = ((Template)o).Name;
 				name = name.Substring(1);
 				if ( !name.StartsWith("_sub") ) {
 					try {
@@ -78,7 +79,7 @@ public class TestCodeGeneration {
 		}
 
 		//@Override
-		protected int writePOJO(STWriter @out, InstanceScope scope, Object o, String[] options){
+		protected int writePOJO(ITemplateWriter @out, InstanceScope scope, Object o, String[] options){
 			Type type = o.GetType();
 			String name = type.Name;
 			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
@@ -86,7 +87,7 @@ public class TestCodeGeneration {
 			return base.writePOJO(@out, scope, o, options);
 		}
 
-		public void indent(STWriter @out){
+		public void indent(ITemplateWriter @out){
 			for (int i=1; i<=tab; i++) {
 				@out.write("\t");
 			}
@@ -106,7 +107,7 @@ public class TestCodeGeneration {
 			g.atn = factory.createATN();
 
 			CodeGenerator gen = CodeGenerator.create(g);
-			ST outputFileST = gen.generateParser();
+			Template outputFileST = gen.generateParser();
 
 //			STViz viz = outputFileST.inspect();
 //			try {

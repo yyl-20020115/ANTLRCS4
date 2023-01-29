@@ -26,16 +26,16 @@ public class NodeRunner : RuntimeRunner {
 	////@Override
 	public String getRuntimeToolName() { return "node"; }
 
-	private static readonly String normalizedRuntimePath = getRuntimePath("JavaScript").replace('\\', '/');
+	private static readonly String normalizedRuntimePath = getRuntimePath("JavaScript").Replace('\\', '/');
 	private static readonly String newImportAntlrString =
 			"import antlr4 from 'file://" + normalizedRuntimePath + "/src/antlr4/index.js'";
 
 	////@Override
 	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
-		for (GeneratedFile generatedFile : generatedFiles) {
+		foreach (GeneratedFile generatedFile in generatedFiles) {
 			try {
-				FileUtils.replaceInFile(Paths.get(getTempDirPath(), generatedFile.name),
+				FileUtils.replaceInFile(Path.Combine(getTempDirPath(), generatedFile.name),
 						"import antlr4 from 'antlr4';",
 						newImportAntlrString);
 			} catch (IOException e) {
@@ -43,7 +43,7 @@ public class NodeRunner : RuntimeRunner {
 			}
 		}
 
-		writeFile(getTempDirPath(), "package.json",
+		FileUtils.writeFile(getTempDirPath(), "package.json",
 				RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/package.json"));
 		return new CompiledState(generatedState, null);
 	}

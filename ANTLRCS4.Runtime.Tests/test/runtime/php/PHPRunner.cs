@@ -20,7 +20,7 @@ public class PHPRunner : RuntimeRunner {
 	}
 
 	////@Override
-	public Map<String, String> getExecEnvironment() {
+	protected override Dictionary<String, String> getExecEnvironment() {
 		return environment;
 	}
 }

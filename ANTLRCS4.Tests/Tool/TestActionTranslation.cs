@@ -9,6 +9,7 @@ using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.semantics;
+using org.antlr.v4.test.runtime;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -235,8 +236,8 @@ public class TestActionTranslation {
 			anal.process();
 
 			CodeGenerator gen = CodeGenerator.create(g);
-			ST outputFileST = gen.generateParser(false);
-			String output = outputFileST.render();
+			Template outputFileST = gen.generateParser(false);
+			String output = outputFileST.Render();
 			//Console.Out.WriteLine(output);
 			String b = "#" + actionName + "#";
 			int start = output.IndexOf(b);

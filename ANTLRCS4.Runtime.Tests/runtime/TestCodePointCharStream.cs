@@ -102,7 +102,7 @@ public class TestCodePointCharStream {
 	public void consumingPastSingleCJKCodePointShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("\u611B");
 		s.consume();
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
+		IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>((s)=>s.consume());
 		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 

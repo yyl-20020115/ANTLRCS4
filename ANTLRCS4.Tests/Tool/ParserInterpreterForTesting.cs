@@ -13,7 +13,7 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.test.tool;
 
 public class ParserInterpreterForTesting {
-	public class DummyParser : runtime.Parser
+	public class DummyParser : Parser
     {
 		public readonly ATN atn;
 		public readonly DFA[] decisionToDFA; // not shared for interp

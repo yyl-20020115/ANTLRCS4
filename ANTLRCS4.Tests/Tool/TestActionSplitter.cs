@@ -4,8 +4,10 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.runtime;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
+using org.antlr.v4.semantics;
 
 namespace org.antlr.v4.test.tool;
 
@@ -44,7 +46,7 @@ public class TestActionSplitter {
 													 new BlankActionSplitterListener());
         Token t = splitter.nextToken();
         while ( t.getType()!=Token.EOF ) {
-            chunks.add("'"+t.getText()+"'<"+t.getType()+">");
+            chunks.Add("'"+t.getText()+"'<"+t.getType()+">");
             t = splitter.nextToken();
         }
         return chunks;

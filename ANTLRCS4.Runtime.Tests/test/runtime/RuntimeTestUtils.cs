@@ -29,7 +29,7 @@ public abstract class RuntimeTestUtils {
 
 	static RuntimeTestUtils() {
 		String locationPath = RuntimeTestUtils.getProtectionDomain().getCodeSource().getLocation().getPath();
-		if (isWindows()) {
+		if (IsWindows()) {
 			locationPath = locationPath.replaceFirst("/", "");
 		}
 		string potentialRuntimeTestsuitePath = Path.Combine(locationPath, "..", "..");
@@ -77,7 +77,7 @@ public abstract class RuntimeTestUtils {
 		try {
 			String text = resourceCache.get(name);
 			if (text == null) {
-				Path path = Paths.get(resourcePath.ToString(), name);
+				string path = Paths.get(resourcePath.ToString(), name);
 				text = new String(Files.readAllBytes(path));
 				resourceCache.put(name, text);
 			}

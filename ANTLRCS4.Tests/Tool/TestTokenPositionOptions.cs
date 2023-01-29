@@ -94,7 +94,7 @@ public class TestTokenPositionOptions {
 				ANTLRParser.STRING_LITERAL,
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
-		List<Token> tokens = new ArrayList<Token>();
+		List<Token> tokens = new ();
 		foreach (GrammarAST node in nodes) {
 			tokens.Add(node.getToken());
 		}

@@ -5,10 +5,3 @@
  */
 
 namespace org.antlr.v4.test.tool;
-
-public enum Stage
-{
-    Compile,
-
-    Execute,
-}

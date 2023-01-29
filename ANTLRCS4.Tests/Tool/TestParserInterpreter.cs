@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool;
 
@@ -346,7 +347,7 @@ public class TestParserInterpreter {
 		LexerInterpreter lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 		ParserInterpreter parser = g.createParserInterpreter(tokens);
-		ParseTree t = parser.parse(g.rules.get(startRule).index);
+		ParseTree t = parser.parse(g.rules[(startRule)].index);
 		Assert.AreEqual(expectedParseTree, t.toStringTree(parser));
 		return t;
 	}

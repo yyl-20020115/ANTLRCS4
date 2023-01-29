@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.runtime.misc;
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;

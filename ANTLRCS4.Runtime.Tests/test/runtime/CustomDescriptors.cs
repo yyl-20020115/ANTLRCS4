@@ -14,7 +14,7 @@ public class CustomDescriptors {
 
 	static CustomDescriptors(){
 		uri = Path.Combine(RuntimeTestUtils.runtimeTestsuitePath.ToString(),
-						"test", "org", "antlr", "v4", "test", "runtime", "CustomDescriptors.java").toUri();
+						"test", "org", "antlr", "v4", "test", "runtime", "CustomDescriptors.java");
 
 		descriptors = new ();
 		descriptors.Add("LexerExec",
@@ -103,7 +103,7 @@ public class CustomDescriptors {
 		// I tried playing around with different sizes, and I think 1002 works for Go but 1003 does not;
 		// the executing lexer gets a token syntax error for T208 or something like that
 		int tokensCount = 1024;
-		String suffix = String.Join("", Collections.nCopies(70, "_"));
+		String suffix = new string('_', 70);// String.Join("", Collections.nCopies(70, "_"));
 
 		String grammarName = "L";
 		StringBuilder grammar = new StringBuilder();
@@ -114,7 +114,7 @@ public class CustomDescriptors {
 		int startOffset;
 		int stopOffset = -2;
 		for (int i = 0; i < tokensCount; i++) {
-			String ruleName = String.format("T_%06d", i);
+			String ruleName = $"T_{i:D6}";
 			String value = ruleName+suffix;
 			grammar.Append(ruleName).Append(": '").Append(value).Append("';\n");
 			input.Append(value).Append('\n');

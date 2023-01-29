@@ -54,10 +54,10 @@ public class TestToolSyntaxErrors {
 
 	[TestMethod]
 	public void AllErrorCodesDistinct() {
-		ErrorType[] errorTypes = typeof(ErrorType).getEnumConstants();
+		ErrorType[] errorTypes = ErrorType.ErrorTypes;
 		for (int i = 0; i < errorTypes.Length; i++) {
 			for (int j = i + 1; j < errorTypes.Length; j++) {
-				assertNotEquals(errorTypes[i], errorTypes[j]);
+				Assert.AreNotEqual(errorTypes[i], errorTypes[j]);
 			}
 		}
 	}

@@ -19,7 +19,7 @@ public class Generator {
 										   params String[] extraOptions)
 	{
 		FileUtils.mkdir(workdir);
-		writeFile(workdir, grammarFileName, grammarStr);
+		FileUtils.writeFile(workdir, grammarFileName, grammarStr);
 		return antlrOnString(workdir, targetName, grammarFileName, defaultListener, extraOptions);
 	}
 
@@ -46,7 +46,7 @@ public class Generator {
 			options.Add("-encoding");
 			options.Add("UTF-8");
 		}
-		options.Add(new File(workdir,grammarFileName).ToString());
+		options.Add(Path.Combine(workdir,grammarFileName));
 
 		 String[] optionsA = new String[options.Count];
 		options.ToArray();
@@ -67,9 +67,9 @@ public class Generator {
 				errors.Add(msgST.Render());
 			}
 		}
-		if ( !defaultListener && !equeue.warnings.isEmpty() ) {
-			for (int i = 0; i < equeue.warnings.size(); i++) {
-				ANTLRMessage msg = equeue.warnings.get(i);
+		if ( !defaultListener && equeue.warnings.Count>0 ) {
+			for (int i = 0; i < equeue.warnings.Count; i++) {
+				ANTLRMessage msg = equeue.warnings[(i)];
 				// antlrToolErrors.Append(msg); warnings are hushed
 			}
 		}

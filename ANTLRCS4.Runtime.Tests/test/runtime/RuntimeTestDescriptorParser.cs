@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime.misc;
+using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime;
 using System.Text;
 
@@ -63,18 +64,18 @@ public class RuntimeTestDescriptorParser {
 	 a : b {<writeln("\"S.a\"")>};
 	 b : B;
 	 */
-	public static RuntimeTestDescriptor parse(String name, String text, URI uri) {
+	public static RuntimeTestDescriptor parse(String name, String text, string uri) {
 		String currentField = null;
 		StringBuilder currentValue = new StringBuilder();
 
 		List<Pair<String, String>> pairs = new ();
 		String[] lines = text.Split("\r?\n");
 
-		for (String line : lines) {
+		foreach (String line in lines) {
 			bool newSection = false;
 			String sectionName = null;
-			if (line.startsWith("[") && line.Length > 2) {
-				sectionName = line.substring(1, line.Length - 1);
+			if (line.StartsWith("[") && line.Length > 2) {
+				sectionName = line.Substring(1, line.Length - 1 -1);
 				newSection = sections.Contains(sectionName);
 			}
 
@@ -104,7 +105,7 @@ public class RuntimeTestDescriptorParser {
 		bool showDFA = false;
 		bool showDiagnosticErrors = false;
 		String[] skipTargets = new String[0];
-		for (Pair<String,String> p : pairs) {
+		foreach (Pair<String,String> p in pairs) {
 			String section = p.a;
 			String value = "";
 			if ( p.b!=null ) {
@@ -156,7 +157,7 @@ public class RuntimeTestDescriptorParser {
 					}
 					break;
 				case "skip":
-					skipTargets = value.split("\n");
+					skipTargets = value.Split('\n');
 					break;
 				default:
 					throw new RuntimeException("Unknown descriptor section ignored: "+section);
@@ -176,6 +177,6 @@ public class RuntimeTestDescriptorParser {
 		}
 		gi += "grammar ".length();
 		int gsemi = grammarDeclLine.indexOf(';');
-		return grammarDeclLine.substring(gi, gsemi);
+		return grammarDeclLine.Substring(gi, gsemi-gi);
 	}
 }

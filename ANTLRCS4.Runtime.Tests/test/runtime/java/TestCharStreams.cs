@@ -5,6 +5,7 @@
  */
 
 using org.antlr.v4.runtime;
+using System.Text;
 
 namespace org.antlr.v4.test.runtime.java;
 
@@ -28,8 +29,8 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromBMPUTF8PathHasExpectedSize( string tempDir)  {
-		Path test = new File(tempDir.ToString(), "test").toPath();
-		Files.write(test, "hello".getBytes(StandardCharsets.UTF_8));
+		string test = Path.Combine(tempDir, "test");
+		File.WriteAllBytes(test, Encoding.UTF8.GetBytes("hello"));
 		CharStream s = CharStreams.fromPath(test);
 		Assert.AreEqual(5, s.size());
 		Assert.AreEqual(0, s.index());
@@ -39,8 +40,8 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromSMPUTF8PathHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
+		string p = getTestFile(tempDir);
+		File.WriteAllBytes(p,Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
 		CharStream s = CharStreams.fromPath(p);
 		Assert.AreEqual(7, s.size());
 		Assert.AreEqual(0, s.index());
@@ -51,7 +52,7 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromBMPUTF8InputStreamHasExpectedSize(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello".getBytes(StandardCharsets.UTF_8));
+		Files.write(p, "hello".getBytes(Encoding.UTF8));
 		using (InputStream @is = Files.newInputStream(p)) {
 			CharStream s = CharStreams.fromStream(@is);
 			Assert.AreEqual(5, s.size());
@@ -62,8 +63,8 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromSMPUTF8InputStreamHasExpectedSize( Path tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
+		string p = getTestFile(tempDir);
+		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
 		try (InputStream is = Files.newInputStream(p)) {
 			CharStream s = CharStreams.fromStream(is);
 			Assert.AreEqual(7, s.size());
@@ -74,8 +75,8 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromBMPUTF8ChannelHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello".getBytes(StandardCharsets.UTF_8));
+		string p = getTestFile(tempDir);
+		Files.write(p, "hello".getBytes(Encoding.UTF8));
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
@@ -88,8 +89,8 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromSMPUTF8ChannelHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
+		string p = getTestFile(tempDir);
+		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
@@ -103,7 +104,7 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromInvalidUTF8BytesChannelReplacesWithSubstCharInReplaceMode(string tempDir)
 		 {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		byte[] toWrite = new byte[] { (byte)0xCA, (byte)0xFE, (byte)0xFE, (byte)0xED };
 		Files.write(p, toWrite);
 		try (SeekableByteChannel c = Files.newByteChannel(p)) {
@@ -120,19 +121,21 @@ public class TestCharStreams {
 		string p = getTestFile(tempDir);
 		byte[] toWrite = new byte[] { (byte)0xCA, (byte)0xFE };
 		Files.write(p, toWrite);
-		try (SeekableByteChannel c = Files.newByteChannel(p)) {
+		SeekableByteChannel c = Files.newByteChannel(p);
+		{
 			assertThrows(
 					CharacterCodingException,
-					() -> CharStreams.fromChannel(c, 4096, CodingErrorAction.REPORT, "foo")
+					() => CharStreams.fromChannel(c, 4096, CodingErrorAction.REPORT, "foo")
 			);
 		}
 	}
 
 	[TestMethod]
 	public void fromSMPUTF8SequenceStraddlingBufferBoundary(string tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
-		try (SeekableByteChannel c = Files.newByteChannel(p)) {
+		string p = getTestFile(tempDir);
+		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
+		SeekableByteChannel c = Files.newByteChannel(p);
+		{
 			CharStream s = CharStreams.fromChannel(
 					c,
 					// Note this buffer size ensures the SMP code point
@@ -149,7 +152,7 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromFileName(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
+		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
 		CharStream s = CharStreams.fromFileName(p.ToString());
 		Assert.AreEqual(7, s.size());
 		Assert.AreEqual(0, s.index());
@@ -160,7 +163,7 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromFileNameWithLatin1(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		Files.write(p, "hello \u00CA\u00FE".getBytes(StandardCharsets.ISO_8859_1));
 		CharStream s = CharStreams.fromFileName(p.ToString(), StandardCharsets.ISO_8859_1);
 		Assert.AreEqual(8, s.size());
@@ -171,9 +174,9 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromReader(string tempDir)  {
-		Path p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_8));
-		using (Reader r = Files.newBufferedReader(p, StandardCharsets.UTF_8)) {
+		string p = getTestFile(tempDir);
+		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
+		using (TextReader r = Files.newBufferedReader(p, Encoding.UTF8)) {
 			CharStream s = CharStreams.fromReader(r);
 			Assert.AreEqual(7, s.size());
 			Assert.AreEqual(0, s.index());
@@ -183,7 +186,7 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromSMPUTF16LEPathSMPHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_16LE));
 		CharStream s = CharStreams.fromPath(p, StandardCharsets.UTF_16LE);
 		Assert.AreEqual(7, s.size());
@@ -194,11 +197,10 @@ public class TestCharStreams {
 
 	[TestMethod]
 	public void fromSMPUTF32LEPathSMPHasExpectedSize(string tempDir)  {
-		Path p = getTestFile(tempDir);
+		string p = getTestFile(tempDir);
 		// UTF-32 isn't popular enough to have an entry in StandardCharsets.
-		Charset c = Charset.forName("UTF-32LE");
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(c));
-		CharStream s = CharStreams.fromPath(p, c);
+		File.WriteAllBytes(p,Encoding.UTF32.GetBytes( "hello \uD83C\uDF0E"));
+		CharStream s = CharStreams.fromPath(p, Encoding.UTF32);
 		Assert.AreEqual(7, s.size());
 		Assert.AreEqual(0, s.index());
 		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());

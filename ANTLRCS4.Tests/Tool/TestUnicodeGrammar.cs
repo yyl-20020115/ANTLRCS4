@@ -121,13 +121,10 @@ public class TestUnicodeGrammar {
 				(byte)0xD0, (byte)0xD3, (byte)0xD3, (byte)0xD1,
 				(byte)0xFF
 		};
-		CharStream charStream;
-		using (ByteArrayInputStream @is = new ByteArrayInputStream(toParse);
-		     // Note we use ISO_8859_1 to treat all byte values as Unicode "characters" from
-		     // U+0000 to U+00FF.
-		     InputStreamReader isr = new InputStreamReader(@is, StandardCharsets.ISO_8859_1)) {
-			charStream = new ANTLRInputStream(isr);
-		}
+		    // Note we use ISO_8859_1 to treat all byte values as Unicode "characters" from
+		    // U+0000 to U+00FF.
+		var charStream = new ANTLRInputStream(new StringReader(
+			Encoding.Latin1.GetString(toParse)));
 		Grammar grammar = new Grammar(grammarText);
 		LexerInterpreter lexEngine = grammar.createLexerInterpreter(charStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
