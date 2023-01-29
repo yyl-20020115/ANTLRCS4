@@ -47,7 +47,7 @@ public class SymbolChecks {
 		// So, call order sensitive
 		// First collect all rules for later use in checkForLabelConflict()
 		if (g.rules != null) {
-			foreach (Rule r in g.rules.Values) nameToRuleMap.put(r.name, r);
+			foreach (Rule r in g.rules.Values) nameToRuleMap[r.name]= r;
 		}
 		checkReservedNames(g.rules.Values);
 		checkActionRedefinitions(collector.namedActions);
@@ -68,10 +68,9 @@ public class SymbolChecks {
 				scope = nameNode.getText();
 				name = ampersandAST.getChild(1).getText();
 			}
-			HashSet<String> scopeActions = actionScopeToActionNames.get(scope);
-			if (scopeActions == null) { // init scope
+			if (!actionScopeToActionNames.TryGetValue(scope,out var scopeActions) ) { // init scope
 				scopeActions = new HashSet<String>();
-				actionScopeToActionNames.put(scope, scopeActions);
+				actionScopeToActionNames[scope]= scopeActions;
 			}
 			if (!scopeActions.Contains(name)) {
 				scopeActions.Add(name);
@@ -104,11 +103,7 @@ public class SymbolChecks {
 						foreach (LabelElementPair p in pairs) {
 							String labelName = findAltLabelName(p.label);
 							if (labelName != null) {
-								List<LabelElementPair> list;
-								if (labelPairs.ContainsKey(labelName)) {
-									list = labelPairs.get(labelName);
-								}
-								else {
+								if (!labelPairs.TryGetValue(labelName,out var list)) {
 									list = new ();
 									labelPairs[labelName] = list;
 								}
@@ -133,9 +128,8 @@ public class SymbolChecks {
         foreach (LabelElementPair p in pairs) {
 			checkForLabelConflict(r, p.label);
 			String name = p.label.getText();
-			LabelElementPair prev = labelNameSpace.get(name);
-			if (prev == null) {
-				labelNameSpace.put(name, p);
+			if (!labelNameSpace.TryGetValue(name,out var prev)) {
+				labelNameSpace[name] = p;
 			}
 			else {
 				checkForTypeMismatch(r, prev, p);
@@ -288,13 +282,14 @@ public class SymbolChecks {
 		if (g.isLexer()) {
 			LexerGrammar lexerGrammar = (LexerGrammar)g;
 			foreach (String modeName in lexerGrammar.modes.Keys) {
-				if (!modeName.Equals("DEFAULT_MODE") && reservedNames.Contains(modeName)) {
-					Rule rule = lexerGrammar.modes.get(modeName).iterator().next();
+				var rx = (lexerGrammar.modes.TryGetValue(modeName, out var ret) ? ret : new());
+                Rule rule = rx.FirstOrDefault();
+
+                if (!modeName.Equals("DEFAULT_MODE") && reservedNames.Contains(modeName)) {
 					g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, rule.ast.parent.getToken(), modeName);
 				}
 
 				if (g.getTokenType(modeName) != Token.INVALID_TYPE) {
-					Rule rule = lexerGrammar.modes.get(modeName).iterator().next();
 					g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_TOKEN, g.fileName, rule.ast.parent.getToken(), modeName);
 				}
 			}
@@ -339,7 +334,7 @@ public class SymbolChecks {
 						for (int j = i + 1; j < stringLiteralRules.Count; j++) {
 							Rule rule2 = stringLiteralRules[(j)];
 							if (!rule2.isFragment()) {
-								checkForOverlap(g, rule1, stringLiteralRules[(j)], firstTokenStringValues, stringLiteralValues.get(j));
+								checkForOverlap(g, rule1, stringLiteralRules[(j)], firstTokenStringValues, stringLiteralValues[(j)]);
 							}
 						}
 					}
@@ -383,7 +378,7 @@ public class SymbolChecks {
 					}
 					else {
 						String text = terminalAST.token.getText();
-						currentValue.Append(text.substring(1, text.Length - 1));
+						currentValue.Append(text.Substring(1, text.Length - 1-1));
 					}
 				}
 

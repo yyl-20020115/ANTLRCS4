@@ -75,7 +75,7 @@ public class RuleCollector : GrammarTreeVisitor {
         foreach (GrammarAST a in actions) {
 			// a = ^(AT ID ACTION)
 			ActionAST action = (ActionAST) a.getChild(1);
-			r.namedActions.put(a.getChild(0).getText(), action);
+			r.namedActions[a.getChild(0).getText()]= action;
 			action.resolver = r;
 		}
 	}
@@ -92,9 +92,9 @@ public class RuleCollector : GrammarTreeVisitor {
 
 	//@Override
 	public void grammarOption(GrammarAST ID, GrammarAST valueAST) {
-		Boolean caseInsensitive = getCaseInsensitiveValue(ID, valueAST);
+		var caseInsensitive = getCaseInsensitiveValue(ID, valueAST);
 		if (caseInsensitive != null) {
-			grammarCaseInsensitive = caseInsensitive;
+			grammarCaseInsensitive = caseInsensitive.GetValueOrDefault();
 		}
 	}
 
@@ -106,9 +106,9 @@ public class RuleCollector : GrammarTreeVisitor {
 		if (options != null) {
 			foreach (Object child in options.getChildren()) {
 				GrammarAST childAST = (GrammarAST) child;
-				Boolean caseInsensitive = getCaseInsensitiveValue((GrammarAST)childAST.getChild(0), (GrammarAST)childAST.getChild(1));
+				var caseInsensitive = getCaseInsensitiveValue((GrammarAST)childAST.getChild(0), (GrammarAST)childAST.getChild(1));
 				if (caseInsensitive != null) {
-					currentCaseInsensitive = caseInsensitive;
+					currentCaseInsensitive = caseInsensitive.GetValueOrDefault();
 				}
 			}
 		}

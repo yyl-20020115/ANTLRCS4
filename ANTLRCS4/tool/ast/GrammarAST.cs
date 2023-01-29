@@ -45,7 +45,7 @@ public class GrammarAST : CommonTree {
     }
 
 	public GrammarAST[] getChildrenAsArray() {
-		return children.ToArray();
+		return children.Cast<GrammarAST>().ToArray();
 	}
 
 	public List<GrammarAST> getNodesWithType(int ttype) {
@@ -65,11 +65,12 @@ public class GrammarAST : CommonTree {
 
 	public List<GrammarAST> getNodesWithType(IntervalSet types) {
 		List<GrammarAST> nodes = new();
-		List<GrammarAST> work = new LinkedList<GrammarAST>();
+		List<GrammarAST> work = new ();
 		work.Add(this);
 		GrammarAST t;
-		while ( !work.isEmpty() ) {
-			t = work.remove(0);
+		while ( work.Count>0 ) {
+			t = work[0];
+			work.RemoveAt(0);
 			if ( types==null || types.contains(t.getType()) ) nodes.Add(t);
 			if ( t.children!=null ) {
 				work.AddRange(Arrays.AsList(t.getChildrenAsArray()));

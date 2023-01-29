@@ -295,6 +295,12 @@ public class Grammar : AttributeResolver
 
     public class TVA : TreeVisitorAction
     {
+        readonly Grammar thiz;
+        public TVA(Grammar thiz)
+        {
+            this.thiz = thiz;
+        }
+
         ////@Override
         public Object pre(Object t) { ((GrammarAST)t).g = thiz; return t; }
         ////@Override
@@ -329,8 +335,8 @@ public class Grammar : AttributeResolver
 
         // ensure each node has pointer to surrounding grammar
         Grammar thiz = this;
-        org.antlr.runtime.tree.TreeVisitor v = new org.antlr.runtime.tree.TreeVisitor(new GrammarASTAdaptor());
-        v.visit(ast, new TVA());
+        TreeVisitor v = new TreeVisitor(new GrammarASTAdaptor());
+        v.visit(ast, new TVA(thiz));
         initTokenSymbolTables();
 
         if (tokenVocabSource != null)
@@ -432,7 +438,7 @@ public class Grammar : AttributeResolver
 	 */
     public bool defineRule(Rule r)
     {
-        if (rules.get(r.name) != null)
+        if (rules.ContainsKey(r.name))
         {
             return false;
         }
@@ -460,7 +466,7 @@ public class Grammar : AttributeResolver
 	 */
     public bool undefineRule(Rule r)
     {
-        if (r.index < 0 || r.index >= indexToRule.Count || indexToRule.get(r.index) != r)
+        if (r.index < 0 || r.index >= indexToRule.Count || indexToRule[(r.index)] != r)
         {
             return false;
         }
@@ -468,7 +474,7 @@ public class Grammar : AttributeResolver
         //assert rules.get(r.name) == r;
 
         rules.remove(r.name);
-        indexToRule.remove(r.index);
+        indexToRule.RemoveAt(r.index);
         for (int i = r.index; i < indexToRule.Count; i++)
         {
             //assert indexToRule.get(i).index == i + 1;
@@ -490,8 +496,7 @@ public class Grammar : AttributeResolver
 
     public Rule getRule(String name)
     {
-        Rule r = rules.get(name);
-        if (r != null) return r;
+        if (rules.TryGetValue(name,out var r)) return r;
         return null;
         /*
 		List<Grammar> imports = getAllImportedGrammars();
@@ -514,7 +519,7 @@ public class Grammar : AttributeResolver
         return atn;
     }
 
-    public Rule getRule(int index) { return indexToRule.get(index); }
+    public Rule getRule(int index) { return indexToRule[(index)]; }
 
     public Rule getRule(String grammarName, String ruleName)
     {
@@ -525,7 +530,7 @@ public class Grammar : AttributeResolver
             {
                 return null;
             }
-            return g.rules.get(ruleName);
+            return g.rules.TryGetValue(ruleName,out var r)?r:null;
         }
         return getRule(ruleName);
     }
@@ -544,13 +549,13 @@ public class Grammar : AttributeResolver
         Dictionary<String, Grammar> delegates = new();
         foreach (Grammar d in importedGrammars)
         {
-            delegates.put(d.fileName, d);
+            delegates[d.fileName] = d;
             List<Grammar> ds = d.getAllImportedGrammars();
             if (ds != null)
             {
                 foreach (Grammar imported in ds)
                 {
-                    delegates.put(imported.fileName, imported);
+                    delegates[imported.fileName]= imported;
                 }
             }
         }
@@ -645,18 +650,15 @@ public class Grammar : AttributeResolver
 
     public int getTokenType(String token)
     {
-        int I;
         if (token[(0)] == '\'')
         {
-            I = stringLiteralToTypeMap.get(token);
+            return stringLiteralToTypeMap.TryGetValue(token,out var r)?r: Token.INVALID_TYPE;
         }
         else
         { // must be a label like ID
-            I = tokenNameToTypeMap.get(token);
+            return tokenNameToTypeMap.TryGetValue(token, out var r) ? r : Token.INVALID_TYPE;
         }
-        int i = (I != null) ? I : Token.INVALID_TYPE;
         //tool.log("grammar", "grammar type "+type+" "+tokenName+"->"+i);
-        return i;
     }
 
     public String getTokenName(String literal)
@@ -664,8 +666,8 @@ public class Grammar : AttributeResolver
         Grammar grammar = this;
         while (grammar != null)
         {
-            if (grammar.stringLiteralToTypeMap.ContainsKey(literal))
-                return grammar.getTokenName(grammar.stringLiteralToTypeMap.get(literal));
+            if (grammar.stringLiteralToTypeMap.TryGetValue(literal,out var v))
+                return grammar.getTokenName(v);
             grammar = grammar.parent;
         }
         return null;
@@ -759,9 +761,7 @@ public class Grammar : AttributeResolver
 	 */
     public int getChannelValue(String channel)
     {
-        int I = channelNameToValueMap.get(channel);
-        int i = (I != null) ? I : -1;
-        return i;
+        return channelNameToValueMap.TryGetValue(channel,out var r)?r:-1;
     }
 
     /**
@@ -776,7 +776,7 @@ public class Grammar : AttributeResolver
 	 */
     public String[] getRuleNames()
     {
-        String[] result = new String[rules.size()];
+        String[] result = new String[rules.Count];
         Array.Fill(result, INVALID_RULE_NAME);
         foreach (Rule rule in rules.Values)
         {
@@ -930,7 +930,10 @@ public class Grammar : AttributeResolver
                 if (a is PredAST)
                 {
                     PredAST p = (PredAST)a;
-                    indexToPredMap[sempreds.get(p)]= p;
+                    if(sempreds.TryGetValue(p, out var r2))
+                    {
+                        indexToPredMap[r2] = p;
+                    }
                 }
             }
         }
@@ -943,8 +946,8 @@ public class Grammar : AttributeResolver
         {
             indexToPredMap = getIndexToPredicateMap();
         }
-        ActionAST actionAST = indexToPredMap.get(pred.predIndex);
-        return actionAST.getText();
+        ActionAST? actionAST = indexToPredMap.TryGetValue(pred.predIndex,out var r)?r:null;
+        return actionAST?.getText();
     }
 
     /** What is the max char value possible for this grammar's target?  Use
@@ -1009,8 +1012,11 @@ public class Grammar : AttributeResolver
             tool.log("grammar", "tokens=" + tokens);
             foreach (String t in tokens.Keys)
             {
-                if (t.charAt(0) == '\'') defineStringLiteral(t, tokens.get(t));
-                else defineTokenName(t, tokens.get(t));
+                if(tokens.TryGetValue(t, out var ret))
+                {
+                    if (t[0] == '\'') defineStringLiteral(t, ret);
+                    else defineTokenName(t, ret);
+                }
             }
         }
     }
@@ -1019,11 +1025,11 @@ public class Grammar : AttributeResolver
     {
         foreach (String tokenName in importG.tokenNameToTypeMap.Keys)
         {
-            defineTokenName(tokenName, importG.tokenNameToTypeMap.get(tokenName));
+            defineTokenName(tokenName, importG.tokenNameToTypeMap[(tokenName)]);
         }
         foreach (String tokenName in importG.stringLiteralToTypeMap.Keys)
         {
-            defineStringLiteral(tokenName, importG.stringLiteralToTypeMap.get(tokenName));
+            defineStringLiteral(tokenName, importG.stringLiteralToTypeMap[(tokenName)]);
         }
         foreach (var channel in importG.channelNameToValueMap)
         {
@@ -1036,7 +1042,7 @@ public class Grammar : AttributeResolver
         for (int ttype = 0; ttype < importG.typeToTokenList.Count; ttype++)
         {
             maxTokenType = Math.Max(maxTokenType, ttype);
-            this.typeToTokenList.set(ttype, importG.typeToTokenList.get(ttype));
+            this.typeToTokenList[ttype]= importG.typeToTokenList[(ttype)];
         }
 
         max = Math.Max(this.channelValueToNameList.Count, importG.channelValueToNameList.Count);
@@ -1044,22 +1050,21 @@ public class Grammar : AttributeResolver
         for (int channelValue = 0; channelValue < importG.channelValueToNameList.Count; channelValue++)
         {
             maxChannelType = Math.Max(maxChannelType, channelValue);
-            this.channelValueToNameList.set(channelValue, importG.channelValueToNameList.get(channelValue));
+            this.channelValueToNameList[channelValue]= importG.channelValueToNameList[channelValue];
         }
     }
 
     public int defineTokenName(String name)
     {
-        int prev = tokenNameToTypeMap.get(name);
-        if (prev == null) return defineTokenName(name, getNewTokenType());
+        if (!tokenNameToTypeMap.TryGetValue(name,out var prev))
+            return defineTokenName(name, getNewTokenType());
         return prev;
     }
 
     public int defineTokenName(String name, int ttype)
     {
-        int prev = tokenNameToTypeMap.get(name);
-        if (prev != null) return prev;
-        tokenNameToTypeMap.put(name, ttype);
+        if (tokenNameToTypeMap.TryGetValue(name,out var prev)) return prev;
+        tokenNameToTypeMap[name]= ttype;
         setTokenForType(ttype, name);
         maxTokenType = Math.Max(maxTokenType, ttype);
         return ttype;
@@ -1079,13 +1084,13 @@ public class Grammar : AttributeResolver
     {
         if (!stringLiteralToTypeMap.ContainsKey(lit))
         {
-            stringLiteralToTypeMap.put(lit, ttype);
+            stringLiteralToTypeMap[lit]= ttype;
             // track in reverse index too
             if (ttype >= typeToStringLiteralList.Count)
             {
                 Utils.setSize(typeToStringLiteralList, ttype + 1);
             }
-            typeToStringLiteralList.set(ttype, lit);
+            typeToStringLiteralList[ttype]= lit;
 
             setTokenForType(ttype, lit);
             return ttype;
@@ -1096,7 +1101,7 @@ public class Grammar : AttributeResolver
     public int defineTokenAlias(String name, String lit)
     {
         int ttype = defineTokenName(name);
-        stringLiteralToTypeMap.put(lit, ttype);
+        stringLiteralToTypeMap[lit] = ttype;
         setTokenForType(ttype, name);
         return ttype;
     }
@@ -1117,7 +1122,7 @@ public class Grammar : AttributeResolver
         if (prevToken == null || prevToken[(0)] == '\'')
         {
             // only record if nothing there before or if thing before was a literal
-            typeToTokenList.set(ttype, text);
+            typeToTokenList[ttype] = text;
         }
     }
 
@@ -1133,8 +1138,7 @@ public class Grammar : AttributeResolver
 	 */
     public int defineChannelName(String name)
     {
-        int prev = channelNameToValueMap.get(name);
-        if (prev == null)
+        if (!channelNameToValueMap.TryGetValue(name,out var prev))
         {
             return defineChannelName(name, getNewChannelNumber());
         }
@@ -1154,8 +1158,7 @@ public class Grammar : AttributeResolver
 	 */
     public int defineChannelName(String name, int value)
     {
-        int prev = channelNameToValueMap.get(name);
-        if (prev != null)
+        if (channelNameToValueMap.TryGetValue(name,out var prev))
         {
             return prev;
         }
@@ -1354,15 +1357,17 @@ public class Grammar : AttributeResolver
                                       TreeWizard wiz,
                                       List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral)
     {
-        Dictionary<String, Object> nodes = new();
+        Dictionary<string, object> nodes = new();
         if (wiz.parse(r, pattern, nodes))
         {
-            GrammarAST litNode = (GrammarAST)nodes.get("lit");
-            GrammarAST nameNode = (GrammarAST)nodes.get("name");
-            Pair<GrammarAST, GrammarAST> pair =
-                new Pair<GrammarAST, GrammarAST>(nameNode, litNode);
-            lexerRuleToStringLiteral.Add(pair);
-            return true;
+            if(nodes.TryGetValue("lit",out var litNode) && litNode is GrammarAST ln 
+                && nodes.TryGetValue("name",out var nameNode) && nameNode is GrammarAST nn)
+            {
+                Pair<GrammarAST, GrammarAST> pair =
+                    new Pair<GrammarAST, GrammarAST>(nn, ln);
+                lexerRuleToStringLiteral.Add(pair);
+                return true;
+            }
         }
         return false;
     }
@@ -1378,23 +1383,24 @@ public class Grammar : AttributeResolver
 
         public void stringRef(TerminalAST @ref)
         {
-            strings.add(@ref.getText());
+            g.strings.Add(@ref.getText());
         }
         //@Override
 
         public ErrorManager getErrorManager() { return g.tool.errMgr; }
     }
+    HashSet<String> strings = new HashSet<String>();
     public HashSet<String> getStringLiterals()
     {
-        HashSet<String> strings = new HashSet<String>();
-        GrammarTreeVisitor collector = new GTV();
+        strings.Clear();
+        GrammarTreeVisitor collector = new GTV(this);
         collector.visitGrammar(ast);
         return strings;
     }
 
     public void setLookaheadDFA(int decision, DFA lookaheadDFA)
     {
-        decisionDFAs.put(decision, lookaheadDFA);
+        decisionDFAs[decision]= lookaheadDFA;
     }
 
     public static Dictionary<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
@@ -1445,7 +1451,7 @@ public class Grammar : AttributeResolver
         }
         if (stateToGrammarRegionMap == null) return Interval.INVALID;
 
-        return stateToGrammarRegionMap.get(atnStateNumber);
+        return stateToGrammarRegionMap.TryGetValue(atnStateNumber,out var r)?r:null;
     }
 
     public LexerInterpreter createLexerInterpreter(CharStream input)

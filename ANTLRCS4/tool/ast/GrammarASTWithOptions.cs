@@ -23,7 +23,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 
     public void setOption(String key, GrammarAST node) {
         if ( options==null ) options = new ();
-        options.put(key, node);
+        options[key] = node;
     }
 
 	public String getOptionString(String key) {
@@ -50,11 +50,11 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 	 */
     public GrammarAST getOptionAST(String key) {
         if ( options==null ) return null;
-        return options.get(key);
+        return options.TryGetValue(key,out var r)?r:null;
     }
 
 	public int getNumberOfOptions() {
-		return options==null ? 0 : options.size();
+		return options==null ? 0 : options.Count;
 	}
 
 	//@Override

@@ -26,13 +26,13 @@ public class CommonToken : WritableToken /*Serializable*/
     /**
 	 * This is the backing field for {@link #getLine} and {@link #setLine}.
 	 */
-    protected int line;
+    public int line;
 
     /**
 	 * This is the backing field for {@link #getCharPositionInLine} and
 	 * {@link #setCharPositionInLine}.
 	 */
-    protected int charPositionInLine = -1; // set to invalid position
+    public int charPositionInLine = -1; // set to invalid position
 
     /**
 	 * This is the backing field for {@link #getChannel} and

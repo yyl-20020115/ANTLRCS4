@@ -50,9 +50,14 @@ public class LexerGrammar : Grammar {
 		if (!base.undefineRule(r)) {
 			return false;
 		}
-
-		bool removed = modes.get(r.mode).remove(r);
-		//assert removed;
-		return true;
+		if(modes.TryGetValue(r.name,out var rule))
+		{
+			rule.Remove(r);
+			return true;
+		}
+		return false;
+		//bool removed = modes.get(r.mode).remove(r);
+		////assert removed;
+		//return true;
 	}
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Compile Remove="codegen\model\dbg.cs" />
+    <Compile Remove="unicode\UnicodeDataTemplateController.cs" />
   </ItemGroup>
 
   <ItemGroup>

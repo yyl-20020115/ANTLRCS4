@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime.misc;
+using System.Text;
 
 namespace org.antlr.v4.runtime;
 
@@ -20,13 +21,12 @@ public class ANTLRFileStream : ANTLRInputStream {
 	public ANTLRFileStream(String fileName): this(fileName, null)
     {}
 
-	public ANTLRFileStream(String fileName, String encoding){
+	public ANTLRFileStream(String fileName, Encoding encoding){
 		this.fileName = fileName;
 		load(fileName, encoding);
 	}
 
-	public void load(String fileName, String encoding)
-		
+	public void load(String fileName, Encoding encoding)
 	{
 		data = RuntimeUtils.readFile(fileName, encoding);
 		this.n = data.Length;

@@ -205,10 +205,10 @@ public class AttributeChecks : ActionSplitterListener {
 		if ( x.Equals(r.name) ) return r;
 		List<LabelElementPair> labels = null;
 		if ( node.resolver is Rule ) {
-			labels = r.getElementLabelDefs().get(x);
+			labels = r.getElementLabelDefs().TryGetValue(x,out var ret)?ret:new List<LabelElementPair>();
 		}
 		else if ( node.resolver is Alternative ) {
-			labels = ((Alternative)node.resolver).labelDefs.get(x);
+			labels = ((Alternative)node.resolver).labelDefs.TryGetValue(x,out var ret)?ret:new();
 		}
 		if ( labels!=null ) {  // it's a label ref. is it a rule label?
 			LabelElementPair anyLabelDef = labels[(0)];
@@ -217,7 +217,7 @@ public class AttributeChecks : ActionSplitterListener {
 			}
 		}
 		if ( node.resolver is Alternative ) {
-			if ( ((Alternative)node.resolver).ruleRefs.get(x)!=null ) {
+			if ( ((Alternative)node.resolver).ruleRefs.ContainsKey(x)) {
 				return g.getRule(x);
 			}
 		}

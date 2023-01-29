@@ -9,6 +9,7 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
+using System.Text.RegularExpressions;
 using Attribute = org.antlr.v4.tool.Attribute;
 
 namespace org.antlr.v4.parse;
@@ -68,11 +69,11 @@ public class ScopeParser {
 		int equalsIndex = decl.a.IndexOf('=');
 		if (equalsIndex > 0) {
 			// everything after the '=' is the init value
-			attr.initValue = decl.a.substring(equalsIndex + 1, decl.a.Length).Trim();
+			attr.initValue = decl.a.Substring(equalsIndex + 1, decl.a.Length - (equalsIndex+1)).Trim();
 			rightEdgeOfDeclarator = equalsIndex - 1;
 		}
 
-		String declarator = decl.a.substring(0, rightEdgeOfDeclarator + 1);
+		String declarator = decl.a.Substring(0, rightEdgeOfDeclarator + 1);
 		Pair<int, int> p;
 		String text = decl.a;
 		text = text.Replace("::","");
@@ -225,14 +226,14 @@ public class ScopeParser {
 		}
 
 		// extract name from decl
-		attr.name =  decl.substring(start, stop);
+		attr.name =  decl.Substring(start, stop-start);
 
 		// extract type from decl (could be empty)
 		if (colon == -1) {
 			attr.type = "";
 		}
 		else {
-			attr.type = decl.substring(colon + 1, decl.Length);
+			attr.type = decl.Substring(colon + 1, decl.Length - (colon+1));
 		}
 		attr.type = attr.type.Trim();
 
@@ -256,7 +257,7 @@ public class ScopeParser {
 		_splitArgumentList(s, 0, -1, separatorChar, args);
 		return args;
 	}
-
+	protected static Regex reg = new("//[^\\n]*");
 	public static int _splitArgumentList(String actionText,
 	                                     int start,
 	                                     int targetChar,
@@ -266,7 +267,7 @@ public class ScopeParser {
 			return -1;
 		}
 
-		actionText = actionText.replaceAll("//[^\\n]*", "");
+		actionText = reg.Replace(actionText, "");// actionText.replaceAll(, "");
 		int n = actionText.Length;
 		//Console.Out.WriteLine("actionText@"+start+"->"+(char)targetChar+"="+actionText.substring(start,n));
 		int p = start;
@@ -317,7 +318,7 @@ public class ScopeParser {
 					break;
 				default:
 					if (c == separatorChar && targetChar == -1) {
-						String arg = actionText.substring(last, p);
+						String arg = actionText.Substring(last, p-last);
 						int index = last;
 						while (index < p && char.IsWhiteSpace(actionText[(index)])) {
 							index++;
@@ -331,7 +332,7 @@ public class ScopeParser {
 			}
 		}
 		if (targetChar == -1 && p <= n) {
-			String arg = actionText.substring(last, p).Trim();
+			String arg = actionText.Substring(last, p-last).Trim();
 			int index = last;
 			while (index < p && char.IsWhiteSpace(actionText[index])) {
 				index++;

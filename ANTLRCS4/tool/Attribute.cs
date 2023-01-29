@@ -33,7 +33,7 @@ public class Attribute {
 
     public Attribute() {}
 
-    public Attribute(String name) { this(name,null); }
+    public Attribute(String name): this(name, null) { ; }
 
     public Attribute(String name, String decl) {
         this.name = name;

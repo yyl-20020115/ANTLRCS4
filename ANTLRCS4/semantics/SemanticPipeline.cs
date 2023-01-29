@@ -164,11 +164,15 @@ public class SemanticPipeline {
 			foreach (String lit in conflictingLiterals) {
 				// Remove literal if repeated across rules so it's not
 				// found by parser grammar.
-				int value = G.stringLiteralToTypeMap.remove(lit);
-				if (value != null && value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList[(value)])) {
-					G.typeToStringLiteralList.Set(value, null);
-				}
-			}
+				if(G.stringLiteralToTypeMap.TryGetValue(lit,out var value))
+				{
+					G.stringLiteralToTypeMap.Remove(lit);
+                    if (value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList[(value)]))
+                    {
+                        G.typeToStringLiteralList.Set(value, null);
+                    }
+                }
+            }
 		}
 	}
 

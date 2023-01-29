@@ -34,7 +34,7 @@ public class ToolANTLRParser : ANTLRParser {
 		tool.errMgr.syntaxError(ErrorType.SYNTAX_ERROR, getSourceName(), e.token, e, msg);
 	}
 
-	public String getParserErrorMessage(Parser parser, RecognitionException e) {
+	public String getParserErrorMessage(antlr.runtime.Parser parser, RecognitionException e) {
 		String msg;
 		if ( e is NoViableAltException) {
 			String name = parser.getTokenErrorDisplay(e.token);

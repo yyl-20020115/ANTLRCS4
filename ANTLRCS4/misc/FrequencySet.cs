@@ -10,13 +10,11 @@ namespace org.antlr.v4.misc;
 /** Count how many of each key we have; not thread safe */
 public class FrequencySet<T> : Dictionary<T, MutableInt> {
 	public int count(T key) {
-		MutableInt value = get(key);
-		if (value == null) return 0;
+		if (!this.TryGetValue(key,out var value)) return 0;
 		return value.v;
 	}
 	public void add(T key) {
-		MutableInt value = get(key);
-		if (value == null) {
+		if (!this.TryGetValue(key,out var value)) {
 			value = new MutableInt(1);
 			Add(key, value);
 		}

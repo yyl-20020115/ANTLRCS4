@@ -323,7 +323,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
-		DecisionState decisionState = originalParser.getATN().decisionToState.get(decision);
+		DecisionState decisionState = originalParser.getATN().decisionToState[(decision)];
 
 		for (int alt = 1; alt<=decisionState.getTransitions().Length; alt++) {
 			// re-parse entire input for all ambiguous alternatives

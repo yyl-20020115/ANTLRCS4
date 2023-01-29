@@ -504,10 +504,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop1;
+                            goto exit1;
+                            //break loop1;
                     }
                 }
-
+            exit1:
                 finishGrammar((GrammarRootAST)GRAMMAR2, ID1);
                 match(input, Token.UP, null);
 
@@ -600,13 +601,14 @@ public class GrammarTreeVisitor : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt2 >= 1) break loop2;
+                                    if (cnt2 >= 1) goto exit2;// break loop2;
                                     EarlyExitException eee = new EarlyExitException(2, input);
                                     throw eee;
                             }
                             cnt2++;
                         }
-
+                    exit2:
+                        ;
                     }
                     break;
                 case 2:
@@ -800,10 +802,11 @@ public class GrammarTreeVisitor : TreeParser
                                 break;
 
                             default:
-                                break loop5;
+                                goto exit5;
+                                //break loop5;
                         }
                     }
-
+                exit5:
                     match(input, Token.UP, null);
                 }
 
@@ -987,13 +990,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt6 >= 1) break loop6;
+                            if (cnt6 >= 1) goto exit6;// break loop6;
                             EarlyExitException eee = new EarlyExitException(6, input);
                             throw eee;
                     }
                     cnt6++;
                 }
-
+            exit6:
                 match(input, Token.UP, null);
 
             }
@@ -1143,13 +1146,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt8 >= 1) break loop8;
+                            if (cnt8 >= 1) goto exit8;// break loop8;
                             EarlyExitException eee = new EarlyExitException(8, input);
                             throw eee;
                     }
                     cnt8++;
                 }
-
+            exit8:
                 match(input, Token.UP, null);
 
             }
@@ -1263,13 +1266,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt9 >= 1) break loop9;
+                            if (cnt9 >= 1) goto exit9;// break loop9;
                             EarlyExitException eee = new EarlyExitException(9, input);
                             throw eee;
                     }
                     cnt9++;
                 }
-
+            exit9:
                 match(input, Token.UP, null);
 
             }
@@ -1483,10 +1486,11 @@ public class GrammarTreeVisitor : TreeParser
                                 break;
 
                             default:
-                                break loop11;
+                                goto exit11;
+                                //break loop11;
                         }
                     }
-
+                exit11:
                     finishRules(RULES8);
                     match(input, Token.UP, null);
                 }
@@ -1562,10 +1566,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop12;
+                            goto exit12;
+                            //break loop12;
                     }
                 }
-
+            exit12:
                 match(input, Token.UP, null);
 
             }
@@ -1667,10 +1672,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop14;
+                            goto exit14;
+                            //break loop14;
                     }
                 }
-
+            exit14:
                 discoverLexerRule((RuleAST)RULE12, TOKEN_REF11, mods, (opts != null ? ((GrammarAST)opts.start) : null), (GrammarAST)input.LT(1));
                 pushFollow(FOLLOW_lexerRuleBlock_in_lexerRule745);
                 lexerRuleBlock13 = lexerRuleBlock();
@@ -1780,13 +1786,13 @@ public class GrammarTreeVisitor : TreeParser
                                         break;
 
                                     default:
-                                        if (cnt15 >= 1) break loop15;
+                                        if (cnt15 >= 1) goto exit15;// break loop15;
                                         EarlyExitException eee = new EarlyExitException(15, input);
                                         throw eee;
                                 }
                                 cnt15++;
                             }
-
+                        exit15:
                             match(input, Token.UP, null);
 
                         }
@@ -1913,10 +1919,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop21;
+                            goto exit21;
+                            //break loop21;
                     }
                 }
-
+            exit21:
                 discoverRule((RuleAST)RULE15, RULE_REF14, mods, (ActionAST)ARG_ACTION16,
                                             (ret != null ? ((GrammarAST)ret.start) : null) != null ? (ActionAST)(ret != null ? ((GrammarAST)ret.start) : null).getChild(0) : null,
                                             (thr != null ? ((GrammarAST)thr.start) : null), (opts != null ? ((GrammarAST)opts.start) : null),
@@ -1997,10 +2004,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop22;
+                            goto exit22;
+                            //break loop22;
                     }
                 }
-
+            exit22:
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:571:25: ( finallyClause )?
                 int alt23 = 2;
                 int LA23_0 = input.LA(1);
@@ -2274,13 +2282,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt24 >= 1) break loop24;
+                            if (cnt24 >= 1) goto exit24;// break loop24;
                             EarlyExitException eee = new EarlyExitException(24, input);
                             throw eee;
                     }
                     cnt24++;
                 }
-
+            exit24:
                 match(input, Token.UP, null);
 
             }
@@ -2450,13 +2458,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt25 >= 1) break loop25;
+                            if (cnt25 >= 1) goto exit25;// break loop25;
                             EarlyExitException eee = new EarlyExitException(25, input);
                             throw eee;
                     }
                     cnt25++;
                 }
-
+            exit25:
                 match(input, Token.UP, null);
 
             }
@@ -2530,13 +2538,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt26 >= 1) break loop26;
+                            if (cnt26 >= 1) goto exit26;// break loop26;
                             EarlyExitException eee = new EarlyExitException(26, input);
                             throw eee;
                     }
                     cnt26++;
                 }
-
+            exit26:
                 match(input, Token.UP, null);
 
             }
@@ -2723,13 +2731,13 @@ public class GrammarTreeVisitor : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt27 >= 1) break loop27;
+                                    if (cnt27 >= 1) goto exit27;// break loop27;
                                     EarlyExitException eee = new EarlyExitException(27, input);
                                     throw eee;
                             }
                             cnt27++;
                         }
-
+                    exit27:
                         match(input, Token.UP, null);
 
                     }
@@ -2810,13 +2818,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt29 >= 1) break loop29;
+                            if (cnt29 >= 1) goto exit29; // break loop29;
                             EarlyExitException eee = new EarlyExitException(29, input);
                             throw eee;
                     }
                     cnt29++;
                 }
-
+            exit29:
                 match(input, Token.UP, null);
 
             }
@@ -3111,13 +3119,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt32 >= 1) break loop32;
+                            if (cnt32 >= 1) goto exit32;// break loop32;
                             EarlyExitException eee = new EarlyExitException(32, input);
                             throw eee;
                     }
                     cnt32++;
                 }
-
+            exit32:
                 match(input, Token.UP, null);
 
             }
@@ -3543,13 +3551,13 @@ public class GrammarTreeVisitor : TreeParser
                                     break;
 
                                 default:
-                                    if (cnt36 >= 1) break loop36;
+                                    if (cnt36 >= 1) goto exit36;// break loop36;
                                     EarlyExitException eee = new EarlyExitException(36, input);
                                     throw eee;
                             }
                             cnt36++;
                         }
-
+                    exit36:
                         match(input, Token.UP, null);
 
                     }
@@ -4802,13 +4810,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt45 >= 1) break loop45;
+                            if (cnt45 >= 1) goto exit45;// break loop45;
                             EarlyExitException eee = new EarlyExitException(45, input);
                             throw eee;
                     }
                     cnt45++;
                 }
-
+            exit45:
                 match(input, Token.UP, null);
 
             }
@@ -5086,10 +5094,11 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            break loop48;
+                            goto exit48;
+                            //break loop48;
                     }
                 }
-
+            exit48:
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:40: ( ACTION )?
                 int alt49 = 2;
                 int LA49_0 = input.LA(1);
@@ -5133,13 +5142,13 @@ public class GrammarTreeVisitor : TreeParser
                             break;
 
                         default:
-                            if (cnt50 >= 1) break loop50;
+                            if (cnt50 >= 1) goto exit50;//  break loop50;
                             EarlyExitException eee = new EarlyExitException(50, input);
                             throw eee;
                     }
                     cnt50++;
                 }
-
+            exit50:
                 match(input, Token.UP, null);
 
             }
@@ -5504,10 +5513,11 @@ public class GrammarTreeVisitor : TreeParser
                                 break;
 
                             default:
-                                break loop54;
+                                goto exit54;
+                                //break loop54;
                         }
                     }
-
+                exit54:
                     match(input, Token.UP, null);
                 }
 

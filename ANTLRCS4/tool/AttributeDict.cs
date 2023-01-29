@@ -50,14 +50,22 @@ public class AttributeDict {
 	public AttributeDict() {}
 	public AttributeDict(DictType type) { this.type = type; }
 
-	public Attribute add(Attribute a) { a.dict = this; return attributes.put(a.name, a); }
-    public Attribute get(String name) { return attributes.get(name); }
+	public Attribute add(Attribute a) { 
+        a.dict = this; 
+        if(this.attributes.TryGetValue(a.name,out var ret))
+        {
+            return ret;
+        }
+        attributes[a.name] = a;
+        return ret;
+    }
+    public Attribute get(String name) { return attributes.TryGetValue(name,out var r)?r:null; }
 
     public String getName() {
         return name;
     }
 
-    public int size() { return attributes.size(); }
+    public int size() { return attributes.Count; }
 
     /** Return the set of keys that collide from
      *  {@code this} and {@code other}.
@@ -65,11 +73,12 @@ public class AttributeDict {
 
     public HashSet<String> intersection(AttributeDict other) {
         if ( other==null || other.size()==0 || size()==0 ) {
-            return Collections.emptySet();
+            return new HashSet<string>();
         }
 
-        HashSet<String> result = new HashSet<String>(attributes.keySet());
-		result.retainAll(other.attributes.keySet());
+        HashSet<String> result = new HashSet<String>(attributes.Keys);
+		//result.retainAll(other.attributes.Keys);
+        result.RemoveWhere(k=>!other.attributes.ContainsKey(k));
 		return result;
     }
 

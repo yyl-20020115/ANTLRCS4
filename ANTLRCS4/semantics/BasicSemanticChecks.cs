@@ -142,7 +142,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 			String name = "?";
 			if (tree.getChildCount() > 0) {
 				name = tree.getChild(0).getText();
-				if (name == null || name.isEmpty()) {
+				if (name == null || name.Length==0) {
 					name = "?";
 				}
 
@@ -256,8 +256,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				String altLabel = altAST.altLabel.getText();
 				// first check that label doesn't conflict with a rule
 				// label X or x can't be rule x.
-				Rule r = ruleCollector.rules.get(Utils.decapitalize(altLabel));
-				if ( r!=null ) {
+				if (ruleCollector.rules.TryGetValue(Utils.decapitalize(altLabel),out var r)) {
 					g.tool.errMgr.grammarError(ErrorType.ALT_LABEL_CONFLICTS_WITH_RULE,
 											   g.fileName, altAST.altLabel.token,
 											   altLabel,
@@ -265,8 +264,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				}
 				// Now verify that label X or x doesn't conflict with label
 				// in another rule. altLabelToRuleName has both X and x mapped.
-				String prevRuleForLabel = ruleCollector.altLabelToRuleName.get(altLabel);
-				if ( prevRuleForLabel!=null && !prevRuleForLabel.Equals(rule.getRuleName()) ) {
+				if ( ruleCollector.altLabelToRuleName.TryGetValue(altLabel,out var prevRuleForLabel) && !prevRuleForLabel.Equals(rule.getRuleName()) ) {
 					g.tool.errMgr.grammarError(ErrorType.ALT_LABEL_REDEF,
 											   g.fileName, altAST.altLabel.token,
 											   altLabel,
@@ -275,9 +273,8 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				}
 			}
 		}
-		List<GrammarAST> altLabels = ruleCollector.ruleToAltLabels.get(rule.getRuleName());
-		int numAltLabels = 0;
-		if ( altLabels!=null ) numAltLabels = altLabels.Count;
+        int numAltLabels = 0;
+		if (ruleCollector.ruleToAltLabels.TryGetValue(rule.getRuleName(),out var altLabels)) numAltLabels = altLabels.Count;
 		if ( numAltLabels>0 && nalts != numAltLabels ) {
 			g.tool.errMgr.grammarError(ErrorType.RULE_WITH_TOO_FEW_ALT_LABELS,
 									   g.fileName, idAST.token, rule.getRuleName());
@@ -468,7 +465,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				break;
 		}
 		String optionName = optionID.getText();
-		if (optionsToCheck != null && !optionsToCheck.contains(optionName)) {
+		if (optionsToCheck != null && !optionsToCheck.Contains(optionName)) {
 			g.tool.errMgr.grammarError(ErrorType.ILLEGAL_OPTION, g.fileName, optionID, optionName);
 		}
 		else {
@@ -571,8 +568,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	void checkImport(Token importID) {
 		Grammar @delegate = g.getImportedGrammar(importID.getText());
 		if ( @delegate==null ) return;
-		List<int> validDelegators = validImportTypes.get(@delegate.getType());
-		if ( validDelegators!=null && !validDelegators.Contains(g.getType()) ) {
+		if (validImportTypes .TryGetValue(@delegate.getType() ,out var validDelegators) && !validDelegators.Contains(g.getType()) ) {
 			g.tool.errMgr.grammarError(ErrorType.INVALID_IMPORT,
 									   g.fileName,
 									   importID,

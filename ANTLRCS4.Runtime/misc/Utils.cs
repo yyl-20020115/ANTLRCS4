@@ -114,13 +114,13 @@ public static class RuntimeUtils
 
     public static char[] readFile(String fileName)
     {
-        return readFile(fileName, null);
+        return readFile(fileName, Encoding.Default);
     }
 
 
-    public static char[] readFile(String fileName, String encoding)
+    public static char[] readFile(String fileName, Encoding encoding)
     {
-        return File.ReadAllText(fileName, Encoding.GetEncoding(encoding)).ToArray();
+        return File.ReadAllText(fileName, encoding).ToArray();
     }
 
     /** Convert array of strings to string&rarr;index map. Useful for

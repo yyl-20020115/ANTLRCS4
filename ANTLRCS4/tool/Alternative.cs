@@ -61,7 +61,7 @@ public class Alternative : AttributeResolver {
     //@Override
     public bool resolvesToAttributeDict(String x, ActionAST node) {
 		if ( resolvesToToken(x, node) ) return true;
-        if ( ruleRefs.get(x)!=null ) return true; // rule ref in this alt?
+        if ( ruleRefs.ContainsKey(x)) return true; // rule ref in this alt?
         LabelElementPair anyLabelDef = getAnyLabelDef(x);
         if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) return true;
 		return false;
@@ -79,10 +79,10 @@ public class Alternative : AttributeResolver {
 	 */
     //@Override
     public Attribute resolveToAttribute(String x, String y, ActionAST node) {
-        if ( tokenRefs.get(x)!=null ) { // token ref in this alt?
+        if ( tokenRefs.ContainsKey(x) ) { // token ref in this alt?
             return rule.getPredefinedScope(LabelType.TOKEN_LABEL).get(y);
         }
-        if ( ruleRefs.get(x)!=null ) {  // rule ref in this alt?
+        if ( ruleRefs.ContainsKey(x) ) {  // rule ref in this alt?
             // look up rule, ask it to resolve y (must be retval or predefined)
 			return rule.g.getRule(x).resolveRetvalOrProperty(y);
 		}
@@ -118,14 +118,13 @@ public class Alternative : AttributeResolver {
 	}
 
 	public LabelElementPair getAnyLabelDef(String x) {
-		List<LabelElementPair> labels = labelDefs.get(x);
-		if ( labels!=null ) return labels.get(0);
+		if (labelDefs.TryGetValue(x,out var labels)) return labels[0];
 		return null;
 	}
 
 	/** x can be ruleref or rule label. */
 	public Rule resolveToRule(String x) {
-        if ( ruleRefs.get(x)!=null ) return rule.g.getRule(x);
+        if ( ruleRefs.ContainsKey(x) ) return rule.g.getRule(x);
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) {
             return rule.g.getRule(anyLabelDef.element.getText());

@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.runtime.tree;
+using org.antlr.v4.runtime.tree.pattern;
 
 namespace org.antlr.v4.test.runtime.java.api;
 
@@ -178,21 +179,21 @@ public class TestVisitors {
 		VisitorCalcParser.SContext context = parser.s();
 		Assert.AreEqual("(s (expr (expr 2) + (expr (expr 8) / (expr 2))) <EOF>)", context.toStringTree(parser));
 
-		VisitorCalcVisitor<Integer> listener = new VisitorCalcBaseVisitor<Integer>() {
+		VisitorCalcVisitor<int> listener = new VisitorCalcBaseVisitor<int>() {
 			//@Override
-			public Integer visitS(VisitorCalcParser.SContext ctx) {
+			public int visitS(VisitorCalcParser.SContext ctx) {
 				return visit(ctx.expr());
 			}
 
 			//@Override
-			public Integer visitNumber(VisitorCalcParser.NumberContext ctx) {
-				return Integer.valueOf(ctx.INT().getText());
+			public int visitNumber(VisitorCalcParser.NumberContext ctx) {
+				return int.valueOf(ctx.INT().getText());
 			}
 
 			//@Override
-			public Integer visitMultiply(VisitorCalcParser.MultiplyContext ctx) {
-				Integer left = visit(ctx.expr(0));
-				Integer right = visit(ctx.expr(1));
+			public int visitMultiply(VisitorCalcParser.MultiplyContext ctx) {
+				int left = visit(ctx.expr(0));
+				int right = visit(ctx.expr(1));
 				if (ctx.MUL() != null) {
 					return left * right;
 				}
@@ -202,9 +203,9 @@ public class TestVisitors {
 			}
 
 			//@Override
-			public Integer visitAdd(VisitorCalcParser.AddContext ctx) {
-				Integer left = visit(ctx.expr(0));
-				Integer right = visit(ctx.expr(1));
+			public int visitAdd(VisitorCalcParser.AddContext ctx) {
+				int left = visit(ctx.expr(0));
+				int right = visit(ctx.expr(1));
 				if (ctx.ADD() != null) {
 					return left + right;
 				}
@@ -214,12 +215,12 @@ public class TestVisitors {
 			}
 
 			//@Override
-			protected Integer defaultResult() {
+			protected int defaultResult() {
 				throw new RuntimeException("Should not be reachable");
 			}
 
 			//@Override
-			protected Integer aggregateResult(Integer aggregate, Integer nextResult) {
+			protected int aggregateResult(int aggregate, int nextResult) {
 				throw new RuntimeException("Should not be reachable");
 			}
 		};

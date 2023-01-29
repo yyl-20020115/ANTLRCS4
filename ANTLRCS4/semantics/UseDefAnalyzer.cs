@@ -25,6 +25,7 @@ public class UseDefAnalyzer {
 			}
 		}
 	}
+
 	public class BASListener: BlankActionSplitterListener
 	{
         //@Override
@@ -40,12 +41,12 @@ public class UseDefAnalyzer {
         //@Override
         public void attr(String expr, Token x) { dependent[0] = true; }
     }
-
+    static bool[] dependent = new bool[] { false };
     public static bool actionIsContextDependent(ActionAST actionAST) {
 		ANTLRStringStream @in = new ANTLRStringStream(actionAST.token.getText());
 		@in.setLine(actionAST.token.getLine());
 		@in.setCharPositionInLine(actionAST.token.getCharPositionInLine());
-		bool[] dependent = new bool[] {false}; // can't be simple bool with anon class
+		// can't be simple bool with anon class
 		ActionSplitterListener listener = new BASListener();
 		ActionSplitter splitter = new ActionSplitter(@in, listener);
 		// forces eval, triggers listener methods
@@ -59,7 +60,7 @@ public class UseDefAnalyzer {
 	}
 
 	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(LexerGrammar g, String modeName) {
-		return getRuleDependencies(g, g.modes.get(modeName));
+		return getRuleDependencies(g, g.modes.TryGetValue(modeName,out var r)?r:new());
 	}
 
 	public static Dictionary<Rule, HashSet<Rule>> getRuleDependencies(Grammar g, ICollection<Rule> rules) {
@@ -68,8 +69,7 @@ public class UseDefAnalyzer {
 		foreach (Rule r in rules) {
 			List<GrammarAST> tokenRefs = r.ast.getNodesWithType(ANTLRParser.TOKEN_REF);
 			foreach (GrammarAST tref in tokenRefs) {
-				HashSet<Rule> calls = dependencies.get(r);
-				if ( calls==null ) {
+				if ( !dependencies .TryGetValue(r,out var calls)) {
 					calls = new HashSet<Rule>();
 					dependencies[r] = calls;
 				}

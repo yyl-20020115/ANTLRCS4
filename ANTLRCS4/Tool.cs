@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
 using org.antlr.runtime;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
@@ -62,7 +63,7 @@ public class Tool {
 	public String outputDirectory;
 	public String libDirectory;
 	public bool generate_ATN_dot = false;
-	public String grammarEncoding = null; // use default locale's encoding
+	public Encoding grammarEncoding = Encoding.Default; // use default locale's encoding
 	public String msgFormat = "antlr";
 	public bool launch_ST_inspector = false;
 	public bool ST_inspector_wait_for_close = false;
@@ -116,7 +117,12 @@ public class Tool {
 	/** Track separately so if someone adds a listener, it's the only one
 	 *  instead of it and the default stderr listener.
 	 */
-	DefaultToolListener defaultListener = new DefaultToolListener(this);
+	DefaultToolListener defaultListener;
+
+	public Tool()
+	{
+		defaultListener = new DefaultToolListener(this);
+    }
 
 	public static void Main(String[] args) {
         Tool antlr = new Tool(args);
@@ -199,11 +205,11 @@ public class Tool {
 			if (outputDirectory.EndsWith("/") ||
 				outputDirectory.EndsWith("\\")) {
 				outputDirectory =
-					outputDirectory.substring(0, outputDirectory.Length - 1);
+					outputDirectory.Substring(0, outputDirectory.Length - 1);
 			}
 			string outDir = outputDirectory;
 			haveOutputDir = true;
-			if (outDir.exists() && !outDir.isDirectory()) {
+			if (File.Exists(outDir) && !Directory.Exists(outDir)) {
 				errMgr.toolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
 				outputDirectory = ".";
 			}
@@ -226,7 +232,8 @@ public class Tool {
 			libDirectory = ".";
 		}
 		if ( launch_ST_inspector ) {
-			STGroup.trackCreationEvents = true;
+
+			//TemplateGroup.trackCreationEvents = true;
 			return_dont_exit = true;
 		}
 	}
@@ -234,8 +241,8 @@ public class Tool {
 	protected void handleOptionSetArg(String arg) {
 		int eq = arg.IndexOf('=');
 		if ( eq>0 && arg.Length>3 ) {
-			String option = arg.substring("-D".Length, eq);
-			String value = arg.substring(eq+1);
+			String option = arg.Substring(2/*"-D".Length*/, eq-2);
+			String value = arg.Substring(eq+1);
 			if ( value.Length==0 ) {
 				errMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
 				return;
@@ -350,7 +357,7 @@ public class Tool {
 		if (gencode && g.tool.getNumErrors()==0 ) {
 			String interpFile = generateInterpreterData(g);
 			using (TextWriter fw = getOutputFileWriter(g, g.name + ".interp")) {
-				fw.write(interpFile);
+				fw.Write(interpFile);
 			}
 			//catch (IOException ioe) {
 			//	errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
@@ -378,9 +385,12 @@ public class Tool {
 
         public bool badref = false;
 
-		public UndefChecker(Tool tool)
+		public Dictionary<String, RuleAST> ruleToAST;
+
+        public UndefChecker(Tool tool, Dictionary<String, RuleAST> ruleToAST)
 		{
 			this.tool = tool;
+			this.ruleToAST = ruleToAST;
 		}
 		// @Override
         public void tokenRef(TerminalAST @ref)
@@ -391,13 +401,13 @@ public class Tool {
                 return;
             }
 
-            if (g.isLexer()) ruleRef(@ref, null);
+            if (tool.gx.isLexer()) ruleRef(@ref, null);
         }
 
         //@Override
         public void ruleRef(GrammarAST @ref, ActionAST arg)
         {
-            RuleAST ruleAST = ruleToAST.get(@ref.getText());
+            RuleAST ruleAST = ruleToAST.TryGetValue(@ref.getText(),out var ret)?ret:null;
             String fileName = @ref.getToken().getInputStream().getSourceName();
             if (char.IsUpper(currentRuleName[(0)]) &&
                 char.IsLower(@ref.getText()[(0)]))
@@ -418,13 +428,14 @@ public class Tool {
     }
 
 
-    /**
+	/**
 	 * Important enough to avoid multiple definitions that we do very early,
 	 * right after AST construction. Also check for undefined rules in
 	 * parser/lexer to avoid exceptions later. Return true if we find multiple
 	 * definitions of the same rule or a reference to an undefined rule or
 	 * parser rule ref in lexer rule.
 	 */
+	Grammar gx;
     public bool checkForRuleIssues( Grammar g) {
 		// check for redefined rules
 		GrammarAST RULES = (GrammarAST)g.ast.getFirstChildWithType(ANTLRParser.RULES);
@@ -439,8 +450,7 @@ public class Tool {
 			RuleAST ruleAST = (RuleAST)r;
 			GrammarAST ID = (GrammarAST)ruleAST.getChild(0);
 			String ruleName = ID.getText();
-			RuleAST prev = ruleToAST.get(ruleName);
-			if ( prev !=null ) {
+			if (ruleToAST.TryGetValue(ruleName,out var prev)) {
 				GrammarAST prevChild = (GrammarAST)prev.getChild(0);
 				g.tool.errMgr.grammarError(ErrorType.RULE_REDEFINITION,
 										   g.fileName,
@@ -452,8 +462,8 @@ public class Tool {
 			}
 			ruleToAST[ruleName]= ruleAST;
 		}
-
-		UndefChecker chk = new UndefChecker(this);
+		gx = g;
+		UndefChecker chk = new UndefChecker(this,ruleToAST);
 		chk.visitGrammar(g.ast);
 
 		return redefinition || chk.badref;
@@ -481,13 +491,13 @@ public class Tool {
 				int firstChar = vocabName[(0)];
 				int lastChar = vocabName[len - 1];
 				if (len >= 2 && firstChar == '\'' && lastChar == '\'') {
-					vocabName = vocabName.substring(1, len-1);
+					vocabName = vocabName.Substring(1, len-1 - 1);
 				}
 				// If the name Contains a path delimited by forward slashes,
 				// use only the part after the last slash as the name
 				int lastSlash = vocabName.LastIndexOf('/');
 				if (lastSlash >= 0) {
-					vocabName = vocabName.substring(lastSlash + 1);
+					vocabName = vocabName.Substring(lastSlash + 1);
 				}
 				g.addEdge(grammarName, vocabName);
 			}
@@ -584,10 +594,9 @@ public class Tool {
 	 */
 	public Grammar loadImportedGrammar(Grammar g, GrammarAST nameNode){
 		String name = nameNode.getText();
-		Grammar imported = importedGrammars.get(name);
-		if (imported == null) {
+		if (!importedGrammars.TryGetValue(name,out var imported)) {
 			g.tool.log("grammar", "load " + name + " from " + g.fileName);
-			File importedFile = null;
+			String importedFile = null;
             foreach (String extension in ALL_GRAMMAR_EXTENSIONS) {
 				importedFile = getImportedGrammarFile(g, name + extension);
 				if (importedFile != null) {
@@ -600,7 +609,7 @@ public class Tool {
 				return null;
 			}
 
-			String absolutePath = importedFile.getAbsolutePath();
+			String absolutePath = importedFile;
 			ANTLRFileStream @in = new ANTLRFileStream(absolutePath, grammarEncoding);
 			GrammarRootAST root = parse(g.fileName, @in);
 			if (root == null) {
@@ -698,14 +707,14 @@ public class Tool {
 			foreach (String channel in g.channelValueToNameList) {
 				content.Append(channel + "\n");
 			}
-			content.Append("\n");
+			content.Append('\n');
 
 			content.Append("mode names:\n");
-            foreach (String mode in ((LexerGrammar)g).modes.keySet()) {
+            foreach (String mode in ((LexerGrammar)g).modes.Keys) {
 				content.Append(mode + "\n");
 			}
 		}
-		content.Append("\n");
+		content.Append('\n');
 
 		IntegerList serializedATN = ATNSerializer.getSerialized(g.atn);
 		// Uncomment if you'd like to write out histogram info on the numbers of
@@ -747,15 +756,14 @@ public class Tool {
 		if (!File.Exists(outputDir)) {
 			Directory.CreateDirectory(outputDir);
 		}
-		FileOutputStream fos = new FileOutputStream(outputFile);
-		OutputStreamWriter osw;
+		TextWriter osw = null;
 		if ( grammarEncoding!=null ) {
-			osw = new OutputStreamWriter(fos, grammarEncoding);
+			osw = new StreamWriter(outputFile,false, grammarEncoding);
 		}
 		else {
-			osw = new OutputStreamWriter(fos);
+			osw = new StreamWriter(outputFile);
 		}
-		return new BufferedWriter(osw);
+		return osw;
 	}
 
 	public string getImportedGrammarFile(Grammar g, String fileName) {
@@ -787,7 +795,7 @@ public class Tool {
 			return new_getOutputDirectory(fileNameWithPath);
 		}
 
-		File outputDir;
+		String outputDir;
 		String fileDirectory;
 
 		// Some files are given to us without a PATH but should should
@@ -822,7 +830,7 @@ public class Tool {
 					outputDir = Path.Combine(outputDirectory, fileDirectory);
 				}
 				else {
-					outputDir = new File(outputDirectory);
+					outputDir = (outputDirectory);
 				}
 			}
 		}
@@ -831,7 +839,7 @@ public class Tool {
 			// where grammar is, absolute or relative, this will only happen
 			// with command line invocation as build tools will always
 			// supply an output directory.
-			outputDir = new File(fileDirectory);
+			outputDir = (fileDirectory);
 		}
 		return outputDir;
 	}
@@ -848,21 +856,21 @@ public class Tool {
 			fileDirectory = ".";
 		}
 		else {
-			fileDirectory = fileNameWithPath.substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
+			fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
 		}
 		if ( haveOutputDir ) {
 			// -o /tmp /var/lib/t.g4 => /tmp/T.java
 			// -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
 			// -o . /usr/lib/t.g4 => ./T.java
 			// -o /tmp subdir/t.g4 => /tmp/T.java
-			outputDir = new File(outputDirectory);
+			outputDir = outputDirectory;
 		}
 		else {
 			// they didn't specify a -o dir so just write to location
 			// where grammar is, absolute or relative, this will only happen
 			// with command line invocation as build tools will always
 			// supply an output directory.
-			outputDir = new File(fileDirectory);
+			outputDir = fileDirectory;
 		}
 		return outputDir;
 	}
@@ -885,7 +893,7 @@ public class Tool {
 		info("ANTLR Parser Generator  Version " + Tool.VERSION);
         foreach (Option o in optionDefs) {
 			String name = o.name + (o.argType!=OptionArgType.NONE? " ___" : "");
-			String s = String.format(" %-19s %s", name, o.description);
+			String s = $"{name} {o.description}";// String.format(" %-19s %s", name, o.description);
 			info(s);
 		}
 	}

@@ -13,14 +13,14 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 	/** Track the elements as they are added to the set */
 	protected List<K> elements = new ();
 
-	public K getKey(int i) { return elements.get(i); }
+	public K getKey(int i) { return elements[(i)]; }
 
-	public V getElement(int i) { return get(elements.get(i)); }
+	public V getElement(int i) { return this.TryGetValue((elements[(i)]),out var r)?r:default; }
 
 	//@Override
 	public V put(K key, V value) {
 		elements.Add(key);
-		return base.put(key, value);
+		return base[key]= value;
 	}
 
     //@Override
@@ -30,10 +30,16 @@ public class OrderedHashMap<K,V> : Dictionary<K,V> {
 		}
 	}
 
-    //@Override
-    public V remove(Object key) {
-		elements.Remove(key);
-		return base.Remove(key);
+	//@Override
+	public V remove(K key)
+	{
+		if (this.TryGetValue(key, out var v))
+		{
+			elements.Remove(key);
+			base.Remove(key);
+			return v;
+		}
+		return default;
 	}
 
     //@Override

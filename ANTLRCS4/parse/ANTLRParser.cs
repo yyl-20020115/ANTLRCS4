@@ -42,7 +42,7 @@ namespace org.antlr.v4.parse;
 /** The definitive ANTLR v3 grammar to parse ANTLR v4 grammars.
  *  The grammar builds ASTs that are sniffed by subsequent stages.
  */
-public class ANTLRParser : Parser
+public class ANTLRParser : antlr.runtime.Parser
 {
     public static readonly String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
@@ -59,6 +59,7 @@ public class ANTLRParser : Parser
         "EPSILON", "LEXER_ACTION_CALL", "LEXER_ALT_ACTION", "OPTIONAL", "POSITIVE_CLOSURE",
         "RULE", "RULEMODIFIERS", "RULES", "SET", "WILDCARD"
     };
+    public const int EOF = -1;
     public const int ACTION = 4;
     public const int ACTION_CHAR_LITERAL = 5;
     public const int ACTION_ESC = 6;
@@ -141,9 +142,9 @@ public class ANTLRParser : Parser
     public const int WILDCARD = 83;
 
     // delegates
-    public Parser[] getDelegates()
+    public antlr.runtime.Parser[] getDelegates()
     {
-        return new Parser[] { };
+        return new antlr.runtime.Parser[] { };
     }
 
     // delegators
@@ -169,7 +170,7 @@ public class ANTLRParser : Parser
         return adaptor;
     }
     ////@Override 
-    public override String[] getTokenNames() { return ANTLRParser.tokenNames; }
+    public virtual String[] getTokenNames() { return ANTLRParser.tokenNames; }
     ////@Override
     public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
 
@@ -9610,16 +9611,6 @@ public class ANTLRParser : Parser
             // do for sure before leaving
         }
         return retval;
-    }
-
-    public override string[] getRuleNames()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override ATN getATN()
-    {
-        throw new NotImplementedException();
     }
 
     // $ANTLR end "blockEntry"

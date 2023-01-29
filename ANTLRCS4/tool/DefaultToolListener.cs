@@ -22,8 +22,8 @@ public class DefaultToolListener : ANTLRToolListener {
 
 	//@Override
 	public void error(ANTLRMessage msg) {
-		ST msgST = tool.errMgr.getMessageTemplate(msg);
-		String outputMsg = msgST.render();
+		var msgST = tool.errMgr.getMessageTemplate(msg);
+		String outputMsg = msgST.Render();
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.Replace('\n', ' ');
 		}
@@ -32,8 +32,8 @@ public class DefaultToolListener : ANTLRToolListener {
 
 	//@Override
 	public void warning(ANTLRMessage msg) {
-		ST msgST = tool.errMgr.getMessageTemplate(msg);
-		String outputMsg = msgST.render();
+		var msgST = tool.errMgr.getMessageTemplate(msg);
+		String outputMsg = msgST.Render();
 		if (tool.errMgr.formatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.Replace('\n', ' ');
 		}

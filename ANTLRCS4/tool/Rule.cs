@@ -297,7 +297,7 @@ public class Rule : AttributeResolver {
 
     public AttributeDict getPredefinedScope(LabelType ltype) {
         String grammarLabelKey = g.getTypeString() + ":" + ltype;
-        return Grammar.grammarAndLabelRefTypeToScope.get(grammarLabelKey);
+        return Grammar.grammarAndLabelRefTypeToScope.TryGetValue(grammarLabelKey,out var v)?v:null;
     }
 
 	public bool isFragment() {

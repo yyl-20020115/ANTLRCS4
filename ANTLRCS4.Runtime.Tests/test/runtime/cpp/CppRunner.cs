@@ -50,8 +50,8 @@ public class CppRunner : RuntimeRunner {
 		if (IsWindows()) {
 			runtimeBinaryPath = Paths.get(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
 			runtimeLibraryFileName = Paths.get(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
-			String path = System.getenv("PATH");
-			environment.put("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
+			String path = Environment.GetEnvironmentVariable("PATH");
+			environment.Add("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
 		}
 		else {
 			runtimeBinaryPath = Paths.get(runtimePath, "dist").ToString();

@@ -24,41 +24,37 @@ public class TokenVocabParser {
 	public Dictionary<String,int> load() {
         Dictionary<String, int> tokens = new ();
 		int maxTokenType = -1;
-		File fullFile = getImportedVocabFile();
-		FileInputStream fis = null;
-		BufferedReader br = null;
+		String fullFile = getImportedVocabFile();
+		
 		Tool tool = g.tool;
 		String vocabName = g.getOptionString("tokenVocab");
-		try {
+        TextReader br = null;
+        try
+        {
 			Regex tokenDefPattern = new("([^\n]+?)[ \\t]*?=[ \\t]*?([0-9]+)");
-			fis = new FileInputStream(fullFile);
-			InputStreamReader isr;
 			if (tool.grammarEncoding != null) {
-				isr = new InputStreamReader(fis, tool.grammarEncoding);
+                br = new StreamReader(fullFile, tool.grammarEncoding);
 			}
 			else {
-				isr = new InputStreamReader(fis);
+                br = new StreamReader(fullFile);
 			}
 
-			br = new BufferedReader(isr);
-			String tokenDef = br.readLine();
+			String tokenDef = br.ReadLine();
 			int lineNum = 1;
 			while ( tokenDef!=null ) {
-				Matcher matcher = tokenDefPattern.matcher(tokenDef);
-				if ( matcher.find() ) {
-					String tokenID = matcher.group(1);
-					String tokenTypeS = matcher.group(2);
-					int tokenType;
-					try {
-						tokenType = Integer.valueOf(tokenTypeS);
-					}
-					catch (NumberFormatException nfe) {
-						tool.errMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
-											  vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
-											  " bad token type: "+tokenTypeS,
-											  lineNum);
-						tokenType = Token.INVALID_TOKEN_TYPE;
-					}
+				var matcher = tokenDefPattern.Match(tokenDef);
+				if ( matcher.Success ) {
+					String tokenID = matcher.Groups[1].Value;
+					String tokenTypeS = matcher.Groups[2].Value;
+	                if(!int.TryParse(tokenTypeS,out var tokenType))
+					{
+                        tool.errMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
+                                              vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
+                                              " bad token type: " + tokenTypeS,
+                                              lineNum);
+                        tokenType = Token.INVALID_TOKEN_TYPE;
+                    }
+                    
 					tool.log("grammar", "import "+tokenID+"="+tokenType);
 					tokens[tokenID] = tokenType;
 					maxTokenType = Math.Max(maxTokenType,tokenType);
@@ -72,7 +68,7 @@ public class TokenVocabParser {
 											  lineNum);
 					}
 				}
-				tokenDef = br.readLine();
+				tokenDef = br.ReadLine();
 			}
 		}
 		catch (FileNotFoundException fnfe) {
@@ -98,7 +94,7 @@ public class TokenVocabParser {
 		}
 		finally {
 			try {
-				if ( br!=null ) br.close();
+				if ( br!=null ) br.Close();
 			}
 			catch (IOException ioe) {
 				tool.errMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,

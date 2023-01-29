@@ -66,12 +66,12 @@ public class GrammarRootAST : GrammarASTWithOptions {
 
 	//@Override
 	public String getOptionString(String key) {
-		if ( cmdLineOptions!=null && cmdLineOptions.containsKey(key) ) {
-			return cmdLineOptions.get(key);
+		if ( cmdLineOptions!=null && cmdLineOptions.TryGetValue(key,out var v) ) {
+			return v;
 		}
 		String value = base.getOptionString(key);
-		if ( value==null ) {
-			value = defaultOptions.get(key);
+		if ( value==null && defaultOptions.TryGetValue(key, out var v2)) {
+			value = v2;
 		}
 		return value;
 	}

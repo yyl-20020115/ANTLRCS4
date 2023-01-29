@@ -39,8 +39,7 @@ public class Graph<T> {
 	}
 
 	public Node<T> getNode(T a) {
-		Node<T> existing = nodes.get(a);
-		if ( existing!=null ) return existing;
+		if ( nodes.TryGetValue(a,out var existing) ) return existing;
 		Node<T> n = new Node<T>(a);
 		nodes[a] = n;
 		return n;
