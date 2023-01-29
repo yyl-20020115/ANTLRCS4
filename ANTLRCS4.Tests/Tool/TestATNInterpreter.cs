@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.automata;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
@@ -345,9 +346,9 @@ public class TestATNInterpreter {
 								String inputString,
 								int expected)
 	{
-		ATN lexatn = createATN(lg, true);
-		LexerATNSimulator lexInterp = new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState.get(Lexer.DEFAULT_MODE)) },null);
-		IntegerList types = getTokenTypesViaATN(inputString, lexInterp);
+		ATN lexatn =ToolTestUtils.createATN(lg, true);
+		LexerATNSimulator lexInterp = new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) },null);
+		IntegerList types = ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
 //		Console.Out.WriteLine(types);
 
 		g.importVocab(lg);

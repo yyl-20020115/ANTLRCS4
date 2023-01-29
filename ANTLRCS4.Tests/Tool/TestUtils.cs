@@ -54,10 +54,10 @@ public class TestUtils
     {
         Assert.AreEqual("fOO", Utils.decapitalize("FOO"));
     }
-    public class UFA<T,TResult> : Utils.Func1<T,TResult>
+    public class UFA<T> : Utils.Func1<T,string>
     {
         //@Override
-        public Object exec(Object arg1)
+        public string exec(T arg1)
         {
             return "baz";
         }

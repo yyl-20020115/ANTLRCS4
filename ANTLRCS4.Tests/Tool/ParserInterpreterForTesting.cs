@@ -13,7 +13,7 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.test.tool;
 
 public class ParserInterpreterForTesting {
-	public class DummyParser : codegen.model.Parser
+	public class DummyParser : antlr.runtime.Parser
     {
 		public readonly ATN atn;
 		public readonly DFA[] decisionToDFA; // not shared for interp
@@ -67,7 +67,7 @@ public class ParserInterpreterForTesting {
 		antlr.process(g,false);
 		parser = new DummyParser(g, g.atn, input);
 		atnSimulator =
-			new ParserATNSimulator(parser, g.atn, parser.decisionToDFA,
+			new ParserATNSimulator(null/*parser*/, g.atn, parser.decisionToDFA,
 										  parser.sharedContextCache);
 	}
 

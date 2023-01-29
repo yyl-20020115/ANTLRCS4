@@ -13,8 +13,8 @@ namespace org.antlr.v4.test.runtime.states;
 public class JavaCompiledState : CompiledState
 {
     public readonly Assembly assembly;
-    public readonly Type lexer;
-    public readonly Type parser;
+    public readonly Type lexerType;
+    public readonly Type parserType;
 
     public JavaCompiledState(GeneratedState previousState,
                              Assembly assembly,
@@ -26,21 +26,23 @@ public class JavaCompiledState : CompiledState
     {
         ;
         this.assembly = assembly;
-        this.lexer = lexer;
-        this.parser = parser;
+        this.lexerType = lexer;
+        this.parserType = parser;
     }
 
     public Pair<Lexer, Parser> initializeLexerAndParser(String input)
     {
         ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
 
-        ConstructorInfo lexerConstructor = lexer.GetConstructor(typeof(CharStream));
-        Lexer lexer = lexerConstructor.newInstance(@in);
+        ConstructorInfo lexerConstructor = this.lexerType.GetConstructor(
+            new Type[] { typeof(CharStream) });
+        Lexer lexer = lexerConstructor.Invoke(new object[] { @in }) as Lexer;
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        ConstructorInfo parserConstructor = parser.getConstructor(TokenStream);
-        Parser parser = parserConstructor.newInstance(tokens);
+        ConstructorInfo parserConstructor = parserType.GetConstructor(
+            new Type[] { typeof(TokenStream) });
+        Parser parser = parserConstructor.Invoke(new object[] { tokens }) as Parser;
         return new (lexer, parser);
     }
 }

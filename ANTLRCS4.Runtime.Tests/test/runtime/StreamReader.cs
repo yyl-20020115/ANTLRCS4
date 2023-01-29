@@ -15,18 +15,18 @@ public class RunnableStreamReader : Runnable {
 
 	public RunnableStreamReader(TextReader reader) {
 		this.reader = reader;
-		worker = new Thread(this);
+		worker = new Thread(this.run);
 	}
 
 	public void start() {
-		worker.start();
+		worker.Start();
 	}
 
 	////@Override
 	public void run() {
 		try {
 			while (true) {
-				int c = in.read();
+				int c = reader.Read();
 				if (c == -1) {
 					break;
 				}
@@ -43,7 +43,7 @@ public class RunnableStreamReader : Runnable {
 
 	/** wait for the thread to finish */
 	public void join()  {
-		worker.join();
+		worker.Join();
 	}
 
 	////@Override

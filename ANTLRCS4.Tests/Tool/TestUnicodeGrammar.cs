@@ -45,7 +45,7 @@ public class TestUnicodeGrammar {
 			"WORLD : ('\\uD83C\\uDF0D' | '\\uD83C\\uDF0E' | '\\uD83C\\uDF0F' );\n" +
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = new StringBuilder("hello ")
-				.appendCodePoint(0x1F30E)
+				.Append(char.ConvertFromUtf32(0x1F30E))
 				.ToString();
 		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
@@ -63,7 +63,7 @@ public class TestUnicodeGrammar {
 			"WORLD : ('\\u{1F30D}' | '\\u{1F30E}' | '\\u{1F30F}' );\n" +
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
 		String inputText = new StringBuilder("hello ")
-				.appendCodePoint(0x1F30E)
+				.Append(char.ConvertFromUtf32(0x1F30E))
 				.ToString();
 		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
@@ -80,8 +80,7 @@ public class TestUnicodeGrammar {
 			"r : 'hello' WORLD;\n" +
 			"WORLD : ('\\u{1F30D}'..'\\u{1F30F}' );\n" +
 			"WS : [ \\t\\r\\n]+ -> skip;\n";
-		String inputText = new StringBuilder("hello ")
-				.appendCodePoint(0x1F30E)
+		String inputText = new StringBuilder("hello ").Append(char.ConvertFromUtf32(0x1F30E))
 				.ToString();
 		Assert.AreEqual(
 				"(r:1 " + inputText + ")",
@@ -129,7 +128,7 @@ public class TestUnicodeGrammar {
 		LexerInterpreter lexEngine = grammar.createLexerInterpreter(charStream);
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 		GrammarParserInterpreter parser = grammar.createGrammarParserInterpreter(tokens);
-		ParseTree parseTree = parser.parse(grammar.rules.get("r").index);
+		ParseTree parseTree = parser.parse(grammar.rules[("r")].index);
 		InterpreterTreeTextProvider nodeTextProvider =
 				new InterpreterTreeTextProvider(grammar.getRuleNames());
 		String result = Trees.toStringTree(parseTree, nodeTextProvider);

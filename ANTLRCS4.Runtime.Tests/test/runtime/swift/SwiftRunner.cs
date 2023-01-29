@@ -65,7 +65,7 @@ public class SwiftRunner : RuntimeRunner {
 			//assert ignoredFiles != null;
 			List<String> excludedFiles = ignoredFiles.ToList();// Arrays.stream().map(File::getName).collect(Collectors.toList());
 
-			String text = getTextFromResource("org/antlr/v4/test/runtime/helpers/Package.swift.stg");
+			String text = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Package.swift.stg");
 			Template outputFileST = new Template(text);
 			outputFileST.Add("excludedFiles", excludedFiles);
 			FileUtils.writeFile(tempDirPath, "Package.swift", outputFileST.Render());
@@ -94,13 +94,13 @@ public class SwiftRunner : RuntimeRunner {
 		return new CompiledState(generatedState, exception);
 	}
 
-	class NoSwiftFileFilter : FilenameFilter {
-		public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
+	//class NoSwiftFileFilter : FilenameFilter {
+	//	public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
 
-		public bool accept(string dir, String name) {
-			return !name.EndsWith(".swift");
-		}
-	}
+	//	public bool accept(string dir, String name) {
+	//		return !name.EndsWith(".swift");
+	//	}
+	//}
 
 	////@Override
 	public String getRuntimeToolName() {
@@ -109,11 +109,11 @@ public class SwiftRunner : RuntimeRunner {
 
 	////@Override
 	public String getExecFileName() {
-		return Paths.get(getTempDirPath(),
+		return Path.Combine(getTempDirPath(),
 				".build",
 				buildSuffix,
 				"release",
-				"Test" + (isWindows() ? ".exe" : "")).ToString();
+				"Test" + (RuntimeTestUtils.IsWindows() ? ".exe" : "")).ToString();
 	}
 
 	////@Override

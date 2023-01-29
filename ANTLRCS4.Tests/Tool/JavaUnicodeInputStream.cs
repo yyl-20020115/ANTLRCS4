@@ -238,4 +238,34 @@ public class JavaUnicodeInputStream : CharStream {
 		nextIndexPtr[0]++;
 		return c0;
 	}
+
+    public int getCharPositionInLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int getLine()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int LT(int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string substring(int tokenStartCharIndex, int v)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind(int nvaeMark)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void rewind()
+    {
+        throw new NotImplementedException();
+    }
 }

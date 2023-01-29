@@ -30,9 +30,9 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void consumingEmptyStreamShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("");
-		IllegalStateException illegalStateException = assertThrows(
-				IllegalStateException,
-				s::consume
+		IllegalStateException illegalStateException = Assert.ThrowsException<
+				IllegalStateException>(
+				() => s.consume()
 		);
 		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
@@ -55,7 +55,7 @@ public class TestCodePointCharStream {
 	public void consumingPastSingleLatinCodePointShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("X");
 		s.consume();
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
+		IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(() => s.consume());
 		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
@@ -102,7 +102,7 @@ public class TestCodePointCharStream {
 	public void consumingPastSingleCJKCodePointShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString("\u611B");
 		s.consume();
-		IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>((s)=>s.consume());
+		IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(()=>s.consume());
 		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
@@ -123,7 +123,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void singleEmojiCodePointHasSize1() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
+				new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
 		Assert.AreEqual(1, s.size());
 		Assert.AreEqual(0, s.index());
 	}
@@ -131,7 +131,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void consumingSingleEmojiCodePointShouldMoveIndex() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
+				new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
 		Assert.AreEqual(0, s.index());
 		s.consume();
 		Assert.AreEqual(1, s.index());
@@ -140,18 +140,19 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void consumingPastEndOfEmojiCodePointWithShouldThrow() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
+				new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
 		Assert.AreEqual(0, s.index());
 		s.consume();
 		Assert.AreEqual(1, s.index());
-		IllegalStateException illegalStateException = assertThrows(IllegalStateException, s::consume);
+		IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(
+			()=>s.consume());
 		Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
 	}
 
 	[TestMethod]
 	public void singleEmojiCodePointLookAheadShouldReturnCodePoint() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
+				new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
 		Assert.AreEqual(0x1F4A9, s.LA(1));
 		Assert.AreEqual(0, s.index());
 	}
@@ -159,7 +160,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void singleEmojiCodePointLookAheadPastEndShouldReturnEOF() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder().appendCodePoint(0x1F4A9).ToString());
+				new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
 		Assert.AreEqual(IntStream.EOF, s.LA(2));
 		Assert.AreEqual(0, s.index());
 	}
@@ -180,7 +181,7 @@ public class TestCodePointCharStream {
 	public void getTextWithEmoji() {
 		CodePointCharStream s = CharStreams.fromString(
 				new StringBuilder("01234")
-					.appendCodePoint(0x1F522)
+					.Append(char.ConvertFromUtf32(0x1F522))
 					.Append("6789")
 					.ToString());
 		Assert.AreEqual("34\uD83D\uDD2267", s.getText(Interval.of(3, 7)));
@@ -201,8 +202,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void toStringWithEmoji() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder("01234")
-					.appendCodePoint(0x1F522)
+				new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
 					.Append("6789")
 					.ToString());
 		Assert.AreEqual("01234\uD83D\uDD226789", s.ToString());
@@ -223,8 +223,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void lookAheadWithEmoji() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder("01234")
-					.appendCodePoint(0x1F522)
+				new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
 					.Append("6789")
 					.ToString());
 		Assert.AreEqual(0x1F522, s.LA(6));
@@ -247,8 +246,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void seekWithEmoji() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder("01234")
-					.appendCodePoint(0x1F522)
+				new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
 					.Append("6789")
 					.ToString());
 		s.seek(5);
@@ -272,8 +270,7 @@ public class TestCodePointCharStream {
 	[TestMethod]
 	public void lookBehindWithEmoji() {
 		CodePointCharStream s = CharStreams.fromString(
-				new StringBuilder("01234")
-					.appendCodePoint(0x1F522)
+				new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
 					.Append("6789")
 					.ToString());
 		s.seek(6);

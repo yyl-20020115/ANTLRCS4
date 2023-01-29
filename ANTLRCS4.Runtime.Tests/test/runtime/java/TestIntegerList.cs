@@ -28,7 +28,7 @@ public class TestIntegerList {
 		// Java allows dangling surrogates, so (currently) we do
 		// as well. We could change this if desired.
 		l.add(0xDC00);
-		char[] expected = new char[] { 0xDC00 };
+		char[] expected = new char[] { '\uDC00' };
 		assertArrayEquals(expected, l.toCharArray());
 	}
 

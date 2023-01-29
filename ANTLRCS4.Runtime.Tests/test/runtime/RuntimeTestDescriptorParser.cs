@@ -13,7 +13,7 @@ namespace org.antlr.v4.test.runtime;
 
 
 public class RuntimeTestDescriptorParser {
-	private static readonly HashSet<String> sections = new HashSet<>(Arrays.AsList(
+	private static readonly HashSet<String> sections = new (Arrays.AsList(
 			"notes", "type", "grammar", "slaveGrammar", "start", "input", "output", "errors", "flags", "skip"
 	));
 
@@ -84,11 +84,11 @@ public class RuntimeTestDescriptorParser {
 					pairs.Add(new (currentField, currentValue.ToString()));
 				}
 				currentField = sectionName;
-				currentValue.setLength(0);
+				currentValue.Length=0;
 			}
 			else {
 				currentValue.Append(line);
-				currentValue.Append("\n");
+				currentValue.Append('\n');
 			}
 		}
 		pairs.Add(new (currentField, currentValue.ToString()));
@@ -122,7 +122,7 @@ public class RuntimeTestDescriptorParser {
 					notes = value;
 					break;
 				case "type":
-					testType = Enum.GetValues(GrammarType, value);
+					testType = Enum.TryParse<GrammarType>(value, out var ret)?ret:GrammarType.Lexer;
 					break;
 				case "grammar":
 					grammarName = getGrammarName(value.Split("\n")[0]);
@@ -131,7 +131,9 @@ public class RuntimeTestDescriptorParser {
 				case "slaveGrammar":
 					String gname = getGrammarName(value.Split("\n")[0]);
 					slaveGrammars.Add(new (gname, value));
-				case "start":
+                    startRule = value;
+					break;
+                case "start":
 					startRule = value;
 					break;
 				case "input":
@@ -171,12 +173,12 @@ public class RuntimeTestDescriptorParser {
 	 * "lexer grammar A;" "grammar B;" "parser grammar C;"
 	 */
 	private static String getGrammarName(String grammarDeclLine) {
-		int gi = grammarDeclLine.indexOf("grammar ");
+		int gi = grammarDeclLine.IndexOf("grammar ");
 		if ( gi<0 ) {
 			return "<unknown grammar name>";
 		}
-		gi += "grammar ".length();
-		int gsemi = grammarDeclLine.indexOf(';');
+		gi += "grammar ".Length;
+		int gsemi = grammarDeclLine.IndexOf(';');
 		return grammarDeclLine.Substring(gi, gsemi-gi);
 	}
 }

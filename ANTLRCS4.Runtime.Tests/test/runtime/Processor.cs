@@ -43,8 +43,8 @@ public class Processor {
 		}
 
 		Process process = builder.start();
-		StreamReader stdoutReader = new StreamReader(process.getInputStream());
-		StreamReader stderrReader = new StreamReader(process.getErrorStream());
+		RunnableStreamReader stdoutReader = new RunnableStreamReader(process.getInputStream());
+        RunnableStreamReader stderrReader = new RunnableStreamReader(process.getErrorStream());
 		stdoutReader.start();
 		stderrReader.start();
 		process.waitFor();
@@ -54,7 +54,7 @@ public class Processor {
 		String output = stdoutReader.ToString();
 		String errors = stderrReader.ToString();
 		if (throwOnNonZeroErrorCode && process.exitValue() != 0) {
-			throw new InterruptedException( joinLines(output, errors));
+			throw new Exception(RuntimeTestUtils.joinLines(output, errors));
 		}
 		return new ProcessorResult(process.exitValue(), output, errors);
 	}

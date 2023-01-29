@@ -10,7 +10,7 @@ using org.antlr.v4.runtime.tree;
 namespace org.antlr.v4.test.tool;
 
 
-public class InterpreterTreeTextProvider : TreeTextProvider {
+public class InterpreterTreeTextProvider {
 	public List<String> ruleNames;
 	public InterpreterTreeTextProvider(String[] ruleNames) {this.ruleNames = Arrays.AsList(ruleNames);}
 

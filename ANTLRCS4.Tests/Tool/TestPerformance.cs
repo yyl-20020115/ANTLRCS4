@@ -357,7 +357,7 @@ public class TestPerformance
         {
             if (CLEAR_DFA)
             {
-                int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
+                int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.CurrentThread).getThreadNumber();
                 if (sharedLexers.Length > 0 && sharedLexers[index] != null)
                 {
                     ATN atn = sharedLexers[index].getATN();
@@ -1504,10 +1504,10 @@ public class TestPerformance
     {
         try
         {
-            Type listenerClass = loader.loadClass(listenerName).asSubclass(ParseTreeListener);
+            Type listenerClass = Type.GetType(listenerName);
 
-            ConstructorInfo lexerCtor = javaCompiledState.lexer.getConstructor(CharStream);
-            ConstructorInfo parserCtor = javaCompiledState.parser.getConstructor(TokenStream);
+            ConstructorInfo lexerCtor = javaCompiledState.lexerType.GetConstructor(CharStream);
+            ConstructorInfo parserCtor = javaCompiledState.parserType.GetConstructor(TokenStream);
 
             // construct initial instances of the lexer and parser to deserialize their ATNs
             javaCompiledState.initializeLexerAndParser("");
@@ -1522,12 +1522,12 @@ public class TestPerformance
         }
     }
 
-    protected interface ParserFactory
+    public interface ParserFactory
     {
         FileParseResult parseFile(CharStream input, int currentPass, int thread);
     }
 
-    protected class FileParseResult
+    public class FileParseResult
     {
         public readonly String sourceName;
         public readonly int checksum;
@@ -2047,12 +2047,11 @@ public class TestPerformance
         }
     }
 
-    protected class NumberedThread : Thread
+    protected class NumberedThread
     {
         private readonly int threadNumber;
 
         public NumberedThread(Runnable target, int threadNumber)
-            : base(target)
         {
             ;
             this.threadNumber = threadNumber;
@@ -2065,7 +2064,7 @@ public class TestPerformance
 
     }
 
-    protected class NumberedThreadFactory : ThreadFactory
+    protected class NumberedThreadFactory
     {
         private readonly AtomicInteger nextThread = new AtomicInteger();
 
@@ -2079,7 +2078,7 @@ public class TestPerformance
 
     }
 
-    public class FixedThreadNumberFactory : ThreadFactory
+    public class FixedThreadNumberFactory
     {
         private readonly int threadNumber;
 
@@ -2145,7 +2144,7 @@ public class TestPerformance
     public class InputDescriptor
     {
         private readonly String source;
-        private Reference<CloneableANTLRFileStream> inputStream;
+        private StrongReference<CloneableANTLRFileStream> inputStream;
 
         public InputDescriptor(String source)
         {
@@ -2273,6 +2272,6 @@ public class TestPerformance
         Assert.IsTrue(equeue.errors.Count == 0);
 
         long endTime = DateTime.Now.Nanosecond;
-        Console.Out.format("%s milliseconds.%n", (endTime - startTime) / 1000000.0);
+        Console.Out.WriteLine("{(endTime - startTime) / 1000000.0} milliseconds.%n" );
     }
 }

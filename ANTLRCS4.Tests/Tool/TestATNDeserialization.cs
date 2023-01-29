@@ -154,19 +154,19 @@ public class TestATNDeserialization {
 	}
 
 	protected void checkDeserializationIsStable(Grammar g) {
-		ATN atn = createATN(g, false);
+		ATN atn =ToolTestUtils.createATN(g, false);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 
-		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);
+		IntegerList serialized16 =ATNDeserializer.encodeIntsWith16BitWords(serialized);
 		int[] ints16 = serialized16.toArray();
 		char[] chars = new char[ints16.Length];
 		for (int i = 0; i < ints16.Length; i++) {
 			chars[i] = (char)ints16[i];
 		}
-		int[] serialized32 = decodeIntsEncodedAs16BitWords(chars, true);
+		int[] serialized32 = ATNDeserializer.decodeIntsEncodedAs16BitWords(chars, true);
 
-		assertArrayEquals(serialized.toArray(), serialized32);
+		Assert.IsTrue(Enumerable.SequenceEqual(serialized.toArray(), serialized32));
 
 		ATN atn2 = new ATNDeserializer().deserialize(serialized.toArray());
 		IntegerList serialized1 = ATNSerializer.getSerialized(atn2);

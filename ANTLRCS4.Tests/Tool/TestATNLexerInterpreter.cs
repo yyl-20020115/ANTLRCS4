@@ -131,7 +131,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ~('\u611B'|'\u611C')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerSetUnicodeSMP(){
@@ -139,7 +139,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerNotBMPSetMatchesUnicodeSMP(){
@@ -147,7 +147,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerNotBMPSetMatchesBMP(){
@@ -163,7 +163,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ~('a'|'b')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4A9).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerNotSMPSetMatchesBMP(){
@@ -179,7 +179,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ~('\\u{1F4A9}'|'\\u{1F4AA}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1D7C0).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1D7C0)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerRangeUnicodeSMP(){
@@ -187,7 +187,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ('\\u{1F4A9}'..'\\u{1F4B0}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x1F4AF).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x1F4AF)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerRangeUnicodeBMPToSMP(){
@@ -195,7 +195,7 @@ public class TestATNLexerInterpreter {
 			"lexer grammar L;\n"+
 			"ID : ('\\u611B'..'\\u{1F4B0}')\n ;");
 		String expecting = "ID, EOF";
-		checkLexerMatches(lg, new StringBuilder().appendCodePoint(0x12001).ToString(), expecting);
+		checkLexerMatches(lg, new StringBuilder().Append(char.ConvertFromUtf32(0x12001)).ToString(), expecting);
 	}
 
 	[TestMethod] public void testLexerKeywordIDAmbiguity(){
@@ -514,9 +514,9 @@ public class TestATNLexerInterpreter {
 	}
 
 	private void checkLexerMatches(LexerGrammar lg, String inputString, String expecting) {
-		ATN atn = createATN(lg, true);
+		ATN atn =ToolTestUtils.createATN(lg, true);
 		CharStream input = CharStreams.fromString(inputString);
-		ATNState startState = atn.modeNameToStartState.get("DEFAULT_MODE");
+		ATNState startState = atn.modeNameToStartState[("DEFAULT_MODE")];
 		DOTGenerator dot = new DOTGenerator(lg);
 //		Console.Out.WriteLine(dot.getDOT(startState, true));
 

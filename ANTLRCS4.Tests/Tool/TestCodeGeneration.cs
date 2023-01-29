@@ -58,7 +58,7 @@ public class TestCodeGeneration {
 		}
 
 		//@Override
-		protected int writeObject(ITemplateWriter @out, InstanceScope scope, Object o, String[] options) {
+		protected int writeObject(ITemplateWriter @out, TemplateFrame scope, Object o, String[] options) {
 			if ( o is Template ) {
 				String name = ((Template)o).Name;
 				name = name.Substring(1);
@@ -71,7 +71,7 @@ public class TestCodeGeneration {
 						evals.Add("</ST:" + name + ">");
 						return r;
 					} catch (IOException ioe) {
-						myErrMgrCopy.IOError(scope.st, ErrorType.WRITE_IO_ERROR, ioe);
+						myErrMgrCopy.IOError(scope.Template, ErrorType.WRITE_IO_ERROR, ioe);
 					}
 				}
 			}
@@ -79,17 +79,17 @@ public class TestCodeGeneration {
 		}
 
 		//@Override
-		protected int writePOJO(ITemplateWriter @out, InstanceScope scope, Object o, String[] options){
+		protected int writePOJO(ITemplateWriter @out, TemplateFrame scope, Object o, String[] options){
 			Type type = o.GetType();
 			String name = type.Name;
-			@out.write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
+			@out.Write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
 			return base.writePOJO(@out, scope, o, options);
 		}
 
 		public void indent(ITemplateWriter @out){
 			for (int i=1; i<=tab; i++) {
-				@out.write("\t");
+				@out.Write("\t");
 			}
 		}
 	}
@@ -122,7 +122,7 @@ public class TestCodeGeneration {
 					new DebugInterpreter(outputFileST.groupThatCreatedThisInstance,
 							outputFileST.impl.nativeGroup.errMgr,
 							debug);
-			InstanceScope scope = new InstanceScope(null, outputFileST);
+			TemplateFrame scope = new TemplateFrame( outputFileST,null);
 			StringWriter sw = new StringWriter();
 			AutoIndentWriter @out = new AutoIndentWriter(sw);
 			interp.exec(@out, scope);

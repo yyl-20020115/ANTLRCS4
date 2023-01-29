@@ -231,7 +231,7 @@ public class TimeLexerSpeed
 
     public void load_legacy_java_ascii_file(String resourceName, int n)
     {
-        streamFootprints sampleJavaFile = TimeLexerSpeed.getClassLoader().getResource(resourceName);
+        streamFootprints sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
         if (sampleJavaFile == null)
         {
             Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
@@ -298,7 +298,6 @@ public class TimeLexerSpeed
     public void load_legacy_java_utf8(String resourceName, int n)
     {
         CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-        ClassLoader loader = TimeLexerSpeed.getClassLoader();
         InputStream[] streams = new InputStream[n];
         for (int i = 0; i < n; i++)
         {

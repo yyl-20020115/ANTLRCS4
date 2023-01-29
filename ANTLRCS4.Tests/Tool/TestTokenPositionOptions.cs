@@ -51,7 +51,7 @@ public class TestTokenPositionOptions {
 				ANTLRParser.RULE_REF);
 		List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
 		List<Token> tokens = new ();
-		for (GrammarAST node in nodes) {
+		foreach (GrammarAST node in nodes) {
 			tokens.Add(node.getToken());
 		}
 		Assert.AreEqual(expectedElementTokens, RuntimeUtils.join(tokens.ToArray(), "\n"));

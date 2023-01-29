@@ -88,7 +88,7 @@ public class TestATNSerialization {
 			"0->2 EPSILON 0,0,0\n" +
 			"2->3 NOT_SET 0,0,0\n" +
 			"3->1 EPSILON 0,0,0\n";
-		ATN atn = createATN(g, true);
+		ATN atn = ToolTestUtils.createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -257,7 +257,7 @@ public class TestATNSerialization {
 			"7->8 ATOM 98,0,0\n" +
 			"8->4 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -281,7 +281,7 @@ public class TestATNSerialization {
 			"3->4 ATOM 128169,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -305,7 +305,7 @@ public class TestATNSerialization {
 			"3->4 RANGE 97,128169,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -341,7 +341,7 @@ public class TestATNSerialization {
 						"7->8 SET 1,0,0\n" +
 						"8->4 EPSILON 0,0,0\n" +
 						"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -385,7 +385,7 @@ public class TestATNSerialization {
 				"1:4\n" +
 				"2:7\n" +
 				"3:9\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -410,7 +410,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -434,7 +434,7 @@ public class TestATNSerialization {
 			"3->4 RANGE 48,57,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -460,7 +460,7 @@ public class TestATNSerialization {
 				"4->5 ATOM 0,0,1\n" +
 				"5->2 EPSILON 0,0,0\n" +
 				"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -490,7 +490,7 @@ public class TestATNSerialization {
 				"6->2 EPSILON 0,0,0\n" +
 				"0:0\n" +
 				"1:5\n";
-		ATN atn = createATN(lg, true);
+		ATN atn =	ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -522,7 +522,7 @@ public class TestATNSerialization {
 				"7->2 EPSILON 0,0,0\n" +
 				"0:0\n" +
 				"1:6\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -570,7 +570,7 @@ public class TestATNSerialization {
 				"13->14 ACTION 2,1,0\n" +
 				"14->6 EPSILON 0,0,0\n" +
 				"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -617,7 +617,7 @@ public class TestATNSerialization {
 			"3->4 SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn =	ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -642,7 +642,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -667,7 +667,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -692,7 +692,7 @@ public class TestATNSerialization {
 			"3->4 SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -717,7 +717,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -742,7 +742,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -767,7 +767,7 @@ public class TestATNSerialization {
 			"3->4 SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -792,7 +792,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -817,7 +817,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -842,7 +842,7 @@ public class TestATNSerialization {
 			"3->4 SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -867,7 +867,7 @@ public class TestATNSerialization {
 			"3->4 NOT_SET 0,0,0\n" +
 			"4->2 EPSILON 0,0,0\n" +
 			"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -931,7 +931,7 @@ public class TestATNSerialization {
 				"0:0\n" +
 				"1:1\n" +
 				"2:11\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -959,7 +959,7 @@ public class TestATNSerialization {
 				"4->5 NOT_SET 1,0,0\n" +
 				"5->2 EPSILON 0,0,0\n" +
 				"0:0\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -1017,7 +1017,7 @@ public class TestATNSerialization {
 			"17->9 EPSILON 0,0,0\n" +
 			"0:0\n" +
 			"1:1\n";
-		ATN atn = createATN(lg, true);
+		ATN atn = ToolTestUtils.createATN(lg, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
@@ -1073,19 +1073,19 @@ public class TestATNSerialization {
 	}
 
 	private void checkResults(Grammar g, String expecting) {
-		ATN atn = createATN(g, true);
+		ATN atn = ToolTestUtils.createATN(g, true);
 		IntegerList serialized = ATNSerializer.getSerialized(atn);
 		String result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).decode(serialized.toArray());
 		Assert.AreEqual(expecting, result);
 
-		IntegerList serialized16 = encodeIntsWith16BitWords(serialized);
+		IntegerList serialized16 = ATNDeserializer.encodeIntsWith16BitWords(serialized);
 		int[] ints16 = serialized16.toArray();
 		char[] chars = new char[ints16.Length];
 		for (int i = 0; i < ints16.Length; i++) {
 			chars[i] = (char)ints16[i];
 		}
-		int[] serialized32 = decodeIntsEncodedAs16BitWords(chars, true);
+		int[] serialized32 =ATNDeserializer.decodeIntsEncodedAs16BitWords(chars, true);
 
-		assertArrayEquals(serialized.toArray(), serialized32);
+		Assert.IsTrue(Enumerable.SequenceEqual(serialized.toArray(), serialized32));
 	}
 }

@@ -9,6 +9,7 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using System.Reflection;
+using System.Text;
 
 namespace org.antlr.v4.test.runtime.java;
 
@@ -35,8 +36,8 @@ public class TestInterpreterDataReader {
 				"SUB : '-';\n" +
 				"WS : [ \\t]+ -> channel(HIDDEN);");
 		String interpString = Tool.generateInterpreterData(g);
-		string interpFile = Files.createTempFile(null, null);
-		Files.write(interpFile, interpString.getBytes(Encoding.UTF8));
+		string interpFile = File.createTempFile(null, null);
+		File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
 
         InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
         FieldInfo atnField = interpreterData.GetType().GetField("atn");
@@ -45,19 +46,19 @@ public class TestInterpreterDataReader {
         FieldInfo channelsField = interpreterData.GetType().GetField("channels");
         FieldInfo modesField = interpreterData.GetType().GetField("modes");
 
-        atnField.setAccessible(true);
-        vocabularyField.setAccessible(true);
-        ruleNamesField.setAccessible(true);
-        channelsField.setAccessible(true);
-        modesField.setAccessible(true);
+        //atnField.setAccessible(true);
+        //vocabularyField.setAccessible(true);
+        //ruleNamesField.setAccessible(true);
+        //channelsField.setAccessible(true);
+        //modesField.setAccessible(true);
 
-        ATN atn = (ATN) atnField.get(interpreterData);
+        ATN atn = (ATN) atnField.GetValue(interpreterData);
         Vocabulary vocabulary = (Vocabulary) vocabularyField.GetValue(interpreterData);
 		String[] literalNames = ((VocabularyImpl) vocabulary).getLiteralNames();
 		String[] symbolicNames = ((VocabularyImpl) vocabulary).getSymbolicNames();
-		List<String> ruleNames = castList(ruleNamesField.GetValue(interpreterData), String);
-        List<String> channels = castList(channelsField.GetValue(interpreterData), String);
-        List<String> modes = castList(modesField.GetValue(interpreterData), String);
+		List<String> ruleNames = castList<String>(ruleNamesField.GetValue(interpreterData), typeof(String));
+        List<String> channels = castList<String>(channelsField.GetValue(interpreterData), typeof(String));
+        List<String> modes = castList<String>(modesField.GetValue(interpreterData),typeof( String));
 
 		Assert.AreEqual(6, vocabulary.getMaxTokenType());
 		assertArrayEquals(new String[]{"s","expr"}, ruleNames.ToArray());

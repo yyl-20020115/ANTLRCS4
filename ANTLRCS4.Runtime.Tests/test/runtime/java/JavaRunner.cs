@@ -6,6 +6,7 @@
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.test.runtime.states;
+using System.Reflection;
 
 namespace org.antlr.v4.test.runtime.java;
 
@@ -126,13 +127,13 @@ public class JavaRunner : RuntimeRunner {
 			Pair<Lexer, Parser> lexerParser = javaCompiledState.initializeLexerAndParser(runOptions.input);
 
 			if (runOptions.parserName != null) {
-				Method startRule;
+				MethodInfo startRule;
 				Object[] args = null;
 				try {
-					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName);
+					startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName);
 				} catch (NoSuchMethodException noSuchMethodException) {
 					// try with int _p arg for recursive func
-					startRule = javaCompiledState.parser.getMethod(runOptions.startRuleName, int);
+					startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName, int);
 					args = new object[]{0};
 				}
 				parseTree = (ParseTree) startRule.invoke(lexerParser.b, args);
@@ -148,20 +149,20 @@ public class JavaRunner : RuntimeRunner {
 		String output = null;
 		String errors = null;
 		try {
-			 Type mainClass = compiledState.loader.loadClass(getTestFileName());
-			 Method recognizeMethod = mainClass.getDeclaredMethod("recognize", String,
+			 Type mainClass = compiledState.GetType().GetType(getTestFileName());
+			 MethodInfo recognizeMethod = mainClass.GetDeclaredMethod("recognize", typeof(String),
 					PrintStream, PrintStream);
 
 			//PipedInputStream stdoutIn = new PipedInputStream();
 			//PipedInputStream stderrIn = new PipedInputStream();
 			//PipedOutputStream stdoutOut = new PipedOutputStream(stdoutIn);
 			//PipedOutputStream stderrOut = new PipedOutputStream(stderrIn);
-			StreamReader stdoutReader = new StreamReader(stdoutIn);
-			StreamReader stderrReader = new StreamReader(stderrIn);
+			RunnableStreamReader stdoutReader = new RunnableStreamReader(stdoutIn);
+            RunnableStreamReader stderrReader = new RunnableStreamReader(stderrIn);
 			stdoutReader.start();
 			stderrReader.start();
 
-			recognizeMethod.invoke(null, new File(getTempDirPath(), "input").getAbsolutePath(),
+			recognizeMethod.Invoke(null, (getTempDirPath(), "input"),
 					new PrintStream(stdoutOut), new PrintStream(stderrOut));
 
 			//stdoutOut.close();

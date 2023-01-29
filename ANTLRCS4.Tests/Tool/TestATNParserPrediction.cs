@@ -475,15 +475,15 @@ public class TestATNParserPrediction {
 	public void checkPredictedAlt(LexerGrammar lg, Grammar g, int decision,
 	                              String inputString, int expectedAlt)
 	{
-		ATN lexatn = createATN(lg, true);
+		ATN lexatn = ToolTestUtils.createATN(lg, true);
 		LexerATNSimulator lexInterp =
 		new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) },new PredictionContextCache());
-		IntegerList types = getTokenTypesViaATN(inputString, lexInterp);
-//		Console.Out.WriteLine(types);
+		IntegerList types =ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
+        //		Console.Out.WriteLine(types);
 
-		semanticProcess(lg);
+        ToolTestUtils.semanticProcess(lg);
 		g.importVocab(lg);
-		semanticProcess(g);
+        ToolTestUtils.semanticProcess(g);
 
 		ParserATNFactory f = new ParserATNFactory(g);
 		ATN atn = f.createATN();
@@ -523,18 +523,18 @@ public class TestATNParserPrediction {
 	                                 String[] inputString, String[] dfaString)
 	{
 //		Tool.internalOption_ShowATNConfigsInDFA = true;
-		ATN lexatn = createATN(lg, true);
+		ATN lexatn = ToolTestUtils.createATN(lg, true);
 		LexerATNSimulator lexInterp =
 		new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.getDecisionState(Lexer.DEFAULT_MODE)) }, new PredictionContextCache());
 
-		semanticProcess(lg);
+		ToolTestUtils.semanticProcess(lg);
 		g.importVocab(lg);
-		semanticProcess(g);
+		ToolTestUtils.semanticProcess(g);
 
 		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, null);
 		for (int i=0; i<inputString.Length; i++) {
 			// Check DFA
-			IntegerList types = getTokenTypesViaATN(inputString[i], lexInterp);
+			IntegerList types = ToolTestUtils.getTokenTypesViaATN(inputString[i], lexInterp);
 //			Console.Out.WriteLine(types);
 			TokenStream input = new MockIntTokenStream(types);
 			try {

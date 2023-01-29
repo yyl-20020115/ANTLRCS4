@@ -212,7 +212,7 @@ public class TestAmbigParseTrees {
 		parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
 
 		// PARSE
-		int ruleIndex = g.rules.get(startRule).index;
+		int ruleIndex = g.rules[(startRule)].index;
 		ParserRuleContext parseTree = parser.parse(ruleIndex);
 		Assert.AreEqual(overallTree, Trees.toStringTree(parseTree, nodeTextProvider));
 		Console.Out.WriteLine();
@@ -255,7 +255,7 @@ public class TestAmbigParseTrees {
 			throw new ArgumentException("rule has no decision: "+startRule);
 		}
 		parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
-		ParseTree t = parser.parse(g.rules.get(startRule).index);
+		ParseTree t = parser.parse(g.rules[(startRule)].index);
 		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
 		Assert.AreEqual(expectedParseTree, Trees.toStringTree(t, nodeTextProvider));
 	}

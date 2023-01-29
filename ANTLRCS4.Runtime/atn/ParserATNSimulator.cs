@@ -278,7 +278,6 @@ public class ParserATNSimulator : ATNSimulator {
 							  PredictionContextCache sharedContextCache)
 		: this(null, atn, decisionToDFA, sharedContextCache)
     {
-		;
 	}
 
 	public ParserATNSimulator(Parser parser, ATN atn,

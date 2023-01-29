@@ -93,8 +93,8 @@ public abstract class RuntimeRunner {
 
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
-			String dirName = GetType().getSimpleName() + "-" + Thread.currentThread().getName() + "-" + DateTime.Now.Millisecond);
-			tempTestDir = Paths.get(TempDirectory, dirName);
+			String dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond);
+			tempTestDir = Path.Combine(TempDirectory, dirName);
 		}
 		else {
 			tempTestDir = tempDir;

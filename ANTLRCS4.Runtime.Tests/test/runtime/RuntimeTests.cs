@@ -9,6 +9,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
+using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 /** This class represents runtime tests for specified runtime.
@@ -86,8 +87,8 @@ public abstract class RuntimeTests {
 				}));
 			}
 
-			string descriptorGroupPath = Paths.get(RuntimeTestUtils.resourcePath.ToString(), "descriptors", group);
-			result.add(dynamicContainer(group, descriptorGroupPath, Arrays.stream(descriptorTests.toArray(new DynamicNode[0]))));
+			string descriptorGroupPath = Path.Combine(RuntimeTestUtils.resourcePath, "descriptors", group);
+			result.Add(dynamicContainer(group, descriptorGroupPath, Arrays.stream(descriptorTests.ToArray())));
 		}
 
 		return result;
@@ -158,14 +159,12 @@ public abstract class RuntimeTests {
 
 		TemplateGroup targetTemplates;
 		lock (cachedTargetTemplates) {
-			targetTemplates = cachedTargetTemplates.get(targetName);
-			if (targetTemplates == null) {
-				ClassLoader classLoader = RuntimeTests.getClassLoader();
-				URL templates = classLoader.getResource("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
+			if (!cachedTargetTemplates.TryGetValue(targetName,out targetTemplates)) {
+				string templates = .getResource("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
 				//assert templates != null;
-				targetTemplates = new TemplateGroupFile(templates, "UTF-8", '<', '>');
-				targetTemplates.RegisterRenderer(String, rendered);
-				cachedTargetTemplates.put(targetName, targetTemplates);
+				targetTemplates = new TemplateGroupFile(templates, Encoding.UTF8, '<', '>');
+				targetTemplates.RegisterRenderer(typeof(String), rendered);
+				cachedTargetTemplates.Add(targetName, targetTemplates);
 			}
 		}
 
@@ -173,17 +172,17 @@ public abstract class RuntimeTests {
 		List<Pair<String, String>> slaveGrammars = descriptor.slaveGrammars;
 		if (slaveGrammars != null) {
 			foreach (Pair<String, String> spair in slaveGrammars) {
-				TemplateGroup g = new TemplateGroup('<', '>');
-				g.RegisterRenderer(typeof(String), rendered);
-				g.ImportTemplates(targetTemplates);
-				Template _grammarST = new Template(g, spair.b);
+				TemplateGroup gx = new TemplateGroup('<', '>');
+				gx.RegisterRenderer(typeof(String), rendered);
+				gx.ImportTemplates(targetTemplates);
+				Template _grammarST = new Template(gx, spair.b);
 				FileUtils.writeFile(runner.getTempDirPath(), spair.a + ".g4", _grammarST.Render());
 			}
 		}
 
         TemplateGroup g = new TemplateGroup('<', '>');
 		g.ImportTemplates(targetTemplates);
-		g.RegisterRenderer(String, rendered);
+		g.RegisterRenderer(typeof(String), rendered);
 		Template grammarST = new Template(g, descriptor.grammar);
 		return grammarST.Render();
 	}

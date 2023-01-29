@@ -124,10 +124,11 @@ public class TestEscapeSequenceParsing {
 				EscapeSequenceParsing.parseEscape("\\P{Deseret", 0).type);
 	}
 
-	[TestMethod]
+	public const int MAX_CODE_POINT = 0X10FFFF;
+    [TestMethod]
 	public void testParseUnicodePropertyInverted() {
 		IntervalSet expected = IntervalSet.of(0, 66559);
-		expected.add(66640, Character.MAX_CODE_POINT);
+		expected.add(66640, MAX_CODE_POINT);
 		Assert.AreEqual(
 				new Result(Result.Type.PROPERTY, -1, expected, 0, 11),
 				EscapeSequenceParsing.parseEscape("\\P{Deseret}", 0));

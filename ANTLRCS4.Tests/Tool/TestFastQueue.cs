@@ -33,8 +33,8 @@ public class TestFastQueue {
         StringBuilder buf = new StringBuilder();
         while ( q.size()>0 ) {
             String o = q.remove();
-            buf.append(o);
-            if ( q.size()>0 ) buf.append(" ");
+            buf.Append(o);
+            if ( q.size()>0 ) buf.Append(" ");
         }
         Assert.AreEqual(0, q.size(), "queue should be empty");
         String expecting = "a b c d e";

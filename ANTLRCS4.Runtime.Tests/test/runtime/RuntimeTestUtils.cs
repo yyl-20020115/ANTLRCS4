@@ -28,9 +28,9 @@ public abstract class RuntimeTestUtils {
 	private static Boolean isWindows;
 
 	static RuntimeTestUtils() {
-		String locationPath = RuntimeTestUtils.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String locationPath = RuntimeTestUtils.getCodeSource().getLocation().getPath();
 		if (IsWindows()) {
-			locationPath = locationPath.replaceFirst("/", "");
+			locationPath = locationPath.ReplaceFirst("/", "");
 		}
 		string potentialRuntimeTestsuitePath = Path.Combine(locationPath, "..", "..");
 		string potentialResourcePath = Path.Combine(potentialRuntimeTestsuitePath.ToString(), "resources");
@@ -42,7 +42,7 @@ public abstract class RuntimeTestUtils {
 			runtimeTestsuitePath = Path.Combine("..", "runtime-testsuite");
 		}
 
-		runtimePath = Path.Combine(runtimeTestsuitePath.ToString(), "..", "runtime").normalize();
+		runtimePath = Path.Combine(runtimeTestsuitePath.ToString(), "..", "runtime");
 		resourcePath = Path.Combine(runtimeTestsuitePath.ToString(), "resources");
 	}
 
@@ -56,8 +56,10 @@ public abstract class RuntimeTestUtils {
 
 	public static OSType getOS() {
 		if (detectedOS == null) {
-			String os = Environment.GetEnvironmentVariable("os.name", "generic").ToLower();
-			if (os.Contains("mac") || os.Contains("darwin")) {
+			String os = Environment.GetEnvironmentVariable("os.name").ToLower();
+			os = os.Length == 0 ? "generic" : os;
+
+            if (os.Contains("mac") || os.Contains("darwin")) {
 				detectedOS = OSType.Mac;
 			}
 			else if (os.Contains("win")) {
@@ -75,16 +77,15 @@ public abstract class RuntimeTestUtils {
 
 	public static String getTextFromResource(String name) {
 		try {
-			String text = resourceCache.get(name);
-			if (text == null) {
-				string path = Paths.get(resourcePath.ToString(), name);
-				text = new String(Files.readAllBytes(path));
-				resourceCache.put(name, text);
+			if (!resourceCache.TryGetValue(name,out var text)) {
+				string path = Path.Combine(resourcePath.ToString(), name);
+				text = File.ReadAllText(path);
+				resourceCache[name]= text;
 			}
 			return text;
 		}
 		catch (Exception ex) {
-			throw new RuntimeException(ex);
+			throw new RuntimeException(ex.Message, ex);
 		}
 	}
 

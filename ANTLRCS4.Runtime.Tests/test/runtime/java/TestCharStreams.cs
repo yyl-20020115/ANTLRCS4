@@ -52,8 +52,9 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromBMPUTF8InputStreamHasExpectedSize(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello".getBytes(Encoding.UTF8));
-		using (InputStream @is = Files.newInputStream(p)) {
+		File.WriteAllBytes(p, Encoding.UTF8.GetBytes( "hello"));
+		InputStream @is = Files.newInputStream(p);
+		{
 			CharStream s = CharStreams.fromStream(@is);
 			Assert.AreEqual(5, s.size());
 			Assert.AreEqual(0, s.index());
@@ -62,11 +63,12 @@ public class TestCharStreams {
 	}
 
 	[TestMethod]
-	public void fromSMPUTF8InputStreamHasExpectedSize( Path tempDir)  {
+	public void fromSMPUTF8InputStreamHasExpectedSize( string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
-		try (InputStream is = Files.newInputStream(p)) {
-			CharStream s = CharStreams.fromStream(is);
+		File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
+		InputStream @is = Files.newInputStream(p);
+			{
+			CharStream s = CharStreams.fromStream(@is);
 			Assert.AreEqual(7, s.size());
 			Assert.AreEqual(0, s.index());
 			Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
@@ -76,8 +78,9 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromBMPUTF8ChannelHasExpectedSize(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello".getBytes(Encoding.UTF8));
-		try (SeekableByteChannel c = Files.newByteChannel(p)) {
+		File.WriteAllBytes(p,Encoding.UTF8.GetBytes("hello"));
+		SeekableByteChannel c = Files.newByteChannel(p);
+		{
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
 			Assert.AreEqual(5, s.size());
@@ -90,8 +93,10 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromSMPUTF8ChannelHasExpectedSize(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
-		try (SeekableByteChannel c = Files.newByteChannel(p)) {
+        File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
+
+		(SeekableByteChannel c = Files.newByteChannel(p);
+		{
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
 			Assert.AreEqual(7, s.size());
@@ -106,8 +111,9 @@ public class TestCharStreams {
 		 {
 		string p = getTestFile(tempDir);
 		byte[] toWrite = new byte[] { (byte)0xCA, (byte)0xFE, (byte)0xFE, (byte)0xED };
-		Files.write(p, toWrite);
-		try (SeekableByteChannel c = Files.newByteChannel(p)) {
+		File.WriteAllBytes(p, toWrite);
+		SeekableByteChannel c = Files.newByteChannel(p);
+		{
 			CharStream s = CharStreams.fromChannel(
 					c, 4096, CodingErrorAction.REPLACE, "foo");
 			Assert.AreEqual(4, s.size());
@@ -120,8 +126,8 @@ public class TestCharStreams {
 	public void fromInvalidUTF8BytesThrowsInReportMode(string tempDir)  {
 		string p = getTestFile(tempDir);
 		byte[] toWrite = new byte[] { (byte)0xCA, (byte)0xFE };
-		Files.write(p, toWrite);
-		SeekableByteChannel c = Files.newByteChannel(p);
+        File.WriteAllBytes(p, toWrite);
+        SeekableByteChannel c = Files.newByteChannel(p);
 		{
 			assertThrows(
 					CharacterCodingException,
@@ -175,7 +181,7 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromReader(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
+		File.WriteAllBytes(p,Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
 		using (TextReader r = Files.newBufferedReader(p, Encoding.UTF8)) {
 			CharStream s = CharStreams.fromReader(r);
 			Assert.AreEqual(7, s.size());
@@ -187,8 +193,8 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromSMPUTF16LEPathSMPHasExpectedSize(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(StandardCharsets.UTF_16LE));
-		CharStream s = CharStreams.fromPath(p, StandardCharsets.UTF_16LE);
+		File.WriteAllBytes(p, Encoding.Unicode.GetBytes("hello \uD83C\uDF0E"));
+		CharStream s = CharStreams.fromPath(p, Encoding.Unicode);
 		Assert.AreEqual(7, s.size());
 		Assert.AreEqual(0, s.index());
 		Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());

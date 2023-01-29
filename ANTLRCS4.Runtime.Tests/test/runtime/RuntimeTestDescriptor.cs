@@ -80,7 +80,7 @@ public class RuntimeTestDescriptor {
 	}
 
 	//@Override
-	public object String ToString() {
+	public override String ToString() {
 		return name;
 	}
 }

@@ -25,24 +25,24 @@ public class TestASTStructure {
 	{
 		ANTLRStringStream @is = new ANTLRStringStream(input);
 		Type lexerClass = Type.GetType(lexerClassName);
-		ConstructorInfo lexConstructor = lexerClass.GetConstructor(CharStream);
-		TokenSource lexer = lexConstructor.Invoke(@is);
+		ConstructorInfo lexConstructor = lexerClass.GetConstructor(new Type[] { typeof(CharStream) });
+		TokenSource lexer = lexConstructor.Invoke(new object[] { @is }) as TokenSource;
         @is.setLine(scriptLine);
 
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		Type parserClass = Type.forName(parserClassName).asSubclass(Parser);
-		ConstructorInfo parConstructor = parserClass.getConstructor(TokenStream);
-		Parser parser = parConstructor.newInstance(tokens);
+		Type parserClass = Type.GetType(parserClassName);
+		ConstructorInfo parConstructor = parserClass.GetConstructor(new Type[] { typeof(TokenStream) });
+        antlr.runtime.Parser parser = parConstructor.Invoke(new object[] { tokens }) as antlr.runtime.Parser;
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
-			MethodInfo m = parserClass.getMethod("setTreeAdaptor", TreeAdaptor);
-			Type adaptorClass = Type.GetType(adaptorClassName).asSubclass(TreeAdaptor);
+			MethodInfo m = parserClass.GetMethod("setTreeAdaptor", TreeAdaptor);
+			Type adaptorClass = Type.GetType(adaptorClassName);
 			m.Invoke(parser, adaptorClass.newInstance());
 		}
 
-		MethodInfo ruleMethod = parserClass.getMethod(ruleName);
+		MethodInfo ruleMethod = parserClass.GetMethod(ruleName);
 
 		// INVOKE RULE
 		return ruleMethod.Invoke(parser);

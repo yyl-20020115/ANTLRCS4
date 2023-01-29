@@ -130,7 +130,8 @@ public class ToolTestUtils {
 		String fullFileName = ToolTestUtils.getPackage().getName().replace('.', '/')+'/'+fileName;
 		int size = 65000;
 		InputStream fis = ToolTestUtils.getClassLoader().getResourceAsStream(fullFileName);
-		using (InputStreamReader isr = new InputStreamReader(fis)) {
+		InputStreamReader isr = new InputStreamReader(fis);
+		{
 			char[] data = new char[size];
 			int n = isr.read(data);
 			return new String(data, 0, n);
