@@ -9,6 +9,7 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 
@@ -211,7 +212,8 @@ public class TestParserProfiler {
 		RunOptions runOptions =ToolTestUtils.createOptionsForJavaToolTests("T.g4", grammar, "TParser", "TLexer",
 				false, false, "s", "xyz;abc;z.q",
 				true, false, Stage.Execute, false);
-		using (JavaRunner runner = new JavaRunner()) {
+		JavaRunner runner = new JavaRunner();
+		{
 			ExecutedState state = (ExecutedState) runner.run(runOptions);
 			String expecting =
 					"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, SLL_ATNTransitions=4, " +

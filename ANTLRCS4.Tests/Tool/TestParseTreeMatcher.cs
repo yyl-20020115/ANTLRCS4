@@ -7,6 +7,8 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
+using org.antlr.v4.test.runtime;
+using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.tool;
@@ -378,7 +380,8 @@ public class TestParseTreeMatcher {
 		RunOptions runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, input,
 				false, false, Stage.Execute, true);
-		using(JavaRunner runner = new JavaRunner()) {
+		JavaRunner runner = new JavaRunner();
+		{
 			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
 			Parser parser = compiledState.initializeLexerAndParser("").b;
@@ -399,7 +402,8 @@ public class TestParseTreeMatcher {
 		RunOptions runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammar, parserName, lexerName,
 				false, false, startRule, null,
 				false, false, Stage.Compile, false);
-		using (JavaRunner runner = new JavaRunner()) {
+		JavaRunner runner = new JavaRunner();
+		{
 			JavaCompiledState compiledState = (JavaCompiledState) runner.run(runOptions);
 
 			Pair<Lexer, Parser> lexerParserPair = compiledState.initializeLexerAndParser("");
