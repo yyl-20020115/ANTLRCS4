@@ -47,10 +47,10 @@ public class TestCodeGeneration {
 
 	/** Add tags around each attribute/template/value write */
 	public class DebugInterpreter : Interpreter {
-		List<String> evals = new ();
-		ErrorManager myErrMgrCopy;
+		public List<String> evals = new ();
+	 	Antlr4.StringTemplate.Misc.ErrorManager myErrMgrCopy;
 		int tab = 0;
-		public DebugInterpreter(TemplateGroup group, ErrorManager errMgr, bool debug)
+		public DebugInterpreter(TemplateGroup group, Antlr4.StringTemplate.Misc.ErrorManager errMgr, bool debug)
 		: base(group, errMgr, debug)
         {
 			;
@@ -66,27 +66,27 @@ public class TestCodeGeneration {
 					try {
 						@out.Write("<ST:" + name + ">");
 						evals.Add("<ST:" + name + ">");
-						int r = base.writeObject(@out, scope, o, options);
+						int r = base.WriteObject(@out, scope, o, options);
 						@out.Write("</ST:" + name + ">");
 						evals.Add("</ST:" + name + ">");
 						return r;
 					} catch (IOException ioe) {
-						myErrMgrCopy.IOError(scope.Template, ErrorType.WRITE_IO_ERROR, ioe);
+						myErrMgrCopy.IOError(scope.Template,Antlr4.StringTemplate.Misc.ErrorType.WRITE_IO_ERROR, ioe);
 					}
 				}
 			}
-			return base.writeObject(@out, scope, o, options);
+			return base.WriteObject(@out, scope, o, options);
 		}
-
+#if false
 		//@Override
 		protected int writePOJO(ITemplateWriter @out, TemplateFrame scope, Object o, String[] options){
 			Type type = o.GetType();
 			String name = type.Name;
 			@out.Write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
-			return base.writePOJO(@out, scope, o, options);
+			return base.WritePOJO(@out, scope, o, options);
 		}
-
+#endif
 		public void indent(ITemplateWriter @out){
 			for (int i=1; i<=tab; i++) {
 				@out.Write("\t");
@@ -119,13 +119,13 @@ public class TestCodeGeneration {
 
 			bool debug = false;
 			DebugInterpreter interp =
-					new DebugInterpreter(outputFileST.groupThatCreatedThisInstance,
-							outputFileST.impl.nativeGroup.errMgr,
+					new DebugInterpreter(outputFileST.Group,
+							outputFileST.impl.NativeGroup.ErrorManager,
 							debug);
 			TemplateFrame scope = new TemplateFrame( outputFileST,null);
 			StringWriter sw = new StringWriter();
 			AutoIndentWriter @out = new AutoIndentWriter(sw);
-			interp.exec(@out, scope);
+			interp.Execute(@out, scope);
 
 			foreach (String e in interp.evals) {
 				if (e.Contains(pattern)) {

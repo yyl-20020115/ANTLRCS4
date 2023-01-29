@@ -155,319 +155,318 @@ public class TimeLexerSpeed
 
     public List<String> streamFootprints = new();
 
-    public static void main(String[] args)
-    {
-        //RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-        //List<String> vmArgs = runtimeMxBean.getInputArguments();
-        Console.Out.Write("Java VM args: ");
-        foreach (String vmArg in args)
-        {
-            if (!vmArg.StartsWith("-D"))
-            {
-                Console.Out.Write(vmArg + " ");
-            }
-        }
-        Console.Out.WriteLine();
-        //		Console.Out.WriteLine(VM.current().details());
+    //public static void main(String[] args)
+    //{
+    //    //RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+    //    //List<String> vmArgs = runtimeMxBean.getInputArguments();
+    //    Console.Out.Write("Java VM args: ");
+    //    foreach (String vmArg in args)
+    //    {
+    //        if (!vmArg.StartsWith("-D"))
+    //        {
+    //            Console.Out.Write(vmArg + " ");
+    //        }
+    //    }
+    //    Console.Out.WriteLine();
+    //    //		Console.Out.WriteLine(VM.current().details());
 
-        TimeLexerSpeed tests = new TimeLexerSpeed();
+    //    TimeLexerSpeed tests = new TimeLexerSpeed();
 
-        tests.compilerWarmUp(100);
+    //    tests.compilerWarmUp(100);
 
-        int n = 3500;
-        tests.load_legacy_java_ascii_file(Parser_java_file, n);
-        tests.load_legacy_java_ascii_file(RuleContext_java_file, n);
-        tests.load_legacy_java_ascii(Parser_java_file, n);
-        tests.load_legacy_java_ascii(RuleContext_java_file, n);
-        tests.load_legacy_java_utf8(Parser_java_file, n);
-        tests.load_legacy_java_utf8(PerfDir + "/udhr_hin.txt", n);
-        tests.load_new_utf8(Parser_java_file, n);
-        tests.load_new_utf8(RuleContext_java_file, n);
-        tests.load_new_utf8(PerfDir + "/udhr_hin.txt", n);
-        Console.Out.WriteLine();
+    //    int n = 3500;
+    //    tests.load_legacy_java_ascii_file(Parser_java_file, n);
+    //    tests.load_legacy_java_ascii_file(RuleContext_java_file, n);
+    //    tests.load_legacy_java_ascii(Parser_java_file, n);
+    //    tests.load_legacy_java_ascii(RuleContext_java_file, n);
+    //    tests.load_legacy_java_utf8(Parser_java_file, n);
+    //    tests.load_legacy_java_utf8(PerfDir + "/udhr_hin.txt", n);
+    //    tests.load_new_utf8(Parser_java_file, n);
+    //    tests.load_new_utf8(RuleContext_java_file, n);
+    //    tests.load_new_utf8(PerfDir + "/udhr_hin.txt", n);
+    //    Console.Out.WriteLine();
 
-        n = 2000;
-        tests.lex_legacy_java_utf8(n, false);
-        tests.lex_legacy_java_utf8(n, true);
-        tests.lex_new_java_utf8(n, false);
-        tests.lex_new_java_utf8(n, true);
-        Console.Out.WriteLine();
+    //    n = 2000;
+    //    tests.lex_legacy_java_utf8(n, false);
+    //    tests.lex_legacy_java_utf8(n, true);
+    //    tests.lex_new_java_utf8(n, false);
+    //    tests.lex_new_java_utf8(n, true);
+    //    Console.Out.WriteLine();
 
-        n = 400;
-        tests.lex_legacy_grapheme_utf8("udhr_kor.txt", n, false);
-        tests.lex_legacy_grapheme_utf8("udhr_kor.txt", n, true);
-        tests.lex_legacy_grapheme_utf8("udhr_hin.txt", n, false);
-        tests.lex_legacy_grapheme_utf8("udhr_hin.txt", n, true);
-        // legacy can't handle the emoji (32 bit stuff)
+    //    n = 400;
+    //    tests.lex_legacy_grapheme_utf8("udhr_kor.txt", n, false);
+    //    tests.lex_legacy_grapheme_utf8("udhr_kor.txt", n, true);
+    //    tests.lex_legacy_grapheme_utf8("udhr_hin.txt", n, false);
+    //    tests.lex_legacy_grapheme_utf8("udhr_hin.txt", n, true);
+    //    // legacy can't handle the emoji (32 bit stuff)
 
-        tests.lex_new_grapheme_utf8("udhr_kor.txt", n, false);
-        tests.lex_new_grapheme_utf8("udhr_kor.txt", n, true);
-        tests.lex_new_grapheme_utf8("udhr_hin.txt", n, false);
-        tests.lex_new_grapheme_utf8("udhr_hin.txt", n, true);
-        tests.lex_new_grapheme_utf8("emoji.txt", n, false);
-        tests.lex_new_grapheme_utf8("emoji.txt", n, true);
+    //    tests.lex_new_grapheme_utf8("udhr_kor.txt", n, false);
+    //    tests.lex_new_grapheme_utf8("udhr_kor.txt", n, true);
+    //    tests.lex_new_grapheme_utf8("udhr_hin.txt", n, false);
+    //    tests.lex_new_grapheme_utf8("udhr_hin.txt", n, true);
+    //    tests.lex_new_grapheme_utf8("emoji.txt", n, false);
+    //    tests.lex_new_grapheme_utf8("emoji.txt", n, true);
 
-        foreach (String streamFootprint in tests.streamFootprints)
-        {
-            Console.Out.Write(streamFootprint);
-        }
-    }
+    //    foreach (String streamFootprint in tests.streamFootprints)
+    //    {
+    //        Console.Out.Write(streamFootprint);
+    //    }
+    //}
 
     public void compilerWarmUp(int n)
     {
         Console.Out.Write("Warming up Java compiler");
         output = false;
-        lex_new_java_utf8(n, false);
-        Console.Out.Write('.');
-        lex_legacy_java_utf8(n, false);
-        Console.Out.Write('.');
-        Console.Out.Write('.');
-        lex_legacy_grapheme_utf8("udhr_hin.txt", n, false);
-        Console.Out.Write('.');
-        lex_new_grapheme_utf8("udhr_hin.txt", n, false);
-        Console.Out.WriteLine();
-        output = true;
+        //lex_new_java_utf8(n, false);
+        //Console.Out.Write('.');
+        //lex_legacy_java_utf8(n, false);
+        //Console.Out.Write('.');
+        //Console.Out.Write('.');
+        //lex_legacy_grapheme_utf8("udhr_hin.txt", n, false);
+        //Console.Out.Write('.');
+        //lex_new_grapheme_utf8("udhr_hin.txt", n, false);
+        //Console.Out.WriteLine();
+        //output = true;
     }
 
-    public void load_legacy_java_ascii_file(String resourceName, int n)
-    {
-        var sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
-        if (sampleJavaFile == null)
-        {
-            Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
-            return; // cannot find resource
-        }
-        if (!File.Exists(sampleJavaFile))
-        {
-            Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
-            return;
-        }
-        long start = DateTime.Now.Nanosecond;
-        CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-        for (int i = 0; i < n; i++)
-        {
-            input[i] = new ANTLRFileStream(sampleJavaFile.getFile());
-        }
-        long stop = DateTime.Now.Nanosecond;
-        long tus = (stop - start) / 1000;
-        int size = input[0].size();
-        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-        //GraphLayout olayout = GraphLayout.parseInstance((Object)input[0]);
-        long streamSize = 0;// olayout.totalSize();
-        streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + olayout.toFootprint());
-        if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
-                                        currentMethodName,
-                                        tus / n,
-                                        streamSize,
-                                        n,
-                                        size,
-                                        basename(resourceName));
-    }
+    //public void load_legacy_java_ascii_file(String resourceName, int n)
+    //{
+    //    var sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
+    //    if (sampleJavaFile == null)
+    //    {
+    //        Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
+    //        return; // cannot find resource
+    //    }
+    //    if (!File.Exists(sampleJavaFile))
+    //    {
+    //        Console.Error.WriteLine("Can't run load_legacy_java_ascii_file from jar (or can't find " + resourceName + ")");
+    //        return;
+    //    }
+    //    long start = DateTime.Now.Nanosecond;
+    //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        input[i] = new ANTLRFileStream(sampleJavaFile.getFile());
+    //    }
+    //    long stop = DateTime.Now.Nanosecond;
+    //    long tus = (stop - start) / 1000;
+    //    int size = input[0].size();
+    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    //GraphLayout olayout = GraphLayout.parseInstance((Object)input[0]);
+    //    long streamSize = 0;// olayout.totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + olayout.toFootprint());
+    //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+    //                                    currentMethodName,
+    //                                    tus / n,
+    //                                    streamSize,
+    //                                    n,
+    //                                    size,
+    //                                    basename(resourceName));
+    //}
 
-    public void load_legacy_java_ascii(String resourceName, int n)
-    {
-        CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-        InputStream[] streams = new InputStream[n];
-        for (int i = 0; i < n; i++)
-        {
-            streams[i] = loader.getResourceAsStream(resourceName);
-        }
-        long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
-        for (int i = 0; i < n; i++)
-        {
-            InputStream @is = streams[i];
-            input[i] = new ANTLRInputStream(@is);
+    //public void load_legacy_java_ascii(String resourceName, int n)
+    //{
+    //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
+    //    InputStream[] streams = new InputStream[n];
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        streams[i] = loader.getResourceAsStream(resourceName);
+    //    }
+    //    long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        InputStream @is = streams[i];
+    //        input[i] = new ANTLRInputStream(@is);
 
-        }
+    //    }
 
-        long stop = DateTime.Now.Nanosecond;
-        long tus = (stop - start) / 1000;
-        int size = input[0].size();
-        long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-        streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-        if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
-                                        currentMethodName,
-                                        tus / n,
-                                        streamSize,
-                                        n,
-                                        size,
-                                        basename(resourceName));
-    }
+    //    long stop = DateTime.Now.Nanosecond;
+    //    long tus = (stop - start) / 1000;
+    //    int size = input[0].size();
+    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
+    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+    //                                    currentMethodName,
+    //                                    tus / n,
+    //                                    streamSize,
+    //                                    n,
+    //                                    size,
+    //                                    basename(resourceName));
+    //}
 
-    public void load_legacy_java_utf8(String resourceName, int n)
-    {
-        CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-        InputStream[] streams = new InputStream[n];
-        for (int i = 0; i < n; i++)
-        {
-            streams[i] = loader.getResourceAsStream(resourceName);
-        }
-        long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
-        for (int i = 0; i < n; i++)
-        {
-            InputStream @is = streams[i];
-            InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
-            BufferedReader br = new BufferedReader(isr);
+    //public void load_legacy_java_utf8(String resourceName, int n)
+    //{
+    //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
+    //    InputStream[] streams = new InputStream[n];
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        streams[i] = loader.getResourceAsStream(resourceName);
+    //    }
+    //    long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        InputStream @is = streams[i];
+    //        InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
+    //        BufferedReader br = new BufferedReader(isr);
 
-            input[i] = new ANTLRInputStream(br);
-        }
+    //        input[i] = new ANTLRInputStream(br);
+    //    }
 
 
-        long stop = DateTime.Now.Nanosecond;
-        long tus = (stop - start) / 1000;
-        int size = input[0].size();
-        long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-        streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-        if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
-                                        currentMethodName,
-                                        tus / n,
-                                        streamSize,
-                                        n,
-                                        size,
-                                        basename(resourceName));
-    }
+    //    long stop = DateTime.Now.Nanosecond;
+    //    long tus = (stop - start) / 1000;
+    //    int size = input[0].size();
+    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
+    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+    //                                    currentMethodName,
+    //                                    tus / n,
+    //                                    streamSize,
+    //                                    n,
+    //                                    size,
+    //                                    basename(resourceName));
+    //}
 
-    public void load_new_utf8(String resourceName, int n)
-    {
-        CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
-        ClassLoader loader = TimeLexerSpeed.getClassLoader();
-        InputStream[] streams = new InputStream[n];
-        for (int i = 0; i < n; i++)
-        {
-            streams[i] = loader.getResourceAsStream(resourceName);
-        }
-        URLConnection uc = null;
-        long streamLength = getResourceSize(loader, resourceName);
-        long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
-        for (int i = 0; i < n; i++)
-        {
-            var @is = streams[i];
-            {
-                input[i] = CharStreams.fromStream(@is, Encoding.UTF8, streamLength);
-            }
-        }
-        long stop = DateTime.Now.Nanosecond;
-        long tus = (stop - start) / 1000;
-        int size = input[0].size();
-        long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-        streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-        if (output)
-            Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
-                            currentMethodName,
-                            tus / n,
-                            streamSize,
-                            n,
-                            size,
-                            basename(resourceName));
-    }
+    //public void load_new_utf8(String resourceName, int n)
+    //{
+    //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
+    //    ClassLoader loader = TimeLexerSpeed.getClassLoader();
+    //    InputStream[] streams = new InputStream[n];
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        streams[i] = loader.getResourceAsStream(resourceName);
+    //    }
+    //    long streamLength = getResourceSize(loader, resourceName);
+    //    long start = DateTime.Now.Nanosecond; // track only time to suck data out of stream
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        var @is = streams[i];
+    //        {
+    //            input[i] = CharStreams.fromStream(@is, Encoding.UTF8, streamLength);
+    //        }
+    //    }
+    //    long stop = DateTime.Now.Nanosecond;
+    //    long tus = (stop - start) / 1000;
+    //    int size = input[0].size();
+    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
+    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    if (output)
+    //        Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
+    //                        currentMethodName,
+    //                        tus / n,
+    //                        streamSize,
+    //                        n,
+    //                        size,
+    //                        basename(resourceName));
+    //}
 
-    public void lex_legacy_java_utf8(int n, bool clearLexerDFACache)
-    {
-        InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(Parser_java_file);
-        InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
-        BufferedReader br = new BufferedReader(isr);
-        {
-            CharStream input = new ANTLRInputStream(br);
-            JavaLexer lexer = new JavaLexer(input);
-            double avg = tokenize(lexer, n, clearLexerDFACache);
-            String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-            if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
-                            currentMethodName,
-                            (int)avg,
-                            n,
-                            input.size(),
-                            clearLexerDFACache ? " DFA cleared" : "");
-        }
-    }
+    //public void lex_legacy_java_utf8(int n, bool clearLexerDFACache)
+    //{
+    //    InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(Parser_java_file);
+    //    InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
+    //    BufferedReader br = new BufferedReader(isr);
+    //    {
+    //        CharStream input = new ANTLRInputStream(br);
+    //        JavaLexer lexer = new JavaLexer(input);
+    //        double avg = tokenize(lexer, n, clearLexerDFACache);
+    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
+    //                        currentMethodName,
+    //                        (int)avg,
+    //                        n,
+    //                        input.size(),
+    //                        clearLexerDFACache ? " DFA cleared" : "");
+    //    }
+    //}
 
-    public void lex_new_java_utf8(int n, bool clearLexerDFACache)
-    {
-        ClassLoader loader = TimeLexerSpeed.getClassLoader();
-        InputStream @is = loader.getResourceAsStream(Parser_java_file);
-        {
-            long size = getResourceSize(loader, Parser_java_file);
-            CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
-            JavaLexer lexer = new JavaLexer(input);
-            double avg = tokenize(lexer, n, clearLexerDFACache);
-            String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-            if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
-                            currentMethodName,
-                            (int)avg,
-                            n,
-                            input.size(),
-                            clearLexerDFACache ? " DFA cleared" : "");
-        }
-    }
+    //public void lex_new_java_utf8(int n, bool clearLexerDFACache)
+    //{
+    //    ClassLoader loader = TimeLexerSpeed.getClassLoader();
+    //    InputStream @is = loader.getResourceAsStream(Parser_java_file);
+    //    {
+    //        long size = getResourceSize(loader, Parser_java_file);
+    //        CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
+    //        JavaLexer lexer = new JavaLexer(input);
+    //        double avg = tokenize(lexer, n, clearLexerDFACache);
+    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
+    //                        currentMethodName,
+    //                        (int)avg,
+    //                        n,
+    //                        input.size(),
+    //                        clearLexerDFACache ? " DFA cleared" : "");
+    //    }
+    //}
 
-    public void lex_legacy_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
-    {
-        InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(PerfDir + "/" + fileName);
-        InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
-        BufferedReader br = new BufferedReader(isr);
-        {
-            CharStream input = new ANTLRInputStream(br);
-            graphemesLexer lexer = new graphemesLexer(input);
-            double avg = tokenize(lexer, n, clearLexerDFACache);
-            String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-            if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
-                            currentMethodName,
-                            (int)avg,
-                            n,
-                            input.size(),
-                            fileName,
-                            clearLexerDFACache ? " DFA cleared" : "");
-        }
-    }
+    //public void lex_legacy_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
+    //{
+    //    InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(PerfDir + "/" + fileName);
+    //    InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
+    //    BufferedReader br = new BufferedReader(isr);
+    //    {
+    //        CharStream input = new ANTLRInputStream(br);
+    //        graphemesLexer lexer = new graphemesLexer(input);
+    //        double avg = tokenize(lexer, n, clearLexerDFACache);
+    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
+    //                        currentMethodName,
+    //                        (int)avg,
+    //                        n,
+    //                        input.size(),
+    //                        fileName,
+    //                        clearLexerDFACache ? " DFA cleared" : "");
+    //    }
+    //}
 
-    public void lex_new_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
-    {
-        String resourceName = PerfDir + "/" + fileName;
-        Assembly assembly = TimeLexerSpeed.getClassLoader();
-        using (InputStream @is = loader.getResourceAsStream(resourceName))
-        {
-            long size = getResourceSize(loader, resourceName);
-            CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
-            graphemesLexer lexer = new graphemesLexer(input);
-            double avg = tokenize(lexer, n, clearLexerDFACache);
-            String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-            if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
-                            currentMethodName,
-                            (int)avg,
-                            n,
-                            input.size(),
-                            fileName,
-                            clearLexerDFACache ? " DFA cleared" : "");
-        }
-    }
+    //public void lex_new_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
+    //{
+    //    String resourceName = PerfDir + "/" + fileName;
+    //    Assembly assembly = TimeLexerSpeed.getClassLoader();
+    //    using (InputStream @is = loader.getResourceAsStream(resourceName))
+    //    {
+    //        long size = getResourceSize(loader, resourceName);
+    //        CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
+    //        graphemesLexer lexer = new graphemesLexer(input);
+    //        double avg = tokenize(lexer, n, clearLexerDFACache);
+    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
+    //                        currentMethodName,
+    //                        (int)avg,
+    //                        n,
+    //                        input.size(),
+    //                        fileName,
+    //                        clearLexerDFACache ? " DFA cleared" : "");
+    //    }
+    //}
 
-    public double tokenize(Lexer lexer, int n, bool clearLexerDFACache)
-    {
-        // always wipe the DFA before we begin tests so previous tests
-        // don't affect this run!
-        lexer.getInterpreter().clearDFA();
-        long[] times = new long[n];
-        for (int i = 0; i < n; i++)
-        {
-            lexer.reset();
-            if (clearLexerDFACache)
-            {
-                lexer.getInterpreter().clearDFA();
-            }
-            long start = DateTime.Now.Nanosecond;
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            tokens.fill(); // lex whole file.
-                           //			int size = lexer.getInputStream().size();
-            long stop = DateTime.Now.Nanosecond;
-            times[i] = (stop - start) / 1000;
-            //			if ( output ) Console.Out.printf("Tokenized %d char in %dus\n", size, times[i]);
-        }
-        Array.Sort(times);
-        times = Arrays.CopyOfRange(times, 0, times.Length - (int)(n * .2)); // drop highest 20% of times
-        return avg(times);
-    }
+    //public double tokenize(Lexer lexer, int n, bool clearLexerDFACache)
+    //{
+    //    // always wipe the DFA before we begin tests so previous tests
+    //    // don't affect this run!
+    //    lexer.getInterpreter().clearDFA();
+    //    long[] times = new long[n];
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        lexer.reset();
+    //        if (clearLexerDFACache)
+    //        {
+    //            lexer.getInterpreter().clearDFA();
+    //        }
+    //        long start = DateTime.Now.Nanosecond;
+    //        CommonTokenStream tokens = new CommonTokenStream(lexer);
+    //        tokens.fill(); // lex whole file.
+    //                       //			int size = lexer.getInputStream().size();
+    //        long stop = DateTime.Now.Nanosecond;
+    //        times[i] = (stop - start) / 1000;
+    //        //			if ( output ) Console.Out.printf("Tokenized %d char in %dus\n", size, times[i]);
+    //    }
+    //    Array.Sort(times);
+    //    times = Arrays.CopyOfRange(times, 0, times.Length - (int)(n * .2)); // drop highest 20% of times
+    //    return avg(times);
+    //}
 
     public double avg(long[] values)
     {
@@ -491,42 +490,18 @@ public class TimeLexerSpeed
 
     public static String basename(String fullyQualifiedFileName)
     {
-        string path = (fullyQualifiedFileName);
-        return basename(path);
+        return Path.GetFileName(fullyQualifiedFileName); 
     }
 
     public static String dirname(String fullyQualifiedFileName)
     {
-        string path = Path.Combine(fullyQualifiedFileName);
-        return dirname(path);
+        return Path.GetDirectoryName(fullyQualifiedFileName) ?? "";
     }
 
-    public static String basename(string path)
+    public static long getResourceSize(global::System.Resources.ResourceManager manager, String resourceName)
     {
-        return path.getName(path.getNameCount() - 1).ToString();
-    }
-
-    public static String dirname(string path)
-    {
-        return path.getName(0).ToString();
-    }
-
-    public static long getResourceSize(ClassLoader loader, String resourceName)
-    {
-        URLConnection uc = null;
-        try
-        {
-            // Sadly, URLConnection is not AutoCloseable, but it leaks resources if
-            // we don't close its stream.
-            uc = loader.getResource(resourceName).openConnection();
-            return uc.getContentLengthLong();
-        }
-        finally
-        {
-            if (uc != null)
-            {
-                uc.getInputStream().close();
-            }
-        }
+        using var s = manager.GetStream(resourceName);
+        var l = s.Length;
+        return l;
     }
 }

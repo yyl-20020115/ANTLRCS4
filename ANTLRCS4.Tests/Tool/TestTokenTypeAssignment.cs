@@ -167,10 +167,9 @@ public class TestTokenTypeAssignment {
 		}
 
 		// make sure expected tokens are there
-		StringTokenizer st = new StringTokenizer(allValidTokensStr, ", ");
-		
-		while ( st.hasMoreTokens() ) {
-			String tokenName = st.nextToken();
+		var parts = allValidTokensStr.Split(", ");
+		foreach(var tokenName in parts)
+		{
 			Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");
 			tokens.Remove(tokenName);
 		}
@@ -178,12 +177,9 @@ public class TestTokenTypeAssignment {
         foreach (String tokenName in tokens) {
 			Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name "+tokenName);
 		}
-
-		// make sure all expected rules are there
-		st = new StringTokenizer(rulesStr, ", ");
+		parts = rulesStr.Split(", ");	
 		int n = 0;
-		while ( st.hasMoreTokens() ) {
-			String ruleName = st.nextToken();
+		foreach(var ruleName in parts) { 
 			Assert.IsNotNull(g.getRule(ruleName), "rule "+ruleName+" expected");
 			n++;
 		}

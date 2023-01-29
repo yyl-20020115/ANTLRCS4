@@ -19,7 +19,8 @@ public class TestTokenStream {
 	[TestMethod]
 	public void testBufferedTokenStreamReuseAfterFill() {
 		CharStream firstInput = new ANTLRInputStream("A");
-		BufferedTokenStream tokenStream = new BufferedTokenStream(new VisitorBasicLexer(firstInput));
+		BufferedTokenStream tokenStream = new BufferedTokenStream(
+			new VisitorBasicLexer(firstInput));
 		tokenStream.fill();
 		Assert.AreEqual(2, tokenStream.size());
 		Assert.AreEqual(VisitorBasicLexer.A, tokenStream.get(0).getType());

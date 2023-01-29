@@ -61,33 +61,37 @@ public class CharStreams {
 	public static CharStream fromPath(string path){
 		return fromReader(new StreamReader(path, Encoding.UTF8));
 	}
+    public static CharStream fromPath(string path,Encoding encoding)
+    {
+        return fromReader(new StreamReader(path, encoding));
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a path to a file on disk and the
 	 * charset of the bytes contained in the file.
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	//public static CharStream fromPath(string path, Encoding charset){
-	//	long size = Files.size(path);
-	//	using (ReadableByteChannel channel = Files.newByteChannel(path)) {
-	//		return fromChannel(
-	//			channel,
-	//			charset,
-	//			DEFAULT_BUFFER_SIZE,
-	//			CodingErrorAction.REPLACE,
-	//			path.toString(),
-	//			size);
-	//	}
-	//}
+    //public static CharStream fromPath(string path, Encoding charset){
+    //	long size = Files.size(path);
+    //	using (ReadableByteChannel channel = Files.newByteChannel(path)) {
+    //		return fromChannel(
+    //			channel,
+    //			charset,
+    //			DEFAULT_BUFFER_SIZE,
+    //			CodingErrorAction.REPLACE,
+    //			path.toString(),
+    //			size);
+    //	}
+    //}
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a string containing a
 	 * path to a UTF-8 file on disk.
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromFileName(String fileName){
+    public static CharStream fromFileName(String fileName){
 		return fromReader(new StreamReader(fileName, Encoding.UTF8));
 	}
 

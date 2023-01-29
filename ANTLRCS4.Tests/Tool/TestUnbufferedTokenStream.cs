@@ -172,7 +172,7 @@ public class TestUnbufferedTokenStream {
 				return new();
 			}
 
-			return Arrays.AsList(tokens).subList(p, n);
+			return tokens[p..n].ToList();// Arrays.AsList(tokens).subList(p, n);
 		}
 
 		/** For testing.  What's in moving window buffer into data stream.
@@ -183,7 +183,7 @@ public class TestUnbufferedTokenStream {
 				return new();
 			}
 
-			return Arrays.AsList(tokens).subList(0, n);
+			return tokens[..n].ToList();// Arrays.AsList(tokens).subList(0, n);
 		}
 
 	}

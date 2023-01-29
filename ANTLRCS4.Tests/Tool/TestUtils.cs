@@ -39,7 +39,7 @@ public class TestUtils
         values.Add(new GrammarAST(Token.DOWN));
         values.Add(new GrammarAST(Token.UP));
 
-        Assert.IsNull(Utils.nodesToStrings(null));
+        Assert.IsNull(Utils.nodesToStrings(new List<GrammarAST>()));
         Assert.IsNotNull(Utils.nodesToStrings(values));
     }
 
@@ -77,7 +77,7 @@ public class TestUtils
         retval.Add("baz");
 
         Assert.AreEqual(retval, Utils.select(strings, func1));
-        Assert.IsNull(Utils.select(null, null));
+        Assert.IsNull(Utils.select<string,string>(null, null));
     }
 
     [TestMethod]
@@ -105,9 +105,9 @@ public class TestUtils
         List<String> strings = new();
         strings.Add("foo");
         strings.Add("bar");
-        Utils.Filter filter = new UFB();
+        Utils.Filter<string> filter = new UFB<string>();
         Assert.AreEqual(0, Utils.indexOf(strings, filter));
-        Assert.AreEqual(-1, Utils.indexOf(new(), null));
+        Assert.AreEqual(-1, Utils.indexOf<string>(new(), null));
     }
 
     public class UFC<T> : Utils.Filter<T>
@@ -124,9 +124,9 @@ public class TestUtils
         List<String> strings = new();
         strings.Add("foo");
         strings.Add("bar");
-        Utils.Filter<string> filter = new UFC();
+        Utils.Filter<string> filter = new UFC<string>();
         Assert.AreEqual(1, Utils.lastIndexOf(strings, filter));
-        Assert.AreEqual(-1, Utils.lastIndexOf(new(), null));
+        Assert.AreEqual(-1, Utils.lastIndexOf<string>(new(), null));
     }
 
     [TestMethod]

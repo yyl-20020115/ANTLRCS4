@@ -9,6 +9,7 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime.java;
 using org.antlr.v4.test.runtime.states;
+using System.IO;
 using System.Text;
 
 namespace org.antlr.v4.test.runtime;
@@ -21,15 +22,15 @@ namespace org.antlr.v4.test.runtime;
 public abstract class RuntimeTests {
 	protected abstract RuntimeRunner createRuntimeRunner();
 
-	private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
+	//private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
 	private static readonly Dictionary<String, TemplateGroup> cachedTargetTemplates = new ();
 	private static readonly StringRenderer rendered = new StringRenderer();
 
 	static RuntimeTests(){
 		string descriptorsDir = (Path.Combine(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
-        string[] directoryListing = descriptorsDir.listFiles();
-		//assert directoryListing != null;
-		foreach (string directory in directoryListing) {
+        var directoryListing = new DirectoryInfo(descriptorsDir).GetFiles().Select(f => f.FullName);
+        //assert directoryListing != null;
+        foreach (string directory in directoryListing) {
 			String groupName = directory;
 			if (groupName.StartsWith(".")) {
 				continue; // Ignore service directories (like .DS_Store in Mac)
@@ -37,7 +38,7 @@ public abstract class RuntimeTests {
 
 			List<RuntimeTestDescriptor> descriptors = new ();
 
-            string[] descriptorFiles = directory.listFiles();
+            var descriptorFiles = new DirectoryInfo(directory).GetFiles().Select(f=>f.FullName);
 			//assert descriptorFiles != null;
 			foreach (string descriptorFile in descriptorFiles) {
 				String name = descriptorFile.Replace(".txt", "");
@@ -54,17 +55,17 @@ public abstract class RuntimeTests {
 				descriptors.Add(RuntimeTestDescriptorParser.parse(name, text, descriptorFile));
 			}
 
-			testDescriptors.put(groupName, descriptors.ToArray());
+			//testDescriptors.put(groupName, descriptors.ToArray());
 		}
 
-		foreach (String key in CustomDescriptors.descriptors.Keys) {
-			RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
-			RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
-			if (existedDescriptors != null) {
-				testDescriptors.put(key, Stream.concat(Arrays.stream(existedDescriptors), Arrays.stream(descriptors))
-						.toArray());
-			}
-		}
+		//foreach (String key in CustomDescriptors.descriptors.Keys) {
+		//	RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
+		//	RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
+		//	if (existedDescriptors != null) {
+		//		testDescriptors.put(key, Stream.concat(Arrays.stream(existedDescriptors), Arrays.stream(descriptors))
+		//				.toArray());
+		//	}
+		//}
 	}
 #if false
 	//@TestFactory
@@ -160,7 +161,7 @@ public abstract class RuntimeTests {
 		TemplateGroup targetTemplates;
 		lock (cachedTargetTemplates) {
 			if (!cachedTargetTemplates.TryGetValue(targetName,out targetTemplates)) {
-				string templates = .getResource("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
+				string templates = File.ReadAllText("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
 				//assert templates != null;
 				targetTemplates = new TemplateGroupFile(templates, Encoding.UTF8, '<', '>');
 				targetTemplates.RegisterRenderer(typeof(String), rendered);

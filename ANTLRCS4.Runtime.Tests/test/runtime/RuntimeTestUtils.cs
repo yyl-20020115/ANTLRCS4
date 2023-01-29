@@ -28,10 +28,10 @@ public abstract class RuntimeTestUtils {
 	private static Boolean isWindows;
 
 	static RuntimeTestUtils() {
-		String locationPath = RuntimeTestUtils.getCodeSource().getLocation().getPath();
-		if (IsWindows()) {
-			locationPath = locationPath.ReplaceFirst("/", "");
-		}
+		String locationPath = Environment.CurrentDirectory;
+		//if (IsWindows()) {
+		//	locationPath = locationPath.ReplaceFirst("/", "");
+		//}
 		string potentialRuntimeTestsuitePath = Path.Combine(locationPath, "..", "..");
 		string potentialResourcePath = Path.Combine(potentialRuntimeTestsuitePath.ToString(), "resources");
 

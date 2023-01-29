@@ -36,7 +36,7 @@ public class TestInterpreterDataReader {
 				"SUB : '-';\n" +
 				"WS : [ \\t]+ -> channel(HIDDEN);");
 		String interpString = Tool.generateInterpreterData(g);
-		string interpFile = File.createTempFile(null, null);
+        string interpFile = Environment.CurrentDirectory + "test-" + Random.Shared.Next() + ".txt";// File.createTempFile(null, null);
 		File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
 
         InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
@@ -61,9 +61,9 @@ public class TestInterpreterDataReader {
         List<String> modes = castList<String>(modesField.GetValue(interpreterData),typeof( String));
 
 		Assert.AreEqual(6, vocabulary.getMaxTokenType());
-		assertArrayEquals(new String[]{"s","expr"}, ruleNames.ToArray());
-		assertArrayEquals(new String[]{"", "", "'*'", "'/'", "'+'", "'-'", ""}, literalNames);
-		assertArrayEquals(new String[]{"", "INT", "MUL", "DIV", "ADD", "SUB", "WS"}, symbolicNames);
+		Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"s","expr"}, ruleNames.ToArray()));
+        Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"", "", "'*'", "'/'", "'+'", "'-'", ""}, literalNames));
+        Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"", "INT", "MUL", "DIV", "ADD", "SUB", "WS"}, symbolicNames));
 		Assert.IsNull(channels);
 		Assert.IsNull(modes);
 

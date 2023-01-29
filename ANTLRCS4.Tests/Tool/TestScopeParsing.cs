@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.parse;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using Attribute = org.antlr.v4.tool.Attribute;
@@ -57,7 +58,7 @@ public class TestScopeParsing {
 		Dictionary<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
 		List<String> @out = new ();
 		foreach (String arg in attributes.Keys) {
-			Attribute attr = attributes.get(arg);
+			Attribute attr = attributes[(arg)];
             @out.Add(attr.ToString());
 		}
 		String actual = RuntimeUtils.join(@out.ToArray(), ", ");

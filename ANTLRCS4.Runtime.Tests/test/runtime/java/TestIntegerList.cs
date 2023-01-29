@@ -12,7 +12,7 @@ public class TestIntegerList {
 	[TestMethod]
 	public void emptyListToEmptyCharArray() {
 		IntegerList l = new IntegerList();
-		assertArrayEquals(new char[0], l.toCharArray());
+		Assert.IsTrue(Enumerable.SequenceEqual(new char[0], l.toCharArray()));
 	}
 
 	[TestMethod]
@@ -29,15 +29,14 @@ public class TestIntegerList {
 		// as well. We could change this if desired.
 		l.add(0xDC00);
 		char[] expected = new char[] { '\uDC00' };
-		assertArrayEquals(expected, l.toCharArray());
+		Assert.IsTrue(Enumerable.SequenceEqual(expected, l.toCharArray()));
 	}
 
 	[TestMethod]
 	public void tooLargeIntegerToCharArrayThrows() {
 		IntegerList l = new IntegerList();
 		l.add(0x110000);
-		assertThrows(
-				ArgumentException,
+		Assert.ThrowsException<ArgumentException>(
 				()=>l.toCharArray()
 		);
 	}
@@ -48,8 +47,8 @@ public class TestIntegerList {
 		l.add(0x35);
 		l.add(0x4E94);
 		l.add(0xFF15);
-		char[] expected = new char[] { 0x35, 0x4E94, 0xFF15 };
-		assertArrayEquals(expected, l.toCharArray());
+		char[] expected = new char[] { '\x35', '\u4E94', '\uFF15' };
+		Assert.IsTrue(Enumerable.SequenceEqual(expected, l.toCharArray()));
 	}
 
 	[TestMethod]
@@ -59,6 +58,6 @@ public class TestIntegerList {
 		l.add(0x116C5);
 		l.add(0x1D7FB);
 		char[] expected = new char[] { '\uD801', '\uDCA5', '\uD805', '\uDEC5', '\uD835', '\uDFFB' };
-		assertArrayEquals(expected, l.toCharArray());
+		Assert.IsTrue(Enumerable.SequenceEqual(expected, l.toCharArray()));
 	}
 }

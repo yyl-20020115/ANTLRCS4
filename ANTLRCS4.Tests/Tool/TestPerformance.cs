@@ -17,7 +17,6 @@ using org.antlr.v4.test.runtime;
 using org.antlr.v4.test.runtime.states;
 using System.Reflection;
 using System.Text;
-using static org.antlr.v4.test.tool.TestPerformance.FilenameFilters;
 
 namespace org.antlr.v4.test.tool;
 
@@ -48,7 +47,7 @@ public class TestPerformance
     /**
 	 * The encoding to use when reading source files.
 	 */
-    private static readonly String ENCODING = "UTF-8";
+    private static readonly Encoding ENCODING = Encoding.UTF8;
     /**
 	 * The maximum number of files to parse in a single iteration.
 	 */
@@ -329,459 +328,457 @@ public class TestPerformance
             tokensPerFile = null;
         }
     }
-    public class R0new : Runnable
-    {
-        //@Override
-        public void run()
-        {
-            try
-            {
-                parse1(0, factory, sources, SHUFFLE_FILES_AT_START);
-            }
-            catch (Exception ex)
-            {
-                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    //public class R0new : Runnable
+    //{
+    //    //@Override
+    //    public void run()
+    //    {
+    //        try
+    //        {
+    //            //parse1(0, factory, sources, SHUFFLE_FILES_AT_START);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+    //        }
+    //    }
+    //}
 
     private static object getName()
     {
         throw new NotImplementedException();
     }
-#if false
-    public class R1
-    {
-        //@Override
-        public void run()
-        {
-            if (CLEAR_DFA)
-            {
-                int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.CurrentThread).getThreadNumber();
-                if (sharedLexers.Length > 0 && sharedLexers[index] != null)
-                {
-                    ATN atn = sharedLexers[index].getATN();
-                    for (int j = 0; j < sharedLexers[index].getInterpreter().decisionToDFA.Length; j++)
-                    {
-                        sharedLexers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
-                    }
-                }
+    //public class R1
+    //{
+    //    //@Override
+    //    public void run()
+    //    {
+    //        if (CLEAR_DFA)
+    //        {
+    //            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.CurrentThread).getThreadNumber();
+    //            if (sharedLexers.Length > 0 && sharedLexers[index] != null)
+    //            {
+    //                ATN atn = sharedLexers[index].getATN();
+    //                for (int j = 0; j < sharedLexers[index].getInterpreter().decisionToDFA.Length; j++)
+    //                {
+    //                    sharedLexers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
+    //                }
+    //            }
 
-                if (sharedParsers.Length > 0 && sharedParsers[index] != null)
-                {
-                    ATN atn = sharedParsers[index].getATN();
-                    for (int j = 0; j < sharedParsers[index].getInterpreter().decisionToDFA.Length; j++)
-                    {
-                        sharedParsers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
-                    }
-                }
+    //            if (sharedParsers.Length > 0 && sharedParsers[index] != null)
+    //            {
+    //                ATN atn = sharedParsers[index].getATN();
+    //                for (int j = 0; j < sharedParsers[index].getInterpreter().decisionToDFA.Length; j++)
+    //                {
+    //                    sharedParsers[index].getInterpreter().decisionToDFA[j] = new DFA(atn.getDecisionState(j), j);
+    //                }
+    //            }
 
-                if (FILE_GRANULARITY)
-                {
-                    Arrays.Fill(sharedLexers, null);
-                    Arrays.Fill(sharedParsers, null);
-                }
-            }
+    //            if (FILE_GRANULARITY)
+    //            {
+    //                Arrays.Fill(sharedLexers, null);
+    //                Arrays.Fill(sharedParsers, null);
+    //            }
+    //        }
 
-            try
-            {
-                parse2(currentPass, factory, sources, SHUFFLE_FILES_AFTER_ITERATIONS);
-            }
-            catch (Exception ex)
-            {
-                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    private readonly AtomicIntegerArray tokenCount = new AtomicIntegerArray(PASSES);
-    [TestMethod]
-    //@Disabled
-    public void compileJdk()
-    {
-        String jdkSourceRoot = getSourceRoot("JDK");
-        Assert.IsTrue(jdkSourceRoot != null && jdkSourceRoot.Length > 0,
-                "The JDK_SOURCE_ROOT environment variable must be set for performance testing.");
+    //        try
+    //        {
+    //            parse2(currentPass, factory, sources, SHUFFLE_FILES_AFTER_ITERATIONS);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+    //        }
+    //    }
+    //}
+    //private readonly AtomicIntegerArray tokenCount = new AtomicIntegerArray(PASSES);
+    //[TestMethod]
+    ////@Disabled
+    //public void compileJdk()
+    //{
+    //    String jdkSourceRoot = getSourceRoot("JDK");
+    //    Assert.IsTrue(jdkSourceRoot != null && jdkSourceRoot.Length > 0,
+    //            "The JDK_SOURCE_ROOT environment variable must be set for performance testing.");
 
-        JavaCompiledState javaCompiledState = compileJavaParser(USE_LR_GRAMMAR);
-        String lexerName = USE_LR_GRAMMAR ? "JavaLRLexer" : "JavaLexer";
-        String parserName = USE_LR_GRAMMAR ? "JavaLRParser" : "JavaParser";
-        String listenerName = USE_LR_GRAMMAR ? "JavaLRBaseListener" : "JavaBaseListener";
-        String entryPoint = "compilationUnit";
-        ParserFactory factory = getParserFactory(javaCompiledState, listenerName, entryPoint);
+    //    JavaCompiledState javaCompiledState = compileJavaParser(USE_LR_GRAMMAR);
+    //    String lexerName = USE_LR_GRAMMAR ? "JavaLRLexer" : "JavaLexer";
+    //    String parserName = USE_LR_GRAMMAR ? "JavaLRParser" : "JavaParser";
+    //    String listenerName = USE_LR_GRAMMAR ? "JavaLRBaseListener" : "JavaBaseListener";
+    //    String entryPoint = "compilationUnit";
+    //    ParserFactory factory = getParserFactory(javaCompiledState, listenerName, entryPoint);
 
-        if (TOP_PACKAGE.Length > 0)
-        {
-            jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.Replace('.', '/');
-        }
+    //    if (TOP_PACKAGE.Length > 0)
+    //    {
+    //        jdkSourceRoot = jdkSourceRoot + '/' + TOP_PACKAGE.Replace('.', '/');
+    //    }
 
-        string directory = (jdkSourceRoot);
-        Assert.IsTrue(directory.isDirectory());
+    //    string directory = (jdkSourceRoot);
+    //    Assert.IsTrue(directory.isDirectory());
 
-        FilenameFilter filesFilter = FilenameFilters.extension(".java", false);
-        FilenameFilter directoriesFilter = FilenameFilters.ALL_FILES;
-        List<InputDescriptor> sources = loadSources(directory, filesFilter, directoriesFilter, RECURSIVE);
+    //    FilenameFilter filesFilter = FilenameFilters.extension(".java", false);
+    //    FilenameFilter directoriesFilter = FilenameFilters.ALL_FILES;
+    //    List<InputDescriptor> sources = loadSources(directory, filesFilter, directoriesFilter, RECURSIVE);
 
-        for (int i = 0; i < PASSES; i++)
-        {
-            if (COMPUTE_TRANSITION_STATS)
-            {
-                totalTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
-                computedTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+    //    for (int i = 0; i < PASSES; i++)
+    //    {
+    //        if (COMPUTE_TRANSITION_STATS)
+    //        {
+    //            totalTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+    //            computedTransitionsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
 
-                if (DETAILED_DFA_STATE_STATS)
-                {
-                    decisionInvocationsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    fullContextFallbackPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    nonSllPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    totalTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    computedTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                    fullContextTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
-                }
-            }
+    //            if (DETAILED_DFA_STATE_STATS)
+    //            {
+    //                decisionInvocationsPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //                fullContextFallbackPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //                nonSllPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //                totalTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //                computedTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //                fullContextTransitionsPerDecisionPerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)][];
+    //            }
+    //        }
 
-            if (COMPUTE_TIMING_STATS)
-            {
-                timePerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
-                tokensPerFile[i] = new int[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
-            }
-        }
+    //        if (COMPUTE_TIMING_STATS)
+    //        {
+    //            timePerFile[i] = new long[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+    //            tokensPerFile[i] = new int[Math.Min(sources.Count, MAX_FILES_PER_PARSE_ITERATION)];
+    //        }
+    //    }
 
-        Console.Out.Write($"Located {sources.Count} source files.%n");
-        Console.Out.Write(getOptionsDescription(TOP_PACKAGE));
+    //    Console.Out.Write($"Located {sources.Count} source files.%n");
+    //    Console.Out.Write(getOptionsDescription(TOP_PACKAGE));
 
-        ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
+    //    ExecutorService executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? 1 : NUMBER_OF_THREADS, new NumberedThreadFactory());
 
-        List<Future> passResults = new();
-        passResults.Add(executorService.submit(new R0()));
-        for (int i = 0; i < PASSES - 1; i++)
-        {
-            int currentPass = i + 1;
-            passResults.Add(executorService.submit(new R1()));
-        }
+    //    List<Future> passResults = new();
+    //    passResults.Add(executorService.submit(new R0()));
+    //    for (int i = 0; i < PASSES - 1; i++)
+    //    {
+    //        int currentPass = i + 1;
+    //        passResults.Add(executorService.submit(new R1()));
+    //    }
 
-        foreach (Future passResult in passResults)
-        {
-            passResult.get();
-        }
+    //    foreach (Future passResult in passResults)
+    //    {
+    //        passResult.get();
+    //    }
 
-        executorService.shutdown();
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    //    executorService.shutdown();
+    //    executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 
-        if (COMPUTE_TRANSITION_STATS && SHOW_TRANSITION_STATS_PER_FILE)
-        {
-            computeTransitionStatistics();
-        }
+    //    if (COMPUTE_TRANSITION_STATS && SHOW_TRANSITION_STATS_PER_FILE)
+    //    {
+    //        computeTransitionStatistics();
+    //    }
 
-        if (COMPUTE_TIMING_STATS)
-        {
-            computeTimingStatistics();
-        }
+    //    if (COMPUTE_TIMING_STATS)
+    //    {
+    //        computeTimingStatistics();
+    //    }
 
-        sources.Clear();
-        if (PAUSE_FOR_HEAP_DUMP)
-        {
-            GC.Collect();
-            Console.Out.WriteLine("Pausing before application exit.");
-            try
-            {
-                Thread.Sleep(4000);
-            }
-            catch (InterruptedException ex)
-            {
-                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-#endif
+    //    sources.Clear();
+    //    if (PAUSE_FOR_HEAP_DUMP)
+    //    {
+    //        GC.Collect();
+    //        Console.Out.WriteLine("Pausing before application exit.");
+    //        try
+    //        {
+    //            Thread.Sleep(4000);
+    //        }
+    //        catch (InterruptedException ex)
+    //        {
+    //            Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+    //        }
+    //    }
+    //}
 
     /**
 	 * Compute and print ATN/DFA transition statistics.
 	 */
-    private void computeTransitionStatistics()
-    {
-        if (TRANSITION_RUNNING_AVERAGE)
-        {
-            for (int i = 0; i < PASSES; i++)
-            {
-                long[] data = computedTransitionsPerFile[i];
-                for (int j = 0; j < data.Length - 1; j++)
-                {
-                    data[j + 1] += data[j];
-                }
+  //  private void computeTransitionStatistics()
+  //  {
+  //      if (TRANSITION_RUNNING_AVERAGE)
+  //      {
+  //          for (int i = 0; i < PASSES; i++)
+  //          {
+  //              long[] data = computedTransitionsPerFile[i];
+  //              for (int j = 0; j < data.Length - 1; j++)
+  //              {
+  //                  data[j + 1] += data[j];
+  //              }
 
-                data = totalTransitionsPerFile[i];
-                for (int j = 0; j < data.Length - 1; j++)
-                {
-                    data[j + 1] += data[j];
-                }
-            }
-        }
+  //              data = totalTransitionsPerFile[i];
+  //              for (int j = 0; j < data.Length - 1; j++)
+  //              {
+  //                  data[j + 1] += data[j];
+  //              }
+  //          }
+  //      }
 
-        long[] sumNum = new long[totalTransitionsPerFile[0].Length];
-        long[] sumDen = new long[totalTransitionsPerFile[0].Length];
-        double[] sumNormalized = new double[totalTransitionsPerFile[0].Length];
-        for (int i = 0; i < PASSES; i++)
-        {
-            long[] num = computedTransitionsPerFile[i];
-            long[] den = totalTransitionsPerFile[i];
-            for (int j = 0; j < den.Length; j++)
-            {
-                sumNum[j] += num[j];
-                sumDen[j] += den[j];
-                if (den[j] > 0)
-                {
-                    sumNormalized[j] += (double)num[j] / (double)den[j];
-                }
-            }
-        }
+  //      long[] sumNum = new long[totalTransitionsPerFile[0].Length];
+  //      long[] sumDen = new long[totalTransitionsPerFile[0].Length];
+  //      double[] sumNormalized = new double[totalTransitionsPerFile[0].Length];
+  //      for (int i = 0; i < PASSES; i++)
+  //      {
+  //          long[] num = computedTransitionsPerFile[i];
+  //          long[] den = totalTransitionsPerFile[i];
+  //          for (int j = 0; j < den.Length; j++)
+  //          {
+  //              sumNum[j] += num[j];
+  //              sumDen[j] += den[j];
+  //              if (den[j] > 0)
+  //              {
+  //                  sumNormalized[j] += (double)num[j] / (double)den[j];
+  //              }
+  //          }
+  //      }
 
-        double[] weightedAverage = new double[totalTransitionsPerFile[0].Length];
-        double[] average = new double[totalTransitionsPerFile[0].Length];
-        for (int i = 0; i < average.Length; i++)
-        {
-            if (sumDen[i] > 0)
-            {
-                weightedAverage[i] = (double)sumNum[i] / (double)sumDen[i];
-            }
-            else
-            {
-                weightedAverage[i] = 0;
-            }
+  //      double[] weightedAverage = new double[totalTransitionsPerFile[0].Length];
+  //      double[] average = new double[totalTransitionsPerFile[0].Length];
+  //      for (int i = 0; i < average.Length; i++)
+  //      {
+  //          if (sumDen[i] > 0)
+  //          {
+  //              weightedAverage[i] = (double)sumNum[i] / (double)sumDen[i];
+  //          }
+  //          else
+  //          {
+  //              weightedAverage[i] = 0;
+  //          }
 
-            average[i] = sumNormalized[i] / PASSES;
-        }
+  //          average[i] = sumNormalized[i] / PASSES;
+  //      }
 
-        double[] low95 = new double[totalTransitionsPerFile[0].Length];
-        double[] high95 = new double[totalTransitionsPerFile[0].Length];
-        double[] low67 = new double[totalTransitionsPerFile[0].Length];
-        double[] high67 = new double[totalTransitionsPerFile[0].Length];
-        double[] stddev = new double[totalTransitionsPerFile[0].Length];
-        for (int i = 0; i < stddev.Length; i++)
-        {
-            double[] points = new double[PASSES];
-            for (int j = 0; j < PASSES; j++)
-            {
-                long totalTransitions = totalTransitionsPerFile[j][i];
-                if (totalTransitions > 0)
-                {
-                    points[j] = ((double)computedTransitionsPerFile[j][i] / (double)totalTransitionsPerFile[j][i]);
-                }
-                else
-                {
-                    points[j] = 0;
-                }
-            }
+  //      double[] low95 = new double[totalTransitionsPerFile[0].Length];
+  //      double[] high95 = new double[totalTransitionsPerFile[0].Length];
+  //      double[] low67 = new double[totalTransitionsPerFile[0].Length];
+  //      double[] high67 = new double[totalTransitionsPerFile[0].Length];
+  //      double[] stddev = new double[totalTransitionsPerFile[0].Length];
+  //      for (int i = 0; i < stddev.Length; i++)
+  //      {
+  //          double[] points = new double[PASSES];
+  //          for (int j = 0; j < PASSES; j++)
+  //          {
+  //              long totalTransitions = totalTransitionsPerFile[j][i];
+  //              if (totalTransitions > 0)
+  //              {
+  //                  points[j] = ((double)computedTransitionsPerFile[j][i] / (double)totalTransitionsPerFile[j][i]);
+  //              }
+  //              else
+  //              {
+  //                  points[j] = 0;
+  //              }
+  //          }
 
-            Array.Sort(points);
+  //          Array.Sort(points);
 
-            double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
-            double value = 0;
-            for (int j = 0; j < PASSES; j++)
-            {
-                double diff = points[j] - averageValue;
-                value += diff * diff;
-            }
+  //          double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
+  //          double value = 0;
+  //          for (int j = 0; j < PASSES; j++)
+  //          {
+  //              double diff = points[j] - averageValue;
+  //              value += diff * diff;
+  //          }
 
-            int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
-            int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
-            low95[i] = points[ignoreCount95];
-            high95[i] = points[points.Length - 1 - ignoreCount95];
-            low67[i] = points[ignoreCount67];
-            high67[i] = points[points.Length - 1 - ignoreCount67];
-            stddev[i] = Math.Sqrt(value / PASSES);
-        }
+  //          int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
+  //          int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
+  //          low95[i] = points[ignoreCount95];
+  //          high95[i] = points[points.Length - 1 - ignoreCount95];
+  //          low67[i] = points[ignoreCount67];
+  //          high67[i] = points[points.Length - 1 - ignoreCount67];
+  //          stddev[i] = Math.Sqrt(value / PASSES);
+  //      }
 
-        Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
-        for (int i = 0; i < stddev.Length; i++)
-        {
-            double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
-            Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
-        }
-    }
-    /**
-	 * Compute and print timing statistics.
-	 */
-    private void computeTimingStatistics()
-    {
-        if (TIMING_CUMULATIVE)
-        {
-            for (int i = 0; i < PASSES; i++)
-            {
-                long[] data = timePerFile[i];
-                for (int j = 0; j < data.Length - 1; j++)
-                {
-                    data[j + 1] += data[j];
-                }
+  //      Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
+  //      for (int i = 0; i < stddev.Length; i++)
+  //      {
+  //          double averageValue = TRANSITION_WEIGHTED_AVERAGE ? weightedAverage[i] : average[i];
+  //          Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
+  //      }
+  //  }
+  //  /**
+	 //* Compute and print timing statistics.
+	 //*/
+  //  private void computeTimingStatistics()
+  //  {
+  //      if (TIMING_CUMULATIVE)
+  //      {
+  //          for (int i = 0; i < PASSES; i++)
+  //          {
+  //              long[] data = timePerFile[i];
+  //              for (int j = 0; j < data.Length - 1; j++)
+  //              {
+  //                  data[j + 1] += data[j];
+  //              }
 
-                int[] data2 = tokensPerFile[i];
-                for (int j = 0; j < data2.Length - 1; j++)
-                {
-                    data2[j + 1] += data2[j];
-                }
-            }
-        }
+  //              int[] data2 = tokensPerFile[i];
+  //              for (int j = 0; j < data2.Length - 1; j++)
+  //              {
+  //                  data2[j + 1] += data2[j];
+  //              }
+  //          }
+  //      }
 
-        int fileCount = timePerFile[0].Length;
-        double[] sum = new double[fileCount];
-        for (int i = 0; i < PASSES; i++)
-        {
-            long[] data = timePerFile[i];
-            int[] tokenData = tokensPerFile[i];
-            for (int j = 0; j < data.Length; j++)
-            {
-                sum[j] += (double)data[j] / (double)tokenData[j];
-            }
-        }
+  //      int fileCount = timePerFile[0].Length;
+  //      double[] sum = new double[fileCount];
+  //      for (int i = 0; i < PASSES; i++)
+  //      {
+  //          long[] data = timePerFile[i];
+  //          int[] tokenData = tokensPerFile[i];
+  //          for (int j = 0; j < data.Length; j++)
+  //          {
+  //              sum[j] += (double)data[j] / (double)tokenData[j];
+  //          }
+  //      }
 
-        double[] average = new double[fileCount];
-        for (int i = 0; i < average.Length; i++)
-        {
-            average[i] = sum[i] / PASSES;
-        }
+  //      double[] average = new double[fileCount];
+  //      for (int i = 0; i < average.Length; i++)
+  //      {
+  //          average[i] = sum[i] / PASSES;
+  //      }
 
-        double[] low95 = new double[fileCount];
-        double[] high95 = new double[fileCount];
-        double[] low67 = new double[fileCount];
-        double[] high67 = new double[fileCount];
-        double[] stddev = new double[fileCount];
-        for (int i = 0; i < stddev.Length; i++)
-        {
-            double[] points = new double[PASSES];
-            for (int j = 0; j < PASSES; j++)
-            {
-                points[j] = (double)timePerFile[j][i] / (double)tokensPerFile[j][i];
-            }
+  //      double[] low95 = new double[fileCount];
+  //      double[] high95 = new double[fileCount];
+  //      double[] low67 = new double[fileCount];
+  //      double[] high67 = new double[fileCount];
+  //      double[] stddev = new double[fileCount];
+  //      for (int i = 0; i < stddev.Length; i++)
+  //      {
+  //          double[] points = new double[PASSES];
+  //          for (int j = 0; j < PASSES; j++)
+  //          {
+  //              points[j] = (double)timePerFile[j][i] / (double)tokensPerFile[j][i];
+  //          }
 
-            Array.Sort(points);
+  //          Array.Sort(points);
 
-            double averageValue = average[i];
-            double value = 0;
-            for (int j = 0; j < PASSES; j++)
-            {
-                double diff = points[j] - averageValue;
-                value += diff * diff;
-            }
+  //          double averageValue = average[i];
+  //          double value = 0;
+  //          for (int j = 0; j < PASSES; j++)
+  //          {
+  //              double diff = points[j] - averageValue;
+  //              value += diff * diff;
+  //          }
 
-            int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
-            int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
-            low95[i] = points[ignoreCount95];
-            high95[i] = points[points.Length - 1 - ignoreCount95];
-            low67[i] = points[ignoreCount67];
-            high67[i] = points[points.Length - 1 - ignoreCount67];
-            stddev[i] = Math.Sqrt(value / PASSES);
-        }
+  //          int ignoreCount95 = (int)Math.Round(PASSES * (1 - 0.95) / 2.0);
+  //          int ignoreCount67 = (int)Math.Round(PASSES * (1 - 0.667) / 2.0);
+  //          low95[i] = points[ignoreCount95];
+  //          high95[i] = points[points.Length - 1 - ignoreCount95];
+  //          low67[i] = points[ignoreCount67];
+  //          high67[i] = points[points.Length - 1 - ignoreCount67];
+  //          stddev[i] = Math.Sqrt(value / PASSES);
+  //      }
 
-        Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
-        for (int i = 0; i < stddev.Length; i++)
-        {
-            double averageValue = average[i];
-            Console.Out.WriteLine("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
-        }
-    }
+  //      Console.Out.WriteLine("File\tAverage\tStd. Dev.\t95%% Low\t95%% High\t66.7%% Low\t66.7%% High%n");
+  //      for (int i = 0; i < stddev.Length; i++)
+  //      {
+  //          double averageValue = average[i];
+  //          Console.Out.WriteLine("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
+  //      }
+  //  }
 
-    private String getSourceRoot(String prefix)
-    {
-        String sourceRoot =Environment.GetEnvironmentVariable(prefix + "_SOURCE_ROOT");
-        //if (sourceRoot == null)
-        //{
-        //    sourceRoot = System.getProperty(prefix + "_SOURCE_ROOT");
-        //}
+  //  private String getSourceRoot(String prefix)
+  //  {
+  //      String sourceRoot =Environment.GetEnvironmentVariable(prefix + "_SOURCE_ROOT");
+  //      //if (sourceRoot == null)
+  //      //{
+  //      //    sourceRoot = System.getProperty(prefix + "_SOURCE_ROOT");
+  //      //}
 
-        return sourceRoot;
-    }
+  //      return sourceRoot;
+  //  }
 
-    public static String getOptionsDescription(String topPackage)
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.Append("Input=");
-        if (topPackage.Length == 0)
-        {
-            builder.Append("*");
-        }
-        else
-        {
-            builder.Append(topPackage).Append(".*");
-        }
+  //  public static String getOptionsDescription(String topPackage)
+  //  {
+  //      StringBuilder builder = new StringBuilder();
+  //      builder.Append("Input=");
+  //      if (topPackage.Length == 0)
+  //      {
+  //          builder.Append("*");
+  //      }
+  //      else
+  //      {
+  //          builder.Append(topPackage).Append(".*");
+  //      }
 
-        builder.Append(", Grammar=").Append(USE_LR_GRAMMAR ? "LR" : "Standard");
-        builder.Append(", ForceAtn=").Append(FORCE_ATN);
+  //      builder.Append(", Grammar=").Append(USE_LR_GRAMMAR ? "LR" : "Standard");
+  //      builder.Append(", ForceAtn=").Append(FORCE_ATN);
 
-        builder.Append(NewLine);
+  //      builder.Append(NewLine);
 
-        builder.Append("Op=Lex").Append(RUN_PARSER ? "+Parse" : " only");
-        builder.Append(", Strategy=").Append(BAIL_ON_ERROR ? nameof(BailErrorStrategy) : nameof(DefaultErrorStrategy));
-        builder.Append(", BuildParseTree=").Append(BUILD_PARSE_TREES);
-        builder.Append(", WalkBlankListener=").Append(BLANK_LISTENER);
+  //      builder.Append("Op=Lex").Append(RUN_PARSER ? "+Parse" : " only");
+  //      builder.Append(", Strategy=").Append(BAIL_ON_ERROR ? nameof(BailErrorStrategy) : nameof(DefaultErrorStrategy));
+  //      builder.Append(", BuildParseTree=").Append(BUILD_PARSE_TREES);
+  //      builder.Append(", WalkBlankListener=").Append(BLANK_LISTENER);
 
-        builder.Append(NewLine);
+  //      builder.Append(NewLine);
 
-        builder.Append("Lexer=").Append(REUSE_LEXER ? "setInputStream" : "newInstance");
-        builder.Append(", Parser=").Append(REUSE_PARSER ? "setInputStream" : "newInstance");
-        builder.Append(", AfterPass=").Append(CLEAR_DFA ? "newInstance" : "setInputStream");
+  //      builder.Append("Lexer=").Append(REUSE_LEXER ? "setInputStream" : "newInstance");
+  //      builder.Append(", Parser=").Append(REUSE_PARSER ? "setInputStream" : "newInstance");
+  //      builder.Append(", AfterPass=").Append(CLEAR_DFA ? "newInstance" : "setInputStream");
 
-        builder.Append(NewLine);
+  //      builder.Append(NewLine);
 
-        return builder.ToString();
-    }
+  //      return builder.ToString();
+  //  }
 
     /**
      *  This method is separate from {@link #parse2} so the first pass can be distinguished when analyzing
      *  profiler results.
      */
-    protected void parse1(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
-    {
-        if (FILE_GRANULARITY)
-        {
-            GC.Collect();
-        }
+    //protected void parse1(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
+    //{
+    //    if (FILE_GRANULARITY)
+    //    {
+    //        GC.Collect();
+    //    }
 
-        parseSources(currentPass, factory, sources, shuffleSources);
-    }
+    //    parseSources(currentPass, factory, sources, shuffleSources);
+    //}
 
     /**
      *  This method is separate from {@link #parse1} so the first pass can be distinguished when analyzing
      *  profiler results.
      */
-    protected void parse2(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
-    {
-        if (FILE_GRANULARITY)
-        {
-            GC.Collect();
-        }
+    //protected void parse2(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
+    //{
+    //    if (FILE_GRANULARITY)
+    //    {
+    //        GC.Collect();
+    //    }
 
-        parseSources(currentPass, factory, sources, shuffleSources);
-    }
+    //    parseSources(currentPass, factory, sources, shuffleSources);
+    //}
 
-    protected List<InputDescriptor> loadSources(string directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive)
+    protected List<InputDescriptor> loadSources(string directory, string filesFilter, string directoriesFilter, bool recursive)
     {
         List<InputDescriptor> result = new();
         loadSources(directory, filesFilter, directoriesFilter, recursive, result);
         return result;
     }
 
-    protected void loadSources(string directory, FilenameFilter filesFilter, FilenameFilter directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
+    protected void loadSources(string directory, string filesFilter, string directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
     {
         //assert directory.isDirectory();
 
-        string[] sources = directory.listFiles(filesFilter);
+        var sources = new DirectoryInfo(directory).GetFiles(filesFilter);
         foreach (var file in sources)
         {
-            if (!file.isFile())
+            if ((file.Attributes&FileAttributes.Normal)!= FileAttributes.Normal )
             {
                 continue;
             }
 
-            result.Add(new InputDescriptor(file));
+            result.Add(new InputDescriptor(file.FullName));
         }
 
         if (recursive)
         {
-            string[] children = directory.listFiles(directoriesFilter);
-            foreach (string child in children)
+            var children = new DirectoryInfo(directory).GetFiles(directoriesFilter, SearchOption.AllDirectories);
+            foreach (var child in children)
             {
-                if (child.isDirectory())
+                if ((child.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    loadSources(child, filesFilter, directoriesFilter, true, result);
+                    loadSources(child.FullName, filesFilter, directoriesFilter, true, result);
                 }
             }
         }
@@ -789,387 +786,387 @@ public class TestPerformance
 
     int configOutputSize = 0;
 
-    protected void parseSources(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
-    {
-        if (shuffleSources)
-        {
-            List<InputDescriptor> sourcesList = new(sources);
-            lock (RANDOM)
-            {
-                Collections.shuffle(sourcesList, RANDOM);
-            }
+//    protected void parseSources(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
+//    {
+//        if (shuffleSources)
+//        {
+//            List<InputDescriptor> sourcesList = new(sources);
+//            lock (RANDOM)
+//            {
+//                Collections.shuffle(sourcesList, RANDOM);
+//            }
 
-            sources = sourcesList;
-        }
+//            sources = sourcesList;
+//        }
 
-        long startTime = DateTime.Now.Nanosecond;
-        tokenCount.set(currentPass, 0);
-        int inputSize = 0;
-        int inputCount = 0;
+//        long startTime = DateTime.Now.Nanosecond;
+//        tokenCount.set(currentPass, 0);
+//        int inputSize = 0;
+//        int inputCount = 0;
 
-        ICollection<Future<FileParseResult>> results = new();
-        ExecutorService executorService;
-        if (FILE_GRANULARITY)
-        {
-            executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? NUMBER_OF_THREADS : 1, new NumberedThreadFactory());
-        }
-        else
-        {
-            executorService = Executors.newSingleThreadExecutor(new FixedThreadNumberFactory(((NumberedThread)Thread.currentThread()).getThreadNumber()));
-        }
+//        ICollection<Future<FileParseResult>> results = new();
+//        ExecutorService executorService;
+//        if (FILE_GRANULARITY)
+//        {
+//            executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? NUMBER_OF_THREADS : 1, new NumberedThreadFactory());
+//        }
+//        else
+//        {
+//            executorService = Executors.newSingleThreadExecutor(new FixedThreadNumberFactory(((NumberedThread)Thread.currentThread()).getThreadNumber()));
+//        }
 
-        foreach (InputDescriptor inputDescriptor in sources)
-        {
-            if (inputCount >= MAX_FILES_PER_PARSE_ITERATION)
-            {
-                break;
-            }
+//        foreach (InputDescriptor inputDescriptor in sources)
+//        {
+//            if (inputCount >= MAX_FILES_PER_PARSE_ITERATION)
+//            {
+//                break;
+//            }
 
-            CharStream input = inputDescriptor.getInputStream();
-            input.seek(0);
-            inputSize += input.size();
-            inputCount++;
-            //TODO:
-#if false
-            Future<FileParseResult> futureChecksum = executorService.submit(new Callable<FileParseResult>()
-            {
-                //@Override
-                public FileParseResult call()
-            {
-                // this incurred a great deal of overhead and was causing significant variations in performance results.
-                //Console.Out.format("Parsing file %s\n", input.getSourceName());
-                try
-                {
-                    return factory.parseFile(input, currentPass, ((NumberedThread)Thread.currentThread()).getThreadNumber());
-                }
-                catch (IllegalStateException ex)
-                {
-                    ex.printStackTrace(System.err);
-                }
-                catch (Throwable t)
-                {
-                    t.printStackTrace(System.err);
-                }
+//            CharStream input = inputDescriptor.getInputStream();
+//            input.seek(0);
+//            inputSize += input.size();
+//            inputCount++;
+//            //TODO:
+//#if false
+//            Future<FileParseResult> futureChecksum = executorService.submit(new Callable<FileParseResult>()
+//            {
+//                //@Override
+//                public FileParseResult call()
+//            {
+//                // this incurred a great deal of overhead and was causing significant variations in performance results.
+//                //Console.Out.format("Parsing file %s\n", input.getSourceName());
+//                try
+//                {
+//                    return factory.parseFile(input, currentPass, ((NumberedThread)Thread.currentThread()).getThreadNumber());
+//                }
+//                catch (IllegalStateException ex)
+//                {
+//                    ex.printStackTrace(System.err);
+//                }
+//                catch (Throwable t)
+//                {
+//                    t.printStackTrace(System.err);
+//                }
 
-                return null;
-            }
-        });
-#endif
-            results.Add(futureChecksum);
-        }
+//                return null;
+//            }
+//        });
+//#endif
+//            results.Add(futureChecksum);
+//        }
 
-        MurmurHashChecksum checksum = new MurmurHashChecksum();
-        int currentIndex = -1;
-        foreach (Future<FileParseResult> future in results)
-        {
-            currentIndex++;
-            int fileChecksum = 0;
-            try
-            {
-                FileParseResult fileResult = future.get();
-                if (COMPUTE_TRANSITION_STATS)
-                {
-                    totalTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserTotalTransitions);
-                    computedTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserComputedTransitions);
+//        MurmurHashChecksum checksum = new MurmurHashChecksum();
+//        int currentIndex = -1;
+//        foreach (Future<FileParseResult> future in results)
+//        {
+//            currentIndex++;
+//            int fileChecksum = 0;
+//            try
+//            {
+//                FileParseResult fileResult = future.get();
+//                if (COMPUTE_TRANSITION_STATS)
+//                {
+//                    totalTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserTotalTransitions);
+//                    computedTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserComputedTransitions);
 
-                    if (DETAILED_DFA_STATE_STATS)
-                    {
-                        decisionInvocationsPerFile[currentPass][currentIndex] = fileResult.decisionInvocations;
-                        fullContextFallbackPerFile[currentPass][currentIndex] = fileResult.fullContextFallback;
-                        nonSllPerFile[currentPass][currentIndex] = fileResult.nonSll;
-                        totalTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserTotalTransitions;
-                        computedTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserComputedTransitions;
-                        fullContextTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserFullContextTransitions;
-                    }
-                }
+//                    if (DETAILED_DFA_STATE_STATS)
+//                    {
+//                        decisionInvocationsPerFile[currentPass][currentIndex] = fileResult.decisionInvocations;
+//                        fullContextFallbackPerFile[currentPass][currentIndex] = fileResult.fullContextFallback;
+//                        nonSllPerFile[currentPass][currentIndex] = fileResult.nonSll;
+//                        totalTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserTotalTransitions;
+//                        computedTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserComputedTransitions;
+//                        fullContextTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserFullContextTransitions;
+//                    }
+//                }
 
-                if (COMPUTE_TIMING_STATS)
-                {
-                    timePerFile[currentPass][currentIndex] = fileResult.endTime - fileResult.startTime;
-                    tokensPerFile[currentPass][currentIndex] = fileResult.tokenCount;
-                }
+//                if (COMPUTE_TIMING_STATS)
+//                {
+//                    timePerFile[currentPass][currentIndex] = fileResult.endTime - fileResult.startTime;
+//                    tokensPerFile[currentPass][currentIndex] = fileResult.tokenCount;
+//                }
 
-                fileChecksum = fileResult.checksum;
-            }
-            catch (ExecutionException ex)
-            {
-                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-            }
+//                fileChecksum = fileResult.checksum;
+//            }
+//            catch (Exception ex)
+//            {
+//                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
+//            }
 
-            if (COMPUTE_CHECKSUM)
-            {
-                updateChecksum(checksum, fileChecksum);
-            }
-        }
+//            if (COMPUTE_CHECKSUM)
+//            {
+//                updateChecksum(checksum, fileChecksum);
+//            }
+//        }
 
-        executorService.shutdown();
-        executorService.awaitTermination(long.MaxValue, TimeUnit.NANOSECONDS);
+//        executorService.shutdown();
+//        executorService.awaitTermination(long.MaxValue, TimeUnit.NANOSECONDS);
 
-        Console.Out.format("%d. Total parse time for %d files (%d KB, %d tokens%s): %.0fms%n",
-                          currentPass + 1,
-                          inputCount,
-                          inputSize / 1024,
-                          tokenCount.get(currentPass),
-                          COMPUTE_CHECKSUM ? String.format(", checksum 0x%8X", checksum.getValue()) : "",
-                          (double)(DateTime.Now.Nanosecond - startTime) / 1000000.0);
+//        Console.Out.format("%d. Total parse time for %d files (%d KB, %d tokens%s): %.0fms%n",
+//                          currentPass + 1,
+//                          inputCount,
+//                          inputSize / 1024,
+//                          tokenCount.get(currentPass),
+//                          COMPUTE_CHECKSUM ? String.format(", checksum 0x%8X", checksum.getValue()) : "",
+//                          (double)(DateTime.Now.Nanosecond - startTime) / 1000000.0);
 
-        if (sharedLexers.Length > 0)
-        {
-            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
-            Lexer lexer = sharedLexers[index];
-            LexerATNSimulator lexerInterpreter = lexer.getInterpreter();
-            DFA[] modeToDFA = lexerInterpreter.decisionToDFA;
-            if (SHOW_DFA_STATE_STATS)
-            {
-                int states = 0;
-                int configs = 0;
-                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
+//        if (sharedLexers.Length > 0)
+//        {
+//            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
+//            Lexer lexer = sharedLexers[index];
+//            LexerATNSimulator lexerInterpreter = lexer.getInterpreter();
+//            DFA[] modeToDFA = lexerInterpreter.decisionToDFA;
+//            if (SHOW_DFA_STATE_STATS)
+//            {
+//                int states = 0;
+//                int configs = 0;
+//                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
-                for (int i = 0; i < modeToDFA.Length; i++)
-                {
-                    DFA dfa = modeToDFA[i];
-                    if (dfa == null)
-                    {
-                        continue;
-                    }
+//                for (int i = 0; i < modeToDFA.Length; i++)
+//                {
+//                    DFA dfa = modeToDFA[i];
+//                    if (dfa == null)
+//                    {
+//                        continue;
+//                    }
 
-                    states += dfa.states.Count;
-                    foreach (DFAState state in dfa.states.Values)
-                    {
-                        configs += state.configs.Count;
-                        uniqueConfigs.UnionWith(state.configs);
-                    }
-                }
+//                    states += dfa.states.Count;
+//                    foreach (DFAState state in dfa.states.Values)
+//                    {
+//                        configs += state.configs.Count;
+//                        uniqueConfigs.UnionWith(state.configs);
+//                    }
+//                }
 
-                Console.Out.format("There are %d lexer DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
+//                Console.Out.format("There are %d lexer DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
 
-                if (DETAILED_DFA_STATE_STATS)
-                {
-                    Console.Out.WriteLine("\tMode\tStates\tConfigs\tMode%n");
-                    for (int i = 0; i < modeToDFA.Length; i++)
-                    {
-                        DFA dfa = modeToDFA[i];
-                        if (dfa == null || dfa.states.Count == 0)
-                        {
-                            continue;
-                        }
+//                if (DETAILED_DFA_STATE_STATS)
+//                {
+//                    Console.Out.WriteLine("\tMode\tStates\tConfigs\tMode%n");
+//                    for (int i = 0; i < modeToDFA.Length; i++)
+//                    {
+//                        DFA dfa = modeToDFA[i];
+//                        if (dfa == null || dfa.states.Count == 0)
+//                        {
+//                            continue;
+//                        }
 
-                        int modeConfigs = 0;
-                        foreach (DFAState state in dfa.states.Values)
-                        {
-                            modeConfigs += state.configs.Count;
-                        }
+//                        int modeConfigs = 0;
+//                        foreach (DFAState state in dfa.states.Values)
+//                        {
+//                            modeConfigs += state.configs.Count;
+//                        }
 
-                        String modeName = lexer.getModeNames()[i];
-                        Console.Out.format("\t%d\t%d\t%d\t%s%n", dfa.decision, dfa.states.Count, modeConfigs, modeName);
-                    }
-                }
-            }
-        }
+//                        String modeName = lexer.getModeNames()[i];
+//                        Console.Out.format("\t%d\t%d\t%d\t%s%n", dfa.decision, dfa.states.Count, modeConfigs, modeName);
+//                    }
+//                }
+//            }
+//        }
 
-        if (RUN_PARSER && sharedParsers.Length > 0)
-        {
-            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
-            Parser parser = sharedParsers[index];
-            // make sure the individual DFAState objects actually have unique ATNConfig arrays
-            ParserATNSimulator interpreter = parser.getInterpreter();
-            DFA[] decisionToDFA = interpreter.decisionToDFA;
+//        if (RUN_PARSER && sharedParsers.Length > 0)
+//        {
+//            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
+//            Parser parser = sharedParsers[index];
+//            // make sure the individual DFAState objects actually have unique ATNConfig arrays
+//            ParserATNSimulator interpreter = parser.getInterpreter();
+//            DFA[] decisionToDFA = interpreter.decisionToDFA;
 
-            if (SHOW_DFA_STATE_STATS)
-            {
-                int states = 0;
-                int configs = 0;
-                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
+//            if (SHOW_DFA_STATE_STATS)
+//            {
+//                int states = 0;
+//                int configs = 0;
+//                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
 
-                for (int i = 0; i < decisionToDFA.Length; i++)
-                {
-                    DFA dfa = decisionToDFA[i];
-                    if (dfa == null)
-                    {
-                        continue;
-                    }
+//                for (int i = 0; i < decisionToDFA.Length; i++)
+//                {
+//                    DFA dfa = decisionToDFA[i];
+//                    if (dfa == null)
+//                    {
+//                        continue;
+//                    }
 
-                    states += dfa.states.Count;
-                    foreach (DFAState state in dfa.states.Values)
-                    {
-                        configs += state.configs.Count;
-                        uniqueConfigs.UnionWith(state.configs);
-                    }
-                }
+//                    states += dfa.states.Count;
+//                    foreach (DFAState state in dfa.states.Values)
+//                    {
+//                        configs += state.configs.Count;
+//                        uniqueConfigs.UnionWith(state.configs);
+//                    }
+//                }
 
-                Console.Out.format("There are %d parser DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
+//                Console.Out.format("There are %d parser DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
 
-                if (DETAILED_DFA_STATE_STATS)
-                {
-                    if (COMPUTE_TRANSITION_STATS)
-                    {
-                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tPredict (ALL)\tPredict (LL)\tNon-SLL\tTransitions\tTransitions (ATN)\tTransitions (LL)\tLA (SLL)\tLA (LL)\tRule%n");
-                    }
-                    else
-                    {
-                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tRule%n");
-                    }
+//                if (DETAILED_DFA_STATE_STATS)
+//                {
+//                    if (COMPUTE_TRANSITION_STATS)
+//                    {
+//                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tPredict (ALL)\tPredict (LL)\tNon-SLL\tTransitions\tTransitions (ATN)\tTransitions (LL)\tLA (SLL)\tLA (LL)\tRule%n");
+//                    }
+//                    else
+//                    {
+//                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tRule%n");
+//                    }
 
-                    for (int i = 0; i < decisionToDFA.Length; i++)
-                    {
-                        DFA dfa = decisionToDFA[i];
-                        if (dfa == null || dfa.states.Count == 0)
-                        {
-                            continue;
-                        }
+//                    for (int i = 0; i < decisionToDFA.Length; i++)
+//                    {
+//                        DFA dfa = decisionToDFA[i];
+//                        if (dfa == null || dfa.states.Count == 0)
+//                        {
+//                            continue;
+//                        }
 
-                        int decisionConfigs = 0;
-                        foreach (DFAState state in dfa.states.Values)
-                        {
-                            decisionConfigs += state.configs.Count;
-                        }
+//                        int decisionConfigs = 0;
+//                        foreach (DFAState state in dfa.states.Values)
+//                        {
+//                            decisionConfigs += state.configs.Count;
+//                        }
 
-                        String ruleName = parser.getRuleNames()[parser.getATN().decisionToState[(dfa.decision)].ruleIndex];
+//                        String ruleName = parser.getRuleNames()[parser.getATN().decisionToState[(dfa.decision)].ruleIndex];
 
-                        long calls = 0;
-                        long fullContextCalls = 0;
-                        long nonSllCalls = 0;
-                        long transitions = 0;
-                        long computedTransitions = 0;
-                        long fullContextTransitions = 0;
-                        double lookahead = 0;
-                        double fullContextLookahead = 0;
-                        String formatString;
-                        if (COMPUTE_TRANSITION_STATS)
-                        {
-                            foreach (long[] data in decisionInvocationsPerFile[currentPass])
-                            {
-                                calls += data[i];
-                            }
+//                        long calls = 0;
+//                        long fullContextCalls = 0;
+//                        long nonSllCalls = 0;
+//                        long transitions = 0;
+//                        long computedTransitions = 0;
+//                        long fullContextTransitions = 0;
+//                        double lookahead = 0;
+//                        double fullContextLookahead = 0;
+//                        String formatString;
+//                        if (COMPUTE_TRANSITION_STATS)
+//                        {
+//                            foreach (long[] data in decisionInvocationsPerFile[currentPass])
+//                            {
+//                                calls += data[i];
+//                            }
 
-                            foreach (long[] data in fullContextFallbackPerFile[currentPass])
-                            {
-                                fullContextCalls += data[i];
-                            }
+//                            foreach (long[] data in fullContextFallbackPerFile[currentPass])
+//                            {
+//                                fullContextCalls += data[i];
+//                            }
 
-                            foreach (long[] data in nonSllPerFile[currentPass])
-                            {
-                                nonSllCalls += data[i];
-                            }
+//                            foreach (long[] data in nonSllPerFile[currentPass])
+//                            {
+//                                nonSllCalls += data[i];
+//                            }
 
-                            foreach (long[] data in totalTransitionsPerDecisionPerFile[currentPass])
-                            {
-                                transitions += data[i];
-                            }
+//                            foreach (long[] data in totalTransitionsPerDecisionPerFile[currentPass])
+//                            {
+//                                transitions += data[i];
+//                            }
 
-                            foreach (long[] data in computedTransitionsPerDecisionPerFile[currentPass])
-                            {
-                                computedTransitions += data[i];
-                            }
+//                            foreach (long[] data in computedTransitionsPerDecisionPerFile[currentPass])
+//                            {
+//                                computedTransitions += data[i];
+//                            }
 
-                            foreach (long[] data in fullContextTransitionsPerDecisionPerFile[currentPass])
-                            {
-                                fullContextTransitions += data[i];
-                            }
+//                            foreach (long[] data in fullContextTransitionsPerDecisionPerFile[currentPass])
+//                            {
+//                                fullContextTransitions += data[i];
+//                            }
 
-                            if (calls > 0)
-                            {
-                                lookahead = (double)(transitions - fullContextTransitions) / (double)calls;
-                            }
+//                            if (calls > 0)
+//                            {
+//                                lookahead = (double)(transitions - fullContextTransitions) / (double)calls;
+//                            }
 
-                            if (fullContextCalls > 0)
-                            {
-                                fullContextLookahead = (double)fullContextTransitions / (double)fullContextCalls;
-                            }
+//                            if (fullContextCalls > 0)
+//                            {
+//                                fullContextLookahead = (double)fullContextTransitions / (double)fullContextCalls;
+//                            }
 
-                            formatString = "\t%1$d\t%2$d\t%3$d\t%4$d\t%5$d\t%6$d\t%7$d\t%8$d\t%9$d\t%10$f\t%11$f\t%12$s%n";
-                        }
-                        else
-                        {
-                            calls = 0;
-                            formatString = "\t%1$d\t%2$d\t%3$d\t%12$s%n";
-                        }
+//                            formatString = "\t%1$d\t%2$d\t%3$d\t%4$d\t%5$d\t%6$d\t%7$d\t%8$d\t%9$d\t%10$f\t%11$f\t%12$s%n";
+//                        }
+//                        else
+//                        {
+//                            calls = 0;
+//                            formatString = "\t%1$d\t%2$d\t%3$d\t%12$s%n";
+//                        }
 
-                        Console.Out.format(formatString, dfa.decision, dfa.states.Count, decisionConfigs, calls, fullContextCalls, nonSllCalls, transitions, computedTransitions, fullContextTransitions, lookahead, fullContextLookahead, ruleName);
-                    }
-                }
-            }
+//                        Console.Out.format(formatString, dfa.decision, dfa.states.Count, decisionConfigs, calls, fullContextCalls, nonSllCalls, transitions, computedTransitions, fullContextTransitions, lookahead, fullContextLookahead, ruleName);
+//                    }
+//                }
+//            }
 
-            int localDfaCount = 0;
-            int globalDfaCount = 0;
-            int localConfigCount = 0;
-            int globalConfigCount = 0;
-            int[] contextsInDFAState = new int[0];
+//            int localDfaCount = 0;
+//            int globalDfaCount = 0;
+//            int localConfigCount = 0;
+//            int globalConfigCount = 0;
+//            int[] contextsInDFAState = new int[0];
 
-            for (int i = 0; i < decisionToDFA.Length; i++)
-            {
-                DFA dfa = decisionToDFA[i];
-                if (dfa == null)
-                {
-                    continue;
-                }
+//            for (int i = 0; i < decisionToDFA.Length; i++)
+//            {
+//                DFA dfa = decisionToDFA[i];
+//                if (dfa == null)
+//                {
+//                    continue;
+//                }
 
-                if (SHOW_CONFIG_STATS)
-                {
-                    foreach (DFAState state in dfa.states.Keys)
-                    {
-                        if (state.configs.Count >= contextsInDFAState.Length)
-                        {
-                            contextsInDFAState = Arrays.CopyOf(contextsInDFAState, state.configs.Count + 1);
-                        }
+//                if (SHOW_CONFIG_STATS)
+//                {
+//                    foreach (DFAState state in dfa.states.Keys)
+//                    {
+//                        if (state.configs.Count >= contextsInDFAState.Length)
+//                        {
+//                            contextsInDFAState = Arrays.CopyOf(contextsInDFAState, state.configs.Count + 1);
+//                        }
 
-                        if (state.isAcceptState)
-                        {
-                            bool hasGlobal = false;
-                            foreach (ATNConfig config in state.configs)
-                            {
-                                if (config.reachesIntoOuterContext > 0)
-                                {
-                                    globalConfigCount++;
-                                    hasGlobal = true;
-                                }
-                                else
-                                {
-                                    localConfigCount++;
-                                }
-                            }
+//                        if (state.isAcceptState)
+//                        {
+//                            bool hasGlobal = false;
+//                            foreach (ATNConfig config in state.configs)
+//                            {
+//                                if (config.reachesIntoOuterContext > 0)
+//                                {
+//                                    globalConfigCount++;
+//                                    hasGlobal = true;
+//                                }
+//                                else
+//                                {
+//                                    localConfigCount++;
+//                                }
+//                            }
 
-                            if (hasGlobal)
-                            {
-                                globalDfaCount++;
-                            }
-                            else
-                            {
-                                localDfaCount++;
-                            }
-                        }
+//                            if (hasGlobal)
+//                            {
+//                                globalDfaCount++;
+//                            }
+//                            else
+//                            {
+//                                localDfaCount++;
+//                            }
+//                        }
 
-                        contextsInDFAState[state.configs.Count]++;
-                    }
-                }
-            }
+//                        contextsInDFAState[state.configs.Count]++;
+//                    }
+//                }
+//            }
 
-            if (SHOW_CONFIG_STATS && currentPass == 0)
-            {
-                Console.Out.format("  DFA accept states: %d total, %d with only local context, %d with a global context%n", localDfaCount + globalDfaCount, localDfaCount, globalDfaCount);
-                Console.Out.format("  Config stats: %d total, %d local, %d global%n", localConfigCount + globalConfigCount, localConfigCount, globalConfigCount);
-                if (SHOW_DFA_STATE_STATS)
-                {
-                    for (int i = 0; i < contextsInDFAState.Length; i++)
-                    {
-                        if (contextsInDFAState[i] != 0)
-                        {
-                            Console.Out.format("  %d configs = %d%n", i, contextsInDFAState[i]);
-                        }
-                    }
-                }
-            }
-        }
+//            if (SHOW_CONFIG_STATS && currentPass == 0)
+//            {
+//                Console.Out.format("  DFA accept states: %d total, %d with only local context, %d with a global context%n", localDfaCount + globalDfaCount, localDfaCount, globalDfaCount);
+//                Console.Out.format("  Config stats: %d total, %d local, %d global%n", localConfigCount + globalConfigCount, localConfigCount, globalConfigCount);
+//                if (SHOW_DFA_STATE_STATS)
+//                {
+//                    for (int i = 0; i < contextsInDFAState.Length; i++)
+//                    {
+//                        if (contextsInDFAState[i] != 0)
+//                        {
+//                            Console.Out.format("  %d configs = %d%n", i, contextsInDFAState[i]);
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
-        if (COMPUTE_TIMING_STATS)
-        {
-            Console.Out.format("File\tTokens\tTime%n");
-            for (int i = 0; i < timePerFile[currentPass].Length; i++)
-            {
-                Console.Out.format("%d\t%d\t%d%n", i + 1, tokensPerFile[currentPass][i], timePerFile[currentPass][i]);
-            }
-        }
-    }
+//        if (COMPUTE_TIMING_STATS)
+//        {
+//            Console.Out.format("File\tTokens\tTime%n");
+//            for (int i = 0; i < timePerFile[currentPass].Length; i++)
+//            {
+//                Console.Out.format("%d\t%d\t%d%n", i + 1, tokensPerFile[currentPass][i], timePerFile[currentPass][i]);
+//            }
+//        }
+//    }
 
     private static long sum(long[] array)
     {
@@ -1182,40 +1179,40 @@ public class TestPerformance
         return result;
     }
 
-    protected JavaCompiledState compileJavaParser(bool leftRecursive)
-    {
-        String grammarFileName = leftRecursive ? "JavaLR.g4" : "Java.g4";
-        String parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
-        String lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
-        String body = load(grammarFileName);
-        List<String> extraOptions = new();
-        extraOptions.Add("-Werror");
-        if (FORCE_ATN)
-        {
-            extraOptions.Add("-Xforce-atn");
-        }
-        if (EXPORT_ATN_GRAPHS)
-        {
-            extraOptions.Add("-atn");
-        }
-        if (DEBUG_TEMPLATES)
-        {
-            extraOptions.Add("-XdbgST");
-            if (DEBUG_TEMPLATES_WAIT)
-            {
-                extraOptions.Add("-XdbgSTWait");
-            }
-        }
-        String[] extraOptionsArray = extraOptions.ToArray();
+    //protected JavaCompiledState compileJavaParser(bool leftRecursive)
+    //{
+    //    String grammarFileName = leftRecursive ? "JavaLR.g4" : "Java.g4";
+    //    String parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
+    //    String lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
+    //    String body = load(grammarFileName);
+    //    List<String> extraOptions = new();
+    //    extraOptions.Add("-Werror");
+    //    if (FORCE_ATN)
+    //    {
+    //        extraOptions.Add("-Xforce-atn");
+    //    }
+    //    if (EXPORT_ATN_GRAPHS)
+    //    {
+    //        extraOptions.Add("-atn");
+    //    }
+    //    if (DEBUG_TEMPLATES)
+    //    {
+    //        extraOptions.Add("-XdbgST");
+    //        if (DEBUG_TEMPLATES_WAIT)
+    //        {
+    //            extraOptions.Add("-XdbgSTWait");
+    //        }
+    //    }
+    //    String[] extraOptionsArray = extraOptions.ToArray();
 
-        RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, body, parserName, lexerName,
-                false, true, null, null,
-                false, false, Stage.Compile, false);
-        RuntimeRunner runner = new JavaRunner();
-        {
-            return (JavaCompiledState)runner.run(runOptions);
-        }
-    }
+    //    RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, body, parserName, lexerName,
+    //            false, true, null, null,
+    //            false, false, Stage.Compile, false);
+    //    RuntimeRunner runner = new JavaRunner();
+    //    {
+    //        return (JavaCompiledState)runner.run(runOptions);
+    //    }
+    //}
 
 
     private static void updateChecksum(MurmurHashChecksum checksum, int value)
@@ -1239,286 +1236,286 @@ public class TestPerformance
         updateChecksum(checksum, token.getChannel());
     }
 
-    public class PF : ParserFactory
-    {
+    //public class PF : ParserFactory
+    //{
 
-        //@Override
-        public FileParseResult parseFile(CharStream input, int currentPass, int thread)
-        {
-            MurmurHashChecksum checksum = new MurmurHashChecksum();
+    //    //@Override
+    //    public FileParseResult parseFile(CharStream input, int currentPass, int thread)
+    //    {
+    //        MurmurHashChecksum checksum = new MurmurHashChecksum();
 
-            long startTime = DateTime.Now.Millisecond;
-            //assert thread >= 0 && thread < NUMBER_OF_THREADS;
+    //        long startTime = DateTime.Now.Millisecond;
+    //        //assert thread >= 0 && thread < NUMBER_OF_THREADS;
 
-            try
-            {
-                ParseTreeListener listener = sharedListeners[thread];
-                if (listener == null)
-                {
-                    listener = listenerClass.newInstance();
-                    sharedListeners[thread] = listener;
-                }
+    //        try
+    //        {
+    //            ParseTreeListener listener = sharedListeners[thread];
+    //            if (listener == null)
+    //            {
+    //                listener = listenerClass.newInstance();
+    //                sharedListeners[thread] = listener;
+    //            }
 
-                Lexer lexer = sharedLexers[thread];
-                if (REUSE_LEXER && lexer != null)
-                {
-                    lexer.setInputStream(input);
-                }
-                else
-                {
-                    Lexer previousLexer = lexer;
-                    lexer = lexerCtor.newInstance(input);
-                    DFA[] decisionToDFA = (FILE_GRANULARITY || previousLexer == null ? lexer : previousLexer).getInterpreter().decisionToDFA;
-                    if (!REUSE_LEXER_DFA || (!FILE_GRANULARITY && previousLexer == null))
-                    {
-                        decisionToDFA = new DFA[decisionToDFA.Length];
-                    }
+    //            Lexer lexer = sharedLexers[thread];
+    //            if (REUSE_LEXER && lexer != null)
+    //            {
+    //                lexer.setInputStream(input);
+    //            }
+    //            else
+    //            {
+    //                Lexer previousLexer = lexer;
+    //                lexer = lexerCtor.newInstance(input);
+    //                DFA[] decisionToDFA = (FILE_GRANULARITY || previousLexer == null ? lexer : previousLexer).getInterpreter().decisionToDFA;
+    //                if (!REUSE_LEXER_DFA || (!FILE_GRANULARITY && previousLexer == null))
+    //                {
+    //                    decisionToDFA = new DFA[decisionToDFA.Length];
+    //                }
 
-                    if (COMPUTE_TRANSITION_STATS)
-                    {
-                        lexer.setInterpreter(new StatisticsLexerATNSimulator(lexer, lexer.getATN(), decisionToDFA, lexer.getInterpreter().getSharedContextCache()));
-                    }
-                    else if (!REUSE_LEXER_DFA)
-                    {
-                        lexer.setInterpreter(new LexerATNSimulator(lexer, lexer.getATN(), decisionToDFA, lexer.getInterpreter().getSharedContextCache()));
-                    }
+    //                if (COMPUTE_TRANSITION_STATS)
+    //                {
+    //                    lexer.setInterpreter(new StatisticsLexerATNSimulator(lexer, lexer.getATN(), decisionToDFA, lexer.getInterpreter().getSharedContextCache()));
+    //                }
+    //                else if (!REUSE_LEXER_DFA)
+    //                {
+    //                    lexer.setInterpreter(new LexerATNSimulator(lexer, lexer.getATN(), decisionToDFA, lexer.getInterpreter().getSharedContextCache()));
+    //                }
 
-                    sharedLexers[thread] = lexer;
-                }
+    //                sharedLexers[thread] = lexer;
+    //            }
 
-                lexer.removeErrorListeners();
-                lexer.addErrorListener(DescriptiveErrorListener.INSTANCE);
+    //            lexer.removeErrorListeners();
+    //            lexer.addErrorListener(DescriptiveErrorListener.INSTANCE);
 
-                if (lexer.getInterpreter().decisionToDFA[0] == null)
-                {
-                    ATN atn = lexer.getATN();
-                    for (int i = 0; i < lexer.getInterpreter().decisionToDFA.Length; i++)
-                    {
-                        lexer.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
-                    }
-                }
+    //            if (lexer.getInterpreter().decisionToDFA[0] == null)
+    //            {
+    //                ATN atn = lexer.getATN();
+    //                for (int i = 0; i < lexer.getInterpreter().decisionToDFA.Length; i++)
+    //                {
+    //                    lexer.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+    //                }
+    //            }
 
-                CommonTokenStream tokens = new CommonTokenStream(lexer);
-                tokens.fill();
-                tokenCount.addAndGet(currentPass, tokens.Count);
+    //            CommonTokenStream tokens = new CommonTokenStream(lexer);
+    //            tokens.fill();
+    //            tokenCount.addAndGet(currentPass, tokens.Count);
 
-                if (COMPUTE_CHECKSUM)
-                {
-                    foreach (Token token in tokens.getTokens())
-                    {
-                        updateChecksum(checksum, token);
-                    }
-                }
+    //            if (COMPUTE_CHECKSUM)
+    //            {
+    //                foreach (Token token in tokens.getTokens())
+    //                {
+    //                    updateChecksum(checksum, token);
+    //                }
+    //            }
 
-                if (!RUN_PARSER)
-                {
-                    return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), null, tokens.size(), startTime, lexer, null);
-                }
+    //            if (!RUN_PARSER)
+    //            {
+    //                return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), null, tokens.size(), startTime, lexer, null);
+    //            }
 
-                long parseStartTime = DateTime.Now.Nanosecond;
-                Parser parser = sharedParsers[thread];
-                if (REUSE_PARSER && parser != null)
-                {
-                    parser.setInputStream(tokens);
-                }
-                else
-                {
-                    Parser previousParser = parser;
+    //            long parseStartTime = DateTime.Now.Nanosecond;
+    //            Parser parser = sharedParsers[thread];
+    //            if (REUSE_PARSER && parser != null)
+    //            {
+    //                parser.setInputStream(tokens);
+    //            }
+    //            else
+    //            {
+    //                Parser previousParser = parser;
 
-                    if (USE_PARSER_INTERPRETER)
-                    {
-                        Parser referenceParser = parserCtor.newInstance(tokens);
-                        parser = new ParserInterpreter(referenceParser.getGrammarFileName(), referenceParser.getVocabulary(), Arrays.AsList(referenceParser.getRuleNames()), referenceParser.getATN(), tokens);
-                    }
-                    else
-                    {
-                        parser = parserCtor.newInstance(tokens);
-                    }
+    //                if (USE_PARSER_INTERPRETER)
+    //                {
+    //                    Parser referenceParser = parserCtor.newInstance(tokens);
+    //                    parser = new ParserInterpreter(referenceParser.getGrammarFileName(), referenceParser.getVocabulary(), Arrays.AsList(referenceParser.getRuleNames()), referenceParser.getATN(), tokens);
+    //                }
+    //                else
+    //                {
+    //                    parser = parserCtor.newInstance(tokens);
+    //                }
 
-                    DFA[] decisionToDFA = (FILE_GRANULARITY || previousParser == null ? parser : previousParser).getInterpreter().decisionToDFA;
-                    if (!REUSE_PARSER_DFA || (!FILE_GRANULARITY && previousParser == null))
-                    {
-                        decisionToDFA = new DFA[decisionToDFA.Length];
-                    }
+    //                DFA[] decisionToDFA = (FILE_GRANULARITY || previousParser == null ? parser : previousParser).getInterpreter().decisionToDFA;
+    //                if (!REUSE_PARSER_DFA || (!FILE_GRANULARITY && previousParser == null))
+    //                {
+    //                    decisionToDFA = new DFA[decisionToDFA.Length];
+    //                }
 
-                    if (COMPUTE_TRANSITION_STATS)
-                    {
-                        parser.setInterpreter(new StatisticsParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
-                    }
-                    else if (!REUSE_PARSER_DFA)
-                    {
-                        parser.setInterpreter(new ParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
-                    }
+    //                if (COMPUTE_TRANSITION_STATS)
+    //                {
+    //                    parser.setInterpreter(new StatisticsParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
+    //                }
+    //                else if (!REUSE_PARSER_DFA)
+    //                {
+    //                    parser.setInterpreter(new ParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
+    //                }
 
-                    sharedParsers[thread] = parser;
-                }
+    //                sharedParsers[thread] = parser;
+    //            }
 
-                parser.removeParseListeners();
-                parser.removeErrorListeners();
-                if (!TWO_STAGE_PARSING)
-                {
-                    parser.addErrorListener(DescriptiveErrorListener.INSTANCE);
-                    parser.addErrorListener(new SummarizingDiagnosticErrorListener());
-                }
+    //            parser.removeParseListeners();
+    //            parser.removeErrorListeners();
+    //            if (!TWO_STAGE_PARSING)
+    //            {
+    //                parser.addErrorListener(DescriptiveErrorListener.INSTANCE);
+    //                parser.addErrorListener(new SummarizingDiagnosticErrorListener());
+    //            }
 
-                if (parser.getInterpreter().decisionToDFA[0] == null)
-                {
-                    ATN atn = parser.getATN();
-                    for (int i = 0; i < parser.getInterpreter().decisionToDFA.Length; i++)
-                    {
-                        parser.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
-                    }
-                }
+    //            if (parser.getInterpreter().decisionToDFA[0] == null)
+    //            {
+    //                ATN atn = parser.getATN();
+    //                for (int i = 0; i < parser.getInterpreter().decisionToDFA.Length; i++)
+    //                {
+    //                    parser.getInterpreter().decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+    //                }
+    //            }
 
-                parser.getInterpreter().setPredictionMode(TWO_STAGE_PARSING ? PredictionMode.SLL : PREDICTION_MODE);
-                parser.setBuildParseTree(BUILD_PARSE_TREES);
-                if (!BUILD_PARSE_TREES && BLANK_LISTENER)
-                {
-                    parser.addParseListener(listener);
-                }
-                if (BAIL_ON_ERROR || TWO_STAGE_PARSING)
-                {
-                    parser.setErrorHandler(new BailErrorStrategy());
-                }
+    //            parser.getInterpreter().setPredictionMode(TWO_STAGE_PARSING ? PredictionMode.SLL : PREDICTION_MODE);
+    //            parser.setBuildParseTree(BUILD_PARSE_TREES);
+    //            if (!BUILD_PARSE_TREES && BLANK_LISTENER)
+    //            {
+    //                parser.addParseListener(listener);
+    //            }
+    //            if (BAIL_ON_ERROR || TWO_STAGE_PARSING)
+    //            {
+    //                parser.setErrorHandler(new BailErrorStrategy());
+    //            }
 
-                MethodInfo parseMethod = javaCompiledState.parser.getMethod(entryPoint);
-                Object parseResult;
+    //            MethodInfo parseMethod = javaCompiledState.parser.getMethod(entryPoint);
+    //            Object parseResult;
 
-                try
-                {
-                    if (COMPUTE_CHECKSUM && !BUILD_PARSE_TREES)
-                    {
-                        parser.addParseListener(new ChecksumParseTreeListener(checksum));
-                    }
+    //            try
+    //            {
+    //                if (COMPUTE_CHECKSUM && !BUILD_PARSE_TREES)
+    //                {
+    //                    parser.addParseListener(new ChecksumParseTreeListener(checksum));
+    //                }
 
-                    if (USE_PARSER_INTERPRETER)
-                    {
-                        ParserInterpreter parserInterpreter = (ParserInterpreter)parser;
-                        parseResult = parserInterpreter.parse(Collections.lastIndexOfSubList(Arrays.AsList(parser.getRuleNames()), Collections.singletonList(entryPoint)));
-                    }
-                    else
-                    {
-                        parseResult = parseMethod.Invoke(parser);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (!TWO_STAGE_PARSING)
-                    {
-                        throw ex;
-                    }
+    //                if (USE_PARSER_INTERPRETER)
+    //                {
+    //                    ParserInterpreter parserInterpreter = (ParserInterpreter)parser;
+    //                    parseResult = parserInterpreter.parse(Collections.lastIndexOfSubList(Arrays.AsList(parser.getRuleNames()), Collections.singletonList(entryPoint)));
+    //                }
+    //                else
+    //                {
+    //                    parseResult = parseMethod.Invoke(parser);
+    //                }
+    //            }
+    //            catch (Exception ex)
+    //            {
+    //                if (!TWO_STAGE_PARSING)
+    //                {
+    //                    throw ex;
+    //                }
 
-                    String sourceName = tokens.getSourceName();
-                    sourceName = sourceName != null && sourceName.Length > 0 ? sourceName + ": " : "";
-                    if (REPORT_SECOND_STAGE_RETRY)
-                    {
-                        Console.Error.WriteLine(sourceName + "Forced to retry with full context.");
-                    }
+    //                String sourceName = tokens.getSourceName();
+    //                sourceName = sourceName != null && sourceName.Length > 0 ? sourceName + ": " : "";
+    //                if (REPORT_SECOND_STAGE_RETRY)
+    //                {
+    //                    Console.Error.WriteLine(sourceName + "Forced to retry with full context.");
+    //                }
 
-                    if (!(ex.InnerException is ParseCancellationException))
-                    {
-                        throw ex;
-                    }
+    //                if (!(ex.InnerException is ParseCancellationException))
+    //                {
+    //                    throw ex;
+    //                }
 
-                    tokens.seek(0);
-                    if (REUSE_PARSER && parser != null)
-                    {
-                        parser.setInputStream(tokens);
-                    }
-                    else
-                    {
-                        Parser previousParser = parser;
+    //                tokens.seek(0);
+    //                if (REUSE_PARSER && parser != null)
+    //                {
+    //                    parser.setInputStream(tokens);
+    //                }
+    //                else
+    //                {
+    //                    Parser previousParser = parser;
 
-                        if (USE_PARSER_INTERPRETER)
-                        {
-                            Parser referenceParser = parserCtor.newInstance(tokens);
-                            parser = new ParserInterpreter(referenceParser.getGrammarFileName(), referenceParser.getVocabulary(), Arrays.AsList(referenceParser.getRuleNames()), referenceParser.getATN(), tokens);
-                        }
-                        else
-                        {
-                            parser = parserCtor.newInstance(tokens);
-                        }
+    //                    if (USE_PARSER_INTERPRETER)
+    //                    {
+    //                        Parser referenceParser = parserCtor.newInstance(tokens);
+    //                        parser = new ParserInterpreter(referenceParser.getGrammarFileName(), referenceParser.getVocabulary(), Arrays.AsList(referenceParser.getRuleNames()), referenceParser.getATN(), tokens);
+    //                    }
+    //                    else
+    //                    {
+    //                        parser = parserCtor.newInstance(tokens);
+    //                    }
 
-                        DFA[] decisionToDFA = previousParser.getInterpreter().decisionToDFA;
-                        if (COMPUTE_TRANSITION_STATS)
-                        {
-                            parser.setInterpreter(new StatisticsParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
-                        }
-                        else if (!REUSE_PARSER_DFA)
-                        {
-                            parser.setInterpreter(new ParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
-                        }
+    //                    DFA[] decisionToDFA = previousParser.getInterpreter().decisionToDFA;
+    //                    if (COMPUTE_TRANSITION_STATS)
+    //                    {
+    //                        parser.setInterpreter(new StatisticsParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
+    //                    }
+    //                    else if (!REUSE_PARSER_DFA)
+    //                    {
+    //                        parser.setInterpreter(new ParserATNSimulator(parser, parser.getATN(), decisionToDFA, parser.getInterpreter().getSharedContextCache()));
+    //                    }
 
-                        sharedParsers[thread] = parser;
-                    }
+    //                    sharedParsers[thread] = parser;
+    //                }
 
-                    parser.removeParseListeners();
-                    parser.removeErrorListeners();
-                    parser.addErrorListener(DescriptiveErrorListener.INSTANCE);
-                    parser.addErrorListener(new SummarizingDiagnosticErrorListener());
-                    parser.getInterpreter().setPredictionMode(PredictionMode.LL);
-                    parser.setBuildParseTree(BUILD_PARSE_TREES);
-                    if (COMPUTE_CHECKSUM && !BUILD_PARSE_TREES)
-                    {
-                        parser.addParseListener(new ChecksumParseTreeListener(checksum));
-                    }
-                    if (!BUILD_PARSE_TREES && BLANK_LISTENER)
-                    {
-                        parser.addParseListener(listener);
-                    }
-                    if (BAIL_ON_ERROR)
-                    {
-                        parser.setErrorHandler(new BailErrorStrategy());
-                    }
+    //                parser.removeParseListeners();
+    //                parser.removeErrorListeners();
+    //                parser.addErrorListener(DescriptiveErrorListener.INSTANCE);
+    //                parser.addErrorListener(new SummarizingDiagnosticErrorListener());
+    //                parser.getInterpreter().setPredictionMode(PredictionMode.LL);
+    //                parser.setBuildParseTree(BUILD_PARSE_TREES);
+    //                if (COMPUTE_CHECKSUM && !BUILD_PARSE_TREES)
+    //                {
+    //                    parser.addParseListener(new ChecksumParseTreeListener(checksum));
+    //                }
+    //                if (!BUILD_PARSE_TREES && BLANK_LISTENER)
+    //                {
+    //                    parser.addParseListener(listener);
+    //                }
+    //                if (BAIL_ON_ERROR)
+    //                {
+    //                    parser.setErrorHandler(new BailErrorStrategy());
+    //                }
 
-                    parseResult = parseMethod.Invoke(parser);
-                }
+    //                parseResult = parseMethod.Invoke(parser);
+    //            }
 
-                Assert.IsTrue(parseResult is ParseTree);
-                if (COMPUTE_CHECKSUM && BUILD_PARSE_TREES)
-                {
-                    ParseTreeWalker.DEFAULT.walk(new ChecksumParseTreeListener(checksum), (ParseTree)parseResult);
-                }
-                if (BUILD_PARSE_TREES && BLANK_LISTENER)
-                {
-                    ParseTreeWalker.DEFAULT.walk(listener, (ParseTree)parseResult);
-                }
+    //            Assert.IsTrue(parseResult is ParseTree);
+    //            if (COMPUTE_CHECKSUM && BUILD_PARSE_TREES)
+    //            {
+    //                ParseTreeWalker.DEFAULT.walk(new ChecksumParseTreeListener(checksum), (ParseTree)parseResult);
+    //            }
+    //            if (BUILD_PARSE_TREES && BLANK_LISTENER)
+    //            {
+    //                ParseTreeWalker.DEFAULT.walk(listener, (ParseTree)parseResult);
+    //            }
 
-                return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), (ParseTree)parseResult, tokens.size(), TIME_PARSE_ONLY ? parseStartTime : startTime, lexer, parser);
-            }
-            catch (Exception e)
-            {
-                if (!REPORT_SYNTAX_ERRORS && e is ParseCancellationException)
-                {
-                    return new FileParseResult("unknown", (int)checksum.getValue(), null, 0, startTime, null, null);
-                }
+    //            return new FileParseResult(input.getSourceName(), (int)checksum.getValue(), (ParseTree)parseResult, tokens.size(), TIME_PARSE_ONLY ? parseStartTime : startTime, lexer, parser);
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            if (!REPORT_SYNTAX_ERRORS && e is ParseCancellationException)
+    //            {
+    //                return new FileParseResult("unknown", (int)checksum.getValue(), null, 0, startTime, null, null);
+    //            }
 
-                //e.printStackTrace(Console.Out);
-                throw new IllegalStateException(e.Message,e);
-            }
-        }
-    }
-    protected ParserFactory getParserFactory(JavaCompiledState javaCompiledState, String listenerName, String entryPoint)
-    {
-        try
-        {
-            Type listenerClass = Type.GetType(listenerName);
+    //            //e.printStackTrace(Console.Out);
+    //            throw new IllegalStateException(e.Message,e);
+    //        }
+    //    }
+    //}
+    //protected ParserFactory getParserFactory(JavaCompiledState javaCompiledState, String listenerName, String entryPoint)
+    //{
+    //    try
+    //    {
+    //        Type listenerClass = Type.GetType(listenerName);
 
-            ConstructorInfo lexerCtor = javaCompiledState.lexerType.GetConstructor(CharStream);
-            ConstructorInfo parserCtor = javaCompiledState.parserType.GetConstructor(TokenStream);
+    //        ConstructorInfo lexerCtor = javaCompiledState.lexerType.GetConstructor(CharStream);
+    //        ConstructorInfo parserCtor = javaCompiledState.parserType.GetConstructor(TokenStream);
 
-            // construct initial instances of the lexer and parser to deserialize their ATNs
-            javaCompiledState.initializeLexerAndParser("");
+    //        // construct initial instances of the lexer and parser to deserialize their ATNs
+    //        javaCompiledState.initializeLexerAndParser("");
 
-            return new PF();
-        }
-        catch (Exception e)
-        {
-            //e.printStackTrace(Console.Out);
-            Assert.Fail(e.Message);
-            throw new IllegalStateException(e);
-        }
-    }
+    //        return new PF();
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        //e.printStackTrace(Console.Out);
+    //        Assert.Fail(e.Message);
+    //        throw new IllegalStateException(e);
+    //    }
+    //}
 
     public interface ParserFactory
     {
@@ -1768,7 +1765,7 @@ public class TestPerformance
             String sourceName = recognizer.getInputStream().getSourceName();
             if (sourceName.Length > 0)
             {
-                sourceName = String.format("%s:%d:%d: ", sourceName, line, charPositionInLine);
+                sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
             }
 
             Console.Error.WriteLine(sourceName + "line " + line + ":" + charPositionInLine + " " + msg);
@@ -1802,11 +1799,11 @@ public class TestPerformance
             }
 
             // show the rule name along with the decision
-            String format = "reportAmbiguity d=%d (%s): ambigAlts=%s, input='%s'";
             int decision = dfa.decision;
             String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
             String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-            recognizer.notifyErrorListeners(String.format(format, decision, rule, ambigAlts, input));
+            String format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
+            recognizer.notifyErrorListeners(format);
         }
 
         //@Override
@@ -1847,205 +1844,16 @@ public class TestPerformance
             }
 
             // show the rule name and viable configs along with the base info
-            String format = "reportContextSensitivity d=%d (%s), input='%s', viable={%d}";
             int decision = dfa.decision;
             String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
             String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-            recognizer.notifyErrorListeners(String.format(format, decision, rule, input, prediction));
+            String format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
+            recognizer.notifyErrorListeners(
+                format);
         }
 
     }
-
-    public class FilenameFilters
-    {
-        public class FilenameFilter
-        {
-            internal bool accept(string dir, string name)
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public class ALL : FilenameFilter
-        {
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                return true;
-            }
-
-        }
-        public static readonly FilenameFilter ALL_FILES = new ALL();
-        public static FilenameFilter extension(String _extension)
-        {
-            return extension(_extension, true);
-        }
-
-        public static FilenameFilter extension(String extension, bool caseSensitive)
-        {
-            return new FileExtensionFilenameFilter(extension, caseSensitive);
-        }
-
-        public static FilenameFilter name(String filename)
-        {
-            return name(filename, true);
-        }
-
-        public static FilenameFilter name(String filename, bool caseSensitive)
-        {
-            return new FileNameFilenameFilter(filename, caseSensitive);
-        }
-
-        public static FilenameFilter all(params FilenameFilter[] filters)
-        {
-            return new AllFilenameFilter(filters);
-        }
-
-        public static FilenameFilter any(params FilenameFilter[] filters)
-        {
-            return new AnyFilenameFilter(filters);
-        }
-
-        public static FilenameFilter none(params FilenameFilter[] filters)
-        {
-            return not(any(filters));
-        }
-
-        public static FilenameFilter not(FilenameFilter filter)
-        {
-            return new NotFilenameFilter(filter);
-        }
-
-        private FilenameFilters()
-        {
-        }
-
-        protected class FileExtensionFilenameFilter : FilenameFilter
-        {
-
-            private readonly String extension;
-            private readonly bool caseSensitive;
-
-            public FileExtensionFilenameFilter(String extension, bool caseSensitive)
-            {
-                if (!extension.StartsWith("."))
-                {
-                    extension = '.' + extension;
-                }
-
-                this.extension = extension;
-                this.caseSensitive = caseSensitive;
-            }
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                if (caseSensitive)
-                {
-                    return name.EndsWith(extension);
-                }
-                else
-                {
-                    return name.ToLower().endsWith(extension);
-                }
-            }
-        }
-
-        protected class FileNameFilenameFilter : FilenameFilter
-        {
-
-            private readonly String filename;
-            private readonly bool caseSensitive;
-
-            public FileNameFilenameFilter(String filename, bool caseSensitive)
-            {
-                this.filename = filename;
-                this.caseSensitive = caseSensitive;
-            }
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                if (caseSensitive)
-                {
-                    return name.Equals(filename);
-                }
-                else
-                {
-                    return name.ToLower().Equals(filename);
-                }
-            }
-        }
-
-        protected class AllFilenameFilter : FilenameFilter
-        {
-
-            private readonly FilenameFilter[] filters;
-
-            public AllFilenameFilter(FilenameFilter[] filters)
-            {
-                this.filters = filters;
-            }
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                foreach (FilenameFilter filter in filters)
-                {
-                    if (!filter.accept(dir, name))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-        }
-
-        protected class AnyFilenameFilter : FilenameFilter
-        {
-
-            private readonly FilenameFilter[] filters;
-
-            public AnyFilenameFilter(FilenameFilter[] filters)
-            {
-                this.filters = filters;
-            }
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                foreach (FilenameFilter filter in filters)
-                {
-                    if (filter.accept(dir, name))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        protected class NotFilenameFilter : FilenameFilter
-        {
-
-            private readonly FilenameFilter filter;
-
-            public NotFilenameFilter(FilenameFilter filter)
-            {
-                this.filter = filter;
-            }
-
-            //@Override
-            public bool accept(string dir, String name)
-            {
-                return !filter.accept(dir, name);
-            }
-        }
-    }
-
-    protected class NumberedThread
+    public class NumberedThread
     {
         private readonly int threadNumber;
 
@@ -2067,7 +1875,7 @@ public class TestPerformance
         private readonly AtomicInteger nextThread = new AtomicInteger();
 
         //@Override
-        public Thread newThread(Runnable r)
+        public NumberedThread newThread(Runnable r)
         {
             int threadNumber = nextThread.getAndIncrement();
             //assert threadNumber<NUMBER_OF_THREADS;
@@ -2086,7 +1894,7 @@ public class TestPerformance
         }
 
         //@Override
-        public Thread newThread(Runnable r)
+        public NumberedThread newThread(Runnable r)
         {
             //assert threadNumber<NUMBER_OF_THREADS;
             return new NumberedThread(r, threadNumber);
@@ -2165,7 +1973,7 @@ public class TestPerformance
                 }
                 catch (IOException ex)
                 {
-                    throw new RuntimeException(ex);
+                    throw new RuntimeException(ex.Message,ex);
                 }
 
                 if (PRELOAD_SOURCES)
@@ -2174,7 +1982,7 @@ public class TestPerformance
                 }
                 else
                 {
-                    inputStream = new SoftReference<CloneableANTLRFileStream>(stream);
+                    inputStream = (stream);
                 }
             }
 
@@ -2185,7 +1993,7 @@ public class TestPerformance
     protected class CloneableANTLRFileStream : ANTLRFileStream
     {
 
-        public CloneableANTLRFileStream(String fileName, String encoding)
+        public CloneableANTLRFileStream(String fileName, Encoding encoding)
             : base(fileName, encoding)
         {
         }
@@ -2243,11 +2051,11 @@ public class TestPerformance
     {
         String tempDirPath = tempDir.ToString();
         String grammarFormat =
-            "parser grammar Level_%d_%d;\n" +
+            "parser grammar Level_{0}_{1};\n" +
             "\n" +
-            "%s import Level_%d_1, Level_%d_2;\n" +
+            "{2} import Level_{3}_1, Level_{4}_2;\n" +
             "\n" +
-            "rule_%d_%d : EOF;\n";
+            "rule_{5}_{6} : EOF;\n";
 
         FileUtils.mkdir(tempDirPath);
 
@@ -2257,11 +2065,11 @@ public class TestPerformance
         for (int level = 0; level < levels; level++)
         {
             String leafPrefix = level == levels - 1 ? "//" : "";
-            String grammar1 = String.format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
+            String grammar1 = String.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
             if (level > 0)
             {
-                String grammar2 = String.format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
+                String grammar2 = String.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
             }
         }

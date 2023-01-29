@@ -381,12 +381,13 @@ public class TestUnbufferedCharStream {
 			int len = n;
 			// Don't pass -1 to new String().
 			if (data[len-1] == IntStream.EOF) {
-				// Don't pass -1 to new String().
-				return new String(data,0,len-1) + "\uFFFF";
-			} else {
-				return new String(data,0,len);
-			}
-		}
+                // Don't pass -1 to new String().
+                return string.Join("", data[..(len - 1)].Select(d => new Rune(d).ToString())) + "\uffff";
+            }
+            else {
+                return string.Join("", data.Select(d => new Rune(d).ToString()));
+            }
+        }
 
 	}
 }

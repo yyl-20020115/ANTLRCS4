@@ -833,11 +833,18 @@ public class TestGraphNodes {
 				if (current.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE) {
 					continue;
 				}
+				var parent = current.getParent(i);
 
-				if (visited.put(current.getParent(i), current.getParent(i)) == null) {
-					contextIds.put(current.getParent(i), contextIds.Cast);
-					workList.push(current.getParent(i));
-				}
+                if (!visited.ContainsKey(parent))
+				{
+					visited.Add(parent, parent);
+					contextIds.Add(parent, contextIds.Count);
+					workList.push(parent);
+                }
+				//if (visited.put(current.getParent(i), current.getParent(i)) == null) {
+				//	contextIds.put(current.getParent(i), contextIds.Cast);
+				//	workList.push(current.getParent(i));
+				//}
 
 				edges.Append("  s").Append(contextIds[(current)]);
 				if (current.size() > 1) {

@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.test.runtime.states;
@@ -23,7 +24,7 @@ public class JavaRunner : RuntimeRunner {
 
 	private static readonly String testLexerContent;
 	private static readonly String testParserContent;
-	private static JavaCompiler compiler;
+	//private static JavaCompiler compiler;
 
 	static JavaRunner(){
 		testLexerContent = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/" + runtimeTestLexerName + ".java");
@@ -41,20 +42,20 @@ public class JavaRunner : RuntimeRunner {
 
 	//@Override
 	protected void initRuntime() {
-		compiler = ToolProvider.getSystemJavaCompiler();
+		//compiler = ToolProvider.getSystemJavaCompiler();
 	}
 
 	//@Override
 	protected String getCompilerName() {
 		return "javac";
 	}
-
+#if false
 	//@Override
 	protected JavaCompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		String tempTestDir = getTempDirPath();
 
 		List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
-		GeneratedFile firstFile = generatedFiles.get(0);
+		GeneratedFile firstFile = generatedFiles[(0)];
 
 		if (!firstFile.isParser) {
 			FileUtils.writeFile(tempTestDir, runtimeTestLexerName + ".java", testLexerContent);
@@ -68,7 +69,7 @@ public class JavaRunner : RuntimeRunner {
 				return new JavaCompiledState(generatedState, null, null, null, e);
 			}
 		}
-		if (generatedFiles.stream().anyMatch(file -> file.isParser)) {
+		if (generatedFiles.Any(f=>f.isParser)) {
 			FileUtils.writeFile(tempTestDir,  runtimeTestParserName + ".java", testParserContent);
 		}
 
@@ -106,7 +107,7 @@ public class JavaRunner : RuntimeRunner {
 
 		return new JavaCompiledState(generatedState, loader, lexer, parser, exception);
 	}
-
+#endif
 	//@Override
 	protected ExecutedState execute(RunOptions runOptions, CompiledState compiledState) {
 		JavaCompiledState javaCompiledState = (JavaCompiledState) compiledState;
@@ -131,12 +132,12 @@ public class JavaRunner : RuntimeRunner {
 				Object[] args = null;
 				try {
 					startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName);
-				} catch (NoSuchMethodException noSuchMethodException) {
+				} catch (Exception noSuchMethodException) {
 					// try with int _p arg for recursive func
-					startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName, int);
+					startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName,new Type[] { typeof(int) });
 					args = new object[]{0};
 				}
-				parseTree = (ParseTree) startRule.invoke(lexerParser.b, args);
+				parseTree = startRule.Invoke(lexerParser.b, args) as ParseTree;
 			}
 		} catch (Exception ex) {
 			exception = ex;
@@ -149,9 +150,8 @@ public class JavaRunner : RuntimeRunner {
 		String output = null;
 		String errors = null;
 		try {
-			 Type mainClass = compiledState.GetType().GetType(getTestFileName());
-			 MethodInfo recognizeMethod = mainClass.GetDeclaredMethod("recognize", typeof(String),
-					PrintStream, PrintStream);
+			 Type mainClass = this.GetType().Assembly.GetType(getTestFileName());
+			 MethodInfo recognizeMethod = mainClass.GetMethod("recognize",new Type[] { typeof(String) });
 
 			//PipedInputStream stdoutIn = new PipedInputStream();
 			//PipedInputStream stderrIn = new PipedInputStream();

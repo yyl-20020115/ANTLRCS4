@@ -74,7 +74,7 @@ public class TestParserExec {
 	 */
 	// TODO: port to test framework (can we simplify the Psl grammar?)
 	[TestMethod] public void testFailedPredicateExceptionState(){
-		String grammar = load("Psl.g4");
+		String grammar =ToolTestUtils.load("Psl.g4");
 		ExecutedState executedState = ToolTestUtils.execParser("Psl.g4", grammar,
 				"PslParser", "PslLexer", "floating_constant", " . 234", false);
 		Assert.AreEqual("", executedState.output);

@@ -93,7 +93,7 @@ public abstract class RuntimeRunner {
 
 	protected RuntimeRunner(string tempDir, bool saveTestDir) {
 		if (tempDir == null) {
-			String dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond);
+			String dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond;
 			tempTestDir = Path.Combine(TempDirectory, dirName);
 		}
 		else {
@@ -138,7 +138,7 @@ public abstract class RuntimeRunner {
 	}
 
 	public static String getRuntimePath(String language) {
-		return Path.Combine(runtimePath, language);
+		return Path.Combine(_runtimePath, language);
 	}
 
 	public State run(RunOptions runOptions) {
@@ -233,10 +233,10 @@ public abstract class RuntimeRunner {
 
 		// Create initialization status for every runtime with lock object
 		lock (runtimeInitializationStatuses) {
-			status = runtimeInitializationStatuses.get(language);
+			status = runtimeInitializationStatuses[(language)];
 			if (status == null) {
 				status = new InitializationStatus();
-				runtimeInitializationStatuses.put(language, status);
+				runtimeInitializationStatuses[language]= status;
 			}
 		}
 
@@ -252,7 +252,7 @@ public abstract class RuntimeRunner {
 					initRuntime();
 				} catch (Exception e) {
 					exception = e;
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				status.isInitialized = exception == null;
 				status.exception = exception;
