@@ -37,15 +37,16 @@ public class TestASTStructure {
 
 		// set up customized tree adaptor if necessary
 		if ( adaptorClassName!=null ) {
-			MethodInfo m = parserClass.GetMethod("setTreeAdaptor", TreeAdaptor);
+			MethodInfo m = parserClass.GetMethod("setTreeAdaptor", new Type[] { typeof(TreeAdaptor) });
 			Type adaptorClass = Type.GetType(adaptorClassName);
-			m.Invoke(parser, adaptorClass.newInstance());
+			m.Invoke(parser, 
+				new object[] { adaptorClass.GetConstructor(new Type[0]).Invoke(new object[0]) });
 		}
 
 		MethodInfo ruleMethod = parserClass.GetMethod(ruleName);
 
 		// INVOKE RULE
-		return ruleMethod.Invoke(parser);
+		return ruleMethod.Invoke(parser,new object[0]);
 	}
 
 	[TestMethod] public void test_grammarSpec1(){

@@ -9,7 +9,10 @@ using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.tree;
-
+public interface TreeTextProvider
+{
+    String getText(Tree node);
+}
 /** A set of utility routines useful for all kinds of ANTLR trees. */
 public static class Trees 
 {
@@ -20,12 +23,30 @@ public static class Trees
 	public static String toStringTree(Tree t) {
 		return toStringTree(t, (List<String>)null);
 	}
+    public static String toStringTree(Tree t, TreeTextProvider nodeTextProvider)
+    {
+        if (t == null) return "null";
+        String s = RuntimeUtils.escapeWhitespace(nodeTextProvider.getText(t), false);
+        if (t.getChildCount() == 0) return s;
+        StringBuilder buf = new StringBuilder();
+        buf.Append('(');
+        s = RuntimeUtils.escapeWhitespace(nodeTextProvider.getText(t), false);
+        buf.Append(s);
+        buf.Append(' ');
+        for (int i = 0; i < t.getChildCount(); i++)
+        {
+            if (i > 0) buf.Append(' ');
+            buf.Append(toStringTree(t.getChild(i), nodeTextProvider));
+        }
+        buf.Append(')');
+        return buf.ToString();
+    }
 
-	/** Print out a whole tree in LISP form. {@link #getNodeText} is used on the
+    /** Print out a whole tree in LISP form. {@link #getNodeText} is used on the
 	 *  node payloads to get the text for the nodes.  Detect
 	 *  parse trees and extract data appropriately.
 	 */
-	public static String toStringTree(Tree t, Parser recog) {
+    public static String toStringTree(Tree t, Parser recog) {
 		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
 		List<String> ruleNamesList = ruleNames?.ToList();
 		return toStringTree(t, ruleNamesList);

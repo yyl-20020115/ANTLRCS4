@@ -158,7 +158,7 @@ public class TestCharStreams {
 	[TestMethod]
 	public void fromFileName(string tempDir)  {
 		string p = getTestFile(tempDir);
-		Files.write(p, "hello \uD83C\uDF0E".getBytes(Encoding.UTF8));
+		File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
 		CharStream s = CharStreams.fromFileName(p.ToString());
 		Assert.AreEqual(7, s.size());
 		Assert.AreEqual(0, s.index());

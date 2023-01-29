@@ -147,7 +147,7 @@ public class TestUnicodeGrammar {
 				CharStreams.fromString(inputText));
 		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
 		GrammarParserInterpreter parser = grammar.createGrammarParserInterpreter(tokens);
-		ParseTree parseTree = parser.parse(grammar.rules.get(rootRule).index);
+		ParseTree parseTree = parser.parse(grammar.rules[(rootRule)].index);
 		InterpreterTreeTextProvider nodeTextProvider =
 				new InterpreterTreeTextProvider(grammar.getRuleNames());
 		return Trees.toStringTree(parseTree, nodeTextProvider);

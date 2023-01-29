@@ -825,7 +825,7 @@ public class TestATNConstruction {
 		}
 		ParserATNFactory f = new LexerATNFactory(g);
 		ATN nfa = f.createATN();
-		ATNState startState = nfa.modeNameToStartState.get(modeName);
+		ATNState startState = nfa.modeNameToStartState[(modeName)];
 		ATNPrinter serializer = new ATNPrinter(g, startState);
 		String result = serializer.asString();
 		//System.out.print(result);

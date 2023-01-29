@@ -544,7 +544,7 @@ public class TestATNParserPrediction {
 				//nvae.printStackTrace(System.err);
 			}
 			DFA dfa = interp.parser.decisionToDFA[decision];
-			Assert.AreEqual(dfaString[i], dfa.ToString(g.getVocabulary()));
+			Assert.AreEqual(dfaString[i], dfa.toString(g.getVocabulary()));
 		}
 	}
 }

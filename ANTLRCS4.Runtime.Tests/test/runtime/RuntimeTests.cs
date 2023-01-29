@@ -66,7 +66,7 @@ public abstract class RuntimeTests {
 			}
 		}
 	}
-
+#if false
 	//@TestFactory
 	//@Execution(ExecutionMode.CONCURRENT)
 	public List<DynamicNode> runtimeTests() {
@@ -93,7 +93,7 @@ public abstract class RuntimeTests {
 
 		return result;
 	}
-
+#endif
 	private static String test(RuntimeTestDescriptor descriptor, RuntimeRunner runner) {
 		String targetName = runner.getLanguage();
 		if (descriptor.ignore(targetName)) {

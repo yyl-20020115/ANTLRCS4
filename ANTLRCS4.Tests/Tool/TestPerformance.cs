@@ -349,7 +349,7 @@ public class TestPerformance
     {
         throw new NotImplementedException();
     }
-
+#if false
     public class R1
     {
         //@Override
@@ -393,9 +393,7 @@ public class TestPerformance
             }
         }
     }
-
     private readonly AtomicIntegerArray tokenCount = new AtomicIntegerArray(PASSES);
-
     [TestMethod]
     //@Disabled
     public void compileJdk()
@@ -494,6 +492,7 @@ public class TestPerformance
             }
         }
     }
+#endif
 
     /**
 	 * Compute and print ATN/DFA transition statistics.
@@ -599,7 +598,6 @@ public class TestPerformance
             Console.Out.format("%d\t%e\t%e\t%e\t%e\t%e\t%e%n", i + 1, averageValue, stddev[i], averageValue - low95[i], high95[i] - averageValue, averageValue - low67[i], high67[i] - averageValue);
         }
     }
-
     /**
 	 * Compute and print timing statistics.
 	 */
@@ -773,7 +771,7 @@ public class TestPerformance
                 continue;
             }
 
-            result.Add(new InputDescriptor(file.getAbsolutePath()));
+            result.Add(new InputDescriptor(file));
         }
 
         if (recursive)
