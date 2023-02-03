@@ -30,59 +30,55 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Misc
+namespace Antlr4.StringTemplate.Misc;
+
+using ArgumentNullException = System.ArgumentNullException;
+using Exception = System.Exception;
+using TextWriter = System.IO.TextWriter;
+
+public class TextWriterErrorListener : ITemplateErrorListener
 {
-    using ArgumentNullException = System.ArgumentNullException;
-    using Exception = System.Exception;
-    using TextWriter = System.IO.TextWriter;
+    private readonly TextWriter _writer;
 
-    public class TextWriterErrorListener : ITemplateErrorListener
+    public TextWriterErrorListener(TextWriter writer)
     {
-        private readonly TextWriter _writer;
+        _writer = writer ?? throw new ArgumentNullException(nameof(writer));
+    }
 
-        public TextWriterErrorListener(TextWriter writer)
+    public virtual void CompiletimeError(TemplateMessage msg)
+    {
+        _writer.WriteLine(msg);
+    }
+
+    public virtual void RuntimeError(TemplateMessage msg)
+    {
+        if (msg.Error != ErrorType.NO_SUCH_PROPERTY)
         {
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-
-            _writer = writer;
-        }
-
-        public virtual void CompiletimeError(TemplateMessage msg)
-        {
+            // ignore these
             _writer.WriteLine(msg);
         }
+    }
 
-        public virtual void RuntimeError(TemplateMessage msg)
-        {
-            if (msg.Error != ErrorType.NO_SUCH_PROPERTY)
-            {
-                // ignore these
-                _writer.WriteLine(msg);
-            }
-        }
+    public virtual void IOError(TemplateMessage msg)
+    {
+        _writer.WriteLine(msg);
+    }
 
-        public virtual void IOError(TemplateMessage msg)
-        {
-            _writer.WriteLine(msg);
-        }
+    public virtual void InternalError(TemplateMessage msg)
+    {
+        _writer.WriteLine(msg);
+        // throw new Error("internal error", msg.cause);
+    }
 
-        public virtual void InternalError(TemplateMessage msg)
-        {
-            _writer.WriteLine(msg);
-            // throw new Error("internal error", msg.cause);
-        }
+    public virtual void Error(string s)
+    {
+        Error(s, null);
+    }
 
-        public virtual void Error(string s)
-        {
-            Error(s, null);
-        }
-
-        public virtual void Error(string s, Exception e)
-        {
-            _writer.WriteLine(s);
-            if (e != null)
-                _writer.WriteLine(e.StackTrace);
-        }
+    public virtual void Error(string s, Exception e)
+    {
+        _writer.WriteLine(s);
+        if (e != null)
+            _writer.WriteLine(e.StackTrace);
     }
 }

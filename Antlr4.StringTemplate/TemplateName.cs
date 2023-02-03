@@ -30,66 +30,41 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate
+namespace Antlr4.StringTemplate;
+
+using System;
+using Path = System.IO.Path;
+using Regex = System.Text.RegularExpressions.Regex;
+using RegexOptions = System.Text.RegularExpressions.RegexOptions;
+
+public class TemplateName
 {
-    using System;
-    using Path = System.IO.Path;
-    using Regex = System.Text.RegularExpressions.Regex;
-    using RegexOptions = System.Text.RegularExpressions.RegexOptions;
+    private static readonly Regex NameFormatRegex = new (@"^/?([a-z0-9_]+/)*[a-z0-9_]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public class TemplateName
+    private readonly string _name;
+
+    public TemplateName(string name)
     {
-        private static readonly Regex NameFormatRegex = new Regex(@"^/?([a-z0-9_]+/)*[a-z0-9_]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
+        if (name.Length == 0)
+            throw new ArgumentException(nameof(name));
+        if (!NameFormatRegex.IsMatch(name))
+            throw new ArgumentException(nameof(name));
 
-        private readonly string _name;
-
-        public TemplateName(string name)
-        {
-            if (name == null)
-                throw new ArgumentNullException("name");
-            if (name.Length == 0)
-                throw new ArgumentException();
-            if (!NameFormatRegex.IsMatch(name))
-                throw new ArgumentException();
-
-            _name = name;
-        }
-
-        public bool IsRooted
-        {
-            get
-            {
-                return _name.Length > 0 && _name[0] == '/';
-            }
-        }
-
-        public bool IsTemplate
-        {
-            get
-            {
-                return _name.Length > 0 && _name[_name.Length - 1] != '/';
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        public static implicit operator TemplateName(string name)
-        {
-            return new TemplateName(name);
-        }
-
-        public static string GetTemplatePath(string localPathRoot, TemplateName templateName)
-        {
-            if (!templateName.IsRooted)
-                return Path.Combine(localPathRoot, templateName.Name);
-
-            return Path.Combine(localPathRoot, templateName.Name.Substring(1));
-        }
+        _name = name;
     }
+
+    public bool IsRooted => _name.Length > 0 && _name[0] == '/';
+
+    public bool IsTemplate => _name.Length > 0 && _name[^1] != '/';
+
+    public string Name => _name;
+
+    public static implicit operator TemplateName(string name) => new(name);
+
+    public static string GetTemplatePath(string localPathRoot, TemplateName templateName) 
+        => !templateName.IsRooted
+            ? Path.Combine(localPathRoot, templateName.Name)
+            : Path.Combine(localPathRoot, templateName.Name[1..]);
 }

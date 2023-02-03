@@ -30,31 +30,11 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+public class AstTreeRuleReturnScope<TOutputTree, TInputTree> : TreeRuleReturnScope<TInputTree>, IAstRuleReturnScope<TOutputTree>, IAstRuleReturnScope
 {
-    public class AstTreeRuleReturnScope<TOutputTree, TInputTree> : TreeRuleReturnScope<TInputTree>, IAstRuleReturnScope<TOutputTree>, IAstRuleReturnScope
-    {
-        private TOutputTree _tree;
+    public TOutputTree Tree { get; set; }
 
-        public TOutputTree Tree
-        {
-            get
-            {
-                return _tree;
-            }
-
-            set
-            {
-                _tree = value;
-            }
-        }
-
-        object IAstRuleReturnScope.Tree
-        {
-            get
-            {
-                return Tree;
-            }
-        }
-    }
+    object IAstRuleReturnScope.Tree => Tree;
 }

@@ -30,70 +30,61 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+using Antlr3.Runtime.Misc;
+
+public class TreeFilter : TreeParser
 {
-    using Antlr.Runtime.Misc;
+    protected ITokenStream originalTokenStream;
+    protected ITreeAdaptor originalAdaptor;
 
-    public class TreeFilter : TreeParser
+    public TreeFilter( ITreeNodeStream input )
+        : this( input, new RecognizerSharedState()) { }
+    public TreeFilter( ITreeNodeStream input, RecognizerSharedState state )
+        : base( input, state )
     {
-        protected ITokenStream originalTokenStream;
-        protected ITreeAdaptor originalAdaptor;
+        originalAdaptor = input.TreeAdaptor;
+        originalTokenStream = input.TokenStream;
+    }
 
-        public TreeFilter( ITreeNodeStream input )
-            : this( input, new RecognizerSharedState() )
+    public virtual void ApplyOnce( object t, Action whichRule )
+    {
+        if ( t == null ) return;
+        try
         {
+            // share TreeParser object but not parsing-related state
+            SetState(new RecognizerSharedState());
+            SetTreeNodeStream(new CommonTreeNodeStream(originalAdaptor, t));
+            (input as CommonTreeNodeStream).TokenStream = originalTokenStream;
+            BacktrackingLevel = 1;
+            whichRule();
+            BacktrackingLevel = 0;
         }
-        public TreeFilter( ITreeNodeStream input, RecognizerSharedState state )
-            : base( input, state )
-        {
-            originalAdaptor = input.TreeAdaptor;
-            originalTokenStream = input.TokenStream;
-        }
-
-        public virtual void ApplyOnce( object t, Action whichRule )
-        {
-            if ( t == null )
-                return;
-
-            try
-            {
-                // share TreeParser object but not parsing-related state
-                SetState(new RecognizerSharedState());
-                SetTreeNodeStream(new CommonTreeNodeStream(originalAdaptor, t));
-                ( (CommonTreeNodeStream)input ).TokenStream = originalTokenStream;
-                BacktrackingLevel = 1;
-                whichRule();
-                BacktrackingLevel = 0;
-            }
-            catch ( RecognitionException )
-            {
-            }
-        }
-
-        public virtual void Downup( object t )
-        {
-            TreeVisitor v = new TreeVisitor( new CommonTreeAdaptor() );
-            Func<object, object> pre = ( o ) =>
-            {
-                ApplyOnce( o, Topdown );
-                return o;
-            };
-            Func<object, object> post = ( o ) =>
-            {
-                ApplyOnce( o, Bottomup );
-                return o;
-            };
-            v.Visit( t, pre, post );
-        }
-
-        // methods the downup strategy uses to do the up and down rules.
-        // to override, just define tree grammar rule topdown and turn on
-        // filter=true.
-        protected virtual void Topdown()
-        {
-        }
-        protected virtual void Bottomup()
+        catch ( RecognitionException )
         {
         }
     }
+
+    public virtual void Downup( object t )
+    {
+        var v = new TreeVisitor( new CommonTreeAdaptor() );
+        Func<object, object> pre = ( o ) =>
+        {
+            ApplyOnce( o, Topdown );
+            return o;
+        };
+        Func<object, object> post = ( o ) =>
+        {
+            ApplyOnce( o, Bottomup );
+            return o;
+        };
+        v.Visit( t, pre, post );
+    }
+
+    // methods the downup strategy uses to do the up and down rules.
+    // to override, just define tree grammar rule topdown and turn on
+    // filter=true.
+    protected virtual void Topdown() { }
+    protected virtual void Bottomup() { }
 }

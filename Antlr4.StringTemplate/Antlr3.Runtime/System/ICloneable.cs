@@ -1,11 +1,10 @@
 ﻿#if PORTABLE
 
-namespace System
+namespace System;
+
+internal interface ICloneable
 {
-    internal interface ICloneable
-    {
-        object Clone();
-    }
+    object Clone();
 }
 
 #endif

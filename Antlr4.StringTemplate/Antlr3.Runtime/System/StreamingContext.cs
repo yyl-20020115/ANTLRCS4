@@ -1,10 +1,9 @@
 ﻿#if NETSTANDARD
 
-namespace System.Runtime.Serialization
+namespace System.Runtime.Serialization;
+
+internal struct StreamingContext
 {
-    internal struct StreamingContext
-    {
-    }
 }
 
 #endif

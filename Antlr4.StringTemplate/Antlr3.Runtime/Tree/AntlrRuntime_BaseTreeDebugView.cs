@@ -30,31 +30,27 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+using System.Diagnostics;
+
+internal sealed class AntlrRuntime_BaseTreeDebugView
 {
-    using System.Diagnostics;
+    private readonly BaseTree _tree;
 
-    internal sealed class AntlrRuntime_BaseTreeDebugView
+    public AntlrRuntime_BaseTreeDebugView(BaseTree tree) => _tree = tree;
+
+    [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+    public ITree[] Children
     {
-        private readonly BaseTree _tree;
-
-        public AntlrRuntime_BaseTreeDebugView(BaseTree tree)
+        get
         {
-            _tree = tree;
-        }
+            if (_tree == null || _tree.Children == null)
+                return null;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        public ITree[] Children
-        {
-            get
-            {
-                if (_tree == null || _tree.Children == null)
-                    return null;
-
-                ITree[] children = new ITree[_tree.Children.Count];
-                _tree.Children.CopyTo(children, 0);
-                return children;
-            }
+            var children = new ITree[_tree.Children.Count];
+            _tree.Children.CopyTo(children, 0);
+            return children;
         }
     }
 }

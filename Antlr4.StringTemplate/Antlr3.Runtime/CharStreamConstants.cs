@@ -30,12 +30,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+
+public static class CharStreamConstants
 {
-
-    public static class CharStreamConstants
-    {
-        public const int EndOfFile = -1;
-    }
-
+    public const int EndOfFile = -1;
 }

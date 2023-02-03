@@ -30,138 +30,99 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
-{
-    using System.Collections.Generic;
+namespace Antlr3.Runtime.Tree;
 
-    using StringBuilder = System.Text.StringBuilder;
+using System.Collections.Generic;
+
+using StringBuilder = System.Text.StringBuilder;
+
+/** <summary>
+ *  A record of the rules used to match a token sequence.  The tokens
+ *  end up as the leaves of this tree and rule nodes are the interior nodes.
+ *  This really adds no functionality, it is just an alias for CommonTree
+ *  that is more meaningful (specific) and holds a String to display for a node.
+ *  </summary>
+ */
+[System.Serializable]
+public class ParseTree : BaseTree
+{
+    public object payload;
+    public List<IToken> hiddenTokens;
+
+    public ParseTree(object label) => this.payload = label;
+
+    #region Properties
+    public override string Text
+    {
+        get => ToString();
+        set { }
+    }
+    public override int TokenStartIndex
+    {
+        get => 0;
+        set { }
+    }
+    public override int TokenStopIndex
+    {
+        get => 0;
+        set { }
+    }
+    public override int Type
+    {
+        get => 0;
+        set { }
+    }
+    #endregion
+
+    public override ITree DupNode() => null;
+
+    public override string ToString() 
+        => payload is IToken t ? t.Type == TokenTypes.EndOfFile ? "<EOF>" : t.Text : payload.ToString();
 
     /** <summary>
-     *  A record of the rules used to match a token sequence.  The tokens
-     *  end up as the leaves of this tree and rule nodes are the interior nodes.
-     *  This really adds no functionality, it is just an alias for CommonTree
-     *  that is more meaningful (specific) and holds a String to display for a node.
+     *  Emit a token and all hidden nodes before.  EOF node holds all
+     *  hidden tokens after last real token.
      *  </summary>
      */
-    [System.Serializable]
-    public class ParseTree : BaseTree
+    public virtual string ToStringWithHiddenTokens()
     {
-        public object payload;
-        public List<IToken> hiddenTokens;
+        var buffer = new StringBuilder();
+        if ( hiddenTokens != null )
+        {
+            for ( int i = 0; i < hiddenTokens.Count; i++ )
+            {
+                var hidden = hiddenTokens[i];
+                buffer.Append( hidden.Text );
+            }
+        }
+        var nodeText = this.ToString();
+        if ( !nodeText.Equals( "<EOF>" ) )
+            buffer.Append( nodeText );
+        return buffer.ToString();
+    }
 
-        public ParseTree( object label )
-        {
-            this.payload = label;
-        }
+    /** <summary>
+     *  Print out the leaves of this tree, which means printing original
+     *  input back out.
+     *  </summary>
+     */
+    public virtual string ToInputString()
+    {
+        var builder = new StringBuilder();
+        ToStringLeaves( builder );
+        return builder.ToString();
+    }
 
-        #region Properties
-        public override string Text
-        {
-            get
-            {
-                return ToString();
-            }
-            set
-            {
-            }
+    protected virtual void ToStringLeaves( StringBuilder buffer )
+    {
+        if ( payload is IToken )
+        { // leaf node token?
+            buffer.Append( this.ToStringWithHiddenTokens() );
+            return;
         }
-        public override int TokenStartIndex
+        for ( int i = 0; Children != null && i < Children.Count; i++ )
         {
-            get
-            {
-                return 0;
-            }
-            set
-            {
-            }
-        }
-        public override int TokenStopIndex
-        {
-            get
-            {
-                return 0;
-            }
-            set
-            {
-            }
-        }
-        public override int Type
-        {
-            get
-            {
-                return 0;
-            }
-            set
-            {
-            }
-        }
-        #endregion
-
-        public override ITree DupNode()
-        {
-            return null;
-        }
-
-        public override string ToString()
-        {
-            if ( payload is IToken )
-            {
-                IToken t = (IToken)payload;
-                if ( t.Type == TokenTypes.EndOfFile )
-                {
-                    return "<EOF>";
-                }
-                return t.Text;
-            }
-            return payload.ToString();
-        }
-
-        /** <summary>
-         *  Emit a token and all hidden nodes before.  EOF node holds all
-         *  hidden tokens after last real token.
-         *  </summary>
-         */
-        public virtual string ToStringWithHiddenTokens()
-        {
-            StringBuilder buf = new StringBuilder();
-            if ( hiddenTokens != null )
-            {
-                for ( int i = 0; i < hiddenTokens.Count; i++ )
-                {
-                    IToken hidden = (IToken)hiddenTokens[i];
-                    buf.Append( hidden.Text );
-                }
-            }
-            string nodeText = this.ToString();
-            if ( !nodeText.Equals( "<EOF>" ) )
-                buf.Append( nodeText );
-            return buf.ToString();
-        }
-
-        /** <summary>
-         *  Print out the leaves of this tree, which means printing original
-         *  input back out.
-         *  </summary>
-         */
-        public virtual string ToInputString()
-        {
-            StringBuilder buf = new StringBuilder();
-            ToStringLeaves( buf );
-            return buf.ToString();
-        }
-
-        protected virtual void ToStringLeaves( StringBuilder buf )
-        {
-            if ( payload is IToken )
-            { // leaf node token?
-                buf.Append( this.ToStringWithHiddenTokens() );
-                return;
-            }
-            for ( int i = 0; Children != null && i < Children.Count; i++ )
-            {
-                ParseTree t = (ParseTree)Children[i];
-                t.ToStringLeaves( buf );
-            }
+            (Children[i] as ParseTree)?.ToStringLeaves( buffer );
         }
     }
 }

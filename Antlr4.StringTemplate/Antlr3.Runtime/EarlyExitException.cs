@@ -30,84 +30,77 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+using ArgumentNullException = System.ArgumentNullException;
+using Exception = System.Exception;
+
+#if !PORTABLE
+using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
+using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
+using StreamingContext = System.Runtime.Serialization.StreamingContext;
+#endif
+
+/** <summary>The recognizer did not match anything for a (..)+ loop.</summary> */
+[System.Serializable]
+public class EarlyExitException : RecognitionException
 {
-    using ArgumentNullException = System.ArgumentNullException;
-    using Exception = System.Exception;
+    private readonly int _decisionNumber;
 
-#if !PORTABLE
-    using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
-    using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
-    using StreamingContext = System.Runtime.Serialization.StreamingContext;
-#endif
-
-    /** <summary>The recognizer did not match anything for a (..)+ loop.</summary> */
-    [System.Serializable]
-    public class EarlyExitException : RecognitionException
+    public EarlyExitException()
     {
-        private readonly int _decisionNumber;
-
-        public EarlyExitException()
-        {
-        }
-
-        public EarlyExitException(string message)
-            : base(message)
-        {
-        }
-
-        public EarlyExitException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        public EarlyExitException(int decisionNumber, IIntStream input)
-            : base(input)
-        {
-            this._decisionNumber = decisionNumber;
-        }
-
-        public EarlyExitException(string message, int decisionNumber, IIntStream input)
-            : base(message, input)
-        {
-            this._decisionNumber = decisionNumber;
-        }
-
-        public EarlyExitException(string message, int decisionNumber, IIntStream input, Exception innerException)
-            : base(message, input, innerException)
-        {
-            this._decisionNumber = decisionNumber;
-        }
-
-#if !PORTABLE
-        protected EarlyExitException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            this._decisionNumber = info.GetInt32("DecisionNumber");
-        }
-#endif
-
-        public int DecisionNumber
-        {
-            get
-            {
-                return _decisionNumber;
-            }
-        }
-
-#if !PORTABLE
-        [SecurityCritical]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            base.GetObjectData(info, context);
-            info.AddValue("DecisionNumber", DecisionNumber);
-        }
-#endif
     }
+
+    public EarlyExitException(string message)
+        : base(message)
+    {
+    }
+
+    public EarlyExitException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    public EarlyExitException(int decisionNumber, IIntStream input)
+        : base(input)
+    {
+        this._decisionNumber = decisionNumber;
+    }
+
+    public EarlyExitException(string message, int decisionNumber, IIntStream input)
+        : base(message, input)
+    {
+        this._decisionNumber = decisionNumber;
+    }
+
+    public EarlyExitException(string message, int decisionNumber, IIntStream input, Exception innerException)
+        : base(message, input, innerException)
+    {
+        this._decisionNumber = decisionNumber;
+    }
+
+#if !PORTABLE
+    protected EarlyExitException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        this._decisionNumber = info.GetInt32("DecisionNumber");
+    }
+#endif
+
+    public int DecisionNumber => _decisionNumber;
+
+#if !PORTABLE
+    [SecurityCritical]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        base.GetObjectData(info, context);
+        info.AddValue("DecisionNumber", DecisionNumber);
+    }
+#endif
 }

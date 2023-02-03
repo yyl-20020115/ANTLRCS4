@@ -30,62 +30,49 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Misc
+namespace Antlr4.StringTemplate.Misc;
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using StringBuilder = System.Text.StringBuilder;
+
+/** Used during tests to track all errors */
+public class ErrorBuffer : ITemplateErrorListener
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using StringBuilder = System.Text.StringBuilder;
+    private readonly List<TemplateMessage> errors = new ();
 
-    /** Used during tests to track all errors */
-    public class ErrorBuffer : ITemplateErrorListener
+    public ReadOnlyCollection<TemplateMessage> Errors => errors.AsReadOnly();
+
+    protected List<TemplateMessage> ErrorList => errors;
+
+    public virtual void CompiletimeError(TemplateMessage msg)
     {
-        private readonly List<TemplateMessage> errors = new List<TemplateMessage>();
+        errors.Add(msg);
+    }
 
-        public ReadOnlyCollection<TemplateMessage> Errors
-        {
-            get
-            {
-                return errors.AsReadOnly();
-            }
-        }
-
-        protected List<TemplateMessage> ErrorList
-        {
-            get
-            {
-                return errors;
-            }
-        }
-
-        public virtual void CompiletimeError(TemplateMessage msg)
-        {
+    public virtual void RuntimeError(TemplateMessage msg)
+    {
+        // ignore these
+        if (msg.Error != ErrorType.NO_SUCH_PROPERTY)
             errors.Add(msg);
-        }
+    }
 
-        public virtual void RuntimeError(TemplateMessage msg)
-        {
-            // ignore these
-            if (msg.Error != ErrorType.NO_SUCH_PROPERTY)
-                errors.Add(msg);
-        }
+    public virtual void IOError(TemplateMessage msg)
+    {
+        errors.Add(msg);
+    }
 
-        public virtual void IOError(TemplateMessage msg)
-        {
-            errors.Add(msg);
-        }
+    public virtual void InternalError(TemplateMessage msg)
+    {
+        errors.Add(msg);
+    }
 
-        public virtual void InternalError(TemplateMessage msg)
-        {
-            errors.Add(msg);
-        }
+    public override string ToString()
+    {
+        var buffer = new StringBuilder();
+        foreach (var m in errors)
+            buffer.AppendLine(m.ToString());
 
-        public override string ToString()
-        {
-            StringBuilder buf = new StringBuilder();
-            foreach (TemplateMessage m in errors)
-                buf.AppendLine(m.ToString());
-
-            return buf.ToString();
-        }
+        return buffer.ToString();
     }
 }

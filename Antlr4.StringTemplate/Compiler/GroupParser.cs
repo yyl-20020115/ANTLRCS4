@@ -25,14 +25,14 @@ using StringBuilder = System.Text.StringBuilder;
 
 
 using System.Collections.Generic;
-using Antlr.Runtime;
-using Antlr.Runtime.Misc;
+using Antlr3.Runtime;
+using Antlr3.Runtime.Misc;
 
 namespace Antlr4.StringTemplate.Compiler
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.5.2-beta2")]
 [System.CLSCompliant(false)]
-public partial class GroupParser : Antlr.Runtime.Parser
+public partial class GroupParser : Antlr3.Runtime.Parser
 {
 	internal static readonly string[] tokenNames = new string[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ANONYMOUS_TEMPLATE", "BIGSTRING", "BIGSTRING_NO_NL", "COMMA", "COMMENT", "FALSE", "ID", "LBRACK", "LINE_COMMENT", "RBRACK", "STRING", "TRUE", "WS", "'('", "')'", "'.'", "':'", "'::='", "';'", "'='", "'@'", "'default'", "'group'", "'implements'", "'import'"

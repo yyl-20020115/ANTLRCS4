@@ -30,14 +30,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate
+namespace Antlr4.StringTemplate;
+
+public enum RenderOption : uint
 {
-    public enum RenderOption
-    {
-        Anchor,
-        Format,
-        Null,
-        Separator,
-        Wrap
-    }
+    Anchor,
+    Format,
+    Null,
+    Separator,
+    Wrap
 }

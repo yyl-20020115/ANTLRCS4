@@ -30,57 +30,40 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+using IList = System.Collections.IList;
+using NotSupportedException = System.NotSupportedException;
+
+[System.Serializable]
+public class RewriteRuleTokenStream : RewriteRuleElementStream
 {
-    using IList = System.Collections.IList;
-    using NotSupportedException = System.NotSupportedException;
 
-    [System.Serializable]
-    public class RewriteRuleTokenStream : RewriteRuleElementStream
-    {
+    public RewriteRuleTokenStream(ITreeAdaptor adaptor, string elementDescription)
+        : base(adaptor, elementDescription) { }
 
-        public RewriteRuleTokenStream( ITreeAdaptor adaptor, string elementDescription )
-            : base( adaptor, elementDescription )
-        {
-        }
+    /** <summary>Create a stream with one element</summary> */
+    public RewriteRuleTokenStream(ITreeAdaptor adaptor, string elementDescription, object oneElement)
+        : base(adaptor, elementDescription, oneElement) { }
 
-        /** <summary>Create a stream with one element</summary> */
-        public RewriteRuleTokenStream( ITreeAdaptor adaptor, string elementDescription, object oneElement )
-            : base( adaptor, elementDescription, oneElement )
-        {
-        }
+    /** <summary>Create a stream, but feed off an existing list</summary> */
+    public RewriteRuleTokenStream(ITreeAdaptor adaptor, string elementDescription, IList elements)
+        : base(adaptor, elementDescription, elements) { }
 
-        /** <summary>Create a stream, but feed off an existing list</summary> */
-        public RewriteRuleTokenStream( ITreeAdaptor adaptor, string elementDescription, IList elements )
-            : base( adaptor, elementDescription, elements )
-        {
-        }
+    /** <summary>Get next token from stream and make a node for it</summary> */
+    public virtual object NextNode()
+        => adaptor.Create(NextCore() as IToken);
 
-        /** <summary>Get next token from stream and make a node for it</summary> */
-        public virtual object NextNode()
-        {
-            IToken t = (IToken)NextCore();
-            return adaptor.Create( t );
-        }
+    public virtual IToken NextToken() 
+        => NextCore() as IToken;
 
-        public virtual IToken NextToken()
-        {
-            return (IToken)NextCore();
-        }
+    /** <summary>
+     *  Don't convert to a tree unless they explicitly call nextTree.
+     *  This way we can do hetero tree nodes in rewrite.
+     *  </summary>
+     */
+    protected override object ToTree(object el) => el;
 
-        /** <summary>
-         *  Don't convert to a tree unless they explicitly call nextTree.
-         *  This way we can do hetero tree nodes in rewrite.
-         *  </summary>
-         */
-        protected override object ToTree( object el )
-        {
-            return el;
-        }
-
-        protected override object Dup( object el )
-        {
-            throw new NotSupportedException( "dup can't be called for a token stream." );
-        }
-    }
+    protected override object Dup(object el)
+        => throw new NotSupportedException("dup can't be called for a token stream.");
 }

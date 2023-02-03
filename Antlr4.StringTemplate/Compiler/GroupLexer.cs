@@ -24,14 +24,14 @@ using Antlr4.StringTemplate.Misc;
 
 
 using System.Collections.Generic;
-using Antlr.Runtime;
-using Antlr.Runtime.Misc;
+using Antlr3.Runtime;
+using Antlr3.Runtime.Misc;
 
 namespace Antlr4.StringTemplate.Compiler
 {
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.5.2-beta2")]
 [System.CLSCompliant(false)]
-public partial class GroupLexer : Antlr.Runtime.Lexer
+public partial class GroupLexer : Antlr3.Runtime.Lexer
 {
 	public const int EOF=-1;
 	public const int ANONYMOUS_TEMPLATE=4;

@@ -30,44 +30,28 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Misc
+namespace Antlr4.StringTemplate.Misc;
+
+using System.Diagnostics;
+
+/** A line number and char position within a line.  Used by the source
+ *  mapping stuff to map address to range within a template.
+ */
+[DebuggerDisplay("({_line},{_charPosition})")]
+public readonly struct Coordinate
 {
-    using System.Diagnostics;
+    private readonly int _line;
+    private readonly int _charPosition;
 
-    /** A line number and char position within a line.  Used by the source
-     *  mapping stuff to map address to range within a template.
-     */
-    [DebuggerDisplay("({_line},{_charPosition})")]
-    public struct Coordinate
+    public Coordinate(int line, int charPosition)
     {
-        private readonly int _line;
-        private readonly int _charPosition;
-
-        public Coordinate(int line, int charPosition)
-        {
-            this._line = line;
-            this._charPosition = charPosition;
-        }
-
-        public int Line
-        {
-            get
-            {
-                return _line;
-            }
-        }
-
-        public int CharPosition
-        {
-            get
-            {
-                return _charPosition;
-            }
-        }
-
-        public override string ToString()
-        {
-            return _line + ":" + _charPosition;
-        }
+        this._line = line;
+        this._charPosition = charPosition;
     }
+
+    public int Line => _line;
+
+    public int CharPosition => _charPosition;
+
+    public override string ToString() => _line + ":" + _charPosition;
 }

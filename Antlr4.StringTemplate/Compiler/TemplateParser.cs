@@ -27,19 +27,19 @@ using Antlr4.StringTemplate.Misc;
 
 
 using System.Collections.Generic;
-using Antlr.Runtime;
-using Antlr.Runtime.Misc;
+using Antlr3.Runtime;
+using Antlr3.Runtime.Misc;
 
 
-using Antlr.Runtime.Tree;
-using RewriteRuleITokenStream = Antlr.Runtime.Tree.RewriteRuleTokenStream;
+using Antlr3.Runtime.Tree;
+using RewriteRuleITokenStream = Antlr3.Runtime.Tree.RewriteRuleTokenStream;
 
 namespace Antlr4.StringTemplate.Compiler
 {
 /** Build an AST from a single StringTemplate template */
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "3.5.2-beta2")]
 [System.CLSCompliant(false)]
-public partial class TemplateParser : Antlr.Runtime.Parser
+public partial class TemplateParser : Antlr3.Runtime.Parser
 {
 	internal static readonly string[] tokenNames = new string[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "IF", "ELSE", "ELSEIF", "ENDIF", "SUPER", "SEMI", "BANG", "ELLIPSIS", "EQUALS", "COLON", "LPAREN", "RPAREN", "LBRACK", "RBRACK", "COMMA", "DOT", "LCURLY", "RCURLY", "TEXT", "LDELIM", "RDELIM", "ID", "STRING", "WS", "PIPE", "OR", "AND", "INDENT", "NEWLINE", "AT", "END", "TRUE", "FALSE", "COMMENT", "ARGS", "ELEMENTS", "EXEC_FUNC", "EXPR", "INCLUDE", "INCLUDE_IND", "INCLUDE_REGION", "INCLUDE_SUPER", "INCLUDE_SUPER_REGION", "LIST", "MAP", "NULL", "OPTIONS", "PROP", "PROP_IND", "REGION", "SUBTEMPLATE", "TO_STR", "ZIP"
@@ -2800,8 +2800,8 @@ public partial class TemplateParser : Antlr.Runtime.Parser
 
 			string id = input.LT(1).Text;
 			string defVal;
-			TemplateCompiler.defaultOptionValues.TryGetValue(id, out defVal);
-			bool validOption = TemplateCompiler.supportedOptions.ContainsKey(id);
+			TemplateCompiler.DefaultOptionValues.TryGetValue(id, out defVal);
+			bool validOption = TemplateCompiler.SupportedOptions.ContainsKey(id);
 
 		try { DebugEnterRule(GrammarFileName, "option");
 		DebugLocation(168, 1);
@@ -3816,7 +3816,7 @@ public partial class TemplateParser : Antlr.Runtime.Parser
 				{
 					int LA34_3 = input.LA(3);
 
-					if (((TemplateCompiler.funcs.ContainsKey(input.LT(1).Text))))
+					if (((TemplateCompiler.Funcs.ContainsKey(input.LT(1).Text))))
 					{
 						alt34 = 1;
 					}
@@ -3896,7 +3896,7 @@ public partial class TemplateParser : Antlr.Runtime.Parser
 				root_0 = (CommonTree)adaptor.Nil();
 
 				DebugLocation(229, 4);
-				if (!((TemplateCompiler.funcs.ContainsKey(input.LT(1).Text))))
+				if (!((TemplateCompiler.Funcs.ContainsKey(input.LT(1).Text))))
 				{
 					throw new FailedPredicateException(input, "includeExpr", "TemplateCompiler.funcs.ContainsKey(input.LT(1).Text)");
 				}

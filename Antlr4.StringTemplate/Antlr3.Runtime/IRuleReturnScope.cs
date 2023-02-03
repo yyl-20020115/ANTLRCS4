@@ -30,27 +30,26 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+/// <summary>
+/// Rules can have start/stop info.
+/// </summary>
+public interface IRuleReturnScope
 {
     /// <summary>
-    /// Rules can have start/stop info.
+    /// Gets the start element from the input stream
     /// </summary>
-    public interface IRuleReturnScope
+    object Start
     {
-        /// <summary>
-        /// Gets the start element from the input stream
-        /// </summary>
-        object Start
-        {
-            get;
-        }
+        get;
+    }
 
-        /// <summary>
-        /// Gets the stop element from the input stream
-        /// </summary>
-        object Stop
-        {
-            get;
-        }
+    /// <summary>
+    /// Gets the stop element from the input stream
+    /// </summary>
+    object Stop
+    {
+        get;
     }
 }

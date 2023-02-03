@@ -30,43 +30,36 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Misc
+namespace Antlr4.StringTemplate.Misc;
+
+using Antlr4.StringTemplate.Compiler;
+
+using Exception = System.Exception;
+
+/// <summary>
+/// For the expression a.b, object a has no b property.
+/// </summary>
+public class TemplateNoSuchPropertyException : TemplateException
 {
-    using Antlr4.StringTemplate.Compiler;
+    private readonly object _object;
+    private readonly string _propertyName;
 
-    using Exception = System.Exception;
-
-    /// <summary>
-    /// For the expression a.b, object a has no b property.
-    /// </summary>
-    public class TemplateNoSuchPropertyException : TemplateException
+    public TemplateNoSuchPropertyException()
     {
-        private readonly object _object;
-        private readonly string _propertyName;
-
-        public TemplateNoSuchPropertyException()
-        {
-        }
-
-        public TemplateNoSuchPropertyException(object obj, string propertyName)
-        {
-            this._object = obj;
-            this._propertyName = propertyName;
-        }
-
-        public TemplateNoSuchPropertyException(object obj, string propertyName, Exception innerException)
-            : base(null, innerException)
-        {
-            this._object = obj;
-            this._propertyName = propertyName;
-        }
-
-        public string PropertyName
-        {
-            get
-            {
-                return _propertyName;
-            }
-        }
     }
+
+    public TemplateNoSuchPropertyException(object obj, string propertyName)
+    {
+        this._object = obj;
+        this._propertyName = propertyName;
+    }
+
+    public TemplateNoSuchPropertyException(object obj, string propertyName, Exception innerException)
+        : base(null, innerException)
+    {
+        this._object = obj;
+        this._propertyName = propertyName;
+    }
+
+    public string PropertyName => _propertyName;
 }

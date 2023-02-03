@@ -30,83 +30,76 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate
+namespace Antlr4.StringTemplate;
+
+using Antlr3.Runtime;
+using Antlr4.StringTemplate.Compiler;
+using Antlr4.StringTemplate.Misc;
+
+using Exception = System.Exception;
+
+/** A group derived from a string not a file or dir. */
+public class TemplateGroupString : TemplateGroup
 {
-    using Antlr.Runtime;
-    using Antlr4.StringTemplate.Compiler;
-    using Antlr4.StringTemplate.Misc;
+    private string sourceName;
+    private string text;
+    private bool alreadyLoaded = false;
 
-    using Exception = System.Exception;
-
-    /** A group derived from a string not a file or dir. */
-    public class TemplateGroupString : TemplateGroup
+    public TemplateGroupString(string text)
+        : this("[string]", text, '<', '>')
     {
-        private string sourceName;
-        private string text;
-        private bool alreadyLoaded = false;
+    }
 
-        public TemplateGroupString(string text)
-            : this("[string]", text, '<', '>')
+    public TemplateGroupString(string sourceName, string text)
+        : this(sourceName, text, '<', '>')
+    {
+    }
+
+    public TemplateGroupString(string sourceName, string text, char delimiterStartChar, char delimiterStopChar)
+        : base(delimiterStartChar, delimiterStopChar)
+    {
+        this.sourceName = sourceName;
+        this.text = text;
+    }
+
+    public override string FileName => sourceName;
+
+    public override bool IsDefined(string name)
+    {
+        if (!alreadyLoaded)
+            Load();
+
+        return base.IsDefined(name);
+    }
+
+    public override void Load()
+    {
+        if (alreadyLoaded)
+            return;
+
+        alreadyLoaded = true;
+        GroupParser parser;
+        try
         {
+            var fs = new ANTLRStringStream(text);
+            fs.name = sourceName;
+            var lexer = new GroupLexer(fs);
+            var tokens = new CommonTokenStream(lexer);
+            parser = new GroupParser(tokens);
+            // no prefix since this group file is the entire group, nothing lives
+            // beneath it.
+            parser.group(this, "/");
         }
-
-        public TemplateGroupString(string sourceName, string text)
-            : this(sourceName, text, '<', '>')
+        catch (Exception e)
         {
+            ErrorManager.IOError(null, ErrorType.CANT_LOAD_GROUP_FILE, e, FileName);
         }
+    }
 
-        public TemplateGroupString(string sourceName, string text, char delimiterStartChar, char delimiterStopChar)
-            : base(delimiterStartChar, delimiterStopChar)
-        {
-            this.sourceName = sourceName;
-            this.text = text;
-        }
-
-        public override string FileName
-        {
-            get
-            {
-                return sourceName;
-            }
-        }
-
-        public override bool IsDefined(string name)
-        {
-            if (!alreadyLoaded)
-                Load();
-
-            return base.IsDefined(name);
-        }
-
-        public override void Load()
-        {
-            if (alreadyLoaded)
-                return;
-
-            alreadyLoaded = true;
-            GroupParser parser;
-            try
-            {
-                ANTLRStringStream fs = new ANTLRStringStream(text);
-                fs.name = sourceName;
-                GroupLexer lexer = new GroupLexer(fs);
-                CommonTokenStream tokens = new CommonTokenStream(lexer);
-                parser = new GroupParser(tokens);
-                // no prefix since this group file is the entire group, nothing lives
-                // beneath it.
-                parser.group(this, "/");
-            }
-            catch (Exception e)
-            {
-                ErrorManager.IOError(null, ErrorType.CANT_LOAD_GROUP_FILE, e, FileName);
-            }
-        }
-
-        protected override CompiledTemplate Load(string name)
-        {
-            if (!alreadyLoaded)
-                Load();
-            return RawGetTemplate(name);
-        }
+    protected override CompiledTemplate Load(string name)
+    {
+        if (!alreadyLoaded)
+            Load();
+        return RawGetTemplate(name);
     }
 }

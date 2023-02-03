@@ -32,57 +32,56 @@
 
 #if !PORTABLE
 
-namespace Antlr.Runtime
+namespace Antlr.Runtime;
+
+using Encoding = System.Text.Encoding;
+using File = System.IO.File;
+
+/** <summary>
+ *  This is a char buffer stream that is loaded from a file
+ *  all at once when you construct the object.  This looks very
+ *  much like an ANTLReader or ANTLRInputStream, but it's a special case
+ *  since we know the exact size of the object to load.  We can avoid lots
+ *  of data copying. 
+ *  </summary>
+ */
+public class ANTLRFileStream : ANTLRStringStream
 {
-    using Encoding = System.Text.Encoding;
-    using File = System.IO.File;
+    protected string fileName;
 
-    /** <summary>
-     *  This is a char buffer stream that is loaded from a file
-     *  all at once when you construct the object.  This looks very
-     *  much like an ANTLReader or ANTLRInputStream, but it's a special case
-     *  since we know the exact size of the object to load.  We can avoid lots
-     *  of data copying. 
-     *  </summary>
-     */
-    public class ANTLRFileStream : ANTLRStringStream
+    public ANTLRFileStream( string fileName ) 
+        : this( fileName, null )
     {
-        protected string fileName;
+    }
 
-        public ANTLRFileStream( string fileName ) 
-            : this( fileName, null )
+    public ANTLRFileStream( string fileName, Encoding encoding )
+    {
+        this.fileName = fileName;
+        Load( fileName, encoding );
+    }
+
+    public virtual void Load( string fileName, Encoding encoding )
+    {
+        if ( fileName == null )
         {
+            return;
         }
 
-        public ANTLRFileStream( string fileName, Encoding encoding )
+        string text;
+        if (encoding == null)
+            text = File.ReadAllText(fileName);
+        else
+            text = File.ReadAllText(fileName, encoding);
+
+        data = text.ToCharArray();
+        n = data.Length;
+    }
+
+    public override string SourceName
+    {
+        get
         {
-            this.fileName = fileName;
-            Load( fileName, encoding );
-        }
-
-        public virtual void Load( string fileName, Encoding encoding )
-        {
-            if ( fileName == null )
-            {
-                return;
-            }
-
-            string text;
-            if (encoding == null)
-                text = File.ReadAllText(fileName);
-            else
-                text = File.ReadAllText(fileName, encoding);
-
-            data = text.ToCharArray();
-            n = data.Length;
-        }
-
-        public override string SourceName
-        {
-            get
-            {
-                return fileName;
-            }
+            return fileName;
         }
     }
 }

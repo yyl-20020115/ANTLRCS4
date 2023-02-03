@@ -30,43 +30,28 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Debug
+namespace Antlr4.StringTemplate.Debug;
+
+using Antlr4.StringTemplate.Misc;
+
+public class EvalExprEvent : InterpEvent
 {
-    using Antlr4.StringTemplate.Misc;
+    // template pattern location
+    private readonly Interval _sourceInterval;
+    private readonly string expr = string.Empty;
 
-    public class EvalExprEvent : InterpEvent
+    public EvalExprEvent(TemplateFrame frame, Interval outputInterval, Interval sourceInterval)
+        : base(frame, outputInterval)
     {
-        // template pattern location
-        private readonly Interval _sourceInterval;
-        private readonly string expr = string.Empty;
-
-        public EvalExprEvent(TemplateFrame frame, Interval outputInterval, Interval sourceInterval)
-            : base(frame, outputInterval)
-        {
-            this._sourceInterval = sourceInterval;
-            if (_sourceInterval != null)
-                expr = frame.Template.impl.Template.Substring(_sourceInterval.Start, _sourceInterval.Length);
-        }
-
-        public Interval SourceInterval
-        {
-            get
-            {
-                return _sourceInterval;
-            }
-        }
-
-        public string Expr
-        {
-            get
-            {
-                return expr;
-            }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}{{self={1}, expr='{2}', source={3}, output={4}}}", GetType().Name, Template, Expr, SourceInterval, OutputInterval);
-        }
+        this._sourceInterval = sourceInterval;
+        if (_sourceInterval != null)
+            expr = frame.Template.impl.Template.Substring(_sourceInterval.Start, _sourceInterval.Length);
     }
+
+    public Interval SourceInterval => _sourceInterval;
+
+    public string Expr => expr;
+
+    public override string ToString()
+        => string.Format("{0}{{self={1}, expr='{2}', source={3}, output={4}}}", GetType().Name, Template, Expr, SourceInterval, OutputInterval);
 }

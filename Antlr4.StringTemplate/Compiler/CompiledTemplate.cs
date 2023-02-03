@@ -30,467 +30,362 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Compiler
+namespace Antlr4.StringTemplate.Compiler;
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Antlr3.Runtime;
+using Antlr3.Runtime.Tree;
+using Antlr4.StringTemplate.Misc;
+
+using ArgumentException = System.ArgumentException;
+using ArgumentNullException = System.ArgumentNullException;
+using Console = System.Console;
+using Math = System.Math;
+using NotSupportedException = System.NotSupportedException;
+using StringWriter = System.IO.StringWriter;
+
+/** The result of compiling an Template.  Contains all the bytecode instructions,
+ *  string table, bytecode address to source code map, and other bookkeeping
+ *  info.  It's the implementation of an Template you might say.  All instances
+ *  of the same template share a single implementation (impl field).
+ */
+public class CompiledTemplate
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using Antlr.Runtime;
-    using Antlr.Runtime.Tree;
-    using Antlr4.StringTemplate.Misc;
+    private static readonly ReadOnlyCollection<CompiledTemplate> EmptyImplicitlyDefinedTemplates =
+        new (System.Array.Empty<CompiledTemplate>());
 
-    using ArgumentException = System.ArgumentException;
-    using ArgumentNullException = System.ArgumentNullException;
-    using Console = System.Console;
-    using Math = System.Math;
-    using NotSupportedException = System.NotSupportedException;
-    using StringWriter = System.IO.StringWriter;
+    private string _name;
 
-    /** The result of compiling an Template.  Contains all the bytecode instructions,
-     *  string table, bytecode address to source code map, and other bookkeeping
-     *  info.  It's the implementation of an Template you might say.  All instances
-     *  of the same template share a single implementation (impl field).
+    /**
+    Every template knows where it is relative to the group that
+    loaded it. The prefix is the relative path from the
+    root. "/prefix/name" is the fully qualified name of this
+    template. All ST.getInstanceOf() calls must use fully qualified
+    names. A "/" is added to the front if you don't specify
+    one. Template references within template code, however, uses
+    relative names, unless of course the name starts with "/".
+
+    This has nothing to do with the outer filesystem path to the group dir
+    or group file.
+
+    We set this as we load/compile the template.
+
+    Always ends with "/".
      */
-    public class CompiledTemplate
+    private string _prefix = "/";
+
+    /** The original, immutable pattern (not really used again after
+     *  initial "compilation"). Useful for debugging.  Even for
+     *  subtemplates, this is entire overall template.
+     */
+    private string _template;
+
+    /** The token that begins template definition; could be &lt;@r&gt; of region. */
+    private IToken _templateDefStartToken;
+
+    /** Overall token stream for template (debug only) */
+    private ITokenStream _tokens;
+
+    /** How do we interpret syntax of template? (debug only) */
+    private CommonTree _ast;
+
+    private List<FormalArgument> _formalArguments;
+
+    private bool _hasFormalArgs;
+
+    /** A list of all regions and subtemplates */
+    private List<CompiledTemplate> implicitlyDefinedTemplates;
+
+    private int _numberOfArgsWithDefaultValues;
+
+    /** The group that physically defines this Template definition.  We use it to initiate
+     *  interpretation via Template.ToString().  From there, it becomes field 'group'
+     *  in interpreter and is fixed until rendering completes.
+     */
+    private TemplateGroup _nativeGroup = TemplateGroup.DefaultGroup;
+
+    /** Does this template come from a &lt;@region&gt;...&lt;@end&gt; embedded in
+     *  another template?
+     */
+    private bool isRegion;
+
+    /** If someone refs &lt;@r()&gt; in template t, an implicit
+     *
+     *   @t.r() ::= ""
+     *
+     *  is defined, but you can overwrite this def by defining your
+     *  own.  We need to prevent more than one manual def though.  Between
+     *  this var and isEmbeddedRegion we can determine these cases.
+     */
+    private Template.RegionType regionDefType;
+
+    private bool isAnonSubtemplate; // {...}
+
+    public string[] strings;     // string operands of instructions
+    public byte[] instrs;        // byte-addressable code memory.
+    public int codeSize;
+    public Interval[] sourceMap; // maps IP to range in template pattern
+
+    public CompiledTemplate()
     {
-        private static readonly ReadOnlyCollection<CompiledTemplate> EmptyImplicitlyDefinedTemplates =
-            new ReadOnlyCollection<CompiledTemplate>(new CompiledTemplate[0]);
+        instrs = new byte[TemplateCompiler.InitialCodeSize];
+        sourceMap = new Interval[TemplateCompiler.InitialCodeSize];
+        _template = string.Empty;
+    }
 
-        private string _name;
+    public string Name
+    {
+        get => _name;
+        set => _name = value;
+    }
 
-        /**
-        Every template knows where it is relative to the group that
-        loaded it. The prefix is the relative path from the
-        root. "/prefix/name" is the fully qualified name of this
-        template. All ST.getInstanceOf() calls must use fully qualified
-        names. A "/" is added to the front if you don't specify
-        one. Template references within template code, however, uses
-        relative names, unless of course the name starts with "/".
-
-        This has nothing to do with the outer filesystem path to the group dir
-        or group file.
-
-        We set this as we load/compile the template.
-
-        Always ends with "/".
-         */
-        private string _prefix = "/";
-
-        /** The original, immutable pattern (not really used again after
-         *  initial "compilation"). Useful for debugging.  Even for
-         *  subtemplates, this is entire overall template.
-         */
-        private string _template;
-
-        /** The token that begins template definition; could be &lt;@r&gt; of region. */
-        private IToken _templateDefStartToken;
-
-        /** Overall token stream for template (debug only) */
-        private ITokenStream _tokens;
-
-        /** How do we interpret syntax of template? (debug only) */
-        private CommonTree _ast;
-
-        private List<FormalArgument> _formalArguments;
-
-        private bool _hasFormalArgs;
-
-        /** A list of all regions and subtemplates */
-        private List<CompiledTemplate> implicitlyDefinedTemplates;
-
-        private int _numberOfArgsWithDefaultValues;
-
-        /** The group that physically defines this Template definition.  We use it to initiate
-         *  interpretation via Template.ToString().  From there, it becomes field 'group'
-         *  in interpreter and is fixed until rendering completes.
-         */
-        private TemplateGroup _nativeGroup = TemplateGroup.DefaultGroup;
-
-        /** Does this template come from a &lt;@region&gt;...&lt;@end&gt; embedded in
-         *  another template?
-         */
-        private bool isRegion;
-
-        /** If someone refs &lt;@r()&gt; in template t, an implicit
-         *
-         *   @t.r() ::= ""
-         *
-         *  is defined, but you can overwrite this def by defining your
-         *  own.  We need to prevent more than one manual def though.  Between
-         *  this var and isEmbeddedRegion we can determine these cases.
-         */
-        private Template.RegionType regionDefType;
-
-        private bool isAnonSubtemplate; // {...}
-
-        public string[] strings;     // string operands of instructions
-        public byte[] instrs;        // byte-addressable code memory.
-        public int codeSize;
-        public Interval[] sourceMap; // maps IP to range in template pattern
-
-        public CompiledTemplate()
+    public string Prefix
+    {
+        get => _prefix;
+        set
         {
-            instrs = new byte[TemplateCompiler.InitialCodeSize];
-            sourceMap = new Interval[TemplateCompiler.InitialCodeSize];
-            _template = string.Empty;
+            if (value == null)
+                throw new ArgumentNullException("value");
+            if (!value.EndsWith("/"))
+                throw new ArgumentException("The prefix must end with a trailing '/'.");
+
+            _prefix = value;
         }
+    }
 
-        public string Name
+    public string Template
+    {
+        get => _template;
+        set => _template = value;
+    }
+
+    public IToken TemplateDefStartToken
+    {
+        get => _templateDefStartToken;
+        set => _templateDefStartToken = value;
+    }
+
+    public ITokenStream Tokens
+    {
+        get => _tokens;
+        set => _tokens = value;
+    }
+
+    public CommonTree Ast
+    {
+        get => _ast;
+        set => _ast = value;
+    }
+
+    public List<FormalArgument> FormalArguments
+    {
+        get => _formalArguments;
+        set
         {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
-            }
+            _formalArguments = value;
+            _numberOfArgsWithDefaultValues = (_formalArguments != null) ? _formalArguments.Count(i => i.DefaultValueToken != null) : 0;
         }
+    }
 
-        public string Prefix
+    public bool HasFormalArgs
+    {
+        get => _hasFormalArgs;
+        set => _hasFormalArgs = value;
+    }
+
+    public ReadOnlyCollection<CompiledTemplate> ImplicitlyDefinedTemplates 
+        => implicitlyDefinedTemplates == null ? EmptyImplicitlyDefinedTemplates : implicitlyDefinedTemplates.AsReadOnly();
+
+    public virtual TemplateGroup NativeGroup
+    {
+        get => _nativeGroup;
+        set => _nativeGroup = value;
+    }
+
+    public bool IsRegion
+    {
+        get => isRegion;
+        set => isRegion = value;
+    }
+
+    public Template.RegionType RegionDefType
+    {
+        get => regionDefType;
+        set => regionDefType = value;
+    }
+
+    public bool IsAnonSubtemplate
+    {
+        get => isAnonSubtemplate;
+        set => isAnonSubtemplate = value;
+    }
+
+    public virtual string TemplateSource
+    {
+        get
         {
-            get
-            {
-                return _prefix;
-            }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-                if (!value.EndsWith("/"))
-                    throw new ArgumentException("The prefix must end with a trailing '/'.");
-
-                _prefix = value;
-            }
+            var r = TemplateRange;
+            return Template[r.Start..r.End];
         }
+    }
 
-        public string Template
+    public virtual Interval TemplateRange
+    {
+        get
         {
-            get
+            if (IsAnonSubtemplate)
             {
-                return _template;
-            }
-
-            set
-            {
-                _template = value;
-            }
-        }
-
-        public IToken TemplateDefStartToken
-        {
-            get
-            {
-                return _templateDefStartToken;
-            }
-
-            set
-            {
-                _templateDefStartToken = value;
-            }
-        }
-
-        public ITokenStream Tokens
-        {
-            get
-            {
-                return _tokens;
-            }
-
-            set
-            {
-                _tokens = value;
-            }
-        }
-
-        public CommonTree Ast
-        {
-            get
-            {
-                return _ast;
-            }
-
-            set
-            {
-                _ast = value;
-            }
-        }
-
-        public List<FormalArgument> FormalArguments
-        {
-            get
-            {
-                return _formalArguments;
-            }
-
-            set
-            {
-                _formalArguments = value;
-                _numberOfArgsWithDefaultValues = (_formalArguments != null) ? _formalArguments.Count(i => i.DefaultValueToken != null) : 0;
-            }
-        }
-
-        public bool HasFormalArgs
-        {
-            get
-            {
-                return _hasFormalArgs;
-            }
-
-            set
-            {
-                _hasFormalArgs = value;
-            }
-        }
-
-        public ReadOnlyCollection<CompiledTemplate> ImplicitlyDefinedTemplates
-        {
-            get
-            {
-                if (implicitlyDefinedTemplates == null)
-                    return EmptyImplicitlyDefinedTemplates;
-
-                return implicitlyDefinedTemplates.AsReadOnly();
-            }
-        }
-
-        public virtual TemplateGroup NativeGroup
-        {
-            get
-            {
-                return _nativeGroup;
-            }
-
-            set
-            {
-                _nativeGroup = value;
-            }
-        }
-
-        public bool IsRegion
-        {
-            get
-            {
-                return isRegion;
-            }
-
-            set
-            {
-                isRegion = value;
-            }
-        }
-
-        public Template.RegionType RegionDefType
-        {
-            get
-            {
-                return regionDefType;
-            }
-
-            set
-            {
-                regionDefType = value;
-            }
-        }
-
-        public bool IsAnonSubtemplate
-        {
-            get
-            {
-                return isAnonSubtemplate;
-            }
-
-            set
-            {
-                isAnonSubtemplate = value;
-            }
-        }
-
-        public virtual string TemplateSource
-        {
-            get
-            {
-                Interval r = TemplateRange;
-                return Template.Substring(r.Start, r.End - r.Start);
-            }
-        }
-
-        public virtual Interval TemplateRange
-        {
-            get
-            {
-                if (IsAnonSubtemplate)
+                int start = int.MaxValue;
+                int stop = int.MinValue;
+                foreach (var interval in sourceMap)
                 {
-                    int start = int.MaxValue;
-                    int stop = int.MinValue;
-                    foreach (Interval interval in sourceMap)
-                    {
-                        if (interval == null)
-                            continue;
+                    if (interval == null)
+                        continue;
 
-                        start = Math.Min(start, interval.Start);
-                        stop = Math.Max(stop, interval.End);
-                    }
-
-                    if (start <= stop + 1)
-                        return new Interval(start, stop);
+                    start = Math.Min(start, interval.Start);
+                    stop = Math.Max(stop, interval.End);
                 }
 
-                return new Interval(0, Template.Length);
+                if (start <= stop + 1)
+                    return new Interval(start, stop);
             }
-        }
 
-        public virtual int NumberOfArgsWithDefaultValues
+            return new Interval(0, Template.Length);
+        }
+    }
+
+    public virtual int NumberOfArgsWithDefaultValues => _numberOfArgsWithDefaultValues;
+
+    public virtual FormalArgument TryGetFormalArgument(string name) => name == null
+            ? throw new ArgumentNullException(nameof(name))
+            : FormalArguments?.FirstOrDefault(i => i.Name == name);
+
+    /// <summary>
+    /// Cloning the <see cref="CompiledTemplate"/> for a <see cref="StringTemplate.Template"/> instance allows
+    /// <see cref="StringTemplate.Template.Add"/> to be called safely during interpretation for templates that do
+    /// not contain formal arguments.
+    /// </summary>
+    /// <returns>
+    /// A copy of the current <see cref="CompiledTemplate"/> instance. The copy is a shallow copy, with the
+    /// exception of the <see cref="_formalArguments"/> field which is also cloned.
+    /// </returns>
+    public CompiledTemplate Clone()
+    {
+        var clone = (CompiledTemplate)MemberwiseClone();
+        if (_formalArguments != null)
+            _formalArguments = new List<FormalArgument>(_formalArguments);
+
+        return clone;
+    }
+
+    public virtual void AddImplicitlyDefinedTemplate(CompiledTemplate sub)
+    {
+        sub.Prefix = this.Prefix;
+        if (sub.Name[0] != '/')
+            sub.Name = sub.Prefix + sub.Name;
+
+        if (implicitlyDefinedTemplates == null)
+            implicitlyDefinedTemplates = new List<CompiledTemplate>();
+
+        implicitlyDefinedTemplates.Add(sub);
+    }
+
+    public virtual void DefineArgumentDefaultValueTemplates(TemplateGroup group)
+    {
+        if (FormalArguments == null)
+            return;
+
+        foreach (var fa in FormalArguments)
         {
-            get
+            if (fa.DefaultValueToken != null)
             {
-                return _numberOfArgsWithDefaultValues;
-            }
-        }
-
-        public virtual FormalArgument TryGetFormalArgument(string name)
-        {
-            if (name == null)
-                throw new ArgumentNullException("name");
-            if (FormalArguments == null)
-                return null;
-
-            return FormalArguments.FirstOrDefault(i => i.Name == name);
-        }
-
-        /// <summary>
-        /// Cloning the <see cref="CompiledTemplate"/> for a <see cref="StringTemplate.Template"/> instance allows
-        /// <see cref="StringTemplate.Template.Add"/> to be called safely during interpretation for templates that do
-        /// not contain formal arguments.
-        /// </summary>
-        /// <returns>
-        /// A copy of the current <see cref="CompiledTemplate"/> instance. The copy is a shallow copy, with the
-        /// exception of the <see cref="_formalArguments"/> field which is also cloned.
-        /// </returns>
-        public CompiledTemplate Clone()
-        {
-            CompiledTemplate clone = (CompiledTemplate)MemberwiseClone();
-            if (_formalArguments != null)
-                _formalArguments = new List<FormalArgument>(_formalArguments);
-
-            return clone;
-        }
-
-        public virtual void AddImplicitlyDefinedTemplate(CompiledTemplate sub)
-        {
-            sub.Prefix = this.Prefix;
-            if (sub.Name[0] != '/')
-                sub.Name = sub.Prefix + sub.Name;
-
-            if (implicitlyDefinedTemplates == null)
-                implicitlyDefinedTemplates = new List<CompiledTemplate>();
-
-            implicitlyDefinedTemplates.Add(sub);
-        }
-
-        public virtual void DefineArgumentDefaultValueTemplates(TemplateGroup group)
-        {
-            if (FormalArguments == null)
-                return;
-
-            foreach (FormalArgument fa in FormalArguments)
-            {
-                if (fa.DefaultValueToken != null)
+                switch (fa.DefaultValueToken.Type)
                 {
-                    switch (fa.DefaultValueToken.Type)
-                    {
-                    case GroupParser.ANONYMOUS_TEMPLATE:
-                        string argSTname = fa.Name + "_default_value";
-                        TemplateCompiler c2 = new TemplateCompiler(group);
-                        string defArgTemplate = Utility.Strip(fa.DefaultValueToken.Text, 1);
-                        fa.CompiledDefaultValue = c2.Compile(group.FileName, argSTname, null, defArgTemplate, fa.DefaultValueToken);
-                        fa.CompiledDefaultValue.Name = argSTname;
-                        fa.CompiledDefaultValue.DefineImplicitlyDefinedTemplates(group);
-                        break;
+                case GroupParser.ANONYMOUS_TEMPLATE:
+                    string argSTname = fa.Name + "_default_value";
+                    TemplateCompiler c2 = new (group);
+                    string defArgTemplate = Utility.Strip(fa.DefaultValueToken.Text, 1);
+                    fa.CompiledDefaultValue = c2.Compile(group.FileName, argSTname, null, defArgTemplate, fa.DefaultValueToken);
+                    fa.CompiledDefaultValue.Name = argSTname;
+                    fa.CompiledDefaultValue.DefineImplicitlyDefinedTemplates(group);
+                    break;
 
-                    case GroupParser.STRING:
-                        fa.DefaultValue = Utility.Strip(fa.DefaultValueToken.Text, 1);
-                        break;
+                case GroupParser.STRING:
+                    fa.DefaultValue = Utility.Strip(fa.DefaultValueToken.Text, 1);
+                    break;
 
-                    case GroupParser.LBRACK:
-                        fa.DefaultValue = new object[0];
-                        break;
+                case GroupParser.LBRACK:
+                    fa.DefaultValue = System.Array.Empty<object>();
+                    break;
 
-                    case GroupParser.TRUE:
-                    case GroupParser.FALSE:
-                        fa.DefaultValue = fa.DefaultValueToken.Type == GroupParser.TRUE;
-                        break;
+                case GroupParser.TRUE:
+                case GroupParser.FALSE:
+                    fa.DefaultValue = fa.DefaultValueToken.Type == GroupParser.TRUE;
+                    break;
 
-                    default:
-                        throw new NotSupportedException("Unexpected default value token type.");
-                    }
+                default:
+                    throw new NotSupportedException("Unexpected default value token type.");
                 }
             }
         }
+    }
 
-        public virtual void DefineFormalArguments(IEnumerable<FormalArgument> args)
+    public virtual void DefineFormalArguments(IEnumerable<FormalArgument> args)
+    {
+        HasFormalArgs = true; // even if no args; it's formally defined
+        if (args == null)
         {
-            HasFormalArgs = true; // even if no args; it's formally defined
-            if (args == null)
-            {
-                FormalArguments = null;
-            }
-            else
-            {
-                foreach (FormalArgument a in args)
-                    AddArgument(a);
-            }
+            FormalArguments = null;
         }
-
-        /** Used by Template.Add() to Add args one by one w/o turning on full formal args definition signal */
-        public virtual void AddArgument(FormalArgument a)
+        else
         {
-            if (FormalArguments == null)
-                FormalArguments = new List<FormalArgument>();
-
-            a.Index = FormalArguments.Count;
-            FormalArguments.Add(a);
-            if (a.DefaultValueToken != null)
-                _numberOfArgsWithDefaultValues++;
+            foreach (var a in args)
+                AddArgument(a);
         }
+    }
 
-        public virtual void DefineImplicitlyDefinedTemplates(TemplateGroup group)
+    /** Used by Template.Add() to Add args one by one w/o turning on full formal args definition signal */
+    public virtual void AddArgument(FormalArgument a)
+    {
+        FormalArguments ??= new ();
+        a.Index = FormalArguments.Count;
+        FormalArguments.Add(a);
+        if (a.DefaultValueToken != null)
+            _numberOfArgsWithDefaultValues++;
+    }
+
+    public virtual void DefineImplicitlyDefinedTemplates(TemplateGroup group)
+    {
+        if (ImplicitlyDefinedTemplates != null)
         {
-            if (ImplicitlyDefinedTemplates != null)
+            foreach (var sub in ImplicitlyDefinedTemplates)
             {
-                foreach (CompiledTemplate sub in ImplicitlyDefinedTemplates)
-                {
-                    group.RawDefineTemplate(sub.Name, sub, sub.TemplateDefStartToken);
-                    sub.DefineImplicitlyDefinedTemplates(group);
-                }
+                group.RawDefineTemplate(sub.Name, sub, sub.TemplateDefStartToken);
+                sub.DefineImplicitlyDefinedTemplates(group);
             }
         }
+    }
 
-        public virtual string GetInstructions()
-        {
-            BytecodeDisassembler dis = new BytecodeDisassembler(this);
-            return dis.GetInstructions();
-        }
+    public virtual string GetInstructions()
+    {
+        BytecodeDisassembler dis = new (this);
+        return dis.GetInstructions();
+    }
 
-        public virtual void Dump()
-        {
-            Console.Write(Disassemble());
-        }
+    public virtual void Dump() 
+        => Console.Write(Disassemble());
 
-        public virtual string Disassemble()
-        {
-            BytecodeDisassembler dis = new BytecodeDisassembler(this);
-            using (StringWriter sw = new StringWriter())
-            {
-                sw.WriteLine(dis.Disassemble());
-                sw.WriteLine("Strings:");
-                sw.WriteLine(dis.GetStrings());
-                sw.WriteLine("Bytecode to template map:");
-                sw.WriteLine(dis.GetSourceMap());
-                return sw.ToString();
-            }
-        }
+    public virtual string Disassemble()
+    {
+        var dis = new BytecodeDisassembler(this);
+        using var writer = new StringWriter();
+        writer.WriteLine(dis.Disassemble());
+        writer.WriteLine("Strings:");
+        writer.WriteLine(dis.GetStrings());
+        writer.WriteLine("Bytecode to template map:");
+        writer.WriteLine(dis.GetSourceMap());
+        return writer.ToString();
     }
 }

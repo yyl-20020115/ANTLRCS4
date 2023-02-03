@@ -30,31 +30,17 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+public class TemplateTreeRuleReturnScope<TTemplate, TTree> : TreeRuleReturnScope<TTree>, ITemplateRuleReturnScope<TTemplate>, ITemplateRuleReturnScope
 {
-    public class TemplateTreeRuleReturnScope<TTemplate, TTree> : TreeRuleReturnScope<TTree>, ITemplateRuleReturnScope<TTemplate>, ITemplateRuleReturnScope
+    private TTemplate _template;
+
+    public TTemplate Template
     {
-        private TTemplate _template;
-
-        public TTemplate Template
-        {
-            get
-            {
-                return _template;
-            }
-
-            set
-            {
-                _template = value;
-            }
-        }
-
-        object ITemplateRuleReturnScope.Template
-        {
-            get
-            {
-                return Template;
-            }
-        }
+        get => _template;
+        set => _template = value;
     }
+
+    object ITemplateRuleReturnScope.Template => Template;
 }

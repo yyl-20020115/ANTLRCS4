@@ -30,102 +30,87 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+using ArgumentNullException = System.ArgumentNullException;
+using Exception = System.Exception;
+
+#if !PORTABLE
+using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
+using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
+using StreamingContext = System.Runtime.Serialization.StreamingContext;
+#endif
+
+[System.Serializable]
+public class MismatchedRangeException : RecognitionException
 {
-    using ArgumentNullException = System.ArgumentNullException;
-    using Exception = System.Exception;
+    private readonly int _a;
+    private readonly int _b;
 
-#if !PORTABLE
-    using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
-    using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
-    using StreamingContext = System.Runtime.Serialization.StreamingContext;
-#endif
-
-    [System.Serializable]
-    public class MismatchedRangeException : RecognitionException
+    public MismatchedRangeException()
     {
-        private readonly int _a;
-        private readonly int _b;
-
-        public MismatchedRangeException()
-        {
-        }
-
-        public MismatchedRangeException(string message)
-            : base(message)
-        {
-        }
-
-        public MismatchedRangeException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        public MismatchedRangeException(int a, int b, IIntStream input)
-            : base(input)
-        {
-            this._a = a;
-            this._b = b;
-        }
-
-        public MismatchedRangeException(string message, int a, int b, IIntStream input)
-            : base(message, input)
-        {
-            this._a = a;
-            this._b = b;
-        }
-
-        public MismatchedRangeException(string message, int a, int b, IIntStream input, Exception innerException)
-            : base(message, input, innerException)
-        {
-            this._a = a;
-            this._b = b;
-        }
-
-#if !PORTABLE
-        protected MismatchedRangeException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            this._a = info.GetInt32("A");
-            this._b = info.GetInt32("B");
-        }
-#endif
-
-        public int A
-        {
-            get
-            {
-                return _a;
-            }
-        }
-
-        public int B
-        {
-            get
-            {
-                return _b;
-            }
-        }
-
-#if !PORTABLE
-        [SecurityCritical]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            base.GetObjectData(info, context);
-            info.AddValue("A", _a);
-            info.AddValue("B", _b);
-        }
-#endif
-
-        public override string ToString()
-        {
-            return "MismatchedRangeException(" + UnexpectedType + " not in [" + A + "," + B + "])";
-        }
     }
+
+    public MismatchedRangeException(string message)
+        : base(message)
+    {
+    }
+
+    public MismatchedRangeException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    public MismatchedRangeException(int a, int b, IIntStream input)
+        : base(input)
+    {
+        this._a = a;
+        this._b = b;
+    }
+
+    public MismatchedRangeException(string message, int a, int b, IIntStream input)
+        : base(message, input)
+    {
+        this._a = a;
+        this._b = b;
+    }
+
+    public MismatchedRangeException(string message, int a, int b, IIntStream input, Exception innerException)
+        : base(message, input, innerException)
+    {
+        this._a = a;
+        this._b = b;
+    }
+
+#if !PORTABLE
+    protected MismatchedRangeException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        this._a = info.GetInt32("A");
+        this._b = info.GetInt32("B");
+    }
+#endif
+
+    public int A => _a;
+
+    public int B => _b;
+
+#if !PORTABLE
+    [SecurityCritical]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        base.GetObjectData(info, context);
+        info.AddValue("A", _a);
+        info.AddValue("B", _b);
+    }
+#endif
+
+    public override string ToString()
+        => "MismatchedRangeException(" + UnexpectedType + " not in [" + A + "," + B + "])";
 }

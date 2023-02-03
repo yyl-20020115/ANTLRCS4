@@ -30,11 +30,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Misc
-{
-    public delegate void Action();
+namespace Antlr3.Runtime.Misc;
 
-    public delegate TResult Func<TResult>();
+public delegate void Action();
 
-    public delegate TResult Func<T, TResult>(T arg);
-}
+public delegate TResult Func<TResult>();
+
+public delegate TResult Func<T, TResult>(T arg);

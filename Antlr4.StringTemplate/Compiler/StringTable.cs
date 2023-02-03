@@ -30,37 +30,35 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate.Compiler
+namespace Antlr4.StringTemplate.Compiler;
+
+using System.Collections.Generic;
+
+/** A unique set of strings where we can get a string's index.
+ *  We can also get them back out in original order. 
+ */
+public class StringTable
 {
-    using System.Collections.Generic;
+    private readonly Dictionary<string, int> table = new ();
+    private int i = -1;
 
-    /** A unique set of strings where we can get a string's index.
-     *  We can also get them back out in original order. 
-     */
-    public class StringTable
+    public virtual int Add(string s)
     {
-        private readonly Dictionary<string, int> table = new Dictionary<string, int>();
-        private int i = -1;
+        if (table.TryGetValue(s, out int I))
+            return I;
 
-        public virtual int Add(string s)
-        {
-            int I;
-            if (table.TryGetValue(s, out I))
-                return I;
+        i++;
+        table[s] = i;
+        return i;
+    }
 
-            i++;
-            table[s] = i;
-            return i;
-        }
+    public virtual string[] ToArray()
+    {
+        var a = new string[table.Count];
+        int i = 0;
+        foreach (string s in table.Keys)
+            a[i++] = s;
 
-        public virtual string[] ToArray()
-        {
-            string[] a = new string[table.Count];
-            int i = 0;
-            foreach (string s in table.Keys)
-                a[i++] = s;
-
-            return a;
-        }
+        return a;
     }
 }

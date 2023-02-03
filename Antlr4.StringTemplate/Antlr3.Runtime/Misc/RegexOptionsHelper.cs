@@ -1,23 +1,22 @@
-﻿namespace Antlr.Runtime.Misc
-{
-    using System.Text.RegularExpressions;
+﻿namespace Antlr3.Runtime.Misc;
+
+using System.Text.RegularExpressions;
 
 #if PORTABLE
-    using System;
+using System;
 #endif
 
-    internal static class RegexOptionsHelper
+internal static class RegexOptionsHelper
+{
+    public static readonly RegexOptions Compiled;
+
+    static RegexOptionsHelper()
     {
-        public static readonly RegexOptions Compiled;
-
-        static RegexOptionsHelper()
-        {
 #if !PORTABLE
-            Compiled = RegexOptions.Compiled;
+        Compiled = RegexOptions.Compiled;
 #else
-            if (!Enum.TryParse("Compiled", out Compiled))
-                Compiled = RegexOptions.None;
+        if (!Enum.TryParse("Compiled", out Compiled))
+            Compiled = RegexOptions.None;
 #endif
-        }
     }
 }

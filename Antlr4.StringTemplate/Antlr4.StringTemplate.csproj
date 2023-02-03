@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>The C# port of StringTemplate 4.</Description>
     <Version>4.2.0</Version>
     <FileVersion>4.2.0</FileVersion>
     <Title>StringTemplate 4</Title>
+    <LangVersion>11.0</LangVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Ken Domino</Authors>
     <PackageId>Domemtech.StringTemplate4</PackageId>
@@ -19,11 +19,21 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);PORTABLE;NETSTANDARD</DefineConstants>
+    <TargetFrameworks>net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Dbg\DebugTemplate.cs" />
     <Compile Remove="Dbg\DebugTemplate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Compiler\CodeGenerator.g3" />
+    <None Remove="Compiler\CodeGenerator.tokens" />
+    <None Remove="Compiler\Group.g3" />
+    <None Remove="Compiler\Group.tokens" />
+    <None Remove="Compiler\TemplateLexer.tokens" />
+    <None Remove="Compiler\TemplateParser.g3" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

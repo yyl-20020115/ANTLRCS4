@@ -30,69 +30,48 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Misc
+namespace Antlr3.Runtime.Misc;
+
+using System.Collections.Generic;
+using InvalidOperationException = System.InvalidOperationException;
+
+public class ListStack<T> : List<T>
 {
-    using System.Collections.Generic;
-    using InvalidOperationException = System.InvalidOperationException;
+    public T Peek() => Peek(0);
 
-    public class ListStack<T> : List<T>
+    public T Peek(int depth) 
+        => !TryPeek(depth, out var item) ? throw new InvalidOperationException() : item;
+
+    public bool TryPeek(out T item) 
+        => TryPeek(0, out item);
+
+    public bool TryPeek(int depth, out T item)
     {
-        public T Peek()
+        if (depth >= Count)
         {
-            return Peek(0);
+            item = default;
+            return false;
         }
 
-        public T Peek(int depth)
-        {
-            T item;
-            if (!TryPeek(depth, out item))
-                throw new InvalidOperationException();
-
-            return item;
-        }
-
-        public bool TryPeek(out T item)
-        {
-            return TryPeek(0, out item);
-        }
-
-        public bool TryPeek(int depth, out T item)
-        {
-            if (depth >= Count)
-            {
-                item = default(T);
-                return false;
-            }
-
-            item = this[Count - depth - 1];
-            return true;
-        }
-
-        public T Pop()
-        {
-            T result;
-            if (!TryPop(out result))
-                throw new InvalidOperationException();
-
-            return result;
-        }
-
-        public bool TryPop(out T item)
-        {
-            if (Count == 0)
-            {
-                item = default(T);
-                return false;
-            }
-
-            item = this[Count - 1];
-            RemoveAt(Count - 1);
-            return true;
-        }
-
-        public void Push(T item)
-        {
-            Add(item);
-        }
+        item = this[Count - depth - 1];
+        return true;
     }
+
+    public T Pop()
+        => !TryPop(out var result) ? throw new InvalidOperationException() : result;
+
+    public bool TryPop(out T item)
+    {
+        if (Count == 0)
+        {
+            item = default;
+            return false;
+        }
+
+        item = this[Count - 1];
+        RemoveAt(Count - 1);
+        return true;
+    }
+
+    public void Push(T item) => Add(item);
 }

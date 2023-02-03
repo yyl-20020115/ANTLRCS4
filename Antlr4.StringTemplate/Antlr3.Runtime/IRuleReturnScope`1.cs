@@ -30,28 +30,27 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+/// <summary>
+/// Rules can have start/stop info.
+/// </summary>
+/// <typeparam name="TLabel">The element type of the input stream.</typeparam>
+public interface IRuleReturnScope<TLabel> : IRuleReturnScope
 {
     /// <summary>
-    /// Rules can have start/stop info.
+    /// Gets the start element from the input stream
     /// </summary>
-    /// <typeparam name="TLabel">The element type of the input stream.</typeparam>
-    public interface IRuleReturnScope<TLabel> : IRuleReturnScope
+    new TLabel Start
     {
-        /// <summary>
-        /// Gets the start element from the input stream
-        /// </summary>
-        new TLabel Start
-        {
-            get;
-        }
+        get;
+    }
 
-        /// <summary>
-        /// Gets the stop element from the input stream
-        /// </summary>
-        new TLabel Stop
-        {
-            get;
-        }
+    /// <summary>
+    /// Gets the stop element from the input stream
+    /// </summary>
+    new TLabel Stop
+    {
+        get;
     }
 }

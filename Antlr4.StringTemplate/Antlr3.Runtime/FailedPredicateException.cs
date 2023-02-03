@@ -30,109 +30,94 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+using ArgumentNullException = System.ArgumentNullException;
+using Exception = System.Exception;
+
+#if !PORTABLE
+using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
+using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
+using StreamingContext = System.Runtime.Serialization.StreamingContext;
+#endif
+
+/** <summary>
+ *  A semantic predicate failed during validation.  Validation of predicates
+ *  occurs when normally parsing the alternative just like matching a token.
+ *  Disambiguating predicate evaluation occurs when we hoist a predicate into
+ *  a prediction decision.
+ *  </summary>
+ */
+[System.Serializable]
+public class FailedPredicateException : RecognitionException
 {
-    using ArgumentNullException = System.ArgumentNullException;
-    using Exception = System.Exception;
+    private readonly string _ruleName;
+    private readonly string _predicateText;
 
-#if !PORTABLE
-    using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
-    using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
-    using StreamingContext = System.Runtime.Serialization.StreamingContext;
-#endif
-
-    /** <summary>
-     *  A semantic predicate failed during validation.  Validation of predicates
-     *  occurs when normally parsing the alternative just like matching a token.
-     *  Disambiguating predicate evaluation occurs when we hoist a predicate into
-     *  a prediction decision.
-     *  </summary>
-     */
-    [System.Serializable]
-    public class FailedPredicateException : RecognitionException
+    public FailedPredicateException()
     {
-        private readonly string _ruleName;
-        private readonly string _predicateText;
-
-        public FailedPredicateException()
-        {
-        }
-
-        public FailedPredicateException(string message)
-            : base(message)
-        {
-        }
-
-        public FailedPredicateException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        public FailedPredicateException(IIntStream input, string ruleName, string predicateText)
-            : base(input)
-        {
-            this._ruleName = ruleName;
-            this._predicateText = predicateText;
-        }
-
-        public FailedPredicateException(string message, IIntStream input, string ruleName, string predicateText)
-            : base(message, input)
-        {
-            this._ruleName = ruleName;
-            this._predicateText = predicateText;
-        }
-
-        public FailedPredicateException(string message, IIntStream input, string ruleName, string predicateText, Exception innerException)
-            : base(message, input, innerException)
-        {
-            this._ruleName = ruleName;
-            this._predicateText = predicateText;
-        }
-
-#if !PORTABLE
-        protected FailedPredicateException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            this._ruleName = info.GetString("RuleName");
-            this._predicateText = info.GetString("PredicateText");
-        }
-#endif
-
-        public string RuleName
-        {
-            get
-            {
-                return _ruleName;
-            }
-        }
-
-        public string PredicateText
-        {
-            get
-            {
-                return _predicateText;
-            }
-        }
-
-#if !PORTABLE
-        [SecurityCritical]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            base.GetObjectData(info, context);
-            info.AddValue("RuleName", _ruleName);
-            info.AddValue("PredicateText", _predicateText);
-        }
-#endif
-
-        public override string ToString()
-        {
-            return "FailedPredicateException(" + RuleName + ",{" + PredicateText + "}?)";
-        }
     }
+
+    public FailedPredicateException(string message)
+        : base(message)
+    {
+    }
+
+    public FailedPredicateException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    public FailedPredicateException(IIntStream input, string ruleName, string predicateText)
+        : base(input)
+    {
+        this._ruleName = ruleName;
+        this._predicateText = predicateText;
+    }
+
+    public FailedPredicateException(string message, IIntStream input, string ruleName, string predicateText)
+        : base(message, input)
+    {
+        this._ruleName = ruleName;
+        this._predicateText = predicateText;
+    }
+
+    public FailedPredicateException(string message, IIntStream input, string ruleName, string predicateText, Exception innerException)
+        : base(message, input, innerException)
+    {
+        this._ruleName = ruleName;
+        this._predicateText = predicateText;
+    }
+
+#if !PORTABLE
+    protected FailedPredicateException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        this._ruleName = info.GetString("RuleName");
+        this._predicateText = info.GetString("PredicateText");
+    }
+#endif
+
+    public string RuleName => _ruleName;
+
+    public string PredicateText => _predicateText;
+
+#if !PORTABLE
+    [SecurityCritical]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        base.GetObjectData(info, context);
+        info.AddValue("RuleName", _ruleName);
+        info.AddValue("PredicateText", _predicateText);
+    }
+#endif
+
+    public override string ToString() 
+        => "FailedPredicateException(" + RuleName + ",{" + PredicateText + "}?)";
 }

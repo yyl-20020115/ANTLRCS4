@@ -30,64 +30,59 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+using TextReader = System.IO.TextReader;
+
+/** <summary>
+ *  Vacuum all input from a Reader and then treat it like a StringStream.
+ *  Manage the buffer manually to avoid unnecessary data copying.
+ *  </summary>
+ *
+ *  <remarks>
+ *  If you need encoding, use ANTLRInputStream.
+ *  </remarks>
+ */
+[System.Serializable]
+public class ANTLRReaderStream : ANTLRStringStream
 {
-    using TextReader = System.IO.TextReader;
+    public const int ReadBufferSize = 1024;
+    public const int InitialBufferSize = 1024;
 
-    /** <summary>
-     *  Vacuum all input from a Reader and then treat it like a StringStream.
-     *  Manage the buffer manually to avoid unnecessary data copying.
-     *  </summary>
-     *
-     *  <remarks>
-     *  If you need encoding, use ANTLRInputStream.
-     *  </remarks>
-     */
-    [System.Serializable]
-    public class ANTLRReaderStream : ANTLRStringStream
+    public ANTLRReaderStream( TextReader r )
+        : this( r, InitialBufferSize, ReadBufferSize )
     {
-        public const int ReadBufferSize = 1024;
-        public const int InitialBufferSize = 1024;
+    }
 
-        public ANTLRReaderStream( TextReader r )
-            : this( r, InitialBufferSize, ReadBufferSize )
+    public ANTLRReaderStream( TextReader r, int size )
+        : this( r, size, ReadBufferSize )
+    {
+    }
+
+    public ANTLRReaderStream( TextReader r, int size, int readChunkSize )
+    {
+        Load( r, size, readChunkSize );
+    }
+
+    public virtual void Load( TextReader r, int size, int readChunkSize )
+    {
+        if ( r == null )
         {
+            return;
         }
-
-        public ANTLRReaderStream( TextReader r, int size )
-            : this( r, size, ReadBufferSize )
+        if ( size <= 0 )
         {
+            size = InitialBufferSize;
         }
-
-        public ANTLRReaderStream( TextReader r, int size, int readChunkSize )
+        if ( readChunkSize <= 0 )
         {
-            Load( r, size, readChunkSize );
+            readChunkSize = ReadBufferSize;
         }
-
-        public virtual void Load( TextReader r, int size, int readChunkSize )
+        // System.out.println("load "+size+" in chunks of "+readChunkSize);
+        using (r)
         {
-            if ( r == null )
-            {
-                return;
-            }
-            if ( size <= 0 )
-            {
-                size = InitialBufferSize;
-            }
-            if ( readChunkSize <= 0 )
-            {
-                readChunkSize = ReadBufferSize;
-            }
-            // System.out.println("load "+size+" in chunks of "+readChunkSize);
-            try
-            {
-                data = r.ReadToEnd().ToCharArray();
-                base.n = data.Length;
-            }
-            finally
-            {
-                r.Dispose();
-            }
+            data = r.ReadToEnd().ToCharArray();
+            base.n = data.Length;
         }
     }
 }

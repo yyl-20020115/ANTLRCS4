@@ -30,13 +30,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+public interface ITemplateRuleReturnScope<TTemplate> : ITemplateRuleReturnScope
 {
-    public interface ITemplateRuleReturnScope<TTemplate> : ITemplateRuleReturnScope
+    new TTemplate Template
     {
-        new TTemplate Template
-        {
-            get;
-        }
+        get;
     }
 }

@@ -30,55 +30,48 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate
+namespace Antlr4.StringTemplate;
+
+using System;
+using System.Collections.Generic;
+using CultureInfo = System.Globalization.CultureInfo;
+
+/** A renderer for java.util.Date and Calendar objects. It understands a
+ *  variety of format names as shown in formatToInt field.  By default
+ *  it assumes "short" format.  A prefix of date: or time: shows only
+ *  those components of the time object.
+ */
+public class DateRenderer : IAttributeRenderer
 {
-    using System;
-    using System.Collections.Generic;
-    using CultureInfo = System.Globalization.CultureInfo;
+    public static readonly IDictionary<string, string> formatToInt =
+        new Dictionary<string, string>() {
+            {"short", "g"},
+            {"medium", "g"},
+            {"long", "f"},
+            {"full", "F"},
 
-    /** A renderer for java.util.Date and Calendar objects. It understands a
-     *  variety of format names as shown in formatToInt field.  By default
-     *  it assumes "short" format.  A prefix of date: or time: shows only
-     *  those components of the time object.
-     */
-    public class DateRenderer : IAttributeRenderer
+            {"date:short", "d"},
+            {"date:medium", "d"},
+            {"date:long", "D"},
+            {"date:full", "D"},
+
+            {"time:short", "t"},
+            {"time:medium", "t"},
+            {"time:long", "T"},
+            {"time:full", "T"},
+        };
+
+    public virtual string ToString(object o, string formatString, CultureInfo locale)
     {
-        public static readonly IDictionary<string, string> formatToInt =
-            new Dictionary<string, string>() {
-                {"short", "g"},
-                {"medium", "g"},
-                {"long", "f"},
-                {"full", "F"},
-
-                {"date:short", "d"},
-                {"date:medium", "d"},
-                {"date:long", "D"},
-                {"date:full", "D"},
-
-                {"time:short", "t"},
-                {"time:medium", "t"},
-                {"time:long", "T"},
-                {"time:full", "T"},
-            };
-
-        public virtual string ToString(object o, string formatString, CultureInfo locale)
+        formatString ??= "short";
+        var d = o switch
         {
-            if (formatString == null)
-                formatString = "short";
-
-            DateTimeOffset d;
-            if (o is DateTime)
-                d = (DateTime)o;
-            else if (o is DateTimeOffset)
-                d = (DateTimeOffset)o;
-            else
-                throw new ArgumentException();
-
-            string dateFormat;
-            if (!formatToInt.TryGetValue(formatString, out dateFormat))
-                return d.ToString(formatString, locale);
-
-            return d.ToString(dateFormat, locale);
-        }
+            DateTime time => (DateTimeOffset)time,
+            DateTimeOffset offset => offset,
+            _ => throw new ArgumentException(nameof(o)),
+        };
+        return !formatToInt.TryGetValue(formatString, out string dateFormat)
+            ? d.ToString(formatString, locale)
+            : d.ToString(dateFormat, locale);
     }
 }

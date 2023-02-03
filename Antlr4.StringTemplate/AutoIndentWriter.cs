@@ -30,267 +30,223 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr4.StringTemplate
+namespace Antlr4.StringTemplate;
+
+using System.Collections.Generic;
+using Antlr3.Runtime.Misc;
+
+using Environment = System.Environment;
+using TextWriter = System.IO.TextWriter;
+
+/** Essentially a char filter that knows how to auto-indent output
+ *  by maintaining a stack of indent levels.
+ *
+ *  The indent stack is a stack of strings so we can repeat original indent
+ *  not just the same number of columns (don't have to worry about tabs vs
+ *  spaces then).
+ *
+ *  Anchors are char positions (tabs won't work) that indicate where all
+ *  future wraps should justify to.  The wrap position is actually the
+ *  larger of either the last anchor or the indentation level.
+ *
+ *  This is a filter on a Writer.
+ *
+ *  \n is the proper way to say newline for options and templates.
+ *  Templates can mix \r\n and \n them but use \n for sure in options like
+ *  wrap="\n". Template will generate the right thing. Override the default (locale)
+ *  newline by passing in a string to the constructor.
+ */
+public class AutoIndentWriter : ITemplateWriter
 {
-    using System.Collections.Generic;
-    using Antlr.Runtime.Misc;
+    public const int NoWrap = -1;
 
-    using Environment = System.Environment;
-    using TextWriter = System.IO.TextWriter;
+    /// <summary>
+    /// Stack of indents
+    /// </summary>
+    private readonly ListStack<string> _indents = new ();
 
-    /** Essentially a char filter that knows how to auto-indent output
-     *  by maintaining a stack of indent levels.
-     *
-     *  The indent stack is a stack of strings so we can repeat original indent
-     *  not just the same number of columns (don't have to worry about tabs vs
-     *  spaces then).
-     *
-     *  Anchors are char positions (tabs won't work) that indicate where all
-     *  future wraps should justify to.  The wrap position is actually the
-     *  larger of either the last anchor or the indentation level.
-     *
-     *  This is a filter on a Writer.
-     *
-     *  \n is the proper way to say newline for options and templates.
-     *  Templates can mix \r\n and \n them but use \n for sure in options like
-     *  wrap="\n". Template will generate the right thing. Override the default (locale)
-     *  newline by passing in a string to the constructor.
+    /// <summary>
+    /// Stack of integer anchors (char positions in line)
+    /// </summary>
+    private readonly Stack<int> _anchors = new ();
+
+    /// <summary>
+    /// The newline character used for this writer
+    /// </summary>
+    private readonly string _newline;
+
+    /// <summary>
+    /// The underlying output stream
+    /// </summary>
+    private TextWriter _writer = null;
+
+    /** Track char position in the line (later we can think about tabs).
+     *  Indexed from 0.  We want to keep charPosition &lt;= lineWidth.
+     *  This is the position we are *about* to Write not the position
+     *  last written to.
      */
-    public class AutoIndentWriter : ITemplateWriter
+    private int _charPosition = 0;
+
+    /// <summary>
+    /// The absolute char index into the output of the next char to be written.
+    /// </summary>
+    private int _charIndex = 0;
+
+    private int _lineWidth = NoWrap;
+
+    public AutoIndentWriter(TextWriter writer)
+        : this(writer, Environment.NewLine)
     {
-        public const int NoWrap = -1;
+    }
 
-        /// <summary>
-        /// Stack of indents
-        /// </summary>
-        private readonly ListStack<string> _indents = new ListStack<string>();
+    public AutoIndentWriter(TextWriter writer, string newline)
+    {
+        this._writer = writer;
+        _indents.Push(null); // s oftart with no indent
+        this._newline = newline;
+    }
 
-        /// <summary>
-        /// Stack of integer anchors (char positions in line)
-        /// </summary>
-        private readonly Stack<int> _anchors = new Stack<int>();
+    public int Index
+    {
+        get => _charIndex;
 
-        /// <summary>
-        /// The newline character used for this writer
-        /// </summary>
-        private readonly string _newline;
+        protected set => _charIndex = value;
+    }
 
-        /// <summary>
-        /// The underlying output stream
-        /// </summary>
-        private TextWriter _writer = null;
+    public int LineWidth
+    {
+        get => _lineWidth;
 
-        /** Track char position in the line (later we can think about tabs).
-         *  Indexed from 0.  We want to keep charPosition &lt;= lineWidth.
-         *  This is the position we are *about* to Write not the position
-         *  last written to.
-         */
-        private int _charPosition = 0;
+        set => _lineWidth = value;
+    }
 
-        /// <summary>
-        /// The absolute char index into the output of the next char to be written.
-        /// </summary>
-        private int _charIndex = 0;
+    protected bool AtStartOfLine => _charPosition == 0;
 
-        private int _lineWidth = NoWrap;
+    protected TextWriter Writer
+    {
+        get => _writer;
 
-        public AutoIndentWriter(TextWriter writer)
-            : this(writer, Environment.NewLine)
+        set => _writer = value;
+    }
+
+    public virtual void PushIndentation(string indent) => _indents.Push(indent);
+
+    public virtual string PopIndentation() => _indents.Pop();
+
+    public virtual void PushAnchorPoint() => _anchors.Push(_charPosition);
+
+    public virtual void PopAnchorPoint() => _anchors.Pop();
+
+    /** Write out a string literal or attribute expression or expression element.*/
+    public virtual int Write(string value)
+    {
+        int n = 0;
+        int valueLength = value.Length;
+        int newlineLength = _newline.Length;
+        for (int i = 0; i < valueLength; i++)
         {
-        }
+            char c = value[i];
+            // found \n or \r\n newline?
+            if (c == '\r')
+                continue;
 
-        public AutoIndentWriter(TextWriter writer, string newline)
-        {
-            this._writer = writer;
-            _indents.Push(null); // s oftart with no indent
-            this._newline = newline;
-        }
-
-        public int Index
-        {
-            get
+            if (c == '\n')
             {
-                return _charIndex;
+                Writer.Write(_newline);
+                _charPosition = 0;
+                n += newlineLength;
+                Index += newlineLength;
+                continue;
             }
 
-            protected set
+            // normal character
+            // check to see if we are at the start of a line; need indent if so
+            if (AtStartOfLine)
             {
-                _charIndex = value;
-            }
-        }
-
-        public int LineWidth
-        {
-            get
-            {
-                return _lineWidth;
+                n += Indent();
             }
 
-            set
+            n++;
+            Writer.Write(c);
+            _charPosition++;
+            Index++;
+        }
+        return n;
+    }
+
+    public virtual int WriteSeparator(string value) => Write(value);
+
+    /** Write out a string literal or attribute expression or expression element.
+     *
+     *  If doing line wrap, then check wrap before emitting this str.  If
+     *  at or beyond desired line width then emit a \n and any indentation
+     *  before spitting out this str.
+     */
+    public virtual int Write(string value, string wrap) => WriteWrap(wrap) + Write(value);
+
+    public virtual int WriteWrap(string wrap)
+    {
+        int n = 0;
+        // if want wrap and not already at start of line (last char was \n)
+        // and we have hit or exceeded the threshold
+        if (LineWidth != NoWrap && wrap != null && !AtStartOfLine && _charPosition >= LineWidth)
+        {
+            // ok to wrap
+            // Walk wrap string and look for A\nB.  Spit out A\n
+            // then spit indent or anchor, whichever is larger
+            // then spit out B.
+            for (int i = 0; i < wrap.Length; i++)
             {
-                _lineWidth = value;
-            }
-        }
-
-        protected bool AtStartOfLine
-        {
-            get
-            {
-                return _charPosition == 0;
-            }
-        }
-
-        protected TextWriter Writer
-        {
-            get
-            {
-                return _writer;
-            }
-
-            set
-            {
-                _writer = value;
-            }
-        }
-
-        public virtual void PushIndentation(string indent)
-        {
-            _indents.Push(indent);
-        }
-
-        public virtual string PopIndentation()
-        {
-            return _indents.Pop();
-        }
-
-        public virtual void PushAnchorPoint()
-        {
-            _anchors.Push(_charPosition);
-        }
-
-        public virtual void PopAnchorPoint()
-        {
-            _anchors.Pop();
-        }
-
-        /** Write out a string literal or attribute expression or expression element.*/
-        public virtual int Write(string value)
-        {
-            int n = 0;
-            int valueLength = value.Length;
-            int newlineLength = _newline.Length;
-            for (int i = 0; i < valueLength; i++)
-            {
-                char c = value[i];
-                // found \n or \r\n newline?
+                char c = wrap[i];
                 if (c == '\r')
                     continue;
 
                 if (c == '\n')
                 {
                     Writer.Write(_newline);
+                    n += _newline.Length;
                     _charPosition = 0;
-                    n += newlineLength;
-                    Index += newlineLength;
-                    continue;
-                }
-
-                // normal character
-                // check to see if we are at the start of a line; need indent if so
-                if (AtStartOfLine)
-                {
+                    Index += _newline.Length;
                     n += Indent();
+                    // continue writing any chars out
                 }
-
-                n++;
-                Writer.Write(c);
-                _charPosition++;
-                Index++;
-            }
-            return n;
-        }
-
-        public virtual int WriteSeparator(string value)
-        {
-            return Write(value);
-        }
-
-        /** Write out a string literal or attribute expression or expression element.
-         *
-         *  If doing line wrap, then check wrap before emitting this str.  If
-         *  at or beyond desired line width then emit a \n and any indentation
-         *  before spitting out this str.
-         */
-        public virtual int Write(string value, string wrap)
-        {
-            int n = WriteWrap(wrap);
-            return n + Write(value);
-        }
-
-        public virtual int WriteWrap(string wrap)
-        {
-            int n = 0;
-            // if want wrap and not already at start of line (last char was \n)
-            // and we have hit or exceeded the threshold
-            if (LineWidth != NoWrap && wrap != null && !AtStartOfLine && _charPosition >= LineWidth)
-            {
-                // ok to wrap
-                // Walk wrap string and look for A\nB.  Spit out A\n
-                // then spit indent or anchor, whichever is larger
-                // then spit out B.
-                for (int i = 0; i < wrap.Length; i++)
+                else
                 {
-                    char c = wrap[i];
-                    if (c == '\r')
-                        continue;
-
-                    if (c == '\n')
-                    {
-                        Writer.Write(_newline);
-                        n += _newline.Length;
-                        _charPosition = 0;
-                        Index += _newline.Length;
-                        n += Indent();
-                        // continue writing any chars out
-                    }
-                    else
-                    {
-                        // Write A or B part
-                        n++;
-                        Writer.Write(c);
-                        _charPosition++;
-                        Index++;
-                    }
+                    // Write A or B part
+                    n++;
+                    Writer.Write(c);
+                    _charPosition++;
+                    Index++;
                 }
             }
-            return n;
         }
+        return n;
+    }
 
-        protected virtual int Indent()
+    protected virtual int Indent()
+    {
+        int n = 0;
+        foreach (string ind in _indents)
         {
-            int n = 0;
-            foreach (string ind in _indents)
+            if (ind != null)
             {
-                if (ind != null)
-                {
-                    n += ind.Length;
-                    Writer.Write(ind);
-                }
+                n += ind.Length;
+                Writer.Write(ind);
             }
-
-            // If current anchor is beyond current indent width, indent to anchor
-            // *after* doing indents (might tabs in there or whatever)
-            int indentWidth = n;
-            if (_anchors.Count > 0 && _anchors.Peek() > indentWidth)
-            {
-                int remainder = _anchors.Peek() - indentWidth;
-                Writer.Write(new string(' ', remainder));
-                n += remainder;
-            }
-
-            _charPosition += n;
-            Index += n;
-            return n;
         }
+
+        // If current anchor is beyond current indent width, indent to anchor
+        // *after* doing indents (might tabs in there or whatever)
+        int indentWidth = n;
+        if (_anchors.Count > 0 && _anchors.Peek() > indentWidth)
+        {
+            int remainder = _anchors.Peek() - indentWidth;
+            Writer.Write(new string(' ', remainder));
+            n += remainder;
+        }
+
+        _charPosition += n;
+        Index += n;
+        return n;
     }
 }

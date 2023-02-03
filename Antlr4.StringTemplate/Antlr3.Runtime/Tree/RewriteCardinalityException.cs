@@ -30,74 +30,73 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime.Tree
+namespace Antlr3.Runtime.Tree;
+
+using ArgumentNullException = System.ArgumentNullException;
+using Exception = System.Exception;
+
+#if !PORTABLE
+using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
+using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
+using StreamingContext = System.Runtime.Serialization.StreamingContext;
+#endif
+
+/** <summary>
+ *  Base class for all exceptions thrown during AST rewrite construction.
+ *  This signifies a case where the cardinality of two or more elements
+ *  in a subrule are different: (ID INT)+ where |ID|!=|INT|
+ *  </summary>
+ */
+[System.Serializable]
+public class RewriteCardinalityException : Exception
 {
-    using ArgumentNullException = System.ArgumentNullException;
-    using Exception = System.Exception;
+    private readonly string _elementDescription;
 
-#if !PORTABLE
-    using SecurityCriticalAttribute = System.Security.SecurityCriticalAttribute;
-    using SerializationInfo = System.Runtime.Serialization.SerializationInfo;
-    using StreamingContext = System.Runtime.Serialization.StreamingContext;
-#endif
-
-    /** <summary>
-     *  Base class for all exceptions thrown during AST rewrite construction.
-     *  This signifies a case where the cardinality of two or more elements
-     *  in a subrule are different: (ID INT)+ where |ID|!=|INT|
-     *  </summary>
-     */
-    [System.Serializable]
-    public class RewriteCardinalityException : Exception
+    public RewriteCardinalityException()
     {
-        private readonly string _elementDescription;
+    }
 
-        public RewriteCardinalityException()
-        {
-        }
+    public RewriteCardinalityException(string elementDescription)
+        : this(elementDescription, elementDescription)
+    {
+        this._elementDescription = elementDescription;
+    }
 
-        public RewriteCardinalityException(string elementDescription)
-            : this(elementDescription, elementDescription)
-        {
-            this._elementDescription = elementDescription;
-        }
+    public RewriteCardinalityException(string elementDescription, Exception innerException)
+        : this(elementDescription, elementDescription, innerException)
+    {
+    }
 
-        public RewriteCardinalityException(string elementDescription, Exception innerException)
-            : this(elementDescription, elementDescription, innerException)
-        {
-        }
+    public RewriteCardinalityException(string message, string elementDescription)
+        : base(message)
+    {
+        _elementDescription = elementDescription;
+    }
 
-        public RewriteCardinalityException(string message, string elementDescription)
-            : base(message)
-        {
-            _elementDescription = elementDescription;
-        }
-
-        public RewriteCardinalityException(string message, string elementDescription, Exception innerException)
-            : base(message, innerException)
-        {
-            _elementDescription = elementDescription;
-        }
+    public RewriteCardinalityException(string message, string elementDescription, Exception innerException)
+        : base(message, innerException)
+    {
+        _elementDescription = elementDescription;
+    }
 
 #if !PORTABLE
-        protected RewriteCardinalityException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
+    protected RewriteCardinalityException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
 
-            _elementDescription = info.GetString("ElementDescription");
-        }
-
-        [SecurityCritical]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
-
-            base.GetObjectData(info, context);
-            info.AddValue("ElementDescription", _elementDescription);
-        }
-#endif
+        _elementDescription = info.GetString("ElementDescription");
     }
+
+    [SecurityCritical]
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+            throw new ArgumentNullException("info");
+
+        base.GetObjectData(info, context);
+        info.AddValue("ElementDescription", _elementDescription);
+    }
+#endif
 }

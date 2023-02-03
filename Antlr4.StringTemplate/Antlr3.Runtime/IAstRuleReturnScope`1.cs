@@ -30,15 +30,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-namespace Antlr.Runtime
+namespace Antlr3.Runtime;
+
+/** <summary>AST rules have trees</summary> */
+public interface IAstRuleReturnScope<TAstLabel> : IAstRuleReturnScope
 {
-    /** <summary>AST rules have trees</summary> */
-    public interface IAstRuleReturnScope<TAstLabel> : IAstRuleReturnScope
+    /** <summary>Has a value potentially if output=AST;</summary> */
+    new TAstLabel Tree
     {
-        /** <summary>Has a value potentially if output=AST;</summary> */
-        new TAstLabel Tree
-        {
-            get;
-        }
+        get;
     }
 }
