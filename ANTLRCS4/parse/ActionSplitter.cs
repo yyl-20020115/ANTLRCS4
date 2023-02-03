@@ -68,7 +68,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     {
     }
     //@Override 
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
 
     //@Override
     public virtual Token nextToken()
@@ -122,13 +122,13 @@ public class ActionSplitter : antlr.runtime.Lexer
             int ruleIndex,
             int ruleStartIndex)
     {
-        if (state.backtracking > 1) base.memoize(input, ruleIndex, ruleStartIndex);
+        if (state.backtracking > 1) base.Memoize(input, ruleIndex, ruleStartIndex);
     }
 
     //@Override
     public bool alreadyParsedRule(IntStream input, int ruleIndex)
     {
-        if (state.backtracking > 1) return base.alreadyParsedRule(input, ruleIndex);
+        if (state.backtracking > 1) return base.AlreadyParsedRule(input, ruleIndex);
         return false;
     }
     // $ANTLR start "COMMENT"
@@ -184,7 +184,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 exit1:
                 match("*/"); if (state.failed) return;
 
-                if (state.backtracking == 1) { @delegate.text(getText()); }
+                if (state.backtracking == 1) { @delegate.Text(getText()); }
             }
 
             state.type = _type;
@@ -265,7 +265,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 }
 
                 match('\n'); if (state.failed) return;
-                if (state.backtracking == 1) { @delegate.text(getText()); }
+                if (state.backtracking == 1) { @delegate.Text(getText()); }
             }
 
             state.type = _type;
@@ -342,7 +342,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
                 {
-                    @delegate.setNonLocalAttr(getText(), x, y, expr);
+                    @delegate.SetNonLocalAttr(getText(), x, y, expr);
                 }
             }
 
@@ -388,7 +388,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 y.setLine(yStartLine157);
                 y.setCharPositionInLine(yStartCharPos157);
 
-                if (state.backtracking == 1) { @delegate.nonLocalAttr(getText(), x, y); }
+                if (state.backtracking == 1) { @delegate.NonLocalAttr(getText(), x, y); }
             }
 
             state.type = _type;
@@ -437,7 +437,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                     if (state.backtracking > 0) { state.failed = true; return; }
                     throw new FailedPredicateException(input, "QUALIFIED_ATTR", "input.LA(1)!='('");
                 }
-                if (state.backtracking == 1) { @delegate.qualifiedAttr(getText(), x, y); }
+                if (state.backtracking == 1) { @delegate.QualifiedAttr(getText(), x, y); }
             }
 
             state.type = _type;
@@ -503,7 +503,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
                 {
-                    @delegate.setAttr(getText(), x, expr);
+                    @delegate.SetAttr(getText(), x, expr);
                 }
             }
 
@@ -538,7 +538,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 x.setLine(xStartLine229);
                 x.setCharPositionInLine(xStartCharPos229);
 
-                if (state.backtracking == 1) { @delegate.attr(getText(), x); }
+                if (state.backtracking == 1) { @delegate.Attr(getText(), x); }
             }
 
             state.type = _type;
@@ -669,7 +669,7 @@ public class ActionSplitter : antlr.runtime.Lexer
 
             state.type = _type;
             state.channel = _channel;
-            if (state.backtracking == 1) { @delegate.text(buf.ToString()); }
+            if (state.backtracking == 1) { @delegate.Text(buf.ToString()); }
         }
         finally
         {

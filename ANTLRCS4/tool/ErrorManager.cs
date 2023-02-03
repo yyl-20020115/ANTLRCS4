@@ -150,7 +150,7 @@ public class ErrorManager {
 		emit(errorType, msg);
 	}
 
-    public void grammarError(ErrorType etype,
+    public void GrammarError(ErrorType etype,
 							 String fileName,
 							 Token token,
 							 params Object[] args)

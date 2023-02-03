@@ -8,10 +8,7 @@ using org.antlr.v4.codegen.model.decl;
 
 namespace org.antlr.v4.codegen.model.chunk;
 
-
 public class LabelRef : SymbolRefChunk
 {
-    public LabelRef(StructDecl ctx, String name, String escapedName) : base(ctx, name, escapedName)
-    {
-    }
+    public LabelRef(StructDecl ctx, string name, string escapedName) : base(ctx, name, escapedName) { }
 }

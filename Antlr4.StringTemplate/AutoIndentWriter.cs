@@ -95,9 +95,7 @@ public class AutoIndentWriter : ITemplateWriter
     private int _lineWidth = NoWrap;
 
     public AutoIndentWriter(TextWriter writer)
-        : this(writer, Environment.NewLine)
-    {
-    }
+        : this(writer, Environment.NewLine) { }
 
     public AutoIndentWriter(TextWriter writer, string newline)
     {
@@ -109,14 +107,12 @@ public class AutoIndentWriter : ITemplateWriter
     public int Index
     {
         get => _charIndex;
-
         protected set => _charIndex = value;
     }
 
     public int LineWidth
     {
         get => _lineWidth;
-
         set => _lineWidth = value;
     }
 
@@ -125,7 +121,6 @@ public class AutoIndentWriter : ITemplateWriter
     protected TextWriter Writer
     {
         get => _writer;
-
         set => _writer = value;
     }
 
@@ -182,7 +177,8 @@ public class AutoIndentWriter : ITemplateWriter
      *  at or beyond desired line width then emit a \n and any indentation
      *  before spitting out this str.
      */
-    public virtual int Write(string value, string wrap) => WriteWrap(wrap) + Write(value);
+    public virtual int Write(string value, string wrap) 
+        => WriteWrap(wrap) + Write(value);
 
     public virtual int WriteWrap(string wrap)
     {
@@ -226,7 +222,7 @@ public class AutoIndentWriter : ITemplateWriter
     protected virtual int Indent()
     {
         int n = 0;
-        foreach (string ind in _indents)
+        foreach (var ind in _indents)
         {
             if (ind != null)
             {

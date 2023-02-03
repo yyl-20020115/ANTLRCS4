@@ -18,85 +18,85 @@ namespace org.antlr.v4.codegen;
  *  objects such as RuleFunction that surround elements in rule
  *  functions.
  */
-public abstract class DefaultOutputModelFactory : BlankOutputModelFactory {
-	// Interface to outside world
+public abstract class DefaultOutputModelFactory : BlankOutputModelFactory
+{
+    // Interface to outside world
 
-	public readonly Grammar g;
+    public readonly Grammar g;
 
-	public readonly CodeGenerator gen;
+    public readonly CodeGenerator gen;
 
-	public OutputModelController controller;
+    public OutputModelController controller;
 
-	protected DefaultOutputModelFactory(CodeGenerator gen) {
-		this.gen = gen;
-		this.g = gen.g;
-	}
+    protected DefaultOutputModelFactory(CodeGenerator gen)
+    {
+        this.gen = gen;
+        this.g = gen.g;
+    }
 
-	//@Override
-	public void setController(OutputModelController controller) {
-		this.controller = controller;
-	}
+    //@Override
+    //@Override
+    public OutputModelController Controller 
+    { 
+        get => controller; 
+        set => this.controller = value; 
+    }
 
-	//@Override
-	public OutputModelController getController() {
-		return controller;
-	}
+    //@Override
+    public override List<SrcOp> RulePostamble(RuleFunction function, Rule r)
+    {
+        if (r.namedActions.ContainsKey("after") || r.namedActions.ContainsKey("finally"))
+        {
+            // See OutputModelController.buildLeftRecursiveRuleFunction
+            // and Parser.exitRule for other places which set stop.
+            var gen = this.GetGenerator();
+            var codegenTemplates = gen.Templates;
+            var setStopTokenAST = codegenTemplates.GetInstanceOf("recRuleSetStopToken");
+            var setStopTokenAction = new Action(this, function.ruleCtx, setStopTokenAST);
+            List<SrcOp> ops = new(1)
+            {
+                setStopTokenAction
+            };
+            return ops;
+        }
+        return base.RulePostamble(function, r);
+    }
 
-	//@Override
-	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) {
-		if ( r.namedActions.ContainsKey("after") || r.namedActions.ContainsKey("finally") ) {
-			// See OutputModelController.buildLeftRecursiveRuleFunction
-			// and Parser.exitRule for other places which set stop.
-			CodeGenerator gen = getGenerator();
-			TemplateGroup codegenTemplates = gen.getTemplates();
-			Template setStopTokenAST = codegenTemplates.GetInstanceOf("recRuleSetStopToken");
-			Action setStopTokenAction = new Action(this, function.ruleCtx, setStopTokenAST);
-			List<SrcOp> ops = new (1);
-			ops.Add(setStopTokenAction);
-			return ops;
-		}
-		return base.rulePostamble(function, r);
-	}
-
-	// Convenience methods
-
-
-	//@Override
-	public Grammar getGrammar() { return g; }
-
-	//@Override
-	public CodeGenerator getGenerator() { return gen; }
-
-	//@Override
-	public OutputModelObject getRoot() { return controller.getRoot(); }
-
-	//@Override
-	public RuleFunction getCurrentRuleFunction() { return controller.getCurrentRuleFunction(); }
-
-	//@Override
-	public Alternative getCurrentOuterMostAlt() { return controller.getCurrentOuterMostAlt(); }
-
-	//@Override
-	public CodeBlock getCurrentBlock() { return controller.getCurrentBlock(); }
-
-	//@Override
-	public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock() { return controller.getCurrentOuterMostAlternativeBlock(); }
-
-	//@Override
-	public int getCodeBlockLevel() { return controller.codeBlockLevel; }
-
-	//@Override
-	public int getTreeLevel() { return controller.treeLevel; }
-
-	// MISC
+    // Convenience methods
 
 
-	public static List<SrcOp> list(params SrcOp[] values) {
-		return new List<SrcOp>(values);
-	}
+    //@Override
+    public override Grammar GetGrammar() { return g; }
+
+    //@Override
+    public override CodeGenerator GetGenerator() { return gen; }
+
+    //@Override
+    public OutputModelObject getRoot() { return controller.GetRoot(); }
+
+    //@Override
+    public RuleFunction getCurrentRuleFunction() { return controller.GetCurrentRuleFunction(); }
+
+    //@Override
+    public Alternative getCurrentOuterMostAlt() { return controller.GetCurrentOuterMostAlt(); }
+
+    //@Override
+    public CodeBlock getCurrentBlock() { return controller.CurrentBlock; }
+
+    //@Override
+    public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock() { return controller.getCurrentOuterMostAlternativeBlock(); }
+
+    //@Override
+    public int GetCodeBlockLevel() { return controller.codeBlockLevel; }
+
+    //@Override
+    public int GetTreeLevel() { return controller.treeLevel; }
+
+    // MISC
 
 
-	public static List<SrcOp> list(ICollection<SrcOp> values) {
-		return new List<SrcOp>(values);
-	}
+    public static List<SrcOp> List(params SrcOp[] values) => new List<SrcOp>(values);
+
+
+    public static List<SrcOp> List(ICollection<SrcOp> values) => new List<SrcOp>(values);
 }

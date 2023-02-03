@@ -10,18 +10,19 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class Sync : SrcOp {
-	public int decision;
-//	public BitSetDecl expecting;
-	public Sync(OutputModelFactory factory,
-				GrammarAST blkOrEbnfRootAST,
-				IntervalSet expecting,
-				int decision,
-				String position)
-		: base(factory, blkOrEbnfRootAST)
+public class Sync : SrcOp
+{
+    public int decision;
+    //	public BitSetDecl expecting;
+    public Sync(OutputModelFactory factory,
+                GrammarAST blkOrEbnfRootAST,
+                IntervalSet expecting,
+                int decision,
+                String position)
+        : base(factory, blkOrEbnfRootAST)
     {
-		this.decision = decision;
-//		this.expecting = factory.createExpectingBitSet(ast, decision, expecting, position);
-//		factory.defineBitSet(this.expecting);
-	}
+        this.decision = decision;
+        //		this.expecting = factory.createExpectingBitSet(ast, decision, expecting, position);
+        //		factory.defineBitSet(this.expecting);
+    }
 }

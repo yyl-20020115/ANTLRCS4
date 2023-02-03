@@ -7,19 +7,20 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 /** */
-public class Decl : SrcOp {
-	public readonly string name;
-	public readonly string escapedName;
-	public readonly string decl; 	// whole thing if copied from action
-	public bool isLocal; // if local var (not in RuleContext struct)
-	public StructDecl ctx;  // which context contains us? set by addDecl
+public class Decl : SrcOp
+{
+    public readonly string name;
+    public readonly string escapedName;
+    public readonly string decl;    // whole thing if copied from action
+    public bool isLocal; // if local var (not in RuleContext struct)
+    public StructDecl ctx;  // which context contains us? set by addDecl
 
-	public Decl(OutputModelFactory factory, string name, string decl = null):base(factory)
+    public Decl(OutputModelFactory factory, string name, string decl = null) : base(factory)
     {
-		this.name = name;
-		this.escapedName = factory.getGenerator().getTarget().escapeIfNeeded(name);
-		this.decl = decl;
-	}
+        this.name = name;
+        this.escapedName = factory.GetGenerator().Target.EscapeIfNeeded(name);
+        this.decl = decl;
+    }
 
     public override int GetHashCode() => name.GetHashCode();
 

@@ -67,7 +67,7 @@ public class TreeParser : BaseRecognizer
     ////@Override
     public void reset()
     {
-        base.reset(); // reset all recognizer state variables
+        base.Reset(); // reset all recognizer state variables
         if (input != null)
         {
             input.seek(0); // rewind the input
@@ -86,7 +86,7 @@ public class TreeParser : BaseRecognizer
     }
 
     ////@Override
-    public override String getSourceName()
+    public override String GetSourceName()
     {
         return input.getSourceName();
     }
@@ -165,7 +165,7 @@ public class TreeParser : BaseRecognizer
     //@Override
     public String getErrorHeader(RecognitionException e)
     {
-        return getGrammarFileName() + ": node from " +
+        return GetGrammarFileName() + ": node from " +
                (e.approximateLineInfo ? "after " : "") + "line " + e.line + ":" + e.charPositionInLine;
     }
 
@@ -185,7 +185,7 @@ public class TreeParser : BaseRecognizer
                                           adaptor.getText(e.node));
             }
         }
-        return base.getErrorMessage(e, tokenNames);
+        return base.GetErrorMessage(e, tokenNames);
     }
 
     /** Check if current node in input has a context.  Context means sequence
@@ -267,11 +267,11 @@ public class TreeParser : BaseRecognizer
 
     public void traceIn(String ruleName, int ruleIndex)
     {
-        base.traceIn(ruleName, ruleIndex, input.LT(1));
+        base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
     public void traceOut(String ruleName, int ruleIndex)
     {
-        base.traceOut(ruleName, ruleIndex, input.LT(1));
+        base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }
 }

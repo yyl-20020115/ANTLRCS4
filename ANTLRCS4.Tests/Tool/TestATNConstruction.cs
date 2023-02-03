@@ -824,10 +824,10 @@ public class TestATNConstruction {
 			return;
 		}
 		ParserATNFactory f = new LexerATNFactory(g);
-		ATN nfa = f.createATN();
+		ATN nfa = f.CreateATN();
 		ATNState startState = nfa.modeNameToStartState[(modeName)];
 		ATNPrinter serializer = new ATNPrinter(g, startState);
-		String result = serializer.asString();
+		String result = serializer.AsString();
 		//System.out.print(result);
 		Assert.AreEqual(expecting, result);
 	}

@@ -278,7 +278,7 @@ public class UnbufferedTokenStream : TokenStream {
 
 	//@Override
 	public String getSourceName() {
-		return tokenSource.getSourceName();
+		return tokenSource.GetSourceName();
 	}
 
 

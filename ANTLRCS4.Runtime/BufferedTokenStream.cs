@@ -434,7 +434,7 @@ public class BufferedTokenStream : TokenStream {
 	}
 
 	//@Override
-    public String getSourceName() {	return tokenSource.getSourceName();	}
+    public String getSourceName() {	return tokenSource.GetSourceName();	}
 
 	/** Get the text of all tokens in this buffer. */
 

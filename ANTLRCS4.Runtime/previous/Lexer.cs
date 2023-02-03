@@ -56,7 +56,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
 
     public void reset()
     {
-        base.reset(); // reset all recognizer state variables
+        base.Reset(); // reset all recognizer state variables
                       // wack Lexer state variables
         if (input != null)
         {
@@ -162,7 +162,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     {
         return this.input;
     }
-    public override String getSourceName()
+    public override String GetSourceName()
     {
         return input.getSourceName();
     }
@@ -310,7 +310,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         errorRecovery = true;
          */
 
-        displayRecognitionError(this.getTokenNames(), e);
+        DisplayRecognitionError(this.getTokenNames(), e);
     }
 
     public String getErrorMessage(RecognitionException e, String[] tokenNames)
@@ -347,7 +347,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
 
         else
         {
-            msg = base.getErrorMessage(e, tokenNames);
+            msg = base.GetErrorMessage(e, tokenNames);
         }
         return msg;
     }
@@ -388,13 +388,13 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     public void traceIn(String ruleName, int ruleIndex)
     {
         String inputSymbol = ((char)input.LT(1)) + " line=" + getLine() + ":" + getCharPositionInLine();
-        base.traceIn(ruleName, ruleIndex, inputSymbol);
+        base.TraceIn(ruleName, ruleIndex, inputSymbol);
     }
 
     public void traceOut(String ruleName, int ruleIndex)
     {
         String inputSymbol = ((char)input.LT(1)) + " line=" + getLine() + ":" + getCharPositionInLine();
-        base.traceOut(ruleName, ruleIndex, inputSymbol);
+        base.TraceOut(ruleName, ruleIndex, inputSymbol);
     }
 
     public CharStream getInputStream()

@@ -25,209 +25,215 @@ namespace org.antlr.v4.automata;
  *
  *  No side-effects. It builds an {@link ATN} object and returns it.
  */
-public class ParserATNFactory : ATNFactory {
+public class ParserATNFactory : ATNFactory
+{
+    public readonly Grammar g;
 
-	public readonly Grammar g;
+    public readonly ATN atn;
 
+    public Rule currentRule;
 
-	public readonly ATN atn;
-
-	public Rule currentRule;
-
-	public int currentOuterAlt;
-
-
-	protected readonly List<Triple<Rule, ATNState, ATNState>> preventEpsilonClosureBlocks =
-		new ();
+    public int currentOuterAlt;
 
 
-	protected readonly List<Triple<Rule, ATNState, ATNState>> preventEpsilonOptionalBlocks =
-		new ();
-
-	public ParserATNFactory(Grammar g) {
-		if (g == null) {
-			throw new NullReferenceException(nameof(g));
-		}
-
-		this.g = g;
-
-		ATNType atnType = g is LexerGrammar ? ATNType.LEXER : ATNType.PARSER;
-		int maxTokenType = g.getMaxTokenType();
-		this.atn = new ATN(atnType, maxTokenType);
-	}
+    protected readonly List<Triple<Rule, ATNState, ATNState>> preventEpsilonClosureBlocks =
+        new();
 
 
-	////@Override
-	public ATN createATN() {
-		_createATN(g.rules.Values);
-		//assert atn.maxTokenType == g.getMaxTokenType();
-        addRuleFollowLinks();
-		addEOFTransitionToStartRules();
-		ATNOptimizer.optimize(g, atn);
-		checkEpsilonClosure();
+    protected readonly List<Triple<Rule, ATNState, ATNState>> preventEpsilonOptionalBlocks =
+        new();
 
-		optionalCheck:
-        foreach (Triple<Rule, ATNState, ATNState> pair in preventEpsilonOptionalBlocks) {
-			int bypassCount = 0;
-			for (int i = 0; i < pair.b.getNumberOfTransitions(); i++) {
-				ATNState startState = pair.b.transition(i).target;
-				if (startState == pair.c) {
-					bypassCount++;
-					continue;
-				}
+    public ParserATNFactory(Grammar g)
+    {
+        this.g = g ?? throw new NullReferenceException(nameof(g));
 
-				LL1Analyzer analyzer = new LL1Analyzer(atn);
-				if (analyzer.LOOK(startState, pair.c, null).contains(org.antlr.v4.runtime.Token.EPSILON)) {
-					g.tool.errMgr.grammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
-					break;
-					//continue optionalCheck;
-				}
-			}
+        var atnType = g is LexerGrammar ? ATNType.LEXER : ATNType.PARSER;
+        int maxTokenType = g.getMaxTokenType();
+        this.atn = new ATN(atnType, maxTokenType);
+    }
 
-			if (bypassCount != 1) {
-				throw new UnsupportedOperationException("Expected optional block with exactly 1 bypass alternative.");
-			}
-		}
 
-		return atn;
-	}
+    ////@Override
+    public ATN CreateATN()
+    {
+        CreateATN(g.rules.Values);
+        //assert atn.maxTokenType == g.getMaxTokenType();
+        AddRuleFollowLinks();
+        addEOFTransitionToStartRules();
+        ATNOptimizer.Optimize(g, atn);
+        CheckEpsilonClosure();
 
-	protected void checkEpsilonClosure() {
-        foreach (Triple<Rule, ATNState, ATNState> pair in preventEpsilonClosureBlocks) {
-			LL1Analyzer analyzer = new LL1Analyzer(atn);
-			ATNState blkStart = pair.b;
-			ATNState blkStop = pair.c;
-			IntervalSet lookahead = analyzer.LOOK(blkStart, blkStop, null);
-			if ( lookahead.contains(org.antlr.v4.runtime.Token.EPSILON)) {
-				ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
-				g.tool.errMgr.grammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
-			}
-			if ( lookahead.contains(org.antlr.v4.runtime.Token.EOF)) {
-				g.tool.errMgr.grammarError(ErrorType.EOF_CLOSURE, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
-			}
-		}
-	}
+    optionalCheck:
+        foreach (var pair in preventEpsilonOptionalBlocks)
+        {
+            int bypassCount = 0;
+            for (int i = 0; i < pair.b.getNumberOfTransitions(); i++)
+            {
+                var startState = pair.b.transition(i).target;
+                if (startState == pair.c)
+                {
+                    bypassCount++;
+                    continue;
+                }
 
-	protected void _createATN(ICollection<Rule> rules) {
-		createRuleStartAndStopATNStates();
+                var analyzer = new LL1Analyzer(atn);
+                if (analyzer.LOOK(startState, pair.c, null).contains(org.antlr.v4.runtime.Token.EPSILON))
+                {
+                    g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+                    break;
+                    //continue optionalCheck;
+                }
+            }
 
-		GrammarASTAdaptor adaptor = new GrammarASTAdaptor();
-        foreach (Rule r in rules) {
-			// find rule's block
-			GrammarAST blk = (GrammarAST)r.ast.getFirstChildWithType(ANTLRParser.BLOCK);
-			CommonTreeNodeStream nodes = new CommonTreeNodeStream(adaptor,blk);
-			ATNBuilder b = new ATNBuilder(nodes,this);
-			try {
-				setCurrentRuleName(r.name);
-				Handle h = b.ruleBlock(null);
-				rule(r.ast, r.name, h);
-			}
-			catch (RecognitionException re) {
-				ErrorManager.fatalInternalError("bad grammar AST structure", re);
-			}
-		}
-	}
+            if (bypassCount != 1)
+                throw new UnsupportedOperationException("Expected optional block with exactly 1 bypass alternative.");
+        }
 
-	//@Override
-	public void setCurrentRuleName(String name) {
-		this.currentRule = g.getRule(name);
-	}
+        return atn;
+    }
 
-	//@Override
-	public void setCurrentOuterAlt(int alt) {
-		currentOuterAlt = alt;
-	}
+    protected void CheckEpsilonClosure()
+    {
+        foreach (var pair in preventEpsilonClosureBlocks)
+        {
+            var analyzer = new LL1Analyzer(atn);
+            var blkStart = pair.b;
+            var blkStop = pair.c;
+            var lookahead = analyzer.LOOK(blkStart, blkStop, null);
+            if (lookahead.contains(org.antlr.v4.runtime.Token.EPSILON))
+            {
+                ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
+                g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+            }
+            if (lookahead.contains(org.antlr.v4.runtime.Token.EOF))
+            {
+                g.Tools.ErrMgr.GrammarError(ErrorType.EOF_CLOSURE, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+            }
+        }
+    }
 
-	/* start->ruleblock->end */
+    protected void CreateATN(ICollection<Rule> rules)
+    {
+        CreateRuleStartAndStopATNStates();
 
-	//@Override
-	public Handle rule(GrammarAST ruleAST, String name, Handle blk) {
-		Rule r = g.getRule(name);
-		RuleStartState start = atn.ruleToStartState[r.index];
-		epsilon(start, blk.left);
-		RuleStopState stop = atn.ruleToStopState[r.index];
-		epsilon(blk.right, stop);
-		Handle h = new Handle(start, stop);
-//		ATNPrinter ser = new ATNPrinter(g, h.left);
-//		Console.Out.WriteLine(ruleAST.toStringTree()+":\n"+ser.asString());
-		ruleAST.atnState = start;
-		return h;
-	}
+        var adaptor = new GrammarASTAdaptor();
+        foreach (var r in rules)
+        {
+            // find rule's block
+            var blk = (GrammarAST)r.ast.getFirstChildWithType(ANTLRParser.BLOCK);
+            var nodes = new CommonTreeNodeStream(adaptor, blk);
+            var b = new ATNBuilder(nodes, this);
+            try
+            {
+                SetCurrentRuleName(r.name);
+                var h = b.ruleBlock(null);
+                Rule(r.ast, r.name, h);
+            }
+            catch (RecognitionException re)
+            {
+                ErrorManager.fatalInternalError("bad grammar AST structure", re);
+            }
+        }
+    }
 
-	/** From label {@code A} build graph {@code o-A->o}. */
+    //@Override
+    public void SetCurrentRuleName(string name)
+    {
+        this.currentRule = g.getRule(name);
+    }
 
-	//@Override
-	public Handle tokenRef(TerminalAST node) {
-		ATNState left = newState(node);
-		ATNState right = newState(node);
-		int ttype = g.getTokenType(node.getText());
-		left.addTransition(new AtomTransition(right, ttype));
-		node.atnState = left;
-		return new Handle(left, right);
-	}
+    //@Override
+    public void SetCurrentOuterAlt(int alt)
+    {
+        currentOuterAlt = alt;
+    }
 
-	/** From set build single edge graph {@code o->o-set->o}.  To conform to
+    /* start->ruleblock->end */
+
+    //@Override
+    public Handle Rule(GrammarAST ruleAST, String name, Handle blk)
+    {
+        var r = g.getRule(name);
+        var start = atn.ruleToStartState[r.index];
+        Epsilon(start, blk.left);
+        var stop = atn.ruleToStopState[r.index];
+        Epsilon(blk.right, stop);
+        var h = new Handle(start, stop);
+        //		ATNPrinter ser = new ATNPrinter(g, h.left);
+        //		Console.Out.WriteLine(ruleAST.toStringTree()+":\n"+ser.asString());
+        ruleAST.atnState = start;
+        return h;
+    }
+
+    /** From label {@code A} build graph {@code o-A->o}. */
+
+    //@Override
+    public Handle TokenRef(TerminalAST node)
+    {
+        var left = NewState(node);
+        var right = NewState(node);
+        int ttype = g.getTokenType(node.getText());
+        left.AddTransition(new AtomTransition(right, ttype));
+        node.atnState = left;
+        return new Handle(left, right);
+    }
+
+    /** From set build single edge graph {@code o->o-set->o}.  To conform to
      *  what an alt block looks like, must have extra state on left.
 	 *  This also handles {@code ~A}, converted to {@code ~{A}} set.
      */
 
-	//@Override
-	public Handle set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert) {
-		ATNState left = newState(associatedAST);
-		ATNState right = newState(associatedAST);
-		IntervalSet set = new IntervalSet();
-        foreach (GrammarAST t in terminals) {
-			int ttype = g.getTokenType(t.getText());
-			set.add(ttype);
-		}
-		if ( invert ) {
-			left.addTransition(new NotSetTransition(right, set));
-		}
-		else {
-			left.addTransition(new SetTransition(right, set));
-		}
-		associatedAST.atnState = left;
-		return new Handle(left, right);
-	}
+    //@Override
+    public Handle Set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert)
+    {
+        var left = NewState(associatedAST);
+        var right = NewState(associatedAST);
+        var set = new IntervalSet();
+        foreach (var t in terminals)
+        {
+            int ttype = g.getTokenType(t.getText());
+            set.add(ttype);
+        }
+        if (invert)
+        {
+            left.AddTransition(new NotSetTransition(right, set));
+        }
+        else
+        {
+            left.AddTransition(new SetTransition(right, set));
+        }
+        associatedAST.atnState = left;
+        return new Handle(left, right);
+    }
 
-	/** Not valid for non-lexers. */
+    /** Not valid for non-lexers. */
 
-	//@Override
-	public Handle range(GrammarAST a, GrammarAST b) {
-		g.tool.errMgr.grammarError(ErrorType.TOKEN_RANGE_IN_PARSER, g.fileName,
-		                           a.getToken(),
-		                           a.getToken().getText(),
-		                           b.getToken().getText());
-		// From a..b, yield ATN for just a.
-		return tokenRef((TerminalAST)a);
-	}
+    //@Override
+    public Handle Range(GrammarAST a, GrammarAST b)
+    {
+        g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_RANGE_IN_PARSER, g.fileName,
+                                   a.getToken(),
+                                   a.getToken().getText(),
+                                   b.getToken().getText());
+        // From a..b, yield ATN for just a.
+        return TokenRef((TerminalAST)a);
+    }
 
-	protected int getTokenType(GrammarAST atom) {
-		int ttype;
-		if ( g.isLexer() ) {
-			ttype = CharSupport.getCharValueFromGrammarCharLiteral(atom.getText());
-		}
-		else {
-			ttype = g.getTokenType(atom.getText());
-		}
-		return ttype;
-	}
+    protected int GetTokenType(GrammarAST atom) 
+        => g.isLexer() ? CharSupport.getCharValueFromGrammarCharLiteral(atom.getText()) : g.getTokenType(atom.getText());
 
-	/** For a non-lexer, just build a simple token reference atom. */
+    /** For a non-lexer, just build a simple token reference atom. */
 
-	//@Override
-	public Handle stringLiteral(TerminalAST stringLiteralAST) {
-		return tokenRef(stringLiteralAST);
-	}
+    //@Override
+    public Handle StringLiteral(TerminalAST stringLiteralAST)
+        => TokenRef(stringLiteralAST);
 
-	/** {@code [Aa]} char sets not allowed in parser */
+    /** {@code [Aa]} char sets not allowed in parser */
 
-	//@Override
-	public Handle charSetLiteral(GrammarAST charSetAST) {
-		return null;
-	}
+    //@Override
+    public Handle CharSetLiteral(GrammarAST charSetAST) => null;
 
-	/**
+    /**
 	 * For reference to rule {@code r}, build
 	 *
 	 * <pre>
@@ -239,123 +245,128 @@ public class ParserATNFactory : ATNFactory {
 	 * {@link RuleTransition#followState}).
 	 */
 
-	//@Override
-	public Handle ruleRef(GrammarAST node) {
-		Handle h = _ruleRef(node);
-		return h;
-	}
+    //@Override
+    public Handle RuleRef(GrammarAST node) => GetRuleRef(node);
 
 
-	public Handle _ruleRef(GrammarAST node) {
-		Rule r = g.getRule(node.getText());
-		if ( r==null ) {
-			g.tool.errMgr.grammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.getToken(), "Rule "+node.getText()+" undefined");
-			return null;
-		}
-		RuleStartState start = atn.ruleToStartState[r.index];
-		ATNState left = newState(node);
-		ATNState right = newState(node);
-		int precedence = 0;
-		if (((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			if(int.TryParse(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME)
-				,out var pre))
-			{
-				precedence = pre;
-			}
-			else
-			{
-				throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
-			}
-		}
-		RuleTransition call = new RuleTransition(start, r.index, precedence, right);
-		left.addTransition(call);
+    public Handle GetRuleRef(GrammarAST node)
+    {
+        var r = g.getRule(node.getText());
+        if (r == null)
+        {
+            g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.getToken(), "Rule " + node.getText() + " undefined");
+            return null;
+        }
+        var start = atn.ruleToStartState[r.index];
+        var left = NewState(node);
+        var right = NewState(node);
+        int precedence = 0;
+        if (((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
+        {
+            if (int.TryParse(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME)
+                , out var pre))
+            {
+                precedence = pre;
+            }
+            else
+            {
+                throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+            }
+        }
+        var call = new RuleTransition(start, r.index, precedence, right);
+        left.AddTransition(call);
 
-		node.atnState = left;
-		return new Handle(left, right);
-	}
+        node.atnState = left;
+        return new Handle(left, right);
+    }
 
-	public void addFollowLink(int ruleIndex, ATNState right) {
-		// add follow edge from end of invoked rule
-		RuleStopState stop = atn.ruleToStopState[ruleIndex];
-//        Console.Out.WriteLine("add follow link from "+ruleIndex+" to "+right);
-		epsilon(stop, right);
-	}
+    public void AddFollowLink(int ruleIndex, ATNState right)
+    {
+        // add follow edge from end of invoked rule
+        var stop = atn.ruleToStopState[ruleIndex];
+        //        Console.Out.WriteLine("add follow link from "+ruleIndex+" to "+right);
+        Epsilon(stop, right);
+    }
 
-	/** From an empty alternative build {@code o-e->o}. */
+    /** From an empty alternative build {@code o-e->o}. */
 
-	//@Override
-	public Handle epsilon(GrammarAST node) {
-		ATNState left = newState(node);
-		ATNState right = newState(node);
-		epsilon(left, right);
-		node.atnState = left;
-		return new Handle(left, right);
-	}
+    //@Override
+    public Handle Epsilon(GrammarAST node)
+    {
+        var left = NewState(node);
+        var right = NewState(node);
+        Epsilon(left, right);
+        node.atnState = left;
+        return new Handle(left, right);
+    }
 
-	/** Build what amounts to an epsilon transition with a semantic
+    /** Build what amounts to an epsilon transition with a semantic
 	 *  predicate action.  The {@code pred} is a pointer into the AST of
 	 *  the {@link ANTLRParser#SEMPRED} token.
 	 */
 
-	//@Override
-	public Handle sempred(PredAST pred) {
-		//Console.Out.WriteLine("sempred: "+ pred);
-		ATNState left = newState(pred);
-		ATNState right = newState(pred);
+    //@Override
+    public Handle Sempred(PredAST pred)
+    {
+        //Console.Out.WriteLine("sempred: "+ pred);
+        var left = NewState(pred);
+        var right = NewState(pred);
 
-		AbstractPredicateTransition p;
-		if (pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null) {
-			if(int.TryParse(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME),out var pre))
-			{
+        AbstractPredicateTransition p;
+        if (pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
+        {
+            if (int.TryParse(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME), out var pre))
+            {
                 int precedence = pre;
 
                 p = new PrecedencePredicateTransition(right, precedence);
-			}
-			else
-			{
-				throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
-			}
+            }
+            else
+            {
+                throw new InvalidOperationException(nameof(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME));
+            }
         }
-		else {
-			bool isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
-			if(g.sempreds.TryGetValue(pred,out var r))
-			{
+        else
+        {
+            bool isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
+            if (g.sempreds.TryGetValue(pred, out var r))
+            {
                 p = new PredicateTransition(right, currentRule.index, r, isCtxDependent);
-			}
-			else
-			{
-				throw new InvalidOperationException(nameof(g.sempreds));
-			}
+            }
+            else
+            {
+                throw new InvalidOperationException(nameof(g.sempreds));
+            }
         }
 
-		left.addTransition(p);
-		pred.atnState = left;
-		return new Handle(left, right);
-	}
+        left.AddTransition(p);
+        pred.atnState = left;
+        return new Handle(left, right);
+    }
 
-	/** Build what amounts to an epsilon transition with an action.
+    /** Build what amounts to an epsilon transition with an action.
 	 *  The action goes into ATN though it is ignored during prediction
 	 *  if {@link ActionTransition#actionIndex actionIndex}{@code <0}.
 	 */
 
-	//@Override
-	public Handle action(ActionAST action) {
-		//Console.Out.WriteLine("action: "+action);
-		ATNState left = newState(action);
-		ATNState right = newState(action);
-		ActionTransition a = new ActionTransition(right, currentRule.index);
-		left.addTransition(a);
-		action.atnState = left;
-		return new Handle(left, right);
-	}
+    //@Override
+    public Handle Action(ActionAST action)
+    {
+        //Console.Out.WriteLine("action: "+action);
+        var left = NewState(action);
+        var right = NewState(action);
+        var a = new ActionTransition(right, currentRule.index);
+        left.AddTransition(a);
+        action.atnState = left;
+        return new Handle(left, right);
+    }
 
 
-	//@Override
-	public Handle action(String action) {
-		throw new UnsupportedOperationException("This element is not valid in parsers.");
-	}
+    //@Override
+    public Handle Action(String action)
+        => throw new UnsupportedOperationException("This element is not valid in parsers.");
 
-	/**
+    /**
 	 * From {@code A|B|..|Z} alternative block build
 	 *
 	 * <pre>
@@ -380,111 +391,126 @@ public class ParserATNFactory : ATNFactory {
 	 * TODO: Set alt number (1..n) in the states?
 	 */
 
-	//@Override
-	public Handle block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts) {
-		if ( ebnfRoot==null ) {
-			if ( alts.Count==1 ) {
-				Handle h = alts[0];
-				blkAST.atnState = h.left;
-				return h;
-			}
-			BlockStartState start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
-			if ( alts.Count>1 ) atn.defineDecisionState(start);
-			return makeBlock(start, blkAST, alts);
-		}
-		switch ( ebnfRoot.getType() ) {
-			case ANTLRParser.OPTIONAL :
-				BlockStartState start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
-				atn.defineDecisionState(start);
-				Handle h = makeBlock(start, blkAST, alts);
-				return optional(ebnfRoot, h);
-			case ANTLRParser.CLOSURE :
-				BlockStartState _star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
-				if ( alts.Count>1 ) atn.defineDecisionState(_star);
-				h = makeBlock(_star, blkAST, alts);
-				return star(ebnfRoot, h);
-			case ANTLRParser.POSITIVE_CLOSURE :
-				PlusBlockStartState _plus = newState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
-				if ( alts.Count>1 ) atn.defineDecisionState(_plus);
-				h = makeBlock(_plus, blkAST, alts);
-				return plus(ebnfRoot, h);
-		}
-		return null;
-	}
+    //@Override
+    public Handle Block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts)
+    {
+        if (ebnfRoot == null)
+        {
+            if (alts.Count == 1)
+            {
+                var h = alts[0];
+                blkAST.atnState = h.left;
+                return h;
+            }
+            var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
+            if (alts.Count > 1) atn.defineDecisionState(start);
+            return MakeBlock(start, blkAST, alts);
+        }
+        switch (ebnfRoot.getType())
+        {
+            case ANTLRParser.OPTIONAL:
+                var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
+                atn.defineDecisionState(start);
+                Handle h = MakeBlock(start, blkAST, alts);
+                return Optional(ebnfRoot, h);
+            case ANTLRParser.CLOSURE:
+                var _star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
+                if (alts.Count > 1) atn.defineDecisionState(_star);
+                h = MakeBlock(_star, blkAST, alts);
+                return Star(ebnfRoot, h);
+            case ANTLRParser.POSITIVE_CLOSURE:
+                var _plus = newState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
+                if (alts.Count > 1) atn.defineDecisionState(_plus);
+                h = MakeBlock(_plus, blkAST, alts);
+                return Plus(ebnfRoot, h);
+        }
+        return null;
+    }
 
 
-	protected Handle makeBlock(BlockStartState start, BlockAST blkAST, List<Handle> alts) {
-		BlockEndState end = newState<BlockEndState>(typeof(BlockEndState), blkAST);
-		start.endState = end;
-        foreach (Handle alt in alts) {
-			// hook alts up to decision block
-			epsilon(start, alt.left);
-			epsilon(alt.right, end);
-			// no back link in ATN so must walk entire alt to see if we can
-			// strip out the epsilon to 'end' state
-			TailEpsilonRemover opt = new TailEpsilonRemover(atn);
-			opt.visit(alt.left);
-		}
-		Handle h = new Handle(start, end);
-//		FASerializer ser = new FASerializer(g, h.left);
-//		Console.Out.WriteLine(blkAST.toStringTree()+":\n"+ser);
-		blkAST.atnState = start;
+    protected Handle MakeBlock(BlockStartState start, BlockAST blkAST, List<Handle> alts)
+    {
+        var end = newState<BlockEndState>(typeof(BlockEndState), blkAST);
+        start.endState = end;
+        foreach (Handle alt in alts)
+        {
+            // hook alts up to decision block
+            Epsilon(start, alt.left);
+            Epsilon(alt.right, end);
+            // no back link in ATN so must walk entire alt to see if we can
+            // strip out the epsilon to 'end' state
+            TailEpsilonRemover opt = new TailEpsilonRemover(atn);
+            opt.Visit(alt.left);
+        }
+        var h = new Handle(start, end);
+        //		FASerializer ser = new FASerializer(g, h.left);
+        //		Console.Out.WriteLine(blkAST.toStringTree()+":\n"+ser);
+        blkAST.atnState = start;
 
-		return h;
-	}
-
-
-	//@Override
-	public Handle alt(List<Handle> els) {
-		return elemList(els);
-	}
+        return h;
+    }
 
 
-	public Handle elemList(List<Handle> els) {
-		int n = els.Count;
-		for (int i = 0; i < n - 1; i++) {	// hook up elements (visit all but last)
-			Handle el = els[(i)];
-			// if el is of form o-x->o for x in {rule, action, pred, token, ...}
-			// and not last in alt
+    //@Override
+    public Handle Alt(List<Handle> els) => ElemList(els);
+
+
+    public Handle ElemList(List<Handle> els)
+    {
+        int n = els.Count;
+        for (int i = 0; i < n - 1; i++)
+        {   // hook up elements (visit all but last)
+            var el = els[(i)];
+            // if el is of form o-x->o for x in {rule, action, pred, token, ...}
+            // and not last in alt
             Transition tr = null;
-            if ( el.left.getNumberOfTransitions()==1 ) tr = el.left.transition(0);
+            if (el.left.getNumberOfTransitions() == 1) tr = el.left.transition(0);
             bool isRuleTrans = tr is RuleTransition;
-            if ( el.left.getStateType() == ATNState.BASIC &&
-				el.right != null &&
-				el.right.getStateType()== ATNState.BASIC &&
-				tr!=null && (isRuleTrans && ((RuleTransition)tr).followState == el.right || tr.target == el.right) ) {
-				// we can avoid epsilon edge to next el
-				Handle handle = null;
-				if (i + 1 < els.Count) {
-					handle = els[(i + 1)];
-				}
-				if (handle != null) {
-					if (isRuleTrans) {
-						((RuleTransition) tr).followState = handle.left;
-					} else {
-						tr.target = handle.left;
-					}
-				}
-				atn.removeState(el.right); // we skipped over this state
-			}
-			else { // need epsilon if previous block's right end node is complicated
-				epsilon(el.right, els[(i+1)].left);
-			}
-		}
-		Handle first = els[(0)];
-		Handle last = els[(n - 1)];
-		ATNState left = null;
-		if (first != null) {
-			left = first.left;
-		}
-		ATNState right = null;
-		if (last != null) {
-			right = last.right;
-		}
-		return new Handle(left, right);
-	}
+            if (el.left.getStateType() == ATNState.BASIC &&
+                el.right != null &&
+                el.right.getStateType() == ATNState.BASIC &&
+                tr != null && (isRuleTrans && ((RuleTransition)tr).followState == el.right || tr.target == el.right))
+            {
+                // we can avoid epsilon edge to next el
+                Handle handle = null;
+                if (i + 1 < els.Count)
+                {
+                    handle = els[(i + 1)];
+                }
+                if (handle != null)
+                {
+                    if (isRuleTrans)
+                    {
+                        ((RuleTransition)tr).followState = handle.left;
+                    }
+                    else
+                    {
+                        tr.target = handle.left;
+                    }
+                }
+                atn.removeState(el.right); // we skipped over this state
+            }
+            else
+            { // need epsilon if previous block's right end node is complicated
+                Epsilon(el.right, els[(i + 1)].left);
+            }
+        }
+        var first = els[(0)];
+        var last = els[(n - 1)];
+        ATNState left = null;
+        if (first != null)
+        {
+            left = first.left;
+        }
+        ATNState right = null;
+        if (last != null)
+        {
+            right = last.right;
+        }
+        return new Handle(left, right);
+    }
 
-	/**
+    /**
 	 * From {@code (A)?} build either:
 	 *
 	 * <pre>
@@ -497,21 +523,22 @@ public class ParserATNFactory : ATNFactory {
 	 * block
 	 */
 
-	//@Override
-	public Handle optional(GrammarAST optAST, Handle blk) {
-		BlockStartState blkStart = (BlockStartState)blk.left;
-		ATNState blkEnd = blk.right;
-		preventEpsilonOptionalBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+    //@Override
+    public Handle Optional(GrammarAST optAST, Handle blk)
+    {
+        var blkStart = (BlockStartState)blk.left;
+        var blkEnd = blk.right;
+        preventEpsilonOptionalBlocks.Add(new (currentRule, blkStart, blkEnd));
 
-		bool greedy = ((QuantifierAST)optAST).isGreedy();
-		blkStart.nonGreedy = !greedy;
-		epsilon(blkStart, blk.right, !greedy);
+        bool greedy = ((QuantifierAST)optAST).isGreedy();
+        blkStart.nonGreedy = !greedy;
+        Epsilon(blkStart, blk.right, !greedy);
 
-		optAST.atnState = blk.left;
-		return blk;
-	}
+        optAST.atnState = blk.left;
+        return blk;
+    }
 
-	/**
+    /**
 	 * From {@code (blk)+} build
 	 *
 	 * <pre>
@@ -524,41 +551,45 @@ public class ParserATNFactory : ATNFactory {
 	 * start.
 	 */
 
-	//@Override
-	public Handle plus(GrammarAST plusAST, Handle blk) {
-		PlusBlockStartState blkStart = (PlusBlockStartState)blk.left;
-		BlockEndState blkEnd = (BlockEndState)blk.right;
-		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+    //@Override
+    public Handle Plus(GrammarAST plusAST, Handle blk)
+    {
+        var blkStart = (PlusBlockStartState)blk.left;
+        var blkEnd = (BlockEndState)blk.right;
+        preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-		PlusLoopbackState loop = newState<PlusLoopbackState>(plusAST);
-		loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
-		atn.defineDecisionState(loop);
-		LoopEndState end = newState<LoopEndState>(plusAST);
-		blkStart.loopBackState = loop;
-		end.loopBackState = loop;
+        var loop = newState<PlusLoopbackState>(plusAST);
+        loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
+        atn.defineDecisionState(loop);
+        var end = newState<LoopEndState>(plusAST);
+        blkStart.loopBackState = loop;
+        end.loopBackState = loop;
 
-		plusAST.atnState = loop;
-		epsilon(blkEnd, loop);		// blk can see loop back
+        plusAST.atnState = loop;
+        Epsilon(blkEnd, loop);      // blk can see loop back
 
-		BlockAST blkAST = (BlockAST)plusAST.getChild(0);
-		if ( ((QuantifierAST)plusAST).isGreedy() ) {
-			if (expectNonGreedy(blkAST)) {
-				g.tool.errMgr.grammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, plusAST.getToken(), plusAST.getToken().getText());
-			}
+        var blkAST = (BlockAST)plusAST.getChild(0);
+        if (((QuantifierAST)plusAST).isGreedy())
+        {
+            if (expectNonGreedy(blkAST))
+            {
+                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, plusAST.getToken(), plusAST.getToken().getText());
+            }
 
-			epsilon(loop, blkStart);	// loop back to start
-			epsilon(loop, end);			// or exit
-		}
-		else {
-			// if not greedy, priority to exit branch; make it first
-			epsilon(loop, end);			// exit
-			epsilon(loop, blkStart);	// loop back to start
-		}
+            Epsilon(loop, blkStart);    // loop back to start
+            Epsilon(loop, end);         // or exit
+        }
+        else
+        {
+            // if not greedy, priority to exit branch; make it first
+            Epsilon(loop, end);         // exit
+            Epsilon(loop, blkStart);    // loop back to start
+        }
 
-		return new Handle(blkStart, end);
-	}
+        return new Handle(blkStart, end);
+    }
 
-	/**
+    /**
 	 * From {@code (blk)*} build {@code ( blk+ )?} with *two* decisions, one for
 	 * entry and one for choosing alts of {@code blk}.
 	 *
@@ -574,94 +605,103 @@ public class ParserATNFactory : ATNFactory {
 	 * {@code (A|B)*} is not the same thing as {@code (A|B|)+}.
 	 */
 
-	//@Override
-	public Handle star(GrammarAST starAST, Handle elem) {
-		StarBlockStartState blkStart = (StarBlockStartState)elem.left;
-		BlockEndState blkEnd = (BlockEndState)elem.right;
-		preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
+    //@Override
+    public Handle Star(GrammarAST starAST, Handle elem)
+    {
+        var blkStart = (StarBlockStartState)elem.left;
+        var blkEnd = (BlockEndState)elem.right;
+        preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-		StarLoopEntryState entry = newState<StarLoopEntryState>(starAST);
-		entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
-		atn.defineDecisionState(entry);
-		LoopEndState end = newState<LoopEndState>(starAST);
-		StarLoopbackState loop = newState<StarLoopbackState>(starAST);
-		entry.loopBackState = loop;
-		end.loopBackState = loop;
+        var entry = newState<StarLoopEntryState>(starAST);
+        entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
+        atn.defineDecisionState(entry);
+        LoopEndState end = newState<LoopEndState>(starAST);
+        StarLoopbackState loop = newState<StarLoopbackState>(starAST);
+        entry.loopBackState = loop;
+        end.loopBackState = loop;
 
-		BlockAST blkAST = (BlockAST)starAST.getChild(0);
-		if ( ((QuantifierAST)starAST).isGreedy() ) {
-			if (expectNonGreedy(blkAST)) {
-				g.tool.errMgr.grammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, starAST.getToken(), starAST.getToken().getText());
-			}
+        var blkAST = (BlockAST)starAST.getChild(0);
+        if (((QuantifierAST)starAST).isGreedy())
+        {
+            if (expectNonGreedy(blkAST))
+            {
+                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, starAST.getToken(), starAST.getToken().getText());
+            }
 
-			epsilon(entry, blkStart);	// loop enter edge (alt 1)
-			epsilon(entry, end);		// bypass loop edge (alt 2)
-		}
-		else {
-			// if not greedy, priority to exit branch; make it first
-			epsilon(entry, end);		// bypass loop edge (alt 1)
-			epsilon(entry, blkStart);	// loop enter edge (alt 2)
-		}
-		epsilon(blkEnd, loop);		// block end hits loop back
-		epsilon(loop, entry);		// loop back to entry/exit decision
+            Epsilon(entry, blkStart);   // loop enter edge (alt 1)
+            Epsilon(entry, end);        // bypass loop edge (alt 2)
+        }
+        else
+        {
+            // if not greedy, priority to exit branch; make it first
+            Epsilon(entry, end);        // bypass loop edge (alt 1)
+            Epsilon(entry, blkStart);   // loop enter edge (alt 2)
+        }
+        Epsilon(blkEnd, loop);      // block end hits loop back
+        Epsilon(loop, entry);       // loop back to entry/exit decision
 
-		starAST.atnState = entry;	// decision is to enter/exit; blk is its own decision
-		return new Handle(entry, end);
-	}
+        starAST.atnState = entry;   // decision is to enter/exit; blk is its own decision
+        return new Handle(entry, end);
+    }
 
-	/** Build an atom with all possible values in its label. */
+    /** Build an atom with all possible values in its label. */
 
-	//@Override
-	public Handle wildcard(GrammarAST node) {
-		ATNState left = newState(node);
-		ATNState right = newState(node);
-		left.addTransition(new WildcardTransition(right));
-		node.atnState = left;
-		return new Handle(left, right);
-	}
+    //@Override
+    public Handle Wildcard(GrammarAST node)
+    {
+        var left = NewState(node);
+        var right = NewState(node);
+        left.AddTransition(new WildcardTransition(right));
+        node.atnState = left;
+        return new (left, right);
+    }
 
-	protected void epsilon(ATNState a, ATNState b) {
-		epsilon(a, b, false);
-	}
+    protected void Epsilon(ATNState a, ATNState b) => Epsilon(a, b, false);
 
-	protected void epsilon(ATNState a, ATNState b, bool prepend) {
-		if ( a!=null ) {
-			int index = prepend ? 0 : a.getNumberOfTransitions();
-			a.addTransition(index, new EpsilonTransition(b));
-		}
-	}
+    protected void Epsilon(ATNState a, ATNState b, bool prepend)
+    {
+        if (a != null)
+        {
+            int index = prepend ? 0 : a.getNumberOfTransitions();
+            a.addTransition(index, new EpsilonTransition(b));
+        }
+    }
 
-	/** Define all the rule begin/end ATNStates to solve forward reference
+    /** Define all the rule begin/end ATNStates to solve forward reference
 	 *  issues.
 	 */
-	void createRuleStartAndStopATNStates() {
-		atn.ruleToStartState = new RuleStartState[g.rules.Count];
-		atn.ruleToStopState = new RuleStopState[g.rules.Count];
-        foreach (Rule r in g.rules.Values) {
-			RuleStartState start = newState<RuleStartState>(r.ast);
-			RuleStopState stop = newState<RuleStopState>(r.ast);
-			start.stopState = stop;
-			start.isLeftRecursiveRule = r is LeftRecursiveRule;
-			start.setRuleIndex(r.index);
-			stop.setRuleIndex(r.index);
-			atn.ruleToStartState[r.index] = start;
-			atn.ruleToStopState[r.index] = stop;
-		}
-	}
+    void CreateRuleStartAndStopATNStates()
+    {
+        atn.ruleToStartState = new RuleStartState[g.rules.Count];
+        atn.ruleToStopState = new RuleStopState[g.rules.Count];
+        foreach (var r in g.rules.Values)
+        {
+            var start = newState<RuleStartState>(r.ast);
+            var stop = newState<RuleStopState>(r.ast);
+            start.stopState = stop;
+            start.isLeftRecursiveRule = r is LeftRecursiveRule;
+            start.setRuleIndex(r.index);
+            stop.setRuleIndex(r.index);
+            atn.ruleToStartState[r.index] = start;
+            atn.ruleToStopState[r.index] = stop;
+        }
+    }
 
-    public void addRuleFollowLinks() {
-        foreach (ATNState p in atn.states) {
-            if ( p!=null &&
-                 p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions()==1 &&
-                 p.transition(0) is RuleTransition )
+    public void AddRuleFollowLinks()
+    {
+        foreach (var p in atn.states)
+        {
+            if (p != null &&
+                 p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions() == 1 &&
+                 p.transition(0) is RuleTransition)
             {
-                RuleTransition rt = (RuleTransition) p.transition(0);
-                addFollowLink(rt.ruleIndex, rt.followState);
+                var rt = (RuleTransition)p.transition(0);
+                AddFollowLink(rt.ruleIndex, rt.followState);
             }
         }
     }
 
-	/** Add an EOF transition to any rule end ATNState that points to nothing
+    /** Add an EOF transition to any rule end ATNState that points to nothing
      *  (i.e., for all those rules not invoked by another rule).  These
      *  are start symbols then.
 	 *
@@ -669,102 +709,120 @@ public class ParserATNFactory : ATNFactory {
 	 *  not invoked by another rule (they can only be invoked from outside).
 	 *  These are the start rules.
      */
-	public int addEOFTransitionToStartRules() {
-		int n = 0;
-		ATNState eofTarget = newState(null); // one unique EOF target for all rules
-        foreach (Rule r in g.rules.Values) {
-			ATNState stop = atn.ruleToStopState[r.index];
-			if ( stop.getNumberOfTransitions()>0 ) continue;
-			n++;
-			Transition t = new AtomTransition(eofTarget, Token.EOF);
-			stop.addTransition(t);
-		}
-		return n;
-	}
+    public int addEOFTransitionToStartRules()
+    {
+        int n = 0;
+        ATNState eofTarget = NewState(null); // one unique EOF target for all rules
+        foreach (Rule r in g.rules.Values)
+        {
+            ATNState stop = atn.ruleToStopState[r.index];
+            if (stop.getNumberOfTransitions() > 0) continue;
+            n++;
+            Transition t = new AtomTransition(eofTarget, Token.EOF);
+            stop.AddTransition(t);
+        }
+        return n;
+    }
 
 
-	//@Override
-	public Handle label(Handle t) {
-		return t;
-	}
+    //@Override
+    public Handle Label(Handle t)
+    {
+        return t;
+    }
 
 
-	//@Override
-	public Handle listLabel(Handle t) {
-		return t;
-	}
+    //@Override
+    public Handle ListLabel(Handle t)
+    {
+        return t;
+    }
 
     public T newState<T>(GrammarAST node) where T : ATNState => newState<T>(typeof(T), node);
 
-    protected T newState<T>(Type nodeType, GrammarAST node) where T: ATNState {
-		Exception cause;
-		try {
+    protected T newState<T>(Type nodeType, GrammarAST node) where T : ATNState
+    {
+        Exception cause;
+        try
+        {
             ConstructorInfo ctor = nodeType.GetConstructor(Array.Empty<Type>());
             T s = ctor.Invoke(Array.Empty<object>()) as T;
             if (currentRule == null) s.setRuleIndex(-1);
             else s.setRuleIndex(currentRule.index);
             atn.addState(s);
             return s;
-		} catch (Exception ex) {
-			cause = ex;
-		} 
+        }
+        catch (Exception ex)
+        {
+            cause = ex;
+        }
 
-		String message = $"Could not create {typeof(ATNState).Name} of type {nodeType.Name}.";
-		throw new UnsupportedOperationException(message, cause);
-	}
-
-
-	public ATNState newState(GrammarAST node) {
-		ATNState n = new BasicState();
-		n.setRuleIndex(currentRule.index);
-		atn.addState(n);
-		return n;
-	}
+        String message = $"Could not create {typeof(ATNState).Name} of type {nodeType.Name}.";
+        throw new UnsupportedOperationException(message, cause);
+    }
 
 
-	//@Override
-	public ATNState newState() { return newState(null); }
+    public ATNState NewState(GrammarAST node)
+    {
+        ATNState n = new BasicState();
+        n.setRuleIndex(currentRule.index);
+        atn.addState(n);
+        return n;
+    }
 
-	public bool expectNonGreedy(BlockAST blkAST) {
-		if ( blockHasWildcardAlt(blkAST) ) {
-			return true;
-		}
 
-		return false;
-	}
+    //@Override
+    public ATNState NewState() { return NewState(null); }
 
-	/**
+    public bool expectNonGreedy(BlockAST blkAST)
+    {
+        if (blockHasWildcardAlt(blkAST))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
 	 * {@code (BLOCK (ALT .))} or {@code (BLOCK (ALT 'a') (ALT .))}.
 	 */
-	public static bool blockHasWildcardAlt(GrammarAST block) {
-        foreach (Object alt in block.getChildren()) {
-			if ( !(alt is AltAST) ) continue;
-			AltAST altAST = (AltAST)alt;
-			if ( altAST.getChildCount()==1 || (altAST.getChildCount() == 2 && altAST.getChild(0).getType() == ANTLRParser.ELEMENT_OPTIONS) ) {
-				Tree e = altAST.getChild(altAST.getChildCount() - 1);
-				if ( e.getType()==ANTLRParser.WILDCARD ) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    public static bool blockHasWildcardAlt(GrammarAST block)
+    {
+        foreach (Object alt in block.getChildren())
+        {
+            if (!(alt is AltAST)) continue;
+            AltAST altAST = (AltAST)alt;
+            if (altAST.getChildCount() == 1 || (altAST.getChildCount() == 2 && altAST.getChild(0).getType() == ANTLRParser.ELEMENT_OPTIONS))
+            {
+                Tree e = altAST.getChild(altAST.getChildCount() - 1);
+                if (e.getType() == ANTLRParser.WILDCARD)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
-	//@Override
-	public Handle lexerAltCommands(Handle alt, Handle cmds) {
-		throw new UnsupportedOperationException("This element is not allowed in parsers.");
-	}
+    //@Override
+    public Handle LexerAltCommands(Handle alt, Handle cmds)
+    {
+        throw new UnsupportedOperationException("This element is not allowed in parsers.");
+    }
 
 
-	//@Override
-	public Handle lexerCallCommand(GrammarAST ID, GrammarAST arg) {
-		throw new UnsupportedOperationException("This element is not allowed in parsers.");
-	}
+    //@Override
+    public Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
+    {
+        throw new UnsupportedOperationException("This element is not allowed in parsers.");
+    }
 
 
-	//@Override
-	public Handle lexerCommand(GrammarAST ID) {
-		throw new UnsupportedOperationException("This element is not allowed in parsers.");
-	}
+    //@Override
+    public Handle LexerCommand(GrammarAST ID)
+    {
+        throw new UnsupportedOperationException("This element is not allowed in parsers.");
+    }
 }

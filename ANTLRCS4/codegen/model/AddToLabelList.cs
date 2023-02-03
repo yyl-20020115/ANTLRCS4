@@ -10,13 +10,14 @@ namespace org.antlr.v4.codegen.model;
 
 
 /** */
-public class AddToLabelList : SrcOp {
-	public readonly Decl label;
-	public readonly String listName;
+public class AddToLabelList : SrcOp
+{
+    public readonly Decl label;
+    public readonly string listName;
 
-	public AddToLabelList(OutputModelFactory factory, String listName, Decl label): base(factory)
+    public AddToLabelList(OutputModelFactory factory, String listName, Decl label) : base(factory)
     {
-		this.label = label;
-		this.listName = listName;
-	}
+        this.label = label;
+        this.listName = listName;
+    }
 }

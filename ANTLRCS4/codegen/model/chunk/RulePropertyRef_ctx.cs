@@ -8,10 +8,10 @@ using org.antlr.v4.codegen.model.decl;
 
 namespace org.antlr.v4.codegen.model.chunk;
 
-public class RulePropertyRef_ctx : RulePropertyRef 
+public class RulePropertyRef_ctx : RulePropertyRef
 {
-    public RulePropertyRef_ctx(StructDecl ctx, String label) : base(ctx, label)
+    public RulePropertyRef_ctx(StructDecl ctx, string label) : base(ctx, label)
     {
-       
+
     }
 }

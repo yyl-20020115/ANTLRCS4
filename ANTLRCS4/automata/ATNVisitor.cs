@@ -14,22 +14,26 @@ namespace org.antlr.v4.automata;
  *  without going into an infinite cycle. Override and implement
  *  visitState() to provide functionality.
  */
-public class ATNVisitor {
-	public void visit(ATNState s) {
-		visit_(s, new HashSet<int>());
-	}
+public class ATNVisitor
+{
+    public void Visit(ATNState s)
+    {
+        Visit(s, new ());
+    }
 
-	public void visit_(ATNState s, HashSet<int> visited) {
-		if ( !visited.Add(s.stateNumber) ) return;
-		visited.Add(s.stateNumber);
+    public void Visit(ATNState s, HashSet<int> visited)
+    {
+        if (!visited.Add(s.stateNumber)) return;
+        visited.Add(s.stateNumber);
 
-		visitState(s);
-		int n = s.getNumberOfTransitions();
-		for (int i=0; i<n; i++) {
-			Transition t = s.transition(i);
-			visit_(t.target, visited);
-		}
-	}
+        VisitState(s);
+        int n = s.getNumberOfTransitions();
+        for (int i = 0; i < n; i++)
+        {
+            var t = s.transition(i);
+            Visit(t.target, visited);
+        }
+    }
 
-	public virtual void visitState(ATNState s) { }
+    public virtual void VisitState(ATNState s) { }
 }

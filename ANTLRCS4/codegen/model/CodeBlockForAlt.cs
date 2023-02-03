@@ -9,8 +9,10 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model;
 
 /** Contains Rewrite block (usually as last op) */
-public class CodeBlockForAlt : CodeBlock {
+public class CodeBlockForAlt : CodeBlock
+{
 
-	public CodeBlockForAlt(OutputModelFactory factory):base(factory) {
-	}
+    public CodeBlockForAlt(OutputModelFactory factory) : base(factory)
+    {
+    }
 }

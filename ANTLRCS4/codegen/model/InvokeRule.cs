@@ -14,63 +14,67 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class InvokeRule : RuleElement , LabeledOp {
-	public readonly String name;
-	public readonly String escapedName;
-	public readonly OrderedHashSet<Decl> labels = new OrderedHashSet<Decl>(); // TODO: should need just 1
-	public readonly String ctxName;
+public class InvokeRule : RuleElement, LabeledOp
+{
+    public readonly string name;
+    public readonly string escapedName;
+    public readonly OrderedHashSet<Decl> labels = new (); // TODO: should need just 1
+    public readonly string ctxName;
 
-	[ModelElement]
-	public List<ActionChunk> argExprsChunks;
+    [ModelElement]
+    public List<ActionChunk> argExprsChunks;
 
-	public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST): base(factory, ast)
+    public InvokeRule(ParserFactory factory, GrammarAST ast, GrammarAST labelAST)
+        : base(factory, ast)
     {
-		if ( ast.atnState!=null ) {
-			stateNumber = ast.atnState.stateNumber;
-		}
+        if (ast.atnState != null)
+            stateNumber = ast.atnState.stateNumber;
 
-		CodeGenerator gen = factory.getGenerator();
-		Target target = gen.getTarget();
-		String identifier = ast.getText();
-		Rule r = factory.getGrammar().getRule(identifier);
-		this.name = r.name;
-		this.escapedName = gen.getTarget().escapeIfNeeded(name);
-		ctxName = target.getRuleFunctionContextStructName(r);
+        var gen = factory.getGenerator();
+        var target = gen.Target;
+        var identifier = ast.getText();
+        var r = factory.getGrammar().getRule(identifier);
+        this.name = r.name;
+        this.escapedName = gen.Target.EscapeIfNeeded(name);
+        ctxName = target.GetRuleFunctionContextStructName(r);
 
-		// TODO: move to factory
-		RuleFunction rf = factory.getCurrentRuleFunction();
-		if ( labelAST!=null ) {
-			RuleContextDecl decl;
-			// for x=r, define <rule-context-type> x and list_x
-			String label = labelAST.getText();
-			if ( labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN  ) {
-				factory.defineImplicitLabel(ast, this);
-				String listLabel = gen.getTarget().getListLabel(label);
-				decl = new RuleContextListDecl(factory, listLabel, ctxName);
-			}
-			else {
-				decl = new RuleContextDecl(factory,label,ctxName);
-				labels.add(decl);
-			}
-			rf.addContextDecl(ast.getAltLabel(), decl);
-		}
+        // TODO: move to factory
+        var rf = factory.getCurrentRuleFunction();
+        if (labelAST != null)
+        {
+            RuleContextDecl decl;
+            // for x=r, define <rule-context-type> x and list_x
+            var label = labelAST.getText();
+            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            {
+                factory.defineImplicitLabel(ast, this);
+                var listLabel = gen.Target.GetListLabel(label);
+                decl = new RuleContextListDecl(factory, listLabel, ctxName);
+            }
+            else
+            {
+                decl = new RuleContextDecl(factory, label, ctxName);
+                labels.add(decl);
+            }
+            rf.AddContextDecl(ast.getAltLabel(), decl);
+        }
 
-		ActionAST arg = (ActionAST)ast.getFirstChildWithType(ANTLRParser.ARG_ACTION);
-		if ( arg != null ) {
-			argExprsChunks = ActionTranslator.translateAction(factory, rf, arg.token, arg);
-		}
+        var arg = (ActionAST)ast.getFirstChildWithType(ANTLRParser.ARG_ACTION);
+        if (arg != null)
+        {
+            argExprsChunks = ActionTranslator.TranslateAction(factory, rf, arg.token, arg);
+        }
 
-		// If action refs rule as rulename not label, we need to define implicit label
-		if ( factory.getCurrentOuterMostAlt().ruleRefsInActions.ContainsKey(identifier) ) {
-			String label = gen.getTarget().getImplicitRuleLabel(identifier);
-			RuleContextDecl d = new RuleContextDecl(factory,label,ctxName);
-			labels.add(d);
-			rf.addContextDecl(ast.getAltLabel(), d);
-		}
-	}
+        // If action refs rule as rulename not label, we need to define implicit label
+        if (factory.getCurrentOuterMostAlt().ruleRefsInActions.ContainsKey(identifier))
+        {
+            var label = gen.Target.GetImplicitRuleLabel(identifier);
+            var d = new RuleContextDecl(factory, label, ctxName);
+            labels.add(d);
+            rf.AddContextDecl(ast.getAltLabel(), d);
+        }
+    }
 
-	//@Override
-	public List<Decl> getLabels() {
-		return labels.elements();
-	}
+    //@Override
+    public virtual List<Decl> GetLabels() => labels.elements();
 }

@@ -9,11 +9,10 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class OptionalBlock : AltBlock {
-	public OptionalBlock(OutputModelFactory factory,
-						 GrammarAST questionAST,
-						 List<CodeBlockForAlt> alts)
-		: base(factory, questionAST, alts)
-    {
-	}
+public class OptionalBlock : AltBlock
+{
+    public OptionalBlock(OutputModelFactory factory,
+                         GrammarAST questionAST,
+                         List<CodeBlockForAlt> alts)
+        : base(factory, questionAST, alts) { }
 }

@@ -11,10 +11,10 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public abstract class OutputModelObject
 {
-    public OutputModelFactory? factory;
-    public GrammarAST? ast;
+    public readonly OutputModelFactory? factory;
+    public readonly GrammarAST ast;
 
-    public OutputModelObject(OutputModelFactory? factory = null, GrammarAST? ast = null)
+    public OutputModelObject(OutputModelFactory? factory = null, GrammarAST ast = null)
     {
         this.factory = factory;
         this.ast = ast;

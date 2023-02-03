@@ -51,7 +51,7 @@ namespace org.antlr.v4.parse;
 public class GrammarTreeVisitor : TreeParser
 {
 
-    public static readonly String[] tokenNames = new String[] {
+    public static readonly string[] tokenNames = new string[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
         "ASSIGN", "AT", "CATCH", "CHANNELS", "COLON", "COLONCOLON", "COMMA", "COMMENT",
@@ -174,12 +174,12 @@ public class GrammarTreeVisitor : TreeParser
     }
 
     //@Override 
-    public String[] getTokenNames() { return GrammarTreeVisitor.tokenNames; }
+    public override string[] getTokenNames() { return GrammarTreeVisitor.tokenNames; }
     //@Override
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g"; }
+    public override string GetGrammarFileName() { return "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g"; }
 
 
-    public String grammarName;
+    public string grammarName;
     public GrammarAST currentRuleAST;
     public String currentModeName = LexerGrammar.DEFAULT_MODE_NAME;
     public String currentRuleName;
@@ -191,12 +191,12 @@ public class GrammarTreeVisitor : TreeParser
 
     // Should be abstract but can't make gen'd parser abstract;
     // subclasses should implement else everything goes to stderr!
-    public ErrorManager getErrorManager() { return null; }
+    public virtual ErrorManager GetErrorManager() { return null; }
 
     public void visitGrammar(GrammarAST t) { visit(t, "grammarSpec"); }
     public void visit(GrammarAST t, String ruleName)
     {
-        CommonTreeNodeStream nodes = new CommonTreeNodeStream(new GrammarASTAdaptor(), t);
+        var nodes = new CommonTreeNodeStream(new GrammarASTAdaptor(), t);
         setTreeNodeStream(nodes);
         try
         {
@@ -205,7 +205,7 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (Exception e)
         {
-            ErrorManager errMgr = getErrorManager();
+            ErrorManager errMgr = GetErrorManager();
             if (e is TargetInvocationException)
             {
                 e = e.InnerException;
@@ -466,17 +466,17 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:348:5: ( ^( GRAMMAR ID prequelConstructs rules ( mode )* ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:348:9: ^( GRAMMAR ID prequelConstructs rules ( mode )* )
             {
-                GRAMMAR2 = (GrammarAST)match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarSpec85);
-                match(input, Token.DOWN, null);
-                ID1 = (GrammarAST)match(input, ID, FOLLOW_ID_in_grammarSpec87);
+                GRAMMAR2 = (GrammarAST)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarSpec85);
+                Match(input, Token.DOWN, null);
+                ID1 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_grammarSpec87);
                 grammarName = (ID1 != null ? ID1.getText() : null);
                 discoverGrammar((GrammarRootAST)GRAMMAR2, ID1);
-                pushFollow(FOLLOW_prequelConstructs_in_grammarSpec106);
+                PushFollow(FOLLOW_prequelConstructs_in_grammarSpec106);
                 prequelConstructs3 = prequelConstructs();
                 state._fsp--;
 
                 finishPrequels((prequelConstructs3 != null ? ((GrammarTreeVisitor.prequelConstructs_return)prequelConstructs3).firstOne : null));
-                pushFollow(FOLLOW_rules_in_grammarSpec123);
+                PushFollow(FOLLOW_rules_in_grammarSpec123);
                 rules();
                 state._fsp--;
 
@@ -496,7 +496,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:352:14: mode
                             {
-                                pushFollow(FOLLOW_mode_in_grammarSpec125);
+                                PushFollow(FOLLOW_mode_in_grammarSpec125);
                                 mode();
                                 state._fsp--;
 
@@ -510,7 +510,7 @@ public class GrammarTreeVisitor : TreeParser
                 }
             exit1:
                 finishGrammar((GrammarRootAST)GRAMMAR2, ID1);
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -520,8 +520,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -593,7 +593,7 @@ public class GrammarTreeVisitor : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:364:24: prequelConstruct
                                     {
-                                        pushFollow(FOLLOW_prequelConstruct_in_prequelConstructs167);
+                                        PushFollow(FOLLOW_prequelConstruct_in_prequelConstructs167);
                                         prequelConstruct();
                                         state._fsp--;
 
@@ -624,8 +624,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -692,7 +692,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:375:6: optionsSpec
                     {
-                        pushFollow(FOLLOW_optionsSpec_in_prequelConstruct194);
+                        PushFollow(FOLLOW_optionsSpec_in_prequelConstruct194);
                         optionsSpec();
                         state._fsp--;
 
@@ -701,7 +701,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:376:9: delegateGrammars
                     {
-                        pushFollow(FOLLOW_delegateGrammars_in_prequelConstruct204);
+                        PushFollow(FOLLOW_delegateGrammars_in_prequelConstruct204);
                         delegateGrammars();
                         state._fsp--;
 
@@ -710,7 +710,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:377:9: tokensSpec
                     {
-                        pushFollow(FOLLOW_tokensSpec_in_prequelConstruct214);
+                        PushFollow(FOLLOW_tokensSpec_in_prequelConstruct214);
                         tokensSpec();
                         state._fsp--;
 
@@ -719,7 +719,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:378:9: channelsSpec
                     {
-                        pushFollow(FOLLOW_channelsSpec_in_prequelConstruct224);
+                        PushFollow(FOLLOW_channelsSpec_in_prequelConstruct224);
                         channelsSpec();
                         state._fsp--;
 
@@ -728,7 +728,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:379:9: action
                     {
-                        pushFollow(FOLLOW_action_in_prequelConstruct234);
+                        PushFollow(FOLLOW_action_in_prequelConstruct234);
                         action();
                         state._fsp--;
 
@@ -742,8 +742,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -774,10 +774,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:389:2: ( ^( OPTIONS ( option )* ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:389:4: ^( OPTIONS ( option )* )
             {
-                match(input, OPTIONS, FOLLOW_OPTIONS_in_optionsSpec259);
+                Match(input, OPTIONS, FOLLOW_OPTIONS_in_optionsSpec259);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:389:14: ( option )*
                 loop5:
                     while (true)
@@ -794,7 +794,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:389:14: option
                                 {
-                                    pushFollow(FOLLOW_option_in_optionsSpec261);
+                                    PushFollow(FOLLOW_option_in_optionsSpec261);
                                     option();
                                     state._fsp--;
 
@@ -807,7 +807,7 @@ public class GrammarTreeVisitor : TreeParser
                         }
                     }
                 exit5:
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
             }
@@ -818,8 +818,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -856,14 +856,14 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:401:5: ( ^(a= ASSIGN ID v= optionValue ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:401:9: ^(a= ASSIGN ID v= optionValue )
             {
-                a = (GrammarAST)match(input, ASSIGN, FOLLOW_ASSIGN_in_option295);
-                match(input, Token.DOWN, null);
-                ID4 = (GrammarAST)match(input, ID, FOLLOW_ID_in_option297);
-                pushFollow(FOLLOW_optionValue_in_option301);
+                a = (GrammarAST)Match(input, ASSIGN, FOLLOW_ASSIGN_in_option295);
+                Match(input, Token.DOWN, null);
+                ID4 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_option297);
+                PushFollow(FOLLOW_optionValue_in_option301);
                 v = optionValue();
                 state._fsp--;
 
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
 
                 if (block) blockOption(ID4, (v != null ? ((GrammarAST)v.start) : null)); // most specific first
@@ -878,8 +878,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -931,8 +931,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -963,8 +963,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:429:2: ( ^( IMPORT ( delegateGrammar )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:429:6: ^( IMPORT ( delegateGrammar )+ )
             {
-                match(input, IMPORT, FOLLOW_IMPORT_in_delegateGrammars389);
-                match(input, Token.DOWN, null);
+                Match(input, IMPORT, FOLLOW_IMPORT_in_delegateGrammars389);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:429:15: ( delegateGrammar )+
                 int cnt6 = 0;
             loop6:
@@ -982,7 +982,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:429:15: delegateGrammar
                             {
-                                pushFollow(FOLLOW_delegateGrammar_in_delegateGrammars391);
+                                PushFollow(FOLLOW_delegateGrammar_in_delegateGrammars391);
                                 delegateGrammar();
                                 state._fsp--;
 
@@ -997,7 +997,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt6++;
                 }
             exit6:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1007,8 +1007,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1063,11 +1063,11 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:439:9: ^( ASSIGN label= ID id= ID )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar420);
-                        match(input, Token.DOWN, null);
-                        label = (GrammarAST)match(input, ID, FOLLOW_ID_in_delegateGrammar424);
-                        id = (GrammarAST)match(input, ID, FOLLOW_ID_in_delegateGrammar428);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar420);
+                        Match(input, Token.DOWN, null);
+                        label = (GrammarAST)Match(input, ID, FOLLOW_ID_in_delegateGrammar424);
+                        id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_delegateGrammar428);
+                        Match(input, Token.UP, null);
 
                         importGrammar(label, id);
                     }
@@ -1075,7 +1075,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:440:9: id= ID
                     {
-                        id = (GrammarAST)match(input, ID, FOLLOW_ID_in_delegateGrammar443);
+                        id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_delegateGrammar443);
                         importGrammar(null, id);
                     }
                     break;
@@ -1087,8 +1087,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1119,8 +1119,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:450:2: ( ^( TOKENS_SPEC ( tokenSpec )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:450:6: ^( TOKENS_SPEC ( tokenSpec )+ )
             {
-                match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec477);
-                match(input, Token.DOWN, null);
+                Match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec477);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:450:20: ( tokenSpec )+
                 int cnt8 = 0;
             loop8:
@@ -1138,7 +1138,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:450:20: tokenSpec
                             {
-                                pushFollow(FOLLOW_tokenSpec_in_tokensSpec479);
+                                PushFollow(FOLLOW_tokenSpec_in_tokensSpec479);
                                 tokenSpec();
                                 state._fsp--;
 
@@ -1153,7 +1153,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt8++;
                 }
             exit8:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1163,8 +1163,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1197,7 +1197,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:460:2: ( ID )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:460:4: ID
             {
-                ID5 = (GrammarAST)match(input, ID, FOLLOW_ID_in_tokenSpec502);
+                ID5 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_tokenSpec502);
                 defineToken(ID5);
             }
 
@@ -1207,8 +1207,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1239,8 +1239,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:470:2: ( ^( CHANNELS ( channelSpec )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:470:6: ^( CHANNELS ( channelSpec )+ )
             {
-                match(input, CHANNELS, FOLLOW_CHANNELS_in_channelsSpec532);
-                match(input, Token.DOWN, null);
+                Match(input, CHANNELS, FOLLOW_CHANNELS_in_channelsSpec532);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:470:17: ( channelSpec )+
                 int cnt9 = 0;
             loop9:
@@ -1258,7 +1258,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:470:17: channelSpec
                             {
-                                pushFollow(FOLLOW_channelSpec_in_channelsSpec534);
+                                PushFollow(FOLLOW_channelSpec_in_channelsSpec534);
                                 channelSpec();
                                 state._fsp--;
 
@@ -1273,7 +1273,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt9++;
                 }
             exit9:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1283,8 +1283,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1317,7 +1317,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:480:2: ( ID )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:480:4: ID
             {
-                ID6 = (GrammarAST)match(input, ID, FOLLOW_ID_in_channelSpec557);
+                ID6 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_channelSpec557);
                 defineChannel(ID6);
             }
 
@@ -1327,8 +1327,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1363,8 +1363,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:490:2: ( ^( AT (sc= ID )? name= ID ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:490:4: ^( AT (sc= ID )? name= ID ACTION )
             {
-                match(input, AT, FOLLOW_AT_in_action585);
-                match(input, Token.DOWN, null);
+                Match(input, AT, FOLLOW_AT_in_action585);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:490:11: (sc= ID )?
                 int alt10 = 2;
                 int LA10_0 = input.LA(1);
@@ -1381,15 +1381,15 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:490:11: sc= ID
                         {
-                            sc = (GrammarAST)match(input, ID, FOLLOW_ID_in_action589);
+                            sc = (GrammarAST)Match(input, ID, FOLLOW_ID_in_action589);
                         }
                         break;
 
                 }
 
-                name = (GrammarAST)match(input, ID, FOLLOW_ID_in_action594);
-                ACTION7 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_action596);
-                match(input, Token.UP, null);
+                name = (GrammarAST)Match(input, ID, FOLLOW_ID_in_action594);
+                ACTION7 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_action596);
+                Match(input, Token.UP, null);
 
                 globalNamedAction(sc, name, (ActionAST)ACTION7);
             }
@@ -1400,8 +1400,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1434,11 +1434,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:500:5: ( ^( RULES ( rule | lexerRule )* ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:500:7: ^( RULES ( rule | lexerRule )* )
             {
-                RULES8 = (GrammarAST)match(input, RULES, FOLLOW_RULES_in_rules624);
+                RULES8 = (GrammarAST)Match(input, RULES, FOLLOW_RULES_in_rules624);
                 discoverRules(RULES8);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:500:40: ( rule | lexerRule )*
                 loop11:
                     while (true)
@@ -1469,7 +1469,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:500:41: rule
                                 {
-                                    pushFollow(FOLLOW_rule_in_rules629);
+                                    PushFollow(FOLLOW_rule_in_rules629);
                                     rule();
                                     state._fsp--;
 
@@ -1478,7 +1478,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 2:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:500:46: lexerRule
                                 {
-                                    pushFollow(FOLLOW_lexerRule_in_rules631);
+                                    PushFollow(FOLLOW_lexerRule_in_rules631);
                                     lexerRule();
                                     state._fsp--;
 
@@ -1492,7 +1492,7 @@ public class GrammarTreeVisitor : TreeParser
                     }
                 exit11:
                     finishRules(RULES8);
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
             }
@@ -1503,8 +1503,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1538,9 +1538,9 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:510:2: ( ^( MODE ID ( lexerRule )* ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:510:4: ^( MODE ID ( lexerRule )* )
             {
-                MODE10 = (GrammarAST)match(input, MODE, FOLLOW_MODE_in_mode662);
-                match(input, Token.DOWN, null);
-                ID9 = (GrammarAST)match(input, ID, FOLLOW_ID_in_mode664);
+                MODE10 = (GrammarAST)Match(input, MODE, FOLLOW_MODE_in_mode662);
+                Match(input, Token.DOWN, null);
+                ID9 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_mode664);
                 currentModeName = (ID9 != null ? ID9.getText() : null); modeDef(MODE10, ID9);
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:510:64: ( lexerRule )*
             loop12:
@@ -1558,7 +1558,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:510:64: lexerRule
                             {
-                                pushFollow(FOLLOW_lexerRule_in_mode668);
+                                PushFollow(FOLLOW_lexerRule_in_mode668);
                                 lexerRule();
                                 state._fsp--;
 
@@ -1571,7 +1571,7 @@ public class GrammarTreeVisitor : TreeParser
                     }
                 }
             exit12:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1581,8 +1581,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1621,9 +1621,9 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:522:2: ( ^( RULE TOKEN_REF ( ^( RULEMODIFIERS m= FRAGMENT ) )? (opts= optionsSpec )* lexerRuleBlock ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:522:4: ^( RULE TOKEN_REF ( ^( RULEMODIFIERS m= FRAGMENT ) )? (opts= optionsSpec )* lexerRuleBlock )
             {
-                RULE12 = (GrammarAST)match(input, RULE, FOLLOW_RULE_in_lexerRule694);
-                match(input, Token.DOWN, null);
-                TOKEN_REF11 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule696);
+                RULE12 = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_lexerRule694);
+                Match(input, Token.DOWN, null);
+                TOKEN_REF11 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule696);
                 currentRuleName = (TOKEN_REF11 != null ? TOKEN_REF11.getText() : null); currentRuleAST = RULE12;
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:524:4: ( ^( RULEMODIFIERS m= FRAGMENT ) )?
                 int alt13 = 2;
@@ -1637,11 +1637,11 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:524:5: ^( RULEMODIFIERS m= FRAGMENT )
                         {
-                            match(input, RULEMODIFIERS, FOLLOW_RULEMODIFIERS_in_lexerRule708);
-                            match(input, Token.DOWN, null);
-                            m = (GrammarAST)match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule712);
+                            Match(input, RULEMODIFIERS, FOLLOW_RULEMODIFIERS_in_lexerRule708);
+                            Match(input, Token.DOWN, null);
+                            m = (GrammarAST)Match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule712);
                             mods.Add(m);
-                            match(input, Token.UP, null);
+                            Match(input, Token.UP, null);
 
                         }
                         break;
@@ -1664,7 +1664,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:525:8: opts= optionsSpec
                             {
-                                pushFollow(FOLLOW_optionsSpec_in_lexerRule724);
+                                PushFollow(FOLLOW_optionsSpec_in_lexerRule724);
                                 opts = optionsSpec();
                                 state._fsp--;
 
@@ -1678,7 +1678,7 @@ public class GrammarTreeVisitor : TreeParser
                 }
             exit14:
                 discoverLexerRule((RuleAST)RULE12, TOKEN_REF11, mods, (opts != null ? ((GrammarAST)opts.start) : null), (GrammarAST)input.LT(1));
-                pushFollow(FOLLOW_lexerRuleBlock_in_lexerRule745);
+                PushFollow(FOLLOW_lexerRuleBlock_in_lexerRule745);
                 lexerRuleBlock13 = lexerRuleBlock();
                 state._fsp--;
 
@@ -1686,7 +1686,7 @@ public class GrammarTreeVisitor : TreeParser
                 finishLexerRule((RuleAST)RULE12, TOKEN_REF11, (lexerRuleBlock13 != null ? ((GrammarAST)lexerRuleBlock13.start) : null));
                 currentRuleName = null; currentRuleAST = null;
 
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1696,8 +1696,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1742,9 +1742,9 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:545:2: ( ^( RULE RULE_REF ( ^( RULEMODIFIERS (m= ruleModifier )+ ) )? ( ARG_ACTION )? (ret= ruleReturns )? (thr= throwsSpec )? (loc= locals )? (opts= optionsSpec |a= ruleAction )* ruleBlock exceptionGroup ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:545:6: ^( RULE RULE_REF ( ^( RULEMODIFIERS (m= ruleModifier )+ ) )? ( ARG_ACTION )? (ret= ruleReturns )? (thr= throwsSpec )? (loc= locals )? (opts= optionsSpec |a= ruleAction )* ruleBlock exceptionGroup )
             {
-                RULE15 = (GrammarAST)match(input, RULE, FOLLOW_RULE_in_rule790);
-                match(input, Token.DOWN, null);
-                RULE_REF14 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_rule792);
+                RULE15 = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_rule790);
+                Match(input, Token.DOWN, null);
+                RULE_REF14 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_rule792);
                 currentRuleName = (RULE_REF14 != null ? RULE_REF14.getText() : null); currentRuleAST = RULE15;
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:546:4: ( ^( RULEMODIFIERS (m= ruleModifier )+ ) )?
                 int alt16 = 2;
@@ -1758,8 +1758,8 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:546:5: ^( RULEMODIFIERS (m= ruleModifier )+ )
                         {
-                            match(input, RULEMODIFIERS, FOLLOW_RULEMODIFIERS_in_rule801);
-                            match(input, Token.DOWN, null);
+                            Match(input, RULEMODIFIERS, FOLLOW_RULEMODIFIERS_in_rule801);
+                            Match(input, Token.DOWN, null);
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:546:21: (m= ruleModifier )+
                             int cnt15 = 0;
                         loop15:
@@ -1777,7 +1777,7 @@ public class GrammarTreeVisitor : TreeParser
                                     case 1:
                                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:546:22: m= ruleModifier
                                         {
-                                            pushFollow(FOLLOW_ruleModifier_in_rule806);
+                                            PushFollow(FOLLOW_ruleModifier_in_rule806);
                                             m = ruleModifier();
                                             state._fsp--;
 
@@ -1793,7 +1793,7 @@ public class GrammarTreeVisitor : TreeParser
                                 cnt15++;
                             }
                         exit15:
-                            match(input, Token.UP, null);
+                            Match(input, Token.UP, null);
 
                         }
                         break;
@@ -1812,7 +1812,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:547:4: ARG_ACTION
                         {
-                            ARG_ACTION16 = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rule817);
+                            ARG_ACTION16 = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rule817);
                         }
                         break;
 
@@ -1830,7 +1830,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:548:12: ret= ruleReturns
                         {
-                            pushFollow(FOLLOW_ruleReturns_in_rule830);
+                            PushFollow(FOLLOW_ruleReturns_in_rule830);
                             ret = ruleReturns();
                             state._fsp--;
 
@@ -1851,7 +1851,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:549:12: thr= throwsSpec
                         {
-                            pushFollow(FOLLOW_throwsSpec_in_rule843);
+                            PushFollow(FOLLOW_throwsSpec_in_rule843);
                             thr = throwsSpec();
                             state._fsp--;
 
@@ -1872,7 +1872,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:550:12: loc= locals
                         {
-                            pushFollow(FOLLOW_locals_in_rule856);
+                            PushFollow(FOLLOW_locals_in_rule856);
                             loc = locals();
                             state._fsp--;
 
@@ -1901,7 +1901,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:551:11: opts= optionsSpec
                             {
-                                pushFollow(FOLLOW_optionsSpec_in_rule871);
+                                PushFollow(FOLLOW_optionsSpec_in_rule871);
                                 opts = optionsSpec();
                                 state._fsp--;
 
@@ -1910,7 +1910,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 2:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:552:11: a= ruleAction
                             {
-                                pushFollow(FOLLOW_ruleAction_in_rule885);
+                                PushFollow(FOLLOW_ruleAction_in_rule885);
                                 a = ruleAction();
                                 state._fsp--;
 
@@ -1929,16 +1929,16 @@ public class GrammarTreeVisitor : TreeParser
                                             (thr != null ? ((GrammarAST)thr.start) : null), (opts != null ? ((GrammarAST)opts.start) : null),
                                             (loc != null ? ((GrammarAST)loc.start) : null) != null ? (ActionAST)(loc != null ? ((GrammarAST)loc.start) : null).getChild(0) : null,
                                             actions, (GrammarAST)input.LT(1));
-                pushFollow(FOLLOW_ruleBlock_in_rule916);
+                PushFollow(FOLLOW_ruleBlock_in_rule916);
                 ruleBlock17 = ruleBlock();
                 state._fsp--;
 
-                pushFollow(FOLLOW_exceptionGroup_in_rule918);
+                PushFollow(FOLLOW_exceptionGroup_in_rule918);
                 exceptionGroup();
                 state._fsp--;
 
                 finishRule((RuleAST)RULE15, RULE_REF14, (ruleBlock17 != null ? ((GrammarAST)ruleBlock17.start) : null)); currentRuleName = null; currentRuleAST = null;
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -1948,8 +1948,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1996,7 +1996,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:571:7: exceptionHandler
                             {
-                                pushFollow(FOLLOW_exceptionHandler_in_exceptionGroup965);
+                                PushFollow(FOLLOW_exceptionHandler_in_exceptionGroup965);
                                 exceptionHandler();
                                 state._fsp--;
 
@@ -2021,7 +2021,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:571:25: finallyClause
                         {
-                            pushFollow(FOLLOW_finallyClause_in_exceptionGroup968);
+                            PushFollow(FOLLOW_finallyClause_in_exceptionGroup968);
                             finallyClause();
                             state._fsp--;
 
@@ -2038,8 +2038,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2073,11 +2073,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:581:2: ( ^( CATCH ARG_ACTION ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:581:4: ^( CATCH ARG_ACTION ACTION )
             {
-                match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler994);
-                match(input, Token.DOWN, null);
-                ARG_ACTION18 = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler996);
-                ACTION19 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler998);
-                match(input, Token.UP, null);
+                Match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler994);
+                Match(input, Token.DOWN, null);
+                ARG_ACTION18 = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler996);
+                ACTION19 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler998);
+                Match(input, Token.UP, null);
 
                 ruleCatch(ARG_ACTION18, (ActionAST)ACTION19);
             }
@@ -2088,8 +2088,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2122,10 +2122,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:591:2: ( ^( FINALLY ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:591:4: ^( FINALLY ACTION )
             {
-                match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause1023);
-                match(input, Token.DOWN, null);
-                ACTION20 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_finallyClause1025);
-                match(input, Token.UP, null);
+                Match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause1023);
+                Match(input, Token.DOWN, null);
+                ACTION20 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_finallyClause1025);
+                Match(input, Token.UP, null);
 
                 finallyAction((ActionAST)ACTION20);
             }
@@ -2136,8 +2136,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2168,10 +2168,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:601:2: ( ^( LOCALS ARG_ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:601:4: ^( LOCALS ARG_ACTION )
             {
-                match(input, LOCALS, FOLLOW_LOCALS_in_locals1053);
-                match(input, Token.DOWN, null);
-                match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_locals1055);
-                match(input, Token.UP, null);
+                Match(input, LOCALS, FOLLOW_LOCALS_in_locals1053);
+                Match(input, Token.DOWN, null);
+                Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_locals1055);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2181,8 +2181,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2213,10 +2213,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:611:2: ( ^( RETURNS ARG_ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:611:4: ^( RETURNS ARG_ACTION )
             {
-                match(input, RETURNS, FOLLOW_RETURNS_in_ruleReturns1078);
-                match(input, Token.DOWN, null);
-                match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleReturns1080);
-                match(input, Token.UP, null);
+                Match(input, RETURNS, FOLLOW_RETURNS_in_ruleReturns1078);
+                Match(input, Token.DOWN, null);
+                Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleReturns1080);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2226,8 +2226,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2258,8 +2258,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:621:5: ( ^( THROWS ( ID )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:621:7: ^( THROWS ( ID )+ )
             {
-                match(input, THROWS, FOLLOW_THROWS_in_throwsSpec1106);
-                match(input, Token.DOWN, null);
+                Match(input, THROWS, FOLLOW_THROWS_in_throwsSpec1106);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:621:16: ( ID )+
                 int cnt24 = 0;
             loop24:
@@ -2277,7 +2277,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:621:16: ID
                             {
-                                match(input, ID, FOLLOW_ID_in_throwsSpec1108);
+                                Match(input, ID, FOLLOW_ID_in_throwsSpec1108);
                             }
                             break;
 
@@ -2289,7 +2289,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt24++;
                 }
             exit24:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2299,8 +2299,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2331,11 +2331,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:631:2: ( ^( AT ID ACTION ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:631:4: ^( AT ID ACTION )
             {
-                match(input, AT, FOLLOW_AT_in_ruleAction1135);
-                match(input, Token.DOWN, null);
-                match(input, ID, FOLLOW_ID_in_ruleAction1137);
-                match(input, ACTION, FOLLOW_ACTION_in_ruleAction1139);
-                match(input, Token.UP, null);
+                Match(input, AT, FOLLOW_AT_in_ruleAction1135);
+                Match(input, Token.DOWN, null);
+                Match(input, ID, FOLLOW_ID_in_ruleAction1137);
+                Match(input, ACTION, FOLLOW_ACTION_in_ruleAction1139);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2345,8 +2345,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2395,8 +2395,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2427,8 +2427,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:654:5: ( ^( BLOCK ( lexerOuterAlternative )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:654:7: ^( BLOCK ( lexerOuterAlternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_lexerRuleBlock1217);
-                match(input, Token.DOWN, null);
+                Match(input, BLOCK, FOLLOW_BLOCK_in_lexerRuleBlock1217);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:655:7: ( lexerOuterAlternative )+
                 int cnt25 = 0;
             loop25:
@@ -2450,7 +2450,7 @@ public class GrammarTreeVisitor : TreeParser
                                 currentOuterAltRoot = (GrammarAST)input.LT(1);
                                 currentOuterAltNumber++;
 
-                                pushFollow(FOLLOW_lexerOuterAlternative_in_lexerRuleBlock1236);
+                                PushFollow(FOLLOW_lexerOuterAlternative_in_lexerRuleBlock1236);
                                 lexerOuterAlternative();
                                 state._fsp--;
 
@@ -2465,7 +2465,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt25++;
                 }
             exit25:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2475,8 +2475,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2507,8 +2507,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:671:5: ( ^( BLOCK ( outerAlternative )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:671:7: ^( BLOCK ( outerAlternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock1281);
-                match(input, Token.DOWN, null);
+                Match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock1281);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:672:7: ( outerAlternative )+
                 int cnt26 = 0;
             loop26:
@@ -2530,7 +2530,7 @@ public class GrammarTreeVisitor : TreeParser
                                 currentOuterAltRoot = (GrammarAST)input.LT(1);
                                 currentOuterAltNumber++;
 
-                                pushFollow(FOLLOW_outerAlternative_in_ruleBlock1300);
+                                PushFollow(FOLLOW_outerAlternative_in_ruleBlock1300);
                                 outerAlternative();
                                 state._fsp--;
 
@@ -2545,7 +2545,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt26++;
                 }
             exit26:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2555,8 +2555,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2588,7 +2588,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:690:2: ( lexerAlternative )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:690:4: lexerAlternative
             {
-                pushFollow(FOLLOW_lexerAlternative_in_lexerOuterAlternative1340);
+                PushFollow(FOLLOW_lexerAlternative_in_lexerOuterAlternative1340);
                 lexerAlternative();
                 state._fsp--;
 
@@ -2601,8 +2601,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2634,7 +2634,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:703:2: ( alternative )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:703:4: alternative
             {
-                pushFollow(FOLLOW_alternative_in_outerAlternative1362);
+                PushFollow(FOLLOW_alternative_in_outerAlternative1362);
                 alternative();
                 state._fsp--;
 
@@ -2647,8 +2647,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2700,9 +2700,9 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:713:4: ^( LEXER_ALT_ACTION lexerElements ( lexerCommand )+ )
                     {
-                        match(input, LEXER_ALT_ACTION, FOLLOW_LEXER_ALT_ACTION_in_lexerAlternative1384);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_lexerElements_in_lexerAlternative1386);
+                        Match(input, LEXER_ALT_ACTION, FOLLOW_LEXER_ALT_ACTION_in_lexerAlternative1384);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_lexerElements_in_lexerAlternative1386);
                         lexerElements();
                         state._fsp--;
 
@@ -2723,7 +2723,7 @@ public class GrammarTreeVisitor : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:713:37: lexerCommand
                                     {
-                                        pushFollow(FOLLOW_lexerCommand_in_lexerAlternative1388);
+                                        PushFollow(FOLLOW_lexerCommand_in_lexerAlternative1388);
                                         lexerCommand();
                                         state._fsp--;
 
@@ -2738,14 +2738,14 @@ public class GrammarTreeVisitor : TreeParser
                             cnt27++;
                         }
                     exit27:
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:714:9: lexerElements
                     {
-                        pushFollow(FOLLOW_lexerElements_in_lexerAlternative1400);
+                        PushFollow(FOLLOW_lexerElements_in_lexerAlternative1400);
                         lexerElements();
                         state._fsp--;
 
@@ -2759,8 +2759,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2791,8 +2791,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:724:5: ( ^( ALT ( lexerElement )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:724:7: ^( ALT ( lexerElement )+ )
             {
-                match(input, ALT, FOLLOW_ALT_in_lexerElements1428);
-                match(input, Token.DOWN, null);
+                Match(input, ALT, FOLLOW_ALT_in_lexerElements1428);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:724:13: ( lexerElement )+
                 int cnt29 = 0;
             loop29:
@@ -2810,7 +2810,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:724:13: lexerElement
                             {
-                                pushFollow(FOLLOW_lexerElement_in_lexerElements1430);
+                                PushFollow(FOLLOW_lexerElement_in_lexerElements1430);
                                 lexerElement();
                                 state._fsp--;
 
@@ -2825,7 +2825,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt29++;
                 }
             exit29:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -2835,8 +2835,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2968,7 +2968,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:734:4: lexerAtom
                     {
-                        pushFollow(FOLLOW_lexerAtom_in_lexerElement1456);
+                        PushFollow(FOLLOW_lexerAtom_in_lexerElement1456);
                         lexerAtom();
                         state._fsp--;
 
@@ -2977,7 +2977,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:735:4: lexerSubrule
                     {
-                        pushFollow(FOLLOW_lexerSubrule_in_lexerElement1461);
+                        PushFollow(FOLLOW_lexerSubrule_in_lexerElement1461);
                         lexerSubrule();
                         state._fsp--;
 
@@ -2986,27 +2986,27 @@ public class GrammarTreeVisitor : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:736:6: ACTION
                     {
-                        ACTION21 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_lexerElement1468);
+                        ACTION21 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_lexerElement1468);
                         actionInAlt((ActionAST)ACTION21);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:737:6: SEMPRED
                     {
-                        SEMPRED22 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_lexerElement1482);
+                        SEMPRED22 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_lexerElement1482);
                         sempredInAlt((PredAST)SEMPRED22);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:738:6: ^( ACTION elementOptions )
                     {
-                        ACTION23 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_lexerElement1497);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_lexerElement1499);
+                        ACTION23 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_lexerElement1497);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_lexerElement1499);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         actionInAlt((ActionAST)ACTION23);
                     }
@@ -3014,13 +3014,13 @@ public class GrammarTreeVisitor : TreeParser
                 case 6:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:739:6: ^( SEMPRED elementOptions )
                     {
-                        SEMPRED24 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_lexerElement1510);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_lexerElement1512);
+                        SEMPRED24 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_lexerElement1510);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_lexerElement1512);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         sempredInAlt((PredAST)SEMPRED24);
                     }
@@ -3028,7 +3028,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 7:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:740:4: EPSILON
                     {
-                        match(input, EPSILON, FOLLOW_EPSILON_in_lexerElement1520);
+                        Match(input, EPSILON, FOLLOW_EPSILON_in_lexerElement1520);
                     }
                     break;
 
@@ -3039,8 +3039,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3071,8 +3071,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:750:3: ( ^( BLOCK ( optionsSpec )? ( lexerAlternative )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:750:5: ^( BLOCK ( optionsSpec )? ( lexerAlternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_lexerBlock1543);
-                match(input, Token.DOWN, null);
+                Match(input, BLOCK, FOLLOW_BLOCK_in_lexerBlock1543);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:750:13: ( optionsSpec )?
                 int alt31 = 2;
                 int LA31_0 = input.LA(1);
@@ -3085,7 +3085,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:750:13: optionsSpec
                         {
-                            pushFollow(FOLLOW_optionsSpec_in_lexerBlock1545);
+                            PushFollow(FOLLOW_optionsSpec_in_lexerBlock1545);
                             optionsSpec();
                             state._fsp--;
 
@@ -3111,7 +3111,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:750:26: lexerAlternative
                             {
-                                pushFollow(FOLLOW_lexerAlternative_in_lexerBlock1548);
+                                PushFollow(FOLLOW_lexerAlternative_in_lexerBlock1548);
                                 lexerAlternative();
                                 state._fsp--;
 
@@ -3126,7 +3126,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt32++;
                 }
             exit32:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -3136,8 +3136,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3240,7 +3240,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:760:9: terminal
                     {
-                        pushFollow(FOLLOW_terminal_in_lexerAtom1579);
+                        PushFollow(FOLLOW_terminal_in_lexerAtom1579);
                         terminal();
                         state._fsp--;
 
@@ -3249,20 +3249,20 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:761:9: ^( NOT blockSet )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_lexerAtom1590);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_blockSet_in_lexerAtom1592);
+                        Match(input, NOT, FOLLOW_NOT_in_lexerAtom1590);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_blockSet_in_lexerAtom1592);
                         blockSet();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:762:9: blockSet
                     {
-                        pushFollow(FOLLOW_blockSet_in_lexerAtom1603);
+                        PushFollow(FOLLOW_blockSet_in_lexerAtom1603);
                         blockSet();
                         state._fsp--;
 
@@ -3271,32 +3271,32 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:763:9: ^( WILDCARD elementOptions )
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_lexerAtom1614);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_lexerAtom1616);
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_lexerAtom1614);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_lexerAtom1616);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:764:9: WILDCARD
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_lexerAtom1627);
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_lexerAtom1627);
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:765:7: LEXER_CHAR_SET
                     {
-                        match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_lexerAtom1635);
+                        Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_lexerAtom1635);
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:766:9: range
                     {
-                        pushFollow(FOLLOW_range_in_lexerAtom1645);
+                        PushFollow(FOLLOW_range_in_lexerAtom1645);
                         range();
                         state._fsp--;
 
@@ -3305,7 +3305,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 8:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:767:9: ruleref
                     {
-                        pushFollow(FOLLOW_ruleref_in_lexerAtom1655);
+                        PushFollow(FOLLOW_ruleref_in_lexerAtom1655);
                         ruleref();
                         state._fsp--;
 
@@ -3319,8 +3319,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3422,38 +3422,38 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:777:4: ACTION
                     {
-                        match(input, ACTION, FOLLOW_ACTION_in_actionElement1679);
+                        Match(input, ACTION, FOLLOW_ACTION_in_actionElement1679);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:778:6: ^( ACTION elementOptions )
                     {
-                        match(input, ACTION, FOLLOW_ACTION_in_actionElement1687);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_actionElement1689);
+                        Match(input, ACTION, FOLLOW_ACTION_in_actionElement1687);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_actionElement1689);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:779:6: SEMPRED
                     {
-                        match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement1697);
+                        Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement1697);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:780:6: ^( SEMPRED elementOptions )
                     {
-                        match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement1705);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_actionElement1707);
+                        Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement1705);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_actionElement1707);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
@@ -3465,8 +3465,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3503,8 +3503,8 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:792:4: ^( ALT ( elementOptions )? ( element )+ )
                     {
-                        match(input, ALT, FOLLOW_ALT_in_alternative1730);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alternative1730);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:792:10: ( elementOptions )?
                         int alt35 = 2;
                         int LA35_0 = input.LA(1);
@@ -3517,7 +3517,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:792:10: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alternative1732);
+                                    PushFollow(FOLLOW_elementOptions_in_alternative1732);
                                     elementOptions();
                                     state._fsp--;
 
@@ -3543,7 +3543,7 @@ public class GrammarTreeVisitor : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:792:26: element
                                     {
-                                        pushFollow(FOLLOW_element_in_alternative1735);
+                                        PushFollow(FOLLOW_element_in_alternative1735);
                                         element();
                                         state._fsp--;
 
@@ -3558,15 +3558,15 @@ public class GrammarTreeVisitor : TreeParser
                             cnt36++;
                         }
                     exit36:
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:793:4: ^( ALT ( elementOptions )? EPSILON )
                     {
-                        match(input, ALT, FOLLOW_ALT_in_alternative1743);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alternative1743);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:793:10: ( elementOptions )?
                         int alt37 = 2;
                         int LA37_0 = input.LA(1);
@@ -3579,7 +3579,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:793:10: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alternative1745);
+                                    PushFollow(FOLLOW_elementOptions_in_alternative1745);
                                     elementOptions();
                                     state._fsp--;
 
@@ -3588,8 +3588,8 @@ public class GrammarTreeVisitor : TreeParser
 
                         }
 
-                        match(input, EPSILON, FOLLOW_EPSILON_in_alternative1748);
-                        match(input, Token.UP, null);
+                        Match(input, EPSILON, FOLLOW_EPSILON_in_alternative1748);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
@@ -3602,8 +3602,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3659,14 +3659,14 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:803:4: ^( LEXER_ACTION_CALL ID lexerCommandExpr )
                     {
-                        match(input, LEXER_ACTION_CALL, FOLLOW_LEXER_ACTION_CALL_in_lexerCommand1774);
-                        match(input, Token.DOWN, null);
-                        ID25 = (GrammarAST)match(input, ID, FOLLOW_ID_in_lexerCommand1776);
-                        pushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand1778);
+                        Match(input, LEXER_ACTION_CALL, FOLLOW_LEXER_ACTION_CALL_in_lexerCommand1774);
+                        Match(input, Token.DOWN, null);
+                        ID25 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_lexerCommand1776);
+                        PushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand1778);
                         lexerCommandExpr26 = lexerCommandExpr();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         lexerCallCommand(currentOuterAltNumber, ID25, (lexerCommandExpr26 != null ? ((GrammarAST)lexerCommandExpr26.start) : null));
                     }
@@ -3674,7 +3674,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:805:4: ID
                     {
-                        ID27 = (GrammarAST)match(input, ID, FOLLOW_ID_in_lexerCommand1794);
+                        ID27 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_lexerCommand1794);
                         lexerCommand(currentOuterAltNumber, ID27);
                     }
                     break;
@@ -3686,8 +3686,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3736,8 +3736,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -3927,7 +3927,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:827:4: labeledElement
                     {
-                        pushFollow(FOLLOW_labeledElement_in_element1851);
+                        PushFollow(FOLLOW_labeledElement_in_element1851);
                         labeledElement();
                         state._fsp--;
 
@@ -3936,7 +3936,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:828:4: atom
                     {
-                        pushFollow(FOLLOW_atom_in_element1856);
+                        PushFollow(FOLLOW_atom_in_element1856);
                         atom();
                         state._fsp--;
 
@@ -3945,7 +3945,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:829:4: subrule
                     {
-                        pushFollow(FOLLOW_subrule_in_element1861);
+                        PushFollow(FOLLOW_subrule_in_element1861);
                         subrule();
                         state._fsp--;
 
@@ -3954,27 +3954,27 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:830:6: ACTION
                     {
-                        ACTION28 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element1868);
+                        ACTION28 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element1868);
                         actionInAlt((ActionAST)ACTION28);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:831:6: SEMPRED
                     {
-                        SEMPRED29 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element1882);
+                        SEMPRED29 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element1882);
                         sempredInAlt((PredAST)SEMPRED29);
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:832:6: ^( ACTION elementOptions )
                     {
-                        ACTION30 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element1897);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_element1899);
+                        ACTION30 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element1897);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_element1899);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         actionInAlt((ActionAST)ACTION30);
                     }
@@ -3982,13 +3982,13 @@ public class GrammarTreeVisitor : TreeParser
                 case 7:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:833:6: ^( SEMPRED elementOptions )
                     {
-                        SEMPRED31 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element1910);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_element1912);
+                        SEMPRED31 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element1910);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_element1912);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         sempredInAlt((PredAST)SEMPRED31);
                     }
@@ -3996,7 +3996,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 8:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:834:4: range
                     {
-                        pushFollow(FOLLOW_range_in_element1920);
+                        PushFollow(FOLLOW_range_in_element1920);
                         range();
                         state._fsp--;
 
@@ -4005,26 +4005,26 @@ public class GrammarTreeVisitor : TreeParser
                 case 9:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:835:4: ^( NOT blockSet )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_element1926);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_blockSet_in_element1928);
+                        Match(input, NOT, FOLLOW_NOT_in_element1926);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_blockSet_in_element1928);
                         blockSet();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 10:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:836:4: ^( NOT block )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_element1935);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_element1937);
+                        Match(input, NOT, FOLLOW_NOT_in_element1935);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_element1937);
                         block();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
@@ -4036,8 +4036,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4138,7 +4138,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:846:4: atom
                     {
-                        pushFollow(FOLLOW_atom_in_astOperand1959);
+                        PushFollow(FOLLOW_atom_in_astOperand1959);
                         atom();
                         state._fsp--;
 
@@ -4147,26 +4147,26 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:847:4: ^( NOT blockSet )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_astOperand1965);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_blockSet_in_astOperand1967);
+                        Match(input, NOT, FOLLOW_NOT_in_astOperand1965);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_blockSet_in_astOperand1967);
                         blockSet();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:848:4: ^( NOT block )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_astOperand1974);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_astOperand1976);
+                        Match(input, NOT, FOLLOW_NOT_in_astOperand1974);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_astOperand1976);
                         block();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
@@ -4178,8 +4178,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4223,13 +4223,13 @@ public class GrammarTreeVisitor : TreeParser
                     MismatchedSetException mse = new MismatchedSetException(null, input);
                     throw mse;
                 }
-                match(input, Token.DOWN, null);
-                ID32 = (GrammarAST)match(input, ID, FOLLOW_ID_in_labeledElement2005);
-                pushFollow(FOLLOW_element_in_labeledElement2007);
+                Match(input, Token.DOWN, null);
+                ID32 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement2005);
+                PushFollow(FOLLOW_element_in_labeledElement2007);
                 element33 = element();
                 state._fsp--;
 
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
                 label(((GrammarAST)retval.start), ID32, (element33 != null ? ((GrammarAST)element33.start) : null));
             }
@@ -4240,8 +4240,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4293,23 +4293,23 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:868:4: ^( blockSuffix block )
                     {
-                        pushFollow(FOLLOW_blockSuffix_in_subrule2032);
+                        PushFollow(FOLLOW_blockSuffix_in_subrule2032);
                         blockSuffix();
                         state._fsp--;
 
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_subrule2034);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_subrule2034);
                         block();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:869:5: block
                     {
-                        pushFollow(FOLLOW_block_in_subrule2041);
+                        PushFollow(FOLLOW_block_in_subrule2041);
                         block();
                         state._fsp--;
 
@@ -4323,8 +4323,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4376,23 +4376,23 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:879:4: ^( blockSuffix lexerBlock )
                     {
-                        pushFollow(FOLLOW_blockSuffix_in_lexerSubrule2066);
+                        PushFollow(FOLLOW_blockSuffix_in_lexerSubrule2066);
                         blockSuffix();
                         state._fsp--;
 
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_lexerBlock_in_lexerSubrule2068);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_lexerBlock_in_lexerSubrule2068);
                         lexerBlock();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:880:5: lexerBlock
                     {
-                        pushFollow(FOLLOW_lexerBlock_in_lexerSubrule2075);
+                        PushFollow(FOLLOW_lexerBlock_in_lexerSubrule2075);
                         lexerBlock();
                         state._fsp--;
 
@@ -4406,8 +4406,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4438,7 +4438,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:890:5: ( ebnfSuffix )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:890:7: ebnfSuffix
             {
-                pushFollow(FOLLOW_ebnfSuffix_in_blockSuffix2102);
+                PushFollow(FOLLOW_ebnfSuffix_in_blockSuffix2102);
                 ebnfSuffix();
                 state._fsp--;
 
@@ -4450,8 +4450,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4500,8 +4500,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4670,41 +4670,41 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:912:4: ^( DOT ID terminal )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom2163);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom2165);
-                        pushFollow(FOLLOW_terminal_in_atom2167);
+                        Match(input, DOT, FOLLOW_DOT_in_atom2163);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom2165);
+                        PushFollow(FOLLOW_terminal_in_atom2167);
                         terminal();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:913:4: ^( DOT ID ruleref )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom2174);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom2176);
-                        pushFollow(FOLLOW_ruleref_in_atom2178);
+                        Match(input, DOT, FOLLOW_DOT_in_atom2174);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom2176);
+                        PushFollow(FOLLOW_ruleref_in_atom2178);
                         ruleref();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:914:7: ^( WILDCARD elementOptions )
                     {
-                        WILDCARD34 = (GrammarAST)match(input, WILDCARD, FOLLOW_WILDCARD_in_atom2188);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_atom2190);
+                        WILDCARD34 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom2188);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_atom2190);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         wildcardRef(WILDCARD34);
                     }
@@ -4712,14 +4712,14 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:915:7: WILDCARD
                     {
-                        WILDCARD35 = (GrammarAST)match(input, WILDCARD, FOLLOW_WILDCARD_in_atom2201);
+                        WILDCARD35 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom2201);
                         wildcardRef(WILDCARD35);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:916:9: terminal
                     {
-                        pushFollow(FOLLOW_terminal_in_atom2217);
+                        PushFollow(FOLLOW_terminal_in_atom2217);
                         terminal();
                         state._fsp--;
 
@@ -4728,7 +4728,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 6:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:917:7: blockSet
                     {
-                        pushFollow(FOLLOW_blockSet_in_atom2225);
+                        PushFollow(FOLLOW_blockSet_in_atom2225);
                         blockSet();
                         state._fsp--;
 
@@ -4737,7 +4737,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 7:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:918:9: ruleref
                     {
-                        pushFollow(FOLLOW_ruleref_in_atom2235);
+                        PushFollow(FOLLOW_ruleref_in_atom2235);
                         ruleref();
                         state._fsp--;
 
@@ -4751,8 +4751,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4783,8 +4783,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:928:2: ( ^( SET ( setElement )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:928:4: ^( SET ( setElement )+ )
             {
-                match(input, SET, FOLLOW_SET_in_blockSet2260);
-                match(input, Token.DOWN, null);
+                Match(input, SET, FOLLOW_SET_in_blockSet2260);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:928:10: ( setElement )+
                 int cnt45 = 0;
             loop45:
@@ -4802,7 +4802,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:928:10: setElement
                             {
-                                pushFollow(FOLLOW_setElement_in_blockSet2262);
+                                PushFollow(FOLLOW_setElement_in_blockSet2262);
                                 setElement();
                                 state._fsp--;
 
@@ -4817,7 +4817,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt45++;
                 }
             exit45:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -4827,8 +4827,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -4947,13 +4947,13 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:938:4: ^( STRING_LITERAL elementOptions )
                     {
-                        STRING_LITERAL36 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2286);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_setElement2288);
+                        STRING_LITERAL36 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2286);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_setElement2288);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         stringRef((TerminalAST)STRING_LITERAL36);
                     }
@@ -4961,13 +4961,13 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:939:4: ^( TOKEN_REF elementOptions )
                     {
-                        TOKEN_REF37 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement2300);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_setElement2302);
+                        TOKEN_REF37 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement2300);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_setElement2302);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         tokenRef((TerminalAST)TOKEN_REF37);
                     }
@@ -4975,25 +4975,25 @@ public class GrammarTreeVisitor : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:940:4: STRING_LITERAL
                     {
-                        STRING_LITERAL38 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2312);
+                        STRING_LITERAL38 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2312);
                         stringRef((TerminalAST)STRING_LITERAL38);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:941:4: TOKEN_REF
                     {
-                        TOKEN_REF39 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement2337);
+                        TOKEN_REF39 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement2337);
                         tokenRef((TerminalAST)TOKEN_REF39);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:942:4: ^( RANGE a= STRING_LITERAL b= STRING_LITERAL )
                     {
-                        match(input, RANGE, FOLLOW_RANGE_in_setElement2366);
-                        match(input, Token.DOWN, null);
-                        a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2370);
-                        b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2374);
-                        match(input, Token.UP, null);
+                        Match(input, RANGE, FOLLOW_RANGE_in_setElement2366);
+                        Match(input, Token.DOWN, null);
+                        a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2370);
+                        b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2374);
+                        Match(input, Token.UP, null);
 
 
                         stringRef((TerminalAST)a);
@@ -5004,7 +5004,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 6:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:947:17: LEXER_CHAR_SET
                     {
-                        match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement2397);
+                        Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement2397);
                     }
                     break;
 
@@ -5015,8 +5015,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5047,8 +5047,8 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:5: ( ^( BLOCK ( optionsSpec )? ( ruleAction )* ( ACTION )? ( alternative )+ ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:7: ^( BLOCK ( optionsSpec )? ( ruleAction )* ( ACTION )? ( alternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_block2422);
-                match(input, Token.DOWN, null);
+                Match(input, BLOCK, FOLLOW_BLOCK_in_block2422);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:15: ( optionsSpec )?
                 int alt47 = 2;
                 int LA47_0 = input.LA(1);
@@ -5061,7 +5061,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:15: optionsSpec
                         {
-                            pushFollow(FOLLOW_optionsSpec_in_block2424);
+                            PushFollow(FOLLOW_optionsSpec_in_block2424);
                             optionsSpec();
                             state._fsp--;
 
@@ -5086,7 +5086,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:28: ruleAction
                             {
-                                pushFollow(FOLLOW_ruleAction_in_block2427);
+                                PushFollow(FOLLOW_ruleAction_in_block2427);
                                 ruleAction();
                                 state._fsp--;
 
@@ -5111,7 +5111,7 @@ public class GrammarTreeVisitor : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:40: ACTION
                         {
-                            match(input, ACTION, FOLLOW_ACTION_in_block2430);
+                            Match(input, ACTION, FOLLOW_ACTION_in_block2430);
                         }
                         break;
 
@@ -5134,7 +5134,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:957:48: alternative
                             {
-                                pushFollow(FOLLOW_alternative_in_block2433);
+                                PushFollow(FOLLOW_alternative_in_block2433);
                                 alternative();
                                 state._fsp--;
 
@@ -5149,7 +5149,7 @@ public class GrammarTreeVisitor : TreeParser
                     cnt50++;
                 }
             exit50:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
@@ -5159,8 +5159,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5194,10 +5194,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:967:5: ( ^( RULE_REF (arg= ARG_ACTION )? ( elementOptions )? ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:967:7: ^( RULE_REF (arg= ARG_ACTION )? ( elementOptions )? )
             {
-                RULE_REF40 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref2463);
+                RULE_REF40 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref2463);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:967:21: (arg= ARG_ACTION )?
                     int alt51 = 2;
                     int LA51_0 = input.LA(1);
@@ -5210,7 +5210,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:967:21: arg= ARG_ACTION
                             {
-                                arg = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref2467);
+                                arg = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref2467);
                             }
                             break;
 
@@ -5228,7 +5228,7 @@ public class GrammarTreeVisitor : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:967:34: elementOptions
                             {
-                                pushFollow(FOLLOW_elementOptions_in_ruleref2470);
+                                PushFollow(FOLLOW_elementOptions_in_ruleref2470);
                                 elementOptions();
                                 state._fsp--;
 
@@ -5237,7 +5237,7 @@ public class GrammarTreeVisitor : TreeParser
 
                     }
 
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
 
@@ -5252,8 +5252,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5284,11 +5284,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:981:5: ( ^( RANGE STRING_LITERAL STRING_LITERAL ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:981:7: ^( RANGE STRING_LITERAL STRING_LITERAL )
             {
-                match(input, RANGE, FOLLOW_RANGE_in_range2507);
-                match(input, Token.DOWN, null);
-                match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range2509);
-                match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range2511);
-                match(input, Token.UP, null);
+                Match(input, RANGE, FOLLOW_RANGE_in_range2507);
+                Match(input, Token.DOWN, null);
+                Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range2509);
+                Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range2511);
+                Match(input, Token.UP, null);
 
             }
 
@@ -5298,8 +5298,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5406,13 +5406,13 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:991:8: ^( STRING_LITERAL elementOptions )
                     {
-                        STRING_LITERAL41 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal2541);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_terminal2543);
+                        STRING_LITERAL41 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal2541);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_terminal2543);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         stringRef((TerminalAST)STRING_LITERAL41);
                     }
@@ -5420,20 +5420,20 @@ public class GrammarTreeVisitor : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:993:7: STRING_LITERAL
                     {
-                        STRING_LITERAL42 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal2566);
+                        STRING_LITERAL42 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal2566);
                         stringRef((TerminalAST)STRING_LITERAL42);
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:994:7: ^( TOKEN_REF elementOptions )
                     {
-                        TOKEN_REF43 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal2580);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_terminal2582);
+                        TOKEN_REF43 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal2580);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_terminal2582);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         tokenRef((TerminalAST)TOKEN_REF43);
                     }
@@ -5441,7 +5441,7 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:995:7: TOKEN_REF
                     {
-                        TOKEN_REF44 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal2593);
+                        TOKEN_REF44 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal2593);
                         tokenRef((TerminalAST)TOKEN_REF44);
                     }
                     break;
@@ -5453,8 +5453,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5485,10 +5485,10 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1005:5: ( ^( ELEMENT_OPTIONS ( elementOption[(GrammarASTWithOptions)$start.getParent()] )* ) )
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1005:7: ^( ELEMENT_OPTIONS ( elementOption[(GrammarASTWithOptions)$start.getParent()] )* )
             {
-                match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions2630);
+                Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions2630);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1005:25: ( elementOption[(GrammarASTWithOptions)$start.getParent()] )*
                 loop54:
                     while (true)
@@ -5505,7 +5505,7 @@ public class GrammarTreeVisitor : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1005:25: elementOption[(GrammarASTWithOptions)$start.getParent()]
                                 {
-                                    pushFollow(FOLLOW_elementOption_in_elementOptions2632);
+                                    PushFollow(FOLLOW_elementOption_in_elementOptions2632);
                                     elementOption((GrammarASTWithOptions)((GrammarAST)retval.start).getParent());
                                     state._fsp--;
 
@@ -5518,7 +5518,7 @@ public class GrammarTreeVisitor : TreeParser
                         }
                     }
                 exit54:
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
             }
@@ -5529,8 +5529,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -5672,18 +5672,18 @@ public class GrammarTreeVisitor : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1015:7: ID
                     {
-                        ID45 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2663);
+                        ID45 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2663);
                         elementOption(t, ID45, null);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1016:9: ^( ASSIGN id= ID v= ID )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2683);
-                        match(input, Token.DOWN, null);
-                        id = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2687);
-                        v = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2691);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2683);
+                        Match(input, Token.DOWN, null);
+                        id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2687);
+                        v = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2691);
+                        Match(input, Token.UP, null);
 
                         elementOption(t, id, v);
                     }
@@ -5691,11 +5691,11 @@ public class GrammarTreeVisitor : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1017:9: ^( ASSIGN ID v= STRING_LITERAL )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2707);
-                        match(input, Token.DOWN, null);
-                        ID46 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2709);
-                        v = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption2713);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2707);
+                        Match(input, Token.DOWN, null);
+                        ID46 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2709);
+                        v = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption2713);
+                        Match(input, Token.UP, null);
 
                         elementOption(t, ID46, v);
                     }
@@ -5703,11 +5703,11 @@ public class GrammarTreeVisitor : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1018:9: ^( ASSIGN ID v= ACTION )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2727);
-                        match(input, Token.DOWN, null);
-                        ID47 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2729);
-                        v = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_elementOption2733);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2727);
+                        Match(input, Token.DOWN, null);
+                        ID47 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2729);
+                        v = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_elementOption2733);
+                        Match(input, Token.UP, null);
 
                         elementOption(t, ID47, v);
                     }
@@ -5715,11 +5715,11 @@ public class GrammarTreeVisitor : TreeParser
                 case 5:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:1019:9: ^( ASSIGN ID v= INT )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2749);
-                        match(input, Token.DOWN, null);
-                        ID48 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption2751);
-                        v = (GrammarAST)match(input, INT, FOLLOW_INT_in_elementOption2755);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption2749);
+                        Match(input, Token.DOWN, null);
+                        ID48 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2751);
+                        v = (GrammarAST)Match(input, INT, FOLLOW_INT_in_elementOption2755);
+                        Match(input, Token.UP, null);
 
                         elementOption(t, ID48, v);
                     }
@@ -5732,8 +5732,8 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {

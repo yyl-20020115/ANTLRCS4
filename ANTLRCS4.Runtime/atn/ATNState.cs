@@ -145,7 +145,7 @@ public abstract class ATNState {
 		return transitions.Count;
 	}
 
-	public void addTransition(Transition e) {
+	public void AddTransition(Transition e) {
 		addTransition(transitions.Count, e);
 	}
 

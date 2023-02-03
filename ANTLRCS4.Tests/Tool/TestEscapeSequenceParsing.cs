@@ -128,7 +128,7 @@ public class TestEscapeSequenceParsing {
     [TestMethod]
 	public void testParseUnicodePropertyInverted() {
 		IntervalSet expected = IntervalSet.of(0, 66559);
-		expected.add(66640, MAX_CODE_POINT);
+		expected.Add(66640, MAX_CODE_POINT);
 		Assert.AreEqual(
 				new Result(Result.Type.PROPERTY, -1, expected, 0, 11),
 				EscapeSequenceParsing.parseEscape("\\P{Deseret}", 0));

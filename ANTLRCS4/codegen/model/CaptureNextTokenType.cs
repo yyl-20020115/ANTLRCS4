@@ -7,7 +7,8 @@
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class CaptureNextTokenType : SrcOp {
-	public String varName;
-	public CaptureNextTokenType(OutputModelFactory factory, String varName) : base(factory) { this.varName = varName; }
+public class CaptureNextTokenType : SrcOp
+{
+    public string varName;
+    public CaptureNextTokenType(OutputModelFactory factory, string varName) : base(factory) { this.varName = varName; }
 }

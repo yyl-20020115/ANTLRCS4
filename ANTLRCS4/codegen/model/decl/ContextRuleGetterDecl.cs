@@ -7,13 +7,14 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 /** {@code public XContext X() { }} */
-public class ContextRuleGetterDecl : ContextGetterDecl {
-	public String ctxName;
-	public bool optional;
+public class ContextRuleGetterDecl : ContextGetterDecl
+{
+    public readonly string ctxName;
+    public readonly bool optional;
 
-	public ContextRuleGetterDecl(OutputModelFactory factory, String name, String ctxName, bool optional): base(factory, name)
+    public ContextRuleGetterDecl(OutputModelFactory factory, string name, string ctxName, bool optional) : base(factory, name)
     {
-		this.ctxName = ctxName;
-		this.optional = optional;
-	}
+        this.ctxName = ctxName;
+        this.optional = optional;
+    }
 }

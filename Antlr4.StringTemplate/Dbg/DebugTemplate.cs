@@ -43,10 +43,10 @@ using StringWriter = System.IO.StringWriter;
 public class DebugTemplate : Template
 {
     /** Record who made us? ConstructionEvent creates Exception to grab stack */
-    public ConstructionEvent newSTEvent;
+    public readonly ConstructionEvent newSTEvent;
 
     /** Track construction-time Add attribute "events"; used for Template user-level debugging */
-    public MultiMap<string, AddAttributeEvent> addAttrEvents;
+    public readonly MultiMap<string, AddAttributeEvent> addAttrEvents;
 
     public DebugTemplate()
     {
@@ -77,9 +77,7 @@ public class DebugTemplate : Template
     }
 
     public override Template CreateShadow(Template shadowEnclosingInstance)
-    {
-        return new DebugTemplate(this, true, shadowEnclosingInstance);
-    }
+        => new DebugTemplate(this, true, shadowEnclosingInstance);
 
     public override Template Add(string name, object value)
     {
@@ -91,37 +89,25 @@ public class DebugTemplate : Template
 
     // TESTING SUPPORT
 
-    public virtual List<InterpEvent> GetEvents()
-    {
-        return GetEvents(CultureInfo.CurrentCulture);
-    }
+    public virtual List<InterpEvent> GetEvents() => GetEvents(CultureInfo.CurrentCulture);
 
-    public virtual List<InterpEvent> GetEvents(int lineWidth)
-    {
-        return GetEvents(CultureInfo.CurrentCulture, lineWidth);
-    }
+    public virtual List<InterpEvent> GetEvents(int lineWidth) => GetEvents(CultureInfo.CurrentCulture, lineWidth);
 
-    public virtual List<InterpEvent> GetEvents(ITemplateWriter writer)
-    {
-        return GetEvents(CultureInfo.CurrentCulture, writer);
-    }
+    public virtual List<InterpEvent> GetEvents(ITemplateWriter writer) => GetEvents(CultureInfo.CurrentCulture, writer);
 
-    public virtual List<InterpEvent> GetEvents(CultureInfo locale)
-    {
-        return GetEvents(locale, AutoIndentWriter.NoWrap);
-    }
+    public virtual List<InterpEvent> GetEvents(CultureInfo locale) => GetEvents(locale, AutoIndentWriter.NoWrap);
 
     public virtual List<InterpEvent> GetEvents(CultureInfo locale, int lineWidth)
     {
-        StringWriter @out = new StringWriter();
-        ITemplateWriter wr = new AutoIndentWriter(@out);
+        var @out = new StringWriter();
+        var wr = new AutoIndentWriter(@out);
         wr.LineWidth = lineWidth;
         return GetEvents(locale, wr);
     }
 
     public virtual List<InterpEvent> GetEvents(CultureInfo culture, ITemplateWriter writer)
     {
-        Interpreter interp = new Interpreter(groupThatCreatedThisInstance, culture);
+        var interp = new Interpreter(groupThatCreatedThisInstance, culture);
         interp.Execute(writer, this); // Render and track events
         return interp.GetEvents();
     }

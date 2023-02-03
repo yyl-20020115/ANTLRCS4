@@ -9,10 +9,11 @@ namespace org.antlr.v4.codegen.model.decl;
 /** {@code public List<XContext> X() { }
  *  public XContext X(int i) { }}
  */
-public class ContextRuleListGetterDecl : ContextGetterDecl {
-	public String ctxName;
-	public ContextRuleListGetterDecl(OutputModelFactory factory, String name, String ctxName) : base(factory, name)
+public class ContextRuleListGetterDecl : ContextGetterDecl
+{
+    public readonly string ctxName;
+    public ContextRuleListGetterDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name)
     {
-		this.ctxName = ctxName;
-	}
+        this.ctxName = ctxName;
+    }
 }

@@ -303,7 +303,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     }
 
     //@Override
-    public virtual String getSourceName()
+    public virtual String GetSourceName()
     {
         return input.getSourceName();
     }

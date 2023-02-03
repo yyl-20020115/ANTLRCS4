@@ -162,12 +162,12 @@ public class ToolTestUtils
         if (g.atn == null)
         {
             semanticProcess(g);
-            Assert.AreEqual(0, g.tool.getNumErrors());
+            Assert.AreEqual(0, g.Tools.getNumErrors());
 
             ParserATNFactory f = g.isLexer() ? new LexerATNFactory((LexerGrammar)g) : new ParserATNFactory(g);
 
-            g.atn = f.createATN();
-            Assert.AreEqual(0, g.tool.getNumErrors());
+            g.atn = f.CreateATN();
+            Assert.AreEqual(0, g.Tools.getNumErrors());
         }
 
         ATN atn = g.atn;

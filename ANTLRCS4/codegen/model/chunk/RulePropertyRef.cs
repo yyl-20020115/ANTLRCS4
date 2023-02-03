@@ -11,9 +11,10 @@ namespace org.antlr.v4.codegen.model.chunk;
 /** */
 public class RulePropertyRef : ActionChunk
 {
-	public String label;
+    public readonly string label;
 
-	public RulePropertyRef(StructDecl ctx, String label) :base(ctx){
-		this.label = label;
-	}
+    public RulePropertyRef(StructDecl ctx, string label) : base(ctx)
+    {
+        this.label = label;
+    }
 }

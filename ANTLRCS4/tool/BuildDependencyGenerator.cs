@@ -64,7 +64,7 @@ public class BuildDependencyGenerator {
     public BuildDependencyGenerator(Tool tool, Grammar g) {
         this.tool = tool;
 		this.g = g;
-		generator = CodeGenerator.create(g);
+		generator = CodeGenerator.Create(g);
     }
 
     /** From T.g return a list of File objects that
@@ -74,19 +74,19 @@ public class BuildDependencyGenerator {
         List<string> files = new ();
 
         // Add generated recognizer; e.g., TParser.java
-        if (generator.getTarget().needsHeader()) {
-          files.Add(getOutputFile(generator.getRecognizerFileName(true)));
+        if (generator.Target.NeedsHeader()) {
+          files.Add(getOutputFile(generator.GetRecognizerFileName(true)));
         }
-        files.Add(getOutputFile(generator.getRecognizerFileName(false)));
+        files.Add(getOutputFile(generator.GetRecognizerFileName(false)));
         // Add output vocab file; e.g., T.tokens. This is always generated to
         // the base output directory, which will be just . if there is no -o option
         //
-		files.Add(getOutputFile(generator.getVocabFileName()));
+		files.Add(getOutputFile(generator.GetVocabFileName()));
         // are we generating a .h file?
         Template headerExtST = null;
-        Template extST = generator.getTemplates().GetInstanceOf("codeFileExtension");
-        if (generator.getTemplates().IsDefined("headerFile")) {
-            headerExtST = generator.getTemplates().GetInstanceOf("headerFileExtension");
+        Template extST = generator.Templates.GetInstanceOf("codeFileExtension");
+        if (generator.Templates.IsDefined("headerFile")) {
+            headerExtST = generator.Templates.GetInstanceOf("headerFileExtension");
             String suffix = Grammar.getGrammarTypeToFileNameSuffix(g.getType());
             String fileName = g.name + suffix + headerExtST.Render();
             files.Add(getOutputFile(fileName));
@@ -107,32 +107,32 @@ public class BuildDependencyGenerator {
             }
         }
 
-        if ( g.tool.gen_listener ) {
+        if ( g.Tools.gen_listener ) {
           // Add generated listener; e.g., TListener.java
-          if (generator.getTarget().needsHeader()) {
-            files.Add(getOutputFile(generator.getListenerFileName(true)));
+          if (generator.Target.NeedsHeader()) {
+            files.Add(getOutputFile(generator.GetListenerFileName(true)));
           }
-          files.Add(getOutputFile(generator.getListenerFileName(false)));
+          files.Add(getOutputFile(generator.GetListenerFileName(false)));
 
           // Add generated base listener; e.g., TBaseListener.java
-          if (generator.getTarget().needsHeader()) {
-            files.Add(getOutputFile(generator.getBaseListenerFileName(true)));
+          if (generator.Target.NeedsHeader()) {
+            files.Add(getOutputFile(generator.GetBaseListenerFileName(true)));
           }
-          files.Add(getOutputFile(generator.getBaseListenerFileName(false)));
+          files.Add(getOutputFile(generator.GetBaseListenerFileName(false)));
         }
 
-        if ( g.tool.gen_visitor ) {
+        if ( g.Tools.gen_visitor ) {
           // Add generated visitor; e.g., TVisitor.java
-          if (generator.getTarget().needsHeader()) {
-            files.Add(getOutputFile(generator.getVisitorFileName(true)));
+          if (generator.Target.NeedsHeader()) {
+            files.Add(getOutputFile(generator.GetVisitorFileName(true)));
           }
-          files.Add(getOutputFile(generator.getVisitorFileName(false)));
+          files.Add(getOutputFile(generator.GetVisitorFileName(false)));
 
           // Add generated base visitor; e.g., TBaseVisitor.java
-          if (generator.getTarget().needsHeader()) {
-            files.Add(getOutputFile(generator.getBaseVisitorFileName(true)));
+          if (generator.Target.NeedsHeader()) {
+            files.Add(getOutputFile(generator.GetBaseVisitorFileName(true)));
           }
-          files.Add(getOutputFile(generator.getBaseVisitorFileName(false)));
+          files.Add(getOutputFile(generator.GetBaseVisitorFileName(false)));
         }
 
 

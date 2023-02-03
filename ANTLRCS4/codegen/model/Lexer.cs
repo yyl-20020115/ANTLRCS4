@@ -9,36 +9,38 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.codegen.model;
 
 
-public class Lexer : Recognizer {
-	public ICollection<String> channelNames;
-	public Dictionary<String, int> escapedChannels;
-	public LexerFile file;
-	public ICollection<String> modes;
-	public ICollection<String> escapedModeNames;
+public class Lexer : Recognizer
+{
+    public ICollection<string> channelNames;
+    public Dictionary<string, int> escapedChannels;
+    public LexerFile file;
+    public ICollection<string> modes;
+    public ICollection<string> escapedModeNames;
 
-	[ModelElement]
-	public Dictionary<Rule, RuleActionFunction> actionFuncs =
-		new ();
+    [ModelElement]
+    public Dictionary<Rule, RuleActionFunction> actionFuncs = new();
 
-	public Lexer(OutputModelFactory factory, LexerFile file):base(factory)
+    public Lexer(OutputModelFactory factory, LexerFile file) : base(factory)
     {
-		this.file = file; // who contains us?
+        this.file = file; // who contains us?
 
-		Grammar g = factory.getGrammar();
-		Target target = factory.getGenerator().getTarget();
+        var g = factory.GetGrammar();
+        var target = factory.GetGenerator().Target;
 
-		escapedChannels = new ();
-		channelNames = new List<string>();
-		foreach (String key in g.channelNameToValueMap.Keys) {
-			int value = g.channelNameToValueMap[key];
-			escapedChannels[target.escapeIfNeeded(key)]= value;
-			channelNames.Add(key);
-		}
+        escapedChannels = new();
+        channelNames = new List<string>();
+        foreach (var key in g.channelNameToValueMap.Keys)
+        {
+            int value = g.channelNameToValueMap[key];
+            escapedChannels[target.EscapeIfNeeded(key)] = value;
+            channelNames.Add(key);
+        }
 
-		modes = (g as LexerGrammar).modes.Keys;
-		escapedModeNames = new List<String>(modes.Count);
-		foreach (String mode in modes) {
-			escapedModeNames.Add(target.escapeIfNeeded(mode));
-		}
-	}
+        modes = (g as LexerGrammar).modes.Keys;
+        escapedModeNames = new List<string>(modes.Count);
+        foreach (var mode in modes)
+        {
+            escapedModeNames.Add(target.EscapeIfNeeded(mode));
+        }
+    }
 }

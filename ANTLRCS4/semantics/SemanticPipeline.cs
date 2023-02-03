@@ -52,19 +52,19 @@ public class SemanticPipeline {
 		ruleCollector.process(g.ast);
 
 		// DO BASIC / EASY SEMANTIC CHECKS
-		int prevErrors = g.tool.errMgr.getNumErrors();
+		int prevErrors = g.Tools.ErrMgr.getNumErrors();
 		BasicSemanticChecks basics = new BasicSemanticChecks(g, ruleCollector);
 		basics.process();
-		if ( g.tool.errMgr.getNumErrors()>prevErrors ) return;
+		if ( g.Tools.ErrMgr.getNumErrors()>prevErrors ) return;
 
 		// TRANSFORM LEFT-RECURSIVE RULES
-		prevErrors = g.tool.errMgr.getNumErrors();
+		prevErrors = g.Tools.ErrMgr.getNumErrors();
 		LeftRecursiveRuleTransformer lrtrans =
 			new LeftRecursiveRuleTransformer(g.ast, ruleCollector.rules.Values, g);
-		lrtrans.translateLeftRecursiveRules();
+		lrtrans.TranslateLeftRecursiveRules();
 
 		// don't continue if we got errors during left-recursion elimination
-		if ( g.tool.errMgr.getNumErrors()>prevErrors ) return;
+		if ( g.Tools.ErrMgr.getNumErrors()>prevErrors ) return;
 
         // STORE RULES IN GRAMMAR
         foreach (Rule r in ruleCollector.rules.Values) {
@@ -111,7 +111,7 @@ public class SemanticPipeline {
 		symcheck.checkForQualifiedRuleIssues(g, collector.qualifiedRulerefs);
 
 		// don't continue if we got symbol errors
-		if ( g.tool.getNumErrors()>0 ) return;
+		if ( g.Tools.getNumErrors()>0 ) return;
 
 		// CHECK ATTRIBUTE EXPRESSIONS FOR SEMANTIC VALIDITY
 		AttributeChecks.checkAllAttributeExpressions(g);
@@ -212,7 +212,7 @@ public class SemanticPipeline {
         // create token types for tokens { A, B, C } ALIASES
         foreach (GrammarAST alias in tokensDefs) {
 			if (g.getTokenType(alias.getText()) != Token.INVALID_TYPE) {
-				g.tool.errMgr.grammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.getText());
+				g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.getText());
 			}
 
 			g.defineTokenName(alias.getText());
@@ -221,7 +221,7 @@ public class SemanticPipeline {
         // DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
         foreach (GrammarAST idAST in tokenIDs) {
 			if (g.getTokenType(idAST.getText()) == Token.INVALID_TYPE) {
-				g.tool.errMgr.grammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.getText());
+				g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.getText());
 			}
 
 			g.defineTokenName(idAST.getText());
@@ -234,12 +234,12 @@ public class SemanticPipeline {
 			}
 
 			if (g.getTokenType(termAST.getText()) == Token.INVALID_TYPE) {
-				g.tool.errMgr.grammarError(ErrorType.IMPLICIT_STRING_DEFINITION, g.fileName, termAST.token, termAST.getText());
+				g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_STRING_DEFINITION, g.fileName, termAST.token, termAST.getText());
 			}
 		}
 
-		g.tool.log("semantics", "tokens="+g.tokenNameToTypeMap);
-        g.tool.log("semantics", "strings="+g.stringLiteralToTypeMap);
+		g.Tools.Log("semantics", "tokens="+g.tokenNameToTypeMap);
+        g.Tools.Log("semantics", "strings="+g.stringLiteralToTypeMap);
 	}
 
 	/**
@@ -262,17 +262,17 @@ public class SemanticPipeline {
 			// values in ANTLR grammar semantics.
 
 			if (g.getTokenType(channelName) != Token.INVALID_TYPE) {
-				g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_TOKEN, g.fileName, channel.token, channelName);
+				g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_TOKEN, g.fileName, channel.token, channelName);
 			}
 
 			if (LexerATNFactory.COMMON_CONSTANTS.ContainsKey(channelName)) {
-				g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, channel.token, channelName);
+				g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, channel.token, channelName);
 			}
 
 			if (outermost is LexerGrammar) {
 				LexerGrammar lexerGrammar = (LexerGrammar)outermost;
 				if (lexerGrammar.modes.ContainsKey(channelName)) {
-					g.tool.errMgr.grammarError(ErrorType.CHANNEL_CONFLICTS_WITH_MODE, g.fileName, channel.token, channelName);
+					g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_MODE, g.fileName, channel.token, channelName);
 				}
 			}
 

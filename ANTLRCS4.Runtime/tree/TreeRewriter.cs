@@ -66,10 +66,10 @@ public class TreeRewriter : TreeParser
             state = new RecognizerSharedState();
             input = new CommonTreeNodeStream(originalAdaptor, t);
             ((CommonTreeNodeStream)input).setTokenStream(originalTokenStream);
-            setBacktrackingLevel(1);
+            BacktrackingLevel = 1;
             TreeRuleReturnScope r = (TreeRuleReturnScope)whichRule.rule();
-            setBacktrackingLevel(0);
-            if (failed()) return t;
+            BacktrackingLevel = 0;
+            if (Failed) return t;
             if (showTransformations &&
                  r != null && !t.Equals(r.getTree()) && r.getTree() != null)
             {

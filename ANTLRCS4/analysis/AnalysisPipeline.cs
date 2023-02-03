@@ -13,79 +13,86 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.analysis;
 
+public class AnalysisPipeline
+{
+    public readonly Grammar g;
 
+    public AnalysisPipeline(Grammar g) => this.g = g;
 
-public class AnalysisPipeline {
-	public Grammar g;
+    public void Process()
+    {
+        // LEFT-RECURSION CHECK
+        var lr = new LeftRecursionDetector(g, g.atn);
+        lr.Check();
+        if (lr.listOfRecursiveCycles.Count > 0) return; // bail out
 
-	public AnalysisPipeline(Grammar g) {
-		this.g = g;
-	}
+        if (g.isLexer())
+        {
+            ProcessLexer();
+        }
+        else
+        {
+            // BUILD DFA FOR EACH DECISION
+            ProcessParser();
+        }
+    }
 
-	public void process() {
-		// LEFT-RECURSION CHECK
-		LeftRecursionDetector lr = new LeftRecursionDetector(g, g.atn);
-		lr.check();
-		if ( lr.listOfRecursiveCycles.Count>0 ) return; // bail out
+    protected void ProcessLexer()
+    {
+        // make sure all non-fragment lexer rules must match at least one symbol
+        foreach (var rule in g.rules.Values)
+        {
+            if (rule.isFragment())
+                continue;
 
-		if (g.isLexer()) {
-			processLexer();
-		}
-		else {
-			// BUILD DFA FOR EACH DECISION
-			processParser();
-		}
-	}
+            var analyzer = new LL1Analyzer(g.atn);
+            var look = analyzer.LOOK(g.atn.ruleToStartState[rule.index], null);
+            if (look.contains(Token.EPSILON))
+                g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_TOKEN, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
+        }
+    }
 
-	protected void processLexer() {
-		// make sure all non-fragment lexer rules must match at least one symbol
-		foreach (Rule rule in g.rules.Values) {
-			if (rule.isFragment()) {
-				continue;
-			}
+    protected void ProcessParser()
+    {
+        g.decisionLOOK = new(g.atn.getNumberOfDecisions() + 1);
+        foreach (var state in g.atn.decisionToState)
+        {
+            g.Tools.Log("LL1", "\nDECISION " + state.decision + " in rule " + g.getRule(state.ruleIndex).name);
+            IntervalSet[] look;
+            if (state.nonGreedy)
+            { // nongreedy decisions can't be LL(1)
+                look = new IntervalSet[state.getNumberOfTransitions() + 1];
+            }
+            else
+            {
+                var anal = new LL1Analyzer(g.atn);
+                look = anal.getDecisionLookahead(state);
+                g.Tools.Log("LL1", "look=" + RuntimeUtils.join(look, ","));
+            }
 
-			LL1Analyzer analyzer = new LL1Analyzer(g.atn);
-			IntervalSet look = analyzer.LOOK(g.atn.ruleToStartState[rule.index], null);
-			if (look.contains(Token.EPSILON)) {
-				g.tool.errMgr.grammarError(ErrorType.EPSILON_TOKEN, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
-			}
-		}
-	}
+            //assert s.decision + 1 >= g.decisionLOOK.size();
+            Utils.setSize(g.decisionLOOK, state.decision + 1);
+            g.decisionLOOK[state.decision] = look;
+            g.Tools.Log("LL1", "LL(1)? " + Disjoint(look));
+        }
+    }
 
-	protected void processParser() {
-		g.decisionLOOK = new (g.atn.getNumberOfDecisions()+1);
-		foreach (DecisionState s in g.atn.decisionToState) {
-            g.tool.log("LL1", "\nDECISION "+s.decision+" in rule "+g.getRule(s.ruleIndex).name);
-			IntervalSet[] look;
-			if ( s.nonGreedy ) { // nongreedy decisions can't be LL(1)
-				look = new IntervalSet[s.getNumberOfTransitions()+1];
-			}
-			else {
-				LL1Analyzer anal = new LL1Analyzer(g.atn);
-				look = anal.getDecisionLookahead(s);
-				g.tool.log("LL1", "look=" + RuntimeUtils.join(look,","));
-			}
-
-			//assert s.decision + 1 >= g.decisionLOOK.size();
-			Utils.setSize(g.decisionLOOK, s.decision+1);
-			g.decisionLOOK[s.decision]= look;
-			g.tool.log("LL1", "LL(1)? " + disjoint(look));
-		}
-	}
-
-	/** Return whether lookahead sets are disjoint; no lookahead ⇒ not disjoint */
-	public static bool disjoint(IntervalSet[] altLook) {
+    /** Return whether lookahead sets are disjoint; no lookahead ⇒ not disjoint */
+    public static bool Disjoint(IntervalSet[] altLook)
+    {
         bool collision = false;
-		IntervalSet combined = new IntervalSet();
-		if ( altLook==null ) return false;
-		foreach (IntervalSet look in altLook) {
-			if ( look==null ) return false; // lookahead must've computation failed
-			if ( !look.and(combined).isNil() ) {
-				collision = true;
-				break;
-			}
-			combined.addAll(look);
-		}
-		return !collision;
-	}
+        var combined = new IntervalSet();
+        if (altLook == null) return false;
+        foreach (var look in altLook)
+        {
+            if (look == null) return false; // lookahead must've computation failed
+            if (!look.and(combined).isNil())
+            {
+                collision = true;
+                break;
+            }
+            combined.addAll(look);
+        }
+        return !collision;
+    }
 }

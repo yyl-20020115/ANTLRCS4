@@ -14,7 +14,5 @@ namespace org.antlr.v4.codegen.model;
 public class ThrowNoViableAlt : ThrowRecognitionException {
 	public ThrowNoViableAlt(OutputModelFactory factory, GrammarAST blkOrEbnfRootAST,
 							IntervalSet expecting)
-        : base(factory, blkOrEbnfRootAST, expecting)
-	{
-	}
+        : base(factory, blkOrEbnfRootAST, expecting) { }
 }

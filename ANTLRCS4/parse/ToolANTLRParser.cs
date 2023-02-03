@@ -31,26 +31,26 @@ public class ToolANTLRParser : ANTLRParser {
 		}
 	//	List stack = getRuleInvocationStack(e, this.getClass().getName());
 	//	msg += ", rule stack = "+stack;
-		tool.errMgr.syntaxError(ErrorType.SYNTAX_ERROR, getSourceName(), e.token, e, msg);
+		tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, GetSourceName(), e.token, e, msg);
 	}
 
 	public String getParserErrorMessage(antlr.runtime.Parser parser, RecognitionException e) {
 		String msg;
 		if ( e is NoViableAltException) {
-			String name = parser.getTokenErrorDisplay(e.token);
+			String name = GetTokenErrorDisplay(e.token);
 			msg = name+" came as a complete surprise to me";
 		}
 		else if ( e is v4ParserException) {
 			msg = ((v4ParserException)e).msg;
 		}
 		else {
-			msg = parser.getErrorMessage(e, parser.getTokenNames());
+			msg = parser.GetErrorMessage(e, parser.getTokenNames());
 		}
 		return msg;
 	}
 
 	//@Override
 	public void grammarError(ErrorType etype, Token token, params Object[] args) {
-		tool.errMgr.grammarError(etype, getSourceName(), token, args);
+		tool.ErrMgr.GrammarError(etype, GetSourceName(), token, args);
 	}
 }

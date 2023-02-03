@@ -139,7 +139,7 @@ public class SourceGenTriggers : TreeParser
     //@Override 
     public virtual String[] getTokenNames() { return SourceGenTriggers.tokenNames; }
     //@Override 
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\codegen\\SourceGenTriggers.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\codegen\\SourceGenTriggers.g"; }
 
 
     public OutputModelController controller;
@@ -156,7 +156,7 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:59:7: ( block[null, null] )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:59:9: block[null, null]
             {
-                pushFollow(FOLLOW_block_in_dummy61);
+                PushFollow(FOLLOW_block_in_dummy61);
                 block(null, null);
                 state._fsp--;
 
@@ -165,8 +165,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -193,8 +193,8 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:5: ( ^(blk= BLOCK ( ^( OPTIONS ( . )+ ) )? ( alternative )+ ) )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:7: ^(blk= BLOCK ( ^( OPTIONS ( . )+ ) )? ( alternative )+ )
             {
-                blk = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_block84);
-                match(input, Token.DOWN, null);
+                blk = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_block84);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:20: ( ^( OPTIONS ( . )+ ) )?
                 int alt2 = 2;
                 int LA2_0 = input.LA(1);
@@ -207,8 +207,8 @@ public class SourceGenTriggers : TreeParser
                     case 1:
                         // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:21: ^( OPTIONS ( . )+ )
                         {
-                            match(input, OPTIONS, FOLLOW_OPTIONS_in_block88);
-                            match(input, Token.DOWN, null);
+                            Match(input, OPTIONS, FOLLOW_OPTIONS_in_block88);
+                            Match(input, Token.DOWN, null);
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:31: ( . )+
                             int cnt1 = 0;
                         loop1:
@@ -242,7 +242,7 @@ public class SourceGenTriggers : TreeParser
                                 cnt1++;
                             }
                         exit1:
-                            match(input, Token.UP, null);
+                            Match(input, Token.UP, null);
 
                         }
                         break;
@@ -267,7 +267,7 @@ public class SourceGenTriggers : TreeParser
                         case 1:
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:64:9: alternative
                             {
-                                pushFollow(FOLLOW_alternative_in_block109);
+                                PushFollow(FOLLOW_alternative_in_block109);
                                 alternative1 = alternative();
                                 state._fsp--;
 
@@ -284,19 +284,19 @@ public class SourceGenTriggers : TreeParser
                 }
             exit3:
 
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
 
                 if (alts.Count == 1 && ebnfRoot == null) return alts.Cast<SrcOp>().ToList();
                 if (ebnfRoot == null)
                 {
-                    omos = DefaultOutputModelFactory.list(controller.getChoiceBlock((BlockAST)blk, alts, label));
+                    omos = DefaultOutputModelFactory.List(controller.GetChoiceBlock((BlockAST)blk, alts, label));
                 }
                 else
                 {
-                    Choice choice = controller.getEBNFBlock(ebnfRoot, alts);
+                    Choice choice = controller.GetEBNFBlock(ebnfRoot, alts);
                     hasLookaheadBlock |= choice is PlusBlock || choice is StarBlock;
-                    omos = DefaultOutputModelFactory.list(choice);
+                    omos = DefaultOutputModelFactory.List(choice);
                 }
 
             }
@@ -304,8 +304,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -341,7 +341,7 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:86:5: (a= alt[outerMost] )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:86:7: a= alt[outerMost]
             {
-                pushFollow(FOLLOW_alt_in_alternative161);
+                PushFollow(FOLLOW_alt_in_alternative161);
                 a = alt(outerMost);
                 state._fsp--;
 
@@ -349,13 +349,13 @@ public class SourceGenTriggers : TreeParser
             }
 
 
-            controller.finishAlternative(retval.altCodeBlock, retval.ops, outerMost);
+            controller.FinishAlternative(retval.altCodeBlock, retval.ops, outerMost);
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -386,7 +386,7 @@ public class SourceGenTriggers : TreeParser
 
         // set alt if outer ALT only (the only ones with alt field set to Alternative object)
         AltAST altAST = (AltAST)retval.start;
-        if (outerMost) controller.setCurrentOuterMostAlt(altAST.alt);
+        if (outerMost) controller.SetCurrentOuterMostAlt(altAST.alt);
 
         try
         {
@@ -401,12 +401,12 @@ public class SourceGenTriggers : TreeParser
 
                         List<SrcOp> elems = new();
                         // TODO: shouldn't we pass ((GrammarAST)retval.start) to controller.alternative()?
-                        retval.altCodeBlock = controller.alternative(controller.getCurrentOuterMostAlt(), outerMost);
+                        retval.altCodeBlock = controller.Alternative(controller.GetCurrentOuterMostAlt(), outerMost);
                         retval.altCodeBlock.ops = retval.ops = elems;
-                        controller.setCurrentBlock(retval.altCodeBlock);
+                        controller.                        CurrentBlock = retval.altCodeBlock;
 
-                        match(input, ALT, FOLLOW_ALT_in_alt191);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alt191);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:102:10: ( elementOptions )?
                         int alt4 = 2;
                         int LA4_0 = input.LA(1);
@@ -419,7 +419,7 @@ public class SourceGenTriggers : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:102:10: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alt193);
+                                    PushFollow(FOLLOW_elementOptions_in_alt193);
                                     elementOptions();
                                     state._fsp--;
 
@@ -445,7 +445,7 @@ public class SourceGenTriggers : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:102:28: element
                                     {
-                                        pushFollow(FOLLOW_element_in_alt198);
+                                        PushFollow(FOLLOW_element_in_alt198);
                                         element2 = element();
                                         state._fsp--;
 
@@ -461,15 +461,15 @@ public class SourceGenTriggers : TreeParser
                             cnt5++;
                         }
                     exit5:
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:104:4: ^( ALT ( elementOptions )? EPSILON )
                     {
-                        match(input, ALT, FOLLOW_ALT_in_alt212);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alt212);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:104:10: ( elementOptions )?
                         int alt6 = 2;
                         int LA6_0 = input.LA(1);
@@ -482,7 +482,7 @@ public class SourceGenTriggers : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:104:10: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alt214);
+                                    PushFollow(FOLLOW_elementOptions_in_alt214);
                                     elementOptions();
                                     state._fsp--;
 
@@ -491,10 +491,10 @@ public class SourceGenTriggers : TreeParser
 
                         }
 
-                        match(input, EPSILON, FOLLOW_EPSILON_in_alt217);
-                        match(input, Token.UP, null);
+                        Match(input, EPSILON, FOLLOW_EPSILON_in_alt217);
+                        Match(input, Token.UP, null);
 
-                        retval.altCodeBlock = controller.epsilon(controller.getCurrentOuterMostAlt(), outerMost);
+                        retval.altCodeBlock = controller.Epsilon(controller.GetCurrentOuterMostAlt(), outerMost);
                     }
                     break;
 
@@ -502,8 +502,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -633,7 +633,7 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:109:4: labeledElement
                     {
-                        pushFollow(FOLLOW_labeledElement_in_element246);
+                        PushFollow(FOLLOW_labeledElement_in_element246);
                         labeledElement3 = labeledElement();
                         state._fsp--;
 
@@ -643,7 +643,7 @@ public class SourceGenTriggers : TreeParser
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:110:4: atom[null,false]
                     {
-                        pushFollow(FOLLOW_atom_in_element257);
+                        PushFollow(FOLLOW_atom_in_element257);
                         atom4 = atom(null, false);
                         state._fsp--;
 
@@ -653,7 +653,7 @@ public class SourceGenTriggers : TreeParser
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:111:4: subrule
                     {
-                        pushFollow(FOLLOW_subrule_in_element267);
+                        PushFollow(FOLLOW_subrule_in_element267);
                         subrule5 = subrule();
                         state._fsp--;
 
@@ -663,43 +663,43 @@ public class SourceGenTriggers : TreeParser
                 case 4:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:112:6: ACTION
                     {
-                        ACTION6 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element282);
-                        omos = controller.action((ActionAST)ACTION6);
+                        ACTION6 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element282);
+                        omos = controller.Action((ActionAST)ACTION6);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:113:6: SEMPRED
                     {
-                        SEMPRED7 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element297);
-                        omos = controller.sempred((ActionAST)SEMPRED7);
+                        SEMPRED7 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element297);
+                        omos = controller.Sempred((ActionAST)SEMPRED7);
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:114:4: ^( ACTION elementOptions )
                     {
-                        ACTION8 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element311);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_element313);
+                        ACTION8 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element311);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_element313);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.action((ActionAST)ACTION8);
+                        omos = controller.Action((ActionAST)ACTION8);
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:115:6: ^( SEMPRED elementOptions )
                     {
-                        SEMPRED9 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element325);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_elementOptions_in_element327);
+                        SEMPRED9 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element325);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_elementOptions_in_element327);
                         elementOptions();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.sempred((ActionAST)SEMPRED9);
+                        omos = controller.Sempred((ActionAST)SEMPRED9);
                     }
                     break;
 
@@ -707,8 +707,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -909,14 +909,14 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:119:4: ^( ASSIGN ID atom[$ID,false] )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement347);
-                        match(input, Token.DOWN, null);
-                        ID10 = (GrammarAST)match(input, ID, FOLLOW_ID_in_labeledElement349);
-                        pushFollow(FOLLOW_atom_in_labeledElement351);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement347);
+                        Match(input, Token.DOWN, null);
+                        ID10 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement349);
+                        PushFollow(FOLLOW_atom_in_labeledElement351);
                         atom11 = atom(ID10, false);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         omos = atom11;
                     }
@@ -924,14 +924,14 @@ public class SourceGenTriggers : TreeParser
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:120:4: ^( PLUS_ASSIGN ID atom[$ID,false] )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement364);
-                        match(input, Token.DOWN, null);
-                        ID12 = (GrammarAST)match(input, ID, FOLLOW_ID_in_labeledElement366);
-                        pushFollow(FOLLOW_atom_in_labeledElement368);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement364);
+                        Match(input, Token.DOWN, null);
+                        ID12 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement366);
+                        PushFollow(FOLLOW_atom_in_labeledElement368);
                         atom13 = atom(ID12, false);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         omos = atom13;
                     }
@@ -939,14 +939,14 @@ public class SourceGenTriggers : TreeParser
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:121:4: ^( ASSIGN ID block[$ID,null] )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement379);
-                        match(input, Token.DOWN, null);
-                        ID14 = (GrammarAST)match(input, ID, FOLLOW_ID_in_labeledElement381);
-                        pushFollow(FOLLOW_block_in_labeledElement383);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement379);
+                        Match(input, Token.DOWN, null);
+                        ID14 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement381);
+                        PushFollow(FOLLOW_block_in_labeledElement383);
                         block15 = block(ID14, null);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         omos = block15;
                     }
@@ -954,14 +954,14 @@ public class SourceGenTriggers : TreeParser
                 case 4:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:122:4: ^( PLUS_ASSIGN ID block[$ID,null] )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement396);
-                        match(input, Token.DOWN, null);
-                        ID16 = (GrammarAST)match(input, ID, FOLLOW_ID_in_labeledElement398);
-                        pushFollow(FOLLOW_block_in_labeledElement400);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement396);
+                        Match(input, Token.DOWN, null);
+                        ID16 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement398);
+                        PushFollow(FOLLOW_block_in_labeledElement400);
                         block17 = block(ID16, null);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         omos = block17;
                     }
@@ -971,8 +971,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1029,13 +1029,13 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:126:4: ^( OPTIONAL b= block[null,$OPTIONAL] )
                     {
-                        OPTIONAL18 = (GrammarAST)match(input, OPTIONAL, FOLLOW_OPTIONAL_in_subrule421);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_subrule425);
+                        OPTIONAL18 = (GrammarAST)Match(input, OPTIONAL, FOLLOW_OPTIONAL_in_subrule421);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_subrule425);
                         b = block(null, OPTIONAL18);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
 
                         omos = b;
@@ -1069,26 +1069,26 @@ public class SourceGenTriggers : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:130:6: ^(op= CLOSURE b= block[null,null] )
                                 {
-                                    op = (GrammarAST)match(input, CLOSURE, FOLLOW_CLOSURE_in_subrule441);
-                                    match(input, Token.DOWN, null);
-                                    pushFollow(FOLLOW_block_in_subrule445);
+                                    op = (GrammarAST)Match(input, CLOSURE, FOLLOW_CLOSURE_in_subrule441);
+                                    Match(input, Token.DOWN, null);
+                                    PushFollow(FOLLOW_block_in_subrule445);
                                     b = block(null, null);
                                     state._fsp--;
 
-                                    match(input, Token.UP, null);
+                                    Match(input, Token.UP, null);
 
                                 }
                                 break;
                             case 2:
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:131:5: ^(op= POSITIVE_CLOSURE b= block[null,null] )
                                 {
-                                    op = (GrammarAST)match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_subrule456);
-                                    match(input, Token.DOWN, null);
-                                    pushFollow(FOLLOW_block_in_subrule460);
+                                    op = (GrammarAST)Match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_subrule456);
+                                    Match(input, Token.DOWN, null);
+                                    PushFollow(FOLLOW_block_in_subrule460);
                                     b = block(null, null);
                                     state._fsp--;
 
-                                    match(input, Token.UP, null);
+                                    Match(input, Token.UP, null);
 
                                 }
                                 break;
@@ -1099,18 +1099,18 @@ public class SourceGenTriggers : TreeParser
                         List<CodeBlockForAlt> alts = new ();
                         SrcOp blk = b[0];
                         CodeBlockForAlt alt = new CodeBlockForAlt(controller.@delegate);
-                        alt.addOp(blk);
+                        alt.AddOp(blk);
                         alts.Add(alt);
-                        SrcOp loop = controller.getEBNFBlock(op, alts); // "star it"
+                        SrcOp loop = controller.GetEBNFBlock(op, alts); // "star it"
                         hasLookaheadBlock |= loop is PlusBlock || loop is StarBlock;
-                        omos = DefaultOutputModelFactory.list(loop);
+                        omos = DefaultOutputModelFactory.List(loop);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:143:5: block[null, null]
                     {
-                        pushFollow(FOLLOW_block_in_subrule476);
+                        PushFollow(FOLLOW_block_in_subrule476);
                         block19 = block(null, null);
                         state._fsp--;
 
@@ -1122,8 +1122,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1150,8 +1150,8 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:147:5: ( ^( SET ( atom[label,invert] )+ ) )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:147:7: ^( SET ( atom[label,invert] )+ )
             {
-                SET20 = (GrammarAST)match(input, SET, FOLLOW_SET_in_blockSet506);
-                match(input, Token.DOWN, null);
+                SET20 = (GrammarAST)Match(input, SET, FOLLOW_SET_in_blockSet506);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:147:13: ( atom[label,invert] )+
                 int cnt12 = 0;
             loop12:
@@ -1169,7 +1169,7 @@ public class SourceGenTriggers : TreeParser
                         case 1:
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:147:13: atom[label,invert]
                             {
-                                pushFollow(FOLLOW_atom_in_blockSet508);
+                                PushFollow(FOLLOW_atom_in_blockSet508);
                                 atom(label, invert);
                                 state._fsp--;
                             }
@@ -1183,16 +1183,16 @@ public class SourceGenTriggers : TreeParser
                     cnt12++;
                 }
             exit12:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
-                omos = controller.set(SET20, label, invert);
+                omos = controller.Set(SET20, label, invert);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1370,13 +1370,13 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:161:4: ^( NOT a= atom[$label, true] )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_atom538);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_atom_in_atom542);
+                        Match(input, NOT, FOLLOW_NOT_in_atom538);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_atom_in_atom542);
                         a = atom(label, true);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         omos = a;
                     }
@@ -1384,7 +1384,7 @@ public class SourceGenTriggers : TreeParser
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:162:4: range[label]
                     {
-                        pushFollow(FOLLOW_range_in_atom552);
+                        PushFollow(FOLLOW_range_in_atom552);
                         range21 = range(label);
                         state._fsp--;
 
@@ -1394,53 +1394,53 @@ public class SourceGenTriggers : TreeParser
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:163:4: ^( DOT ID terminal[$label] )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom567);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom569);
-                        pushFollow(FOLLOW_terminal_in_atom571);
+                        Match(input, DOT, FOLLOW_DOT_in_atom567);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom569);
+                        PushFollow(FOLLOW_terminal_in_atom571);
                         terminal(label);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:164:4: ^( DOT ID ruleref[$label] )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom579);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom581);
-                        pushFollow(FOLLOW_ruleref_in_atom583);
+                        Match(input, DOT, FOLLOW_DOT_in_atom579);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom581);
+                        PushFollow(FOLLOW_ruleref_in_atom583);
                         ruleref(label);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:165:7: ^( WILDCARD . )
                     {
-                        WILDCARD22 = (GrammarAST)match(input, WILDCARD, FOLLOW_WILDCARD_in_atom594);
-                        match(input, Token.DOWN, null);
+                        WILDCARD22 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom594);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.wildcard(WILDCARD22, label);
+                        omos = controller.Wildcard(WILDCARD22, label);
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:166:7: WILDCARD
                     {
-                        WILDCARD23 = (GrammarAST)match(input, WILDCARD, FOLLOW_WILDCARD_in_atom613);
-                        omos = controller.wildcard(WILDCARD23, label);
+                        WILDCARD23 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom613);
+                        omos = controller.Wildcard(WILDCARD23, label);
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:167:9: terminal[label]
                     {
-                        pushFollow(FOLLOW_terminal_in_atom632);
+                        PushFollow(FOLLOW_terminal_in_atom632);
                         terminal24 = terminal(label);
                         state._fsp--;
 
@@ -1450,7 +1450,7 @@ public class SourceGenTriggers : TreeParser
                 case 8:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:168:9: ruleref[label]
                     {
-                        pushFollow(FOLLOW_ruleref_in_atom649);
+                        PushFollow(FOLLOW_ruleref_in_atom649);
                         ruleref25 = ruleref(label);
                         state._fsp--;
 
@@ -1460,7 +1460,7 @@ public class SourceGenTriggers : TreeParser
                 case 9:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:169:4: blockSet[$label, invert]
                     {
-                        pushFollow(FOLLOW_blockSet_in_atom661);
+                        PushFollow(FOLLOW_blockSet_in_atom661);
                         blockSet26 = blockSet(label, invert);
                         state._fsp--;
 
@@ -1472,8 +1472,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1501,10 +1501,10 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:5: ( ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? ) )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:7: ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? )
             {
-                RULE_REF27 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref685);
+                RULE_REF27 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref685);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:18: ( ARG_ACTION )?
                     int alt14 = 2;
                     int LA14_0 = input.LA(1);
@@ -1517,7 +1517,7 @@ public class SourceGenTriggers : TreeParser
                         case 1:
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:18: ARG_ACTION
                             {
-                                ARG_ACTION28 = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref687);
+                                ARG_ACTION28 = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref687);
                             }
                             break;
 
@@ -1535,7 +1535,7 @@ public class SourceGenTriggers : TreeParser
                         case 1:
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:30: elementOptions
                             {
-                                pushFollow(FOLLOW_elementOptions_in_ruleref690);
+                                PushFollow(FOLLOW_elementOptions_in_ruleref690);
                                 elementOptions();
                                 state._fsp--;
 
@@ -1544,17 +1544,17 @@ public class SourceGenTriggers : TreeParser
 
                     }
 
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
-                omos = controller.ruleRef(RULE_REF27, label, ARG_ACTION28);
+                omos = controller.RuleRef(RULE_REF27, label, ARG_ACTION28);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1582,19 +1582,19 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:177:5: ( ^( RANGE a= STRING_LITERAL b= STRING_LITERAL ) )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:177:7: ^( RANGE a= STRING_LITERAL b= STRING_LITERAL )
             {
-                match(input, RANGE, FOLLOW_RANGE_in_range718);
-                match(input, Token.DOWN, null);
-                a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range722);
-                b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range726);
-                match(input, Token.UP, null);
+                Match(input, RANGE, FOLLOW_RANGE_in_range718);
+                Match(input, Token.DOWN, null);
+                a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range722);
+                b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range726);
+                Match(input, Token.UP, null);
 
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1753,49 +1753,49 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:181:8: ^( STRING_LITERAL . )
                     {
-                        STRING_LITERAL29 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal751);
-                        match(input, Token.DOWN, null);
+                        STRING_LITERAL29 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal751);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.stringRef(STRING_LITERAL29, label);
+                        omos = controller.StringRef(STRING_LITERAL29, label);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:182:7: STRING_LITERAL
                     {
-                        STRING_LITERAL30 = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal766);
-                        omos = controller.stringRef(STRING_LITERAL30, label);
+                        STRING_LITERAL30 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal766);
+                        omos = controller.StringRef(STRING_LITERAL30, label);
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:183:7: ^( TOKEN_REF ARG_ACTION . )
                     {
-                        TOKEN_REF31 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal780);
-                        match(input, Token.DOWN, null);
-                        ARG_ACTION32 = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal782);
+                        TOKEN_REF31 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal780);
+                        Match(input, Token.DOWN, null);
+                        ARG_ACTION32 = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal782);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.tokenRef(TOKEN_REF31, label, ARG_ACTION32);
+                        omos = controller.TokenRef(TOKEN_REF31, label, ARG_ACTION32);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:184:7: ^( TOKEN_REF . )
                     {
-                        TOKEN_REF33 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal796);
-                        match(input, Token.DOWN, null);
+                        TOKEN_REF33 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal796);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        omos = controller.tokenRef(TOKEN_REF33, label, null);
+                        omos = controller.TokenRef(TOKEN_REF33, label, null);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:185:7: TOKEN_REF
                     {
-                        TOKEN_REF34 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal812);
-                        omos = controller.tokenRef(TOKEN_REF34, label, null);
+                        TOKEN_REF34 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal812);
+                        omos = controller.TokenRef(TOKEN_REF34, label, null);
                     }
                     break;
 
@@ -1803,8 +1803,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1825,8 +1825,8 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:189:5: ( ^( ELEMENT_OPTIONS ( elementOption )+ ) )
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:189:7: ^( ELEMENT_OPTIONS ( elementOption )+ )
             {
-                match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions836);
-                match(input, Token.DOWN, null);
+                Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions836);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:189:25: ( elementOption )+
                 int cnt17 = 0;
             loop17:
@@ -1844,7 +1844,7 @@ public class SourceGenTriggers : TreeParser
                         case 1:
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:189:25: elementOption
                             {
-                                pushFollow(FOLLOW_elementOption_in_elementOptions838);
+                                PushFollow(FOLLOW_elementOption_in_elementOptions838);
                                 elementOption();
                                 state._fsp--;
 
@@ -1859,15 +1859,15 @@ public class SourceGenTriggers : TreeParser
                     cnt17++;
                 }
             exit17:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1991,50 +1991,50 @@ public class SourceGenTriggers : TreeParser
                 case 1:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:193:7: ID
                     {
-                        match(input, ID, FOLLOW_ID_in_elementOption857);
+                        Match(input, ID, FOLLOW_ID_in_elementOption857);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:194:9: ^( ASSIGN ID ID )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption868);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption870);
-                        match(input, ID, FOLLOW_ID_in_elementOption872);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption868);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption870);
+                        Match(input, ID, FOLLOW_ID_in_elementOption872);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:195:9: ^( ASSIGN ID STRING_LITERAL )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption884);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption886);
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption888);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption884);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption886);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption888);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:196:9: ^( ASSIGN ID ACTION )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption900);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption902);
-                        match(input, ACTION, FOLLOW_ACTION_in_elementOption904);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption900);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption902);
+                        Match(input, ACTION, FOLLOW_ACTION_in_elementOption904);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:197:9: ^( ASSIGN ID INT )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption916);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption918);
-                        match(input, INT, FOLLOW_INT_in_elementOption920);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption916);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption918);
+                        Match(input, INT, FOLLOW_INT_in_elementOption920);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
@@ -2043,8 +2043,8 @@ public class SourceGenTriggers : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {

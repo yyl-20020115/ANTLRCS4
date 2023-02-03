@@ -9,34 +9,35 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
-public abstract class OutputFile : OutputModelObject {
-	public readonly String fileName;
-	public readonly String grammarFileName;
-	public readonly String ANTLRVersion;
-    public readonly String TokenLabelType;
-    public readonly String InputSymbolType;
+public abstract class OutputFile : OutputModelObject
+{
+    public readonly string fileName;
+    public readonly string grammarFileName;
+    public readonly string ANTLRVersion;
+    public readonly string TokenLabelType;
+    public readonly string InputSymbolType;
 
-    public OutputFile(OutputModelFactory factory, String fileName): base(factory)
+    public OutputFile(OutputModelFactory factory, string fileName) : base(factory)
     {
         this.fileName = fileName;
-        Grammar g = factory.getGrammar();
-		grammarFileName = g.fileName;
-		ANTLRVersion = Tool.VERSION;
+        var g = factory.GetGrammar();
+        grammarFileName = g.fileName;
+        ANTLRVersion = Tool.VERSION;
         TokenLabelType = g.getOptionString("TokenLabelType");
         InputSymbolType = TokenLabelType;
     }
 
-	public Dictionary<String, Action> buildNamedActions(Grammar g) {
-		return buildNamedActions(g, null);
-	}
+    public Dictionary<string, Action> BuildNamedActions(Grammar g) => BuildNamedActions(g, null);
 
-	public Dictionary<String, Action> buildNamedActions(Grammar g, Predicate<ActionAST> filter) {
-		Dictionary<String, Action> namedActions = new ();
-        foreach (String name in g.namedActions.Keys) {
-			ActionAST ast = g.namedActions[(name)];
-			if(filter==null || filter(ast))
-				namedActions[name]=new Action(factory, ast);
-		}
-		return namedActions;
-	}
+    public Dictionary<string, Action> BuildNamedActions(Grammar g, Predicate<ActionAST> filter)
+    {
+        Dictionary<string, Action> namedActions = new();
+        foreach (var name in g.namedActions.Keys)
+        {
+            var ast = g.namedActions[(name)];
+            if (filter == null || filter(ast))
+                namedActions[name] = new (factory, ast);
+        }
+        return namedActions;
+    }
 }

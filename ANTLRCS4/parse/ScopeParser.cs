@@ -156,7 +156,7 @@ public class ScopeParser {
 			start = 0;
 		}
 		if (start < 0) {
-			g.tool.errMgr.grammarError(ErrorType.CANNOT_FIND_ATTRIBUTE_NAME_IN_DECL, g.fileName, a.token, decl);
+			g.Tools.ErrMgr.GrammarError(ErrorType.CANNOT_FIND_ATTRIBUTE_NAME_IN_DECL, g.fileName, a.token, decl);
 		}
 
 		// walk forward looking for end of an ID
@@ -206,7 +206,7 @@ public class ScopeParser {
 
 		if (start == -1) {
 			start = 0;
-			g.tool.errMgr.grammarError(ErrorType.CANNOT_FIND_ATTRIBUTE_NAME_IN_DECL, g.fileName, a.token, decl);
+			g.Tools.ErrMgr.GrammarError(ErrorType.CANNOT_FIND_ATTRIBUTE_NAME_IN_DECL, g.fileName, a.token, decl);
 		}
 
 		// look for stop of name

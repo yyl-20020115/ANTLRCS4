@@ -8,8 +8,10 @@ using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen.model;
 
-public class RuleSempredFunction:RuleActionFunction {
-	public RuleSempredFunction(OutputModelFactory factory, Rule r, String ctxType): base(factory, r, ctxType)
+public class RuleSempredFunction : RuleActionFunction
+{
+    public RuleSempredFunction(OutputModelFactory factory, Rule r, string ctxType) 
+        : base(factory, r, ctxType)
     {
-	}
+    }
 }

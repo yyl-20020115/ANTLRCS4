@@ -25,42 +25,39 @@ public interface ATNFactory
             this.right = right;
         }
 
-        public override String ToString()
-        {
-            return "(" + left + "," + right + ")";
-        }
+        public override String ToString() => "(" + left + "," + right + ")";
     }
 
 
-    ATN createATN();
+    ATN CreateATN();
 
-    void setCurrentRuleName(String name);
+    void SetCurrentRuleName(String name);
 
-    void setCurrentOuterAlt(int alt);
-
-
-    Handle rule(GrammarAST ruleAST, String name, Handle blk);
+    void SetCurrentOuterAlt(int alt);
 
 
-    ATNState newState();
+    Handle Rule(GrammarAST ruleAST, String name, Handle blk);
 
 
-    Handle label(Handle t);
+    ATNState NewState();
 
 
-    Handle listLabel(Handle t);
+    Handle Label(Handle t);
 
 
-    Handle tokenRef(TerminalAST node);
+    Handle ListLabel(Handle t);
 
 
-    Handle set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert);
+    Handle TokenRef(TerminalAST node);
 
 
-    Handle charSetLiteral(GrammarAST charSetAST);
+    Handle Set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert);
 
 
-    Handle range(GrammarAST a, GrammarAST b);
+    Handle CharSetLiteral(GrammarAST charSetAST);
+
+
+    Handle Range(GrammarAST a, GrammarAST b);
 
     /** For a non-lexer, just build a simple token reference atom.
 	 *  For a lexer, a string is a sequence of char to match.  That is,
@@ -69,7 +66,7 @@ public interface ATNFactory
 	 *  for n characters.
 	 */
 
-    Handle stringLiteral(TerminalAST stringLiteralAST);
+    Handle StringLiteral(TerminalAST stringLiteralAST);
 
     /** For reference to rule r, build
 	 *
@@ -88,30 +85,30 @@ public interface ATNFactory
 	 * @param node
 	 */
 
-    Handle ruleRef(GrammarAST node);
+    Handle RuleRef(GrammarAST node);
 
     /** From an empty alternative build Grip o-e-&gt;o */
 
-    Handle epsilon(GrammarAST node);
+    Handle Epsilon(GrammarAST node);
 
     /** Build what amounts to an epsilon transition with a semantic
 	 *  predicate action.  The pred is a pointer into the AST of
 	 *  the SEMPRED token.
 	 */
 
-    Handle sempred(PredAST pred);
+    Handle Sempred(PredAST pred);
 
     /** Build what amounts to an epsilon transition with an action.
 	 *  The action goes into ATN though it is ignored during analysis.
 	 */
 
-    Handle action(ActionAST action);
+    Handle Action(ActionAST action);
 
 
-    Handle action(String action);
+    Handle Action(String action);
 
 
-    Handle alt(List<Handle> els);
+    Handle Alt(List<Handle> els);
 
     /** From A|B|..|Z alternative block build
      *
@@ -137,7 +134,7 @@ public interface ATNFactory
      *  Set alt number (1..n) in the left-Transition ATNState.
      */
 
-    Handle block(BlockAST blockAST, GrammarAST ebnfRoot, List<Handle> alternativeGrips);
+    Handle Block(BlockAST blockAST, GrammarAST ebnfRoot, List<Handle> alternativeGrips);
 
     //	Handle notBlock(GrammarAST blockAST, Handle set);
 
@@ -150,7 +147,7 @@ public interface ATNFactory
 	 *  or, if A is a block, just add an empty alt to the end of the block
 	 */
 
-    Handle optional(GrammarAST optAST, Handle blk);
+    Handle Optional(GrammarAST optAST, Handle blk);
 
     /** From (A)+ build
 	 *
@@ -166,7 +163,7 @@ public interface ATNFactory
 	 *  an n-alt A block.
 	 */
 
-    Handle plus(GrammarAST plusAST, Handle blk);
+    Handle Plus(GrammarAST plusAST, Handle blk);
 
     /** From (A)* build
 	 *
@@ -199,18 +196,18 @@ public interface ATNFactory
 	 *  determination.  See codegen.g
 	 */
 
-    Handle star(GrammarAST starAST, Handle blk);
+    Handle Star(GrammarAST starAST, Handle blk);
 
     /** Build an atom with all possible values in its label */
 
-    Handle wildcard(GrammarAST associatedAST);
+    Handle Wildcard(GrammarAST associatedAST);
 
 
-    Handle lexerAltCommands(Handle alt, Handle cmds);
+    Handle LexerAltCommands(Handle alt, Handle cmds);
 
 
-    Handle lexerCallCommand(GrammarAST ID, GrammarAST arg);
+    Handle LexerCallCommand(GrammarAST ID, GrammarAST arg);
 
 
-    Handle lexerCommand(GrammarAST ID);
+    Handle LexerCommand(GrammarAST ID);
 }

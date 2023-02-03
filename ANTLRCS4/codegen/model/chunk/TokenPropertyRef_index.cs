@@ -9,10 +9,10 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class TokenPropertyRef_index : TokenPropertyRef 
+public class TokenPropertyRef_index : TokenPropertyRef
 {
-	public TokenPropertyRef_index(StructDecl ctx, String label) 
-		: base(ctx, label)
+    public TokenPropertyRef_index(StructDecl ctx, string label)
+        : base(ctx, label)
     {
-	}
+    }
 }

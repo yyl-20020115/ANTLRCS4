@@ -7,6 +7,7 @@
 namespace org.antlr.v4.codegen;
 
 /** */
-public class LexerFactory : DefaultOutputModelFactory {
-	public LexerFactory(CodeGenerator gen):base(gen) {  }
+public class LexerFactory : DefaultOutputModelFactory
+{
+    public LexerFactory(CodeGenerator gen) : base(gen) { }
 }

@@ -11,8 +11,8 @@ namespace org.antlr.v4.codegen.model.chunk;
 /** */
 public class TokenPropertyRef_int : TokenPropertyRef
 {
-	public TokenPropertyRef_int(StructDecl ctx, String label)
-		: base(ctx, label)
+    public TokenPropertyRef_int(StructDecl ctx, string label)
+        : base(ctx, label)
     {
-	}
+    }
 }

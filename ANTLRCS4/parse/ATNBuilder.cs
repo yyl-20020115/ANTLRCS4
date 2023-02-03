@@ -157,7 +157,7 @@ public class ATNBuilder : TreeParser
     //@Override
     public String[] getTokenNames() { return ATNBuilder.tokenNames; }
     //@Override 
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ATNBuilder.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ATNBuilder.g"; }
 
 
     ATNFactory factory;
@@ -178,7 +178,7 @@ public class ATNBuilder : TreeParser
             // org\\antlr\\v4\\parse\\ATNBuilder.g:80:7: ( block[null] )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:80:9: block[null]
             {
-                pushFollow(FOLLOW_block_in_dummy63);
+                PushFollow(FOLLOW_block_in_dummy63);
                 block(null);
                 state._fsp--;
 
@@ -187,8 +187,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -212,15 +212,15 @@ public class ATNBuilder : TreeParser
 
         List<ATNFactory.Handle> alts = new();
         int alt = 1;
-        factory.setCurrentOuterAlt(alt);
+        factory.SetCurrentOuterAlt(alt);
 
         try
         {
             // org\\antlr\\v4\\parse\\ATNBuilder.g:88:5: ( ^( BLOCK ( ^( OPTIONS ( . )* ) )? (a= alternative )+ ) )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:88:7: ^( BLOCK ( ^( OPTIONS ( . )* ) )? (a= alternative )+ )
             {
-                BLOCK1 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock89);
-                match(input, Token.DOWN, null);
+                BLOCK1 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock89);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\ATNBuilder.g:89:13: ( ^( OPTIONS ( . )* ) )?
                 int alt2 = 2;
                 int LA2_0 = input.LA(1);
@@ -233,10 +233,10 @@ public class ATNBuilder : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:89:14: ^( OPTIONS ( . )* )
                         {
-                            match(input, OPTIONS, FOLLOW_OPTIONS_in_ruleBlock105);
+                            Match(input, OPTIONS, FOLLOW_OPTIONS_in_ruleBlock105);
                             if (input.LA(1) == Token.DOWN)
                             {
-                                match(input, Token.DOWN, null);
+                                Match(input, Token.DOWN, null);
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:89:24: ( . )*
                             loop1:
                                 while (true)
@@ -267,7 +267,7 @@ public class ATNBuilder : TreeParser
                                     }
                                 }
                             exit1:
-                                match(input, Token.UP, null);
+                                Match(input, Token.UP, null);
                             }
 
                         }
@@ -292,11 +292,11 @@ public class ATNBuilder : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:90:17: a= alternative
                             {
-                                pushFollow(FOLLOW_alternative_in_ruleBlock131);
+                                PushFollow(FOLLOW_alternative_in_ruleBlock131);
                                 a = alternative();
                                 state._fsp--;
 
-                                alts.Add(a); factory.setCurrentOuterAlt(++alt);
+                                alts.Add(a); factory.SetCurrentOuterAlt(++alt);
                             }
                             break;
 
@@ -308,16 +308,16 @@ public class ATNBuilder : TreeParser
                     cnt3++;
                 }
             exit3:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
-                p = factory.block((BlockAST)BLOCK1, ebnfRoot, alts);
+                p = factory.Block((BlockAST)BLOCK1, ebnfRoot, alts);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -345,8 +345,8 @@ public class ATNBuilder : TreeParser
             // org\\antlr\\v4\\parse\\ATNBuilder.g:99:5: ( ^( BLOCK ( ^( OPTIONS ( . )* ) )? (a= alternative )+ ) )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:99:7: ^( BLOCK ( ^( OPTIONS ( . )* ) )? (a= alternative )+ )
             {
-                BLOCK2 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_block209);
-                match(input, Token.DOWN, null);
+                BLOCK2 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_block209);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\ATNBuilder.g:99:15: ( ^( OPTIONS ( . )* ) )?
                 int alt5 = 2;
                 int LA5_0 = input.LA(1);
@@ -359,10 +359,10 @@ public class ATNBuilder : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:99:16: ^( OPTIONS ( . )* )
                         {
-                            match(input, OPTIONS, FOLLOW_OPTIONS_in_block213);
+                            Match(input, OPTIONS, FOLLOW_OPTIONS_in_block213);
                             if (input.LA(1) == Token.DOWN)
                             {
-                                match(input, Token.DOWN, null);
+                                Match(input, Token.DOWN, null);
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:99:26: ( . )*
                             loop4:
                                 while (true)
@@ -393,7 +393,7 @@ public class ATNBuilder : TreeParser
                                     }
                                 }
                             exit4:
-                                match(input, Token.UP, null);
+                                Match(input, Token.UP, null);
                             }
 
                         }
@@ -418,7 +418,7 @@ public class ATNBuilder : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:99:33: a= alternative
                             {
-                                pushFollow(FOLLOW_alternative_in_block224);
+                                PushFollow(FOLLOW_alternative_in_block224);
                                 a = alternative();
                                 state._fsp--;
 
@@ -434,16 +434,16 @@ public class ATNBuilder : TreeParser
                     cnt6++;
                 }
             exit6:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
-                p = factory.block((BlockAST)BLOCK2, ebnfRoot, alts);
+                p = factory.Block((BlockAST)BLOCK2, ebnfRoot, alts);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -478,26 +478,26 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:105:7: ^( LEXER_ALT_ACTION a= alternative lexerCommands )
                     {
-                        match(input, LEXER_ALT_ACTION, FOLLOW_LEXER_ALT_ACTION_in_alternative263);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_alternative_in_alternative267);
+                        Match(input, LEXER_ALT_ACTION, FOLLOW_LEXER_ALT_ACTION_in_alternative263);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_alternative_in_alternative267);
                         a = alternative();
                         state._fsp--;
 
-                        pushFollow(FOLLOW_lexerCommands_in_alternative269);
+                        PushFollow(FOLLOW_lexerCommands_in_alternative269);
                         lexerCommands3 = lexerCommands();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        p = factory.lexerAltCommands(a, lexerCommands3);
+                        p = factory.LexerAltCommands(a, lexerCommands3);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:107:7: ^( ALT ( elementOptions )? EPSILON )
                     {
-                        match(input, ALT, FOLLOW_ALT_in_alternative289);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alternative289);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:107:13: ( elementOptions )?
                         int alt7 = 2;
                         int LA7_0 = input.LA(1);
@@ -510,7 +510,7 @@ public class ATNBuilder : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ATNBuilder.g:107:13: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alternative291);
+                                    PushFollow(FOLLOW_elementOptions_in_alternative291);
                                     elementOptions();
                                     state._fsp--;
 
@@ -519,17 +519,17 @@ public class ATNBuilder : TreeParser
 
                         }
 
-                        EPSILON4 = (GrammarAST)match(input, EPSILON, FOLLOW_EPSILON_in_alternative294);
-                        match(input, Token.UP, null);
+                        EPSILON4 = (GrammarAST)Match(input, EPSILON, FOLLOW_EPSILON_in_alternative294);
+                        Match(input, Token.UP, null);
 
-                        p = factory.epsilon(EPSILON4);
+                        p = factory.Epsilon(EPSILON4);
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:108:9: ^( ALT ( elementOptions )? (e= element )+ )
                     {
-                        match(input, ALT, FOLLOW_ALT_in_alternative314);
-                        match(input, Token.DOWN, null);
+                        Match(input, ALT, FOLLOW_ALT_in_alternative314);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:108:15: ( elementOptions )?
                         int alt8 = 2;
                         int LA8_0 = input.LA(1);
@@ -542,7 +542,7 @@ public class ATNBuilder : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ATNBuilder.g:108:15: elementOptions
                                 {
-                                    pushFollow(FOLLOW_elementOptions_in_alternative316);
+                                    PushFollow(FOLLOW_elementOptions_in_alternative316);
                                     elementOptions();
                                     state._fsp--;
 
@@ -568,7 +568,7 @@ public class ATNBuilder : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\ATNBuilder.g:108:32: e= element
                                     {
-                                        pushFollow(FOLLOW_element_in_alternative322);
+                                        PushFollow(FOLLOW_element_in_alternative322);
                                         e = element();
                                         state._fsp--;
 
@@ -584,9 +584,9 @@ public class ATNBuilder : TreeParser
                             cnt9++;
                         }
                     exit9:
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        p = factory.alt(els);
+                        p = factory.Alt(els);
                     }
                     break;
 
@@ -594,8 +594,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -639,7 +639,7 @@ public class ATNBuilder : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:113:10: c= lexerCommand
                             {
-                                pushFollow(FOLLOW_lexerCommand_in_lexerCommands360);
+                                PushFollow(FOLLOW_lexerCommand_in_lexerCommands360);
                                 c = lexerCommand();
                                 state._fsp--;
 
@@ -656,15 +656,15 @@ public class ATNBuilder : TreeParser
                 }
             exit11:
 
-                p = factory.alt(cmds);
+                p = factory.Alt(cmds);
 
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -713,23 +713,23 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:120:4: ^( LEXER_ACTION_CALL ID lexerCommandExpr )
                     {
-                        match(input, LEXER_ACTION_CALL, FOLLOW_LEXER_ACTION_CALL_in_lexerCommand393);
-                        match(input, Token.DOWN, null);
-                        ID5 = (GrammarAST)match(input, ID, FOLLOW_ID_in_lexerCommand395);
-                        pushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand397);
+                        Match(input, LEXER_ACTION_CALL, FOLLOW_LEXER_ACTION_CALL_in_lexerCommand393);
+                        Match(input, Token.DOWN, null);
+                        ID5 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_lexerCommand395);
+                        PushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand397);
                         lexerCommandExpr6 = lexerCommandExpr();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        cmd = factory.lexerCallCommand(ID5, (lexerCommandExpr6 != null ? ((GrammarAST)lexerCommandExpr6.start) : null));
+                        cmd = factory.LexerCallCommand(ID5, (lexerCommandExpr6 != null ? ((GrammarAST)lexerCommandExpr6.start) : null));
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:122:4: ID
                     {
-                        ID7 = (GrammarAST)match(input, ID, FOLLOW_ID_in_lexerCommand413);
-                        cmd = factory.lexerCommand(ID7);
+                        ID7 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_lexerCommand413);
+                        cmd = factory.LexerCommand(ID7);
                     }
                     break;
 
@@ -737,8 +737,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -781,8 +781,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -927,7 +927,7 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:132:4: labeledElement
                     {
-                        pushFollow(FOLLOW_labeledElement_in_element454);
+                        PushFollow(FOLLOW_labeledElement_in_element454);
                         labeledElement8 = labeledElement();
                         state._fsp--;
 
@@ -937,7 +937,7 @@ public class ATNBuilder : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:133:4: atom
                     {
-                        pushFollow(FOLLOW_atom_in_element464);
+                        PushFollow(FOLLOW_atom_in_element464);
                         atom9 = atom();
                         state._fsp--;
 
@@ -947,7 +947,7 @@ public class ATNBuilder : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:134:4: subrule
                     {
-                        pushFollow(FOLLOW_subrule_in_element476);
+                        PushFollow(FOLLOW_subrule_in_element476);
                         subrule10 = subrule();
                         state._fsp--;
 
@@ -957,49 +957,49 @@ public class ATNBuilder : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:135:6: ACTION
                     {
-                        ACTION11 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element490);
-                        retval.p = factory.action((ActionAST)ACTION11);
+                        ACTION11 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element490);
+                        retval.p = factory.Action((ActionAST)ACTION11);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:136:6: SEMPRED
                     {
-                        SEMPRED12 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element504);
-                        retval.p = factory.sempred((PredAST)SEMPRED12);
+                        SEMPRED12 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element504);
+                        retval.p = factory.Sempred((PredAST)SEMPRED12);
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:137:6: ^( ACTION . )
                     {
-                        ACTION13 = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_element519);
-                        match(input, Token.DOWN, null);
+                        ACTION13 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element519);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.action((ActionAST)ACTION13);
+                        retval.p = factory.Action((ActionAST)ACTION13);
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:138:6: ^( SEMPRED . )
                     {
-                        SEMPRED14 = (GrammarAST)match(input, SEMPRED, FOLLOW_SEMPRED_in_element536);
-                        match(input, Token.DOWN, null);
+                        SEMPRED14 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element536);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.sempred((PredAST)SEMPRED14);
+                        retval.p = factory.Sempred((PredAST)SEMPRED14);
                     }
                     break;
                 case 8:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:139:7: ^( NOT b= blockSet[true] )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_element553);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_blockSet_in_element557);
+                        Match(input, NOT, FOLLOW_NOT_in_element553);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_blockSet_in_element557);
                         b = blockSet(true);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = (b != null ? ((ATNBuilder.blockSet_return)b).p : null);
                     }
@@ -1007,8 +1007,8 @@ public class ATNBuilder : TreeParser
                 case 9:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:140:7: LEXER_CHAR_SET
                     {
-                        match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_element570);
-                        retval.p = factory.charSetLiteral(((GrammarAST)retval.start));
+                        Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_element570);
+                        retval.p = factory.CharSetLiteral(((GrammarAST)retval.start));
                     }
                     break;
 
@@ -1016,8 +1016,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1065,7 +1065,7 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:144:4: atom
                     {
-                        pushFollow(FOLLOW_atom_in_astOperand590);
+                        PushFollow(FOLLOW_atom_in_astOperand590);
                         atom15 = atom();
                         state._fsp--;
 
@@ -1075,13 +1075,13 @@ public class ATNBuilder : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:145:4: ^( NOT blockSet[true] )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_astOperand603);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_blockSet_in_astOperand605);
+                        Match(input, NOT, FOLLOW_NOT_in_astOperand603);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_blockSet_in_astOperand605);
                         blockSet16 = blockSet(true);
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         p = (blockSet16 != null ? ((ATNBuilder.blockSet_return)blockSet16).p : null);
                     }
@@ -1091,8 +1091,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1140,31 +1140,31 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:149:4: ^( ASSIGN ID element )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement626);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_labeledElement628);
-                        pushFollow(FOLLOW_element_in_labeledElement630);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement626);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_labeledElement628);
+                        PushFollow(FOLLOW_element_in_labeledElement630);
                         element17 = element();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        p = factory.label((element17 != null ? ((ATNBuilder.element_return)element17).p : null));
+                        p = factory.Label((element17 != null ? ((ATNBuilder.element_return)element17).p : null));
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:150:4: ^( PLUS_ASSIGN ID element )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement643);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_labeledElement645);
-                        pushFollow(FOLLOW_element_in_labeledElement647);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement643);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_labeledElement645);
+                        PushFollow(FOLLOW_element_in_labeledElement647);
                         element18 = element();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        p = factory.listLabel((element18 != null ? ((ATNBuilder.element_return)element18).p : null));
+                        p = factory.ListLabel((element18 != null ? ((ATNBuilder.element_return)element18).p : null));
                     }
                     break;
 
@@ -1172,8 +1172,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1239,13 +1239,13 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:154:4: ^( OPTIONAL block[$start] )
                     {
-                        match(input, OPTIONAL, FOLLOW_OPTIONAL_in_subrule668);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_subrule670);
+                        Match(input, OPTIONAL, FOLLOW_OPTIONAL_in_subrule668);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_subrule670);
                         block19 = block(((GrammarAST)retval.start));
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = block19;
                     }
@@ -1253,13 +1253,13 @@ public class ATNBuilder : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:155:4: ^( CLOSURE block[$start] )
                     {
-                        match(input, CLOSURE, FOLLOW_CLOSURE_in_subrule682);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_subrule684);
+                        Match(input, CLOSURE, FOLLOW_CLOSURE_in_subrule682);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_subrule684);
                         block20 = block(((GrammarAST)retval.start));
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = block20;
                     }
@@ -1267,13 +1267,13 @@ public class ATNBuilder : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:156:4: ^( POSITIVE_CLOSURE block[$start] )
                     {
-                        match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_subrule696);
-                        match(input, Token.DOWN, null);
-                        pushFollow(FOLLOW_block_in_subrule698);
+                        Match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_subrule696);
+                        Match(input, Token.DOWN, null);
+                        PushFollow(FOLLOW_block_in_subrule698);
                         block21 = block(((GrammarAST)retval.start));
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = block21;
                     }
@@ -1281,7 +1281,7 @@ public class ATNBuilder : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:157:5: block[null]
                     {
-                        pushFollow(FOLLOW_block_in_subrule708);
+                        PushFollow(FOLLOW_block_in_subrule708);
                         block22 = block(null);
                         state._fsp--;
 
@@ -1293,8 +1293,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1327,8 +1327,8 @@ public class ATNBuilder : TreeParser
             // org\\antlr\\v4\\parse\\ATNBuilder.g:162:2: ( ^( SET ( setElement )+ ) )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:162:4: ^( SET ( setElement )+ )
             {
-                match(input, SET, FOLLOW_SET_in_blockSet742);
-                match(input, Token.DOWN, null);
+                Match(input, SET, FOLLOW_SET_in_blockSet742);
+                Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\ATNBuilder.g:162:10: ( setElement )+
                 int cnt17 = 0;
             loop17:
@@ -1346,7 +1346,7 @@ public class ATNBuilder : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:162:11: setElement
                             {
-                                pushFollow(FOLLOW_setElement_in_blockSet745);
+                                PushFollow(FOLLOW_setElement_in_blockSet745);
                                 setElement23 = setElement();
                                 state._fsp--;
 
@@ -1362,16 +1362,16 @@ public class ATNBuilder : TreeParser
                     cnt17++;
                 }
             exit17:
-                match(input, Token.UP, null);
+                Match(input, Token.UP, null);
 
-                retval.p = factory.set(((GrammarAST)retval.start), alts, invert);
+                retval.p = factory.Set(((GrammarAST)retval.start), alts, invert);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1483,50 +1483,50 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:167:4: ^( STRING_LITERAL . )
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement766);
-                        match(input, Token.DOWN, null);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement766);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:168:4: ^( TOKEN_REF . )
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement775);
-                        match(input, Token.DOWN, null);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement775);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:169:4: STRING_LITERAL
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement783);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement783);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:170:4: TOKEN_REF
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement788);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement788);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:171:4: ^( RANGE a= STRING_LITERAL b= STRING_LITERAL )
                     {
-                        match(input, RANGE, FOLLOW_RANGE_in_setElement794);
-                        match(input, Token.DOWN, null);
-                        a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement798);
-                        b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement802);
-                        match(input, Token.UP, null);
+                        Match(input, RANGE, FOLLOW_RANGE_in_setElement794);
+                        Match(input, Token.DOWN, null);
+                        a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement798);
+                        b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement802);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:172:9: LEXER_CHAR_SET
                     {
-                        match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement813);
+                        Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement813);
                     }
                     break;
 
@@ -1534,8 +1534,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1712,7 +1712,7 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:176:4: range
                     {
-                        pushFollow(FOLLOW_range_in_atom828);
+                        PushFollow(FOLLOW_range_in_atom828);
                         range24 = range();
                         state._fsp--;
 
@@ -1722,14 +1722,14 @@ public class ATNBuilder : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:177:4: ^( DOT ID terminal )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom840);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom842);
-                        pushFollow(FOLLOW_terminal_in_atom844);
+                        Match(input, DOT, FOLLOW_DOT_in_atom840);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom842);
+                        PushFollow(FOLLOW_terminal_in_atom844);
                         terminal25 = terminal();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = (terminal25 != null ? ((ATNBuilder.terminal_return)terminal25).p : null);
                     }
@@ -1737,14 +1737,14 @@ public class ATNBuilder : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:178:4: ^( DOT ID ruleref )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom854);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_atom856);
-                        pushFollow(FOLLOW_ruleref_in_atom858);
+                        Match(input, DOT, FOLLOW_DOT_in_atom854);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_atom856);
+                        PushFollow(FOLLOW_ruleref_in_atom858);
                         ruleref26 = ruleref();
                         state._fsp--;
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
                         retval.p = ruleref26;
                     }
@@ -1752,25 +1752,25 @@ public class ATNBuilder : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:179:7: ^( WILDCARD . )
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_atom871);
-                        match(input, Token.DOWN, null);
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom871);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.wildcard(((GrammarAST)retval.start));
+                        retval.p = factory.Wildcard(((GrammarAST)retval.start));
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:180:7: WILDCARD
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_atom886);
-                        retval.p = factory.wildcard(((GrammarAST)retval.start));
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom886);
+                        retval.p = factory.Wildcard(((GrammarAST)retval.start));
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:181:7: blockSet[false]
                     {
-                        pushFollow(FOLLOW_blockSet_in_atom899);
+                        PushFollow(FOLLOW_blockSet_in_atom899);
                         blockSet27 = blockSet(false);
                         state._fsp--;
 
@@ -1780,7 +1780,7 @@ public class ATNBuilder : TreeParser
                 case 7:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:182:9: terminal
                     {
-                        pushFollow(FOLLOW_terminal_in_atom914);
+                        PushFollow(FOLLOW_terminal_in_atom914);
                         terminal28 = terminal();
                         state._fsp--;
 
@@ -1790,7 +1790,7 @@ public class ATNBuilder : TreeParser
                 case 8:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:183:9: ruleref
                     {
-                        pushFollow(FOLLOW_ruleref_in_atom929);
+                        PushFollow(FOLLOW_ruleref_in_atom929);
                         ruleref29 = ruleref();
                         state._fsp--;
 
@@ -1802,8 +1802,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1934,8 +1934,8 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:187:7: ^( RULE_REF ( ARG_ACTION )? ^( ELEMENT_OPTIONS ( . )* ) )
                     {
-                        RULE_REF30 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref957);
-                        match(input, Token.DOWN, null);
+                        RULE_REF30 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref957);
+                        Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:187:18: ( ARG_ACTION )?
                         int alt20 = 2;
                         int LA20_0 = input.LA(1);
@@ -1948,16 +1948,16 @@ public class ATNBuilder : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ATNBuilder.g:187:18: ARG_ACTION
                                 {
-                                    match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref959);
+                                    Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref959);
                                 }
                                 break;
 
                         }
 
-                        match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_ruleref963);
+                        Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_ruleref963);
                         if (input.LA(1) == Token.DOWN)
                         {
-                            match(input, Token.DOWN, null);
+                            Match(input, Token.DOWN, null);
                         // org\\antlr\\v4\\parse\\ATNBuilder.g:187:48: ( . )*
                         loop21:
                             while (true)
@@ -1988,21 +1988,21 @@ public class ATNBuilder : TreeParser
                                 }
                             }
                         exit12:
-                            match(input, Token.UP, null);
+                            Match(input, Token.UP, null);
                         }
 
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        p = factory.ruleRef(RULE_REF30);
+                        p = factory.RuleRef(RULE_REF30);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:188:7: ^( RULE_REF ( ARG_ACTION )? )
                     {
-                        RULE_REF31 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref980);
+                        RULE_REF31 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref980);
                         if (input.LA(1) == Token.DOWN)
                         {
-                            match(input, Token.DOWN, null);
+                            Match(input, Token.DOWN, null);
                             // org\\antlr\\v4\\parse\\ATNBuilder.g:188:18: ( ARG_ACTION )?
                             int alt22 = 2;
                             int LA22_0 = input.LA(1);
@@ -2015,23 +2015,23 @@ public class ATNBuilder : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\ATNBuilder.g:188:18: ARG_ACTION
                                     {
-                                        match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref982);
+                                        Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref982);
                                     }
                                     break;
 
                             }
 
-                            match(input, Token.UP, null);
+                            Match(input, Token.UP, null);
                         }
 
-                        p = factory.ruleRef(RULE_REF31);
+                        p = factory.RuleRef(RULE_REF31);
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:189:7: RULE_REF
                     {
-                        RULE_REF32 = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref1001);
-                        p = factory.ruleRef(RULE_REF32);
+                        RULE_REF32 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref1001);
+                        p = factory.RuleRef(RULE_REF32);
                     }
                     break;
 
@@ -2039,8 +2039,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2067,20 +2067,20 @@ public class ATNBuilder : TreeParser
             // org\\antlr\\v4\\parse\\ATNBuilder.g:193:5: ( ^( RANGE a= STRING_LITERAL b= STRING_LITERAL ) )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:193:7: ^( RANGE a= STRING_LITERAL b= STRING_LITERAL )
             {
-                match(input, RANGE, FOLLOW_RANGE_in_range1035);
-                match(input, Token.DOWN, null);
-                a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range1039);
-                b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range1043);
-                match(input, Token.UP, null);
+                Match(input, RANGE, FOLLOW_RANGE_in_range1035);
+                Match(input, Token.DOWN, null);
+                a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range1039);
+                b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range1043);
+                Match(input, Token.UP, null);
 
-                p = factory.range(a, b);
+                p = factory.Range(a, b);
             }
 
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2237,49 +2237,49 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:197:8: ^( STRING_LITERAL . )
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal1069);
-                        match(input, Token.DOWN, null);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal1069);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.stringLiteral((TerminalAST)((GrammarAST)retval.start));
+                        retval.p = factory.StringLiteral((TerminalAST)((GrammarAST)retval.start));
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:198:7: STRING_LITERAL
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal1084);
-                        retval.p = factory.stringLiteral((TerminalAST)((GrammarAST)retval.start));
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal1084);
+                        retval.p = factory.StringLiteral((TerminalAST)((GrammarAST)retval.start));
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:199:7: ^( TOKEN_REF ARG_ACTION . )
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1098);
-                        match(input, Token.DOWN, null);
-                        match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal1100);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1098);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal1100);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.tokenRef((TerminalAST)((GrammarAST)retval.start));
+                        retval.p = factory.TokenRef((TerminalAST)((GrammarAST)retval.start));
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:200:7: ^( TOKEN_REF . )
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1114);
-                        match(input, Token.DOWN, null);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1114);
+                        Match(input, Token.DOWN, null);
                         matchAny(input);
-                        match(input, Token.UP, null);
+                        Match(input, Token.UP, null);
 
-                        retval.p = factory.tokenRef((TerminalAST)((GrammarAST)retval.start));
+                        retval.p = factory.TokenRef((TerminalAST)((GrammarAST)retval.start));
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:201:7: TOKEN_REF
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1130);
-                        retval.p = factory.tokenRef((TerminalAST)((GrammarAST)retval.start));
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1130);
+                        retval.p = factory.TokenRef((TerminalAST)((GrammarAST)retval.start));
                     }
                     break;
 
@@ -2287,8 +2287,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2309,10 +2309,10 @@ public class ATNBuilder : TreeParser
             // org\\antlr\\v4\\parse\\ATNBuilder.g:205:2: ( ^( ELEMENT_OPTIONS ( elementOption )* ) )
             // org\\antlr\\v4\\parse\\ATNBuilder.g:205:4: ^( ELEMENT_OPTIONS ( elementOption )* )
             {
-                match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions1151);
+                Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions1151);
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null);
+                    Match(input, Token.DOWN, null);
                 // org\\antlr\\v4\\parse\\ATNBuilder.g:205:22: ( elementOption )*
                 loop25:
                     while (true)
@@ -2329,7 +2329,7 @@ public class ATNBuilder : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ATNBuilder.g:205:22: elementOption
                                 {
-                                    pushFollow(FOLLOW_elementOption_in_elementOptions1153);
+                                    PushFollow(FOLLOW_elementOption_in_elementOptions1153);
                                     elementOption();
                                     state._fsp--;
 
@@ -2342,7 +2342,7 @@ public class ATNBuilder : TreeParser
                         }
                     }
                 exit25:
-                    match(input, Token.UP, null);
+                    Match(input, Token.UP, null);
                 }
 
             }
@@ -2350,8 +2350,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -2475,50 +2475,50 @@ public class ATNBuilder : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:209:4: ID
                     {
-                        match(input, ID, FOLLOW_ID_in_elementOption1166);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1166);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:210:4: ^( ASSIGN ID ID )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1172);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption1174);
-                        match(input, ID, FOLLOW_ID_in_elementOption1176);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1172);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1174);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1176);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:211:4: ^( ASSIGN ID STRING_LITERAL )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1183);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption1185);
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption1187);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1183);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1185);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption1187);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:212:4: ^( ASSIGN ID ACTION )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1194);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption1196);
-                        match(input, ACTION, FOLLOW_ACTION_in_elementOption1198);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1194);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1196);
+                        Match(input, ACTION, FOLLOW_ACTION_in_elementOption1198);
+                        Match(input, Token.UP, null);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\ATNBuilder.g:213:4: ^( ASSIGN ID INT )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1205);
-                        match(input, Token.DOWN, null);
-                        match(input, ID, FOLLOW_ID_in_elementOption1207);
-                        match(input, INT, FOLLOW_INT_in_elementOption1209);
-                        match(input, Token.UP, null);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption1205);
+                        Match(input, Token.DOWN, null);
+                        Match(input, ID, FOLLOW_ID_in_elementOption1207);
+                        Match(input, INT, FOLLOW_INT_in_elementOption1209);
+                        Match(input, Token.UP, null);
                     }
                     break;
 
@@ -2526,8 +2526,8 @@ public class ATNBuilder : TreeParser
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {

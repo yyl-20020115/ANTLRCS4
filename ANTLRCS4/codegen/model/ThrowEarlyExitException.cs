@@ -10,10 +10,8 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class ThrowEarlyExitException : ThrowRecognitionException {
-	public ThrowEarlyExitException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting)
-	: base(factory, ast, expecting)
-    {
-		;
-	}
+public class ThrowEarlyExitException : ThrowRecognitionException
+{
+    public ThrowEarlyExitException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting)
+    : base(factory, ast, expecting) { }
 }

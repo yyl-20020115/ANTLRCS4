@@ -6,22 +6,24 @@
 
 namespace org.antlr.v4.codegen.model;
 
-public class LexerFile : OutputFile {
-	public String genPackage; // from -package cmd-line
-	public String exportMacro; // from -DexportMacro cmd-line
-	public bool genListener; // from -listener cmd-line
-	public bool genVisitor; // from -visitor cmd-line
-	[ModelElement] 
-		public Lexer lexer;
-    [ModelElement] 
-    public Dictionary<String, Action> namedActions;
+public class LexerFile : OutputFile
+{
+    public string genPackage; // from -package cmd-line
+    public string exportMacro; // from -DexportMacro cmd-line
+    public bool genListener; // from -listener cmd-line
+    public bool genVisitor; // from -visitor cmd-line
+    [ModelElement]
+    public Lexer lexer;
+    [ModelElement]
+    public Dictionary<string, Action> namedActions;
 
-	public LexerFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    public LexerFile(OutputModelFactory factory, string fileName) 
+        : base(factory, fileName)
     {
-		namedActions = buildNamedActions(factory.getGrammar());
-		genPackage = factory.getGrammar().tool.genPackage;
-		exportMacro = factory.getGrammar().getOptionString("exportMacro");
-		genListener = factory.getGrammar().tool.gen_listener;
-		genVisitor = factory.getGrammar().tool.gen_visitor;
-	}
+        namedActions = BuildNamedActions(factory.GetGrammar());
+        genPackage = factory.GetGrammar().Tools.genPackage;
+        exportMacro = factory.GetGrammar().getOptionString("exportMacro");
+        genListener = factory.GetGrammar().Tools.gen_listener;
+        genVisitor = factory.GetGrammar().Tools.gen_visitor;
+    }
 }

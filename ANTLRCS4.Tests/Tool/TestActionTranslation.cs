@@ -230,13 +230,13 @@ public class TestActionTranslation {
 
 			ATNFactory factory = new ParserATNFactory(g);
 			if ( g.isLexer() ) factory = new LexerATNFactory((LexerGrammar)g);
-			g.atn = factory.createATN();
+			g.atn = factory.CreateATN();
 
 			AnalysisPipeline anal = new AnalysisPipeline(g);
-			anal.process();
+			anal.Process();
 
-			CodeGenerator gen = CodeGenerator.create(g);
-			Template outputFileST = gen.generateParser(false);
+			CodeGenerator gen = CodeGenerator.Create(g);
+			Template outputFileST = gen.GenerateParser(false);
 			String output = outputFileST.Render();
 			//Console.Out.WriteLine(output);
 			String b = "#" + actionName + "#";

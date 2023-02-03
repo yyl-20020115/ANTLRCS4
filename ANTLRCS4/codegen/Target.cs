@@ -6,11 +6,9 @@
 
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
-using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 using System.Text;
@@ -20,23 +18,23 @@ namespace org.antlr.v4.codegen;
 /** */
 public abstract class Target
 {
-    private readonly static Dictionary<String, TemplateGroup> languageTemplates = new();
+    private readonly static Dictionary<string, TemplateGroup> languageTemplates = new();
 
     protected readonly CodeGenerator gen;
 
-    protected static readonly Dictionary<char, String> defaultCharValueEscape;
+    protected static readonly Dictionary<char, string> defaultCharValueEscape;
     static Target()
     {
         // https://docs.oracle.com/javase/tutorial/java/data/characters.html
         Dictionary<char, String> map = new();
-        addEscapedChar(map, '\t', 't');
-        addEscapedChar(map, '\b', 'b');
-        addEscapedChar(map, '\n', 'n');
-        addEscapedChar(map, '\r', 'r');
-        addEscapedChar(map, '\f', 'f');
-        addEscapedChar(map, '\'');
-        addEscapedChar(map, '\"');
-        addEscapedChar(map, '\\');
+        AddEscapedChar(map, '\t', 't');
+        AddEscapedChar(map, '\b', 'b');
+        AddEscapedChar(map, '\n', 'n');
+        AddEscapedChar(map, '\r', 'r');
+        AddEscapedChar(map, '\f', 'f');
+        AddEscapedChar(map, '\'');
+        AddEscapedChar(map, '\"');
+        AddEscapedChar(map, '\\');
         defaultCharValueEscape = map;
     }
 
@@ -52,27 +50,21 @@ public abstract class Target
 	 *  that the target language can hold them as a string.
 	 *  Each target can have a different set in memory at same time.
 	 */
-    public Dictionary<char, String> getTargetCharValueEscape()
+    public virtual Dictionary<char, string> GetTargetCharValueEscape() => defaultCharValueEscape;
+
+    protected static void AddEscapedChar(Dictionary<char, String> map, char key)
     {
-        return defaultCharValueEscape;
+        AddEscapedChar(map, key, key);
     }
 
-    protected static void addEscapedChar(Dictionary<char, String> map, char key)
-    {
-        addEscapedChar(map, key, key);
-    }
-
-    protected static void addEscapedChar(Dictionary<char, String> map, char key, char representation)
+    protected static void AddEscapedChar(Dictionary<char, String> map, char key, char representation)
     {
         map[key] = ("\\" + representation);
     }
 
-    public String getLanguage() { return gen.language; }
+    public virtual string GetLanguage() => gen.language;
 
-    public CodeGenerator getCodeGenerator()
-    {
-        return gen;
-    }
+    public virtual CodeGenerator GetCodeGenerator() => gen;
 
     /** ANTLR tool should check output templates / target are compatible with tool code generation.
 	 *  For now, a simple string match used on x.y of x.y.z scheme. We use a method to avoid mismatches
@@ -82,26 +74,22 @@ public abstract class Target
 	 *
 	 * @since 4.3
 	 */
-    public String getVersion()
-    {
-        return Tool.VERSION;
-    }
+    public virtual string GetVersion() => Tool.VERSION;
 
-    public TemplateGroup getTemplates()
+    public TemplateGroup GetTemplates()
     {
         lock (this)
         {
-            String language = getLanguage();
-            
+            var language = GetLanguage(); 
             if (!languageTemplates.TryGetValue(language,out var templates))
             {
-                String version = getVersion();
+                var version = GetVersion();
                 if (version == null ||
                         !RuntimeMetaData.getMajorMinorVersion(version).Equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
                 {
-                    gen.tool.errMgr.toolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+                    gen.tool.ErrMgr.toolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
                 }
-                templates = loadTemplates();
+                templates = LoadTemplates();
                 languageTemplates.Add(language, templates);
             }
 
@@ -109,21 +97,15 @@ public abstract class Target
         }
     }
 
-    protected abstract HashSet<String> getReservedWords();
+    protected abstract HashSet<string> GetReservedWords();
 
-    public String escapeIfNeeded(String identifier)
-    {
-        return getReservedWords().Contains(identifier) ? escapeWord(identifier) : identifier;
-    }
+    public virtual string EscapeIfNeeded(string identifier) => GetReservedWords().Contains(identifier) ? EscapeWord(identifier) : identifier;
 
-    protected String escapeWord(String word)
-    {
-        return word + "_";
-    }
+    protected virtual string EscapeWord(string word) => word + "_";
 
-    public void genFile(Grammar g, Template outputFileST, String fileName)
+    public virtual void GenFile(Grammar g, Template outputFileST, string fileName)
     {
-        getCodeGenerator().write(outputFileST, fileName);
+        GetCodeGenerator().Write(outputFileST, fileName);
     }
 
     /** Get a meaningful name for a token type useful during code generation.
@@ -132,9 +114,9 @@ public abstract class Target
 	 *  etc...  Essentially we are looking for the most obvious way to refer
 	 *  to a token type in the generated code.
 	 */
-    public String getTokenTypeAsTargetLabel(Grammar g, int ttype)
+    public virtual string GetTokenTypeAsTargetLabel(Grammar g, int ttype)
     {
-        String name = g.getTokenName(ttype);
+        var name = g.getTokenName(ttype);
         // If name is not valid, return the token type instead
         if (Grammar.INVALID_TOKEN_NAME.Equals(name))
         {
@@ -144,12 +126,12 @@ public abstract class Target
         return name;
     }
 
-    public String[] getTokenTypesAsTargetLabels(Grammar g, int[] ttypes)
+    public virtual string[] GetTokenTypesAsTargetLabels(Grammar g, int[] ttypes)
     {
-        String[] labels = new String[ttypes.Length];
+        var labels = new string[ttypes.Length];
         for (int i = 0; i < ttypes.Length; i++)
         {
-            labels[i] = getTokenTypeAsTargetLabel(g, ttypes[i]);
+            labels[i] = GetTokenTypeAsTargetLabel(g, ttypes[i]);
         }
         return labels;
     }
@@ -173,51 +155,41 @@ public abstract class Target
 	 *
 	 *  depending on the quoted arg.
 	 */
-    public String getTargetStringLiteralFromString(String s, bool quoted)
+    public virtual string GetTargetStringLiteralFromString(string s, bool quoted)
     {
-        if (s == null)
-        {
-            return null;
-        }
-
-        StringBuilder buf = new StringBuilder();
+        if (s == null) return null;
+        var buffer = new StringBuilder();
         if (quoted)
         {
-            buf.Append('"');
+            buffer.Append('"');
         }
         for (int i = 0; i < s.Length;)
         {
             int c = char.ConvertToUtf32(s, i); // s.codePointAt(i);
-            String? escaped = c <= char.MaxValue ?
-                (getTargetCharValueEscape().TryGetValue((char)c, out var v) ? v : null) : null;
+            var escaped = c <= char.MaxValue ?
+                (GetTargetCharValueEscape().TryGetValue((char)c, out var v) ? v : null) : null;
             if (c != '\'' && escaped != null)
             { // don't escape single quotes in strings for java
-                buf.Append(escaped);
+                buffer.Append(escaped);
             }
-            else if (shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(c))
+            else if (ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(c))
             {
-                appendUnicodeEscapedCodePoint(i, buf);
+                AppendUnicodeEscapedCodePoint(i, buffer);
             }
             else
             {
-                buf.Append(char.ConvertFromUtf32(c));//.appendCodePoint(c);
+                buffer.Append(char.ConvertFromUtf32(c));//.appendCodePoint(c);
             }
             i += new Rune(c).Utf16SequenceLength;
         }
-        if (quoted)
-        {
-            buf.Append('"');
-        }
-        return buf.ToString();
+        if (quoted) buffer.Append('"');
+        return buffer.ToString();
     }
 
-    private void appendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb, bool escape)
+    private void AppendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb, bool escape)
     {
-        if (escape)
-        {
-            sb.Append("\\");
-        }
-        appendUnicodeEscapedCodePoint(codePoint, sb);
+        if (escape) sb.Append('\\');
+        AppendUnicodeEscapedCodePoint(codePoint, sb);
     }
 
     /**
@@ -227,20 +199,16 @@ public abstract class Target
 	 * The static method {@link UnicodeEscapes#appendEscapedCodePoint(StringBuilder, int, String)} can be used as well
 	 * if default escaping method (Java) is used or language is officially supported
 	 */
-    protected void appendUnicodeEscapedCodePoint(int codePoint, StringBuilder sb)
+    protected virtual void AppendUnicodeEscapedCodePoint(int codePoint, StringBuilder builder)
     {
-        UnicodeEscapes.appendEscapedCodePoint(sb, codePoint, getLanguage());
+        UnicodeEscapes.appendEscapedCodePoint(builder, codePoint, GetLanguage());
     }
 
-    public String getTargetStringLiteralFromString(String s)
-    {
-        return getTargetStringLiteralFromString(s, true);
-    }
+    public virtual string GetTargetStringLiteralFromString(string s)
+        => GetTargetStringLiteralFromString(s, true);
 
-    public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes)
-    {
-        return getTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, false);
-    }
+    public virtual string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes)
+        => GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, false);
 
     /**
 	 * <p>Convert from an ANTLR string literal found in a grammar file to an
@@ -258,15 +226,15 @@ public abstract class Target
 	 * around.
 	 * </p>
 	 */
-    public String getTargetStringLiteralFromANTLRStringLiteral(
+    public virtual string GetTargetStringLiteralFromANTLRStringLiteral(
         CodeGenerator generator,
-        String literal,
+        string literal,
         bool addQuotes,
         bool escapeSpecial)
     {
-        StringBuilder sb = new StringBuilder();
+        var builder = new StringBuilder();
 
-        if (addQuotes) sb.Append('"');
+        if (addQuotes) builder.Append('"');
 
         for (int i = 1; i < literal.Length - 1;)
         {
@@ -295,10 +263,10 @@ public abstract class Target
                         // Pass the escape through
                         if (escapeSpecial && escapedCodePoint != '\\')
                         {
-                            sb.Append('\\');
+                            builder.Append('\\');
                         }
-                        sb.Append('\\');
-                        sb.Append(char.ConvertFromUtf32(escapedCodePoint));
+                        builder.Append('\\');
+                        builder.Append(char.ConvertFromUtf32(escapedCodePoint));
                         break;
 
                     case 'u':    // Either unnnn or u{nnnnnn}
@@ -316,21 +284,21 @@ public abstract class Target
                         }
                         if (i + toAdvance <= literal.Length)
                         { // we might have an invalid \\uAB or something
-                            String fullEscape = literal.Substring(i,toAdvance);
-                            appendUnicodeEscapedCodePoint(
+                            var fullEscape = literal.Substring(i,toAdvance);
+                            AppendUnicodeEscapedCodePoint(
                                 CharSupport.getCharValueFromCharInGrammarLiteral(fullEscape),
-                                sb,
+                                builder,
                                 escapeSpecial);
                         }
                         break;
                     default:
-                        if (shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(escapedCodePoint))
+                        if (ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(escapedCodePoint))
                         {
-                            appendUnicodeEscapedCodePoint(escapedCodePoint, sb, escapeSpecial);
+                            AppendUnicodeEscapedCodePoint(escapedCodePoint, builder, escapeSpecial);
                         }
                         else
                         {
-                            sb.Append(new Rune(escapedCodePoint).ToString());
+                            builder.Append(new Rune(escapedCodePoint).ToString());
                         }
                         break;
                 }
@@ -341,26 +309,26 @@ public abstract class Target
                 {
                     // ANTLR doesn't escape " in literal strings,
                     // but every other language needs to do so.
-                    sb.Append("\\\"");
+                    builder.Append("\\\"");
                 }
-                else if (shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint))
+                else if (ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint))
                 {
-                    appendUnicodeEscapedCodePoint(codePoint, sb, escapeSpecial);
+                    AppendUnicodeEscapedCodePoint(codePoint, builder, escapeSpecial);
                 }
                 else
                 {
-                    sb.Append(new Rune(codePoint).ToString());
+                    builder.Append(new Rune(codePoint).ToString());
                 }
             }
             i += toAdvance;
         }
 
-        if (addQuotes) sb.Append('"');
+        if (addQuotes) builder.Append('"');
 
-        return sb.ToString();
+        return builder.ToString();
     }
 
-    protected bool shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint)
+    protected virtual bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint)
     {
         // We don't want anyone passing 0x0A (newline) or 0x22
         // (double-quote) here because Java treats \\u000A as
@@ -375,21 +343,21 @@ public abstract class Target
     }
 
     /** Assume 16-bit char */
-    public String encodeInt16AsCharEscape(int v)
+    public virtual string EncodeInt16AsCharEscape(int v)
     {
         if (v < char.MinValue || v > char.MaxValue)
         {
             throw new ArgumentException($"Cannot encode the specified value: {v}");
         }
 
-        if (isATNSerializedAsInts())
+        if (IsATNSerializedAsInts())
         {
             return v.ToString();// Integer.ToString(v);
         }
 
         char c = (char)v;
         //String escaped = getTargetCharValueEscape().get(c);
-        if (getTargetCharValueEscape().TryGetValue(c,out var escaped))
+        if (GetTargetCharValueEscape().TryGetValue(c,out var escaped))
         {
             return escaped;
         }
@@ -399,169 +367,144 @@ public abstract class Target
             case System.Globalization.UnicodeCategory.Control:
             case System.Globalization.UnicodeCategory.LineSeparator:
             case System.Globalization.UnicodeCategory.ParagraphSeparator:
-                return escapeChar(v);
+                return EscapeChar(v);
             default:
                 if (v <= 127)
                 {
                     return c.ToString();  // ascii chars can be as-is, no encoding
                 }
                 // else we use hex encoding to ensure pure ascii chars generated
-                return escapeChar(v);
+                return EscapeChar(v);
         }
     }
 
-    protected String escapeChar(int v)
-    {
-        return $"\\u%{v:X4}";
-    }
+    protected virtual string EscapeChar(int v) => $"\\u%{v:X4}";
 
-    public String getLoopLabel(GrammarAST ast)
-    {
-        return "loop" + ast.token.getTokenIndex();
-    }
+    public virtual string GetLoopLabel(GrammarAST ast) => "loop" + ast.token.getTokenIndex();
 
-    public String getLoopCounter(GrammarAST ast)
-    {
-        return "cnt" + ast.token.getTokenIndex();
-    }
+    public virtual string GetLoopCounter(GrammarAST ast) => "cnt" + ast.token.getTokenIndex();
 
-    public String getListLabel(String label)
+    public virtual string GetListLabel(String label)
     {
-        var st = getTemplates().GetInstanceOf("ListLabelName");
+        var st = GetTemplates().GetInstanceOf("ListLabelName");
         st.Add("label", label);
         return st.Render();
     }
 
-    public String getRuleFunctionContextStructName(Rule r)
-    {
-        if (r.g.isLexer())
-        {
-            return getTemplates().GetInstanceOf("LexerRuleContext").Render();
-        }
-        return Utils.capitalize(r.name) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
-    }
+    public virtual string GetRuleFunctionContextStructName(Rule r) => r.g.isLexer()
+            ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
+            : Utils.capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
 
-    public String getAltLabelContextStructName(String label)
-    {
-        return Utils.capitalize(label) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
-    }
+    public virtual string GetAltLabelContextStructName(string label)
+        => Utils.capitalize(label) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
 
     /** If we know which actual function, we can provide the actual ctx type.
 	 *  This will contain implicit labels etc...  From outside, though, we
 	 *  see only ParserRuleContext unless there are externally visible stuff
 	 *  like args, locals, explicit labels, etc...
 	 */
-    public String getRuleFunctionContextStructName(model.RuleFunction function)
+    public virtual string GetRuleFunctionContextStructName(model.RuleFunction function)
     {
-        Rule r = function.rule;
-        if (r.g.isLexer())
-        {
-            return getTemplates().GetInstanceOf("LexerRuleContext").Render();
-        }
-        return Utils.capitalize(r.name) + getTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+        var r = function.rule;
+        return r.g.isLexer()
+            ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
+            : Utils.capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     // should be same for all refs to same token like ctx.ID within single rule function
     // for literals like 'while', we gen _s<ttype>
-    public String getImplicitTokenLabel(String tokenName)
+    public virtual string GetImplicitTokenLabel(string tokenName)
     {
-        var st = getTemplates().GetInstanceOf("ImplicitTokenLabel");
-        int ttype = getCodeGenerator().g.getTokenType(tokenName);
-        if (tokenName.StartsWith("'"))
-        {
-            return "s" + ttype;
-        }
-        String text = getTokenTypeAsTargetLabel(getCodeGenerator().g, ttype);
+        var st = GetTemplates().GetInstanceOf("ImplicitTokenLabel");
+        int ttype = GetCodeGenerator().g.getTokenType(tokenName);
+        if (tokenName.StartsWith("'")) return "s" + ttype;
+        var text = GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
         st.Add("tokenName", text);
         return st.Render();
     }
 
     // x=(A|B)
-    public String getImplicitSetLabel(String id)
+    public virtual string GetImplicitSetLabel(string id)
     {
-        var st = getTemplates().GetInstanceOf("ImplicitSetLabel");
+        var st = GetTemplates().GetInstanceOf("ImplicitSetLabel");
         st.Add("id", id);
         return st.Render();
     }
 
-    public String getImplicitRuleLabel(String ruleName)
+    public virtual string GetImplicitRuleLabel(string ruleName)
     {
-        var st = getTemplates().GetInstanceOf("ImplicitRuleLabel");
+        var st = GetTemplates().GetInstanceOf("ImplicitRuleLabel");
         st.Add("ruleName", ruleName);
         return st.Render();
     }
 
-    public String getElementListName(String name)
+    public virtual string GetElementListName(string name)
     {
-        var st = getTemplates().GetInstanceOf("ElementListName");
-        st.Add("elemName", getElementName(name));
+        var st = GetTemplates().GetInstanceOf("ElementListName");
+        st.Add("elemName", GetElementName(name));
         return st.Render();
     }
 
-    public String getElementName(String name)
+    public virtual string GetElementName(string name)
     {
-        if (".".Equals(name))
-        {
-            return "_wild";
-        }
-
-        if (getCodeGenerator().g.getRule(name) != null) return name;
-        int ttype = getCodeGenerator().g.getTokenType(name);
+        if (".".Equals(name)) return "_wild";
+        if (GetCodeGenerator().g.getRule(name) != null) return name;
+        int ttype = GetCodeGenerator().g.getTokenType(name);
         if (ttype == Token.INVALID_TYPE) return name;
-        return getTokenTypeAsTargetLabel(getCodeGenerator().g, ttype);
+        return GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
     }
 
     /** Generate TParser.java and TLexer.java from T.g4 if combined, else
 	 *  just use T.java as output regardless of type.
 	 */
-    public String getRecognizerFileName(bool header)
+    public virtual string GetRecognizerFileName(bool header)
     {
-        var extST = getTemplates().GetInstanceOf("codeFileExtension");
-        String recognizerName = gen.g.getRecognizerName();
+        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var recognizerName = gen.g.getRecognizerName();
         return recognizerName + extST.Render();
     }
 
     /** A given grammar T, return the listener name such as
 	 *  TListener.java, if we're using the Java target.
  	 */
-    public String getListenerFileName(bool header)
+    public virtual string GetListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        var extST = getTemplates().GetInstanceOf("codeFileExtension");
-        String listenerName = gen.g.name + "Listener";
+        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var listenerName = gen.g.name + "Listener";
         return listenerName + extST.Render();
     }
 
     /** A given grammar T, return the visitor name such as
 	 *  TVisitor.java, if we're using the Java target.
  	 */
-    public String getVisitorFileName(bool header)
+    public virtual string GetVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
-        String listenerName = gen.g.name + "Visitor";
+        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var listenerName = gen.g.name + "Visitor";
         return listenerName + extST.Render();
     }
 
     /** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-    public String getBaseListenerFileName(bool header)
+    public virtual string GetBaseListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
-        String listenerName = gen.g.name + "BaseListener";
+        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var listenerName = gen.g.name + "BaseListener";
         return listenerName + extST.Render();
     }
 
     /** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-    public String getBaseVisitorFileName(bool header)
+    public virtual string GetBaseVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        Template extST = getTemplates().GetInstanceOf("codeFileExtension");
-        String listenerName = gen.g.name + "BaseVisitor";
+        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var listenerName = gen.g.name + "BaseVisitor";
         return listenerName + extST.Render();
     }
 
@@ -589,10 +532,7 @@ public abstract class Target
 	 *
 	 * @return the serialized ATN segment limit
 	 */
-    public int getSerializedATNSegmentLimit()
-    {
-        return int.MaxValue;
-    }
+    public virtual int GetSerializedATNSegmentLimit() => int.MaxValue;
 
     /** How many bits should be used to do inline token type tests? Java assumes
 	 *  a 64-bit word for bitsets.  Must be a valid wordsize for your target like
@@ -600,9 +540,9 @@ public abstract class Target
 	 *
 	 *  @since 4.5
 	 */
-    public int getInlineTestSetWordSize() { return 64; }
+    public virtual int GetInlineTestSetWordSize() => 64;
 
-    public bool grammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
+    public virtual bool GrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
     {
         switch (idNode.getParent().getType())
         {
@@ -637,64 +577,38 @@ public abstract class Target
                 break;
         }
 
-        return getReservedWords().Contains(idNode.getText());
+        return GetReservedWords().Contains(idNode.getText());
     }
 
     //@Deprecated
-    protected bool visibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
-    {
-        return getReservedWords().Contains(idNode.getText());
-    }
+    protected virtual bool VisibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) 
+        => GetReservedWords().Contains(idNode.getText());
 
-    public bool templatesExist()
-    {
-        return loadTemplatesHelper(false) != null;
-    }
+    public virtual bool TemplatesExist() => LoadTemplatesHelper(false) != null;
     public class STE : ITemplateErrorListener
     {
         public readonly Target target;
-        public STE(Target target)
-        {
-            this.target = target;
-        }
+        public STE(Target target) => this.target = target;
 
         //@Override
-        public void CompiletimeError(TemplateMessage msg)
-        {
-            ReportError(msg);
-        }
+        public void CompiletimeError(TemplateMessage msg) => ReportError(msg);
 
         //@Override
-        public void RuntimeError(TemplateMessage msg)
-        {
-            ReportError(msg);
-        }
+        public void RuntimeError(TemplateMessage msg) => ReportError(msg);
 
         //@Override
-        public void IOError(TemplateMessage msg)
-        {
-            ReportError(msg);
-        }
+        public void IOError(TemplateMessage msg) => ReportError(msg);
 
         //@Override
-        public void InternalError(TemplateMessage msg)
-        {
-            ReportError(msg);
-        }
+        public void InternalError(TemplateMessage msg) => ReportError(msg);
 
-        private void ReportError(TemplateMessage msg)
-        {
-            target.getCodeGenerator().tool.errMgr.toolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
-        }
+        private void ReportError(TemplateMessage msg) => target.GetCodeGenerator().tool.ErrMgr.toolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
 
     }
-    protected TemplateGroup loadTemplates()
+    protected TemplateGroup LoadTemplates()
     {
-        TemplateGroup result = loadTemplatesHelper(true);
-        if (result == null)
-        {
-            return null;
-        }
+        var result = LoadTemplatesHelper(true);
+        if (result == null) return null;
         result.RegisterRenderer(typeof(int), new NumberRenderer());
         result.RegisterRenderer(typeof(string), new StringRenderer());
         result.Listener=(new STE(this));
@@ -702,10 +616,10 @@ public abstract class Target
         return result;
     }
 
-    private TemplateGroup loadTemplatesHelper(bool reportErrorIfFail)
+    private TemplateGroup LoadTemplatesHelper(bool reportErrorIfFail)
     {
-        String language = getLanguage();
-        String groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + TemplateGroup.GroupFileExtension;
+        var language = GetLanguage();
+        var groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + TemplateGroup.GroupFileExtension;
         try
         {
             return new TemplateGroupFile(groupFileName);
@@ -714,7 +628,7 @@ public abstract class Target
         {
             if (reportErrorIfFail)
             {
-                gen.tool.errMgr.toolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, getLanguage());
+                gen.tool.ErrMgr.toolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, GetLanguage());
             }
             return null;
         }
@@ -723,32 +637,20 @@ public abstract class Target
     /**
 	 * @since 4.3
 	 */
-    public bool wantsBaseListener()
-    {
-        return true;
-    }
+    public virtual bool WantsBaseListener() => true;
 
     /**
 	 * @since 4.3
 	 */
-    public bool wantsBaseVisitor()
-    {
-        return true;
-    }
+    public virtual bool WantsBaseVisitor() => true;
 
     /**
 	 * @since 4.3
 	 */
-    public bool supportsOverloadedMethods()
-    {
-        return true;
-    }
+    public virtual bool SupportsOverloadedMethods() => true;
 
-    public bool isATNSerializedAsInts()
-    {
-        return true;
-    }
+    public virtual bool IsATNSerializedAsInts() => true;
 
     /** @since 4.6 */
-    public bool needsHeader() { return false; } // Override in targets that need header files.
+    public virtual bool NeedsHeader() => false;  // Override in targets that need header files.
 }

@@ -6,7 +6,9 @@
 namespace org.antlr.v4.codegen.model;
 
 
-public class VisitorDispatchMethod : DispatchMethod {
-	public VisitorDispatchMethod(OutputModelFactory factory):base(factory) {
-	}
+public class VisitorDispatchMethod : DispatchMethod
+{
+    public VisitorDispatchMethod(OutputModelFactory factory) : base(factory)
+    {
+    }
 }

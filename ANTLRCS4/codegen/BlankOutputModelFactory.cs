@@ -13,140 +13,107 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.codegen;
 
 
-public abstract class BlankOutputModelFactory : OutputModelFactory {
-	//@Override
-	public ParserFile parserFile(String fileName) { return null; }
+public abstract class BlankOutputModelFactory : OutputModelFactory
+{
+    //@Override
+    public virtual ParserFile ParserFile(String fileName) => null;
 
-	//@Override
-	public Parser parser(ParserFile file) { return null; }
+    //@Override
+    public virtual Parser Parser(ParserFile file) => null;
 
-	//@Override
-	public RuleFunction rule(Rule r) { return null; }
+    //@Override
+    public virtual RuleFunction Rule(Rule r) => null;
 
-	//@Override
-	public List<SrcOp> rulePostamble(RuleFunction function, Rule r) { return null; }
+    //@Override
+    public virtual List<SrcOp> RulePostamble(RuleFunction function, Rule r) => null;
 
-	//@Override
-	public LexerFile lexerFile(String fileName) { return null; }
+    //@Override
+    public virtual LexerFile LexerFile(String fileName) => null;
 
-	//@Override
-	public Lexer lexer(LexerFile file) { return null; }
+    //@Override
+    public virtual Lexer Lexer(LexerFile file) => null;
 
-	// ALTERNATIVES / ELEMENTS
+    // ALTERNATIVES / ELEMENTS
 
-	//@Override
-	public CodeBlockForAlt alternative(Alternative alt, bool outerMost) { return null; }
+    //@Override
+    public virtual CodeBlockForAlt Alternative(Alternative alt, bool outerMost) => null;
 
-	//@Override
-	public CodeBlockForAlt finishAlternative(CodeBlockForAlt blk, List<SrcOp> ops) { return blk; }
+    //@Override
+    public virtual CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, List<SrcOp> ops) { return blk; }
 
-	//@Override
-	public CodeBlockForAlt epsilon(Alternative alt, bool outerMost) { return null; }
+    //@Override
+    public virtual CodeBlockForAlt Epsilon(Alternative alt, bool outerMost) => null;
 
-	//@Override
-	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) { return null; }
+    //@Override
+    public virtual List<SrcOp> RuleRef(GrammarAST ID, GrammarAST label, GrammarAST args) => null;
 
-	//@Override
-	public List<SrcOp> tokenRef(GrammarAST ID, GrammarAST label, GrammarAST args) { return null; }
+    //@Override
+    public virtual List<SrcOp> TokenRef(GrammarAST ID, GrammarAST label, GrammarAST args) => null;
 
-	//@Override
-	public List<SrcOp> stringRef(GrammarAST ID, GrammarAST label) { return tokenRef(ID, label, null); }
+    //@Override
+    public virtual List<SrcOp> StringRef(GrammarAST ID, GrammarAST label) { return TokenRef(ID, label, null); }
 
-	//@Override
-	public List<SrcOp> set(GrammarAST setAST, GrammarAST label, bool invert) {	return null; }
+    //@Override
+    public virtual List<SrcOp> Set(GrammarAST setAST, GrammarAST label, bool invert) => null;
 
-	//@Override
-	public List<SrcOp> wildcard(GrammarAST ast, GrammarAST labelAST) { return null; }
+    //@Override
+    public virtual List<SrcOp> Wildcard(GrammarAST ast, GrammarAST labelAST) => null;
 
-	// ACTIONS
+    // ACTIONS
 
-	//@Override
-	public List<SrcOp> action(ActionAST ast) { return null; }
+    //@Override
+    public virtual List<SrcOp> Action(ActionAST ast) => null;
 
-	//@Override
-	public List<SrcOp> sempred(ActionAST ast) { return null; }
+    //@Override
+    public virtual List<SrcOp> Sempred(ActionAST ast) => null;
 
-	// BLOCKS
+    // BLOCKS
 
-	//@Override
-	public Choice getChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label) { return null; }
+    //@Override
+    public virtual Choice GetChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label) => null;
 
-	//@Override
-	public Choice getEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) { return null; }
+    //@Override
+    public virtual Choice GetEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) => null;
 
-	//@Override
-	public Choice getLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) { return null; }
+    //@Override
+    public virtual Choice GetLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) => null;
 
-	//@Override
-	public Choice getComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) { return null; }
+    //@Override
+    public virtual Choice GetComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) => null;
 
-	//@Override
-	public Choice getLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) { return null; }
+    //@Override
+    public virtual Choice GetLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) => null;
 
-	//@Override
-	public Choice getComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) { return null; }
+    //@Override
+    public virtual Choice GetComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) => null;
 
-	//@Override
-	public List<SrcOp> getLL1Test(IntervalSet look, GrammarAST blkAST) { return null; }
+    //@Override
+    public virtual List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST) => null;
 
-	//@Override
-	public bool needsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
+    //@Override
+    public virtual bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
 
-    public Grammar getGrammar()
+    public virtual Grammar GetGrammar() => null;
+
+    public virtual CodeGenerator GetGenerator() => null;
+
+    public virtual OutputModelController Controller
     {
-        throw new NotImplementedException();
+        get;set;
     }
 
-    public CodeGenerator getGenerator()
-    {
-        throw new NotImplementedException();
-    }
+    public OutputModelObject GetRoot() => null;
 
-    public void setController(OutputModelController controller)
-    {
-        throw new NotImplementedException();
-    }
+    public RuleFunction GetCurrentRuleFunction() => null;
 
-    public OutputModelController getController()
-    {
-        throw new NotImplementedException();
-    }
+    public Alternative GetCurrentOuterMostAlt() => null;
 
-    
+    public CodeBlock GetCurrentBlock() => null;
 
-    public OutputModelObject getRoot()
-    {
-        throw new NotImplementedException();
-    }
+    public CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock() => null;
 
-    public RuleFunction getCurrentRuleFunction()
-    {
-        throw new NotImplementedException();
-    }
+    public int GetCodeBlockLevel() => 0;
 
-    public Alternative getCurrentOuterMostAlt()
-    {
-        throw new NotImplementedException();
-    }
-
-    public CodeBlock getCurrentBlock()
-    {
-        throw new NotImplementedException();
-    }
-
-    public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getCodeBlockLevel()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getTreeLevel()
-    {
-        throw new NotImplementedException();
-    }
+    public int GetTreeLevel() => 0;
 }
 

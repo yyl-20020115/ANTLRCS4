@@ -172,7 +172,7 @@ public class ANTLRParser : antlr.runtime.Parser
     ////@Override 
     public virtual String[] getTokenNames() { return ANTLRParser.tokenNames; }
     ////@Override
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRParser.g"; }
 
 
     public Deque<String> paraphrases = new();
@@ -232,7 +232,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_id.add(id2.getTree());
-                SEMI3 = (Token)match(input, SEMI, FOLLOW_SEMI_in_grammarSpec285);
+                SEMI3 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_grammarSpec285);
                 stream_SEMI.add(SEMI3);
 
                 pushFollow(FOLLOW_sync_in_grammarSpec323);
@@ -310,7 +310,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     }
                 }
             exit2:
-                EOF9 = (Token)match(input, EOF, FOLLOW_EOF_in_grammarSpec398);
+                EOF9 = (Token)Match(input, EOF, FOLLOW_EOF_in_grammarSpec398);
                 stream_EOF.add(EOF9);
 
 
@@ -445,10 +445,10 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:187:9: t= LEXER g= GRAMMAR
                         {
-                            t = (Token)match(input, LEXER, FOLLOW_LEXER_in_grammarType568);
+                            t = (Token)Match(input, LEXER, FOLLOW_LEXER_in_grammarType568);
                             stream_LEXER.add(t);
 
-                            g = (Token)match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType572);
+                            g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType572);
                             stream_GRAMMAR.add(g);
 
 
@@ -476,10 +476,10 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 2:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:189:6: t= PARSER g= GRAMMAR
                         {
-                            t = (Token)match(input, PARSER, FOLLOW_PARSER_in_grammarType595);
+                            t = (Token)Match(input, PARSER, FOLLOW_PARSER_in_grammarType595);
                             stream_PARSER.add(t);
 
-                            g = (Token)match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType599);
+                            g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType599);
                             stream_GRAMMAR.add(g);
 
 
@@ -507,7 +507,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 3:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:192:6: g= GRAMMAR
                         {
-                            g = (Token)match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType620);
+                            g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType620);
                             stream_GRAMMAR.add(g);
 
 
@@ -752,7 +752,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:226:2: ( OPTIONS ( option SEMI )* RBRACE -> ^( OPTIONS[$OPTIONS, \"OPTIONS\"] ( option )* ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:226:4: OPTIONS ( option SEMI )* RBRACE
             {
-                OPTIONS15 = (Token)match(input, OPTIONS, FOLLOW_OPTIONS_in_optionsSpec791);
+                OPTIONS15 = (Token)Match(input, OPTIONS, FOLLOW_OPTIONS_in_optionsSpec791);
                 stream_OPTIONS.add(OPTIONS15);
 
             // org\\antlr\\v4\\parse\\ANTLRParser.g:226:12: ( option SEMI )*
@@ -776,7 +776,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 state._fsp--;
 
                                 stream_option.add(option16.getTree());
-                                SEMI17 = (Token)match(input, SEMI, FOLLOW_SEMI_in_optionsSpec796);
+                                SEMI17 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_optionsSpec796);
                                 stream_SEMI.add(SEMI17);
 
                             }
@@ -788,7 +788,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     }
                 }
             exit5:
-                RBRACE18 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_optionsSpec800);
+                RBRACE18 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_optionsSpec800);
                 stream_RBRACE.add(RBRACE18);
 
 
@@ -884,7 +884,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 adaptor.addChild(root_0, id19.getTree());
 
-                ASSIGN20 = (Token)match(input, ASSIGN, FOLLOW_ASSIGN_in_option831);
+                ASSIGN20 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_option831);
                 ASSIGN20_tree = (GrammarAST)adaptor.create(ASSIGN20);
                 root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN20_tree, root_0);
 
@@ -997,7 +997,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        STRING_LITERAL23 = (Token)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_optionValue885);
+                        STRING_LITERAL23 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_optionValue885);
                         STRING_LITERAL23_tree = (GrammarAST)adaptor.create(STRING_LITERAL23);
                         adaptor.addChild(root_0, STRING_LITERAL23_tree);
 
@@ -1009,7 +1009,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        ACTION24 = (Token)match(input, ACTION, FOLLOW_ACTION_in_optionValue890);
+                        ACTION24 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_optionValue890);
                         ACTION24_tree = new ActionAST(ACTION24);
                         adaptor.addChild(root_0, ACTION24_tree);
 
@@ -1021,7 +1021,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        INT25 = (Token)match(input, INT, FOLLOW_INT_in_optionValue901);
+                        INT25 = (Token)Match(input, INT, FOLLOW_INT_in_optionValue901);
                         INT25_tree = (GrammarAST)adaptor.create(INT25);
                         adaptor.addChild(root_0, INT25_tree);
 
@@ -1086,7 +1086,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:251:2: ( IMPORT delegateGrammar ( COMMA delegateGrammar )* SEMI -> ^( IMPORT ( delegateGrammar )+ ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:251:4: IMPORT delegateGrammar ( COMMA delegateGrammar )* SEMI
             {
-                IMPORT26 = (Token)match(input, IMPORT, FOLLOW_IMPORT_in_delegateGrammars917);
+                IMPORT26 = (Token)Match(input, IMPORT, FOLLOW_IMPORT_in_delegateGrammars917);
                 stream_IMPORT.add(IMPORT26);
 
                 pushFollow(FOLLOW_delegateGrammar_in_delegateGrammars919);
@@ -1110,7 +1110,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:251:28: COMMA delegateGrammar
                             {
-                                COMMA28 = (Token)match(input, COMMA, FOLLOW_COMMA_in_delegateGrammars922);
+                                COMMA28 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_delegateGrammars922);
                                 stream_COMMA.add(COMMA28);
 
                                 pushFollow(FOLLOW_delegateGrammar_in_delegateGrammars924);
@@ -1127,7 +1127,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     }
                 }
             exit7:
-                SEMI30 = (Token)match(input, SEMI, FOLLOW_SEMI_in_delegateGrammars928);
+                SEMI30 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_delegateGrammars928);
                 stream_SEMI.add(SEMI30);
 
 
@@ -1298,7 +1298,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         adaptor.addChild(root_0, id31.getTree());
 
-                        ASSIGN32 = (Token)match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar957);
+                        ASSIGN32 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar957);
                         ASSIGN32_tree = (GrammarAST)adaptor.create(ASSIGN32);
                         root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN32_tree, root_0);
 
@@ -1429,7 +1429,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:262:4: TOKENS_SPEC id ( COMMA id )* RBRACE
                     {
-                        TOKENS_SPEC35 = (Token)match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec984);
+                        TOKENS_SPEC35 = (Token)Match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec984);
                         stream_TOKENS_SPEC.add(TOKENS_SPEC35);
 
                         pushFollow(FOLLOW_id_in_tokensSpec986);
@@ -1453,7 +1453,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\ANTLRParser.g:262:20: COMMA id
                                     {
-                                        COMMA37 = (Token)match(input, COMMA, FOLLOW_COMMA_in_tokensSpec989);
+                                        COMMA37 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_tokensSpec989);
                                         stream_COMMA.add(COMMA37);
 
                                         pushFollow(FOLLOW_id_in_tokensSpec991);
@@ -1470,7 +1470,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             }
                         }
                     exit9:
-                        RBRACE39 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec995);
+                        RBRACE39 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec995);
                         stream_RBRACE.add(RBRACE39);
 
 
@@ -1514,10 +1514,10 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:263:7: TOKENS_SPEC RBRACE
                     {
-                        TOKENS_SPEC40 = (Token)match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec1012);
+                        TOKENS_SPEC40 = (Token)Match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec1012);
                         stream_TOKENS_SPEC.add(TOKENS_SPEC40);
 
-                        RBRACE41 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec1014);
+                        RBRACE41 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec1014);
                         stream_RBRACE.add(RBRACE41);
 
 
@@ -1600,7 +1600,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 root_0 = (GrammarAST)adaptor.nil();
 
 
-                CHANNELS42 = (Token)match(input, CHANNELS, FOLLOW_CHANNELS_in_channelsSpec1027);
+                CHANNELS42 = (Token)Match(input, CHANNELS, FOLLOW_CHANNELS_in_channelsSpec1027);
                 CHANNELS42_tree = (GrammarAST)adaptor.create(CHANNELS42);
                 root_0 = (GrammarAST)adaptor.becomeRoot(CHANNELS42_tree, root_0);
 
@@ -1626,7 +1626,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:267:18: COMMA ! id
                             {
-                                COMMA44 = (Token)match(input, COMMA, FOLLOW_COMMA_in_channelsSpec1033);
+                                COMMA44 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_channelsSpec1033);
                                 pushFollow(FOLLOW_id_in_channelsSpec1036);
                                 id45 = id();
                                 state._fsp--;
@@ -1642,7 +1642,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     }
                 }
             exit11:
-                RBRACE46 = (Token)match(input, RBRACE, FOLLOW_RBRACE_in_channelsSpec1040);
+                RBRACE46 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_channelsSpec1040);
             }
 
             retval.stop = input.LT(-1);
@@ -1703,7 +1703,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:275:2: ( AT ( actionScopeName COLONCOLON )? id ACTION -> ^( AT ( actionScopeName )? id ACTION ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:275:4: AT ( actionScopeName COLONCOLON )? id ACTION
             {
-                AT47 = (Token)match(input, AT, FOLLOW_AT_in_action1057);
+                AT47 = (Token)Match(input, AT, FOLLOW_AT_in_action1057);
                 stream_AT.add(AT47);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:275:7: ( actionScopeName COLONCOLON )?
@@ -1745,7 +1745,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             state._fsp--;
 
                             stream_actionScopeName.add(actionScopeName48.getTree());
-                            COLONCOLON49 = (Token)match(input, COLONCOLON, FOLLOW_COLONCOLON_in_action1062);
+                            COLONCOLON49 = (Token)Match(input, COLONCOLON, FOLLOW_COLONCOLON_in_action1062);
                             stream_COLONCOLON.add(COLONCOLON49);
 
                         }
@@ -1758,7 +1758,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_id.add(id50.getTree());
-                ACTION51 = (Token)match(input, ACTION, FOLLOW_ACTION_in_action1068);
+                ACTION51 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_action1068);
                 stream_ACTION.add(ACTION51);
 
 
@@ -1891,7 +1891,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:283:4: LEXER
                     {
-                        LEXER53 = (Token)match(input, LEXER, FOLLOW_LEXER_in_actionScopeName1102);
+                        LEXER53 = (Token)Match(input, LEXER, FOLLOW_LEXER_in_actionScopeName1102);
                         stream_LEXER.add(LEXER53);
 
 
@@ -1919,7 +1919,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:284:9: PARSER
                     {
-                        PARSER54 = (Token)match(input, PARSER, FOLLOW_PARSER_in_actionScopeName1117);
+                        PARSER54 = (Token)Match(input, PARSER, FOLLOW_PARSER_in_actionScopeName1117);
                         stream_PARSER.add(PARSER54);
 
 
@@ -2004,7 +2004,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:288:5: ( MODE id SEMI sync ( lexerRule sync )* -> ^( MODE id ( lexerRule )* ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:288:7: MODE id SEMI sync ( lexerRule sync )*
             {
-                MODE55 = (Token)match(input, MODE, FOLLOW_MODE_in_modeSpec1136);
+                MODE55 = (Token)Match(input, MODE, FOLLOW_MODE_in_modeSpec1136);
                 stream_MODE.add(MODE55);
 
                 pushFollow(FOLLOW_id_in_modeSpec1138);
@@ -2012,7 +2012,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_id.add(id56.getTree());
-                SEMI57 = (Token)match(input, SEMI, FOLLOW_SEMI_in_modeSpec1140);
+                SEMI57 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_modeSpec1140);
                 stream_SEMI.add(SEMI57);
 
                 pushFollow(FOLLOW_sync_in_modeSpec1142);
@@ -2454,7 +2454,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:333:5: ( RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? rulePrequels COLON ruleBlock SEMI exceptionGroup -> ^( RULE RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? ( rulePrequels )? ruleBlock ( exceptionGroup )* ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:337:4: RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? rulePrequels COLON ruleBlock SEMI exceptionGroup
             {
-                RULE_REF66 = (Token)match(input, RULE_REF, FOLLOW_RULE_REF_in_parserRule1299);
+                RULE_REF66 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_parserRule1299);
                 stream_RULE_REF.add(RULE_REF66);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:345:4: ( ARG_ACTION )?
@@ -2469,7 +2469,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:345:4: ARG_ACTION
                         {
-                            ARG_ACTION67 = (Token)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_parserRule1329);
+                            ARG_ACTION67 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_parserRule1329);
                             stream_ARG_ACTION.add(ARG_ACTION67);
 
                         }
@@ -2548,7 +2548,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_rulePrequels.add(rulePrequels71.getTree());
-                COLON72 = (Token)match(input, COLON, FOLLOW_COLON_in_parserRule1397);
+                COLON72 = (Token)Match(input, COLON, FOLLOW_COLON_in_parserRule1397);
                 stream_COLON.add(COLON72);
 
                 pushFollow(FOLLOW_ruleBlock_in_parserRule1420);
@@ -2556,7 +2556,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_ruleBlock.add(ruleBlock73.getTree());
-                SEMI74 = (Token)match(input, SEMI, FOLLOW_SEMI_in_parserRule1429);
+                SEMI74 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_parserRule1429);
                 stream_SEMI.add(SEMI74);
 
                 pushFollow(FOLLOW_exceptionGroup_in_parserRule1438);
@@ -2815,13 +2815,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:396:2: ( CATCH ARG_ACTION ACTION -> ^( CATCH ARG_ACTION ACTION ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:396:4: CATCH ARG_ACTION ACTION
             {
-                CATCH78 = (Token)match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler1541);
+                CATCH78 = (Token)Match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler1541);
                 stream_CATCH.add(CATCH78);
 
-                ARG_ACTION79 = (Token)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler1543);
+                ARG_ACTION79 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler1543);
                 stream_ARG_ACTION.add(ARG_ACTION79);
 
-                ACTION80 = (Token)match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler1545);
+                ACTION80 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler1545);
                 stream_ACTION.add(ACTION80);
 
 
@@ -2905,10 +2905,10 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:400:2: ( FINALLY ACTION -> ^( FINALLY ACTION ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:400:4: FINALLY ACTION
             {
-                FINALLY81 = (Token)match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause1572);
+                FINALLY81 = (Token)Match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause1572);
                 stream_FINALLY.add(FINALLY81);
 
-                ACTION82 = (Token)match(input, ACTION, FOLLOW_ACTION_in_finallyClause1574);
+                ACTION82 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_finallyClause1574);
                 stream_ACTION.add(ACTION82);
 
 
@@ -3207,11 +3207,11 @@ public class ANTLRParser : antlr.runtime.Parser
                 root_0 = (GrammarAST)adaptor.nil();
 
 
-                RETURNS88 = (Token)match(input, RETURNS, FOLLOW_RETURNS_in_ruleReturns1663);
+                RETURNS88 = (Token)Match(input, RETURNS, FOLLOW_RETURNS_in_ruleReturns1663);
                 RETURNS88_tree = (GrammarAST)adaptor.create(RETURNS88);
                 root_0 = (GrammarAST)adaptor.becomeRoot(RETURNS88_tree, root_0);
 
-                ARG_ACTION89 = (Token)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleReturns1666);
+                ARG_ACTION89 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleReturns1666);
                 ARG_ACTION89_tree = new ActionAST(ARG_ACTION89);
                 adaptor.addChild(root_0, ARG_ACTION89_tree);
 
@@ -3271,7 +3271,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:439:5: ( THROWS qid ( COMMA qid )* -> ^( THROWS ( qid )+ ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:439:7: THROWS qid ( COMMA qid )*
             {
-                THROWS90 = (Token)match(input, THROWS, FOLLOW_THROWS_in_throwsSpec1694);
+                THROWS90 = (Token)Match(input, THROWS, FOLLOW_THROWS_in_throwsSpec1694);
                 stream_THROWS.add(THROWS90);
 
                 pushFollow(FOLLOW_qid_in_throwsSpec1696);
@@ -3295,7 +3295,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:439:19: COMMA qid
                             {
-                                COMMA92 = (Token)match(input, COMMA, FOLLOW_COMMA_in_throwsSpec1699);
+                                COMMA92 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_throwsSpec1699);
                                 stream_COMMA.add(COMMA92);
 
                                 pushFollow(FOLLOW_qid_in_throwsSpec1701);
@@ -3402,11 +3402,11 @@ public class ANTLRParser : antlr.runtime.Parser
                 root_0 = (GrammarAST)adaptor.nil();
 
 
-                LOCALS94 = (Token)match(input, LOCALS, FOLLOW_LOCALS_in_localsSpec1726);
+                LOCALS94 = (Token)Match(input, LOCALS, FOLLOW_LOCALS_in_localsSpec1726);
                 LOCALS94_tree = (GrammarAST)adaptor.create(LOCALS94);
                 root_0 = (GrammarAST)adaptor.becomeRoot(LOCALS94_tree, root_0);
 
-                ARG_ACTION95 = (Token)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_localsSpec1729);
+                ARG_ACTION95 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_localsSpec1729);
                 ARG_ACTION95_tree = new ActionAST(ARG_ACTION95);
                 adaptor.addChild(root_0, ARG_ACTION95_tree);
 
@@ -3465,7 +3465,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:455:2: ( AT id ACTION -> ^( AT id ACTION ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:455:4: AT id ACTION
             {
-                AT96 = (Token)match(input, AT, FOLLOW_AT_in_ruleAction1752);
+                AT96 = (Token)Match(input, AT, FOLLOW_AT_in_ruleAction1752);
                 stream_AT.add(AT96);
 
                 pushFollow(FOLLOW_id_in_ruleAction1754);
@@ -3473,7 +3473,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_id.add(id97.getTree());
-                ACTION98 = (Token)match(input, ACTION, FOLLOW_ACTION_in_ruleAction1756);
+                ACTION98 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_ruleAction1756);
                 stream_ACTION.add(ACTION98);
 
 
@@ -3662,7 +3662,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:474:16: OR labeledAlt
                             {
-                                OR101 = (Token)match(input, OR, FOLLOW_OR_in_ruleAltList1833);
+                                OR101 = (Token)Match(input, OR, FOLLOW_OR_in_ruleAltList1833);
                                 stream_OR.add(OR101);
 
                                 pushFollow(FOLLOW_labeledAlt_in_ruleAltList1835);
@@ -3786,7 +3786,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:479:5: POUND ! id !
                         {
-                            POUND104 = (Token)match(input, POUND, FOLLOW_POUND_in_labeledAlt1859);
+                            POUND104 = (Token)Match(input, POUND, FOLLOW_POUND_in_labeledAlt1859);
                             pushFollow(FOLLOW_id_in_labeledAlt1862);
                             id105 = id();
                             state._fsp--;
@@ -3873,7 +3873,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:488:7: FRAGMENT
                         {
-                            FRAGMENT106 = (Token)match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule1894);
+                            FRAGMENT106 = (Token)Match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule1894);
                             stream_FRAGMENT.add(FRAGMENT106);
 
                         }
@@ -3881,7 +3881,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 }
 
-                TOKEN_REF107 = (Token)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule1900);
+                TOKEN_REF107 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule1900);
                 stream_TOKEN_REF.add(TOKEN_REF107);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:491:4: ( optionsSpec )?
@@ -3906,7 +3906,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 }
 
-                COLON109 = (Token)match(input, COLON, FOLLOW_COLON_in_lexerRule1913);
+                COLON109 = (Token)Match(input, COLON, FOLLOW_COLON_in_lexerRule1913);
                 stream_COLON.add(COLON109);
 
                 pushFollow(FOLLOW_lexerRuleBlock_in_lexerRule1915);
@@ -3914,7 +3914,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_lexerRuleBlock.add(lexerRuleBlock110.getTree());
-                SEMI111 = (Token)match(input, SEMI, FOLLOW_SEMI_in_lexerRule1917);
+                SEMI111 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_lexerRule1917);
                 stream_SEMI.add(SEMI111);
 
 
@@ -4127,7 +4127,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:509:14: OR lexerAlt
                             {
-                                OR114 = (Token)match(input, OR, FOLLOW_OR_in_lexerAltList2023);
+                                OR114 = (Token)Match(input, OR, FOLLOW_OR_in_lexerAltList2023);
                                 stream_OR.add(OR114);
 
                                 pushFollow(FOLLOW_lexerAlt_in_lexerAltList2025);
@@ -4890,7 +4890,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:578:3: ( LPAREN ( optionsSpec COLON )? lexerAltList RPAREN -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? lexerAltList ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:578:5: LPAREN ( optionsSpec COLON )? lexerAltList RPAREN
             {
-                LPAREN124 = (Token)match(input, LPAREN, FOLLOW_LPAREN_in_lexerBlock2270);
+                LPAREN124 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_lexerBlock2270);
                 stream_LPAREN.add(LPAREN124);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:579:9: ( optionsSpec COLON )?
@@ -4910,7 +4910,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             state._fsp--;
 
                             stream_optionsSpec.add(optionsSpec125.getTree());
-                            COLON126 = (Token)match(input, COLON, FOLLOW_COLON_in_lexerBlock2284);
+                            COLON126 = (Token)Match(input, COLON, FOLLOW_COLON_in_lexerBlock2284);
                             stream_COLON.add(COLON126);
 
                         }
@@ -4923,7 +4923,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_lexerAltList.add(lexerAltList127.getTree());
-                RPAREN128 = (Token)match(input, RPAREN, FOLLOW_RPAREN_in_lexerBlock2307);
+                RPAREN128 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerBlock2307);
                 stream_RPAREN.add(RPAREN128);
 
 
@@ -5023,7 +5023,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:587:2: ( RARROW lexerCommand ( COMMA lexerCommand )* -> ( lexerCommand )+ )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:587:4: RARROW lexerCommand ( COMMA lexerCommand )*
             {
-                RARROW129 = (Token)match(input, RARROW, FOLLOW_RARROW_in_lexerCommands2344);
+                RARROW129 = (Token)Match(input, RARROW, FOLLOW_RARROW_in_lexerCommands2344);
                 stream_RARROW.add(RARROW129);
 
                 pushFollow(FOLLOW_lexerCommand_in_lexerCommands2346);
@@ -5047,7 +5047,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:587:25: COMMA lexerCommand
                             {
-                                COMMA131 = (Token)match(input, COMMA, FOLLOW_COMMA_in_lexerCommands2349);
+                                COMMA131 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_lexerCommands2349);
                                 stream_COMMA.add(COMMA131);
 
                                 pushFollow(FOLLOW_lexerCommand_in_lexerCommands2351);
@@ -5257,7 +5257,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         state._fsp--;
 
                         stream_lexerCommandName.add(lexerCommandName133.getTree());
-                        LPAREN134 = (Token)match(input, LPAREN, FOLLOW_LPAREN_in_lexerCommand2371);
+                        LPAREN134 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_lexerCommand2371);
                         stream_LPAREN.add(LPAREN134);
 
                         pushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand2373);
@@ -5265,7 +5265,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         state._fsp--;
 
                         stream_lexerCommandExpr.add(lexerCommandExpr135.getTree());
-                        RPAREN136 = (Token)match(input, RPAREN, FOLLOW_RPAREN_in_lexerCommand2375);
+                        RPAREN136 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerCommand2375);
                         stream_RPAREN.add(RPAREN136);
 
 
@@ -5400,7 +5400,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        INT139 = (Token)match(input, INT, FOLLOW_INT_in_lexerCommandExpr2406);
+                        INT139 = (Token)Match(input, INT, FOLLOW_INT_in_lexerCommandExpr2406);
                         INT139_tree = (GrammarAST)adaptor.create(INT139);
                         adaptor.addChild(root_0, INT139_tree);
 
@@ -5492,7 +5492,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:602:17: MODE
                     {
-                        MODE141 = (Token)match(input, MODE, FOLLOW_MODE_in_lexerCommandName2448);
+                        MODE141 = (Token)Match(input, MODE, FOLLOW_MODE_in_lexerCommandName2448);
                         stream_MODE.add(MODE141);
 
 
@@ -5591,7 +5591,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:606:20: OR alternative
                             {
-                                OR143 = (Token)match(input, OR, FOLLOW_OR_in_altList2479);
+                                OR143 = (Token)Match(input, OR, FOLLOW_OR_in_altList2479);
                                 stream_OR.add(OR143);
 
                                 pushFollow(FOLLOW_alternative_in_altList2481);
@@ -6418,7 +6418,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        ACTION151 = (Token)match(input, ACTION, FOLLOW_ACTION_in_actionElement2774);
+                        ACTION151 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_actionElement2774);
                         ACTION151_tree = new ActionAST(ACTION151);
                         adaptor.addChild(root_0, ACTION151_tree);
 
@@ -6427,7 +6427,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:674:6: ACTION elementOptions
                     {
-                        ACTION152 = (Token)match(input, ACTION, FOLLOW_ACTION_in_actionElement2784);
+                        ACTION152 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_actionElement2784);
                         stream_ACTION.add(ACTION152);
 
                         pushFollow(FOLLOW_elementOptions_in_actionElement2786);
@@ -6470,7 +6470,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        SEMPRED154 = (Token)match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2804);
+                        SEMPRED154 = (Token)Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2804);
                         SEMPRED154_tree = new PredAST(SEMPRED154);
                         adaptor.addChild(root_0, SEMPRED154_tree);
 
@@ -6479,7 +6479,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 4:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:676:6: SEMPRED elementOptions
                     {
-                        SEMPRED155 = (Token)match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2814);
+                        SEMPRED155 = (Token)Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2814);
                         stream_SEMPRED.add(SEMPRED155);
 
                         pushFollow(FOLLOW_elementOptions_in_actionElement2816);
@@ -6609,7 +6609,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:680:8: ass= ASSIGN
                         {
-                            ass = (Token)match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement2843);
+                            ass = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement2843);
                             stream_ASSIGN.add(ass);
 
                         }
@@ -6617,7 +6617,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 2:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:680:19: ass= PLUS_ASSIGN
                         {
-                            ass = (Token)match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement2847);
+                            ass = (Token)Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement2847);
                             stream_PLUS_ASSIGN.add(ass);
 
                         }
@@ -7010,7 +7010,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:704:4: QUESTION (nongreedy= QUESTION )?
                     {
-                        QUESTION163 = (Token)match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3001);
+                        QUESTION163 = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3001);
                         stream_QUESTION.add(QUESTION163);
 
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:704:22: (nongreedy= QUESTION )?
@@ -7025,7 +7025,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ANTLRParser.g:704:22: nongreedy= QUESTION
                                 {
-                                    nongreedy = (Token)match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3005);
+                                    nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3005);
                                     stream_QUESTION.add(nongreedy);
 
                                 }
@@ -7058,7 +7058,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:705:6: STAR (nongreedy= QUESTION )?
                     {
-                        STAR164 = (Token)match(input, STAR, FOLLOW_STAR_in_ebnfSuffix3021);
+                        STAR164 = (Token)Match(input, STAR, FOLLOW_STAR_in_ebnfSuffix3021);
                         stream_STAR.add(STAR164);
 
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:705:20: (nongreedy= QUESTION )?
@@ -7073,7 +7073,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ANTLRParser.g:705:20: nongreedy= QUESTION
                                 {
-                                    nongreedy = (Token)match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3025);
+                                    nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3025);
                                     stream_QUESTION.add(nongreedy);
 
                                 }
@@ -7106,7 +7106,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:706:7: PLUS (nongreedy= QUESTION )?
                     {
-                        PLUS165 = (Token)match(input, PLUS, FOLLOW_PLUS_in_ebnfSuffix3043);
+                        PLUS165 = (Token)Match(input, PLUS, FOLLOW_PLUS_in_ebnfSuffix3043);
                         stream_PLUS.add(PLUS165);
 
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:706:21: (nongreedy= QUESTION )?
@@ -7121,7 +7121,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             case 1:
                                 // org\\antlr\\v4\\parse\\ANTLRParser.g:706:21: nongreedy= QUESTION
                                 {
-                                    nongreedy = (Token)match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3047);
+                                    nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3047);
                                     stream_QUESTION.add(nongreedy);
 
                                 }
@@ -7303,7 +7303,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        RULE_REF168 = (Token)match(input, RULE_REF, FOLLOW_RULE_REF_in_lexerAtom3083);
+                        RULE_REF168 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_lexerAtom3083);
                         RULE_REF168_tree = new RuleRefAST(RULE_REF168);
                         adaptor.addChild(root_0, RULE_REF168_tree);
 
@@ -7343,7 +7343,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        LEXER_CHAR_SET171 = (Token)match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_lexerAtom3110);
+                        LEXER_CHAR_SET171 = (Token)Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_lexerAtom3110);
                         LEXER_CHAR_SET171_tree = (GrammarAST)adaptor.create(LEXER_CHAR_SET171);
                         adaptor.addChild(root_0, LEXER_CHAR_SET171_tree);
 
@@ -7580,7 +7580,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:748:2: ( DOT ( elementOptions )? -> ^( WILDCARD[$DOT] ( elementOptions )? ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:753:6: DOT ( elementOptions )?
             {
-                DOT177 = (Token)match(input, DOT, FOLLOW_DOT_in_wildcard3236);
+                DOT177 = (Token)Match(input, DOT, FOLLOW_DOT_in_wildcard3236);
                 stream_DOT.add(DOT177);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:753:10: ( elementOptions )?
@@ -7743,7 +7743,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:763:7: NOT setElement
                     {
-                        NOT179 = (Token)match(input, NOT, FOLLOW_NOT_in_notSet3276);
+                        NOT179 = (Token)Match(input, NOT, FOLLOW_NOT_in_notSet3276);
                         stream_NOT.add(NOT179);
 
                         pushFollow(FOLLOW_setElement_in_notSet3278);
@@ -7790,7 +7790,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:764:7: NOT blockSet
                     {
-                        NOT181 = (Token)match(input, NOT, FOLLOW_NOT_in_notSet3306);
+                        NOT181 = (Token)Match(input, NOT, FOLLOW_NOT_in_notSet3306);
                         stream_NOT.add(NOT181);
 
                         pushFollow(FOLLOW_blockSet_in_notSet3308);
@@ -7890,7 +7890,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:772:5: ( LPAREN setElement ( OR setElement )* RPAREN -> ^( SET[$LPAREN,\"SET\"] ( setElement )+ ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:772:7: LPAREN setElement ( OR setElement )* RPAREN
             {
-                LPAREN183 = (Token)match(input, LPAREN, FOLLOW_LPAREN_in_blockSet3343);
+                LPAREN183 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_blockSet3343);
                 stream_LPAREN.add(LPAREN183);
 
                 pushFollow(FOLLOW_setElement_in_blockSet3345);
@@ -7914,7 +7914,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:772:26: OR setElement
                             {
-                                OR185 = (Token)match(input, OR, FOLLOW_OR_in_blockSet3348);
+                                OR185 = (Token)Match(input, OR, FOLLOW_OR_in_blockSet3348);
                                 stream_OR.add(OR185);
 
                                 pushFollow(FOLLOW_setElement_in_blockSet3350);
@@ -7931,7 +7931,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     }
                 }
             exit61:
-                RPAREN187 = (Token)match(input, RPAREN, FOLLOW_RPAREN_in_blockSet3354);
+                RPAREN187 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_blockSet3354);
                 stream_RPAREN.add(RPAREN187);
 
 
@@ -8080,7 +8080,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        TOKEN_REF188 = (Token)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement3384);
+                        TOKEN_REF188 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement3384);
                         TOKEN_REF188_tree = new TerminalAST(TOKEN_REF188);
                         root_0 = (GrammarAST)adaptor.becomeRoot(TOKEN_REF188_tree, root_0);
 
@@ -8115,7 +8115,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        STRING_LITERAL190 = (Token)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement3396);
+                        STRING_LITERAL190 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement3396);
                         STRING_LITERAL190_tree = new TerminalAST(STRING_LITERAL190);
                         root_0 = (GrammarAST)adaptor.becomeRoot(STRING_LITERAL190_tree, root_0);
 
@@ -8164,7 +8164,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         root_0 = (GrammarAST)adaptor.nil();
 
 
-                        LEXER_CHAR_SET193 = (Token)match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement3418);
+                        LEXER_CHAR_SET193 = (Token)Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement3418);
                         LEXER_CHAR_SET193_tree = (GrammarAST)adaptor.create(LEXER_CHAR_SET193);
                         adaptor.addChild(root_0, LEXER_CHAR_SET193_tree);
 
@@ -8232,7 +8232,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:797:3: ( LPAREN ( ( optionsSpec )? (ra+= ruleAction )* COLON )? altList RPAREN -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? ( $ra)* altList ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:797:5: LPAREN ( ( optionsSpec )? (ra+= ruleAction )* COLON )? altList RPAREN
             {
-                LPAREN194 = (Token)match(input, LPAREN, FOLLOW_LPAREN_in_block3442);
+                LPAREN194 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_block3442);
                 stream_LPAREN.add(LPAREN194);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:798:9: ( ( optionsSpec )? (ra+= ruleAction )* COLON )?
@@ -8301,7 +8301,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 }
                             }
                         exit66:
-                            COLON196 = (Token)match(input, COLON, FOLLOW_COLON_in_block3462);
+                            COLON196 = (Token)Match(input, COLON, FOLLOW_COLON_in_block3462);
                             stream_COLON.add(COLON196);
 
                         }
@@ -8314,7 +8314,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 state._fsp--;
 
                 stream_altList.add(altList197.getTree());
-                RPAREN198 = (Token)match(input, RPAREN, FOLLOW_RPAREN_in_block3479);
+                RPAREN198 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_block3479);
                 stream_RPAREN.add(RPAREN198);
 
 
@@ -8420,7 +8420,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:817:5: ( RULE_REF ( ARG_ACTION )? ( elementOptions )? -> ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:817:7: RULE_REF ( ARG_ACTION )? ( elementOptions )?
             {
-                RULE_REF199 = (Token)match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref3533);
+                RULE_REF199 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref3533);
                 stream_RULE_REF.add(RULE_REF199);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:817:16: ( ARG_ACTION )?
@@ -8435,7 +8435,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     case 1:
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:817:16: ARG_ACTION
                         {
-                            ARG_ACTION200 = (Token)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref3535);
+                            ARG_ACTION200 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref3535);
                             stream_ARG_ACTION.add(ARG_ACTION200);
 
                         }
@@ -8567,15 +8567,15 @@ public class ANTLRParser : antlr.runtime.Parser
                 root_0 = (GrammarAST)adaptor.nil();
 
 
-                STRING_LITERAL202 = (Token)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3594);
+                STRING_LITERAL202 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3594);
                 STRING_LITERAL202_tree = new TerminalAST(STRING_LITERAL202);
                 adaptor.addChild(root_0, STRING_LITERAL202_tree);
 
-                RANGE203 = (Token)match(input, RANGE, FOLLOW_RANGE_in_range3599);
+                RANGE203 = (Token)Match(input, RANGE, FOLLOW_RANGE_in_range3599);
                 RANGE203_tree = new RangeAST(RANGE203);
                 root_0 = (GrammarAST)adaptor.becomeRoot(RANGE203_tree, root_0);
 
-                STRING_LITERAL204 = (Token)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3605);
+                STRING_LITERAL204 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3605);
                 STRING_LITERAL204_tree = new TerminalAST(STRING_LITERAL204);
                 adaptor.addChild(root_0, STRING_LITERAL204_tree);
 
@@ -8656,7 +8656,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:841:6: TOKEN_REF ( elementOptions )?
                     {
-                        TOKEN_REF205 = (Token)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal3629);
+                        TOKEN_REF205 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal3629);
                         stream_TOKEN_REF.add(TOKEN_REF205);
 
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:841:16: ( elementOptions )?
@@ -8719,7 +8719,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:842:6: STRING_LITERAL ( elementOptions )?
                     {
-                        STRING_LITERAL207 = (Token)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal3652);
+                        STRING_LITERAL207 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal3652);
                         stream_STRING_LITERAL.add(STRING_LITERAL207);
 
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:842:21: ( elementOptions )?
@@ -8845,7 +8845,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\ANTLRParser.g:848:5: ( LT ( elementOption ( COMMA elementOption )* )? GT -> ^( ELEMENT_OPTIONS[$LT,\"ELEMENT_OPTIONS\"] ( elementOption )* ) )
             // org\\antlr\\v4\\parse\\ANTLRParser.g:848:9: LT ( elementOption ( COMMA elementOption )* )? GT
             {
-                LT209 = (Token)match(input, LT, FOLLOW_LT_in_elementOptions3685);
+                LT209 = (Token)Match(input, LT, FOLLOW_LT_in_elementOptions3685);
                 stream_LT.add(LT209);
 
                 // org\\antlr\\v4\\parse\\ANTLRParser.g:848:12: ( elementOption ( COMMA elementOption )* )?
@@ -8881,7 +8881,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     case 1:
                                         // org\\antlr\\v4\\parse\\ANTLRParser.g:848:28: COMMA elementOption
                                         {
-                                            COMMA211 = (Token)match(input, COMMA, FOLLOW_COMMA_in_elementOptions3691);
+                                            COMMA211 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_elementOptions3691);
                                             stream_COMMA.add(COMMA211);
 
                                             pushFollow(FOLLOW_elementOption_in_elementOptions3693);
@@ -8904,7 +8904,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 }
 
-                GT213 = (Token)match(input, GT, FOLLOW_GT_in_elementOptions3699);
+                GT213 = (Token)Match(input, GT, FOLLOW_GT_in_elementOptions3699);
                 stream_GT.add(GT213);
 
 
@@ -9086,7 +9086,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         adaptor.addChild(root_0, id215.getTree());
 
-                        ASSIGN216 = (Token)match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption3757);
+                        ASSIGN216 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption3757);
                         ASSIGN216_tree = (GrammarAST)adaptor.create(ASSIGN216);
                         root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN216_tree, root_0);
 
@@ -9173,7 +9173,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:867:7: RULE_REF
                     {
-                        RULE_REF218 = (Token)match(input, RULE_REF, FOLLOW_RULE_REF_in_id3791);
+                        RULE_REF218 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_id3791);
                         stream_RULE_REF.add(RULE_REF218);
 
 
@@ -9201,7 +9201,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:868:7: TOKEN_REF
                     {
-                        TOKEN_REF219 = (Token)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_id3804);
+                        TOKEN_REF219 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_id3804);
                         stream_TOKEN_REF.add(TOKEN_REF219);
 
 
@@ -9302,7 +9302,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         case 1:
                             // org\\antlr\\v4\\parse\\ANTLRParser.g:874:8: DOT id
                             {
-                                DOT221 = (Token)match(input, DOT, FOLLOW_DOT_in_qid3835);
+                                DOT221 = (Token)Match(input, DOT, FOLLOW_DOT_in_qid3835);
                                 stream_DOT.add(DOT221);
 
                                 pushFollow(FOLLOW_id_in_qid3837);
@@ -9399,7 +9399,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 adaptor.addChild(root_0, alternative223.getTree());
 
-                EOF224 = (Token)match(input, EOF, FOLLOW_EOF_in_alternativeEntry3856);
+                EOF224 = (Token)Match(input, EOF, FOLLOW_EOF_in_alternativeEntry3856);
                 EOF224_tree = (GrammarAST)adaptor.create(EOF224);
                 adaptor.addChild(root_0, EOF224_tree);
 
@@ -9462,7 +9462,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 adaptor.addChild(root_0, element225.getTree());
 
-                EOF226 = (Token)match(input, EOF, FOLLOW_EOF_in_elementEntry3867);
+                EOF226 = (Token)Match(input, EOF, FOLLOW_EOF_in_elementEntry3867);
                 EOF226_tree = (GrammarAST)adaptor.create(EOF226);
                 adaptor.addChild(root_0, EOF226_tree);
 
@@ -9525,7 +9525,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 adaptor.addChild(root_0, rule227.getTree());
 
-                EOF228 = (Token)match(input, EOF, FOLLOW_EOF_in_ruleEntry3877);
+                EOF228 = (Token)Match(input, EOF, FOLLOW_EOF_in_ruleEntry3877);
                 EOF228_tree = (GrammarAST)adaptor.create(EOF228);
                 adaptor.addChild(root_0, EOF228_tree);
 
@@ -9588,7 +9588,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 adaptor.addChild(root_0, block229.getTree());
 
-                EOF230 = (Token)match(input, EOF, FOLLOW_EOF_in_blockEntry3887);
+                EOF230 = (Token)Match(input, EOF, FOLLOW_EOF_in_blockEntry3887);
                 EOF230_tree = (GrammarAST)adaptor.create(EOF230);
                 adaptor.addChild(root_0, EOF230_tree);
 

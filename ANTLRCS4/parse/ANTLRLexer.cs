@@ -190,7 +190,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         dfa32 = new DFA32(this);
     }
     //@Override 
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRLexer.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRLexer.g"; }
 
     // $ANTLR start "DOC_COMMENT"
     public void mDOC_COMMENT()
@@ -3293,7 +3293,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     t.setLine(state.tokenStartLine);
                     t.setText(state.text);
                     t.setCharPositionInLine(state.tokenStartCharPositionInLine);
-                    String msg = getTokenErrorDisplay(t) + " came as a complete surprise to me";
+                    String msg = GetTokenErrorDisplay(t) + " came as a complete surprise to me";
                     grammarError(ErrorType.SYNTAX_ERROR, t, msg);
                     state.syntaxErrors++;
                     skip();

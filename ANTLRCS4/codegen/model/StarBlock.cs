@@ -9,18 +9,18 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
-public class StarBlock : Loop {
-	public String loopLabel;
+public class StarBlock : Loop
+{
+    public string loopLabel;
 
-	public StarBlock(OutputModelFactory factory,
-					 GrammarAST blkOrEbnfRootAST,
-					 List<CodeBlockForAlt> alts)
-		:base(factory, blkOrEbnfRootAST, alts)
+    public StarBlock(OutputModelFactory factory,
+                     GrammarAST blkOrEbnfRootAST,
+                     List<CodeBlockForAlt> alts)
+        : base(factory, blkOrEbnfRootAST, alts)
     {
-		;
-		loopLabel = factory.getGenerator().getTarget().getLoopLabel(blkOrEbnfRootAST);
-		StarLoopEntryState star = (StarLoopEntryState)blkOrEbnfRootAST.atnState;
-		loopBackStateNumber = star.loopBackState.stateNumber;
-		decision = star.decision;
-	}
+        loopLabel = factory.GetGenerator().Target.GetLoopLabel(blkOrEbnfRootAST);
+        var star = blkOrEbnfRootAST.atnState as StarLoopEntryState;
+        loopBackStateNumber = star.loopBackState.stateNumber;
+        decision = star.decision;
+    }
 }

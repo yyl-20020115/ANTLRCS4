@@ -48,7 +48,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
             return tokens[i++];
         }
         ////@Override
-        public String getSourceName() { return "test"; }
+        public String GetSourceName() { return "test"; }
         ////@Override
         public int getCharPositionInLine()
         {
@@ -128,7 +128,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
             return tokens[i++];
         }
         //@Override
-        public String getSourceName() { return "test"; }
+        public String GetSourceName() { return "test"; }
         //@Override
         public int getCharPositionInLine()
         {
@@ -234,7 +234,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public String getSourceName()
+        public String GetSourceName()
         {
             return IntStream.UNKNOWN_SOURCE_NAME;
         }
@@ -292,7 +292,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public String getSourceName()
+        public String GetSourceName()
         {
             return IntStream.UNKNOWN_SOURCE_NAME;
         }

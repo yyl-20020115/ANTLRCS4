@@ -12,9 +12,9 @@ namespace org.antlr.v4.codegen.model.chunk;
 /** */
 public class ActionText : ActionChunk
 {
-    public String text;
+    public readonly string text;
 
-    public ActionText(StructDecl ctx, String text) : base(ctx)
+    public ActionText(StructDecl ctx, string text) : base(ctx)
     {
         this.text = text;
     }

@@ -6,13 +6,9 @@
 
 namespace org.antlr.v4.codegen.model.decl;
 
-public class ContextTokenListIndexedGetterDecl : ContextTokenListGetterDecl {
-	public ContextTokenListIndexedGetterDecl(OutputModelFactory factory, String name): base(factory, name)
-    {
-	}
+public class ContextTokenListIndexedGetterDecl : ContextTokenListGetterDecl
+{
+    public ContextTokenListIndexedGetterDecl(OutputModelFactory factory, string name) : base(factory, name) { }
 
-	
-	public override String getArgType() {
-		return "int";
-	}
+    public override string GetArgType() => "int";
 }

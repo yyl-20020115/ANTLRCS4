@@ -9,11 +9,12 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class QRetValueRef : RetValueRef {
-	public readonly String dict;
+public class QRetValueRef : RetValueRef
+{
+    public readonly string dict;
 
-	public QRetValueRef(StructDecl ctx, String dict, String name, String escapedName) : base(ctx, name, escapedName)
+    public QRetValueRef(StructDecl ctx, string dict, string name, string escapedName) : base(ctx, name, escapedName)
     {
-		this.dict = dict;
-	}
+        this.dict = dict;
+    }
 }

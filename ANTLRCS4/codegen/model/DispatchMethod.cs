@@ -5,7 +5,9 @@
  */
 namespace org.antlr.v4.codegen.model;
 
-public class DispatchMethod : OutputModelObject {
-	public DispatchMethod(OutputModelFactory factory):base(factory) {
-	}
+public class DispatchMethod : OutputModelObject
+{
+    public DispatchMethod(OutputModelFactory factory) : base(factory)
+    {
+    }
 }

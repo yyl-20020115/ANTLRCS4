@@ -23,58 +23,66 @@ namespace org.antlr.v4.codegen.model;
  *  think it makes sense to factor code using super constructors because
  *  it has too much work to do.
  */
-public abstract class Choice : RuleElement {
-	public int decision = -1;
-	public Decl label;
+public abstract class Choice : RuleElement
+{
+    public int decision = -1;
+    public Decl label;
 
-	[ModelElement] 
-	public List<CodeBlockForAlt> alts;
-	[ModelElement]
-	public List<SrcOp> preamble = new ();
+    [ModelElement]
+    public List<CodeBlockForAlt> alts;
+    [ModelElement]
+    public List<SrcOp> preamble = new();
 
-	public Choice(OutputModelFactory factory,
-				  GrammarAST blkOrEbnfRootAST,
-				  List<CodeBlockForAlt> alts)
-		: base(factory, blkOrEbnfRootAST)
+    public Choice(OutputModelFactory factory,
+                  GrammarAST blkOrEbnfRootAST,
+                  List<CodeBlockForAlt> alts)
+        : base(factory, blkOrEbnfRootAST)
     {
-		this.alts = alts;
-	}
+        this.alts = alts;
+    }
 
-	public void addPreambleOp(SrcOp op) {
-		preamble.Add(op);
-	}
+    public void AddPreambleOp(SrcOp op)
+    {
+        preamble.Add(op);
+    }
 
-	public List<TokenInfo[]> getAltLookaheadAsStringLists(IntervalSet[] altLookSets) {
-		List<TokenInfo[]> altLook = new ();
-		Target target = factory.getGenerator().getTarget();
-		Grammar grammar = factory.getGrammar();
-		foreach (IntervalSet s in altLookSets) {
-			IntegerList list = s.toIntegerList();
-			TokenInfo[] info = new TokenInfo[list.size()];
-			for (int i = 0; i < info.Length; i++) {
-				info[i] = new TokenInfo(list.get(i), target.getTokenTypeAsTargetLabel(grammar, list.get(i)));
-			}
-			altLook.Add(info);
-		}
-		return altLook;
-	}
+    public List<TokenInfo[]> GetAltLookaheadAsStringLists(IntervalSet[] altLookSets)
+    {
+        List<TokenInfo[]> altLook = new();
+        var target = factory.GetGenerator().Target;
+        var grammar = factory.GetGrammar();
+        foreach (var s in altLookSets)
+        {
+            var list = s.toIntegerList();
+            var info = new TokenInfo[list.size()];
+            for (int i = 0; i < info.Length; i++)
+            {
+                info[i] = new TokenInfo(list.get(i), target.GetTokenTypeAsTargetLabel(grammar, list.get(i)));
+            }
+            altLook.Add(info);
+        }
+        return altLook;
+    }
 
-	public TestSetInline addCodeForLookaheadTempVar(IntervalSet look) {
-		List<SrcOp> testOps = factory.getLL1Test(look, ast);
-		TestSetInline expr = testOps.FirstOrDefault(op => op is TestSetInline) as TestSetInline;//
-							 //Utils.find(testOps, typeof(TestSetInline));
-		if (expr != null) {
-			Decl d = new TokenTypeDecl(factory, expr.varName);
-			factory.getCurrentRuleFunction().addLocalDecl(d);
-			CaptureNextTokenType nextType = new CaptureNextTokenType(factory,expr.varName);
-			addPreambleOp(nextType);
-		}
-		return expr;
-	}
+    public TestSetInline AddCodeForLookaheadTempVar(IntervalSet look)
+    {
+        var testOps = factory.GetLL1Test(look, ast);
+        var expr = testOps.FirstOrDefault(op => op is TestSetInline) as TestSetInline;//
+                                                                                                //Utils.find(testOps, typeof(TestSetInline));
+        if (expr != null)
+        {
+            var d = new TokenTypeDecl(factory, expr.varName);
+            factory.GetCurrentRuleFunction().AddLocalDecl(d);
+            var nextType = new CaptureNextTokenType(factory, expr.varName);
+            AddPreambleOp(nextType);
+        }
+        return expr;
+    }
 
-	public ThrowNoViableAlt getThrowNoViableAlt(OutputModelFactory factory,
-												GrammarAST blkAST,
-												IntervalSet expecting) {
-		return new ThrowNoViableAlt(factory, blkAST, expecting);
-	}
+    public static ThrowNoViableAlt GetThrowNoViableAlt(OutputModelFactory factory,
+                                                GrammarAST blkAST,
+                                                IntervalSet expecting)
+    {
+        return new ThrowNoViableAlt(factory, blkAST, expecting);
+    }
 }

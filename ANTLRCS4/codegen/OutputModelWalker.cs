@@ -48,7 +48,7 @@ public class OutputModelWalker {
 		Type cl = omo.GetType();
 		String templateName = cl.Name;
 		if ( templateName == null ) {
-			tool.errMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
+			tool.ErrMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
 			return new Template("["+templateName+" invalid]");
 		}
 
@@ -56,11 +56,11 @@ public class OutputModelWalker {
 
         Template st = templates.GetInstanceOf(templateName);
 		if ( st == null ) {
-			tool.errMgr.toolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
+			tool.ErrMgr.toolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
 			return new Template("["+templateName+" invalid]");
 		}
 		if ( st.impl.FormalArguments == null ) {
-			tool.errMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
+			tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
 			return st;
 		}
 
@@ -84,7 +84,7 @@ public class OutputModelWalker {
 
 			String fieldName = fi.Name;
 			if (!usedFieldNames.Add(fieldName)) {
-				tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
+				tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
 				continue;
 			}
 
@@ -125,11 +125,11 @@ public class OutputModelWalker {
 					st.Add(fieldName, m);
 				}
 				else if ( o!=null ) {
-					tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: "+fieldName);
+					tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: "+fieldName);
 				}
 			}
 			catch (Exception iae) {
-				tool.errMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
+				tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
 			}
 		}
 		//st.impl.dump();

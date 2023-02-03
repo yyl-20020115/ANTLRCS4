@@ -6,7 +6,6 @@
 
 using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model;
-using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using System.Reflection;
@@ -15,87 +14,88 @@ namespace org.antlr.v4.codegen;
 
 /** General controller for code gen.  Can instantiate sub generator(s).
  */
-public class CodeGenerator {
-	public static readonly String TEMPLATE_ROOT = "org/antlr/v4/tool/templates/codegen";
-	public static readonly String VOCAB_FILE_EXTENSION = ".tokens";
-	public static readonly String vocabFilePattern =
-		"<tokens.keys:{t | <t>=<tokens.(t)>\n}>" +
-		"<literals.keys:{t | <t>=<literals.(t)>\n}>";
+public class CodeGenerator
+{
+    public static readonly string TEMPLATE_ROOT = "org/antlr/v4/tool/templates/codegen";
+    public static readonly string VOCAB_FILE_EXTENSION = ".tokens";
+    public static readonly string vocabFilePattern =
+        "<tokens.keys:{t | <t>=<tokens.(t)>\n}>" +
+        "<literals.keys:{t | <t>=<literals.(t)>\n}>";
 
-	public readonly Grammar g;
+    public readonly Grammar g;
 
-	public readonly Tool tool;
+    public readonly Tool tool;
 
-	public readonly String language;
+    public readonly String language;
 
-	private Target target;
+    private Target target;
 
-	public int lineWidth = 72;
+    public int lineWidth = 72;
 
-	public static CodeGenerator create(Grammar g) {
-		return create(g.tool, g, g.getLanguage());
-	}
+    public static CodeGenerator Create(Grammar g) => Create(g.Tools, g, g.getLanguage());
 
-	public static CodeGenerator create(Tool tool, Grammar g, String language) {
-		String targetName = "org.antlr.v4.codegen.target."+language+"Target";
-		try {
-			Type c = Type.GetType(targetName);
-			ConstructorInfo ctor = c.GetConstructor(new Type[] {typeof(CodeGenerator)});
-			CodeGenerator codeGenerator = new CodeGenerator(tool, g, language);
-			codeGenerator.target = ctor.Invoke(new object[] { codeGenerator }) as Target;
-			return codeGenerator;
-		}
-		catch (Exception e) {
-			g.tool.errMgr.toolError(ErrorType.CANNOT_CREATE_TARGET_GENERATOR, e, language);
-			return null;
-		}
-	}
+    public static CodeGenerator Create(Tool tool, Grammar g, string language)
+    {
+        var targetName = "org.antlr.v4.codegen.target." + language + "Target";
+        try
+        {
+            var c = Type.GetType(targetName);
+            var ctor = c.GetConstructor(new Type[] { typeof(CodeGenerator) });
+            var codeGenerator = new CodeGenerator(tool, g, language);
+            codeGenerator.target = ctor.Invoke(new object[] { codeGenerator }) as Target;
+            return codeGenerator;
+        }
+        catch (Exception e)
+        {
+            g.Tools.ErrMgr.toolError(ErrorType.CANNOT_CREATE_TARGET_GENERATOR, e, language);
+            return null;
+        }
+    }
 
-	private CodeGenerator(Tool tool, Grammar g, String language) {
-		this.g = g;
-		this.tool = tool;
-		this.language = language;
-	}
+    private CodeGenerator(Tool tool, Grammar g, String language)
+    {
+        this.g = g;
+        this.tool = tool;
+        this.language = language;
+    }
 
-	public Target getTarget() {
-		return target;
-	}
+    public Target Target => target;
 
-	public TemplateGroup getTemplates() {
-		return target.getTemplates();
-	}
+    public TemplateGroup Templates => target.GetTemplates();
 
-	// CREATE TEMPLATES BY WALKING MODEL
+    // CREATE TEMPLATES BY WALKING MODEL
 
-	private OutputModelController createController() {
-		OutputModelFactory factory = new ParserFactory(this);
-		OutputModelController controller = new OutputModelController(factory);
-		factory.setController(controller);
-		return controller;
-	}
+    private OutputModelController CreateController()
+    {
+        var factory = new ParserFactory(this);
+        var controller = new OutputModelController(factory);
+        factory.Controller = controller;
+        return controller;
+    }
 
-	private Template walk(OutputModelObject outputModel, bool header) {
-		OutputModelWalker walker = new OutputModelWalker(tool, getTemplates());
-		return walker.walk(outputModel, header);
-	}
+    private Template Walk(OutputModelObject outputModel, bool header)
+    {
+        var walker = new OutputModelWalker(tool, Templates);
+        return walker.walk(outputModel, header);
+    }
 
-	public Template generateLexer() { return generateLexer(false); }
-	public Template generateLexer(bool header) { return walk(createController().buildLexerOutputModel(header), header); }
+    public Template GenerateLexer() { return GenerateLexer(false); }
+    public Template GenerateLexer(bool header) { return Walk(CreateController().BuildLexerOutputModel(header), header); }
 
-	public Template generateParser() { return generateParser(false); }
-	public Template generateParser(bool header) { return walk(createController().buildParserOutputModel(header), header); }
+    public Template GenerateParser() { return GenerateParser(false); }
+    public Template GenerateParser(bool header) { return Walk(CreateController().BuildParserOutputModel(header), header); }
 
-	public Template generateListener() { return generateListener(false); }
-	public Template generateListener(bool header) { return walk(createController().buildListenerOutputModel(header), header); }
+    public Template GenerateListener() { return GenerateListener(false); }
+    public Template GenerateListener(bool header) { return Walk(CreateController().BuildListenerOutputModel(header), header); }
 
-	public Template generateBaseListener() { return generateBaseListener(false); }
-	public Template generateBaseListener(bool header) { return walk(createController().buildBaseListenerOutputModel(header), header); }
+    public Template GenerateBaseListener() { return GenerateBaseListener(false); }
+    public Template GenerateBaseListener(bool header) { return Walk(CreateController().BuildBaseListenerOutputModel(header), header); }
 
-	public Template generateVisitor() { return generateVisitor(false); }
-	public Template generateVisitor(bool header) { return walk(createController().buildVisitorOutputModel(header), header); }
+    public Template GenerateVisitor() { return GenerateVisitor(false); }
+    public Template GenerateVisitor(bool header) { return Walk(CreateController().BuildVisitorOutputModel(header), header); }
 
-	public Template generateBaseVisitor() { return generateBaseVisitor(false); }
-	public Template generateBaseVisitor(bool header) { return walk(createController().buildBaseVisitorOutputModel(header), header); }
+    public Template GenerateBaseVisitor() { return GenerateBaseVisitor(false); }
+    public Template GenerateBaseVisitor(bool header) { return Walk(CreateController().BuildBaseVisitorOutputModel(header), header); }
 
     /** Generate a token vocab file with all the token names/types.  For example:
 	 *  ID=7
@@ -104,102 +104,116 @@ public class CodeGenerator {
 	 *
 	 *  This is independent of the target language; used by antlr internally
 	 */
-    Template getTokenVocabOutput() {
-		Template vocabFileST = new Template(vocabFilePattern);
-		Dictionary<String,int> tokens = new Dictionary<String,int>();
+    Template GetTokenVocabOutput()
+    {
+        var vocabFileST = new Template(vocabFilePattern);
+        var tokens = new Dictionary<string, int>();
         // make constants for the token names
-        foreach (String t in g.tokenNameToTypeMap.Keys) {
-			int tokenType = g.tokenNameToTypeMap[t];
-			if ( tokenType>=Token.MIN_USER_TOKEN_TYPE) {
-				tokens[t]= tokenType;
-			}
-		}
-		vocabFileST.Add("tokens", tokens);
+        foreach (var t in g.tokenNameToTypeMap.Keys)
+        {
+            int tokenType = g.tokenNameToTypeMap[t];
+            if (tokenType >= Token.MIN_USER_TOKEN_TYPE)
+            {
+                tokens[t] = tokenType;
+            }
+        }
+        vocabFileST.Add("tokens", tokens);
 
-		// now dump the strings
-		Dictionary<String,int> literals = new Dictionary<String,int>();
-		foreach (String literal in g.stringLiteralToTypeMap.Keys) {
-			int tokenType = g.stringLiteralToTypeMap[literal];
-			if ( tokenType>=Token.MIN_USER_TOKEN_TYPE) {
-				literals[literal] = tokenType;
-			}
-		}
-		vocabFileST.Add("literals", literals);
+        // now dump the strings
+        var literals = new Dictionary<String, int>();
+        foreach (var literal in g.stringLiteralToTypeMap.Keys)
+        {
+            int tokenType = g.stringLiteralToTypeMap[literal];
+            if (tokenType >= Token.MIN_USER_TOKEN_TYPE)
+            {
+                literals[literal] = tokenType;
+            }
+        }
+        vocabFileST.Add("literals", literals);
 
-		return vocabFileST;
-	}
+        return vocabFileST;
+    }
 
-	public void writeRecognizer(Template outputFileST, bool header) {
-		target.genFile(g, outputFileST, getRecognizerFileName(header));
-	}
+    public void WriteRecognizer(Template outputFileST, bool header)
+    {
+        target.GenFile(g, outputFileST, GetRecognizerFileName(header));
+    }
 
-	public void writeListener(Template outputFileST, bool header) {
-		target.genFile(g, outputFileST, getListenerFileName(header));
-	}
+    public void WriteListener(Template outputFileST, bool header)
+    {
+        target.GenFile(g, outputFileST, GetListenerFileName(header));
+    }
 
-	public void writeBaseListener(Template outputFileST, bool header) {
-		target.genFile(g, outputFileST, getBaseListenerFileName(header));
-	}
+    public void WriteBaseListener(Template outputFileST, bool header)
+    {
+        target.GenFile(g, outputFileST, GetBaseListenerFileName(header));
+    }
 
-	public void writeVisitor(Template outputFileST, bool header) {
-		target.genFile(g, outputFileST, getVisitorFileName(header));
-	}
+    public void WriteVisitor(Template outputFileST, bool header)
+    {
+        target.GenFile(g, outputFileST, GetVisitorFileName(header));
+    }
 
-	public void writeBaseVisitor(Template outputFileST, bool header) {
-		target.genFile(g, outputFileST, getBaseVisitorFileName(header));
-	}
+    public void WriteBaseVisitor(Template outputFileST, bool header)
+    {
+        target.GenFile(g, outputFileST, GetBaseVisitorFileName(header));
+    }
 
-	public void writeVocabFile() {
-		// write out the vocab interchange file; used by antlr,
-		// does not change per target
-		Template tokenVocabSerialization = getTokenVocabOutput();
-		String fileName = getVocabFileName();
-		if ( fileName!=null ) {
-			target.genFile(g, tokenVocabSerialization, fileName);
-		}
-	}
+    public void WriteVocabFile()
+    {
+        // write out the vocab interchange file; used by antlr,
+        // does not change per target
+        var tokenVocabSerialization = GetTokenVocabOutput();
+        var fileName = GetVocabFileName();
+        if (fileName != null)
+        {
+            target.GenFile(g, tokenVocabSerialization, fileName);
+        }
+    }
 
-	public void write(Template code, String fileName) {
-		try {
-//			long start = System.currentTimeMillis();
-			TextWriter w = tool.getOutputFileWriter(g, fileName);
-			ITemplateWriter wr = new AutoIndentWriter(w);
-			wr.LineWidth=(lineWidth);
-			code.Write(wr);
-			w.Close();
-//			long stop = System.currentTimeMillis();
-		}
-		catch (IOException ioe) {
-			tool.errMgr.toolError(ErrorType.CANNOT_WRITE_FILE,
-								  ioe,
-								  fileName);
-		}
-	}
+    public void Write(Template code, string fileName)
+    {
+        try
+        {
+            //			long start = System.currentTimeMillis();
+            var w = tool.getOutputFileWriter(g, fileName);
+            var wr = new AutoIndentWriter(w);
+            wr.LineWidth = (lineWidth);
+            code.Write(wr);
+            w.Close();
+            //			long stop = System.currentTimeMillis();
+        }
+        catch (IOException ioe)
+        {
+            tool.ErrMgr.toolError(ErrorType.CANNOT_WRITE_FILE,
+                                  ioe,
+                                  fileName);
+        }
+    }
 
-	public String getRecognizerFileName() { return getRecognizerFileName(false); }
-	public String getListenerFileName() { return getListenerFileName(false); }
-	public String getVisitorFileName() { return getVisitorFileName(false); }
-	public String getBaseListenerFileName() { return getBaseListenerFileName(false); }
-	public String getBaseVisitorFileName() { return getBaseVisitorFileName(false); }
+    public string GetRecognizerFileName() => GetRecognizerFileName(false);
+    public string GetListenerFileName() => GetListenerFileName(false);
+    public string GetVisitorFileName() => GetVisitorFileName(false);
+    public string GetBaseListenerFileName() => GetBaseListenerFileName(false);
+    public string GetBaseVisitorFileName() => GetBaseVisitorFileName(false);
 
-	public String getRecognizerFileName(bool header) { return target.getRecognizerFileName(header); }
-	public String getListenerFileName(bool header) { return target.getListenerFileName(header); }
-	public String getVisitorFileName(bool header) { return target.getVisitorFileName(header); }
-	public String getBaseListenerFileName(bool header) { return target.getBaseListenerFileName(header); }
-	public String getBaseVisitorFileName(bool header) { return target.getBaseVisitorFileName(header); }
+    public string GetRecognizerFileName(bool header) => target.GetRecognizerFileName(header);
+    public string GetListenerFileName(bool header) => target.GetListenerFileName(header);
+    public string GetVisitorFileName(bool header) => target.GetVisitorFileName(header);
+    public string GetBaseListenerFileName(bool header) => target.GetBaseListenerFileName(header);
+    public string GetBaseVisitorFileName(bool header) => target.GetBaseVisitorFileName(header);
 
-	/** What is the name of the vocab file generated for this grammar?
+    /** What is the name of the vocab file generated for this grammar?
 	 *  Returns null if no .tokens file should be generated.
 	 */
-	public String getVocabFileName() {
-		return g.name+VOCAB_FILE_EXTENSION;
-	}
+    public string GetVocabFileName() => g.name + VOCAB_FILE_EXTENSION;
 
-	public String getHeaderFileName() {
-        Template extST = getTemplates().GetInstanceOf("headerFileExtension");
-		if ( extST==null ) return null;
-		String recognizerName = g.getRecognizerName();
-		return recognizerName+extST.Render();
-	}
+    public string GetHeaderFileName()
+    {
+        var extST = Templates.GetInstanceOf("headerFileExtension");
+        if (extST == null) return null;
+        var recognizerName = g.getRecognizerName();
+        return recognizerName + extST.Render();
+    }
 
 }

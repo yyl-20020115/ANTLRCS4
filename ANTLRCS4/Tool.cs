@@ -60,20 +60,20 @@ public class Tool {
 	// fields set by option manager
 
 	public string inputDirectory; // used by mvn plugin but not set by tool itself.
-	public String outputDirectory;
-	public String libDirectory;
+	public string outputDirectory;
+	public string libDirectory;
 	public bool generate_ATN_dot = false;
 	public Encoding grammarEncoding = Encoding.Default; // use default locale's encoding
-	public String msgFormat = "antlr";
-	public bool launch_ST_inspector = false;
+	public string msgFormat = "antlr";
+	public bool Launch_ST_inspector = false;
 	public bool ST_inspector_wait_for_close = false;
     public bool force_atn = false;
     public bool dolog = false;
 	public bool gen_listener = true;
 	public bool gen_visitor = false;
 	public bool gen_dependencies = false;
-	public String genPackage = null;
-	public Dictionary<String, String> grammarOptions = null;
+	public string genPackage = null;
+	public Dictionary<string, string> grammarOptions = null;
 	public bool warnings_are_errors = false;
 	public bool longMessages = false;
 	public bool exact_output_dir = false;
@@ -109,7 +109,7 @@ public class Tool {
 
 	protected List<String> grammarFiles = new ();
 
-	public ErrorManager errMgr;
+	public ErrorManager ErrMgr;
     public LogManager logMgr = new ();
 
 	List<ANTLRToolListener> listeners = new List<ANTLRToolListener>();// CopyOnWriteArrayList<ANTLRToolListener>();
@@ -124,8 +124,8 @@ public class Tool {
 		defaultListener = new DefaultToolListener(this);
     }
 
-	public static void Main(String[] args) {
-        Tool antlr = new Tool(args);
+	public static void Main(string[] args) {
+        var antlr = new Tool(args);
         if ( args.Length == 0 ) { antlr.help(); antlr.exit(0); }
 
         try {
@@ -138,13 +138,13 @@ public class Tool {
                     Console.WriteLine("wrote "+logname);
                 }
                 catch (IOException ioe) {
-                    antlr.errMgr.toolError(ErrorType.INTERNAL_ERROR, ioe);
+                    antlr.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, ioe);
                 }
             }
         }
 		if ( antlr.return_dont_exit ) return;
 
-		if (antlr.errMgr.getNumErrors() > 0) {
+		if (antlr.ErrMgr.getNumErrors() > 0) {
 			antlr.exit(1);
 		}
 		antlr.exit(0);
@@ -152,12 +152,12 @@ public class Tool {
 
 	public Tool(params String[] args) {
 		this.args = args;
-		errMgr = new ErrorManager(this);
+		ErrMgr = new ErrorManager(this);
 		// We have to use the default message format until we have
 		// parsed the -message-format command line option.
-		errMgr.setFormat("antlr");
+		ErrMgr.setFormat("antlr");
 		handleArgs();
-		errMgr.setFormat(msgFormat);
+		ErrMgr.setFormat(msgFormat);
 	}
 
 	protected void handleArgs() {
@@ -193,12 +193,12 @@ public class Tool {
 						else f.SetValue(this, argValue);
 					}
 					catch (Exception e) {
-						errMgr.toolError(ErrorType.INTERNAL_ERROR, "can't access field "+o.fieldName);
+						ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "can't access field "+o.fieldName);
 					}
 				}
 			}
 			if ( !found ) {
-				errMgr.toolError(ErrorType.INVALID_CMDLINE_ARG, arg);
+				ErrMgr.toolError(ErrorType.INVALID_CMDLINE_ARG, arg);
 			}
 		}
 		if ( outputDirectory!=null ) {
@@ -210,7 +210,7 @@ public class Tool {
 			string outDir = outputDirectory;
 			haveOutputDir = true;
 			if (File.Exists(outDir) && !Directory.Exists(outDir)) {
-				errMgr.toolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
+				ErrMgr.toolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
 				outputDirectory = ".";
 			}
 		}
@@ -224,14 +224,14 @@ public class Tool {
 			}
 			string outDir = (libDirectory);
 			if (!File.Exists(outDir)) {
-				errMgr.toolError(ErrorType.DIR_NOT_FOUND, libDirectory);
+				ErrMgr.toolError(ErrorType.DIR_NOT_FOUND, libDirectory);
 				libDirectory = ".";
 			}
 		}
 		else {
 			libDirectory = ".";
 		}
-		if ( launch_ST_inspector ) {
+		if ( Launch_ST_inspector ) {
 
 			//TemplateGroup.trackCreationEvents = true;
 			return_dont_exit = true;
@@ -244,7 +244,7 @@ public class Tool {
 			String option = arg.Substring(2/*"-D".Length*/, eq-2);
 			String value = arg.Substring(eq+1);
 			if ( value.Length==0 ) {
-				errMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
+				ErrMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
 				return;
 			}
 			if ( Grammar.parserOptions.Contains(option) ||
@@ -254,14 +254,14 @@ public class Tool {
 				grammarOptions[option] = value;
 			}
 			else {
-				errMgr.grammarError(ErrorType.ILLEGAL_OPTION,
+				ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION,
 									null,
 									null,
 									option);
 			}
 		}
 		else {
-			errMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
+			ErrMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
 		}
 	}
 
@@ -283,7 +283,7 @@ public class Tool {
 				Console.WriteLine(dep.getDependencies().Render());
 
 			}
-			else if (errMgr.getNumErrors() == 0) {
+			else if (ErrMgr.getNumErrors() == 0) {
 				process(g, true);
 			}
 		}
@@ -334,14 +334,14 @@ public class Tool {
 		bool ruleFail = checkForRuleIssues(g);
 		if ( ruleFail ) return;
 
-		int prevErrors = errMgr.getNumErrors();
+		int prevErrors = ErrMgr.getNumErrors();
 		// MAKE SURE GRAMMAR IS SEMANTICALLY CORRECT (FILL IN GRAMMAR OBJECT)
 		SemanticPipeline sem = new SemanticPipeline(g);
 		sem.process();
 
-		if ( errMgr.getNumErrors()>prevErrors ) return;
+		if ( ErrMgr.getNumErrors()>prevErrors ) return;
 
-		CodeGenerator codeGenerator = CodeGenerator.create(g);
+		CodeGenerator codeGenerator = CodeGenerator.Create(g);
 		if (codeGenerator == null) {
 			return;
 		}
@@ -350,11 +350,11 @@ public class Tool {
 		ATNFactory factory;
 		if ( g.isLexer() ) factory = new LexerATNFactory((LexerGrammar)g, codeGenerator);
 		else factory = new ParserATNFactory(g);
-		g.atn = factory.createATN();
+		g.atn = factory.CreateATN();
 
 		if ( generate_ATN_dot ) generateATNs(g);
 
-		if (gencode && g.tool.getNumErrors()==0 ) {
+		if (gencode && g.Tools.getNumErrors()==0 ) {
 			String interpFile = generateInterpreterData(g);
 			using (TextWriter fw = getOutputFileWriter(g, g.name + ".interp")) {
 				fw.Write(interpFile);
@@ -366,16 +366,16 @@ public class Tool {
 
 		// PERFORM GRAMMAR ANALYSIS ON ATN: BUILD DECISION DFAs
 		AnalysisPipeline anal = new AnalysisPipeline(g);
-		anal.process();
+		anal.Process();
 
 		//if ( generate_DFA_dot ) generateDFAs(g);
 
-		if ( g.tool.getNumErrors()>prevErrors ) return;
+		if ( g.Tools.getNumErrors()>prevErrors ) return;
 
 		// GENERATE CODE
 		if ( gencode ) {
 			CodeGenPipeline gen = new CodeGenPipeline(g, codeGenerator);
-			gen.process();
+			gen.Process();
 		}
 	}
     // check for undefined rules
@@ -413,18 +413,18 @@ public class Tool {
                 char.IsLower(@ref.getText()[(0)]))
             {
                 badref = true;
-                this.tool.errMgr.grammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
+                this.tool.ErrMgr.GrammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
                                     fileName, @ref.getToken(), @ref.getText(), currentRuleName);
             }
             else if (ruleAST == null)
             {
                 badref = true;
-                this.tool.errMgr.grammarError(ErrorType.UNDEFINED_RULE_REF,
+                this.tool.ErrMgr.GrammarError(ErrorType.UNDEFINED_RULE_REF,
                                     fileName, @ref.token, @ref.getText());
             }
         }
         //@Override
-        public ErrorManager getErrorManager() { return this.tool.errMgr; }
+        public ErrorManager getErrorManager() { return this.tool.ErrMgr; }
     }
 
 
@@ -452,7 +452,7 @@ public class Tool {
 			String ruleName = ID.getText();
 			if (ruleToAST.TryGetValue(ruleName,out var prev)) {
 				GrammarAST prevChild = (GrammarAST)prev.getChild(0);
-				g.tool.errMgr.grammarError(ErrorType.RULE_REDEFINITION,
+				g.Tools.ErrMgr.GrammarError(ErrorType.RULE_REDEFINITION,
 										   g.fileName,
 										   ID.getToken(),
 										   ruleName,
@@ -567,7 +567,7 @@ public class Tool {
 			return t;
 		}
 		catch (IOException ioe) {
-			errMgr.toolError(ErrorType.CANNOT_OPEN_FILE, ioe, fileName);
+			ErrMgr.toolError(ErrorType.CANNOT_OPEN_FILE, ioe, fileName);
 		}
 		return null;
 	}
@@ -595,7 +595,7 @@ public class Tool {
 	public Grammar loadImportedGrammar(Grammar g, GrammarAST nameNode){
 		String name = nameNode.getText();
 		if (!importedGrammars.TryGetValue(name,out var imported)) {
-			g.tool.log("grammar", "load " + name + " from " + g.fileName);
+			g.Tools.Log("grammar", "load " + name + " from " + g.fileName);
 			String importedFile = null;
             foreach (String extension in ALL_GRAMMAR_EXTENSIONS) {
 				importedFile = getImportedGrammarFile(g, name + extension);
@@ -605,7 +605,7 @@ public class Tool {
 			}
 
 			if ( importedFile==null ) {
-				errMgr.grammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.getToken(), name);
+				ErrMgr.GrammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.getToken(), name);
 				return null;
 			}
 
@@ -639,7 +639,7 @@ public class Tool {
 			ParserRuleReturnScope r = p.grammarSpec();
 			GrammarAST root = (GrammarAST) r.getTree();
 			if (root is GrammarRootAST) {
-				((GrammarRootAST) root).hasErrors = lexer.getNumberOfSyntaxErrors() > 0 || p.getNumberOfSyntaxErrors() > 0;
+				((GrammarRootAST) root).hasErrors = lexer.GetNumberOfSyntaxErrors() > 0 || p.GetNumberOfSyntaxErrors() > 0;
 				//assert ((GrammarRootAST) root).tokenStream == tokens;
 				if (grammarOptions != null) {
 					((GrammarRootAST) root).cmdLineOptions = grammarOptions;
@@ -670,7 +670,7 @@ public class Tool {
 					}
 				}
                 catch (IOException ioe) {
-					errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
+					ErrMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
 				}
 			}
 		}
@@ -898,10 +898,10 @@ public class Tool {
 		}
 	}
 
-    public void log(String component, String msg) { logMgr.log(component, msg); }
-    public void log(String msg) { log(null, msg); }
+    public void Log(String component, String msg) { logMgr.log(component, msg); }
+    public void log(String msg) { Log(null, msg); }
 
-	public int getNumErrors() { return errMgr.getNumErrors(); }
+	public int getNumErrors() { return ErrMgr.getNumErrors(); }
 
 	public void addListener(ANTLRToolListener tl) {
 		if ( tl!=null ) listeners.Add(tl);
@@ -933,7 +933,7 @@ public class Tool {
 		}
 
 		if (warnings_are_errors) {
-			errMgr.emit(ErrorType.WARNING_TREATED_AS_ERROR, new ANTLRMessage(ErrorType.WARNING_TREATED_AS_ERROR));
+			ErrMgr.emit(ErrorType.WARNING_TREATED_AS_ERROR, new ANTLRMessage(ErrorType.WARNING_TREATED_AS_ERROR));
 		}
 	}
 

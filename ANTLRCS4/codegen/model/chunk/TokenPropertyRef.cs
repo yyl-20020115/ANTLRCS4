@@ -9,11 +9,12 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class TokenPropertyRef : ActionChunk {
-	public String label;
+public class TokenPropertyRef : ActionChunk
+{
+    public readonly string label;
 
-	public TokenPropertyRef(StructDecl ctx, String label) :base(ctx)
-	{
-		this.label = label;
-	}
+    public TokenPropertyRef(StructDecl ctx, string label) : base(ctx)
+    {
+        this.label = label;
+    }
 }

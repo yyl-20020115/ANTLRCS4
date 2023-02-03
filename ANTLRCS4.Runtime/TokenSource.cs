@@ -63,7 +63,7 @@ public interface TokenSource {
 	 * non-null, non-empty string. If such a name is not known, this method
 	 * returns {@link IntStream#UNKNOWN_SOURCE_NAME}.
 	 */
-	public String getSourceName();
+	public String GetSourceName();
 
 	/**
 	 * Set the {@link TokenFactory} this token source should use for creating

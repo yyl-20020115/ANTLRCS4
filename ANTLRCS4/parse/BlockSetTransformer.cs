@@ -144,7 +144,7 @@ public class BlockSetTransformer : TreeRewriter
     //@Override 
     public String[] getTokenNames() { return BlockSetTransformer.tokenNames; }
     //@Override 
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\BlockSetTransformer.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\BlockSetTransformer.g"; }
 
 
     public String currentRuleName;
@@ -236,11 +236,11 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            RULE1 = (GrammarAST)match(input, RULE, FOLLOW_RULE_in_topdown86); if (state.failed) return retval;
+                            RULE1 = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_topdown86); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = RULE1;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             // org\\antlr\\v4\\parse\\BlockSetTransformer.g:64:14: (id= TOKEN_REF |id= RULE_REF )
                             int alt1 = 2;
                             int LA1_0 = input.LA(1);
@@ -267,7 +267,7 @@ public class BlockSetTransformer : TreeRewriter
                                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:64:15: id= TOKEN_REF
                                     {
                                         _last = (GrammarAST)input.LT(1);
-                                        id = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_topdown91); if (state.failed) return retval;
+                                        id = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_topdown91); if (state.failed) return retval;
 
                                         if (state.backtracking == 1)
                                             if (_first_1 == null) _first_1 = id;
@@ -285,7 +285,7 @@ public class BlockSetTransformer : TreeRewriter
                                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:64:28: id= RULE_REF
                                     {
                                         _last = (GrammarAST)input.LT(1);
-                                        id = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_topdown95); if (state.failed) return retval;
+                                        id = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_topdown95); if (state.failed) return retval;
 
                                         if (state.backtracking == 1)
                                             if (_first_1 == null) _first_1 = id;
@@ -350,7 +350,7 @@ public class BlockSetTransformer : TreeRewriter
                                 cnt2++;
                             }
                         exit2:
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -368,7 +368,7 @@ public class BlockSetTransformer : TreeRewriter
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:65:7: setAlt
                     {
                         _last = (GrammarAST)input.LT(1);
-                        pushFollow(FOLLOW_setAlt_in_topdown110);
+                        PushFollow(FOLLOW_setAlt_in_topdown110);
                         setAlt3 = setAlt();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -389,7 +389,7 @@ public class BlockSetTransformer : TreeRewriter
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:66:7: ebnfBlockSet
                     {
                         _last = (GrammarAST)input.LT(1);
-                        pushFollow(FOLLOW_ebnfBlockSet_in_topdown118);
+                        PushFollow(FOLLOW_ebnfBlockSet_in_topdown118);
                         ebnfBlockSet4 = ebnfBlockSet();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -410,7 +410,7 @@ public class BlockSetTransformer : TreeRewriter
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:67:7: blockSet
                     {
                         _last = (GrammarAST)input.LT(1);
-                        pushFollow(FOLLOW_blockSet_in_topdown126);
+                        PushFollow(FOLLOW_blockSet_in_topdown126);
                         blockSet5 = blockSet();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -432,8 +432,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -481,7 +481,7 @@ public class BlockSetTransformer : TreeRewriter
                     throw new FailedPredicateException(input, "setAlt", "inContext(\"RULE BLOCK\")");
                 }
                 _last = (GrammarAST)input.LT(1);
-                ALT6 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_setAlt141); if (state.failed) return retval;
+                ALT6 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_setAlt141); if (state.failed) return retval;
 
                 if (state.backtracking == 1)
                     if (_first_0 == null) _first_0 = ALT6;
@@ -499,8 +499,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -549,21 +549,21 @@ public class BlockSetTransformer : TreeRewriter
                     GrammarAST _save_last_1 = _last;
                     GrammarAST _first_1 = null;
                     _last = (GrammarAST)input.LT(1);
-                    pushFollow(FOLLOW_ebnfSuffix_in_ebnfBlockSet161);
+                    PushFollow(FOLLOW_ebnfSuffix_in_ebnfBlockSet161);
                     ebnfSuffix7 = ebnfSuffix();
                     state._fsp--;
                     if (state.failed) return retval;
                     if (state.backtracking == 1) stream_ebnfSuffix.add(ebnfSuffix7.getTree());
                     if (state.backtracking == 1)
                         if (_first_0 == null) _first_0 = (GrammarAST)ebnfSuffix7.getTree();
-                    match(input, Token.DOWN, null); if (state.failed) return retval;
+                    Match(input, Token.DOWN, null); if (state.failed) return retval;
                     _last = (GrammarAST)input.LT(1);
-                    pushFollow(FOLLOW_blockSet_in_ebnfBlockSet163);
+                    PushFollow(FOLLOW_blockSet_in_ebnfBlockSet163);
                     blockSet8 = blockSet();
                     state._fsp--;
                     if (state.failed) return retval;
                     if (state.backtracking == 1) stream_blockSet.add(blockSet8.getTree());
-                    match(input, Token.UP, null); if (state.failed) return retval;
+                    Match(input, Token.UP, null); if (state.failed) return retval;
                     _last = _save_last_1;
                 }
 
@@ -625,8 +625,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -697,8 +697,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -780,25 +780,25 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            BLOCK10 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_blockSet244); if (state.failed) return retval;
+                            BLOCK10 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_blockSet244); if (state.failed) return retval;
 
                             if (state.backtracking == 1) stream_BLOCK.add(BLOCK10);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK10;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
                             {
                                 GrammarAST _save_last_2 = _last;
                                 GrammarAST _first_2 = null;
                                 _last = (GrammarAST)input.LT(1);
-                                alt = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet249); if (state.failed) return retval;
+                                alt = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet249); if (state.failed) return retval;
 
                                 if (state.backtracking == 1) stream_ALT.add(alt);
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = alt;
-                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:98:21: ( elementOptions )?
                                 int alt4 = 2;
                                 int LA4_0 = input.LA(1);
@@ -812,7 +812,7 @@ public class BlockSetTransformer : TreeRewriter
                                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:98:21: elementOptions
                                         {
                                             _last = (GrammarAST)input.LT(1);
-                                            pushFollow(FOLLOW_elementOptions_in_blockSet251);
+                                            PushFollow(FOLLOW_elementOptions_in_blockSet251);
                                             elementOptions11 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
@@ -835,12 +835,12 @@ public class BlockSetTransformer : TreeRewriter
                                     throw new FailedPredicateException(input, "blockSet", "((AltAST)$alt).altLabel==null");
                                 }
                                 _last = (GrammarAST)input.LT(1);
-                                pushFollow(FOLLOW_setElement_in_blockSet256);
+                                PushFollow(FOLLOW_setElement_in_blockSet256);
                                 setElement12 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
                                 if (state.backtracking == 1) stream_setElement.add(setElement12.getTree());
-                                match(input, Token.UP, null); if (state.failed) return retval;
+                                Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
 
@@ -867,13 +867,13 @@ public class BlockSetTransformer : TreeRewriter
                                                 GrammarAST _save_last_2 = _last;
                                                 GrammarAST _first_2 = null;
                                                 _last = (GrammarAST)input.LT(1);
-                                                ALT13 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet263); if (state.failed) return retval;
+                                                ALT13 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet263); if (state.failed) return retval;
 
                                                 if (state.backtracking == 1) stream_ALT.add(ALT13);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT13;
-                                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:98:99: ( elementOptions )?
                                                 int alt5 = 2;
                                                 int LA5_0 = input.LA(1);
@@ -887,7 +887,7 @@ public class BlockSetTransformer : TreeRewriter
                                                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:98:99: elementOptions
                                                         {
                                                             _last = (GrammarAST)input.LT(1);
-                                                            pushFollow(FOLLOW_elementOptions_in_blockSet265);
+                                                            PushFollow(FOLLOW_elementOptions_in_blockSet265);
                                                             elementOptions14 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
@@ -905,12 +905,12 @@ public class BlockSetTransformer : TreeRewriter
                                                 }
 
                                                 _last = (GrammarAST)input.LT(1);
-                                                pushFollow(FOLLOW_setElement_in_blockSet268);
+                                                PushFollow(FOLLOW_setElement_in_blockSet268);
                                                 setElement15 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
                                                 if (state.backtracking == 1) stream_setElement.add(setElement15.getTree());
-                                                match(input, Token.UP, null); if (state.failed) return retval;
+                                                Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
 
@@ -934,7 +934,7 @@ public class BlockSetTransformer : TreeRewriter
                                 cnt6++;
                             }
                         exit6:
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1011,25 +1011,25 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            BLOCK16 = (GrammarAST)match(input, BLOCK, FOLLOW_BLOCK_in_blockSet313); if (state.failed) return retval;
+                            BLOCK16 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_blockSet313); if (state.failed) return retval;
 
                             if (state.backtracking == 1) stream_BLOCK.add(BLOCK16);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK16;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
                             {
                                 GrammarAST _save_last_2 = _last;
                                 GrammarAST _first_2 = null;
                                 _last = (GrammarAST)input.LT(1);
-                                ALT17 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet316); if (state.failed) return retval;
+                                ALT17 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet316); if (state.failed) return retval;
 
                                 if (state.backtracking == 1) stream_ALT.add(ALT17);
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = ALT17;
-                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:101:17: ( elementOptions )?
                                 int alt7 = 2;
                                 int LA7_0 = input.LA(1);
@@ -1043,7 +1043,7 @@ public class BlockSetTransformer : TreeRewriter
                                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:101:17: elementOptions
                                         {
                                             _last = (GrammarAST)input.LT(1);
-                                            pushFollow(FOLLOW_elementOptions_in_blockSet318);
+                                            PushFollow(FOLLOW_elementOptions_in_blockSet318);
                                             elementOptions18 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
@@ -1061,12 +1061,12 @@ public class BlockSetTransformer : TreeRewriter
                                 }
 
                                 _last = (GrammarAST)input.LT(1);
-                                pushFollow(FOLLOW_setElement_in_blockSet321);
+                                PushFollow(FOLLOW_setElement_in_blockSet321);
                                 setElement19 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
                                 if (state.backtracking == 1) stream_setElement.add(setElement19.getTree());
-                                match(input, Token.UP, null); if (state.failed) return retval;
+                                Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
 
@@ -1093,13 +1093,13 @@ public class BlockSetTransformer : TreeRewriter
                                                 GrammarAST _save_last_2 = _last;
                                                 GrammarAST _first_2 = null;
                                                 _last = (GrammarAST)input.LT(1);
-                                                ALT20 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_blockSet328); if (state.failed) return retval;
+                                                ALT20 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet328); if (state.failed) return retval;
 
                                                 if (state.backtracking == 1) stream_ALT.add(ALT20);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT20;
-                                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:101:62: ( elementOptions )?
                                                 int alt8 = 2;
                                                 int LA8_0 = input.LA(1);
@@ -1113,7 +1113,7 @@ public class BlockSetTransformer : TreeRewriter
                                                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:101:62: elementOptions
                                                         {
                                                             _last = (GrammarAST)input.LT(1);
-                                                            pushFollow(FOLLOW_elementOptions_in_blockSet330);
+                                                            PushFollow(FOLLOW_elementOptions_in_blockSet330);
                                                             elementOptions21 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
@@ -1131,12 +1131,12 @@ public class BlockSetTransformer : TreeRewriter
                                                 }
 
                                                 _last = (GrammarAST)input.LT(1);
-                                                pushFollow(FOLLOW_setElement_in_blockSet333);
+                                                PushFollow(FOLLOW_setElement_in_blockSet333);
                                                 setElement22 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
                                                 if (state.backtracking == 1) stream_setElement.add(setElement22.getTree());
-                                                match(input, Token.UP, null); if (state.failed) return retval;
+                                                Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
 
@@ -1160,7 +1160,7 @@ public class BlockSetTransformer : TreeRewriter
                                 cnt9++;
                             }
                         exit9:
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1219,8 +1219,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1333,13 +1333,13 @@ public class BlockSetTransformer : TreeRewriter
                                 GrammarAST _save_last_1 = _last;
                                 GrammarAST _first_1 = null;
                                 _last = (GrammarAST)input.LT(1);
-                                a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement373); if (state.failed) return retval;
+                                a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement373); if (state.failed) return retval;
 
                                 if (state.backtracking == 1)
                                     if (_first_0 == null) _first_0 = a;
-                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                 _last = (GrammarAST)input.LT(1);
-                                pushFollow(FOLLOW_elementOptions_in_setElement375);
+                                PushFollow(FOLLOW_elementOptions_in_setElement375);
                                 elementOptions23 = elementOptions();
                                 state._fsp--;
                                 if (state.failed) return retval;
@@ -1347,7 +1347,7 @@ public class BlockSetTransformer : TreeRewriter
 
                                     if (_first_1 == null) _first_1 = (GrammarAST)elementOptions23.getTree();
 
-                                match(input, Token.UP, null); if (state.failed) return retval;
+                                Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_1;
                             }
 
@@ -1370,7 +1370,7 @@ public class BlockSetTransformer : TreeRewriter
                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:110:7: a= STRING_LITERAL {...}?
                         {
                             _last = (GrammarAST)input.LT(1);
-                            a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement388); if (state.failed) return retval;
+                            a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement388); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = a;
@@ -1402,13 +1402,13 @@ public class BlockSetTransformer : TreeRewriter
                                 GrammarAST _save_last_1 = _last;
                                 GrammarAST _first_1 = null;
                                 _last = (GrammarAST)input.LT(1);
-                                TOKEN_REF24 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement400); if (state.failed) return retval;
+                                TOKEN_REF24 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement400); if (state.failed) return retval;
 
                                 if (state.backtracking == 1)
                                     if (_first_0 == null) _first_0 = TOKEN_REF24;
-                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                 _last = (GrammarAST)input.LT(1);
-                                pushFollow(FOLLOW_elementOptions_in_setElement402);
+                                PushFollow(FOLLOW_elementOptions_in_setElement402);
                                 elementOptions25 = elementOptions();
                                 state._fsp--;
                                 if (state.failed) return retval;
@@ -1416,7 +1416,7 @@ public class BlockSetTransformer : TreeRewriter
 
                                     if (_first_1 == null) _first_1 = (GrammarAST)elementOptions25.getTree();
 
-                                match(input, Token.UP, null); if (state.failed) return retval;
+                                Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_1;
                             }
 
@@ -1439,7 +1439,7 @@ public class BlockSetTransformer : TreeRewriter
                                 throw new FailedPredicateException(input, "setElement", "!inLexer");
                             }
                             _last = (GrammarAST)input.LT(1);
-                            TOKEN_REF26 = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement414); if (state.failed) return retval;
+                            TOKEN_REF26 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement414); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = TOKEN_REF26;
@@ -1466,24 +1466,24 @@ public class BlockSetTransformer : TreeRewriter
                                 GrammarAST _save_last_1 = _last;
                                 GrammarAST _first_1 = null;
                                 _last = (GrammarAST)input.LT(1);
-                                RANGE27 = (GrammarAST)match(input, RANGE, FOLLOW_RANGE_in_setElement425); if (state.failed) return retval;
+                                RANGE27 = (GrammarAST)Match(input, RANGE, FOLLOW_RANGE_in_setElement425); if (state.failed) return retval;
 
                                 if (state.backtracking == 1)
                                     if (_first_0 == null) _first_0 = RANGE27;
-                                match(input, Token.DOWN, null); if (state.failed) return retval;
+                                Match(input, Token.DOWN, null); if (state.failed) return retval;
                                 _last = (GrammarAST)input.LT(1);
-                                a = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement429); if (state.failed) return retval;
+                                a = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement429); if (state.failed) return retval;
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = a;
 
                                 _last = (GrammarAST)input.LT(1);
-                                b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement433); if (state.failed) return retval;
+                                b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement433); if (state.failed) return retval;
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = b;
 
-                                match(input, Token.UP, null); if (state.failed) return retval;
+                                Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_1;
                             }
 
@@ -1522,8 +1522,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1571,13 +1571,13 @@ public class BlockSetTransformer : TreeRewriter
                     GrammarAST _save_last_1 = _last;
                     GrammarAST _first_1 = null;
                     _last = (GrammarAST)input.LT(1);
-                    ELEMENT_OPTIONS28 = (GrammarAST)match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions455); if (state.failed) return retval;
+                    ELEMENT_OPTIONS28 = (GrammarAST)Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions455); if (state.failed) return retval;
 
                     if (state.backtracking == 1)
                         if (_first_0 == null) _first_0 = ELEMENT_OPTIONS28;
                     if (input.LA(1) == Token.DOWN)
                     {
-                        match(input, Token.DOWN, null); if (state.failed) return retval;
+                        Match(input, Token.DOWN, null); if (state.failed) return retval;
                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:120:22: ( elementOption )*
                         loop12:
                         while (true)
@@ -1595,7 +1595,7 @@ public class BlockSetTransformer : TreeRewriter
                                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:120:22: elementOption
                                     {
                                         _last = (GrammarAST)input.LT(1);
-                                        pushFollow(FOLLOW_elementOption_in_elementOptions457);
+                                        PushFollow(FOLLOW_elementOption_in_elementOptions457);
                                         elementOption29 = elementOption();
                                         state._fsp--;
                                         if (state.failed) return retval;
@@ -1619,7 +1619,7 @@ public class BlockSetTransformer : TreeRewriter
                             }
                         }
                         exit12:
-                        match(input, Token.UP, null); if (state.failed) return retval;
+                        Match(input, Token.UP, null); if (state.failed) return retval;
                     }
                     _last = _save_last_1;
                 }
@@ -1637,8 +1637,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {
@@ -1807,7 +1807,7 @@ public class BlockSetTransformer : TreeRewriter
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:124:4: ID
                     {
                         _last = (GrammarAST)input.LT(1);
-                        ID30 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption470); if (state.failed) return retval;
+                        ID30 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption470); if (state.failed) return retval;
 
                         if (state.backtracking == 1)
                             if (_first_0 == null) _first_0 = ID30;
@@ -1829,24 +1829,24 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            ASSIGN31 = (GrammarAST)match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption476); if (state.failed) return retval;
+                            ASSIGN31 = (GrammarAST)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption476); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = ASSIGN31;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
-                            id = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption480); if (state.failed) return retval;
+                            id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption480); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = id;
 
                             _last = (GrammarAST)input.LT(1);
-                            v = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption484); if (state.failed) return retval;
+                            v = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption484); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = v;
 
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1868,24 +1868,24 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            ASSIGN32 = (GrammarAST)match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption491); if (state.failed) return retval;
+                            ASSIGN32 = (GrammarAST)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption491); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = ASSIGN32;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
-                            ID33 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption493); if (state.failed) return retval;
+                            ID33 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption493); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = ID33;
 
                             _last = (GrammarAST)input.LT(1);
-                            v = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption497); if (state.failed) return retval;
+                            v = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption497); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = v;
 
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1907,24 +1907,24 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            ASSIGN34 = (GrammarAST)match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption504); if (state.failed) return retval;
+                            ASSIGN34 = (GrammarAST)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption504); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = ASSIGN34;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
-                            ID35 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption506); if (state.failed) return retval;
+                            ID35 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption506); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = ID35;
 
                             _last = (GrammarAST)input.LT(1);
-                            v = (GrammarAST)match(input, ACTION, FOLLOW_ACTION_in_elementOption510); if (state.failed) return retval;
+                            v = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_elementOption510); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = v;
 
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1946,24 +1946,24 @@ public class BlockSetTransformer : TreeRewriter
                             GrammarAST _save_last_1 = _last;
                             GrammarAST _first_1 = null;
                             _last = (GrammarAST)input.LT(1);
-                            ASSIGN36 = (GrammarAST)match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption517); if (state.failed) return retval;
+                            ASSIGN36 = (GrammarAST)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption517); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = ASSIGN36;
-                            match(input, Token.DOWN, null); if (state.failed) return retval;
+                            Match(input, Token.DOWN, null); if (state.failed) return retval;
                             _last = (GrammarAST)input.LT(1);
-                            ID37 = (GrammarAST)match(input, ID, FOLLOW_ID_in_elementOption519); if (state.failed) return retval;
+                            ID37 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption519); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = ID37;
 
                             _last = (GrammarAST)input.LT(1);
-                            v = (GrammarAST)match(input, INT, FOLLOW_INT_in_elementOption523); if (state.failed) return retval;
+                            v = (GrammarAST)Match(input, INT, FOLLOW_INT_in_elementOption523); if (state.failed) return retval;
 
                             if (state.backtracking == 1)
                                 if (_first_1 == null) _first_1 = v;
 
-                            match(input, Token.UP, null); if (state.failed) return retval;
+                            Match(input, Token.UP, null); if (state.failed) return retval;
                             _last = _save_last_1;
                         }
 
@@ -1982,8 +1982,8 @@ public class BlockSetTransformer : TreeRewriter
         }
         catch (RecognitionException re)
         {
-            reportError(re);
-            recover(input, re);
+            ReportError(re);
+            Recover(input, re);
         }
         finally
         {

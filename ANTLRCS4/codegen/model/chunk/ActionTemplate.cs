@@ -10,12 +10,13 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 
-public class ActionTemplate : ActionChunk {
-	public Template st;
+public class ActionTemplate : ActionChunk
+{
+    public readonly Template st;
 
-	public ActionTemplate(StructDecl ctx, Template st):base(ctx)
+    public ActionTemplate(StructDecl ctx, Template st) : base(ctx)
     {
-		
-		this.st = st;
-	}
+
+        this.st = st;
+    }
 }

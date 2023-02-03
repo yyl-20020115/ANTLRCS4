@@ -67,7 +67,7 @@ public class IntervalSet : IntSet {
     /** Create a set with all ints within range [a..b] (inclusive) */
 	public static IntervalSet of(int a, int b) {
 		IntervalSet s = new IntervalSet();
-		s.add(a,b);
+		s.Add(a,b);
 		return s;
 	}
 
@@ -82,7 +82,7 @@ public class IntervalSet : IntSet {
     //@Override
     public void add(int el) {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
-        add(el,el);
+        Add(el,el);
     }
 
     /** Add interval; i.e., add all integers from a to b to set.
@@ -92,7 +92,7 @@ public class IntervalSet : IntSet {
      *  If this is {1..5, 10..20}, adding 6..7 yields
      *  {1..5, 6..7, 10..20}.  Adding 4..8 yields {1..8, 10..20}.
      */
-    public void add(int a, int b) {
+    public void Add(int a, int b) {
         add(Interval.of(a, b));
     }
 
@@ -168,7 +168,7 @@ public class IntervalSet : IntSet {
 			int n = other.intervals.Count;
 			for (int i = 0; i < n; i++) {
 				Interval I = other.intervals[i];
-				this.add(I.a,I.b);
+				this.Add(I.a,I.b);
 			}
 		}
 		else {
@@ -678,7 +678,7 @@ public class IntervalSet : IntSet {
             if ( el>a && el<b ) { // found in this interval
                 int oldb = I.b;
                 I.b = el-1;      // [a..x-1]
-                add(el+1, oldb); // add [x+1..b]
+                Add(el+1, oldb); // add [x+1..b]
             }
         }
     }

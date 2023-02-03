@@ -687,8 +687,7 @@ public partial class Interpreter
         {
             bool argumentCountMismatch = false;
             var formalArguments = st.impl.FormalArguments;
-            if (formalArguments == null)
-                formalArguments = new List<FormalArgument>();
+            formalArguments ??= new List<FormalArgument>();
 
             // first make sure that all non-default arguments are specified
             // ignore this check if a NO_SUCH_ATTRIBUTE error already occurred

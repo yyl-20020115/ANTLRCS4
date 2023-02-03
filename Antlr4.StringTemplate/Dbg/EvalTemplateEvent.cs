@@ -37,7 +37,5 @@ using Antlr4.StringTemplate.Misc;
 public class EvalTemplateEvent : InterpEvent
 {
     public EvalTemplateEvent(TemplateFrame frame, Interval interval)
-        : base(frame, interval)
-    {
-    }
+        : base(frame, interval) { }
 }

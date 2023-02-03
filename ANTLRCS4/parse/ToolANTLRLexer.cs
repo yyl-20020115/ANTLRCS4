@@ -19,11 +19,11 @@ public class ToolANTLRLexer : ANTLRLexer {
 	//@Override
 	public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
 		String msg = getErrorMessage(e, tokenNames);
-		tool.errMgr.syntaxError(ErrorType.SYNTAX_ERROR, getSourceName(), e.token, e, msg);
+		tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, GetSourceName(), e.token, e, msg);
 	}
 
 	//@Override
 	public void grammarError(ErrorType etype, Token token, params Object[] args) {
-		tool.errMgr.grammarError(etype, getSourceName(), token, args);
+		tool.ErrMgr.GrammarError(etype, GetSourceName(), token, args);
 	}
 }

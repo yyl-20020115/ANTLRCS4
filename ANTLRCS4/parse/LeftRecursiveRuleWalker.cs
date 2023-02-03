@@ -137,7 +137,7 @@ public class LeftRecursiveRuleWalker : TreeParser
     //@Override
     public String[] getTokenNames() { return LeftRecursiveRuleWalker.tokenNames; }
     //@Override
-    public override String getGrammarFileName() { return "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g"; }
+    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g"; }
 
 
     private String ruleName;
@@ -173,9 +173,9 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:69:2: ( ^(r= RULE id= RULE_REF ( ruleModifier )? ( ^( RETURNS a= ARG_ACTION ) )? ( ^( LOCALS ARG_ACTION ) )? ( ^( OPTIONS ( . )* ) | ^( AT ID ACTION ) )* ruleBlock exceptionGroup ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:69:4: ^(r= RULE id= RULE_REF ( ruleModifier )? ( ^( RETURNS a= ARG_ACTION ) )? ( ^( LOCALS ARG_ACTION ) )? ( ^( OPTIONS ( . )* ) | ^( AT ID ACTION ) )* ruleBlock exceptionGroup )
             {
-                r = (GrammarAST)match(input, RULE, FOLLOW_RULE_in_rec_rule72); if (state.failed) return isLeftRec;
-                match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
-                id = (GrammarAST)match(input, RULE_REF, FOLLOW_RULE_REF_in_rec_rule76); if (state.failed) return isLeftRec;
+                r = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_rec_rule72); if (state.failed) return isLeftRec;
+                Match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
+                id = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_rec_rule76); if (state.failed) return isLeftRec;
                 if (state.backtracking == 0) { ruleName = id.getText(); }
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:70:4: ( ruleModifier )?
                 int alt1 = 2;
@@ -189,7 +189,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:70:4: ruleModifier
                         {
-                            pushFollow(FOLLOW_ruleModifier_in_rec_rule83);
+                            PushFollow(FOLLOW_ruleModifier_in_rec_rule83);
                             ruleModifier();
                             state._fsp--;
                             if (state.failed) return isLeftRec;
@@ -210,11 +210,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:72:5: ^( RETURNS a= ARG_ACTION )
                         {
-                            match(input, RETURNS, FOLLOW_RETURNS_in_rec_rule92); if (state.failed) return isLeftRec;
-                            match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
-                            a = (GrammarAST)match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rec_rule96); if (state.failed) return isLeftRec;
+                            Match(input, RETURNS, FOLLOW_RETURNS_in_rec_rule92); if (state.failed) return isLeftRec;
+                            Match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
+                            a = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rec_rule96); if (state.failed) return isLeftRec;
                             if (state.backtracking == 0) { setReturnValues(a); }
-                            match(input, Token.UP, null); if (state.failed) return isLeftRec;
+                            Match(input, Token.UP, null); if (state.failed) return isLeftRec;
 
                         }
                         break;
@@ -233,10 +233,10 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:74:11: ^( LOCALS ARG_ACTION )
                         {
-                            match(input, LOCALS, FOLLOW_LOCALS_in_rec_rule115); if (state.failed) return isLeftRec;
-                            match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
-                            match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rec_rule117); if (state.failed) return isLeftRec;
-                            match(input, Token.UP, null); if (state.failed) return isLeftRec;
+                            Match(input, LOCALS, FOLLOW_LOCALS_in_rec_rule115); if (state.failed) return isLeftRec;
+                            Match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
+                            Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_rec_rule117); if (state.failed) return isLeftRec;
+                            Match(input, Token.UP, null); if (state.failed) return isLeftRec;
 
                         }
                         break;
@@ -263,10 +263,10 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:75:11: ^( OPTIONS ( . )* )
                             {
-                                match(input, OPTIONS, FOLLOW_OPTIONS_in_rec_rule135); if (state.failed) return isLeftRec;
+                                Match(input, OPTIONS, FOLLOW_OPTIONS_in_rec_rule135); if (state.failed) return isLeftRec;
                                 if (input.LA(1) == Token.DOWN)
                                 {
-                                    match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
+                                    Match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
                                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:75:21: ( . )*
                                     loop4:
                                     while (true)
@@ -297,7 +297,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                         }
                                     }
                                     exit4:
-                                    match(input, Token.UP, null); if (state.failed) return isLeftRec;
+                                    Match(input, Token.UP, null); if (state.failed) return isLeftRec;
                                 }
 
                             }
@@ -305,11 +305,11 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 2:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:76:11: ^( AT ID ACTION )
                             {
-                                match(input, AT, FOLLOW_AT_in_rec_rule152); if (state.failed) return isLeftRec;
-                                match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
-                                match(input, ID, FOLLOW_ID_in_rec_rule154); if (state.failed) return isLeftRec;
-                                match(input, ACTION, FOLLOW_ACTION_in_rec_rule156); if (state.failed) return isLeftRec;
-                                match(input, Token.UP, null); if (state.failed) return isLeftRec;
+                                Match(input, AT, FOLLOW_AT_in_rec_rule152); if (state.failed) return isLeftRec;
+                                Match(input, Token.DOWN, null); if (state.failed) return isLeftRec;
+                                Match(input, ID, FOLLOW_ID_in_rec_rule154); if (state.failed) return isLeftRec;
+                                Match(input, ACTION, FOLLOW_ACTION_in_rec_rule156); if (state.failed) return isLeftRec;
+                                Match(input, Token.UP, null); if (state.failed) return isLeftRec;
 
                             }
                             break;
@@ -320,16 +320,16 @@ public class LeftRecursiveRuleWalker : TreeParser
                     }
                 }
             exit5:
-                pushFollow(FOLLOW_ruleBlock_in_rec_rule172);
+                PushFollow(FOLLOW_ruleBlock_in_rec_rule172);
                 ruleBlock1 = ruleBlock();
                 state._fsp--;
                 if (state.failed) return isLeftRec;
                 if (state.backtracking == 0) { isLeftRec = (ruleBlock1 != null ? ((LeftRecursiveRuleWalker.ruleBlock_return)ruleBlock1).isLeftRec : false); }
-                pushFollow(FOLLOW_exceptionGroup_in_rec_rule179);
+                PushFollow(FOLLOW_exceptionGroup_in_rec_rule179);
                 exceptionGroup();
                 state._fsp--;
                 if (state.failed) return isLeftRec;
-                match(input, Token.UP, null); if (state.failed) return isLeftRec;
+                Match(input, Token.UP, null); if (state.failed) return isLeftRec;
 
             }
 
@@ -370,7 +370,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:84:7: exceptionHandler
                             {
-                                pushFollow(FOLLOW_exceptionHandler_in_exceptionGroup197);
+                                PushFollow(FOLLOW_exceptionHandler_in_exceptionGroup197);
                                 exceptionHandler();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -395,7 +395,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:84:25: finallyClause
                         {
-                            pushFollow(FOLLOW_finallyClause_in_exceptionGroup200);
+                            PushFollow(FOLLOW_finallyClause_in_exceptionGroup200);
                             finallyClause();
                             state._fsp--;
                             if (state.failed) return;
@@ -426,11 +426,11 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:88:2: ( ^( CATCH ARG_ACTION ACTION ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:88:4: ^( CATCH ARG_ACTION ACTION )
             {
-                match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler216); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
-                match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler218); if (state.failed) return;
-                match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler220); if (state.failed) return;
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler216); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
+                Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler218); if (state.failed) return;
+                Match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler220); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
             }
 
@@ -454,10 +454,10 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:92:2: ( ^( FINALLY ACTION ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:92:4: ^( FINALLY ACTION )
             {
-                match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause233); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
-                match(input, ACTION, FOLLOW_ACTION_in_finallyClause235); if (state.failed) return;
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause233); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
+                Match(input, ACTION, FOLLOW_ACTION_in_finallyClause235); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
             }
 
@@ -527,8 +527,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:103:2: ( ^( BLOCK (o= outerAlternative )+ ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:103:4: ^( BLOCK (o= outerAlternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock290); if (state.failed) return retval;
-                match(input, Token.DOWN, null); if (state.failed) return retval;
+                Match(input, BLOCK, FOLLOW_BLOCK_in_ruleBlock290); if (state.failed) return retval;
+                Match(input, Token.DOWN, null); if (state.failed) return retval;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:104:4: (o= outerAlternative )+
                 int cnt8 = 0;
             loop8:
@@ -546,7 +546,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:105:5: o= outerAlternative
                             {
-                                pushFollow(FOLLOW_outerAlternative_in_ruleBlock303);
+                                PushFollow(FOLLOW_outerAlternative_in_ruleBlock303);
                                 o = outerAlternative();
                                 state._fsp--;
                                 if (state.failed) return retval;
@@ -564,7 +564,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt8++;
                 }
             exit8:
-                match(input, Token.UP, null); if (state.failed) return retval;
+                Match(input, Token.UP, null); if (state.failed) return retval;
 
             }
 
@@ -633,7 +633,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:9: ( binary )=> binary
                     {
-                        pushFollow(FOLLOW_binary_in_outerAlternative362);
+                        PushFollow(FOLLOW_binary_in_outerAlternative362);
                         binary();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -643,7 +643,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:116:9: ( prefix )=> prefix
                     {
-                        pushFollow(FOLLOW_prefix_in_outerAlternative418);
+                        PushFollow(FOLLOW_prefix_in_outerAlternative418);
                         prefix();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -653,7 +653,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:118:9: ( suffix )=> suffix
                     {
-                        pushFollow(FOLLOW_suffix_in_outerAlternative474);
+                        PushFollow(FOLLOW_suffix_in_outerAlternative474);
                         suffix();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -663,7 +663,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:120:9: nonLeftRecur
                     {
-                        pushFollow(FOLLOW_nonLeftRecur_in_outerAlternative515);
+                        PushFollow(FOLLOW_nonLeftRecur_in_outerAlternative515);
                         nonLeftRecur();
                         state._fsp--;
                         if (state.failed) return retval;
@@ -695,8 +695,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:2: ( ^( ALT ( elementOptions )? recurse ( element )* recurse ( epsilonElement )* ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:4: ^( ALT ( elementOptions )? recurse ( element )* recurse ( epsilonElement )* )
             {
-                ALT2 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_binary541); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                ALT2 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_binary541); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:11: ( elementOptions )?
                 int alt10 = 2;
                 int LA10_0 = input.LA(1);
@@ -709,7 +709,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:11: elementOptions
                         {
-                            pushFollow(FOLLOW_elementOptions_in_binary543);
+                            PushFollow(FOLLOW_elementOptions_in_binary543);
                             elementOptions();
                             state._fsp--;
                             if (state.failed) return;
@@ -718,7 +718,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
                 }
 
-                pushFollow(FOLLOW_recurse_in_binary546);
+                PushFollow(FOLLOW_recurse_in_binary546);
                 recurse();
                 state._fsp--;
                 if (state.failed) return;
@@ -733,7 +733,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:35: element
                             {
-                                pushFollow(FOLLOW_element_in_binary548);
+                                PushFollow(FOLLOW_element_in_binary548);
                                 element();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -746,7 +746,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     }
                 }
                 exit11:
-                pushFollow(FOLLOW_recurse_in_binary551);
+                PushFollow(FOLLOW_recurse_in_binary551);
                 recurse();
                 state._fsp--;
                 if (state.failed) return;
@@ -766,7 +766,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:124:52: epsilonElement
                             {
-                                pushFollow(FOLLOW_epsilonElement_in_binary553);
+                                PushFollow(FOLLOW_epsilonElement_in_binary553);
                                 epsilonElement();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -779,7 +779,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     }
                 }
                 exit12:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT2, currentOuterAltNumber); }
             }
@@ -806,8 +806,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:129:2: ( ^( ALT ( elementOptions )? ( element )+ recurse ( epsilonElement )* ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:129:4: ^( ALT ( elementOptions )? ( element )+ recurse ( epsilonElement )* )
             {
-                ALT3 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_prefix579); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                ALT3 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_prefix579); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:129:11: ( elementOptions )?
                 int alt13 = 2;
                 int LA13_0 = input.LA(1);
@@ -820,7 +820,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:129:11: elementOptions
                         {
-                            pushFollow(FOLLOW_elementOptions_in_prefix581);
+                            PushFollow(FOLLOW_elementOptions_in_prefix581);
                             elementOptions();
                             state._fsp--;
                             if (state.failed) return;
@@ -841,7 +841,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:130:4: element
                             {
-                                pushFollow(FOLLOW_element_in_prefix587);
+                                PushFollow(FOLLOW_element_in_prefix587);
                                 element();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -857,7 +857,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt14++;
                 }
             exit14:
-                pushFollow(FOLLOW_recurse_in_prefix593);
+                PushFollow(FOLLOW_recurse_in_prefix593);
                 recurse();
                 state._fsp--;
                 if (state.failed) return;
@@ -877,7 +877,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:131:12: epsilonElement
                             {
-                                pushFollow(FOLLOW_epsilonElement_in_prefix595);
+                                PushFollow(FOLLOW_epsilonElement_in_prefix595);
                                 epsilonElement();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -890,7 +890,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     }
                 }
                 exit15:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT3, currentOuterAltNumber); }
             }
@@ -917,8 +917,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:137:5: ( ^( ALT ( elementOptions )? recurse ( element )+ ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:137:9: ^( ALT ( elementOptions )? recurse ( element )+ )
             {
-                ALT4 = (GrammarAST)match(input, ALT, FOLLOW_ALT_in_suffix630); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                ALT4 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_suffix630); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:137:16: ( elementOptions )?
                 int alt16 = 2;
                 int LA16_0 = input.LA(1);
@@ -931,7 +931,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:137:16: elementOptions
                         {
-                            pushFollow(FOLLOW_elementOptions_in_suffix632);
+                            PushFollow(FOLLOW_elementOptions_in_suffix632);
                             elementOptions();
                             state._fsp--;
                             if (state.failed) return;
@@ -940,7 +940,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
                 }
 
-                pushFollow(FOLLOW_recurse_in_suffix635);
+                PushFollow(FOLLOW_recurse_in_suffix635);
                 recurse();
                 state._fsp--;
                 if (state.failed) return;
@@ -961,7 +961,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:137:40: element
                             {
-                                pushFollow(FOLLOW_element_in_suffix637);
+                                PushFollow(FOLLOW_element_in_suffix637);
                                 element();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -977,7 +977,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt17++;
                 }
             exit17:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
                 if (state.backtracking == 0) { setAltAssoc((AltAST)ALT4, currentOuterAltNumber); }
             }
@@ -1002,8 +1002,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:142:5: ( ^( ALT ( elementOptions )? ( element )+ ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:142:9: ^( ALT ( elementOptions )? ( element )+ )
             {
-                match(input, ALT, FOLLOW_ALT_in_nonLeftRecur671); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                Match(input, ALT, FOLLOW_ALT_in_nonLeftRecur671); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:142:15: ( elementOptions )?
                 int alt18 = 2;
                 int LA18_0 = input.LA(1);
@@ -1016,7 +1016,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:142:15: elementOptions
                         {
-                            pushFollow(FOLLOW_elementOptions_in_nonLeftRecur673);
+                            PushFollow(FOLLOW_elementOptions_in_nonLeftRecur673);
                             elementOptions();
                             state._fsp--;
                             if (state.failed) return;
@@ -1042,7 +1042,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:142:31: element
                             {
-                                pushFollow(FOLLOW_element_in_nonLeftRecur676);
+                                PushFollow(FOLLOW_element_in_nonLeftRecur676);
                                 element();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -1058,7 +1058,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt19++;
                 }
             exit19:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
             }
 
@@ -1109,35 +1109,35 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:146:4: ^( ASSIGN ID recurseNoLabel )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_recurse693); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_recurse695); if (state.failed) return;
-                        pushFollow(FOLLOW_recurseNoLabel_in_recurse697);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_recurse693); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_recurse695); if (state.failed) return;
+                        PushFollow(FOLLOW_recurseNoLabel_in_recurse697);
                         recurseNoLabel();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:147:4: ^( PLUS_ASSIGN ID recurseNoLabel )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_recurse704); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_recurse706); if (state.failed) return;
-                        pushFollow(FOLLOW_recurseNoLabel_in_recurse708);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_recurse704); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_recurse706); if (state.failed) return;
+                        PushFollow(FOLLOW_recurseNoLabel_in_recurse708);
                         recurseNoLabel();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:148:4: recurseNoLabel
                     {
-                        pushFollow(FOLLOW_recurseNoLabel_in_recurse714);
+                        PushFollow(FOLLOW_recurseNoLabel_in_recurse714);
                         recurseNoLabel();
                         state._fsp--;
                         if (state.failed) return;
@@ -1170,7 +1170,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     if (state.backtracking > 0) { state.failed = true; return; }
                     throw new FailedPredicateException(input, "recurseNoLabel", "((CommonTree)input.LT(1)).getText().equals(ruleName)");
                 }
-                match(input, RULE_REF, FOLLOW_RULE_REF_in_recurseNoLabel726); if (state.failed) return;
+                Match(input, RULE_REF, FOLLOW_RULE_REF_in_recurseNoLabel726); if (state.failed) return;
             }
 
         }
@@ -1284,50 +1284,50 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:154:4: ^( ASSIGN ID s= token )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_token740); if (state.failed) return t;
-                        match(input, Token.DOWN, null); if (state.failed) return t;
-                        match(input, ID, FOLLOW_ID_in_token742); if (state.failed) return t;
-                        pushFollow(FOLLOW_token_in_token746);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_token740); if (state.failed) return t;
+                        Match(input, Token.DOWN, null); if (state.failed) return t;
+                        Match(input, ID, FOLLOW_ID_in_token742); if (state.failed) return t;
+                        PushFollow(FOLLOW_token_in_token746);
                         s = token();
                         state._fsp--;
                         if (state.failed) return t;
                         if (state.backtracking == 0) { t = s; }
-                        match(input, Token.UP, null); if (state.failed) return t;
+                        Match(input, Token.UP, null); if (state.failed) return t;
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:155:4: ^( PLUS_ASSIGN ID s= token )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_token755); if (state.failed) return t;
-                        match(input, Token.DOWN, null); if (state.failed) return t;
-                        match(input, ID, FOLLOW_ID_in_token757); if (state.failed) return t;
-                        pushFollow(FOLLOW_token_in_token761);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_token755); if (state.failed) return t;
+                        Match(input, Token.DOWN, null); if (state.failed) return t;
+                        Match(input, ID, FOLLOW_ID_in_token757); if (state.failed) return t;
+                        PushFollow(FOLLOW_token_in_token761);
                         s = token();
                         state._fsp--;
                         if (state.failed) return t;
                         if (state.backtracking == 0) { t = s; }
-                        match(input, Token.UP, null); if (state.failed) return t;
+                        Match(input, Token.UP, null); if (state.failed) return t;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:156:4: b= STRING_LITERAL
                     {
-                        b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_token771); if (state.failed) return t;
+                        b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_token771); if (state.failed) return t;
                         if (state.backtracking == 0) { t = b; }
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:157:7: ^(b= STRING_LITERAL elementOptions )
                     {
-                        b = (GrammarAST)match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_token792); if (state.failed) return t;
-                        match(input, Token.DOWN, null); if (state.failed) return t;
-                        pushFollow(FOLLOW_elementOptions_in_token794);
+                        b = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_token792); if (state.failed) return t;
+                        Match(input, Token.DOWN, null); if (state.failed) return t;
+                        PushFollow(FOLLOW_elementOptions_in_token794);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return t;
-                        match(input, Token.UP, null); if (state.failed) return t;
+                        Match(input, Token.UP, null); if (state.failed) return t;
 
                         if (state.backtracking == 0) { t = b; }
                     }
@@ -1335,13 +1335,13 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 5:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:158:7: ^(c= TOKEN_REF elementOptions )
                     {
-                        c = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_token809); if (state.failed) return t;
-                        match(input, Token.DOWN, null); if (state.failed) return t;
-                        pushFollow(FOLLOW_elementOptions_in_token811);
+                        c = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_token809); if (state.failed) return t;
+                        Match(input, Token.DOWN, null); if (state.failed) return t;
+                        PushFollow(FOLLOW_elementOptions_in_token811);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return t;
-                        match(input, Token.UP, null); if (state.failed) return t;
+                        Match(input, Token.UP, null); if (state.failed) return t;
 
                         if (state.backtracking == 0) { t = c; }
                     }
@@ -1349,7 +1349,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 6:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:159:4: c= TOKEN_REF
                     {
-                        c = (GrammarAST)match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_token823); if (state.failed) return t;
+                        c = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_token823); if (state.failed) return t;
                         if (state.backtracking == 0) { t = c; }
                     }
                     break;
@@ -1376,10 +1376,10 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:163:5: ( ^( ELEMENT_OPTIONS ( elementOption )* ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:163:7: ^( ELEMENT_OPTIONS ( elementOption )* )
             {
-                match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions853); if (state.failed) return;
+                Match(input, ELEMENT_OPTIONS, FOLLOW_ELEMENT_OPTIONS_in_elementOptions853); if (state.failed) return;
                 if (input.LA(1) == Token.DOWN)
                 {
-                    match(input, Token.DOWN, null); if (state.failed) return;
+                    Match(input, Token.DOWN, null); if (state.failed) return;
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:163:25: ( elementOption )*
                     loop22:
                     while (true)
@@ -1396,7 +1396,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                             case 1:
                                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:163:25: elementOption
                                 {
-                                    pushFollow(FOLLOW_elementOption_in_elementOptions855);
+                                    PushFollow(FOLLOW_elementOption_in_elementOptions855);
                                     elementOption();
                                     state._fsp--;
                                     if (state.failed) return;
@@ -1409,7 +1409,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         }
                     }
                     exit22:
-                    match(input, Token.UP, null); if (state.failed) return;
+                    Match(input, Token.UP, null); if (state.failed) return;
                 }
 
             }
@@ -1542,50 +1542,50 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:167:7: ID
                     {
-                        match(input, ID, FOLLOW_ID_in_elementOption874); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption874); if (state.failed) return;
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:168:9: ^( ASSIGN ID ID )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption885); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_elementOption887); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_elementOption889); if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption885); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption887); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption889); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:169:9: ^( ASSIGN ID STRING_LITERAL )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption901); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_elementOption903); if (state.failed) return;
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption905); if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption901); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption903); if (state.failed) return;
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption905); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:170:9: ^( ASSIGN ID ACTION )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption917); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_elementOption919); if (state.failed) return;
-                        match(input, ACTION, FOLLOW_ACTION_in_elementOption921); if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption917); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption919); if (state.failed) return;
+                        Match(input, ACTION, FOLLOW_ACTION_in_elementOption921); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:171:9: ^( ASSIGN ID INT )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption933); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_elementOption935); if (state.failed) return;
-                        match(input, INT, FOLLOW_INT_in_elementOption937); if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption933); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_elementOption935); if (state.failed) return;
+                        Match(input, INT, FOLLOW_INT_in_elementOption937); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
@@ -1702,7 +1702,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:175:4: atom
                     {
-                        pushFollow(FOLLOW_atom_in_element952);
+                        PushFollow(FOLLOW_atom_in_element952);
                         atom();
                         state._fsp--;
                         if (state.failed) return;
@@ -1711,66 +1711,66 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:176:4: ^( NOT element )
                     {
-                        match(input, NOT, FOLLOW_NOT_in_element958); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_element_in_element960);
+                        Match(input, NOT, FOLLOW_NOT_in_element958); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_element_in_element960);
                         element();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:177:4: ^( RANGE atom atom )
                     {
-                        match(input, RANGE, FOLLOW_RANGE_in_element967); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_atom_in_element969);
+                        Match(input, RANGE, FOLLOW_RANGE_in_element967); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_atom_in_element969);
                         atom();
                         state._fsp--;
                         if (state.failed) return;
-                        pushFollow(FOLLOW_atom_in_element971);
+                        PushFollow(FOLLOW_atom_in_element971);
                         atom();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:178:4: ^( ASSIGN ID element )
                     {
-                        match(input, ASSIGN, FOLLOW_ASSIGN_in_element978); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_element980); if (state.failed) return;
-                        pushFollow(FOLLOW_element_in_element982);
+                        Match(input, ASSIGN, FOLLOW_ASSIGN_in_element978); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_element980); if (state.failed) return;
+                        PushFollow(FOLLOW_element_in_element982);
                         element();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:179:4: ^( PLUS_ASSIGN ID element )
                     {
-                        match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_element989); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_element991); if (state.failed) return;
-                        pushFollow(FOLLOW_element_in_element993);
+                        Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_element989); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_element991); if (state.failed) return;
+                        PushFollow(FOLLOW_element_in_element993);
                         element();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:180:7: ^( SET ( setElement )+ )
                     {
-                        match(input, SET, FOLLOW_SET_in_element1003); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, SET, FOLLOW_SET_in_element1003); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:180:13: ( setElement )+
                         int cnt24 = 0;
                     loop24:
@@ -1788,7 +1788,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:180:13: setElement
                                     {
-                                        pushFollow(FOLLOW_setElement_in_element1005);
+                                        PushFollow(FOLLOW_setElement_in_element1005);
                                         setElement();
                                         state._fsp--;
                                         if (state.failed) return;
@@ -1804,20 +1804,20 @@ public class LeftRecursiveRuleWalker : TreeParser
                             cnt24++;
                         }
                     exit24:
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:181:9: RULE_REF
                     {
-                        match(input, RULE_REF, FOLLOW_RULE_REF_in_element1017); if (state.failed) return;
+                        Match(input, RULE_REF, FOLLOW_RULE_REF_in_element1017); if (state.failed) return;
                     }
                     break;
                 case 8:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:182:4: ebnf
                     {
-                        pushFollow(FOLLOW_ebnf_in_element1022);
+                        PushFollow(FOLLOW_ebnf_in_element1022);
                         ebnf();
                         state._fsp--;
                         if (state.failed) return;
@@ -1826,7 +1826,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 9:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:183:4: epsilonElement
                     {
-                        pushFollow(FOLLOW_epsilonElement_in_element1027);
+                        PushFollow(FOLLOW_epsilonElement_in_element1027);
                         epsilonElement();
                         state._fsp--;
                         if (state.failed) return;
@@ -1933,44 +1933,44 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:187:4: ACTION
                     {
-                        match(input, ACTION, FOLLOW_ACTION_in_epsilonElement1038); if (state.failed) return;
+                        Match(input, ACTION, FOLLOW_ACTION_in_epsilonElement1038); if (state.failed) return;
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:188:4: SEMPRED
                     {
-                        match(input, SEMPRED, FOLLOW_SEMPRED_in_epsilonElement1043); if (state.failed) return;
+                        Match(input, SEMPRED, FOLLOW_SEMPRED_in_epsilonElement1043); if (state.failed) return;
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:189:4: EPSILON
                     {
-                        match(input, EPSILON, FOLLOW_EPSILON_in_epsilonElement1048); if (state.failed) return;
+                        Match(input, EPSILON, FOLLOW_EPSILON_in_epsilonElement1048); if (state.failed) return;
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:190:4: ^( ACTION elementOptions )
                     {
-                        match(input, ACTION, FOLLOW_ACTION_in_epsilonElement1054); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_epsilonElement1056);
+                        Match(input, ACTION, FOLLOW_ACTION_in_epsilonElement1054); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_epsilonElement1056);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:191:4: ^( SEMPRED elementOptions )
                     {
-                        match(input, SEMPRED, FOLLOW_SEMPRED_in_epsilonElement1063); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_epsilonElement1065);
+                        Match(input, SEMPRED, FOLLOW_SEMPRED_in_epsilonElement1063); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_epsilonElement1065);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
@@ -2070,39 +2070,39 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:195:4: ^( STRING_LITERAL elementOptions )
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement1078); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_setElement1080);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement1078); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_setElement1080);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:196:4: ^( TOKEN_REF elementOptions )
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement1087); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_setElement1089);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement1087); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_setElement1089);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:197:4: STRING_LITERAL
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement1095); if (state.failed) return;
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement1095); if (state.failed) return;
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:198:4: TOKEN_REF
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement1100); if (state.failed) return;
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement1100); if (state.failed) return;
                     }
                     break;
 
@@ -2159,7 +2159,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:201:9: block
                     {
-                        pushFollow(FOLLOW_block_in_ebnf1111);
+                        PushFollow(FOLLOW_block_in_ebnf1111);
                         block();
                         state._fsp--;
                         if (state.failed) return;
@@ -2168,39 +2168,39 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:202:9: ^( OPTIONAL block )
                     {
-                        match(input, OPTIONAL, FOLLOW_OPTIONAL_in_ebnf1123); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_block_in_ebnf1125);
+                        Match(input, OPTIONAL, FOLLOW_OPTIONAL_in_ebnf1123); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_block_in_ebnf1125);
                         block();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:203:9: ^( CLOSURE block )
                     {
-                        match(input, CLOSURE, FOLLOW_CLOSURE_in_ebnf1139); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_block_in_ebnf1141);
+                        Match(input, CLOSURE, FOLLOW_CLOSURE_in_ebnf1139); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_block_in_ebnf1141);
                         block();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:204:9: ^( POSITIVE_CLOSURE block )
                     {
-                        match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_ebnf1155); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_block_in_ebnf1157);
+                        Match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_ebnf1155); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_block_in_ebnf1157);
                         block();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
@@ -2226,8 +2226,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:208:5: ( ^( BLOCK ( ACTION )? ( alternative )+ ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:208:7: ^( BLOCK ( ACTION )? ( alternative )+ )
             {
-                match(input, BLOCK, FOLLOW_BLOCK_in_block1177); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                Match(input, BLOCK, FOLLOW_BLOCK_in_block1177); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:208:15: ( ACTION )?
                 int alt29 = 2;
                 int LA29_0 = input.LA(1);
@@ -2240,7 +2240,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:208:15: ACTION
                         {
-                            match(input, ACTION, FOLLOW_ACTION_in_block1179); if (state.failed) return;
+                            Match(input, ACTION, FOLLOW_ACTION_in_block1179); if (state.failed) return;
                         }
                         break;
 
@@ -2263,7 +2263,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:208:23: alternative
                             {
-                                pushFollow(FOLLOW_alternative_in_block1182);
+                                PushFollow(FOLLOW_alternative_in_block1182);
                                 alternative();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -2279,7 +2279,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt30++;
                 }
             exit30:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
             }
 
@@ -2303,8 +2303,8 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:212:2: ( ^( ALT ( elementOptions )? ( element )+ ) )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:212:4: ^( ALT ( elementOptions )? ( element )+ )
             {
-                match(input, ALT, FOLLOW_ALT_in_alternative1199); if (state.failed) return;
-                match(input, Token.DOWN, null); if (state.failed) return;
+                Match(input, ALT, FOLLOW_ALT_in_alternative1199); if (state.failed) return;
+                Match(input, Token.DOWN, null); if (state.failed) return;
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:212:10: ( elementOptions )?
                 int alt31 = 2;
                 int LA31_0 = input.LA(1);
@@ -2317,7 +2317,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     case 1:
                         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:212:10: elementOptions
                         {
-                            pushFollow(FOLLOW_elementOptions_in_alternative1201);
+                            PushFollow(FOLLOW_elementOptions_in_alternative1201);
                             elementOptions();
                             state._fsp--;
                             if (state.failed) return;
@@ -2343,7 +2343,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         case 1:
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:212:26: element
                             {
-                                pushFollow(FOLLOW_element_in_alternative1204);
+                                PushFollow(FOLLOW_element_in_alternative1204);
                                 element();
                                 state._fsp--;
                                 if (state.failed) return;
@@ -2359,7 +2359,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                     cnt32++;
                 }
             exit32:
-                match(input, Token.UP, null); if (state.failed) return;
+                Match(input, Token.UP, null); if (state.failed) return;
 
             }
 
@@ -2498,10 +2498,10 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 1:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:216:4: ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? )
                     {
-                        match(input, RULE_REF, FOLLOW_RULE_REF_in_atom1221); if (state.failed) return;
+                        Match(input, RULE_REF, FOLLOW_RULE_REF_in_atom1221); if (state.failed) return;
                         if (input.LA(1) == Token.DOWN)
                         {
-                            match(input, Token.DOWN, null); if (state.failed) return;
+                            Match(input, Token.DOWN, null); if (state.failed) return;
                             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:216:15: ( ARG_ACTION )?
                             int alt33 = 2;
                             int LA33_0 = input.LA(1);
@@ -2514,7 +2514,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:216:15: ARG_ACTION
                                     {
-                                        match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_atom1223); if (state.failed) return;
+                                        Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_atom1223); if (state.failed) return;
                                     }
                                     break;
 
@@ -2532,7 +2532,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 case 1:
                                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:216:27: elementOptions
                                     {
-                                        pushFollow(FOLLOW_elementOptions_in_atom1226);
+                                        PushFollow(FOLLOW_elementOptions_in_atom1226);
                                         elementOptions();
                                         state._fsp--;
                                         if (state.failed) return;
@@ -2541,7 +2541,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
                             }
 
-                            match(input, Token.UP, null); if (state.failed) return;
+                            Match(input, Token.UP, null); if (state.failed) return;
                         }
 
                     }
@@ -2549,71 +2549,71 @@ public class LeftRecursiveRuleWalker : TreeParser
                 case 2:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:217:8: ^( STRING_LITERAL elementOptions )
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_atom1238); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_atom1240);
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_atom1238); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_atom1240);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:218:4: STRING_LITERAL
                     {
-                        match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_atom1246); if (state.failed) return;
+                        Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_atom1246); if (state.failed) return;
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:219:7: ^( TOKEN_REF elementOptions )
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_atom1255); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_atom1257);
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_atom1255); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_atom1257);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:220:4: TOKEN_REF
                     {
-                        match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_atom1263); if (state.failed) return;
+                        Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_atom1263); if (state.failed) return;
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:221:7: ^( WILDCARD elementOptions )
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_atom1272); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        pushFollow(FOLLOW_elementOptions_in_atom1274);
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom1272); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        PushFollow(FOLLOW_elementOptions_in_atom1274);
                         elementOptions();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
                 case 7:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:222:4: WILDCARD
                     {
-                        match(input, WILDCARD, FOLLOW_WILDCARD_in_atom1280); if (state.failed) return;
+                        Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom1280); if (state.failed) return;
                     }
                     break;
                 case 8:
                     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:223:4: ^( DOT ID element )
                     {
-                        match(input, DOT, FOLLOW_DOT_in_atom1286); if (state.failed) return;
-                        match(input, Token.DOWN, null); if (state.failed) return;
-                        match(input, ID, FOLLOW_ID_in_atom1288); if (state.failed) return;
-                        pushFollow(FOLLOW_element_in_atom1290);
+                        Match(input, DOT, FOLLOW_DOT_in_atom1286); if (state.failed) return;
+                        Match(input, Token.DOWN, null); if (state.failed) return;
+                        Match(input, ID, FOLLOW_ID_in_atom1288); if (state.failed) return;
+                        PushFollow(FOLLOW_element_in_atom1290);
                         element();
                         state._fsp--;
                         if (state.failed) return;
-                        match(input, Token.UP, null); if (state.failed) return;
+                        Match(input, Token.UP, null); if (state.failed) return;
 
                     }
                     break;
@@ -2634,7 +2634,7 @@ public class LeftRecursiveRuleWalker : TreeParser
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:9: ( binary )
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:10: binary
         {
-            pushFollow(FOLLOW_binary_in_synpred1_LeftRecursiveRuleWalker348);
+            PushFollow(FOLLOW_binary_in_synpred1_LeftRecursiveRuleWalker348);
             binary();
             state._fsp--;
             if (state.failed) return;
@@ -2649,7 +2649,7 @@ public class LeftRecursiveRuleWalker : TreeParser
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:116:9: ( prefix )
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:116:10: prefix
         {
-            pushFollow(FOLLOW_prefix_in_synpred2_LeftRecursiveRuleWalker404);
+            PushFollow(FOLLOW_prefix_in_synpred2_LeftRecursiveRuleWalker404);
             prefix();
             state._fsp--;
             if (state.failed) return;
@@ -2664,7 +2664,7 @@ public class LeftRecursiveRuleWalker : TreeParser
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:118:9: ( suffix )
         // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:118:10: suffix
         {
-            pushFollow(FOLLOW_suffix_in_synpred3_LeftRecursiveRuleWalker460);
+            PushFollow(FOLLOW_suffix_in_synpred3_LeftRecursiveRuleWalker460);
             suffix();
             state._fsp--;
             if (state.failed) return;

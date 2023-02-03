@@ -9,23 +9,23 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
-public class PlusBlock : Loop {
-    [ModelElement] 
+public class PlusBlock : Loop
+{
+    [ModelElement]
     public ThrowNoViableAlt error;
 
-	public PlusBlock(OutputModelFactory factory,
-					 GrammarAST plusRoot,
-					 List<CodeBlockForAlt> alts)
-		: base(factory, plusRoot, alts)
+    public PlusBlock(OutputModelFactory factory,
+                     GrammarAST plusRoot,
+                     List<CodeBlockForAlt> alts)
+        : base(factory, plusRoot, alts)
     {
-		;
-		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
-		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;
-		PlusLoopbackState loop = blkStart.loopBackState;
-		stateNumber = blkStart.loopBackState.stateNumber;
-		blockStartStateNumber = blkStart.stateNumber;
-		loopBackStateNumber = loop.stateNumber;
-		this.error = getThrowNoViableAlt(factory, plusRoot, null);
-		decision = loop.decision;
-	}
+        var blkAST = plusRoot.getChild(0) as BlockAST;
+        var blkStart = blkAST.atnState as PlusBlockStartState;
+        var loop = blkStart.loopBackState;
+        stateNumber = blkStart.loopBackState.stateNumber;
+        blockStartStateNumber = blkStart.stateNumber;
+        loopBackStateNumber = loop.stateNumber;
+        this.error = GetThrowNoViableAlt(factory, plusRoot, null);
+        decision = loop.decision;
+    }
 }

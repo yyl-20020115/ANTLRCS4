@@ -10,22 +10,19 @@ using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
 
-
-
 /** */
-public class LL1PlusBlockSingleAlt : LL1Loop {
-	public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts): base(factory, plusRoot, alts)
+public class LL1PlusBlockSingleAlt : LL1Loop
+{
+    public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts) : base(factory, plusRoot, alts)
     {
-		BlockAST blkAST = (BlockAST)plusRoot.getChild(0);
-		PlusBlockStartState blkStart = (PlusBlockStartState)blkAST.atnState;
-
-		stateNumber = blkStart.loopBackState.stateNumber;
-		blockStartStateNumber = blkStart.stateNumber;
-		PlusBlockStartState plus = (PlusBlockStartState)blkAST.atnState;
-		this.decision = plus.loopBackState.decision;
-		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK[(decision)];
-
-		IntervalSet loopBackLook = altLookSets[0];
-		loopExpr = addCodeForLoopLookaheadTempVar(loopBackLook);
-	}
+        var blkAST = plusRoot.getChild(0) as BlockAST;
+        var blkStart = blkAST.atnState as PlusBlockStartState;
+        stateNumber = blkStart.loopBackState.stateNumber;
+        blockStartStateNumber = blkStart.stateNumber;
+        var plus = blkAST.atnState as PlusBlockStartState;
+        this.decision = plus.loopBackState.decision;
+        var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
+        var loopBackLook = altLookSets[0];
+        loopExpr = AddCodeForLoopLookaheadTempVar(loopBackLook);
+    }
 }

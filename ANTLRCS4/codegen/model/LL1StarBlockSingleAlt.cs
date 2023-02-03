@@ -5,11 +5,9 @@
  */
 
 using org.antlr.v4.runtime.atn;
-using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
-
 
 /** */
 public class LL1StarBlockSingleAlt : LL1Loop {
@@ -17,13 +15,13 @@ public class LL1StarBlockSingleAlt : LL1Loop {
 	: base(factory, starRoot, alts)
     {
 
-		StarLoopEntryState star = (StarLoopEntryState)starRoot.atnState;
+		var star = starRoot.atnState as StarLoopEntryState;
 		loopBackStateNumber = star.loopBackState.stateNumber;
 		this.decision = star.decision;
-		IntervalSet[] altLookSets = factory.getGrammar().decisionLOOK[(decision)];
+		var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
 		//assert altLookSets.length == 2;
-		IntervalSet enterLook = altLookSets[0];
-		IntervalSet exitLook = altLookSets[1];
-		loopExpr = addCodeForLoopLookaheadTempVar(enterLook);
+		var enterLook = altLookSets[0];
+		var exitLook = altLookSets[1];
+		loopExpr = AddCodeForLoopLookaheadTempVar(enterLook);
 	}
 }

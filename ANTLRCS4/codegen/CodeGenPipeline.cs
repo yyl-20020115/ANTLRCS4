@@ -4,118 +4,146 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using Antlr4.StringTemplate;
-using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen;
 
-public class CodeGenPipeline {
-	readonly Grammar g;
-	readonly CodeGenerator gen;
+public class CodeGenPipeline
+{
+    public readonly Grammar g;
+    public readonly CodeGenerator gen;
 
-	public CodeGenPipeline(Grammar g, CodeGenerator gen) {
-		this.g = g;
-		this.gen = gen;
-	}
+    public CodeGenPipeline(Grammar g, CodeGenerator gen)
+    {
+        this.g = g;
+        this.gen = gen;
+    }
 
-	public void process() {
-		// all templates are generated in memory to report the most complete
-		// error information possible, but actually writing output files stops
-		// after the first error is reported
-		int errorCount = g.tool.errMgr.getNumErrors();
+    public void Process()
+    {
+        // all templates are generated in memory to report the most complete
+        // error information possible, but actually writing output files stops
+        // after the first error is reported
+        int errorCount = g.Tools.ErrMgr.getNumErrors();
 
-		if ( g.isLexer() ) {
-			if (gen.getTarget().needsHeader()) {
-                Template lexer2 = gen.generateLexer(true); // Header file if needed.
-				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					writeRecognizer(lexer2, gen, true);
-				}
-			}
-            Template lexer = gen.generateLexer(false);
-			if (g.tool.errMgr.getNumErrors() == errorCount) {
-				writeRecognizer(lexer, gen, false);
-			}
-		}
-		else {
-			if (gen.getTarget().needsHeader()) {
-                Template parser2 = gen.generateParser(true);
-				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					writeRecognizer(parser2, gen, true);
-				}
-			}
-            Template parser = gen.generateParser(false);
-			if (g.tool.errMgr.getNumErrors() == errorCount) {
-				writeRecognizer(parser, gen, false);
-			}
+        if (g.isLexer())
+        {
+            if (gen.Target.NeedsHeader())
+            {
+                var lexer2 = gen.GenerateLexer(true); // Header file if needed.
+                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                {
+                    WriteRecognizer(lexer2, gen, true);
+                }
+            }
+            var lexer = gen.GenerateLexer(false);
+            if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+            {
+                WriteRecognizer(lexer, gen, false);
+            }
+        }
+        else
+        {
+            if (gen.Target.NeedsHeader())
+            {
+                var parser2 = gen.GenerateParser(true);
+                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                {
+                    WriteRecognizer(parser2, gen, true);
+                }
+            }
+            var parser = gen.GenerateParser(false);
+            if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+            {
+                WriteRecognizer(parser, gen, false);
+            }
 
-			if ( g.tool.gen_listener ) {
-				if (gen.getTarget().needsHeader()) {
-                    Template listener2 = gen.generateListener(true);
-					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeListener(listener2, true);
-					}
-				}
-                Template listener3 = gen.generateListener(false);
-				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					gen.writeListener(listener3, false);
-				}
+            if (g.Tools.gen_listener)
+            {
+                if (gen.Target.NeedsHeader())
+                {
+                    var listener2 = gen.GenerateListener(true);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteListener(listener2, true);
+                    }
+                }
+                var listener3 = gen.GenerateListener(false);
+                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                {
+                    gen.WriteListener(listener3, false);
+                }
 
-				if (gen.getTarget().needsHeader()) {
-                    Template baseListener = gen.generateBaseListener(true);
-					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeBaseListener(baseListener, true);
-					}
-				}
-				if (gen.getTarget().wantsBaseListener()) {
-                    Template baseListener = gen.generateBaseListener(false);
-					if ( g.tool.errMgr.getNumErrors()==errorCount ) {
-						gen.writeBaseListener(baseListener, false);
-					}
-				}
-			}
-			if ( g.tool.gen_visitor ) {
-				if (gen.getTarget().needsHeader()) {
-                    Template visitor2 = gen.generateVisitor(true);
-					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeVisitor(visitor2, true);
-					}
-				}
-                Template visitor = gen.generateVisitor(false);
-				if (g.tool.errMgr.getNumErrors() == errorCount) {
-					gen.writeVisitor(visitor, false);
-				}
+                if (gen.Target.NeedsHeader())
+                {
+                    var baseListener = gen.GenerateBaseListener(true);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteBaseListener(baseListener, true);
+                    }
+                }
+                if (gen.Target.WantsBaseListener())
+                {
+                    var baseListener = gen.GenerateBaseListener(false);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteBaseListener(baseListener, false);
+                    }
+                }
+            }
+            if (g.Tools.gen_visitor)
+            {
+                if (gen.Target.NeedsHeader())
+                {
+                    var visitor2 = gen.GenerateVisitor(true);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteVisitor(visitor2, true);
+                    }
+                }
+                var visitor = gen.GenerateVisitor(false);
+                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                {
+                    gen.WriteVisitor(visitor, false);
+                }
 
-				if (gen.getTarget().needsHeader()) {
-                    Template baseVisitor = gen.generateBaseVisitor(true);
-					if (g.tool.errMgr.getNumErrors() == errorCount) {
-						gen.writeBaseVisitor(baseVisitor, true);
-					}
-				}
-				if (gen.getTarget().wantsBaseVisitor()) {
-                    Template baseVisitor = gen.generateBaseVisitor(false);
-					if ( g.tool.errMgr.getNumErrors()==errorCount ) {
-						gen.writeBaseVisitor(baseVisitor, false);
-					}
-				}
-			}
-		}
-		gen.writeVocabFile();
-	}
+                if (gen.Target.NeedsHeader())
+                {
+                    var baseVisitor = gen.GenerateBaseVisitor(true);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteBaseVisitor(baseVisitor, true);
+                    }
+                }
+                if (gen.Target.WantsBaseVisitor())
+                {
+                    var baseVisitor = gen.GenerateBaseVisitor(false);
+                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    {
+                        gen.WriteBaseVisitor(baseVisitor, false);
+                    }
+                }
+            }
+        }
+        gen.WriteVocabFile();
+    }
 
-	protected void writeRecognizer(Template template, CodeGenerator gen, bool header) {
-		if ( g.tool.launch_ST_inspector ) {
-			//NOTICE: not supported
-			//STViz viz = template.Inspect();
-			//if (g.tool.ST_inspector_wait_for_close) {
-			//	try {
-			//		viz.waitForClose();
-			//	}
-			//	catch (Exception ex) {
-			//		g.tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
-			//	}
-			//}
-		}
+    protected void WriteRecognizer(Template template, CodeGenerator gen, bool header)
+    {
+        if (g.Tools.Launch_ST_inspector)
+        {
+            //NOTICE: not supported
+            //STViz viz = template.Inspect();
+            //if (g.tool.ST_inspector_wait_for_close) {
+            //	try {
+            //		viz.waitForClose();
+            //	}
+            //	catch (Exception ex) {
+            //		g.tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
+            //	}
+            //}
+        }
 
-		gen.writeRecognizer(template, header);
-	}
+        gen.WriteRecognizer(template, header);
+    }
 }

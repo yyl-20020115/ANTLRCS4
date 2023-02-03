@@ -7,8 +7,9 @@
 namespace org.antlr.v4.codegen.model.decl;
 
 /** {@code public Token X() { }} */
-public class ContextTokenGetterDecl : ContextGetterDecl {
-	public bool optional;
+public class ContextTokenGetterDecl : ContextGetterDecl
+{
+    public readonly bool optional;
 
-	public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) : base(factory, name) { this.optional = optional; }
+    public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) : base(factory, name) { this.optional = optional; }
 }

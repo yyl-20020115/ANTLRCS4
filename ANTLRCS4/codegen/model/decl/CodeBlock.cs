@@ -9,49 +9,57 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.codegen.model.decl;
 
 
-public class CodeBlock : SrcOp {
-	public int codeBlockLevel;
-	public int treeLevel;
+public class CodeBlock : SrcOp
+{
+    public readonly int codeBlockLevel;
+    public readonly int treeLevel;
 
-	[ModelElement] 
-	public OrderedHashSet<Decl> locals;
+    [ModelElement]
+    public OrderedHashSet<Decl> locals;
     [ModelElement]
     public List<SrcOp> preamble;
     [ModelElement]
     public List<SrcOp> ops;
 
-	public CodeBlock(OutputModelFactory factory):base(factory) {
-	}
+    public CodeBlock(OutputModelFactory factory) : base(factory)
+    {
+    }
 
-	public CodeBlock(OutputModelFactory factory, int treeLevel, int codeBlockLevel):base(factory) {
-		this.treeLevel = treeLevel;
-		this.codeBlockLevel = codeBlockLevel;
-	}
+    public CodeBlock(OutputModelFactory factory, int treeLevel, int codeBlockLevel) : base(factory)
+    {
+        this.treeLevel = treeLevel;
+        this.codeBlockLevel = codeBlockLevel;
+    }
 
-	/** Add local var decl */
-	public void addLocalDecl(Decl d) {
-		if ( locals==null ) locals = new OrderedHashSet<Decl>();
-		locals.add(d);
-		d.isLocal = true;
-	}
+    /** Add local var decl */
+    public void AddLocalDecl(Decl d)
+    {
+        locals ??= new ();
+        locals.add(d);
+        d.isLocal = true;
+    }
 
-	public void addPreambleOp(SrcOp op) {
-		if ( preamble==null ) preamble = new();
-		preamble.Add(op);
-	}
+    public void AddPreambleOp(SrcOp op)
+    {
+        preamble ??= new();
+        preamble.Add(op);
+    }
 
-	public void addOp(SrcOp op) {
-		if ( ops==null ) ops = new();
-		ops.Add(op);
-	}
+    public void AddOp(SrcOp op)
+    {
+        ops ??= new();
+        ops.Add(op);
+    }
 
-	public void insertOp(int i, SrcOp op) {
-		if ( ops==null ) ops = new();
-		ops.Insert(i, op);
-	}
+    public void InsertOp(int i, SrcOp op)
+    {
+        ops ??= new();
+        ops.Insert(i, op);
+    }
 
-	public void addOps(List<SrcOp> ops) {
-		if ( this.ops==null ) this.ops = new();
-		this.ops.AddRange(ops);
-	}
+    public void AddOps(List<SrcOp> ops)
+    {
+        this.ops ??= new();
+        this.ops.AddRange(ops);
+    }
 }

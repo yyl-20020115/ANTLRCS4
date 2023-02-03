@@ -26,7 +26,7 @@ public class TokenVocabParser {
 		int maxTokenType = -1;
 		String fullFile = getImportedVocabFile();
 		
-		Tool tool = g.tool;
+		Tool tool = g.Tools;
 		String vocabName = g.getOptionString("tokenVocab");
         TextReader br = null;
         try
@@ -48,21 +48,21 @@ public class TokenVocabParser {
 					String tokenTypeS = matcher.Groups[2].Value;
 	                if(!int.TryParse(tokenTypeS,out var tokenType))
 					{
-                        tool.errMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
+                        tool.ErrMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
                                               vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
                                               " bad token type: " + tokenTypeS,
                                               lineNum);
                         tokenType = Token.INVALID_TOKEN_TYPE;
                     }
                     
-					tool.log("grammar", "import "+tokenID+"="+tokenType);
+					tool.Log("grammar", "import "+tokenID+"="+tokenType);
 					tokens[tokenID] = tokenType;
 					maxTokenType = Math.Max(maxTokenType,tokenType);
 					lineNum++;
 				}
 				else {
 					if ( tokenDef.Length >0 ) { // ignore blank lines
-						tool.errMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
+						tool.ErrMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
 											  vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
 											  " bad token def: " + tokenDef,
 											  lineNum);
@@ -75,19 +75,19 @@ public class TokenVocabParser {
 			GrammarAST inTree = g.ast.getOptionAST("tokenVocab");
 			String inTreeValue = inTree.getToken().getText();
 			if ( vocabName.Equals(inTreeValue) ) {
-				tool.errMgr.grammarError(ErrorType.CANNOT_FIND_TOKENS_FILE_REFD_IN_GRAMMAR,
+				tool.ErrMgr.GrammarError(ErrorType.CANNOT_FIND_TOKENS_FILE_REFD_IN_GRAMMAR,
 										 g.fileName,
 										 inTree.getToken(),
 										 fullFile);
 			}
 			else { // must be from -D option on cmd-line not token in tree
-				tool.errMgr.toolError(ErrorType.CANNOT_FIND_TOKENS_FILE_GIVEN_ON_CMDLINE,
+				tool.ErrMgr.toolError(ErrorType.CANNOT_FIND_TOKENS_FILE_GIVEN_ON_CMDLINE,
 									  fullFile,
 									  g.name);
 			}
 		}
 		catch (Exception e) {
-			tool.errMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
+			tool.ErrMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
 								  e,
 								  fullFile,
 								  e.Message);
@@ -97,7 +97,7 @@ public class TokenVocabParser {
 				if ( br!=null ) br.Close();
 			}
 			catch (IOException ioe) {
-				tool.errMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
+				tool.ErrMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
 									  ioe,
 									  fullFile,
 									  ioe.Message);
@@ -117,7 +117,7 @@ public class TokenVocabParser {
 	 */
 	public String getImportedVocabFile() {
 		String vocabName = g.getOptionString("tokenVocab");
-		string f = Path.Combine(g.tool.libDirectory,
+		string f = Path.Combine(g.Tools.libDirectory,
 						  vocabName,
 						  CodeGenerator.VOCAB_FILE_EXTENSION);
 		if (File.Exists(f)) {
@@ -128,7 +128,7 @@ public class TokenVocabParser {
 		// to look for it in the output directory which is where .tokens
 		// files are generated (in the base, not relative to the input
 		// location.)
-		f = Path.Combine(g.tool.outputDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
+		f = Path.Combine(g.Tools.outputDirectory, vocabName + CodeGenerator.VOCAB_FILE_EXTENSION);
 		if ( File.Exists(f) ) {
 			return f;
 		}

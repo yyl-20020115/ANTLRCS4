@@ -104,10 +104,10 @@ public class TestCodeGeneration {
 
 			ATNFactory factory = new ParserATNFactory(g);
 			if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar) g);
-			g.atn = factory.createATN();
+			g.atn = factory.CreateATN();
 
-			CodeGenerator gen = CodeGenerator.create(g);
-			Template outputFileST = gen.generateParser();
+			CodeGenerator gen = CodeGenerator.Create(g);
+			Template outputFileST = gen.GenerateParser();
 
 //			STViz viz = outputFileST.inspect();
 //			try {

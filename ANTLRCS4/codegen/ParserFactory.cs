@@ -59,18 +59,18 @@ public class ParserFactory : DefaultOutputModelFactory {
 	}
 
 	//@Override
-	public List<SrcOp> action(ActionAST ast) { return list(new model.Action(this, ast)); }
+	public List<SrcOp> action(ActionAST ast) { return List(new model.Action(this, ast)); }
 
 	//@Override
-	public List<SrcOp> sempred(ActionAST ast) { return list(new SemPred(this, ast)); }
+	public List<SrcOp> sempred(ActionAST ast) { return List(new SemPred(this, ast)); }
 
 	//@Override
 	public List<SrcOp> ruleRef(GrammarAST ID, GrammarAST label, GrammarAST args) {
 		InvokeRule invokeOp = new InvokeRule(this, ID, label);
 		// If no manual label and action refs as token/rule not label, we need to define implicit label
-		if ( controller.needsImplicitLabel(ID, invokeOp) ) defineImplicitLabel(ID, invokeOp);
+		if ( controller.NeedsImplicitLabel(ID, invokeOp) ) defineImplicitLabel(ID, invokeOp);
 		AddToLabelList listLabelOp = getAddToListOpIfListLabelPresent(invokeOp, label);
-		return list(invokeOp, listLabelOp);
+		return List(invokeOp, listLabelOp);
 	}
 
 	//@Override
@@ -83,12 +83,12 @@ public class ParserFactory : DefaultOutputModelFactory {
 				// add Token _X and List<Token> X decls
 				defineImplicitLabel(ID, matchOp); // adds _X
 				TokenListDecl l = getTokenListLabelDecl(label);
-				rf.addContextDecl(ID.getAltLabel(), l);
+				rf.AddContextDecl(ID.getAltLabel(), l);
 			}
 			else {
 				Decl d = getTokenLabelDecl(label);
 				matchOp.labels.Add(d);
-				rf.addContextDecl(ID.getAltLabel(), d);
+				rf.AddContextDecl(ID.getAltLabel(), d);
 			}
 
 //			Decl d = getTokenLabelDecl(label);
@@ -99,9 +99,9 @@ public class ParserFactory : DefaultOutputModelFactory {
 //				getCurrentRuleFunction().addContextDecl(ID.getAltLabel(), l);
 //			}
 		}
-		if ( controller.needsImplicitLabel(ID, matchOp) ) defineImplicitLabel(ID, matchOp);
+		if ( controller.NeedsImplicitLabel(ID, matchOp) ) defineImplicitLabel(ID, matchOp);
 		AddToLabelList listLabelOp = getAddToListOpIfListLabelPresent(matchOp, labelAST);
-		return list(matchOp, listLabelOp);
+		return List(matchOp, listLabelOp);
 	}
 
 	public Decl getTokenLabelDecl(String label) {
@@ -109,7 +109,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 	}
 
 	public TokenListDecl getTokenListLabelDecl(String label) {
-		return new TokenListDecl(this, gen.getTarget().getListLabel(label));
+		return new TokenListDecl(this, gen.Target.GetListLabel(label));
 	}
 
 	//@Override
@@ -123,17 +123,17 @@ public class ParserFactory : DefaultOutputModelFactory {
 			if ( labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN ) {
 				defineImplicitLabel(setAST, matchOp);
 				TokenListDecl l = getTokenListLabelDecl(label);
-				rf.addContextDecl(setAST.getAltLabel(), l);
+				rf.AddContextDecl(setAST.getAltLabel(), l);
 			}
 			else {
 				Decl d = getTokenLabelDecl(label);
 				matchOp.labels.Add(d);
-				rf.addContextDecl(setAST.getAltLabel(), d);
+				rf.AddContextDecl(setAST.getAltLabel(), d);
 			}
 		}
-		if ( controller.needsImplicitLabel(setAST, matchOp) ) defineImplicitLabel(setAST, matchOp);
+		if ( controller.NeedsImplicitLabel(setAST, matchOp) ) defineImplicitLabel(setAST, matchOp);
 		AddToLabelList listLabelOp = getAddToListOpIfListLabelPresent(matchOp, labelAST);
-		return list(matchOp, listLabelOp);
+		return List(matchOp, listLabelOp);
 	}
 
 	//@Override
@@ -144,22 +144,22 @@ public class ParserFactory : DefaultOutputModelFactory {
 			String label = labelAST.getText();
 			Decl d = getTokenLabelDecl(label);
 			wild.labels.Add(d);
-			getCurrentRuleFunction().addContextDecl(ast.getAltLabel(), d);
+			getCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), d);
 			if ( labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN ) {
 				TokenListDecl l = getTokenListLabelDecl(label);
-				getCurrentRuleFunction().addContextDecl(ast.getAltLabel(), l);
+				getCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), l);
 			}
 		}
-		if ( controller.needsImplicitLabel(ast, wild) ) defineImplicitLabel(ast, wild);
+		if ( controller.NeedsImplicitLabel(ast, wild) ) defineImplicitLabel(ast, wild);
 		AddToLabelList listLabelOp = getAddToListOpIfListLabelPresent(wild, labelAST);
-		return list(wild, listLabelOp);
+		return List(wild, listLabelOp);
 	}
 
 	//@Override
 	public Choice getChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST labelAST) {
 		int decision = ((DecisionState)blkAST.atnState).decision;
 		Choice c;
-		if ( !g.tool.force_atn && AnalysisPipeline.disjoint(g.decisionLOOK[decision]) ) {
+		if ( !g.Tools.force_atn && AnalysisPipeline.Disjoint(g.decisionLOOK[decision]) ) {
 			c = getLL1ChoiceBlock(blkAST, alts);
 		}
 		else {
@@ -170,11 +170,11 @@ public class ParserFactory : DefaultOutputModelFactory {
 			String label = labelAST.getText();
 			Decl d = getTokenLabelDecl(label);
 			c.label = d;
-			getCurrentRuleFunction().addContextDecl(labelAST.getAltLabel(), d);
+			getCurrentRuleFunction().AddContextDecl(labelAST.getAltLabel(), d);
 			if ( labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN  ) {
-				String listLabel = gen.getTarget().getListLabel(label);
+				String listLabel = gen.Target.GetListLabel(label);
 				TokenListDecl l = new TokenListDecl(this, listLabel);
-				getCurrentRuleFunction().addContextDecl(labelAST.getAltLabel(), l);
+				getCurrentRuleFunction().AddContextDecl(labelAST.getAltLabel(), l);
 			}
 		}
 
@@ -183,7 +183,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 
 	//@Override
 	public Choice getEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts) {
-		if (!g.tool.force_atn) {
+		if (!g.Tools.force_atn) {
 			int decision;
 			if ( ebnfRoot.getType()==ANTLRParser.POSITIVE_CLOSURE ) {
 				decision = ((PlusLoopbackState)ebnfRoot.atnState).decision;
@@ -195,7 +195,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 				decision = ((DecisionState)ebnfRoot.atnState).decision;
 			}
 
-			if ( AnalysisPipeline.disjoint(g.decisionLOOK[decision]) ) {
+			if ( AnalysisPipeline.Disjoint(g.decisionLOOK[decision]) ) {
 				return getLL1EBNFBlock(ebnfRoot, alts);
 			}
 		}
@@ -256,7 +256,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 
 	//@Override
 	public List<SrcOp> getLL1Test(IntervalSet look, GrammarAST blkAST) {
-		return list(new TestSetInline(this, blkAST, look, gen.getTarget().getInlineTestSetWordSize()));
+		return List(new TestSetInline(this, blkAST, look, gen.Target.GetInlineTestSetWordSize()));
 	}
 
 	//@Override
@@ -264,7 +264,7 @@ public class ParserFactory : DefaultOutputModelFactory {
 		Alternative currentOuterMostAlt = getCurrentOuterMostAlt();
 		bool actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.getText());
 		bool actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.getText());
-		return	op.getLabels().Count==0 &&	(actionRefsAsToken || actionRefsAsRule);
+		return	op.GetLabels().Count==0 &&	(actionRefsAsToken || actionRefsAsRule);
 	}
 
 	// support
@@ -273,35 +273,35 @@ public class ParserFactory : DefaultOutputModelFactory {
 		Decl d;
 		if ( ast.getType()==ANTLRParser.SET || ast.getType()==ANTLRParser.WILDCARD ) {
 			String implLabel =
-				gen.getTarget().getImplicitSetLabel((ast.token.getTokenIndex().ToString()));
+				gen.				Target.GetImplicitSetLabel((ast.token.getTokenIndex().ToString()));
 			d = getTokenLabelDecl(implLabel);
 			((TokenDecl)d).isImplicit = true;
 		}
 		else if ( ast.getType()==ANTLRParser.RULE_REF ) { // a rule reference?
 			Rule r = g.getRule(ast.getText());
-			String implLabel = gen.getTarget().getImplicitRuleLabel(ast.getText());
+			String implLabel = gen.Target.GetImplicitRuleLabel(ast.getText());
 			String ctxName =
-				gen.getTarget().getRuleFunctionContextStructName(r);
+				gen.				Target.GetRuleFunctionContextStructName(r);
 			d = new RuleContextDecl(this, implLabel, ctxName);
 			((RuleContextDecl)d).isImplicit = true;
 		}
 		else {
-			String implLabel = gen.getTarget().getImplicitTokenLabel(ast.getText());
+			String implLabel = gen.Target.GetImplicitTokenLabel(ast.getText());
 			d = getTokenLabelDecl(implLabel);
 			((TokenDecl)d).isImplicit = true;
 		}
-		op.getLabels().Add(d);
+		op.GetLabels().Add(d);
 		// all labels must be in scope struct in case we exec action out of context
-		getCurrentRuleFunction().addContextDecl(ast.getAltLabel(), d);
+		getCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), d);
 	}
 
 	public AddToLabelList getAddToListOpIfListLabelPresent(LabeledOp op, GrammarAST label) {
 		AddToLabelList labelOp = null;
 		if ( label!=null && label.parent.getType()==ANTLRParser.PLUS_ASSIGN ) {
-			Target target = gen.getTarget();
-			String listLabel = target.getListLabel(label.getText());
-			String listRuntimeName = target.escapeIfNeeded(listLabel);
-			labelOp = new AddToLabelList(this, listRuntimeName, op.getLabels()[0]);
+			Target target = gen.Target;
+			String listLabel = target.GetListLabel(label.getText());
+			String listRuntimeName = target.EscapeIfNeeded(listLabel);
+			labelOp = new AddToLabelList(this, listRuntimeName, op.GetLabels()[0]);
 		}
 		return labelOp;
 	}

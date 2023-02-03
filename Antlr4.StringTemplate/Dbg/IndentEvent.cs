@@ -37,7 +37,5 @@ using Antlr4.StringTemplate.Misc;
 public class IndentEvent : EvalExprEvent
 {
     public IndentEvent(TemplateFrame frame, Interval outputInterval, Interval sourceInterval)
-        : base(frame, outputInterval, sourceInterval)
-    {
-    }
+        : base(frame, outputInterval, sourceInterval) { }
 }

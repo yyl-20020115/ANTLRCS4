@@ -31,7 +31,7 @@ public class AttributeChecks : ActionSplitterListener {
         this.alt = alt;
         this.node = node;
         this.actionToken = actionToken;
-		this.errMgr = g.tool.errMgr;
+		this.errMgr = g.Tools.ErrMgr;
     }
 
     public static void checkAllAttributeExpressions(Grammar g) {
@@ -80,15 +80,15 @@ public class AttributeChecks : ActionSplitterListener {
 
 	// $x.y
 	//@Override
-	public void qualifiedAttr(String expr, Token x, Token y) {
+	public void QualifiedAttr(String expr, Token x, Token y) {
 		if ( g.isLexer() ) {
-			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
+			errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
 								g.fileName, x, x.getText()+"."+y.getText(), expr);
 			return;
 		}
 		if ( node.resolver.resolveToAttribute(x.getText(), node)!=null ) {
 			// must be a member access to a predefined attribute like $ctx.foo
-			attr(expr, x);
+			Attr(expr, x);
 			return;
 		}
 
@@ -96,29 +96,29 @@ public class AttributeChecks : ActionSplitterListener {
 			Rule rref = isolatedRuleRef(x.getText());
 			if ( rref!=null ) {
 				if ( rref.args!=null && rref.args.get(y.getText())!=null ) {
-					g.tool.errMgr.grammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
+					g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
 											  g.fileName, y, y.getText(), rref.name, expr);
 				}
 				else {
-					errMgr.grammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
+					errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
 											  g.fileName, y, y.getText(), rref.name, expr);
 				}
 			}
 			else if ( !node.resolver.resolvesToAttributeDict(x.getText(), node) ) {
-				errMgr.grammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
+				errMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
 										  g.fileName, x, x.getText(), expr);
 			}
 			else {
-				errMgr.grammarError(ErrorType.UNKNOWN_ATTRIBUTE_IN_SCOPE,
+				errMgr.GrammarError(ErrorType.UNKNOWN_ATTRIBUTE_IN_SCOPE,
 										  g.fileName, y, y.getText(), expr);
 			}
 		}
 	}
 
 	//@Override
-	public void setAttr(String expr, Token x, Token rhs) {
+	public void SetAttr(String expr, Token x, Token rhs) {
 		if ( g.isLexer() ) {
-			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
+			errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
 								g.fileName, x, x.getText(), expr);
 			return;
 		}
@@ -129,16 +129,16 @@ public class AttributeChecks : ActionSplitterListener {
 				errorType = ErrorType.ASSIGNMENT_TO_LIST_LABEL;
 			}
 
-			errMgr.grammarError(errorType,
+			errMgr.GrammarError(errorType,
 								g.fileName, x, x.getText(), expr);
 		}
 		new AttributeChecks(g, r, alt, node, rhs).examineAction();
 	}
 
 	//@Override
-    public void attr(String expr, Token x) {
+    public void Attr(String expr, Token x) {
 		if ( g.isLexer() ) {
-			errMgr.grammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
+			errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
 								g.fileName, x, x.getText(), expr);
 			return;
 		}
@@ -150,45 +150,45 @@ public class AttributeChecks : ActionSplitterListener {
 				return; // $ids for ids+=ID etc...
 			}
 			if ( isolatedRuleRef(x.getText())!=null ) {
-				errMgr.grammarError(ErrorType.ISOLATED_RULE_REF,
+				errMgr.GrammarError(ErrorType.ISOLATED_RULE_REF,
 									g.fileName, x, x.getText(), expr);
 				return;
 			}
-			errMgr.grammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
+			errMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
 								g.fileName, x, x.getText(), expr);
 		}
 	}
 
 	//@Override
-	public void nonLocalAttr(String expr, Token x, Token y) {
+	public void NonLocalAttr(String expr, Token x, Token y) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
-			errMgr.grammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
+			errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
 								g.fileName, x, x.getText(), y.getText(), expr);
 		}
 		else if ( r.resolveToAttribute(y.getText(), null)==null ) {
-			errMgr.grammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
+			errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
 								g.fileName, y, y.getText(), x.getText(), expr);
 
 		}
 	}
 
 	//@Override
-	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
+	public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 		Rule r = g.getRule(x.getText());
 		if ( r==null ) {
-			errMgr.grammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
+			errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
 								g.fileName, x, x.getText(), y.getText(), expr);
 		}
 		else if ( r.resolveToAttribute(y.getText(), null)==null ) {
-			errMgr.grammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
+			errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
 								g.fileName, y, y.getText(), x.getText(), expr);
 
 		}
 	}
 
 	//@Override
-	public void text(String text) { }
+	public void Text(String text) { }
 
 	// don't care
 	public void templateInstance(String expr) {   }

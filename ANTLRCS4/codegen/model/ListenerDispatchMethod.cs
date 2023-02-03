@@ -5,11 +5,12 @@
  */
 namespace org.antlr.v4.codegen.model;
 
-public class ListenerDispatchMethod : DispatchMethod {
-	public bool isEnter;
+public class ListenerDispatchMethod : DispatchMethod
+{
+    public readonly bool isEnter;
 
-	public ListenerDispatchMethod(OutputModelFactory factory, bool isEnter): base(factory)
+    public ListenerDispatchMethod(OutputModelFactory factory, bool isEnter) : base(factory)
     {
-		this.isEnter = isEnter;
-	}
+        this.isEnter = isEnter;
+    }
 }

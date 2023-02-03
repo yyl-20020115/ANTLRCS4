@@ -9,13 +9,14 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class SetAttr : SymbolRefChunk {
-	[ModelElement] 
-	public List<ActionChunk> rhsChunks;
+public class SetAttr : SymbolRefChunk
+{
+    [ModelElement]
+    public readonly List<ActionChunk> rhsChunks;
 
-	public SetAttr(StructDecl ctx, String name, String escapedName, List<ActionChunk> rhsChunks)
-		:base(ctx, name, escapedName)
+    public SetAttr(StructDecl ctx, string name, string escapedName, List<ActionChunk> rhsChunks)
+        : base(ctx, name, escapedName)
     {
-		this.rhsChunks = rhsChunks;
-	}
+        this.rhsChunks = rhsChunks;
+    }
 }

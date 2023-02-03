@@ -11,5 +11,5 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 public class ListLabelRef : LabelRef
 {
-    public ListLabelRef(StructDecl ctx, String name, String escapedName) : base(ctx, name, escapedName) { }
+    public ListLabelRef(StructDecl ctx, string name, string escapedName) : base(ctx, name, escapedName) { }
 }

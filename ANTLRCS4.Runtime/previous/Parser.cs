@@ -55,7 +55,7 @@ public class Parser : BaseRecognizer
     //@Override
     public void reset()
     {
-        base.reset(); // reset all recognizer state variables
+        base.Reset(); // reset all recognizer state variables
         if (input != null)
         {
             input.seek(0); // rewind the input
@@ -104,18 +104,18 @@ public class Parser : BaseRecognizer
     }
 
     //@Override
-    public override String getSourceName()
+    public override String GetSourceName()
     {
         return input.getSourceName();
     }
 
     public void traceIn(String ruleName, int ruleIndex)
     {
-        base.traceIn(ruleName, ruleIndex, input.LT(1));
+        base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
     public void traceOut(String ruleName, int ruleIndex)
     {
-        base.traceOut(ruleName, ruleIndex, input.LT(1));
+        base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }
 }

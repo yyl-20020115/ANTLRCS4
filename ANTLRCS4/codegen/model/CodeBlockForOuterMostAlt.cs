@@ -11,18 +11,20 @@ namespace org.antlr.v4.codegen.model;
  *  Sometimes we might want to treat them differently in the
  *  code generation.
  */
-public class CodeBlockForOuterMostAlt : CodeBlockForAlt {
-	/**
+public class CodeBlockForOuterMostAlt : CodeBlockForAlt
+{
+    /**
 	 * The label for the alternative; or null if the alternative is not labeled.
 	 */
-	public String altLabel;
-	/**
+    public string altLabel;
+    /**
 	 * The alternative.
 	 */
-	public Alternative alt;
+    public Alternative alt;
 
-	public CodeBlockForOuterMostAlt(OutputModelFactory factory, Alternative alt) :base(factory){
-		this.alt = alt;
-		altLabel = alt.ast.altLabel!=null ? alt.ast.altLabel.getText() : null;
-	}
+    public CodeBlockForOuterMostAlt(OutputModelFactory factory, Alternative alt) : base(factory)
+    {
+        this.alt = alt;
+        altLabel = alt.ast.altLabel != null ? alt.ast.altLabel.getText() : null;
+    }
 }

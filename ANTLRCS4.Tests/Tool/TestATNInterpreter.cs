@@ -354,7 +354,7 @@ public class TestATNInterpreter {
 		g.importVocab(lg);
 
 		ParserATNFactory f = new ParserATNFactory(g);
-		ATN atn = f.createATN();
+		ATN atn = f.CreateATN();
 
 		TokenStream input = new MockIntTokenStream(types);
 //		Console.Out.WriteLine("input="+input.types);

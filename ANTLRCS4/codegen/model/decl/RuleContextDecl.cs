@@ -9,12 +9,13 @@ using System.Xml.Linq;
 namespace org.antlr.v4.codegen.model.decl;
 
 /** */
-public class RuleContextDecl : Decl {
-	public string ctxName;
-	public bool isImplicit;
+public class RuleContextDecl : Decl
+{
+    public readonly string ctxName;
+    public bool isImplicit;
 
-	public RuleContextDecl(OutputModelFactory factory, string name, string ctxName):base(factory, name)
+    public RuleContextDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name)
     {
-		this.ctxName = ctxName;
-	}
+        this.ctxName = ctxName;
+    }
 }

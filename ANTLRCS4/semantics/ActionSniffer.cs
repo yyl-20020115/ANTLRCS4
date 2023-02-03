@@ -31,7 +31,7 @@ public class ActionSniffer : BlankActionSplitterListener {
 		this.alt = alt;
 		this.node = node;
 		this.actionToken = actionToken;
-		this.errMgr = g.tool.errMgr;
+		this.errMgr = g.Tools.ErrMgr;
 	}
 
 	public void examineAction() {

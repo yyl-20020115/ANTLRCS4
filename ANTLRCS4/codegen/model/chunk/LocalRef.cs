@@ -10,5 +10,5 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 public class LocalRef : SymbolRefChunk 
 {
-	public LocalRef(StructDecl ctx, String name, String escapedName): base(ctx, name, escapedName) { }
+	public LocalRef(StructDecl ctx, string name, string escapedName): base(ctx, name, escapedName) { }
 }

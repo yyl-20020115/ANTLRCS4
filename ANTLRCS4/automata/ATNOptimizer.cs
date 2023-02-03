@@ -17,16 +17,16 @@ namespace org.antlr.v4.automata;
  *
  * @author Sam Harwell
  */
-public class ATNOptimizer
+public static class ATNOptimizer
 {
 
-    public static void optimize(Grammar g, ATN atn)
+    public static void Optimize(Grammar g, ATN atn)
     {
-        optimizeSets(g, atn);
-        optimizeStates(atn);
+        OptimizeSets(g, atn);
+        OptimizeStates(atn);
     }
 
-    private static void optimizeSets(Grammar g, ATN atn)
+    private static void OptimizeSets(Grammar g, ATN atn)
     {
         if (g.isParser())
         {
@@ -35,12 +35,12 @@ public class ATNOptimizer
         }
 
         int removedStates = 0;
-        List<DecisionState> decisions = atn.decisionToState;
-        foreach (DecisionState decision in decisions)
+        var decisions = atn.decisionToState;
+        foreach (var decision in decisions)
         {
             if (decision.ruleIndex >= 0)
             {
-                Rule rule = g.getRule(decision.ruleIndex);
+                var rule = g.getRule(decision.ruleIndex);
                 if (char.IsLower(rule.name[0]))
                 {
                     // parser codegen doesn't currently support SetTransition
@@ -48,11 +48,11 @@ public class ATNOptimizer
                 }
             }
 
-            IntervalSet setTransitions = new IntervalSet();
+            var setTransitions = new IntervalSet();
             for (int i = 0; i < decision.getNumberOfTransitions(); i++)
             {
-                Transition epsTransition = decision.transition(i);
-                if (!(epsTransition is EpsilonTransition))
+                var epsTransition = decision.transition(i);
+                if (epsTransition is not EpsilonTransition)
                 {
                     continue;
                 }
@@ -62,7 +62,7 @@ public class ATNOptimizer
                     continue;
                 }
 
-                Transition transition = epsTransition.target.transition(0);
+                var transition = epsTransition.target.transition(0);
                 if (transition.target is not BlockEndState)
                 {
                     continue;
@@ -85,27 +85,27 @@ public class ATNOptimizer
             // due to min alt resolution policies, can only collapse sequential alts
             for (int i = setTransitions.getIntervals().Count - 1; i >= 0; i--)
             {
-                Interval interval = setTransitions.getIntervals()[i];
+                var interval = setTransitions.getIntervals()[i];
                 if (interval.length() <= 1)
                 {
                     continue;
                 }
 
-                ATNState blockEndState = decision.transition(interval.a).target.transition(0).target;
-                IntervalSet matchSet = new IntervalSet();
+                var blockEndState = decision.transition(interval.a).target.transition(0).target;
+                var matchSet = new IntervalSet();
                 for (int j = interval.a; j <= interval.b; j++)
                 {
-                    Transition matchTransition = decision.transition(j).target.transition(0);
+                    var matchTransition = decision.transition(j).target.transition(0);
                     if (matchTransition is NotSetTransition)
                     {
                         throw new UnsupportedOperationException("Not yet implemented.");
                     }
-                    IntervalSet set = matchTransition.label();
-                    List<Interval> intervals = set.getIntervals();
+                    var set = matchTransition.label();
+                    var intervals = set.getIntervals();
                     int n = intervals.Count;
                     for (int k = 0; k < n; k++)
                     {
-                        Interval setInterval = intervals[(k)];
+                        var setInterval = intervals[(k)];
                         int a = setInterval.a;
                         int b = setInterval.b;
                         if (a != -1 && b != -1)
@@ -115,7 +115,7 @@ public class ATNOptimizer
                                 if (matchSet.contains(v))
                                 {
                                     // TODO: Token is missing (i.e. position in source is not displayed).
-                                    g.tool.errMgr.grammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName,
+                                    g.Tools.ErrMgr.GrammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName,
                                             null,
                                             CharSupport.getANTLRCharLiteralForChar(v),
                                             CharSupport.getIntervalSetEscapedString(matchSet));
@@ -148,7 +148,7 @@ public class ATNOptimizer
                 decision.transition(interval.a).target.setTransition(0, newTransition);
                 for (int j = interval.a + 1; j <= interval.b; j++)
                 {
-                    Transition removed = decision.removeTransition(interval.a + 1);
+                    var removed = decision.removeTransition(interval.a + 1);
                     atn.removeState(removed.target);
                     removedStates++;
                 }
@@ -158,12 +158,12 @@ public class ATNOptimizer
         //		Console.Out.WriteLine("ATN optimizer removed " + removedStates + " states by collapsing sets.");
     }
 
-    private static void optimizeStates(ATN atn)
+    private static void OptimizeStates(ATN atn)
     {
         //		Console.Out.WriteLine(atn.states);
         List<ATNState> compressed = new();
         int i = 0; // new state number
-        foreach (ATNState s in atn.states)
+        foreach (var s in atn.states)
         {
             if (s != null)
             {
@@ -177,9 +177,4 @@ public class ATNOptimizer
         atn.states.Clear();
         atn.states.AddRange(compressed);
     }
-
-    private ATNOptimizer()
-    {
-    }
-
 }

@@ -93,7 +93,7 @@ public abstract class RuntimeTestUtils {
 		Rule r = g.getRule(ruleName);
 		ATNState startState = g.getATN().ruleToStartState[r.index];
 		ATNPrinter serializer = new ATNPrinter(g, startState);
-		String result = serializer.asString();
+		String result = serializer.AsString();
 
 		Assert.AreEqual(expecting, result);
 	}

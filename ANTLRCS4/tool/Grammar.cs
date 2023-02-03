@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using Microsoft.VisualBasic;
 using org.antlr.runtime.tree;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
@@ -17,7 +16,6 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.tool.ast;
 using System.Text;
-using RuntimeUtils = org.antlr.v4.runtime.misc.RuntimeUtils;
 
 namespace org.antlr.v4.tool;
 
@@ -151,7 +149,7 @@ public class Grammar : AttributeResolver
 
     public List<IntervalSet[]> decisionLOOK;
 
-    public readonly Tool tool;
+    public readonly Tool Tools;
 
     /** Token names and literal tokens like "void" are uniquely indexed.
 	 *  with -1 implying EOF.  Characters are different; they go from
@@ -241,7 +239,7 @@ public class Grammar : AttributeResolver
             throw new ArgumentException("ast must have a token stream");
         }
 
-        this.tool = tool;
+        this.Tools = tool;
         this.ast = ast;
         this.name = (ast.getChild(0)).getText();
         this.tokenStream = ast.tokenStream;
@@ -312,14 +310,14 @@ public class Grammar : AttributeResolver
     {
         this.text = grammarText;
         this.fileName = fileName;
-        this.tool = new Tool();
+        this.Tools = new Tool();
         ANTLRToolListener hush = new ATL();
-        tool.addListener(hush); // we want to hush errors/warnings
-        this.tool.addListener(listener);
+        Tools.addListener(hush); // we want to hush errors/warnings
+        this.Tools.addListener(listener);
         org.antlr.runtime.ANTLRStringStream @in = new org.antlr.runtime.ANTLRStringStream(grammarText);
         @in.name = fileName;
 
-        this.ast = tool.parse(fileName, @in);
+        this.ast = Tools.parse(fileName, @in);
         if (ast == null)
         {
             throw new UnsupportedOperationException();
@@ -344,7 +342,7 @@ public class Grammar : AttributeResolver
             importVocab(tokenVocabSource);
         }
 
-        tool.process(this, false);
+        Tools.process(this, false);
     }
 
     protected void initTokenSymbolTables()
@@ -388,11 +386,11 @@ public class Grammar : AttributeResolver
             Grammar g;
             try
             {
-                g = tool.loadImportedGrammar(this, t);
+                g = Tools.loadImportedGrammar(this, t);
             }
             catch (IOException ioe)
             {
-                tool.errMgr.grammarError(ErrorType.ERROR_READING_IMPORTED_GRAMMAR,
+                Tools.ErrMgr.GrammarError(ErrorType.ERROR_READING_IMPORTED_GRAMMAR,
                                          importedGrammarName,
                                          t.getToken(),
                                          importedGrammarName,
@@ -514,7 +512,7 @@ public class Grammar : AttributeResolver
         if (atn == null)
         {
             ParserATNFactory factory = new ParserATNFactory(this);
-            atn = factory.createATN();
+            atn = factory.CreateATN();
         }
         return atn;
     }
@@ -1009,7 +1007,7 @@ public class Grammar : AttributeResolver
         {
             TokenVocabParser vparser = new TokenVocabParser(this);
             Dictionary<String, int> tokens = vparser.load();
-            tool.log("grammar", "tokens=" + tokens);
+            Tools.Log("grammar", "tokens=" + tokens);
             foreach (String t in tokens.Keys)
             {
                 if(tokens.TryGetValue(t, out var ret))
@@ -1387,7 +1385,7 @@ public class Grammar : AttributeResolver
         }
         //@Override
 
-        public ErrorManager getErrorManager() { return g.tool.errMgr; }
+        public ErrorManager getErrorManager() { return g.Tools.ErrMgr; }
     }
     HashSet<String> strings = new HashSet<String>();
     public HashSet<String> getStringLiterals()

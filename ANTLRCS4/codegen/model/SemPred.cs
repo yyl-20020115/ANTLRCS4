@@ -8,58 +8,61 @@ using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
-public class SemPred : Action {
-	/**
+public class SemPred : Action
+{
+    /**
 	 * The user-specified terminal option {@code fail}, if it was used and the
 	 * value is a string literal. For example:
 	 *
 	 * <p>
 	 * {@code {pred}?<fail='message'>}</p>
 	 */
-	public String msg;
-	/**
+    public String msg;
+    /**
 	 * The predicate string with <code>{</code> and <code>}?</code> stripped from the ends.
 	 */
-	public String predicate;
+    public String predicate;
 
-	/**
+    /**
 	 * The translated chunks of the user-specified terminal option {@code fail},
 	 * if it was used and the value is an action. For example:
 	 *
 	 * <p>
 	 * {@code {pred}?<fail={"Java literal"}>}</p>
 	 */
-	[ModelElement] 
-		public List<ActionChunk> failChunks;
+    [ModelElement]
+    public List<ActionChunk> failChunks;
 
-	public SemPred(OutputModelFactory factory, ActionAST ast): base(factory, ast)
+    public SemPred(OutputModelFactory factory, ActionAST ast) : base(factory, ast)
     {
-		//assert ast.atnState != null
-		//	&& ast.atnState.getNumberOfTransitions() == 1
-		//	&& ast.atnState.transition(0) is AbstractPredicateTransition;
+        //assert ast.atnState != null
+        //	&& ast.atnState.getNumberOfTransitions() == 1
+        //	&& ast.atnState.transition(0) is AbstractPredicateTransition;
 
-		GrammarAST failNode = ast.getOptionAST("fail");
-		CodeGenerator gen = factory.getGenerator();
-		predicate = ast.getText();
-		if (predicate.StartsWith("{") && predicate.EndsWith("}?")) {
-			predicate = predicate.Substring(1, predicate.Length - 2 - 1);
-		}
-		predicate = gen.getTarget().getTargetStringLiteralFromString(predicate);
+        var failNode = ast.getOptionAST("fail");
+        var gen = factory.GetGenerator();
+        predicate = ast.getText();
+        if (predicate.StartsWith("{") && predicate.EndsWith("}?"))
+        {
+            predicate = predicate[1..^2];
+        }
+        predicate = gen.Target.GetTargetStringLiteralFromString(predicate);
 
-		if ( failNode==null ) return;
+        if (failNode == null) return;
 
-		if ( failNode is ActionAST ) {
-			ActionAST failActionNode = (ActionAST)failNode;
-			RuleFunction rf = factory.getCurrentRuleFunction();
-			failChunks = ActionTranslator.translateAction(factory, rf,
-														  failActionNode.token,
-														  failActionNode);
-		}
-		else {
-			msg = gen.getTarget().getTargetStringLiteralFromANTLRStringLiteral(gen,
-																		  failNode.getText(),
-																		  true,
-																		  true);
-		}
-	}
+        if (failNode is ActionAST failActionNode)
+        {
+            var rf = factory.GetCurrentRuleFunction();
+            failChunks = ActionTranslator.TranslateAction(factory, rf,
+                                                          failActionNode.token,
+                                                          failActionNode);
+        }
+        else
+        {
+            msg = gen.Target.GetTargetStringLiteralFromANTLRStringLiteral(gen,
+                                                                          failNode.getText(),
+                                                                          true,
+                                                                          true);
+        }
+    }
 }

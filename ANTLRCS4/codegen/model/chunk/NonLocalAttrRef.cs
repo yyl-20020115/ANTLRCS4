@@ -8,13 +8,14 @@ using org.antlr.v4.codegen.model.decl;
 
 namespace org.antlr.v4.codegen.model.chunk;
 
-public class NonLocalAttrRef : SymbolRefChunk {
-	public String ruleName;
-	public int ruleIndex;
+public class NonLocalAttrRef : SymbolRefChunk
+{
+    public readonly string ruleName;
+    public readonly int ruleIndex;
 
-	public NonLocalAttrRef(StructDecl ctx, String ruleName, String name, String escapedName, int ruleIndex) : base(ctx, name, escapedName)
+    public NonLocalAttrRef(StructDecl ctx, string ruleName, string name, string escapedName, int ruleIndex) : base(ctx, name, escapedName)
     {
-		this.ruleName = ruleName;
-		this.ruleIndex = ruleIndex;
-	}
+        this.ruleName = ruleName;
+        this.ruleIndex = ruleIndex;
+    }
 }

@@ -10,32 +10,34 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.codegen.model;
 
 /** */
-public class ParserFile : OutputFile {
-	public String genPackage; // from -package cmd-line
-	public String exportMacro; // from -DexportMacro cmd-line
-	public bool genListener; // from -listener cmd-line
-	public bool genVisitor; // from -visitor cmd-line
-	[ModelElement]
-		public Parser parser;
-    [ModelElement] 
-    public Dictionary<String, Action> namedActions;
+public class ParserFile : OutputFile
+{
+    public string genPackage; // from -package cmd-line
+    public string exportMacro; // from -DexportMacro cmd-line
+    public bool genListener; // from -listener cmd-line
+    public bool genVisitor; // from -visitor cmd-line
+    [ModelElement]
+    public Parser parser;
+    [ModelElement]
+    public Dictionary<string, Action> namedActions;
     [ModelElement]
     public ActionChunk contextSuperClass;
-	public String grammarName;
+    public string grammarName;
 
-	public ParserFile(OutputModelFactory factory, String fileName): base(factory, fileName)
+    public ParserFile(OutputModelFactory factory, string fileName) : base(factory, fileName)
     {
-		Grammar g = factory.getGrammar();
-		namedActions = buildNamedActions(factory.getGrammar());
-		genPackage = g.tool.genPackage;
-		exportMacro = factory.getGrammar().getOptionString("exportMacro");
-		// need the below members in the ST for Python, C++
-		genListener = g.tool.gen_listener;
-		genVisitor = g.tool.gen_visitor;
-		grammarName = g.name;
+        var g = factory.GetGrammar();
+        namedActions = BuildNamedActions(factory.GetGrammar());
+        genPackage = g.Tools.genPackage;
+        exportMacro = factory.GetGrammar().getOptionString("exportMacro");
+        // need the below members in the ST for Python, C++
+        genListener = g.Tools.gen_listener;
+        genVisitor = g.Tools.gen_visitor;
+        grammarName = g.name;
 
-		if (g.getOptionString("contextSuperClass") != null) {
-			contextSuperClass = new ActionText(null, g.getOptionString("contextSuperClass"));
-		}
-	}
+        if (g.getOptionString("contextSuperClass") != null)
+        {
+            contextSuperClass = new ActionText(null, g.getOptionString("contextSuperClass"));
+        }
+    }
 }

@@ -9,7 +9,9 @@ namespace org.antlr.v4.codegen.model.decl;
 /** {@code public List<Token> X() { }
  *  public Token X(int i) { }}
  */
-public class ContextTokenListGetterDecl : ContextGetterDecl {
-	public ContextTokenListGetterDecl(OutputModelFactory factory, String name):base(factory,name) {
-	}
+public class ContextTokenListGetterDecl : ContextGetterDecl
+{
+    public ContextTokenListGetterDecl(OutputModelFactory factory, String name) : base(factory, name)
+    {
+    }
 }

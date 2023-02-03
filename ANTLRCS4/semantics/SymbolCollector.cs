@@ -39,7 +39,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 
 	public SymbolCollector(Grammar g) {
 		this.g = g;
-		this.errMgr = g.tool.errMgr;
+		this.errMgr = g.Tools.ErrMgr;
 	}
 
 	//@Override

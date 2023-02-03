@@ -9,7 +9,8 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class TokenRef : SymbolRefChunk {
-	public TokenRef(StructDecl ctx, String name, String escapedName)
-	: base(ctx, name, escapedName) { }
+public class TokenRef : SymbolRefChunk
+{
+    public TokenRef(StructDecl ctx, string name, string escapedName)
+    : base(ctx, name, escapedName) { }
 }

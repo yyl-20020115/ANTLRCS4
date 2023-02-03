@@ -48,7 +48,7 @@ public abstract class BaseRecognizer
     public const int DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
     public const int HIDDEN = Token.HIDDEN_CHANNEL;
 
-    public const String NEXT_TOKEN_RULE_NAME = "nextToken";
+    public const string NEXT_TOKEN_RULE_NAME = "nextToken";
 
     /** State of a lexer, parser, or tree parser are collected into a state
 	 *  object so the state can be shared.  This sharing is needed to
@@ -65,15 +65,12 @@ public abstract class BaseRecognizer
 
     public BaseRecognizer(RecognizerSharedState state)
     {
-        if (state == null)
-        {
-            state = new RecognizerSharedState();
-        }
+        state ??= new RecognizerSharedState();
         this.state = state;
     }
 
     /** reset the parser's state; subclasses must rewinds the input stream */
-    public void reset()
+    public void Reset()
     {
         // wack everything related to error recovery
         if (state == null)
@@ -105,12 +102,10 @@ public abstract class BaseRecognizer
      *  immediate exit from rule.  Rule would recover by resynchronizing
      *  to the set of symbols that can follow rule ref.
 	 */
-    public Object match(IntStream input, int ttype, BitSet follow)
-
-
+    public Object Match(IntStream input, int ttype, BitSet follow)
     {
         //Console.Out.println("match "+((TokenStream)input).LT(1));
-        Object matchedSymbol = getCurrentInputSymbol(input);
+        var matchedSymbol = GetCurrentInputSymbol(input);
         if (input.LA(1) == ttype)
         {
             input.consume();
@@ -123,24 +118,24 @@ public abstract class BaseRecognizer
             state.failed = true;
             return matchedSymbol;
         }
-        matchedSymbol = recoverFromMismatchedToken(input, ttype, follow);
+        matchedSymbol = RecoverFromMismatchedToken(input, ttype, follow);
         return matchedSymbol;
     }
 
     /** Match the wildcard: in a symbol */
-    public void matchAny(IntStream input)
+    public void MatchAny(IntStream input)
     {
         state.errorRecovery = false;
         state.failed = false;
         input.consume();
     }
 
-    public bool mismatchIsUnwantedToken(IntStream input, int ttype)
+    public static bool MismatchIsUnwantedToken(IntStream input, int ttype)
     {
         return input.LA(2) == ttype;
     }
 
-    public bool mismatchIsMissingToken(IntStream input, BitSet follow)
+    public bool MismatchIsMissingToken(IntStream input, BitSet follow)
     {
         if (follow == null)
         {
@@ -151,7 +146,7 @@ public abstract class BaseRecognizer
         // compute what can follow this grammar element reference
         if (follow.member(Token.EOR_TOKEN_TYPE))
         {
-            BitSet viableTokensFollowingThisRule = computeContextSensitiveRuleFOLLOW();
+            var viableTokensFollowingThisRule = ComputeContextSensitiveRuleFOLLOW();
             follow.Or(viableTokensFollowingThisRule);
             if (state._fsp >= 0)
             { // remove EOR if we're not the start symbol
@@ -191,7 +186,7 @@ public abstract class BaseRecognizer
      *
      *  If you override, make sure to update syntaxErrors if you care about that.
      */
-    public void reportError(RecognitionException e)
+    public void ReportError(RecognitionException e)
     {
         // if we've already reported an error and have not matched a token
         // yet successfully, don't report any errors.
@@ -203,15 +198,15 @@ public abstract class BaseRecognizer
         state.syntaxErrors++; // don't count spurious
         state.errorRecovery = true;
 
-        displayRecognitionError(this.getTokenNames(), e);
+        DisplayRecognitionError(this.getTokenNames(), e);
     }
 
-    public void displayRecognitionError(String[] tokenNames,
+    public void DisplayRecognitionError(string[] tokenNames,
                                         RecognitionException e)
     {
-        String hdr = getErrorHeader(e);
-        String msg = getErrorMessage(e, tokenNames);
-        emitErrorMessage(hdr + " " + msg);
+        var hdr = GetErrorHeader(e);
+        var msg = GetErrorMessage(e, tokenNames);
+        EmitErrorMessage(hdr + " " + msg);
     }
 
     /** What error message should be generated for the various
@@ -236,60 +231,28 @@ public abstract class BaseRecognizer
      *  Override this to change the message generated for one or more
      *  exception types.
      */
-    public String getErrorMessage(RecognitionException e, String[] tokenNames)
+    public string GetErrorMessage(RecognitionException e, string[] tokenNames)
     {
-        String msg = e.Message;
+        var msg = e.Message;
         if (e is UnwantedTokenException ute) {
-            String tokenName;
-            if (ute.expecting == Token.EOF)
-            {
-                tokenName = "EOF";
-            }
-            else
-            {
-                tokenName = tokenNames[ute.expecting];
-            }
-            msg = "extraneous input " + getTokenErrorDisplay(ute.getUnexpectedToken()) +
+            string tokenName = ute.expecting == Token.EOF ? "EOF" : tokenNames[ute.expecting];
+            msg = "extraneous input " + GetTokenErrorDisplay(ute.getUnexpectedToken()) +
                 " expecting " + tokenName;
         }
 
         else if (e is MissingTokenException mte) {
-            String tokenName;
-            if (mte.expecting == Token.EOF)
-            {
-                tokenName = "EOF";
-            }
-            else
-            {
-                tokenName = tokenNames[mte.expecting];
-            }
-            msg = "missing " + tokenName + " at " + getTokenErrorDisplay(e.token);
+            string tokenName = mte.expecting == Token.EOF ? "EOF" : tokenNames[mte.expecting];
+            msg = "missing " + tokenName + " at " + GetTokenErrorDisplay(e.token);
         }
 
         else if (e is MismatchedTokenException mte2 ) {
-            String tokenName;
-            if (mte2.expecting == Token.EOF)
-            {
-                tokenName = "EOF";
-            }
-            else
-            {
-                tokenName = tokenNames[mte2.expecting];
-            }
-            msg = "mismatched input " + getTokenErrorDisplay(e.token) +
+            string tokenName = mte2.expecting == Token.EOF ? "EOF" : tokenNames[mte2.expecting];
+            msg = "mismatched input " + GetTokenErrorDisplay(e.token) +
                 " expecting " + tokenName;
         }
 
         else if (e is MismatchedTreeNodeException mtne ) {
-            String tokenName;
-            if (mtne.expecting == Token.EOF)
-            {
-                tokenName = "EOF";
-            }
-            else
-            {
-                tokenName = tokenNames[mtne.expecting];
-            }
+            string tokenName = mtne.expecting == Token.EOF ? "EOF" : tokenNames[mtne.expecting];
             msg = "mismatched tree node: " + mtne.node +
                 " expecting " + tokenName;
         }
@@ -299,30 +262,27 @@ public abstract class BaseRecognizer
             // for development, can add "decision=<<"+nvae.grammarDecisionDescription+">>"
             // and "(decision="+nvae.decisionNumber+") and
             // "state "+nvae.stateNumber
-            msg = "no viable alternative at input " + getTokenErrorDisplay(e.token);
+            msg = "no viable alternative at input " + GetTokenErrorDisplay(e.token);
         }
 
         else if (e is EarlyExitException ) {
             //EarlyExitException eee = (EarlyExitException)e;
             // for development, can add "(decision="+eee.decisionNumber+")"
             msg = "required (...)+ loop did not match anything at input " +
-                getTokenErrorDisplay(e.token);
+                GetTokenErrorDisplay(e.token);
         }
 
-        else if (e is MismatchedSetException ) {
-            MismatchedSetException mse = (MismatchedSetException)e;
-            msg = "mismatched input " + getTokenErrorDisplay(e.token) +
+        else if (e is MismatchedSetException mse) {
+            msg = "mismatched input " + GetTokenErrorDisplay(e.token) +
                 " expecting set " + mse.expecting;
         }
 
-        else if (e is MismatchedNotSetException ) {
-            MismatchedNotSetException mse = (MismatchedNotSetException)e;
-            msg = "mismatched input " + getTokenErrorDisplay(e.token) +
-                " expecting set " + mse.expecting;
+        else if (e is MismatchedNotSetException msne) {
+            msg = "mismatched input " + GetTokenErrorDisplay(e.token) +
+                " expecting set " + msne.expecting;
         }
 
-        else if (e is FailedPredicateException ) {
-            FailedPredicateException fpe = (FailedPredicateException)e;
+        else if (e is FailedPredicateException fpe) {
             msg = "rule " + fpe.ruleName + " failed predicate: {" +
                 fpe.predicateText + "}?";
         }
@@ -336,19 +296,16 @@ public abstract class BaseRecognizer
 	 *
 	 *  See also reportError()
 	 */
-    public int getNumberOfSyntaxErrors()
+    public int GetNumberOfSyntaxErrors()
     {
         return state.syntaxErrors;
     }
 
     /** What is the error header, normally line/character position information? */
-    public String getErrorHeader(RecognitionException e)
-    {
-        if (getSourceName() != null)
-            return getSourceName() + " line " + e.line + ":" + e.charPositionInLine;
-
-        return "line " + e.line + ":" + e.charPositionInLine;
-    }
+    public string GetErrorHeader(RecognitionException e) 
+        => GetSourceName() != null
+            ? GetSourceName() + " line " + e.line + ":" + e.charPositionInLine
+            : "line " + e.line + ":" + e.charPositionInLine;
 
     /** How should a token be displayed in an error message? The default
      *  is to display just the text, but during development you might
@@ -358,19 +315,12 @@ public abstract class BaseRecognizer
      *  your token objects because you don't have to go modify your lexer
      *  so that it creates a new Java type.
      */
-    public String getTokenErrorDisplay(Token t)
+    public static string GetTokenErrorDisplay(Token t)
     {
-        String s = t.getText();
+        var s = t.getText();
         if (s == null)
         {
-            if (t.getType() == Token.EOF)
-            {
-                s = "<EOF>";
-            }
-            else
-            {
-                s = "<" + t.getType() + ">";
-            }
+            s = t.getType() == Token.EOF ? "<EOF>" : "<" + t.getType() + ">";
         }
         s = s.Replace("\n", "\\\\n");
         s = s.Replace("\r", "\\\\r");
@@ -379,7 +329,7 @@ public abstract class BaseRecognizer
     }
 
     /** Override this method to change where error messages go */
-    public void emitErrorMessage(String msg)
+    public static void EmitErrorMessage(String msg)
     {
         Console.Error.WriteLine(msg);
     }
@@ -390,7 +340,7 @@ public abstract class BaseRecognizer
      *  handle mismatched symbol exceptions but there could be a mismatched
      *  token that the match() routine could not recover from.
      */
-    public void recover(IntStream input, RecognitionException re)
+    public void Recover(IntStream input, RecognitionException re)
     {
         if (state.lastErrorIndex == input.index())
         {
@@ -401,20 +351,20 @@ public abstract class BaseRecognizer
             input.consume();
         }
         state.lastErrorIndex = input.index();
-        BitSet followSet = computeErrorRecoverySet();
-        beginResync();
-        consumeUntil(input, followSet);
-        endResync();
+        BitSet followSet = ComputeErrorRecoverySet();
+        BeginResync();
+        ConsumeUntil(input, followSet);
+        EndResync();
     }
 
     /** A hook to listen in on the token consumption during error recovery.
      *  The DebugParser subclasses this to fire events to the listenter.
      */
-    public void beginResync()
+    public void BeginResync()
     {
     }
 
-    public void endResync()
+    public void EndResync()
     {
     }
 
@@ -509,9 +459,9 @@ public abstract class BaseRecognizer
      *  Like Grosch I implemented local FOLLOW sets that are combined
      *  at run-time upon error to avoid overhead during parsing.
      */
-    protected BitSet computeErrorRecoverySet()
+    protected BitSet ComputeErrorRecoverySet()
     {
-        return combineFollows(false);
+        return CombineFollows(false);
     }
 
     /** Compute the context-sensitive FOLLOW set for current rule.
@@ -566,22 +516,22 @@ public abstract class BaseRecognizer
      *  a missing token in the input stream.  "Insert" one by just not
      *  throwing an exception.
      */
-    protected BitSet computeContextSensitiveRuleFOLLOW()
+    protected BitSet ComputeContextSensitiveRuleFOLLOW()
     {
-        return combineFollows(true);
+        return CombineFollows(true);
     }
 
     // what is exact? it seems to only add sets from above on stack
     // if EOR is in set i.  When it sees a set w/o EOR, it stops adding.
     // Why would we ever want them all?  Maybe no viable alt instead of
     // mismatched token?
-    protected BitSet combineFollows(bool exact)
+    protected BitSet CombineFollows(bool exact)
     {
         int top = state._fsp;
-        BitSet followSet = new BitSet();
+        var followSet = new BitSet();
         for (int i = top; i >= 0; i--)
         {
-            BitSet localFollowSet = state.following[i];
+            var localFollowSet = state.following[i];
             /*
             Console.Out.println("local follow depth "+i+"="+
                                localFollowSet.toString(getTokenNames())+")");
@@ -637,13 +587,11 @@ public abstract class BaseRecognizer
      *  is in the set of tokens that can follow the ')' token
      *  reference in rule atom.  It can assume that you forgot the ')'.
      */
-    protected Object recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
-
-
+    protected object RecoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
     {
         RecognitionException e = null;
         // if next token is what we are looking for then "delete" this token
-        if (mismatchIsUnwantedToken(input, ttype))
+        if (MismatchIsUnwantedToken(input, ttype))
         {
             e = new UnwantedTokenException(ttype, input);
             /*
@@ -651,21 +599,21 @@ public abstract class BaseRecognizer
                                ((TokenStream)input).LT(1)+
                                " since "+((TokenStream)input).LT(2)+" is what we want");
              */
-            beginResync();
+            BeginResync();
             input.consume(); // simply delete extra token
-            endResync();
-            reportError(e);  // report after consuming so AW sees the token in the exception
+            EndResync();
+            ReportError(e);  // report after consuming so AW sees the token in the exception
                              // we want to return the token we're actually matching
-            Object matchedSymbol = getCurrentInputSymbol(input);
+            Object matchedSymbol = GetCurrentInputSymbol(input);
             input.consume(); // move past ttype token as if all were ok
             return matchedSymbol;
         }
         // can't recover with single token deletion, try insertion
-        if (mismatchIsMissingToken(input, follow))
+        if (MismatchIsMissingToken(input, follow))
         {
-            Object inserted = getMissingSymbol(input, e, ttype, follow);
+            Object inserted = GetMissingSymbol(input, e, ttype, follow);
             e = new MissingTokenException(ttype, input, inserted);
-            reportError(e);  // report after inserting so AW sees the token in the exception
+            ReportError(e);  // report after inserting so AW sees the token in the exception
             return inserted;
         }
         // even that didn't work; must throw the exception
@@ -674,18 +622,16 @@ public abstract class BaseRecognizer
     }
 
     /** Not currently used */
-    public Object recoverFromMismatchedSet(IntStream input,
+    public Object RecoverFromMismatchedSet(IntStream input,
                                            RecognitionException e,
                                            BitSet follow)
-
-
     {
-        if (mismatchIsMissingToken(input, follow))
+        if (MismatchIsMissingToken(input, follow))
         {
             // Console.Out.println("missing token");
-            reportError(e);
+            ReportError(e);
             // we don't know how to conjure up a token for sets yet
-            return getMissingSymbol(input, e, Token.INVALID_TYPE, follow);
+            return GetMissingSymbol(input, e, Token.INVALID_TYPE, follow);
         }
         // TODO do single token deletion like above for Token mismatch
         throw e;
@@ -700,7 +646,7 @@ public abstract class BaseRecognizer
      * 
      *  This is ignored for lexers.
      */
-    protected Object getCurrentInputSymbol(IntStream input) { return null; }
+    protected Object GetCurrentInputSymbol(IntStream input) { return null; }
 
     /** Conjure up a missing token during error recovery.
      *
@@ -721,7 +667,7 @@ public abstract class BaseRecognizer
      *  If you change what tokens must be created by the lexer,
      *  override this method to create the appropriate tokens.
      */
-    protected Object getMissingSymbol(IntStream input,
+    protected object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow)
@@ -729,7 +675,7 @@ public abstract class BaseRecognizer
         return null;
     }
 
-    public void consumeUntil(IntStream input, int tokenType)
+    public void ConsumeUntil(IntStream input, int tokenType)
     {
         //Console.Out.println("consumeUntil "+tokenType);
         int ttype = input.LA(1);
@@ -741,7 +687,7 @@ public abstract class BaseRecognizer
     }
 
     /** Consume tokens until one matches the given token set */
-    public void consumeUntil(IntStream input, BitSet set)
+    public void ConsumeUntil(IntStream input, BitSet set)
     {
         //Console.Out.println("consumeUntil("+set.toString(getTokenNames())+")");
         int ttype = input.LA(1);
@@ -754,11 +700,11 @@ public abstract class BaseRecognizer
     }
 
     /** Push a rule's follow set using our own hardcoded stack */
-    protected void pushFollow(BitSet fset)
+    protected void PushFollow(BitSet fset)
     {
         if ((state._fsp + 1) >= state.following.Length)
         {
-            BitSet[] f = new BitSet[state.following.Length * 2];
+            var f = new BitSet[state.following.Length * 2];
             Array.Copy(state.following, 0, f, 0, state.following.Length);
             state.following = f;
         }
@@ -773,10 +719,10 @@ public abstract class BaseRecognizer
      *  This is very useful for error messages and for context-sensitive
      *  error recovery.
      */
-    public List<String> getRuleInvocationStack()
+    public List<string> GetRuleInvocationStack()
     {
-        String parserClassName = GetType().Name;
-        return getRuleInvocationStack(new Exception(), parserClassName);
+        var parserClassName = GetType().Name;
+        return GetRuleInvocationStack(new Exception(), parserClassName);
     }
 
     /** A more general version of getRuleInvocationStack where you can
@@ -786,17 +732,17 @@ public abstract class BaseRecognizer
      *
      *  TODO: move to a utility class or something; weird having lexer call this
      */
-    public static List<String> getRuleInvocationStack(Exception e,
-                                              String recognizerClassName)
+    public static List<string> GetRuleInvocationStack(Exception e,
+                                              string recognizerClassName)
     {
        
         //TODO:
         List<String> rules = new ();
-        StackTraceElement[] stack = new StackTraceElement[0];// e.getStackTrace();
+        var stack = new StackTraceElement[0];// e.getStackTrace();
         int i;
         for (i = stack.Length - 1; i >= 0; i--)
         {
-            StackTraceElement t = stack[i];
+            var t = stack[i];
             if (t.getClassName().StartsWith("org.antlr.runtime."))
             {
                 continue; // skip support code such as this method
@@ -814,39 +760,34 @@ public abstract class BaseRecognizer
         return rules;
     }
 
-    public int getBacktrackingLevel() { return state.backtracking; }
-
-    public void setBacktrackingLevel(int n) { state.backtracking = n; }
+    public int BacktrackingLevel 
+    { 
+        get => state.backtracking;
+        set => state.backtracking = value; 
+    }
 
     /** Return whether or not a backtracking attempt failed. */
-    public bool failed() { return state.failed; }
-
+    public bool Failed => state.failed;
     /** Used to print out token names like ID during debugging and
      *  error reporting.  The generated parsers implement a method
      *  that overrides this to point to their String[] tokenNames.
      */
-    public String[] getTokenNames()
-    {
-        return null;
-    }
+    public virtual string[] getTokenNames() => null;
 
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.
      */
-    public virtual String getGrammarFileName()
-    {
-        return null;
-    }
+    public virtual String GetGrammarFileName() => null;
 
-    public abstract String getSourceName();
+    public abstract String GetSourceName();
 
     /** A convenience method for use most often with template rewrites.
      *  Convert a List&lt;Token&gt; to List&lt;String&gt;
      */
-    public List<String> toStrings(List<Token> tokens)
+    public static List<String> ToStrings(List<Token> tokens)
     {
         if (tokens == null) return null;
-        List<String> strings = new (tokens.Count);
+        List<string> strings = new (tokens.Count);
         for (int i = 0; i < tokens.Count; i++)
         {
             strings.Add(tokens[i].getText());
@@ -864,7 +805,7 @@ public abstract class BaseRecognizer
      *  Later, we can make a special one for ints and also one that
      *  tosses out data after we commit past input position i.
      */
-    public int getRuleMemoization(int ruleIndex, int ruleStartIndex)
+    public int GetRuleMemoization(int ruleIndex, int ruleStartIndex)
     {
         if (state.ruleMemo[ruleIndex] == null)
         {
@@ -886,9 +827,9 @@ public abstract class BaseRecognizer
      *  this rule and successfully parsed before, then seek ahead to
      *  1 past the stop token matched for this rule last time.
      */
-    public bool alreadyParsedRule(IntStream input, int ruleIndex)
+    public bool AlreadyParsedRule(IntStream input, int ruleIndex)
     {
-        int stopIndex = getRuleMemoization(ruleIndex, input.index());
+        int stopIndex = GetRuleMemoization(ruleIndex, input.index());
         if (stopIndex == MEMO_RULE_UNKNOWN)
         {
             return false;
@@ -909,14 +850,14 @@ public abstract class BaseRecognizer
     /** Record whether or not this rule parsed the input at this position
      *  successfully.  Use a standard java hashtable for now.
      */
-    public void memoize(IntStream input,
+    public void Memoize(IntStream input,
                         int ruleIndex,
                         int ruleStartIndex)
     {
         int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.index() - 1;
         if (state.ruleMemo == null)
         {
-            Console.Error.WriteLine("!!!!!!!!! memo array is null for " + getGrammarFileName());
+            Console.Error.WriteLine("!!!!!!!!! memo array is null for " + GetGrammarFileName());
         }
         if (ruleIndex >= state.ruleMemo.Length)
         {
@@ -931,7 +872,7 @@ public abstract class BaseRecognizer
     /** return how many rule/input-index pairs there are in total.
      *  TODO: this includes synpreds. :(
      */
-    public int getRuleMemoizationCacheSize()
+    public int GetRuleMemoizationCacheSize()
     {
         int n = 0;
         for (int i = 0; state.ruleMemo != null && i < state.ruleMemo.Length; i++)
@@ -945,7 +886,7 @@ public abstract class BaseRecognizer
         return n;
     }
 
-    public void traceIn(String ruleName, int ruleIndex, Object inputSymbol)
+    public void TraceIn(String ruleName, int ruleIndex, Object inputSymbol)
     {
         Console.Out.Write("enter " + ruleName + " " + inputSymbol);
         if (state.backtracking > 0)
@@ -955,7 +896,7 @@ public abstract class BaseRecognizer
         Console.Out.WriteLine();
     }
 
-    public void traceOut(String ruleName,
+    public void TraceOut(String ruleName,
                          int ruleIndex,
                          Object inputSymbol)
     {

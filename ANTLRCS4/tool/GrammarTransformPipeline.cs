@@ -29,13 +29,13 @@ public class GrammarTransformPipeline {
 	public void process() {
 		GrammarRootAST root = g.ast;
 		if ( root==null ) return;
-        tool.log("grammar", "before: "+root.toStringTree());
+        tool.Log("grammar", "before: "+root.toStringTree());
 
         integrateImportedGrammars(g);
 		reduceBlocksToSets(root);
         expandParameterizedLoops(root);
 
-        tool.log("grammar", "after: "+root.toStringTree());
+        tool.Log("grammar", "after: "+root.toStringTree());
 	}
 
 	public void reduceBlocksToSets(GrammarAST root) {
@@ -178,7 +178,7 @@ public class GrammarTransformPipeline {
 			// COPY CHANNELS
 			GrammarAST imp_channelRoot = (GrammarAST)imp.ast.getFirstChildWithType(ANTLRParser.CHANNELS);
 			if ( imp_channelRoot != null) {
-				rootGrammar.tool.log("grammar", "imported channels: "+imp_channelRoot.getChildren());
+				rootGrammar.Tools.Log("grammar", "imported channels: "+imp_channelRoot.getChildren());
 				if (channelsRoot==null) {
 					channelsRoot = imp_channelRoot.dupTree();
 					channelsRoot.g = rootGrammar;
@@ -204,7 +204,7 @@ public class GrammarTransformPipeline {
 			// COPY TOKENS
 			GrammarAST imp_tokensRoot = (GrammarAST)imp.ast.getFirstChildWithType(ANTLRParser.TOKENS_SPEC);
 			if ( imp_tokensRoot!=null ) {
-				rootGrammar.tool.log("grammar", "imported tokens: "+imp_tokensRoot.getChildren());
+				rootGrammar.Tools.Log("grammar", "imported tokens: "+imp_tokensRoot.getChildren());
 				if ( tokensRoot==null ) {
 					tokensRoot = (GrammarAST)adaptor.create(ANTLRParser.TOKENS_SPEC, "TOKENS");
 					tokensRoot.g = rootGrammar;
@@ -223,7 +223,7 @@ public class GrammarTransformPipeline {
 				DoubleKeyMap<String, String, GrammarAST> namedActions =
 					new DoubleKeyMap<String, String, GrammarAST>();
 
-				rootGrammar.tool.log("grammar", "imported actions: "+imp_actionRoots);
+				rootGrammar.Tools.Log("grammar", "imported actions: "+imp_actionRoots);
 				foreach (GrammarAST at in all_actionRoots) {
 					String scopeName = rootGrammar.getDefaultActionScope();
 					GrammarAST scope, name, action;
@@ -243,7 +243,7 @@ public class GrammarTransformPipeline {
 					}
 					else {
 						if ( prevAction.g == at.g ) {
-							rootGrammar.tool.errMgr.grammarError(ErrorType.ACTION_REDEFINITION,
+							rootGrammar.Tools.ErrMgr.GrammarError(ErrorType.ACTION_REDEFINITION,
 												at.g.fileName, name.token, name.getText());
 						}
 						else {
@@ -262,7 +262,7 @@ public class GrammarTransformPipeline {
                 foreach (String scopeName in namedActions.keySet()) {
                     foreach (String name in namedActions.keySet(scopeName)) {
 						GrammarAST action = namedActions.get(scopeName, name);
-						rootGrammar.tool.log("grammar", action.g.name+" "+scopeName+":"+name+"="+action.getText());
+						rootGrammar.Tools.Log("grammar", action.g.name+" "+scopeName+":"+name+"="+action.getText());
 						if ( action.g != rootGrammar ) {
 							root.insertChild(1, action.getParent());
 						}
@@ -280,7 +280,7 @@ public class GrammarTransformPipeline {
             List<GrammarAST> modes = imp.ast.getNodesWithType(ANTLRParser.MODE);
 			if (modes != null) {
 				foreach (GrammarAST m in modes) {
-					rootGrammar.tool.log("grammar", "imported mode: " + m.toStringTree());
+					rootGrammar.Tools.Log("grammar", "imported mode: " + m.toStringTree());
 					String name = m.getChild(0).getText();
 					bool rootAlreadyHasMode = rootModeNames.Contains(name);
 					GrammarAST destinationAST = null;
@@ -299,7 +299,7 @@ public class GrammarTransformPipeline {
 					int addedRules = 0;
 					List<GrammarAST> modeRules = m.getAllChildrenWithType(ANTLRParser.RULE);
 					foreach (GrammarAST r in modeRules) {
-					    rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
+					    rootGrammar.Tools.Log("grammar", "imported rule: "+r.toStringTree());
 						String ruleName = r.getChild(0).getText();
 					    bool rootAlreadyHasRule = rootRuleNames.Contains(ruleName);
 					    if (!rootAlreadyHasRule) {
@@ -321,7 +321,7 @@ public class GrammarTransformPipeline {
 			List<GrammarAST> rules = imp.ast.getNodesWithType(ANTLRParser.RULE);
 			if ( rules!=null ) {
 				foreach (GrammarAST r in rules) {
-					rootGrammar.tool.log("grammar", "imported rule: "+r.toStringTree());
+					rootGrammar.Tools.Log("grammar", "imported rule: "+r.toStringTree());
 					String name = r.getChild(0).getText();
 					bool rootAlreadyHasRule = rootRuleNames.Contains(name);
 					if ( !rootAlreadyHasRule ) {
@@ -352,12 +352,12 @@ public class GrammarTransformPipeline {
 				}
 
 				if (hasNewOption) {
-					rootGrammar.tool.errMgr.grammarError(ErrorType.OPTIONS_IN_DELEGATE,
+					rootGrammar.Tools.ErrMgr.GrammarError(ErrorType.OPTIONS_IN_DELEGATE,
 										optionsRoot.g.fileName, optionsRoot.token, imp.name);
 				}
 			}
 		}
-		rootGrammar.tool.log("grammar", "Grammar: "+rootGrammar.ast.toStringTree());
+		rootGrammar.Tools.Log("grammar", "Grammar: "+rootGrammar.ast.toStringTree());
 	}
 
 	/** Build lexer grammar from combined grammar that looks like:
@@ -497,8 +497,8 @@ public class GrammarTransformPipeline {
 		combinedAST.sanityCheckParentAndChildIndexes();
 //		tool.log("grammar", combinedAST.toTokenString());
 
-        combinedGrammar.tool.log("grammar", "after extract implicit lexer ="+combinedAST.toStringTree());
-        combinedGrammar.tool.log("grammar", "lexer ="+lexerAST.toStringTree());
+        combinedGrammar.Tools.Log("grammar", "after extract implicit lexer ="+combinedAST.toStringTree());
+        combinedGrammar.Tools.Log("grammar", "lexer ="+lexerAST.toStringTree());
 
 		if ( lexerRulesRoot.getChildCount()==0 )	return null;
 		return lexerAST;

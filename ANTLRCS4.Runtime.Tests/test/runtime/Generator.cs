@@ -63,7 +63,7 @@ public class Generator {
 		if ( !defaultListener && equeue.errors.Count>0 ) {
 			for (int i = 0; i < equeue.errors.Count; i++) {
 				ANTLRMessage msg = equeue.errors[(i)];
-				Template msgST = antlr.errMgr.getMessageTemplate(msg);
+				Template msgST = antlr.ErrMgr.getMessageTemplate(msg);
 				errors.Add(msgST.Render());
 			}
 		}

@@ -164,7 +164,7 @@ public class ATNDeserializer {
 //					   " "+Transition.serializationNames[ttype]+
 //					   " "+arg1+","+arg2+","+arg3);
 			ATNState srcState = atn.states[(src)];
-			srcState.addTransition(trans);
+			srcState.AddTransition(trans);
 			p += 6;
 		}
 
@@ -185,7 +185,7 @@ public class ATNDeserializer {
 				}
 
 				EpsilonTransition returnTransition = new EpsilonTransition(ruleTransition.followState, outermostPrecedenceReturn);
-				atn.ruleToStopState[ruleTransition.target.ruleIndex].addTransition(returnTransition);
+				atn.ruleToStopState[ruleTransition.target.ruleIndex].AddTransition(returnTransition);
 			}
 		}
 
@@ -329,17 +329,17 @@ public class ATNDeserializer {
 				// all transitions leaving the rule start state need to leave blockStart instead
 				while (atn.ruleToStartState[i].getNumberOfTransitions() > 0) {
 					Transition transition = atn.ruleToStartState[i].removeTransition(atn.ruleToStartState[i].getNumberOfTransitions() - 1);
-					bypassStart.addTransition(transition);
+					bypassStart.AddTransition(transition);
 				}
 
 				// link the new states
-				atn.ruleToStartState[i].addTransition(new EpsilonTransition(bypassStart));
-				bypassStop.addTransition(new EpsilonTransition(endState));
+				atn.ruleToStartState[i].AddTransition(new EpsilonTransition(bypassStart));
+				bypassStop.AddTransition(new EpsilonTransition(endState));
 
 				ATNState matchState = new BasicState();
 				atn.addState(matchState);
-				matchState.addTransition(new AtomTransition(bypassStop, atn.ruleToTokenType[i]));
-				bypassStart.addTransition(new EpsilonTransition(matchState));
+				matchState.AddTransition(new AtomTransition(bypassStop, atn.ruleToTokenType[i]));
+				bypassStart.AddTransition(new EpsilonTransition(matchState));
 			}
 
 			if (deserializationOptions.isVerifyATN()) {
@@ -367,7 +367,7 @@ public class ATNDeserializer {
 			for (int j=0; j<nintervals; j++) {
 				int a = data[p++];
 				int b = data[p++];
-				set.add(a, b);
+				set.Add(a, b);
 			}
 		}
 		return p;

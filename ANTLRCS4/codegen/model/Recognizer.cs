@@ -4,18 +4,18 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 using org.antlr.v4.codegen.model.chunk;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.codegen.model;
 
-public abstract class Recognizer : OutputModelObject {
-	public String name;
-	public String grammarName;
-	public String grammarFileName;
-	public String accessLevel;
-	public Dictionary<String,int> tokens;
+public abstract class Recognizer : OutputModelObject
+{
+    public string name;
+    public string grammarName;
+    public string grammarFileName;
+    public string accessLevel;
+    public Dictionary<string, int> tokens;
 
     /**
 	 * @deprecated This field is provided only for compatibility with code
@@ -23,89 +23,71 @@ public abstract class Recognizer : OutputModelObject {
 	 * {@link #literalNames} and {@link #symbolicNames}.
 	 */
     //@Deprecated
-    public List<String> tokenNames;
+    public List<string> tokenNames;
 
-	public List<String> literalNames;
-	public List<String> symbolicNames;
-	public HashSet<String> ruleNames;
-	public ICollection<Rule> rules;
-	[ModelElement] 
-		public ActionChunk superClass;
-
-    [ModelElement] 
+    public List<string> literalNames;
+    public List<string> symbolicNames;
+    public HashSet<string> ruleNames;
+    public ICollection<Rule> rules;
+    [ModelElement]
+    public ActionChunk superClass;
+    [ModelElement]
     public SerializedATN atn;
-    [ModelElement] 
-    public Dictionary<Rule, RuleSempredFunction> sempredFuncs =
-		new ();
+    [ModelElement]
+    public Dictionary<Rule, RuleSempredFunction> sempredFuncs = new();
 
-	public Recognizer(OutputModelFactory factory) : base(factory)
+    public Recognizer(OutputModelFactory factory) : base(factory)
     {
-
-		Grammar g = factory.getGrammar();
-		CodeGenerator gen = factory.getGenerator();
-		grammarFileName = g.fileName;
+        var g = factory.GetGrammar();
+        var gen = factory.GetGenerator();
+        grammarFileName = g.fileName;
         grammarName = g.name;
-		name = g.getRecognizerName();
-		accessLevel = g.getOptionString("accessLevel");
-		tokens = new ();
-        foreach (var entry in g.tokenNameToTypeMap) {
-			int ttype = entry.Value;
-			if ( ttype>0 ) {
-				tokens[entry.Key]= ttype;
-			}
-		}
+        name = g.getRecognizerName();
+        accessLevel = g.getOptionString("accessLevel");
+        tokens = new();
+        foreach (var entry in g.tokenNameToTypeMap)
+        {
+            int ttype = entry.Value;
+            if (ttype > 0)
+            {
+                tokens[entry.Key] = ttype;
+            }
+        }
 
-		ruleNames = g.rules.Keys.ToHashSet();
-		rules = g.rules.Values;
-		if ( gen.getTarget() is JavaTarget ) {
-			atn = new SerializedJavaATN(factory, g.atn);
-		}
-		else {
-			atn = new SerializedATN(factory, g.atn);
-		}
-		if (g.getOptionString("superClass") != null) {
-			superClass = new ActionText(null, g.getOptionString("superClass"));
-		}
-		else {
-			superClass = null;
-		}
+        ruleNames = g.rules.Keys.ToHashSet();
+        rules = g.rules.Values;
+        atn = gen.Target is JavaTarget ? new SerializedJavaATN(factory, g.atn) : new SerializedATN(factory, g.atn);
+        superClass = g.getOptionString("superClass") != null ? new ActionText(null, g.getOptionString("superClass")) : (ActionChunk?)null;
+        tokenNames = TranslateTokenStringsToTarget(g.getTokenDisplayNames(), gen);
+        literalNames = TranslateTokenStringsToTarget(g.getTokenLiteralNames(), gen);
+        symbolicNames = TranslateTokenStringsToTarget(g.getTokenSymbolicNames(), gen);
+    }
 
-		tokenNames = translateTokenStringsToTarget(g.getTokenDisplayNames(), gen);
-		literalNames = translateTokenStringsToTarget(g.getTokenLiteralNames(), gen);
-		symbolicNames = translateTokenStringsToTarget(g.getTokenSymbolicNames(), gen);
-	}
+    protected static List<string> TranslateTokenStringsToTarget(String[] tokenStrings, CodeGenerator gen)
+    {
+        var result = (string[])tokenStrings.Clone();
+        for (int i = 0; i < tokenStrings.Length; i++)
+            result[i] = TranslateTokenStringToTarget(tokenStrings[i], gen);
+        int lastTrueEntry = result.Length - 1;
+        while (lastTrueEntry >= 0 && result[lastTrueEntry] == null)
+            lastTrueEntry--;
+        if (lastTrueEntry < result.Length - 1)
+            result = Arrays.CopyOf(result, lastTrueEntry + 1);
+        return Arrays.AsList(result);
+    }
 
-	protected static List<String> translateTokenStringsToTarget(String[] tokenStrings, CodeGenerator gen) {
-		String[] result = (string[])tokenStrings.Clone();
-		for (int i = 0; i < tokenStrings.Length; i++) {
-			result[i] = translateTokenStringToTarget(tokenStrings[i], gen);
-		}
-
-		int lastTrueEntry = result.Length - 1;
-		while (lastTrueEntry >= 0 && result[lastTrueEntry] == null) {
-			lastTrueEntry --;
-		}
-
-		if (lastTrueEntry < result.Length - 1) {
-			result = Arrays.CopyOf(result, lastTrueEntry + 1);
-		}
-
-		return Arrays.AsList(result);
-	}
-
-	protected static String translateTokenStringToTarget(String tokenName, CodeGenerator gen) {
-		if (tokenName == null) {
-			return null;
-		}
-
-		if (tokenName[(0)] == '\'') {
-			String targetString =
-				gen.getTarget().getTargetStringLiteralFromANTLRStringLiteral(gen, tokenName, false, true);
-			return "\"'" + targetString + "'\"";
-		}
-		else {
-			return gen.getTarget().getTargetStringLiteralFromString(tokenName, true);
-		}
-	}
-
+    protected static string TranslateTokenStringToTarget(string tokenName, CodeGenerator gen)
+    {
+        if (tokenName == null) return null;
+        if (tokenName[(0)] == '\'')
+        {
+            var targetString =
+                gen.                Target.GetTargetStringLiteralFromANTLRStringLiteral(gen, tokenName, false, true);
+            return "\"'" + targetString + "'\"";
+        }
+        else
+        {
+            return gen.Target.GetTargetStringLiteralFromString(tokenName, true);
+        }
+    }
 }

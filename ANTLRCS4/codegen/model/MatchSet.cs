@@ -12,18 +12,19 @@ namespace org.antlr.v4.codegen.model;
 
 public class MatchSet : MatchToken
 {
-    [ModelElement] 
+    [ModelElement]
     public TestSetInline expr;
-    [ModelElement] 
+    [ModelElement]
     public CaptureNextTokenType capture;
 
-    public MatchSet(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)
+    public MatchSet(OutputModelFactory factory, GrammarAST ast)
+        : base(factory, ast)
     {
-        SetTransition st = (SetTransition)ast.atnState.transition(0);
-        int wordSize = factory.getGenerator().getTarget().getInlineTestSetWordSize();
+        var st = ast.atnState.transition(0) as SetTransition;
+        int wordSize = factory.GetGenerator().Target.GetInlineTestSetWordSize();
         expr = new TestSetInline(factory, null, st.set, wordSize);
-        Decl d = new TokenTypeDecl(factory, expr.varName);
-        factory.getCurrentRuleFunction().addLocalDecl(d);
+        var d = new TokenTypeDecl(factory, expr.varName);
+        factory.GetCurrentRuleFunction().AddLocalDecl(d);
         capture = new CaptureNextTokenType(factory, expr.varName);
     }
 }

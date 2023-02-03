@@ -486,7 +486,7 @@ public class TestATNParserPrediction {
         ToolTestUtils.semanticProcess(g);
 
 		ParserATNFactory f = new ParserATNFactory(g);
-		ATN atn = f.createATN();
+		ATN atn = f.CreateATN();
 
 		DOTGenerator dot = new DOTGenerator(g);
 

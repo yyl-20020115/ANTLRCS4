@@ -12,26 +12,26 @@ namespace org.antlr.v4.semantics;
 
 public class BlankActionSplitterListener : ActionSplitterListener {
 	//@Override
-	public void qualifiedAttr(String expr, Token x, Token y) {
+	public void QualifiedAttr(String expr, Token x, Token y) {
 	}
 
 	//@Override
-	public void setAttr(String expr, Token x, Token rhs) {
+	public void SetAttr(String expr, Token x, Token rhs) {
 	}
 
 	//@Override
-	public void attr(String expr, Token x) {
+	public void Attr(String expr, Token x) {
 	}
 
 	public void templateInstance(String expr) {
 	}
 
 	//@Override
-	public void nonLocalAttr(String expr, Token x, Token y) {
+	public void NonLocalAttr(String expr, Token x, Token y) {
 	}
 
 	//@Override
-	public void setNonLocalAttr(String expr, Token x, Token y, Token rhs) {
+	public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs) {
 	}
 
 	public void indirectTemplateInstance(String expr) {
@@ -47,6 +47,6 @@ public class BlankActionSplitterListener : ActionSplitterListener {
 	}
 
 	//@Override
-	public void text(String text) {
+	public void Text(String text) {
 	}
 }

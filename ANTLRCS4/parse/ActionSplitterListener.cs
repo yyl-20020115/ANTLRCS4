@@ -5,18 +5,18 @@
  */
 
 using org.antlr.v4.runtime;
-
 namespace org.antlr.v4.parse;
 
 
 /** */
-public interface ActionSplitterListener {
-    void qualifiedAttr(String expr, Token x, Token y);
-	void setAttr(String expr, Token x, Token rhs);
-	void attr(String expr, Token x);
+public interface ActionSplitterListener
+{
+    void QualifiedAttr(string expr, Token x, Token y);
+    void SetAttr(string expr, Token x, Token rhs);
+    void Attr(string expr, Token x);
 
-	void setNonLocalAttr(String expr, Token x, Token y, Token rhs);
-	void nonLocalAttr(String expr, Token x, Token y);
+    void SetNonLocalAttr(string expr, Token x, Token y, Token rhs);
+    void NonLocalAttr(string expr, Token x, Token y);
 
-    void text(String text);
+    void Text(string text);
 }

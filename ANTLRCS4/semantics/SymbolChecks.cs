@@ -30,12 +30,12 @@ public class SymbolChecks {
 
 	public ErrorManager errMgr;
 
-	protected HashSet<String> reservedNames = new HashSet<String>(LexerATNFactory.getCommonConstants());
+	protected HashSet<String> reservedNames = new HashSet<String>(LexerATNFactory.GetCommonConstants());
 
 	public SymbolChecks(Grammar g, SymbolCollector collector) {
 		this.g = g;
 		this.collector = collector;
-		this.errMgr = g.tool.errMgr;
+		this.errMgr = g.Tools.ErrMgr;
 
 		foreach (GrammarAST tokenId in collector.tokenIDRefs) {
 			tokenIDs.Add(tokenId.getText());
@@ -76,7 +76,7 @@ public class SymbolChecks {
 				scopeActions.Add(name);
 			}
 			else {
-				errMgr.grammarError(ErrorType.ACTION_REDEFINITION,
+				errMgr.GrammarError(ErrorType.ACTION_REDEFINITION,
 						g.fileName, nameNode.token, name);
 			}
 		}
@@ -169,7 +169,7 @@ public class SymbolChecks {
 			Token token = r is LeftRecursiveRule
 					? ((GrammarAST) r.ast.getChild(0)).getToken()
 					: labelPair.label.token;
-			errMgr.grammarError(
+			errMgr.GrammarError(
 					ErrorType.LABEL_TYPE_CONFLICT,
 					g.fileName,
 					token,
@@ -185,7 +185,7 @@ public class SymbolChecks {
 					: labelPair.label.token;
 			String prevLabelOp = prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
 			String labelOp = labelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
-			errMgr.grammarError(
+			errMgr.GrammarError(
 					ErrorType.LABEL_TYPE_CONFLICT,
 					g.fileName,
 					token,
@@ -198,27 +198,27 @@ public class SymbolChecks {
 		String name = labelID.getText();
 		if (nameToRuleMap.ContainsKey(name)) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_RULE;
-			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
+			errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 
 		if (tokenIDs.Contains(name)) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_TOKEN;
-			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
+			errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 
 		if (r.args != null && r.args.get(name) != null) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_ARG;
-			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
+			errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 
 		if (r.retvals != null && r.retvals.get(name) != null) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_RETVAL;
-			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
+			errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 
 		if (r.locals != null && r.locals.get(name) != null) {
 			ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_LOCAL;
-			errMgr.grammarError(etype, g.fileName, labelID.token, name, r.name);
+			errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
 		}
 	}
 
@@ -244,7 +244,7 @@ public class SymbolChecks {
 
 		foreach (tool.Attribute attribute in attributes.attributes.Values) {
 			if (ruleNames.Contains(attribute.name)) {
-				errMgr.grammarError(
+				errMgr.GrammarError(
 						errorType,
 						g.fileName,
 						attribute.token != null ? attribute.token : ((GrammarAST) r.ast.getChild(0)).token,
@@ -261,7 +261,7 @@ public class SymbolChecks {
 
 		HashSet<String> conflictingKeys = attributes.intersection(referenceAttributes);
         foreach (String key in conflictingKeys) {
-			errMgr.grammarError(
+			errMgr.GrammarError(
 					errorType,
 					g.fileName,
 					attributes.get(key).token != null ? attributes.get(key).token : ((GrammarAST)r.ast.getChild(0)).token,
@@ -273,7 +273,7 @@ public class SymbolChecks {
 	protected void checkReservedNames(ICollection<Rule> rules) {
 		foreach (Rule rule in rules) {
 			if (reservedNames.Contains(rule.name)) {
-				errMgr.grammarError(ErrorType.RESERVED_RULE_NAME, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
+				errMgr.GrammarError(ErrorType.RESERVED_RULE_NAME, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
 			}
 		}
 	}
@@ -286,11 +286,11 @@ public class SymbolChecks {
                 Rule rule = rx.FirstOrDefault();
 
                 if (!modeName.Equals("DEFAULT_MODE") && reservedNames.Contains(modeName)) {
-					g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, rule.ast.parent.getToken(), modeName);
+					g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, rule.ast.parent.getToken(), modeName);
 				}
 
 				if (g.getTokenType(modeName) != Token.INVALID_TYPE) {
-					g.tool.errMgr.grammarError(ErrorType.MODE_CONFLICTS_WITH_TOKEN, g.fileName, rule.ast.parent.getToken(), modeName);
+					g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_TOKEN, g.fileName, rule.ast.parent.getToken(), modeName);
 				}
 			}
 		}
@@ -404,7 +404,7 @@ public class SymbolChecks {
 			for (int j = secondTokenInd; j < secondTokenStringValues.Count; j++) {
 				String str2 = secondTokenStringValues[j];
 				if (str1.Equals(str2)) {
-					errMgr.grammarError(ErrorType.TOKEN_UNREACHABLE, g.fileName,
+					errMgr.GrammarError(ErrorType.TOKEN_UNREACHABLE, g.fileName,
 							((GrammarAST) rule2.ast.getChild(0)).token, rule2.name, str2, rule1.name);
 				}
 			}
@@ -419,12 +419,12 @@ public class SymbolChecks {
 			Rule r = g.getRule(ruleName);
 			GrammarAST arg = (GrammarAST)@ref.getFirstChildWithType(ANTLRParser.ARG_ACTION);
 			if ( arg!=null && (r==null || r.args==null) ) {
-				errMgr.grammarError(ErrorType.RULE_HAS_NO_ARGS,
+				errMgr.GrammarError(ErrorType.RULE_HAS_NO_ARGS,
 						g.fileName, @ref.token, ruleName);
 
 			}
 			else if ( arg==null && (r!=null && r.args!=null) ) {
-				errMgr.grammarError(ErrorType.MISSING_RULE_ARGS,
+				errMgr.GrammarError(ErrorType.MISSING_RULE_ARGS,
 						g.fileName, @ref.token, ruleName);
 			}
 		}
@@ -434,16 +434,16 @@ public class SymbolChecks {
         foreach (GrammarAST dot in qualifiedRuleRefs) {
 			GrammarAST grammar = (GrammarAST)dot.getChild(0);
 			GrammarAST rule = (GrammarAST)dot.getChild(1);
-			g.tool.log("semantics", grammar.getText()+"."+rule.getText());
+			g.Tools.Log("semantics", grammar.getText()+"."+rule.getText());
 			Grammar @delegate = g.getImportedGrammar(grammar.getText());
 			if ( @delegate==null ) {
-				errMgr.grammarError(ErrorType.NO_SUCH_GRAMMAR_SCOPE,
+				errMgr.GrammarError(ErrorType.NO_SUCH_GRAMMAR_SCOPE,
 						g.fileName, grammar.token, grammar.getText(),
 						rule.getText());
 			}
 			else {
 				if ( g.getRule(grammar.getText(), rule.getText())==null ) {
-					errMgr.grammarError(ErrorType.NO_SUCH_RULE_IN_SCOPE,
+					errMgr.GrammarError(ErrorType.NO_SUCH_RULE_IN_SCOPE,
 							g.fileName, rule.token, grammar.getText(),
 							rule.getText());
 				}
