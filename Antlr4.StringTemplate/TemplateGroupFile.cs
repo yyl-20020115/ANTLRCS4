@@ -118,10 +118,7 @@ public class TemplateGroupFile : TemplateGroup
     public TemplateGroupFile(string fullyQualifiedFileName, Encoding encoding, char delimiterStartChar, char delimiterStopChar)
         : this(fullyQualifiedFileName, delimiterStartChar, delimiterStopChar)
     {
-        if (encoding == null)
-            throw new ArgumentNullException(nameof(encoding));
-
-        this.Encoding = encoding;
+        this.Encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
     }
 
     /// <summary>
@@ -192,5 +189,5 @@ public class TemplateGroupFile : TemplateGroup
 
     public override string FileName => _fileName ?? _url.Segments.Last();
 
-    public override Uri RootDirUri => new Uri(_url, ".");
+    public override Uri RootDirUri => new (_url, ".");
 }
