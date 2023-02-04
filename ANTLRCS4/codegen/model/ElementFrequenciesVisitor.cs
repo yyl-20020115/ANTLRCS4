@@ -98,7 +98,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         var result = CombineAndClip(a, b, int.MaxValue);
         foreach (var entry in result)
         {
-            entry.Value.v = Math.Min(a.count(entry.Key), b.count(entry.Key));
+            entry.Value.v = Math.Min(a.CountFor(entry.Key), b.CountFor(entry.Key));
         }
 
         return result;
@@ -123,7 +123,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         {
             for (int i = 0; i < entry.Value.v; i++)
             {
-                result.add(entry.Key);
+                result.Add(entry.Key);
             }
         }
 
@@ -131,7 +131,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         {
             for (int i = 0; i < entry.Value.v; i++)
             {
-                result.add(entry.Key);
+                result.Add(entry.Key);
             }
         }
 
@@ -146,15 +146,15 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     public void tokenRef(TerminalAST @ref)
     {
-        frequencies.peek().add(@ref.getText());
-        minFrequencies.peek().add(@ref.getText());
+        frequencies.peek().Add(@ref.getText());
+        minFrequencies.peek().Add(@ref.getText());
     }
 
     //@Override
     public void ruleRef(GrammarAST @ref, ActionAST arg)
     {
-        frequencies.peek().add(@ref.getText());
-        minFrequencies.peek().add(@ref.getText());
+        frequencies.peek().Add(@ref.getText());
+        minFrequencies.peek().Add(@ref.getText());
     }
 
     //@Override
@@ -164,8 +164,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 
         if (tokenName != null && !tokenName.StartsWith("T__"))
         {
-            frequencies.peek().add(tokenName);
-            minFrequencies.peek().add(tokenName);
+            frequencies.peek().Add(tokenName);
+            minFrequencies.peek().Add(tokenName);
         }
     }
 

@@ -6,11 +6,9 @@
 
 using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model;
-using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace org.antlr.v4.codegen;
@@ -32,108 +30,123 @@ namespace org.antlr.v4.codegen;
  *  This simple mechanism means we don't have to include code in every
  *  output model object that says how to create the corresponding template.
  */
-public class OutputModelWalker {
-	Tool tool;
-	TemplateGroup templates;
+public class OutputModelWalker
+{
+    Tool tool;
+    TemplateGroup templates;
 
-	public OutputModelWalker(Tool tool,
-							 TemplateGroup templates)
-	{
-		this.tool = tool;
-		this.templates = templates;
-	}
+    public OutputModelWalker(Tool tool,
+                             TemplateGroup templates)
+    {
+        this.tool = tool;
+        this.templates = templates;
+    }
 
-	public Template walk(OutputModelObject omo, bool header) {
-		// CREATE TEMPLATE FOR THIS OUTPUT OBJECT
-		Type cl = omo.GetType();
-		String templateName = cl.Name;
-		if ( templateName == null ) {
-			tool.ErrMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
-			return new Template("["+templateName+" invalid]");
-		}
+    public Template walk(OutputModelObject omo, bool header)
+    {
+        // CREATE TEMPLATE FOR THIS OUTPUT OBJECT
+        var cl = omo.GetType();
+        var templateName = cl.Name;
+        if (templateName == null)
+        {
+            tool.ErrMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
+            return new Template("[" + templateName + " invalid]");
+        }
 
-		if (header) templateName += "Header";
+        if (header) templateName += "Header";
 
-        Template st = templates.GetInstanceOf(templateName);
-		if ( st == null ) {
-			tool.ErrMgr.toolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
-			return new Template("["+templateName+" invalid]");
-		}
-		if ( st.impl.FormalArguments == null ) {
-			tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
-			return st;
-		}
+        var st = templates.GetInstanceOf(templateName);
+        if (st == null)
+        {
+            tool.ErrMgr.toolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
+            return new Template("[" + templateName + " invalid]");
+        }
+        if (st.impl.FormalArguments == null)
+        {
+            tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
+            return st;
+        }
 
-		var formalArgs = st.impl.FormalArguments;
+        var formalArgs = st.impl.FormalArguments;
 
-		// PASS IN OUTPUT MODEL OBJECT TO TEMPLATE AS FIRST ARG
-		var argNames = formalArgs.Select(f=>f.Name).ToHashSet();
-		var arg_it = argNames.GetEnumerator();
+        // PASS IN OUTPUT MODEL OBJECT TO TEMPLATE AS FIRST ARG
+        var argNames = formalArgs.Select(f => f.Name).ToHashSet();
+        var arg_it = argNames.GetEnumerator();
 
-		arg_it.MoveNext();
-		
-		var modelArgName = arg_it.Current; // ordered so this is first arg
-		st.Add(modelArgName, omo);
+        arg_it.MoveNext();
 
-		// COMPUTE STs FOR EACH NESTED MODEL OBJECT MARKED WITH @ModelElement AND MAKE ST ATTRIBUTE
-		HashSet<String> usedFieldNames = new HashSet<String>();
-		FieldInfo[] fields = cl.GetFields();
-		foreach(var fi in fields) {
-			var me = fi.GetCustomAttribute<ModelElementAttribute>();
-			if (me == null) continue;
+        var modelArgName = arg_it.Current; // ordered so this is first arg
+        st.Add(modelArgName, omo);
 
-			String fieldName = fi.Name;
-			if (!usedFieldNames.Add(fieldName)) {
-				tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
-				continue;
-			}
+        // COMPUTE STs FOR EACH NESTED MODEL OBJECT MARKED WITH @ModelElement AND MAKE ST ATTRIBUTE
+        var usedFieldNames = new HashSet<string>();
+        var fields = cl.GetFields();
+        foreach (var fi in fields)
+        {
+            var me = fi.GetCustomAttribute<ModelElementAttribute>();
+            if (me == null) continue;
 
-			// Just don't set @ModelElement fields w/o formal arg in target ST
-			if ( !formalArgs.Any(f=>f.Name==fieldName) ) continue;
+            var fieldName = fi.Name;
+            if (!usedFieldNames.Add(fieldName))
+            {
+                tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
+                continue;
+            }
 
-			try {
-				Object o = fi.GetValue(omo);
-				if ( o is OutputModelObject nestedOmo) {  // SINGLE MODEL OBJECT?
+            // Just don't set @ModelElement fields w/o formal arg in target ST
+            if (!formalArgs.Any(f => f.Name == fieldName)) continue;
+
+            try
+            {
+                var o = fi.GetValue(omo);
+                if (o is OutputModelObject nestedOmo)
+                {  // SINGLE MODEL OBJECT?
                     Template nestedST = walk(nestedOmo, header);
-					//Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
-					st.Add(fieldName, nestedST);
-				}
-				else if ( o is ICollection || o is OutputModelObject[] ) {
-					// LIST OF MODEL OBJECTS?
-					if ( o is OutputModelObject[] ) {
-						o = Arrays.AsList((OutputModelObject[])o);
-					}
-					ICollection nestedOmos = (ICollection)o;
-                    foreach (Object nomo in nestedOmos) {
-						if (nomo == null ) continue;
-						Template nestedST = walk((OutputModelObject)nomo, header);
-						//Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
-						st.Add(fieldName, nestedST);
-					} 
-				}
-				else if ( o is IDictionary nestedOmoMap) {
-					Dictionary<Object, Template> m = new Dictionary<Object, Template>();
-					var e = nestedOmoMap.GetEnumerator();
+                    //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
+                    st.Add(fieldName, nestedST);
+                }
+                else if (o is ICollection || o is OutputModelObject[])
+                {
+                    // LIST OF MODEL OBJECTS?
+                    if (o is OutputModelObject[] v)
+                    {
+                        o = Arrays.AsList(v);
+                    }
+                    ICollection nestedOmos = (ICollection)o;
+                    foreach (var nomo in nestedOmos)
+                    {
+                        if (nomo == null) continue;
+                        Template nestedST = walk((OutputModelObject)nomo, header);
+                        //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
+                        st.Add(fieldName, nestedST);
+                    }
+                }
+                else if (o is IDictionary nestedOmoMap)
+                {
+                    var m = new Dictionary<Object, Template>();
+                    var e = nestedOmoMap.GetEnumerator();
 
-                    while(e.MoveNext())
-					{
-                        Template nestedST = walk((OutputModelObject)e.Value, header);
-						//Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
-						m[e.Key] = nestedST;
-					}
-					
-					st.Add(fieldName, m);
-				}
-				else if ( o!=null ) {
-					tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: "+fieldName);
-				}
-			}
-			catch (Exception iae) {
-				tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
-			}
-		}
-		//st.impl.dump();
-		return st;
-	}
+                    while (e.MoveNext())
+                    {
+                        var nestedST = walk((OutputModelObject)e.Value, header);
+                        //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
+                        m[e.Key] = nestedST;
+                    }
+
+                    st.Add(fieldName, m);
+                }
+                else if (o != null)
+                {
+                    tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: " + fieldName);
+                }
+            }
+            catch (Exception iae)
+            {
+                tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
+            }
+        }
+        //st.impl.dump();
+        return st;
+    }
 
 }

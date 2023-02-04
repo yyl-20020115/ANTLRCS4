@@ -440,7 +440,7 @@ public class Grammar : AttributeResolver
         {
             return false;
         }
-        rules.put(r.name, r);
+        rules.Put(r.name, r);
         r.index = ruleNumber++;
         indexToRule.Add(r);
         return true;
@@ -471,7 +471,7 @@ public class Grammar : AttributeResolver
 
         //assert rules.get(r.name) == r;
 
-        rules.remove(r.name);
+        rules.Remove(r.name);
         indexToRule.RemoveAt(r.index);
         for (int i = r.index; i < indexToRule.Count; i++)
         {
@@ -681,7 +681,7 @@ public class Grammar : AttributeResolver
         if (isLexer() &&
              ttype >= Lexer.MIN_CHAR_VALUE && ttype <= Lexer.MAX_CHAR_VALUE)
         {
-            return CharSupport.getANTLRCharLiteralForChar(ttype);
+            return CharSupport.GetANTLRCharLiteralForChar(ttype);
         }
 
         if (ttype == Token.EOF)
@@ -727,7 +727,7 @@ public class Grammar : AttributeResolver
         if (isLexer() &&
              ttype >= Lexer.MIN_CHAR_VALUE && ttype <= Lexer.MAX_CHAR_VALUE)
         {
-            return CharSupport.getANTLRCharLiteralForChar(ttype);
+            return CharSupport.GetANTLRCharLiteralForChar(ttype);
         }
 
         if (ttype == Token.EOF)
@@ -1036,7 +1036,7 @@ public class Grammar : AttributeResolver
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
         int max = Math.Max(this.typeToTokenList.Count, importG.typeToTokenList.Count);
-        Utils.setSize(typeToTokenList, max);
+        Utils.SetSize(typeToTokenList, max);
         for (int ttype = 0; ttype < importG.typeToTokenList.Count; ttype++)
         {
             maxTokenType = Math.Max(maxTokenType, ttype);
@@ -1044,7 +1044,7 @@ public class Grammar : AttributeResolver
         }
 
         max = Math.Max(this.channelValueToNameList.Count, importG.channelValueToNameList.Count);
-        Utils.setSize(channelValueToNameList, max);
+        Utils.SetSize(channelValueToNameList, max);
         for (int channelValue = 0; channelValue < importG.channelValueToNameList.Count; channelValue++)
         {
             maxChannelType = Math.Max(maxChannelType, channelValue);
@@ -1086,7 +1086,7 @@ public class Grammar : AttributeResolver
             // track in reverse index too
             if (ttype >= typeToStringLiteralList.Count)
             {
-                Utils.setSize(typeToStringLiteralList, ttype + 1);
+                Utils.SetSize(typeToStringLiteralList, ttype + 1);
             }
             typeToStringLiteralList[ttype]= lit;
 
@@ -1114,7 +1114,7 @@ public class Grammar : AttributeResolver
 
         if (ttype >= typeToTokenList.Count)
         {
-            Utils.setSize(typeToTokenList, ttype + 1);
+            Utils.SetSize(typeToTokenList, ttype + 1);
         }
         String prevToken = typeToTokenList[ttype];
         if (prevToken == null || prevToken[(0)] == '\'')
@@ -1181,7 +1181,7 @@ public class Grammar : AttributeResolver
     {
         if (channelValue >= channelValueToNameList.Count)
         {
-            Utils.setSize(channelValueToNameList, channelValue + 1);
+            Utils.SetSize(channelValueToNameList, channelValue + 1);
         }
 
         String prevChannel = channelValueToNameList[channelValue];

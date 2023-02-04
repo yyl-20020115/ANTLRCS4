@@ -28,7 +28,7 @@ public abstract class BlankOutputModelFactory : OutputModelFactory
     public virtual List<SrcOp> RulePostamble(RuleFunction function, Rule r) => null;
 
     //@Override
-    public virtual LexerFile LexerFile(String fileName) => null;
+    public virtual LexerFile LexerFile(string fileName) => null;
 
     //@Override
     public virtual Lexer Lexer(LexerFile file) => null;
@@ -102,18 +102,18 @@ public abstract class BlankOutputModelFactory : OutputModelFactory
         get;set;
     }
 
-    public OutputModelObject GetRoot() => null;
+    public virtual OutputModelObject GetRoot() => null;
 
-    public RuleFunction GetCurrentRuleFunction() => null;
+    public virtual RuleFunction GetCurrentRuleFunction() => null;
 
-    public Alternative GetCurrentOuterMostAlt() => null;
+    public virtual Alternative GetCurrentOuterMostAlt() => null;
 
-    public CodeBlock GetCurrentBlock() => null;
+    public virtual CodeBlock GetCurrentBlock() => null;
 
-    public CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock() => null;
+    public virtual CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock() => null;
 
-    public int GetCodeBlockLevel() => 0;
+    public virtual int GetCodeBlockLevel() => 0;
 
-    public int GetTreeLevel() => 0;
+    public virtual int GetTreeLevel() => 0;
 }
 

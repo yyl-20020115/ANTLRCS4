@@ -15,50 +15,47 @@ public class CodeGeneratorExtension
 {
     public OutputModelFactory factory;
 
-    public CodeGeneratorExtension(OutputModelFactory factory)
-    {
-        this.factory = factory;
-    }
+    public CodeGeneratorExtension(OutputModelFactory factory) => this.factory = factory;
 
-    public ParserFile ParserFile(ParserFile f) { return f; }
+    public ParserFile ParserFile(ParserFile f) => f;
 
-    public Parser Parser(Parser p) { return p; }
+    public Parser Parser(Parser p) => p;
 
-    public LexerFile LexerFile(LexerFile f) { return f; }
+    public LexerFile LexerFile(LexerFile f) => f;
 
-    public Lexer Lexer(Lexer l) { return l; }
+    public Lexer Lexer(Lexer l) => l;
 
-    public RuleFunction Rule(RuleFunction rf) { return rf; }
+    public RuleFunction Rule(RuleFunction rf) => rf;
 
-    public List<SrcOp> RulePostamble(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> RulePostamble(List<SrcOp> ops) => ops;
 
-    public CodeBlockForAlt Alternative(CodeBlockForAlt blk, bool outerMost) { return blk; }
+    public CodeBlockForAlt Alternative(CodeBlockForAlt blk, bool outerMost) => blk;
 
-    public CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, bool outerMost) { return blk; }
+    public CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, bool outerMost) => blk;
 
-    public CodeBlockForAlt Epsilon(CodeBlockForAlt blk) { return blk; }
+    public CodeBlockForAlt Epsilon(CodeBlockForAlt blk) => blk;
 
-    public List<SrcOp> RuleRef(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> RuleRef(List<SrcOp> ops) => ops;
 
-    public List<SrcOp> TokenRef(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> TokenRef(List<SrcOp> ops) => ops;
 
-    public List<SrcOp> Set(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> Set(List<SrcOp> ops) => ops;
 
-    public List<SrcOp> StringRef(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> StringRef(List<SrcOp> ops) => ops;
 
-    public List<SrcOp> Wildcard(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> Wildcard(List<SrcOp> ops) => ops;
 
     // ACTIONS
 
-    public List<SrcOp> Action(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> Action(List<SrcOp> ops) => ops;
 
-    public List<SrcOp> Sempred(List<SrcOp> ops) { return ops; }
+    public List<SrcOp> Sempred(List<SrcOp> ops) => ops;
 
     // BLOCKS
 
-    public Choice GetChoiceBlock(Choice c) { return c; }
+    public Choice GetChoiceBlock(Choice c) => c;
 
-    public Choice GetEBNFBlock(Choice c) { return c; }
+    public Choice GetEBNFBlock(Choice c) => c;
 
-    public bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op) { return false; }
+    public bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op) => false;
 }

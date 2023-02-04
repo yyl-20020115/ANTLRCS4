@@ -58,7 +58,7 @@ public class RuleFunction : OutputModelObject
         this.name = r.name;
         this.escapedName = factory.GetGenerator().Target.EscapeIfNeeded(r.name);
         this.rule = r;
-        modifiers = Utils.nodesToStrings(r.modifiers);
+        modifiers = Utils.NodesToStrings(r.modifiers);
 
         index = r.index;
 
@@ -187,12 +187,12 @@ public class RuleFunction : OutputModelObject
 
                 if (refLabelName != null)
                 {
-                    if (altFreq.count(refLabelName) > 1)
+                    if (altFreq.CountFor(refLabelName) > 1)
                     {
                         needsList.Add(refLabelName);
                     }
 
-                    if (firstAlt && minFreq.count(refLabelName) != 0)
+                    if (firstAlt && minFreq.CountFor(refLabelName) != 0)
                     {
                         nonOptional.Add(refLabelName);
                     }
@@ -201,7 +201,7 @@ public class RuleFunction : OutputModelObject
 
             foreach (var @ref in nonOptional.ToArray())
             {
-                if (minFreq.count(@ref) == 0)
+                if (minFreq.CountFor(@ref) == 0)
                 {
                     nonOptional.Remove(@ref);
                 }

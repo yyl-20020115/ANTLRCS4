@@ -47,7 +47,7 @@ public class InvokeRule : RuleElement, LabeledOp
             var label = labelAST.getText();
             if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
             {
-                factory.defineImplicitLabel(ast, this);
+                factory.DefineImplicitLabel(ast, this);
                 var listLabel = gen.Target.GetListLabel(label);
                 decl = new RuleContextListDecl(factory, listLabel, ctxName);
             }

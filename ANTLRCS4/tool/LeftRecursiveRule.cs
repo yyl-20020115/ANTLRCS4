@@ -52,7 +52,7 @@ public class LeftRecursiveRule : Rule {
 			if (altInfo.altLabel == null) alts.Add(altInfo.originalAltAST);
 		}
 		for (int i = 0; i < recOpAlts.Count; i++) {
-			LeftRecursiveRuleAltInfo altInfo = recOpAlts.getElement(i);
+			LeftRecursiveRuleAltInfo altInfo = recOpAlts.GetElement(i);
 			if ( altInfo.altLabel==null ) alts.Add(altInfo.originalAltAST);
 		}
 		if ( alts.Count==0 ) return null;
@@ -129,7 +129,7 @@ public class LeftRecursiveRule : Rule {
 		}
 		if ( recOpAlts!=null ) {
 			for (int i = 0; i < recOpAlts.Count; i++) {
-				LeftRecursiveRuleAltInfo altInfo = recOpAlts.getElement(i);
+				LeftRecursiveRuleAltInfo altInfo = recOpAlts.GetElement(i);
 				if ( altInfo.altLabel!=null ) {
 					if (!labels.TryGetValue(altInfo.altLabel,out var pairs)) {
 						pairs = new ();

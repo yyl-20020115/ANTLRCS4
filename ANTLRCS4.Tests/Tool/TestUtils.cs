@@ -10,18 +10,18 @@ public class TestUtils
     [TestMethod]
     public void testStripFileExtension()
     {
-        Assert.IsNull(Utils.stripFileExtension(null));
-        Assert.AreEqual("foo", Utils.stripFileExtension("foo"));
-        Assert.AreEqual("foo", Utils.stripFileExtension("foo.txt"));
+        Assert.IsNull(Utils.StripFileExtension(null));
+        Assert.AreEqual("foo", Utils.StripFileExtension("foo"));
+        Assert.AreEqual("foo", Utils.StripFileExtension("foo.txt"));
     }
 
     [TestMethod]
     public void testJoin()
     {
         Assert.AreEqual("foobbar",
-            Utils.join(new String[] { "foo", "bar" }, "b"));
+            Utils.Join(new String[] { "foo", "bar" }, "b"));
         Assert.AreEqual("foo,bar",
-            Utils.join(new String[] { "foo", "bar" }, ","));
+            Utils.Join(new String[] { "foo", "bar" }, ","));
     }
 
     [TestMethod]
@@ -39,25 +39,25 @@ public class TestUtils
         values.Add(new GrammarAST(Token.DOWN));
         values.Add(new GrammarAST(Token.UP));
 
-        Assert.IsNull(Utils.nodesToStrings(new List<GrammarAST>()));
-        Assert.IsNotNull(Utils.nodesToStrings(values));
+        Assert.IsNull(Utils.NodesToStrings(new List<GrammarAST>()));
+        Assert.IsNotNull(Utils.NodesToStrings(values));
     }
 
     [TestMethod]
     public void testCapitalize()
     {
-        Assert.AreEqual("Foo", Utils.capitalize("foo"));
+        Assert.AreEqual("Foo", Utils.Capitalize("foo"));
     }
 
     [TestMethod]
     public void testDecapitalize()
     {
-        Assert.AreEqual("fOO", Utils.decapitalize("FOO"));
+        Assert.AreEqual("fOO", Utils.Decapitalize("FOO"));
     }
     public class UFA<T> : Utils.Func1<T,string>
     {
         //@Override
-        public string exec(T arg1)
+        public string Exec(T arg1)
         {
             return "baz";
         }
@@ -76,8 +76,8 @@ public class TestUtils
         retval.Add("baz");
         retval.Add("baz");
 
-        Assert.AreEqual(retval, Utils.select(strings, func1));
-        Assert.IsNull(Utils.select<string,string>(null, null));
+        Assert.AreEqual(retval, Utils.Select(strings, func1));
+        Assert.IsNull(Utils.Select<string,string>(null, null));
     }
 
     [TestMethod]
@@ -86,15 +86,15 @@ public class TestUtils
         List<String> strings = new();
         strings.Add("foo");
         strings.Add("bar");
-        Assert.AreEqual("foo", Utils.find(strings, typeof(String)));
+        Assert.AreEqual("foo", Utils.Find(strings, typeof(String)));
 
-        Assert.IsNull(Utils.find(new List<string>(), typeof(String)));
+        Assert.IsNull(Utils.Find(new List<string>(), typeof(String)));
     }
 
     public class UFB<T> : Utils.Filter<T>
     {
         //@Override
-        public bool select(T o)
+        public bool Select(T o)
         {
             return true;
         }
@@ -106,14 +106,14 @@ public class TestUtils
         strings.Add("foo");
         strings.Add("bar");
         Utils.Filter<string> filter = new UFB<string>();
-        Assert.AreEqual(0, Utils.indexOf(strings, filter));
-        Assert.AreEqual(-1, Utils.indexOf<string>(new(), null));
+        Assert.AreEqual(0, Utils.IndexOf(strings, filter));
+        Assert.AreEqual(-1, Utils.IndexOf<string>(new(), null));
     }
 
     public class UFC<T> : Utils.Filter<T>
     {
         //@Override
-        public bool select(T o)
+        public bool Select(T o)
         {
             return true;
         }
@@ -125,8 +125,8 @@ public class TestUtils
         strings.Add("foo");
         strings.Add("bar");
         Utils.Filter<string> filter = new UFC<string>();
-        Assert.AreEqual(1, Utils.lastIndexOf(strings, filter));
-        Assert.AreEqual(-1, Utils.lastIndexOf<string>(new(), null));
+        Assert.AreEqual(1, Utils.LastIndexOf(strings, filter));
+        Assert.AreEqual(-1, Utils.LastIndexOf<string>(new(), null));
     }
 
     [TestMethod]
@@ -138,10 +138,10 @@ public class TestUtils
         strings.Add("baz");
         Assert.AreEqual(3, strings.Count);
 
-        Utils.setSize(strings, 2);
+        Utils.SetSize(strings, 2);
         Assert.AreEqual(2, strings.Count);
 
-        Utils.setSize(strings, 4);
+        Utils.SetSize(strings, 4);
         Assert.AreEqual(4, strings.Count);
     }
 }

@@ -138,9 +138,9 @@ public class LeftRecursiveRuleTransformer
         }
 
         r.recOpAlts = new OrderedHashMap<int, LeftRecursiveRuleAltInfo>();
-        r.recOpAlts.putAll(leftRecursiveRuleWalker.binaryAlts);
-        r.recOpAlts.putAll(leftRecursiveRuleWalker.ternaryAlts);
-        r.recOpAlts.putAll(leftRecursiveRuleWalker.suffixAlts);
+        r.recOpAlts.PutAll(leftRecursiveRuleWalker.binaryAlts);
+        r.recOpAlts.PutAll(leftRecursiveRuleWalker.ternaryAlts);
+        r.recOpAlts.PutAll(leftRecursiveRuleWalker.suffixAlts);
 
         // walk alt info records and set their altAST to point to appropriate ALT subtree
         // from freshly created AST
@@ -235,7 +235,7 @@ public class LeftRecursiveRuleTransformer
         }
         for (int i = 0; i < r.recOpAlts.Count; i++)
         {
-            var altInfo = r.recOpAlts.getElement(i);
+            var altInfo = r.recOpAlts.GetElement(i);
             altInfo.altAST = (AltAST)opsBlk.getChild(i);
             altInfo.altAST.leftRecursiveAltInfo = altInfo;
             altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;

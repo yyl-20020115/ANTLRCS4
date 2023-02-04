@@ -66,37 +66,35 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory
 
 
     //@Override
-    public override Grammar GetGrammar() { return g; }
+    public override Grammar GetGrammar() => g;
 
     //@Override
-    public override CodeGenerator GetGenerator() { return gen; }
+    public override CodeGenerator GetGenerator() => gen;
 
     //@Override
-    public OutputModelObject getRoot() { return controller.GetRoot(); }
+    public override OutputModelObject GetRoot() => controller.GetRoot();
 
     //@Override
-    public RuleFunction getCurrentRuleFunction() { return controller.GetCurrentRuleFunction(); }
+    public override RuleFunction GetCurrentRuleFunction() => controller.GetCurrentRuleFunction();
 
     //@Override
-    public Alternative getCurrentOuterMostAlt() { return controller.GetCurrentOuterMostAlt(); }
+    public override Alternative GetCurrentOuterMostAlt() => controller.GetCurrentOuterMostAlt();
 
     //@Override
-    public CodeBlock getCurrentBlock() { return controller.CurrentBlock; }
+    public override CodeBlock GetCurrentBlock() => controller.CurrentBlock;
 
     //@Override
-    public CodeBlockForOuterMostAlt getCurrentOuterMostAlternativeBlock() { return controller.getCurrentOuterMostAlternativeBlock(); }
+    public override CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock() => controller.CurrentOuterMostAlternativeBlock;
 
     //@Override
-    public int GetCodeBlockLevel() { return controller.codeBlockLevel; }
+    public override int GetCodeBlockLevel() => controller.codeBlockLevel;
 
     //@Override
-    public int GetTreeLevel() { return controller.treeLevel; }
+    public override int GetTreeLevel() => controller.treeLevel;
 
     // MISC
+    public static List<SrcOp> List(params SrcOp[] values) => new (values);
 
 
-    public static List<SrcOp> List(params SrcOp[] values) => new List<SrcOp>(values);
-
-
-    public static List<SrcOp> List(ICollection<SrcOp> values) => new List<SrcOp>(values);
+    public static List<SrcOp> List(ICollection<SrcOp> values) => new (values);
 }

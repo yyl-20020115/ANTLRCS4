@@ -174,7 +174,7 @@ public class GrammarTreeVisitor : TreeParser
     }
 
     //@Override 
-    public override string[] getTokenNames() { return GrammarTreeVisitor.tokenNames; }
+    public override string[] GetTokenNames() { return GrammarTreeVisitor.tokenNames; }
     //@Override
     public override string GetGrammarFileName() { return "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g"; }
 

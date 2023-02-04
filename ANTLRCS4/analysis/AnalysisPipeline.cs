@@ -71,7 +71,7 @@ public class AnalysisPipeline
             }
 
             //assert s.decision + 1 >= g.decisionLOOK.size();
-            Utils.setSize(g.decisionLOOK, state.decision + 1);
+            Utils.SetSize(g.decisionLOOK, state.decision + 1);
             g.decisionLOOK[state.decision] = look;
             g.Tools.Log("LL1", "LL(1)? " + Disjoint(look));
         }

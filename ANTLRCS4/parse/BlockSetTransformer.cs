@@ -1352,7 +1352,7 @@ public class BlockSetTransformer : TreeRewriter
                             }
 
 
-                            if (!((!inLexer || CharSupport.getCharValueFromGrammarCharLiteral(a.getText()) != -1)))
+                            if (!((!inLexer || CharSupport.GetCharValueFromGrammarCharLiteral(a.getText()) != -1)))
                             {
                                 if (state.backtracking > 0) { state.failed = true; return retval; }
                                 throw new FailedPredicateException(input, "setElement", "!inLexer || CharSupport.getCharValueFromGrammarCharLiteral($a.getText())!=-1");
@@ -1375,7 +1375,7 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = a;
 
-                            if (!((!inLexer || CharSupport.getCharValueFromGrammarCharLiteral(a.getText()) != -1)))
+                            if (!((!inLexer || CharSupport.GetCharValueFromGrammarCharLiteral(a.getText()) != -1)))
                             {
                                 if (state.backtracking > 0) { state.failed = true; return retval; }
                                 throw new FailedPredicateException(input, "setElement", "!inLexer || CharSupport.getCharValueFromGrammarCharLiteral($a.getText())!=-1");
@@ -1488,8 +1488,8 @@ public class BlockSetTransformer : TreeRewriter
                             }
 
 
-                            if (!((CharSupport.getCharValueFromGrammarCharLiteral(a.getText()) != -1 &&
-                                         CharSupport.getCharValueFromGrammarCharLiteral(b.getText()) != -1)))
+                            if (!((CharSupport.GetCharValueFromGrammarCharLiteral(a.getText()) != -1 &&
+                                         CharSupport.GetCharValueFromGrammarCharLiteral(b.getText()) != -1)))
                             {
                                 if (state.backtracking > 0) { state.failed = true; return retval; }
                                 throw new FailedPredicateException(input, "setElement", "CharSupport.getCharValueFromGrammarCharLiteral($a.getText())!=-1 &&\r\n\t\t\t CharSupport.getCharValueFromGrammarCharLiteral($b.getText())!=-1");

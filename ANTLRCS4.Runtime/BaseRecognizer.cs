@@ -198,7 +198,7 @@ public abstract class BaseRecognizer
         state.syntaxErrors++; // don't count spurious
         state.errorRecovery = true;
 
-        DisplayRecognitionError(this.getTokenNames(), e);
+        DisplayRecognitionError(this.GetTokenNames(), e);
     }
 
     public void DisplayRecognitionError(string[] tokenNames,
@@ -772,7 +772,7 @@ public abstract class BaseRecognizer
      *  error reporting.  The generated parsers implement a method
      *  that overrides this to point to their String[] tokenNames.
      */
-    public virtual string[] getTokenNames() => null;
+    public virtual string[] GetTokenNames() => null;
 
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.

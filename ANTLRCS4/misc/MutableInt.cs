@@ -7,25 +7,21 @@
 namespace org.antlr.v4.misc;
 
 
-public class MutableInt : IComparable<MutableInt> {
-	public int v;
+public class MutableInt : IComparable<MutableInt>
+{
+    public int v;
 
-	public MutableInt(int v) { this.v = v; }
+    public MutableInt(int v) { this.v = v; }
 
-	public override bool Equals(Object o) {
-		if ( o is MutableInt m ) return v == m.intValue();
-		return false;
-	}
+    public override bool Equals(object? o)
+        => o is MutableInt m && v == m.IntValue();
 
-	public override int GetHashCode() { return v; }
+    public override int GetHashCode() => v;
 
-	public virtual int CompareTo(MutableInt? o) { return v-o.intValue(); }
-	public virtual int intValue() { return v; }
-	public virtual long longValue() { return v; }
-	public virtual float floatValue() { return v; }
-	public virtual double doubleValue() { return v; }
-
-	public override String ToString() {
-		return v.ToString();
-	}
+    public virtual int CompareTo(MutableInt? o) => v - o.IntValue();
+    public virtual int IntValue() => v;
+    public virtual long LongValue() => v;
+    public virtual float FloatValue() => v;
+    public virtual double DoubleValue() => v;
+    public override string ToString() => v.ToString();
 }

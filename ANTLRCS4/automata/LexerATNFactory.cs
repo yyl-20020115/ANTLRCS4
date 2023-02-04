@@ -205,7 +205,7 @@ public class LexerATNFactory : ParserATNFactory
 
         // fall back to standard action generation for the command
         var cmdST = codegenTemplates.GetInstanceOf("Lexer" +
-                CharSupport.capitalize(ID.getText()) +
+                CharSupport.Capitalize(ID.getText()) +
                 "Command");
         if (cmdST == null)
         {
@@ -237,8 +237,8 @@ public class LexerATNFactory : ParserATNFactory
     {
         var left = NewState(a);
         var right = NewState(b);
-        int t1 = CharSupport.getCharValueFromGrammarCharLiteral(a.getText());
-        int t2 = CharSupport.getCharValueFromGrammarCharLiteral(b.getText());
+        int t1 = CharSupport.GetCharValueFromGrammarCharLiteral(a.getText());
+        int t2 = CharSupport.GetCharValueFromGrammarCharLiteral(b.getText());
         if (CheckRange(a, b, t1, t2))
         {
             left.AddTransition(CreateTransition(right, t1, t2, a));
@@ -258,8 +258,8 @@ public class LexerATNFactory : ParserATNFactory
         {
             if (t.getType() == ANTLRParser.RANGE)
             {
-                int a = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(0).getText());
-                int b = CharSupport.getCharValueFromGrammarCharLiteral(t.getChild(1).getText());
+                int a = CharSupport.GetCharValueFromGrammarCharLiteral(t.getChild(0).getText());
+                int b = CharSupport.GetCharValueFromGrammarCharLiteral(t.getChild(1).getText());
                 if (CheckRange((GrammarAST)t.getChild(0), (GrammarAST)t.getChild(1), a, b))
                 {
                     CheckRangeAndAddToSet(associatedAST, t, set, a, b, currentRule.caseInsensitive, null);
@@ -271,7 +271,7 @@ public class LexerATNFactory : ParserATNFactory
             }
             else if (t.getType() == ANTLRParser.STRING_LITERAL)
             {
-                int c = CharSupport.getCharValueFromGrammarCharLiteral(t.getText());
+                int c = CharSupport.GetCharValueFromGrammarCharLiteral(t.getText());
                 if (c != -1)
                 {
                     CheckCharAndAddToSet(associatedAST, set, c);
@@ -350,7 +350,7 @@ public class LexerATNFactory : ParserATNFactory
         var chars = stringLiteralAST.getText();
         var left = NewState(stringLiteralAST);
         ATNState right;
-        var s = CharSupport.getStringFromGrammarStringLiteral(chars);
+        var s = CharSupport.GetStringFromGrammarStringLiteral(chars);
         if (s == null)
         {
             // the lexer will already have given an error
@@ -458,7 +458,7 @@ public class LexerATNFactory : ParserATNFactory
             if (c == '\\')
             {
                 var escapeParseResult =
-                    EscapeSequenceParsing.parseEscape(chars, i);
+                    EscapeSequenceParsing.ParseEscape(chars, i);
                 switch (escapeParseResult.type)
                 {
                     case EscapeSequenceParsing.Result.Type.INVALID:
@@ -525,7 +525,7 @@ public class LexerATNFactory : ParserATNFactory
                         ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED,
                         g.fileName,
                         charSetAST.getToken(),
-                        CharSupport.getRangeEscapedString(state.prevCodePoint, codePoint));
+                        CharSupport.GetRangeEscapedString(state.prevCodePoint, codePoint));
             }
             CheckRangeAndAddToSet(charSetAST, set, state.prevCodePoint, codePoint);
             state = CharSetParseState.NONE;

@@ -44,7 +44,7 @@ public class ToolANTLRParser : ANTLRParser {
 			msg = ((v4ParserException)e).msg;
 		}
 		else {
-			msg = parser.GetErrorMessage(e, parser.getTokenNames());
+			msg = parser.GetErrorMessage(e, parser.GetTokenNames());
 		}
 		return msg;
 	}

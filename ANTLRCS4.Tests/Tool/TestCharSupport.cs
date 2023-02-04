@@ -14,103 +14,103 @@ public class TestCharSupport {
 	[TestMethod]
 	public void testGetANTLRCharLiteralForChar() {
 		Assert.AreEqual("'<INVALID>'",
-			CharSupport.getANTLRCharLiteralForChar(-1));
+			CharSupport.GetANTLRCharLiteralForChar(-1));
 		Assert.AreEqual("'\\n'",
-			CharSupport.getANTLRCharLiteralForChar('\n'));
+			CharSupport.GetANTLRCharLiteralForChar('\n'));
 		Assert.AreEqual("'\\\\'",
-			CharSupport.getANTLRCharLiteralForChar('\\'));
+			CharSupport.GetANTLRCharLiteralForChar('\\'));
 		Assert.AreEqual("'\\''",
-			CharSupport.getANTLRCharLiteralForChar('\''));
+			CharSupport.GetANTLRCharLiteralForChar('\''));
 		Assert.AreEqual("'b'",
-			CharSupport.getANTLRCharLiteralForChar('b'));
+			CharSupport.GetANTLRCharLiteralForChar('b'));
 		Assert.AreEqual("'\\uFFFF'",
-			CharSupport.getANTLRCharLiteralForChar(0xFFFF));
+			CharSupport.GetANTLRCharLiteralForChar(0xFFFF));
 		Assert.AreEqual("'\\u{10FFFF}'",
-			CharSupport.getANTLRCharLiteralForChar(0x10FFFF));
+			CharSupport.GetANTLRCharLiteralForChar(0x10FFFF));
 	}
 
 	[TestMethod]
 	public void testGetCharValueFromGrammarCharLiteral() {
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromGrammarCharLiteral(null));
+			CharSupport.GetCharValueFromGrammarCharLiteral(null));
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromGrammarCharLiteral(""));
+			CharSupport.GetCharValueFromGrammarCharLiteral(""));
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromGrammarCharLiteral("b"));
+			CharSupport.GetCharValueFromGrammarCharLiteral("b"));
 		Assert.AreEqual(111,
-			CharSupport.getCharValueFromGrammarCharLiteral("foo"));
+			CharSupport.GetCharValueFromGrammarCharLiteral("foo"));
 	}
 
 	[TestMethod]
 	public void testGetStringFromGrammarStringLiteral() {
 		Assert.IsNull(CharSupport
-			.getStringFromGrammarStringLiteral("foo\\u{bbb"));
+			.GetStringFromGrammarStringLiteral("foo\\u{bbb"));
 		Assert.IsNull(CharSupport
-			.getStringFromGrammarStringLiteral("foo\\u{[]bb"));
+			.GetStringFromGrammarStringLiteral("foo\\u{[]bb"));
 		Assert.IsNull(CharSupport
-			.getStringFromGrammarStringLiteral("foo\\u[]bb"));
+			.GetStringFromGrammarStringLiteral("foo\\u[]bb"));
 		Assert.IsNull(CharSupport
-			.getStringFromGrammarStringLiteral("foo\\ubb"));
+			.GetStringFromGrammarStringLiteral("foo\\ubb"));
 
 		Assert.AreEqual("oo»b", CharSupport
-			.getStringFromGrammarStringLiteral("foo\\u{bb}bb"));
+			.GetStringFromGrammarStringLiteral("foo\\u{bb}bb"));
 	}
 
 	[TestMethod]
 	public void testGetCharValueFromCharInGrammarLiteral() {
 		Assert.AreEqual(102,
-			CharSupport.getCharValueFromCharInGrammarLiteral("f"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("f"));
 
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\' "));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\' "));
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\ "));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\ "));
 		Assert.AreEqual(39,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\\'"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\\'"));
 		Assert.AreEqual(10,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\n"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\n"));
 
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromCharInGrammarLiteral("foobar"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("foobar"));
 		Assert.AreEqual(4660,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\u1234"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\u1234"));
 		Assert.AreEqual(18,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\u{12}"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\u{12}"));
 
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromCharInGrammarLiteral("\\u{"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("\\u{"));
 		Assert.AreEqual(-1,
-			CharSupport.getCharValueFromCharInGrammarLiteral("foo"));
+			CharSupport.GetCharValueFromCharInGrammarLiteral("foo"));
 	}
 
 	[TestMethod]
 	public void testParseHexValue() {
-		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", -1, 3));
-		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", 1, -1));
-		Assert.AreEqual(-1, CharSupport.parseHexValue("foobar", 1, 3));
-		Assert.AreEqual(35, CharSupport.parseHexValue("123456", 1, 3));
+		Assert.AreEqual(-1, CharSupport.ParseHexValue("foobar", -1, 3));
+		Assert.AreEqual(-1, CharSupport.ParseHexValue("foobar", 1, -1));
+		Assert.AreEqual(-1, CharSupport.ParseHexValue("foobar", 1, 3));
+		Assert.AreEqual(35, CharSupport.ParseHexValue("123456", 1, 3));
 	}
 
 	[TestMethod]
 	public void testCapitalize() {
-		Assert.AreEqual("Foo", CharSupport.capitalize("foo"));
+		Assert.AreEqual("Foo", CharSupport.Capitalize("foo"));
 	}
 
 	[TestMethod]
 	public void testGetIntervalSetEscapedString() {
 		Assert.AreEqual("",
-			CharSupport.getIntervalSetEscapedString(new IntervalSet()));
+			CharSupport.GetIntervalSetEscapedString(new IntervalSet()));
 		Assert.AreEqual("'\\u0000'",
-			CharSupport.getIntervalSetEscapedString(new IntervalSet(0)));
+			CharSupport.GetIntervalSetEscapedString(new IntervalSet(0)));
 		Assert.AreEqual("'\\u0001'..'\\u0003'",
-			CharSupport.getIntervalSetEscapedString(new IntervalSet(3, 1, 2)));
+			CharSupport.GetIntervalSetEscapedString(new IntervalSet(3, 1, 2)));
 	}
 
 	[TestMethod]
 	public void testGetRangeEscapedString() {
 		Assert.AreEqual("'\\u0002'..'\\u0004'",
-			CharSupport.getRangeEscapedString(2, 4));
+			CharSupport.GetRangeEscapedString(2, 4));
 		Assert.AreEqual("'\\u0002'",
-			CharSupport.getRangeEscapedString(2, 2));
+			CharSupport.GetRangeEscapedString(2, 2));
 	}
 }

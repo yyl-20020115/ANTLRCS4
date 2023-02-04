@@ -80,8 +80,8 @@ public abstract class Target
     {
         lock (this)
         {
-            var language = GetLanguage(); 
-            if (!languageTemplates.TryGetValue(language,out var templates))
+            var language = GetLanguage();
+            if (!languageTemplates.TryGetValue(language, out var templates))
             {
                 var version = GetVersion();
                 if (version == null ||
@@ -201,7 +201,7 @@ public abstract class Target
 	 */
     protected virtual void AppendUnicodeEscapedCodePoint(int codePoint, StringBuilder builder)
     {
-        UnicodeEscapes.appendEscapedCodePoint(builder, codePoint, GetLanguage());
+        UnicodeEscapes.AppendEscapedCodePoint(builder, codePoint, GetLanguage());
     }
 
     public virtual string GetTargetStringLiteralFromString(string s)
@@ -238,7 +238,7 @@ public abstract class Target
 
         for (int i = 1; i < literal.Length - 1;)
         {
-            int codePoint = char.ConvertToUtf32(literal,i);
+            int codePoint = char.ConvertToUtf32(literal, i);
             int toAdvance = new Rune(codePoint).Utf16SequenceLength;
             if (codePoint == '\\')
             {
@@ -248,7 +248,7 @@ public abstract class Target
                 // is what the default implementation is dealing with and remove
                 // the escape. The C target does this for instance.
                 //
-                int escapedCodePoint = char.ConvertToUtf32(literal,(i + toAdvance));
+                int escapedCodePoint = char.ConvertToUtf32(literal, (i + toAdvance));
                 toAdvance++;
                 switch (escapedCodePoint)
                 {
@@ -284,9 +284,9 @@ public abstract class Target
                         }
                         if (i + toAdvance <= literal.Length)
                         { // we might have an invalid \\uAB or something
-                            var fullEscape = literal.Substring(i,toAdvance);
+                            var fullEscape = literal.Substring(i, toAdvance);
                             AppendUnicodeEscapedCodePoint(
-                                CharSupport.getCharValueFromCharInGrammarLiteral(fullEscape),
+                                CharSupport.GetCharValueFromCharInGrammarLiteral(fullEscape),
                                 builder,
                                 escapeSpecial);
                         }
@@ -357,7 +357,7 @@ public abstract class Target
 
         char c = (char)v;
         //String escaped = getTargetCharValueEscape().get(c);
-        if (GetTargetCharValueEscape().TryGetValue(c,out var escaped))
+        if (GetTargetCharValueEscape().TryGetValue(c, out var escaped))
         {
             return escaped;
         }
@@ -393,10 +393,10 @@ public abstract class Target
 
     public virtual string GetRuleFunctionContextStructName(Rule r) => r.g.isLexer()
             ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
-            : Utils.capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+            : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
 
     public virtual string GetAltLabelContextStructName(string label)
-        => Utils.capitalize(label) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+        => Utils.Capitalize(label) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
 
     /** If we know which actual function, we can provide the actual ctx type.
 	 *  This will contain implicit labels etc...  From outside, though, we
@@ -408,7 +408,7 @@ public abstract class Target
         var r = function.rule;
         return r.g.isLexer()
             ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
-            : Utils.capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+            : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     // should be same for all refs to same token like ctx.ID within single rule function
@@ -581,7 +581,7 @@ public abstract class Target
     }
 
     //@Deprecated
-    protected virtual bool VisibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode) 
+    protected virtual bool VisibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
         => GetReservedWords().Contains(idNode.getText());
 
     public virtual bool TemplatesExist() => LoadTemplatesHelper(false) != null;
@@ -611,7 +611,7 @@ public abstract class Target
         if (result == null) return null;
         result.RegisterRenderer(typeof(int), new NumberRenderer());
         result.RegisterRenderer(typeof(string), new StringRenderer());
-        result.Listener=(new STE(this));
+        result.Listener = (new STE(this));
 
         return result;
     }

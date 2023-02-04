@@ -220,7 +220,7 @@ public class ParserATNFactory : ATNFactory
     }
 
     protected int GetTokenType(GrammarAST atom) 
-        => g.isLexer() ? CharSupport.getCharValueFromGrammarCharLiteral(atom.getText()) : g.getTokenType(atom.getText());
+        => g.isLexer() ? CharSupport.GetCharValueFromGrammarCharLiteral(atom.getText()) : g.getTokenType(atom.getText());
 
     /** For a non-lexer, just build a simple token reference atom. */
 

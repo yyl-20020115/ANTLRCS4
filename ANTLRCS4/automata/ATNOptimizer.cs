@@ -117,8 +117,8 @@ public static class ATNOptimizer
                                     // TODO: Token is missing (i.e. position in source is not displayed).
                                     g.Tools.ErrMgr.GrammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName,
                                             null,
-                                            CharSupport.getANTLRCharLiteralForChar(v),
-                                            CharSupport.getIntervalSetEscapedString(matchSet));
+                                            CharSupport.GetANTLRCharLiteralForChar(v),
+                                            CharSupport.GetIntervalSetEscapedString(matchSet));
                                     break;
                                 }
                             }

@@ -35,7 +35,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 		else {
 			String v = value.getText();
 			if ( v.StartsWith("'") || v.StartsWith("\"") ) {
-				v = CharSupport.getStringFromGrammarStringLiteral(v);
+				v = CharSupport.GetStringFromGrammarStringLiteral(v);
 				if (v == null) {
 					g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.getToken(), value.getText());
 					v = "";

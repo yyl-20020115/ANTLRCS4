@@ -8,7 +8,6 @@ using Antlr4.StringTemplate;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
-using System.Reflection;
 
 namespace org.antlr.v4.codegen;
 
@@ -26,13 +25,14 @@ public class CodeGenerator
 
     public readonly Tool tool;
 
-    public readonly String language;
+    public readonly string language;
 
     private Target target;
 
     public int lineWidth = 72;
 
-    public static CodeGenerator Create(Grammar g) => Create(g.Tools, g, g.getLanguage());
+    public static CodeGenerator Create(Grammar g) 
+        => Create(g.Tools, g, g.getLanguage());
 
     public static CodeGenerator Create(Tool tool, Grammar g, string language)
     {
@@ -52,7 +52,7 @@ public class CodeGenerator
         }
     }
 
-    private CodeGenerator(Tool tool, Grammar g, String language)
+    private CodeGenerator(Tool tool, Grammar g, string language)
     {
         this.g = g;
         this.tool = tool;
@@ -79,23 +79,23 @@ public class CodeGenerator
         return walker.walk(outputModel, header);
     }
 
-    public Template GenerateLexer() { return GenerateLexer(false); }
-    public Template GenerateLexer(bool header) { return Walk(CreateController().BuildLexerOutputModel(header), header); }
+    public Template GenerateLexer() => GenerateLexer(false);
+    public Template GenerateLexer(bool header) => Walk(CreateController().BuildLexerOutputModel(header), header);
 
-    public Template GenerateParser() { return GenerateParser(false); }
-    public Template GenerateParser(bool header) { return Walk(CreateController().BuildParserOutputModel(header), header); }
+    public Template GenerateParser() => GenerateParser(false);
+    public Template GenerateParser(bool header) => Walk(CreateController().BuildParserOutputModel(header), header);
 
-    public Template GenerateListener() { return GenerateListener(false); }
-    public Template GenerateListener(bool header) { return Walk(CreateController().BuildListenerOutputModel(header), header); }
+    public Template GenerateListener() => GenerateListener(false);
+    public Template GenerateListener(bool header) => Walk(CreateController().BuildListenerOutputModel(header), header);
 
-    public Template GenerateBaseListener() { return GenerateBaseListener(false); }
-    public Template GenerateBaseListener(bool header) { return Walk(CreateController().BuildBaseListenerOutputModel(header), header); }
+    public Template GenerateBaseListener() => GenerateBaseListener(false);
+    public Template GenerateBaseListener(bool header) => Walk(CreateController().BuildBaseListenerOutputModel(header), header);
 
-    public Template GenerateVisitor() { return GenerateVisitor(false); }
-    public Template GenerateVisitor(bool header) { return Walk(CreateController().BuildVisitorOutputModel(header), header); }
+    public Template GenerateVisitor() => GenerateVisitor(false);
+    public Template GenerateVisitor(bool header) => Walk(CreateController().BuildVisitorOutputModel(header), header);
 
-    public Template GenerateBaseVisitor() { return GenerateBaseVisitor(false); }
-    public Template GenerateBaseVisitor(bool header) { return Walk(CreateController().BuildBaseVisitorOutputModel(header), header); }
+    public Template GenerateBaseVisitor() => GenerateBaseVisitor(false);
+    public Template GenerateBaseVisitor(bool header) => Walk(CreateController().BuildBaseVisitorOutputModel(header), header);
 
     /** Generate a token vocab file with all the token names/types.  For example:
 	 *  ID=7
@@ -134,30 +134,15 @@ public class CodeGenerator
         return vocabFileST;
     }
 
-    public void WriteRecognizer(Template outputFileST, bool header)
-    {
-        target.GenFile(g, outputFileST, GetRecognizerFileName(header));
-    }
+    public void WriteRecognizer(Template outputFileST, bool header) => target.GenFile(g, outputFileST, GetRecognizerFileName(header));
 
-    public void WriteListener(Template outputFileST, bool header)
-    {
-        target.GenFile(g, outputFileST, GetListenerFileName(header));
-    }
+    public void WriteListener(Template outputFileST, bool header) => target.GenFile(g, outputFileST, GetListenerFileName(header));
 
-    public void WriteBaseListener(Template outputFileST, bool header)
-    {
-        target.GenFile(g, outputFileST, GetBaseListenerFileName(header));
-    }
+    public void WriteBaseListener(Template outputFileST, bool header) => target.GenFile(g, outputFileST, GetBaseListenerFileName(header));
 
-    public void WriteVisitor(Template outputFileST, bool header)
-    {
-        target.GenFile(g, outputFileST, GetVisitorFileName(header));
-    }
+    public void WriteVisitor(Template outputFileST, bool header) => target.GenFile(g, outputFileST, GetVisitorFileName(header));
 
-    public void WriteBaseVisitor(Template outputFileST, bool header)
-    {
-        target.GenFile(g, outputFileST, GetBaseVisitorFileName(header));
-    }
+    public void WriteBaseVisitor(Template outputFileST, bool header) => target.GenFile(g, outputFileST, GetBaseVisitorFileName(header));
 
     public void WriteVocabFile()
     {
@@ -177,8 +162,10 @@ public class CodeGenerator
         {
             //			long start = System.currentTimeMillis();
             var w = tool.getOutputFileWriter(g, fileName);
-            var wr = new AutoIndentWriter(w);
-            wr.LineWidth = (lineWidth);
+            var wr = new AutoIndentWriter(w)
+            {
+                LineWidth = (lineWidth)
+            };
             code.Write(wr);
             w.Close();
             //			long stop = System.currentTimeMillis();
@@ -196,7 +183,6 @@ public class CodeGenerator
     public string GetVisitorFileName() => GetVisitorFileName(false);
     public string GetBaseListenerFileName() => GetBaseListenerFileName(false);
     public string GetBaseVisitorFileName() => GetBaseVisitorFileName(false);
-
     public string GetRecognizerFileName(bool header) => target.GetRecognizerFileName(header);
     public string GetListenerFileName(bool header) => target.GetListenerFileName(header);
     public string GetVisitorFileName(bool header) => target.GetVisitorFileName(header);
@@ -207,7 +193,6 @@ public class CodeGenerator
 	 *  Returns null if no .tokens file should be generated.
 	 */
     public string GetVocabFileName() => g.name + VOCAB_FILE_EXTENSION;
-
     public string GetHeaderFileName()
     {
         var extST = Templates.GetInstanceOf("headerFileExtension");

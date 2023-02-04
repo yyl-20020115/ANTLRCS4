@@ -12,7 +12,6 @@ using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4.codegen;
@@ -64,7 +63,7 @@ public class ActionTranslator : ActionSplitterListener
         this.target = gen.Target;
     }
 
-    public static String ToString(List<ActionChunk> chunks)
+    public static string ToString(List<ActionChunk> chunks)
     {
         var buffer = new StringBuilder();
         foreach (var c in chunks) buffer.Append(c.ToString());
@@ -119,10 +118,10 @@ public class ActionTranslator : ActionSplitterListener
     }
 
     //@Override
-    public void Attr(string expr, Token x)
+    public virtual void Attr(string expr, Token x)
     {
         gen.g.Tools.Log("action-translator", "attr " + x);
-        tool.Attribute a = node.resolver.resolveToAttribute(x.getText(), node);
+        var a = node.resolver.resolveToAttribute(x.getText(), node);
         var name = x.getText();
         var escapedName = target.EscapeIfNeeded(name);
         if (a != null)
@@ -171,7 +170,7 @@ public class ActionTranslator : ActionSplitterListener
     }
 
     //@Override
-    public void QualifiedAttr(String expr, Token x, Token y)
+    public virtual void QualifiedAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "qattr " + x + "." + y);
         if (node.resolver.resolveToAttribute(x.getText(), node) != null)
@@ -181,7 +180,7 @@ public class ActionTranslator : ActionSplitterListener
             chunks.Add(new ActionText(nodeContext, "." + y.getText()));
             return;
         }
-        tool.Attribute a = node.resolver.resolveToAttribute(x.getText(), y.getText(), node);
+        var a = node.resolver.resolveToAttribute(x.getText(), y.getText(), node);
         if (a == null)
         {
             // Added in response to https://github.com/antlr/antlr4/issues/1211
@@ -193,7 +192,9 @@ public class ActionTranslator : ActionSplitterListener
         }
         switch (a.dict.type)
         {
-            case AttributeDict.DictType.ARG: chunks.Add(new ArgRef(nodeContext, y.getText(), target.EscapeIfNeeded(y.getText()))); break; // has to be current rule
+            case AttributeDict.DictType.ARG: 
+                chunks.Add(new ArgRef(nodeContext, y.getText(), target.EscapeIfNeeded(y.getText()))); 
+                break; // has to be current rule
             case AttributeDict.DictType.RET:
                 chunks.Add(new QRetValueRef(nodeContext, GetRuleLabel(x.getText()), y.getText(), target.EscapeIfNeeded(y.getText())));
                 break;
@@ -209,26 +210,26 @@ public class ActionTranslator : ActionSplitterListener
     }
 
     //@Override
-    public void SetAttr(String expr, Token x, Token rhs)
+    public virtual void SetAttr(string expr, Token x, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setAttr " + x + " " + rhs);
-        List<ActionChunk> rhsChunks = TranslateActionChunk(factory, rf, rhs.getText(), node);
-        String name = x.getText();
-        SetAttr s = new SetAttr(nodeContext, name, target.EscapeIfNeeded(name), rhsChunks);
+        var rhsChunks = TranslateActionChunk(factory, rf, rhs.getText(), node);
+        var name = x.getText();
+        var s = new SetAttr(nodeContext, name, target.EscapeIfNeeded(name), rhsChunks);
         chunks.Add(s);
     }
 
     //@Override
-    public void NonLocalAttr(String expr, Token x, Token y)
+    public virtual void NonLocalAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "nonLocalAttr " + x + "::" + y);
         var r = factory.GetGrammar().getRule(x.getText());
-        String name = y.getText();
+        var name = y.getText();
         chunks.Add(new NonLocalAttrRef(nodeContext, x.getText(), name, target.EscapeIfNeeded(name), r.index));
     }
 
     //@Override
-    public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs)
+    public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setNonLocalAttr " + x + "::" + y + "=" + rhs);
         var r = factory.GetGrammar().getRule(x.getText());
@@ -239,7 +240,7 @@ public class ActionTranslator : ActionSplitterListener
     }
 
     //@Override
-    public void Text(String text)
+    public virtual void Text(string text)
     {
         chunks.Add(new ActionText(nodeContext, text));
     }
@@ -249,7 +250,7 @@ public class ActionTranslator : ActionSplitterListener
         try
         {
             var c = tokenPropToModelMap[y.getText()];
-            var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(String) });
+            var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(string) });
             return ctor.Invoke(new object[] { nodeContext, GetTokenLabel(x.getText()) }) as TokenPropertyRef;
         }
         catch (Exception e)
@@ -264,7 +265,7 @@ public class ActionTranslator : ActionSplitterListener
         try
         {
             var c = (x != null ? rulePropToModelMap : thisRulePropToModelMap)[prop.getText()];
-            var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(String) });
+            var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(string) });
             return ctor.Invoke(new object[] { nodeContext, GetRuleLabel((x != null ? x : prop).getText()) }) as RulePropertyRef;
         }
         catch (Exception e)
@@ -274,9 +275,9 @@ public class ActionTranslator : ActionSplitterListener
         return null;
     }
 
-    public string GetTokenLabel(string x)
+    public virtual string GetTokenLabel(string x)
         => node.resolver.resolvesToLabel(x, node) ? x : target.GetImplicitTokenLabel(x);
 
-    public string GetRuleLabel(string x) 
+    public virtual string GetRuleLabel(string x) 
         => node.resolver.resolvesToLabel(x, node) ? x : target.GetImplicitRuleLabel(x);
 }

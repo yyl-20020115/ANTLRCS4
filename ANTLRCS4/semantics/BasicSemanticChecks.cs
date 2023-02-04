@@ -256,7 +256,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 				String altLabel = altAST.altLabel.getText();
 				// first check that label doesn't conflict with a rule
 				// label X or x can't be rule x.
-				if (ruleCollector.rules.TryGetValue(Utils.decapitalize(altLabel),out var r)) {
+				if (ruleCollector.rules.TryGetValue(Utils.Decapitalize(altLabel),out var r)) {
 					g.Tools.ErrMgr.GrammarError(ErrorType.ALT_LABEL_CONFLICTS_WITH_RULE,
 											   g.fileName, altAST.altLabel.token,
 											   altLabel,
@@ -294,7 +294,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 		string f = (fullyQualifiedName);
 		String fileName = f;
 		if ( g.originalGrammar!=null ) return; // don't warn about diff if this is implicit lexer
-		if ( !Utils.stripFileExtension(fileName).Equals(nameToken.getText()) &&
+		if ( !Utils.StripFileExtension(fileName).Equals(nameToken.getText()) &&
 		     !fileName.Equals(Grammar.GRAMMAR_FROM_STRING_NAME)) {
 			g.Tools.ErrMgr.GrammarError(ErrorType.FILE_AND_GRAMMAR_NAME_DIFFER,
 									   fileName, nameToken, nameToken.getText(), fileName);

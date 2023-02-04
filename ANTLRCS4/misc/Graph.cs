@@ -12,40 +12,44 @@ namespace org.antlr.v4.misc;
  *  This is only used to topologically sort a list of file dependencies
  *  at the moment.
  */
-public class Graph<T> {
+public class Graph<T>
+{
+    public class Node<T>
+    {
+        public T payload;
 
-	public class Node<T> {
-		public T payload;
+        public List<Node<T>> edges = new(); // points at which nodes?
 
-		public List<Node<T>> edges = new(); // points at which nodes?
+        public Node(T payload) => this.payload = payload;
 
-		public Node(T payload) { this.payload = payload; }
+        public void AddEdge(Node<T> n)
+        {
+            if (!edges.Contains(n)) edges.Add(n);
+        }
 
-		public void addEdge(Node<T> n) {
-			if ( !edges.Contains(n) ) edges.Add(n);
-		}
+        public override string ToString() => payload.ToString();
+    }
 
-		public override String ToString() { return payload.ToString(); }
-	}
+    /** Map from node payload to node containing it */
+    protected Dictionary<T, Node<T>> nodes = new();
 
-	/** Map from node payload to node containing it */
-	protected Dictionary<T,Node<T>> nodes = new ();
+    public void AddEdge(T a, T b)
+    {
+        //Console.Out.WriteLine("add edge "+a+" to "+b);
+        var a_node = GetNode(a);
+        var b_node = GetNode(b);
+        a_node.AddEdge(b_node);
+    }
 
-	public void addEdge(T a, T b) {
-		//Console.Out.WriteLine("add edge "+a+" to "+b);
-		Node<T> a_node = getNode(a);
-		Node<T> b_node = getNode(b);
-		a_node.addEdge(b_node);
-	}
+    public Node<T> GetNode(T a)
+    {
+        if (nodes.TryGetValue(a, out var existing)) return existing;
+        var n = new Node<T>(a);
+        nodes[a] = n;
+        return n;
+    }
 
-	public Node<T> getNode(T a) {
-		if ( nodes.TryGetValue(a,out var existing) ) return existing;
-		Node<T> n = new Node<T>(a);
-		nodes[a] = n;
-		return n;
-	}
-
-	/** DFS-based topological sort.  A valid sort is the reverse of
+    /** DFS-based topological sort.  A valid sort is the reverse of
 	 *  the post-order DFA traversal.  Amazingly simple but true.
 	 *  For sorting, I'm not following convention here since ANTLR
 	 *  needs the opposite.  Here's what I assume for sorting:
@@ -56,31 +60,38 @@ public class Graph<T> {
 	 *  So if this gives nonreversed postorder traversal, I get the order
 	 *  I want.
 	 */
-	public List<T> sort() {
-		HashSet<Node<T>> visited = new OrderedHashSet<Node<T>>();
-		List<T> sorted = new ();
-		while ( visited.Count < nodes.Count ) {
-			// pick any unvisited node, n
-			Node<T> n = null;
-			foreach (Node<T> tNode in nodes.Values) {
-				n = tNode;
-				if ( !visited.Contains(n) ) break;
-			}
-			if (n!=null) { // if at least one unvisited
-				DFS(n, visited, sorted);
-			}
-		}
-		return sorted;
-	}
+    public List<T> Sort()
+    {
+        var visited = new OrderedHashSet<Node<T>>();
+        List<T> sorted = new();
+        while (visited.Count < nodes.Count)
+        {
+            // pick any unvisited node, n
+            Node<T> n = null;
+            foreach (var tNode in nodes.Values)
+            {
+                n = tNode;
+                if (!visited.Contains(n)) break;
+            }
+            if (n != null)
+            { // if at least one unvisited
+                DFS(n, visited, sorted);
+            }
+        }
+        return sorted;
+    }
 
-	public void DFS(Node<T> n, HashSet<Node<T>> visited, List<T> sorted) {
-		if ( visited.Contains(n) ) return;
-		visited.Add(n);
-		if ( n.edges!=null ) {
-			foreach (Node<T> target in n.edges) {
-				DFS(target, visited, sorted);
-			}
-		}
-		sorted.Add(n.payload);
-	}
+    public void DFS(Node<T> n, HashSet<Node<T>> visited, List<T> sorted)
+    {
+        if (visited.Contains(n)) return;
+        visited.Add(n);
+        if (n.edges != null)
+        {
+            foreach (Node<T> target in n.edges)
+            {
+                DFS(target, visited, sorted);
+            }
+        }
+        sorted.Add(n.payload);
+    }
 }

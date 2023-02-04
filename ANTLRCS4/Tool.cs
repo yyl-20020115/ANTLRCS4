@@ -499,14 +499,14 @@ public class Tool {
 				if (lastSlash >= 0) {
 					vocabName = vocabName.Substring(lastSlash + 1);
 				}
-				g.addEdge(grammarName, vocabName);
+				g.AddEdge(grammarName, vocabName);
 			}
 			// add cycle to graph so we always process a grammar if no error
 			// even if no dependency
-			g.addEdge(grammarName, grammarName);
+			g.AddEdge(grammarName, grammarName);
 		}
 
-		List<String> sortedGrammarNames = g.sort();
+		List<String> sortedGrammarNames = g.Sort();
 //		Console.WriteLine("sortedGrammarNames="+sortedGrammarNames);
 
 		List<GrammarRootAST> sortedRoots = new ();

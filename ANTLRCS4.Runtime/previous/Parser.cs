@@ -76,7 +76,7 @@ public class Parser : BaseRecognizer
     {
         String tokenText;
         if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
-        else tokenText = "<missing " + getTokenNames()[expectedTokenType] + ">";
+        else tokenText = "<missing " + GetTokenNames()[expectedTokenType] + ">";
         CommonToken t = new CommonToken(expectedTokenType, tokenText);
         Token current = ((TokenStream)input).LT(1);
         if (current.getType() == Token.EOF)

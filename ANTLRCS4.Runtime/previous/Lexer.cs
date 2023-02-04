@@ -310,7 +310,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         errorRecovery = true;
          */
 
-        DisplayRecognitionError(this.getTokenNames(), e);
+        DisplayRecognitionError(this.GetTokenNames(), e);
     }
 
     public String getErrorMessage(RecognitionException e, String[] tokenNames)

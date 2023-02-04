@@ -6,7 +6,6 @@
 
 using Antlr4.StringTemplate;
 using org.antlr.runtime.tree;
-using org.antlr.v4.analysis;
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.misc;
@@ -218,7 +217,7 @@ public class OutputModelController
             var altInfo = r.recPrimaryAlts[(i)];
             if (altInfo.altLabel == null) continue;
             var altActionST = codegenTemplates.GetInstanceOf("recRuleReplaceContext");
-            altActionST.Add("ctxName", Utils.capitalize(altInfo.altLabel));
+            altActionST.Add("ctxName", Utils.Capitalize(altInfo.altLabel));
             var altAction =
                 new Action(@delegate, function.altLabelCtxs[(altInfo.altLabel)], altActionST);
             var alt = primaryAltsCode[(i)];
@@ -239,7 +238,7 @@ public class OutputModelController
         for (int i = 0; i < opAltsCode.Count; i++)
         {
             Template altActionST;
-            var altInfo = r.recOpAlts.getElement(i);
+            var altInfo = r.recOpAlts.GetElement(i);
             string templateName;
             if (altInfo.altLabel != null)
             {
@@ -251,7 +250,7 @@ public class OutputModelController
             {
                 templateName = "recRuleAltStartAction";
                 altActionST = codegenTemplates.GetInstanceOf(templateName);
-                altActionST.Add("ctxName", Utils.capitalize(r.name));
+                altActionST.Add("ctxName", Utils.Capitalize(r.name));
             }
             altActionST.Add("ruleName", r.name);
             // add label of any lr ref we deleted
@@ -282,7 +281,7 @@ public class OutputModelController
         try
         {
             // walk AST of rule alts/elements
-            function.code = DefaultOutputModelFactory.List(walker.block(null, null));
+            function.code = DefaultOutputModelFactory.List(walker.Block(null, null));
             function.hasLookaheadBlock = walker.hasLookaheadBlock;
         }
         catch (RecognitionException e)
@@ -489,15 +488,7 @@ public class OutputModelController
 
     public CodeBlock CurrentBlock { get => currentBlock; set => currentBlock = value; }
 
-    public void SsetCurrentOuterMostAlternativeBlock(CodeBlockForOuterMostAlt currentOuterMostAlternativeBlock)
-    {
-        this.currentOuterMostAlternativeBlock = currentOuterMostAlternativeBlock;
-    }
+    public CodeBlockForOuterMostAlt CurrentOuterMostAlternativeBlock { get => currentOuterMostAlternativeBlock; set => this.currentOuterMostAlternativeBlock = value; }
 
-    public CodeBlockForOuterMostAlt SetCurrentOuterMostAlternativeBlock()
-    {
-        return currentOuterMostAlternativeBlock;
-    }
-
-    public int GetCodeBlockLevel() { return codeBlockLevel; }
+    public int CodeBlockLevel => codeBlockLevel;
 }

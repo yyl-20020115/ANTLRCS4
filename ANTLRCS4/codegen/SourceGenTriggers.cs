@@ -3,17 +3,15 @@
 using org.antlr.runtime.tree;
 using org.antlr.runtime;
 using org.antlr.v4.codegen.model;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.parse;
 
 namespace org.antlr.v4.codegen;
 public class SourceGenTriggers : TreeParser
 {
 
-    public static readonly String[] tokenNames = new String[] {
+    public static readonly string[] tokenNames = new string[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
         "ASSIGN", "AT", "CATCH", "CHANNELS", "COLON", "COLONCOLON", "COMMA", "COMMENT",
@@ -111,7 +109,7 @@ public class SourceGenTriggers : TreeParser
     public const int WILDCARD = 83;
 
     // delegates
-    public TreeParser[] getDelegates()
+    public TreeParser[] GetDelegates()
     {
         return new TreeParser[] { };
     }
@@ -137,9 +135,9 @@ public class SourceGenTriggers : TreeParser
     }
 
     //@Override 
-    public virtual String[] getTokenNames() { return SourceGenTriggers.tokenNames; }
+    public override string[] GetTokenNames() => tokenNames;
     //@Override 
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\codegen\\SourceGenTriggers.g"; }
+    public override string GetGrammarFileName() => "org\\antlr\\v4\\codegen\\SourceGenTriggers.g";
 
 
     public OutputModelController controller;
@@ -149,7 +147,7 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "dummy"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:59:1: dummy : block[null, null] ;
-    public void dummy()
+    public void Dummy()
     {
         try
         {
@@ -157,7 +155,7 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:59:9: block[null, null]
             {
                 PushFollow(FOLLOW_block_in_dummy61);
-                block(null, null);
+                Block(null, null);
                 state._fsp--;
 
             }
@@ -179,12 +177,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "block"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:61:1: block[GrammarAST label, GrammarAST ebnfRoot] returns [List<SrcOp> omos] : ^(blk= BLOCK ( ^( OPTIONS ( . )+ ) )? ( alternative )+ ) ;
-    public List<SrcOp> block(GrammarAST label, GrammarAST ebnfRoot)
+    public List<SrcOp> Block(GrammarAST label, GrammarAST ebnfRoot)
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST blk = null;
         TreeRuleReturnScope alternative1 = null;
 
@@ -236,7 +232,7 @@ public class SourceGenTriggers : TreeParser
 
                                     default:
                                         if (cnt1 >= 1) goto exit1;// break loop1;
-                                        EarlyExitException eee = new EarlyExitException(1, input);
+                                        var eee = new EarlyExitException(1, input);
                                         throw eee;
                                 }
                                 cnt1++;
@@ -249,7 +245,7 @@ public class SourceGenTriggers : TreeParser
 
                 }
 
-                List<CodeBlockForAlt> alts = new ();
+                List<CodeBlockForAlt> alts = new();
                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:64:7: ( alternative )+
                 int cnt3 = 0;
             loop3:
@@ -268,10 +264,10 @@ public class SourceGenTriggers : TreeParser
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:64:9: alternative
                             {
                                 PushFollow(FOLLOW_alternative_in_block109);
-                                alternative1 = alternative();
+                                alternative1 = Alternative();
                                 state._fsp--;
 
-                                alts.Add((alternative1 != null ? ((SourceGenTriggers.alternative_return)alternative1).altCodeBlock : null));
+                                alts.Add((alternative1 != null ? ((SourceGenTriggers.AlternativeReturn)alternative1).altCodeBlock : null));
                             }
                             break;
 
@@ -316,7 +312,7 @@ public class SourceGenTriggers : TreeParser
     // $ANTLR end "block"
 
 
-    public class alternative_return : TreeRuleReturnScope
+    public class AlternativeReturn : TreeRuleReturnScope
     {
 
         public CodeBlockForAlt altCodeBlock;
@@ -326,14 +322,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "alternative"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:79:1: alternative returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : a= alt[outerMost] ;
-    public SourceGenTriggers.alternative_return alternative()
+    public AlternativeReturn Alternative()
     {
-        SourceGenTriggers.alternative_return retval = new SourceGenTriggers.alternative_return();
+        AlternativeReturn retval = new();
         retval.start = input.LT(1);
-
-        TreeRuleReturnScope a = null;
-
-
         bool outerMost = inContext("RULE BLOCK");
 
         try
@@ -342,10 +334,10 @@ public class SourceGenTriggers : TreeParser
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:86:7: a= alt[outerMost]
             {
                 PushFollow(FOLLOW_alt_in_alternative161);
-                a = alt(outerMost);
                 state._fsp--;
 
-                retval.altCodeBlock = (a != null ? ((SourceGenTriggers.alt_return)a).altCodeBlock : null); retval.ops = (a != null ? ((SourceGenTriggers.alt_return)a).ops : null);
+                TreeRuleReturnScope a = Alt(outerMost);
+                retval.altCodeBlock = (a != null ? ((SourceGenTriggers.AltReturn)a).altCodeBlock : null); retval.ops = (a != null ? ((SourceGenTriggers.AltReturn)a).ops : null);
             }
 
 
@@ -366,7 +358,7 @@ public class SourceGenTriggers : TreeParser
     // $ANTLR end "alternative"
 
 
-    public class alt_return : TreeRuleReturnScope
+    public class AltReturn : TreeRuleReturnScope
     {
 
         public CodeBlockForAlt altCodeBlock;
@@ -376,16 +368,16 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "alt"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );
-    public SourceGenTriggers.alt_return alt(bool outerMost)
+    public AltReturn Alt(bool outerMost)
     {
-        SourceGenTriggers.alt_return retval = new SourceGenTriggers.alt_return();
+        var retval = new AltReturn();
         retval.start = input.LT(1);
 
         List<SrcOp> element2 = null;
 
 
         // set alt if outer ALT only (the only ones with alt field set to Alternative object)
-        AltAST altAST = (AltAST)retval.start;
+        AltAST altAST = retval.start as AltAST;
         if (outerMost) controller.SetCurrentOuterMostAlt(altAST.alt);
 
         try
@@ -403,7 +395,7 @@ public class SourceGenTriggers : TreeParser
                         // TODO: shouldn't we pass ((GrammarAST)retval.start) to controller.alternative()?
                         retval.altCodeBlock = controller.Alternative(controller.GetCurrentOuterMostAlt(), outerMost);
                         retval.altCodeBlock.ops = retval.ops = elems;
-                        controller.                        CurrentBlock = retval.altCodeBlock;
+                        controller.CurrentBlock = retval.altCodeBlock;
 
                         Match(input, ALT, FOLLOW_ALT_in_alt191);
                         Match(input, Token.DOWN, null);
@@ -420,7 +412,7 @@ public class SourceGenTriggers : TreeParser
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:102:10: elementOptions
                                 {
                                     PushFollow(FOLLOW_elementOptions_in_alt193);
-                                    elementOptions();
+                                    ElementOptions();
                                     state._fsp--;
 
                                 }
@@ -446,7 +438,7 @@ public class SourceGenTriggers : TreeParser
                                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:102:28: element
                                     {
                                         PushFollow(FOLLOW_element_in_alt198);
-                                        element2 = element();
+                                        element2 = Element();
                                         state._fsp--;
 
                                         if (element2 != null) elems.AddRange(element2);
@@ -455,7 +447,7 @@ public class SourceGenTriggers : TreeParser
 
                                 default:
                                     if (cnt5 >= 1) goto exit5;// break loop5;
-                                    EarlyExitException eee = new EarlyExitException(5, input);
+                                    var eee = new EarlyExitException(5, input);
                                     throw eee;
                             }
                             cnt5++;
@@ -483,7 +475,7 @@ public class SourceGenTriggers : TreeParser
                                 // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:104:10: elementOptions
                                 {
                                     PushFollow(FOLLOW_elementOptions_in_alt214);
-                                    elementOptions();
+                                    ElementOptions();
                                     state._fsp--;
 
                                 }
@@ -517,11 +509,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "element"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:108:1: element returns [List<SrcOp> omos] : ( labeledElement | atom[null,false] | subrule | ACTION | SEMPRED | ^( ACTION elementOptions ) | ^( SEMPRED elementOptions ) );
-    public List<SrcOp> element()
+    public List<SrcOp> Element()
     {
 
         List<SrcOp> omos = null;
-
 
         GrammarAST ACTION6 = null;
         GrammarAST SEMPRED7 = null;
@@ -611,7 +602,7 @@ public class SourceGenTriggers : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae2 =
+                                var nvae2 =
                                     new NoViableAltException("", 8, 5, input);
                                 throw nvae2;
                             }
@@ -624,7 +615,7 @@ public class SourceGenTriggers : TreeParser
                     }
                     break;
                 default:
-                    NoViableAltException nvae =
+                    var nvae =
                         new NoViableAltException("", 8, 0, input);
                     throw nvae;
             }
@@ -634,7 +625,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:109:4: labeledElement
                     {
                         PushFollow(FOLLOW_labeledElement_in_element246);
-                        labeledElement3 = labeledElement();
+                        labeledElement3 = LabeledElement();
                         state._fsp--;
 
                         omos = labeledElement3;
@@ -644,7 +635,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:110:4: atom[null,false]
                     {
                         PushFollow(FOLLOW_atom_in_element257);
-                        atom4 = atom(null, false);
+                        atom4 = Atom(null, false);
                         state._fsp--;
 
                         omos = atom4;
@@ -654,7 +645,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:111:4: subrule
                     {
                         PushFollow(FOLLOW_subrule_in_element267);
-                        subrule5 = subrule();
+                        subrule5 = Subrule();
                         state._fsp--;
 
                         omos = subrule5;
@@ -680,7 +671,7 @@ public class SourceGenTriggers : TreeParser
                         ACTION8 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element311);
                         Match(input, Token.DOWN, null);
                         PushFollow(FOLLOW_elementOptions_in_element313);
-                        elementOptions();
+                        ElementOptions();
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -694,7 +685,7 @@ public class SourceGenTriggers : TreeParser
                         SEMPRED9 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element325);
                         Match(input, Token.DOWN, null);
                         PushFollow(FOLLOW_elementOptions_in_element327);
-                        elementOptions();
+                        ElementOptions();
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -722,12 +713,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "labeledElement"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:118:1: labeledElement returns [List<SrcOp> omos] : ( ^( ASSIGN ID atom[$ID,false] ) | ^( PLUS_ASSIGN ID atom[$ID,false] ) | ^( ASSIGN ID block[$ID,null] ) | ^( PLUS_ASSIGN ID block[$ID,null] ) );
-    public List<SrcOp> labeledElement()
+    public List<SrcOp> LabeledElement()
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST ID10 = null;
         GrammarAST ID12 = null;
         GrammarAST ID14 = null;
@@ -769,7 +758,7 @@ public class SourceGenTriggers : TreeParser
                                 {
                                     input.consume();
                                 }
-                                NoViableAltException nvae =
+                                var nvae =
                                     new NoViableAltException("", 9, 5, input);
                                 throw nvae;
                             }
@@ -790,7 +779,7 @@ public class SourceGenTriggers : TreeParser
                             {
                                 input.consume();
                             }
-                            NoViableAltException nvae =
+                            var nvae =
                                 new NoViableAltException("", 9, 3, input);
                             throw nvae;
                         }
@@ -808,7 +797,7 @@ public class SourceGenTriggers : TreeParser
                     try
                     {
                         input.consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 9, 1, input);
                         throw nvae;
                     }
@@ -867,7 +856,7 @@ public class SourceGenTriggers : TreeParser
                             {
                                 input.consume();
                             }
-                            NoViableAltException nvae =
+                            var nvae =
                                 new NoViableAltException("", 9, 4, input);
                             throw nvae;
                         }
@@ -885,7 +874,7 @@ public class SourceGenTriggers : TreeParser
                     try
                     {
                         input.consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 9, 2, input);
                         throw nvae;
                     }
@@ -899,7 +888,7 @@ public class SourceGenTriggers : TreeParser
 
             else
             {
-                NoViableAltException nvae =
+                var nvae =
                     new NoViableAltException("", 9, 0, input);
                 throw nvae;
             }
@@ -913,7 +902,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         ID10 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement349);
                         PushFollow(FOLLOW_atom_in_labeledElement351);
-                        atom11 = atom(ID10, false);
+                        atom11 = Atom(ID10, false);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -928,7 +917,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         ID12 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement366);
                         PushFollow(FOLLOW_atom_in_labeledElement368);
-                        atom13 = atom(ID12, false);
+                        atom13 = Atom(ID12, false);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -943,7 +932,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         ID14 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement381);
                         PushFollow(FOLLOW_block_in_labeledElement383);
-                        block15 = block(ID14, null);
+                        block15 = Block(ID14, null);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -958,7 +947,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         ID16 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_labeledElement398);
                         PushFollow(FOLLOW_block_in_labeledElement400);
-                        block17 = block(ID16, null);
+                        block17 = Block(ID16, null);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -986,12 +975,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "subrule"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:125:1: subrule returns [List<SrcOp> omos] : ( ^( OPTIONAL b= block[null,$OPTIONAL] ) | ( ^(op= CLOSURE b= block[null,null] ) | ^(op= POSITIVE_CLOSURE b= block[null,null] ) ) | block[null, null] );
-    public List<SrcOp> subrule()
+    public List<SrcOp> Subrule()
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST op = null;
         GrammarAST OPTIONAL18 = null;
         List<SrcOp> b = null;
@@ -1020,7 +1007,7 @@ public class SourceGenTriggers : TreeParser
                     }
                     break;
                 default:
-                    NoViableAltException nvae =
+                    var nvae =
                         new NoViableAltException("", 11, 0, input);
                     throw nvae;
             }
@@ -1032,7 +1019,7 @@ public class SourceGenTriggers : TreeParser
                         OPTIONAL18 = (GrammarAST)Match(input, OPTIONAL, FOLLOW_OPTIONAL_in_subrule421);
                         Match(input, Token.DOWN, null);
                         PushFollow(FOLLOW_block_in_subrule425);
-                        b = block(null, OPTIONAL18);
+                        b = Block(null, OPTIONAL18);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -1059,7 +1046,7 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            NoViableAltException nvae =
+                            var nvae =
                                 new NoViableAltException("", 10, 0, input);
                             throw nvae;
                         }
@@ -1072,7 +1059,7 @@ public class SourceGenTriggers : TreeParser
                                     op = (GrammarAST)Match(input, CLOSURE, FOLLOW_CLOSURE_in_subrule441);
                                     Match(input, Token.DOWN, null);
                                     PushFollow(FOLLOW_block_in_subrule445);
-                                    b = block(null, null);
+                                    b = Block(null, null);
                                     state._fsp--;
 
                                     Match(input, Token.UP, null);
@@ -1085,7 +1072,7 @@ public class SourceGenTriggers : TreeParser
                                     op = (GrammarAST)Match(input, POSITIVE_CLOSURE, FOLLOW_POSITIVE_CLOSURE_in_subrule456);
                                     Match(input, Token.DOWN, null);
                                     PushFollow(FOLLOW_block_in_subrule460);
-                                    b = block(null, null);
+                                    b = Block(null, null);
                                     state._fsp--;
 
                                     Match(input, Token.UP, null);
@@ -1096,12 +1083,12 @@ public class SourceGenTriggers : TreeParser
                         }
 
 
-                        List<CodeBlockForAlt> alts = new ();
-                        SrcOp blk = b[0];
-                        CodeBlockForAlt alt = new CodeBlockForAlt(controller.@delegate);
+                        List<CodeBlockForAlt> alts = new();
+                        var blk = b[0];
+                        CodeBlockForAlt alt = new(controller.@delegate);
                         alt.AddOp(blk);
                         alts.Add(alt);
-                        SrcOp loop = controller.GetEBNFBlock(op, alts); // "star it"
+                        var loop = controller.GetEBNFBlock(op, alts); // "star it"
                         hasLookaheadBlock |= loop is PlusBlock || loop is StarBlock;
                         omos = DefaultOutputModelFactory.List(loop);
 
@@ -1111,7 +1098,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:143:5: block[null, null]
                     {
                         PushFollow(FOLLOW_block_in_subrule476);
-                        block19 = block(null, null);
+                        block19 = Block(null, null);
                         state._fsp--;
 
                         omos = block19;
@@ -1137,7 +1124,7 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "blockSet"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:146:1: blockSet[GrammarAST label, bool invert] returns [List<SrcOp> omos] : ^( SET ( atom[label,invert] )+ ) ;
-    public List<SrcOp> blockSet(GrammarAST label, bool invert)
+    public List<SrcOp> BlockSet(GrammarAST label, bool invert)
     {
 
         List<SrcOp> omos = null;
@@ -1170,7 +1157,7 @@ public class SourceGenTriggers : TreeParser
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:147:13: atom[label,invert]
                             {
                                 PushFollow(FOLLOW_atom_in_blockSet508);
-                                atom(label, invert);
+                                Atom(label, invert);
                                 state._fsp--;
                             }
                             break;
@@ -1206,12 +1193,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "atom"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:160:1: atom[GrammarAST label, bool invert] returns [List<SrcOp> omos] : ( ^( NOT a= atom[$label, true] ) | range[label] | ^( DOT ID terminal[$label] ) | ^( DOT ID ruleref[$label] ) | ^( WILDCARD . ) | WILDCARD | terminal[label] | ruleref[label] | blockSet[$label, invert] );
-    public List<SrcOp> atom(GrammarAST label, bool invert)
+    public List<SrcOp> Atom(GrammarAST label, bool invert)
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST WILDCARD22 = null;
         GrammarAST WILDCARD23 = null;
         List<SrcOp> a = null;
@@ -1263,7 +1248,7 @@ public class SourceGenTriggers : TreeParser
                                         {
                                             input.consume();
                                         }
-                                        NoViableAltException nvae3 =
+                                        var nvae3 =
                                             new NoViableAltException("", 13, 11, input);
                                         throw nvae3;
                                     }
@@ -1284,7 +1269,7 @@ public class SourceGenTriggers : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae2 =
+                                    var nvae2 =
                                         new NoViableAltException("", 13, 8, input);
                                     throw nvae2;
                                 }
@@ -1302,7 +1287,7 @@ public class SourceGenTriggers : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae4 =
+                                var nvae4 =
                                     new NoViableAltException("", 13, 3, input);
                                 throw nvae4;
                             }
@@ -1332,7 +1317,7 @@ public class SourceGenTriggers : TreeParser
                             try
                             {
                                 input.consume();
-                                NoViableAltException nvae5 =
+                                var nvae5 =
                                     new NoViableAltException("", 13, 4, input);
                                 throw nvae5;
                             }
@@ -1361,7 +1346,7 @@ public class SourceGenTriggers : TreeParser
                     }
                     break;
                 default:
-                    NoViableAltException nvae =
+                    var nvae =
                         new NoViableAltException("", 13, 0, input);
                     throw nvae;
             }
@@ -1373,7 +1358,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, NOT, FOLLOW_NOT_in_atom538);
                         Match(input, Token.DOWN, null);
                         PushFollow(FOLLOW_atom_in_atom542);
-                        a = atom(label, true);
+                        a = Atom(label, true);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -1385,7 +1370,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:162:4: range[label]
                     {
                         PushFollow(FOLLOW_range_in_atom552);
-                        range21 = range(label);
+                        range21 = Range(label);
                         state._fsp--;
 
                         omos = range21;
@@ -1398,7 +1383,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         Match(input, ID, FOLLOW_ID_in_atom569);
                         PushFollow(FOLLOW_terminal_in_atom571);
-                        terminal(label);
+                        Terminal(label);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -1412,7 +1397,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, Token.DOWN, null);
                         Match(input, ID, FOLLOW_ID_in_atom581);
                         PushFollow(FOLLOW_ruleref_in_atom583);
-                        ruleref(label);
+                        Ruleref(label);
                         state._fsp--;
 
                         Match(input, Token.UP, null);
@@ -1441,7 +1426,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:167:9: terminal[label]
                     {
                         PushFollow(FOLLOW_terminal_in_atom632);
-                        terminal24 = terminal(label);
+                        terminal24 = Terminal(label);
                         state._fsp--;
 
                         omos = terminal24;
@@ -1451,7 +1436,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:168:9: ruleref[label]
                     {
                         PushFollow(FOLLOW_ruleref_in_atom649);
-                        ruleref25 = ruleref(label);
+                        ruleref25 = Ruleref(label);
                         state._fsp--;
 
                         omos = ruleref25;
@@ -1461,7 +1446,7 @@ public class SourceGenTriggers : TreeParser
                     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:169:4: blockSet[$label, invert]
                     {
                         PushFollow(FOLLOW_blockSet_in_atom661);
-                        blockSet26 = blockSet(label, invert);
+                        blockSet26 = BlockSet(label, invert);
                         state._fsp--;
 
                         omos = blockSet26;
@@ -1487,12 +1472,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "ruleref"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:172:1: ruleref[GrammarAST label] returns [List<SrcOp> omos] : ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? ) ;
-    public List<SrcOp> ruleref(GrammarAST label)
+    public List<SrcOp> Ruleref(GrammarAST label)
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST RULE_REF27 = null;
         GrammarAST ARG_ACTION28 = null;
 
@@ -1536,7 +1519,7 @@ public class SourceGenTriggers : TreeParser
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:173:30: elementOptions
                             {
                                 PushFollow(FOLLOW_elementOptions_in_ruleref690);
-                                elementOptions();
+                                ElementOptions();
                                 state._fsp--;
 
                             }
@@ -1568,12 +1551,10 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "range"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:176:1: range[GrammarAST label] returns [List<SrcOp> omos] : ^( RANGE a= STRING_LITERAL b= STRING_LITERAL ) ;
-    public List<SrcOp> range(GrammarAST label)
+    public List<SrcOp> Range(GrammarAST label)
     {
 
         List<SrcOp> omos = null;
-
-
         GrammarAST a = null;
         GrammarAST b = null;
 
@@ -1608,12 +1589,9 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "terminal"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:180:1: terminal[GrammarAST label] returns [List<SrcOp> omos] : ( ^( STRING_LITERAL . ) | STRING_LITERAL | ^( TOKEN_REF ARG_ACTION . ) | ^( TOKEN_REF . ) | TOKEN_REF );
-    public List<SrcOp> terminal(GrammarAST label)
+    public List<SrcOp> Terminal(GrammarAST label)
     {
-
         List<SrcOp> omos = null;
-
-
         GrammarAST STRING_LITERAL29 = null;
         GrammarAST STRING_LITERAL30 = null;
         GrammarAST TOKEN_REF31 = null;
@@ -1644,7 +1622,7 @@ public class SourceGenTriggers : TreeParser
                     try
                     {
                         input.consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 16, 1, input);
                         throw nvae;
                     }
@@ -1682,7 +1660,7 @@ public class SourceGenTriggers : TreeParser
                                 {
                                     input.consume();
                                 }
-                                NoViableAltException nvae =
+                                var nvae =
                                     new NoViableAltException("", 16, 7, input);
                                 throw nvae;
                             }
@@ -1707,7 +1685,7 @@ public class SourceGenTriggers : TreeParser
                             {
                                 input.consume();
                             }
-                            NoViableAltException nvae =
+                            var nvae =
                                 new NoViableAltException("", 16, 5, input);
                             throw nvae;
                         }
@@ -1729,7 +1707,7 @@ public class SourceGenTriggers : TreeParser
                     try
                     {
                         input.consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 16, 2, input);
                         throw nvae;
                     }
@@ -1743,7 +1721,7 @@ public class SourceGenTriggers : TreeParser
 
             else
             {
-                NoViableAltException nvae =
+                var nvae =
                     new NoViableAltException("", 16, 0, input);
                 throw nvae;
             }
@@ -1818,7 +1796,7 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "elementOptions"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:188:1: elementOptions : ^( ELEMENT_OPTIONS ( elementOption )+ ) ;
-    public void elementOptions()
+    public void ElementOptions()
     {
         try
         {
@@ -1845,7 +1823,7 @@ public class SourceGenTriggers : TreeParser
                             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:189:25: elementOption
                             {
                                 PushFollow(FOLLOW_elementOption_in_elementOptions838);
-                                elementOption();
+                                ElementOption();
                                 state._fsp--;
 
                             }
@@ -1880,7 +1858,7 @@ public class SourceGenTriggers : TreeParser
 
     // $ANTLR start "elementOption"
     // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:192:1: elementOption : ( ID | ^( ASSIGN ID ID ) | ^( ASSIGN ID STRING_LITERAL ) | ^( ASSIGN ID ACTION ) | ^( ASSIGN ID INT ) );
-    public void elementOption()
+    public void ElementOption()
     {
         try
         {
@@ -1929,7 +1907,7 @@ public class SourceGenTriggers : TreeParser
                                     {
                                         input.consume();
                                     }
-                                    NoViableAltException nvae =
+                                    var nvae =
                                         new NoViableAltException("", 18, 4, input);
                                     throw nvae;
                                 }
@@ -1949,7 +1927,7 @@ public class SourceGenTriggers : TreeParser
                             {
                                 input.consume();
                             }
-                            NoViableAltException nvae =
+                            var nvae =
                                 new NoViableAltException("", 18, 3, input);
                             throw nvae;
                         }
@@ -1967,7 +1945,7 @@ public class SourceGenTriggers : TreeParser
                     try
                     {
                         input.consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 18, 2, input);
                         throw nvae;
                     }
@@ -1981,7 +1959,7 @@ public class SourceGenTriggers : TreeParser
 
             else
             {
-                NoViableAltException nvae =
+                var nvae =
                     new NoViableAltException("", 18, 0, input);
                 throw nvae;
             }
@@ -2055,65 +2033,34 @@ public class SourceGenTriggers : TreeParser
 
     // Delegated rules
 
-
-
-
-    //static final short[] DFA7_eot = DFA.unpackEncodedString(DFA7_eotS);
-    //static final short[] DFA7_eof = DFA.unpackEncodedString(DFA7_eofS);
-    //static final char[] DFA7_min = DFA.unpackEncodedStringToUnsignedChars(DFA7_minS);
-    //static final char[] DFA7_max = DFA.unpackEncodedStringToUnsignedChars(DFA7_maxS);
-    //static final short[] DFA7_accept = DFA.unpackEncodedString(DFA7_acceptS);
-    //static final short[] DFA7_special = DFA.unpackEncodedString(DFA7_specialS);
-    //static final short[][] DFA7_transition;
-
-    //static
-    //{
-    //    int numStates = DFA7_transitionS.length;
-    //    DFA7_transition = new short[numStates][];
-    //    for (int i = 0; i < numStates; i++)
-    //    {
-    //        DFA7_transition[i] = DFA.unpackEncodedString(DFA7_transitionS[i]);
-    //    }
-    //}
-    public static short[] Convert(char[] chars)
-    {
-        short[] shorts = new short[chars.Length];
-        for (int i = 0; i < shorts.Length; i++)
-        {
-            int c = chars[i];
-            shorts[i] = (short)c;
-        }
-        return shorts;
-    }
-
-    static readonly short[] DFA7_eot = Convert(new char[] { '\u0014', '\uffff' });
-    static readonly short[] DFA7_eof = Convert(new char[] { '\u0014', '\uffff' });
+    static readonly short[] DFA7_eot = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff' });
+    static readonly short[] DFA7_eof = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff' });
     static readonly char[] DFA7_min = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u0002', '\u0002', '\uffff', '\u0001', '\u000a', '\u0001', '\u0003', '\u0001', '\u0002', '\u0001', '\u0004', '\u0001', '\u001c', '\u0001', '\u0004', '\u0008', '\u0003' };
     static readonly char[] DFA7_max = new char[] { '\u0001', '\u0045', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u0002', '\u0002', '\uffff', '\u0002', '\u001c', '\u0001', '\u0002', '\u0001', '\u0053', '\u0001', '\u001c', '\u0001', '\u003b', '\u0004', '\u0003', '\u0004', '\u001c' };
-    static readonly short[] DFA7_accept = Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
-    static readonly short[] DFA7_special = Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
+    static readonly short[] DFA7_accept = RuntimeUtils.Convert(new char[] { '\u0004', '\uffff', '\u0001', '\u0001', '\u0001', '\u0002', '\u000e', '\uffff' });
+    static readonly short[] DFA7_special = RuntimeUtils.Convert(new char[] { '\u0014', '\uffff', '\u007d', '\u003e' });
     static readonly short[][] DFA7_transition = new short[][]{
-    Convert(new char[] {'\u0001','\u0001'}),
-    Convert(new char[] {'\u0001','\u0002'}),
-    Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0001','\uffff','\u0001','\u0003','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
-    Convert(new char[] {'\u0001','\u0006'}),
-    Convert(new char[0]),
-    Convert(new char[0]),
-    Convert(new char[] {'\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u000a'}),
-    Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
-    Convert(new char[] {'\u0001','\u000b'}),
-    Convert(new char[] {'\u0001','\u000e','\u0017','\uffff','\u0001','\u000c','\u0001','\uffff','\u0001','\u000f','\u001c','\uffff','\u0001','\u000d'}),
-    Convert(new char[] {'\u0001','\u0010'}),
-    Convert(new char[] {'\u0001','\u0011'}),
-    Convert(new char[] {'\u0001','\u0012'}),
-    Convert(new char[] {'\u0001','\u0013'}),
-    Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
-    Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'})
-};
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0001'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0002'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0001','\uffff','\u0001','\u0003','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0006'}),
+    RuntimeUtils.Convert(new char[0]),
+    RuntimeUtils.Convert(new char[0]),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000a'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0004','\u0005','\uffff','\u0001','\u0004','\u0009','\uffff','\u0001','\u0004','\u0012','\uffff','\u0001','\u0004','\u0006','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0004','\uffff','\u0001','\u0004','\u0001','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0002','\uffff','\u0001','\u0004','\u0007','\uffff','\u0002','\u0004','\u0002','\uffff','\u0001','\u0005','\u0002','\uffff','\u0002','\u0004','\u0003','\uffff','\u0002','\u0004'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000b'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u000e','\u0017','\uffff','\u0001','\u000c','\u0001','\uffff','\u0001','\u000f','\u001c','\uffff','\u0001','\u000d'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0010'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0011'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0012'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0013'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'}),
+    RuntimeUtils.Convert(new char[] {'\u0001','\u0009','\u0006','\uffff','\u0001','\u0008','\u0011','\uffff','\u0001','\u0007'})
+    };
 
 
     protected class DFA7 : antlr.runtime.DFA
@@ -2132,10 +2079,7 @@ public class SourceGenTriggers : TreeParser
             this.transition = DFA7_transition;
         }
         //@Override
-        public override String getDescription()
-        {
-            return "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
-        }
+        public override string getDescription() => "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
     }
 
     public static readonly BitSet FOLLOW_block_in_dummy61 = new BitSet(new long[] { 0x0000000000000002L });

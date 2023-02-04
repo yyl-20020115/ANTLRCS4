@@ -15,77 +15,78 @@ using Parser = org.antlr.v4.codegen.model.Parser;
 
 namespace org.antlr.v4.codegen;
 
-public interface OutputModelFactory {
-	Grammar GetGrammar();
+public interface OutputModelFactory
+{
+    Grammar GetGrammar();
 
-	CodeGenerator GetGenerator();
+    CodeGenerator GetGenerator();
 
     OutputModelController Controller { get; set; }
 
-    ParserFile ParserFile(String fileName);
+    ParserFile ParserFile(string fileName);
 
-	Parser Parser(ParserFile file);
+    Parser Parser(ParserFile file);
 
-	LexerFile LexerFile(String fileName);
+    LexerFile LexerFile(string fileName);
 
-	Lexer Lexer(LexerFile file);
+    Lexer Lexer(LexerFile file);
 
-	RuleFunction Rule(Rule r);
+    RuleFunction Rule(Rule r);
 
-	List<SrcOp> RulePostamble(RuleFunction function, Rule r);
+    List<SrcOp> RulePostamble(RuleFunction function, Rule r);
 
-	// ELEMENT TRIGGERS
+    // ELEMENT TRIGGERS
 
-	CodeBlockForAlt Alternative(Alternative alt, bool outerMost);
+    CodeBlockForAlt Alternative(Alternative alt, bool outerMost);
 
-	CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, List<SrcOp> ops);
+    CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, List<SrcOp> ops);
 
-	CodeBlockForAlt Epsilon(Alternative alt, bool outerMost);
+    CodeBlockForAlt Epsilon(Alternative alt, bool outerMost);
 
-	List<SrcOp> RuleRef(GrammarAST ID, GrammarAST label, GrammarAST args);
+    List<SrcOp> RuleRef(GrammarAST ID, GrammarAST label, GrammarAST args);
 
-	List<SrcOp> TokenRef(GrammarAST ID, GrammarAST label, GrammarAST args);
+    List<SrcOp> TokenRef(GrammarAST ID, GrammarAST label, GrammarAST args);
 
-	List<SrcOp> StringRef(GrammarAST ID, GrammarAST label);
+    List<SrcOp> StringRef(GrammarAST ID, GrammarAST label);
 
-	List<SrcOp> Set(GrammarAST setAST, GrammarAST label, bool invert);
+    List<SrcOp> Set(GrammarAST setAST, GrammarAST label, bool invert);
 
-	List<SrcOp> Wildcard(GrammarAST ast, GrammarAST labelAST);
+    List<SrcOp> Wildcard(GrammarAST ast, GrammarAST labelAST);
 
-	List<SrcOp> Action(ActionAST ast);
+    List<SrcOp> Action(ActionAST ast);
 
-	List<SrcOp> Sempred(ActionAST ast);
+    List<SrcOp> Sempred(ActionAST ast);
 
-	Choice GetChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label);
+    Choice GetChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label);
 
-	Choice GetEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
+    Choice GetEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
 
-	Choice GetLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts);
+    Choice GetLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts);
 
-	Choice GetComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts);
+    Choice GetComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts);
 
-	Choice GetLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
+    Choice GetLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
 
-	Choice GetComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
+    Choice GetComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts);
 
-	List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST);
+    List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST);
 
-	bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op);
+    bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op);
 
-	// CONTEXT INFO
+    // CONTEXT INFO
 
-	OutputModelObject GetRoot();
+    OutputModelObject GetRoot();
 
-	RuleFunction GetCurrentRuleFunction();
+    RuleFunction GetCurrentRuleFunction();
 
-	Alternative GetCurrentOuterMostAlt();
+    Alternative GetCurrentOuterMostAlt();
 
-	CodeBlock GetCurrentBlock();
+    CodeBlock GetCurrentBlock();
 
-	CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock();
+    CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock();
 
-	int GetCodeBlockLevel();
+    int GetCodeBlockLevel();
 
-	int GetTreeLevel();
+    int GetTreeLevel();
 
 }
