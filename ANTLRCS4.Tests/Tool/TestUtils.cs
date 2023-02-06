@@ -8,7 +8,7 @@ namespace org.antlr.v4.test.tool;
 public class TestUtils
 {
     [TestMethod]
-    public void testStripFileExtension()
+    public void TestStripFileExtension()
     {
         Assert.IsNull(Utils.StripFileExtension(null));
         Assert.AreEqual("foo", Utils.StripFileExtension("foo"));
@@ -16,96 +16,100 @@ public class TestUtils
     }
 
     [TestMethod]
-    public void testJoin()
+    public void TestJoin()
     {
         Assert.AreEqual("foobbar",
-            Utils.Join(new String[] { "foo", "bar" }, "b"));
+            Utils.Join(new string[] { "foo", "bar" }, "b"));
         Assert.AreEqual("foo,bar",
-            Utils.Join(new String[] { "foo", "bar" }, ","));
+            Utils.Join(new string[] { "foo", "bar" }, ","));
     }
 
     [TestMethod]
-    public void testSortLinesInString()
+    public void TestSortLinesInString()
     {
         Assert.AreEqual("bar\nbaz\nfoo\n",
             Utils.sortLinesInString("foo\nbar\nbaz"));
     }
 
     [TestMethod]
-    public void testNodesToStrings()
+    public void TestNodesToStrings()
     {
-        List<GrammarAST> values = new();
-        values.Add(new GrammarAST(Token.EOR_TOKEN_TYPE));
-        values.Add(new GrammarAST(Token.DOWN));
-        values.Add(new GrammarAST(Token.UP));
+        List<GrammarAST> values = new()
+        {
+            new GrammarAST(Token.EOR_TOKEN_TYPE),
+            new GrammarAST(Token.DOWN),
+            new GrammarAST(Token.UP)
+        };
 
         Assert.IsNull(Utils.NodesToStrings(new List<GrammarAST>()));
         Assert.IsNotNull(Utils.NodesToStrings(values));
     }
 
     [TestMethod]
-    public void testCapitalize()
+    public void TestCapitalize()
     {
         Assert.AreEqual("Foo", Utils.Capitalize("foo"));
     }
 
     [TestMethod]
-    public void testDecapitalize()
+    public void TestDecapitalize()
     {
         Assert.AreEqual("fOO", Utils.Decapitalize("FOO"));
     }
     public class UFA<T> : Utils.Func1<T,string>
     {
         //@Override
-        public string Exec(T arg1)
-        {
-            return "baz";
-        }
+        public string Exec(T arg1) => "baz";
     }
 
     [TestMethod]
-    public void testSelect()
+    public void TestSelect()
     {
-        List<String> strings = new();
-        strings.Add("foo");
-        strings.Add("bar");
+        List<string> strings = new()
+        {
+            "foo",
+            "bar"
+        };
 
-        Utils.Func1<String, String> func1 = new UFA<string>();
+        var func1 = new UFA<string>();
 
-        List<String> retval = new();
-        retval.Add("baz");
-        retval.Add("baz");
+        List<string> retval = new()
+        {
+            "baz",
+            "baz"
+        };
 
         Assert.AreEqual(retval, Utils.Select(strings, func1));
         Assert.IsNull(Utils.Select<string,string>(null, null));
     }
 
     [TestMethod]
-    public void testFind()
+    public void TestFind()
     {
-        List<String> strings = new();
-        strings.Add("foo");
-        strings.Add("bar");
-        Assert.AreEqual("foo", Utils.Find(strings, typeof(String)));
+        List<string> strings = new()
+        {
+            "foo",
+            "bar"
+        };
+        Assert.AreEqual("foo", Utils.Find(strings, typeof(string)));
 
-        Assert.IsNull(Utils.Find(new List<string>(), typeof(String)));
+        Assert.IsNull(Utils.Find(new List<string>(), typeof(string)));
     }
 
     public class UFB<T> : Utils.Filter<T>
     {
         //@Override
-        public bool Select(T o)
-        {
-            return true;
-        }
+        public bool Select(T o) => true;
     }
     [TestMethod]
-    public void testIndexOf()
+    public void TestIndexOf()
     {
-        List<String> strings = new();
-        strings.Add("foo");
-        strings.Add("bar");
-        Utils.Filter<string> filter = new UFB<string>();
+        List<string> strings = new()
+        {
+            "foo",
+            "bar"
+        };
+        var filter = new UFB<string>();
         Assert.AreEqual(0, Utils.IndexOf(strings, filter));
         Assert.AreEqual(-1, Utils.IndexOf<string>(new(), null));
     }
@@ -113,29 +117,30 @@ public class TestUtils
     public class UFC<T> : Utils.Filter<T>
     {
         //@Override
-        public bool Select(T o)
-        {
-            return true;
-        }
+        public bool Select(T o) => true;
     }
     [TestMethod]
-    public void testLastIndexOf()
+    public void TestLastIndexOf()
     {
-        List<String> strings = new();
-        strings.Add("foo");
-        strings.Add("bar");
-        Utils.Filter<string> filter = new UFC<string>();
-        Assert.AreEqual(1, Utils.LastIndexOf(strings, filter));
+        List<string> strings = new()
+        {
+            "foo",
+            "bar"
+        };
+        var filter = new UFC<string>();
+        Assert.AreEqual(+1, Utils.LastIndexOf(strings, filter));
         Assert.AreEqual(-1, Utils.LastIndexOf<string>(new(), null));
     }
 
     [TestMethod]
-    public void testSetSize()
+    public void TestSetSize()
     {
-        List<String> strings = new();
-        strings.Add("foo");
-        strings.Add("bar");
-        strings.Add("baz");
+        List<string> strings = new()
+        {
+            "foo",
+            "bar",
+            "baz"
+        };
         Assert.AreEqual(3, strings.Count);
 
         Utils.SetSize(strings, 2);

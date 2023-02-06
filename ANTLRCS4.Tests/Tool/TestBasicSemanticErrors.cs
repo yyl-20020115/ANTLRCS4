@@ -100,6 +100,6 @@ public class TestBasicSemanticErrors
 
     private void TestErrors(string[] strings, bool v)
     {
-        throw new NotImplementedException();
+        ToolTestUtils.TestErrors(strings, v);
     }
 }

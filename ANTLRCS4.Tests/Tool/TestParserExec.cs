@@ -57,7 +57,7 @@ public class TestParserExec
             "ID : 'a'..'z'+ ;\n" +
             "INT : '0'..'9'+ ;\n" +
             "WS : (' '|'\\t'|'\\n')+ -> skip ;\n";
-        var executedState = ToolTestUtils.execParser("T.g4", grammar, "TParser", "TLexer",
+        var executedState = ToolTestUtils.ExecParser("T.g4", grammar, "TParser", "TLexer",
                 "s", "abc 34", true);
         var expecting =
             "Decision 0:\n" +
@@ -77,8 +77,8 @@ public class TestParserExec
     [TestMethod]
     public void TestFailedPredicateExceptionState()
     {
-        var grammar = ToolTestUtils.load("Psl.g4");
-        var executedState = ToolTestUtils.execParser("Psl.g4", grammar,
+        var grammar = ToolTestUtils.Load("Psl.g4");
+        var executedState = ToolTestUtils.ExecParser("Psl.g4", grammar,
                 "PslParser", "PslLexer", "floating_constant", " . 234", false);
         Assert.AreEqual("", executedState.output);
         Assert.AreEqual("line 1:6 rule floating_constant DEC:A floating-point constant cannot have internal white space\n", executedState.errors);
@@ -115,9 +115,9 @@ public class TestParserExec
             "    | '«' '/' ID '»'\n" +
             "    ;";
 
-        ToolTestUtils.execLexer("ModeTagsLexer.g4", lexerGrammar, "ModeTagsLexer", "",
+        ToolTestUtils.ExecLexer("ModeTagsLexer.g4", lexerGrammar, "ModeTagsLexer", "",
                 tempDir, true);
-        var executedState = ToolTestUtils.execParser("ModeTagsParser.g4", parserGrammar,
+        var executedState = ToolTestUtils.ExecParser("ModeTagsParser.g4", parserGrammar,
                 "ModeTagsParser", "ModeTagsLexer",
                 "file", "", false,
                 tempDir);
@@ -150,7 +150,7 @@ public class TestParserExec
             "WS : [ \\t\\n\\r]+ -> skip ; // toss out all whitespace\n";
 
         var input = "2 9 10 3 1 2 3";
-        var executedState = ToolTestUtils.execParser("Data.g4", grammar,
+        var executedState = ToolTestUtils.ExecParser("Data.g4", grammar,
                 "DataParser", "DataLexer", "file", input, false);
         Assert.AreEqual("6\n", executedState.output);
         Assert.AreEqual("", executedState.errors);
@@ -172,7 +172,7 @@ public class TestParserExec
                 "WS: [ \\t\\n\\r]+ -> skip;";
 
         var input = "NEW Abc (Not a AND not B)";
-        var executedState = ToolTestUtils.execParser(
+        var executedState = ToolTestUtils.ExecParser(
                 "CaseInsensitiveGrammar.g4", grammar,
                 "CaseInsensitiveGrammarParser", "CaseInsensitiveGrammarLexer",
                 "e", input, false);

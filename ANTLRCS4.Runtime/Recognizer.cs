@@ -108,7 +108,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 
 		lock (ruleIndexMapCache) {
 			if (!ruleIndexMapCache.TryGetValue(ruleNames,out var result)) {
-				result = RuntimeUtils.toMap(ruleNames);
+				result = RuntimeUtils.ToMap(ruleNames);
 
 				ruleIndexMapCache.Add(ruleNames, result);
 			}

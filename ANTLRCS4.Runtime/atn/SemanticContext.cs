@@ -288,7 +288,7 @@ public abstract class SemanticContext {
 
 		//@Override
 		public String toString() {
-			return RuntimeUtils.join(opnds, "&&");
+			return RuntimeUtils.Join(opnds, "&&");
         }
     }
 
@@ -385,7 +385,7 @@ public abstract class SemanticContext {
 
         //@Override
         public String toString() {
-			return RuntimeUtils.join((opnds), "||");
+			return RuntimeUtils.Join((opnds), "||");
         }
     }
 

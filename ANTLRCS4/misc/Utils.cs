@@ -135,7 +135,7 @@ public static class Utils
     }
 
     /** Find exact object type or subclass of cl in list */
-    public static T Fsind<T>(List<T> ops, Type cl) where T : class
+    public static T Find<T>(List<T> ops, Type cl) where T : class
     {
         foreach (var o in ops)
         {

@@ -97,7 +97,7 @@ public class TestATNSerialization
             "0->2 EPSILON 0,0,0\n" +
             "2->3 NOT_SET 0,0,0\n" +
             "3->1 EPSILON 0,0,0\n";
-        var atn = ToolTestUtils.createATN(g, true);
+        var atn = ToolTestUtils.CreateATN(g, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -278,7 +278,7 @@ public class TestATNSerialization
             "7->8 ATOM 98,0,0\n" +
             "8->4 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -304,7 +304,7 @@ public class TestATNSerialization
             "3->4 ATOM 128169,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -330,7 +330,7 @@ public class TestATNSerialization
             "3->4 RANGE 97,128169,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -368,7 +368,7 @@ public class TestATNSerialization
                         "7->8 SET 1,0,0\n" +
                         "8->4 EPSILON 0,0,0\n" +
                         "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -414,7 +414,7 @@ public class TestATNSerialization
                 "1:4\n" +
                 "2:7\n" +
                 "3:9\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -441,7 +441,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -467,7 +467,7 @@ public class TestATNSerialization
             "3->4 RANGE 48,57,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -495,7 +495,7 @@ public class TestATNSerialization
                 "4->5 ATOM 0,0,1\n" +
                 "5->2 EPSILON 0,0,0\n" +
                 "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -527,7 +527,7 @@ public class TestATNSerialization
                 "6->2 EPSILON 0,0,0\n" +
                 "0:0\n" +
                 "1:5\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -561,7 +561,7 @@ public class TestATNSerialization
                 "7->2 EPSILON 0,0,0\n" +
                 "0:0\n" +
                 "1:6\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -611,7 +611,7 @@ public class TestATNSerialization
                 "13->14 ACTION 2,1,0\n" +
                 "14->6 EPSILON 0,0,0\n" +
                 "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -662,7 +662,7 @@ public class TestATNSerialization
             "3->4 SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -689,7 +689,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -716,7 +716,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -743,7 +743,7 @@ public class TestATNSerialization
             "3->4 SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -770,7 +770,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -797,7 +797,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -824,7 +824,7 @@ public class TestATNSerialization
             "3->4 SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -851,7 +851,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -878,7 +878,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -905,7 +905,7 @@ public class TestATNSerialization
             "3->4 SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -932,7 +932,7 @@ public class TestATNSerialization
             "3->4 NOT_SET 0,0,0\n" +
             "4->2 EPSILON 0,0,0\n" +
             "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -998,7 +998,7 @@ public class TestATNSerialization
                 "0:0\n" +
                 "1:1\n" +
                 "2:11\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -1028,7 +1028,7 @@ public class TestATNSerialization
                 "4->5 NOT_SET 1,0,0\n" +
                 "5->2 EPSILON 0,0,0\n" +
                 "0:0\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -1088,7 +1088,7 @@ public class TestATNSerialization
             "17->9 EPSILON 0,0,0\n" +
             "0:0\n" +
             "1:1\n";
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);
@@ -1147,7 +1147,7 @@ public class TestATNSerialization
 
     private static void CheckResults(Grammar g, string expecting)
     {
-        var atn = ToolTestUtils.createATN(g, true);
+        var atn = ToolTestUtils.CreateATN(g, true);
         var serialized = ATNSerializer.getSerialized(atn);
         var result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.toArray());
         Assert.AreEqual(expecting, result);

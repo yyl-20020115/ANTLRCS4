@@ -17,51 +17,51 @@ using System.Text;
 
 namespace org.antlr.v4.test.tool;
 
-
 public class ToolTestUtils
 {
-    public static ExecutedState execLexer(String grammarFileName, String grammarStr, String lexerName, String input)
+    public static ExecutedState ExecLexer(string grammarFileName, string grammarStr,
+        string lexerName, string input)
     {
-        return execLexer(grammarFileName, grammarStr, lexerName, input, null, false);
+        return ExecLexer(grammarFileName, grammarStr, lexerName, input, null, false);
     }
 
-    public static ExecutedState execLexer(String grammarFileName, String grammarStr, String lexerName, String input,
-                                      string tempDir, bool saveTestDir)
+    public static ExecutedState ExecLexer(string grammarFileName, string grammarStr, 
+        string lexerName, string input, string tempDir, bool saveTestDir)
     {
-        return execRecognizer(grammarFileName, grammarStr, null, lexerName,
+        return ExecRecognizer(grammarFileName, grammarStr, null, lexerName,
                 null, input, false, tempDir, saveTestDir);
     }
 
-    public static ExecutedState execParser(String grammarFileName, String grammarStr,
-                                       String parserName, String lexerName, String startRuleName,
-                                       String input, bool showDiagnosticErrors
+    public static ExecutedState ExecParser(string grammarFileName, string grammarStr,
+                                       string parserName, string lexerName, string startRuleName,
+                                       string input, bool showDiagnosticErrors
     )
     {
-        return execParser(grammarFileName, grammarStr, parserName, lexerName, startRuleName,
+        return ExecParser(grammarFileName, grammarStr, parserName, lexerName, startRuleName,
                 input, showDiagnosticErrors, null);
     }
 
-    public static ExecutedState execParser(String grammarFileName, String grammarStr,
-                                    String parserName, String lexerName, String startRuleName,
-                                    String input, bool showDiagnosticErrors, string workingDir
+    public static ExecutedState ExecParser(string grammarFileName, string grammarStr,
+                                    string parserName, string lexerName, string startRuleName,
+                                    string input, bool showDiagnosticErrors, string workingDir
     )
     {
-        return execRecognizer(grammarFileName, grammarStr, parserName, lexerName,
+        return ExecRecognizer(grammarFileName, grammarStr, parserName, lexerName,
                 startRuleName, input, showDiagnosticErrors, workingDir, false);
     }
 
-    private static ExecutedState execRecognizer(String grammarFileName, String grammarStr,
-                                         String parserName, String lexerName, String startRuleName,
-                                         String input, bool showDiagnosticErrors,
+    private static ExecutedState ExecRecognizer(string grammarFileName, string grammarStr,
+                                         string parserName, string lexerName, string startRuleName,
+                                         string input, bool showDiagnosticErrors,
                                          string workingDir, bool saveTestDir)
     {
-        RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, lexerName,
+        var runOptions = CreateOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, lexerName,
                 false, true, startRuleName, input,
                 false, showDiagnosticErrors, Stage.Execute, false);
-        JavaRunner runner = new JavaRunner(workingDir, saveTestDir);
+        var runner = new JavaRunner(workingDir, saveTestDir);
         {
-            State result = runner.Run(runOptions);
-            if (!(result is ExecutedState))
+            var result = runner.Run(runOptions);
+            if (result is not ExecutedState)
             {
                 Assert.Fail(result.GetErrorMessage());
             }
@@ -69,10 +69,10 @@ public class ToolTestUtils
         }
     }
 
-    public static RunOptions createOptionsForJavaToolTests(
-            String grammarFileName, String grammarStr, String parserName, String lexerName,
-            bool useListener, bool useVisitor, String startRuleName,
-            String input, bool profile, bool showDiagnosticErrors,
+    public static RunOptions CreateOptionsForJavaToolTests(
+            string grammarFileName, string grammarStr, string parserName, string lexerName,
+            bool useListener, bool useVisitor, string startRuleName,
+            string input, bool profile, bool showDiagnosticErrors,
             Stage endStage, bool returnObject
     )
     {
@@ -81,27 +81,27 @@ public class ToolTestUtils
                 JavaRunner.runtimeTestParserName);
     }
 
-    public static void testErrors(String[] pairs, bool printTree)
+    public static void TestErrors(string[] pairs, bool printTree)
     {
         for (int i = 0; i < pairs.Length; i += 2)
         {
-            String grammarStr = pairs[i];
-            String expect = pairs[i + 1];
+            var grammarStr = pairs[i];
+            var expect = pairs[i + 1];
 
-            String[] lines = grammarStr.Split('\n');
-            String fileName = getFilenameFromFirstLineOfGrammar(lines[0]);
+            string[] lines = grammarStr.Split('\n');
+            var fileName = GetFilenameFromFirstLineOfGrammar(lines[0]);
 
-            String tempDirName = "AntlrTestErrors-" + Thread.CurrentThread.Name + "-"
+            var tempDirName = "AntlrTestErrors-" + Thread.CurrentThread.Name + "-"
                 + DateTime.Now.Millisecond;
-            String tempTestDir = Path.Combine(RuntimeTestUtils.TempDirectory, tempDirName);
+            var tempTestDir = Path.Combine(RuntimeTestUtils.TempDirectory, tempDirName);
 
             try
             {
-                ErrorQueue equeue = Generator.AntlrOnString(tempTestDir, null, fileName, grammarStr, false);
+                var equeue = Generator.AntlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-                String actual = equeue.ToString(true);
+                var actual = equeue.ToString(true);
                 actual = actual.Replace(tempTestDir + Path.DirectorySeparatorChar, "");
-                String msg = grammarStr;
+                var msg = grammarStr;
                 msg = msg.Replace("\n", "\\n");
                 msg = msg.Replace("\r", "\\r");
                 msg = msg.Replace("\t", "\\t");
@@ -121,35 +121,35 @@ public class ToolTestUtils
         }
     }
 
-    public static String getFilenameFromFirstLineOfGrammar(String line)
+    public static string GetFilenameFromFirstLineOfGrammar(string line)
     {
-        String fileName = "A" + Tool.GRAMMAR_EXTENSION;
+        var fileName = "A" + Tool.GRAMMAR_EXTENSION;
         int grIndex = line.LastIndexOf("grammar");
         int semi = line.LastIndexOf(';');
         if (grIndex >= 0 && semi >= 0)
         {
             int space = line.IndexOf(' ', grIndex);
-            fileName = line.Substring(space + 1, semi - (space + 1)) + Tool.GRAMMAR_EXTENSION;
+            fileName = line[(space + 1)..semi] + Tool.GRAMMAR_EXTENSION;
         }
         if (fileName.Length == Tool.GRAMMAR_EXTENSION.Length) fileName = "A" + Tool.GRAMMAR_EXTENSION;
         return fileName;
     }
 
-    public static List<String> realElements(List<String> elements)
+    public static List<string> RealElements(List<string> elements)
     {
         return elements.ToArray()[Token.MIN_USER_TOKEN_TYPE..elements.Count].ToList();
 
         //return elements.subList(Token.MIN_USER_TOKEN_TYPE, elements.Count);
     }
 
-    public static String load(String fileName)
+    public static string Load(string fileName)
     {
         if (fileName == null)
         {
             return null;
         }
 
-        String fullFileName = Path.Combine(Environment.CurrentDirectory, nameof(ToolTestUtils), fileName);
+        var fullFileName = Path.Combine(Environment.CurrentDirectory, nameof(ToolTestUtils), fileName);
         int size = 65000;
         {
             var data = File.ReadAllBytes(fullFileName);// isr.read(data);
@@ -157,41 +157,41 @@ public class ToolTestUtils
         }
     }
 
-    public static ATN createATN(Grammar g, bool useSerializer)
+    public static ATN CreateATN(Grammar g, bool useSerializer)
     {
         if (g.atn == null)
         {
-            semanticProcess(g);
+            SemanticProcess(g);
             Assert.AreEqual(0, g.Tools.getNumErrors());
 
-            ParserATNFactory f = g.isLexer() ? new LexerATNFactory((LexerGrammar)g) : new ParserATNFactory(g);
+            var f = g.isLexer() ? new LexerATNFactory((LexerGrammar)g) : new ParserATNFactory(g);
 
             g.atn = f.CreateATN();
             Assert.AreEqual(0, g.Tools.getNumErrors());
         }
 
-        ATN atn = g.atn;
+        var atn = g.atn;
         if (useSerializer)
         {
             // sets some flags in ATN
-            IntegerList serialized = ATNSerializer.getSerialized(atn);
+            var serialized = ATNSerializer.getSerialized(atn);
             return new ATNDeserializer().deserialize(serialized.toArray());
         }
 
         return atn;
     }
 
-    public static void semanticProcess(Grammar g)
+    public static void SemanticProcess(Grammar gammar)
     {
-        if (g.ast != null && !g.ast.hasErrors)
+        if (gammar.ast != null && !gammar.ast.hasErrors)
         {
             //			Console.Out.WriteLine(g.ast.toStringTree());
-            Tool antlr = new Tool();
-            SemanticPipeline sem = new SemanticPipeline(g);
+            var antlr = new Tool();
+            var sem = new SemanticPipeline(gammar);
             sem.process();
-            if (g.getImportedGrammars() != null)
+            if (gammar.getImportedGrammars() != null)
             { // process imported grammars (if any)
-                foreach (Grammar imp in g.getImportedGrammars())
+                foreach (var imp in gammar.getImportedGrammars())
                 {
                     antlr.processNonCombinedGrammar(imp, false);
                 }
@@ -199,10 +199,10 @@ public class ToolTestUtils
         }
     }
 
-    public static IntegerList getTokenTypesViaATN(String input, LexerATNSimulator lexerATN)
+    public static IntegerList GetTokenTypesViaATN(string input, LexerATNSimulator lexerATN)
     {
-        ANTLRInputStream @in = new ANTLRInputStream(input);
-        IntegerList tokenTypes = new IntegerList();
+        var @in = new ANTLRInputStream(input);
+        var tokenTypes = new IntegerList();
         int ttype;
         do
         {

@@ -194,7 +194,7 @@ public class TestATNDeserialization
 
     protected static void CheckDeserializationIsStable(Grammar g)
     {
-        var atn = ToolTestUtils.createATN(g, false);
+        var atn = ToolTestUtils.CreateATN(g, false);
         var serialized = ATNSerializer.getSerialized(atn);
         var atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.toArray());
 

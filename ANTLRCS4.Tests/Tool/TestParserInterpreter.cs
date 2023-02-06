@@ -14,100 +14,100 @@ namespace org.antlr.v4.test.tool;
 public class TestParserInterpreter
 {
     [TestMethod]
-    public void testEmptyStartRule()
+    public void TestEmptyStartRule()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s :  ;",
             lg);
 
-        testInterp(lg, g, "s", "", "s");
-        testInterp(lg, g, "s", "a", "s");
+        TestInterp(lg, g, "s", "", "s");
+        TestInterp(lg, g, "s", "a", "s");
     }
 
     [TestMethod]
-    public void testA()
+    public void TestA()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : A ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "a", "(s a)");
+        var t = TestInterp(lg, g, "s", "a", "(s a)");
         Assert.AreEqual("0..0", t.getSourceInterval().ToString());
     }
 
     [TestMethod]
-    public void testEOF()
+    public void TestEOF()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : A EOF ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "a", "(s a <EOF>)");
+        ParseTree t = TestInterp(lg, g, "s", "a", "(s a <EOF>)");
         Assert.AreEqual("0..1", t.getSourceInterval().ToString());
     }
 
     [TestMethod]
-    public void testEOFInChild()
+    public void TestEOFInChild()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x ;\n" +
             "x : A EOF ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>))");
+        var t = TestInterp(lg, g, "s", "a", "(s (x a <EOF>))");
         Assert.AreEqual("0..1", t.getSourceInterval().ToString());
         Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString());
     }
 
     [TestMethod]
-    public void testEmptyRuleAfterEOFInChild()
+    public void TestEmptyRuleAfterEOFInChild()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x y;\n" +
             "x : A EOF ;\n" +
             "y : ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "a", "(s (x a <EOF>) y)");
+        var t = TestInterp(lg, g, "s", "a", "(s (x a <EOF>) y)");
         Assert.AreEqual("0..1", t.getSourceInterval().ToString()); // s
         Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString()); // x
                                                                                // unspecified		Assert.AreEqual("1..0", t.getChild(1).getSourceInterval().ToString()); // y
     }
 
     [TestMethod]
-    public void testEmptyRuleAfterJustEOFInChild()
+    public void TestEmptyRuleAfterJustEOFInChild()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x y;\n" +
             "x : EOF ;\n" +
             "y : ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) y)");
+        var t = TestInterp(lg, g, "s", "", "(s (x <EOF>) y)");
         Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
         Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
                                                                                // this next one is a weird special case where somebody tries to match beyond in the file
@@ -115,29 +115,29 @@ public class TestParserInterpreter
     }
 
     [TestMethod]
-    public void testEmptyInput()
+    public void TestEmptyInput()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x EOF ;\n" +
             "x : ;\n",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "", "(s x <EOF>)");
+        var t = TestInterp(lg, g, "s", "", "(s x <EOF>)");
         Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
         Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
     }
 
     [TestMethod]
-    public void testEmptyInputWithCallsAfter()
+    public void TestEmptyInputWithCallsAfter()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x y ;\n" +
             "x : EOF ;\n" +
@@ -145,167 +145,167 @@ public class TestParserInterpreter
             "z : ;",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "", "(s (x <EOF>) (y z))");
+        var t = TestInterp(lg, g, "s", "", "(s (x <EOF>) (y z))");
         Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
         Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
                                                                                // unspecified		Assert.AreEqual("0..-1", t.getChild(1).getSourceInterval().ToString()); // x
     }
 
     [TestMethod]
-    public void testEmptyFirstRule()
+    public void TestEmptyFirstRule()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : x A ;\n" +
             "x : ;\n",
             lg);
 
-        ParseTree t = testInterp(lg, g, "s", "a", "(s x a)");
+        var t = TestInterp(lg, g, "s", "a", "(s x a)");
         Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
                                                                    // This gets an empty interval because the stop token is null for x
         Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
     }
 
     [TestMethod]
-    public void testAorB()
+    public void TestAorB()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : A{;} | B ;",
             lg);
-        testInterp(lg, g, "s", "a", "(s a)");
-        testInterp(lg, g, "s", "b", "(s b)");
+        TestInterp(lg, g, "s", "a", "(s a)");
+        TestInterp(lg, g, "s", "b", "(s b)");
     }
 
     [TestMethod]
-    public void testCall()
+    public void TestCall()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : t C ;\n" +
             "t : A{;} | B ;\n",
             lg);
 
-        testInterp(lg, g, "s", "ac", "(s (t a) c)");
-        testInterp(lg, g, "s", "bc", "(s (t b) c)");
+        TestInterp(lg, g, "s", "ac", "(s (t a) c)");
+        TestInterp(lg, g, "s", "bc", "(s (t b) c)");
     }
 
     [TestMethod]
-    public void testCall2()
+    public void TestCall2()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : t C ;\n" +
             "t : u ;\n" +
             "u : A{;} | B ;\n",
             lg);
 
-        testInterp(lg, g, "s", "ac", "(s (t (u a)) c)");
-        testInterp(lg, g, "s", "bc", "(s (t (u b)) c)");
+        TestInterp(lg, g, "s", "ac", "(s (t (u a)) c)");
+        TestInterp(lg, g, "s", "bc", "(s (t (u b)) c)");
     }
 
     [TestMethod]
-    public void testOptionalA()
+    public void TestOptionalA()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : A? B ;\n",
             lg);
 
-        testInterp(lg, g, "s", "b", "(s b)");
-        testInterp(lg, g, "s", "ab", "(s a b)");
+        TestInterp(lg, g, "s", "b", "(s b)");
+        TestInterp(lg, g, "s", "ab", "(s a b)");
     }
 
     [TestMethod]
-    public void testOptionalAorB()
+    public void TestOptionalAorB()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : (A{;}|B)? C ;\n",
             lg);
 
-        testInterp(lg, g, "s", "c", "(s c)");
-        testInterp(lg, g, "s", "ac", "(s a c)");
-        testInterp(lg, g, "s", "bc", "(s b c)");
+        TestInterp(lg, g, "s", "c", "(s c)");
+        TestInterp(lg, g, "s", "ac", "(s a c)");
+        TestInterp(lg, g, "s", "bc", "(s b c)");
     }
 
     [TestMethod]
-    public void testStarA()
+    public void TestStarA()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : A* B ;\n",
             lg);
 
-        testInterp(lg, g, "s", "b", "(s b)");
-        testInterp(lg, g, "s", "ab", "(s a b)");
-        testInterp(lg, g, "s", "aaaaaab", "(s a a a a a a b)");
+        TestInterp(lg, g, "s", "b", "(s b)");
+        TestInterp(lg, g, "s", "ab", "(s a b)");
+        TestInterp(lg, g, "s", "aaaaaab", "(s a a a a a a b)");
     }
 
     [TestMethod]
-    public void testStarAorB()
+    public void TestStarAorB()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : (A{;}|B)* C ;\n",
             lg);
 
-        testInterp(lg, g, "s", "c", "(s c)");
-        testInterp(lg, g, "s", "ac", "(s a c)");
-        testInterp(lg, g, "s", "bc", "(s b c)");
-        testInterp(lg, g, "s", "abaaabc", "(s a b a a a b c)");
-        testInterp(lg, g, "s", "babac", "(s b a b a c)");
+        TestInterp(lg, g, "s", "c", "(s c)");
+        TestInterp(lg, g, "s", "ac", "(s a c)");
+        TestInterp(lg, g, "s", "bc", "(s b c)");
+        TestInterp(lg, g, "s", "abaaabc", "(s a b a a a b c)");
+        TestInterp(lg, g, "s", "babac", "(s b a b a c)");
     }
 
     [TestMethod]
-    public void testLeftRecursion()
+    public void TestLeftRecursion()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n" +
             "PLUS : '+' ;\n" +
             "MULT : '*' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : e ;\n" +
             "e : e MULT e\n" +
@@ -314,12 +314,12 @@ public class TestParserInterpreter
             "  ;\n",
             lg);
 
-        testInterp(lg, g, "s", "a", "(s (e a))");
-        testInterp(lg, g, "s", "a+a", "(s (e (e a) + (e a)))");
-        testInterp(lg, g, "s", "a*a", "(s (e (e a) * (e a)))");
-        testInterp(lg, g, "s", "a+a+a", "(s (e (e (e a) + (e a)) + (e a)))");
-        testInterp(lg, g, "s", "a*a+a", "(s (e (e (e a) * (e a)) + (e a)))");
-        testInterp(lg, g, "s", "a+a*a", "(s (e (e a) + (e (e a) * (e a))))");
+        TestInterp(lg, g, "s", "a", "(s (e a))");
+        TestInterp(lg, g, "s", "a+a", "(s (e (e a) + (e a)))");
+        TestInterp(lg, g, "s", "a*a", "(s (e (e a) * (e a)))");
+        TestInterp(lg, g, "s", "a+a+a", "(s (e (e (e a) + (e a)) + (e a)))");
+        TestInterp(lg, g, "s", "a*a+a", "(s (e (e (e a) * (e a)) + (e a)))");
+        TestInterp(lg, g, "s", "a+a*a", "(s (e (e a) + (e (e a) * (e a))))");
     }
 
     /**
@@ -327,16 +327,16 @@ public class TestParserInterpreter
 	 * https://github.com/antlr/antlr4/issues/461
 	 */
     [TestMethod]
-    public void testLeftRecursiveStartRule()
+    public void TestLeftRecursiveStartRule()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
             "lexer grammar L;\n" +
             "A : 'a' ;\n" +
             "B : 'b' ;\n" +
             "C : 'c' ;\n" +
             "PLUS : '+' ;\n" +
             "MULT : '*' ;\n");
-        Grammar g = new Grammar(
+        var g = new Grammar(
             "parser grammar T;\n" +
             "s : e ;\n" +
             "e : e MULT e\n" +
@@ -345,18 +345,18 @@ public class TestParserInterpreter
             "  ;\n",
             lg);
 
-        testInterp(lg, g, "e", "a", "(e a)");
-        testInterp(lg, g, "e", "a+a", "(e (e a) + (e a))");
-        testInterp(lg, g, "e", "a*a", "(e (e a) * (e a))");
-        testInterp(lg, g, "e", "a+a+a", "(e (e (e a) + (e a)) + (e a))");
-        testInterp(lg, g, "e", "a*a+a", "(e (e (e a) * (e a)) + (e a))");
-        testInterp(lg, g, "e", "a+a*a", "(e (e a) + (e (e a) * (e a)))");
+        TestInterp(lg, g, "e", "a", "(e a)");
+        TestInterp(lg, g, "e", "a+a", "(e (e a) + (e a))");
+        TestInterp(lg, g, "e", "a*a", "(e (e a) * (e a))");
+        TestInterp(lg, g, "e", "a+a+a", "(e (e (e a) + (e a)) + (e a))");
+        TestInterp(lg, g, "e", "a*a+a", "(e (e (e a) * (e a)) + (e a))");
+        TestInterp(lg, g, "e", "a+a*a", "(e (e a) + (e (e a) * (e a)))");
     }
 
     [TestMethod]
-    public void testCaseInsensitiveTokensInParser()
+    public void TestCaseInsensitiveTokensInParser()
     {
-        LexerGrammar lg = new LexerGrammar(
+        var lg = new LexerGrammar(
                 "lexer grammar L;\n" +
                 "options { caseInsensitive = true; }\n" +
                 "NOT: 'not';\n" +
@@ -366,7 +366,7 @@ public class TestParserInterpreter
                 "RB:  ')';\n" +
                 "ID: [a-z_][a-z_0-9]*;\n" +
                 "WS: [ \\t\\n\\r]+ -> skip;");
-        Grammar g = new Grammar(
+        var g = new Grammar(
                 "parser grammar T;\n" +
                 "options { caseInsensitive = true; }\n" +
                 "e\n" +
@@ -376,17 +376,17 @@ public class TestParserInterpreter
                 "    | 'new' ID '(' e ')'\n" +
                 "    ;", lg);
 
-        testInterp(lg, g, "e", "NEW Abc (Not a AND not B)", "(e NEW Abc ( (e (e Not (e a)) AND (e not (e B))) ))");
+        TestInterp(lg, g, "e", "NEW Abc (Not a AND not B)", "(e NEW Abc ( (e (e Not (e a)) AND (e not (e B))) ))");
     }
 
-    ParseTree testInterp(LexerGrammar lg, Grammar g,
-                    String startRule, String input,
-                    String expectedParseTree)
+    static ParseTree TestInterp(LexerGrammar lg, Grammar g,
+                    string startRule, string input,
+                    string expectedParseTree)
     {
-        LexerInterpreter lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream tokens = new CommonTokenStream(lexEngine);
-        ParserInterpreter parser = g.createParserInterpreter(tokens);
-        ParseTree t = parser.parse(g.rules[(startRule)].index);
+        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var tokens = new CommonTokenStream(lexEngine);
+        var parser = g.createParserInterpreter(tokens);
+        var t = parser.parse(g.rules[(startRule)].index);
         Assert.AreEqual(expectedParseTree, t.toStringTree(parser));
         return t;
     }

@@ -52,7 +52,7 @@ public class ErrorQueue : ANTLRToolListener {
 
     public string ToString(bool rendered) {
 		if (!rendered) {
-			return RuntimeUtils.join(all, "\n");
+			return RuntimeUtils.Join(all, "\n");
 		}
 
 		if (tool == null) {

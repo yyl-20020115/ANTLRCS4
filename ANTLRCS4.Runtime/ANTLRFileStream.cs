@@ -28,7 +28,7 @@ public class ANTLRFileStream : ANTLRInputStream {
 
 	public void load(String fileName, Encoding encoding)
 	{
-		data = RuntimeUtils.readFile(fileName, encoding);
+		data = RuntimeUtils.ReadFile(fileName, encoding);
 		this.n = data.Length;
 	}
 

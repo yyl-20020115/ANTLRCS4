@@ -67,7 +67,7 @@ public class AnalysisPipeline
             {
                 var anal = new LL1Analyzer(g.atn);
                 look = anal.getDecisionLookahead(state);
-                g.Tools.Log("LL1", "look=" + RuntimeUtils.join(look, ","));
+                g.Tools.Log("LL1", "look=" + RuntimeUtils.Join(look, ","));
             }
 
             //assert s.decision + 1 >= g.decisionLOOK.size();

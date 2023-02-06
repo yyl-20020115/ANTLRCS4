@@ -10,181 +10,210 @@ using org.antlr.v4.tool;
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
-public class TestTokenTypeAssignment {
-	[TestMethod] public void testParserSimpleTokens(){
-		Grammar g = new Grammar(
-				"parser grammar t;\n"+
-				"a : A | B;\n" +
-				"b : C ;");
-		String rules = "a, b";
-		String tokenNames = "A, B, C";
-		checkSymbols(g, rules, tokenNames);
-	}
+public class TestTokenTypeAssignment
+{
+    [TestMethod]
+    public void TestParserSimpleTokens()
+    {
+        var g = new Grammar(
+                "parser grammar t;\n" +
+                "a : A | B;\n" +
+                "b : C ;");
+        var rules = "a, b";
+        var tokenNames = "A, B, C";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	[TestMethod] public void testParserTokensSection(){
-		Grammar g = new Grammar(
-				"parser grammar t;\n" +
-				"tokens {\n" +
-				"  C,\n" +
-				"  D" +
-				"}\n"+
-				"a : A | B;\n" +
-				"b : C ;");
-		String rules = "a, b";
-		String tokenNames = "A, B, C, D";
-		checkSymbols(g, rules, tokenNames);
-	}
+    [TestMethod]
+    public void TestParserTokensSection()
+    {
+        var g = new Grammar(
+                "parser grammar t;\n" +
+                "tokens {\n" +
+                "  C,\n" +
+                "  D" +
+                "}\n" +
+                "a : A | B;\n" +
+                "b : C ;");
+        var rules = "a, b";
+        var tokenNames = "A, B, C, D";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	[TestMethod] public void testLexerTokensSection(){
-		LexerGrammar g = new LexerGrammar(
-				"lexer grammar t;\n" +
-				"tokens {\n" +
-				"  C,\n" +
-				"  D" +
-				"}\n"+
-				"A : 'a';\n" +
-				"C : 'c' ;");
-		String rules = "A, C";
-		String tokenNames = "A, C, D";
-		checkSymbols(g, rules, tokenNames);
-	}
+    [TestMethod]
+    public void TestLexerTokensSection()
+    {
+        var g = new LexerGrammar(
+                "lexer grammar t;\n" +
+                "tokens {\n" +
+                "  C,\n" +
+                "  D" +
+                "}\n" +
+                "A : 'a';\n" +
+                "C : 'c' ;");
+        var rules = "A, C";
+        var tokenNames = "A, C, D";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	[TestMethod] public void testCombinedGrammarLiterals(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : 'begin' b 'end';\n" +
-				"b : C ';' ;\n" +
-				"ID : 'a' ;\n" +
-				"FOO : 'foo' ;\n" +  // "foo" is not a token name
-				"C : 'c' ;\n");        // nor is 'c'
-		String rules = "a, b";
-		String tokenNames = "C, FOO, ID, 'begin', 'end', ';'";
-		checkSymbols(g, rules, tokenNames);
-	}
+    [TestMethod]
+    public void TestCombinedGrammarLiterals()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : 'begin' b 'end';\n" +
+                "b : C ';' ;\n" +
+                "ID : 'a' ;\n" +
+                "FOO : 'foo' ;\n" +  // "foo" is not a token name
+                "C : 'c' ;\n");        // nor is 'c'
+        var rules = "a, b";
+        var tokenNames = "C, FOO, ID, 'begin', 'end', ';'";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	[TestMethod] public void testLiteralInParserAndLexer(){
-		// 'x' is token and char in lexer rule
-		Grammar g = new Grammar(
-				"grammar t;\n" +
-				"a : 'x' E ; \n" +
-				"E: 'x' '0' ;\n");
+    [TestMethod]
+    public void TestLiteralInParserAndLexer()
+    {
+        // 'x' is token and char in lexer rule
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : 'x' E ; \n" +
+                "E: 'x' '0' ;\n");
 
-		String literals = "['x']";
-		String foundLiterals = g.stringLiteralToTypeMap.Keys.ToString();
-		Assert.AreEqual(literals, foundLiterals);
+        var literals = "['x']";
+        var foundLiterals = g.stringLiteralToTypeMap.Keys.ToString();
+        Assert.AreEqual(literals, foundLiterals);
 
-		foundLiterals = g.implicitLexer.stringLiteralToTypeMap.Keys.ToString();
-		Assert.AreEqual("['x']", foundLiterals); // pushed in lexer from parser
+        foundLiterals = g.implicitLexer.stringLiteralToTypeMap.Keys.ToString();
+        Assert.AreEqual("['x']", foundLiterals); // pushed in lexer from parser
 
-		String[] typeToTokenName = g.getTokenDisplayNames();
-		HashSet<String> tokens = new ();
-		foreach (String t in typeToTokenName) if ( t!=null ) tokens.Add(t);
-		Assert.AreEqual("[<INVALID>, 'x', E]", tokens.ToString());
-	}
+        string[] typeToTokenName = g.getTokenDisplayNames();
+        HashSet<string> tokens = new();
+        foreach (var t in typeToTokenName) if (t != null) tokens.Add(t);
+        Assert.AreEqual("[<INVALID>, 'x', E]", tokens.ToString());
+    }
 
-	[TestMethod] public void testPredDoesNotHideNameToLiteralMapInLexer(){
-		// 'x' is token and char in lexer rule
-		Grammar g = new Grammar(
-				"grammar t;\n" +
-				"a : 'x' X ; \n" +
-				"X: 'x' {true}?;\n"); // must match as alias even with pred
+    [TestMethod]
+    public void TestPredDoesNotHideNameToLiteralMapInLexer()
+    {
+        // 'x' is token and char in lexer rule
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : 'x' X ; \n" +
+                "X: 'x' {true}?;\n"); // must match as alias even with pred
 
-		Assert.AreEqual("{'x'=1}", g.stringLiteralToTypeMap.ToString());
-		Assert.AreEqual("{EOF=-1, X=1}", g.tokenNameToTypeMap.ToString());
+        Assert.AreEqual("{'x'=1}", g.stringLiteralToTypeMap.ToString());
+        Assert.AreEqual("{EOF=-1, X=1}", g.tokenNameToTypeMap.ToString());
 
-		// pushed in lexer from parser
-		Assert.AreEqual("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.ToString());
-		Assert.AreEqual("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.ToString());
-	}
+        // pushed in lexer from parser
+        Assert.AreEqual("{'x'=1}", g.implicitLexer.stringLiteralToTypeMap.ToString());
+        Assert.AreEqual("{EOF=-1, X=1}", g.implicitLexer.tokenNameToTypeMap.ToString());
+    }
 
-	[TestMethod] public void testCombinedGrammarWithRefToLiteralButNoTokenIDRef(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : 'a' ;\n" +
-				"A : 'a' ;\n");
-		String rules = "a";
-		String tokenNames = "A, 'a'";
-		checkSymbols(g, rules, tokenNames);
-	}
+    [TestMethod]
+    public void TestCombinedGrammarWithRefToLiteralButNoTokenIDRef()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : 'a' ;\n" +
+                "A : 'a' ;\n");
+        var rules = "a";
+        var tokenNames = "A, 'a'";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	[TestMethod] public void testSetDoesNotMissTokenAliases(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : 'a'|'b' ;\n" +
-				"A : 'a' ;\n" +
-				"B : 'b' ;\n");
-		String rules = "a";
-		String tokenNames = "A, 'a', B, 'b'";
-		checkSymbols(g, rules, tokenNames);
-	}
+    [TestMethod]
+    public void TestSetDoesNotMissTokenAliases()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : 'a'|'b' ;\n" +
+                "A : 'a' ;\n" +
+                "B : 'b' ;\n");
+        var rules = "a";
+        var tokenNames = "A, 'a', B, 'b'";
+        CheckSymbols(g, rules, tokenNames);
+    }
 
-	// T E S T  L I T E R A L  E S C A P E S
+    // T E S T  L I T E R A L  E S C A P E S
 
-	[TestMethod] public void testParserCharLiteralWithEscape(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : '\\n';\n");
-		var literals = g.stringLiteralToTypeMap.Keys;
-		// must store literals how they appear in the antlr grammar
-		Assert.AreEqual("'\\n'", literals.ToArray()[0]);
-	}
+    [TestMethod]
+    public void TestParserCharLiteralWithEscape()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : '\\n';\n");
+        var literals = g.stringLiteralToTypeMap.Keys;
+        // must store literals how they appear in the antlr grammar
+        Assert.AreEqual("'\\n'", literals.ToArray()[0]);
+    }
 
-	[TestMethod] public void testParserCharLiteralWithBasicUnicodeEscape(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : '\\uABCD';\n");
-		var literals = g.stringLiteralToTypeMap.Keys;
-		// must store literals how they appear in the antlr grammar
-		Assert.AreEqual("'\\uABCD'", literals.ToArray()[0]);
-	}
+    [TestMethod]
+    public void TestParserCharLiteralWithBasicUnicodeEscape()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : '\\uABCD';\n");
+        var literals = g.stringLiteralToTypeMap.Keys;
+        // must store literals how they appear in the antlr grammar
+        Assert.AreEqual("'\\uABCD'", literals.ToArray()[0]);
+    }
 
-	[TestMethod] public void testParserCharLiteralWithExtendedUnicodeEscape(){
-		Grammar g = new Grammar(
-				"grammar t;\n"+
-				"a : '\\u{1ABCD}';\n");
-		var literals = g.stringLiteralToTypeMap.Keys;
-		// must store literals how they appear in the antlr grammar
-		Assert.AreEqual("'\\u{1ABCD}'", literals.ToArray()[0]);
-	}
+    [TestMethod]
+    public void TestParserCharLiteralWithExtendedUnicodeEscape()
+    {
+        var g = new Grammar(
+                "grammar t;\n" +
+                "a : '\\u{1ABCD}';\n");
+        var literals = g.stringLiteralToTypeMap.Keys;
+        // must store literals how they appear in the antlr grammar
+        Assert.AreEqual("'\\u{1ABCD}'", literals.ToArray()[0]);
+    }
 
-	protected void checkSymbols(Grammar g,
-								String rulesStr,
-								String allValidTokensStr)
-		
-	{
-		String[] typeToTokenName = g.getTokenNames();
-        HashSet<String> tokens = new HashSet<String>();
-		for (int i = 0; i < typeToTokenName.Length; i++) {
-			String t = typeToTokenName[i];
-			if ( t!=null ) {
-				if (t.StartsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX)) {
-					tokens.Add(g.getTokenDisplayName(i));
-				}
-				else {
-					tokens.Add(t);
-				}
-			}
-		}
+    protected static void CheckSymbols(Grammar g,
+                                String rulesStr,
+                                String allValidTokensStr)
 
-		// make sure expected tokens are there
-		var parts = allValidTokensStr.Split(", ");
-		foreach(var tokenName in parts)
-		{
-			Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token "+tokenName+" expected, but was undefined");
-			tokens.Remove(tokenName);
-		}
+    {
+        var typeToTokenName = g.getTokenNames();
+        var tokens = new HashSet<String>();
+        for (int i = 0; i < typeToTokenName.Length; i++)
+        {
+            var t = typeToTokenName[i];
+            if (t != null)
+            {
+                if (t.StartsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX))
+                {
+                    tokens.Add(g.getTokenDisplayName(i));
+                }
+                else
+                {
+                    tokens.Add(t);
+                }
+            }
+        }
+
+        // make sure expected tokens are there
+        var parts = allValidTokensStr.Split(", ");
+        foreach (var tokenName in parts)
+        {
+            Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token " + tokenName + " expected, but was undefined");
+            tokens.Remove(tokenName);
+        }
         // make sure there are not any others (other than <EOF> etc...)
-        foreach (String tokenName in tokens) {
-			Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name "+tokenName);
-		}
-		parts = rulesStr.Split(", ");	
-		int n = 0;
-		foreach(var ruleName in parts) { 
-			Assert.IsNotNull(g.getRule(ruleName), "rule "+ruleName+" expected");
-			n++;
-		}
-		//Console.Out.WriteLine("rules="+rules);
-		// make sure there are no extra rules
-		Assert.AreEqual(n, g.rules.Count, "number of rules mismatch; expecting "+n+"; found "+g.rules.Count);
-	}
+        foreach (var tokenName in tokens)
+        {
+            Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name " + tokenName);
+        }
+        parts = rulesStr.Split(", ");
+        int n = 0;
+        foreach (var ruleName in parts)
+        {
+            Assert.IsNotNull(g.getRule(ruleName), "rule " + ruleName + " expected");
+            n++;
+        }
+        //Console.Out.WriteLine("rules="+rules);
+        // make sure there are no extra rules
+        Assert.AreEqual(n, g.rules.Count, "number of rules mismatch; expecting " + n + "; found " + g.rules.Count);
+    }
 }

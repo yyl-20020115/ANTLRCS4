@@ -4,9 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
@@ -14,8 +11,6 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime;
-using org.antlr.v4.test.runtime.states;
-using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4.test.tool;
@@ -25,12 +20,12 @@ namespace org.antlr.v4.test.tool;
 [TestClass]
 public class TestPerformance
 {
-    public static readonly String NewLine = Environment.NewLine;
+    public static readonly string NewLine = Environment.NewLine;
     /**
      * Parse all java files under this package within the JDK_SOURCE_ROOT
      * (environment variable or property defined on the Java command line).
      */
-    private static readonly String TOP_PACKAGE = "java.lang";
+    private static readonly string TOP_PACKAGE = "java.lang";
     /**
      * {@code true} to load java files from sub-packages of
      * {@link #TOP_PACKAGE}.
@@ -67,7 +62,7 @@ public class TestPerformance
 	 * The instance of {@link Random} passed when calling
 	 * {@link Collections#shuffle}.
 	 */
-    private static readonly Random RANDOM = new Random();
+    private static readonly Random RANDOM = new ();
 
     /**
      * {@code true} to use the Java grammar with expressions in the v4

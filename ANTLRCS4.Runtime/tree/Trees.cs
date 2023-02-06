@@ -26,11 +26,11 @@ public static class Trees
     public static String toStringTree(Tree t, TreeTextProvider nodeTextProvider)
     {
         if (t == null) return "null";
-        String s = RuntimeUtils.escapeWhitespace(nodeTextProvider.GetText(t), false);
+        String s = RuntimeUtils.EscapeWhitespace(nodeTextProvider.GetText(t), false);
         if (t.getChildCount() == 0) return s;
         StringBuilder buf = new StringBuilder();
         buf.Append('(');
-        s = RuntimeUtils.escapeWhitespace(nodeTextProvider.GetText(t), false);
+        s = RuntimeUtils.EscapeWhitespace(nodeTextProvider.GetText(t), false);
         buf.Append(s);
         buf.Append(' ');
         for (int i = 0; i < t.getChildCount(); i++)
@@ -56,11 +56,11 @@ public static class Trees
 	 *  node payloads to get the text for the nodes.
 	 */
 	public static String toStringTree(Tree t, List<String> ruleNames) {
-		String s = RuntimeUtils.escapeWhitespace(getNodeText(t, ruleNames), false);
+		String s = RuntimeUtils.EscapeWhitespace(getNodeText(t, ruleNames), false);
 		if ( t.getChildCount()==0 ) return s;
 		StringBuilder buf = new StringBuilder();
 		buf.Append('(');
-		s = RuntimeUtils.escapeWhitespace(getNodeText(t, ruleNames), false);
+		s = RuntimeUtils.EscapeWhitespace(getNodeText(t, ruleNames), false);
 		buf.Append(s);
 		buf.Append(' ');
 		for (int i = 0; i<t.getChildCount(); i++) {

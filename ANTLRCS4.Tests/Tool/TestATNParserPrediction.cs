@@ -504,15 +504,15 @@ public class TestATNParserPrediction
     public static void CheckPredictedAlt(LexerGrammar lg, Grammar g, int decision,
                                   String inputString, int expectedAlt)
     {
-        var lexatn = ToolTestUtils.createATN(lg, true);
+        var lexatn = ToolTestUtils.CreateATN(lg, true);
         var lexInterp =
         new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) }, new PredictionContextCache());
-        var types = ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
+        var types = ToolTestUtils.GetTokenTypesViaATN(inputString, lexInterp);
         //		Console.Out.WriteLine(types);
 
-        ToolTestUtils.semanticProcess(lg);
+        ToolTestUtils.SemanticProcess(lg);
         g.importVocab(lg);
-        ToolTestUtils.semanticProcess(g);
+        ToolTestUtils.SemanticProcess(g);
 
         var f = new ParserATNFactory(g);
         var atn = f.CreateATN();
@@ -552,19 +552,19 @@ public class TestATNParserPrediction
                                      string[] inputString, string[] dfaString)
     {
         //		Tool.internalOption_ShowATNConfigsInDFA = true;
-        var lexatn = ToolTestUtils.createATN(lg, true);
+        var lexatn = ToolTestUtils.CreateATN(lg, true);
         var lexInterp =
         new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.getDecisionState(Lexer.DEFAULT_MODE)) }, new PredictionContextCache());
 
-        ToolTestUtils.semanticProcess(lg);
+        ToolTestUtils.SemanticProcess(lg);
         g.importVocab(lg);
-        ToolTestUtils.semanticProcess(g);
+        ToolTestUtils.SemanticProcess(g);
 
         var interp = new ParserInterpreterForTesting(g, null);
         for (int i = 0; i < inputString.Length; i++)
         {
             // Check DFA
-            var types = ToolTestUtils.getTokenTypesViaATN(inputString[i], lexInterp);
+            var types = ToolTestUtils.GetTokenTypesViaATN(inputString[i], lexInterp);
             //			Console.Out.WriteLine(types);
             var input = new MockIntTokenStream(types);
             try

@@ -296,7 +296,7 @@ public class TestCompositeGrammars
         var expectedTypeToTokenList = "[B, A, C, WS]";
         Assert.AreEqual(expectedTokenIDToTypeMap, g.tokenNameToTypeMap.ToString());
         Assert.AreEqual(expectedStringLiteralToTypeMap, Sort(g.stringLiteralToTypeMap).ToString());
-        Assert.AreEqual(expectedTypeToTokenList, ToolTestUtils.realElements(g.typeToTokenList).ToString());
+        Assert.AreEqual(expectedTypeToTokenList, ToolTestUtils.RealElements(g.typeToTokenList).ToString());
         Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: " + equeue);
     }
 
@@ -485,7 +485,7 @@ public class TestCompositeGrammars
                      g.tokenNameToTypeMap.ToString());
         Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
         Assert.AreEqual(expectedTypeToTokenList,
-                     ToolTestUtils.realElements(g.typeToTokenList).ToString());
+                     ToolTestUtils.RealElements(g.typeToTokenList).ToString());
 
         Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: " + equeue);
         Assert.IsTrue(Compile("M.g4", master, "MParser", "a", tempDir));
@@ -548,7 +548,7 @@ public class TestCompositeGrammars
                      g.tokenNameToTypeMap.ToString());
         Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
         Assert.AreEqual(expectedTypeToTokenList,
-                     ToolTestUtils.realElements(g.typeToTokenList).ToString());
+                     ToolTestUtils.RealElements(g.typeToTokenList).ToString());
         Assert.IsTrue(Compile("M.g4", master, "MParser", "a", tempDir));
     }
 
@@ -584,7 +584,7 @@ public class TestCompositeGrammars
                      g.tokenNameToTypeMap.ToString());
         Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
         Assert.AreEqual(expectedTypeToTokenList,
-                     ToolTestUtils.realElements(g.typeToTokenList).ToString());
+                     ToolTestUtils.RealElements(g.typeToTokenList).ToString());
 
         Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: " + equeue);
     }
@@ -634,7 +634,7 @@ public class TestCompositeGrammars
                      g.tokenNameToTypeMap.ToString());
         Assert.AreEqual(expectedStringLiteralToTypeMap, g.stringLiteralToTypeMap.ToString());
         Assert.AreEqual(expectedTypeToTokenList,
-                     ToolTestUtils.realElements(g.typeToTokenList).ToString());
+                     ToolTestUtils.RealElements(g.typeToTokenList).ToString());
 
         Assert.AreEqual(0, equeue.errors.Count, "unexpected errors: " + equeue);
 
@@ -673,14 +673,14 @@ public class TestCompositeGrammars
     public void TestImportLargeGrammar(string tempDir)
     {
         var tempDirPath = tempDir.ToString();
-        var slave = ToolTestUtils.load("Java.g4");
+        var slave = ToolTestUtils.Load("Java.g4");
         var master =
             "grammar NewJava;\n" +
             "import Java;\n";
 
         FileUtils.MakeDirectory(tempDirPath);
         FileUtils.WriteFile(tempDirPath, "Java.g4", slave);
-        ExecutedState executedState = ToolTestUtils.execParser("NewJava.g4", master,
+        ExecutedState executedState = ToolTestUtils.ExecParser("NewJava.g4", master,
                 "NewJavaParser", "NewJavaLexer", "compilationUnit", "package Foo;",
                 debug, tempDir);
         Assert.AreEqual("", executedState.output);
@@ -711,7 +711,7 @@ public class TestCompositeGrammars
 
         FileUtils.MakeDirectory(tempDirPath);
         FileUtils.WriteFile(tempDirPath, "Java.g4", slave);
-        var executedState = ToolTestUtils.execParser(
+        var executedState = ToolTestUtils.ExecParser(
                 "T.g4", master, "TParser", "TLexer", "s", "a=b", debug,
                 tempDir);
         Assert.AreEqual("", executedState.output);
@@ -735,7 +735,7 @@ public class TestCompositeGrammars
 
         FileUtils.MakeDirectory(tempDirPath);
         FileUtils.WriteFile(tempDirPath, "G1.g4", g1);
-        var executedState = ToolTestUtils.execParser("G2.g4", g2, "G2Parser", "G2Lexer", "r", "R2", debug, tempDir);
+        var executedState = ToolTestUtils.ExecParser("G2.g4", g2, "G2Parser", "G2Lexer", "r", "R2", debug, tempDir);
         Assert.AreEqual("", executedState.errors);
     }
 
@@ -761,7 +761,7 @@ public class TestCompositeGrammars
 
     private static bool Compile(string grammarFileName, string grammarStr, string parserName, string startRuleName, string tempDirPath)
     {
-        var runOptions = ToolTestUtils.createOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, null,
+        var runOptions = ToolTestUtils.CreateOptionsForJavaToolTests(grammarFileName, grammarStr, parserName, null,
                 false, false, startRuleName, null,
                 false, false, Stage.Compile, false);
         var runner = new JavaRunner(tempDirPath, false);

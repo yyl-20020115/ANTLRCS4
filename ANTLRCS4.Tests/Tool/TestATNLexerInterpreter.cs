@@ -473,7 +473,7 @@ public class TestATNLexerInterpreter
             "A0bcDE93\n" +
             "АБВабв\n";
 
-        var expecting = RuntimeUtils.join(new String[] {
+        var expecting = RuntimeUtils.Join(new String[] {
             "SIMPLE_TOKEN", "SIMPLE_TOKEN", "SIMPLE_TOKEN",
             "TOKEN_WITH_SPACES", "TOKEN_WITH_SPACES",
             "TOKEN_WITH_DIGITS",
@@ -496,7 +496,7 @@ public class TestATNLexerInterpreter
                 "lexer grammar L;\n" +
                 "options { caseInsensitive = true; }\n" +
                 "LITERAL_WITH_NOT:   ~'f';\n";     // ~('f' | 'F)
-        var executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "F");
+        var executedState = ToolTestUtils.ExecLexer("L.g4", grammar, "L", "F");
 
         Assert.AreEqual("line 1:0 token recognition error at: 'F'\n", executedState.errors);
     }
@@ -508,7 +508,7 @@ public class TestATNLexerInterpreter
                 "lexer grammar L;\n" +
                 "options { caseInsensitive = true; }\n" +
                 "SET_WITH_NOT: ~[a-c];\n";        // ~[a-cA-C]
-        var executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "B");
+        var executedState = ToolTestUtils.ExecLexer("L.g4", grammar, "L", "B");
 
         Assert.AreEqual("line 1:0 token recognition error at: 'B'\n", executedState.errors);
     }
@@ -551,7 +551,7 @@ public class TestATNLexerInterpreter
 
         var inputString = "abcXYZ äéöüßÄÉÖÜß àâæçÙÛÜŸ ćčđĐŠŽ àèéÌÒÙ áéÚÜ¡¿ αβγΧΨΩ абвЭЮЯ ";
 
-        var expecting = RuntimeUtils.join(new String[] {
+        var expecting = RuntimeUtils.Join(new String[] {
                 "ENGLISH_TOKEN",
                 "GERMAN_TOKEN",
                 "FRENCH_TOKEN",
@@ -600,13 +600,13 @@ public class TestATNLexerInterpreter
                 "options { caseInsensitive=true; }\n" +
                 "STRING options { caseInsensitive=false; } : 'N'? '\\'' (~'\\'' | '\\'\\'')* '\\'';\n";
 
-        var executedState = ToolTestUtils.execLexer("L.g4", grammar, "L", "n'sample'");
+        var executedState = ToolTestUtils.ExecLexer("L.g4", grammar, "L", "n'sample'");
         Assert.AreEqual("line 1:0 token recognition error at: 'n'\n", executedState.errors);
     }
 
     private static void CheckLexerMatches(LexerGrammar lg, String inputString, String expecting)
     {
-        var atn = ToolTestUtils.createATN(lg, true);
+        var atn = ToolTestUtils.CreateATN(lg, true);
         var input = CharStreams.fromString(inputString);
         var startState = atn.modeNameToStartState[("DEFAULT_MODE")];
         var dot = new DOTGenerator(lg);
@@ -614,7 +614,7 @@ public class TestATNLexerInterpreter
 
         var tokenTypes = GetTokenTypes(lg, atn, input);
 
-        var result = RuntimeUtils.join(tokenTypes, ", ");
+        var result = RuntimeUtils.Join(tokenTypes, ", ");
         //		Console.Out.WriteLine(tokenTypes);
         Assert.AreEqual(expecting, result);
     }

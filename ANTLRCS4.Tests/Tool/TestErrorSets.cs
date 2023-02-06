@@ -3,6 +3,7 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
+using Microsoft.VisualBasic;
 using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
@@ -30,7 +31,7 @@ public class TestErrorSets
 
     private void TestErrors(string[] pair, bool v)
     {
-        throw new NotImplementedException();
+        ToolTestUtils.TestErrors(strings, v);
     }
 
     [TestMethod]

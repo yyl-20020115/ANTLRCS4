@@ -16,7 +16,7 @@ public class TestDollarParser
                       "a : ID  { outStream.println(new java.io.File($parser.getSourceName()).getAbsolutePath()); }\n" +
                       "  ;\n" +
                       "ID : 'a'..'z'+ ;\n";
-        var executedState = ToolTestUtils.execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
+        var executedState = ToolTestUtils.ExecParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
         Assert.IsTrue(executedState.output.Contains("input"));
         Assert.AreEqual("", executedState.errors);
     }

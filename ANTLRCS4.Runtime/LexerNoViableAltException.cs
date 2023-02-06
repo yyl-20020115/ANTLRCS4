@@ -45,7 +45,7 @@ public class LexerNoViableAltException : RecognitionException {
 		String symbol = "";
 		if (startIndex >= 0 && startIndex < getInputStream().Count) {
 			symbol = getInputStream().getText(Interval.of(startIndex,startIndex));
-			symbol = RuntimeUtils.escapeWhitespace(symbol, false);
+			symbol = RuntimeUtils.EscapeWhitespace(symbol, false);
 		}
 
 		return $"{typeof(LexerNoViableAltException).Name}('{symbol}')";

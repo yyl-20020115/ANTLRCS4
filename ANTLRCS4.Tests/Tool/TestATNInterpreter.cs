@@ -387,9 +387,9 @@ public class TestATNInterpreter
                                 String inputString,
                                 int expected)
     {
-        var lexatn = ToolTestUtils.createATN(lg, true);
+        var lexatn = ToolTestUtils.CreateATN(lg, true);
         var lexInterp = new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) }, null);
-        var types = ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
+        var types = ToolTestUtils.GetTokenTypesViaATN(inputString, lexInterp);
         //		Console.Out.WriteLine(types);
 
         g.importVocab(lg);
