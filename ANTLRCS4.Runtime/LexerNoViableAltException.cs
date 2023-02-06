@@ -44,7 +44,7 @@ public class LexerNoViableAltException : RecognitionException {
     public override String ToString() {
 		String symbol = "";
 		if (startIndex >= 0 && startIndex < getInputStream().Count) {
-			symbol = getInputStream().getText(Interval.of(startIndex,startIndex));
+			symbol = getInputStream().GetText(Interval.Of(startIndex,startIndex));
 			symbol = RuntimeUtils.EscapeWhitespace(symbol, false);
 		}
 

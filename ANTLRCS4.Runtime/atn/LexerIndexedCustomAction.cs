@@ -21,11 +21,12 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerIndexedCustomAction : LexerAction {
-	private readonly int offset;
-	private readonly LexerAction action;
+public class LexerIndexedCustomAction : LexerAction
+{
+    private readonly int offset;
+    private readonly LexerAction action;
 
-	/**
+    /**
 	 * Constructs a new indexed custom action by associating a character offset
 	 * with a {@link LexerAction}.
 	 *
@@ -38,12 +39,13 @@ public class LexerIndexedCustomAction : LexerAction {
 	 * @param action The lexer action to execute at a particular offset in the
 	 * input {@link CharStream}.
 	 */
-	public LexerIndexedCustomAction(int offset, LexerAction action) {
-		this.offset = offset;
-		this.action = action;
-	}
+    public LexerIndexedCustomAction(int offset, LexerAction action)
+    {
+        this.offset = offset;
+        this.action = action;
+    }
 
-	/**
+    /**
 	 * Gets the location in the input {@link CharStream} at which the lexer
 	 * action should be executed. The value is interpreted as an offset relative
 	 * to the token start index.
@@ -51,18 +53,14 @@ public class LexerIndexedCustomAction : LexerAction {
 	 * @return The location in the input {@link CharStream} at which the lexer
 	 * action should be executed.
 	 */
-	public int getOffset() {
-		return offset;
-	}
+    public int Offset => offset;
 
-	/**
+    /**
 	 * Gets the lexer action to execute.
 	 *
 	 * @return A {@link LexerAction} object which executes the lexer action.
 	 */
-	public LexerAction getAction() {
-		return action;
-	}
+    public LexerAction Action => action;
 
     /**
 	 * {@inheritDoc}
@@ -87,31 +85,35 @@ public class LexerIndexedCustomAction : LexerAction {
 	 * using the provided {@code lexer}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		// assume the input stream position was properly set by the calling code
-		action.Execute(lexer);
-	}
+    public void Execute(Lexer lexer)
+    {
+        // assume the input stream position was properly set by the calling code
+        action.Execute(lexer);
+    }
 
-	//@Override
-	public int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, offset);
-		hash = MurmurHash.Update(hash, action);
-		return MurmurHash.Finish(hash, 2);
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        var hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, offset);
+        hash = MurmurHash.Update(hash, action);
+        return MurmurHash.Finish(hash, 2);
+    }
 
-	//@Override
-	public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerIndexedCustomAction)) {
-			return false;
-		}
+    //@Override
+    public override bool Equals(object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (obj is LexerIndexedCustomAction other)
+        {
+            return offset == other.offset
+                && action.Equals(other.action);
+        }
 
-		LexerIndexedCustomAction other = (LexerIndexedCustomAction)obj;
-		return offset == other.offset
-			&& action.Equals(other.action);
-	}
+        return false;
+    }
 
 }

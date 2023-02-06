@@ -163,7 +163,7 @@ public class LeftRecursiveRuleTransformer
             var labelOpNode = (GrammarAST)labelNode.getParent();
             var elementNode = (GrammarAST)labelOpNode.getChild(1);
             var lp = new LabelElementPair(g, labelNode, elementNode, labelOpNode.getType());
-            r.alt[1].labelDefs.map(labelNode.getText(), lp);
+            r.alt[1].labelDefs.Map(labelNode.getText(), lp);
         }
         // copy to rule from walker
         r.leftRecursiveRuleRefLabels = leftRecursiveRuleWalker.leftRecursiveRuleRefLabels;

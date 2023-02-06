@@ -127,7 +127,7 @@ public class TestLookaheadTrees
         parser.setProfile(true);
         var t = parser.parse(startRuleIndex);
 
-        var decisionInfo = parser.getParseInfo().getDecisionInfo()[decision];
+        var decisionInfo = parser.getParseInfo().GetDecisionInfo()[decision];
         var lookaheadEventInfo = decisionInfo.SLL_MaxLookEvent;
 
         var lookaheadParseTrees =

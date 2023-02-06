@@ -9,14 +9,16 @@ using System.Text;
 
 namespace org.antlr.v4.runtime.atn;
 
-public class RangeTransition : Transition {
-	public readonly int from;
-	public readonly int to;
+public class RangeTransition : Transition
+{
+    public readonly int from;
+    public readonly int to;
 
-	public RangeTransition(ATNState target, int from, int to):base(target) {
-		this.from = from;
-		this.to = to;
-	}
+    public RangeTransition(ATNState target, int from, int to) : base(target)
+    {
+        this.from = from;
+        this.to = to;
+    }
 
     //@Override
     public override int SerializationType => RANGE;
@@ -25,17 +27,13 @@ public class RangeTransition : Transition {
 
     public override IntervalSet Label => IntervalSet.Of(from, to);
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return symbol >= from && symbol <= to;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => symbol >= from && symbol <= to;
 
-	//@Override
-	public override String ToString() {
-		return new StringBuilder("'")
-				.Append(char.ConvertFromUtf32(from))
-				.Append("'..'")
-				.Append(char.ConvertFromUtf32(to))
-				.Append('\'')
-				.ToString();
-	}
+    //@Override
+    public override string ToString() => new StringBuilder("'")
+                .Append(char.ConvertFromUtf32(from))
+                .Append("'..'")
+                .Append(char.ConvertFromUtf32(to))
+                .Append('\'')
+                .ToString();
 }

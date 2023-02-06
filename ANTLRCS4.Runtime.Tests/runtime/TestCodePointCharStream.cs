@@ -18,7 +18,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("");
         Assert.AreEqual(0, s.Count);
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
         Assert.AreEqual("", s.ToString());
     }
 
@@ -27,7 +27,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("");
         Assert.AreEqual(IntStream.EOF, s.LA(1));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -36,7 +36,7 @@ public class TestCodePointCharStream
         var s = CharStreams.fromString("");
         IllegalStateException illegalStateException = Assert.ThrowsException<
                 IllegalStateException>(
-                () => s.consume()
+                () => s.Consume()
         );
         Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
     }
@@ -52,17 +52,17 @@ public class TestCodePointCharStream
     public void ConsumingSingleLatinCodePointShouldMoveIndex()
     {
         var s = CharStreams.fromString("X");
-        Assert.AreEqual(0, s.index());
-        s.consume();
-        Assert.AreEqual(1, s.index());
+        Assert.AreEqual(0, s.Index());
+        s.Consume();
+        Assert.AreEqual(1, s.Index());
     }
 
     [TestMethod]
     public void ConsumingPastSingleLatinCodePointShouldThrow()
     {
         var s = CharStreams.fromString("X");
-        s.consume();
-        IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(() => s.consume());
+        s.Consume();
+        IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(() => s.Consume());
         Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
     }
 
@@ -71,7 +71,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("X");
         Assert.AreEqual('X', s.LA(1));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -79,11 +79,11 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("XYZ");
         Assert.AreEqual('X', s.LA(1));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
         Assert.AreEqual('Y', s.LA(2));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
         Assert.AreEqual('Z', s.LA(3));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -98,24 +98,24 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("\u611B");
         Assert.AreEqual(1, s.Count);
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
     public void ConsumingSingleCJKCodePointShouldMoveIndex()
     {
         var s = CharStreams.fromString("\u611B");
-        Assert.AreEqual(0, s.index());
-        s.consume();
-        Assert.AreEqual(1, s.index());
+        Assert.AreEqual(0, s.Index());
+        s.Consume();
+        Assert.AreEqual(1, s.Index());
     }
 
     [TestMethod]
     public void ConsumingPastSingleCJKCodePointShouldThrow()
     {
         var s = CharStreams.fromString("\u611B");
-        s.consume();
-        IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(() => s.consume());
+        s.Consume();
+        IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(() => s.Consume());
         Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
     }
 
@@ -124,7 +124,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("\u611B");
         Assert.AreEqual(0x611B, s.LA(1));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -132,7 +132,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("\u611B");
         Assert.AreEqual(IntStream.EOF, s.LA(2));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -141,7 +141,7 @@ public class TestCodePointCharStream
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
         Assert.AreEqual(1, s.Count);
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -149,9 +149,9 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
-        Assert.AreEqual(0, s.index());
-        s.consume();
-        Assert.AreEqual(1, s.index());
+        Assert.AreEqual(0, s.Index());
+        s.Consume();
+        Assert.AreEqual(1, s.Index());
     }
 
     [TestMethod]
@@ -159,11 +159,11 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
-        Assert.AreEqual(0, s.index());
-        s.consume();
-        Assert.AreEqual(1, s.index());
+        Assert.AreEqual(0, s.Index());
+        s.Consume();
+        Assert.AreEqual(1, s.Index());
         IllegalStateException illegalStateException = Assert.ThrowsException<IllegalStateException>(
-            () => s.consume());
+            () => s.Consume());
         Assert.AreEqual("cannot consume EOF", illegalStateException.Message);
     }
 
@@ -173,7 +173,7 @@ public class TestCodePointCharStream
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
         Assert.AreEqual(0x1F4A9, s.LA(1));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
@@ -182,21 +182,21 @@ public class TestCodePointCharStream
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
         Assert.AreEqual(IntStream.EOF, s.LA(2));
-        Assert.AreEqual(0, s.index());
+        Assert.AreEqual(0, s.Index());
     }
 
     [TestMethod]
     public void GetTextWithLatin()
     {
         var s = CharStreams.fromString("0123456789");
-        Assert.AreEqual("34567", s.getText(Interval.of(3, 7)));
+        Assert.AreEqual("34567", s.GetText(Interval.Of(3, 7)));
     }
 
     [TestMethod]
     public void GetTextWithCJK()
     {
         var s = CharStreams.fromString("01234\u40946789");
-        Assert.AreEqual("34\u409467", s.getText(Interval.of(3, 7)));
+        Assert.AreEqual("34\u409467", s.GetText(Interval.Of(3, 7)));
     }
 
     [TestMethod]
@@ -207,7 +207,7 @@ public class TestCodePointCharStream
                     .Append(char.ConvertFromUtf32(0x1F522))
                     .Append("6789")
                     .ToString());
-        Assert.AreEqual("34\uD83D\uDD2267", s.getText(Interval.of(3, 7)));
+        Assert.AreEqual("34\uD83D\uDD2267", s.GetText(Interval.Of(3, 7)));
     }
 
     [TestMethod]
@@ -262,7 +262,7 @@ public class TestCodePointCharStream
     public void SeekWithLatin()
     {
         var s = CharStreams.fromString("0123456789");
-        s.seek(5);
+        s.Seek(5);
         Assert.AreEqual('5', s.LA(1));
     }
 
@@ -270,7 +270,7 @@ public class TestCodePointCharStream
     public void SeekWithCJK()
     {
         var s = CharStreams.fromString("01234\u40946789");
-        s.seek(5);
+        s.Seek(5);
         Assert.AreEqual(0x4094, s.LA(1));
     }
 
@@ -281,7 +281,7 @@ public class TestCodePointCharStream
                 new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
                     .Append("6789")
                     .ToString());
-        s.seek(5);
+        s.Seek(5);
         Assert.AreEqual(0x1F522, s.LA(1));
     }
 
@@ -289,7 +289,7 @@ public class TestCodePointCharStream
     public void LookBehindWithLatin()
     {
         var s = CharStreams.fromString("0123456789");
-        s.seek(6);
+        s.Seek(6);
         Assert.AreEqual('5', s.LA(-1));
     }
 
@@ -297,7 +297,7 @@ public class TestCodePointCharStream
     public void LookBehindWithCJK()
     {
         var s = CharStreams.fromString("01234\u40946789");
-        s.seek(6);
+        s.Seek(6);
         Assert.AreEqual(0x4094, s.LA(-1));
     }
 
@@ -308,7 +308,7 @@ public class TestCodePointCharStream
                 new StringBuilder("01234").Append(char.ConvertFromUtf32(0x1F522))
                     .Append("6789")
                     .ToString());
-        s.seek(6);
+        s.Seek(6);
         Assert.AreEqual(0x1F522, s.LA(-1));
     }
 

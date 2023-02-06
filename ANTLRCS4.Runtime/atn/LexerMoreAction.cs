@@ -18,17 +18,17 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerMoreAction : LexerAction {
-	/**
+public class LexerMoreAction : LexerAction
+{
+    /**
 	 * Provides a singleton instance of this parameterless lexer action.
 	 */
-	public static readonly LexerMoreAction INSTANCE = new LexerMoreAction();
+    public static readonly LexerMoreAction INSTANCE = new ();
 
-	/**
+    /**
 	 * Constructs the singleton instance of the lexer {@code more} command.
 	 */
-	private LexerMoreAction() {
-	}
+    private LexerMoreAction() { }
 
     /**
 	 * {@inheritDoc}
@@ -50,25 +50,23 @@ public class LexerMoreAction : LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#more}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		lexer.more();
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.more();
+    }
 
-	//@Override
-	public override int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, ActionType);
-		return MurmurHash.Finish(hash, 1);
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        return MurmurHash.Finish(hash, 1);
+    }
 
-	//@Override
-	//@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-	public override bool Equals(Object? obj) {
-		return obj == this;
-	}
+    //@Override
+    //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    public override bool Equals(object? o) => o == this;
 
-	//@Override
-	public override String ToString() {
-		return "more";
-	}
+    //@Override
+    public override string ToString() => "more";
 }

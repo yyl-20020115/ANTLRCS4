@@ -127,8 +127,8 @@ public class LeftRecursionDetector
         if (!foundCycle)
         {
             var cycle = new OrderedHashSet<Rule>();
-            cycle.add(targetRule);
-            cycle.add(enclosingRule);
+            cycle.Add(targetRule);
+            cycle.Add(enclosingRule);
             listOfRecursiveCycles.Add(cycle);
         }
     }

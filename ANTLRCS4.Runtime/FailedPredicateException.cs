@@ -29,7 +29,7 @@ public class FailedPredicateException : RecognitionException {
     public FailedPredicateException(Parser recognizer,
 									String predicate = null,
 									String message = null)
-		: base(formatMessage(predicate, message), recognizer, recognizer.getInputStream(), recognizer.GetCtx())
+		: base(formatMessage(predicate, message), recognizer, recognizer.InputStream, recognizer.GetCtx())
     {
 		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 

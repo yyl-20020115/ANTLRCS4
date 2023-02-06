@@ -74,7 +74,7 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 			t.setText(text);
 		}
 		else if ( copyText && source.b != null ) {
-			t.setText(source.b.getText(Interval.of(start,stop)));
+			t.setText(source.b.GetText(Interval.Of(start,stop)));
 		}
 
 		return t;

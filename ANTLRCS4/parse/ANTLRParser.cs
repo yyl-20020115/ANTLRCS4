@@ -455,7 +455,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             root_0 = (GrammarAST)adaptor.nil();
                             // 187:28: -> GRAMMAR[$g, \"LEXER_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "LEXER_GRAMMAR", getTokenStream()));
+                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "LEXER_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -486,7 +486,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             root_0 = (GrammarAST)adaptor.nil();
                             // 189:25: -> GRAMMAR[$g, \"PARSER_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "PARSER_GRAMMAR", getTokenStream()));
+                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "PARSER_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -514,7 +514,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             root_0 = (GrammarAST)adaptor.nil();
                             // 192:25: -> GRAMMAR[$g, \"COMBINED_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "COMBINED_GRAMMAR", getTokenStream()));
+                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "COMBINED_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -1222,17 +1222,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 8, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1251,17 +1251,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 8, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1391,17 +1391,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 10, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2246,7 +2246,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
         BitSet followSet = computeErrorRecoverySet();
-        if (input.LA(1) != Token.EOF && !followSet.member(input.LA(1)))
+        if (input.LA(1) != Token.EOF && !followSet.Member(input.LA(1)))
         {
             reportError(new NoViableAltException("", 0, 0, input));
             beginResync();
@@ -4531,7 +4531,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
         paraphrases.Push("looking for lexer rule element");
-        int m = input.mark();
+        int m = input.Mark();
 
         try
         {
@@ -4810,22 +4810,22 @@ public class ANTLRParser : antlr.runtime.Parser
                 reportError(missingSemi);
                 if (ttype == EOF)
                 {
-                    input.seek(input.index() + 1);
+                    input.Seek(input.Index() + 1);
                 }
                 else if (ttype == CATCH || ttype == FINALLY)
                 {
-                    input.seek(input.range()); // ignore what's before rule trailer stuff
+                    input.Seek(input.range()); // ignore what's before rule trailer stuff
                 }
                 else if (ttype == RETURNS || ttype == AT)
                 { // scan back looking for ID of rule header
-                    int p = input.index();
+                    int p = input.Index();
                     Token t = input.get(p);
                     while (t.getType() != RULE_REF && t.getType() != TOKEN_REF)
                     {
                         p--;
                         t = input.get(p);
                     }
-                    input.seek(p);
+                    input.Seek(p);
                 }
                 throw new ResyncToEndOfRuleBlock(); // make sure it goes back to rule block level to recover
             }
@@ -5156,17 +5156,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae3 =
                                     new NoViableAltException("", 39, 1, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -5186,17 +5186,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae5 =
                                     new NoViableAltException("", 39, 2, input);
                                 throw nvae5;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -5216,17 +5216,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae4 =
                                     new NoViableAltException("", 39, 3, input);
                                 throw nvae4;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -5904,7 +5904,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
         paraphrases.Push("looking for rule element");
-        int m = input.mark();
+        int m = input.Mark();
 
         try
         {
@@ -5926,17 +5926,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 48, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -5956,17 +5956,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae4 =
                                     new NoViableAltException("", 48, 2, input);
                                 throw nvae4;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -6268,18 +6268,18 @@ public class ANTLRParser : antlr.runtime.Parser
                 reportError(missingSemi);
                 if (ttype == CATCH || ttype == FINALLY)
                 {
-                    input.seek(input.range()); // ignore what's before rule trailer stuff
+                    input.Seek(input.range()); // ignore what's before rule trailer stuff
                 }
                 if (ttype == RETURNS || ttype == AT)
                 { // scan back looking for ID of rule header
-                    int p = input.index();
+                    int p = input.Index();
                     Token t = input.get(p);
                     while (t.getType() != RULE_REF && t.getType() != TOKEN_REF)
                     {
                         p--;
                         t = input.get(p);
                     }
-                    input.seek(p);
+                    input.Seek(p);
                 }
                 throw new ResyncToEndOfRuleBlock(); // make sure it goes back to rule block level to recover
             }
@@ -6348,17 +6348,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 49, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -6377,17 +6377,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 49, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -7211,17 +7211,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae3 =
                                     new NoViableAltException("", 57, 1, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -7406,17 +7406,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 58, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -7705,17 +7705,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 60, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -8036,17 +8036,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae6 =
                                     new NoViableAltException("", 64, 2, input);
                                 throw nvae6;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -8996,17 +8996,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 75, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -9025,17 +9025,17 @@ public class ANTLRParser : antlr.runtime.Parser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 75, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 

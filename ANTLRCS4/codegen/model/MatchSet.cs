@@ -22,7 +22,7 @@ public class MatchSet : MatchToken
     {
         var st = ast.atnState.Transition(0) as SetTransition;
         int wordSize = factory.GetGenerator().Target.GetInlineTestSetWordSize();
-        expr = new TestSetInline(factory, null, st.set, wordSize);
+        expr = new TestSetInline(factory, null, st.label, wordSize);
         var d = new TokenTypeDecl(factory, expr.varName);
         factory.GetCurrentRuleFunction().AddLocalDecl(d);
         capture = new CaptureNextTokenType(factory, expr.varName);

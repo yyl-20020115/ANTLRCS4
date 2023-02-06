@@ -19,15 +19,11 @@ public abstract class CodePointTransitions
 {
     /** Return new {@link AtomTransition} */
     public static Transition CreateWithCodePoint(ATNState target, int codePoint)
-    {
-        return CreateWithCodePointRange(target, codePoint, codePoint);
-    }
+        => CreateWithCodePointRange(target, codePoint, codePoint);
 
     /** Return new {@link AtomTransition} if range represents one atom else {@link SetTransition}. */
-    public static Transition CreateWithCodePointRange(ATNState target, int codePointFrom, int codePointTo)
-    {
-        return codePointFrom == codePointTo
+    public static Transition CreateWithCodePointRange(ATNState target, int codePointFrom, int codePointTo) 
+        => codePointFrom == codePointTo
                 ? new AtomTransition(target, codePointFrom)
                 : new RangeTransition(target, codePointFrom, codePointTo);
-    }
 }

@@ -16,7 +16,6 @@ public class IntegerList
 {
 
     private readonly static int[] EMPTY_DATA = Array.Empty<int>();
-
     private static readonly int INITIAL_SIZE = 4;
     private static readonly int MAX_ARRAY_SIZE = int.MaxValue - 8;
 
@@ -35,14 +34,7 @@ public class IntegerList
             throw new ArgumentException(null, nameof(capacity));
         }
 
-        if (capacity == 0)
-        {
-            _data = EMPTY_DATA;
-        }
-        else
-        {
-            _data = new int[capacity];
-        }
+        _data = capacity == 0 ? EMPTY_DATA : (new int[capacity]);
     }
 
     public IntegerList(IntegerList list)
@@ -54,17 +46,13 @@ public class IntegerList
     public IntegerList(ICollection<int> list) : this(list.Count)
     {
         foreach (var value in list)
-        {
             Add(value);
-        }
     }
 
     public void Add(int value)
     {
         if (_data.Length == _size)
-        {
             EnsureCapacity(_size + 1);
-        }
 
         _data[_size] = value;
         _size++;
@@ -99,9 +87,7 @@ public class IntegerList
     public int Get(int index)
     {
         if (index < 0 || index >= _size)
-        {
             throw new IndexOutOfRangeException(nameof(index));
-        }
 
         return _data[index];
     }
@@ -109,12 +95,8 @@ public class IntegerList
     public bool Contains(int value)
     {
         for (int i = 0; i < _size; i++)
-        {
             if (_data[i] == value)
-            {
                 return true;
-            }
-        }
 
         return false;
     }
@@ -122,9 +104,7 @@ public class IntegerList
     public int Set(int index, int value)
     {
         if (index < 0 || index >= _size)
-        {
             throw new IndexOutOfRangeException(nameof(index));
-        }
 
         int previous = _data[index];
         _data[index] = value;
@@ -144,11 +124,11 @@ public class IntegerList
     {
         if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size)
         {
-            throw new IndexOutOfRangeException();
+            throw new IndexOutOfRangeException(nameof(fromIndex));
         }
         if (fromIndex > toIndex)
         {
-            throw new ArgumentException();
+            throw new ArgumentException(nameof(fromIndex));
         }
 
         Array.Copy(_data, toIndex, _data, fromIndex, _size - toIndex);
@@ -159,18 +139,11 @@ public class IntegerList
 
     public bool IsEmpty => _size == 0;
 
-    public int Size()
-    {
-        return _size;
-    }
+    public int Size => _size;
 
     public void TrimToSize()
     {
-        if (_data.Length == _size)
-        {
-            return;
-        }
-
+        if (_data.Length == _size) return;
         _data = Arrays.CopyOf(_data, _size);
     }
 
@@ -182,11 +155,7 @@ public class IntegerList
 
     public int[] ToArray()
     {
-        if (_size == 0)
-        {
-            return EMPTY_DATA;
-        }
-
+        if (_size == 0) return EMPTY_DATA;
         return Arrays.CopyOf(_data, _size);
     }
 
@@ -267,15 +236,9 @@ public class IntegerList
 	 * Returns a string representation of this list.
 	 */
     //@Override
-    public override string ToString()
-    {
-        return string.Join(',', ToArray());
-    }
+    public override string ToString() => string.Join(',', ToArray());
 
-    public int BinarySearch(int key)
-    {
-        return Array.BinarySearch(_data, 0, _size, key);
-    }
+    public int BinarySearch(int key) => Array.BinarySearch(_data, 0, _size, key);
 
     public int BinarySearch(int fromIndex, int toIndex, int key)
     {
@@ -285,7 +248,7 @@ public class IntegerList
         }
         if (fromIndex > toIndex)
         {
-            throw new ArgumentException();
+            throw new ArgumentException(nameof(fromIndex));
         }
 
         return Array.BinarySearch(_data, fromIndex, toIndex, key);
@@ -375,9 +338,7 @@ public class IntegerList
     {
         int result = 0;
         for (int i = 0; i < _size; i++)
-        {
             result += new Rune(_data[i]).Utf16SequenceLength;
-        }
         return result;
     }
 }

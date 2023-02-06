@@ -10,14 +10,14 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public class PrecedencePredicateTransition : AbstractPredicateTransition {
-	public readonly int precedence;
+public class PrecedencePredicateTransition : AbstractPredicateTransition
+{
+    public readonly int precedence;
 
-	public PrecedencePredicateTransition(ATNState target, int precedence):base(target)
+    public PrecedencePredicateTransition(ATNState target, int precedence) : base(target)
     {
-		;
-		this.precedence = precedence;
-	}
+        this.precedence = precedence;
+    }
 
     //@Override
     public override int SerializationType => PRECEDENCE;
@@ -26,17 +26,11 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition {
     public override bool IsEpsilon => true;
 
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return false;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
-	public SemanticContext.PrecedencePredicate getPredicate() {
-		return new SemanticContext.PrecedencePredicate(precedence);
-	}
+    public SemanticContext.PrecedencePredicate GetPredicate() => new(precedence);
 
-	//@Override
-	public override String ToString() {
-		return precedence + " >= _p";
-	}
+    //@Override
+    public override string ToString() => precedence + " >= _p";
 
 }

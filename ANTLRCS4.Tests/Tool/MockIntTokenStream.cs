@@ -12,25 +12,25 @@ public class MockIntTokenStream : TokenStream
     public MockIntTokenStream(IntegerList types) => this.types = types;
 
     ////@Override
-    public void consume() => p++;
+    public void Consume() => p++;
 
     ////@Override
     public int LA(int i) => LT(i).getType();
 
     ////@Override
-    public int mark() => index();
+    public int Mark() => Index();
 
     ////@Override
-    public int index() => p;
+    public int Index() => p;
 
     ////@Override
-    public void release(int marker) => seek(marker);
+    public void Release(int marker) => Seek(marker);
 
     ////@Override
-    public void seek(int index) => p = index;
+    public void Seek(int index) => p = index;
 
     ////@Override
-    public int Count => types.Size();
+    public int Count => types.Size;
 
     ////@Override
     public string getSourceName() => IntStream.UNKNOWN_SOURCE_NAME;
@@ -40,7 +40,7 @@ public class MockIntTokenStream : TokenStream
     {
         CommonToken t;
         int rawIndex = p + i - 1;
-        if (rawIndex >= types.Size()) t = new CommonToken(Token.EOF);
+        if (rawIndex >= types.Size) t = new CommonToken(Token.EOF);
         else t = new CommonToken(types.Get(rawIndex));
         t.setTokenIndex(rawIndex);
         return t;
@@ -98,12 +98,12 @@ public class MockIntTokenStream : TokenStream
         throw new NotImplementedException();
     }
 
-    public void rewind(int nvaeMark)
+    public void Rewind(int nvaeMark)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

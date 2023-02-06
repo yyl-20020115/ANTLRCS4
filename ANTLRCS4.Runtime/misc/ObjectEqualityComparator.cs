@@ -14,15 +14,7 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 	 * <p>This implementation returns
 	 * {@code obj.}{@link Object#hashCode hashCode()}.</p>
 	 */
-    public override int GetHashCode(T obj)
-    {
-        if (obj == null)
-        {
-            return 0;
-        }
-
-        return obj.GetHashCode();
-    }
+    public override int GetHashCode(T obj) => obj == null ? 0 : obj.GetHashCode();
 
     /**
 	 * {@inheritDoc}
@@ -33,15 +25,7 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 	 * this method returns the result of
 	 * {@code a.}{@link Object#equals equals}{@code (b)}.</p>
 	 */
-    public override bool Equals(T a, T b)
-    {
-        if (a == null)
-        {
-            return b == null;
-        }
-
-        return a.Equals(b);
-    }
+    public override bool Equals(T a, T b) => a == null ? b == null : a.Equals(b);
 
 }
 

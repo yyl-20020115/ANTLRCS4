@@ -669,7 +669,7 @@ public class BlockSetTransformer : TreeRewriter
                 set9 = (GrammarAST)input.LT(1);
                 if (input.LA(1) == CLOSURE || (input.LA(1) >= OPTIONAL && input.LA(1) <= POSITIVE_CLOSURE))
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                     state.failed = false;
                 }
@@ -1287,17 +1287,17 @@ public class BlockSetTransformer : TreeRewriter
                     else
                     {
                         if (state.backtracking > 0) { state.failed = true; return retval; }
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
-                            input.consume();
+                            input.Consume();
                             NoViableAltException nvae =
                                 new NoViableAltException("", 11, 1, input);
                             throw nvae;
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -1731,12 +1731,12 @@ public class BlockSetTransformer : TreeRewriter
                                 break;
                             default:
                                 if (state.backtracking > 0) { state.failed = true; return retval; }
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae =
                                         new NoViableAltException("", 13, 4, input);
@@ -1744,7 +1744,7 @@ public class BlockSetTransformer : TreeRewriter
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                         }
                     }
@@ -1752,12 +1752,12 @@ public class BlockSetTransformer : TreeRewriter
                     else
                     {
                         if (state.backtracking > 0) { state.failed = true; return retval; }
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             NoViableAltException nvae =
                                 new NoViableAltException("", 13, 3, input);
@@ -1765,7 +1765,7 @@ public class BlockSetTransformer : TreeRewriter
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -1774,17 +1774,17 @@ public class BlockSetTransformer : TreeRewriter
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return retval; }
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 13, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2168,13 +2168,13 @@ public class BlockSetTransformer : TreeRewriter
                 case 0:
                     int LA10_60 = input.LA(1);
 
-                    int index10_60 = input.index();
-                    input.rewind();
+                    int index10_60 = input.Index();
+                    input.Rewind();
                     s = -1;
                     if (((this.transformer.inContext("RULE")))) { s = 70; }
                     else if (((!this.transformer.inContext("RULE")))) { s = 71; }
 
-                    input.seek(index10_60);
+                    input.Seek(index10_60);
                     if (s >= 0) return s;
                     break;
             }

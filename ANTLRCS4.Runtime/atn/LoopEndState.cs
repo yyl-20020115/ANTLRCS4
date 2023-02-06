@@ -7,8 +7,8 @@
 namespace org.antlr.v4.runtime.atn;
 
 /** Mark the end of a * or + loop. */
-public class LoopEndState : ATNState {
-	public ATNState loopBackState;
-
+public class LoopEndState : ATNState
+{
+    public ATNState loopBackState;
     public override int StateType => LOOP_END;
 }

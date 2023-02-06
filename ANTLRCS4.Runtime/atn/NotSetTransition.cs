@@ -9,23 +9,21 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.runtime.atn;
 
 
-public class NotSetTransition : SetTransition {
-	public NotSetTransition(ATNState target, IntervalSet set):base(target, set)
+public class NotSetTransition : SetTransition
+{
+    public NotSetTransition(ATNState target, IntervalSet set) : base(target, set)
     {
-	}
+    }
 
     //@Override
     public override int SerializationType => NOT_SET;
 
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return symbol >= minVocabSymbol
-			&& symbol <= maxVocabSymbol
-			&& !base.Matches(symbol, minVocabSymbol, maxVocabSymbol);
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
+        => symbol >= minVocabSymbol
+            && symbol <= maxVocabSymbol
+            && !base.Matches(symbol, minVocabSymbol, maxVocabSymbol);
 
-	//@Override
-	public override String ToString() {
-		return '~'+base.ToString();
-	}
+    //@Override
+    public override string ToString() => '~' + base.ToString();
 }

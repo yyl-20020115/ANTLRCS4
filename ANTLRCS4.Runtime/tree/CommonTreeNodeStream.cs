@@ -90,7 +90,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         hasNilRoot = false;
         level = 0;
         previousLocationElement = null;
-        if (calls != null) calls.clear();
+        if (calls != null) calls.Clear();
     }
 
     /** Pull elements from tree iterator.  Track tree level 0..max_level.
@@ -168,8 +168,8 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         {
             calls = new IntArray();
         }
-        calls.push(p); // save current index
-        seek(index);
+        calls.Push(p); // save current index
+        Seek(index);
     }
 
     /** Seek back to previous index saved during last {@link #push} call.
@@ -177,8 +177,8 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
      */
     public int pop()
     {
-        int ret = calls.pop();
-        seek(ret);
+        int ret = calls.Pop();
+        Seek(ret);
         return ret;
     }
 
@@ -262,7 +262,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         {
             buf.Append(" ");
             buf.Append(type);
-            consume();
+            Consume();
             o = LT(1);
             type = adaptor.getType(o);
         }

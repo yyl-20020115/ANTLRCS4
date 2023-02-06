@@ -70,8 +70,8 @@ public class LexerActionExecutor
             return new LexerActionExecutor(new LexerAction[] { lexerAction });
         }
 
-        LexerAction[] lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
-        lexerActions[lexerActions.Length - 1] = lexerAction;
+        var lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
+        lexerActions[^1] = lexerAction;
         return new LexerActionExecutor(lexerActions);
     }
 
@@ -111,11 +111,7 @@ public class LexerActionExecutor
         {
             if (lexerActions[i].IsPositionDependent && !(lexerActions[i] is LexerIndexedCustomAction))
             {
-                if (updatedLexerActions == null)
-                {
-                    updatedLexerActions = (LexerAction[])lexerActions.Clone();
-                }
-
+                updatedLexerActions ??= (LexerAction[])lexerActions.Clone();
                 updatedLexerActions[i] = new LexerIndexedCustomAction(offset, lexerActions[i]);
             }
         }
@@ -156,17 +152,16 @@ public class LexerActionExecutor
     public void Execute(Lexer lexer, CharStream input, int startIndex)
     {
         bool requiresSeek = false;
-        int stopIndex = input.index();
+        int stopIndex = input.Index();
         try
         {
             foreach (var lexerAction in lexerActions)
             {
                 if (lexerAction is LexerIndexedCustomAction action)
                 {
-
-                    int offset = action.getOffset();
-                    input.seek(startIndex + offset);
-                    var _lexerAction = action.getAction();
+                    int offset = action.Offset;
+                    input.Seek(startIndex + offset);
+                    var _lexerAction = action.Action;
 
                     requiresSeek = (startIndex + offset) != stopIndex;
 
@@ -175,7 +170,7 @@ public class LexerActionExecutor
                 }
                 else if (lexerAction.IsPositionDependent)
                 {
-                    input.seek(stopIndex);
+                    input.Seek(stopIndex);
                     requiresSeek = false;
                 }
 
@@ -186,7 +181,7 @@ public class LexerActionExecutor
         {
             if (requiresSeek)
             {
-                input.seek(stopIndex);
+                input.Seek(stopIndex);
             }
         }
     }
@@ -194,20 +189,17 @@ public class LexerActionExecutor
 
     public override int GetHashCode() => this.hashCode;
 
-
     public override bool Equals(object? obj)
     {
         if (obj == this)
         {
             return true;
         }
-        else if (obj is not LexerActionExecutor)
+        else if (obj is  LexerActionExecutor other)
         {
-            return false;
+            return hashCode == other.hashCode
+                && Enumerable.SequenceEqual(lexerActions, other.lexerActions);
         }
-
-        LexerActionExecutor other = (LexerActionExecutor)obj;
-        return hashCode == other.hashCode
-            && Enumerable.SequenceEqual(lexerActions, other.lexerActions);
+        return false;
     }
 }

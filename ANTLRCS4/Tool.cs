@@ -134,7 +134,7 @@ public class Tool {
         finally {
             if ( antlr.dolog) {
                 try {
-                    String logname = antlr.logMgr.save();
+                    String logname = antlr.logMgr.Save();
                     Console.WriteLine("wrote "+logname);
                 }
                 catch (IOException ioe) {
@@ -898,7 +898,7 @@ public class Tool {
 		}
 	}
 
-    public void Log(String component, String msg) { logMgr.log(component, msg); }
+    public void Log(String component, String msg) { logMgr.Log(component, msg); }
     public void log(String msg) { Log(null, msg); }
 
 	public int getNumErrors() { return ErrMgr.getNumErrors(); }

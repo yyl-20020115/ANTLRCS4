@@ -11,9 +11,9 @@ namespace org.antlr.v4.runtime.atn;
  *  it for completeness. In reality, the {@link PlusLoopbackState} node is the
  *  real decision-making note for {@code A+}.
  */
-public class PlusBlockStartState : BlockStartState {
-	public PlusLoopbackState loopBackState;
-
+public class PlusBlockStartState : BlockStartState
+{
+    public PlusLoopbackState loopBackState;
 
     public override int StateType => PLUS_BLOCK_START;
 }

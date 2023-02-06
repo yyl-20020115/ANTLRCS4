@@ -54,14 +54,11 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         this.input = input;
     }
 
-    public void reset()
+    public override void Reset()
     {
         base.Reset(); // reset all recognizer state variables
                       // wack Lexer state variables
-        if (input != null)
-        {
-            input.seek(0); // rewind the input
-        }
+        input?.Seek(0); // rewind the input
         if (state == null)
         {
             return; // no shared state work to do
@@ -84,20 +81,20 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         {
             state.token = null;
             state.channel = Token.DEFAULT_CHANNEL;
-            state.tokenStartCharIndex = input.index();
-            state.tokenStartCharPositionInLine = input.getCharPositionInLine();
-            state.tokenStartLine = input.getLine();
+            state.tokenStartCharIndex = input.Index();
+            state.tokenStartCharPositionInLine = input.CharPositionInLine;
+            state.tokenStartLine = input.Line;
             state.text = null;
             if (input.LA(1) == CharStream.EOF)
             {
-                return getEOFToken();
+                return GetEOFToken();
             }
             try
             {
-                mTokens();
+                MTokens();
                 if (state.token == null)
                 {
-                    emit();
+                    Emit();
                 }
                 else if (state.token == Token.SKIP_TOKEN)
                 {
@@ -107,17 +104,17 @@ public abstract class Lexer : BaseRecognizer, TokenSource
             }
             catch (MismatchedRangeException re)
             {
-                reportError(re);
+                ReportError(re);
                 // matchRange() routine has already called recover()
             }
             catch (MismatchedTokenException re)
             {
-                reportError(re);
+                ReportError(re);
                 // match() routine has already called recover()
             }
             catch (RecognitionException re)
             {
-                reportError(re);
+                ReportError(re);
                 recover(re); // throw out current char and try again
             }
         }
@@ -126,13 +123,13 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     /** Returns the EOF token (default), if you need
      *  to return a custom token instead override this method.
      */
-    public Token getEOFToken()
+    public Token GetEOFToken()
     {
-        Token eof = new CommonToken(input, Token.EOF,
+        var eof = new CommonToken(input, Token.EOF,
                                     Token.DEFAULT_CHANNEL,
-                                    input.index(), input.index());
-        eof.setLine(getLine());
-        eof.setCharPositionInLine(getCharPositionInLine());
+                                    input.Index(), input.Index());
+        eof.setLine(Line);
+        eof.setCharPositionInLine(CharPositionInLine);
         return eof;
     }
 
@@ -142,27 +139,27 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      *  if token==null at end of any token rule, it creates one for you
      *  and emits it.
      */
-    public void skip()
+    public void Skip()
     {
         state.token = Token.SKIP_TOKEN;
     }
 
     /** This is the lexer entry point that sets instance var 'token' */
-    public abstract void mTokens();
+    public abstract void MTokens();
 
     /** Set the char stream and reset the lexer */
-    public void setCharStream(CharStream input)
+    public void SetCharStream(CharStream input)
     {
         this.input = null;
-        reset();
+        Reset();
         this.input = input;
     }
 
-    public CharStream getCharStream()
+    public CharStream GetCharStream()
     {
         return this.input;
     }
-    public override String GetSourceName()
+    public override string GetSourceName()
     {
         return input.getSourceName();
     }
@@ -172,7 +169,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      *  nextToken (to push tokens into a list and pull from that list rather
      *  than a single variable as this implementation does).
      */
-    public void emit(Token token)
+    public void Emit(Token token)
     {
         state.token = token;
     }
@@ -186,17 +183,17 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      *  If you are building trees, then you should also override
      *  Parser or TreeParser.getMissingSymbol().
      */
-    public Token emit()
+    public Token Emit()
     {
-        Token t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, getCharIndex() - 1);
+        var t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
         t.setLine(state.tokenStartLine);
         t.setText(state.text);
         t.setCharPositionInLine(state.tokenStartCharPositionInLine);
-        emit(t);
+        Emit(t);
         return t;
     }
 
-    public void match(String s)
+    public void Match(string s)
     {
 
         int i = 0;
@@ -209,23 +206,23 @@ public abstract class Lexer : BaseRecognizer, TokenSource
                     state.failed = true;
                     return;
                 }
-                MismatchedTokenException mte =
+                var mte =
                     new MismatchedTokenException(s[i], input);
                 recover(mte);
                 throw mte;
             }
             i++;
-            input.consume();
+            input.Consume();
             state.failed = false;
         }
     }
 
-    public void matchAny()
+    public void MatchAny()
     {
-        input.consume();
+        input.Consume();
     }
 
-    public void match(int c)
+    public void Match(int c)
     {
         if (input.LA(1) != c)
         {
@@ -234,16 +231,16 @@ public abstract class Lexer : BaseRecognizer, TokenSource
                 state.failed = true;
                 return;
             }
-            MismatchedTokenException mte =
+            var mte =
                 new MismatchedTokenException(c, input);
             recover(mte);  // don't really recover; just consume in lexer
             throw mte;
         }
-        input.consume();
+        input.Consume();
         state.failed = false;
     }
 
-    public void matchRange(int a, int b)
+    public void MatchRange(int a, int b)
     {
         if (input.LA(1) < a || input.LA(1) > b)
         {
@@ -252,52 +249,33 @@ public abstract class Lexer : BaseRecognizer, TokenSource
                 state.failed = true;
                 return;
             }
-            MismatchedRangeException mre =
+            var mre =
                 new MismatchedRangeException(a, b, input);
             recover(mre);
             throw mre;
         }
-        input.consume();
+        input.Consume();
         state.failed = false;
     }
 
-    public int getLine()
-    {
-        return input.getLine();
-    }
+    public int Line => input.Line;
 
-    public int getCharPositionInLine()
-    {
-        return input.getCharPositionInLine();
-    }
+    public int CharPositionInLine => input.CharPositionInLine;
 
     /** What is the index of the current character of lookahead? */
-    public int getCharIndex()
-    {
-        return input.index();
-    }
+    public int CharIndex => input.Index();
 
     /** Return the text matched so far for the current token or any
      *  text override.
      */
-    public String getText()
-    {
-        if (state.text != null)
-        {
-            return state.text;
-        }
-        return input.substring(state.tokenStartCharIndex, getCharIndex() - 1);
-    }
+    public string GetText() => state.text ?? input.Substring(state.tokenStartCharIndex, CharIndex - 1);
 
     /** Set the complete text of this token; it wipes any previous
      *  changes to the text.
      */
-    public void setText(String text)
-    {
-        state.text = text;
-    }
+    public void SetText(string text) => state.text = text;
 
-    public void reportError(RecognitionException e)
+    public override void ReportError(RecognitionException e)
     {
         /** TODO: not thought about recovery in lexer yet.
          *
@@ -313,9 +291,9 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         DisplayRecognitionError(this.GetTokenNames(), e);
     }
 
-    public String getErrorMessage(RecognitionException e, String[] tokenNames)
+    public override string GetErrorMessage(RecognitionException e, string[] tokenNames)
     {
-        String msg;
+        string msg;
         if (e is MismatchedTokenException mte) {
             msg = "mismatched character " + getCharErrorDisplay(e.c) + " expecting " + getCharErrorDisplay(mte.expecting);
         }
@@ -352,9 +330,9 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         return msg;
     }
 
-    public String getCharErrorDisplay(int c)
+    public string GetCharErrorDisplay(int c)
     {
-        String s = ((char)c).ToString();
+        string s = ((char)c).ToString();
         switch (c)
         {
             case Token.EOF:
@@ -378,37 +356,29 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      *  it all works out.  You can instead use the rule invocation stack
      *  to do sophisticated error recovery if you are in a fragment rule.
      */
-    public void recover(RecognitionException re)
+    public void Recover(RecognitionException re)
     {
         //System.out.println("consuming char "+(char)input.LA(1)+" during recovery");
         //re.printStackTrace();
-        input.consume();
+        input.Consume();
     }
 
-    public void traceIn(String ruleName, int ruleIndex)
+    public void TraceIn(string ruleName, int ruleIndex)
     {
-        String inputSymbol = ((char)input.LT(1)) + " line=" + getLine() + ":" + getCharPositionInLine();
+        var inputSymbol = ((char)input.LT(1)) + " line=" + Line + ":" + CharPositionInLine;
         base.TraceIn(ruleName, ruleIndex, inputSymbol);
     }
 
-    public void traceOut(String ruleName, int ruleIndex)
+    public void TraceOut(string ruleName, int ruleIndex)
     {
-        String inputSymbol = ((char)input.LT(1)) + " line=" + getLine() + ":" + getCharPositionInLine();
+        var inputSymbol = ((char)input.LT(1)) + " line=" + Line + ":" + CharPositionInLine;
         base.TraceOut(ruleName, ruleIndex, inputSymbol);
     }
 
-    public CharStream getInputStream()
-    {
-        throw new NotImplementedException();
-    }
+    public CharStream InputStream => throw new NotImplementedException();
 
-    public void setTokenFactory(TokenFactory factory)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TokenFactory getTokenFactory()
-    {
-        throw new NotImplementedException();
+    public TokenFactory TokenFactory 
+    { 
+        get; set; 
     }
 }

@@ -7,8 +7,7 @@
 namespace org.antlr.v4.runtime.atn;
 
 /** The block that begins a closure loop. */
-public class StarBlockStartState : BlockStartState {
-
-
+public class StarBlockStartState : BlockStartState
+{
     public override int StateType => STAR_BLOCK_START;
 }

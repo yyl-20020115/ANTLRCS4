@@ -70,39 +70,39 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 Token eof = new CommonToken(input, Token.EOF,
                                             Token.DEFAULT_CHANNEL,
-                                            input.index(), input.index());
-                eof.setLine(getLine());
-                eof.setCharPositionInLine(getCharPositionInLine());
+                                            input.Index(), input.Index());
+                eof.setLine(Line);
+                eof.setCharPositionInLine(CharPositionInLine);
                 return eof;
             }
             state.token = null;
             state.channel = Token.DEFAULT_CHANNEL;
-            state.tokenStartCharIndex = input.index();
-            state.tokenStartCharPositionInLine = input.getCharPositionInLine();
-            state.tokenStartLine = input.getLine();
+            state.tokenStartCharIndex = input.Index();
+            state.tokenStartCharPositionInLine = input.CharPositionInLine;
+            state.tokenStartLine = input.Line;
             state.text = null;
             try
             {
-                int m = input.mark();
+                int m = input.Mark();
                 state.backtracking = 1;
                 state.failed = false;
-                mTokens();
+                MTokens();
                 state.backtracking = 0;
                 if (state.failed)
                 {
-                    input.rewind(m);
-                    input.consume();
+                    input.Rewind(m);
+                    input.Consume();
                 }
                 else
                 {
-                    emit();
+                    Emit();
                     return state.token;
                 }
             }
             catch (RecognitionException re)
             {
                 // shouldn't happen in backtracking mode, but...
-                reportError(re);
+                ReportError(re);
                 recover(re);
             }
         }
@@ -132,7 +132,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:68:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:68:9: '/*' ( options {greedy=false; } : . )* '*/'
             {
-                match("/*"); if (state.failed) return;
+                Match("/*"); if (state.failed) return;
 
                 // org\\antlr\\v4\\parse\\ActionSplitter.g:68:14: ( options {greedy=false; } : . )*
                 loop1:
@@ -163,7 +163,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                         case 1:
                             // org\\antlr\\v4\\parse\\ActionSplitter.g:68:42: .
                             {
-                                matchAny(); if (state.failed) return;
+                                MatchAny(); if (state.failed) return;
                             }
                             break;
 
@@ -173,9 +173,9 @@ public class ActionSplitter : antlr.runtime.Lexer
                     }
                 }
                 exit1:
-                match("*/"); if (state.failed) return;
+                Match("*/"); if (state.failed) return;
 
-                if (state.backtracking == 1) { @delegate.Text(getText()); }
+                if (state.backtracking == 1) { @delegate.Text(GetText()); }
             }
 
             state.type = _type;
@@ -198,7 +198,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:72:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:72:7: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
             {
-                match("//"); if (state.failed) return;
+                Match("//"); if (state.failed) return;
 
                 // org\\antlr\\v4\\parse\\ActionSplitter.g:72:12: (~ ( '\\n' | '\\r' ) )*
                 loop2:
@@ -218,7 +218,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                             {
                                 if ((input.LA(1) >= '\u0000' && input.LA(1) <= '\t') || (input.LA(1) >= '\u000B' && input.LA(1) <= '\f') || (input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF'))
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -249,14 +249,14 @@ public class ActionSplitter : antlr.runtime.Lexer
                     case 1:
                         // org\\antlr\\v4\\parse\\ActionSplitter.g:72:26: '\\r'
                         {
-                            match('\r'); if (state.failed) return;
+                            Match('\r'); if (state.failed) return;
                         }
                         break;
 
                 }
 
-                match('\n'); if (state.failed) return;
-                if (state.backtracking == 1) { @delegate.Text(getText()); }
+                Match('\n'); if (state.failed) return;
+                if (state.backtracking == 1) { @delegate.Text(GetText()); }
             }
 
             state.type = _type;
@@ -283,22 +283,22 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:76:2: ( '$' x= ID '::' y= ID ( WS )? '=' expr= ATTR_VALUE_EXPR ';' )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:76:4: '$' x= ID '::' y= ID ( WS )? '=' expr= ATTR_VALUE_EXPR ';'
             {
-                match('$'); if (state.failed) return;
-                int xStart115 = getCharIndex();
-                int xStartLine115 = getLine();
-                int xStartCharPos115 = getCharPositionInLine();
+                Match('$'); if (state.failed) return;
+                int xStart115 = CharIndex;
+                int xStartLine115 = Line;
+                int xStartCharPos115 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart115, getCharIndex() - 1);
+                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart115, CharIndex - 1);
                 x.setLine(xStartLine115);
                 x.setCharPositionInLine(xStartCharPos115);
 
-                match("::"); if (state.failed) return;
+                Match("::"); if (state.failed) return;
 
-                int yStart121 = getCharIndex();
-                int yStartLine121 = getLine();
-                int yStartCharPos121 = getCharPositionInLine();
+                int yStart121 = CharIndex;
+                int yStartLine121 = Line;
+                int yStartCharPos121 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart121, getCharIndex() - 1);
+                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart121, CharIndex - 1);
                 y.setLine(yStartLine121);
                 y.setCharPositionInLine(yStartCharPos121);
 
@@ -321,19 +321,19 @@ public class ActionSplitter : antlr.runtime.Lexer
 
                 }
 
-                match('='); if (state.failed) return;
-                int exprStart130 = getCharIndex();
-                int exprStartLine130 = getLine();
-                int exprStartCharPos130 = getCharPositionInLine();
+                Match('='); if (state.failed) return;
+                int exprStart130 = CharIndex;
+                int exprStartLine130 = Line;
+                int exprStartCharPos130 = CharPositionInLine;
                 mATTR_VALUE_EXPR(); if (state.failed) return;
-                expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart130, getCharIndex() - 1);
+                expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart130, CharIndex - 1);
                 expr.setLine(exprStartLine130);
                 expr.setCharPositionInLine(exprStartCharPos130);
 
-                match(';'); if (state.failed) return;
+                Match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
                 {
-                    @delegate.SetNonLocalAttr(getText(), x, y, expr);
+                    @delegate.SetNonLocalAttr(GetText(), x, y, expr);
                 }
             }
 
@@ -360,26 +360,26 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:83:2: ( '$' x= ID '::' y= ID )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:83:4: '$' x= ID '::' y= ID
             {
-                match('$'); if (state.failed) return;
-                int xStart151 = getCharIndex();
-                int xStartLine151 = getLine();
-                int xStartCharPos151 = getCharPositionInLine();
+                Match('$'); if (state.failed) return;
+                int xStart151 = CharIndex;
+                int xStartLine151 = Line;
+                int xStartCharPos151 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart151, getCharIndex() - 1);
+                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart151, CharIndex - 1);
                 x.setLine(xStartLine151);
                 x.setCharPositionInLine(xStartCharPos151);
 
-                match("::"); if (state.failed) return;
+                Match("::"); if (state.failed) return;
 
-                int yStart157 = getCharIndex();
-                int yStartLine157 = getLine();
-                int yStartCharPos157 = getCharPositionInLine();
+                int yStart157 = CharIndex;
+                int yStartLine157 = Line;
+                int yStartCharPos157 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart157, getCharIndex() - 1);
+                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart157, CharIndex - 1);
                 y.setLine(yStartLine157);
                 y.setCharPositionInLine(yStartCharPos157);
 
-                if (state.backtracking == 1) { @delegate.NonLocalAttr(getText(), x, y); }
+                if (state.backtracking == 1) { @delegate.NonLocalAttr(GetText(), x, y); }
             }
 
             state.type = _type;
@@ -405,21 +405,21 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:87:2: ( '$' x= ID '.' y= ID {...}?)
             // org\\antlr\\v4\\parse\\ActionSplitter.g:87:4: '$' x= ID '.' y= ID {...}?
             {
-                match('$'); if (state.failed) return;
-                int xStart174 = getCharIndex();
-                int xStartLine174 = getLine();
-                int xStartCharPos174 = getCharPositionInLine();
+                Match('$'); if (state.failed) return;
+                int xStart174 = CharIndex;
+                int xStartLine174 = Line;
+                int xStartCharPos174 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart174, getCharIndex() - 1);
+                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart174, CharIndex - 1);
                 x.setLine(xStartLine174);
                 x.setCharPositionInLine(xStartCharPos174);
 
-                match('.'); if (state.failed) return;
-                int yStart180 = getCharIndex();
-                int yStartLine180 = getLine();
-                int yStartCharPos180 = getCharPositionInLine();
+                Match('.'); if (state.failed) return;
+                int yStart180 = CharIndex;
+                int yStartLine180 = Line;
+                int yStartCharPos180 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart180, getCharIndex() - 1);
+                y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart180, CharIndex - 1);
                 y.setLine(yStartLine180);
                 y.setCharPositionInLine(yStartCharPos180);
 
@@ -428,7 +428,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                     if (state.backtracking > 0) { state.failed = true; return; }
                     throw new FailedPredicateException(input, "QUALIFIED_ATTR", "input.LA(1)!='('");
                 }
-                if (state.backtracking == 1) { @delegate.QualifiedAttr(getText(), x, y); }
+                if (state.backtracking == 1) { @delegate.QualifiedAttr(GetText(), x, y); }
             }
 
             state.type = _type;
@@ -454,12 +454,12 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:91:2: ( '$' x= ID ( WS )? '=' expr= ATTR_VALUE_EXPR ';' )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:91:4: '$' x= ID ( WS )? '=' expr= ATTR_VALUE_EXPR ';'
             {
-                match('$'); if (state.failed) return;
-                int xStart199 = getCharIndex();
-                int xStartLine199 = getLine();
-                int xStartCharPos199 = getCharPositionInLine();
+                Match('$'); if (state.failed) return;
+                int xStart199 = CharIndex;
+                int xStartLine199 = Line;
+                int xStartCharPos199 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                x = new CommonToken( input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart199, getCharIndex() - 1);
+                x = new CommonToken( input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart199, CharIndex - 1);
                 x.setLine(xStartLine199);
                 x.setCharPositionInLine(xStartCharPos199);
 
@@ -482,19 +482,19 @@ public class ActionSplitter : antlr.runtime.Lexer
 
                 }
 
-                match('='); if (state.failed) return;
-                int exprStart208 = getCharIndex();
-                int exprStartLine208 = getLine();
-                int exprStartCharPos208 = getCharPositionInLine();
+                Match('='); if (state.failed) return;
+                int exprStart208 = CharIndex;
+                int exprStartLine208 = Line;
+                int exprStartCharPos208 = CharPositionInLine;
                 mATTR_VALUE_EXPR(); if (state.failed) return;
-                expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart208, getCharIndex() - 1);
+                expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart208, CharIndex - 1);
                 expr.setLine(exprStartLine208);
                 expr.setCharPositionInLine(exprStartCharPos208);
 
-                match(';'); if (state.failed) return;
+                Match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
                 {
-                    @delegate.SetAttr(getText(), x, expr);
+                    @delegate.SetAttr(GetText(), x, expr);
                 }
             }
 
@@ -520,16 +520,16 @@ public class ActionSplitter : antlr.runtime.Lexer
             // org\\antlr\\v4\\parse\\ActionSplitter.g:98:2: ( '$' x= ID )
             // org\\antlr\\v4\\parse\\ActionSplitter.g:98:4: '$' x= ID
             {
-                match('$'); if (state.failed) return;
-                int xStart229 = getCharIndex();
-                int xStartLine229 = getLine();
-                int xStartCharPos229 = getCharPositionInLine();
+                Match('$'); if (state.failed) return;
+                int xStart229 = CharIndex;
+                int xStartLine229 = Line;
+                int xStartCharPos229 = CharPositionInLine;
                 mID(); if (state.failed) return;
-                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart229, getCharIndex() - 1);
+                x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart229, CharIndex - 1);
                 x.setLine(xStartLine229);
                 x.setCharPositionInLine(xStartCharPos229);
 
-                if (state.backtracking == 1) { @delegate.Attr(getText(), x); }
+                if (state.backtracking == 1) { @delegate.Attr(GetText(), x); }
             }
 
             state.type = _type;
@@ -592,7 +592,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 c = input.LA(1);
                                 if ((input.LA(1) >= '\u0000' && input.LA(1) <= '#') || (input.LA(1) >= '%' && input.LA(1) <= '[') || (input.LA(1) >= ']' && input.LA(1) <= '\uFFFF'))
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -608,7 +608,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                         case 2:
                             // org\\antlr\\v4\\parse\\ActionSplitter.g:106:5: '\\\\$'
                             {
-                                match("\\$"); if (state.failed) return;
+                                Match("\\$"); if (state.failed) return;
 
                                 if (state.backtracking == 1) { buf.Append('$'); }
                             }
@@ -616,11 +616,11 @@ public class ActionSplitter : antlr.runtime.Lexer
                         case 3:
                             // org\\antlr\\v4\\parse\\ActionSplitter.g:107:5: '\\\\' c=~ ( '$' )
                             {
-                                match('\\'); if (state.failed) return;
+                                Match('\\'); if (state.failed) return;
                                 c = input.LA(1);
                                 if ((input.LA(1) >= '\u0000' && input.LA(1) <= '#') || (input.LA(1) >= '%' && input.LA(1) <= '\uFFFF'))
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -641,7 +641,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     throw new FailedPredicateException(input, "TEXT", "!isIDStartChar(input.LA(2))");
                                 }
-                                match('$'); if (state.failed) return;
+                                Match('$'); if (state.failed) return;
                                 if (state.backtracking == 1) { buf.Append('$'); }
                             }
                             break;
@@ -679,7 +679,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 if ((input.LA(1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(1) >= 'a' && input.LA(1) <= 'z'))
                 {
-                    input.consume();
+                    input.Consume();
                     state.failed = false;
                 }
                 else
@@ -707,7 +707,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                             {
                                 if ((input.LA(1) >= '0' && input.LA(1) <= '9') || (input.LA(1) >= 'A' && input.LA(1) <= 'Z') || input.LA(1) == '_' || (input.LA(1) >= 'a' && input.LA(1) <= 'z'))
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -747,7 +747,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 if ((input.LA(1) >= '\u0000' && input.LA(1) <= '<') || (input.LA(1) >= '>' && input.LA(1) <= '\uFFFF'))
                 {
-                    input.consume();
+                    input.Consume();
                     state.failed = false;
                 }
                 else
@@ -775,7 +775,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                             {
                                 if ((input.LA(1) >= '\u0000' && input.LA(1) <= ':') || (input.LA(1) >= '<' && input.LA(1) <= '\uFFFF'))
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -832,7 +832,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                             {
                                 if ((input.LA(1) >= '\t' && input.LA(1) <= '\n') || input.LA(1) == '\r' || input.LA(1) == ' ')
                                 {
-                                    input.consume();
+                                    input.Consume();
                                     state.failed = false;
                                 }
                                 else
@@ -866,7 +866,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end "WS"
 
     //@Override
-    public override void mTokens()
+    public override void MTokens()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:39: ( COMMENT | LINE_COMMENT | SET_NONLOCAL_ATTR | NONLOCAL_ATTR | QUALIFIED_ATTR | SET_ATTR | ATTR | TEXT )
         int alt10 = 8;
@@ -920,17 +920,17 @@ public class ActionSplitter : antlr.runtime.Lexer
             else
             {
                 if (state.backtracking > 0) { state.failed = true; return; }
-                int nvaeMark = input.mark();
+                int nvaeMark = input.Mark();
                 try
                 {
-                    input.consume();
+                    input.Consume();
                     NoViableAltException nvae =
                         new NoViableAltException("", 10, 2, input);
                     throw nvae;
                 }
                 finally
                 {
-                    input.rewind(nvaeMark);
+                    input.Rewind(nvaeMark);
                 }
             }
 
@@ -1104,7 +1104,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred2_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred2_ActionSplitter_fragment(); // can never throw exception
@@ -1114,7 +1114,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1122,7 +1122,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred7_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred7_ActionSplitter_fragment(); // can never throw exception
@@ -1132,7 +1132,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1140,7 +1140,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred1_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred1_ActionSplitter_fragment(); // can never throw exception
@@ -1150,7 +1150,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1158,7 +1158,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred6_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred6_ActionSplitter_fragment(); // can never throw exception
@@ -1168,7 +1168,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1176,7 +1176,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred3_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred3_ActionSplitter_fragment(); // can never throw exception
@@ -1186,7 +1186,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1194,7 +1194,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred4_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred4_ActionSplitter_fragment(); // can never throw exception
@@ -1204,7 +1204,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -1212,7 +1212,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     public bool synpred5_ActionSplitter()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred5_ActionSplitter_fragment(); // can never throw exception
@@ -1222,7 +1222,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;

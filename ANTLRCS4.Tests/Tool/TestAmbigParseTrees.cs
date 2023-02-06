@@ -224,7 +224,7 @@ public class TestAmbigParseTrees
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
         parser.setProfile(true);
-        parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
+        parser.getInterpreter().        PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 
         // PARSE
         int ruleIndex = g.rules[(startRule)].index;
@@ -232,7 +232,7 @@ public class TestAmbigParseTrees
         Assert.AreEqual(overallTree, Trees.ToStringTree(parseTree, nodeTextProvider));
         Console.Out.WriteLine();
 
-        var decisionInfo = parser.getParseInfo().getDecisionInfo();
+        var decisionInfo = parser.getParseInfo().GetDecisionInfo();
         var ambiguities = decisionInfo[decision].ambiguities;
         Assert.AreEqual(1, ambiguities.Count);
         var ambiguityInfo = ambiguities[(0)];

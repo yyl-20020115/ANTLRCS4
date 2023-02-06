@@ -33,10 +33,7 @@ public class LexerChannelAction : LexerAction
 	 *
 	 * @return The channel to use for the {@link Token} created by the lexer.
 	 */
-    public int GetChannel()
-    {
-        return channel;
-    }
+    public int GetChannel() => channel;
 
     /**
 	 * {@inheritDoc}
@@ -80,18 +77,14 @@ public class LexerChannelAction : LexerAction
         {
             return true;
         }
-        else if (!(obj is LexerChannelAction))
+        else if (obj is LexerChannelAction action)
         {
-            return false;
+            return channel == action.channel;
         }
+        return false;
 
-        return channel == ((LexerChannelAction)obj).channel;
     }
 
     //@Override
-    public override String ToString()
-    {
-        return $"channel({channel})";
-
-    }
+    public override string ToString() => $"channel({channel})";
 }

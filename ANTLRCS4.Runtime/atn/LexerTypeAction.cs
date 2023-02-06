@@ -15,24 +15,21 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerTypeAction : LexerAction {
-	private readonly int type;
+public class LexerTypeAction : LexerAction
+{
+    private readonly int type;
 
-	/**
+    /**
 	 * Constructs a new {@code type} action with the specified token type value.
 	 * @param type The type to assign to the token using {@link Lexer#setType}.
 	 */
-	public LexerTypeAction(int type) {
-		this.type = type;
-	}
+    public LexerTypeAction(int type) => this.type = type;
 
-	/**
+    /**
 	 * Gets the type to assign to a token created by the lexer.
 	 * @return The type to assign to a token created by the lexer.
 	 */
-	public int getType() {
-		return type;
-	}
+    public int Type => type;
 
     /**
 	 * {@inheritDoc}
@@ -55,32 +52,34 @@ public class LexerTypeAction : LexerAction {
 	 * value provided by {@link #getType}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		lexer.setType(type);
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.setType(type);
+    }
 
-	//@Override
-	public int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, ActionType);
-		hash = MurmurHash.Update(hash, type);
-		return MurmurHash.Finish(hash, 2);
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        hash = MurmurHash.Update(hash, type);
+        return MurmurHash.Finish(hash, 2);
+    }
 
-	//@Override
-	public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerTypeAction)) {
-			return false;
-		}
+    //@Override
+    public override bool Equals(object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (obj is LexerTypeAction)
+        {
+            return type == ((LexerTypeAction)obj).type;
+        }
+        return false;
+    }
 
-		return type == ((LexerTypeAction)obj).type;
-	}
-
-	//@Override
-	public override String ToString() {
-		return $"type({type})";
-	}
+    //@Override
+    public override string ToString() => $"type({type})";
 }

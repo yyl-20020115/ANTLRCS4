@@ -34,7 +34,7 @@ public class NoViableAltException : RecognitionException {
 
     public NoViableAltException(Parser recognizer)
 		: this(recognizer,
-             recognizer.getInputStream(),
+             recognizer.             InputStream,
              recognizer.getCurrentToken(),
              recognizer.getCurrentToken(),
              null,

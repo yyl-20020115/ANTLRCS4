@@ -32,12 +32,9 @@ public class EpsilonTransition : Transition
     //@Override
     public override bool IsEpsilon => true;
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
-    {
-        return false;
-    }
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
     //@Override
 
-    public override String ToString() => "epsilon";
+    public override string ToString() => "epsilon";
 }

@@ -68,7 +68,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 
 		String decision = getDecisionDescription(recognizer, dfa);
 		BitSet conflictingAlts = getConflictingAlts(ambigAlts, configs);
-		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
 		String message = $"reportAmbiguity d={decision}: ambigAlts={conflictingAlts}, input='{text}'";
 		recognizer.notifyErrorListeners(message);
 	}
@@ -82,7 +82,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 											ATNConfigSet configs)
 	{
 		String decision = getDecisionDescription(recognizer, dfa);
-		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
 		String message = $"reportAttemptingFullContext d={decision}, input='{text}'";
 
         recognizer.notifyErrorListeners(message);
@@ -97,7 +97,7 @@ public class DiagnosticErrorListener : BaseErrorListener {
 										 ATNConfigSet configs)
 	{
 		String decision = getDecisionDescription(recognizer, dfa);
-		String text = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
 		String message = $"reportContextSensitivity d={decision}, input='{text}'";
 
         recognizer.notifyErrorListeners(message);

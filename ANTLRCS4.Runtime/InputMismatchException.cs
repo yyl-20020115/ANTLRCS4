@@ -9,12 +9,12 @@ namespace org.antlr.v4.runtime;
  *  when the current input does not match the expected token.
  */
 public class InputMismatchException : RecognitionException {
-	public InputMismatchException(Parser recognizer) : base(recognizer, recognizer.getInputStream(), recognizer.GetCtx())
+	public InputMismatchException(Parser recognizer) : base(recognizer, recognizer.InputStream, recognizer.GetCtx())
     {
 		this.setOffendingToken(recognizer.getCurrentToken());
 	}
 
-	public InputMismatchException(Parser recognizer, int state, ParserRuleContext ctx): base(recognizer, recognizer.getInputStream(), ctx)
+	public InputMismatchException(Parser recognizer, int state, ParserRuleContext ctx): base(recognizer, recognizer.InputStream, ctx)
     {
 		;
 		this.setOffendingState(state);

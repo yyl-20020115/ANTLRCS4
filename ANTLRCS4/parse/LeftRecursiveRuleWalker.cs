@@ -481,7 +481,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             {
                 if ((input.LA(1) >= PRIVATE && input.LA(1) <= PUBLIC))
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                     state.failed = false;
                 }
@@ -1222,17 +1222,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return t; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 21, 3, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1253,17 +1253,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return t; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae3 =
                                     new NoViableAltException("", 21, 4, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1466,12 +1466,12 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 break;
                             default:
                                 if (state.backtracking > 0) { state.failed = true; return; }
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae =
                                         new NoViableAltException("", 23, 4, input);
@@ -1479,7 +1479,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                         }
                     }
@@ -1487,12 +1487,12 @@ public class LeftRecursiveRuleWalker : TreeParser
                     else
                     {
                         if (state.backtracking > 0) { state.failed = true; return; }
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             var nvae =
                                 new NoViableAltException("", 23, 3, input);
@@ -1500,7 +1500,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -1509,17 +1509,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 23, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1623,17 +1623,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 25, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1866,17 +1866,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 26, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1897,17 +1897,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae3 =
                                     new NoViableAltException("", 26, 2, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2007,17 +2007,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 27, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2037,17 +2037,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 27, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2400,17 +2400,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 35, 2, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2431,17 +2431,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 35, 3, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2462,17 +2462,17 @@ public class LeftRecursiveRuleWalker : TreeParser
                         else
                         {
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 35, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2660,7 +2660,7 @@ public class LeftRecursiveRuleWalker : TreeParser
     public bool Synpred1LeftRecursiveRuleWalker()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             synpred1LeftRecursiveRuleWalkerFragment(); // can never throw exception
@@ -2670,7 +2670,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -2678,7 +2678,7 @@ public class LeftRecursiveRuleWalker : TreeParser
     public bool Synpred2LeftRecursiveRuleWalker()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             Synpred2LeftRecursiveRuleWalkerFragment(); // can never throw exception
@@ -2688,7 +2688,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;
@@ -2696,7 +2696,7 @@ public class LeftRecursiveRuleWalker : TreeParser
     public bool Synpred3LeftRecursiveRuleWalker()
     {
         state.backtracking++;
-        int start = input.mark();
+        int start = input.Mark();
         try
         {
             Synpred3LeftRecursiveRuleWalkerFragment(); // can never throw exception
@@ -2706,7 +2706,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             Console.Error.WriteLine("impossible: " + re);
         }
         bool success = !state.failed;
-        input.rewind(start);
+        input.Rewind(start);
         state.backtracking--;
         state.failed = false;
         return success;

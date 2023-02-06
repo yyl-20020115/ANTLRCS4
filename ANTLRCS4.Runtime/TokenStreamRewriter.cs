@@ -355,14 +355,14 @@ public class TokenStreamRewriter {
 	 *  instructions given to this rewriter.
  	 */
 	public String getText() {
-		return getText(DEFAULT_PROGRAM_NAME, Interval.of(0,tokens.Count-1));
+		return getText(DEFAULT_PROGRAM_NAME, Interval.Of(0,tokens.Count-1));
 	}
 
 	/** Return the text from the original tokens altered per the
 	 *  instructions given to this rewriter in programName.
  	 */
 	public String getText(String programName) {
-		return getText(programName, Interval.of(0,tokens.Count-1));
+		return getText(programName, Interval.Of(0,tokens.Count-1));
 	}
 
 	/** Return the text associated with the tokens in the interval from the

@@ -905,7 +905,7 @@ public class Grammar : AttributeResolver
     public String joinPredicateOperands(SemanticContext.Operator op, String separator)
     {
         StringBuilder buf = new StringBuilder();
-        foreach (SemanticContext operand in op.getOperands())
+        foreach (SemanticContext operand in op.GetOperands())
         {
             if (buf.Length > 0)
             {
@@ -1411,7 +1411,7 @@ public class Grammar : AttributeResolver
         {
             if (n.atnState != null)
             {
-                Interval tokenRegion = Interval.of(n.getTokenStartIndex(), n.getTokenStopIndex());
+                Interval tokenRegion = Interval.Of(n.getTokenStartIndex(), n.getTokenStopIndex());
                 Tree ruleNode = null;
                 // RULEs, BLOCKs of transformed recursive rules point to original token interval
                 switch (n.getType())
@@ -1431,7 +1431,7 @@ public class Grammar : AttributeResolver
                     if (r is LeftRecursiveRule)
                     {
                         RuleAST originalAST = ((LeftRecursiveRule)r).getOriginalAST();
-                        tokenRegion = Interval.of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
+                        tokenRegion = Interval.Of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
                     }
                 }
                 stateToGrammarRegionMap[n.atnState.stateNumber]= tokenRegion;

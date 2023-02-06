@@ -293,14 +293,14 @@ public class ParserInterpreter : Parser {
 		if ( p.NumberOfTransitions>1 ) {
 			getErrorHandler().sync(this);
 			int decision = p.decision;
-			if ( decision == overrideDecision && input.index() == overrideDecisionInputIndex &&
+			if ( decision == overrideDecision && input.Index() == overrideDecisionInputIndex &&
 			     !overrideDecisionReached )
 			{
 				predictedAlt = overrideDecisionAlt;
 				overrideDecisionReached = true;
 			}
 			else {
-				predictedAlt = getInterpreter().adaptivePredict(input, decision, _ctx);
+				predictedAlt = getInterpreter().AdaptivePredict(input, decision, _ctx);
 			}
 		}
 		return predictedAlt;
@@ -387,9 +387,9 @@ public class ParserInterpreter : Parser {
 	 *  tree.
 	 */
 	protected void recover(RecognitionException e) {
-		int i = input.index();
+		int i = input.Index();
 		getErrorHandler().recover(this, e);
-		if ( input.index()==i ) {
+		if ( input.Index()==i ) {
 			// no input consumed, better add an error node
 			if ( e is InputMismatchException ) {
 				InputMismatchException ime = (InputMismatchException)e;
@@ -399,7 +399,7 @@ public class ParserInterpreter : Parser {
 					expectedTokenType = ime.getExpectedTokens().GetMinElement(); // get any element
 				}
 				Token errToken =
-					(getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
+					(TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().InputStream),
 				                             expectedTokenType, tok.getText(),
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop
@@ -409,7 +409,7 @@ public class ParserInterpreter : Parser {
 			else { // NoViableAlt
 				Token tok = e.getOffendingToken();
 				Token errToken =
-					(getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),
+					(TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().InputStream),
 				                             Token.INVALID_TYPE, tok.getText(),
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop

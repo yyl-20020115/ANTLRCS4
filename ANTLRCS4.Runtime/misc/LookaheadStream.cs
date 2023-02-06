@@ -97,9 +97,9 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     }
 
     /** Make sure we have at least one element to remove, even if EOF */
-    public void consume()
+    public void Consume()
     {
-        syncAhead(1);
+        SyncAhead(1);
         Remove();
         currentElementIndex++;
     }
@@ -108,14 +108,14 @@ public abstract class LookaheadStream<T> : FastQueue<T>
      *  p index is data.size()-1.  p+need-1 is the data index 'need' elements
      *  ahead.  If we need 1 element, (p+1-1)==p must be &lt; data.size().
      */
-    protected void syncAhead(int need)
+    protected void SyncAhead(int need)
     {
         int n = (p + need - 1) - data.Count + 1; // how many more elements we need?
-        if (n > 0) fill(n);                 // out of elements?
+        if (n > 0) Fill(n);                 // out of elements?
     }
 
     /** add n elements to buffer */
-    public void fill(int n)
+    public void Fill(int n)
     {
         for (int i = 1; i <= n; i++)
         {
@@ -135,26 +135,26 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         }
         if (k < 0) return LB(-k);
         //System.out.print("LT(p="+p+","+k+")=");
-        syncAhead(k);
+        SyncAhead(k);
         if ((p + k - 1) > data.Count) return eof;
         return ElementAt(k - 1);
     }
 
-    public int index() { return currentElementIndex; }
+    public int Index() => currentElementIndex;
 
-    public int mark()
+    public int Mark()
     {
         markDepth++;
         lastMarker = p; // track where we are in buffer not absolute token index
         return lastMarker;
     }
 
-    public void release(int marker)
+    public void Release(int marker)
     {
         // no resources to release
     }
 
-    public void rewind(int marker)
+    public void Rewind(int marker)
     {
         markDepth--;
         int delta = p - marker;
@@ -162,7 +162,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         p = marker;
     }
 
-    public void rewind()
+    public void Rewind()
     {
         // rewind but do not release marker
         int delta = p - lastMarker;
@@ -184,7 +184,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
      * beginning of the moving window buffer
      * ({@code index < }{@link #currentElementIndex currentElementIndex}<code> - </code>{@link #p p}).
      */
-    public void seek(int index)
+    public void Seek(int index)
     {
         if (index < 0)
         {

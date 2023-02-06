@@ -63,19 +63,19 @@ public class TestUnbufferedTokenStream
 
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.GetBuffer().ToString());
         Assert.AreEqual("x", tokens.LT(1).getText());
-        tokens.consume(); // move to WS
+        tokens.Consume(); // move to WS
         Assert.AreEqual(" ", tokens.LT(1).getText());
         Assert.AreEqual("[[@1,1:1=' ',<7>,1:1]]", tokens.GetRemainingBuffer().ToString());
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual("=", tokens.LT(1).getText());
         Assert.AreEqual("[[@2,2:2='=',<4>,1:2]]", tokens.GetRemainingBuffer().ToString());
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual(" ", tokens.LT(1).getText());
         Assert.AreEqual("[[@3,3:3=' ',<7>,1:3]]", tokens.GetRemainingBuffer().ToString());
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual("302", tokens.LT(1).getText());
         Assert.AreEqual("[[@4,4:6='302',<2>,1:4]]", tokens.GetRemainingBuffer().ToString());
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual(";", tokens.LT(1).getText());
         Assert.AreEqual("[[@5,7:7=';',<3>,1:7]]", tokens.GetRemainingBuffer().ToString());
     }
@@ -100,16 +100,16 @@ public class TestUnbufferedTokenStream
         var lexEngine = g.createLexerInterpreter(input);
         var tokens = new TestingUnbufferedTokenStream(lexEngine);
 
-        int m = tokens.mark();
+        int m = tokens.Mark();
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.GetBuffer().ToString());
         Assert.AreEqual("x", tokens.LT(1).getText());
-        tokens.consume(); // consume x
+        tokens.Consume(); // consume x
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.GetBuffer().ToString());
-        tokens.consume(); // ' '
-        tokens.consume(); // =
-        tokens.consume(); // ' '
-        tokens.consume(); // 302
-        tokens.consume(); // ;
+        tokens.Consume(); // ' '
+        tokens.Consume(); // =
+        tokens.Consume(); // ' '
+        tokens.Consume(); // 302
+        tokens.Consume(); // ;
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]," +
                      " [@2,2:2='=',<4>,1:2], [@3,3:3=' ',<7>,1:3]," +
                      " [@4,4:6='302',<2>,1:4], [@5,7:7=';',<3>,1:7]," +
@@ -137,31 +137,31 @@ public class TestUnbufferedTokenStream
         var lexEngine = g.createLexerInterpreter(input);
         var tokens = new TestingUnbufferedTokenStream(lexEngine);
 
-        int m = tokens.mark();
+        int m = tokens.Mark();
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.GetBuffer().ToString());
         Assert.AreEqual("x", tokens.LT(1).getText());
-        tokens.consume(); // consume x
+        tokens.Consume(); // consume x
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1]]", tokens.GetBuffer().ToString());
-        tokens.consume(); // ' '
-        tokens.consume(); // =
-        tokens.consume(); // ' '
+        tokens.Consume(); // ' '
+        tokens.Consume(); // =
+        tokens.Consume(); // ' '
         Assert.AreEqual("302", tokens.LT(1).getText());
-        tokens.release(m); // "x = 302" is in buffer. will kill buffer
-        tokens.consume(); // 302
-        tokens.consume(); // ' '
-        m = tokens.mark(); // mark at the +
+        tokens.Release(m); // "x = 302" is in buffer. will kill buffer
+        tokens.Consume(); // 302
+        tokens.Consume(); // ' '
+        m = tokens.Mark(); // mark at the +
         Assert.AreEqual("+", tokens.LT(1).getText());
-        tokens.consume(); // '+'
-        tokens.consume(); // ' '
-        tokens.consume(); // 1
-        tokens.consume(); // ;
+        tokens.Consume(); // '+'
+        tokens.Consume(); // ' '
+        tokens.Consume(); // 1
+        tokens.Consume(); // ;
         Assert.AreEqual("<EOF>", tokens.LT(1).getText());
         // we marked at the +, so that should be the start of the buffer
         Assert.AreEqual("[[@6,8:8='+',<5>,1:8], [@7,9:9=' ',<7>,1:9]," +
                      " [@8,10:10='1',<2>,1:10], [@9,11:11=';',<3>,1:11]," +
                      " [@10,12:11='<EOF>',<-1>,1:12]]",
                      tokens.GetBuffer().ToString());
-        tokens.release(m);
+        tokens.Release(m);
     }
 
     protected class TestingUnbufferedTokenStream : UnbufferedTokenStream

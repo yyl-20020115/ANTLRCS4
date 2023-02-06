@@ -913,7 +913,7 @@ public class GrammarTreeVisitor : TreeParser
             {
                 if (input.LA(1) == ID || input.LA(1) == INT || input.LA(1) == STRING_LITERAL)
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -2377,7 +2377,7 @@ public class GrammarTreeVisitor : TreeParser
             {
                 if (input.LA(1) == FRAGMENT || (input.LA(1) >= PRIVATE && input.LA(1) <= PUBLIC))
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -2905,17 +2905,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 30, 3, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2935,17 +2935,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 30, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -3197,17 +3197,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 33, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -3363,17 +3363,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 34, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -3392,17 +3392,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 34, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -3718,7 +3718,7 @@ public class GrammarTreeVisitor : TreeParser
             {
                 if (input.LA(1) == ID || input.LA(1) == INT)
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -3810,17 +3810,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -3840,17 +3840,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 5, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -3878,12 +3878,12 @@ public class GrammarTreeVisitor : TreeParser
 
                             else
                             {
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae2 =
                                         new NoViableAltException("", 40, 12, input);
@@ -3891,7 +3891,7 @@ public class GrammarTreeVisitor : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                             }
 
@@ -3899,17 +3899,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 40, 7, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -4087,12 +4087,12 @@ public class GrammarTreeVisitor : TreeParser
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             NoViableAltException nvae =
                                 new NoViableAltException("", 41, 3, input);
@@ -4100,7 +4100,7 @@ public class GrammarTreeVisitor : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -4108,17 +4108,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 41, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -4213,7 +4213,7 @@ public class GrammarTreeVisitor : TreeParser
             {
                 if (input.LA(1) == ASSIGN || input.LA(1) == PLUS_ASSIGN)
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -4482,7 +4482,7 @@ public class GrammarTreeVisitor : TreeParser
             {
                 if (input.LA(1) == CLOSURE || (input.LA(1) >= OPTIONAL && input.LA(1) <= POSITIVE_CLOSURE))
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -4554,12 +4554,12 @@ public class GrammarTreeVisitor : TreeParser
 
                                 else
                                 {
-                                    int nvaeMark = input.mark();
+                                    int nvaeMark = input.Mark();
                                     try
                                     {
                                         for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                         {
-                                            input.consume();
+                                            input.Consume();
                                         }
                                         NoViableAltException nvae2 =
                                             new NoViableAltException("", 44, 9, input);
@@ -4567,7 +4567,7 @@ public class GrammarTreeVisitor : TreeParser
                                     }
                                     finally
                                     {
-                                        input.rewind(nvaeMark);
+                                        input.Rewind(nvaeMark);
                                     }
                                 }
 
@@ -4575,12 +4575,12 @@ public class GrammarTreeVisitor : TreeParser
 
                             else
                             {
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae2 =
                                         new NoViableAltException("", 44, 6, input);
@@ -4588,7 +4588,7 @@ public class GrammarTreeVisitor : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                             }
 
@@ -4596,17 +4596,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 44, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -4626,17 +4626,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 44, 2, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -4879,17 +4879,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 46, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -4909,17 +4909,17 @@ public class GrammarTreeVisitor : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 46, 2, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -5347,17 +5347,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 53, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -5376,17 +5376,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 53, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -5601,12 +5601,12 @@ public class GrammarTreeVisitor : TreeParser
                                 }
                                 break;
                             default:
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae =
                                         new NoViableAltException("", 55, 4, input);
@@ -5614,19 +5614,19 @@ public class GrammarTreeVisitor : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                         }
                     }
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             NoViableAltException nvae =
                                 new NoViableAltException("", 55, 3, input);
@@ -5634,7 +5634,7 @@ public class GrammarTreeVisitor : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -5642,17 +5642,17 @@ public class GrammarTreeVisitor : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 55, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 

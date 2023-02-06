@@ -34,7 +34,6 @@ public abstract class Transition
     public const int WILDCARD = 9;
     public const int PRECEDENCE = 10;
 
-
     public static readonly List<string> serializationNames =
         new() {
             "INVALID",
@@ -62,7 +61,6 @@ public abstract class Transition
         [typeof(NotSetTransition)] = NOT_SET,
         [typeof(WildcardTransition)] = WILDCARD,
         [typeof(PrecedencePredicateTransition)] = PRECEDENCE,
-
     };
 
     /** The target of this transition. */
@@ -70,9 +68,7 @@ public abstract class Transition
     public ATNState target;
 
     protected Transition(ATNState target)
-    {
-        this.target = target ?? throw new NullReferenceException(nameof(target));
-    }
+        => this.target = target ?? throw new NullReferenceException(nameof(target));
 
     public abstract int SerializationType { get; }
 
@@ -86,7 +82,6 @@ public abstract class Transition
 	 * transition consumes (matches) an input symbol.
 	 */
     public virtual bool IsEpsilon => false;
-
 
     public virtual IntervalSet Label => null;
     public abstract bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol);

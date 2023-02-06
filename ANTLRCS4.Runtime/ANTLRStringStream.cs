@@ -101,7 +101,7 @@ public class ANTLRStringStream : CharStream
     }
 
     //@Override
-    public void consume()
+    public void Consume()
     {
         //System.out.println("prev p="+p+", c="+(char)data[p]);
         if (p < n)
@@ -158,7 +158,7 @@ public class ANTLRStringStream : CharStream
      *  be returned from LA(1).
      */
     //@Override
-    public int index()
+    public int Index()
     {
         return p;
     }
@@ -167,7 +167,7 @@ public class ANTLRStringStream : CharStream
     public int Count => n;
 
     //@Override
-    public int mark()
+    public int Mark()
     {
         if (markers == null)
         {
@@ -193,24 +193,24 @@ public class ANTLRStringStream : CharStream
     }
 
     //@Override
-    public void rewind(int m)
+    public void Rewind(int m)
     {
         CharStreamState state = markers[(m)];
         // restore stream state
-        seek(state.p);
+        Seek(state.p);
         line = state.line;
         charPositionInLine = state.charPositionInLine;
-        release(m);
+        Release(m);
     }
 
     //@Override
-    public void rewind()
+    public void Rewind()
     {
-        rewind(lastMarker);
+        Rewind(lastMarker);
     }
 
     //@Override
-    public void release(int marker)
+    public void Release(int marker)
     {
         // unwind any other markers made after m and release m
         markDepth = marker;
@@ -222,7 +222,7 @@ public class ANTLRStringStream : CharStream
      *  update line and charPositionInLine.
      */
     //@Override
-    public void seek(int index)
+    public void Seek(int index)
     {
         if (index <= p)
         {
@@ -232,27 +232,21 @@ public class ANTLRStringStream : CharStream
         // seek forward, consume until p hits index
         while (p < index)
         {
-            consume();
+            Consume();
         }
     }
 
     //@Override
-    public String substring(int start, int stop)
+    public String Substring(int start, int stop)
     {
         return new String(data, start, stop - start + 1);
     }
 
     //@Override
-    public int getLine()
-    {
-        return line;
-    }
+    public int Line => line;
 
     //@Override
-    public int getCharPositionInLine()
-    {
-        return charPositionInLine;
-    }
+    public int CharPositionInLine => charPositionInLine;
 
     //@Override
     public void setLine(int line)
@@ -274,7 +268,7 @@ public class ANTLRStringStream : CharStream
     //@Override
     public override String ToString() { return new String(data); }
 
-    public string getText(Interval interval)
+    public string GetText(Interval interval)
     {
         throw new NotImplementedException();
     }

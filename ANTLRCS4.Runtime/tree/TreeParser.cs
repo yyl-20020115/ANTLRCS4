@@ -70,7 +70,7 @@ public class TreeParser : BaseRecognizer
         base.Reset(); // reset all recognizer state variables
         if (input != null)
         {
-            input.seek(0); // rewind the input
+            input.Seek(0); // rewind the input
         }
     }
 
@@ -121,7 +121,7 @@ public class TreeParser : BaseRecognizer
         Object look = input.LT(1);
         if (input.getTreeAdaptor().getChildCount(look) == 0)
         {
-            input.consume(); // not subtree, consume 1 node and return
+            input.Consume(); // not subtree, consume 1 node and return
             return;
         }
         // current node is a subtree, skip to corresponding UP.
@@ -130,7 +130,7 @@ public class TreeParser : BaseRecognizer
         int tokenType = input.getTreeAdaptor().getType(look);
         while (tokenType != Token.EOF && !(tokenType == UP && level == 0))
         {
-            input.consume();
+            input.Consume();
             look = input.LT(1);
             tokenType = input.getTreeAdaptor().getType(look);
             if (tokenType == DOWN)
@@ -142,7 +142,7 @@ public class TreeParser : BaseRecognizer
                 level--;
             }
         }
-        input.consume(); // consume UP
+        input.Consume(); // consume UP
     }
 
     /** We have DOWN/UP nodes in the stream that have no line info; override.

@@ -165,7 +165,7 @@ public class Rule : AttributeResolver {
         for (int i=1; i<=numberOfAlts; i++) {
             foreach (List<LabelElementPair> pairs in alt[i].labelDefs.Values) {
                 foreach (LabelElementPair p in pairs) {
-                    defs.map(p.label.getText(), p);
+                    defs.Map(p.label.getText(), p);
                 }
             }
         }

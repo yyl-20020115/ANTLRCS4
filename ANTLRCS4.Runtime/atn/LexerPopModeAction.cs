@@ -17,17 +17,17 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerPopModeAction : LexerAction {
-	/**
+public class LexerPopModeAction : LexerAction
+{
+    /**
 	 * Provides a singleton instance of this parameterless lexer action.
 	 */
-	public static readonly LexerPopModeAction INSTANCE = new LexerPopModeAction();
+    public static readonly LexerPopModeAction INSTANCE = new ();
 
-	/**
+    /**
 	 * Constructs the singleton instance of the lexer {@code popMode} command.
 	 */
-	private LexerPopModeAction() {
-	}
+    private LexerPopModeAction() { }
 
     /**
 	 * {@inheritDoc}
@@ -49,25 +49,23 @@ public class LexerPopModeAction : LexerAction {
 	 * <p>This action is implemented by calling {@link Lexer#popMode}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		lexer.popMode();
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.popMode();
+    }
 
-	//@Override
-	public override int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, ActionType);
-		return MurmurHash.Finish(hash, 1);
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        return MurmurHash.Finish(hash, 1);
+    }
 
     //@Override
     //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    public override bool Equals(Object? obj) {
-		return obj == this;
-	}
+    public override bool Equals(object? obj) => obj == this;
 
-	//@Override
-	public override String ToString() {
-		return "popMode";
-	}
+    //@Override
+    public override string ToString() => "popMode";
 }

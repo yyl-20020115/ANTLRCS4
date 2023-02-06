@@ -6,9 +6,10 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class RuleStartState : ATNState {
-	public RuleStopState stopState;
-	public bool isLeftRecursiveRule;
+public class RuleStartState : ATNState
+{
+    public RuleStopState stopState;
+    public bool isLeftRecursiveRule;
 
     public override int StateType => RULE_START;
 }

@@ -57,7 +57,7 @@ public interface IntStream {
 	 * end of the stream (i.e. if {@code LA(1)==}{@link #EOF EOF} before calling
 	 * {@code consume}).
 	 */
-	void consume();
+	void Consume();
 
 	/**
 	 * Gets the value of the symbol at offset {@code i} from the current
@@ -141,7 +141,7 @@ public interface IntStream {
 	 * @return An opaque marker which should be passed to
 	 * {@link #release release()} when the marked range is no longer required.
 	 */
-	int mark();
+	int Mark();
 
 	/**
 	 * This method releases a marked range created by a call to
@@ -155,7 +155,7 @@ public interface IntStream {
 	 * @param marker A marker returned by a call to {@code mark()}.
 	 * @see #mark
 	 */
-	void release(int marker);
+	void Release(int marker);
 
 	/**
 	 * Return the index into the stream of the input symbol referred to by
@@ -165,7 +165,7 @@ public interface IntStream {
 	 * {@link IntStream initializing method} has occurred after this stream was
 	 * constructed.</p>
 	 */
-	int index();
+	int Index();
 
 	/**
 	 * Set the input cursor to the position indicated by {@code index}. If the
@@ -195,7 +195,7 @@ public interface IntStream {
 	 * @throws UnsupportedOperationException if the stream does not support
 	 * seeking to the specified index
 	 */
-	void seek(int index);
+	void Seek(int index);
 
     /**
 	 * Returns the total number of symbols in the stream, including a single EOF
@@ -213,6 +213,6 @@ public interface IntStream {
 	 */
 
     public String getSourceName();
-    void rewind(int nvaeMark);
-    void rewind();
+    void Rewind(int nvaeMark);
+    void Rewind();
 }

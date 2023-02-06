@@ -101,14 +101,14 @@ public class ATNSerializer
                         break;
 
                     case LexerActionType.CUSTOM:
-                        int ruleIndex = ((LexerCustomAction)action).GetRuleIndex();
-                        int actionIndex = ((LexerCustomAction)action).GetActionIndex();
+                        int ruleIndex = ((LexerCustomAction)action).RuleIndex;
+                        int actionIndex = ((LexerCustomAction)action).ActionIndex;
                         data.Add(ruleIndex);
                         data.Add(actionIndex);
                         break;
 
                     case LexerActionType.MODE:
-                        int mode = ((LexerModeAction)action).getMode();
+                        int mode = ((LexerModeAction)action).Mode;
                         data.Add(mode);
                         data.Add(0);
                         break;
@@ -124,7 +124,7 @@ public class ATNSerializer
                         break;
 
                     case LexerActionType.PUSH_MODE:
-                        mode = ((LexerPushModeAction)action).getMode();
+                        mode = ((LexerPushModeAction)action).Mode;
                         data.Add(mode);
                         data.Add(0);
                         break;
@@ -135,7 +135,7 @@ public class ATNSerializer
                         break;
 
                     case LexerActionType.TYPE:
-                        int type = ((LexerTypeAction)action).getType();
+                        int type = ((LexerTypeAction)action).Type;
                         data.Add(type);
                         data.Add(0);
                         break;
@@ -232,7 +232,7 @@ public class ATNSerializer
                         break;
                     case Transition.SET:
                     case Transition.NOT_SET:
-                        if (setIndices.TryGetValue(((SetTransition)t).set, out var ret))
+                        if (setIndices.TryGetValue(((SetTransition)t).label, out var ret))
                         {
                             arg1 = ret;
                         }
@@ -294,8 +294,8 @@ public class ATNSerializer
 
     private void AddPrecedenceStates()
     {
-        data.Add(_precedenceStates.Size());
-        for (int i = 0; i < _precedenceStates.Size(); i++)
+        data.Add(_precedenceStates.Size);
+        for (int i = 0; i < _precedenceStates.Size; i++)
         {
             data.Add(_precedenceStates.Get(i));
         }
@@ -303,8 +303,8 @@ public class ATNSerializer
 
     private void AddNonGreedyStates()
     {
-        data.Add(nonGreedyStates.Size());
-        for (int i = 0; i < nonGreedyStates.Size(); i++)
+        data.Add(nonGreedyStates.Size);
+        for (int i = 0; i < nonGreedyStates.Size; i++)
         {
             data.Add(nonGreedyStates.Get(i));
         }
@@ -360,7 +360,7 @@ public class ATNSerializer
                     if (edgeType == Transition.SET || edgeType == Transition.NOT_SET)
                     {
                         SetTransition st = (SetTransition)t;
-                        sets[st.set] = true;
+                        sets[st.label] = true;
                     }
                 }
             }

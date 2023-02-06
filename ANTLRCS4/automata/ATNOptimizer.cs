@@ -86,7 +86,7 @@ public static class ATNOptimizer
             for (int i = setTransitions.GetIntervals().Count - 1; i >= 0; i--)
             {
                 var interval = setTransitions.GetIntervals()[i];
-                if (interval.length() <= 1)
+                if (interval.Length <= 1)
                 {
                     continue;
                 }

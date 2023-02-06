@@ -117,7 +117,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 	//@Override
 	public void label(GrammarAST op, GrammarAST ID, GrammarAST element) {
 		LabelElementPair lp = new LabelElementPair(g, ID, element, op.getType());
-		currentRule.alt[currentOuterAltNumber].labelDefs.map(ID.getText(), lp);
+		currentRule.alt[currentOuterAltNumber].labelDefs.Map(ID.getText(), lp);
 	}
 
 	//@Override
@@ -125,7 +125,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 		terminals.Add(@ref);
 		strings.Add(@ref.getText());
 		if ( currentRule!=null ) {
-			currentRule.alt[currentOuterAltNumber].tokenRefs.map(@ref.getText(), @ref);
+			currentRule.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
 		}
 	}
 
@@ -134,7 +134,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 		terminals.Add(@ref);
 		tokenIDRefs.Add(@ref);
 		if ( currentRule!=null ) {
-			currentRule.alt[currentOuterAltNumber].tokenRefs.map(@ref.getText(), @ref);
+			currentRule.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
 		}
 	}
 
@@ -143,7 +143,7 @@ public class SymbolCollector : GrammarTreeVisitor {
 //		if ( inContext("DOT ...") ) qualifiedRulerefs.add((GrammarAST)@ref.getParent());
 		rulerefs.Add(@ref);
     	if ( currentRule!=null ) {
-    		currentRule.alt[currentOuterAltNumber].ruleRefs.map(@ref.getText(), @ref);
+    		currentRule.alt[currentOuterAltNumber].ruleRefs.Map(@ref.getText(), @ref);
     	}
 	}
 

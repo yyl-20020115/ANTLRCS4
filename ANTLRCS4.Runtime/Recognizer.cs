@@ -269,12 +269,10 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 //		if ( traceATNStates ) _ctx.trace(atnState);
 	}
 
-	public abstract IntStream getInputStream();
+    public abstract IntStream InputStream { get; }
 
-	public abstract void setInputStream(IntStream input);
+    public abstract void setInputStream(IntStream input);
 
 
-	public abstract TokenFactory getTokenFactory();
-
-	public abstract void setTokenFactory(TokenFactory input);
+    public abstract TokenFactory TokenFactory { get; set; }
 }

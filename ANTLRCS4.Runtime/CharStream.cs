@@ -10,8 +10,9 @@ namespace org.antlr.v4.runtime;
 
 /** A source of characters for an ANTLR lexer. */
 public interface CharStream : IntStream {
-    int getCharPositionInLine();
-    int getLine();
+    int CharPositionInLine { get; }
+
+    int Line { get; }
 
     /**
 * This method returns the text for a range of characters within this input
@@ -29,7 +30,7 @@ public interface CharStream : IntStream {
 * @throws UnsupportedOperationException if the stream does not support
 * getting the text of the specified interval
 */
-    String getText(Interval interval);
+    string GetText(Interval interval);
     int LT(int v);
-    String substring(int tokenStartCharIndex, int v);
+    string Substring(int tokenStartCharIndex, int v);
 }

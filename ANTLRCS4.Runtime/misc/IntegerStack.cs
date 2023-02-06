@@ -9,28 +9,25 @@ namespace org.antlr.v4.runtime.misc;
  *
  * @author Sam Harwell
  */
-public class IntegerStack : IntegerList {
+public class IntegerStack : IntegerList
+{
 
-	public IntegerStack() {
-	}
-
-	public IntegerStack(int capacity):base(capacity) {
-	}
-
-	public IntegerStack(IntegerStack list) : base(list)
+    public IntegerStack()
     {
-	}
+    }
 
-	public void push(int value) {
-		Add(value);
-	}
+    public IntegerStack(int capacity) : base(capacity)
+    {
+    }
 
-	public int pop() {
-		return RemoveAt(Size() - 1);
-	}
+    public IntegerStack(IntegerStack list) : base(list)
+    {
+    }
 
-	public int peek() {
-		return Get(Size() - 1);
-	}
+    public void Push(int value) => Add(value);
+
+    public int Pop() => RemoveAt(Size - 1);
+
+    public int Peek() => Get(Size - 1);
 
 }

@@ -5,10 +5,11 @@
  */
 
 namespace org.antlr.v4.runtime.atn;
-public class StarLoopEntryState : DecisionState {
-	public StarLoopbackState loopBackState;
+public class StarLoopEntryState : DecisionState
+{
+    public StarLoopbackState loopBackState;
 
-	/**
+    /**
 	 * Indicates whether this state can benefit from a precedence DFA during SLL
 	 * decision making.
 	 *
@@ -18,7 +19,7 @@ public class StarLoopEntryState : DecisionState {
 	 *
 	 * @see DFA#isPrecedenceDfa()
 	 */
-	public bool isPrecedenceDecision;
+    public bool isPrecedenceDecision;
 
     public override int StateType => STAR_LOOP_ENTRY;
 }

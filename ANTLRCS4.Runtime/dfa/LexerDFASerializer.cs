@@ -8,15 +8,15 @@ using System.Text;
 
 namespace org.antlr.v4.runtime.dfa;
 
-public class LexerDFASerializer : DFASerializer {
-	public LexerDFASerializer(DFA dfa) : base(dfa, VocabularyImpl.EMPTY_VOCABULARY)
+public class LexerDFASerializer : DFASerializer
+{
+    public LexerDFASerializer(DFA dfa) : base(dfa, VocabularyImpl.EMPTY_VOCABULARY)
     {
-	}
+    }
 
-	protected override String getEdgeLabel(int i) {
-		return new StringBuilder("'")
-				.Append(char.ConvertFromUtf32(i))//.appendCodePoint(i)
-				.Append('\'')
-				.ToString();
-	}
+    protected override string GetEdgeLabel(int i)
+        => new StringBuilder("'")
+                .Append(char.ConvertFromUtf32(i))//.appendCodePoint(i)
+                .Append('\'')
+                .ToString();
 }

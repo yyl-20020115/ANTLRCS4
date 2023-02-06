@@ -103,8 +103,8 @@ public class CommonToken : WritableToken /*Serializable*/
         this.stop = stop;
         if (source.a != null)
         {
-            this.line = source.a.getLine();
-            this.charPositionInLine = source.a.getCharPositionInLine();
+            this.line = source.a.Line;
+            this.charPositionInLine = source.a.CharPositionInLine;
         }
     }
 
@@ -183,7 +183,7 @@ public class CommonToken : WritableToken /*Serializable*/
         int n = input.Count;
         if (start < n && stop < n)
         {
-            return input.getText(Interval.of(start, stop));
+            return input.GetText(Interval.Of(start, stop));
         }
         else
         {

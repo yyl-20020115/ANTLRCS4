@@ -35,37 +35,38 @@ namespace org.antlr.v4.runtime.dfa;
  *  but with different ATN contexts (with same or different alts)
  *  meaning that state was reached via a different set of rule invocations.</p>
  */
-public class DFAState {
-	public int stateNumber = -1;
+public class DFAState
+{
+    public int stateNumber = -1;
 
 
-	public ATNConfigSet configs = new ATNConfigSet();
+    public ATNConfigSet configs = new ();
 
-	/** {@code edges[symbol]} points to target of symbol. Shift up by 1 so (-1)
+    /** {@code edges[symbol]} points to target of symbol. Shift up by 1 so (-1)
 	 *  {@link Token#EOF} maps to {@code edges[0]}.
 	 */
 
-	public DFAState[] edges;
+    public DFAState[] edges;
 
-	public bool isAcceptState = false;
+    public bool isAcceptState = false;
 
-	/** if accept state, what ttype do we match or alt do we predict?
+    /** if accept state, what ttype do we match or alt do we predict?
 	 *  This is set to {@link ATN#INVALID_ALT_NUMBER} when {@link #predicates}{@code !=null} or
 	 *  {@link #requiresFullContext}.
 	 */
-	public int prediction;
+    public int prediction;
 
-	public LexerActionExecutor lexerActionExecutor;
+    public LexerActionExecutor lexerActionExecutor;
 
-	/**
+    /**
 	 * Indicates that this state was created during SLL prediction that
 	 * discovered a conflict between the configurations in the state. Future
 	 * {@link ParserATNSimulator#execATN} invocations immediately jumped doing
 	 * full context prediction if this field is true.
 	 */
-	public bool requiresFullContext;
+    public bool requiresFullContext;
 
-	/** During SLL parsing, this is a list of predicates associated with the
+    /** During SLL parsing, this is a list of predicates associated with the
 	 *  ATN configurations of the DFA state. When we have predicates,
 	 *  {@link #requiresFullContext} is {@code false} since full context prediction evaluates predicates
 	 *  on-the-fly. If this is not null, then {@link #prediction} is
@@ -78,50 +79,49 @@ public class DFAState {
 	 *  <p>This list is computed by {@link ParserATNSimulator#predicateDFAState}.</p>
 	 */
 
-	public PredPrediction[] predicates;
+    public PredPrediction[] predicates;
 
-	/** Map a predicate to a predicted alternative. */
-	public class PredPrediction {
+    /** Map a predicate to a predicted alternative. */
+    public class PredPrediction
+    {
+        public SemanticContext pred; // never null; at least SemanticContext.NONE
+        public int alt;
+        public PredPrediction(SemanticContext pred, int alt)
+        {
+            this.alt = alt;
+            this.pred = pred;
+        }
+        public override string ToString() => "(" + pred + ", " + alt + ")";
+    }
 
-		public SemanticContext pred; // never null; at least SemanticContext.NONE
-		public int alt;
-		public PredPrediction(SemanticContext pred, int alt) {
-			this.alt = alt;
-			this.pred = pred;
-		}
-		public override String ToString() {
-			return "("+pred+", "+alt+ ")";
-		}
-	}
+    public DFAState() { }
 
-	public DFAState() { }
+    public DFAState(int stateNumber) { this.stateNumber = stateNumber; }
 
-	public DFAState(int stateNumber) { this.stateNumber = stateNumber; }
+    public DFAState(ATNConfigSet configs) { this.configs = configs; }
 
-	public DFAState(ATNConfigSet configs) { this.configs = configs; }
-
-	/** Get the set of all alts mentioned by all ATN configurations in this
+    /** Get the set of all alts mentioned by all ATN configurations in this
 	 *  DFA state.
 	 */
-	public HashSet<int> getAltSet() {
-		var alts = new HashSet<int>();
-		if ( configs!=null ) {
-			foreach (ATNConfig c in configs) {
-				alts.Add(c.alt);
-			}
-		}
-		if ( alts.Count==0 ) return null;
-		return alts;
-	}
+    public HashSet<int> GetAltSet()
+    {
+        var alts = new HashSet<int>();
+        if (configs != null)
+            foreach (var c in configs)
+                alts.Add(c.alt);
+        if (alts.Count == 0) return null;
+        return alts;
+    }
 
-	public override int GetHashCode() {
-		int hash = MurmurHash.Initialize(7);
-		hash = MurmurHash.Update(hash, configs.GetHashCode());
-		hash = MurmurHash.Finish(hash, 1);
-		return hash;
-	}
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize(7);
+        hash = MurmurHash.Update(hash, configs.GetHashCode());
+        hash = MurmurHash.Finish(hash, 1);
+        return hash;
+    }
 
-	/**
+    /**
 	 * Two {@link DFAState} instances are equal if their ATN configuration sets
 	 * are the same. This method is used to see if a state already exists.
 	 *
@@ -134,33 +134,38 @@ public class DFAState {
 	 * exists that has this exact set of ATN configurations. The
 	 * {@link #stateNumber} is irrelevant.</p>
 	 */
-	public override bool Equals(Object? o) {
-		// compare set of ATN configurations in this set with other
-		if ( this==o ) return true;
+    public override bool Equals(object? o)
+    {
+        // compare set of ATN configurations in this set with other
+        if (this == o) return true;
 
-		if (!(o is DFAState)) {
-			return false;
-		}
+        if (o is DFAState other)
+        {
+            // TODO (sam): what to do when configs==null?
+            bool sameSet = this.configs.Equals(other.configs);
+            //		Console.Out.WriteLine("DFAState.equals: "+configs+(sameSet?"==":"!=")+other.configs);
+            return sameSet;
+        }
+        return false;
 
-		DFAState other = (DFAState)o;
-		// TODO (sam): what to do when configs==null?
-		bool sameSet = this.configs.Equals(other.configs);
-//		Console.Out.WriteLine("DFAState.equals: "+configs+(sameSet?"==":"!=")+other.configs);
-		return sameSet;
-	}
+    }
 
-	public override String ToString() {
-        StringBuilder buf = new StringBuilder();
-        buf.Append(stateNumber).Append(':').Append(configs);
-        if ( isAcceptState ) {
-            buf.Append("=>");
-            if ( predicates!=null ) {
-                buf.Append(string.Join<DFAState.PredPrediction>(',',predicates));
+    public override string ToString()
+    {
+        var buffer = new StringBuilder();
+        buffer.Append(stateNumber).Append(':').Append(configs);
+        if (isAcceptState)
+        {
+            buffer.Append("=>");
+            if (predicates != null)
+            {
+                buffer.Append(string.Join<DFAState.PredPrediction>(',', predicates));
             }
-            else {
-                buf.Append(prediction);
+            else
+            {
+                buffer.Append(prediction);
             }
         }
-		return buf.ToString();
-	}
+        return buffer.ToString();
+    }
 }

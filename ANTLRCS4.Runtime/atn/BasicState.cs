@@ -12,8 +12,6 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class BasicState : ATNState
 {
-
     //@Override
     public override int StateType => BASIC;
-
 }

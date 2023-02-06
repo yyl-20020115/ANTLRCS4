@@ -12,15 +12,16 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class LookaheadEventInfo : DecisionEventInfo {
-	/** The alternative chosen by adaptivePredict(), not necessarily
+public class LookaheadEventInfo : DecisionEventInfo
+{
+    /** The alternative chosen by adaptivePredict(), not necessarily
 	 *  the outermost alt shown for a rule; left-recursive rules have
 	 *  user-level alts that differ from the rewritten rule with a (...) block
 	 *  and a (..)* loop.
 	 */
-	public int predictedAlt;
+    public int predictedAlt;
 
-	/**
+    /**
 	 * Constructs a new instance of the {@link LookaheadEventInfo} class with
 	 * the specified detailed lookahead information.
 	 *
@@ -35,13 +36,13 @@ public class LookaheadEventInfo : DecisionEventInfo {
 	 * prediction; otherwise, {@code false} if the current lookahead is part of
 	 * an SLL prediction
 	 */
-	public LookaheadEventInfo(int decision,
-							  ATNConfigSet configs,
-							  int predictedAlt,
-							  TokenStream input, int startIndex, int stopIndex,
-							  bool fullCtx)
-		: base(decision, configs, input, startIndex, stopIndex, fullCtx)
+    public LookaheadEventInfo(int decision,
+                              ATNConfigSet configs,
+                              int predictedAlt,
+                              TokenStream input, int startIndex, int stopIndex,
+                              bool fullCtx)
+        : base(decision, configs, input, startIndex, stopIndex, fullCtx)
     {
-		this.predictedAlt = predictedAlt;
-	}
+        this.predictedAlt = predictedAlt;
+    }
 }

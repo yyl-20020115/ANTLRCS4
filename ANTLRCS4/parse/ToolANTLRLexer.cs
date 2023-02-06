@@ -21,7 +21,7 @@ public class ToolANTLRLexer : ANTLRLexer
     //@Override
     public void DisplayRecognitionError(string[] tokenNames, RecognitionException e)
     {
-        var msg = getErrorMessage(e, tokenNames);
+        var msg = GetErrorMessage(e, tokenNames);
         tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, GetSourceName(), e.token, e, msg);
     }
 

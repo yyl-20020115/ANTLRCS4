@@ -83,7 +83,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	//@Override
 	public void discoverOuterAlt(AltAST alt) {
 		if ( alt.altLabel!=null ) {
-			ruleToAltLabels.map(currentRuleName, alt.altLabel);
+			ruleToAltLabels.Map(currentRuleName, alt.altLabel);
 			String altLabel = alt.altLabel.getText();
 			altLabelToRuleName[Utils.Capitalize(altLabel)]= currentRuleName;
 			altLabelToRuleName[misc.Utils.Decapitalize(altLabel)] = currentRuleName;

@@ -151,7 +151,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public Parser(TokenStream input)
     {
-        _precedenceStack.push(0);
+        _precedenceStack.Push(0);
 
         setInputStream(input);
     }
@@ -164,14 +164,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     /** reset the parser's state */
     public virtual void reset()
     {
-        if (getInputStream() != null) getInputStream().seek(0);
+        if (InputStream != null) InputStream.Seek(0);
         _errHandler.reset(this);
         _ctx = null;
         _syntaxErrors = 0;
         matchedEOF = false;
         setTrace(false);
         _precedenceStack.Clear();
-        _precedenceStack.push(0);
+        _precedenceStack.Push(0);
         ATNSimulator interpreter = getInterpreter();
         if (interpreter != null)
         {
@@ -479,17 +479,9 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     }
 
     //@Override
-    public override TokenFactory getTokenFactory()
-    {
-        return input.getTokenSource().getTokenFactory();
-    }
-
     /** Tell our token source and error strategy about a new way to create tokens. */
     //@Override
-    public override void setTokenFactory(TokenFactory factory)
-    {
-        input.getTokenSource().setTokenFactory(factory);
-    }
+    public override TokenFactory TokenFactory { get => input.getTokenSource().TokenFactory; set => input.getTokenSource().TokenFactory = value; }
 
     /**
 	 * The ATN with bypass alternatives is expensive to create so we create it
@@ -568,8 +560,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     }
 
     //@Override
-    public override TokenStream getInputStream() { return getTokenStream(); }
-
+    public override TokenStream InputStream => getTokenStream();
     //@Override
     public override void setInputStream(IntStream input)
     {
@@ -642,7 +633,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         Token o = getCurrentToken();
         if (o.getType() != EOF)
         {
-            getInputStream().consume();
+            InputStream.Consume();
         }
         bool hasListener = _parseListeners != null && _parseListeners.Count > 0;
         if (_buildParseTrees || hasListener)
@@ -763,7 +754,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             return -1;
         }
 
-        return _precedenceStack.peek();
+        return _precedenceStack.Peek();
     }
 
     /**
@@ -779,7 +770,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
     {
         setState(state);
-        _precedenceStack.push(precedence);
+        _precedenceStack.Push(precedence);
         _ctx = localctx;
         _ctx.start = input.LT(1);
         if (_parseListeners != null)
@@ -813,7 +804,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public void unrollRecursionContexts(ParserRuleContext _parentctx)
     {
-        _precedenceStack.pop();
+        _precedenceStack.Pop();
         _ctx.stop = input.LT(-1);
         ParserRuleContext retctx = _ctx; // save current ctx (return value)
 
@@ -865,7 +856,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     //@Override
     public bool precpred(RuleContext localctx, int precedence)
     {
-        return precedence >= _precedenceStack.peek();
+        return precedence >= _precedenceStack.Peek();
     }
 
     public bool inContext(String context)
@@ -993,7 +984,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             for (int d = 0; d < _interp.decisionToDFA.Length; d++)
             {
                 var dfa = _interp.decisionToDFA[d];
-                s.Add(dfa.toString(getVocabulary()));
+                s.Add(dfa.ToString(getVocabulary()));
             }
             return s;
         }
@@ -1017,7 +1008,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 {
                     if (seenOne) dumpStream.WriteLine();
                     dumpStream.WriteLine("Decision " + dfa.decision + ":");
-                    dumpStream.Write(dfa.toString(getVocabulary()));
+                    dumpStream.Write(dfa.ToString(getVocabulary()));
                     seenOne = true;
                 }
             }
@@ -1046,7 +1037,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     public void setProfile(bool profile)
     {
         ParserATNSimulator interp = getInterpreter();
-        PredictionMode saveMode = interp.getPredictionMode();
+        PredictionMode saveMode = interp.PredictionMode;
         if (profile)
         {
             if (!(interp is ProfilingATNSimulator))
@@ -1060,7 +1051,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 new ParserATNSimulator(this, getATN(), interp.decisionToDFA, interp.GetSharedContextCache());
             setInterpreter(sim);
         }
-        getInterpreter().setPredictionMode(saveMode);
+        getInterpreter().        PredictionMode = saveMode;
     }
 
     /** During a parse is sometimes useful to listen in on the rule entry and exit

@@ -15,25 +15,25 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerPushModeAction : LexerAction {
-	private readonly int mode;
+public class LexerPushModeAction : LexerAction
+{
+    private readonly int mode;
 
-	/**
+    /**
 	 * Constructs a new {@code pushMode} action with the specified mode value.
 	 * @param mode The mode value to pass to {@link Lexer#pushMode}.
 	 */
-	public LexerPushModeAction(int mode) {
-		this.mode = mode;
-	}
+    public LexerPushModeAction(int mode)
+    {
+        this.mode = mode;
+    }
 
-	/**
+    /**
 	 * Get the lexer mode this action should transition the lexer to.
 	 *
 	 * @return The lexer mode for this {@code pushMode} command.
 	 */
-	public int getMode() {
-		return mode;
-	}
+    public int Mode => mode;
 
     /**
 	 * {@inheritDoc}
@@ -56,32 +56,35 @@ public class LexerPushModeAction : LexerAction {
 	 * value provided by {@link #getMode}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		lexer.pushMode(mode);
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.pushMode(mode);
+    }
 
-	//@Override
-	public override int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, ActionType);
-		hash = MurmurHash.Update(hash, mode);
-		return MurmurHash.Finish(hash, 2);
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        hash = MurmurHash.Update(hash, mode);
+        return MurmurHash.Finish(hash, 2);
+    }
 
-	//@Override
-	public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerPushModeAction)) {
-			return false;
-		}
+    //@Override
+    public override bool Equals(Object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (obj is LexerPushModeAction action)
+        {
+            return mode == action.mode;
+        }
+        return false;
 
-		return mode == ((LexerPushModeAction)obj).mode;
-	}
+    }
 
-	//@Override
-	public override String ToString() {
-		return $"pushMode({mode})";
-	}
+    //@Override
+    public override string ToString() => $"pushMode({mode})";
 }

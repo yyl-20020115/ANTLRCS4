@@ -162,11 +162,11 @@ public class TestTokenStreamRewriter
         expecting = "x = 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(0, 9));
+        result = tokens.getText(Interval.Of(0, 9));
         expecting = "x = 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(4, 8));
+        result = tokens.getText(Interval.Of(4, 8));
         expecting = "0";
         Assert.AreEqual(expecting, result);
     }
@@ -202,28 +202,28 @@ public class TestTokenStreamRewriter
         expecting = "x = 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(0, 17));
+        result = tokens.getText(Interval.Of(0, 17));
         expecting = "x = 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(4, 8));
+        result = tokens.getText(Interval.Of(4, 8));
         expecting = "0";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(0, 8));
+        result = tokens.getText(Interval.Of(0, 8));
         expecting = "x = 0";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(12, 16));
+        result = tokens.getText(Interval.Of(12, 16));
         expecting = "2 * 0";
         Assert.AreEqual(expecting, result);
 
         tokens.insertAfter(17, "// comment");
-        result = tokens.getText(Interval.of(12, 18));
+        result = tokens.getText(Interval.Of(12, 18));
         expecting = "2 * 0;// comment";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.of(0, 8));
+        result = tokens.getText(Interval.Of(0, 8));
         stream.fill();
         // try again after insert at end
         expecting = "x = 0";
@@ -547,7 +547,7 @@ public class TestTokenStreamRewriter
         stream.fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
-        var result = tokens.getText(Interval.of(0, 6));
+        var result = tokens.getText(Interval.Of(0, 6));
         var expecting = "abxyzba";
         Assert.AreEqual(expecting, result);
     }

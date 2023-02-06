@@ -860,7 +860,7 @@ public class TestGraphNodes
 
     public static SingletonPredictionContext CreateSingleton(PredictionContext parent, int payload)
     {
-        var a = SingletonPredictionContext.create(parent, payload);
+        var a = SingletonPredictionContext.Create(parent, payload);
         return a;
     }
 

@@ -30,25 +30,25 @@ public interface TokenSource {
 	 */
 	public Token NextToken();
 
-	/**
+    /**
 	 * Get the line number for the current position in the input stream. The
 	 * first line in the input is line 1.
 	 *
 	 * @return The line number for the current position in the input stream, or
 	 * 0 if the current token source does not track line numbers.
 	 */
-	public int getLine();
+    public int Line { get; }
 
-	/**
+    /**
 	 * Get the index into the current line for the current position in the input
 	 * stream. The first character on a line has position 0.
 	 *
 	 * @return The line number for the current position in the input stream, or
 	 * -1 if the current token source does not track character positions.
 	 */
-	public int getCharPositionInLine();
+    public int CharPositionInLine { get; }
 
-	/**
+    /**
 	 * Get the {@link CharStream} from which this token source is currently
 	 * providing tokens.
 	 *
@@ -56,28 +56,26 @@ public interface TokenSource {
 	 * the input, or {@code null} if no input stream is available for the token
 	 * source.
 	 */
-	public CharStream getInputStream();
+    public CharStream InputStream { get; }
 
-	/**
+    /**
 	 * Gets the name of the underlying input source. This method returns a
 	 * non-null, non-empty string. If such a name is not known, this method
 	 * returns {@link IntStream#UNKNOWN_SOURCE_NAME}.
 	 */
-	public String GetSourceName();
+    public String GetSourceName();
 
-	/**
-	 * Set the {@link TokenFactory} this token source should use for creating
-	 * {@link Token} objects from the input.
-	 *
-	 * @param factory The {@link TokenFactory} to use for creating tokens.
-	 */
-	public void setTokenFactory(TokenFactory factory);
-
-	/**
+    /**
 	 * Gets the {@link TokenFactory} this token source is currently using for
 	 * creating {@link Token} objects from the input.
 	 *
 	 * @return The {@link TokenFactory} currently used by this token source.
 	 */
-	public TokenFactory getTokenFactory();
+    /**
+ * Set the {@link TokenFactory} this token source should use for creating
+ * {@link Token} objects from the input.
+ *
+ * @param factory The {@link TokenFactory} to use for creating tokens.
+ */
+    public TokenFactory TokenFactory { get; set; }
 }

@@ -36,7 +36,7 @@ public class TestUnbufferedCharStream
         Assert.AreEqual(IntStream.EOF, input.LA(1));
 
         //assertThrows(IllegalStateException, input::consume);
-        Assert.ThrowsException<IllegalStateException>(() => input.consume());
+        Assert.ThrowsException<IllegalStateException>(() => input.Consume());
 
     }
 
@@ -46,16 +46,16 @@ public class TestUnbufferedCharStream
 
         var input = CreateStream("");
         //assertThrows(typeof(ArgumentException), () => input.seek(-1));
-        Assert.ThrowsException<ArgumentException>(() => input.seek(-1));
+        Assert.ThrowsException<ArgumentException>(() => input.Seek(-1));
     }
 
     [TestMethod]
     public void TestSeekPastEOF()
     {
         var input = CreateStream("");
-        Assert.AreEqual(0, input.index());
-        input.seek(1);
-        Assert.AreEqual(0, input.index());
+        Assert.AreEqual(0, input.Index());
+        input.Seek(1);
+        Assert.AreEqual(0, input.Index());
     }
 
     /**
@@ -68,10 +68,10 @@ public class TestUnbufferedCharStream
     public void TestMarkReleaseOutOfOrder()
     {
         var input = CreateStream("");
-        int m1 = input.mark();
-        int m2 = input.mark();
+        int m1 = input.Mark();
+        int m2 = input.Mark();
         //assertThrows(IllegalStateException, () => input.release(m1));
-        Assert.ThrowsException<IllegalStateException>(() => input.release(m1));
+        Assert.ThrowsException<IllegalStateException>(() => input.Release(m1));
 
     }
 
@@ -84,10 +84,10 @@ public class TestUnbufferedCharStream
     public void TestMarkReleasedTwice()
     {
         var input = CreateStream("");
-        int m1 = input.mark();
-        input.release(m1);
+        int m1 = input.Mark();
+        input.Release(m1);
         //assertThrows(IllegalStateException, () => input.release(m1));
-        Assert.ThrowsException<IllegalStateException>(() => input.release(m1));
+        Assert.ThrowsException<IllegalStateException>(() => input.Release(m1));
     }
 
     /**
@@ -99,11 +99,11 @@ public class TestUnbufferedCharStream
     public void TestNestedMarkReleasedTwice()
     {
         var input = CreateStream("");
-        int m1 = input.mark();
-        int m2 = input.mark();
-        input.release(m2);
+        int m1 = input.Mark();
+        int m2 = input.Mark();
+        input.Release(m2);
         //assertThrows(IllegalStateException, () => input.release(m2));
-        Assert.ThrowsException<IllegalStateException>(() => input.release(m2));
+        Assert.ThrowsException<IllegalStateException>(() => input.Release(m2));
     }
 
     /**
@@ -115,44 +115,44 @@ public class TestUnbufferedCharStream
     public void TestMarkPassedToSeek()
     {
         var input = CreateStream("");
-        int m1 = input.mark();
+        int m1 = input.Mark();
         //assertThrows(ArgumentException, () => input.seek(m1));
-        Assert.ThrowsException<ArgumentException>(() => input.seek(m1));
+        Assert.ThrowsException<ArgumentException>(() => input.Seek(m1));
     }
 
     [TestMethod]
     public void TestSeekBeforeBufferStart()
     {
         var input = CreateStream("xyz");
-        input.consume();
-        int m1 = input.mark();
-        Assert.AreEqual(1, input.index());
-        input.consume();
+        input.Consume();
+        int m1 = input.Mark();
+        Assert.AreEqual(1, input.Index());
+        input.Consume();
         //assertThrows(ArgumentException, () => input.seek(0));
-        Assert.ThrowsException<ArgumentException>(() => input.seek(0));
+        Assert.ThrowsException<ArgumentException>(() => input.Seek(0));
     }
 
     [TestMethod]
     public void TestGetTextBeforeBufferStart()
     {
         var input = CreateStream("xyz");
-        input.consume();
-        int m1 = input.mark();
-        Assert.AreEqual(1, input.index());
+        input.Consume();
+        int m1 = input.Mark();
+        Assert.AreEqual(1, input.Index());
         //assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
-        Assert.ThrowsException<ArgumentException>(() => input.getText(new Interval(0, 1)));
+        Assert.ThrowsException<ArgumentException>(() => input.GetText(new Interval(0, 1)));
     }
 
     [TestMethod]
     public void TestGetTextInMarkedRange()
     {
         var input = CreateStream("xyz");
-        input.consume();
-        int m1 = input.mark();
-        Assert.AreEqual(1, input.index());
-        input.consume();
-        input.consume();
-        Assert.AreEqual("yz", input.getText(new Interval(1, 2)));
+        input.Consume();
+        int m1 = input.Mark();
+        Assert.AreEqual(1, input.Index());
+        input.Consume();
+        input.Consume();
+        Assert.AreEqual("yz", input.GetText(new Interval(1, 2)));
     }
 
     [TestMethod]
@@ -160,25 +160,25 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("abcdef");
 
-        input.consume();
+        input.Consume();
         Assert.AreEqual('a', input.LA(-1));
 
-        int m1 = input.mark();
-        input.consume();
-        input.consume();
-        input.consume();
+        int m1 = input.Mark();
+        input.Consume();
+        input.Consume();
+        input.Consume();
         Assert.AreEqual('d', input.LA(-1));
 
-        input.seek(2);
+        input.Seek(2);
         Assert.AreEqual('b', input.LA(-1));
 
-        input.release(m1);
-        input.seek(3);
+        input.Release(m1);
+        input.Seek(3);
         Assert.AreEqual('c', input.LA(-1));
         // this special case is not required by the IntStream interface, but
         // UnbufferedCharStream allows it so we have to make sure the resulting
         // state is consistent
-        input.seek(2);
+        input.Seek(2);
         Assert.AreEqual('b', input.LA(-1));
     }
 
@@ -187,7 +187,7 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("x");
         Assert.AreEqual('x', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
         String r = input.GetRemainingBuffer();
         Assert.AreEqual("\uFFFF", r); // shouldn't include x
@@ -199,11 +199,11 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("xy");
         Assert.AreEqual('x', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('y', input.LA(1));
         Assert.AreEqual("y", input.GetRemainingBuffer()); // shouldn't include x
         Assert.AreEqual("y", input.Buffer);
-        input.consume();
+        input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
         Assert.AreEqual("\uFFFF", input.Buffer);
     }
@@ -235,15 +235,15 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("01234", 1);
         Assert.AreEqual('0', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('1', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('2', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('3', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('4', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
     }
 
@@ -252,15 +252,15 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("01234", 2);
         Assert.AreEqual('0', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('1', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('2', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('3', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual('4', input.LA(1));
-        input.consume();
+        input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
     }
 
@@ -268,11 +268,11 @@ public class TestUnbufferedCharStream
     public void Test1Mark()
     {
         var input = CreateStream("xyz");
-        int m = input.mark();
+        int m = input.Mark();
         Assert.AreEqual('x', input.LA(1));
         Assert.AreEqual('y', input.LA(2));
         Assert.AreEqual('z', input.LA(3));
-        input.release(m);
+        input.Release(m);
         Assert.AreEqual(IntStream.EOF, input.LA(4));
         Assert.AreEqual("xyz\uFFFF", input.Buffer);
     }
@@ -281,13 +281,13 @@ public class TestUnbufferedCharStream
     public void Test1MarkWithConsumesInSequence()
     {
         var input = CreateStream("xyz");
-        int m = input.mark();
-        input.consume(); // x, moves to y
-        input.consume(); // y
-        input.consume(); // z, moves to EOF
+        int m = input.Mark();
+        input.Consume(); // x, moves to y
+        input.Consume(); // y
+        input.Consume(); // z, moves to EOF
         Assert.AreEqual(IntStream.EOF, input.LA(1));
         Assert.AreEqual("xyz\uFFFF", input.Buffer);
-        input.release(m); // wipes buffer
+        input.Release(m); // wipes buffer
         Assert.AreEqual("\uFFFF", input.Buffer);
     }
 
@@ -296,15 +296,15 @@ public class TestUnbufferedCharStream
     {
         var input = CreateStream("xyz", 100);
         Assert.AreEqual('x', input.LA(1));
-        input.consume(); // reset buffer index (p) to 0
-        int m1 = input.mark();
+        input.Consume(); // reset buffer index (p) to 0
+        int m1 = input.Mark();
         Assert.AreEqual('y', input.LA(1));
-        input.consume();
-        int m2 = input.mark();
+        input.Consume();
+        int m2 = input.Mark();
         Assert.AreEqual("yz", input.Buffer);
-        input.release(m2); // drop to 1 marker
-        input.consume();
-        input.release(m1); // shifts remaining char to beginning
+        input.Release(m2); // drop to 1 marker
+        input.Consume();
+        input.Release(m1); // shifts remaining char to beginning
         Assert.AreEqual(IntStream.EOF, input.LA(1));
         Assert.AreEqual("\uFFFF", input.Buffer);
     }
@@ -326,7 +326,8 @@ public class TestUnbufferedCharStream
         var input = CreateStream("x = 302 * 91 + 20234234 * 0;");
         var lexEngine = g.createLexerInterpreter(input);
         // copy text into tokens from char stream
-        lexEngine.setTokenFactory(new CommonTokenFactory(true));
+        lexEngine.        // copy text into tokens from char stream
+        TokenFactory = new CommonTokenFactory(true);
         var tokens = new CommonTokenStream(lexEngine);
         var result = tokens.LT(1).getText();
         var expecting = "x";
@@ -349,7 +350,7 @@ public class TestUnbufferedCharStream
         var input = CreateStream("\uD83C\uDF0E");
         Assert.AreEqual(0x1F30E, input.LA(1));
         Assert.AreEqual("\uD83C\uDF0E", input.Buffer);
-        input.consume();
+        input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
         Assert.AreEqual("\uFFFF", input.Buffer);
     }

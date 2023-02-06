@@ -68,14 +68,14 @@ public class DFA
         {
             Console.Error.WriteLine("Enter DFA.predict for decision " + decisionNumber);
         }
-        int mark = input.mark(); // remember where decision started in input
+        int mark = input.Mark(); // remember where decision started in input
         int s = 0; // we always start at s0
         try
         {
             while (true)
             {
                 if (debug) Console.Error.WriteLine("DFA " + decisionNumber + " state " + s + " LA(1)=" + (char)input.LA(1) + "(" + input.LA(1) +
-                                                "), index=" + input.index());
+                                                "), index=" + input.Index());
                 int specialState = special[s];
                 if (specialState >= 0)
                 {
@@ -95,7 +95,7 @@ public class DFA
                         NoViableAlt(s, input);
                         return 0;
                     }
-                    input.consume();
+                    input.Consume();
                     continue;
                 }
                 if (accept[s] >= 1)
@@ -118,7 +118,7 @@ public class DFA
                         {  // EOT Transition to accept state?
                             if (debug) Console.Error.WriteLine("EOT transition");
                             s = eot[s];
-                            input.consume();
+                            input.Consume();
                             // TODO: I had this as return accept[eot[s]]
                             // which assumed here that the EOT edge always
                             // went to an accept...faster to do this, but
@@ -130,14 +130,14 @@ public class DFA
                         return 0;
                     }
                     s = snext;
-                    input.consume();
+                    input.Consume();
                     continue;
                 }
                 if (eot[s] >= 0)
                 {  // EOT Transition?
                     if (debug) Console.Error.WriteLine("EOT transition");
                     s = eot[s];
-                    input.consume();
+                    input.Consume();
                     continue;
                 }
                 if (c == Token.EOF && eof[s] >= 0)
@@ -164,7 +164,7 @@ public class DFA
         }
         finally
         {
-            input.rewind(mark);
+            input.Rewind(mark);
         }
     }
 
@@ -175,9 +175,9 @@ public class DFA
             recognizer.state.failed = true;
             return;
         }
-        NoViableAltException nvae =
+        var nvae =
 
-                new NoViableAltException(getDescription(),
+                new NoViableAltException(GetDescription(),
                                          decisionNumber,
                                          s,
                                          input);
@@ -186,7 +186,7 @@ public class DFA
     }
 
     /** A hook for debugging interface */
-    protected void Error(NoViableAltException nvae) {; }
+    protected void Error(NoViableAltException nvae) { }
 
     public int SpecialStateTransition(int s, IntStream input)
     {
@@ -211,7 +211,7 @@ public class DFA
         {
             size += encodedString[(i)];
         }
-        short[] data = new short[size];
+        var data = new short[size];
         int di = 0;
         for (int i = 0; i < encodedString.Length; i += 2)
         {
@@ -227,7 +227,7 @@ public class DFA
     }
 
     /** Hideous duplication of code, but I need different typed arrays out :( */
-    public static char[] UnpackEncodedStringToUnsignedChars(String encodedString)
+    public static char[] UnpackEncodedStringToUnsignedChars(string encodedString)
     {
         // walk first to find how big it is.
         int size = 0;
@@ -235,7 +235,7 @@ public class DFA
         {
             size += encodedString[(i)];
         }
-        char[] data = new char[size];
+        var data = new char[size];
         int di = 0;
         for (int i = 0; i < encodedString.Length; i += 2)
         {

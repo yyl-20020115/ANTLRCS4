@@ -103,7 +103,7 @@ public class IntervalSet : IntSet
      */
     public void Add(int a, int b)
     {
-        Add(Interval.of(a, b));
+        Add(Interval.Of(a, b));
     }
 
     // copy on write so we can cache a..a intervals and sets of that
@@ -125,23 +125,23 @@ public class IntervalSet : IntSet
             {
                 return;
             }
-            if (addition.adjacent(r) || !addition.disjoint(r))
+            if (addition.Adjacent(r) || !addition.Disjoint(r))
             {
                 // next to each other, make a single larger interval
-                var bigger = addition.union(r);
+                var bigger = addition.Union(r);
                 intervals[i] = bigger;
                 // make sure we didn't just create an interval that
                 // should be merged with next interval in list
                 while (++i < intervals.Count)
                 {
                     var next = intervals[i];
-                    if (!bigger.adjacent(next) && bigger.disjoint(next))
+                    if (!bigger.Adjacent(next) && bigger.Disjoint(next))
                     {
                         break;
                     }
                     intervals.RemoveAt(i);
                     i--;
-                    intervals[i] = bigger.union(next);
+                    intervals[i] = bigger.Union(next);
                     i++;
                     // if we bump up against or overlap next, merge
                     //iter.remove();   // remove this one
@@ -151,7 +151,7 @@ public class IntervalSet : IntSet
                 }
                 return;
             }
-            if (addition.startsBeforeDisjoint(r))
+            if (addition.StartsBeforeDisjoint(r))
             {
                 // insert before r
                 //i++;
@@ -377,44 +377,44 @@ public class IntervalSet : IntSet
             var mine = myIntervals[(i)];
             var theirs = theirIntervals[(j)];
             //Console.Out.WriteLine("mine="+mine+" and theirs="+theirs);
-            if (mine.startsBeforeDisjoint(theirs))
+            if (mine.StartsBeforeDisjoint(theirs))
             {
                 // move this iterator looking for interval that might overlap
                 i++;
             }
-            else if (theirs.startsBeforeDisjoint(mine))
+            else if (theirs.StartsBeforeDisjoint(mine))
             {
                 // move other iterator looking for interval that might overlap
                 j++;
             }
-            else if (mine.properlyContains(theirs))
+            else if (mine.ProperlyContains(theirs))
             {
                 // overlap, add intersection, get next theirs
                 if (intersection == null)
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.Add(mine.intersection(theirs));
+                intersection.Add(mine.Intersection(theirs));
                 j++;
             }
-            else if (theirs.properlyContains(mine))
+            else if (theirs.ProperlyContains(mine))
             {
                 // overlap, add intersection, get next mine
                 if (intersection == null)
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.Add(mine.intersection(theirs));
+                intersection.Add(mine.Intersection(theirs));
                 i++;
             }
-            else if (!mine.disjoint(theirs))
+            else if (!mine.Disjoint(theirs))
             {
                 // overlap, add intersection
                 if (intersection == null)
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.Add(mine.intersection(theirs));
+                intersection.Add(mine.Intersection(theirs));
                 // Move the iterator of lower range [a..b], but not
                 // the upper range as it may contain elements that will collide
                 // with the next iterator. So, if mine=[0..115] and
@@ -422,11 +422,11 @@ public class IntervalSet : IntSet
                 // but not theirs as theirs may collide with the next range
                 // in thisIter.
                 // move both iterators to next ranges
-                if (mine.startsAfterNonDisjoint(theirs))
+                if (mine.StartsAfterNonDisjoint(theirs))
                 {
                     j++;
                 }
-                else if (theirs.startsAfterNonDisjoint(mine))
+                else if (theirs.StartsAfterNonDisjoint(mine))
                 {
                     i++;
                 }

@@ -44,21 +44,25 @@ namespace org.antlr.runtime.misc;
 public class IntArray
 {
     public const int INITIAL_SIZE = 10;
-    public int[] data;
+    public int[] data = new int[INITIAL_SIZE];
     protected int p = -1;
 
-    public void add(int v)
+    public IntArray()
     {
-        ensureCapacity(p + 1);
+
+    }
+    public void Add(int v)
+    {
+        EnsureCapacity(p + 1);
         data[++p] = v;
     }
 
-    public void push(int v)
+    public void Push(int v)
     {
-        add(v);
+        Add(v);
     }
 
-    public int pop()
+    public int Pop()
     {
         int v = data[p];
         p--;
@@ -66,17 +70,17 @@ public class IntArray
     }
 
     /** This only tracks elements added via push/add. */
-    public int size()
+    public int Size()
     {
         return p;
     }
 
-    public void clear()
+    public void Clear()
     {
         p = -1;
     }
 
-    public void ensureCapacity(int index)
+    public void EnsureCapacity(int index)
     {
         if (data == null)
         {
@@ -84,12 +88,12 @@ public class IntArray
         }
         else if ((index + 1) >= data.Length)
         {
-            int newSize = data.Length * 2;
+            var newSize = data.Length << 1;
             if (index > newSize)
             {
                 newSize = index + 1;
             }
-            int[] newData = new int[newSize];
+            var newData = new int[newSize];
             Array.Copy(data, 0, newData, 0, data.Length);
             data = newData;
         }

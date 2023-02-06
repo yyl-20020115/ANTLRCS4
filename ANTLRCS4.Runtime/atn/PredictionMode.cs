@@ -14,8 +14,9 @@ namespace org.antlr.v4.runtime.atn;
  * utility methods for analyzing configuration sets for conflicts and/or
  * ambiguities.
  */
-public enum PredictionMode {
-	/**
+public enum PredictionMode : uint
+{
+    /**
 	 * The SLL(*) prediction mode. This prediction mode ignores the current
 	 * parser context when making predictions. This is the fastest prediction
 	 * mode, and provides correct results for many grammars. This prediction
@@ -36,8 +37,8 @@ public enum PredictionMode {
 	 * This prediction mode does not provide any guarantees for prediction
 	 * behavior for syntactically-incorrect inputs.</p>
 	 */
-	SLL,
-	/**
+    SLL,
+    /**
 	 * The LL(*) prediction mode. This prediction mode allows the current parser
 	 * context to be used for resolving SLL conflicts that occur during
 	 * prediction. This is the fastest prediction mode that guarantees correct
@@ -55,8 +56,8 @@ public enum PredictionMode {
 	 * This prediction mode does not provide any guarantees for prediction
 	 * behavior for syntactically-incorrect inputs.</p>
 	 */
-	LL,
-	/**
+    LL,
+    /**
 	 * The LL(*) prediction mode with exact ambiguity detection. In addition to
 	 * the correctness guarantees provided by the {@link #LL} prediction mode,
 	 * this prediction mode instructs the prediction algorithm to determine the
@@ -73,46 +74,51 @@ public enum PredictionMode {
 	 * This prediction mode does not provide any guarantees for prediction
 	 * behavior for syntactically-incorrect inputs.</p>
 	 */
-	LL_EXACT_AMBIG_DETECTION
+    LL_EXACT_AMBIG_DETECTION
 }
 public static class PredictionModeTools
-{ 
-	/** A Map that uses just the state and the stack context as the key. */
-	 class AltAndContextMap : FlexibleHashMap<ATNConfig,BitSet> {
-		public AltAndContextMap(): base(AltAndContextConfigEqualityComparator.INSTANCE)
+{
+    /** A Map that uses just the state and the stack context as the key. */
+    class AltAndContextMap : FlexibleHashMap<ATNConfig, BitSet>
+    {
+        public AltAndContextMap() : base(AltAndContextConfigEqualityComparator.INSTANCE)
         {
-		}
-	}
+        }
+    }
 
-	private  class AltAndContextConfigEqualityComparator : AbstractEqualityComparator<ATNConfig> {
-		public static readonly AltAndContextConfigEqualityComparator INSTANCE = new AltAndContextConfigEqualityComparator();
+    private class AltAndContextConfigEqualityComparator : AbstractEqualityComparator<ATNConfig>
+    {
+        public static readonly AltAndContextConfigEqualityComparator INSTANCE = new ();
 
-		private AltAndContextConfigEqualityComparator() {
-		}
+        private AltAndContextConfigEqualityComparator()
+        {
+        }
 
-		/**
+        /**
 		 * The hash code is only a function of the {@link ATNState#stateNumber}
 		 * and {@link ATNConfig#context}.
 		 */
-		//@Override
-		public int hashCode(ATNConfig o) {
-			int hashCode = MurmurHash.Initialize(7);
-			hashCode = MurmurHash.Update(hashCode, o.state.stateNumber);
-			hashCode = MurmurHash.Update(hashCode, o.context);
-			hashCode = MurmurHash.Finish(hashCode, 2);
-	        return hashCode;
-		}
+        //@Override
+        public override int GetHashCode(ATNConfig o)
+        {
+            int hashCode = MurmurHash.Initialize(7);
+            hashCode = MurmurHash.Update(hashCode, o.state.stateNumber);
+            hashCode = MurmurHash.Update(hashCode, o.context);
+            hashCode = MurmurHash.Finish(hashCode, 2);
+            return hashCode;
+        }
 
-		//@Override
-		public bool equals(ATNConfig a, ATNConfig b) {
-			if ( a==b ) return true;
-			if ( a==null || b==null ) return false;
-			return a.state.stateNumber==b.state.stateNumber
-				&& a.context.Equals(b.context);
-		}
-	}
+        //@Override
+        public override bool Equals(ATNConfig a, ATNConfig b)
+        {
+            if (a == b) return true;
+            if (a == null || b == null) return false;
+            return a.state.stateNumber == b.state.stateNumber
+                && a.context.Equals(b.context);
+        }
+    }
 
-	/**
+    /**
 	 * Computes the SLL prediction termination condition.
 	 *
 	 * <p>
@@ -204,42 +210,47 @@ public static class PredictionModeTools
 	 * the configurations to strip out all of the predicates so that a standard
 	 * {@link ATNConfigSet} will merge everything ignoring predicates.</p>
 	 */
-	public static bool hasSLLConflictTerminatingPrediction(PredictionMode mode, ATNConfigSet configs) {
-		/* Configs in rule stop states indicate reaching the end of the decision
+    public static bool HasSLLConflictTerminatingPrediction(PredictionMode mode, ATNConfigSet configs)
+    {
+        /* Configs in rule stop states indicate reaching the end of the decision
 		 * rule (local context) or end of start rule (full context). If all
 		 * configs meet this condition, then none of the configurations is able
 		 * to match additional input so we terminate prediction.
 		 */
-		if (allConfigsInRuleStopStates(configs)) {
-			return true;
-		}
+        if (AllConfigsInRuleStopStates(configs))
+        {
+            return true;
+        }
 
-		// pure SLL mode parsing
-		if ( mode == PredictionMode.SLL ) {
-			// Don't bother with combining configs from different semantic
-			// contexts if we can fail over to full LL; costs more time
-			// since we'll often fail over anyway.
-			if ( configs.hasSemanticContext ) {
-				// dup configs, tossing out semantic predicates
-				ATNConfigSet dup = new ATNConfigSet();
-				foreach (ATNConfig c in configs) {
-					var c2 = new ATNConfig(c,SemanticContext.Empty.Instance);
-					dup.Add(c2);
-				}
-				configs = dup;
-			}
-			// now we have combined contexts for configs with dissimilar preds
-		}
+        // pure SLL mode parsing
+        if (mode == PredictionMode.SLL)
+        {
+            // Don't bother with combining configs from different semantic
+            // contexts if we can fail over to full LL; costs more time
+            // since we'll often fail over anyway.
+            if (configs.hasSemanticContext)
+            {
+                // dup configs, tossing out semantic predicates
+                var dup = new ATNConfigSet();
+                foreach (var c in configs)
+                {
+                    var c2 = new ATNConfig(c, SemanticContext.Empty.Instance);
+                    dup.Add(c2);
+                }
+                configs = dup;
+            }
+            // now we have combined contexts for configs with dissimilar preds
+        }
 
-		// pure SLL or combined SLL+LL mode parsing
+        // pure SLL or combined SLL+LL mode parsing
 
-		ICollection<BitSet> altsets = getConflictingAltSubsets(configs);
-		bool heuristic =
-			hasConflictingAltSet(altsets) && !hasStateAssociatedWithOneAlt(configs);
-		return heuristic;
-	}
+        var altsets = GetConflictingAltSubsets(configs);
+        bool heuristic =
+            HasConflictingAltSet(altsets) && !HasStateAssociatedWithOneAlt(configs);
+        return heuristic;
+    }
 
-	/**
+    /**
 	 * Checks if any configuration in {@code configs} is in a
 	 * {@link RuleStopState}. Configurations meeting this condition have reached
 	 * the end of the decision rule (local context) or end of start rule (full
@@ -249,17 +260,16 @@ public static class PredictionModeTools
 	 * @return {@code true} if any configuration in {@code configs} is in a
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
-	public static bool hasConfigInRuleStopState(ATNConfigSet configs) {
-		foreach (ATNConfig c in configs) {
-			if (c.state is RuleStopState) {
-				return true;
-			}
-		}
+    public static bool HasConfigInRuleStopState(ATNConfigSet configs)
+    {
+        foreach (var c in configs)
+            if (c.state is RuleStopState)
+                return true;
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
+    /**
 	 * Checks if all configurations in {@code configs} are in a
 	 * {@link RuleStopState}. Configurations meeting this condition have reached
 	 * the end of the decision rule (local context) or end of start rule (full
@@ -269,17 +279,15 @@ public static class PredictionModeTools
 	 * @return {@code true} if all configurations in {@code configs} are in a
 	 * {@link RuleStopState}, otherwise {@code false}
 	 */
-	public static bool allConfigsInRuleStopStates(ATNConfigSet configs) {
-		foreach (ATNConfig config in configs) {
-			if (config.state is not RuleStopState) {
-				return false;
-			}
-		}
+    public static bool AllConfigsInRuleStopStates(ATNConfigSet configs)
+    {
+        foreach (var config in configs)
+            if (config.state is not RuleStopState)
+                return false;
+        return true;
+    }
 
-		return true;
-	}
-
-	/**
+    /**
 	 * Full LL prediction termination.
 	 *
 	 * <p>Can we stop looking ahead during ATN simulation or is there some
@@ -420,11 +428,12 @@ public static class PredictionModeTools
 	 * we need exact ambiguity detection when the sets look like
 	 * {@code A={{1,2}}} or {@code {{1,2},{1,2}}}, etc...</p>
 	 */
-	public static int resolvesToJustOneViableAlt(ICollection<BitSet> altsets) {
-		return getSingleViableAlt(altsets);
-	}
+    public static int ResolvesToJustOneViableAlt(ICollection<BitSet> altsets)
+    {
+        return GetSingleViableAlt(altsets);
+    }
 
-	/**
+    /**
 	 * Determines if every alternative subset in {@code altsets} contains more
 	 * than one alternative.
 	 *
@@ -432,11 +441,12 @@ public static class PredictionModeTools
 	 * @return {@code true} if every {@link BitSet} in {@code altsets} has
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
-	public static bool allSubsetsConflict(ICollection<BitSet> altsets) {
-		return !hasNonConflictingAltSet(altsets);
-	}
+    public static bool AllSubsetsConflict(ICollection<BitSet> altsets)
+    {
+        return !HasNonConflictingAltSet(altsets);
+    }
 
-	/**
+    /**
 	 * Determines if any single alternative subset in {@code altsets} contains
 	 * exactly one alternative.
 	 *
@@ -444,16 +454,15 @@ public static class PredictionModeTools
 	 * @return {@code true} if {@code altsets} contains a {@link BitSet} with
 	 * {@link BitSet#cardinality cardinality} 1, otherwise {@code false}
 	 */
-	public static bool hasNonConflictingAltSet(ICollection<BitSet> altsets) {
-		foreach (BitSet alts in altsets) {
-			if ( alts.Cardinality()==1 ) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public static bool HasNonConflictingAltSet(ICollection<BitSet> altsets)
+    {
+        foreach (var alts in altsets)
+            if (alts.Cardinality() == 1)
+                return true;
+        return false;
+    }
 
-	/**
+    /**
 	 * Determines if any single alternative subset in {@code altsets} contains
 	 * more than one alternative.
 	 *
@@ -461,50 +470,49 @@ public static class PredictionModeTools
 	 * @return {@code true} if {@code altsets} contains a {@link BitSet} with
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
-	public static bool hasConflictingAltSet(ICollection<BitSet> altsets) {
-		foreach (BitSet alts in altsets) {
-			if ( alts.Cardinality()>1 ) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public static bool HasConflictingAltSet(ICollection<BitSet> altsets)
+    {
+        foreach (var alts in altsets)
+            if (alts.Cardinality() > 1)
+                return true;
+        return false;
+    }
 
-	/**
+    /**
 	 * Determines if every alternative subset in {@code altsets} is equivalent.
 	 *
 	 * @param altsets a collection of alternative subsets
 	 * @return {@code true} if every member of {@code altsets} is equal to the
 	 * others, otherwise {@code false}
 	 */
-	public static bool allSubsetsEqual(ICollection<BitSet> altsets) {
+    public static bool AllSubsetsEqual(ICollection<BitSet> altsets)
+    {
         var list = new List<BitSet>(altsets);
-		var it = list.GetEnumerator();
-		if(it.MoveNext())
-		{
-			var first = it.Current;
-			while (it.MoveNext())
-			{
-				if (!first.Equals(it.Current)) return false;
-			}
-		}
-		return true;
-	}
+        var it = list.GetEnumerator();
+        if (it.MoveNext())
+        {
+            var first = it.Current;
+            while (it.MoveNext())
+                if (!first.Equals(it.Current)) return false;
+        }
+        return true;
+    }
 
-	/**
+    /**
 	 * Returns the unique alternative predicted by all alternative subsets in
 	 * {@code altsets}. If no such alternative exists, this method returns
 	 * {@link ATN#INVALID_ALT_NUMBER}.
 	 *
 	 * @param altsets a collection of alternative subsets
 	 */
-	public static int getUniqueAlt(ICollection<BitSet> altsets) {
-		BitSet all = getAlts(altsets);
-		if ( all.Cardinality()==1 ) return all.NextSetBit(0);
-		return ATN.INVALID_ALT_NUMBER;
-	}
+    public static int GetUniqueAlt(ICollection<BitSet> altsets)
+    {
+        var all = GetAlts(altsets);
+        if (all.Cardinality() == 1) return all.NextSetBit(0);
+        return ATN.INVALID_ALT_NUMBER;
+    }
 
-	/**
+    /**
 	 * Gets the complete set of represented alternatives for a collection of
 	 * alternative subsets. This method returns the union of each {@link BitSet}
 	 * in {@code altsets}.
@@ -512,28 +520,28 @@ public static class PredictionModeTools
 	 * @param altsets a collection of alternative subsets
 	 * @return the set of represented alternatives in {@code altsets}
 	 */
-	public static BitSet getAlts(ICollection<BitSet> altsets) {
-		BitSet all = new BitSet();
-		foreach (BitSet alts in altsets) {
-			all.Or(alts);
-		}
-		return all;
-	}
+    public static BitSet GetAlts(ICollection<BitSet> altsets)
+    {
+        var all = new BitSet();
+        foreach (var alts in altsets)
+            all.Or(alts);
+        return all;
+    }
 
-	/**
+    /**
 	 * Get union of all alts from configs.
 	 *
 	 * @since 4.5.1
 	 */
-	public static BitSet getAlts(ATNConfigSet configs) {
-		BitSet alts = new BitSet();
-		foreach (ATNConfig config in configs) {
-			alts.Set(config.alt);
-		}
-		return alts;
-	}
+    public static BitSet GetAlts(ATNConfigSet configs)
+    {
+        var alts = new BitSet();
+        foreach (var config in configs)
+            alts.Set(config.alt);
+        return alts;
+    }
 
-	/**
+    /**
 	 * This function gets the conflicting alt subsets from a configuration set.
 	 * For each configuration {@code c} in {@code configs}:
 	 *
@@ -542,20 +550,23 @@ public static class PredictionModeTools
 	 * alt and not pred
 	 * </pre>
 	 */
-	public static ICollection<BitSet> getConflictingAltSubsets(ATNConfigSet configs) {
-		AltAndContextMap configToAlts = new AltAndContextMap();
-		foreach (ATNConfig c in configs) {
-			BitSet alts = configToAlts.get(c);
-			if ( alts==null ) {
-				alts = new BitSet();
-				configToAlts.put(c, alts);
-			}
-			alts.Set(c.alt);
-		}
-		return configToAlts.Values;
-	}
+    public static ICollection<BitSet> GetConflictingAltSubsets(ATNConfigSet configs)
+    {
+        var configToAlts = new AltAndContextMap();
+        foreach (var c in configs)
+        {
+            var alts = configToAlts.get(c);
+            if (alts == null)
+            {
+                alts = new BitSet();
+                configToAlts.put(c, alts);
+            }
+            alts.Set(c.alt);
+        }
+        return configToAlts.Values;
+    }
 
-	/**
+    /**
 	 * Get a map from state to alt subset from a configuration set. For each
 	 * configuration {@code c} in {@code configs}:
 	 *
@@ -563,36 +574,37 @@ public static class PredictionModeTools
 	 * map[c.{@link ATNConfig#state state}] U= c.{@link ATNConfig#alt alt}
 	 * </pre>
 	 */
-	public static Dictionary<ATNState, BitSet> getStateToAltMap(ATNConfigSet configs) {
-        Dictionary<ATNState, BitSet> m = new ();
-		foreach (ATNConfig c in configs) {
-			if ( !m.TryGetValue(c.state,out var alts) ) {
-				alts = new BitSet();
-				m.Add(c.state, alts);
-			}
-			alts.Set(c.alt);
-		}
-		return m;
-	}
+    public static Dictionary<ATNState, BitSet> GetStateToAltMap(ATNConfigSet configs)
+    {
+        Dictionary<ATNState, BitSet> m = new();
+        foreach (var c in configs)
+        {
+            if (!m.TryGetValue(c.state, out var alts))
+                m.Add(c.state, alts = new BitSet());
+            alts.Set(c.alt);
+        }
+        return m;
+    }
 
-	public static bool hasStateAssociatedWithOneAlt(ATNConfigSet configs) {
-		Dictionary<ATNState, BitSet> x = getStateToAltMap(configs);
-		foreach(BitSet alts in x.Values) {
-			if ( alts.Cardinality()==1 ) return true;
-		}
-		return false;
-	}
+    public static bool HasStateAssociatedWithOneAlt(ATNConfigSet configs)
+    {
+        var x = GetStateToAltMap(configs);
+        foreach (var alts in x.Values)
+            if (alts.Cardinality() == 1) return true;
+        return false;
+    }
 
-	public static int getSingleViableAlt(ICollection<BitSet> altsets) {
-		BitSet viableAlts = new BitSet();
-		foreach (BitSet alts in altsets) {
-			int minAlt = alts.NextSetBit(0);
-			viableAlts.Set(minAlt);
-			if ( viableAlts.Cardinality()>1 ) { // more than 1 viable alt
-				return ATN.INVALID_ALT_NUMBER;
-			}
-		}
-		return viableAlts.NextSetBit(0);
-	}
-
+    public static int GetSingleViableAlt(ICollection<BitSet> altsets)
+    {
+        var viableAlts = new BitSet();
+        foreach (var alts in altsets)
+        {
+            int minAlt = alts.NextSetBit(0);
+            viableAlts.Set(minAlt);
+            if (viableAlts.Cardinality() > 1)
+              // more than 1 viable alt
+                return ATN.INVALID_ALT_NUMBER;
+        }
+        return viableAlts.NextSetBit(0);
+    }
 }

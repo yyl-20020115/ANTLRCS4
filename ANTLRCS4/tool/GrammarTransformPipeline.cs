@@ -237,9 +237,9 @@ public class GrammarTransformPipeline {
 						name = (GrammarAST)at.getChild(0);
 						action = (GrammarAST)at.getChild(1);
 					}
-					GrammarAST prevAction = namedActions.get(scopeName, name.getText());
+					GrammarAST prevAction = namedActions.Get(scopeName, name.getText());
 					if ( prevAction==null ) {
-						namedActions.put(scopeName, name.getText(), action);
+						namedActions.Put(scopeName, name.getText(), action);
 					}
 					else {
 						if ( prevAction.g == at.g ) {
@@ -259,9 +259,9 @@ public class GrammarTransformPipeline {
                 // at this point, we have complete list of combined actions,
                 // some of which are already living in root grammar.
                 // Merge in any actions not in root grammar into root's tree.
-                foreach (String scopeName in namedActions.keySet()) {
-                    foreach (String name in namedActions.keySet(scopeName)) {
-						GrammarAST action = namedActions.get(scopeName, name);
+                foreach (String scopeName in namedActions.KeySet()) {
+                    foreach (String name in namedActions.KeySet(scopeName)) {
+						GrammarAST action = namedActions.Get(scopeName, name);
 						rootGrammar.Tools.Log("grammar", action.g.name+" "+scopeName+":"+name+"="+action.getText());
 						if ( action.g != rootGrammar ) {
 							root.insertChild(1, action.getParent());

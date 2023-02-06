@@ -15,25 +15,25 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public  class LexerModeAction : LexerAction {
-	private readonly int mode;
+public class LexerModeAction : LexerAction
+{
+    private readonly int mode;
 
-	/**
+    /**
 	 * Constructs a new {@code mode} action with the specified mode value.
 	 * @param mode The mode value to pass to {@link Lexer#mode}.
 	 */
-	public LexerModeAction(int mode) {
-		this.mode = mode;
-	}
+    public LexerModeAction(int mode)
+    {
+        this.mode = mode;
+    }
 
-	/**
+    /**
 	 * Get the lexer mode this action should transition the lexer to.
 	 *
 	 * @return The lexer mode for this {@code mode} command.
 	 */
-	public int getMode() {
-		return mode;
-	}
+    public int Mode => mode;
 
     /**
 	 * {@inheritDoc}
@@ -56,32 +56,35 @@ public  class LexerModeAction : LexerAction {
 	 * value provided by {@link #getMode}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer) {
-		lexer.mode(mode);
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.mode(mode);
+    }
 
     //@Override
-    public override int GetHashCode() {
-		int hash = MurmurHash.Initialize();
-		hash = MurmurHash.Update(hash, ActionType);
-		hash = MurmurHash.Update(hash, mode);
-		return MurmurHash.Finish(hash, 2);
-	}
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        hash = MurmurHash.Update(hash, mode);
+        return MurmurHash.Finish(hash, 2);
+    }
 
     //@Override
-    public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerModeAction)) {
-			return false;
-		}
+    public override bool Equals(object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (obj is LexerModeAction action)
+        {
+            return mode == action.mode;
+        }
+        return false;
 
-		return mode == ((LexerModeAction)obj).mode;
-	}
+    }
 
     //@Override
-    public override String ToString() {
-		return $"mode({mode})";
-	}
+    public override string ToString() => $"mode({mode})";
 }

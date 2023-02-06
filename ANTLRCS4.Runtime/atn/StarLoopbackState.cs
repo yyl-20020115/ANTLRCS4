@@ -6,10 +6,9 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class StarLoopbackState : ATNState {
-	public StarLoopEntryState getLoopEntryState() {
-		return (StarLoopEntryState)Transition(0).target;
-	}
+public class StarLoopbackState : ATNState
+{
+    public StarLoopEntryState LoopEntryState => (StarLoopEntryState)Transition(0).target;
 
     public override int StateType => STAR_LOOP_BACK;
 }

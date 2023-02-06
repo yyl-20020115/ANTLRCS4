@@ -10,17 +10,19 @@ using org.antlr.v4.runtime.tree.pattern;
 namespace org.antlr.v4.runtime.misc;
 
 // A class to read plain text interpreter data produced by ANTLR.
-public class InterpreterDataReader {
+public class InterpreterDataReader
+{
 
-	public class InterpreterData {
-	  public ATN atn;
+    public class InterpreterData
+    {
+        public ATN atn;
         public Vocabulary vocabulary;
-        public List<String> ruleNames;
-        public List<String> channels; // Only valid for lexer grammars.
-        public List<String> modes; // ditto
-	};
+        public List<string> ruleNames;
+        public List<string> channels; // Only valid for lexer grammars.
+        public List<string> modes; // ditto
+    };
 
-	/**
+    /**
 	 * The structure of the data file is very simple. Everything is line based with empty lines
 	 * separating the different parts. For lexers the layout is:
 	 * token literal names:
@@ -43,83 +45,91 @@ public class InterpreterDataReader {
 	 *
 	 * Data for a parser does not contain channel and mode names.
 	 */
-	public static InterpreterData parseFile(String fileName) {
-		InterpreterData result = new InterpreterData();
-		result.ruleNames = new ();
+    public static InterpreterData ParseFile(string fileName)
+    {
+        var result = new InterpreterData();
+        result.ruleNames = new();
 
-		using (var br = new StreamReader(fileName)) {
-		    String line;
-		  	List<String> literalNames = new();
-		  	List<String> symbolicNames = new();
+        using (var br = new StreamReader(fileName))
+        {
+            string line;
+            List<string> literalNames = new();
+            List<string> symbolicNames = new();
 
-			line = br.ReadLine();
-			if ( !line.Equals("token literal names:") )
-				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.ReadLine()) != null) {
-		       if ( line.Length == 0 )
-					break;
-				literalNames.Add(line.Equals("null") ? "" : line);
-		    }
+            line = br.ReadLine();
+            if (!line.Equals("token literal names:"))
+                throw new RuntimeException("Unexpected data entry");
+            while ((line = br.ReadLine()) != null)
+            {
+                if (line.Length == 0)
+                    break;
+                literalNames.Add(line.Equals("null") ? "" : line);
+            }
 
-			line = br.ReadLine();
-			if ( !line.Equals("token symbolic names:") )
-				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.ReadLine()) != null) {
-		       if ( line.Length == 0 )
-					break;
-				symbolicNames.Add(line.Equals("null") ? "" : line);
-		    }
+            line = br.ReadLine();
+            if (!line.Equals("token symbolic names:"))
+                throw new RuntimeException("Unexpected data entry");
+            while ((line = br.ReadLine()) != null)
+            {
+                if (line.Length == 0)
+                    break;
+                symbolicNames.Add(line.Equals("null") ? "" : line);
+            }
 
-		  	result.vocabulary = new VocabularyImpl(literalNames.ToArray(), symbolicNames.ToArray());
+            result.vocabulary = new VocabularyImpl(literalNames.ToArray(), symbolicNames.ToArray());
 
-			line = br.ReadLine();
-			if ( !line.Equals("rule names:") )
-				throw new RuntimeException("Unexpected data entry");
-		    while ((line = br.ReadLine()) != null) {
-		       if ( line.Length==0 )
-					break;
-				result.ruleNames.Add(line);
-		    }
+            line = br.ReadLine();
+            if (!line.Equals("rule names:"))
+                throw new RuntimeException("Unexpected data entry");
+            while ((line = br.ReadLine()) != null)
+            {
+                if (line.Length == 0)
+                    break;
+                result.ruleNames.Add(line);
+            }
 
-			line = br.ReadLine();
-			if ( line.Equals("channel names:") ) { // Additional lexer data.
-				result.channels = new ();
-			    while ((line = br.ReadLine()) != null) {
-			       if ( line.Length==0 )
-						break;
-					result.channels.Add(line);
-			    }
+            line = br.ReadLine();
+            if (line.Equals("channel names:"))
+            { // Additional lexer data.
+                result.channels = new();
+                while ((line = br.ReadLine()) != null)
+                {
+                    if (line.Length == 0)
+                        break;
+                    result.channels.Add(line);
+                }
 
-				line = br.ReadLine();
-				if ( !line.Equals("mode names:") )
-					throw new RuntimeException("Unexpected data entry");
-				result.modes = new ();
-			    while ((line = br.ReadLine()) != null) {
-			       if ( line.Length == 0 )
-						break;
-					result.modes.Add(line);
-			    }
-			}
+                line = br.ReadLine();
+                if (!line.Equals("mode names:"))
+                    throw new RuntimeException("Unexpected data entry");
+                result.modes = new();
+                while ((line = br.ReadLine()) != null)
+                {
+                    if (line.Length == 0)
+                        break;
+                    result.modes.Add(line);
+                }
+            }
 
-		  	line = br.ReadLine();
-		  	if ( !line.Equals("atn:") )
-		  		throw new RuntimeException("Unexpected data entry");
-			line = br.ReadLine();
-			String[] elements = line[1..^1].Split(",");
-	  		int[] serializedATN = new int[elements.Length];
+            line = br.ReadLine();
+            if (!line.Equals("atn:"))
+                throw new RuntimeException("Unexpected data entry");
+            line = br.ReadLine();
+            var elements = line[1..^1].Split(",");
+            var serializedATN = new int[elements.Length];
 
-			for (int i = 0; i < elements.Length; ++i) { // ignore [...] on ends
-				serializedATN[i] = int.TryParse(elements[i].Trim(),out var v)?v:0;
-			}
+            for (int i = 0; i < elements.Length; ++i)
+            { // ignore [...] on ends
+                serializedATN[i] = int.TryParse(elements[i].Trim(), out var v) ? v : 0;
+            }
 
-		  	ATNDeserializer deserializer = new ATNDeserializer();
-		  	result.atn = deserializer.Deserialize(serializedATN);
-		}
-		//catch (IOException e) {
-		//	// We just swallow the error and return empty objects instead.
-		//}
+            var deserializer = new ATNDeserializer();
+            result.atn = deserializer.Deserialize(serializedATN);
+        }
+        //catch (IOException e) {
+        //	// We just swallow the error and return empty objects instead.
+        //}
 
-		return result;
-	}
-
+        return result;
+    }
 }

@@ -193,9 +193,4 @@ public abstract class ATNState
     public bool OnlyHasEpsilonTransitions() => epsilonOnlyTransitions;
 
     public void SetRuleIndex(int ruleIndex) => this.ruleIndex = ruleIndex;
-
-    //public static object GetName()
-    //{
-    //    throw new NotImplementedException();
-    //}
 }

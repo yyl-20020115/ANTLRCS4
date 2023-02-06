@@ -165,11 +165,11 @@ public class GrammarAST : CommonTree {
 
 	// TODO: don't include this node!!
 	public CommonTree getFirstDescendantWithType(BitSet types) {
-		if ( types.member(getType()) ) return this;
+		if ( types.Member(getType()) ) return this;
 		if ( children==null ) return null;
 		foreach (Object c in children) {
 			GrammarAST t = (GrammarAST)c;
-			if ( types.member(t.getType()) ) return t;
+			if ( types.Member(t.getType()) ) return t;
 			CommonTree d = t.getFirstDescendantWithType(types);
 			if ( d!=null ) return d;
 		}
@@ -222,7 +222,7 @@ public class GrammarAST : CommonTree {
 		while ( type!=Token.EOF ) {
 			buf.Append(" ");
 			buf.Append(o.getText());
-			nodes.consume();
+			nodes.Consume();
 			o = (GrammarAST)nodes.LT(1);
 			type = adaptor.getType(o);
 		}

@@ -42,7 +42,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker {
 			// Move down to first child, if exists
 			if (currentNode.getChildCount() > 0) {
 				nodeStack.Push(currentNode);
-				indexStack.push(currentIndex);
+				indexStack.Push(currentIndex);
 				currentIndex = 0;
 				currentNode = currentNode.getChild(0);
 				continue;
@@ -71,7 +71,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker {
 
 				// No next, sibling, so move up
 				currentNode = nodeStack.Pop();
-				currentIndex = indexStack.pop();
+				currentIndex = indexStack.Pop();
 
 			} while (currentNode != null);
 		}

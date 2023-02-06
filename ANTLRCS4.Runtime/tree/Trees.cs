@@ -258,7 +258,7 @@ public static class Trees
  	 *  @since 4.5.1
 	 */
 	public static Tree findNodeSuchThat(Tree t, misc.Predicate<Tree> pred) {
-		if ( pred.test(t) ) return t;
+		if ( pred.Test(t) ) return t;
 
 		if ( t==null ) return null;
 

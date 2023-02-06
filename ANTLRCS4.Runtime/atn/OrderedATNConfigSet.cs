@@ -12,15 +12,19 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public class OrderedATNConfigSet : ATNConfigSet {
+public class OrderedATNConfigSet : ATNConfigSet
+{
 
-	public OrderedATNConfigSet() {
-		this.configLookup = new LexerConfigHashSet();
-	}
+    public OrderedATNConfigSet()
+    {
+        this.configLookup = new LexerConfigHashSet();
+    }
 
-	public class LexerConfigHashSet : AbstractConfigHashSet {
-		public LexerConfigHashSet():base(TEqualityComparator<ATNConfig>.INSTANCE)
+    public class LexerConfigHashSet : AbstractConfigHashSet
+    {
+        public LexerConfigHashSet()
+            : base(TEqualityComparator<ATNConfig>.INSTANCE)
         {
-		}
-	}
+        }
+    }
 }

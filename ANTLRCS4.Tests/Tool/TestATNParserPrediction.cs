@@ -539,11 +539,11 @@ public class TestATNParserPrediction
         Assert.AreEqual(expectedAlt, alt);
 
         // Check adaptive prediction
-        input.seek(0);
+        input.Seek(0);
         alt = interp.AdaptivePredict(input, decision, null);
         Assert.AreEqual(expectedAlt, alt);
         // run 2x; first time creates DFA in atn
-        input.seek(0);
+        input.Seek(0);
         alt = interp.AdaptivePredict(input, decision, null);
         Assert.AreEqual(expectedAlt, alt);
     }
@@ -576,7 +576,7 @@ public class TestATNParserPrediction
                 //nvae.printStackTrace(System.err);
             }
             var dfa = interp.parser.decisionToDFA[decision];
-            Assert.AreEqual(dfaString[i], dfa.toString(g.getVocabulary()));
+            Assert.AreEqual(dfaString[i], dfa.ToString(g.getVocabulary()));
         }
     }
 }

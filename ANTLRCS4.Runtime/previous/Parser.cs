@@ -42,7 +42,7 @@ public class Parser : BaseRecognizer
         : base()
     {
         // highlight that we go to super to set state object
-        setTokenStream(input);
+        SetTokenStream(input);
     }
 
     public Parser(TokenStream input, RecognizerSharedState state)
@@ -53,28 +53,25 @@ public class Parser : BaseRecognizer
     }
 
     //@Override
-    public void reset()
+    public override void Reset()
     {
         base.Reset(); // reset all recognizer state variables
-        if (input != null)
-        {
-            input.seek(0); // rewind the input
-        }
+        input?.Seek(0); // rewind the input
     }
 
     //@Override
-    protected Object getCurrentInputSymbol(IntStream input)
+    protected object GetCurrentInputSymbol(IntStream input)
     {
         return ((TokenStream)input).LT(1);
     }
 
     //@Override
-    protected Object getMissingSymbol(IntStream input,
+    protected object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow)
     {
-        String tokenText;
+        string tokenText;
         if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
         else tokenText = "<missing " + GetTokenNames()[expectedTokenType] + ">";
         CommonToken t = new CommonToken(expectedTokenType, tokenText);
@@ -91,30 +88,30 @@ public class Parser : BaseRecognizer
     }
 
     /** Set the token stream and reset the parser */
-    public void setTokenStream(TokenStream input)
+    public void SetTokenStream(TokenStream input)
     {
         this.input = null;
-        reset();
+        Reset();
         this.input = input;
     }
 
-    public TokenStream getTokenStream()
+    public TokenStream GetTokenStream()
     {
         return input;
     }
 
     //@Override
-    public override String GetSourceName()
+    public override string GetSourceName()
     {
         return input.getSourceName();
     }
 
-    public void traceIn(String ruleName, int ruleIndex)
+    public void TraceIn(string ruleName, int ruleIndex)
     {
         base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
-    public void traceOut(String ruleName, int ruleIndex)
+    public void TraceOut(string ruleName, int ruleIndex)
     {
         base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }

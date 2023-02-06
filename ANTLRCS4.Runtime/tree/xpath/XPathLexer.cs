@@ -90,7 +90,7 @@ public class XPathLexer : Lexer {
 
 	//@Override
 	public override Token NextToken() {
-		_tokenStartCharIndex = input.index();
+		_tokenStartCharIndex = input.Index();
 		CommonToken t = null;
 		while ( t==null ) {
 			switch ( input.LA(1) ) {
@@ -145,7 +145,7 @@ public class XPathLexer : Lexer {
 		else {
 			charPositionInLine++;
 		}
-		input.consume();
+		input.Consume();
 	}
 
 	//@Override
@@ -154,22 +154,22 @@ public class XPathLexer : Lexer {
 	}
 
 	public String matchID() {
-		int start = input.index();
+		int start = input.Index();
 		consume(); // drop start char
 		while ( isNameChar(input.LA(1)) ) {
 			consume();
 		}
-		return input.getText(Interval.of(start,input.index()-1));
+		return input.GetText(Interval.Of(start,input.Index()-1));
 	}
 
 	public String matchString() {
-		int start = input.index();
+		int start = input.Index();
 		consume(); // drop first quote
 		while ( input.LA(1)!='\'' ) {
 			consume();
 		}
 		consume(); // drop last quote
-		return input.getText(Interval.of(start,input.index()-1));
+		return input.GetText(Interval.Of(start,input.Index()-1));
 	}
 
 	public bool isNameChar(int c) { return char.IsLetterOrDigit((char)c); }

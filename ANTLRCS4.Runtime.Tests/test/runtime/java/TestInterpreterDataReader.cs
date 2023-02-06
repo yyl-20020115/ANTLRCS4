@@ -41,7 +41,7 @@ public class TestInterpreterDataReader
         var interpFile = Environment.CurrentDirectory + "test-" + Random.Shared.Next() + ".txt";// File.createTempFile(null, null);
         File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
 
-        var interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
+        var interpreterData = InterpreterDataReader.ParseFile(interpFile.ToString());
         var t = interpreterData.GetType();
         var atnField = t.GetField("atn");
         var vocabularyField = t.GetField("vocabulary");

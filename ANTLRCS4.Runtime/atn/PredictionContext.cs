@@ -21,7 +21,7 @@ public abstract class PredictionContext
     private static readonly int INITIAL_HASH = 1;
 
     private static readonly AtomicInteger globalNodeCount = new AtomicInteger();
-    public readonly int id = globalNodeCount.getAndIncrement();
+    public readonly int id = globalNodeCount.GetAndIncrement();
 
     /**
 	 * Stores the computed hash code of this {@link PredictionContext}. The hash
@@ -46,17 +46,14 @@ public abstract class PredictionContext
 	 */
     public readonly int cachedHashCode;
 
-    protected PredictionContext(int cachedHashCode)
-    {
-        this.cachedHashCode = cachedHashCode;
-    }
+    protected PredictionContext(int cachedHashCode) => this.cachedHashCode = cachedHashCode;
 
     /** Convert a {@link RuleContext} tree to a {@link PredictionContext} graph.
 	 *  Return {@link EmptyPredictionContext#Instance} if {@code outerContext} is empty or null.
 	 */
     public static PredictionContext FromRuleContext(ATN atn, RuleContext outerContext)
     {
-        if (outerContext == null) outerContext = ParserRuleContext.EMPTY;
+        outerContext ??= ParserRuleContext.EMPTY;
 
         // if we are in RuleContext of start rule, s, then PredictionContext
         // is EMPTY. Nobody called us. (if we are empty, return empty)
@@ -69,9 +66,9 @@ public abstract class PredictionContext
         PredictionContext parent = EmptyPredictionContext.Instance;
         parent = FromRuleContext(atn, outerContext.parent);
 
-        ATNState state = atn.states[(outerContext.invokingState)];
-        RuleTransition transition = (RuleTransition)state.Transition(0);
-        return SingletonPredictionContext.create(parent, transition.followState.stateNumber);
+        var state = atn.states[(outerContext.invokingState)];
+        var transition = state.Transition(0) as RuleTransition;
+        return SingletonPredictionContext.Create(parent, transition.followState.stateNumber);
     }
 
     public abstract int Count { get; }
@@ -127,7 +124,8 @@ public abstract class PredictionContext
 
     // dispatch
     public static PredictionContext Merge(
-        PredictionContext a, PredictionContext b,
+        PredictionContext a,
+        PredictionContext b,
         bool rootIsWildcard,
         DoubleKeyMap<PredictionContext, PredictionContext, PredictionContext> mergeCache)
     {
@@ -199,16 +197,16 @@ public abstract class PredictionContext
     {
         if (mergeCache != null)
         {
-            PredictionContext previous = mergeCache.get(a, b);
+            PredictionContext previous = mergeCache.Get(a, b);
             if (previous != null) return previous;
-            previous = mergeCache.get(b, a);
+            previous = mergeCache.Get(b, a);
             if (previous != null) return previous;
         }
 
         PredictionContext rootMerge = MergeRoot(a, b, rootIsWildcard);
         if (rootMerge != null)
         {
-            if (mergeCache != null) mergeCache.put(a, b, rootMerge);
+            if (mergeCache != null) mergeCache.Put(a, b, rootMerge);
             return rootMerge;
         }
 
@@ -222,8 +220,8 @@ public abstract class PredictionContext
                                               // merge parents x and y, giving array node with x,y then remainders
                                               // of those graphs.  dup a, a' points at merged array
                                               // new joined parent so create new singleton pointing to it, a'
-            PredictionContext a_ = SingletonPredictionContext.create(parent, a.returnState);
-            if (mergeCache != null) mergeCache.put(a, b, a_);
+            PredictionContext a_ = SingletonPredictionContext.Create(parent, a.returnState);
+            if (mergeCache != null) mergeCache.Put(a, b, a_);
             return a_;
         }
         else
@@ -245,7 +243,7 @@ public abstract class PredictionContext
                 }
                 PredictionContext[] _parents = { singleParent, singleParent };
                 PredictionContext _a_ = new ArrayPredictionContext(_parents, _payloads);
-                if (mergeCache != null) mergeCache.put(a, b, _a_);
+                if (mergeCache != null) mergeCache.Put(a, b, _a_);
                 return _a_;
             }
             // parents differ and can't merge them. Just pack together
@@ -260,7 +258,7 @@ public abstract class PredictionContext
                 parents = new PredictionContext[] { b.parent, a.parent };
             }
             PredictionContext a_ = new ArrayPredictionContext(parents, payloads);
-            if (mergeCache != null) mergeCache.put(a, b, a_);
+            if (mergeCache != null) mergeCache.Put(a, b, a_);
             return a_;
         }
     }
@@ -362,9 +360,9 @@ public abstract class PredictionContext
     {
         if (mergeCache != null)
         {
-            PredictionContext previous = mergeCache.get(a, b);
+            var previous = mergeCache.Get(a, b);
             if (previous != null) return previous;
-            previous = mergeCache.get(b, a);
+            previous = mergeCache.Get(b, a);
             if (previous != null) return previous;
         }
 
@@ -373,15 +371,15 @@ public abstract class PredictionContext
         int j = 0; // walks b
         int k = 0; // walks target M array
 
-        int[] mergedReturnStates =
+        var mergedReturnStates =
             new int[a.returnStates.Length + b.returnStates.Length];
-        PredictionContext[] mergedParents =
+        var mergedParents =
             new PredictionContext[a.returnStates.Length + b.returnStates.Length];
         // walk and merge to yield mergedParents, mergedReturnStates
         while (i < a.returnStates.Length && j < b.returnStates.Length)
         {
-            PredictionContext a_parent = a.parents[i];
-            PredictionContext b_parent = b.parents[j];
+            var a_parent = a.parents[i];
+            var b_parent = b.parents[j];
             if (a.returnStates[i] == b.returnStates[j])
             {
                 // same payload (stack tops are equal), must yield merged singleton
@@ -398,7 +396,7 @@ public abstract class PredictionContext
                 }
                 else
                 { // ax+ay -> a'[x,y]
-                    PredictionContext mergedParent =
+                    var mergedParent =
                         Merge(a_parent, b_parent, rootIsWildcard, mergeCache);
                     mergedParents[k] = mergedParent;
                     mergedReturnStates[k] = payload;
@@ -446,10 +444,10 @@ public abstract class PredictionContext
         { // write index < last position; trim
             if (k == 1)
             { // for just one merged element, return singleton top
-                PredictionContext a_ =
-                    SingletonPredictionContext.create(mergedParents[0],
+                var a_ =
+                    SingletonPredictionContext.Create(mergedParents[0],
                                                       mergedReturnStates[0]);
-                if (mergeCache != null) mergeCache.put(a, b, a_);
+                mergeCache?.Put(a, b, a_);
                 return a_;
             }
             Array.Resize(ref mergedParents, k);
@@ -458,25 +456,25 @@ public abstract class PredictionContext
             //mergedReturnStates = Arrays.copyOf(mergedReturnStates, k);
         }
 
-        PredictionContext M =
+        var M =
             new ArrayPredictionContext(mergedParents, mergedReturnStates);
 
         // if we created same array as a or b, return that instead
         // TODO: track whether this is possible above during merge sort for speed
         if (M.Equals(a))
         {
-            if (mergeCache != null) mergeCache.put(a, b, a);
+            mergeCache?.Put(a, b, a);
             return a;
         }
         if (M.Equals(b))
         {
-            if (mergeCache != null) mergeCache.put(a, b, b);
+            mergeCache?.Put(a, b, b);
             return b;
         }
 
         CombineCommonParents(mergedParents);
 
-        if (mergeCache != null) mergeCache.put(a, b, M);
+        mergeCache?.Put(a, b, M);
         return M;
     }
 
@@ -527,7 +525,7 @@ public abstract class PredictionContext
         {
             if (current is SingletonPredictionContext)
             {
-                var s = (current.id.ToString());
+                var s = current.id.ToString();
                 buffer.Append("  s").Append(s);
                 var returnState = (current.GetReturnState(0).ToString());
                 if (current is EmptyPredictionContext) returnState = "$";
@@ -586,7 +584,7 @@ public abstract class PredictionContext
             return existing;
         }
 
-        existing = contextCache.get(context);
+        existing = contextCache.Get(context);
         if (existing != null)
         {
             visited.Add(context, existing);
@@ -617,7 +615,7 @@ public abstract class PredictionContext
 
         if (!changed)
         {
-            contextCache.add(context);
+            contextCache.Add(context);
             visited[context] = context;
             return context;
         }
@@ -629,7 +627,7 @@ public abstract class PredictionContext
         }
         else if (parents.Length == 1)
         {
-            updated = SingletonPredictionContext.create(parents[0], context.GetReturnState(0));
+            updated = SingletonPredictionContext.Create(parents[0], context.GetReturnState(0));
         }
         else
         {
@@ -637,7 +635,7 @@ public abstract class PredictionContext
             updated = new ArrayPredictionContext(parents, arrayPredictionContext.returnStates);
         }
 
-        contextCache.add(updated);
+        contextCache.Add(updated);
         visited[updated] = updated;
         visited[context] = context;
         return updated;
@@ -688,21 +686,16 @@ public abstract class PredictionContext
         }
     }
 
-    public string ToString(Recognizer<Token, ATNSimulator> recog)
-    {
-        return ToString();
-        //		return toString(recog, ParserRuleContext.EMPTY);
-    }
+    public string ToString(Recognizer<Token, ATNSimulator> recog) 
+        => ToString();//		return toString(recog, ParserRuleContext.EMPTY);
 
     public string[] ToStrings(Recognizer<Token, ATNSimulator> recognizer, int currentState)
-    {
-        return ToStrings(recognizer, EmptyPredictionContext.Instance, currentState);
-    }
+        => ToStrings(recognizer, EmptyPredictionContext.Instance, currentState);
 
     // FROM SAM
     public string[] ToStrings(Recognizer<Token, ATNSimulator> recognizer, PredictionContext stop, int currentState)
     {
-        List<String> result = new();
+        List<string> result = new();
 
         int perm = 0;
 
@@ -765,7 +758,7 @@ public abstract class PredictionContext
                 stateNumber = p.GetReturnState(index);
                 p = p.GetParent(index);
             }
-            localBuffer.Append("]");
+            localBuffer.Append(']');
             result.Add(localBuffer.ToString());
 
             if (last)

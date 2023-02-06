@@ -169,10 +169,7 @@ public class Array2DHashSet<T> : HashSet<T>
 
             foreach (T o in bucket)
             {
-                if (o == null)
-                {
-                    break;
-                }
+                if (o == null) break;
 
                 int b = GetBucket(o);
                 int bucketLength = newBucketLengths[b];
@@ -203,7 +200,7 @@ public class Array2DHashSet<T> : HashSet<T>
     }
 
     //@Override
-    public bool Add(T t)
+    public new bool Add(T t)
     {
         T existing = GetOrAdd(t);
         return existing.Equals(t);
@@ -270,8 +267,9 @@ public class Array2DHashSet<T> : HashSet<T>
     }
 
     //@Override
-    public T[] ToArray(T[] a)
+    public T[] ToArray(T[] a = null)
     {
+        a??=new T[Size()];
         if (a.Length < Size())
         {
             a = Arrays.CopyOf(a, Size());
@@ -443,7 +441,7 @@ public class Array2DHashSet<T> : HashSet<T>
     }
 
     //@Override
-    public void Clear()
+    public new void Clear()
     {
         n = 0;
         buckets = CreateBuckets(this.initialCapacity);
@@ -475,26 +473,26 @@ public class Array2DHashSet<T> : HashSet<T>
 
     public string ToTableString()
     {
-        var buf = new StringBuilder();
+        var buffer = new StringBuilder();
         foreach (var bucket in buckets)
         {
             if (bucket == null)
             {
-                buf.Append("null\n");
+                buffer.Append("null\n");
                 continue;
             }
-            buf.Append('[');
+            buffer.Append('[');
             bool first = true;
             foreach (T o in bucket)
             {
                 if (first) first = false;
-                else buf.Append(' ');
-                if (o == null) buf.Append('_');
-                else buf.Append(o.ToString());
+                else buffer.Append(' ');
+                if (o == null) buffer.Append('_');
+                else buffer.Append(o.ToString());
             }
-            buf.Append("]\n");
+            buffer.Append("]\n");
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
     /**
@@ -525,7 +523,7 @@ public class Array2DHashSet<T> : HashSet<T>
     //@SuppressWarnings("unchecked")
     protected T[][] CreateBuckets(int capacity)
     {
-        return (T[][])new T[capacity][];
+        return new T[capacity][];
     }
 
     /**

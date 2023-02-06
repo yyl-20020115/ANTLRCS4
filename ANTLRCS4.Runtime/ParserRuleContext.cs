@@ -303,9 +303,9 @@ public class ParserRuleContext : RuleContext {
 			return Interval.INVALID;
 		}
 		if ( stop==null || stop.getTokenIndex()<start.getTokenIndex() ) {
-			return Interval.of(start.getTokenIndex(), start.getTokenIndex()-1); // empty
+			return Interval.Of(start.getTokenIndex(), start.getTokenIndex()-1); // empty
 		}
-		return Interval.of(start.getTokenIndex(), stop.getTokenIndex());
+		return Interval.Of(start.getTokenIndex(), stop.getTokenIndex());
 	}
 
 	/**

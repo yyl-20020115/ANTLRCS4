@@ -46,20 +46,14 @@ public class LexerCustomAction : LexerAction
 	 *
 	 * @return The rule index for the custom action.
 	 */
-    public int GetRuleIndex()
-    {
-        return ruleIndex;
-    }
+    public int RuleIndex => ruleIndex;
 
     /**
 	 * Gets the action index to use for calls to {@link Recognizer#action}.
 	 *
 	 * @return The action index for the custom action.
 	 */
-    public int GetActionIndex()
-    {
-        return actionIndex;
-    }
+    public int ActionIndex => actionIndex;
 
     /**
 	 * {@inheritDoc}
@@ -106,19 +100,17 @@ public class LexerCustomAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(Object? obj)
+    public override bool Equals(object? obj)
     {
         if (obj == this)
         {
             return true;
         }
-        else if (!(obj is LexerCustomAction))
+        else if (obj is LexerCustomAction other)
         {
-            return false;
+            return ruleIndex == other.ruleIndex
+                && actionIndex == other.actionIndex;
         }
-
-        LexerCustomAction other = (LexerCustomAction)obj;
-        return ruleIndex == other.ruleIndex
-            && actionIndex == other.actionIndex;
+        return false;
     }
 }

@@ -10,12 +10,9 @@ namespace ANTLRCS4.Runtime;
 
 public static class Objects
 {
-    public static bool equals(object a, object b)
-    {
-        return (a == b) || (a != null && a.Equals(b));
-    }
+    public static bool DoEquals(object? a, object? b) => (a == b) || (a != null && a.Equals(b));
 
-    internal static void requireNonNull(object o)
+    public static void RequireNonNull(object? o)
     {
         if(o == null) throw new ArgumentNullException(nameof(o));
     }

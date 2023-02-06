@@ -91,7 +91,7 @@ public abstract class CodePointCharStream : CharStream {
 	}
 
 	//@Override
-	public void consume() {
+	public void Consume() {
 		if (_size - position == 0) {
 			//assert LA(1) == IntStream.EOF;
 			throw new IllegalStateException("cannot consume EOF");
@@ -100,7 +100,7 @@ public abstract class CodePointCharStream : CharStream {
 	}
 
 	//@Override
-	public int index() {
+	public int Index() {
 		return position;
 	}
 
@@ -109,16 +109,16 @@ public abstract class CodePointCharStream : CharStream {
 
     /** mark/release do nothing; we have entire buffer */
     //@Override
-    public int mark() {
+    public int Mark() {
 		return -1;
 	}
 
 	//@Override
-	public void release(int marker) {
+	public void Release(int marker) {
 	}
 
 	//@Override
-	public void seek(int index) {
+	public void Seek(int index) {
 		position = index;
 	}
 
@@ -133,10 +133,10 @@ public abstract class CodePointCharStream : CharStream {
 
 	//@Override
 	public override String ToString() {
-		return getText(Interval.of(0, _size - 1));
+		return GetText(Interval.Of(0, _size - 1));
 	}
 
-    public string getText(Interval interval)
+    public string GetText(Interval interval)
     {
         throw new NotImplementedException();
     }
@@ -146,17 +146,11 @@ public abstract class CodePointCharStream : CharStream {
         throw new NotImplementedException();
     }
 
-    public int getCharPositionInLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int CharPositionInLine => throw new NotImplementedException();
 
-    public int getLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int Line => throw new NotImplementedException();
 
-    public void rewind(int start)
+    public void Rewind(int start)
     {
         throw new NotImplementedException();
     }
@@ -166,12 +160,12 @@ public abstract class CodePointCharStream : CharStream {
         throw new NotImplementedException();
     }
 
-    public string substring(int tokenStartCharIndex, int v)
+    public string Substring(int tokenStartCharIndex, int v)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

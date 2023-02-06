@@ -7,37 +7,38 @@
 namespace org.antlr.v4.runtime.atn;
 
 /** */
-public class RuleTransition : Transition {
-	/** Ptr to the rule definition object for this rule ref */
-	public readonly int ruleIndex;     // no Rule object at runtime
+public class RuleTransition : Transition
+{
+    /** Ptr to the rule definition object for this rule ref */
+    public readonly int ruleIndex;     // no Rule object at runtime
 
-	public readonly int precedence;
+    public readonly int precedence;
 
-	/** What node to begin computations following ref to rule */
-	public ATNState followState;
+    /** What node to begin computations following ref to rule */
+    public ATNState followState;
 
-	/**
+    /**
 	 * @deprecated Use
 	 * {@link #RuleTransition(RuleStartState, int, int, ATNState)} instead.
 	 */
-	//@Deprecated
-	public RuleTransition(RuleStartState ruleStart,
-						  int ruleIndex,
-						  ATNState followState)
-		: this(ruleStart, ruleIndex, 0, followState)
+    //@Deprecated
+    public RuleTransition(RuleStartState ruleStart,
+                          int ruleIndex,
+                          ATNState followState)
+        : this(ruleStart, ruleIndex, 0, followState)
     {
-	}
+    }
 
-	public RuleTransition(RuleStartState ruleStart,
-						  int ruleIndex,
-						  int precedence,
-						  ATNState followState)
-		:base(ruleStart)
-	{
-		this.ruleIndex = ruleIndex;
-		this.precedence = precedence;
-		this.followState = followState;
-	}
+    public RuleTransition(RuleStartState ruleStart,
+                          int ruleIndex,
+                          int precedence,
+                          ATNState followState)
+        : base(ruleStart)
+    {
+        this.ruleIndex = ruleIndex;
+        this.precedence = precedence;
+        this.followState = followState;
+    }
 
     //@Override
     public override int SerializationType => RULE;
@@ -45,7 +46,5 @@ public class RuleTransition : Transition {
     //@Override
     public override bool IsEpsilon => true;
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return false;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 }

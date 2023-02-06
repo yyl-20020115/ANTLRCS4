@@ -26,10 +26,8 @@ public class AtomTransition : Transition
 
     public override IntervalSet Label => IntervalSet.Of(_label);
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
-    {
-        return _label == symbol;
-    }
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
+        => _label == symbol;
 
     //@Override
     public override string ToString() => this._label.ToString();

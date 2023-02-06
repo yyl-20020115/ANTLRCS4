@@ -113,7 +113,7 @@ public class UnbufferedCharStream : CharStream {
 	}
 
 	//@Override
-	public void consume() {
+	public void Consume() {
 		if (LA(1) == IntStream.EOF) {
 			throw new IllegalStateException("cannot consume EOF");
 		}
@@ -230,7 +230,7 @@ public class UnbufferedCharStream : CharStream {
 	 * {@code release()} is called in the wrong order.</p>
 	 */
     //@Override
-    public int mark() {
+    public int Mark() {
 		if (numMarkers == 0) {
 			lastCharBufferStart = lastChar;
 		}
@@ -244,7 +244,7 @@ public class UnbufferedCharStream : CharStream {
 	 * @param marker
 	 */
     //@Override
-    public void release(int marker) {
+    public void Release(int marker) {
 		int expectedMark = -numMarkers;
 		if ( marker!=expectedMark ) {
 			throw new IllegalStateException("release() called with an invalid marker.");
@@ -262,7 +262,7 @@ public class UnbufferedCharStream : CharStream {
     }
 
     //@Override
-    public int index() {
+    public int Index() {
 		return currentCharIndex;
     }
 
@@ -270,7 +270,7 @@ public class UnbufferedCharStream : CharStream {
 	 *  sliding window.  Move {@code p} to {@code index-bufferStartIndex}.
 	 */
     //@Override
-    public void seek(int index) {
+    public void Seek(int index) {
 		if (index == currentCharIndex) {
 			return;
 		}
@@ -313,14 +313,14 @@ public class UnbufferedCharStream : CharStream {
 	}
 
 	//@Override
-	public String getText(Interval interval) {
+	public String GetText(Interval interval) {
 		if (interval.a < 0 || interval.b < interval.a - 1) {
 			throw new ArgumentException("invalid interval");
 		}
 
 		int bufferStartIndex = getBufferStartIndex();
 		if (n > 0 && data[n - 1] == char.MaxValue) {
-			if (interval.a + interval.length() > bufferStartIndex + n) {
+			if (interval.a + interval.Length > bufferStartIndex + n) {
 				throw new ArgumentException("the interval extends past the end of the stream");
 			}
 		}
@@ -331,7 +331,7 @@ public class UnbufferedCharStream : CharStream {
 		}
 		// convert from absolute to local index
 		int i = interval.a - bufferStartIndex;
-		var runs = data.Select(d => new Rune(d)).ToArray()[i .. interval.length()].ToArray();
+		var runs = data.Select(d => new Rune(d)).ToArray()[i .. interval.Length].ToArray();
 		var builder = new StringBuilder();
 		foreach(var r in runs)
 		{
@@ -344,17 +344,11 @@ public class UnbufferedCharStream : CharStream {
 		return currentCharIndex - p;
 	}
 
-    public int getCharPositionInLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int CharPositionInLine => throw new NotImplementedException();
 
-    public int getLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int Line => throw new NotImplementedException();
 
-    public void rewind(int start)
+    public void Rewind(int start)
     {
         throw new NotImplementedException();
     }
@@ -364,12 +358,12 @@ public class UnbufferedCharStream : CharStream {
         throw new NotImplementedException();
     }
 
-    public string substring(int tokenStartCharIndex, int v)
+    public string Substring(int tokenStartCharIndex, int v)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

@@ -568,17 +568,17 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 8, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -598,17 +598,17 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae2 =
                                     new NoViableAltException("", 8, 5, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -751,12 +751,12 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
                                 for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                 {
-                                    input.consume();
+                                    input.Consume();
                                 }
                                 var nvae =
                                     new NoViableAltException("", 9, 5, input);
@@ -764,7 +764,7 @@ public class SourceGenTriggers : TreeParser
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -772,12 +772,12 @@ public class SourceGenTriggers : TreeParser
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             var nvae =
                                 new NoViableAltException("", 9, 3, input);
@@ -785,7 +785,7 @@ public class SourceGenTriggers : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -793,17 +793,17 @@ public class SourceGenTriggers : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 9, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -828,12 +828,12 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
                                 for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                 {
-                                    input.consume();
+                                    input.Consume();
                                 }
                                 NoViableAltException nvae =
                                     new NoViableAltException("", 9, 6, input);
@@ -841,7 +841,7 @@ public class SourceGenTriggers : TreeParser
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -849,12 +849,12 @@ public class SourceGenTriggers : TreeParser
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             var nvae =
                                 new NoViableAltException("", 9, 4, input);
@@ -862,7 +862,7 @@ public class SourceGenTriggers : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -870,17 +870,17 @@ public class SourceGenTriggers : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 9, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1241,12 +1241,12 @@ public class SourceGenTriggers : TreeParser
 
                                 else
                                 {
-                                    int nvaeMark = input.mark();
+                                    int nvaeMark = input.Mark();
                                     try
                                     {
                                         for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                         {
-                                            input.consume();
+                                            input.Consume();
                                         }
                                         var nvae3 =
                                             new NoViableAltException("", 13, 11, input);
@@ -1254,7 +1254,7 @@ public class SourceGenTriggers : TreeParser
                                     }
                                     finally
                                     {
-                                        input.rewind(nvaeMark);
+                                        input.Rewind(nvaeMark);
                                     }
                                 }
 
@@ -1262,12 +1262,12 @@ public class SourceGenTriggers : TreeParser
 
                             else
                             {
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     var nvae2 =
                                         new NoViableAltException("", 13, 8, input);
@@ -1275,7 +1275,7 @@ public class SourceGenTriggers : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                             }
 
@@ -1283,17 +1283,17 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae4 =
                                     new NoViableAltException("", 13, 3, input);
                                 throw nvae4;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1313,17 +1313,17 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 var nvae5 =
                                     new NoViableAltException("", 13, 4, input);
                                 throw nvae5;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1618,17 +1618,17 @@ public class SourceGenTriggers : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 16, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1653,12 +1653,12 @@ public class SourceGenTriggers : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
                                 for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                 {
-                                    input.consume();
+                                    input.Consume();
                                 }
                                 var nvae =
                                     new NoViableAltException("", 16, 7, input);
@@ -1666,7 +1666,7 @@ public class SourceGenTriggers : TreeParser
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1678,12 +1678,12 @@ public class SourceGenTriggers : TreeParser
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             var nvae =
                                 new NoViableAltException("", 16, 5, input);
@@ -1691,7 +1691,7 @@ public class SourceGenTriggers : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -1703,17 +1703,17 @@ public class SourceGenTriggers : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 16, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -1900,12 +1900,12 @@ public class SourceGenTriggers : TreeParser
                                 }
                                 break;
                             default:
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     var nvae =
                                         new NoViableAltException("", 18, 4, input);
@@ -1913,19 +1913,19 @@ public class SourceGenTriggers : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                         }
                     }
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             var nvae =
                                 new NoViableAltException("", 18, 3, input);
@@ -1933,7 +1933,7 @@ public class SourceGenTriggers : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -1941,17 +1941,17 @@ public class SourceGenTriggers : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         var nvae =
                             new NoViableAltException("", 18, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 

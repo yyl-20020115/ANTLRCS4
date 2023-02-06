@@ -14,31 +14,22 @@ public class EmptyPredictionContext : SingletonPredictionContext
 	 */
     public static readonly EmptyPredictionContext Instance = new();
 
-    private EmptyPredictionContext() : base(null, EMPTY_RETURN_STATE)
-    {
-        ;
-    }
+    private EmptyPredictionContext() : base(null, EMPTY_RETURN_STATE) { }
 
     //@Override
-    public bool IsEmpty() => true;
+    public override bool IsEmpty => true;
 
     //@Override
     public int Size => 1;
 
     //@Override
-    public PredictionContext GetParent(int index)
-    {
-        return null;
-    }
+    public override PredictionContext GetParent(int index) => null;
 
     //@Override
-    public int GetReturnState(int index) => returnState;
+    public override int GetReturnState(int index) => returnState;
 
     //@Override
-    public override bool Equals(object? o)
-    {
-        return this == o;
-    }
+    public override bool Equals(object? o) => this == o;
 
     //@Override
     public override string ToString() => "$";

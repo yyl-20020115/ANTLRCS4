@@ -94,7 +94,7 @@ public class DOTGenerator {
 			buf.Append("^");
 		}
 		if ( grammar!=null ) {
-            var alts = s.getAltSet();
+            var alts = s.GetAltSet();
 			if ( alts!=null ) {
 				buf.Append("\\n");
 				// separate alts
@@ -102,7 +102,7 @@ public class DOTGenerator {
 				altList.AddAll(alts);
 				altList.Sort();
 				HashSet<ATNConfig> configurations = s.configs;
-				for (int altIndex = 0; altIndex < altList.Size(); altIndex++) {
+				for (int altIndex = 0; altIndex < altList.Size; altIndex++) {
 					int alt = altList.Get(altIndex);
 					if ( altIndex>0 ) {
 						buf.Append("\\n");

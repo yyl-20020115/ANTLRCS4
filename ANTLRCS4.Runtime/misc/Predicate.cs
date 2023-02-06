@@ -7,5 +7,5 @@
 namespace org.antlr.v4.runtime.misc;
 
 public interface Predicate<T> {
-	bool test(T t);
+	bool Test(T t);
 }

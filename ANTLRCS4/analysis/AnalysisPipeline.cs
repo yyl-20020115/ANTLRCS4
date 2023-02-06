@@ -66,7 +66,7 @@ public class AnalysisPipeline
             else
             {
                 var anal = new LL1Analyzer(g.atn);
-                look = anal.getDecisionLookahead(state);
+                look = anal.GetDecisionLookahead(state);
                 g.Tools.Log("LL1", "look=" + RuntimeUtils.Join(look, ","));
             }
 

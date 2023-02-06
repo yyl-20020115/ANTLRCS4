@@ -120,7 +120,7 @@ public class ANTLRInputStream : CharStream {
 	}
 
     //@Override
-    public void consume() {
+    public void Consume() {
 		if (p >= n) {
 			if( LA(1) == IntStream.EOF)
 
@@ -164,7 +164,7 @@ public class ANTLRInputStream : CharStream {
 	 *  be returned from LA(1).
      */
     //@Override
-    public int index() {
+    public int Index() {
         return p;
     }
 
@@ -173,19 +173,19 @@ public class ANTLRInputStream : CharStream {
 
     /** mark/release do nothing; we have entire buffer */
     //@Override
-    public int mark() {
+    public int Mark() {
 		return -1;
     }
 
 	//@Override
-	public void release(int marker) {
+	public void Release(int marker) {
 	}
 
 	/** consume() ahead until p==index; can't just set p=index as we must
 	 *  update line and charPositionInLine. If we seek backwards, just set p
 	 */
 	//@Override
-	public void seek(int index) {
+	public void Seek(int index) {
 		if ( index<=p ) {
 			p = index; // just jump; don't update stream state (line, ...)
 			return;
@@ -193,12 +193,12 @@ public class ANTLRInputStream : CharStream {
 		// seek forward, consume until p hits index or n (whichever comes first)
 		index = Math.Min(index, n);
 		while ( p<index ) {
-			consume();
+			Consume();
 		}
 	}
 
 	//@Override
-	public String getText(Interval interval) {
+	public String GetText(Interval interval) {
 		int start = interval.a;
 		int stop = interval.b;
 		if ( stop >= n ) stop = n-1;
@@ -222,27 +222,21 @@ public class ANTLRInputStream : CharStream {
     //@Override
     public override String ToString() { return new String(data); }
 
-    public int getCharPositionInLine()
+    public int CharPositionInLine => throw new NotImplementedException();
+
+    public int Line => throw new NotImplementedException();
+
+    public void Rewind(int start)
     {
         throw new NotImplementedException();
     }
 
-    public int getLine()
+    public string Substring(int tokenStartCharIndex, int v)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind(int start)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string substring(int tokenStartCharIndex, int v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

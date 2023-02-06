@@ -36,9 +36,9 @@ public class JavaUnicodeInputStream : CharStream
     public int Count => source.Count;
 
     ////@Override
-    public int index()
+    public int Index()
     {
-        return source.index();
+        return source.Index();
     }
 
     ////@Override
@@ -48,19 +48,19 @@ public class JavaUnicodeInputStream : CharStream
     }
 
     ////@Override
-    public string getText(Interval interval)
+    public string GetText(Interval interval)
     {
-        return source.getText(interval);
+        return source.GetText(interval);
     }
 
     ////@Override
-    public void consume()
+    public void Consume()
     {
         if (la1 != '\\')
         {
-            source.consume();
+            source.Consume();
             la1 = source.LA(1);
-            range = Math.Max(range, source.index());
+            range = Math.Max(range, source.Index());
             slashCount = 0;
             return;
         }
@@ -68,9 +68,9 @@ public class JavaUnicodeInputStream : CharStream
         // make sure the next character has been processed
         this.LA(1);
 
-        if (escapeListIndex >= escapeIndexes.Size() || escapeIndexes.Get(escapeListIndex) != index())
+        if (escapeListIndex >= escapeIndexes.Size || escapeIndexes.Get(escapeListIndex) != Index())
         {
-            source.consume();
+            source.Consume();
             slashCount++;
         }
         else
@@ -78,7 +78,7 @@ public class JavaUnicodeInputStream : CharStream
             int indirectionLevel = escapeIndirectionLevels.Get(escapeListIndex);
             for (int i = 0; i < 6 + indirectionLevel; i++)
             {
-                source.consume();
+                source.Consume();
             }
 
             escapeListIndex++;
@@ -99,7 +99,7 @@ public class JavaUnicodeInputStream : CharStream
 
         if (i <= 0)
         {
-            int desiredIndex = index() + i;
+            int desiredIndex = Index() + i;
             for (int j = escapeListIndex - 1; j >= 0; j--)
             {
                 if (escapeIndexes.Get(j) + 6 + escapeIndirectionLevels.Get(j) > desiredIndex)
@@ -113,12 +113,12 @@ public class JavaUnicodeInputStream : CharStream
                 }
             }
 
-            return source.LA(desiredIndex - index());
+            return source.LA(desiredIndex - Index());
         }
         else
         {
-            int desiredIndex = index() + i - 1;
-            for (int j = escapeListIndex; j < escapeIndexes.Size(); j++)
+            int desiredIndex = Index() + i - 1;
+            for (int j = escapeListIndex; j < escapeIndexes.Size; j++)
             {
                 if (escapeIndexes.Get(j) == desiredIndex)
                 {
@@ -130,11 +130,11 @@ public class JavaUnicodeInputStream : CharStream
                 }
                 else
                 {
-                    return source.LA(desiredIndex - index() + 1);
+                    return source.LA(desiredIndex - Index() + 1);
                 }
             }
 
-            int[] currentIndex = { index() };
+            int[] currentIndex = { Index() };
             int[] slashCountPtr = { slashCount };
             int[] indirectionLevelPtr = { 0 };
             for (int j = 0; j < i; j++)
@@ -164,26 +164,26 @@ public class JavaUnicodeInputStream : CharStream
     }
 
     ////@Override
-    public int mark()
+    public int Mark()
     {
-        return source.mark();
+        return source.Mark();
     }
 
     ////@Override
-    public void release(int marker)
+    public void Release(int marker)
     {
-        source.release(marker);
+        source.Release(marker);
     }
 
     ////@Override
-    public void seek(int index)
+    public void Seek(int index)
     {
         if (index > range)
         {
             throw new UnsupportedOperationException();
         }
 
-        source.seek(index);
+        source.Seek(index);
         la1 = source.LA(1);
 
         slashCount = 0;
@@ -192,7 +192,7 @@ public class JavaUnicodeInputStream : CharStream
             slashCount++;
         }
 
-        escapeListIndex = escapeIndexes.BinarySearch(source.index());
+        escapeListIndex = escapeIndexes.BinarySearch(source.Index());
         if (escapeListIndex < 0)
         {
             escapeListIndex = -escapeListIndex - 1;
@@ -234,27 +234,27 @@ public class JavaUnicodeInputStream : CharStream
 
         bool blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
 
-        int c0 = source.LA(nextIndexPtr[0] - index() + 1);
+        int c0 = source.LA(nextIndexPtr[0] - Index() + 1);
         if (c0 == '\\')
         {
             slashCountPtr[0]++;
 
             if (!blockUnicodeEscape)
             {
-                int c1 = source.LA(nextIndexPtr[0] - index() + 2);
+                int c1 = source.LA(nextIndexPtr[0] - Index() + 2);
                 if (c1 == 'u')
                 {
-                    int c2 = source.LA(nextIndexPtr[0] - index() + 3);
+                    int c2 = source.LA(nextIndexPtr[0] - Index() + 3);
                     indirectionLevelPtr[0] = 0;
                     while (c2 == 'u')
                     {
                         indirectionLevelPtr[0]++;
-                        c2 = source.LA(nextIndexPtr[0] - index() + 3 + indirectionLevelPtr[0]);
+                        c2 = source.LA(nextIndexPtr[0] - Index() + 3 + indirectionLevelPtr[0]);
                     }
 
-                    int c3 = source.LA(nextIndexPtr[0] - index() + 4 + indirectionLevelPtr[0]);
-                    int c4 = source.LA(nextIndexPtr[0] - index() + 5 + indirectionLevelPtr[0]);
-                    int c5 = source.LA(nextIndexPtr[0] - index() + 6 + indirectionLevelPtr[0]);
+                    int c3 = source.LA(nextIndexPtr[0] - Index() + 4 + indirectionLevelPtr[0]);
+                    int c4 = source.LA(nextIndexPtr[0] - Index() + 5 + indirectionLevelPtr[0]);
+                    int c5 = source.LA(nextIndexPtr[0] - Index() + 6 + indirectionLevelPtr[0]);
                     if (isHexDigit(c2) && isHexDigit(c3) && isHexDigit(c4) && isHexDigit(c5))
                     {
                         int value = hexValue(c2);
@@ -274,32 +274,26 @@ public class JavaUnicodeInputStream : CharStream
         return c0;
     }
 
-    public int getCharPositionInLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int CharPositionInLine => throw new NotImplementedException();
 
-    public int getLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int Line => throw new NotImplementedException();
 
     public int LT(int v)
     {
         throw new NotImplementedException();
     }
 
-    public string substring(int tokenStartCharIndex, int v)
+    public string Substring(int tokenStartCharIndex, int v)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind(int nvaeMark)
+    public void Rewind(int nvaeMark)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

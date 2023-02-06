@@ -35,7 +35,7 @@ public class CodeBlock : SrcOp
     public void AddLocalDecl(Decl d)
     {
         locals ??= new ();
-        locals.add(d);
+        locals.Add(d);
         d.isLocal = true;
     }
 

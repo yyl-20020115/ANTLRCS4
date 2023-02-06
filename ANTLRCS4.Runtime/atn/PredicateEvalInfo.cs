@@ -15,24 +15,25 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class PredicateEvalInfo : DecisionEventInfo {
-	/**
+public class PredicateEvalInfo : DecisionEventInfo
+{
+    /**
 	 * The semantic context which was evaluated.
 	 */
-	public readonly SemanticContext semctx;
-	/**
+    public readonly SemanticContext semctx;
+    /**
 	 * The alternative number for the decision which is guarded by the semantic
 	 * context {@link #semctx}. Note that other ATN
 	 * configurations may predict the same alternative which are guarded by
 	 * other semantic contexts and/or {@link SemanticContext#NONE}.
 	 */
-	public readonly int predictedAlt;
-	/**
+    public readonly int predictedAlt;
+    /**
 	 * The result of evaluating the semantic context {@link #semctx}.
 	 */
-	public readonly bool evalResult;
+    public readonly bool evalResult;
 
-	/**
+    /**
 	 * Constructs a new instance of the {@link PredicateEvalInfo} class with the
 	 * specified detailed predicate evaluation information.
 	 *
@@ -54,17 +55,17 @@ public class PredicateEvalInfo : DecisionEventInfo {
 	 * @see ParserATNSimulator#evalSemanticContext(SemanticContext, ParserRuleContext, int, boolean)
 	 * @see SemanticContext#eval(Recognizer, RuleContext)
 	 */
-	public PredicateEvalInfo(int decision,
-							 TokenStream input, int startIndex, int stopIndex,
-							 SemanticContext semctx,
-							 bool evalResult,
-							 int predictedAlt,
-							 bool fullCtx)
+    public PredicateEvalInfo(int decision,
+                             TokenStream input, int startIndex, int stopIndex,
+                             SemanticContext semctx,
+                             bool evalResult,
+                             int predictedAlt,
+                             bool fullCtx)
 
-        :base(decision, new ATNConfigSet(), input, startIndex, stopIndex, fullCtx)
-	{
-		this.semctx = semctx;
-		this.evalResult = evalResult;
-		this.predictedAlt = predictedAlt;
-	}
+        : base(decision, new ATNConfigSet(), input, startIndex, stopIndex, fullCtx)
+    {
+        this.semctx = semctx;
+        this.evalResult = evalResult;
+        this.predictedAlt = predictedAlt;
+    }
 }

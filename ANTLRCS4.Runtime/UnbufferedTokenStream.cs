@@ -131,11 +131,11 @@ public class UnbufferedTokenStream : TokenStream {
 
 	//@Override
 	public String getText(Token start, Token stop) {
-		return getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()));
+		return getText(Interval.Of(start.getTokenIndex(), stop.getTokenIndex()));
 	}
 
 	//@Override
-	public void consume() {
+	public void Consume() {
 		if (LA(1) == Token.EOF) {
 			throw new IllegalStateException("cannot consume EOF");
 		}
@@ -204,7 +204,7 @@ public class UnbufferedTokenStream : TokenStream {
 	 * {@code release()} is called in the wrong order.</p>
 	 */
 	//@Override
-	public int mark() {
+	public int Mark() {
 		if (numMarkers == 0) {
 			lastTokenBufferStart = lastToken;
 		}
@@ -215,7 +215,7 @@ public class UnbufferedTokenStream : TokenStream {
 	}
 
 	//@Override
-	public void release(int marker) {
+	public void Release(int marker) {
 		int expectedMark = -numMarkers;
 		if ( marker!=expectedMark ) {
 			throw new IllegalStateException("release() called with an invalid marker.");
@@ -236,12 +236,12 @@ public class UnbufferedTokenStream : TokenStream {
 	}
 
 	//@Override
-	public int index() {
+	public int Index() {
 		return currentTokenIndex;
 	}
 
 	//@Override
-	public void seek(int index) { // seek to absolute index
+	public void Seek(int index) { // seek to absolute index
 		if (index == currentTokenIndex) {
 			return;
 		}
@@ -323,12 +323,12 @@ public class UnbufferedTokenStream : TokenStream {
         throw new NotImplementedException();
     }
 
-    public void rewind(int nvaeMark)
+    public void Rewind(int nvaeMark)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

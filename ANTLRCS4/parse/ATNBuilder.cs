@@ -767,7 +767,7 @@ public class ATNBuilder : TreeParser
             {
                 if (input.LA(1) == ID || input.LA(1) == INT)
                 {
-                    input.consume();
+                    input.Consume();
                     state.errorRecovery = false;
                 }
                 else
@@ -860,17 +860,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 13, 4, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -890,17 +890,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae3 =
                                     new NoViableAltException("", 13, 5, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1416,17 +1416,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae2 =
                                     new NoViableAltException("", 18, 1, input);
                                 throw nvae2;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1446,17 +1446,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae3 =
                                     new NoViableAltException("", 18, 2, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1597,12 +1597,12 @@ public class ATNBuilder : TreeParser
 
                                 else
                                 {
-                                    int nvaeMark = input.mark();
+                                    int nvaeMark = input.Mark();
                                     try
                                     {
                                         for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                         {
-                                            input.consume();
+                                            input.Consume();
                                         }
                                         NoViableAltException nvae4 =
                                             new NoViableAltException("", 19, 10, input);
@@ -1610,7 +1610,7 @@ public class ATNBuilder : TreeParser
                                     }
                                     finally
                                     {
-                                        input.rewind(nvaeMark);
+                                        input.Rewind(nvaeMark);
                                     }
                                 }
 
@@ -1618,12 +1618,12 @@ public class ATNBuilder : TreeParser
 
                             else
                             {
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae2 =
                                         new NoViableAltException("", 19, 7, input);
@@ -1631,7 +1631,7 @@ public class ATNBuilder : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                             }
 
@@ -1639,17 +1639,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae3 =
                                     new NoViableAltException("", 19, 2, input);
                                 throw nvae3;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1669,17 +1669,17 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
-                                input.consume();
+                                input.Consume();
                                 NoViableAltException nvae4 =
                                     new NoViableAltException("", 19, 3, input);
                                 throw nvae4;
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -1851,12 +1851,12 @@ public class ATNBuilder : TreeParser
 
                                 else
                                 {
-                                    int nvaeMark2 = input.mark();
+                                    int nvaeMark2 = input.Mark();
                                     try
                                     {
                                         for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                         {
-                                            input.consume();
+                                            input.Consume();
                                         }
                                         NoViableAltException nvae =
                                             new NoViableAltException("", 23, 4, input);
@@ -1864,7 +1864,7 @@ public class ATNBuilder : TreeParser
                                     }
                                     finally
                                     {
-                                        input.rewind(nvaeMark2);
+                                        input.Rewind(nvaeMark2);
                                     }
                                 }
 
@@ -1881,12 +1881,12 @@ public class ATNBuilder : TreeParser
                             }
                             break;
                         default:
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
                                 for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                                 {
-                                    input.consume();
+                                    input.Consume();
                                 }
                                 NoViableAltException nvae =
                                     new NoViableAltException("", 23, 2, input);
@@ -1894,7 +1894,7 @@ public class ATNBuilder : TreeParser
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                     }
                 }
@@ -1905,17 +1905,17 @@ public class ATNBuilder : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 23, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2123,17 +2123,17 @@ public class ATNBuilder : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 24, 1, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2158,12 +2158,12 @@ public class ATNBuilder : TreeParser
 
                         else
                         {
-                            int nvaeMark = input.mark();
+                            int nvaeMark = input.Mark();
                             try
                             {
                                 for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                 {
-                                    input.consume();
+                                    input.Consume();
                                 }
                                 NoViableAltException nvae =
                                     new NoViableAltException("", 24, 7, input);
@@ -2171,7 +2171,7 @@ public class ATNBuilder : TreeParser
                             }
                             finally
                             {
-                                input.rewind(nvaeMark);
+                                input.Rewind(nvaeMark);
                             }
                         }
 
@@ -2183,12 +2183,12 @@ public class ATNBuilder : TreeParser
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             NoViableAltException nvae =
                                 new NoViableAltException("", 24, 5, input);
@@ -2196,7 +2196,7 @@ public class ATNBuilder : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -2208,17 +2208,17 @@ public class ATNBuilder : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 24, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 
@@ -2405,12 +2405,12 @@ public class ATNBuilder : TreeParser
                                 }
                                 break;
                             default:
-                                int nvaeMark = input.mark();
+                                int nvaeMark = input.Mark();
                                 try
                                 {
                                     for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++)
                                     {
-                                        input.consume();
+                                        input.Consume();
                                     }
                                     NoViableAltException nvae =
                                         new NoViableAltException("", 26, 4, input);
@@ -2418,19 +2418,19 @@ public class ATNBuilder : TreeParser
                                 }
                                 finally
                                 {
-                                    input.rewind(nvaeMark);
+                                    input.Rewind(nvaeMark);
                                 }
                         }
                     }
 
                     else
                     {
-                        int nvaeMark = input.mark();
+                        int nvaeMark = input.Mark();
                         try
                         {
                             for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
                             {
-                                input.consume();
+                                input.Consume();
                             }
                             NoViableAltException nvae =
                                 new NoViableAltException("", 26, 3, input);
@@ -2438,7 +2438,7 @@ public class ATNBuilder : TreeParser
                         }
                         finally
                         {
-                            input.rewind(nvaeMark);
+                            input.Rewind(nvaeMark);
                         }
                     }
 
@@ -2446,17 +2446,17 @@ public class ATNBuilder : TreeParser
 
                 else
                 {
-                    int nvaeMark = input.mark();
+                    int nvaeMark = input.Mark();
                     try
                     {
-                        input.consume();
+                        input.Consume();
                         NoViableAltException nvae =
                             new NoViableAltException("", 26, 2, input);
                         throw nvae;
                     }
                     finally
                     {
-                        input.rewind(nvaeMark);
+                        input.Rewind(nvaeMark);
                     }
                 }
 

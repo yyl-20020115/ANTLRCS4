@@ -110,5 +110,5 @@ public interface TreeNodeStream : IntStream
      * nothing.</p>
      */
     public void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
-    void rewind(int nvaeMark);
+    void Rewind(int nvaeMark);
 }

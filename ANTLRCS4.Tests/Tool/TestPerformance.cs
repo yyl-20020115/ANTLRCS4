@@ -1297,13 +1297,13 @@ public class TestPerformance
         }
 
         //@Override
-        public override int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
+        public override int AdaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
         {
             try
             {
                 this.decision = decision;
                 decisionInvocations[decision]++;
-                return base.adaptivePredict(input, decision, outerContext);
+                return base.AdaptivePredict(input, decision, outerContext);
             }
             finally
             {
@@ -1312,28 +1312,28 @@ public class TestPerformance
         }
 
         //@Override
-        protected override int execATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext)
+        protected override int ExecATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext)
         {
             fullContextFallback[decision]++;
-            return base.execATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
+            return base.ExecATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
         }
 
         //@Override
-        protected override DFAState getExistingTargetState(DFAState previousD, int t)
+        protected override DFAState GetExistingTargetState(DFAState previousD, int t)
         {
             totalTransitions[decision]++;
-            return base.getExistingTargetState(previousD, t);
+            return base.GetExistingTargetState(previousD, t);
         }
 
         //@Override
-        protected override DFAState computeTargetState(DFA dfa, DFAState previousD, int t)
+        protected override DFAState ComputeTargetState(DFA dfa, DFAState previousD, int t)
         {
             computedTransitions[decision]++;
-            return base.computeTargetState(dfa, previousD, t);
+            return base.ComputeTargetState(dfa, previousD, t);
         }
 
         //@Override
-        protected override ATNConfigSet computeReachSet(ATNConfigSet closure, int t, bool fullCtx)
+        protected override ATNConfigSet ComputeReachSet(ATNConfigSet closure, int t, bool fullCtx)
         {
             if (fullCtx)
             {
@@ -1342,7 +1342,7 @@ public class TestPerformance
                 fullContextTransitions[decision]++;
             }
 
-            return base.computeReachSet(closure, t, fullCtx);
+            return base.ComputeReachSet(closure, t, fullCtx);
         }
     }
 
@@ -1360,7 +1360,7 @@ public class TestPerformance
                 return;
             }
 
-            var sourceName = recognizer.getInputStream().getSourceName();
+            var sourceName = recognizer.InputStream.getSourceName();
             if (sourceName.Length > 0)
             {
                 sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
@@ -1399,7 +1399,7 @@ public class TestPerformance
             // show the rule name along with the decision
             int decision = dfa.decision;
             var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
             var format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
             recognizer.notifyErrorListeners(format);
         }
@@ -1417,7 +1417,7 @@ public class TestPerformance
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
             var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
             var representedAlts = getConflictingAlts(conflictingAlts, configs);
             var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
             //String.Format(format, decision, rule, input, representedAlts)
@@ -1445,7 +1445,7 @@ public class TestPerformance
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
             var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
             var format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
             recognizer.notifyErrorListeners(
                 format);
@@ -1475,7 +1475,7 @@ public class TestPerformance
         //@Override
         public NumberedThread NewThread(Runnable r)
         {
-            int threadNumber = nextThread.getAndIncrement();
+            int threadNumber = nextThread.GetAndIncrement();
             //assert threadNumber<NUMBER_OF_THREADS;
             return new NumberedThread(r, threadNumber);
         }

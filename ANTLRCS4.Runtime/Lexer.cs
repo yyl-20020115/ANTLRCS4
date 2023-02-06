@@ -106,14 +106,14 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                 throw mte;
             }
             i++;
-            input.consume();
+            input.Consume();
             state.failed = false;
         }
     }
 
     public void matchAny()
     {
-        input.consume();
+        input.Consume();
     }
 
     public void match(int c)
@@ -130,7 +130,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
             recover(mte);  // don't really recover; just consume in lexer
             throw mte;
         }
-        input.consume();
+        input.Consume();
         state.failed = false;
     }
 
@@ -148,7 +148,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
             recover(mre);
             throw mre;
         }
-        input.consume();
+        input.Consume();
         state.failed = false;
     }
     public void reset()
@@ -156,7 +156,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         // wack Lexer state variables
         if (input != null)
         {
-            input.seek(0); // rewind the input
+            input.Seek(0); // rewind the input
         }
         token = null;
         _type = Token.INVALID_TYPE;
@@ -186,7 +186,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
         // Mark start location in char stream so unbuffered streams are
         // guaranteed at least have text of current token
-        int tokenStartMarker = input.mark();
+        int tokenStartMarker = input.Mark();
         try
         {
         outer:
@@ -200,7 +200,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
                 token = null;
                 _channel = Token.DEFAULT_CHANNEL;
-                _tokenStartCharIndex = input.index();
+                _tokenStartCharIndex = input.Index();
                 _tokenStartCharPositionInLine = getInterpreter().GetCharPositionInLine();
                 _tokenStartLine = getInterpreter().GetLine();
                 _text = null;
@@ -239,7 +239,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         {
             // make sure we release marker after match or
             // unbuffered char stream will keep buffering
-            input.release(tokenStartMarker);
+            input.Release(tokenStartMarker);
         }
     }
 
@@ -267,29 +267,21 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     public void pushMode(int m)
     {
         if (LexerATNSimulator.debug) Console.WriteLine("pushMode " + m);
-        _modeStack.push(_mode);
+        _modeStack.Push(_mode);
         mode(m);
     }
 
     public int popMode()
     {
         if (_modeStack.IsEmpty) throw new EmptyStackException();
-        if (LexerATNSimulator.debug) Console.WriteLine("popMode back to " + _modeStack.peek());
-        mode(_modeStack.pop());
+        if (LexerATNSimulator.debug) Console.WriteLine("popMode back to " + _modeStack.Peek());
+        mode(_modeStack.Pop());
         return _mode;
     }
 
     //@Override
-    public override void setTokenFactory(TokenFactory factory)
-    {
-        this._factory = factory;
-    }
-
     //@Override
-    public override TokenFactory getTokenFactory()
-    {
-        return _factory;
-    }
+    public override TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 
     /** Set the char stream and reset the lexer */
     //@Override
@@ -309,10 +301,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     }
 
     //@Override
-    public override CharStream getInputStream()
-    {
-        return input;
-    }
+    public override CharStream InputStream => input;
 
     /** By default does not support multiple emits per nextToken invocation
 	 *  for efficiency reasons.  Subclass and override this method, nextToken,
@@ -341,25 +330,19 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     public Token emitEOF()
     {
-        int cpos = getCharPositionInLine();
-        int line = getLine();
-        Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.index(), input.index() - 1,
+        int cpos = CharPositionInLine;
+        int line = Line;
+        Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.Index(), input.Index() - 1,
                                     line, cpos);
         emit(eof);
         return eof;
     }
 
     //@Override
-    public int getLine()
-    {
-        return getInterpreter().GetLine();
-    }
+    public int Line => getInterpreter().GetLine();
 
     //@Override
-    public int getCharPositionInLine()
-    {
-        return getInterpreter().GetCharPositionInLine();
-    }
+    public int CharPositionInLine => getInterpreter().GetCharPositionInLine();
 
     public void setLine(int line)
     {
@@ -374,7 +357,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     /** What is the index of the current character of lookahead? */
     public int getCharIndex()
     {
-        return input.index();
+        return input.Index();
     }
 
     /** Return the text matched so far for the current token or any
@@ -469,7 +452,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     public void notifyListeners(LexerNoViableAltException e)
     {
-        String text = input.getText(Interval.of(_tokenStartCharIndex, input.index()));
+        String text = input.GetText(Interval.Of(_tokenStartCharIndex, input.Index()));
         String msg = "token recognition error at: '" + getErrorDisplay(text) + "'";
 
         ANTLRErrorListener listener = getErrorListenerDispatch();
@@ -523,6 +506,6 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         //Console.WriteLine("consuming char "+(char)input.LA(1)+" during recovery");
         //re.printStackTrace();
         // TODO: Do we lose character or line position information?
-        input.consume();
+        input.Consume();
     }
 }

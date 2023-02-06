@@ -142,7 +142,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		if( p.NumberOfTransitions > 1) {
 //			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
 			if( p.decision == this.overrideDecision &&
-				this.input.index() == this.overrideDecisionInputIndex )
+				this.input.Index() == this.overrideDecisionInputIndex )
 			{
 				overrideDecisionRoot = (GrammarInterpreterRuleContext)getContext();
 			}
@@ -394,7 +394,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		parser.setErrorHandler(new BailErrorStrategy());
 		parser.removeErrorListeners();
 		parser.removeParseListeners();
-		parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION);
+		parser.getInterpreter().		PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 		return parser;
 	}
 
@@ -409,20 +409,20 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		public int firstErrorTokenIndex = -1;
 		////@Override
 		public void recover(Parser recognizer, RecognitionException e) {
-			int errIndex = recognizer.getInputStream().index();
+			int errIndex = recognizer.InputStream.Index();
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}
 //			Console.Error.WriteLine("recover: error at " + errIndex);
-			TokenStream input = recognizer.getInputStream();
-			if ( input.index()<input.Count-1 ) { // don't consume() eof
+			TokenStream input = recognizer.InputStream;
+			if ( input.Index()<input.Count-1 ) { // don't consume() eof
 				recognizer.consume(); // just kill this bad token and let it continue.
 			}
 		}
 
 		////@Override
 		public Token recoverInline(Parser recognizer) {
-			int errIndex = recognizer.getInputStream().index();
+			int errIndex = recognizer.InputStream.Index();
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}

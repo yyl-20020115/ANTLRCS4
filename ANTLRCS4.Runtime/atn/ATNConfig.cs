@@ -175,7 +175,7 @@ public class ATNConfig
 
         return this.state.stateNumber == other.state.stateNumber
             && this.alt == other.alt
-            && Objects.Equals(this.context, other.context)
+            && Objects.DoEquals(this.context, other.context)
             && this.semanticContext.Equals(other.semanticContext)
             && this.IsPrecedenceFilterSuppressed() == other.IsPrecedenceFilterSuppressed();
     }

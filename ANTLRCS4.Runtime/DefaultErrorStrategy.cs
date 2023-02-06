@@ -158,7 +158,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 //						   ", lastErrorIndex="+
 //						   lastErrorIndex+
 //						   ", states="+lastErrorStates);
-		if ( lastErrorIndex==recognizer.getInputStream().index() &&
+		if ( lastErrorIndex==recognizer.InputStream.Index() &&
 			lastErrorStates != null &&
 			lastErrorStates.Contains(recognizer.getState()) ) {
 			// uh oh, another error at same token index and previously-visited
@@ -170,7 +170,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 //			Console.Error.WriteLine("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
 			recognizer.consume();
 		}
-		lastErrorIndex = recognizer.getInputStream().index();
+		lastErrorIndex = recognizer.InputStream.Index();
 		if ( lastErrorStates==null ) lastErrorStates = new IntervalSet();
 		lastErrorStates.Add(recognizer.getState());
 		IntervalSet followSet = getErrorRecoverySet(recognizer);
@@ -232,7 +232,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			return;
 		}
 
-        TokenStream tokens = recognizer.getInputStream();
+        TokenStream tokens = recognizer.InputStream;
         int la = tokens.LA(1);
 
         // try cheaper subset first; might get lucky. seems to shave a wee bit off
@@ -294,7 +294,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	protected void reportNoViableAlternative(Parser recognizer,
 											 NoViableAltException e)
 	{
-		TokenStream tokens = recognizer.getInputStream();
+		TokenStream tokens = recognizer.InputStream;
 		String input;
 		if ( tokens!=null ) {
 			if ( e.getStartToken().getType()==Token.EOF ) input = "<EOF>";
@@ -503,7 +503,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * strategy for the current mismatched input, otherwise {@code false}
 	 */
 	protected bool singleTokenInsertion(Parser recognizer) {
-		int currentSymbolType = recognizer.getInputStream().LA(1);
+		int currentSymbolType = recognizer.InputStream.LA(1);
 		// if current token is consistent with what could come after current
 		// ATN state, then we know we're missing a token; error recovery
 		// is free to conjure up and insert the missing token
@@ -539,7 +539,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * {@code null}
 	 */
 	protected Token singleTokenDeletion(Parser recognizer) {
-		int nextTokenType = recognizer.getInputStream().LA(2);
+		int nextTokenType = recognizer.InputStream.LA(2);
 		IntervalSet expecting = getExpectedTokens(recognizer);
 		if ( expecting.Contains(nextTokenType) ) {
 			reportUnwantedToken(recognizer);
@@ -588,12 +588,12 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		if ( expectedTokenType== Token.EOF ) tokenText = "<missing EOF>";
 		else tokenText = "<missing "+recognizer.getVocabulary().getDisplayName(expectedTokenType)+">";
 		Token current = currentSymbol;
-		Token lookback = recognizer.getInputStream().LT(-1);
+		Token lookback = recognizer.InputStream.LT(-1);
 		if ( current.getType() == Token.EOF && lookback!=null ) {
 			current = lookback;
 		}
 		return
-			(recognizer.getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(current.getTokenSource(), current.getTokenSource().getInputStream()), expectedTokenType, tokenText,
+			(recognizer.TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(current.getTokenSource(), current.getTokenSource().InputStream), expectedTokenType, tokenText,
 							Token.DEFAULT_CHANNEL,
 							-1, -1,
 							current.getLine(), current.getCharPositionInLine());
@@ -755,12 +755,12 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	/** Consume tokens until one matches the given token set. */
 	protected void consumeUntil(Parser recognizer, IntervalSet set) {
 //		Console.Error.WriteLine("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
-		int ttype = recognizer.getInputStream().LA(1);
+		int ttype = recognizer.InputStream.LA(1);
 		while (ttype != Token.EOF && !set.Contains(ttype) ) {
             //Console.Out.WriteLine("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
 //			recognizer.getInputStream().consume();
             recognizer.consume();
-            ttype = recognizer.getInputStream().LA(1);
+            ttype = recognizer.InputStream.LA(1);
         }
     }
 }

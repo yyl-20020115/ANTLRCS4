@@ -12,16 +12,18 @@ namespace org.antlr.v4.runtime.atn;
  *  may have to combine a bunch of them as it collects predicates from
  *  multiple ATN configurations into a single DFA state.
  */
-public class PredicateTransition : AbstractPredicateTransition {
-	public readonly int ruleIndex;
-	public readonly int predIndex;
-	public readonly bool isCtxDependent;  // e.g., $i ref in pred
+public class PredicateTransition : AbstractPredicateTransition
+{
+    public readonly int ruleIndex;
+    public readonly int predIndex;
+    public readonly bool isCtxDependent;  // e.g., $i ref in pred
 
-	public PredicateTransition(ATNState target, int ruleIndex, int predIndex, bool isCtxDependent) :base(target){
-		this.ruleIndex = ruleIndex;
-		this.predIndex = predIndex;
-		this.isCtxDependent = isCtxDependent;
-	}
+    public PredicateTransition(ATNState target, int ruleIndex, int predIndex, bool isCtxDependent) : base(target)
+    {
+        this.ruleIndex = ruleIndex;
+        this.predIndex = predIndex;
+        this.isCtxDependent = isCtxDependent;
+    }
 
     //@Override
     public override int SerializationType => PREDICATE;
@@ -29,17 +31,13 @@ public class PredicateTransition : AbstractPredicateTransition {
     //@Override
     public override bool IsEpsilon => true;
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return false;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
-    public SemanticContext.Predicate getPredicate() {
-   		return new SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent);
-   	}
+    public SemanticContext.Predicate GetPredicate()
+        => new SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent);
 
-	//@Override
-	public override String ToString() {
-		return "pred_"+ruleIndex+":"+predIndex;
-	}
+    //@Override
+    public override string ToString() 
+        => "pred_" + ruleIndex + ":" + predIndex;
 
 }

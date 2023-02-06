@@ -8,80 +8,93 @@ using System.Text;
 
 namespace org.antlr.v4.runtime.misc;
 
-public class LogManager {
-    public class Record {
-		public long timestamp;
+public class LogManager
+{
+    public class Record
+    {
+        public long timestamp;
         public StackTraceElement location;
-        public String component;
-        public String msg;
-		public Record() {
+        public string component;
+        public string msg;
+        public Record()
+        {
             timestamp = DateTime.Now.Millisecond;
             location = null;// new Exception().StackTrace;//.getStackTrace()[0];
-		}
+        }
 
-		//@Override
-		public override String ToString() {
-            StringBuilder buf = new StringBuilder();
+        //@Override
+        public override string ToString()
+        {
+            var buffer = new StringBuilder();
             //SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date(timestamp))
-            buf.Append(DateTime.Now.ToLongTimeString());
-            buf.Append(" ");
-            buf.Append(component);
-            buf.Append(" ");
-            buf.Append(location.getFileName());
-            buf.Append(":");
-            buf.Append(location.getLineNumber());
-            buf.Append(" ");
-            buf.Append(msg);
-            return buf.ToString();
-		}
-	}
-
-	protected List<Record> records;
-
-	public void log(String component, String msg) {
-		Record r = new Record();
-		r.component = component;
-		r.msg = msg;
-		if ( records==null ) {
-			records = new ();
-		}
-		records.Add(r);
-	}
-
-    public void log(String msg) { log(null, msg); }
-
-    public void save(String filename){
-        File.WriteAllText(filename, toString());
+            buffer.Append(DateTime.Now.ToLongTimeString());
+            buffer.Append(' ');
+            buffer.Append(component);
+            buffer.Append(' ');
+            buffer.Append(location.GetFileName());
+            buffer.Append(':');
+            buffer.Append(location.GetLineNumber());
+            buffer.Append(' ');
+            buffer.Append(msg);
+            return buffer.ToString();
+        }
     }
 
-    public String save(){
+    protected List<Record> records;
+
+    public void Log(string component, string msg)
+    {
+        var r = new Record
+        {
+            component = component,
+            msg = msg
+        };
+        if (records == null)
+        {
+            records = new();
+        }
+        records.Add(r);
+    }
+
+    public void Log(String msg) { Log(null, msg); }
+
+    public void Save(String filename)
+    {
+        File.WriteAllText(filename, ToString());
+    }
+
+    public string Save()
+    {
         //String dir = System.getProperty("java.io.tmpdir");
-        String dir = ".";
-        String defaultFilename =
+        var dir = ".";
+        var defaultFilename =
             dir + "/antlr-" +
             DateTime.Now.ToString("yyyy-MM-dd-HH.mm.ss") + ".log";
         // new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(new DateTime())
-        save(defaultFilename);
+        Save(defaultFilename);
         return defaultFilename;
     }
 
     //@Override
-    public String toString() {
-        if ( records==null ) return "";
-        String nl = Environment.NewLine;
-        StringBuilder buf = new StringBuilder();
-        foreach (Record r in records) {
-            buf.Append(r);
-            buf.Append(nl);
+    public override string ToString()
+    {
+        if (records == null) return "";
+        var nl = Environment.NewLine;
+        var buffer = new StringBuilder();
+        foreach (var r in records)
+        {
+            buffer.Append(r);
+            buffer.Append(nl);
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
-    public static void TestMain(String[] args){
-        LogManager mgr = new LogManager();
-        mgr.log("atn", "test msg");
-        mgr.log("dfa", "test msg 2");
+    public static void TestMain(String[] args)
+    {
+        var mgr = new LogManager();
+        mgr.Log("atn", "test msg");
+        mgr.Log("dfa", "test msg 2");
         Console.WriteLine(mgr);
-        mgr.save();
+        mgr.Save();
     }
 }

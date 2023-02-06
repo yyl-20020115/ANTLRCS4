@@ -74,34 +74,34 @@ public class StructDecl : Decl
         d.ctx = this;
 
         if (d is ContextGetterDecl) 
-            getters.add(d);
+            getters.Add(d);
         else 
-            attrs.add(d);
+            attrs.Add(d);
 
         // add to specific "lists"
         if (d is TokenTypeDecl)
         {
-            tokenTypeDecls.add(d);
+            tokenTypeDecls.Add(d);
         }
         else if (d is TokenListDecl)
         {
-            tokenListDecls.add(d);
+            tokenListDecls.Add(d);
         }
         else if (d is TokenDecl)
         {
-            tokenDecls.add(d);
+            tokenDecls.Add(d);
         }
         else if (d is RuleContextListDecl)
         {
-            ruleContextListDecls.add(d);
+            ruleContextListDecls.Add(d);
         }
         else if (d is RuleContextDecl)
         {
-            ruleContextDecls.add(d);
+            ruleContextDecls.Add(d);
         }
         else if (d is AttributeDecl)
         {
-            attributeDecls.add(d);
+            attributeDecls.Add(d);
         }
     }
 

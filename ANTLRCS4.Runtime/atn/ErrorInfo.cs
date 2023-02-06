@@ -37,7 +37,5 @@ public class ErrorInfo : DecisionEventInfo
     public ErrorInfo(int decision,
                      ATNConfigSet configs,
                      TokenStream input, int startIndex, int stopIndex,
-                     bool fullCtx) : base(decision, configs, input, startIndex, stopIndex, fullCtx)
-    {
-    }
+                     bool fullCtx) : base(decision, configs, input, startIndex, stopIndex, fullCtx) { }
 }

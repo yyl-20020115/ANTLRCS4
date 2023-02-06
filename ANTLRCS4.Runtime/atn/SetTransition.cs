@@ -10,31 +10,26 @@ namespace org.antlr.v4.runtime.atn;
 
 
 /** A transition containing a set of values. */
-public class SetTransition : Transition {
-	public readonly IntervalSet set;
+public class SetTransition : Transition
+{
+    public readonly IntervalSet label;
 
-	// TODO (sam): should we really allow null here?
-	public SetTransition(ATNState target, IntervalSet set):base(target)
+    // TODO (sam): should we really allow null here?
+    public SetTransition(ATNState target, IntervalSet set) : base(target)
     {
-		;
-		if ( set == null ) set = IntervalSet.Of(Token.INVALID_TYPE);
-		this.set = set;
-	}
+        this.label = set ??= IntervalSet.Of(Token.INVALID_TYPE);
+    }
 
     //@Override
     public override int SerializationType => SET;
 
     //@Override
 
-    public override IntervalSet Label => set;
+    public override IntervalSet Label => label;
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return set.Contains(symbol);
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => label.Contains(symbol);
 
-	//@Override
+    //@Override
 
-	public override String ToString() {
-		return set.ToString();
-	}
+    public override string ToString() => label.ToString();
 }

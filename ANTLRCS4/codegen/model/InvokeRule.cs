@@ -54,7 +54,7 @@ public class InvokeRule : RuleElement, LabeledOp
             else
             {
                 decl = new RuleContextDecl(factory, label, ctxName);
-                labels.add(decl);
+                labels.Add(decl);
             }
             rf.AddContextDecl(ast.getAltLabel(), decl);
         }
@@ -70,11 +70,11 @@ public class InvokeRule : RuleElement, LabeledOp
         {
             var label = gen.Target.GetImplicitRuleLabel(identifier);
             var d = new RuleContextDecl(factory, label, ctxName);
-            labels.add(d);
+            labels.Add(d);
             rf.AddContextDecl(ast.getAltLabel(), d);
         }
     }
 
     //@Override
-    public virtual List<Decl> GetLabels() => labels.elements();
+    public virtual List<Decl> GetLabels() => labels.Elements();
 }

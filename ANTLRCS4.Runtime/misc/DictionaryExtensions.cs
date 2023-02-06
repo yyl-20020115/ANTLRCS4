@@ -11,18 +11,13 @@ public static class DictionaryExtensions
     public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         where TValue : class
     {
-        TValue value;
-        if (!dictionary.TryGetValue(key, out value))
-            return null;
-
-        return value;
+        return dictionary.TryGetValue(key, out var value) ? value : null;
     }
 
     public static TValue Put<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         where TValue : class
     {
-        TValue previous;
-        if (!dictionary.TryGetValue(key, out previous))
+        if (!dictionary.TryGetValue(key, out var previous))
             previous = null;
 
         dictionary[key] = value;
@@ -31,11 +26,8 @@ public static class DictionaryExtensions
     public static IDictionary<TKey, TValue> AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IDictionary<TKey, TValue> other)
         where TValue : class
     {
-        foreach(var p in other)
-        {
+        foreach (var p in other)
             dictionary[p.Key] = p.Value;
-        }
-
         return dictionary;
     }
 }

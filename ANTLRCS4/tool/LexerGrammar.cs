@@ -41,7 +41,7 @@ public class LexerGrammar : Grammar {
 		}
 
 		if ( modes==null ) modes = new MultiMap<String, Rule>();
-		modes.map(r.mode, r);
+		modes.Map(r.mode, r);
 		return true;
 	}
 

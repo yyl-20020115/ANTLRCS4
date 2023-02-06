@@ -65,7 +65,7 @@ public abstract class ATNSimulator
 	 *
 	 * @since 4.3
 	 */
-    public void ClearDFA()
+    public virtual void ClearDFA()
     {
         throw new UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
     }

@@ -6,19 +6,17 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class WildcardTransition : Transition {
-	public WildcardTransition(ATNState target):base(target) {  }
+public class WildcardTransition : Transition
+{
+    public WildcardTransition(ATNState target) : base(target) { }
 
     //@Override
     public override int SerializationType => WILDCARD;
 
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
+        => symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 
-	//@Override
-	public override String ToString() {
-		return ".";
-	}
+    //@Override
+    public override string ToString() => ".";
 }

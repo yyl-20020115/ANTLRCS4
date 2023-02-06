@@ -82,12 +82,12 @@ public class ActionSniffer : BlankActionSplitterListener
         var xRefs = alt.tokenRefs[x.getText()];
         if (xRefs != null)
         {
-            alt.tokenRefsInActions.map(x.getText(), node);
+            alt.tokenRefsInActions.Map(x.getText(), node);
         }
         var rRefs = alt.ruleRefs[x.getText()];
         if (rRefs != null)
         {
-            alt.ruleRefsInActions.map(x.getText(), node);
+            alt.ruleRefsInActions.Map(x.getText(), node);
         }
     }
 }

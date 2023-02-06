@@ -20,9 +20,7 @@ public class BitSet
         return result;
     }
 
-    public BitSet()
-    {
-    }
+    public BitSet() { }
     public BitSet(params ulong[] data)
     {
         int c = GetBitCount(data);
@@ -33,9 +31,7 @@ public class BitSet
         Array.Copy(data, _data, data.Length);
     }
     public BitSet(params long[] data)
-        :this(Convert(data))
-    {
-    }
+        : this(Convert(data)) { }
     public BitSet(int nbits)
     {
         if (nbits < 0)
@@ -300,13 +296,7 @@ public class BitSet
         return builder.ToString();
     }
 
-    public bool member(int n)
-    {
-        return this[n];
-    }
+    public bool Member(int n) => this[n];
 
-    public void remove(int n)
-    {
-        this[n] = false;
-    }
+    public void Remove(int n) => this[n] = false;
 }

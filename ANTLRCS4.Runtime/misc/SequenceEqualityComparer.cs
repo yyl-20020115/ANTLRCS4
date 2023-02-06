@@ -24,13 +24,7 @@ public class SequenceEqualityComparer<T> : EqualityComparer<IEnumerable<T>>
         _elementEqualityComparer = elementComparer ?? EqualityComparer<T>.Default;
     }
 
-    public new static SequenceEqualityComparer<T> Default
-    {
-        get
-        {
-            return _default;
-        }
-    }
+    public new static SequenceEqualityComparer<T> Default => _default;
 
     public override bool Equals(IEnumerable<T> x, IEnumerable<T> y)
     {

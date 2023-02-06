@@ -43,21 +43,20 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         ////@Override
         public string GetSourceName() => "test";
         ////@Override
-        public int getCharPositionInLine() => 0;
+        public int CharPositionInLine => 0;
         ////@Override
-        public int getLine() => 0;
+        public int Line => 0;
         ////@Override
-        public CharStream getInputStream() => null;
+        public CharStream InputStream => null;
 
         ////@Override
-        public void setTokenFactory(TokenFactory factory)
-        {
-        }
-
         ////@Override
-        public TokenFactory getTokenFactory()
+        public TokenFactory TokenFactory
         {
-            return null;
+            get => null;
+            set
+            {
+            }
         }
     }
     [TestMethod]
@@ -69,19 +68,19 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         var tokens = new CommonTokenStream(lexer);
 
         Assert.AreEqual("x", tokens.LT(1).getText()); // must skip first off channel token
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual("=", tokens.LT(1).getText());
         Assert.AreEqual("x", tokens.LT(-1).getText());
 
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual("34", tokens.LT(1).getText());
         Assert.AreEqual("=", tokens.LT(-1).getText());
 
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual(";", tokens.LT(1).getText());
         Assert.AreEqual("34", tokens.LT(-1).getText());
 
-        tokens.consume();
+        tokens.Consume();
         Assert.AreEqual(Token.EOF, tokens.LA(1));
         Assert.AreEqual(";", tokens.LT(-1).getText());
 
@@ -113,30 +112,20 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         //@Override
         public string GetSourceName() { return "test"; }
         //@Override
-        public int getCharPositionInLine()
-        {
-            return 0;
-        }
+        public int CharPositionInLine => 0;
         //@Override
-        public int getLine()
-        {
-            return 0;
-        }
+        public int Line => 0;
         //@Override
-        public CharStream getInputStream()
-        {
-            return null;
-        }
+        public CharStream InputStream => null;
 
         //@Override
-        public void setTokenFactory(TokenFactory factory)
-        {
-        }
-
         //@Override
-        public TokenFactory getTokenFactory()
+        public TokenFactory TokenFactory
         {
-            return null;
+            get => null;
+            set
+            {
+            }
         }
     }
 
@@ -199,22 +188,13 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public int getLine()
-        {
-            return 0;
-        }
+        public int Line => 0;
 
         //@Override
-        public int getCharPositionInLine()
-        {
-            return 0;
-        }
+        public int CharPositionInLine => 0;
 
         //@Override
-        public CharStream getInputStream()
-        {
-            return null;
-        }
+        public CharStream InputStream => null;
 
         //@Override
         public String GetSourceName()
@@ -223,16 +203,8 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public TokenFactory getTokenFactory()
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
         //@Override
-        public void setTokenFactory(TokenFactory factory)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+        public TokenFactory TokenFactory { get => throw new UnsupportedOperationException("Not supported yet."); set => throw new UnsupportedOperationException("Not supported yet."); }
     }
     [TestMethod]
     public void TestSingleEOF()
@@ -243,7 +215,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         tokens.fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
-        Assert.AreEqual(0, tokens.index());
+        Assert.AreEqual(0, tokens.Index());
         Assert.AreEqual(1, tokens.Count);
     }
 
@@ -257,22 +229,13 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public int getLine()
-        {
-            return 0;
-        }
+        public int Line => 0;
 
         //@Override
-        public int getCharPositionInLine()
-        {
-            return 0;
-        }
+        public int CharPositionInLine => 0;
 
         //@Override
-        public CharStream getInputStream()
-        {
-            return null;
-        }
+        public CharStream InputStream => null;
 
         //@Override
         public String GetSourceName()
@@ -281,16 +244,8 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
 
         //@Override
-        public TokenFactory getTokenFactory()
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
         //@Override
-        public void setTokenFactory(TokenFactory factory)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
+        public TokenFactory TokenFactory { get => throw new UnsupportedOperationException("Not supported yet."); set => throw new UnsupportedOperationException("Not supported yet."); }
     }
     [TestMethod]
     public void TestCannotConsumeEOF()
@@ -301,10 +256,10 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         tokens.fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
-        Assert.AreEqual(0, tokens.index());
+        Assert.AreEqual(0, tokens.Index());
         Assert.AreEqual(1, tokens.Count);
         //assertThrows(IllegalStateException, tokens::consume);
-        Assert.ThrowsException<IllegalStateException>(() => tokens.consume());
+        Assert.ThrowsException<IllegalStateException>(() => tokens.Consume());
 
     }
 }

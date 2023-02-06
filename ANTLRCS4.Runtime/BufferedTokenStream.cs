@@ -76,15 +76,15 @@ public class BufferedTokenStream : TokenStream {
     public TokenSource getTokenSource() { return tokenSource; }
 
     //@Override
-    public int index() { return p; }
+    public int Index() { return p; }
 
     //@Override
-    public int mark() {
+    public int Mark() {
 		return 0;
 	}
 
     //@Override
-    public void release(int marker) {
+    public void Release(int marker) {
 		// no resources to release
 	}
 
@@ -97,11 +97,11 @@ public class BufferedTokenStream : TokenStream {
 	 */
     //@Deprecated
     public void reset() {
-        seek(0);
+        Seek(0);
     }
 
     //@Override
-    public void seek(int index) {
+    public void Seek(int index) {
         lazyInit();
         p = adjustSeekIndex(index);
     }
@@ -109,7 +109,7 @@ public class BufferedTokenStream : TokenStream {
     //@Override
     public int Count => tokens.Count;
     //@Override
-    public void consume() {
+    public void Consume() {
 		bool skipEofCheck;
 		if (p >= 0) {
 			if (fetchedEOF) {
@@ -439,7 +439,7 @@ public class BufferedTokenStream : TokenStream {
 
 	//@Override
 	public String getText() {
-		return getText(Interval.of(0,Count-1));
+		return getText(Interval.Of(0,Count-1));
 	}
 
 	//@Override
@@ -469,7 +469,7 @@ public class BufferedTokenStream : TokenStream {
     //@Override
     public String getText(Token start, Token stop) {
         if ( start!=null && stop!=null ) {
-            return getText(Interval.of(start.getTokenIndex(), stop.getTokenIndex()));
+            return getText(Interval.Of(start.getTokenIndex(), stop.getTokenIndex()));
         }
 
 		return "";
@@ -502,12 +502,12 @@ public class BufferedTokenStream : TokenStream {
         throw new NotImplementedException();
     }
 
-    public void rewind(int nvaeMark)
+    public void Rewind(int nvaeMark)
     {
         throw new NotImplementedException();
     }
 
-    public void rewind()
+    public void Rewind()
     {
         throw new NotImplementedException();
     }

@@ -115,7 +115,7 @@ public class TestBufferedTokenStream
         var t = tokens.LT(1);
         while (t.getType() != Token.EOF)
         {
-            tokens.consume();
+            tokens.Consume();
             t = tokens.LT(1);
         }
 
@@ -142,12 +142,12 @@ public class TestBufferedTokenStream
         var lexEngine = g.createLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
-        tokens.consume(); // get x into buffer
+        tokens.Consume(); // get x into buffer
         var t = tokens.LT(-1);
         Assert.AreEqual("x", t.getText());
 
-        tokens.consume();
-        tokens.consume(); // consume '='
+        tokens.Consume();
+        tokens.Consume(); // consume '='
         t = tokens.LT(-3);
         Assert.AreEqual("x", t.getText());
         t = tokens.LT(-2);

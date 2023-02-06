@@ -81,7 +81,7 @@ public class ParserInterpreterForTesting
     public int AdaptivePredict(TokenStream input, int decision,
                                ParserRuleContext outerContext)
     {
-        return atnSimulator.adaptivePredict(input, decision, outerContext);
+        return atnSimulator.AdaptivePredict(input, decision, outerContext);
     }
 
     public int MatchATN(TokenStream input,
@@ -93,7 +93,7 @@ public class ParserInterpreterForTesting
         }
         else if (startState is DecisionState)
         {
-            return atnSimulator.adaptivePredict(input, ((DecisionState)startState).decision, null);
+            return atnSimulator.AdaptivePredict(input, ((DecisionState)startState).decision, null);
         }
         else if (startState.NumberOfTransitions > 0)
         {

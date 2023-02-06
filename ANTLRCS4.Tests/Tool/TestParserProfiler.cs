@@ -267,7 +267,7 @@ public class TestParserProfiler
             parser.setInputStream(tokens);
             if (!g.rules.TryGetValue(startRule, out var r))
             {
-                return parser.getParseInfo().getDecisionInfo();
+                return parser.getParseInfo().GetDecisionInfo();
             }
             var t = parser.parse(r.index);
             //			try {
@@ -279,6 +279,6 @@ public class TestParserProfiler
             //
             //			Console.Out.WriteLine(t.toStringTree(parser));
         }
-        return parser.getParseInfo().getDecisionInfo();
+        return parser.getParseInfo().GetDecisionInfo();
     }
 }

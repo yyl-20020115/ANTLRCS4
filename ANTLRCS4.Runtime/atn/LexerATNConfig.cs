@@ -69,12 +69,12 @@ public class LexerATNConfig : ATNConfig
 	 * Gets the {@link LexerActionExecutor} capable of executing the embedded
 	 * action(s) for the current configuration.
 	 */
-    public LexerActionExecutor getLexerActionExecutor()
+    public LexerActionExecutor GetLexerActionExecutor()
     {
         return lexerActionExecutor;
     }
 
-    public bool hasPassedThroughNonGreedyDecision()
+    public bool HasPassedThroughNonGreedyDecision()
     {
         return passedThroughNonGreedyDecision;
     }
@@ -100,28 +100,25 @@ public class LexerATNConfig : ATNConfig
         {
             return true;
         }
-        else if (other is not LexerATNConfig)
+        else if (other is LexerATNConfig lexerOther)
         {
-            return false;
-        }
+            if (passedThroughNonGreedyDecision != lexerOther.passedThroughNonGreedyDecision)
+            {
+                return false;
+            }
 
-        LexerATNConfig lexerOther = (LexerATNConfig)other;
-        if (passedThroughNonGreedyDecision != lexerOther.passedThroughNonGreedyDecision)
-        {
-            return false;
-        }
+            if (!ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor))
+            {
+                return false;
+            }
 
-        if (!ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor))
-        {
-            return false;
+            return base.Equals(other);
         }
+        return false;
 
-        return base.Equals(other);
     }
 
-    private static bool CheckNonGreedyDecision(LexerATNConfig source, ATNState target)
-    {
-        return source.passedThroughNonGreedyDecision
+    private static bool CheckNonGreedyDecision(LexerATNConfig source, ATNState target) 
+        => source.passedThroughNonGreedyDecision
             || target is DecisionState state1 && state1.nonGreedy;
-    }
 }

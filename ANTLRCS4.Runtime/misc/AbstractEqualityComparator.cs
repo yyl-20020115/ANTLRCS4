@@ -13,13 +13,7 @@ namespace org.antlr.v4.runtime.misc;
  */
 public abstract class AbstractEqualityComparator<T> : EqualityComparator<T>
 {
-    public virtual bool Equals(T a, T b)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual bool Equals(T a, T b) => throw new NotImplementedException();
 
-    public virtual int GetHashCode(T obj)
-    {
-        throw new NotImplementedException();
-    }
+    public virtual int GetHashCode(T obj) => throw new NotImplementedException();
 }

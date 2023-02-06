@@ -82,42 +82,51 @@ public class ListTokenSource : TokenSource {
 		this.sourceName = sourceName;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public int getCharPositionInLine() {
-		if (i < tokens.Count) {
-			return tokens[(i)].getCharPositionInLine();
-		}
-		else if (eofToken != null) {
-			return eofToken.getCharPositionInLine();
-		}
-		else if (tokens.Count > 0) {
-			// have to calculate the result from the line/column of the previous
-			// token, along with the text of the token.
-			Token lastToken = tokens[(tokens.Count - 1)];
-			String tokenText = lastToken.getText();
-			if (tokenText != null) {
-				int lastNewLine = tokenText.LastIndexOf('\n');
-				if (lastNewLine >= 0) {
-					return tokenText.Length - lastNewLine - 1;
-				}
-			}
+    //@Override
+    public int CharPositionInLine
+    {
+        get
+        {
+            if (i < tokens.Count)
+            {
+                return tokens[(i)].getCharPositionInLine();
+            }
+            else if (eofToken != null)
+            {
+                return eofToken.getCharPositionInLine();
+            }
+            else if (tokens.Count > 0)
+            {
+                // have to calculate the result from the line/column of the previous
+                // token, along with the text of the token.
+                Token lastToken = tokens[(tokens.Count - 1)];
+                String tokenText = lastToken.getText();
+                if (tokenText != null)
+                {
+                    int lastNewLine = tokenText.LastIndexOf('\n');
+                    if (lastNewLine >= 0)
+                    {
+                        return tokenText.Length - lastNewLine - 1;
+                    }
+                }
 
-			return lastToken.getCharPositionInLine() + lastToken.getStopIndex() - lastToken.getStartIndex() + 1;
-		}
+                return lastToken.getCharPositionInLine() + lastToken.getStopIndex() - lastToken.getStartIndex() + 1;
+            }
 
-		// only reach this if tokens is empty, meaning EOF occurs at the first
-		// position in the input
-		return 0;
-	}
+            // only reach this if tokens is empty, meaning EOF occurs at the first
+            // position in the input
+            return 0;
+        }
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public Token NextToken() {
+    //@Override
+    public Token NextToken() {
 		if (i >= tokens.Count) {
 			if (eofToken == null) {
 				int start = -1;
@@ -129,7 +138,7 @@ public class ListTokenSource : TokenSource {
 				}
 
 				int stop = Math.Max(-1, start - 1);
-				eofToken =(_factory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(this, getInputStream()), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, getLine(), getCharPositionInLine());
+				eofToken =(_factory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
 			}
 
 			return eofToken;
@@ -144,70 +153,87 @@ public class ListTokenSource : TokenSource {
 		return t;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public int getLine() {
-		if (i < tokens.Count) {
-			return tokens[(i)].getLine();
-		}
-		else if (eofToken != null) {
-			return eofToken.getLine();
-		}
-		else if (tokens.Count > 0) {
-			// have to calculate the result from the line/column of the previous
-			// token, along with the text of the token.
-			Token lastToken = tokens[(tokens.Count - 1)];
-			int line = lastToken.getLine();
+    //@Override
+    public int Line
+    {
+        get
+        {
+            if (i < tokens.Count)
+            {
+                return tokens[(i)].getLine();
+            }
+            else if (eofToken != null)
+            {
+                return eofToken.getLine();
+            }
+            else if (tokens.Count > 0)
+            {
+                // have to calculate the result from the line/column of the previous
+                // token, along with the text of the token.
+                Token lastToken = tokens[(tokens.Count - 1)];
+                int line = lastToken.getLine();
 
-			String tokenText = lastToken.getText();
-			if (tokenText != null) {
-				for (int i = 0; i < tokenText.Length; i++) {
-					if (tokenText[(i)] == '\n') {
-						line++;
-					}
-				}
-			}
+                String tokenText = lastToken.getText();
+                if (tokenText != null)
+                {
+                    for (int i = 0; i < tokenText.Length; i++)
+                    {
+                        if (tokenText[(i)] == '\n')
+                        {
+                            line++;
+                        }
+                    }
+                }
 
-			// if no text is available, assume the token did not contain any newline characters.
-			return line;
-		}
+                // if no text is available, assume the token did not contain any newline characters.
+                return line;
+            }
 
-		// only reach this if tokens is empty, meaning EOF occurs at the first
-		// position in the input
-		return 1;
-	}
+            // only reach this if tokens is empty, meaning EOF occurs at the first
+            // position in the input
+            return 1;
+        }
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public CharStream getInputStream() {
-		if (i < tokens.Count) {
-			return tokens[(i)].getInputStream();
-		}
-		else if (eofToken != null) {
-			return eofToken.getInputStream();
-		}
-		else if (tokens.Count > 0) {
-			return tokens[(tokens.Count - 1)].getInputStream();
-		}
+    //@Override
+    public CharStream InputStream
+    {
+        get
+        {
+            if (i < tokens.Count)
+            {
+                return tokens[(i)].getInputStream();
+            }
+            else if (eofToken != null)
+            {
+                return eofToken.getInputStream();
+            }
+            else if (tokens.Count > 0)
+            {
+                return tokens[(tokens.Count - 1)].getInputStream();
+            }
 
-		// no input stream information is available
-		return null;
-	}
+            // no input stream information is available
+            return null;
+        }
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public String GetSourceName() {
+    //@Override
+    public String GetSourceName() {
 		if (sourceName != null) {
 			return sourceName;
 		}
 
-		CharStream inputStream = getInputStream();
+		CharStream inputStream = InputStream;
 		if (inputStream != null) {
 			return inputStream.getSourceName();
 		}
@@ -215,19 +241,13 @@ public class ListTokenSource : TokenSource {
 		return "List";
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public void setTokenFactory(TokenFactory factory) {
-		this._factory = factory;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	//@Override
-	public TokenFactory getTokenFactory() {
-		return _factory;
-	}
+    //@Override
+    /**
+ * {@inheritDoc}
+ */
+    //@Override
+    public TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 }

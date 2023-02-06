@@ -7,52 +7,53 @@ using org.antlr.v4.runtime.atn;
 
 namespace org.antlr.v4.runtime.dfa;
 
-public class DFA {
-	/** A set of all DFA states. Use {@link Map} so we can get old state back
+public class DFA
+{
+    /** A set of all DFA states. Use {@link Map} so we can get old state back
 	 *  ({@link Set} only allows you to see if it's there).
      */
 
-	public readonly Dictionary<DFAState, DFAState> states = new ();
+    public readonly Dictionary<DFAState, DFAState> states = new();
 
-	public volatile DFAState s0;
+    public volatile DFAState s0;
 
-	public readonly int decision;
+    public readonly int decision;
 
-	/** From which ATN state did we create this DFA? */
+    /** From which ATN state did we create this DFA? */
 
-	public readonly DecisionState atnStartState;
+    public readonly DecisionState atnStartState;
 
-	/**
+    /**
 	 * {@code true} if this DFA is for a precedence decision; otherwise,
 	 * {@code false}. This is the backing field for {@link #isPrecedenceDfa}.
 	 */
-	private readonly bool precedenceDfa;
+    private readonly bool precedenceDfa;
 
-	public DFA(DecisionState atnStartState) : this(atnStartState, 0)
+    public DFA(DecisionState atnStartState) : this(atnStartState, 0) { }
+
+    public DFA(DecisionState atnStartState, int decision)
     {
-		
-	}
+        this.atnStartState = atnStartState;
+        this.decision = decision;
 
-	public DFA(DecisionState atnStartState, int decision) {
-		this.atnStartState = atnStartState;
-		this.decision = decision;
+        bool precedenceDfa = false;
+        if (atnStartState is StarLoopEntryState state)
+        {
+            if (state.isPrecedenceDecision)
+            {
+                precedenceDfa = true;
+                var precedenceState = new DFAState(new ATNConfigSet());
+                precedenceState.edges = new DFAState[0];
+                precedenceState.isAcceptState = false;
+                precedenceState.requiresFullContext = false;
+                this.s0 = precedenceState;
+            }
+        }
 
-		bool precedenceDfa = false;
-		if (atnStartState is StarLoopEntryState) {
-			if (((StarLoopEntryState)atnStartState).isPrecedenceDecision) {
-				precedenceDfa = true;
-				DFAState precedenceState = new DFAState(new ATNConfigSet());
-				precedenceState.edges = new DFAState[0];
-				precedenceState.isAcceptState = false;
-				precedenceState.requiresFullContext = false;
-				this.s0 = precedenceState;
-			}
-		}
+        this.precedenceDfa = precedenceDfa;
+    }
 
-		this.precedenceDfa = precedenceDfa;
-	}
-
-	/**
+    /**
 	 * Gets whether this DFA is a precedence DFA. Precedence DFAs use a special
 	 * start state {@link #s0} which is not stored in {@link #states}. The
 	 * {@link DFAState#edges} array for this start state contains outgoing edges
@@ -63,11 +64,9 @@ public class DFA {
 	 * {@code false}.
 	 * @see Parser#getPrecedence()
 	 */
-	public bool isPrecedenceDfa() {
-		return precedenceDfa;
-	}
+    public bool IsPrecedenceDfa() => precedenceDfa;
 
-	/**
+    /**
 	 * Get the start state for a specific precedence value.
 	 *
 	 * @param precedence The current precedence.
@@ -77,20 +76,18 @@ public class DFA {
 	 * @throws IllegalStateException if this is not a precedence DFA.
 	 * @see #isPrecedenceDfa()
 	 */
-	public DFAState getPrecedenceStartState(int precedence) {
-		if (!isPrecedenceDfa()) {
-			throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
-		}
+    public DFAState GetPrecedenceStartState(int precedence)
+    {
+        if (!IsPrecedenceDfa())
+        {
+            throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
+        }
 
-		// s0.edges is never null for a precedence DFA
-		if (precedence < 0 || precedence >= s0.edges.Length) {
-			return null;
-		}
+        // s0.edges is never null for a precedence DFA
+        return precedence < 0 || precedence >= s0.edges.Length ? null : s0.edges[precedence];
+    }
 
-		return s0.edges[precedence];
-	}
-
-	/**
+    /**
 	 * Set the start state for a specific precedence value.
 	 *
 	 * @param precedence The current precedence.
@@ -100,29 +97,34 @@ public class DFA {
 	 * @throws IllegalStateException if this is not a precedence DFA.
 	 * @see #isPrecedenceDfa()
 	 */
-	public void setPrecedenceStartState(int precedence, DFAState startState) {
-		if (!isPrecedenceDfa()) {
-			throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
-		}
+    public void SetPrecedenceStartState(int precedence, DFAState startState)
+    {
+        if (!IsPrecedenceDfa())
+        {
+            throw new IllegalStateException("Only precedence DFAs may contain a precedence start state.");
+        }
 
-		if (precedence < 0) {
-			return;
-		}
+        if (precedence < 0)
+        {
+            return;
+        }
 
-		// synchronization on s0 here is ok. when the DFA is turned into a
-		// precedence DFA, s0 will be initialized once and not updated again
-		lock (s0) {
-			// s0.edges is never null for a precedence DFA
-			if (precedence >= s0.edges.Length) {
-				Array.Resize(ref s0.edges, precedence + 1);
-				//s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
-			}
+        // synchronization on s0 here is ok. when the DFA is turned into a
+        // precedence DFA, s0 will be initialized once and not updated again
+        lock (s0)
+        {
+            // s0.edges is never null for a precedence DFA
+            if (precedence >= s0.edges.Length)
+            {
+                Array.Resize(ref s0.edges, precedence + 1);
+                //s0.edges = Arrays.copyOf(s0.edges, precedence + 1);
+            }
 
-			s0.edges[precedence] = startState;
-		}
-	}
+            s0.edges[precedence] = startState;
+        }
+    }
 
-	/**
+    /**
 	 * Sets whether this is a precedence DFA.
 	 *
 	 * @param precedenceDfa {@code true} if this is a precedence DFA; otherwise,
@@ -133,54 +135,60 @@ public class DFA {
 	 *
 	 * @deprecated This method no longer performs any action.
 	 */
-	
-	public  void setPrecedenceDfa(bool precedenceDfa) {
-		if (precedenceDfa != isPrecedenceDfa()) {
-			throw new UnsupportedOperationException("The precedenceDfa field cannot change after a DFA is constructed.");
-		}
-	}
 
-	/**
+    public void SetPrecedenceDfa(bool precedenceDfa)
+    {
+        if (precedenceDfa != IsPrecedenceDfa())
+        {
+            throw new UnsupportedOperationException("The precedenceDfa field cannot change after a DFA is constructed.");
+        }
+    }
+
+    /**
 	 * Return a list of all states in this DFA, ordered by state number.
 	 */
 
-	public List<DFAState> getStates() {
-		List<DFAState> result = new (states.Keys);
-		result.Sort((x, y) => x.stateNumber - y.stateNumber);
-		//Collections.sort(result, new Comparator<DFAState>() {
-		//	@Override
-		//	public int compare(DFAState o1, DFAState o2) {
-		//		return o1.stateNumber - o2.stateNumber;
-		//	}
-		//});
+    public List<DFAState> GetStates()
+    {
+        List<DFAState> result = new(states.Keys);
+        result.Sort((x, y) => x.stateNumber - y.stateNumber);
+        //Collections.sort(result, new Comparator<DFAState>() {
+        //	@Override
+        //	public int compare(DFAState o1, DFAState o2) {
+        //		return o1.stateNumber - o2.stateNumber;
+        //	}
+        //});
 
-		return result;
-	}
+        return result;
+    }
 
-	public override String ToString() { return toString(VocabularyImpl.EMPTY_VOCABULARY); }
+    public override string ToString() => ToString(VocabularyImpl.EMPTY_VOCABULARY);
 
-	/**
+    /**
 	 * @deprecated Use {@link #toString(Vocabulary)} instead.
 	 */
-	public String toString(String[] tokenNames) {
-		if ( s0==null ) return "";
-		DFASerializer serializer = new DFASerializer(this,tokenNames);
-		return serializer.ToString();
-	}
+    public string ToString(string[] tokenNames)
+    {
+        if (s0 == null) return "";
+        var serializer = new DFASerializer(this, tokenNames);
+        return serializer.ToString();
+    }
 
-	public String toString(Vocabulary vocabulary) {
-		if (s0 == null) {
-			return "";
-		}
+    public string ToString(Vocabulary vocabulary)
+    {
+        if (s0 == null)
+        {
+            return "";
+        }
 
-		var serializer = new DFASerializer(this, vocabulary);
-		return serializer.ToString();
-	}
+        var serializer = new DFASerializer(this, vocabulary);
+        return serializer.ToString();
+    }
 
-	public String toLexerString() {
-		if ( s0==null ) return "";
-		var serializer = new LexerDFASerializer(this);
-		return serializer.ToString();
-	}
-
+    public string ToLexerString()
+    {
+        if (s0 == null) return "";
+        var serializer = new LexerDFASerializer(this);
+        return serializer.ToString();
+    }
 }

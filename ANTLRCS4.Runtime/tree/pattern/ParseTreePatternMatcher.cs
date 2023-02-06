@@ -256,9 +256,9 @@ public class ParseTreePatternMatcher {
 				if ( t2.getSymbol() is TokenTagToken ) { // x and <ID>
 					TokenTagToken tokenTagToken = (TokenTagToken)t2.getSymbol();
 					// track label->list-of-nodes for both token name and label (if any)
-					labels.map(tokenTagToken.getTokenName(), tree);
+					labels.Map(tokenTagToken.getTokenName(), tree);
 					if ( tokenTagToken.getLabel()!=null ) {
-						labels.map(tokenTagToken.getLabel(), tree);
+						labels.Map(tokenTagToken.getLabel(), tree);
 					}
 				}
 				else if ( t1.getText().Equals(t2.getText()) ) {
@@ -290,9 +290,9 @@ public class ParseTreePatternMatcher {
 				ParseTreeMatch m = null;
 				if ( r1.getRuleContext().getRuleIndex() == r2.getRuleContext().getRuleIndex() ) {
 					// track label->list-of-nodes for both rule name and label (if any)
-					labels.map(ruleTagToken.getRuleName(), tree);
+					labels.Map(ruleTagToken.getRuleName(), tree);
 					if ( ruleTagToken.getLabel()!=null ) {
-						labels.map(ruleTagToken.getLabel(), tree);
+						labels.Map(ruleTagToken.getLabel(), tree);
 					}
 				}
 				else {
