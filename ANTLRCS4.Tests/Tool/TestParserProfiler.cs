@@ -214,7 +214,7 @@ public class TestParserProfiler {
 				true, false, Stage.Execute, false);
 		JavaRunner runner = new JavaRunner();
 		{
-			ExecutedState state = (ExecutedState) runner.run(runOptions);
+			ExecutedState state = (ExecutedState) runner.Run(runOptions);
 			String expecting =
 					"[{decision=0, contextSensitivities=0, errors=0, ambiguities=0, SLL_lookahead=6, SLL_ATNTransitions=4, " +
 							"SLL_DFATransitions=2, LL_Fallback=0, LL_lookahead=0, LL_ATNTransitions=0}," +

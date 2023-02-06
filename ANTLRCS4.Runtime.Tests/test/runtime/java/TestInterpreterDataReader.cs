@@ -8,7 +8,6 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
-using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4.test.runtime.java;
@@ -16,35 +15,39 @@ namespace org.antlr.v4.test.runtime.java;
 /** This file represents a simple sanity checks on the parsing of the .interp file
  *  available to the Java runtime for interpreting rather than compiling and executing parsers.
  */
-public class TestInterpreterDataReader {
+[TestClass]
+public class TestInterpreterDataReader
+{
     [TestMethod]
-    public void testParseFile() {
-		Grammar g = new Grammar(
-				"grammar Calc;\n" +
-				"s :  expr EOF\n" +
-				"  ;\n" +
-				"expr\n" +
-				"  :  INT            # number\n" +
-				"  |  expr (MUL | DIV) expr  # multiply\n" +
-				"  |  expr (ADD | SUB) expr  # add\n" +
-				"  ;\n" +
-				"\n" +
-				"INT : [0-9]+;\n" +
-				"MUL : '*';\n" +
-				"DIV : '/';\n" +
-				"ADD : '+';\n" +
-				"SUB : '-';\n" +
-				"WS : [ \\t]+ -> channel(HIDDEN);");
-		String interpString = Tool.generateInterpreterData(g);
-        string interpFile = Environment.CurrentDirectory + "test-" + Random.Shared.Next() + ".txt";// File.createTempFile(null, null);
-		File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
+    public void TestParseFile()
+    {
+        var g = new Grammar(
+                "grammar Calc;\n" +
+                "s :  expr EOF\n" +
+                "  ;\n" +
+                "expr\n" +
+                "  :  INT            # number\n" +
+                "  |  expr (MUL | DIV) expr  # multiply\n" +
+                "  |  expr (ADD | SUB) expr  # add\n" +
+                "  ;\n" +
+                "\n" +
+                "INT : [0-9]+;\n" +
+                "MUL : '*';\n" +
+                "DIV : '/';\n" +
+                "ADD : '+';\n" +
+                "SUB : '-';\n" +
+                "WS : [ \\t]+ -> channel(HIDDEN);");
+        var interpString = Tool.generateInterpreterData(g);
+        var interpFile = Environment.CurrentDirectory + "test-" + Random.Shared.Next() + ".txt";// File.createTempFile(null, null);
+        File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
 
-        InterpreterDataReader.InterpreterData interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
-        FieldInfo atnField = interpreterData.GetType().GetField("atn");
-        FieldInfo vocabularyField = interpreterData.GetType().GetField("vocabulary");
-        FieldInfo ruleNamesField = interpreterData.GetType().GetField("ruleNames");
-        FieldInfo channelsField = interpreterData.GetType().GetField("channels");
-        FieldInfo modesField = interpreterData.GetType().GetField("modes");
+        var interpreterData = InterpreterDataReader.parseFile(interpFile.ToString());
+        var t = interpreterData.GetType();
+        var atnField = t.GetField("atn");
+        var vocabularyField = t.GetField("vocabulary");
+        var ruleNamesField = t.GetField("ruleNames");
+        var channelsField = t.GetField("channels");
+        var modesField = t.GetField("modes");
 
         //atnField.setAccessible(true);
         //vocabularyField.setAccessible(true);
@@ -52,31 +55,32 @@ public class TestInterpreterDataReader {
         //channelsField.setAccessible(true);
         //modesField.setAccessible(true);
 
-        ATN atn = (ATN) atnField.GetValue(interpreterData);
-        Vocabulary vocabulary = (Vocabulary) vocabularyField.GetValue(interpreterData);
-		String[] literalNames = ((VocabularyImpl) vocabulary).getLiteralNames();
-		String[] symbolicNames = ((VocabularyImpl) vocabulary).getSymbolicNames();
-		List<String> ruleNames = castList<String>(ruleNamesField.GetValue(interpreterData), typeof(String));
-        List<String> channels = castList<String>(channelsField.GetValue(interpreterData), typeof(String));
-        List<String> modes = castList<String>(modesField.GetValue(interpreterData),typeof( String));
+        var atn = (ATN)atnField.GetValue(interpreterData);
+        var vocabulary = (Vocabulary)vocabularyField.GetValue(interpreterData);
+        var literalNames = ((VocabularyImpl)vocabulary).getLiteralNames();
+        var symbolicNames = ((VocabularyImpl)vocabulary).getSymbolicNames();
+        var ruleNames = CastList<string>(ruleNamesField.GetValue(interpreterData));
+        var channels = CastList<string>(channelsField.GetValue(interpreterData));
+        var modes = CastList<string>(modesField.GetValue(interpreterData));
 
-		Assert.AreEqual(6, vocabulary.getMaxTokenType());
-		Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"s","expr"}, ruleNames.ToArray()));
-        Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"", "", "'*'", "'/'", "'+'", "'-'", ""}, literalNames));
-        Assert.IsTrue(Enumerable.SequenceEqual(new String[]{"", "INT", "MUL", "DIV", "ADD", "SUB", "WS"}, symbolicNames));
-		Assert.IsNull(channels);
-		Assert.IsNull(modes);
+        Assert.AreEqual(6, vocabulary.getMaxTokenType());
+        Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "s", "expr" }, ruleNames.ToArray()));
+        Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "", "", "'*'", "'/'", "'+'", "'-'", "" }, literalNames));
+        Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "", "INT", "MUL", "DIV", "ADD", "SUB", "WS" }, symbolicNames));
+        Assert.IsNull(channels);
+        Assert.IsNull(modes);
 
-		IntegerList serialized = ATNSerializer.getSerialized(atn);
-		Assert.AreEqual(ATNDeserializer.SERIALIZED_VERSION, serialized.get(0));
+        var serialized = ATNSerializer.getSerialized(atn);
+        Assert.AreEqual(ATNDeserializer.SERIALIZED_VERSION, serialized.get(0));
     }
 
-    private List<T> castList<T>(Object obj, Type clazz) {
-        List<T> result = new ();
-        if (obj is List<T> list) {
-            foreach (var o in list) {
+    private static List<T> CastList<T>(object obj)
+    {
+        List<T> result = new();
+        if (obj is List<T> list)
+        {
+            foreach (var o in list)
                 result.Add((T)o);
-            }
             return result;
         }
         return null;

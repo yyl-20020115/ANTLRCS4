@@ -11,44 +11,51 @@ using org.antlr.v4.tool.ast;
 namespace org.antlr.v4.parse;
 
 
-public class GrammarASTAdaptor : CommonTreeAdaptor {
+public class GrammarASTAdaptor : CommonTreeAdaptor
+{
     CharStream input; // where we can find chars ref'd by tokens in tree
     public GrammarASTAdaptor() { }
     public GrammarASTAdaptor(CharStream input) { this.input = input; }
 
     //@Override
-    public Object create(Token token) {
+    public object create(Token token)
+    {
         return new GrammarAST(token);
     }
 
     //@Override
     /** Make sure even imaginary nodes know the input stream */
-    public Object create(int tokenType, String text) {
-		GrammarAST t;
-		if ( tokenType==ANTLRParser.RULE ) {
-			// needed by TreeWizard to make RULE tree
-        	t = new RuleAST(new CommonToken(tokenType, text));
-		}
-		else if ( tokenType==ANTLRParser.STRING_LITERAL ) {
-			// implicit lexer construction done with wizard; needs this node type
-			// whereas grammar ANTLRParser.g can use token option to spec node type
-			t = new TerminalAST(new CommonToken(tokenType, text));
-		}
-		else {
-			t = (GrammarAST)base.create(tokenType, text);
-		}
+    public object create(int tokenType, String text)
+    {
+        GrammarAST t;
+        if (tokenType == ANTLRParser.RULE)
+        {
+            // needed by TreeWizard to make RULE tree
+            t = new RuleAST(new CommonToken(tokenType, text));
+        }
+        else if (tokenType == ANTLRParser.STRING_LITERAL)
+        {
+            // implicit lexer construction done with wizard; needs this node type
+            // whereas grammar ANTLRParser.g can use token option to spec node type
+            t = new TerminalAST(new CommonToken(tokenType, text));
+        }
+        else
+        {
+            t = (GrammarAST)base.create(tokenType, text);
+        }
         t.token.setInputStream(input);
         return t;
     }
 
     //@Override
-    public Object dupNode(Object t) {
-        if ( t==null ) return null;
+    public object dupNode(Object t)
+    {
+        if (t == null) return null;
         return ((GrammarAST)t).dupNode(); //create(((GrammarAST)t).token);
     }
 
     //@Override
-    public Object errorNode(TokenStream input, Token start,Token stop,
+    public object errorNode(TokenStream input, Token start, Token stop,
                             RecognitionException e)
     {
         return new GrammarASTErrorNode(input, start, stop, e);

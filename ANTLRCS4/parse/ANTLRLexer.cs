@@ -31,7 +31,6 @@ using org.antlr.runtime;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.runtime.atn;
 
 namespace org.antlr.v4.parse;
 
@@ -130,13 +129,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     public CommonTokenStream tokens; // track stream we push to; need for context info
     public bool isLexerRule = false;
 
-    public void grammarError(ErrorType etype, Token token, params Object[] args) { }
+    public void GrammarError(ErrorType etype, Token token, params Object[] args) { }
 
     /** scan backwards from current point in this.tokens list
      *  looking for the start of the rule or subrule.
      *  Return token or null if for some reason we can't find the start.
      */
-    public Token getRuleOrSubruleStartToken()
+    public Token GetRuleOrSubruleStartToken()
     {
         if (tokens == null) return null;
         int i = tokens.index();
@@ -173,24 +172,18 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
 
     // delegates
     // delegators
-    public antlr.runtime.Lexer[] getDelegates()
-    {
-        return new antlr.runtime.Lexer[] { };
-    }
+    public antlr.runtime.Lexer[] GetDelegates() => Array.Empty<antlr.runtime.Lexer>();
     protected DFA2 dfa2;
     protected DFA32 dfa32;
 
-    public ANTLRLexer(CharStream input) : this(input, new RecognizerSharedState())
-    {
-        ;
-    }
+    public ANTLRLexer(CharStream input) : this(input, new RecognizerSharedState()) { }
     public ANTLRLexer(CharStream input, RecognizerSharedState state) : base(input, state)
     {
         dfa2 = new DFA2(this);
         dfa32 = new DFA32(this);
     }
     //@Override 
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ANTLRLexer.g"; }
+    public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\ANTLRLexer.g";
 
     // $ANTLR start "DOC_COMMENT"
     public void mDOC_COMMENT()
@@ -1442,7 +1435,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     // this.tokens is the token string we are pushing into, so
                     // just loop backwards looking for a rule definition. Then
                     // we set isLexerRule.
-                    Token t = getRuleOrSubruleStartToken();
+                    Token t = GetRuleOrSubruleStartToken();
                     if (t != null)
                     {
                         if (t.getType() == RULE_REF) isLexerRule = false;
@@ -2640,7 +2633,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 t.setLine(state.tokenStartLine);
                                 t.setText(state.text);
                                 t.setCharPositionInLine(state.tokenStartCharPositionInLine);
-                                grammarError(ErrorType.UNTERMINATED_STRING_LITERAL, t);
+                                GrammarError(ErrorType.UNTERMINATED_STRING_LITERAL, t);
                             }
                         }
                         break;
@@ -2835,7 +2828,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 t.setText(t.getText());
                                 t.setLine(input.getLine());
                                 t.setCharPositionInLine(input.getCharPositionInLine() - 2);
-                                grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.substring(getCharIndex() - 2, getCharIndex() - 1));
+                                GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.substring(getCharIndex() - 2, getCharIndex() - 1));
                             }
                         }
                         break;
@@ -3011,7 +3004,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         Token t = new CommonToken(input, state.type, state.channel, badRange.a, badRange.b);
                         t.setLine(input.getLine());
                         t.setCharPositionInLine(input.getCharPositionInLine() - hCount - 2);
-                        grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, bad);
+                        GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, bad);
                     }
                 }
             }
@@ -3085,7 +3078,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         t.setText(t.getText());
                         t.setLine(input.getLine());
                         t.setCharPositionInLine(input.getCharPositionInLine() - numDigits);
-                        grammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.substring(state.tokenStartCharIndex, getCharIndex() - 1));
+                        GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.substring(state.tokenStartCharIndex, getCharIndex() - 1));
                     }
                 }
             }
@@ -3294,7 +3287,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     t.setText(state.text);
                     t.setCharPositionInLine(state.tokenStartCharPositionInLine);
                     String msg = GetTokenErrorDisplay(t) + " came as a complete surprise to me";
-                    grammarError(ErrorType.SYNTAX_ERROR, t, msg);
+                    GrammarError(ErrorType.SYNTAX_ERROR, t, msg);
                     state.syntaxErrors++;
                     skip();
                 }

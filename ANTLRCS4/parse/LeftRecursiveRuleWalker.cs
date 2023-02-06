@@ -2,7 +2,6 @@
 
 using org.antlr.runtime.tree;
 using org.antlr.runtime;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 using org.antlr.v4.runtime.misc;
@@ -11,7 +10,7 @@ namespace org.antlr.v4.parse;
 public class LeftRecursiveRuleWalker : TreeParser
 {
 
-    public static readonly String[] tokenNames = new String[] {
+    public static readonly string[] tokenNames = new string[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
         "ASSIGN", "AT", "CATCH", "CHANNELS", "COLON", "COLONCOLON", "COMMA", "COMMENT",
@@ -113,9 +112,9 @@ public class LeftRecursiveRuleWalker : TreeParser
     public const int PUBLIC = 86;
 
     // delegates
-    public TreeParser[] getDelegates()
+    public TreeParser[] GetDelegates()
     {
-        return new TreeParser[] { };
+        return Array.Empty<TreeParser>();
     }
 
     // delegators
@@ -135,18 +134,18 @@ public class LeftRecursiveRuleWalker : TreeParser
     }
 
     //@Override
-    public String[] getTokenNames() { return LeftRecursiveRuleWalker.tokenNames; }
+    public override string[] GetTokenNames() => tokenNames;
     //@Override
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g"; }
+    public override String GetGrammarFileName() => "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g";
 
 
-    private String ruleName;
+    private string ruleName;
     private int currentOuterAltNumber; // which outer alt of rule?
     public int numAlts;  // how many alts for this rule total?
 
-    public void setAltAssoc(AltAST altTree, int alt) { }
+    public void SetAltAssoc(AltAST altTree, int alt) { }
     public void binaryAlt(AltAST altTree, int alt) { }
-    public void prefixAlt(AltAST altTree, int alt) { }
+    public void sprefixAlt(AltAST altTree, int alt) { }
     public void suffixAlt(AltAST altTree, int alt) { }
     public void otherAlt(AltAST altTree, int alt) { }
     public void setReturnValues(GrammarAST t) { }
@@ -781,7 +780,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 exit12:
                 Match(input, Token.UP, null); if (state.failed) return;
 
-                if (state.backtracking == 0) { setAltAssoc((AltAST)ALT2, currentOuterAltNumber); }
+                if (state.backtracking == 0) { SetAltAssoc((AltAST)ALT2, currentOuterAltNumber); }
             }
 
         }
@@ -892,7 +891,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 exit15:
                 Match(input, Token.UP, null); if (state.failed) return;
 
-                if (state.backtracking == 0) { setAltAssoc((AltAST)ALT3, currentOuterAltNumber); }
+                if (state.backtracking == 0) { SetAltAssoc((AltAST)ALT3, currentOuterAltNumber); }
             }
 
         }
@@ -979,7 +978,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             exit17:
                 Match(input, Token.UP, null); if (state.failed) return;
 
-                if (state.backtracking == 0) { setAltAssoc((AltAST)ALT4, currentOuterAltNumber); }
+                if (state.backtracking == 0) { SetAltAssoc((AltAST)ALT4, currentOuterAltNumber); }
             }
 
         }

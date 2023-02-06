@@ -2,25 +2,20 @@
 
 using System.Runtime.Serialization;
 
-namespace org.antlr.v4.parse
+namespace org.antlr.v4.parse;
+
+public class RewriteEarlyExitException : Exception
 {
-    [Serializable]
-    internal class RewriteEarlyExitException : Exception
+    public RewriteEarlyExitException()
     {
-        public RewriteEarlyExitException()
-        {
-        }
-
-        public RewriteEarlyExitException(string? message) : base(message)
-        {
-        }
-
-        public RewriteEarlyExitException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected RewriteEarlyExitException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
+
+    public RewriteEarlyExitException(string? message) : base(message)
+    {
+    }
+
+    public RewriteEarlyExitException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
 }

@@ -9,36 +9,37 @@ using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.dart;
 
-public class DartRunner : RuntimeRunner {
-	////@Override
-	public override String getLanguage() {
-		return "Dart";
-	}
+public class DartRunner : RuntimeRunner
+{
+    ////@Override
+    public override string GetLanguage() => "Dart";
 
-	private static String cacheDartPackageConfig;
+    private static string cacheDartPackageConfig;
 
-	////@Override
-	protected void initRuntime()  {
-		String cachePath = getCachePath();
-        FileUtils.mkdir(cachePath);
+    ////@Override
+    protected override void InitRuntime()
+    {
+        string cachePath = GetCachePath();
+        FileUtils.MakeDirectory(cachePath);
 
-		Template projectTemplate = new Template(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/pubspec.yaml.stg"));
-		projectTemplate.Add("runtimePath", getRuntimePath());
+        var projectTemplate = new Template(RuntimeTestUtils.GetTextFromResource("org/antlr/v4/test/runtime/helpers/pubspec.yaml.stg"));
+        projectTemplate.Add("runtimePath", GetRuntimePath());
 
-		FileUtils.writeFile(cachePath, "pubspec.yaml", projectTemplate.Render());
+        FileUtils.WriteFile(cachePath, "pubspec.yaml", projectTemplate.Render());
 
-		runCommand(new String[]{getRuntimeToolPath(), "pub", "get"}, cachePath);
+        RunCommand(new string[] { GetRuntimeToolPath(), "pub", "get" }, cachePath);
 
-		cacheDartPackageConfig = FileUtils.readFile(
-			Path.Combine(cachePath , ".dart_tool"), "package_config.json");
-	}
+        cacheDartPackageConfig = FileUtils.ReadFile(
+            Path.Combine(cachePath, ".dart_tool"), "package_config.json");
+    }
 
-	////@Override
-	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		String dartToolDirPath = Path.Combine(getTempDirPath(), ".dart_tool");
-		FileUtils.mkdir(dartToolDirPath);
-		FileUtils.writeFile(dartToolDirPath, "package_config.json", cacheDartPackageConfig);
+    ////@Override
+    public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    {
+        string dartToolDirPath = Path.Combine(GetTempDirPath(), ".dart_tool");
+        FileUtils.MakeDirectory(dartToolDirPath);
+        FileUtils.WriteFile(dartToolDirPath, "package_config.json", cacheDartPackageConfig);
 
-		return new CompiledState(generatedState, null);
-	}
+        return new CompiledState(generatedState, null);
+    }
 }

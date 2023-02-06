@@ -163,7 +163,7 @@ public class ParserInterpreter : Parser {
 				if ( _ctx.isEmpty() ) {
 					if (startRuleStartState.isLeftRecursiveRule) {
 						ParserRuleContext result = _ctx;
-						Pair<ParserRuleContext, int> parentContext = _parentContextStack.pop();
+						Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
 						unrollRecursionContexts(parentContext.a);
 						return result;
 					}
@@ -195,7 +195,7 @@ public class ParserInterpreter : Parser {
 	//@Override
 	public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence) {
 		Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);
-		_parentContextStack.push(pair);
+		_parentContextStack.Push(pair);
 		base.enterRecursionRule(localctx, state, ruleIndex, precedence);
 	}
 
@@ -220,8 +220,8 @@ public class ParserInterpreter : Parser {
 					// We are at the start of a left recursive rule's (...)* loop
 					// and we're not taking the exit branch of loop.
 					InterpreterRuleContext localctx =
-						createInterpreterRuleContext(_parentContextStack.peek().a,
-													 _parentContextStack.peek().b,
+						createInterpreterRuleContext(_parentContextStack.Peek().a,
+													 _parentContextStack.Peek().b,
 													 _ctx.getRuleIndex());
 					pushNewRecursionContext(localctx,
 											atn.ruleToStartState[p.ruleIndex].stateNumber,
@@ -320,7 +320,7 @@ public class ParserInterpreter : Parser {
 	protected void visitRuleStopState(ATNState p) {
 		RuleStartState ruleStartState = atn.ruleToStartState[p.ruleIndex];
 		if (ruleStartState.isLeftRecursiveRule) {
-			Pair<ParserRuleContext, int> parentContext = _parentContextStack.pop();
+			Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
 			unrollRecursionContexts(parentContext.a);
 			setState(parentContext.b);
 		}

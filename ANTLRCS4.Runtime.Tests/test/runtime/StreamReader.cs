@@ -8,46 +8,54 @@ using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
-public class RunnableStreamReader : Runnable {
-	private readonly StringBuilder buffer = new StringBuilder();
-	private readonly TextReader reader;
-	private readonly Thread worker;
+public class RunnableStreamReader : Runnable
+{
+    private readonly StringBuilder buffer = new ();
+    private readonly TextReader reader;
+    private readonly Thread worker;
 
-	public RunnableStreamReader(TextReader reader) {
-		this.reader = reader;
-		worker = new Thread(this.run);
-	}
+    public RunnableStreamReader(TextReader reader)
+    {
+        this.reader = reader;
+        worker = new Thread(this.Run);
+    }
 
-	public void start() {
-		worker.Start();
-	}
+    public void Start()
+    {
+        worker.Start();
+    }
 
-	////@Override
-	public void run() {
-		try {
-			while (true) {
-				int c = reader.Read();
-				if (c == -1) {
-					break;
-				}
-				if (c == '\r') {
-					continue;
-				}
-				buffer.Append((char) c);
-			}
-		}
-		catch (IOException ioe) {
-			Console.Error.WriteLine("can't read output from process");
-		}
-	}
+    ////@Override
+    public void Run()
+    {
+        try
+        {
+            while (true)
+            {
+                int c = reader.Read();
+                if (c == -1)
+                {
+                    break;
+                }
+                if (c == '\r')
+                {
+                    continue;
+                }
+                buffer.Append((char)c);
+            }
+        }
+        catch (IOException ioe)
+        {
+            Console.Error.WriteLine("can't read output from process");
+        }
+    }
 
-	/** wait for the thread to finish */
-	public void join()  {
-		worker.Join();
-	}
+    /** wait for the thread to finish */
+    public void Join()
+    {
+        worker.Join();
+    }
 
-	////@Override
-	public override String ToString() {
-		return buffer.ToString();
-	}
+    ////@Override
+    public override string ToString() => buffer.ToString();
 }

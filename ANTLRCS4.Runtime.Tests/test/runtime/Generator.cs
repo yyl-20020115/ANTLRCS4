@@ -9,71 +9,81 @@ using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.runtime;
 
-public class Generator {
-	/** Write a grammar to tmpdir and run antlr */
-	public static ErrorQueue antlrOnString(String workdir,
-										   String targetName,
-										   String grammarFileName,
-										   String grammarStr,
-										   bool defaultListener,
-										   params String[] extraOptions)
-	{
-		FileUtils.mkdir(workdir);
-		FileUtils.writeFile(workdir, grammarFileName, grammarStr);
-		return antlrOnString(workdir, targetName, grammarFileName, defaultListener, extraOptions);
-	}
+public static class Generator
+{
+    /** Write a grammar to tmpdir and run antlr */
+    public static ErrorQueue AntlrOnString(string workdir,
+                                           string targetName,
+                                           string grammarFileName,
+                                           string grammarStr,
+                                           bool defaultListener,
+                                           params string[] extraOptions)
+    {
+        FileUtils.MakeDirectory(workdir);
+        FileUtils.WriteFile(workdir, grammarFileName, grammarStr);
+        return AntlrOnString(workdir, targetName, grammarFileName, defaultListener, extraOptions);
+    }
 
-	/** Run ANTLR on stuff in workdir and error queue back */
-	public static ErrorQueue antlrOnString(String workdir,
-										   String targetName,
-										   String grammarFileName,
-										   bool defaultListener,
-										   params String[] extraOptions)
-	{
-		List<String> options = new (extraOptions);
-		if ( targetName!=null ) {
-			options.Add("-Dlanguage="+targetName);
-		}
-		if ( !options.Contains("-o") ) {
-			options.Add("-o");
-			options.Add(workdir);
-		}
-		if ( !options.Contains("-lib") ) {
-			options.Add("-lib");
-			options.Add(workdir);
-		}
-		if ( !options.Contains("-encoding") ) {
-			options.Add("-encoding");
-			options.Add("UTF-8");
-		}
-		options.Add(Path.Combine(workdir,grammarFileName));
+    /** Run ANTLR on stuff in workdir and error queue back */
+    public static ErrorQueue AntlrOnString(string workdir,
+                                           string targetName,
+                                           string grammarFileName,
+                                           bool defaultListener,
+                                           params string[] extraOptions)
+    {
+        List<string> options = new(extraOptions);
+        if (targetName != null)
+        {
+            options.Add("-Dlanguage=" + targetName);
+        }
+        if (!options.Contains("-o"))
+        {
+            options.Add("-o");
+            options.Add(workdir);
+        }
+        if (!options.Contains("-lib"))
+        {
+            options.Add("-lib");
+            options.Add(workdir);
+        }
+        if (!options.Contains("-encoding"))
+        {
+            options.Add("-encoding");
+            options.Add("UTF-8");
+        }
+        options.Add(Path.Combine(workdir, grammarFileName));
 
-		 String[] optionsA = new String[options.Count];
-		options.ToArray();
-		Tool antlr = new Tool(optionsA);
-		ErrorQueue equeue = new ErrorQueue(antlr);
-		antlr.addListener(equeue);
-		if (defaultListener) {
-			antlr.addListener(new DefaultToolListener(antlr));
-		}
-		antlr.processGrammarsOnCommandLine();
+        var optionsA = new string[options.Count];
+        options.ToArray();
+        var antlr = new Tool(optionsA);
+        var equeue = new ErrorQueue(antlr);
+        antlr.addListener(equeue);
+        if (defaultListener)
+        {
+            antlr.addListener(new DefaultToolListener(antlr));
+        }
+        antlr.processGrammarsOnCommandLine();
 
-		List<String> errors = new ();
+        List<string> errors = new();
 
-		if ( !defaultListener && equeue.errors.Count>0 ) {
-			for (int i = 0; i < equeue.errors.Count; i++) {
-				ANTLRMessage msg = equeue.errors[(i)];
-				Template msgST = antlr.ErrMgr.getMessageTemplate(msg);
-				errors.Add(msgST.Render());
-			}
-		}
-		if ( !defaultListener && equeue.warnings.Count>0 ) {
-			for (int i = 0; i < equeue.warnings.Count; i++) {
-				ANTLRMessage msg = equeue.warnings[(i)];
-				// antlrToolErrors.Append(msg); warnings are hushed
-			}
-		}
+        if (!defaultListener && equeue.errors.Count > 0)
+        {
+            for (int i = 0; i < equeue.errors.Count; i++)
+            {
+                var msg = equeue.errors[(i)];
+                var msgST = antlr.ErrMgr.getMessageTemplate(msg);
+                errors.Add(msgST.Render());
+            }
+        }
+        if (!defaultListener && equeue.warnings.Count > 0)
+        {
+            for (int i = 0; i < equeue.warnings.Count; i++)
+            {
+                var msg = equeue.warnings[(i)];
+                // antlrToolErrors.Append(msg); warnings are hushed
+            }
+        }
 
-		return equeue;
-	}
+        return equeue;
+    }
 }

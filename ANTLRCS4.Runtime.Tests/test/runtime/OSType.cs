@@ -6,9 +6,10 @@
 
 namespace org.antlr.v4.test.runtime;
 
-public enum OSType {
-	Windows,
-	Linux,
-	Mac,
-	Unknown
+public enum OSType : uint
+{
+    Unknown,
+    Windows,
+    Linux,
+    Mac,
 }

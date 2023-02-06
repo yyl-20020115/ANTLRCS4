@@ -3,7 +3,6 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-using Antlr4.StringTemplate;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
@@ -13,7 +12,7 @@ namespace org.antlr.v4.test.runtime;
 
 public class ErrorQueue : ANTLRToolListener {
 	public readonly Tool tool;
-	public readonly List<String> infos = new ();
+	public readonly List<string> infos = new ();
 	public readonly List<ANTLRMessage> errors = new ();
 	public readonly List<ANTLRMessage> warnings = new ();
 	public readonly List<ANTLRMessage> all = new ();
@@ -24,37 +23,34 @@ public class ErrorQueue : ANTLRToolListener {
 	}
 
 	////@Override
-	public void info(String msg) {
+	public void Info(string msg)
+	{
 		infos.Add(msg);
 	}
 
 	////@Override
-	public void error(ANTLRMessage msg) {
+	public void Error(ANTLRMessage msg) {
 		errors.Add(msg);
         all.Add(msg);
 	}
 
 	////@Override
-	public void warning(ANTLRMessage msg) {
+	public void Warning(ANTLRMessage msg) {
 		warnings.Add(msg);
         all.Add(msg);
 	}
 
-	public void error(ToolMessage msg) {
+	public void Error(ToolMessage msg) {
 		errors.Add(msg);
 		all.Add(msg);
 	}
 
-	public int size() {
-		return all.Count + infos.Count;
-	}
+    public int Count => all.Count + infos.Count;
 
-	////@Override
-	public override String ToString() {
-		return toString(false);
-	}
+    ////@Override
+    public override string ToString() => ToString(false);
 
-	public String toString(bool rendered) {
+    public string ToString(bool rendered) {
 		if (!rendered) {
 			return RuntimeUtils.join(all, "\n");
 		}
@@ -64,14 +60,14 @@ public class ErrorQueue : ANTLRToolListener {
 				$"No {nameof(Tool)} instance is available.");
 		}
 
-		StringBuilder buf = new StringBuilder();
-		foreach (ANTLRMessage m in all) {
-			Template st = tool.ErrMgr.getMessageTemplate(m);
-			buf.Append(st.Render());
-			buf.Append("\n");
+		var buffer = new StringBuilder();
+		foreach (var m in all) {
+			var st = tool.ErrMgr.getMessageTemplate(m);
+			buffer.Append(st.Render());
+			buffer.Append("\n");
 		}
 
-		return buf.ToString();
+		return buffer.ToString();
 	}
 
 }

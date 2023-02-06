@@ -281,13 +281,13 @@ public class Grammar : AttributeResolver
     {
         ////@Override
 
-        public void info(String msg) { }
+        public void Info(String msg) { }
         ////@Override
 
-        public void error(ANTLRMessage msg) { }
+        public void Error(ANTLRMessage msg) { }
         ////@Override
 
-        public void warning(ANTLRMessage msg) { }
+        public void Warning(ANTLRMessage msg) { }
 
     }
 
@@ -1006,7 +1006,7 @@ public class Grammar : AttributeResolver
         if (vocab != null)
         {
             TokenVocabParser vparser = new TokenVocabParser(this);
-            Dictionary<String, int> tokens = vparser.load();
+            Dictionary<String, int> tokens = vparser.Load();
             Tools.Log("grammar", "tokens=" + tokens);
             foreach (String t in tokens.Keys)
             {

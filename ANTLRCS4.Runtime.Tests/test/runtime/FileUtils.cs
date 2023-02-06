@@ -2,7 +2,7 @@
 
 public static class FileUtils
 {
-    public static void writeFile(String dir, String fileName, String content)
+    public static void WriteFile(string dir, string fileName, string content)
     {
         try
         {
@@ -14,7 +14,7 @@ public static class FileUtils
         }
     }
 
-    public static String readFile(String dir, String fileName)
+    public static string ReadFile(string dir, string fileName)
     {
         try
         {
@@ -27,24 +27,24 @@ public static class FileUtils
         return null;
     }
 
-    public static void replaceInFile(string sourcePath, String target, String replacement)
+    public static void ReplaceInFile(string sourcePath, String target, String replacement)
     {
-        replaceInFile(sourcePath, sourcePath, target, replacement);
+        ReplaceInFile(sourcePath, sourcePath, target, replacement);
     }
 
-    public static void replaceInFile(string sourcePath, string destPath, String target, String replacement)
+    public static void ReplaceInFile(string sourcePath, string destPath, String target, String replacement)
     {
-        String content = File.ReadAllText(sourcePath);
-        String newContent = content.Replace(target, replacement);
-        File.WriteAllText(destPath, newContent);  
+        var content = File.ReadAllText(sourcePath);
+        var newContent = content.Replace(target, replacement);
+        File.WriteAllText(destPath, newContent);
     }
 
-    public static void mkdir(String dir)
+    public static void MakeDirectory(String dir)
     {
         Directory.CreateDirectory(dir);
     }
 
-    public static void deleteDirectory(string f)
+    public static void DeleteDirectory(string f)
     {
         if (Directory.Exists(f))
         {

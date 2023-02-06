@@ -133,7 +133,7 @@ public class TestCodeGeneration {
 				}
 			}
 		}
-		if ( equeue.size()>0 ) {
+		if ( equeue.Count>0 ) {
 			Console.Error.WriteLine(equeue.ToString());
 		}
 		return evals;

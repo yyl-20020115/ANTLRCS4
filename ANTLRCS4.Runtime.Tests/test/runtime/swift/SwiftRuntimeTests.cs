@@ -6,9 +6,8 @@
 
 namespace org.antlr.v4.test.runtime.swift;
 
-public class SwiftRuntimeTests : RuntimeTests {
-	//////@Override
-	protected override RuntimeRunner createRuntimeRunner() {
-		return new SwiftRunner();
-	}
+public class SwiftRuntimeTests : RuntimeTests
+{
+    //////@Override
+    protected override RuntimeRunner CreateRuntimeRunner() => new SwiftRunner();
 }

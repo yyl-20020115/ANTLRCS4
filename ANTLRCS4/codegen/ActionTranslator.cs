@@ -113,7 +113,7 @@ public class ActionTranslator : ActionSplitterListener
         @in.setCharPositionInLine(tokenWithinAction.getCharPositionInLine());
         var trigger = new ActionSplitter(@in, translator);
         // forces eval, triggers listener methods
-        trigger.getActionTokens();
+        trigger.GetActionTokens();
         return translator.chunks;
     }
 

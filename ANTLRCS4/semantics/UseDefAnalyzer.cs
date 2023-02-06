@@ -20,7 +20,7 @@ public class UseDefAnalyzer {
 				Alternative alt = r.alt[i];
                 foreach (ActionAST a in alt.actions) {
 					ActionSniffer sniffer =	new ActionSniffer(g, r, alt, a, a.token);
-					sniffer.examineAction();
+					sniffer.ExamineAction();
 				}
 			}
 		}
@@ -50,7 +50,7 @@ public class UseDefAnalyzer {
 		ActionSplitterListener listener = new BASListener();
 		ActionSplitter splitter = new ActionSplitter(@in, listener);
 		// forces eval, triggers listener methods
-		splitter.getActionTokens();
+		splitter.GetActionTokens();
 		return dependent[0];
 	}
 

@@ -193,9 +193,9 @@ public class TestXPath {
 				false, false, Stage.Execute, true);
 		JavaRunner runner = new JavaRunner();
 		{
-			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
+			JavaExecutedState executedState = (JavaExecutedState)runner.Run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
-            var parser = compiledState.initializeLexerAndParser(input).b;
+            var parser = compiledState.InitializeLexerAndParser(input).b;
 			ICollection<ParseTree> found = XPath.findAll(executedState.parseTree, xpath, parser);
 
 			return new (parser.getRuleNames(), found);

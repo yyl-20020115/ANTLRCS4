@@ -60,10 +60,10 @@ public class ToolTestUtils
                 false, showDiagnosticErrors, Stage.Execute, false);
         JavaRunner runner = new JavaRunner(workingDir, saveTestDir);
         {
-            State result = runner.run(runOptions);
+            State result = runner.Run(runOptions);
             if (!(result is ExecutedState))
             {
-                Assert.Fail(result.getErrorMessage());
+                Assert.Fail(result.GetErrorMessage());
             }
             return (ExecutedState)result;
         }
@@ -97,9 +97,9 @@ public class ToolTestUtils
 
             try
             {
-                ErrorQueue equeue = Generator.antlrOnString(tempTestDir, null, fileName, grammarStr, false);
+                ErrorQueue equeue = Generator.AntlrOnString(tempTestDir, null, fileName, grammarStr, false);
 
-                String actual = equeue.toString(true);
+                String actual = equeue.ToString(true);
                 actual = actual.Replace(tempTestDir + Path.DirectorySeparatorChar, "");
                 String msg = grammarStr;
                 msg = msg.Replace("\n", "\\n");
@@ -112,7 +112,7 @@ public class ToolTestUtils
             {
                 try
                 {
-                    FileUtils.deleteDirectory(tempTestDir);
+                    FileUtils.DeleteDirectory(tempTestDir);
                 }
                 catch (IOException ignored)
                 {

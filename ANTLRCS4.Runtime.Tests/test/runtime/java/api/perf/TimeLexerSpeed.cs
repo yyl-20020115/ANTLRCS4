@@ -488,17 +488,17 @@ public class TimeLexerSpeed
         return Math.Sqrt(sum / (values.Count - 1));
     }
 
-    public static String basename(String fullyQualifiedFileName)
+    public static string basename(string fullyQualifiedFileName)
     {
         return Path.GetFileName(fullyQualifiedFileName); 
     }
 
-    public static String dirname(String fullyQualifiedFileName)
+    public static string dirname(string fullyQualifiedFileName)
     {
         return Path.GetDirectoryName(fullyQualifiedFileName) ?? "";
     }
 
-    public static long getResourceSize(global::System.Resources.ResourceManager manager, String resourceName)
+    public static long getResourceSize(global::System.Resources.ResourceManager manager, string resourceName)
     {
         using var s = manager.GetStream(resourceName);
         var l = s.Length;

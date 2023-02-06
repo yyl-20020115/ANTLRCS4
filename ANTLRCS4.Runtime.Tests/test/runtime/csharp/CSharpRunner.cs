@@ -8,53 +8,60 @@ using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.csharp;
 
-public class CSharpRunner : RuntimeRunner {
-	////@Override
-	public override String getLanguage() { return "CSharp"; }
+public class CSharpRunner : RuntimeRunner
+{
+    ////@Override
+    public override string GetLanguage() { return "CSharp"; }
 
-	////@Override
-	public String getTitleName() { return "C#"; }
+    ////@Override
+    public override string GetTitleName() { return "C#"; }
 
-	////@Override
-	public String getExtension() { return "cs"; }
+    ////@Override
+    public override string GetExtension() { return "cs"; }
 
-	////@Override
-	public String getRuntimeToolName() { return "dotnet"; }
+    ////@Override
+    public override string GetRuntimeToolName() { return "dotnet"; }
 
-	////@Override
-	public String getExecFileName() { return getTestFileName() + ".dll"; }
+    ////@Override
+    public override string GetExecFileName() { return GetTestFileName() + ".dll"; }
 
-	private static readonly String testProjectFileName = "Antlr4.Test.csproj";
-	private static readonly String cSharpAntlrRuntimeDllName =
-			Path.Combine(getCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").ToString();
+    private static readonly string testProjectFileName = "Antlr4.Test.csproj";
+    private static readonly string cSharpAntlrRuntimeDllName =
+            Path.Combine(GetCachePath("CSharp"), "Antlr4.Runtime.Standard.dll").ToString();
 
-	private static readonly String cSharpTestProjectContent;
+    private static readonly string cSharpTestProjectContent;
 
-	static CSharpRunner(){
-		Template projectTemplate = new Template(RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Antlr4.Test.csproj.stg"));
-		projectTemplate.Add("runtimeLibraryPath", cSharpAntlrRuntimeDllName);
-		cSharpTestProjectContent = projectTemplate.Render();
-	}
+    static CSharpRunner()
+    {
+        var projectTemplate = new Template(RuntimeTestUtils.GetTextFromResource("org/antlr/v4/test/runtime/helpers/Antlr4.Test.csproj.stg"));
+        projectTemplate.Add("runtimeLibraryPath", cSharpAntlrRuntimeDllName);
+        cSharpTestProjectContent = projectTemplate.Render();
+    }
 
-	////@Override
-	protected void initRuntime()  {
-		String cachePath = getCachePath();
-        FileUtils.mkdir(cachePath);
-		String projectPath = Path.Combine(getRuntimePath(), "src", "Antlr4.csproj").ToString();
-		String[] args = new String[]{getRuntimeToolPath(), "build", projectPath, "-c", "Release", "-o", cachePath};
-		runCommand(args, cachePath, "build " + getTitleName() + " ANTLR runtime");
-	}
+    ////@Override
+    protected override void InitRuntime()
+    {
+        var cachePath = GetCachePath();
+        FileUtils.MakeDirectory(cachePath);
+        var projectPath = Path.Combine(GetRuntimePath(), "src", "Antlr4.csproj").ToString();
+        var args = new string[] { GetRuntimeToolPath(), "build", projectPath, "-c", "Release", "-o", cachePath };
+        RunCommand(args, cachePath, "build " + GetTitleName() + " ANTLR runtime");
+    }
 
-	////@Override
-	public CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		Exception exception = null;
-		try {
-			FileUtils.writeFile(getTempDirPath(), testProjectFileName, cSharpTestProjectContent);
-			runCommand(new String[]{getRuntimeToolPath(), "build", testProjectFileName, "-c", "Release"}, getTempDirPath(),
-					"build C# test binary");
-		} catch (Exception e) {
-			exception = e;
-		}
-		return new CompiledState(generatedState, exception);
-	}
+    ////@Override
+    public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    {
+        Exception exception = null;
+        try
+        {
+            FileUtils.WriteFile(GetTempDirPath(), testProjectFileName, cSharpTestProjectContent);
+            RunCommand(new string[] { GetRuntimeToolPath(), "build", testProjectFileName, "-c", "Release" }, GetTempDirPath(),
+                    "build C# test binary");
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        return new CompiledState(generatedState, exception);
+    }
 }

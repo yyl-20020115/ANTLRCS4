@@ -6,21 +6,18 @@
 
 namespace org.antlr.v4.test.runtime.php;
 
-public class PHPRunner : RuntimeRunner {
-	private static readonly Dictionary<String, String> environment;
+public class PHPRunner : RuntimeRunner
+{
+    private static readonly Dictionary<string, string> environment = new();
 
-	static PHPRunner(){
-		environment = new ();
-		environment.Add("RUNTIME", getRuntimePath("PHP"));
-	}
+    static PHPRunner()
+    {
+        environment.Add("RUNTIME", GetRuntimePath("PHP"));
+    }
 
-	////@Override
-	public override String getLanguage() {
-		return "PHP";
-	}
+    ////@Override
+    public override string GetLanguage() => "PHP";
 
-	////@Override
-	protected override Dictionary<String, String> getExecEnvironment() {
-		return environment;
-	}
+    ////@Override
+    public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

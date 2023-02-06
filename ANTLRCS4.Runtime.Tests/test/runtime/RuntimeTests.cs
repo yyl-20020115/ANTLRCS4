@@ -19,54 +19,63 @@ namespace org.antlr.v4.test.runtime;
  *  All the various test rig classes derived from this one.
  *  E.g., see {@link JavaRuntimeTests}.
  */
-public abstract class RuntimeTests {
-	protected abstract RuntimeRunner createRuntimeRunner();
+public abstract class RuntimeTests
+{
+    protected abstract RuntimeRunner CreateRuntimeRunner();
 
-	//private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
-	private static readonly Dictionary<String, TemplateGroup> cachedTargetTemplates = new ();
-	private static readonly StringRenderer rendered = new StringRenderer();
+    //private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
+    private static readonly Dictionary<string, TemplateGroup> cachedTargetTemplates = new();
+    private static readonly StringRenderer rendered = new();
 
-	static RuntimeTests(){
-		string descriptorsDir = (Path.Combine(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
+    static RuntimeTests()
+    {
+        var descriptorsDir = (Path.Combine(RuntimeTestUtils.resourcePath.ToString(), "org/antlr/v4/test/runtime/descriptors").ToString());
         var directoryListing = new DirectoryInfo(descriptorsDir).GetFiles().Select(f => f.FullName);
         //assert directoryListing != null;
-        foreach (string directory in directoryListing) {
-			String groupName = directory;
-			if (groupName.StartsWith(".")) {
-				continue; // Ignore service directories (like .DS_Store in Mac)
-			}
+        foreach (var directory in directoryListing)
+        {
+            var groupName = directory;
+            if (groupName.StartsWith("."))
+            {
+                continue; // Ignore service directories (like .DS_Store in Mac)
+            }
 
-			List<RuntimeTestDescriptor> descriptors = new ();
+            List<RuntimeTestDescriptor> descriptors = new();
 
-            var descriptorFiles = new DirectoryInfo(directory).GetFiles().Select(f=>f.FullName);
-			//assert descriptorFiles != null;
-			foreach (string descriptorFile in descriptorFiles) {
-				String name = descriptorFile.Replace(".txt", "");
-				if (name.StartsWith(".")) {
-					continue;
-				}
+            var descriptorFiles = new DirectoryInfo(directory).GetFiles().Select(f => f.FullName);
+            //assert descriptorFiles != null;
+            foreach (var descriptorFile in descriptorFiles)
+            {
+                var name = descriptorFile.Replace(".txt", "");
+                if (name.StartsWith("."))
+                {
+                    continue;
+                }
 
-				String text;
-				try {
-					text = File.ReadAllText(descriptorFile);
-				} catch (IOException e) {
-					throw new RuntimeException(e.Message, e);
-				}
-				descriptors.Add(RuntimeTestDescriptorParser.parse(name, text, descriptorFile));
-			}
+                String text;
+                try
+                {
+                    text = File.ReadAllText(descriptorFile);
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e.Message, e);
+                }
+                descriptors.Add(RuntimeTestDescriptorParser.Parse(name, text, descriptorFile));
+            }
 
-			//testDescriptors.put(groupName, descriptors.ToArray());
-		}
+            //testDescriptors.put(groupName, descriptors.ToArray());
+        }
 
-		//foreach (String key in CustomDescriptors.descriptors.Keys) {
-		//	RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
-		//	RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
-		//	if (existedDescriptors != null) {
-		//		testDescriptors.put(key, Stream.concat(Arrays.stream(existedDescriptors), Arrays.stream(descriptors))
-		//				.toArray());
-		//	}
-		//}
-	}
+        //foreach (String key in CustomDescriptors.descriptors.Keys) {
+        //	RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
+        //	RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
+        //	if (existedDescriptors != null) {
+        //		testDescriptors.put(key, Stream.concat(Arrays.stream(existedDescriptors), Arrays.stream(descriptors))
+        //				.toArray());
+        //	}
+        //}
+    }
 #if false
 	//@TestFactory
 	//@Execution(ExecutionMode.CONCURRENT)
@@ -93,133 +102,145 @@ public abstract class RuntimeTests {
 		}
 
 		return result;
-	}
+	}	
 #endif
-	private static String test(RuntimeTestDescriptor descriptor, RuntimeRunner runner) {
-		String targetName = runner.getLanguage();
-		if (descriptor.ignore(targetName)) {
-			Console.Out.WriteLine("Ignore " + descriptor);
-			return null;
-		}
+    private static string Test(RuntimeTestDescriptor descriptor, RuntimeRunner runner)
+    {
+        var targetName = runner.GetLanguage();
+        if (descriptor.Ignore(targetName))
+        {
+            Console.Out.WriteLine("Ignore " + descriptor);
+            return null;
+        }
 
-		FileUtils.mkdir(runner.getTempDirPath());
+        FileUtils.MakeDirectory(runner.GetTempDirPath());
 
-		String grammarName = descriptor.grammarName;
-		String grammar = prepareGrammars(descriptor, runner);
+        var grammarName = descriptor.grammarName;
+        var grammar = PrepareGrammars(descriptor, runner);
 
-		String lexerName, parserName;
-		bool useListenerOrVisitor;
-		String superClass;
-		if (descriptor.testType == GrammarType.Parser || descriptor.testType == GrammarType.CompositeParser) {
-			lexerName = grammarName + "Lexer";
-			parserName = grammarName + "Parser";
-			useListenerOrVisitor = true;
-			if (targetName.Equals("Java")) {
-				superClass = JavaRunner.runtimeTestParserName;
-			}
-			else {
-				superClass = null;
-			}
-		}
-		else {
-			lexerName = grammarName;
-			parserName = null;
-			useListenerOrVisitor = false;
-			if (targetName.Equals("Java")) {
-				superClass = JavaRunner.runtimeTestLexerName;
-			}
-			else {
-				superClass = null;
-			}
-		}
+        string lexerName, parserName;
+        bool useListenerOrVisitor;
+        string superClass;
+        if (descriptor.testType == GrammarType.Parser || descriptor.testType == GrammarType.CompositeParser)
+        {
+            lexerName = grammarName + "Lexer";
+            parserName = grammarName + "Parser";
+            useListenerOrVisitor = true;
+            if (targetName.Equals("Java"))
+            {
+                superClass = JavaRunner.runtimeTestParserName;
+            }
+            else
+            {
+                superClass = null;
+            }
+        }
+        else
+        {
+            lexerName = grammarName;
+            parserName = null;
+            useListenerOrVisitor = false;
+            if (targetName.Equals("Java"))
+            {
+                superClass = JavaRunner.runtimeTestLexerName;
+            }
+            else
+            {
+                superClass = null;
+            }
+        }
 
-		RunOptions runOptions = new RunOptions(grammarName + ".g4",
-				grammar,
-				parserName,
-				lexerName,
-				useListenerOrVisitor,
-				useListenerOrVisitor,
-				descriptor.startRule,
-				descriptor.input,
-				false,
-				descriptor.showDiagnosticErrors,
-				descriptor.showDFA,
-				Stage.Execute,
-				false,
-				targetName,
-				superClass
-		);
+        var runOptions = new RunOptions(grammarName + ".g4",
+                grammar,
+                parserName,
+                lexerName,
+                useListenerOrVisitor,
+                useListenerOrVisitor,
+                descriptor.startRule,
+                descriptor.input,
+                false,
+                descriptor.showDiagnosticErrors,
+                descriptor.showDFA,
+                Stage.Execute,
+                false,
+                targetName,
+                superClass
+        );
 
-		State result = runner.run(runOptions);
+        var result = runner.Run(runOptions);
 
-		return assertCorrectOutput(descriptor, targetName, result);
-	}
+        return AssertCorrectOutput(descriptor, targetName, result);
+    }
 
-	private static String prepareGrammars(RuntimeTestDescriptor descriptor, RuntimeRunner runner) {
-		String targetName = runner.getLanguage();
+    private static string PrepareGrammars(RuntimeTestDescriptor descriptor, RuntimeRunner runner)
+    {
+        var targetName = runner.GetLanguage();
+        TemplateGroup targetTemplates;
+        lock (cachedTargetTemplates)
+        {
+            if (!cachedTargetTemplates.TryGetValue(targetName, out targetTemplates))
+            {
+                var templates = File.ReadAllText("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
+                //assert templates != null;
+                targetTemplates = new TemplateGroupFile(templates, Encoding.UTF8, '<', '>');
+                targetTemplates.RegisterRenderer(typeof(String), rendered);
+                cachedTargetTemplates.Add(targetName, targetTemplates);
+            }
+        }
 
-		TemplateGroup targetTemplates;
-		lock (cachedTargetTemplates) {
-			if (!cachedTargetTemplates.TryGetValue(targetName,out targetTemplates)) {
-				string templates = File.ReadAllText("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
-				//assert templates != null;
-				targetTemplates = new TemplateGroupFile(templates, Encoding.UTF8, '<', '>');
-				targetTemplates.RegisterRenderer(typeof(String), rendered);
-				cachedTargetTemplates.Add(targetName, targetTemplates);
-			}
-		}
+        // write out any slave grammars
+        var slaveGrammars = descriptor.slaveGrammars;
+        if (slaveGrammars != null)
+        {
+            foreach (var spair in slaveGrammars)
+            {
+                var gx = new TemplateGroup('<', '>');
+                gx.RegisterRenderer(typeof(String), rendered);
+                gx.ImportTemplates(targetTemplates);
+                var _grammarST = new Template(gx, spair.b);
+                FileUtils.WriteFile(runner.GetTempDirPath(), spair.a + ".g4", _grammarST.Render());
+            }
+        }
 
-		// write out any slave grammars
-		List<Pair<String, String>> slaveGrammars = descriptor.slaveGrammars;
-		if (slaveGrammars != null) {
-			foreach (Pair<String, String> spair in slaveGrammars) {
-				TemplateGroup gx = new TemplateGroup('<', '>');
-				gx.RegisterRenderer(typeof(String), rendered);
-				gx.ImportTemplates(targetTemplates);
-				Template _grammarST = new Template(gx, spair.b);
-				FileUtils.writeFile(runner.getTempDirPath(), spair.a + ".g4", _grammarST.Render());
-			}
-		}
+        var g = new TemplateGroup('<', '>');
+        g.ImportTemplates(targetTemplates);
+        g.RegisterRenderer(typeof(string), rendered);
+        var grammarST = new Template(g, descriptor.grammar);
+        return grammarST.Render();
+    }
 
-        TemplateGroup g = new TemplateGroup('<', '>');
-		g.ImportTemplates(targetTemplates);
-		g.RegisterRenderer(typeof(String), rendered);
-		Template grammarST = new Template(g, descriptor.grammar);
-		return grammarST.Render();
-	}
+    private static string AssertCorrectOutput(RuntimeTestDescriptor descriptor, String targetName, State state)
+    {
+        ExecutedState executedState;
+        if (state is ExecutedState state1)
+        {
+            executedState = state1;
+            if (executedState.exception != null)
+            {
+                return state.GetErrorMessage();
+            }
+        }
+        else
+        {
+            return state.GetErrorMessage();
+        }
 
-	private static String assertCorrectOutput(RuntimeTestDescriptor descriptor, String targetName, State state) {
-		ExecutedState executedState;
-		if (state is ExecutedState) {
-			executedState = (ExecutedState)state;
-			if (executedState.exception != null) {
-				return state.getErrorMessage();
-			}
-		}
-		else {
-			return state.getErrorMessage();
-		}
+        var expectedOutput = descriptor.output;
+        var expectedParseErrors = descriptor.errors;
 
-		String expectedOutput = descriptor.output;
-		String expectedParseErrors = descriptor.errors;
+        bool doesOutputEqualToExpected = executedState.output.Equals(expectedOutput);
+        if (!doesOutputEqualToExpected || !executedState.errors.Equals(expectedParseErrors))
+        {
+            var message = doesOutputEqualToExpected
+                ? "Parse output is as expected, but errors are not: "
+                : "Parse output is incorrect: " +
+                        "expectedOutput:<" + expectedOutput + ">; actualOutput:<" + executedState.output + ">; ";
+            return "[" + targetName + ":" + descriptor.name + "] " +
+                    message +
+                    "expectedParseErrors:<" + expectedParseErrors + ">;" +
+                    "actualParseErrors:<" + executedState.errors + ">.";
+        }
 
-		bool doesOutputEqualToExpected = executedState.output.Equals(expectedOutput);
-		if (!doesOutputEqualToExpected || !executedState.errors.Equals(expectedParseErrors)) {
-			String message;
-			if (doesOutputEqualToExpected) {
-				message = "Parse output is as expected, but errors are not: ";
-			}
-			else {
-				message = "Parse output is incorrect: " +
-						"expectedOutput:<" + expectedOutput + ">; actualOutput:<" + executedState.output + ">; ";
-			}
-
-			return "[" + targetName + ":" + descriptor.name + "] " +
-					message +
-					"expectedParseErrors:<" + expectedParseErrors + ">;" +
-					"actualParseErrors:<" + executedState.errors + ">.";
-		}
-
-		return null;
-	}
+        return null;
+    }
 }

@@ -6,9 +6,10 @@
 
 namespace org.antlr.v4.test.runtime;
 
-public enum GrammarType {
-	Lexer,
-	Parser,
-	CompositeLexer,
-	CompositeParser
+public enum GrammarType : uint
+{
+    Lexer,
+    Parser,
+    CompositeLexer,
+    CompositeParser
 }

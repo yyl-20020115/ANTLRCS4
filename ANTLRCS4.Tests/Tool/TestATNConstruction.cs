@@ -24,7 +24,7 @@ public class TestATNConstruction {
 			"s2-A->s3\n" +
 			"s3->RuleStop_a_1\n" +
 			"RuleStop_a_1-EOF->s4\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAB(){
 		Grammar g = new Grammar(
@@ -36,7 +36,7 @@ public class TestATNConstruction {
 				"s3-B->s4\n" +
 				"s4->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAorB(){
 		Grammar g = new Grammar(
@@ -51,7 +51,7 @@ public class TestATNConstruction {
 				"BlockEnd_6->RuleStop_a_1\n" +
 				"s4-action_0:-1->BlockEnd_6\n" +
 				"RuleStop_a_1-EOF->s7\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testSetAorB(){
 		Grammar g = new Grammar(
@@ -62,7 +62,7 @@ public class TestATNConstruction {
 				"s2-{A, B}->s3\n" +
 				"s3->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s4\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testLexerIsntSetMultiCharString(){
 		LexerGrammar g = new LexerGrammar(
@@ -242,7 +242,7 @@ public class TestATNConstruction {
 				"s2-{'b', A}->s3\n" +
 				"s3->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s4\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testABorCD(){
 		Grammar g = new Grammar(
@@ -258,7 +258,7 @@ public class TestATNConstruction {
 				"s5-D->BlockEnd_7\n" +
 				"BlockEnd_7->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s8\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testbA(){
 		Grammar g = new Grammar(
@@ -271,13 +271,13 @@ public class TestATNConstruction {
 				"s5-A->s6\n" +
 				"s6->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s9\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 		expecting =
 			"RuleStart_b_2->s7\n" +
 				"s7-B->s8\n" +
 				"s8->RuleStop_b_3\n" +
 				"RuleStop_b_3->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "b", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "b", expecting);
 	}
 	[TestMethod] public void testFollow(){
 		Grammar g = new Grammar(
@@ -291,7 +291,7 @@ public class TestATNConstruction {
 				"s10->RuleStop_b_3\n" +
 				"RuleStop_b_3->s7\n" +
 				"RuleStop_b_3->s12\n";
-		RuntimeTestUtils.checkRuleATN(g, "b", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "b", expecting);
 	}
 	[TestMethod] public void testAorEpsilon(){
 		Grammar g = new Grammar(
@@ -305,7 +305,7 @@ public class TestATNConstruction {
 				"s3->BlockEnd_5\n" +
 				"BlockEnd_5->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s6\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAOptional(){
 		Grammar g = new Grammar(
@@ -318,7 +318,7 @@ public class TestATNConstruction {
 				"s2-A->BlockEnd_4\n" +
 				"BlockEnd_4->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAorBoptional(){
 		Grammar g = new Grammar(
@@ -334,7 +334,7 @@ public class TestATNConstruction {
 				"BlockEnd_6->RuleStop_a_1\n" +
 				"s3-action_0:-1->BlockEnd_6\n" +
 				"RuleStop_a_1-EOF->s7\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testSetAorBoptional(){
 		Grammar g = new Grammar(
@@ -347,7 +347,7 @@ public class TestATNConstruction {
 				"s2-{A, B}->BlockEnd_4\n" +
 				"BlockEnd_4->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAorBthenC(){
 		Grammar g = new Grammar(
@@ -359,7 +359,7 @@ public class TestATNConstruction {
 				"s3-C->s4\n" +
 				"s4->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAplus(){
 		Grammar g = new Grammar(
@@ -374,7 +374,7 @@ public class TestATNConstruction {
 				"PlusLoopBack_5->s6\n" +
 				"s6->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s7\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAplusSingleAltHasPlusASTPointingAtLoopBackState(){
 		Grammar g = new Grammar(
@@ -390,7 +390,7 @@ public class TestATNConstruction {
 			"PlusLoopBack_10->s11\n" +
 			"s11->RuleStop_a_3\n" +
 			"RuleStop_a_3->s5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 		// Get all AST -> ATNState relationships. Make sure loopback is covered when no loop entry decision
 		List<GrammarAST> ruleNodes = g.ast.getNodesWithType(ANTLRParser.RULE);
 		RuleAST a = (RuleAST)ruleNodes[(1)];
@@ -419,7 +419,7 @@ public class TestATNConstruction {
 				"PlusLoopBack_7->s8\n" +
 				"s8->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s9\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAorBorEmptyPlus(){
 		Grammar g = new Grammar(
@@ -438,7 +438,7 @@ public class TestATNConstruction {
 				"PlusLoopBack_7->s8\n" +
 				"s8->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s9\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testEmptyOrEmpty(){
 		Grammar g = new Grammar(
@@ -452,7 +452,7 @@ public class TestATNConstruction {
 			"s3->BlockEnd_5\n"+
 			"BlockEnd_5->RuleStop_a_1\n"+
 			"RuleStop_a_1-EOF->s6\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAStar(){
 		Grammar g = new Grammar(
@@ -468,7 +468,7 @@ public class TestATNConstruction {
 				"RuleStop_a_1-EOF->s8\n" +
 				"BlockEnd_4->StarLoopBack_7\n" +
 				"StarLoopBack_7->StarLoopEntry_5\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testNestedAstar(){
 		Grammar g = new Grammar(
@@ -491,7 +491,7 @@ public class TestATNConstruction {
 				"BlockEnd_5->StarLoopBack_8\n" +
 				"StarLoopBack_13->StarLoopEntry_11\n" +
 				"StarLoopBack_8->StarLoopEntry_6\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testAorBstar(){
 		Grammar g = new Grammar(
@@ -510,7 +510,7 @@ public class TestATNConstruction {
 				"BlockEnd_6->StarLoopBack_9\n" +
 				"s4-action_0:-1->BlockEnd_6\n" +
 				"StarLoopBack_9->StarLoopEntry_7\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 	[TestMethod] public void testPredicatedAorB(){
 		Grammar g = new Grammar(
@@ -526,7 +526,7 @@ public class TestATNConstruction {
 				"s5-B->BlockEnd_7\n" +
 				"BlockEnd_7->RuleStop_a_1\n" +
 				"RuleStop_a_1-EOF->s8\n";
-		RuntimeTestUtils.checkRuleATN(g, "a", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
 	}
 
 	[TestMethod] public void testParserRuleRefInLexerRule(){
@@ -541,11 +541,11 @@ public class TestATNConstruction {
 			Tool tool = new Tool();
 			tool.removeListeners();
 			tool.addListener(errorQueue);
-			Assert.AreEqual(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.Count);
 			GrammarRootAST grammarRootAST = tool.parseGrammarFromString(gstr);
-			Assert.AreEqual(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.Count);
 			Grammar g = tool.createGrammar(grammarRootAST);
-			Assert.AreEqual(0, errorQueue.size());
+			Assert.AreEqual(0, errorQueue.Count);
 			g.fileName = "<string>";
 			tool.process(g, false);
 		}
@@ -615,7 +615,7 @@ public class TestATNConstruction {
 			"StarLoopBack_29->StarLoopEntry_27\n"+
 			"s20-e->RuleStart_e_2\n"+
 			"s21->BlockEnd_26\n";
-		RuntimeTestUtils.checkRuleATN(g, "e", expecting);
+		RuntimeTestUtils.CheckRuleATN(g, "e", expecting);
 	}
 
 

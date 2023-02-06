@@ -54,20 +54,20 @@ public class RuleCollector : GrammarTreeVisitor {
 		rules.Put(r.name, r);
 
 		if ( arg!=null ) {
-			r.args = ScopeParser.parseTypedArgList(arg, arg.getText(), g);
+			r.args = ScopeParser.ParseTypedArgList(arg, arg.getText(), g);
 			r.args.type = AttributeDict.DictType.ARG;
 			r.args.ast = arg;
 			arg.resolver = r.alt[currentOuterAltNumber];
 		}
 
 		if ( returns!=null ) {
-			r.retvals = ScopeParser.parseTypedArgList(returns, returns.getText(), g);
+			r.retvals = ScopeParser.ParseTypedArgList(returns, returns.getText(), g);
 			r.retvals.type = AttributeDict.DictType.RET;
 			r.retvals.ast = returns;
 		}
 
 		if ( locals!=null ) {
-			r.locals = ScopeParser.parseTypedArgList(locals, locals.getText(), g);
+			r.locals = ScopeParser.ParseTypedArgList(locals, locals.getText(), g);
 			r.locals.type = AttributeDict.DictType.LOCAL;
 			r.locals.ast = locals;
 		}

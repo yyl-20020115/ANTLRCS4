@@ -1,9 +1,7 @@
 ﻿// $ANTLR 3.5.3 org\\antlr\\v4\\parse\\ActionSplitter.g 2023-01-27 22:27:34
 
 using org.antlr.runtime;
-using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.atn;
 using System.Text;
 
 namespace org.antlr.v4.parse;
@@ -28,12 +26,11 @@ public class ActionSplitter : antlr.runtime.Lexer
     public ActionSplitter(CharStream input, ActionSplitterListener @delegate)
         : this(input, new RecognizerSharedState())
     {
-        ;
         this.@delegate = @delegate;
     }
 
     /** force filtering (and return tokens). triggers all above actions. */
-    public List<Token> getActionTokens()
+    public List<Token> GetActionTokens()
     {
         List<Token> chunks = new();
         Token t = nextToken();
@@ -45,18 +42,12 @@ public class ActionSplitter : antlr.runtime.Lexer
         return chunks;
     }
 
-    private bool isIDStartChar(int c)
-    {
-        return c == '_' || char.IsLetter((char)c);
-    }
+    private bool IsIDStartChar(int c) => c == '_' || char.IsLetter((char)c);
 
 
     // delegates
     // delegators
-    public antlr.runtime.Lexer[] getDelegates()
-    {
-        return new antlr.runtime.Lexer[] { };
-    }
+    public antlr.runtime.Lexer[] GetDelegates() => new antlr.runtime.Lexer[] { };
 
     public ActionSplitter() { }
     public ActionSplitter(CharStream input)
@@ -68,7 +59,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     {
     }
     //@Override 
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
+    public override string GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
 
     //@Override
     public virtual Token nextToken()
@@ -588,7 +579,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                         }
 
                     }
-                    else if ((LA6_0 == '$') && ((!isIDStartChar(input.LA(2)))))
+                    else if ((LA6_0 == '$') && ((!IsIDStartChar(input.LA(2)))))
                     {
                         alt6 = 4;
                     }
@@ -645,7 +636,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                         case 4:
                             // org\\antlr\\v4\\parse\\ActionSplitter.g:108:5: {...}? => '$'
                             {
-                                if (!((!isIDStartChar(input.LA(2)))))
+                                if (!((!IsIDStartChar(input.LA(2)))))
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     throw new FailedPredicateException(input, "TEXT", "!isIDStartChar(input.LA(2))");
@@ -921,7 +912,7 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 alt10 = 7;
             }
-            else if (((!isIDStartChar(input.LA(2)))))
+            else if (((!IsIDStartChar(input.LA(2)))))
             {
                 alt10 = 8;
             }

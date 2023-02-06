@@ -14,9 +14,7 @@ public interface ActionSplitterListener
     void QualifiedAttr(string expr, Token x, Token y);
     void SetAttr(string expr, Token x, Token rhs);
     void Attr(string expr, Token x);
-
     void SetNonLocalAttr(string expr, Token x, Token y, Token rhs);
     void NonLocalAttr(string expr, Token x, Token y);
-
     void Text(string text);
 }

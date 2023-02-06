@@ -7,34 +7,36 @@
 namespace org.antlr.v4.test.runtime.states;
 
 
-public class GeneratedState : State {
-	////@Override
-	public override Stage getStage() {
-		return Stage.Generate;
-	}
+public class GeneratedState : State
+{
+    ////@Override
+    public override Stage Stage => Stage.Generate;
 
-	public readonly ErrorQueue errorQueue;
-	public readonly List<GeneratedFile> generatedFiles;
+    public readonly ErrorQueue errorQueue;
+    public readonly List<GeneratedFile> generatedFiles;
 
-	////@Override
-	public bool containsErrors() {
-		return errorQueue.errors.Count > 0 || base.containsErrors();
-	}
-
-	public String getErrorMessage() {
-		String result = base.getErrorMessage();
-
-		if (errorQueue.errors.Count > 0) {
-			result = RuntimeTestUtils.joinLines(result, errorQueue.toString(true));
-		}
-
-		return result;
-	}
-
-	public GeneratedState(ErrorQueue errorQueue, List<GeneratedFile>  generatedFiles, Exception exception) 
-	: base(null, exception)
+    ////@Override
+    public override bool ContainsErrors()
     {
-		this.errorQueue = errorQueue;
-		this.generatedFiles = generatedFiles;
-	}
+        return errorQueue.errors.Count > 0 || base.ContainsErrors();
+    }
+
+    public override String GetErrorMessage()
+    {
+        var result = base.GetErrorMessage();
+
+        if (errorQueue.errors.Count > 0)
+        {
+            result = RuntimeTestUtils.JoinLines(result, errorQueue.ToString(true));
+        }
+
+        return result;
+    }
+
+    public GeneratedState(ErrorQueue errorQueue, List<GeneratedFile> generatedFiles, Exception exception)
+    : base(null, exception)
+    {
+        this.errorQueue = errorQueue;
+        this.generatedFiles = generatedFiles;
+    }
 }

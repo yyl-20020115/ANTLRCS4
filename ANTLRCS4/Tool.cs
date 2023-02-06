@@ -635,8 +635,8 @@ public class Tool {
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			lexer.tokens = tokens;
 			ToolANTLRParser p = new ToolANTLRParser(tokens, this);
-			p.setTreeAdaptor(adaptor);
-			ParserRuleReturnScope r = p.grammarSpec();
+			p.			TreeAdaptor = adaptor;
+			ParserRuleReturnScope r = p.GrammarSpec();
 			GrammarAST root = (GrammarAST) r.getTree();
 			if (root is GrammarRootAST) {
 				((GrammarRootAST) root).hasErrors = lexer.GetNumberOfSyntaxErrors() > 0 || p.GetNumberOfSyntaxErrors() > 0;
@@ -912,24 +912,24 @@ public class Tool {
 
 	public void info(String msg) {
 		if ( listeners.Count == 0 ) {
-			defaultListener.info(msg);
+			defaultListener.Info(msg);
 			return;
 		}
-        foreach (ANTLRToolListener l in listeners) l.info(msg);
+        foreach (ANTLRToolListener l in listeners) l.Info(msg);
 	}
 	public void error(ANTLRMessage msg) {
 		if ( listeners.Count == 0 ) {
-			defaultListener.error(msg);
+			defaultListener.Error(msg);
 			return;
 		}
-        foreach (ANTLRToolListener l in listeners) l.error(msg);
+        foreach (ANTLRToolListener l in listeners) l.Error(msg);
 	}
 	public void warning(ANTLRMessage msg) {
 		if ( listeners.Count == 0 ) {
-			defaultListener.warning(msg);
+			defaultListener.Warning(msg);
 		}
 		else {
-			foreach (ANTLRToolListener l in listeners) l.warning(msg);
+			foreach (ANTLRToolListener l in listeners) l.Warning(msg);
 		}
 
 		if (warnings_are_errors) {

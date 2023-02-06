@@ -6,9 +6,8 @@
 
 namespace org.antlr.v4.test.runtime.csharp;
 
-public class CSharpRuntimeTests : RuntimeTests {
-	////@Override
-	protected override RuntimeRunner createRuntimeRunner() {
-		return new CSharpRunner();
-	}
+public class CSharpRuntimeTests : RuntimeTests
+{
+    ////@Override
+    protected override RuntimeRunner CreateRuntimeRunner() => new CSharpRunner();
 }

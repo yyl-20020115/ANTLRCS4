@@ -6,8 +6,9 @@
 
 namespace org.antlr.v4.test.runtime;
 
-public enum Stage {
-	Generate,
-	Compile,
-	Execute
+public enum Stage : uint
+{
+    Generate,
+    Compile,
+    Execute
 }

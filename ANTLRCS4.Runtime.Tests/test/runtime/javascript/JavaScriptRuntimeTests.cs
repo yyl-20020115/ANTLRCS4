@@ -6,9 +6,8 @@
 
 namespace org.antlr.v4.test.runtime.javascript;
 
-public class JavaScriptRuntimeTests : RuntimeTests {
-	////@Override
-	protected override RuntimeRunner createRuntimeRunner() {
-		return new NodeRunner();
-	}
+public class JavaScriptRuntimeTests : RuntimeTests
+{
+    ////@Override
+    protected override RuntimeRunner CreateRuntimeRunner() => new NodeRunner();
 }

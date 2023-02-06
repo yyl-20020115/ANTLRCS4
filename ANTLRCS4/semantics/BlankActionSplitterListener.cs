@@ -10,43 +10,55 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.semantics;
 
 
-public class BlankActionSplitterListener : ActionSplitterListener {
-	//@Override
-	public void QualifiedAttr(String expr, Token x, Token y) {
-	}
+public class BlankActionSplitterListener : ActionSplitterListener
+{
+    //@Override
+    public virtual void QualifiedAttr(string expr, Token x, Token y)
+    {
+    }
 
-	//@Override
-	public void SetAttr(String expr, Token x, Token rhs) {
-	}
+    //@Override
+    public virtual void SetAttr(string expr, Token x, Token rhs)
+    {
+    }
 
-	//@Override
-	public void Attr(String expr, Token x) {
-	}
+    //@Override
+    public virtual void Attr(string expr, Token x)
+    {
+    }
 
-	public void templateInstance(String expr) {
-	}
+    public virtual void TemplateInstance(string expr)
+    {
+    }
 
-	//@Override
-	public void NonLocalAttr(String expr, Token x, Token y) {
-	}
+    //@Override
+    public virtual void NonLocalAttr(string expr, Token x, Token y)
+    {
+    }
 
-	//@Override
-	public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs) {
-	}
+    //@Override
+    public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
+    {
+    }
 
-	public void indirectTemplateInstance(String expr) {
-	}
+    public virtual void IndirectTemplateInstance(string expr)
+    {
+    }
 
-	public void setExprAttribute(String expr) {
-	}
+    public virtual void SetExprAttribute(string expr)
+    {
+    }
 
-	public void setSTAttribute(String expr) {
-	}
+    public virtual void SetSTAttribute(string expr)
+    {
+    }
 
-	public void templateExpr(String expr) {
-	}
+    public virtual void TemplateExpr(string expr)
+    {
+    }
 
-	//@Override
-	public void Text(String text) {
-	}
+    //@Override
+    public virtual void Text(string text)
+    {
+    }
 }

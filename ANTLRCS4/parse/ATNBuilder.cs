@@ -28,7 +28,6 @@
 using org.antlr.runtime.tree;
 using org.antlr.runtime;
 using org.antlr.v4.automata;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 using org.antlr.v4.runtime.misc;
@@ -37,7 +36,7 @@ namespace org.antlr.v4.parse;
 public class ATNBuilder : TreeParser
 {
 
-    public static readonly String[] tokenNames = new String[] {
+    public static readonly string[] tokenNames = new string[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
         "ASSIGN", "AT", "CATCH", "CHANNELS", "COLON", "COLONCOLON", "COMMA", "COMMENT",

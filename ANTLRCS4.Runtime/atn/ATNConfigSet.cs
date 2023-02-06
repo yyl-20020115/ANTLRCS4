@@ -133,7 +133,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		if (config.getOuterContextDepth() > 0) {
 			dipsIntoOuterContext = true;
 		}
-		ATNConfig existing = configLookup.getOrAdd(config);
+		ATNConfig existing = configLookup.GetOrAdd(config);
 		if ( existing==config ) { // we added this new one
 			cachedHashCode = -1;
 			configs.Add(config);  // track order here
@@ -200,7 +200,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	public void optimizeConfigs(ATNSimulator interpreter) {
 		if ( @readonly ) throw new IllegalStateException("This set is readonly");
-		if ( configLookup.isEmpty() ) return;
+		if ( configLookup.IsEmpty() ) return;
 
 		foreach (ATNConfig config in configs) {
 //			int before = PredictionContext.getAllContextNodes(config.context).size();
@@ -268,7 +268,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
 		}
 
-		return configLookup.contains(o);
+		return configLookup.Contains(o);
 	}
 
 	public bool containsFast(ATNConfig obj) {
@@ -276,7 +276,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 			throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
 		}
 
-		return configLookup.containsFast(obj);
+		return configLookup.ContainsFast(obj);
 	}
 
 	//@Override
@@ -289,7 +289,7 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 		if ( @readonly ) throw new IllegalStateException("This set is readonly");
 		configs.Clear();
 		cachedHashCode = -1;
-		configLookup.clear();
+		configLookup.Clear();
 	}
 
 	public bool isReadonly() {
@@ -316,12 +316,12 @@ public class ATNConfigSet : HashSet<ATNConfig> {
 
 	//@Override
 	public ATNConfig[] toArray() {
-		return configLookup.toArray();
+		return configLookup.ToArray();
 	}
 
 	//@Override
 	public ATNConfig[] ToArray<T>(ATNConfig[] a) {
-		return configLookup.toArray();
+		return configLookup.ToArray();
 	}
 
 	//@Override

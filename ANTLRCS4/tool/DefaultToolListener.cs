@@ -13,7 +13,7 @@ public class DefaultToolListener : ANTLRToolListener {
 	public DefaultToolListener(Tool tool) { this.tool = tool; }
 
 	//@Override
-	public void info(String msg) {
+	public void Info(String msg) {
 		if (tool.ErrMgr.formatWantsSingleLineMessage()) {
 			msg = msg.Replace('\n', ' ');
 		}
@@ -21,7 +21,7 @@ public class DefaultToolListener : ANTLRToolListener {
 	}
 
 	//@Override
-	public void error(ANTLRMessage msg) {
+	public void Error(ANTLRMessage msg) {
 		var msgST = tool.ErrMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.Render();
 		if (tool.ErrMgr.formatWantsSingleLineMessage()) {
@@ -31,7 +31,7 @@ public class DefaultToolListener : ANTLRToolListener {
 	}
 
 	//@Override
-	public void warning(ANTLRMessage msg) {
+	public void Warning(ANTLRMessage msg) {
 		var msgST = tool.ErrMgr.getMessageTemplate(msg);
 		String outputMsg = msgST.Render();
 		if (tool.ErrMgr.formatWantsSingleLineMessage()) {

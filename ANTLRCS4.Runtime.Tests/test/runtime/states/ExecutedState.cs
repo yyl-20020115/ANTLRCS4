@@ -6,20 +6,18 @@
 
 namespace org.antlr.v4.test.runtime.states;
 
-public class ExecutedState : State {
-	////@Override
-	public override Stage getStage() {
-		return Stage.Execute;
-	}
+public class ExecutedState : State
+{
+    ////@Override
+    public override Stage Stage => Stage.Execute;
 
-	public readonly String output;
+    public readonly string output;
 
-	public readonly String errors;
+    public readonly string errors;
 
-	public ExecutedState(CompiledState previousState, String output, String errors, Exception exception): base(previousState, exception)
+    public ExecutedState(CompiledState previousState, string output, string errors, Exception exception) : base(previousState, exception)
     {
-		;
-		this.output = output != null ? output : "";
-		this.errors = errors != null ? errors : "";
-	}
+        this.output = output != null ? output : "";
+        this.errors = errors != null ? errors : "";
+    }
 }

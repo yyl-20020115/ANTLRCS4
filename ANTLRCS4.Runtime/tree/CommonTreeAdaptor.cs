@@ -51,7 +51,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
 	 */
     //@Override
 
-    public virtual Object dupNode(Object t)
+    public object dupNode(Object t)
     {
         if (t == null) return null;
         return ((Tree)t).dupNode();

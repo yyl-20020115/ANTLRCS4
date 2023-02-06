@@ -8,13 +8,14 @@ using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.test.runtime.states;
 
-public class JavaExecutedState : ExecutedState {
-	public readonly ParseTree parseTree;
+public class JavaExecutedState : ExecutedState
+{
+    public readonly ParseTree parseTree;
 
-	public JavaExecutedState(JavaCompiledState previousState, String output, String errors, ParseTree parseTree,
-							 Exception exception): base(previousState, output, errors, exception)
+    public JavaExecutedState(JavaCompiledState previousState, String output, String errors, ParseTree parseTree,
+                             Exception exception) : base(previousState, output, errors, exception)
     {
-		;
-		this.parseTree = parseTree;
-	}
+        ;
+        this.parseTree = parseTree;
+    }
 }

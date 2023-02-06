@@ -795,9 +795,9 @@ public class TestGraphNodes {
 		Deque<PredictionContext> workList = new ();
 		visited[context]= context;
 		contextIds[context]= contextIds.Count;
-		workList.add(context);
-		while (workList.size() > 0) {
-			PredictionContext current = workList.pop();
+		workList.Add(context);
+		while (workList.Size() > 0) {
+			PredictionContext current = workList.Pop();
 			nodes.Append("  s").Append(contextIds[(current)]).Append('[');
 
 			if (current.size() > 1) {
@@ -839,7 +839,7 @@ public class TestGraphNodes {
 				{
 					visited.Add(parent, parent);
 					contextIds.Add(parent, contextIds.Count);
-					workList.push(parent);
+					workList.Push(parent);
                 }
 				//if (visited.put(current.getParent(i), current.getParent(i)) == null) {
 				//	contextIds.put(current.getParent(i), contextIds.Cast);

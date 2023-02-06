@@ -14,7 +14,7 @@ namespace org.antlr.v4.tool;
  *  the info I need for error messages.
  */
 public interface ANTLRToolListener {
-	public void info(String msg);
-	public void error(ANTLRMessage msg);
-	public void warning(ANTLRMessage msg);
+	public void Info(String msg);
+	public void Error(ANTLRMessage msg);
+	public void Warning(ANTLRMessage msg);
 }

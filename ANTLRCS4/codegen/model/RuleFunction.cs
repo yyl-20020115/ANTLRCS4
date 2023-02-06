@@ -268,13 +268,13 @@ public class RuleFunction : OutputModelObject
         {
             var visitor = new ElementFrequenciesVisitor(new CommonTreeNodeStream(new GrammarASTAdaptor(), ast));
             visitor.outerAlternative();
-            if (visitor.frequencies.size() != 1)
+            if (visitor.frequencies.Size() != 1)
             {
                 factory.GetGrammar().Tools.ErrMgr.toolError(ErrorType.INTERNAL_ERROR);
                 return new(new FrequencySet<string>(), new FrequencySet<string>());
             }
 
-            return new(visitor.GetMinFrequencies(), visitor.frequencies.peek());
+            return new(visitor.GetMinFrequencies(), visitor.frequencies.Peek());
         }
         catch (RecognitionException ex)
         {

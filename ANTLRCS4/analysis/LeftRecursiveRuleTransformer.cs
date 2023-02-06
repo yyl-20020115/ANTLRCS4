@@ -150,7 +150,7 @@ public class LeftRecursiveRuleTransformer
         var arg = (ActionAST)r.ast.getFirstChildWithType(ANTLRParser.ARG_ACTION);
         if (arg != null)
         {
-            r.args = ScopeParser.parseTypedArgList(arg, arg.getText(), g);
+            r.args = ScopeParser.ParseTypedArgList(arg, arg.getText(), g);
             r.args.type = AttributeDict.DictType.ARG;
             r.args.ast = arg;
             arg.resolver = r.alt[1]; // todo: isn't this Rule or something?
@@ -180,7 +180,7 @@ public class LeftRecursiveRuleTransformer
         var tokens = new CommonTokenStream(lexer);
         lexer.tokens = tokens;
         var p = new ToolANTLRParser(tokens, tool);
-        p.setTreeAdaptor(adaptor);
+        p.        TreeAdaptor = adaptor;
         Token ruleStart = null;
         try
         {

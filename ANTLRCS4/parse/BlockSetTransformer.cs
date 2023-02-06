@@ -4,17 +4,14 @@ using org.antlr.runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.misc;
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using RuntimeUtils = org.antlr.v4.runtime.misc.RuntimeUtils;
 
 namespace org.antlr.v4.parse;
 public class BlockSetTransformer : TreeRewriter
 {
-
-    public static readonly String[] tokenNames = new String[] {
+    public static readonly string[] tokenNames = new string[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "ACTION", "ACTION_CHAR_LITERAL",
         "ACTION_ESC", "ACTION_STRING_LITERAL", "ARG_ACTION", "ARG_OR_CHARSET",
         "ASSIGN", "AT", "CATCH", "CHANNELS", "COLON", "COLONCOLON", "COMMA", "COMMENT",

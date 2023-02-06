@@ -28,8 +28,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 
     public ElementFrequenciesVisitor(TreeNodeStream input) : base(input)
     {
-        frequencies.push(new());
-        minFrequencies.push(SENTINEL);
+        frequencies.Push(new());
+        minFrequencies.Push(SENTINEL);
     }
 
     public FrequencySet<string> GetMinFrequencies()
@@ -38,7 +38,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         //assert minFrequencies.peek() != SENTINEL;
         //assert SENTINEL.isEmpty();
 
-        return minFrequencies.peek();
+        return minFrequencies.Peek();
     }
 
     /** During code gen, we can assume tree is in good shape */
@@ -146,15 +146,15 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     public void tokenRef(TerminalAST @ref)
     {
-        frequencies.peek().Add(@ref.getText());
-        minFrequencies.peek().Add(@ref.getText());
+        frequencies.Peek().Add(@ref.getText());
+        minFrequencies.Peek().Add(@ref.getText());
     }
 
     //@Override
     public void ruleRef(GrammarAST @ref, ActionAST arg)
     {
-        frequencies.peek().Add(@ref.getText());
-        minFrequencies.peek().Add(@ref.getText());
+        frequencies.Peek().Add(@ref.getText());
+        minFrequencies.Peek().Add(@ref.getText());
     }
 
     //@Override
@@ -164,8 +164,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 
         if (tokenName != null && !tokenName.StartsWith("T__"))
         {
-            frequencies.peek().Add(tokenName);
-            minFrequencies.peek().Add(tokenName);
+            frequencies.Peek().Add(tokenName);
+            minFrequencies.Peek().Add(tokenName);
         }
     }
 
@@ -176,42 +176,42 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     protected void enterAlternative(AltAST tree)
     {
-        frequencies.push(new FrequencySet<string>());
-        minFrequencies.push(new FrequencySet<string>());
+        frequencies.Push(new FrequencySet<string>());
+        minFrequencies.Push(new FrequencySet<string>());
     }
 
     //@Override
     protected void exitAlternative(AltAST tree)
     {
-        frequencies.push(CombineMax(frequencies.pop(), frequencies.pop()));
-        minFrequencies.push(CombineMin(minFrequencies.pop(), minFrequencies.pop()));
+        frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
+        minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));
     }
 
     //@Override
     protected void enterElement(GrammarAST tree)
     {
-        frequencies.push(new FrequencySet<String>());
-        minFrequencies.push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<String>());
+        minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
     protected void exitElement(GrammarAST tree)
     {
-        frequencies.push(CombineAndClip(frequencies.pop(), frequencies.pop(), 2));
-        minFrequencies.push(CombineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
+        frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
+        minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
     //@Override
     protected void enterBlockSet(GrammarAST tree)
     {
-        frequencies.push(new FrequencySet<String>());
-        minFrequencies.push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<String>());
+        minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
     protected void exitBlockSet(GrammarAST tree)
     {
-        foreach (var entry in frequencies.peek())
+        foreach (var entry in frequencies.Peek())
         {
             // This visitor counts a block set as a sequence of elements, not a
             // sequence of alternatives of elements. Reset the count back to 1
@@ -220,14 +220,14 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
             entry.Value.v = 1;
         }
 
-        if (minFrequencies.peek().Count > 1)
+        if (minFrequencies.Peek().Count > 1)
         {
             // Everything is optional
-            minFrequencies.peek().Clear();
+            minFrequencies.Peek().Clear();
         }
 
-        frequencies.push(CombineAndClip(frequencies.pop(), frequencies.pop(), 2));
-        minFrequencies.push(CombineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
+        frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
+        minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
     //@Override
@@ -235,7 +235,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     {
         if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
         {
-            foreach (var entry in frequencies.peek())
+            foreach (var entry in frequencies.Peek())
             {
                 entry.Value.v = 2;
             }
@@ -245,7 +245,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         {
             // Everything inside a closure is optional, so the minimum
             // number of occurrences for all elements is 0.
-            minFrequencies.peek().Clear();
+            minFrequencies.Peek().Clear();
         }
     }
 
@@ -256,29 +256,29 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     protected void enterLexerAlternative(GrammarAST tree)
     {
-        frequencies.push(new FrequencySet<String>());
-        minFrequencies.push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<String>());
+        minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
     protected void exitLexerAlternative(GrammarAST tree)
     {
-        frequencies.push(CombineMax(frequencies.pop(), frequencies.pop()));
-        minFrequencies.push(CombineMin(minFrequencies.pop(), minFrequencies.pop()));
+        frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
+        minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));
     }
 
     //@Override
     protected void enterLexerElement(GrammarAST tree)
     {
-        frequencies.push(new FrequencySet<String>());
-        minFrequencies.push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<String>());
+        minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
     protected void exitLexerElement(GrammarAST tree)
     {
-        frequencies.push(CombineAndClip(frequencies.pop(), frequencies.pop(), 2));
-        minFrequencies.push(CombineAndClip(minFrequencies.pop(), minFrequencies.pop(), 2));
+        frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
+        minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
     //@Override
@@ -286,7 +286,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     {
         if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
         {
-            foreach (var entry in frequencies.peek())
+            foreach (var entry in frequencies.Peek())
             {
                 entry.Value.v = 2;
             }
@@ -296,7 +296,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         {
             // Everything inside a closure is optional, so the minimum
             // number of occurrences for all elements is 0.
-            minFrequencies.peek().Clear();
+            minFrequencies.Peek().Clear();
         }
     }
 }

@@ -246,7 +246,7 @@ public class TestActionTranslation {
 			String snippet = output.Substring(start+b.Length,end-(start + b.Length));
 			Assert.AreEqual(expected, snippet);
 		}
-		if ( equeue.size()>0 ) {
+		if ( equeue.Count>0 ) {
 //			Console.Error.WriteLine(equeue.ToString());
 		}
 	}

@@ -6,18 +6,18 @@
 
 namespace org.antlr.v4.test.runtime;
 
-public class ProcessorResult {
-	public readonly int exitCode;
-	public readonly String output;
-	public readonly String errors;
+public class ProcessorResult
+{
+    public readonly int exitCode;
+    public readonly string output;
+    public readonly string errors;
 
-	public ProcessorResult(int exitCode, String output, String errors) {
-		this.exitCode = exitCode;
-		this.output = output;
-		this.errors = errors;
-	}
+    public ProcessorResult(int exitCode, string output, string errors)
+    {
+        this.exitCode = exitCode;
+        this.output = output;
+        this.errors = errors;
+    }
 
-	public bool isSuccess() {
-		return exitCode == 0;
-	}
+    public bool IsSuccessful => exitCode == 0;
 }

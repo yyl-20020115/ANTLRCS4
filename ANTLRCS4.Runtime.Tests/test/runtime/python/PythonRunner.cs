@@ -7,12 +7,14 @@ using Antlr4.StringTemplate;
 
 namespace org.antlr.v4.test.runtime.python;
 
-public abstract class PythonRunner : RuntimeRunner {
-	//////@Override
-	public String getExtension() { return "py"; }
+public abstract class PythonRunner : RuntimeRunner
+{
+    //////@Override
+    public override string GetExtension() => "py";
 
-	////@Override
-	protected void addExtraRecognizerParameters(Template template) {
-		template.Add("python3", getLanguage().Equals("Python3"));
-	}
+    ////@Override
+    protected override void AddExtraRecognizerParameters(Template template)
+    {
+        template.Add("python3", GetLanguage().Equals("Python3"));
+    }
 }

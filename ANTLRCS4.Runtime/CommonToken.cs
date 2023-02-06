@@ -16,7 +16,7 @@ public class CommonToken : WritableToken /*Serializable*/
 	 * {@link #source} for tokens that do not have a source.
 	 */
     protected static readonly Pair<TokenSource, CharStream> EMPTY_SOURCE =
-        new Pair<TokenSource, CharStream>(null, null);
+        new (default, default);
 
     /**
 	 * This is the backing field for {@link #getType} and {@link #setType}.
@@ -59,7 +59,7 @@ public class CommonToken : WritableToken /*Serializable*/
 	 *
 	 * @see #getText()
 	 */
-    protected String text;
+    protected string text;
 
     /**
 	 * This is the backing field for {@link #getTokenIndex} and
@@ -115,7 +115,7 @@ public class CommonToken : WritableToken /*Serializable*/
 	 * @param type The token type.
 	 * @param text The text of the token.
 	 */
-    public CommonToken(int type, String text)
+    public CommonToken(int type, string text)
     {
         this.type = type;
         this.channel = Token.DEFAULT_CHANNEL;
@@ -146,39 +146,39 @@ public class CommonToken : WritableToken /*Serializable*/
         start = oldToken.getStartIndex();
         stop = oldToken.getStopIndex();
 
-        if (oldToken is CommonToken)
+        if (oldToken is CommonToken token)
         {
-            text = ((CommonToken)oldToken).text;
-            source = ((CommonToken)oldToken).source;
+            text = token.text;
+            source = token.source;
         }
         else
         {
             text = oldToken.getText();
-            source = new Pair<TokenSource, CharStream>(oldToken.getTokenSource(), oldToken.getInputStream());
+            source = new (oldToken.getTokenSource(), oldToken.getInputStream());
         }
     }
 
     //@Override
-    public int getType()
+    public virtual int getType()
     {
         return type;
     }
 
     //@Override
-    public void setLine(int line)
+    public virtual void setLine(int line)
     {
         this.line = line;
     }
 
     //@Override
-    public String getText()
+    public virtual string getText()
     {
         if (text != null)
         {
             return text;
         }
 
-        CharStream input = getInputStream();
+        var input = getInputStream();
         if (input == null) return null;
         int n = input.size();
         if (start < n && stop < n)
@@ -201,107 +201,107 @@ public class CommonToken : WritableToken /*Serializable*/
 	 * of the token.
 	 */
     //@Override
-    public void setText(String text)
+    public virtual void setText(String text)
     {
         this.text = text;
     }
 
     //@Override
-    public int getLine()
+    public virtual int getLine()
     {
         return line;
     }
 
     //@Override
-    public int getCharPositionInLine()
+    public virtual int getCharPositionInLine()
     {
         return charPositionInLine;
     }
 
     //@Override
-    public void setCharPositionInLine(int charPositionInLine)
+    public virtual void setCharPositionInLine(int charPositionInLine)
     {
         this.charPositionInLine = charPositionInLine;
     }
 
     //@Override
-    public int getChannel()
+    public virtual int getChannel()
     {
         return channel;
     }
 
     //@Override
-    public void setChannel(int channel)
+    public virtual void setChannel(int channel)
     {
         this.channel = channel;
     }
 
     //@Override
-    public void setType(int type)
+    public virtual void setType(int type)
     {
         this.type = type;
     }
 
     //@Override
-    public int getStartIndex()
+    public virtual int getStartIndex()
     {
         return start;
     }
 
-    public void setStartIndex(int start)
+    public virtual void setStartIndex(int start)
     {
         this.start = start;
     }
 
     //@Override
-    public int getStopIndex()
+    public virtual int getStopIndex()
     {
         return stop;
     }
 
-    public void setStopIndex(int stop)
+    public virtual void setStopIndex(int stop)
     {
         this.stop = stop;
     }
 
     //@Override
-    public int getTokenIndex()
+    public virtual int getTokenIndex()
     {
         return index;
     }
 
     //@Override
-    public void setTokenIndex(int index)
+    public virtual void setTokenIndex(int index)
     {
         this.index = index;
     }
 
     //@Override
-    public TokenSource getTokenSource()
+    public virtual TokenSource getTokenSource()
     {
         return source.a;
     }
 
     //@Override
-    public CharStream getInputStream()
+    public virtual CharStream getInputStream()
     {
         return source.b;
     }
 
     //@Override
-    public override String ToString()
+    public override string ToString()
     {
         return ToString(null);
     }
 
-    public String ToString(Recognizer<Token, ATNSimulator> r)
+    public string ToString(Recognizer<Token, ATNSimulator> r)
     {
-        String channelStr = "";
+        string channelStr = "";
         if (channel > 0)
         {
             channelStr = ",channel=" + channel;
         }
-        String txt = getText();
+        var txt = getText();
         if (txt != null)
         {
             txt = txt.Replace("\n", "\\n");
@@ -312,7 +312,7 @@ public class CommonToken : WritableToken /*Serializable*/
         {
             txt = "<no text>";
         }
-        String typeString = type.ToString();// String.valueOf(type);
+        var typeString = type.ToString();// String.valueOf(type);
         if (r != null)
         {
             typeString = r.getVocabulary().getDisplayName(type);
@@ -320,12 +320,12 @@ public class CommonToken : WritableToken /*Serializable*/
         return "[@" + getTokenIndex() + "," + start + ":" + stop + "='" + txt + "',<" + typeString + ">" + channelStr + "," + line + ":" + getCharPositionInLine() + "]";
     }
 
-    public void setTokenSource(TokenSource tokenSource)
+    public virtual void setTokenSource(TokenSource tokenSource)
     {
         throw new NotImplementedException();
     }
 
-    public void setInputStream(CharStream input)
+    public virtual void setInputStream(CharStream input)
     {
         throw new NotImplementedException();
     }

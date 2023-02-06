@@ -9,64 +9,43 @@ namespace org.antlr.v4.test.runtime.go;
 
 public class GoRunner : RuntimeRunner
 {
-    public override String getLanguage()
-    {
-        return "Go";
-    }
+    public override string GetLanguage() => "Go";
 
     ////@Override
-    protected override String getLexerSuffix()
-    {
-        return "_lexer";
-    }
+    public override string GetLexerSuffix() => "_lexer";
 
     ////@Override
-    public String getParserSuffix()
-    {
-        return "_parser";
-    }
+    public override string GetParserSuffix() => "_parser";
 
     ////@Override
-    public String getBaseListenerSuffix()
-    {
-        return "_base_listener";
-    }
+    public override string GetBaseListenerSuffix() => "_base_listener";
 
     ////@Override
-    public String getListenerSuffix()
-    {
-        return "_listener";
-    }
+    public override string GetListenerSuffix() => "_listener";
 
     ////@Override
-    public String getBaseVisitorSuffix()
-    {
-        return "_base_visitor";
-    }
+    public override string GetBaseVisitorSuffix() => "_base_visitor";
 
     ////@Override
-    public String getVisitorSuffix()
-    {
-        return "_visitor";
-    }
+    public override string GetVisitorSuffix() => "_visitor";
 
     ////@Override
-    protected String grammarNameToFileName(String grammarName)
+    public override string GrammarNameToFileName(string grammarName)
     {
         return grammarName.ToLower();
     }
 
     ////@Override
-    public String[] getExtraRunArgs()
+    public override string[] GetExtraRunArgs()
     {
-        return new String[] { "run" };
+        return new string[] { "run" };
     }
 
-    private static readonly String GoRuntimeImportPath = "github.com/antlr/antlr4/runtime/Go/antlr/v4";
+    private static readonly string GoRuntimeImportPath = "github.com/antlr/antlr4/runtime/Go/antlr/v4";
 
-    private static readonly Dictionary<String, String> environment;
+    private static readonly Dictionary<string, string> environment;
 
-    private static String cachedGoMod;
+    private static string cachedGoMod;
 
     static GoRunner()
     {
@@ -75,40 +54,40 @@ public class GoRunner : RuntimeRunner
     }
 
     ////@Override
-    protected void initRuntime()
+    protected override void InitRuntime()
     {
-        String cachePath = getCachePath();
-        FileUtils.mkdir(cachePath);
-        string runtimeFilesPath = Path.Combine(getRuntimePath("Go"), "antlr");
-        String runtimeToolPath = getRuntimeToolPath();
-        string goModFile = Path.Combine(cachePath, "go.mod");
+        var cachePath = GetCachePath();
+        FileUtils.MakeDirectory(cachePath);
+        var runtimeFilesPath = Path.Combine(GetRuntimePath("Go"), "antlr");
+        var runtimeToolPath = GetRuntimeToolPath();
+        var goModFile = Path.Combine(cachePath, "go.mod");
         if (File.Exists(goModFile))
             File.Delete(goModFile);
-            if (File.Exists(goModFile))
-                throw new IOException("Can't delete " + goModFile);
-        Processor.run(new String[] { runtimeToolPath, "mod", "init", "test" }, cachePath, environment);
-        Processor.run(new String[] {runtimeToolPath, "mod", "edit",
+        if (File.Exists(goModFile))
+            throw new IOException("Can't delete " + goModFile);
+        Processor.Run(new String[] { runtimeToolPath, "mod", "init", "test" }, cachePath, environment);
+        Processor.Run(new String[] {runtimeToolPath, "mod", "edit",
                 "-replace=" + GoRuntimeImportPath + "=" + runtimeFilesPath}, cachePath, environment);
-        cachedGoMod = FileUtils.readFile(cachePath, "go.mod");
+        cachedGoMod = FileUtils.ReadFile(cachePath, "go.mod");
     }
 
     ////@Override
-    protected String grammarParseRuleToRecognizerName(String startRuleName)
+    protected override string GrammarParseRuleToRecognizerName(string startRuleName)
     {
         if (startRuleName == null || startRuleName.Length == 0)
         {
             return null;
         }
 
-        return startRuleName[..1].ToUpper() + startRuleName.Substring(1);
+        return startRuleName[..1].ToUpper() + startRuleName[1..];
     }
 
     ////@Override
-    protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState)
+    public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
-        List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
-        String tempDirPath = getTempDirPath();
-        string generatedParserDir = Path.Combine(tempDirPath, "parser");
+        var generatedFiles = generatedState.generatedFiles;
+        var tempDirPath = GetTempDirPath();
+        var generatedParserDir = Path.Combine(tempDirPath, "parser");
         if (!Directory.CreateDirectory(generatedParserDir).Exists)
         {
             return new CompiledState(generatedState, new Exception("can't make dir " + generatedParserDir));
@@ -119,12 +98,12 @@ public class GoRunner : RuntimeRunner
         // directly in to the parser subdir. But in case down the line, there is some reason to want to replace things in
         // the generated code, then I will leave this here, and we can use replaceInFile()
         //
-        foreach (GeneratedFile generatedFile in generatedFiles)
+        foreach (var generatedFile in generatedFiles)
         {
             try
             {
-                string originalFile = Path.Combine(tempDirPath, generatedFile.name);
-                File.Move(originalFile, 
+                var originalFile = Path.Combine(tempDirPath, generatedFile.name);
+                File.Move(originalFile,
                     Path.Combine(tempDirPath, "parser", generatedFile.name));
             }
             catch (IOException e)
@@ -133,11 +112,11 @@ public class GoRunner : RuntimeRunner
             }
         }
 
-        FileUtils.writeFile(tempDirPath, "go.mod", cachedGoMod);
+        FileUtils.WriteFile(tempDirPath, "go.mod", cachedGoMod);
         Exception ex = null;
         try
         {
-            Processor.run(new String[] { getRuntimeToolPath(), "mod", "tidy" }, tempDirPath, environment);
+            Processor.Run(new string[] { GetRuntimeToolPath(), "mod", "tidy" }, tempDirPath, environment);
         }
         catch (Exception e)
         {
@@ -148,8 +127,5 @@ public class GoRunner : RuntimeRunner
     }
 
     ////@Override
-    public Dictionary<String, String> getExecEnvironment()
-    {
-        return environment;
-    }
+    public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

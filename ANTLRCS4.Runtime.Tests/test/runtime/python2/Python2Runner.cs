@@ -8,22 +8,19 @@ using org.antlr.v4.test.runtime.python;
 
 namespace org.antlr.v4.test.runtime.python2;
 
-public class Python2Runner : PythonRunner {
-	public static readonly Dictionary<String, String> environment;
+public class Python2Runner : PythonRunner
+{
+    public static readonly Dictionary<string, string> environment = new();
 
-	static Python2Runner(){
-		environment = new ();
-		environment.Add("PYTHONPATH", Path.Combine(getRuntimePath("Python2"), "src"));
-		environment.Add("PYTHONIOENCODING", "utf-8");
-	}
+    static Python2Runner()
+    {
+        environment.Add("PYTHONPATH", Path.Combine(GetRuntimePath("Python2"), "src"));
+        environment.Add("PYTHONIOENCODING", "utf-8");
+    }
 
-	////@Override
-	public override String getLanguage() {
-		return "Python2";
-	}
+    ////@Override
+    public override string GetLanguage() => "Python2";
 
-	////@Override
-	protected override Dictionary<String, String> getExecEnvironment() {
-		return environment;
-	}
+    ////@Override
+    public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

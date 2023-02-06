@@ -27,150 +27,171 @@ namespace org.antlr.v4.test.runtime.cpp;
  * ... crash ...
  * (lldb) thread backtrace
  */
-public class CppRunner : RuntimeRunner {
-	////@Override
-	public override String getLanguage() {
-		return "Cpp";
-	}
+public class CppRunner : RuntimeRunner
+{
+    ////@Override
+    public override string GetLanguage()
+    {
+        return "Cpp";
+    }
 
-	////@Override
-	protected override String getTitleName() { return "C++"; }
+    ////@Override
+    protected override string GetTitleName() => "C++";
 
-	private static readonly String runtimeSourcePath;
-	private static readonly String runtimeBinaryPath;
-	private static readonly String runtimeLibraryFileName;
-	private static String compilerName;
-	private static readonly String visualStudioProjectContent;
-	private static readonly Dictionary<String, String> environment;
+    private static readonly string runtimeSourcePath;
+    private static readonly string runtimeBinaryPath;
+    private static readonly string runtimeLibraryFileName;
+    private static string compilerName;
+    private static readonly string visualStudioProjectContent;
+    private static readonly Dictionary<string, string> environment;
 
-	static CppRunner() {
-		String runtimePath = getRuntimePath("Cpp");
-		runtimeSourcePath = Path.Combine(runtimePath, "runtime", "src").ToString();
+    static CppRunner()
+    {
+        var runtimePath = GetRuntimePath("Cpp");
+        runtimeSourcePath = Path.Combine(runtimePath, "runtime", "src").ToString();
 
-		environment = new ();
-		if (RuntimeTestUtils.IsWindows()) {
-			runtimeBinaryPath = Path.Combine(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
-			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
-			String path = Environment.GetEnvironmentVariable("PATH");
-			environment.Add("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
-		}
-		else {
-			runtimeBinaryPath = Path.Combine(runtimePath, "dist").ToString();
-			runtimeLibraryFileName = Path.Combine(runtimeBinaryPath,
-					"libantlr4-runtime." + (RuntimeTestUtils.getOS() == OSType.Mac ? "dylib" : "so")).ToString();
-			environment.Add("LD_PRELOAD", runtimeLibraryFileName);
-		}
+        environment = new();
+        if (RuntimeTestUtils.IsWindows())
+        {
+            runtimeBinaryPath = Path.Combine(runtimePath, "runtime", "bin", "vs-2022", "x64", "Release DLL").ToString();
+            runtimeLibraryFileName = Path.Combine(runtimeBinaryPath, "antlr4-runtime.dll").ToString();
+            var path = Environment.GetEnvironmentVariable("PATH");
+            environment.Add("PATH", path == null ? runtimeBinaryPath : path + ";" + runtimeBinaryPath);
+        }
+        else
+        {
+            runtimeBinaryPath = Path.Combine(runtimePath, "dist").ToString();
+            runtimeLibraryFileName = Path.Combine(runtimeBinaryPath,
+                    "libantlr4-runtime." + (RuntimeTestUtils.GetOS() == OSType.Mac ? "dylib" : "so")).ToString();
+            environment.Add("LD_PRELOAD", runtimeLibraryFileName);
+        }
 
-		if (RuntimeTestUtils.IsWindows()) {
-			visualStudioProjectContent = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/Test.vcxproj.stg");
-		} else {
-			visualStudioProjectContent = null;
-		}
-	}
+        visualStudioProjectContent = RuntimeTestUtils.IsWindows()
+            ? RuntimeTestUtils.GetTextFromResource("org/antlr/v4/test/runtime/helpers/Test.vcxproj.stg")
+            : null;
+    }
 
-	////@Override
-	protected String getCompilerName() {
-		if (compilerName == null) {
-			if (RuntimeTestUtils.IsWindows()) {
-				compilerName = "MSBuild";
-			}
-			else {
-				compilerName = "clang++";
-			}
-		}
+    ////@Override
+    protected string GetCompilerName()
+    {
+        if (compilerName == null)
+        {
+            if (RuntimeTestUtils.IsWindows())
+            {
+                compilerName = "MSBuild";
+            }
+            else
+            {
+                compilerName = "clang++";
+            }
+        }
 
-		return compilerName;
-	}
+        return compilerName;
+    }
 
-	////@Override
-	protected void initRuntime()  {
-		String runtimePath = getRuntimePath();
+    ////@Override
+    protected void InitRuntime()
+    {
+        var runtimePath = GetRuntimePath();
 
-		if (RuntimeTestUtils.IsWindows()) {
-			String[] command = {
-				getCompilerPath(), "antlr4cpp-vs2022.vcxproj", "/p:configuration=Release DLL", "/p:platform=x64"
-			};
+        if (RuntimeTestUtils.IsWindows())
+        {
+            String[] command = {
+                GetCompilerPath(), "antlr4cpp-vs2022.vcxproj", "/p:configuration=Release DLL", "/p:platform=x64"
+            };
 
-			runCommand(command, runtimePath + "\\runtime","build c++ ANTLR runtime using MSBuild");
-		}
-		else {
-			String[] command = {"cmake", ".", "-DCMAKE_BUILD_TYPE=Release"};
-			runCommand(command, runtimePath, "run cmake on antlr c++ runtime");
+            RunCommand(command, runtimePath + "\\runtime", "build c++ ANTLR runtime using MSBuild");
+        }
+        else
+        {
+            String[] command = { "cmake", ".", "-DCMAKE_BUILD_TYPE=Release" };
+            RunCommand(command, runtimePath, "run cmake on antlr c++ runtime");
 
-			command = new String[] {"make", "-j", (Environment.ProcessorCount.ToString())};
-			runCommand(command, runtimePath, "run make on antlr c++ runtime");
-		}
-	}
+            command = new String[] { "make", "-j", (Environment.ProcessorCount.ToString()) };
+            RunCommand(command, runtimePath, "run make on antlr c++ runtime");
+        }
+    }
 
-	////@Override
-	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		if (RuntimeTestUtils.IsWindows()) {
-			writeVisualStudioProjectFile(runOptions.grammarName, runOptions.lexerName, runOptions.parserName,
-					runOptions.useListener, runOptions.useVisitor);
-		}
+    ////@Override
+    protected CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    {
+        if (RuntimeTestUtils.IsWindows())
+        {
+            WriteVisualStudioProjectFile(runOptions.grammarName, runOptions.lexerName, runOptions.parserName,
+                    runOptions.useListener, runOptions.useVisitor);
+        }
 
-		Exception exception = null;
-		try {
-			if (!RuntimeTestUtils.IsWindows()) {
-				String[] linkCommand = new String[]{"ln", "-s", runtimeLibraryFileName};
-				runCommand(linkCommand, getTempDirPath(), "sym link C++ runtime");
-			}
+        Exception exception = null;
+        try
+        {
+            if (!RuntimeTestUtils.IsWindows())
+            {
+                string[] linkCommand = new string[] { "ln", "-s", runtimeLibraryFileName };
+                RunCommand(linkCommand, GetTempDirPath(), "sym link C++ runtime");
+            }
 
-			List<String> buildCommand = new ();
-			buildCommand.Add(getCompilerPath());
-			if (RuntimeTestUtils.IsWindows()) {
-				buildCommand.Add(getTestFileName() + ".vcxproj");
-				buildCommand.Add("/p:configuration=Release");
-				buildCommand.Add("/p:platform=x64");
-			}
-			else {
-				buildCommand.Add("-std=c++17");
-				buildCommand.Add("-I");
-				buildCommand.Add(runtimeSourcePath);
-				buildCommand.Add("-L.");
-				buildCommand.Add("-lantlr4-runtime");
-				buildCommand.Add("-pthread");
-				buildCommand.Add("-o");
-				buildCommand.Add(getTestFileName() + ".out");
-				buildCommand.Add(getTestFileWithExt());
-				buildCommand.AddRange(
-					generatedState.generatedFiles.Select(f=>f.name));
-			}
+            List<String> buildCommand = new();
+            buildCommand.Add(GetCompilerPath());
+            if (RuntimeTestUtils.IsWindows())
+            {
+                buildCommand.Add(GetTestFileName() + ".vcxproj");
+                buildCommand.Add("/p:configuration=Release");
+                buildCommand.Add("/p:platform=x64");
+            }
+            else
+            {
+                buildCommand.Add("-std=c++17");
+                buildCommand.Add("-I");
+                buildCommand.Add(runtimeSourcePath);
+                buildCommand.Add("-L.");
+                buildCommand.Add("-lantlr4-runtime");
+                buildCommand.Add("-pthread");
+                buildCommand.Add("-o");
+                buildCommand.Add(GetTestFileName() + ".out");
+                buildCommand.Add(GetTestFileWithExt());
+                buildCommand.AddRange(
+                    generatedState.generatedFiles.Select(f => f.name));
+            }
 
-			runCommand(buildCommand.ToArray(), getTempDirPath(), "build test c++ binary");
-		}
-		catch (Exception ex) {
-			exception = ex;
-		}
-		return new CompiledState(generatedState, exception);
-	}
+            RunCommand(buildCommand.ToArray(), GetTempDirPath(), "build test c++ binary");
+        }
+        catch (Exception ex)
+        {
+            exception = ex;
+        }
+        return new CompiledState(generatedState, exception);
+    }
 
-	private void writeVisualStudioProjectFile(String grammarName, String lexerName, String parserName,
-											  bool useListener, bool useVisitor) {
-		Template projectFileST = new Template(visualStudioProjectContent);
-		projectFileST.Add("runtimeSourcePath", runtimeSourcePath);
-		projectFileST.Add("runtimeBinaryPath", runtimeBinaryPath);
-		projectFileST.Add("grammarName", grammarName);
-		projectFileST.Add("lexerName", lexerName);
-		projectFileST.Add("parserName", parserName);
-		projectFileST.Add("useListener", useListener);
-		projectFileST.Add("useVisitor", useVisitor);
-		FileUtils.writeFile(getTempDirPath(), "Test.vcxproj", projectFileST.Render());
-	}
+    private void WriteVisualStudioProjectFile(String grammarName, String lexerName, String parserName,
+                                              bool useListener, bool useVisitor)
+    {
+        var projectFileST = new Template(visualStudioProjectContent);
+        projectFileST.Add("runtimeSourcePath", runtimeSourcePath);
+        projectFileST.Add("runtimeBinaryPath", runtimeBinaryPath);
+        projectFileST.Add("grammarName", grammarName);
+        projectFileST.Add("lexerName", lexerName);
+        projectFileST.Add("parserName", parserName);
+        projectFileST.Add("useListener", useListener);
+        projectFileST.Add("useVisitor", useVisitor);
+        FileUtils.WriteFile(GetTempDirPath(), "Test.vcxproj", projectFileST.Render());
+    }
 
-	////@Override
-	protected String getRuntimeToolName() {
-		return null;
-	}
+    ////@Override
+    protected string GetRuntimeToolName()
+    {
+        return null;
+    }
 
-	////@Override
-	public String getExecFileName() {
-		return Path.Combine(getTempDirPath(), getTestFileName() + "." + (RuntimeTestUtils.IsWindows() ? "exe" : "out")).ToString();
-	}
+    ////@Override
+    public string GetExecFileName()
+    {
+        return Path.Combine(GetTempDirPath(), GetTestFileName() + "." + (RuntimeTestUtils.IsWindows() ? "exe" : "out")).ToString();
+    }
 
-	////@Override
-	protected override Dictionary<String, String> getExecEnvironment() {
-		return environment;
-	}
+    ////@Override
+    protected override Dictionary<string, string> GetExecEnvironment()
+    {
+        return environment;
+    }
 }
 

@@ -8,62 +8,69 @@ using System.Diagnostics;
 
 namespace org.antlr.v4.test.runtime;
 
-public class Processor {
-	public readonly String[] arguments;
-	public readonly String workingDirectory;
-	public readonly Dictionary<String, String> environmentVariables;
-	public readonly bool throwOnNonZeroErrorCode;
+public class Processor
+{
+    public readonly string[] arguments;
+    public readonly string workingDirectory;
+    public readonly Dictionary<string, string> environmentVariables;
+    public readonly bool throwOnNonZeroErrorCode;
 
-	public static ProcessorResult run(String[] arguments, String workingDirectory, Dictionary<String, String> environmentVariables)
-			
-	{
-		return new Processor(arguments, workingDirectory, environmentVariables, true).start();
-	}
+    public static ProcessorResult Run(string[] arguments, string workingDirectory, Dictionary<string, string> environmentVariables)
 
-	public static ProcessorResult run(String[] arguments, String workingDirectory) {
-		return new Processor(arguments, workingDirectory, new (), true).start();
-	}
+    {
+        return new Processor(arguments, workingDirectory, environmentVariables, true).Start();
+    }
 
-	public Processor(String[] arguments, String workingDirectory, Dictionary<String, String> environmentVariables,
-					 bool throwOnNonZeroErrorCode) {
-		this.arguments = arguments;
-		this.workingDirectory = workingDirectory;
-		this.environmentVariables = environmentVariables;
-		this.throwOnNonZeroErrorCode = throwOnNonZeroErrorCode;
-	}
+    public static ProcessorResult Run(string[] arguments, string workingDirectory)
+    {
+        return new Processor(arguments, workingDirectory, new(), true).Start();
+    }
 
-	public ProcessorResult start() {
-        ProcessStartInfo processStartInfo
-            = new()
+    public Processor(string[] arguments, string workingDirectory, Dictionary<string, string> environmentVariables,
+                     bool throwOnNonZeroErrorCode)
+    {
+        this.arguments = arguments;
+        this.workingDirectory = workingDirectory;
+        this.environmentVariables = environmentVariables;
+        this.throwOnNonZeroErrorCode = throwOnNonZeroErrorCode;
+    }
+
+    public ProcessorResult Start()
+    {
+        var processStartInfo
+            = new ProcessStartInfo()
             {
                 WorkingDirectory = workingDirectory
             };
 
-        if (environmentVariables != null && environmentVariables.Count > 0) {
-			var environment = processStartInfo.EnvironmentVariables;
-            foreach (String key in environmentVariables.Keys) {
-				environment.Add(key, environmentVariables[(key)]);
-			}
-		}
-        
-        Process process = Process.Start(processStartInfo);
+        if (environmentVariables != null && environmentVariables.Count > 0)
+        {
+            var environment = processStartInfo.EnvironmentVariables;
+            foreach (String key in environmentVariables.Keys)
+            {
+                environment.Add(key, environmentVariables[(key)]);
+            }
+        }
 
-        RunnableStreamReader stdoutReader = new (process.StandardOutput);
-        RunnableStreamReader stderrReader = new (process.StandardError);
+        var process = Process.Start(processStartInfo);
 
-        stdoutReader.start();
-		stderrReader.start();
+        RunnableStreamReader stdoutReader = new(process.StandardOutput);
+        RunnableStreamReader stderrReader = new(process.StandardError);
 
-		process.WaitForExit();
+        stdoutReader.Start();
+        stderrReader.Start();
 
-		stdoutReader.join();
-		stderrReader.join();
+        process.WaitForExit();
 
-		String output = stdoutReader.ToString();
-		String errors = stderrReader.ToString();
-		if (throwOnNonZeroErrorCode && process.ExitCode != 0) {
-			throw new Exception(RuntimeTestUtils.joinLines(output, errors));
-		}
-		return new ProcessorResult(process.ExitCode, output, errors);
-	}
+        stdoutReader.Join();
+        stderrReader.Join();
+
+        String output = stdoutReader.ToString();
+        String errors = stderrReader.ToString();
+        if (throwOnNonZeroErrorCode && process.ExitCode != 0)
+        {
+            throw new Exception(RuntimeTestUtils.JoinLines(output, errors));
+        }
+        return new ProcessorResult(process.ExitCode, output, errors);
+    }
 }

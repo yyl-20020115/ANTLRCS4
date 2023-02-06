@@ -2078,7 +2078,7 @@ public class TestPerformance
             "\n" +
             "rule_{5}_{6} : EOF;\n";
 
-        FileUtils.mkdir(tempDirPath);
+        FileUtils.MakeDirectory(tempDirPath);
 
         long startTime = DateTime.Now.Nanosecond;
 
@@ -2087,15 +2087,15 @@ public class TestPerformance
         {
             String leafPrefix = level == levels - 1 ? "//" : "";
             String grammar1 = String.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
-                FileUtils.writeFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
+                FileUtils.WriteFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
             if (level > 0)
             {
                 String grammar2 = String.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
-                FileUtils.writeFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
+                FileUtils.WriteFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
             }
         }
 
-        ErrorQueue equeue = Generator.antlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
+        ErrorQueue equeue = Generator.AntlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
         Assert.IsTrue(equeue.errors.Count == 0);
 
         long endTime = DateTime.Now.Nanosecond;

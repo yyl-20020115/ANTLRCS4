@@ -8,48 +8,52 @@ using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime.javascript;
 
-public class NodeRunner : RuntimeRunner {
-	////@Override
-	public override String getLanguage() {
-		return "JavaScript";
-	}
+public class NodeRunner : RuntimeRunner
+{
+    ////@Override
+    public override string GetLanguage() => "JavaScript";
 
-	////@Override
-	public String getExtension() { return "js"; }
+    ////@Override
+    public override string GetExtension() => "js";
 
-	////@Override
-	public String getBaseListenerSuffix() { return null; }
+    ////@Override
+    public override string GetBaseListenerSuffix() => null;
 
-	////@Override
-	public String getBaseVisitorSuffix() { return null; }
+    ////@Override
+    public override string GetBaseVisitorSuffix() => null;
 
-	////@Override
-	public String getRuntimeToolName() { return "node"; }
+    ////@Override
+    public override string GetRuntimeToolName() => "node";
 
-	private static readonly String normalizedRuntimePath = getRuntimePath("JavaScript").Replace('\\', '/');
-	private static readonly String newImportAntlrString =
-			"import antlr4 from 'file://" + normalizedRuntimePath + "/src/antlr4/index.js'";
+    private static readonly string normalizedRuntimePath = GetRuntimePath("JavaScript").Replace('\\', '/');
+    private static readonly string newImportAntlrString = "import antlr4 from 'file://" + normalizedRuntimePath + "/src/antlr4/index.js'";
 
-	////@Override
-	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
-		foreach (GeneratedFile generatedFile in generatedFiles) {
-			try {
-				FileUtils.replaceInFile(Path.Combine(getTempDirPath(), generatedFile.name),
-						"import antlr4 from 'antlr4';",
-						newImportAntlrString);
-			} catch (IOException e) {
-				return new CompiledState(generatedState, e);
-			}
-		}
+    ////@Override
+    public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    {
+        var generatedFiles = generatedState.generatedFiles;
+        foreach (var generatedFile in generatedFiles)
+        {
+            try
+            {
+                FileUtils.ReplaceInFile(Path.Combine(GetTempDirPath(), generatedFile.name),
+                        "import antlr4 from 'antlr4';",
+                        newImportAntlrString);
+            }
+            catch (IOException e)
+            {
+                return new CompiledState(generatedState, e);
+            }
+        }
 
-		FileUtils.writeFile(getTempDirPath(), "package.json",
-				RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/package.json"));
-		return new CompiledState(generatedState, null);
-	}
+        FileUtils.WriteFile(GetTempDirPath(), "package.json",
+                RuntimeTestUtils.GetTextFromResource("org/antlr/v4/test/runtime/helpers/package.json"));
+        return new CompiledState(generatedState, null);
+    }
 
-	////@Override
-	protected void addExtraRecognizerParameters(Template template) {
-		template.Add("runtimePath", normalizedRuntimePath);
-	}
+    ////@Override
+    protected override void AddExtraRecognizerParameters(Template template)
+    {
+        template.Add("runtimePath", normalizedRuntimePath);
+    }
 }

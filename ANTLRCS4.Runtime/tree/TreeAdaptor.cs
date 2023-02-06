@@ -48,21 +48,21 @@ public interface TreeAdaptor
 	 *
 	 *  Override if you want another kind of node to be built.
 	 */
-    public Object create(Token payload);
+    public object create(Token payload);
 
     /** Duplicate a single tree node.
 	 *  Override if you want another kind of node to be built.
 	 */
-    public Object dupNode(Object treeNode);
+    public object dupNode(Object treeNode);
 
     /** Duplicate tree recursively, using dupNode() for each node */
-    public Object dupTree(Object tree);
+    public object dupTree(Object tree);
 
     /** Return a nil node (an empty but non-null node) that can hold
 	 *  a list of element as the children.  If you want a flat tree (a list)
 	 *  use "t=adaptor.nil(); t.addChild(x); t.addChild(y);"
 	 */
-    public Object nil();
+    public object nil();
 
     /** Return a tree node representing an error.  This node records the
 	 *  tokens consumed during error recovery.  The start token indicates the
@@ -78,7 +78,7 @@ public interface TreeAdaptor
 	 *  Tree parsing should happen only when parsing and tree construction
 	 *  succeed.
 	 */
-    public Object errorNode(TokenStream input, Token start, Token stop, RecognitionException e);
+    public object errorNode(TokenStream input, Token start, Token stop, RecognitionException e);
 
     /** Is tree considered a nil node used to make lists of child nodes? */
     public bool isNil(Object tree);
@@ -118,7 +118,7 @@ public interface TreeAdaptor
 	 *  constructing these nodes so we should have this control for
 	 *  efficiency.
 	 */
-    public Object becomeRoot(Object newRoot, Object oldRoot);
+    public object becomeRoot(Object newRoot, Object oldRoot);
 
     /** Given the root of the subtree created for this rule, post process
 	 *  it to do any simplifications or whatever you want.  A required

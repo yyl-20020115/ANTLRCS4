@@ -55,7 +55,7 @@ public class TestScopeParsing {
     public void testArgs(Parameter parameter){
 		Grammar dummy = new Grammar("grammar T; a:'a';");
 
-		Dictionary<String, Attribute> attributes = ScopeParser.parseTypedArgList(null, parameter.input, dummy).attributes;
+		Dictionary<String, Attribute> attributes = ScopeParser.ParseTypedArgList(null, parameter.input, dummy).attributes;
 		List<String> @out = new ();
 		foreach (String arg in attributes.Keys) {
 			Attribute attr = attributes[(arg)];

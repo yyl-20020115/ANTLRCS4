@@ -6,31 +6,37 @@
 
 namespace org.antlr.v4.test.runtime.states;
 
-public abstract class State {
-	public readonly State previousState;
+public abstract class State
+{
+    public readonly State previousState;
 
-	public readonly Exception exception;
+    public readonly Exception exception;
 
-	public abstract Stage getStage();
+    public abstract Stage Stage { get; }
 
-	public bool containsErrors() {
-		return exception != null;
-	}
+    public virtual bool ContainsErrors()
+    {
+        return exception != null;
+    }
 
-	public String getErrorMessage() {
-		String result = "State: " + getStage() + "; ";
-		if (exception != null) {
-			result += exception.ToString();
-			if ( exception.InnerException!=null ) {
-				result += "\nCause:\n";
-				result += exception.InnerException.ToString();
-			}
-		}
-		return result;
-	}
+    public virtual string GetErrorMessage()
+    {
+        var result = "State: " + Stage + "; ";
+        if (exception != null)
+        {
+            result += exception.ToString();
+            if (exception.InnerException != null)
+            {
+                result += "\nCause:\n";
+                result += exception.InnerException.ToString();
+            }
+        }
+        return result;
+    }
 
-	public State(State previousState, Exception exception) {
-		this.previousState = previousState;
-		this.exception = exception;
-	}
+    public State(State previousState, Exception exception)
+    {
+        this.previousState = previousState;
+        this.exception = exception;
+    }
 }

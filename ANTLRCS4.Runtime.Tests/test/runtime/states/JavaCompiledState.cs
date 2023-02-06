@@ -24,25 +24,24 @@ public class JavaCompiledState : CompiledState
     )
         : base(previousState, exception)
     {
-        ;
         this.assembly = assembly;
         this.lexerType = lexer;
         this.parserType = parser;
     }
 
-    public Pair<Lexer, Parser> initializeLexerAndParser(String input)
+    public Pair<Lexer, Parser> InitializeLexerAndParser(String input)
     {
-        ANTLRInputStream @in = new ANTLRInputStream(new StringReader(input));
+        var @in = new ANTLRInputStream(new StringReader(input));
 
-        ConstructorInfo lexerConstructor = this.lexerType.GetConstructor(
+        var lexerConstructor = this.lexerType.GetConstructor(
             new Type[] { typeof(CharStream) });
-        Lexer lexer = lexerConstructor.Invoke(new object[] { @in }) as Lexer;
+        var lexer = lexerConstructor.Invoke(new object[] { @in }) as Lexer;
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
 
-        ConstructorInfo parserConstructor = parserType.GetConstructor(
+        var parserConstructor = parserType.GetConstructor(
             new Type[] { typeof(TokenStream) });
-        Parser parser = parserConstructor.Invoke(new object[] { tokens }) as Parser;
-        return new (lexer, parser);
+        var parser = parserConstructor.Invoke(new object[] { tokens }) as Parser;
+        return new(lexer, parser);
     }
 }

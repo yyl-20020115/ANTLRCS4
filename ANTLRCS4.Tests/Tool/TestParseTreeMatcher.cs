@@ -382,9 +382,9 @@ public class TestParseTreeMatcher {
 				false, false, Stage.Execute, true);
 		JavaRunner runner = new JavaRunner();
 		{
-			JavaExecutedState executedState = (JavaExecutedState)runner.run(runOptions);
+			JavaExecutedState executedState = (JavaExecutedState)runner.Run(runOptions);
 			JavaCompiledState compiledState = (JavaCompiledState)executedState.previousState;
-			Parser parser = compiledState.initializeLexerAndParser("").b;
+			Parser parser = compiledState.InitializeLexerAndParser("").b;
 
 			ParseTreePattern p = parser.compileParseTreePattern(pattern, parser.getRuleIndex(startRule));
 
@@ -404,9 +404,9 @@ public class TestParseTreeMatcher {
 				false, false, Stage.Compile, false);
 		JavaRunner runner = new JavaRunner();
 		{
-			JavaCompiledState compiledState = (JavaCompiledState) runner.run(runOptions);
+			JavaCompiledState compiledState = (JavaCompiledState) runner.Run(runOptions);
 
-			Pair<Lexer, Parser> lexerParserPair = compiledState.initializeLexerAndParser("");
+			Pair<Lexer, Parser> lexerParserPair = compiledState.InitializeLexerAndParser("");
 
 			return new ParseTreePatternMatcher(lexerParserPair.a, lexerParserPair.b);
 		}

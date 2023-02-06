@@ -9,312 +9,352 @@ using org.antlr.v4.test.runtime.states;
 
 namespace org.antlr.v4.test.runtime;
 
-public abstract class RuntimeRunner {
-	public abstract String getLanguage();
+public abstract class RuntimeRunner
+{
+    public abstract string GetLanguage();
 
-	protected virtual String getExtension() { return getLanguage().ToLower(); }
+    public virtual string GetExtension() => GetLanguage().ToLower();
 
-	protected virtual String getTitleName() { return getLanguage(); }
+    public virtual string GetTitleName() => GetLanguage();
 
-	protected virtual String getTestFileName() { return "Test"; }
+    public virtual string GetTestFileName() => "Test";
 
-	protected virtual String getLexerSuffix() { return "Lexer"; }
+    public virtual string GetLexerSuffix() => "Lexer";
 
-	protected virtual String getParserSuffix() { return "Parser"; }
+    public virtual string GetParserSuffix() => "Parser";
 
-	protected virtual String getBaseListenerSuffix() { return "BaseListener"; }
+    public virtual string GetBaseListenerSuffix() => "BaseListener";
 
-	protected virtual String getListenerSuffix() { return "Listener"; }
+    public virtual string GetListenerSuffix() => "Listener";
 
-	protected virtual String getBaseVisitorSuffix() { return "BaseVisitor"; }
+    public virtual string GetBaseVisitorSuffix() => "BaseVisitor";
 
-	protected virtual String getVisitorSuffix() { return "Visitor"; }
+    public virtual string GetVisitorSuffix() => "Visitor";
 
-	protected virtual String grammarNameToFileName(String grammarName) { return grammarName; }
+    public virtual string GrammarNameToFileName(string grammarName) => grammarName;
 
-	private static String runtimeToolPath;
-	private static String compilerPath;
+    private static string runtimeToolPath;
+    private static string compilerPath;
 
-	protected String getCompilerPath() {
-		if (compilerPath == null) {
-			compilerPath = getCompilerName();
-			if (compilerPath != null) {
-				String compilerPathFromProperty = Environment.GetEnvironmentVariable(getPropertyPrefix() + "-compiler");
-				if (compilerPathFromProperty != null && compilerPathFromProperty.Length > 0) {
-					compilerPath = compilerPathFromProperty;
-				}
-			}
-		}
-
-		return compilerPath;
-	}
-
-	protected String getRuntimeToolPath() {
-		if (runtimeToolPath == null) {
-			runtimeToolPath = getRuntimeToolName();
-			if (runtimeToolPath != null) {
-				String runtimeToolPathFromProperty = Environment.GetEnvironmentVariable(getPropertyPrefix() + "-exec");
-				if (runtimeToolPathFromProperty != null && runtimeToolPathFromProperty.Length > 0) {
-					runtimeToolPath = runtimeToolPathFromProperty;
-				}
-			}
-		}
-
-		return runtimeToolPath;
-	}
-
-	protected String getCompilerName() { return null; }
-
-	protected String getRuntimeToolName() { return getLanguage().ToLower(); }
-
-	protected String getTestFileWithExt() { return getTestFileName() + "." + getExtension(); }
-
-	protected String getExecFileName() { return getTestFileWithExt(); }
-
-	protected String[] getExtraRunArgs() { return null; }
-
-	protected virtual Dictionary<String, String> getExecEnvironment() { return null; }
-
-	protected String getPropertyPrefix() {
-		return "antlr-" + getLanguage().ToLower();
-	}
-
-	public  String getTempDirPath() {
-		return tempTestDir.ToString();
-	}
-
-	private bool saveTestDir;
-
-	protected readonly string tempTestDir;
-
-	protected RuntimeRunner(): this(null, false)
+    public virtual string GetCompilerPath()
     {
-	}
+        if (compilerPath == null)
+        {
+            compilerPath = GetCompilerName();
+            if (compilerPath != null)
+            {
+                var compilerPathFromProperty = Environment.GetEnvironmentVariable(GetPropertyPrefix() + "-compiler");
+                if (compilerPathFromProperty != null && compilerPathFromProperty.Length > 0)
+                {
+                    compilerPath = compilerPathFromProperty;
+                }
+            }
+        }
 
-	protected RuntimeRunner(string tempDir, bool saveTestDir) {
-		if (tempDir == null) {
-			String dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond;
-			tempTestDir = Path.Combine(RuntimeTestUtils.TempDirectory, dirName);
-		}
-		else {
-			tempTestDir = tempDir;
-		}
-		this.saveTestDir = saveTestDir;
-	}
+        return compilerPath;
+    }
 
-	public void setSaveTestDir(bool saveTestDir) {
-		this.saveTestDir = saveTestDir;
-	}
+    public virtual string GetRuntimeToolPath()
+    {
+        if (runtimeToolPath == null)
+        {
+            runtimeToolPath = GetRuntimeToolName();
+            if (runtimeToolPath != null)
+            {
+                var runtimeToolPathFromProperty = Environment.GetEnvironmentVariable(GetPropertyPrefix() + "-exec");
+                if (runtimeToolPathFromProperty != null && runtimeToolPathFromProperty.Length > 0)
+                {
+                    runtimeToolPath = runtimeToolPathFromProperty;
+                }
+            }
+        }
 
-	public void close() {
-		removeTempTestDirIfRequired();
-	}
+        return runtimeToolPath;
+    }
 
-	public static readonly String cacheDirectory;
+    public virtual string GetCompilerName() => null;
 
-	private class InitializationStatus {
-		public  Object lockObject = new Object();
-		public volatile Boolean isInitialized;
-		public Exception exception;
-	}
+    public virtual string GetRuntimeToolName() => GetLanguage().ToLower();
 
-	private static readonly Dictionary<String, InitializationStatus> runtimeInitializationStatuses = 
-		new ();
+    public virtual string GetTestFileWithExt() => GetTestFileName() + "." + GetExtension();
 
-	static RuntimeRunner() {
-		cacheDirectory = Environment.CurrentDirectory;// new File(System.getProperty("java.io.tmpdir"), "ANTLR-runtime-testsuite-cache").getAbsolutePath();
-	}
+    public virtual string GetExecFileName() => GetTestFileWithExt();
 
-	protected String getCachePath() {
-		return getCachePath(getLanguage());
-	}
+    public virtual string[] GetExtraRunArgs() => null;
 
-	public static String getCachePath(String language) {
-		return Path.Combine(cacheDirectory ,  language);
-	}
+    public virtual Dictionary<string, string> GetExecEnvironment() => null;
 
-	protected String getRuntimePath() {
-		return getRuntimePath(getLanguage());
-	}
+    public virtual string GetPropertyPrefix() => "antlr-" + GetLanguage().ToLower();
 
-	public static String getRuntimePath(String language) {
-		return Path.Combine(RuntimeTestUtils.runtimePath, language);
-	}
+    public virtual string GetTempDirPath() => tempTestDir.ToString();
 
-	public State run(RunOptions runOptions) {
-		List<String> options = new ();
-		if (runOptions.useVisitor) {
-			options.Add("-visitor");
-		}
-		if (runOptions.superClass != null && runOptions.superClass.Length > 0) {
-			options.Add("-DsuperClass=" + runOptions.superClass);
-		}
-		ErrorQueue errorQueue = Generator.antlrOnString(getTempDirPath(), getLanguage(),
-				runOptions.grammarFileName, runOptions.grammarStr, false, options.ToArray());
+    protected bool saveTestDir;
 
-		List<GeneratedFile> generatedFiles = getGeneratedFiles(runOptions);
-		GeneratedState generatedState = new GeneratedState(errorQueue, generatedFiles, null);
+    protected readonly string tempTestDir;
 
-		if (generatedState.containsErrors() || runOptions.endStage == Stage.Generate) {
-			return generatedState;
-		}
+    protected RuntimeRunner()
+        : this(null, false)
+    {
+    }
 
-		if (!initAntlrRuntimeIfRequired()) {
-			// Do not repeat ANTLR runtime initialization error
-			return new CompiledState(generatedState, new Exception(getTitleName() + " ANTLR runtime is not initialized"));
-		}
+    protected RuntimeRunner(string tempDir, bool saveTestDir)
+    {
+        if (tempDir == null)
+        {
+            var dirName = GetType().Name + "-" + Thread.CurrentThread.Name + "-" + DateTime.Now.Millisecond;
+            tempTestDir = Path.Combine(RuntimeTestUtils.TempDirectory, dirName);
+        }
+        else
+        {
+            tempTestDir = tempDir;
+        }
+        this.saveTestDir = saveTestDir;
+    }
 
-		writeRecognizerFile(runOptions);
+    public virtual void SetSaveTestDir(bool saveTestDir)
+    {
+        this.saveTestDir = saveTestDir;
+    }
 
-		CompiledState compiledState = compile(runOptions, generatedState);
+    public virtual void Close()
+    {
+        RemoveTempTestDirIfRequired();
+    }
 
-		if (compiledState.containsErrors() || runOptions.endStage == Stage.Compile) {
-			return compiledState;
-		}
+    public static readonly string cacheDirectory;
 
-		FileUtils.writeFile(getTempDirPath(), "input", runOptions.input);
+    private class InitializationStatus
+    {
+        public object lockObject = new();
+        public volatile bool isInitialized;
+        public Exception exception;
+    }
 
-		return execute(runOptions, compiledState);
-	}
+    private static readonly Dictionary<string, InitializationStatus> runtimeInitializationStatuses = new();
 
-	protected List<GeneratedFile> getGeneratedFiles(RunOptions runOptions) {
-		List<GeneratedFile> files = new ();
-		String extensionWithDot = "." + getExtension();
-		String fileGrammarName = grammarNameToFileName(runOptions.grammarName);
-		bool isCombinedGrammarOrGo = runOptions.lexerName != null && runOptions.parserName != null || getLanguage().Equals("Go");
-		if (runOptions.lexerName != null) {
-			files.Add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getLexerSuffix() : "") + extensionWithDot, false));
-		}
-		if (runOptions.parserName != null) {
-			files.Add(new GeneratedFile(fileGrammarName + (isCombinedGrammarOrGo ? getParserSuffix() : "") + extensionWithDot, true));
-			if (runOptions.useListener) {
-				files.Add(new GeneratedFile(fileGrammarName + getListenerSuffix() + extensionWithDot, true));
-				String baseListenerSuffix = getBaseListenerSuffix();
-				if (baseListenerSuffix != null) {
-					files.Add(new GeneratedFile(fileGrammarName + baseListenerSuffix + extensionWithDot, true));
-				}
-			}
-			if (runOptions.useVisitor) {
-				files.Add(new GeneratedFile(fileGrammarName + getVisitorSuffix() + extensionWithDot, true));
-				String baseVisitorSuffix = getBaseVisitorSuffix();
-				if (baseVisitorSuffix != null) {
-					files.Add(new GeneratedFile(fileGrammarName + baseVisitorSuffix + extensionWithDot, true));
-				}
-			}
-		}
-		return files;
-	}
+    static RuntimeRunner()
+    {
+        cacheDirectory = Environment.CurrentDirectory;// new File(System.getProperty("java.io.tmpdir"), "ANTLR-runtime-testsuite-cache").getAbsolutePath();
+    }
 
-	protected void writeRecognizerFile(RunOptions runOptions) {
-		String text = RuntimeTestUtils.getTextFromResource("org/antlr/v4/test/runtime/helpers/" + getTestFileWithExt() + ".stg");
-		Template outputFileST = new Template(text);
-		outputFileST.Add("grammarName", runOptions.grammarName);
-		outputFileST.Add("lexerName", runOptions.lexerName);
-		outputFileST.Add("parserName", runOptions.parserName);
-		outputFileST.Add("parserStartRuleName", grammarParseRuleToRecognizerName(runOptions.startRuleName));
-		outputFileST.Add("debug", runOptions.showDiagnosticErrors);
-		outputFileST.Add("profile", runOptions.profile);
-		outputFileST.Add("showDFA", runOptions.showDFA);
-		outputFileST.Add("useListener", runOptions.useListener);
-		outputFileST.Add("useVisitor", runOptions.useVisitor);
-		addExtraRecognizerParameters(outputFileST);
-		FileUtils.writeFile(getTempDirPath(), getTestFileWithExt(), outputFileST.Render());
-	}
+    public virtual string GetCachePath() => GetCachePath(GetLanguage());
 
-	protected String grammarParseRuleToRecognizerName(String startRuleName) {
-		return startRuleName;
-	}
+    public static string GetCachePath(string language) => Path.Combine(cacheDirectory, language);
 
-	protected void addExtraRecognizerParameters(Template template) {}
+    protected virtual string GetRuntimePath() => GetRuntimePath(GetLanguage());
 
-	private bool initAntlrRuntimeIfRequired() {
-		String language = getLanguage();
-		InitializationStatus status;
+    public static string GetRuntimePath(string language) => Path.Combine(RuntimeTestUtils.runtimePath, language);
 
-		// Create initialization status for every runtime with lock object
-		lock (runtimeInitializationStatuses) {
-			status = runtimeInitializationStatuses[(language)];
-			if (status == null) {
-				status = new InitializationStatus();
-				runtimeInitializationStatuses[language]= status;
-			}
-		}
+    public virtual State Run(RunOptions runOptions)
+    {
+        List<string> options = new();
+        if (runOptions.useVisitor)
+        {
+            options.Add("-visitor");
+        }
+        if (runOptions.superClass != null && runOptions.superClass.Length > 0)
+        {
+            options.Add("-DsuperClass=" + runOptions.superClass);
+        }
+        var errorQueue = Generator.AntlrOnString(GetTempDirPath(), GetLanguage(),
+                runOptions.grammarFileName, runOptions.grammarStr, false, options.ToArray());
 
-		if (status.isInitialized != null) {
-			return status.isInitialized;
-		}
+        var generatedFiles = GetGeneratedFiles(runOptions);
+        var generatedState = new GeneratedState(errorQueue, generatedFiles, null);
 
-		// Locking per runtime, several runtimes can be being initialized simultaneously
-		lock (status.lockObject) {
-			if (status.isInitialized == null) {
-				Exception exception = null;
-				try {
-					initRuntime();
-				} catch (Exception e) {
-					exception = e;
-					//e.printStackTrace();
-				}
-				status.isInitialized = exception == null;
-				status.exception = exception;
-			}
-		}
-		return status.isInitialized;
-	}
+        if (generatedState.ContainsErrors() || runOptions.endStage == Stage.Generate)
+        {
+            return generatedState;
+        }
 
-	protected void initRuntime()  {
-	}
+        if (!InitAntlrRuntimeIfRequired())
+        {
+            // Do not repeat ANTLR runtime initialization error
+            return new CompiledState(generatedState, new Exception(GetTitleName() + " ANTLR runtime is not initialized"));
+        }
 
-	protected CompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		return new CompiledState(generatedState, null);
-	}
+        WriteRecognizerFile(runOptions);
 
-	protected ExecutedState execute(RunOptions runOptions, CompiledState compiledState) {
-		String output = null;
-		String errors = null;
-		Exception exception = null;
-		try {
-			List<String> args = new ();
-			String runtimeToolPath = getRuntimeToolPath();
-			if (runtimeToolPath != null) {
-				args.Add(runtimeToolPath);
-			}
-			String[] extraRunArgs = getExtraRunArgs();
-			if (extraRunArgs != null) {
-				args.AddRange((extraRunArgs));
-			}
-			args.Add(getExecFileName());
-			args.Add("input");
-			ProcessorResult result = Processor.run(args.ToArray(), getTempDirPath(), getExecEnvironment());
-			output = result.output;
-			errors = result.errors;
-		} catch (Exception e) {
-			exception = e;
-		}
-		return new ExecutedState(compiledState, output, errors, exception);
-	}
+        var compiledState = Compile(runOptions, generatedState);
 
-	protected ProcessorResult runCommand(String[] command, String workPath)  {
-		return runCommand(command, workPath, null);
-	}
+        if (compiledState.ContainsErrors() || runOptions.endStage == Stage.Compile)
+        {
+            return compiledState;
+        }
 
-	protected ProcessorResult runCommand(String[] command, String workPath, String description)  {
-		try {
-			return Processor.run(command, workPath);
-		} catch (Exception e) {
-			throw description != null ? new Exception("can't " + description, e) : e;
-		}
-	}
+        FileUtils.WriteFile(GetTempDirPath(), "input", runOptions.input);
 
-	private void removeTempTestDirIfRequired() {
-		if (!saveTestDir) {
-			string dirFile = tempTestDir;
-			if (File.Exists(dirFile)) {
-				try {
-					FileUtils.deleteDirectory(dirFile);
-				} catch (IOException e) {
-					//e.printStackTrace();
-				}
-			}
-		}
-	}
+        return Execute(runOptions, compiledState);
+    }
+
+    protected virtual List<GeneratedFile> GetGeneratedFiles(RunOptions runOptions)
+    {
+        List<GeneratedFile> files = new();
+        var extensionWithDot = "." + GetExtension();
+        var fileGrammarName = GrammarNameToFileName(runOptions.grammarName);
+        bool isCombinedGrammarOrGo = runOptions.lexerName != null && runOptions.parserName != null || GetLanguage().Equals("Go");
+        if (runOptions.lexerName != null)
+        {
+            files.Add(new(fileGrammarName + (isCombinedGrammarOrGo ? GetLexerSuffix() : "") + extensionWithDot, false));
+        }
+        if (runOptions.parserName != null)
+        {
+            files.Add(new(fileGrammarName + (isCombinedGrammarOrGo ? GetParserSuffix() : "") + extensionWithDot, true));
+            if (runOptions.useListener)
+            {
+                files.Add(new(fileGrammarName + GetListenerSuffix() + extensionWithDot, true));
+                var baseListenerSuffix = GetBaseListenerSuffix();
+                if (baseListenerSuffix != null)
+                {
+                    files.Add(new(fileGrammarName + baseListenerSuffix + extensionWithDot, true));
+                }
+            }
+            if (runOptions.useVisitor)
+            {
+                files.Add(new(fileGrammarName + GetVisitorSuffix() + extensionWithDot, true));
+                var baseVisitorSuffix = GetBaseVisitorSuffix();
+                if (baseVisitorSuffix != null)
+                {
+                    files.Add(new(fileGrammarName + baseVisitorSuffix + extensionWithDot, true));
+                }
+            }
+        }
+        return files;
+    }
+
+    protected virtual void WriteRecognizerFile(RunOptions runOptions)
+    {
+        var text = RuntimeTestUtils.GetTextFromResource("org/antlr/v4/test/runtime/helpers/" + GetTestFileWithExt() + ".stg");
+        var outputFileST = new Template(text);
+        outputFileST.Add("grammarName", runOptions.grammarName);
+        outputFileST.Add("lexerName", runOptions.lexerName);
+        outputFileST.Add("parserName", runOptions.parserName);
+        outputFileST.Add("parserStartRuleName", GrammarParseRuleToRecognizerName(runOptions.startRuleName));
+        outputFileST.Add("debug", runOptions.showDiagnosticErrors);
+        outputFileST.Add("profile", runOptions.profile);
+        outputFileST.Add("showDFA", runOptions.showDFA);
+        outputFileST.Add("useListener", runOptions.useListener);
+        outputFileST.Add("useVisitor", runOptions.useVisitor);
+        AddExtraRecognizerParameters(outputFileST);
+        FileUtils.WriteFile(GetTempDirPath(), GetTestFileWithExt(), outputFileST.Render());
+    }
+
+    protected virtual string GrammarParseRuleToRecognizerName(string startRuleName)
+    {
+        return startRuleName;
+    }
+
+    protected virtual void AddExtraRecognizerParameters(Template template)
+    {
+    }
+
+    protected virtual bool InitAntlrRuntimeIfRequired()
+    {
+        var language = GetLanguage();
+        InitializationStatus status = default;
+        // Create initialization status for every runtime with lock object
+        lock (runtimeInitializationStatuses)
+        {
+            if (!runtimeInitializationStatuses.TryGetValue(language, out status))
+            {
+                runtimeInitializationStatuses[language] =
+                    status = new InitializationStatus();
+            }
+        }
+
+        if (status.isInitialized)
+            return status.isInitialized;
+
+        // Locking per runtime, several runtimes can be being initialized simultaneously
+        lock (status.lockObject)
+        {
+            if (!status.isInitialized)
+            {
+                Exception exception = null;
+                try
+                {
+                    InitRuntime();
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                    //e.printStackTrace();
+                }
+                status.isInitialized = exception == null;
+                status.exception = exception;
+            }
+        }
+        return status.isInitialized;
+    }
+
+    protected virtual void InitRuntime()
+    {
+    }
+
+    public virtual CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    {
+        return new CompiledState(generatedState, null);
+    }
+
+    public virtual ExecutedState Execute(RunOptions runOptions, CompiledState compiledState)
+    {
+        string output = null;
+        string errors = null;
+        Exception exception = null;
+        try
+        {
+            List<string> args = new();
+            var runtimeToolPath = GetRuntimeToolPath();
+            if (runtimeToolPath != null)
+            {
+                args.Add(runtimeToolPath);
+            }
+            var extraRunArgs = GetExtraRunArgs();
+            if (extraRunArgs != null)
+            {
+                args.AddRange((extraRunArgs));
+            }
+            args.Add(GetExecFileName());
+            args.Add("input");
+            var result = Processor.Run(args.ToArray(), GetTempDirPath(), GetExecEnvironment());
+            output = result.output;
+            errors = result.errors;
+        }
+        catch (Exception e)
+        {
+            exception = e;
+        }
+        return new ExecutedState(compiledState, output, errors, exception);
+    }
+
+    public virtual ProcessorResult RunCommand(string[] command, string workPath, string description = null)
+    {
+        try
+        {
+            return Processor.Run(command, workPath);
+        }
+        catch (Exception e)
+        {
+            throw description != null ? new Exception("can't " + description, e) : e;
+        }
+    }
+
+    public virtual void RemoveTempTestDirIfRequired()
+    {
+        if (!saveTestDir)
+        {
+            var dirFile = tempTestDir;
+            if (File.Exists(dirFile))
+            {
+                try
+                {
+                    FileUtils.DeleteDirectory(dirFile);
+                }
+                catch (IOException e)
+                {
+                    //e.printStackTrace();
+                }
+            }
+        }
+    }
 }
