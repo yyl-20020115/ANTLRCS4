@@ -14,9 +14,7 @@ public class TestIntervalSet
 {
 
     /** Public default constructor used by TestRig */
-    public TestIntervalSet()
-    {
-    }
+    public TestIntervalSet() { }
 
     [TestMethod]
     public void TestSingleElement()

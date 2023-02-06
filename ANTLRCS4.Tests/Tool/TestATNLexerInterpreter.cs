@@ -8,7 +8,6 @@ using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.test.runtime.states;
 using org.antlr.v4.tool;
 using System.Text;
 
@@ -245,7 +244,7 @@ public class TestATNLexerInterpreter
             "KEND : 'end' ;\n" +
             "ID : 'a'..'z'+ ;\n" +
             "WS : (' '|'\\n')+ ;");
-        var expecting = "ID, EOF";
+        string expecting;// = "ID, EOF";
         //checkLexerMatches(lg, "e", expecting);
         expecting = "KEND, EOF";
         CheckLexerMatches(lg, "end", expecting);

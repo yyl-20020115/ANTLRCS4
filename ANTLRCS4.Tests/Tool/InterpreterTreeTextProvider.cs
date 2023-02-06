@@ -11,8 +11,9 @@ namespace org.antlr.v4.test.tool;
 
 public class InterpreterTreeTextProvider : TreeTextProvider
 {
-	public List<string> ruleNames;
-    public InterpreterTreeTextProvider(string[] ruleNames) => this.ruleNames = Arrays.AsList(ruleNames);
+	public readonly List<string> ruleNames;
+    public InterpreterTreeTextProvider(string[] ruleNames)
+		=> this.ruleNames = Arrays.AsList(ruleNames);
 
     ////@Override
     public string GetText(Tree node) {

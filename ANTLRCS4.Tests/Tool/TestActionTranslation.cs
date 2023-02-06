@@ -18,7 +18,7 @@ namespace org.antlr.v4.test.tool;
 [TestClass]
 public class TestActionTranslation
 {
-    string attributeTemplate =
+    readonly string attributeTemplate =
         "attributeTemplate(members,init,inline,finally,inline2) ::= <<\n" +
         "parser grammar A;\n" +
         "@members {#members#<members>#end-members#}\n" +

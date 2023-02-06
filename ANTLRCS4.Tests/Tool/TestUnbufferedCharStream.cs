@@ -359,7 +359,6 @@ public class TestUnbufferedCharStream
     {
         //assertThrows(RuntimeException, () => createStream("\uD83C"));
         Assert.ThrowsException<RuntimeException>(() => CreateStream("\uD83C"));
-
     }
 
     [TestMethod]

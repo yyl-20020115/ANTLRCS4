@@ -298,13 +298,13 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 	//@Override
-	public void clearDFA() {
+	public virtual void clearDFA() {
 		for (int d = 0; d < decisionToDFA.Length; d++) {
 			decisionToDFA[d] = new DFA(atn.getDecisionState(d), d);
 		}
 	}
 
-	public int adaptivePredict(TokenStream input, int decision,
+    public virtual int adaptivePredict(TokenStream input, int decision,
 							   ParserRuleContext outerContext)
 	{
 		if ( debug || debug_list_atn_decisions )  {
@@ -410,7 +410,7 @@ public class ParserATNSimulator : ATNSimulator {
 	    conflict
 	    conflict + preds
 	 */
-	protected int execATN(DFA dfa, DFAState s0,
+	protected virtual int execATN(DFA dfa, DFAState s0,
 					   TokenStream input, int startIndex,
 					   ParserRuleContext outerContext)
 	{
@@ -518,7 +518,7 @@ public class ParserATNSimulator : ATNSimulator {
 		}
 	}
 
-	/**
+    /**
 	 * Get an existing target state for an edge in the DFA. If the target state
 	 * for the edge has not yet been computed or is otherwise not available,
 	 * this method returns {@code null}.
@@ -529,7 +529,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * {@code t}, or {@code null} if the target state for this edge is not
 	 * already cached
 	 */
-	protected DFAState getExistingTargetState(DFAState previousD, int t) {
+    protected virtual DFAState getExistingTargetState(DFAState previousD, int t) {
 		DFAState[] edges = previousD.edges;
 		if (edges == null || t + 1 < 0 || t + 1 >= edges.Length) {
 			return null;
@@ -538,7 +538,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return edges[t + 1];
 	}
 
-	/**
+    /**
 	 * Compute a target state for an edge in the DFA, and attempt to add the
 	 * computed state and corresponding edge to the DFA.
 	 *
@@ -550,7 +550,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * {@code t}. If {@code t} does not lead to a valid DFA state, this method
 	 * returns {@link #ERROR}.
 	 */
-	protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
+    protected virtual DFAState computeTargetState(DFA dfa, DFAState previousD, int t) {
 		ATNConfigSet reach = computeReachSet(previousD.configs, t, false);
 		if ( reach==null ) {
 			addDFAEdge(dfa, previousD, t, ERROR);
@@ -598,7 +598,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return D;
 	}
 
-	protected void predicateDFAState(DFAState dfaState, DecisionState decisionState) {
+    protected virtual void predicateDFAState(DFAState dfaState, DecisionState decisionState) {
 		// We need to test all predicates, even in DFA states that
 		// uniquely predict alternative.
 		int nalts = decisionState.getNumberOfTransitions();
@@ -618,8 +618,8 @@ public class ParserATNSimulator : ATNSimulator {
 		}
 	}
 
-	// comes back with reach.uniqueAlt set to a valid alt
-	protected int execATNWithFullContext(DFA dfa,
+    // comes back with reach.uniqueAlt set to a valid alt
+    protected virtual int execATNWithFullContext(DFA dfa,
 										 DFAState D, // how far we got in SLL DFA before failing over
 										 ATNConfigSet s0,
 										 TokenStream input, int startIndex,
@@ -744,7 +744,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return predictedAlt;
 	}
 
-	protected ATNConfigSet computeReachSet(ATNConfigSet _closure, int t,
+    protected virtual ATNConfigSet computeReachSet(ATNConfigSet _closure, int t,
 										   bool fullCtx)
 	{
 		if ( debug )
@@ -875,7 +875,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return reach;
 	}
 
-	/**
+    /**
 	 * Return a configuration set containing only the configurations from
 	 * {@code configs} which are in a {@link RuleStopState}. If all
 	 * configurations in {@code configs} are already in a rule stop state, this
@@ -895,12 +895,12 @@ public class ParserATNSimulator : ATNSimulator {
 	 * rule stop state, otherwise return a new configuration set containing only
 	 * the configurations from {@code configs} which are in a rule stop state
 	 */
-	protected ATNConfigSet removeAllConfigsNotInRuleStopState(ATNConfigSet configs, bool lookToEndOfRule) {
+    protected virtual ATNConfigSet removeAllConfigsNotInRuleStopState(ATNConfigSet configs, bool lookToEndOfRule) {
 		if (PredictionModeTools.allConfigsInRuleStopStates(configs)) {
 			return configs;
 		}
 
-		ATNConfigSet result = new ATNConfigSet(configs.fullCtx);
+		var result = new ATNConfigSet(configs.fullCtx);
         foreach (ATNConfig config in configs) {
 			if (config.state is RuleStopState) {
 				result.add(config, mergeCache);
@@ -920,7 +920,7 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	protected ATNConfigSet computeStartState(ATNState p,
+    protected virtual ATNConfigSet computeStartState(ATNState p,
 										  RuleContext ctx,
 										  bool fullCtx)
 	{
@@ -938,7 +938,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return configs;
 	}
 
-	/* parrt internal source braindump that doesn't mess up
+    /* parrt internal source braindump that doesn't mess up
 	 * external API spec.
 		context-sensitive in that they can only be properly evaluated
 		in the context of the proper prec argument. Without pruning,
@@ -1041,7 +1041,7 @@ public class ParserATNSimulator : ATNSimulator {
 		level 0"
 	 */
 
-	/**
+    /**
 	 * This method transforms the start state computed by
 	 * {@link #computeStartState} to the special start state used by a
 	 * precedence DFA for a particular precedence value. The transformation
@@ -1101,7 +1101,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * for a precedence DFA at a particular precedence level (determined by
 	 * calling {@link Parser#getPrecedence}).
 	 */
-	protected ATNConfigSet applyPrecedenceFilter(ATNConfigSet configs) {
+    protected virtual ATNConfigSet applyPrecedenceFilter(ATNConfigSet configs) {
 		Dictionary<int, PredictionContext> statesFromAlt1 = new ();
 		ATNConfigSet configSet = new ATNConfigSet(configs.fullCtx);
         foreach (ATNConfig config in configs) {
@@ -1148,7 +1148,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return configSet;
 	}
 
-	protected ATNState getReachableTarget(Transition trans, int ttype) {
+    protected virtual ATNState getReachableTarget(Transition trans, int ttype) {
 		if (trans.matches(ttype, 0, atn.maxTokenType)) {
 			return trans.target;
 		}
@@ -1156,7 +1156,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return null;
 	}
 
-	protected SemanticContext[] getPredsForAmbigAlts(BitSet ambigAlts,
+    protected virtual SemanticContext[] getPredsForAmbigAlts(BitSet ambigAlts,
 												  ATNConfigSet configs,
 												  int nalts)
 	{
@@ -1200,7 +1200,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return altToPred;
 	}
 
-	protected DFAState.PredPrediction[] getPredicatePredictions(BitSet ambigAlts,
+    protected virtual DFAState.PredPrediction[] getPredicatePredictions(BitSet ambigAlts,
 															 SemanticContext[] altToPred)
 	{
 		List<DFAState.PredPrediction> pairs = new ();
@@ -1225,7 +1225,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return pairs.ToArray();
 	}
 
-	/**
+    /**
 	 * This method is used to improve the localization of error messages by
 	 * choosing an alternative rather than throwing a
 	 * {@link NoViableAltException} in particular prediction scenarios where the
@@ -1271,7 +1271,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * {@link ATN#INVALID_ALT_NUMBER} if a suitable alternative was not
 	 * identified and {@link #adaptivePredict} should report an error instead.
 	 */
-	protected int getSynValidOrSemInvalidAltThatFinishedDecisionEntryRule(ATNConfigSet configs,
+    protected virtual int getSynValidOrSemInvalidAltThatFinishedDecisionEntryRule(ATNConfigSet configs,
 																		  ParserRuleContext outerContext)
 	{
 		Pair<ATNConfigSet,ATNConfigSet> sets =
@@ -1292,7 +1292,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return ATN.INVALID_ALT_NUMBER;
 	}
 
-	protected int getAltThatFinishedDecisionEntryRule(ATNConfigSet configs) {
+    protected virtual int getAltThatFinishedDecisionEntryRule(ATNConfigSet configs) {
 		IntervalSet alts = new IntervalSet();
         foreach (ATNConfig c in configs) {
 			if ( c.getOuterContextDepth()>0 || (c.state is RuleStopState && c.context.hasEmptyPath()) ) {
@@ -1303,7 +1303,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return alts.getMinElement();
 	}
 
-	/** Walk the list of configurations and split them according to
+    /** Walk the list of configurations and split them according to
 	 *  those that have preds evaluating to true/false.  If no pred, assume
 	 *  true pred and include in succeeded set.  Returns Pair of sets.
 	 *
@@ -1312,7 +1312,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 *  Assumption: the input stream has been restored to the starting point
 	 *  prediction, which is where predicates need to evaluate.
  	 */
-	protected Pair<ATNConfigSet,ATNConfigSet> splitAccordingToSemanticValidity(
+    protected virtual Pair<ATNConfigSet,ATNConfigSet> splitAccordingToSemanticValidity(
 		ATNConfigSet configs,
 		ParserRuleContext outerContext)
 	{
@@ -1335,13 +1335,13 @@ public class ParserATNSimulator : ATNSimulator {
 		return new Pair<ATNConfigSet, ATNConfigSet>(succeeded,failed);
 	}
 
-	/** Look through a list of predicate/alt pairs, returning alts for the
+    /** Look through a list of predicate/alt pairs, returning alts for the
 	 *  pairs that win. A {@code NONE} predicate indicates an alt containing an
 	 *  unpredicated config which behaves as "always true." If !complete
 	 *  then we stop at the first predicate that evaluates to true. This
 	 *  includes pairs with null predicates.
 	 */
-	protected BitSet evalSemanticContext(DFAState.PredPrediction[] predPredictions,
+    protected virtual BitSet evalSemanticContext(DFAState.PredPrediction[] predPredictions,
 									  ParserRuleContext outerContext,
 									  bool complete)
 	{
@@ -1373,7 +1373,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return predictions;
 	}
 
-	/**
+    /**
 	 * Evaluate a semantic context within a specific parser context.
 	 *
 	 * <p>
@@ -1403,18 +1403,18 @@ public class ParserATNSimulator : ATNSimulator {
 	 *
 	 * @since 4.3
 	 */
-	protected bool evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx) {
+    protected virtual bool evalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx) {
 		return pred.eval(parser, parserCallStack);
 	}
 
-	/* TODO: If we are doing predicates, there is no point in pursuing
+    /* TODO: If we are doing predicates, there is no point in pursuing
 		 closure operations if we reach a DFA state that uniquely predicts
 		 alternative. We will not be caching that DFA state and it is a
 		 waste to pursue the closure. Might have to advance when we do
 		 ambig detection thought :(
 		  */
 
-	protected void closure(ATNConfig config,
+    protected virtual void closure(ATNConfig config,
 						   ATNConfigSet configs,
 						   HashSet<ATNConfig> closureBusy,
 						   bool collectPredicates,
@@ -1428,7 +1428,7 @@ public class ParserATNSimulator : ATNSimulator {
 		//assert !fullCtx || !configs.dipsIntoOuterContext;
 	}
 
-	protected void closureCheckingStopState(ATNConfig config,
+    protected virtual void closureCheckingStopState(ATNConfig config,
 											ATNConfigSet configs,
 											HashSet<ATNConfig> closureBusy,
 											bool collectPredicates,
@@ -1491,8 +1491,8 @@ public class ParserATNSimulator : ATNSimulator {
 				 fullCtx, depth, treatEofAsEpsilon);
 	}
 
-	/** Do the actual work of walking epsilon edges */
-	protected void closure_(ATNConfig config,
+    /** Do the actual work of walking epsilon edges */
+    protected virtual void closure_(ATNConfig config,
 							ATNConfigSet configs,
 							HashSet<ATNConfig> closureBusy,
 							bool collectPredicates,
@@ -1566,7 +1566,7 @@ public class ParserATNSimulator : ATNSimulator {
 		}
 	}
 
-	/** Implements first-edge (loop entry) elimination as an optimization
+    /** Implements first-edge (loop entry) elimination as an optimization
 	 *  during closure operations.  See antlr/antlr4#1398.
 	 *
 	 * The optimization is to avoid adding the loop entry config when
@@ -1654,7 +1654,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 *
 	 * @since 4.6
 	 */
-	protected bool canDropLoopEntryEdgeInLeftRecursiveRule(ATNConfig config) {
+    protected virtual bool canDropLoopEntryEdgeInLeftRecursiveRule(ATNConfig config) {
 		if ( TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT ) return false;
 		ATNState p = config.state;
 		// First check to see if we are in StarLoopEntryState generated during
@@ -1726,13 +1726,13 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	public String getRuleName(int index) {
+	public virtual string getRuleName(int index) {
 		if ( parser!=null && index>=0 ) return parser.getRuleNames()[index];
 		return "<rule "+index+">";
 	}
 
 
-	protected ATNConfig getEpsilonTarget(ATNConfig config,
+    protected virtual ATNConfig getEpsilonTarget(ATNConfig config,
 									  Transition t,
 									  bool collectPredicates,
 									  bool inContext,
@@ -1777,13 +1777,13 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	protected ATNConfig actionTransition(ATNConfig config, ActionTransition t) {
+    protected virtual ATNConfig actionTransition(ATNConfig config, ActionTransition t) {
 		if ( debug ) Console.WriteLine("ACTION edge "+t.ruleIndex+":"+t.actionIndex);
 		return new ATNConfig(config, t.target);
 	}
 
 
-	public ATNConfig precedenceTransition(ATNConfig config,
+	public virtual ATNConfig precedenceTransition(ATNConfig config,
 									PrecedencePredicateTransition pt,
 									bool collectPredicates,
 									bool inContext,
@@ -1829,7 +1829,7 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	protected ATNConfig predTransition(ATNConfig config,
+    protected virtual ATNConfig predTransition(ATNConfig config,
 									PredicateTransition pt,
 									bool collectPredicates,
 									bool inContext,
@@ -1877,7 +1877,7 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	protected ATNConfig ruleTransition(ATNConfig config, RuleTransition t) {
+    protected virtual ATNConfig ruleTransition(ATNConfig config, RuleTransition t) {
 		if ( debug ) {
 			Console.WriteLine("CALL rule "+getRuleName(t.target.ruleIndex)+
 							   ", ctx="+config.context);
@@ -1889,7 +1889,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return new ATNConfig(config, t.target, newContext);
 	}
 
-	/**
+    /**
 	 * Gets a {@link BitSet} containing the alternatives in {@code configs}
 	 * which are part of one or more conflicting alternative subsets.
 	 *
@@ -1898,12 +1898,12 @@ public class ParserATNSimulator : ATNSimulator {
 	 * conflicting alternative subsets. If {@code configs} does not contain any
 	 * conflicting subsets, this method returns an empty {@link BitSet}.
 	 */
-	protected BitSet getConflictingAlts(ATNConfigSet configs) {
+    protected virtual BitSet getConflictingAlts(ATNConfigSet configs) {
 		ICollection<BitSet> altsets = PredictionModeTools.getConflictingAltSubsets(configs);
 		return PredictionModeTools.getAlts(altsets);
 	}
 
-	/**
+    /**
 	 Sam pointed out a problem with the previous definition, v3, of
 	 ambiguous states. If we have another state associated with conflicting
 	 alternatives, we should keep going. For example, the following grammar
@@ -1939,7 +1939,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 ignore a set of conflicting alts when we have an alternative
 	 that we still need to pursue.
 	 */
-	protected BitSet getConflictingAltsOrUniqueAlt(ATNConfigSet configs) {
+    protected virtual BitSet getConflictingAltsOrUniqueAlt(ATNConfigSet configs) {
 		BitSet conflictingAlts;
 		if ( configs.uniqueAlt!= ATN.INVALID_ALT_NUMBER ) {
 			conflictingAlts = new BitSet();
@@ -1952,7 +1952,7 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	public String getTokenName(int t) {
+	public virtual string getTokenName(int t) {
 		if (t == Token.EOF) {
 			return "EOF";
 		}
@@ -1966,7 +1966,7 @@ public class ParserATNSimulator : ATNSimulator {
 		return displayName + "<" + t + ">";
 	}
 
-	public String getLookaheadName(TokenStream input) {
+	public virtual string getLookaheadName(TokenStream input) {
 		return getTokenName(input.LA(1));
 	}
 
@@ -1974,7 +1974,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 *  it out for clarity now that alg. works well. We can leave this
 	 *  "dead" code for a bit.
 	 */
-	public void dumpDeadEndConfigs(NoViableAltException nvae) {
+	public virtual void dumpDeadEndConfigs(NoViableAltException nvae) {
 		Console.Error.WriteLine("dead end configs: ");
         foreach (ATNConfig c in nvae.getDeadEndConfigs()) {
 			String trans = "no edges";
@@ -1995,7 +1995,7 @@ public class ParserATNSimulator : ATNSimulator {
 	}
 
 
-	protected NoViableAltException noViableAlt(TokenStream input,
+	protected virtual NoViableAltException noViableAlt(TokenStream input,
 											ParserRuleContext outerContext,
 											ATNConfigSet configs,
 											int startIndex)
@@ -2039,7 +2039,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * otherwise this method returns the result of calling {@link #addDFAState}
 	 * on {@code to}
 	 */
-	protected DFAState addDFAEdge(DFA dfa,
+	protected virtual DFAState addDFAEdge(DFA dfa,
 								  DFAState from,
 								  int t,
 								  DFAState to)
@@ -2087,7 +2087,7 @@ public class ParserATNSimulator : ATNSimulator {
 	 * state if {@code D} is already in the DFA, or {@code D} itself if the
 	 * state was not already present.
 	 */
-	protected DFAState addDFAState(DFA dfa, DFAState D) {
+	protected virtual DFAState addDFAState(DFA dfa, DFAState D) {
 		if (D == ERROR) {
 			return D;
 		}
@@ -2107,26 +2107,26 @@ public class ParserATNSimulator : ATNSimulator {
 		}
 	}
 
-	protected void reportAttemptingFullContext(DFA dfa, BitSet conflictingAlts, ATNConfigSet configs, int startIndex, int stopIndex) {
+	protected virtual void reportAttemptingFullContext(DFA dfa, BitSet conflictingAlts, ATNConfigSet configs, int startIndex, int stopIndex) {
         if ( debug || retry_debug ) {
 			Interval interval = Interval.of(startIndex, stopIndex);
 			Console.WriteLine("reportAttemptingFullContext decision="+dfa.decision+":"+configs+
                                ", input="+parser.getTokenStream().getText(interval));
         }
-        if ( parser!=null ) parser.getErrorListenerDispatch().reportAttemptingFullContext(parser, dfa, startIndex, stopIndex, conflictingAlts, configs);
+        if ( parser!=null ) parser.getErrorListenerDispatch().ReportAttemptingFullContext(parser, dfa, startIndex, stopIndex, conflictingAlts, configs);
     }
 
-	protected void reportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex) {
+	protected virtual void reportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex) {
         if ( debug || retry_debug ) {
 			Interval interval = Interval.of(startIndex, stopIndex);
             Console.WriteLine("reportContextSensitivity decision="+dfa.decision+":"+configs+
                                ", input="+parser.getTokenStream().getText(interval));
         }
-        if ( parser!=null ) parser.getErrorListenerDispatch().reportContextSensitivity(parser, dfa, startIndex, stopIndex, prediction, configs);
+        if ( parser!=null ) parser.getErrorListenerDispatch().ReportContextSensitivity(parser, dfa, startIndex, stopIndex, prediction, configs);
     }
 
     /** If context sensitive parsing, we know it's ambiguity not conflict */
-    protected void reportAmbiguity(DFA dfa,
+    protected virtual void reportAmbiguity(DFA dfa,
 								   DFAState D, // the DFA state from execATN() that had SLL conflicts
 								   int startIndex, int stopIndex,
 								   bool exact,
@@ -2139,27 +2139,27 @@ public class ParserATNSimulator : ATNSimulator {
 							   ambigAlts+":"+configs+
                                ", input="+parser.getTokenStream().getText(interval));
         }
-        if ( parser!=null ) parser.getErrorListenerDispatch().reportAmbiguity(parser, dfa, startIndex, stopIndex,
+        if ( parser!=null ) parser.getErrorListenerDispatch().ReportAmbiguity(parser, dfa, startIndex, stopIndex,
 																			  exact, ambigAlts, configs);
     }
 
-	public void setPredictionMode(PredictionMode mode) {
+	public virtual void setPredictionMode(PredictionMode mode) {
 		this.mode = mode;
 	}
 
 
-	public PredictionMode getPredictionMode() {
+	public virtual PredictionMode getPredictionMode() {
 		return mode;
 	}
 
 	/**
 	 * @since 4.3
 	 */
-	public Parser getParser() {
+	public virtual Parser getParser() {
 		return parser;
 	}
 
-	public static String getSafeEnv(String envName) {
+	public static string getSafeEnv(String envName) {
 		return Environment.GetEnvironmentVariable(envName);
 	}
 }

@@ -24,26 +24,26 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             this.parser = parser;
         }
         //@Override
-        public void enterEveryRule(ParserRuleContext ctx)
+        public void EnterEveryRule(ParserRuleContext ctx)
         {
             Console.Out.WriteLine("enter   " + this.parser.getRuleNames()[ctx.getRuleIndex()] +
                                ", LT(1)=" + this.parser.input.LT(1).getText());
         }
 
         //@Override
-        public void visitTerminal(TerminalNode node)
+        public void VisitTerminal(TerminalNode node)
         {
             Console.Out.WriteLine("consume " + node.getSymbol() + " rule " +
                                this.parser.getRuleNames()[this.parser._ctx.getRuleIndex()]);
         }
 
         //@Override
-        public void visitErrorNode(ErrorNode node)
+        public void VisitErrorNode(ErrorNode node)
         {
         }
 
         //@Override
-        public void exitEveryRule(ParserRuleContext ctx)
+        public void ExitEveryRule(ParserRuleContext ctx)
         {
             Console.Out.WriteLine("exit    " + this.parser.getRuleNames()[ctx.getRuleIndex()] +
                                ", LT(1)=" + this.parser.input.LT(1).getText());
@@ -55,16 +55,16 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         public static readonly TrimToSizeListener INSTANCE = new TrimToSizeListener();
 
         //@Override
-        public void enterEveryRule(ParserRuleContext ctx) { }
+        public void EnterEveryRule(ParserRuleContext ctx) { }
 
         //@Override
-        public void visitTerminal(TerminalNode node) { }
+        public void VisitTerminal(TerminalNode node) { }
 
         //@Override
-        public void visitErrorNode(ErrorNode node) { }
+        public void VisitErrorNode(ErrorNode node) { }
 
         //@Override
-        public void exitEveryRule(ParserRuleContext ctx)
+        public void ExitEveryRule(ParserRuleContext ctx)
         {
             if (ctx.children is List<ParseTree> ch)
             {
@@ -446,7 +446,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     {
         foreach (ParseTreeListener listener in _parseListeners)
         {
-            listener.enterEveryRule(_ctx);
+            listener.EnterEveryRule(_ctx);
             _ctx.enterRule(listener);
         }
     }
@@ -463,7 +463,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         {
             ParseTreeListener listener = _parseListeners[i];
             _ctx.exitRule(listener);
-            listener.exitEveryRule(_ctx);
+            listener.ExitEveryRule(_ctx);
         }
     }
 
@@ -613,7 +613,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         charPositionInLine = offendingToken.getCharPositionInLine();
 
         ANTLRErrorListener listener = getErrorListenerDispatch();
-        listener.syntaxError(this, offendingToken, line, charPositionInLine, msg, e);
+        listener.SyntaxError(this, offendingToken, line, charPositionInLine, msg, e);
     }
 
     /**
@@ -654,7 +654,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 {
                     foreach (ParseTreeListener listener in _parseListeners)
                     {
-                        listener.visitErrorNode(node);
+                        listener.VisitErrorNode(node);
                     }
                 }
             }
@@ -665,7 +665,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 {
                     foreach (ParseTreeListener listener in _parseListeners)
                     {
-                        listener.visitTerminal(node);
+                        listener.VisitTerminal(node);
                     }
                 }
             }

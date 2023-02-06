@@ -5,7 +5,6 @@
  */
 
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.test.runtime;
 using org.antlr.v4.test.runtime.java;
@@ -33,7 +32,7 @@ public class TestParseTreeMatcher
     {
         var m = new ParseTreePatternMatcher(null, null);
         m.setDelimiters("<<", ">>", "$");
-        String result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
+        var result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
         Assert.AreEqual("[ID, ' = ', expr, ' ;<< ick >>']", result);
     }
 
@@ -58,7 +57,7 @@ public class TestParseTreeMatcher
     public void TestUnclosedTag()
     {
         var m = new ParseTreePatternMatcher(null, null);
-        String result = null;
+        string result = null;
         try
         {
             m.split("<expr hi mom");
@@ -195,14 +194,14 @@ public class TestParseTreeMatcher
     [TestMethod]
     public void TestHiddenTokensNotSeenByTreePatternParser()
     {
-        vars grammar =
+        var grammar =
             "grammar X2;\n" +
             "s : ID '=' expr ';' ;\n" +
             "expr : ID | INT ;\n" +
             "ID : [a-z]+ ;\n" +
             "INT : [0-9]+ ;\n" +
             "WS : [ \\r\\n\\t]+ -> channel(HIDDEN) ;\n";
-        var m = getPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
+        var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
         var t = m.compile("<ID> = <expr> ;", m.getParser().getRuleIndex("s"));
         Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));

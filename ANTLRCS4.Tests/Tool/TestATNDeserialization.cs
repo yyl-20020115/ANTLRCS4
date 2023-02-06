@@ -199,13 +199,13 @@ public class TestATNDeserialization
         var atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.toArray());
 
         var serialized16 = ATNDeserializer.encodeIntsWith16BitWords(serialized);
-        int[] ints16 = serialized16.toArray();
-        char[] chars = new char[ints16.Length];
+        var ints16 = serialized16.toArray();
+        var chars = new char[ints16.Length];
         for (int i = 0; i < ints16.Length; i++)
         {
             chars[i] = (char)ints16[i];
         }
-        int[] serialized32 = ATNDeserializer.decodeIntsEncodedAs16BitWords(chars, true);
+        var serialized32 = ATNDeserializer.decodeIntsEncodedAs16BitWords(chars, true);
 
         Assert.IsTrue(Enumerable.SequenceEqual(serialized.toArray(), serialized32));
 

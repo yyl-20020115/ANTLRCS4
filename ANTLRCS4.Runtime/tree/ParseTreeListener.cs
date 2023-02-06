@@ -18,9 +18,10 @@ namespace org.antlr.v4.runtime.tree;
  *
  * 		https://github.com/antlr/antlr4/issues/841
  */
-public interface ParseTreeListener {
-	void visitTerminal(TerminalNode node);
-	void visitErrorNode(ErrorNode node);
-    void enterEveryRule(ParserRuleContext ctx);
-    void exitEveryRule(ParserRuleContext ctx);
+public interface ParseTreeListener
+{
+    void VisitTerminal(TerminalNode node);
+    void VisitErrorNode(ErrorNode node);
+    void EnterEveryRule(ParserRuleContext ctx);
+    void ExitEveryRule(ParserRuleContext ctx);
 }

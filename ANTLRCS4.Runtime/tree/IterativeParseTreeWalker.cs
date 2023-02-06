@@ -29,10 +29,10 @@ public class IterativeParseTreeWalker : ParseTreeWalker {
 
 			// pre-order visit
 			if (currentNode is ErrorNode) {
-				listener.visitErrorNode((ErrorNode) currentNode);
+				listener.VisitErrorNode((ErrorNode) currentNode);
 			}
 			else if (currentNode is TerminalNode) {
-				listener.visitTerminal((TerminalNode) currentNode);
+				listener.VisitTerminal((TerminalNode) currentNode);
 			}
 			else {
 				 RuleNode r = (RuleNode) currentNode;

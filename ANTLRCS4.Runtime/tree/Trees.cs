@@ -20,10 +20,10 @@ public static class Trees
 	 *  node payloads to get the text for the nodes.  Detect
 	 *  parse trees and extract data appropriately.
 	 */
-	public static String toStringTree(Tree t) {
+	public static String ToStringTree(Tree t) {
 		return toStringTree(t, (List<String>)null);
 	}
-    public static String toStringTree(Tree t, TreeTextProvider nodeTextProvider)
+    public static String ToStringTree(Tree t, TreeTextProvider nodeTextProvider)
     {
         if (t == null) return "null";
         String s = RuntimeUtils.EscapeWhitespace(nodeTextProvider.GetText(t), false);
@@ -36,7 +36,7 @@ public static class Trees
         for (int i = 0; i < t.getChildCount(); i++)
         {
             if (i > 0) buf.Append(' ');
-            buf.Append(toStringTree(t.getChild(i), nodeTextProvider));
+            buf.Append(ToStringTree(t.getChild(i), nodeTextProvider));
         }
         buf.Append(')');
         return buf.ToString();

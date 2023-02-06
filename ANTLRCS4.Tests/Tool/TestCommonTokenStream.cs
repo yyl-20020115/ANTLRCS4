@@ -12,15 +12,12 @@ namespace org.antlr.v4.test.tool;
 public class TestCommonTokenStream : TestBufferedTokenStream
 {
     //@Override
-    protected static TokenStream CreateTokenStream(TokenSource src)
-    {
-        return new CommonTokenStream(src);
-    }
+    protected static TokenStream CreateTokenStream(TokenSource src) 
+        => new CommonTokenStream(src);
 
     public class TS1 : TokenSource
     {
         int i = 0;
-
 
         public WritableToken[] tokens;
 

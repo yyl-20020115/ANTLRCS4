@@ -30,7 +30,7 @@ public class ConsoleErrorListener : BaseErrorListener {
 	 * </pre>
 	 */
 	//@Override
-	public override void syntaxError(Recognizer recognizer,
+	public override void SyntaxError(Recognizer recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,

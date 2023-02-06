@@ -102,18 +102,18 @@ public class TestSymbolIssues
 		"error(" + ErrorType.MODE_CONFLICTS_WITH_TOKEN + "): F.g4:3:0: mode M1 conflicts with token with same name\n"
     };
 
-    [TestMethod] 
-    public void TestA() { ToolTestUtils.TestErrors(A, false); }
-    [TestMethod] 
-    public void TestB() { ToolTestUtils.TestErrors(B, false); }
+    [TestMethod]
+    public void TestA() => ToolTestUtils.TestErrors(A, false);
+    [TestMethod]
+    public void TestB() => ToolTestUtils.TestErrors(B, false);
 
 
-    [TestMethod] 
-    public void TestD() { ToolTestUtils.TestErrors(D, false); }
-    [TestMethod] 
-    public void TestE() { ToolTestUtils.TestErrors(E, false); }
-    [TestMethod] 
-    public void TestF() { ToolTestUtils.TestErrors(F, false); }
+    [TestMethod]
+    public void TestD() => ToolTestUtils.TestErrors(D, false);
+    [TestMethod]
+    public void TestE() => ToolTestUtils.TestErrors(E, false);
+    [TestMethod]
+    public void TestF() => ToolTestUtils.TestErrors(F, false);
 
     [TestMethod]
     public void TestStringLiteralRedefs()

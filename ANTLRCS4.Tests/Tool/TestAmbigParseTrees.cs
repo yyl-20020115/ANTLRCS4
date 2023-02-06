@@ -229,7 +229,7 @@ public class TestAmbigParseTrees
         // PARSE
         int ruleIndex = g.rules[(startRule)].index;
         var parseTree = parser.parse(ruleIndex);
-        Assert.AreEqual(overallTree, Trees.toStringTree(parseTree, nodeTextProvider));
+        Assert.AreEqual(overallTree, Trees.ToStringTree(parseTree, nodeTextProvider));
         Console.Out.WriteLine();
 
         var decisionInfo = parser.getParseInfo().getDecisionInfo();
@@ -252,7 +252,7 @@ public class TestAmbigParseTrees
         for (int i = 0; i < ambiguousParseTrees.Count; i++)
         {
             ParserRuleContext t = ambiguousParseTrees[i];
-            Assert.AreEqual(expectedParseTrees[i], Trees.toStringTree(t, nodeTextProvider));
+            Assert.AreEqual(expectedParseTrees[i], Trees.ToStringTree(t, nodeTextProvider));
         }
     }
 
@@ -274,6 +274,6 @@ public class TestAmbigParseTrees
         parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
         var t = parser.parse(g.rules[(startRule)].index);
         var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
-        Assert.AreEqual(expectedParseTree, Trees.toStringTree(t, nodeTextProvider));
+        Assert.AreEqual(expectedParseTree, Trees.ToStringTree(t, nodeTextProvider));
     }
 }

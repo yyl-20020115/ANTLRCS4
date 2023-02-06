@@ -10,7 +10,7 @@ namespace org.antlr.v4.runtime.tree.xpath;
 
 
 public class XPathLexerErrorListener : BaseErrorListener {
-	public override void syntaxError(Recognizer recognizer, Object offendingSymbol,
+	public override void SyntaxError(Recognizer recognizer, Object offendingSymbol,
 							int line, int charPositionInLine, String msg,
 							RecognitionException e)
 	{

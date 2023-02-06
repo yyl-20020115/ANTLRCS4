@@ -171,12 +171,12 @@ public class TestTokenTypeAssignment
     }
 
     protected static void CheckSymbols(Grammar g,
-                                String rulesStr,
-                                String allValidTokensStr)
+                                string rulesStr,
+                                string allValidTokensStr)
 
     {
         var typeToTokenName = g.getTokenNames();
-        var tokens = new HashSet<String>();
+        var tokens = new HashSet<string>();
         for (int i = 0; i < typeToTokenName.Length; i++)
         {
             var t = typeToTokenName[i];

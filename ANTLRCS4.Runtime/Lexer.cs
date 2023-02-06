@@ -473,7 +473,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         String msg = "token recognition error at: '" + getErrorDisplay(text) + "'";
 
         ANTLRErrorListener listener = getErrorListenerDispatch();
-        listener.syntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
+        listener.SyntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
     }
 
     public String getErrorDisplay(String s)

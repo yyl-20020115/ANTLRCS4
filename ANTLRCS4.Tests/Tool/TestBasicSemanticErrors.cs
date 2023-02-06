@@ -98,7 +98,7 @@ public class TestBasicSemanticErrors
         TestErrors(new String[] { grammarST.Render(), expected }, false);
     }
 
-    private void TestErrors(string[] strings, bool v)
+    private static void TestErrors(string[] strings, bool v)
     {
         ToolTestUtils.TestErrors(strings, v);
     }

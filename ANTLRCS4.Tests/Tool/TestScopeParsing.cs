@@ -7,7 +7,6 @@
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
-using Attribute = org.antlr.v4.tool.Attribute;
 
 namespace org.antlr.v4.test.tool;
 
@@ -70,17 +69,17 @@ public class TestScopeParsing
 
     public class Parameter
     {
-        public readonly String input;
-        public readonly String output;
+        public readonly string input;
+        public readonly string output;
 
-        public Parameter(String input, String output)
+        public Parameter(string input, string output)
         {
             this.input = input;
             this.output = output;
         }
 
         ////@Override
-        public override String ToString()
+        public override string ToString()
         {
             return input;
         }

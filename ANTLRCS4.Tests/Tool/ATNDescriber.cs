@@ -27,7 +27,7 @@ namespace org.antlr.v4.test.tool;
 public class ATNDescriber
 {
     public ATN atn;
-    private List<string> tokenNames;
+    private readonly List<string> tokenNames;
 
     public ATNDescriber(ATN atn, List<string> tokenNames)
     {
@@ -73,7 +73,7 @@ public class ATNDescriber
                 int endStateNumber = data[p++];
                 arg = " " + endStateNumber;
             }
-            buffer.Append(i).Append(":")
+            buffer.Append(i).Append(':')
                     .Append(ATNState.serializationNames[(stype)]).Append(' ')
                     .Append(ruleIndex).Append(arg).Append('\n');
         }
@@ -227,5 +227,4 @@ public class ATNDescriber
 
         return t.ToString();
     }
-
 }

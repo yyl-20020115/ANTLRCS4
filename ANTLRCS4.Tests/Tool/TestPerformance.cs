@@ -744,14 +744,14 @@ public class TestPerformance
     //    parseSources(currentPass, factory, sources, shuffleSources);
     //}
 
-    protected List<InputDescriptor> loadSources(string directory, string filesFilter, string directoriesFilter, bool recursive)
+    protected List<InputDescriptor> LoadSources(string directory, string filesFilter, string directoriesFilter, bool recursive)
     {
         List<InputDescriptor> result = new();
-        loadSources(directory, filesFilter, directoriesFilter, recursive, result);
+        LoadSources(directory, filesFilter, directoriesFilter, recursive, result);
         return result;
     }
 
-    protected void loadSources(string directory, string filesFilter, string directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
+    protected void LoadSources(string directory, string filesFilter, string directoriesFilter, bool recursive, ICollection<InputDescriptor> result)
     {
         //assert directory.isDirectory();
 
@@ -773,406 +773,13 @@ public class TestPerformance
             {
                 if ((child.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    loadSources(child.FullName, filesFilter, directoriesFilter, true, result);
+                    LoadSources(child.FullName, filesFilter, directoriesFilter, true, result);
                 }
             }
         }
     }
 
     int configOutputSize = 0;
-
-//    protected void parseSources(int currentPass, ParserFactory factory, ICollection<InputDescriptor> sources, bool shuffleSources)
-//    {
-//        if (shuffleSources)
-//        {
-//            List<InputDescriptor> sourcesList = new(sources);
-//            lock (RANDOM)
-//            {
-//                Collections.shuffle(sourcesList, RANDOM);
-//            }
-
-//            sources = sourcesList;
-//        }
-
-//        long startTime = DateTime.Now.Nanosecond;
-//        tokenCount.set(currentPass, 0);
-//        int inputSize = 0;
-//        int inputCount = 0;
-
-//        ICollection<Future<FileParseResult>> results = new();
-//        ExecutorService executorService;
-//        if (FILE_GRANULARITY)
-//        {
-//            executorService = Executors.newFixedThreadPool(FILE_GRANULARITY ? NUMBER_OF_THREADS : 1, new NumberedThreadFactory());
-//        }
-//        else
-//        {
-//            executorService = Executors.newSingleThreadExecutor(new FixedThreadNumberFactory(((NumberedThread)Thread.currentThread()).getThreadNumber()));
-//        }
-
-//        foreach (InputDescriptor inputDescriptor in sources)
-//        {
-//            if (inputCount >= MAX_FILES_PER_PARSE_ITERATION)
-//            {
-//                break;
-//            }
-
-//            CharStream input = inputDescriptor.getInputStream();
-//            input.seek(0);
-//            inputSize += input.size();
-//            inputCount++;
-//            //TODO:
-//#if false
-//            Future<FileParseResult> futureChecksum = executorService.submit(new Callable<FileParseResult>()
-//            {
-//                //@Override
-//                public FileParseResult call()
-//            {
-//                // this incurred a great deal of overhead and was causing significant variations in performance results.
-//                //Console.Out.format("Parsing file %s\n", input.getSourceName());
-//                try
-//                {
-//                    return factory.parseFile(input, currentPass, ((NumberedThread)Thread.currentThread()).getThreadNumber());
-//                }
-//                catch (IllegalStateException ex)
-//                {
-//                    ex.printStackTrace(System.err);
-//                }
-//                catch (Throwable t)
-//                {
-//                    t.printStackTrace(System.err);
-//                }
-
-//                return null;
-//            }
-//        });
-//#endif
-//            results.Add(futureChecksum);
-//        }
-
-//        MurmurHashChecksum checksum = new MurmurHashChecksum();
-//        int currentIndex = -1;
-//        foreach (Future<FileParseResult> future in results)
-//        {
-//            currentIndex++;
-//            int fileChecksum = 0;
-//            try
-//            {
-//                FileParseResult fileResult = future.get();
-//                if (COMPUTE_TRANSITION_STATS)
-//                {
-//                    totalTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserTotalTransitions);
-//                    computedTransitionsPerFile[currentPass][currentIndex] = sum(fileResult.parserComputedTransitions);
-
-//                    if (DETAILED_DFA_STATE_STATS)
-//                    {
-//                        decisionInvocationsPerFile[currentPass][currentIndex] = fileResult.decisionInvocations;
-//                        fullContextFallbackPerFile[currentPass][currentIndex] = fileResult.fullContextFallback;
-//                        nonSllPerFile[currentPass][currentIndex] = fileResult.nonSll;
-//                        totalTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserTotalTransitions;
-//                        computedTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserComputedTransitions;
-//                        fullContextTransitionsPerDecisionPerFile[currentPass][currentIndex] = fileResult.parserFullContextTransitions;
-//                    }
-//                }
-
-//                if (COMPUTE_TIMING_STATS)
-//                {
-//                    timePerFile[currentPass][currentIndex] = fileResult.endTime - fileResult.startTime;
-//                    tokensPerFile[currentPass][currentIndex] = fileResult.tokenCount;
-//                }
-
-//                fileChecksum = fileResult.checksum;
-//            }
-//            catch (Exception ex)
-//            {
-//                Logger.getLogger(TestPerformance.getName()).log(Level.SEVERE, null, ex);
-//            }
-
-//            if (COMPUTE_CHECKSUM)
-//            {
-//                updateChecksum(checksum, fileChecksum);
-//            }
-//        }
-
-//        executorService.shutdown();
-//        executorService.awaitTermination(long.MaxValue, TimeUnit.NANOSECONDS);
-
-//        Console.Out.format("%d. Total parse time for %d files (%d KB, %d tokens%s): %.0fms%n",
-//                          currentPass + 1,
-//                          inputCount,
-//                          inputSize / 1024,
-//                          tokenCount.get(currentPass),
-//                          COMPUTE_CHECKSUM ? String.format(", checksum 0x%8X", checksum.getValue()) : "",
-//                          (double)(DateTime.Now.Nanosecond - startTime) / 1000000.0);
-
-//        if (sharedLexers.Length > 0)
-//        {
-//            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
-//            Lexer lexer = sharedLexers[index];
-//            LexerATNSimulator lexerInterpreter = lexer.getInterpreter();
-//            DFA[] modeToDFA = lexerInterpreter.decisionToDFA;
-//            if (SHOW_DFA_STATE_STATS)
-//            {
-//                int states = 0;
-//                int configs = 0;
-//                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
-
-//                for (int i = 0; i < modeToDFA.Length; i++)
-//                {
-//                    DFA dfa = modeToDFA[i];
-//                    if (dfa == null)
-//                    {
-//                        continue;
-//                    }
-
-//                    states += dfa.states.Count;
-//                    foreach (DFAState state in dfa.states.Values)
-//                    {
-//                        configs += state.configs.Count;
-//                        uniqueConfigs.UnionWith(state.configs);
-//                    }
-//                }
-
-//                Console.Out.format("There are %d lexer DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
-
-//                if (DETAILED_DFA_STATE_STATS)
-//                {
-//                    Console.Out.WriteLine("\tMode\tStates\tConfigs\tMode%n");
-//                    for (int i = 0; i < modeToDFA.Length; i++)
-//                    {
-//                        DFA dfa = modeToDFA[i];
-//                        if (dfa == null || dfa.states.Count == 0)
-//                        {
-//                            continue;
-//                        }
-
-//                        int modeConfigs = 0;
-//                        foreach (DFAState state in dfa.states.Values)
-//                        {
-//                            modeConfigs += state.configs.Count;
-//                        }
-
-//                        String modeName = lexer.getModeNames()[i];
-//                        Console.Out.format("\t%d\t%d\t%d\t%s%n", dfa.decision, dfa.states.Count, modeConfigs, modeName);
-//                    }
-//                }
-//            }
-//        }
-
-//        if (RUN_PARSER && sharedParsers.Length > 0)
-//        {
-//            int index = FILE_GRANULARITY ? 0 : ((NumberedThread)Thread.currentThread()).getThreadNumber();
-//            Parser parser = sharedParsers[index];
-//            // make sure the individual DFAState objects actually have unique ATNConfig arrays
-//            ParserATNSimulator interpreter = parser.getInterpreter();
-//            DFA[] decisionToDFA = interpreter.decisionToDFA;
-
-//            if (SHOW_DFA_STATE_STATS)
-//            {
-//                int states = 0;
-//                int configs = 0;
-//                HashSet<ATNConfig> uniqueConfigs = new HashSet<ATNConfig>();
-
-//                for (int i = 0; i < decisionToDFA.Length; i++)
-//                {
-//                    DFA dfa = decisionToDFA[i];
-//                    if (dfa == null)
-//                    {
-//                        continue;
-//                    }
-
-//                    states += dfa.states.Count;
-//                    foreach (DFAState state in dfa.states.Values)
-//                    {
-//                        configs += state.configs.Count;
-//                        uniqueConfigs.UnionWith(state.configs);
-//                    }
-//                }
-
-//                Console.Out.format("There are %d parser DFAState instances, %d configs (%d unique).%n", states, configs, uniqueConfigs.Count);
-
-//                if (DETAILED_DFA_STATE_STATS)
-//                {
-//                    if (COMPUTE_TRANSITION_STATS)
-//                    {
-//                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tPredict (ALL)\tPredict (LL)\tNon-SLL\tTransitions\tTransitions (ATN)\tTransitions (LL)\tLA (SLL)\tLA (LL)\tRule%n");
-//                    }
-//                    else
-//                    {
-//                        Console.Out.WriteLine("\tDecision\tStates\tConfigs\tRule%n");
-//                    }
-
-//                    for (int i = 0; i < decisionToDFA.Length; i++)
-//                    {
-//                        DFA dfa = decisionToDFA[i];
-//                        if (dfa == null || dfa.states.Count == 0)
-//                        {
-//                            continue;
-//                        }
-
-//                        int decisionConfigs = 0;
-//                        foreach (DFAState state in dfa.states.Values)
-//                        {
-//                            decisionConfigs += state.configs.Count;
-//                        }
-
-//                        String ruleName = parser.getRuleNames()[parser.getATN().decisionToState[(dfa.decision)].ruleIndex];
-
-//                        long calls = 0;
-//                        long fullContextCalls = 0;
-//                        long nonSllCalls = 0;
-//                        long transitions = 0;
-//                        long computedTransitions = 0;
-//                        long fullContextTransitions = 0;
-//                        double lookahead = 0;
-//                        double fullContextLookahead = 0;
-//                        String formatString;
-//                        if (COMPUTE_TRANSITION_STATS)
-//                        {
-//                            foreach (long[] data in decisionInvocationsPerFile[currentPass])
-//                            {
-//                                calls += data[i];
-//                            }
-
-//                            foreach (long[] data in fullContextFallbackPerFile[currentPass])
-//                            {
-//                                fullContextCalls += data[i];
-//                            }
-
-//                            foreach (long[] data in nonSllPerFile[currentPass])
-//                            {
-//                                nonSllCalls += data[i];
-//                            }
-
-//                            foreach (long[] data in totalTransitionsPerDecisionPerFile[currentPass])
-//                            {
-//                                transitions += data[i];
-//                            }
-
-//                            foreach (long[] data in computedTransitionsPerDecisionPerFile[currentPass])
-//                            {
-//                                computedTransitions += data[i];
-//                            }
-
-//                            foreach (long[] data in fullContextTransitionsPerDecisionPerFile[currentPass])
-//                            {
-//                                fullContextTransitions += data[i];
-//                            }
-
-//                            if (calls > 0)
-//                            {
-//                                lookahead = (double)(transitions - fullContextTransitions) / (double)calls;
-//                            }
-
-//                            if (fullContextCalls > 0)
-//                            {
-//                                fullContextLookahead = (double)fullContextTransitions / (double)fullContextCalls;
-//                            }
-
-//                            formatString = "\t%1$d\t%2$d\t%3$d\t%4$d\t%5$d\t%6$d\t%7$d\t%8$d\t%9$d\t%10$f\t%11$f\t%12$s%n";
-//                        }
-//                        else
-//                        {
-//                            calls = 0;
-//                            formatString = "\t%1$d\t%2$d\t%3$d\t%12$s%n";
-//                        }
-
-//                        Console.Out.format(formatString, dfa.decision, dfa.states.Count, decisionConfigs, calls, fullContextCalls, nonSllCalls, transitions, computedTransitions, fullContextTransitions, lookahead, fullContextLookahead, ruleName);
-//                    }
-//                }
-//            }
-
-//            int localDfaCount = 0;
-//            int globalDfaCount = 0;
-//            int localConfigCount = 0;
-//            int globalConfigCount = 0;
-//            int[] contextsInDFAState = new int[0];
-
-//            for (int i = 0; i < decisionToDFA.Length; i++)
-//            {
-//                DFA dfa = decisionToDFA[i];
-//                if (dfa == null)
-//                {
-//                    continue;
-//                }
-
-//                if (SHOW_CONFIG_STATS)
-//                {
-//                    foreach (DFAState state in dfa.states.Keys)
-//                    {
-//                        if (state.configs.Count >= contextsInDFAState.Length)
-//                        {
-//                            contextsInDFAState = Arrays.CopyOf(contextsInDFAState, state.configs.Count + 1);
-//                        }
-
-//                        if (state.isAcceptState)
-//                        {
-//                            bool hasGlobal = false;
-//                            foreach (ATNConfig config in state.configs)
-//                            {
-//                                if (config.reachesIntoOuterContext > 0)
-//                                {
-//                                    globalConfigCount++;
-//                                    hasGlobal = true;
-//                                }
-//                                else
-//                                {
-//                                    localConfigCount++;
-//                                }
-//                            }
-
-//                            if (hasGlobal)
-//                            {
-//                                globalDfaCount++;
-//                            }
-//                            else
-//                            {
-//                                localDfaCount++;
-//                            }
-//                        }
-
-//                        contextsInDFAState[state.configs.Count]++;
-//                    }
-//                }
-//            }
-
-//            if (SHOW_CONFIG_STATS && currentPass == 0)
-//            {
-//                Console.Out.format("  DFA accept states: %d total, %d with only local context, %d with a global context%n", localDfaCount + globalDfaCount, localDfaCount, globalDfaCount);
-//                Console.Out.format("  Config stats: %d total, %d local, %d global%n", localConfigCount + globalConfigCount, localConfigCount, globalConfigCount);
-//                if (SHOW_DFA_STATE_STATS)
-//                {
-//                    for (int i = 0; i < contextsInDFAState.Length; i++)
-//                    {
-//                        if (contextsInDFAState[i] != 0)
-//                        {
-//                            Console.Out.format("  %d configs = %d%n", i, contextsInDFAState[i]);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-//        if (COMPUTE_TIMING_STATS)
-//        {
-//            Console.Out.format("File\tTokens\tTime%n");
-//            for (int i = 0; i < timePerFile[currentPass].Length; i++)
-//            {
-//                Console.Out.format("%d\t%d\t%d%n", i + 1, tokensPerFile[currentPass][i], timePerFile[currentPass][i]);
-//            }
-//        }
-//    }
-
-    private static long sum(long[] array)
-    {
-        long result = 0;
-        for (int i = 0; i < array.Length; i++)
-        {
-            result += array[i];
-        }
-
-        return result;
-    }
 
     //protected JavaCompiledState compileJavaParser(bool leftRecursive)
     //{
@@ -1210,25 +817,25 @@ public class TestPerformance
     //}
 
 
-    private static void updateChecksum(MurmurHashChecksum checksum, int value)
+    private static void UpdateChecksum(MurmurHashChecksum checksum, int value)
     {
-        checksum.update(value);
+        checksum.Update(value);
     }
 
-    private static void updateChecksum(MurmurHashChecksum checksum, Token token)
+    private static void UpdateChecksum(MurmurHashChecksum checksum, Token token)
     {
         if (token == null)
         {
-            checksum.update(0);
+            checksum.Update(0);
             return;
         }
 
-        updateChecksum(checksum, token.getStartIndex());
-        updateChecksum(checksum, token.getStopIndex());
-        updateChecksum(checksum, token.getLine());
-        updateChecksum(checksum, token.getCharPositionInLine());
-        updateChecksum(checksum, token.getType());
-        updateChecksum(checksum, token.getChannel());
+        UpdateChecksum(checksum, token.getStartIndex());
+        UpdateChecksum(checksum, token.getStopIndex());
+        UpdateChecksum(checksum, token.getLine());
+        UpdateChecksum(checksum, token.getCharPositionInLine());
+        UpdateChecksum(checksum, token.getType());
+        UpdateChecksum(checksum, token.getChannel());
     }
 
     //public class PF : ParserFactory
@@ -1514,7 +1121,7 @@ public class TestPerformance
 
     public interface ParserFactory
     {
-        FileParseResult parseFile(CharStream input, int currentPass, int thread);
+        FileParseResult ParseFile(CharStream input, int currentPass, int thread);
     }
 
     public class FileParseResult
@@ -1549,11 +1156,11 @@ public class TestPerformance
 
             if (lexer != null)
             {
-                LexerATNSimulator interpreter = lexer.getInterpreter();
-                if (interpreter is StatisticsLexerATNSimulator)
+                var interpreter = lexer.getInterpreter();
+                if (interpreter is StatisticsLexerATNSimulator simulator)
                 {
-                    lexerTotalTransitions = ((StatisticsLexerATNSimulator)interpreter).totalTransitions;
-                    lexerComputedTransitions = ((StatisticsLexerATNSimulator)interpreter).computedTransitions;
+                    lexerTotalTransitions = simulator.totalTransitions;
+                    lexerComputedTransitions = simulator.computedTransitions;
                 }
                 else
                 {
@@ -1581,15 +1188,15 @@ public class TestPerformance
 
             if (parser != null)
             {
-                ParserATNSimulator interpreter = parser.getInterpreter();
-                if (interpreter is StatisticsParserATNSimulator)
+                var interpreter = parser.getInterpreter();
+                if (interpreter is StatisticsParserATNSimulator simulator)
                 {
-                    decisionInvocations = ((StatisticsParserATNSimulator)interpreter).decisionInvocations;
-                    fullContextFallback = ((StatisticsParserATNSimulator)interpreter).fullContextFallback;
-                    nonSll = ((StatisticsParserATNSimulator)interpreter).nonSll;
-                    parserTotalTransitions = ((StatisticsParserATNSimulator)interpreter).totalTransitions;
-                    parserComputedTransitions = ((StatisticsParserATNSimulator)interpreter).computedTransitions;
-                    parserFullContextTransitions = ((StatisticsParserATNSimulator)interpreter).fullContextTransitions;
+                    decisionInvocations = simulator.decisionInvocations;
+                    fullContextFallback = simulator.fullContextFallback;
+                    nonSll = simulator.nonSll;
+                    parserTotalTransitions = simulator.totalTransitions;
+                    parserComputedTransitions = simulator.computedTransitions;
+                    parserFullContextTransitions = simulator.fullContextTransitions;
                 }
                 else
                 {
@@ -1634,24 +1241,22 @@ public class TestPerformance
         public StatisticsLexerATNSimulator(ATN atn, DFA[] decisionToDFA, PredictionContextCache sharedContextCache)
         : base(atn, decisionToDFA, sharedContextCache)
         {
-            ;
         }
 
         public StatisticsLexerATNSimulator(Lexer recog, ATN atn, DFA[] decisionToDFA, PredictionContextCache sharedContextCache)
         : base(recog, atn, decisionToDFA, sharedContextCache)
         {
-            ;
         }
 
         //@Override
-        protected DFAState getExistingTargetState(DFAState s, int t)
+        protected override DFAState getExistingTargetState(DFAState s, int t)
         {
             totalTransitions++;
             return base.getExistingTargetState(s, t);
         }
 
         //@Override
-        protected DFAState computeTargetState(CharStream input, DFAState s, int t)
+        protected override DFAState computeTargetState(CharStream input, DFAState s, int t)
         {
             computedTransitions++;
             return base.computeTargetState(input, s, t);
@@ -1660,7 +1265,6 @@ public class TestPerformance
 
     private class StatisticsParserATNSimulator : ParserATNSimulator
     {
-
         public readonly long[] decisionInvocations;
         public readonly long[] fullContextFallback;
         public readonly long[] nonSll;
@@ -1673,7 +1277,6 @@ public class TestPerformance
         public StatisticsParserATNSimulator(ATN atn, DFA[] decisionToDFA, PredictionContextCache sharedContextCache)
         : base(atn, decisionToDFA, sharedContextCache)
         {
-            ;
             decisionInvocations = new long[atn.decisionToState.Count];
             fullContextFallback = new long[atn.decisionToState.Count];
             nonSll = new long[atn.decisionToState.Count];
@@ -1694,7 +1297,7 @@ public class TestPerformance
         }
 
         //@Override
-        public int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
+        public override int adaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
         {
             try
             {
@@ -1709,28 +1312,28 @@ public class TestPerformance
         }
 
         //@Override
-        protected int execATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext)
+        protected override int execATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext)
         {
             fullContextFallback[decision]++;
             return base.execATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
         }
 
         //@Override
-        protected DFAState getExistingTargetState(DFAState previousD, int t)
+        protected override DFAState getExistingTargetState(DFAState previousD, int t)
         {
             totalTransitions[decision]++;
             return base.getExistingTargetState(previousD, t);
         }
 
         //@Override
-        protected DFAState computeTargetState(DFA dfa, DFAState previousD, int t)
+        protected override DFAState computeTargetState(DFA dfa, DFAState previousD, int t)
         {
             computedTransitions[decision]++;
             return base.computeTargetState(dfa, previousD, t);
         }
 
         //@Override
-        protected ATNConfigSet computeReachSet(ATNConfigSet closure, int t, bool fullCtx)
+        protected override ATNConfigSet computeReachSet(ATNConfigSet closure, int t, bool fullCtx)
         {
             if (fullCtx)
             {
@@ -1748,7 +1351,7 @@ public class TestPerformance
         public readonly static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
 
         //@Override
-        public void syntaxError(Recognizer<Token, ATNSimulator> recognizer, Object offendingSymbol,
+        public override void SyntaxError(Recognizer<Token, ATNSimulator> recognizer, Object offendingSymbol,
                                 int line, int charPositionInLine,
                                 String msg, RecognitionException e)
         {
@@ -1757,7 +1360,7 @@ public class TestPerformance
                 return;
             }
 
-            String sourceName = recognizer.getInputStream().getSourceName();
+            var sourceName = recognizer.getInputStream().getSourceName();
             if (sourceName.Length > 0)
             {
                 sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
@@ -1774,7 +1377,7 @@ public class TestPerformance
         private ATNConfigSet _sllConfigs;
 
         //@Override
-        public void reportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+        public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
             {
@@ -1795,14 +1398,14 @@ public class TestPerformance
 
             // show the rule name along with the decision
             int decision = dfa.decision;
-            String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-            String format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
+            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
             recognizer.notifyErrorListeners(format);
         }
 
         //@Override
-        public void reportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+        public void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
         {
             _sllConflict = conflictingAlts;
             _sllConfigs = configs;
@@ -1813,20 +1416,20 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-            BitSet representedAlts = getConflictingAlts(conflictingAlts, configs);
-            String format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
+            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var representedAlts = getConflictingAlts(conflictingAlts, configs);
+            var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
             //String.Format(format, decision, rule, input, representedAlts)
             recognizer.notifyErrorListeners(format);
         }
 
         //@Override
-        public void reportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+        public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
             {
-                BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
+                var sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
                 int sllPrediction = sllPredictions.NextSetBit(0);
                 if (sllPrediction != prediction)
                 {
@@ -1841,9 +1444,9 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            String rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            String input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
-            String format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
+            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().getText(Interval.of(startIndex, stopIndex));
+            var format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
             recognizer.notifyErrorListeners(
                 format);
         }
@@ -1855,11 +1458,10 @@ public class TestPerformance
 
         public NumberedThread(Runnable target, int threadNumber)
         {
-            ;
             this.threadNumber = threadNumber;
         }
 
-        public int getThreadNumber()
+        public int GetThreadNumber()
         {
             return threadNumber;
         }
@@ -1871,7 +1473,7 @@ public class TestPerformance
         private readonly AtomicInteger nextThread = new AtomicInteger();
 
         //@Override
-        public NumberedThread newThread(Runnable r)
+        public NumberedThread NewThread(Runnable r)
         {
             int threadNumber = nextThread.getAndIncrement();
             //assert threadNumber<NUMBER_OF_THREADS;
@@ -1890,7 +1492,7 @@ public class TestPerformance
         }
 
         //@Override
-        public NumberedThread newThread(Runnable r)
+        public NumberedThread NewThread(Runnable r)
         {
             //assert threadNumber<NUMBER_OF_THREADS;
             return new NumberedThread(r, threadNumber);
@@ -1912,53 +1514,53 @@ public class TestPerformance
         }
 
         //@Override
-        public void visitTerminal(TerminalNode node)
+        public void VisitTerminal(TerminalNode node)
         {
-            checksum.update(VISIT_TERMINAL);
-            updateChecksum(checksum, node.getSymbol());
+            checksum.Update(VISIT_TERMINAL);
+            UpdateChecksum(checksum, node.getSymbol());
         }
 
         //@Override
-        public void visitErrorNode(ErrorNode node)
+        public void VisitErrorNode(ErrorNode node)
         {
-            checksum.update(VISIT_ERROR_NODE);
-            updateChecksum(checksum, node.getSymbol());
+            checksum.Update(VISIT_ERROR_NODE);
+            UpdateChecksum(checksum, node.getSymbol());
         }
 
         //@Override
-        public void enterEveryRule(ParserRuleContext ctx)
+        public void EnterEveryRule(ParserRuleContext ctx)
         {
-            checksum.update(ENTER_RULE);
-            updateChecksum(checksum, ctx.getRuleIndex());
-            updateChecksum(checksum, ctx.getStart());
+            checksum.Update(ENTER_RULE);
+            UpdateChecksum(checksum, ctx.getRuleIndex());
+            UpdateChecksum(checksum, ctx.getStart());
         }
 
         //@Override
-        public void exitEveryRule(ParserRuleContext ctx)
+        public void ExitEveryRule(ParserRuleContext ctx)
         {
-            checksum.update(EXIT_RULE);
-            updateChecksum(checksum, ctx.getRuleIndex());
-            updateChecksum(checksum, ctx.getStop());
+            checksum.Update(EXIT_RULE);
+            UpdateChecksum(checksum, ctx.getRuleIndex());
+            UpdateChecksum(checksum, ctx.getStop());
         }
 
     }
 
     public class InputDescriptor
     {
-        private readonly String source;
+        private readonly string source;
         private Reference<CloneableANTLRFileStream> inputStream;
 
-        public InputDescriptor(String source)
+        public InputDescriptor(string source)
         {
             this.source = source;
             if (PRELOAD_SOURCES)
             {
-                getInputStream();
+                GetInputStream();
             }
         }
 
 
-        public /*synchronized*/ CharStream getInputStream()
+        public /*synchronized*/ CharStream GetInputStream()
         {
             CloneableANTLRFileStream stream = inputStream != null ? inputStream.get() : null;
             if (stream == null)
@@ -1982,7 +1584,7 @@ public class TestPerformance
                 }
             }
 
-            return new JavaUnicodeInputStream(stream.createCopy());
+            return new JavaUnicodeInputStream(stream.CreateCopy());
         }
     }
 
@@ -1994,9 +1596,9 @@ public class TestPerformance
         {
         }
 
-        public ANTLRInputStream createCopy()
+        public ANTLRInputStream CreateCopy()
         {
-            ANTLRInputStream stream = new ANTLRInputStream(this.data, this.n);
+            var stream = new ANTLRInputStream(this.data, this.n);
             stream.name = this.getSourceName();
             return stream;
         }
@@ -2049,13 +1651,13 @@ public class TestPerformance
             this.value = MurmurHash.initialize();
         }
 
-        public void update(int value)
+        public void Update(int value)
         {
             this.value = MurmurHash.update(this.value, value);
             this.count++;
         }
 
-        public int getValue()
+        public int GetValue()
         {
             return MurmurHash.finish(value, count);
         }
@@ -2063,10 +1665,10 @@ public class TestPerformance
 
     [TestMethod]
     //@Timeout(20)
-    public void testExponentialInclude(string tempDir)
+    public void TestExponentialInclude(string tempDir)
     {
-        String tempDirPath = tempDir.ToString();
-        String grammarFormat =
+        var tempDirPath = tempDir.ToString();
+        var grammarFormat =
             "parser grammar Level_{0}_{1};\n" +
             "\n" +
             "{2} import Level_{3}_1, Level_{4}_2;\n" +
@@ -2080,17 +1682,17 @@ public class TestPerformance
         int levels = 20;
         for (int level = 0; level < levels; level++)
         {
-            String leafPrefix = level == levels - 1 ? "//" : "";
-            String grammar1 = String.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
+            var leafPrefix = level == levels - 1 ? "//" : "";
+            var grammar1 = String.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.WriteFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
             if (level > 0)
             {
-                String grammar2 = String.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
+                var grammar2 = String.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.WriteFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
             }
         }
 
-        ErrorQueue equeue = Generator.AntlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
+        var equeue = Generator.AntlrOnString(tempDirPath, "Java", "Level_0_1.g4", false);
         Assert.IsTrue(equeue.errors.Count == 0);
 
         long endTime = DateTime.Now.Nanosecond;

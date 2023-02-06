@@ -67,12 +67,12 @@ public class TestToolSyntaxErrors
     }
 
     [TestMethod]
-    public void TestA() { ToolTestUtils.TestErrors(A, true); }
+    public void TestA() => ToolTestUtils.TestErrors(A, true);
 
     [TestMethod]
     public void TestExtraColon()
     {
-        var pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "a : : A ;\n" +
             "b : B ;",
@@ -263,7 +263,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestEmptyBlockOptions()
     {
-        String[] pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "a : (options{} : 'x') ;\n",
 
@@ -275,7 +275,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestEmptyTokensBlock()
     {
-        String[] pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "tokens {}\n" +
             "a : 'x' ;\n",
@@ -293,7 +293,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestInvalidLexerCommand()
     {
-        String[] pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "tokens{Foo}\n" +
             "b : Foo ;\n" +
@@ -309,7 +309,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestLexerCommandArgumentValidation()
     {
-        String[] pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "tokens{Foo}\n" +
             "b : Foo ;\n" +
@@ -325,7 +325,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestRuleRedefinition()
     {
-        String[] pair = new String[] {
+        var pair = new string[] {
             "grammar Oops;\n" +
             "\n" +
             "ret_ty : A ;\n" +
@@ -354,7 +354,7 @@ public class TestToolSyntaxErrors
             "error(" + ErrorType.EPSILON_CLOSURE + "): A.g4:4:0: rule y2 contains a closure with at least one alternative that can match an empty string\n" +
             "error(" + ErrorType.EPSILON_CLOSURE + "): A.g4:5:0: rule z1 contains a closure with at least one alternative that can match an empty string\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -432,7 +432,7 @@ public class TestToolSyntaxErrors
         var expected =
             "warning(" + ErrorType.EPSILON_OPTIONAL + "): T.g4:2:0: rule s contains an optional block with at least one alternative that can match an empty string\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -453,7 +453,7 @@ public class TestToolSyntaxErrors
             "warning(" + ErrorType.EPSILON_OPTIONAL + "): A.g4:3:0: rule y contains an optional block with at least one alternative that can match an empty string\n" +
             "warning(" + ErrorType.EPSILON_OPTIONAL + "): A.g4:4:0: rule z1 contains an optional block with at least one alternative that can match an empty string\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -489,7 +489,7 @@ public class TestToolSyntaxErrors
         var expected =
             "";
 
-        String[] pair = new String[] { grammar, expected };
+        var pair = new string[] { grammar, expected };
         ToolTestUtils.TestErrors(pair, true);
     }
 
@@ -519,7 +519,7 @@ public class TestToolSyntaxErrors
             "error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:42: syntax error: '\\' came as a complete surprise to me\n" +
             "error(" + ErrorType.SYNTAX_ERROR + "): A.g4:2:44: syntax error: '\"' came as a complete surprise to me\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -541,7 +541,7 @@ public class TestToolSyntaxErrors
             "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): A.g4:2:10: invalid escape sequence \\\"\n" +
             "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): A.g4:2:15: invalid escape sequence \\\"\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -563,7 +563,7 @@ public class TestToolSyntaxErrors
         var expected =
             "";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -587,7 +587,7 @@ public class TestToolSyntaxErrors
             "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): A.g4:2:19: invalid escape sequence \\x\n" +
             "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): A.g4:2:22: invalid escape sequence \\u\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -616,7 +616,7 @@ public class TestToolSyntaxErrors
             "error(" + ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED + "): T.g4:4:15: string literals and sets cannot be empty: ''\n" +
             "error(" + ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED + "): T.g4:5:8: string literals and sets cannot be empty: ''\n";
 
-        String[] pair = new String[] {
+        var pair = new string[] {
                 grammar,
                 expected
         };
@@ -651,7 +651,7 @@ public class TestToolSyntaxErrors
                 "error(" + ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED + "): Test.g4:5:36: string literals and sets cannot be empty: []\n" +
                 "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): Test.g4:10:84: invalid escape sequence \\'\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
                 grammar,
                 expected
         };
@@ -693,7 +693,7 @@ public class TestToolSyntaxErrors
                 "error(" + ErrorType.UNICODE_PROPERTY_NOT_ALLOWED_IN_RANGE + "): Test.g4:13:48: unicode property escapes not allowed in lexer charset range: [\\P{Uppercase_Letter}-\\P{Number}]\n" +
                 "error(" + ErrorType.INVALID_ESCAPE_SEQUENCE + "): Test.g4:14:16: invalid escape sequence \\p{Grapheme_Cluster_Break=E_Base}\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
                 grammar,
                 expected
         };
@@ -717,7 +717,7 @@ public class TestToolSyntaxErrors
         var expected =
             "warning(" + ErrorType.UNRECOGNIZED_ASSOC_OPTION + "): A.g4:3:10: rule x contains an assoc terminal option in an unrecognized location\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -748,7 +748,7 @@ public class TestToolSyntaxErrors
             "warning(" + ErrorType.FRAGMENT_ACTION_IGNORED + "): A.g4:7:12: fragment rule X2 contains an action or command which can never be executed\n" +
             "warning(" + ErrorType.FRAGMENT_ACTION_IGNORED + "): A.g4:10:9: fragment rule Y2 contains an action or command which can never be executed\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -771,7 +771,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.RESERVED_RULE_NAME + "): A.g4:3:1: cannot declare a rule with reserved name EOF\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -795,7 +795,7 @@ public class TestToolSyntaxErrors
             "Something : 'something' -> channel(CUSTOM);";
         var expected =
             "error(" + ErrorType.CANNOT_CREATE_TARGET_GENERATOR + "):  ANTLR cannot generate Foo code as of version " + Tool.VERSION + "\n";
-        string[] pair = new string[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -818,7 +818,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.CANNOT_CREATE_TARGET_GENERATOR + "):  ANTLR cannot generate Foo code as of version " + Tool.VERSION + "\n";
 
-        string[] pair = new string[] {
+        var pair = new string[] {
             grammar,
             expected
         };
@@ -930,7 +930,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.TOKEN_RANGE_IN_PARSER + "): T.g4:2:4: token ranges not allowed in parser: 'A'..'Z'\n";
 
-        string[] pair = new String[] {
+        var pair = new string[] {
             grammar,
             expected
         };

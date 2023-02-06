@@ -29,11 +29,11 @@ public class TestTokenPositionOptions
                 "ID : [a-z]+ ;\n"
         );
 
-        string expectedTree =
+        var expectedTree =
                 "(COMBINED_GRAMMAR T (RULES (RULE s (BLOCK (ALT e ';'))) (RULE e (BLOCK (ALT (BLOCK (ALT {} ('-' (ELEMENT_OPTIONS (= tokenIndex 43))) (e (ELEMENT_OPTIONS (= tokenIndex 45) (= p 2)))) (ALT (ID (ELEMENT_OPTIONS (= tokenIndex 49))))) (* (BLOCK (ALT ({precpred(_ctx, 5)}? (ELEMENT_OPTIONS (= p 5))) ('*' (ELEMENT_OPTIONS (= tokenIndex 21))) (e (ELEMENT_OPTIONS (= tokenIndex 23) (= p 6)))) (ALT ({precpred(_ctx, 4)}? (ELEMENT_OPTIONS (= p 4))) ('+' (ELEMENT_OPTIONS (= tokenIndex 29))) (e (ELEMENT_OPTIONS (= tokenIndex 31) (= p 5)))) (ALT ({precpred(_ctx, 3)}? (ELEMENT_OPTIONS (= p 3))) ('.' (ELEMENT_OPTIONS (= tokenIndex 37))) (ID (ELEMENT_OPTIONS (= tokenIndex 39)))))))))))";
         Assert.AreEqual(expectedTree, g.ast.toStringTree());
 
-        string expectedElementTokens =
+        var expectedElementTokens =
                 "[@5,11:11='s',<54>,2:0]\n" +
                 "[@9,15:15='e',<54>,2:4]\n" +
                 "[@11,17:19='';'',<59>,2:6]\n" +
@@ -52,7 +52,7 @@ public class TestTokenPositionOptions
                 new IntervalSet(ANTLRParser.TOKEN_REF,
                 ANTLRParser.STRING_LITERAL,
                 ANTLRParser.RULE_REF);
-        List<GrammarAST> nodes = g.ast.getNodesWithTypePreorderDFS(types);
+        var nodes = g.ast.getNodesWithTypePreorderDFS(types);
         List<Token> tokens = new();
         foreach (var node in nodes)
         {
@@ -101,7 +101,7 @@ public class TestTokenPositionOptions
                 ANTLRParser.RULE_REF);
         var nodes = g.ast.getNodesWithTypePreorderDFS(types);
         List<Token> tokens = new();
-        foreach (GrammarAST node in nodes)
+        foreach (var node in nodes)
         {
             tokens.Add(node.getToken());
         }

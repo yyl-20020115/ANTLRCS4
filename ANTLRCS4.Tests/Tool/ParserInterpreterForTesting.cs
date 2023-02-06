@@ -39,7 +39,7 @@ public class ParserInterpreterForTesting
         }
 
         //@Override
-        public String[] GetRuleNames()
+        public string[] GetRuleNames()
         {
             return g.rules.Keys.ToArray();//.toArray(new String[0]);
         }
@@ -74,7 +74,7 @@ public class ParserInterpreterForTesting
         antlr.process(g, false);
         parser = new DummyParser(g, g.atn, input);
         atnSimulator =
-            new ParserATNSimulator(null/*parser*/, g.atn, parser.decisionToDFA,
+            new (null/*parser*/, g.atn, parser.decisionToDFA,
                                           parser.sharedContextCache);
     }
 

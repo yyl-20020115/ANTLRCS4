@@ -14,7 +14,7 @@ namespace org.antlr.v4.test.tool;
 /** */
 public class TestAttributeChecks
 {
-    string attributeTemplate =
+    readonly string attributeTemplate =
         "parser grammar A;\n" +
         "@members {<members>}\n" +
         "tokens{ID}\n" +
@@ -30,13 +30,11 @@ public class TestAttributeChecks
         "    :   {<inline2>}\n" +
         "    ;\n" +
         "c   :   ;\n";
-
-    String[] membersChecks = {
+    readonly string[] membersChecks = {
         "$a",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:2:11: unknown attribute reference a in $a\n",
         "$a.y",         "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:2:11: unknown attribute reference a in $a.y\n",
     };
-
-    String[] initChecks = {
+    readonly string[] initChecks = {
         "$text",        "",
         "$start",       "",
         "$x = $y",      "",
@@ -48,8 +46,7 @@ public class TestAttributeChecks
         "$c",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:5:8: unknown attribute reference c in $c\n",
         "$a.q",         "error(" + ErrorType.UNKNOWN_RULE_ATTRIBUTE + "): A.g4:5:10: unknown attribute q for rule a in $a.q\n",
     };
-
-    String[] inlineChecks = {
+    readonly string[] inlineChecks = {
         "$text",        "",
         "$start",       "",
         "$x = $y",      "",
@@ -67,8 +64,7 @@ public class TestAttributeChecks
         "$ids",         "",
         "$labs",        "",
     };
-
-    String[] bad_inlineChecks = {
+    readonly string[] bad_inlineChecks = {
         "$lab",         "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:7:4: missing attribute access on rule reference lab in $lab\n",
         "$q",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:7:4: unknown attribute reference q in $q\n",
         "$q.y",         "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:7:4: unknown attribute reference q in $q.y\n",
@@ -85,8 +81,7 @@ public class TestAttributeChecks
         "$ids = null;", "error(" + ErrorType.ASSIGNMENT_TO_LIST_LABEL + "): A.g4:7:4: cannot assign a value to list label ids\n",
         "$labs = null;","error(" + ErrorType.ASSIGNMENT_TO_LIST_LABEL + "): A.g4:7:4: cannot assign a value to list label labs\n",
     };
-
-    String[] finallyChecks = {
+    readonly string[] finallyChecks = {
         "$text",        "",
         "$start",       "",
         "$x = $y",      "",
@@ -113,8 +108,7 @@ public class TestAttributeChecks
         "$c.text",      "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:10:14: unknown attribute reference c in $c.text\n",
         "$lab.d",       "error(" + ErrorType.INVALID_RULE_PARAMETER_REF + "): A.g4:10:18: parameter d of rule b is not accessible in this scope: $lab.d\n",
     };
-
-    String[] dynMembersChecks = {
+    readonly string[] dynMembersChecks = {
         "$S",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:2:11: unknown attribute reference S in $S\n",
         "$S::i",        "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:2:11: reference to undefined rule S in non-local ref $S::i\n",
         "$S::i=$S::i",  "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:2:11: reference to undefined rule S in non-local ref $S::i\n" +
@@ -125,8 +119,7 @@ public class TestAttributeChecks
         "$S::j = 3;",   "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:2:11: reference to undefined rule S in non-local ref $S::j = 3;\n",
         "$S::j = $S::k;",   "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:2:11: reference to undefined rule S in non-local ref $S::j = $S::k;\n",
     };
-
-    String[] dynInitChecks = {
+    readonly string[] dynInitChecks = {
         "$a",           "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:5:8: missing attribute access on rule reference a in $a\n",
         "$b",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:5:8: unknown attribute reference b in $b\n",
         "$lab",         "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:5:8: missing attribute access on rule reference lab in $lab\n",
@@ -141,8 +134,7 @@ public class TestAttributeChecks
         "$S::j = 3;",   "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:5:8: reference to undefined rule S in non-local ref $S::j = 3;\n",
         "$S::j = $S::k;",   "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:5:8: reference to undefined rule S in non-local ref $S::j = $S::k;\n",
     };
-
-    String[] dynInlineChecks = {
+    readonly string[] dynInlineChecks = {
         "$a",           "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:7:4: missing attribute access on rule reference a in $a\n",
         "$b",           "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:7:4: missing attribute access on rule reference b in $b\n",
         "$lab",         "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:7:4: missing attribute access on rule reference lab in $lab\n",
@@ -174,8 +166,7 @@ public class TestAttributeChecks
         "$S[$S::y]::i",     "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:7:4: unknown attribute reference S in $S\n" +
                             "error(" + ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF + "): A.g4:7:7: reference to undefined rule S in non-local ref $S::y\n"
     };
-
-    String[] dynFinallyChecks = {
+    readonly string[] dynFinallyChecks = {
         "$a",           "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:10:14: missing attribute access on rule reference a in $a\n",
         "$b",           "error(" + ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE + "): A.g4:10:14: unknown attribute reference b in $b\n",
         "$lab",         "error(" + ErrorType.ISOLATED_RULE_REF + "): A.g4:10:14: missing attribute access on rule reference lab in $lab\n",
@@ -254,7 +245,7 @@ public class TestAttributeChecks
             "a : x=ID {Token t = $x; t = $ID;} ;\n";
         var expected =
             "";
-        TestErrors(new string[] { grammar, expected }, false);
+        ToolTestUtils.TestErrors(new string[] { grammar, expected }, false);
     }
 
     private static void TestActions(String location, String[] pairs, String template)
@@ -263,17 +254,14 @@ public class TestAttributeChecks
         {
             var action = pairs[i];
             var expected = pairs[i + 1];
-            var g = new TemplateGroup('<', '>');
-            g.Listener = (new ErrorBuffer()); // hush warnings
+            var g = new TemplateGroup('<', '>')
+            {
+                Listener = new ErrorBuffer() // hush warnings
+            };
             var st = new Template(g, template);
             st.Add(location, action);
             var grammar = st.Render();
-            TestErrors(new String[] { grammar, expected }, false);
+            ToolTestUtils.TestErrors(new String[] { grammar, expected }, false);
         }
-    }
-
-    private static void TestErrors(string[] strings, bool v)
-    {
-        ToolTestUtils.TestErrors(strings, v);
     }
 }

@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
+using System.ComponentModel.DataAnnotations;
 
 namespace org.antlr.v4.runtime.atn;
 
@@ -234,12 +235,12 @@ public class LexerATNSimulator : ATNSimulator {
 	 * already cached
 	 */
 
-	protected DFAState getExistingTargetState(DFAState s, int t) {
+	protected virtual DFAState getExistingTargetState(DFAState s, int t) {
 		if (s.edges == null || t < MIN_DFA_EDGE || t > MAX_DFA_EDGE) {
 			return null;
 		}
 
-		DFAState target = s.edges[t - MIN_DFA_EDGE];
+		var target = s.edges[t - MIN_DFA_EDGE];
 		if (debug && target != null) {
 			Console.Out.WriteLine("reuse state "+s.stateNumber+
 							   " edge to "+target.stateNumber);
@@ -248,7 +249,7 @@ public class LexerATNSimulator : ATNSimulator {
 		return target;
 	}
 
-	/**
+    /**
 	 * Compute a target state for an edge in the DFA, and attempt to add the
 	 * computed state and corresponding edge to the DFA.
 	 *
@@ -261,7 +262,7 @@ public class LexerATNSimulator : ATNSimulator {
 	 * returns {@link #ERROR}.
 	 */
 
-	protected DFAState computeTargetState(CharStream input, DFAState s, int t) {
+    protected virtual DFAState computeTargetState(CharStream input, DFAState s, int t) {
 		ATNConfigSet reach = new OrderedATNConfigSet();
 
 		// if we don't find an existing DFA state

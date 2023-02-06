@@ -384,7 +384,7 @@ public class TestATNInterpreter
     }
 
     public static void CheckMatchedAlt(LexerGrammar lg, Grammar g,
-                                String inputString,
+                                string inputString,
                                 int expected)
     {
         var lexatn = ToolTestUtils.CreateATN(lg, true);

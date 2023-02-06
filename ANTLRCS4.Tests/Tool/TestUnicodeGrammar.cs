@@ -138,7 +138,7 @@ public class TestUnicodeGrammar
         var parseTree = parser.parse(grammar.rules[("r")].index);
         var nodeTextProvider =
                 new InterpreterTreeTextProvider(grammar.getRuleNames());
-        var result = Trees.toStringTree(parseTree, nodeTextProvider);
+        var result = Trees.ToStringTree(parseTree, nodeTextProvider);
 
         Assert.AreEqual(
                 "(r:1 \u0002\u0000\u0001\u0007 \u00D0\u00D2\u00D2\u00D3\u00D3\u00D3 \u00D0\u00D3\u00D3\u00D1 \u00FF)",
@@ -158,6 +158,6 @@ public class TestUnicodeGrammar
         var parseTree = parser.parse(grammar.rules[(rootRule)].index);
         var nodeTextProvider =
                 new InterpreterTreeTextProvider(grammar.getRuleNames());
-        return Trees.toStringTree(parseTree, nodeTextProvider);
+        return Trees.ToStringTree(parseTree, nodeTextProvider);
     }
 }

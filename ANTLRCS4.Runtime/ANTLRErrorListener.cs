@@ -11,8 +11,9 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.runtime;
 
 /** How to emit recognition errors. */
-public interface ANTLRErrorListener {
-	/**
+public interface ANTLRErrorListener
+{
+    /**
 	 * Upon syntax error, notify any interested parties. This is not how to
 	 * recover from errors or compute error messages. {@link ANTLRErrorStrategy}
 	 * specifies how to recover from syntax errors and how to compute error
@@ -45,14 +46,14 @@ public interface ANTLRErrorListener {
 	 *        the parser was able to recover in line without exiting the
 	 *        surrounding rule.
 	 */
-	public void syntaxError(Recognizer recognizer,
-							Object offendingSymbol,
-							int line,
-							int charPositionInLine,
-							String msg,
-							RecognitionException e);
+    public void SyntaxError(Recognizer recognizer,
+                            object offendingSymbol,
+                            int line,
+                            int charPositionInLine,
+                            string msg,
+                            RecognitionException e);
 
-	/**
+    /**
 	 * This method is called by the parser when a full-context prediction
 	 * results in an ambiguity.
 	 *
@@ -92,15 +93,15 @@ public interface ANTLRErrorListener {
 	 * @param configs the ATN configuration set where the ambiguity was
 	 * identified
 	 */
-	void reportAmbiguity(Parser recognizer,
-						 DFA dfa,
-						 int startIndex,
-						 int stopIndex,
-						 bool exact,
-						 BitSet ambigAlts,
-						 ATNConfigSet configs);
+    void ReportAmbiguity(Parser recognizer,
+                         DFA dfa,
+                         int startIndex,
+                         int stopIndex,
+                         bool exact,
+                         BitSet ambigAlts,
+                         ATNConfigSet configs);
 
-	/**
+    /**
 	 * This method is called when an SLL conflict occurs and the parser is about
 	 * to use the full context information to make an LL decision.
 	 *
@@ -123,14 +124,14 @@ public interface ANTLRErrorListener {
 	 * @param configs the ATN configuration set where the SLL conflict was
 	 * detected
 	 */
-	void reportAttemptingFullContext(Parser recognizer,
-									 DFA dfa,
-									 int startIndex,
-									 int stopIndex,
-									 BitSet conflictingAlts,
-									 ATNConfigSet configs);
+    void ReportAttemptingFullContext(Parser recognizer,
+                                     DFA dfa,
+                                     int startIndex,
+                                     int stopIndex,
+                                     BitSet conflictingAlts,
+                                     ATNConfigSet configs);
 
-	/**
+    /**
 	 * This method is called by the parser when a full-context prediction has a
 	 * unique result.
 	 *
@@ -168,10 +169,10 @@ public interface ANTLRErrorListener {
 	 * @param configs the ATN configuration set where the unambiguous prediction
 	 * was determined
 	 */
-	void reportContextSensitivity(Parser recognizer,
-								  DFA dfa,
-								  int startIndex,
-								  int stopIndex,
-								  int prediction,
-								  ATNConfigSet configs);
+    void ReportContextSensitivity(Parser recognizer,
+                                  DFA dfa,
+                                  int startIndex,
+                                  int stopIndex,
+                                  int prediction,
+                                  ATNConfigSet configs);
 }

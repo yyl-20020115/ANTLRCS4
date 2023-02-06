@@ -15,7 +15,7 @@ public class TestFastQueue
     [TestMethod]
     public void TestQueueNoRemove()
     {
-        var q = new FastQueue<String>();
+        var q = new FastQueue<string>();
         q.Add("a");
         q.Add("b");
         q.Add("c");
@@ -29,7 +29,7 @@ public class TestFastQueue
     [TestMethod]
     public void TestQueueThenRemoveAll()
     {
-        var q = new FastQueue<String>();
+        var q = new FastQueue<string>();
         q.Add("a");
         q.Add("b");
         q.Add("c");
@@ -74,7 +74,7 @@ public class TestFastQueue
     [TestMethod]
     public void TestGetFromEmptyQueue()
     {
-        var q = new FastQueue<String>();
+        var q = new FastQueue<string>();
         string msg = null;
         try { q.Remove(); }
         catch (NoSuchElementException nsee)
@@ -89,7 +89,7 @@ public class TestFastQueue
     [TestMethod]
     public void TestGetFromEmptyQueueAfterSomeAdds()
     {
-        var q = new FastQueue<String>();
+        var q = new FastQueue<string>();
         q.Add("a");
         q.Add("b");
         q.Remove();
@@ -108,7 +108,7 @@ public class TestFastQueue
     [TestMethod]
     public void TestGetFromEmptyQueueAfterClear()
     {
-        var q = new FastQueue<String>();
+        var q = new FastQueue<string>();
         q.Add("a");
         q.Add("b");
         q.Clear();

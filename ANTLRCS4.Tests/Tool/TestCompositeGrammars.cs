@@ -771,7 +771,7 @@ public class TestCompositeGrammars
         }
     }
 
-    public static SortedDictionary<K, V> Sort<K, V>(Dictionary<K, V> data) where K : notnull
+    public static SortedDictionary<K, V> Sort<K, V>(IDictionary<K, V> data) where K : notnull
     {
         return new SortedDictionary<K,V>(data);
     }

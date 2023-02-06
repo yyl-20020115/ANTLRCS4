@@ -69,11 +69,11 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "", 2);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "a",
         "",
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->:s1=>1\n",
 
         "s0-EOF->:s2=>2\n" +
@@ -97,12 +97,12 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, 0, "ab", 2);
         CheckPredictedAlt(lg, g, 0, "abc", 2);
 
-        String[] inputs = {
+        string[] inputs = {
         "a",
         "ab",
         "abc"
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->s1\n" +
         "s1-EOF->:s2=>1\n",
 
@@ -135,12 +135,12 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "b", 2);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "a",
         "b",
         "a"
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->:s1=>1\n",
 
         "s0-'a'->:s1=>1\n" +
@@ -172,13 +172,13 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "c", 2);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "a",
         "b",
         "c",
         "c",
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->:s1=>1\n",
 
         "s0-'a'->:s1=>1\n" +
@@ -211,12 +211,12 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "ab", 3);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "a",
         "ab",
         "ab"
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->s1\n" +
         "s1-EOF->:s2^=>1\n",
 
@@ -247,12 +247,12 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "abc", 3);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "ab",
         "abc",
         "ab"
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-'a'->s1\n" +
         "s1-'b'->s2\n" +
         "s2-EOF->:s3^=>1\n",
@@ -296,13 +296,13 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "((34))c", 2);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "34b",
         "34c",
         "((34))b",
         "((34))c"
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-INT->s1\n" +
         "s1-'b'->:s2=>1\n",
 
@@ -357,13 +357,13 @@ public class TestATNParserPrediction
         CheckPredictedAlt(lg, g, decision, "((34))ab", 2);
 
         // After matching these inputs for decision, what is DFA after each prediction?
-        String[] inputs = {
+        string[] inputs = {
         "34a",
         "34ab",
         "((34))a",
         "((34))ab",
         };
-        String[] dfa = {
+        string[] dfa = {
         "s0-INT->s1\n" +
         "s1-'a'->s2\n" +
         "s2-EOF->:s3=>1\n",

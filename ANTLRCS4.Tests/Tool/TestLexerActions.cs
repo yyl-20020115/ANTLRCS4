@@ -310,5 +310,4 @@ public class TestLexerActions
             "[@6,57:56='<EOF>',<-1>,5:0]\n";
         Assert.AreEqual(expecting, executedState.output);
     }
-
 }

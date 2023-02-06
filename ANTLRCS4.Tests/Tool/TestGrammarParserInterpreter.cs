@@ -109,7 +109,7 @@ public class TestGrammarParserInterpreter
         var parser = g.createGrammarParserInterpreter(tokens);
         var t = parser.parse(g.rules[(startRule)].index);
         var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
-        var treeStr = Trees.toStringTree(t, nodeTextProvider);
+        var treeStr = Trees.ToStringTree(t, nodeTextProvider);
         //		Console.Out.WriteLine("parse tree: "+treeStr);
         Assert.AreEqual(expectedParseTree, treeStr);
         return (InterpreterRuleContext)t;

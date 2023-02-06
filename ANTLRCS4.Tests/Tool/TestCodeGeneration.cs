@@ -19,7 +19,7 @@ public class TestCodeGeneration
     public void TestArgDecl()
     { // should use template not string
         /*ErrorQueue equeue = */
-        new ErrorQueue();
+        var e = new ErrorQueue();
         var g =
                 "grammar T;\n" +
                 "a[int xyz] : 'a' ;\n";
@@ -63,7 +63,6 @@ public class TestCodeGeneration
         public DebugInterpreter(TemplateGroup group, Antlr4.StringTemplate.Misc.ErrorManager errMgr, bool debug)
         : base(group, errMgr, debug)
         {
-            ;
             ErrMgrCopy = errMgr;
         }
 

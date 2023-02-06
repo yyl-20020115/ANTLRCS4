@@ -27,7 +27,7 @@ public class TestGraphNodes
             "rankdir=LR;\n" +
             "  s0[label=\"*\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
@@ -41,26 +41,26 @@ public class TestGraphNodes
             "rankdir=LR;\n" +
             "  s0[label=\"$\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
     public void TestXDollar()
     {
-        var r = PredictionContext.merge(x(), EmptyPredictionContext.Instance, RootIsWildcard(), null);
+        var r = PredictionContext.merge(X(), EmptyPredictionContext.Instance, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"*\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
     public void TestXDollarFullctx()
     {
-        var r = PredictionContext.merge(x(), EmptyPredictionContext.Instance, FullCtx(), null);
+        var r = PredictionContext.merge(X(), EmptyPredictionContext.Instance, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -69,26 +69,26 @@ public class TestGraphNodes
             "  s1[label=\"$\"];\n" +
             "  s0:p0->s1[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
     public void TestDollarX()
     {
-        var r = PredictionContext.merge(EmptyPredictionContext.Instance, x(), RootIsWildcard(), null);
+        var r = PredictionContext.merge(EmptyPredictionContext.Instance, X(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"*\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
     public void TestDollarXFullctx()
     {
-        PredictionContext r = PredictionContext.merge(EmptyPredictionContext.Instance, x(), FullCtx(), null);
+        PredictionContext r = PredictionContext.merge(EmptyPredictionContext.Instance, X(), FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         String expecting =
             "digraph G {\n" +
@@ -97,51 +97,51 @@ public class TestGraphNodes
             "  s1[label=\"$\"];\n" +
             "  s0:p0->s1[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
-    public void test_a_a()
+    public void TestAA()
     {
-        PredictionContext r = PredictionContext.merge(a(), a(), RootIsWildcard(), null);
+        var r = PredictionContext.merge(A(), A(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
             "  s1[label=\"*\"];\n" +
             "  s0->s1[label=\"1\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_adollar_ax()
+    public void TestAdollarAx()
     {
-        PredictionContext a1 = a();
-        PredictionContext _x = x();
-        PredictionContext a2 = createSingleton(_x, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var a1 = A();
+        var _x = X();
+        var a2 = CreateSingleton(_x, 1);
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
             "  s1[label=\"*\"];\n" +
             "  s0->s1[label=\"1\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_adollar_ax_fullctx()
+    public void TestAdollarAxFullctx()
     {
-        PredictionContext a1 = a();
-        PredictionContext _x = x();
-        PredictionContext a2 = createSingleton(_x, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, FullCtx(), null);
+        var a1 = A();
+        var _x = X();
+        var a2 = CreateSingleton(_x, 1);
+        var r = PredictionContext.merge(a1, a2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -150,38 +150,38 @@ public class TestGraphNodes
             "  s0->s1[label=\"1\"];\n" +
             "  s1:p0->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
-    public void test_axdollar_adollar()
+    public void TestAxdollarAdollar()
     {
-        PredictionContext _x = x();
-        PredictionContext a1 = createSingleton(_x, 1);
-        PredictionContext a2 = a();
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var _x = X();
+        var a1 = CreateSingleton(_x, 1);
+        var a2 = A();
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
             "  s1[label=\"*\"];\n" +
             "  s0->s1[label=\"1\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_aadollar_adollar_dollar_fullCtx()
+    public void TestAadollarAdollarDollarFullCtx()
     {
-        PredictionContext empty = EmptyPredictionContext.Instance;
-        PredictionContext child1 = createSingleton(empty, 8);
-        PredictionContext right = PredictionContext.merge(empty, child1, false, null);
-        PredictionContext left = createSingleton(right, 8);
-        PredictionContext merged = PredictionContext.merge(left, right, false, null);
-        String actual = toDOTString(merged, false);
+        var empty = EmptyPredictionContext.Instance;
+        var child1 = CreateSingleton(empty, 8);
+        var right = PredictionContext.merge(empty, child1, false, null);
+        var left = CreateSingleton(right, 8);
+        var merged = PredictionContext.merge(left, right, false, null);
+        var actual = ToDOTString(merged, false);
         //		Console.Out.WriteLine(actual);
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>$\"];\n" +
@@ -194,14 +194,14 @@ public class TestGraphNodes
     }
 
     [TestMethod]
-    public void test_axdollar_adollar_fullctx()
+    public void TestAxdollarAdollarFullctx()
     {
-        PredictionContext _x = x();
-        PredictionContext a1 = createSingleton(_x, 1);
-        PredictionContext a2 = a();
-        PredictionContext r = PredictionContext.merge(a1, a2, FullCtx(), null);
+        var _x = X();
+        var a1 = CreateSingleton(_x, 1);
+        var a2 = A();
+        var r = PredictionContext.merge(a1, a2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -210,15 +210,15 @@ public class TestGraphNodes
             "  s0->s1[label=\"1\"];\n" +
             "  s1:p0->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
-    public void test_a_b()
+    public void TestAB()
     {
-        PredictionContext r = PredictionContext.merge(a(), b(), RootIsWildcard(), null);
+        var r = PredictionContext.merge(A(), B(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -226,18 +226,18 @@ public class TestGraphNodes
             "  s0:p0->s1[label=\"1\"];\n" +
             "  s0:p1->s1[label=\"2\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_ax_ax_same()
+    public void TestAxAxSame()
     {
-        PredictionContext _x = x();
-        PredictionContext a1 = createSingleton(_x, 1);
-        PredictionContext a2 = createSingleton(_x, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var _x = X();
+        var a1 = CreateSingleton(_x, 1);
+        var a2 = CreateSingleton(_x, 1);
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -246,19 +246,19 @@ public class TestGraphNodes
             "  s0->s1[label=\"1\"];\n" +
             "  s1->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_ax_ax()
+    public void TestAxAx()
     {
-        PredictionContext x1 = x();
-        PredictionContext x2 = x();
-        PredictionContext a1 = createSingleton(x1, 1);
-        PredictionContext a2 = createSingleton(x2, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var x1 = X();
+        var x2 = X();
+        var a1 = CreateSingleton(x1, 1);
+        var a2 = CreateSingleton(x2, 1);
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -267,21 +267,21 @@ public class TestGraphNodes
             "  s0->s1[label=\"1\"];\n" +
             "  s1->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_abx_abx()
+    public void TestAbxAbx()
     {
-        PredictionContext x1 = x();
-        PredictionContext x2 = x();
-        PredictionContext b1 = createSingleton(x1, 2);
-        PredictionContext b2 = createSingleton(x2, 2);
-        PredictionContext a1 = createSingleton(b1, 1);
-        PredictionContext a2 = createSingleton(b2, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var x1 = X();
+        var x2 = X();
+        var b1 = CreateSingleton(x1, 2);
+        var b2 = CreateSingleton(x2, 2);
+        var a1 = CreateSingleton(b1, 1);
+        var a2 = CreateSingleton(b2, 1);
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -292,21 +292,21 @@ public class TestGraphNodes
             "  s1->s2[label=\"2\"];\n" +
             "  s2->s3[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_abx_acx()
+    public void TestAbxAcx()
     {
-        PredictionContext x1 = x();
-        PredictionContext x2 = x();
-        PredictionContext b = createSingleton(x1, 2);
-        PredictionContext c = createSingleton(x2, 3);
-        PredictionContext a1 = createSingleton(b, 1);
-        PredictionContext a2 = createSingleton(c, 1);
-        PredictionContext r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var x1 = X();
+        var x2 = X();
+        var b = CreateSingleton(x1, 2);
+        var c = CreateSingleton(x2, 3);
+        var a1 = CreateSingleton(b, 1);
+        var a2 = CreateSingleton(c, 1);
+        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -318,18 +318,18 @@ public class TestGraphNodes
             "  s1:p1->s2[label=\"3\"];\n" +
             "  s2->s3[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_ax_bx_same()
+    public void TestAxBxSame()
     {
-        PredictionContext _x = x();
-        PredictionContext a = createSingleton(_x, 1);
-        PredictionContext b = createSingleton(_x, 2);
-        PredictionContext r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var _x = X();
+        var a = CreateSingleton(_x, 1);
+        var b = CreateSingleton(_x, 2);
+        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -339,19 +339,19 @@ public class TestGraphNodes
             "  s0:p1->s1[label=\"2\"];\n" +
             "  s1->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_ax_bx()
+    public void TestAxBx()
     {
-        PredictionContext x1 = x();
-        PredictionContext x2 = x();
-        PredictionContext a = createSingleton(x1, 1);
-        PredictionContext b = createSingleton(x2, 2);
-        PredictionContext r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var x1 = X();
+        var x2 = X();
+        var a = CreateSingleton(x1, 1);
+        var b = CreateSingleton(x2, 2);
+        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -361,17 +361,17 @@ public class TestGraphNodes
             "  s0:p1->s1[label=\"2\"];\n" +
             "  s1->s2[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_ax_by()
+    public void TestAxBy()
     {
-        PredictionContext a = createSingleton(x(), 1);
-        PredictionContext b = createSingleton(y(), 2);
-        PredictionContext r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var a = CreateSingleton(X(), 1);
+        var b = CreateSingleton(Y(), 2);
+        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -383,18 +383,18 @@ public class TestGraphNodes
             "  s2->s3[label=\"10\"];\n" +
             "  s1->s3[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_adollar_bx()
+    public void TestAdollarBx()
     {
-        PredictionContext x2 = x();
-        PredictionContext _a = a();
-        PredictionContext _b = createSingleton(x2, 2);
-        PredictionContext r = PredictionContext.merge(_a, _b, RootIsWildcard(), null);
+        var x2 = X();
+        var _a = A();
+        var _b = CreateSingleton(x2, 2);
+        var r = PredictionContext.merge(_a, _b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -404,18 +404,18 @@ public class TestGraphNodes
             "  s0:p1->s2[label=\"2\"];\n" +
             "  s2->s1[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_adollar_bx_fullctx()
+    public void TestAdollarBxFullctx()
     {
-        PredictionContext x2 = x();
-        PredictionContext _a = a();
-        PredictionContext b = createSingleton(x2, 2);
-        PredictionContext r = PredictionContext.merge(_a, b, FullCtx(), null);
+        var x2 = X();
+        var _a = A();
+        var b = CreateSingleton(x2, 2);
+        var r = PredictionContext.merge(_a, b, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -425,23 +425,23 @@ public class TestGraphNodes
             "  s0:p1->s2[label=\"2\"];\n" +
             "  s2->s1[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     //@Disabled("Known inefficiency but deferring resolving the issue for now")
     [TestMethod]
-    public void test_aex_bfx()
+    public void TestAexBfx()
     {
         // TJP: this is inefficient as it leaves the top x nodes unmerged.
-        PredictionContext x1 = x();
-        PredictionContext x2 = x();
-        PredictionContext e = createSingleton(x1, 5);
-        PredictionContext f = createSingleton(x2, 6);
-        PredictionContext a = createSingleton(e, 1);
-        PredictionContext b = createSingleton(f, 2);
-        PredictionContext r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var x1 = X();
+        var x2 = X();
+        var e = CreateSingleton(x1, 5);
+        var f = CreateSingleton(x2, 6);
+        var a = CreateSingleton(e, 1);
+        var b = CreateSingleton(f, 2);
+        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -455,37 +455,37 @@ public class TestGraphNodes
             "  s3->s4[label=\"9\"];\n" +
             "  s1->s3[label=\"5\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     // Array merges
 
     [TestMethod]
-    public void test_Adollar_Adollar_fullctx()
+    public void TestAdollarAdollarFullctx()
     {
-        ArrayPredictionContext A1 = array(EmptyPredictionContext.Instance);
-        ArrayPredictionContext A2 = array(EmptyPredictionContext.Instance);
-        PredictionContext r = PredictionContext.merge(A1, A2, FullCtx(), null);
+        var A1 = Array(EmptyPredictionContext.Instance);
+        var A2 = Array(EmptyPredictionContext.Instance);
+        var r = PredictionContext.merge(A1, A2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"$\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, FullCtx()));
+        Assert.AreEqual(expecting, ToDOTString(r, FullCtx()));
     }
 
     [TestMethod]
-    public void test_Aab_Ac()
+    public void TestAabAc()
     { // a,b + c
-        SingletonPredictionContext _a = a();
-        SingletonPredictionContext _b = b();
-        SingletonPredictionContext _c = c();
-        ArrayPredictionContext A1 = array(_a, _b);
-        ArrayPredictionContext A2 = array(_c);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var _a = A();
+        var _b = B();
+        var _c = C();
+        var A1 = Array(_a, _b);
+        var A2 = Array(_c);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -494,39 +494,39 @@ public class TestGraphNodes
             "  s0:p1->s1[label=\"2\"];\n" +
             "  s0:p2->s1[label=\"3\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aa_Aa()
+    public void TestAaAa()
     {
-        SingletonPredictionContext a1 = a();
-        SingletonPredictionContext a2 = a();
-        ArrayPredictionContext A1 = array(a1);
-        ArrayPredictionContext A2 = array(a2);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a1 = A();
+        var a2 = A();
+        var A1 = Array(a1);
+        var A2 = Array(a2);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
             "  s1[label=\"*\"];\n" +
             "  s0->s1[label=\"1\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aa_Abc()
+    public void TestAaAbc()
     { // a + b,c
-        SingletonPredictionContext _a = a();
-        SingletonPredictionContext _b = b();
-        SingletonPredictionContext _c = c();
-        ArrayPredictionContext A1 = array(_a);
-        ArrayPredictionContext A2 = array(_b, _c);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var _a = A();
+        var _b = B();
+        var _c = C();
+        var A1 = Array(_a);
+        var A2 = Array(_b, _c);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -535,20 +535,20 @@ public class TestGraphNodes
             "  s0:p1->s1[label=\"2\"];\n" +
             "  s0:p2->s1[label=\"3\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aac_Ab()
+    public void TestAacAb()
     { // a,c + b
-        SingletonPredictionContext _a = a();
-        SingletonPredictionContext _b = b();
-        SingletonPredictionContext _c = c();
-        ArrayPredictionContext A1 = array(_a, _c);
-        ArrayPredictionContext A2 = array(_b);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var _a = A();
+        var _b = B();
+        var _c = C();
+        var A1 = Array(_a, _c);
+        var A2 = Array(_b);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -557,17 +557,17 @@ public class TestGraphNodes
             "  s0:p1->s1[label=\"2\"];\n" +
             "  s0:p2->s1[label=\"3\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aab_Aa()
+    public void TestAabAa()
     { // a,b + a
-        ArrayPredictionContext A1 = array(a(), b());
-        ArrayPredictionContext A2 = array(a());
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var A1 = Array(A(), B());
+        var A2 = Array(A());
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -575,17 +575,17 @@ public class TestGraphNodes
             "  s0:p0->s1[label=\"1\"];\n" +
             "  s0:p1->s1[label=\"2\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aab_Ab()
+    public void TestAabAb()
     { // a,b + b
-        ArrayPredictionContext A1 = array(a(), b());
-        ArrayPredictionContext A2 = array(b());
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var A1 = Array(A(), B());
+        var A2 = Array(B());
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -593,19 +593,19 @@ public class TestGraphNodes
             "  s0:p0->s1[label=\"1\"];\n" +
             "  s0:p1->s1[label=\"2\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aax_Aby()
+    public void TestAaxAby()
     { // ax + by but in arrays
-        SingletonPredictionContext a = createSingleton(x(), 1);
-        SingletonPredictionContext b = createSingleton(y(), 2);
-        ArrayPredictionContext A1 = array(a);
-        ArrayPredictionContext A2 = array(b);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(X(), 1);
+        var b = CreateSingleton(Y(), 2);
+        var A1 = Array(a);
+        var A2 = Array(b);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>\"];\n" +
@@ -617,19 +617,19 @@ public class TestGraphNodes
             "  s2->s3[label=\"10\"];\n" +
             "  s1->s3[label=\"9\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aax_Aay()
+    public void TestAaxAay()
     { // ax + ay -> merged singleton a, array parent
-        SingletonPredictionContext a1 = createSingleton(x(), 1);
-        SingletonPredictionContext a2 = createSingleton(y(), 1);
-        ArrayPredictionContext A1 = array(a1);
-        ArrayPredictionContext A2 = array(a2);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a1 = CreateSingleton(X(), 1);
+        var a2 = CreateSingleton(Y(), 1);
+        var A1 = Array(a1);
+        var A2 = Array(a2);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[label=\"0\"];\n" +
@@ -639,19 +639,19 @@ public class TestGraphNodes
             "  s1:p0->s2[label=\"9\"];\n" +
             "  s1:p1->s2[label=\"10\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaxc_Aayd()
+    public void TestAaxcAayd()
     { // ax,c + ay,d -> merged a, array parent
-        SingletonPredictionContext a1 = createSingleton(x(), 1);
-        SingletonPredictionContext a2 = createSingleton(y(), 1);
-        ArrayPredictionContext A1 = array(a1, c());
-        ArrayPredictionContext A2 = array(a2, d());
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a1 = CreateSingleton(X(), 1);
+        var a2 = CreateSingleton(Y(), 1);
+        var A1 = Array(a1, C());
+        var A2 = Array(a2, D());
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -663,21 +663,21 @@ public class TestGraphNodes
             "  s1:p0->s2[label=\"9\"];\n" +
             "  s1:p1->s2[label=\"10\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaubv_Acwdx()
+    public void TestAaubvAcwdx()
     { // au,bv + cw,dx -> [a,b,c,d]->[u,v,w,x]
-        SingletonPredictionContext a = createSingleton(u(), 1);
-        SingletonPredictionContext b = createSingleton(v(), 2);
-        SingletonPredictionContext c = createSingleton(w(), 3);
-        SingletonPredictionContext d = createSingleton(x(), 4);
-        ArrayPredictionContext A1 = array(a, b);
-        ArrayPredictionContext A2 = array(c, d);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(U(), 1);
+        var b = CreateSingleton(V(), 2);
+        var c = CreateSingleton(W(), 3);
+        var d = CreateSingleton(X(), 4);
+        var A1 = Array(a, b);
+        var A2 = Array(c, d);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>|<p3>\"];\n" +
@@ -695,21 +695,21 @@ public class TestGraphNodes
             "  s2->s5[label=\"7\"];\n" +
             "  s1->s5[label=\"6\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaubv_Abvdx()
+    public void TestAaubvAbvdx()
     { // au,bv + bv,dx -> [a,b,d]->[u,v,x]
-        SingletonPredictionContext a = createSingleton(u(), 1);
-        SingletonPredictionContext b1 = createSingleton(v(), 2);
-        SingletonPredictionContext b2 = createSingleton(v(), 2);
-        SingletonPredictionContext d = createSingleton(x(), 4);
-        ArrayPredictionContext A1 = array(a, b1);
-        ArrayPredictionContext A2 = array(b2, d);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(U(), 1);
+        var b1 = CreateSingleton(V(), 2);
+        var b2 = CreateSingleton(V(), 2);
+        var d = CreateSingleton(X(), 4);
+        var A1 = Array(a, b1);
+        var A2 = Array(b2, d);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -724,21 +724,21 @@ public class TestGraphNodes
             "  s2->s4[label=\"7\"];\n" +
             "  s1->s4[label=\"6\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaubv_Abwdx()
+    public void TestAaubvAbwdx()
     { // au,bv + bw,dx -> [a,b,d]->[u,[v,w],x]
-        SingletonPredictionContext a = createSingleton(u(), 1);
-        SingletonPredictionContext b1 = createSingleton(v(), 2);
-        SingletonPredictionContext b2 = createSingleton(w(), 2);
-        SingletonPredictionContext d = createSingleton(x(), 4);
-        ArrayPredictionContext A1 = array(a, b1);
-        ArrayPredictionContext A2 = array(b2, d);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(U(), 1);
+        var b1 = CreateSingleton(V(), 2);
+        var b2 = CreateSingleton(W(), 2);
+        var d = CreateSingleton(X(), 4);
+        var A1 = Array(a, b1);
+        var A2 = Array(b2, d);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -754,21 +754,21 @@ public class TestGraphNodes
             "  s2:p1->s4[label=\"8\"];\n" +
             "  s1->s4[label=\"6\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaubv_Abvdu()
+    public void TestAaubvAbvdu()
     { // au,bv + bv,du -> [a,b,d]->[u,v,u]; u,v shared
-        SingletonPredictionContext a = createSingleton(u(), 1);
-        SingletonPredictionContext b1 = createSingleton(v(), 2);
-        SingletonPredictionContext b2 = createSingleton(v(), 2);
-        SingletonPredictionContext d = createSingleton(u(), 4);
-        ArrayPredictionContext A1 = array(a, b1);
-        ArrayPredictionContext A2 = array(b2, d);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(U(), 1);
+        var b1 = CreateSingleton(V(), 2);
+        var b2 = CreateSingleton(V(), 2);
+        var d = CreateSingleton(U(), 4);
+        var A1 = Array(a, b1);
+        var A2 = Array(b2, d);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>\"];\n" +
@@ -781,21 +781,21 @@ public class TestGraphNodes
             "  s2->s3[label=\"7\"];\n" +
             "  s1->s3[label=\"6\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
     [TestMethod]
-    public void test_Aaubu_Acudu()
+    public void TestAaubuAcudu()
     { // au,bu + cu,du -> [a,b,c,d]->[u,u,u,u]
-        SingletonPredictionContext a = createSingleton(u(), 1);
-        SingletonPredictionContext b = createSingleton(u(), 2);
-        SingletonPredictionContext c = createSingleton(u(), 3);
-        SingletonPredictionContext d = createSingleton(u(), 4);
-        ArrayPredictionContext A1 = array(a, b);
-        ArrayPredictionContext A2 = array(c, d);
-        PredictionContext r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var a = CreateSingleton(U(), 1);
+        var b = CreateSingleton(U(), 2);
+        var c = CreateSingleton(U(), 3);
+        var d = CreateSingleton(U(), 4);
+        var A1 = Array(a, b);
+        var A2 = Array(c, d);
+        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>|<p2>|<p3>\"];\n" +
@@ -807,67 +807,67 @@ public class TestGraphNodes
             "  s0:p3->s1[label=\"4\"];\n" +
             "  s1->s2[label=\"6\"];\n" +
             "}\n";
-        Assert.AreEqual(expecting, toDOTString(r, RootIsWildcard()));
+        Assert.AreEqual(expecting, ToDOTString(r, RootIsWildcard()));
     }
 
 
     // ------------ SUPPORT -------------------------
 
-    protected SingletonPredictionContext a()
+    protected SingletonPredictionContext A()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 1);
+        return CreateSingleton(EmptyPredictionContext.Instance, 1);
     }
 
-    private SingletonPredictionContext b()
+    private SingletonPredictionContext B()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 2);
+        return CreateSingleton(EmptyPredictionContext.Instance, 2);
     }
 
-    private SingletonPredictionContext c()
+    private SingletonPredictionContext C()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 3);
+        return CreateSingleton(EmptyPredictionContext.Instance, 3);
     }
 
-    private SingletonPredictionContext d()
+    private SingletonPredictionContext D()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 4);
+        return CreateSingleton(EmptyPredictionContext.Instance, 4);
     }
 
-    private SingletonPredictionContext u()
+    private SingletonPredictionContext U()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 6);
+        return CreateSingleton(EmptyPredictionContext.Instance, 6);
     }
 
-    private SingletonPredictionContext v()
+    private SingletonPredictionContext V()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 7);
+        return CreateSingleton(EmptyPredictionContext.Instance, 7);
     }
 
-    private SingletonPredictionContext w()
+    private SingletonPredictionContext W()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 8);
+        return CreateSingleton(EmptyPredictionContext.Instance, 8);
     }
 
-    private SingletonPredictionContext x()
+    private SingletonPredictionContext X()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 9);
+        return CreateSingleton(EmptyPredictionContext.Instance, 9);
     }
 
-    private SingletonPredictionContext y()
+    private SingletonPredictionContext Y()
     {
-        return createSingleton(EmptyPredictionContext.Instance, 10);
+        return CreateSingleton(EmptyPredictionContext.Instance, 10);
     }
 
-    public SingletonPredictionContext createSingleton(PredictionContext parent, int payload)
+    public static SingletonPredictionContext CreateSingleton(PredictionContext parent, int payload)
     {
-        SingletonPredictionContext a = SingletonPredictionContext.create(parent, payload);
+        var a = SingletonPredictionContext.create(parent, payload);
         return a;
     }
 
-    public ArrayPredictionContext array(params SingletonPredictionContext[] nodes)
+    public static ArrayPredictionContext Array(params SingletonPredictionContext[] nodes)
     {
-        PredictionContext[] parents = new PredictionContext[nodes.Length];
-        int[] invokingStates = new int[nodes.Length];
+        var parents = new PredictionContext[nodes.Length];
+        var invokingStates = new int[nodes.Length];
         for (int i = 0; i < nodes.Length; i++)
         {
             parents[i] = nodes[i].parent;
@@ -876,19 +876,19 @@ public class TestGraphNodes
         return new ArrayPredictionContext(parents, invokingStates);
     }
 
-    private static String toDOTString(PredictionContext context, bool rootIsWildcard)
+    private static string ToDOTString(PredictionContext context, bool rootIsWildcard)
     {
-        StringBuilder nodes = new StringBuilder();
-        StringBuilder edges = new StringBuilder();
+        var nodes = new StringBuilder();
+        var edges = new StringBuilder();
         Dictionary<PredictionContext, PredictionContext> visited = new();
         Dictionary<PredictionContext, int> contextIds = new();
-        Deque<PredictionContext> workList = new();
+        var workList = new ArrayDeque<PredictionContext>();
         visited[context] = context;
         contextIds[context] = contextIds.Count;
         workList.Add(context);
         while (workList.Size() > 0)
         {
-            PredictionContext current = workList.Pop();
+            var current = workList.Pop();
             nodes.Append("  s").Append(contextIds[(current)]).Append('[');
 
             if (current.size() > 1)
@@ -962,7 +962,7 @@ public class TestGraphNodes
             }
         }
 
-        StringBuilder builder = new StringBuilder();
+        var builder = new StringBuilder();
         builder.Append("digraph G {\n");
         builder.Append("rankdir=LR;\n");
         builder.Append(nodes);

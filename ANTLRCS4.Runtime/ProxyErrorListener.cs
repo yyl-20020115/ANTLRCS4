@@ -28,7 +28,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 	}
 
 	//@Override
-	public void syntaxError(Recognizer recognizer,
+	public void SyntaxError(Recognizer recognizer,
 							Object offendingSymbol,
 							int line,
 							int charPositionInLine,
@@ -36,12 +36,12 @@ public class ProxyErrorListener : ANTLRErrorListener {
 							RecognitionException e)
 	{
 		foreach (ANTLRErrorListener listener in delegates) {
-			listener.syntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
+			listener.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 		}
 	}
 
 	//@Override
-	public void reportAmbiguity(Parser recognizer,
+	public void ReportAmbiguity(Parser recognizer,
 								DFA dfa,
 								int startIndex,
 								int stopIndex,
@@ -50,12 +50,12 @@ public class ProxyErrorListener : ANTLRErrorListener {
 								ATNConfigSet configs)
 	{
 		foreach (ANTLRErrorListener listener in delegates) {
-			listener.reportAmbiguity(recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
+			listener.ReportAmbiguity(recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
 		}
 	}
 
 	//@Override
-	public void reportAttemptingFullContext(Parser recognizer,
+	public void ReportAttemptingFullContext(Parser recognizer,
 											DFA dfa,
 											int startIndex,
 											int stopIndex,
@@ -63,12 +63,12 @@ public class ProxyErrorListener : ANTLRErrorListener {
 											ATNConfigSet configs)
 	{
 		foreach (ANTLRErrorListener listener in delegates) {
-			listener.reportAttemptingFullContext(recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
+			listener.ReportAttemptingFullContext(recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
 		}
 	}
 
 	//@Override
-	public void reportContextSensitivity(Parser recognizer,
+	public void ReportContextSensitivity(Parser recognizer,
 										 DFA dfa,
 										 int startIndex,
 										 int stopIndex,
@@ -76,7 +76,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 										 ATNConfigSet configs)
 	{
 		foreach (ANTLRErrorListener listener in delegates) {
-			listener.reportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs);
+			listener.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs);
 		}
 	}
 }

@@ -20,11 +20,11 @@ public class ParseTreeWalker {
 	 */
 	public void walk(ParseTreeListener listener, ParseTree t) {
 		if ( t is ErrorNode node) {
-			listener.visitErrorNode(node);
+			listener.VisitErrorNode(node);
 			return;
 		}
 		else if ( t is TerminalNode node1) {
-			listener.visitTerminal(node1);
+			listener.VisitTerminal(node1);
 			return;
 		}
 		RuleNode r = (RuleNode)t;
@@ -44,7 +44,7 @@ public class ParseTreeWalker {
 	 */
     protected void enterRule(ParseTreeListener listener, RuleNode r) {
 		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
-		listener.enterEveryRule(ctx);
+		listener.EnterEveryRule(ctx);
 		ctx.enterRule(listener);
     }
 
@@ -58,6 +58,6 @@ public class ParseTreeWalker {
 	protected void exitRule(ParseTreeListener listener, RuleNode r) {
 		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
 		ctx.exitRule(listener);
-		listener.exitEveryRule(ctx);
+		listener.ExitEveryRule(ctx);
     }
 }
