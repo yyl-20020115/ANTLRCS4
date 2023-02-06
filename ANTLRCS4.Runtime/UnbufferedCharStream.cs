@@ -304,7 +304,7 @@ public class UnbufferedCharStream : CharStream {
     public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
     //@Override
-    public String getSourceName() {
+    public String GetSourceName() {
 		if (string.IsNullOrEmpty(name)) {
 			return IntStream.UNKNOWN_SOURCE_NAME;
 		}

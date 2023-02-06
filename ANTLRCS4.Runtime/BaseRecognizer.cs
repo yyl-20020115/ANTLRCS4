@@ -604,14 +604,14 @@ public abstract class BaseRecognizer
             EndResync();
             ReportError(e);  // report after consuming so AW sees the token in the exception
                              // we want to return the token we're actually matching
-            Object matchedSymbol = GetCurrentInputSymbol(input);
+            var matchedSymbol = GetCurrentInputSymbol(input);
             input.Consume(); // move past ttype token as if all were ok
             return matchedSymbol;
         }
         // can't recover with single token deletion, try insertion
         if (MismatchIsMissingToken(input, follow))
         {
-            Object inserted = GetMissingSymbol(input, e, ttype, follow);
+            var inserted = GetMissingSymbol(input, e, ttype, follow);
             e = new MissingTokenException(ttype, input, inserted);
             ReportError(e);  // report after inserting so AW sees the token in the exception
             return inserted;
@@ -734,7 +734,7 @@ public abstract class BaseRecognizer
     {
        
         //TODO:
-        List<String> rules = new ();
+        List<string> rules = new ();
         var stack = Array.Empty<StackTraceElement>();// e.getStackTrace();
         int i;
         for (i = stack.Length - 1; i >= 0; i--)
@@ -774,7 +774,7 @@ public abstract class BaseRecognizer
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.
      */
-    public virtual String GetGrammarFileName() => null;
+    public virtual string GetGrammarFileName() => null;
 
     public abstract string GetSourceName();
 

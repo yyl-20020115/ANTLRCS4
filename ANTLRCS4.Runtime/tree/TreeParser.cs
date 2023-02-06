@@ -88,7 +88,7 @@ public class TreeParser : BaseRecognizer
     ////@Override
     public override String GetSourceName()
     {
-        return input.getSourceName();
+        return input.GetSourceName();
     }
 
     ////@Override

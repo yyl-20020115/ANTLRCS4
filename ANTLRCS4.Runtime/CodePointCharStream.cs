@@ -123,7 +123,7 @@ public abstract class CodePointCharStream : CharStream {
 	}
 
 	//@Override
-	public virtual String getSourceName() {
+	public virtual String GetSourceName() {
 		if (string.IsNullOrEmpty(name)) {
 			return IntStream.UNKNOWN_SOURCE_NAME;
 		}

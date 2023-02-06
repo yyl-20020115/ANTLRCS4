@@ -1017,7 +1017,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public String getSourceName()
     {
-        return input.getSourceName();
+        return input.GetSourceName();
     }
 
     //@Override

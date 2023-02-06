@@ -211,7 +211,7 @@ public class ANTLRInputStream : CharStream {
 	}
 
 	//@Override
-	public String getSourceName() {
+	public String GetSourceName() {
 		if (string.IsNullOrEmpty(name)) {
 			return IntStream.UNKNOWN_SOURCE_NAME;
 		}

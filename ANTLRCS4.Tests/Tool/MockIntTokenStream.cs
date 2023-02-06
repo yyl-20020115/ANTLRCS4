@@ -33,7 +33,7 @@ public class MockIntTokenStream : TokenStream
     public int Count => types.Size;
 
     ////@Override
-    public string getSourceName() => IntStream.UNKNOWN_SOURCE_NAME;
+    public string GetSourceName() => IntStream.UNKNOWN_SOURCE_NAME;
 
     ////@Override
     public Token LT(int i)

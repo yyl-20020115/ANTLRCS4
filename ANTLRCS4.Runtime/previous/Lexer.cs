@@ -161,7 +161,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     }
     public override string GetSourceName()
     {
-        return input.getSourceName();
+        return input.GetSourceName();
     }
 
     /** Currently does not support multiple emits per nextToken invocation

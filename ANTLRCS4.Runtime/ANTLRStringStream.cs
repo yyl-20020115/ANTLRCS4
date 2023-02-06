@@ -260,7 +260,7 @@ public class ANTLRStringStream : CharStream
         this.charPositionInLine = pos;
     }
     //@Override
-    public String getSourceName()
+    public String GetSourceName()
     {
         return name;
     }

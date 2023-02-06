@@ -22,20 +22,21 @@ namespace org.antlr.v4.runtime;
  *   <li>{@link #size}</li>
  * </ul>
  */
-public interface IntStream {
-	/**
+public interface IntStream
+{
+    /**
 	 * The value returned by {@link #LA LA()} when the end of the stream is
 	 * reached.
 	 */
-	public const int EOF = -1;
+    public const int EOF = -1;
 
-	/**
+    /**
 	 * The value returned by {@link #getSourceName} when the actual name of the
 	 * underlying source is not known.
 	 */
-	public static readonly String UNKNOWN_SOURCE_NAME = "<unknown>";
+    public static readonly string UNKNOWN_SOURCE_NAME = "<unknown>";
 
-	/**
+    /**
 	 * Consumes the current symbol in the stream. This method has the following
 	 * effects:
 	 *
@@ -57,9 +58,9 @@ public interface IntStream {
 	 * end of the stream (i.e. if {@code LA(1)==}{@link #EOF EOF} before calling
 	 * {@code consume}).
 	 */
-	void Consume();
+    void Consume();
 
-	/**
+    /**
 	 * Gets the value of the symbol at offset {@code i} from the current
 	 * position. When {@code i==1}, this method returns the value of the current
 	 * symbol in the stream (which is the next symbol to be consumed). When
@@ -93,9 +94,9 @@ public interface IntStream {
 	 * @throws UnsupportedOperationException if the stream does not support
 	 * retrieving the value of the specified symbol
 	 */
-	int LA(int i);
+    int LA(int i);
 
-	/**
+    /**
 	 * A mark provides a guarantee that {@link #seek seek()} operations will be
 	 * valid over a "marked range" extending from the index where {@code mark()}
 	 * was called to the current {@link #index index()}. This allows the use of
@@ -141,9 +142,9 @@ public interface IntStream {
 	 * @return An opaque marker which should be passed to
 	 * {@link #release release()} when the marked range is no longer required.
 	 */
-	int Mark();
+    int Mark();
 
-	/**
+    /**
 	 * This method releases a marked range created by a call to
 	 * {@link #mark mark()}. Calls to {@code release()} must appear in the
 	 * reverse order of the corresponding calls to {@code mark()}. If a mark is
@@ -155,9 +156,9 @@ public interface IntStream {
 	 * @param marker A marker returned by a call to {@code mark()}.
 	 * @see #mark
 	 */
-	void Release(int marker);
+    void Release(int marker);
 
-	/**
+    /**
 	 * Return the index into the stream of the input symbol referred to by
 	 * {@code LA(1)}.
 	 *
@@ -165,9 +166,9 @@ public interface IntStream {
 	 * {@link IntStream initializing method} has occurred after this stream was
 	 * constructed.</p>
 	 */
-	int Index();
+    int Index();
 
-	/**
+    /**
 	 * Set the input cursor to the position indicated by {@code index}. If the
 	 * specified index lies past the end of the stream, the operation behaves as
 	 * though {@code index} was the index of the EOF symbol. After this method
@@ -195,7 +196,7 @@ public interface IntStream {
 	 * @throws UnsupportedOperationException if the stream does not support
 	 * seeking to the specified index
 	 */
-	void Seek(int index);
+    void Seek(int index);
 
     /**
 	 * Returns the total number of symbols in the stream, including a single EOF
@@ -212,7 +213,9 @@ public interface IntStream {
 	 * returns {@link #UNKNOWN_SOURCE_NAME}.
 	 */
 
-    public String getSourceName();
+    public string GetSourceName();
+
     void Rewind(int nvaeMark);
+
     void Rewind();
 }

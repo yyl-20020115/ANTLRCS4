@@ -1360,7 +1360,7 @@ public class TestPerformance
                 return;
             }
 
-            var sourceName = recognizer.InputStream.getSourceName();
+            var sourceName = recognizer.InputStream.GetSourceName();
             if (sourceName.Length > 0)
             {
                 sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);

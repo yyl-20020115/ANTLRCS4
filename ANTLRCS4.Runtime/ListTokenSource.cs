@@ -235,7 +235,7 @@ public class ListTokenSource : TokenSource {
 
 		CharStream inputStream = InputStream;
 		if (inputStream != null) {
-			return inputStream.getSourceName();
+			return inputStream.GetSourceName();
 		}
 
 		return "List";

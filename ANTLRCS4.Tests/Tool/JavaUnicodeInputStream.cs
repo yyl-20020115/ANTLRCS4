@@ -42,9 +42,9 @@ public class JavaUnicodeInputStream : CharStream
     }
 
     ////@Override
-    public String getSourceName()
+    public String GetSourceName()
     {
-        return source.getSourceName();
+        return source.GetSourceName();
     }
 
     ////@Override

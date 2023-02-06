@@ -138,7 +138,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     public Object getTreeSource() { return root; }
 
     //@Override
-    public String getSourceName() { return getTokenStream().getSourceName(); }
+    public String GetSourceName() { return getTokenStream().GetSourceName(); }
 
     //@Override
     public TokenStream getTokenStream() { return tokens; }

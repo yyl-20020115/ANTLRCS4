@@ -408,7 +408,7 @@ public class Tool {
         public void ruleRef(GrammarAST @ref, ActionAST arg)
         {
             RuleAST ruleAST = ruleToAST.TryGetValue(@ref.getText(),out var ret)?ret:null;
-            String fileName = @ref.getToken().getInputStream().getSourceName();
+            String fileName = @ref.getToken().getInputStream().GetSourceName();
             if (char.IsUpper(currentRuleName[(0)]) &&
                 char.IsLower(@ref.getText()[(0)]))
             {

@@ -40,7 +40,7 @@ public class TestCharStreams
         Assert.AreEqual(5, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello", s.ToString());
-        Assert.AreEqual(test.ToString(), s.getSourceName());
+        Assert.AreEqual(test.ToString(), s.GetSourceName());
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class TestCharStreams
         Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
-        Assert.AreEqual(p.ToString(), s.getSourceName());
+        Assert.AreEqual(p.ToString(), s.GetSourceName());
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ public class TestCharStreams
             Assert.AreEqual(5, s.Count);
             Assert.AreEqual(0, s.Index());
             Assert.AreEqual("hello", s.ToString());
-            Assert.AreEqual("foo", s.getSourceName());
+            Assert.AreEqual("foo", s.GetSourceName());
         }
     }
 
@@ -105,7 +105,7 @@ public class TestCharStreams
             Assert.AreEqual(7, s.Count);
             Assert.AreEqual(0, s.Index());
             Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
-            Assert.AreEqual("foo", s.getSourceName());
+            Assert.AreEqual("foo", s.GetSourceName());
         }
     }
 
@@ -159,7 +159,7 @@ public class TestCharStreams
         Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
-        Assert.AreEqual(p.ToString(), s.getSourceName());
+        Assert.AreEqual(p.ToString(), s.GetSourceName());
 
     }
 
@@ -172,7 +172,7 @@ public class TestCharStreams
         Assert.AreEqual(8, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello \u00CA\u00FE", s.ToString());
-        Assert.AreEqual(p.ToString(), s.getSourceName());
+        Assert.AreEqual(p.ToString(), s.GetSourceName());
     }
 
     [TestMethod]
@@ -195,7 +195,7 @@ public class TestCharStreams
         Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
-        Assert.AreEqual(p.ToString(), s.getSourceName());
+        Assert.AreEqual(p.ToString(), s.GetSourceName());
     }
 
     [TestMethod]
@@ -208,7 +208,7 @@ public class TestCharStreams
         Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.Index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
-        Assert.AreEqual(p.ToString(), s.getSourceName());
+        Assert.AreEqual(p.ToString(), s.GetSourceName());
     }
 
     protected static string GetTestFile(string dir)

@@ -66,7 +66,7 @@ public class Parser : BaseRecognizer
     }
 
     //@Override
-    protected object GetMissingSymbol(IntStream input,
+    protected override object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow)
@@ -74,8 +74,8 @@ public class Parser : BaseRecognizer
         string tokenText;
         if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
         else tokenText = "<missing " + GetTokenNames()[expectedTokenType] + ">";
-        CommonToken t = new CommonToken(expectedTokenType, tokenText);
-        Token current = ((TokenStream)input).LT(1);
+        var t = new CommonToken(expectedTokenType, tokenText);
+        var current = ((TokenStream)input).LT(1);
         if (current.getType() == Token.EOF)
         {
             current = ((TokenStream)input).LT(-1);
@@ -103,7 +103,7 @@ public class Parser : BaseRecognizer
     //@Override
     public override string GetSourceName()
     {
-        return input.getSourceName();
+        return input.GetSourceName();
     }
 
     public void TraceIn(string ruleName, int ruleIndex)
