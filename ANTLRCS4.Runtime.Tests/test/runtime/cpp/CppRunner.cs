@@ -30,13 +30,10 @@ namespace org.antlr.v4.test.runtime.cpp;
 public class CppRunner : RuntimeRunner
 {
     ////@Override
-    public override string GetLanguage()
-    {
-        return "Cpp";
-    }
+    public override string GetLanguage() => "Cpp";
 
     ////@Override
-    protected override string GetTitleName() => "C++";
+    public override string GetTitleName() => "C++";
 
     private static readonly string runtimeSourcePath;
     private static readonly string runtimeBinaryPath;
@@ -72,7 +69,7 @@ public class CppRunner : RuntimeRunner
     }
 
     ////@Override
-    protected string GetCompilerName()
+    public override string GetCompilerName()
     {
         if (compilerName == null)
         {
@@ -90,13 +87,13 @@ public class CppRunner : RuntimeRunner
     }
 
     ////@Override
-    protected void InitRuntime()
+    protected override void InitRuntime()
     {
         var runtimePath = GetRuntimePath();
 
         if (RuntimeTestUtils.IsWindows())
         {
-            String[] command = {
+            string[] command = {
                 GetCompilerPath(), "antlr4cpp-vs2022.vcxproj", "/p:configuration=Release DLL", "/p:platform=x64"
             };
 
@@ -104,16 +101,16 @@ public class CppRunner : RuntimeRunner
         }
         else
         {
-            String[] command = { "cmake", ".", "-DCMAKE_BUILD_TYPE=Release" };
+            string[] command = { "cmake", ".", "-DCMAKE_BUILD_TYPE=Release" };
             RunCommand(command, runtimePath, "run cmake on antlr c++ runtime");
 
-            command = new String[] { "make", "-j", (Environment.ProcessorCount.ToString()) };
+            command = new string[] { "make", "-j", (Environment.ProcessorCount.ToString()) };
             RunCommand(command, runtimePath, "run make on antlr c++ runtime");
         }
     }
 
     ////@Override
-    protected CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
+    public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         if (RuntimeTestUtils.IsWindows())
         {
@@ -130,7 +127,7 @@ public class CppRunner : RuntimeRunner
                 RunCommand(linkCommand, GetTempDirPath(), "sym link C++ runtime");
             }
 
-            List<String> buildCommand = new();
+            List<string> buildCommand = new();
             buildCommand.Add(GetCompilerPath());
             if (RuntimeTestUtils.IsWindows())
             {
@@ -162,7 +159,7 @@ public class CppRunner : RuntimeRunner
         return new CompiledState(generatedState, exception);
     }
 
-    private void WriteVisualStudioProjectFile(String grammarName, String lexerName, String parserName,
+    private void WriteVisualStudioProjectFile(string grammarName, string lexerName, string parserName,
                                               bool useListener, bool useVisitor)
     {
         var projectFileST = new Template(visualStudioProjectContent);
@@ -177,19 +174,19 @@ public class CppRunner : RuntimeRunner
     }
 
     ////@Override
-    protected string GetRuntimeToolName()
+    public override string GetRuntimeToolName()
     {
         return null;
     }
 
     ////@Override
-    public string GetExecFileName()
+    public override string GetExecFileName()
     {
         return Path.Combine(GetTempDirPath(), GetTestFileName() + "." + (RuntimeTestUtils.IsWindows() ? "exe" : "out")).ToString();
     }
 
     ////@Override
-    protected override Dictionary<string, string> GetExecEnvironment()
+    public override Dictionary<string, string> GetExecEnvironment()
     {
         return environment;
     }

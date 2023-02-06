@@ -293,18 +293,18 @@ public class TestTokenStreamRewriter
     }
 
     [TestMethod]
-    public void testInsertInPriorReplace()
+    public void TestInsertInPriorReplace()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 2, "x");
         tokens.insertBefore(1, "0");
         Exception exc = null;
@@ -316,167 +316,167 @@ public class TestTokenStreamRewriter
         {
             exc = iae;
         }
-        String expecting = "insert op <InsertBeforeOp@[@1,1:1='b',<2>,1:1]:\"0\"> within boundaries of previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@2,2:2='c',<3>,1:2]:\"x\">";
+        var expecting = "insert op <InsertBeforeOp@[@1,1:1='b',<2>,1:1]:\"0\"> within boundaries of previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@2,2:2='c',<3>,1:2]:\"x\">";
         Assert.IsNotNull(exc);
         Assert.AreEqual(expecting, exc.Message);
     }
 
     [TestMethod]
-    public void testInsertThenReplaceSameIndex()
+    public void TestInsertThenReplaceSameIndex()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "0");
         tokens.replace(0, "x");
         stream.fill();
         // supercedes insert at 0
-        String result = tokens.getText();
-        String expecting = "0xbc";
+        var result = tokens.getText();
+        var expecting = "0xbc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void test2InsertMiddleIndex()
+    public void Test2InsertMiddleIndex()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(1, "y");
-        String result = tokens.getText();
-        String expecting = "ayxbc";
+        var result = tokens.getText();
+        var expecting = "ayxbc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void test2InsertThenReplaceIndex0()
+    public void Test2InsertThenReplaceIndex0()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
         tokens.replace(0, "z");
-        String result = tokens.getText();
-        String expecting = "yxzbc";
+        var result = tokens.getText();
+        var expecting = "yxzbc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceThenInsertBeforeLastIndex()
+    public void TestReplaceThenInsertBeforeLastIndex()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, "x");
         tokens.insertBefore(2, "y");
-        String result = tokens.getText();
-        String expecting = "abyx";
+        var result = tokens.getText();
+        var expecting = "abyx";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testInsertThenReplaceLastIndex()
+    public void TestInsertThenReplaceLastIndex()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
         tokens.replace(2, "x");
-        String result = tokens.getText();
-        String expecting = "abyx";
+        var result = tokens.getText();
+        var expecting = "abyx";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceThenInsertAfterLastIndex()
+    public void TestReplaceThenInsertAfterLastIndex()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, "x");
         tokens.insertAfter(2, "y");
-        String result = tokens.getText();
-        String expecting = "abxy";
+        var result = tokens.getText();
+        var expecting = "abxy";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceRangeThenInsertAtLeftEdge()
+    public void TestReplaceRangeThenInsertAtLeftEdge()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertBefore(2, "y");
-        String result = tokens.getText();
-        String expecting = "abyxba";
+        var result = tokens.getText();
+        var expecting = "abyxba";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceRangeThenInsertAtRightEdge()
+    public void TestReplaceRangeThenInsertAtRightEdge()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertBefore(4, "y");
         stream.fill(); // no effect; within range of a replace
@@ -489,82 +489,82 @@ public class TestTokenStreamRewriter
         {
             exc = iae;
         }
-        String expecting = "insert op <InsertBeforeOp@[@4,4:4='c',<3>,1:4]:\"y\"> within boundaries of previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"x\">";
+        var expecting = "insert op <InsertBeforeOp@[@4,4:4='c',<3>,1:4]:\"y\"> within boundaries of previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"x\">";
         Assert.IsNotNull(exc);
         Assert.AreEqual(expecting, exc.Message);
     }
 
     [TestMethod]
-    public void testReplaceRangeThenInsertAfterRightEdge()
+    public void TestReplaceRangeThenInsertAfterRightEdge()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertAfter(4, "y");
-        String result = tokens.getText();
-        String expecting = "abxyba";
+        var result = tokens.getText();
+        var expecting = "abxyba";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceAll()
+    public void TestReplaceAll()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 6, "x");
-        String result = tokens.getText();
-        String expecting = "x";
+        var result = tokens.getText();
+        var expecting = "x";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceSubsetThenFetch()
+    public void TestReplaceSubsetThenFetch()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
-        String result = tokens.getText(Interval.of(0, 6));
-        String expecting = "abxyzba";
+        var result = tokens.getText(Interval.of(0, 6));
+        var expecting = "abxyzba";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testReplaceThenReplaceSuperset()
+    public void TestReplaceThenReplaceSuperset()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
         tokens.replace(3, 5, "foo");
         stream.fill();
@@ -578,24 +578,24 @@ public class TestTokenStreamRewriter
         {
             exc = iae;
         }
-        String expecting = "replace op boundaries of <ReplaceOp@[@3,3:3='c',<3>,1:3]..[@5,5:5='b',<2>,1:5]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
+        var expecting = "replace op boundaries of <ReplaceOp@[@3,3:3='c',<3>,1:3]..[@5,5:5='b',<2>,1:5]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
         Assert.IsNotNull(exc);
         Assert.AreEqual(expecting, exc.Message);
     }
 
     [TestMethod]
-    public void testReplaceThenReplaceLowerIndexedSuperset()
+    public void TestReplaceThenReplaceLowerIndexedSuperset()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcccba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcccba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
         tokens.replace(1, 3, "foo");
         stream.fill();
@@ -609,174 +609,174 @@ public class TestTokenStreamRewriter
         {
             exc = iae;
         }
-        String expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@3,3:3='c',<3>,1:3]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
+        var expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@3,3:3='c',<3>,1:3]:\"foo\"> overlap with previous <ReplaceOp@[@2,2:2='c',<3>,1:2]..[@4,4:4='c',<3>,1:4]:\"xyz\">";
         Assert.IsNotNull(exc);
         Assert.AreEqual(expecting, exc.Message);
     }
 
     [TestMethod]
-    public void testReplaceSingleMiddleThenOverlappingSuperset()
+    public void TestReplaceSingleMiddleThenOverlappingSuperset()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcba";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcba";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 2, "xyz");
         tokens.replace(0, 3, "foo");
-        String result = tokens.getText();
-        String expecting = "fooa";
+        var result = tokens.getText();
+        var expecting = "fooa";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testCombineInserts()
+    public void TestCombineInserts()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
-        String result = tokens.getText();
-        String expecting = "yxabc";
+        var result = tokens.getText();
+        var expecting = "yxabc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testCombine3Inserts()
+    public void TestCombine3Inserts()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(0, "y");
         tokens.insertBefore(1, "z");
-        String result = tokens.getText();
-        String expecting = "yazxbc";
+        var result = tokens.getText();
+        var expecting = "yazxbc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testCombineInsertOnLeftWithReplace()
+    public void TestCombineInsertOnLeftWithReplace()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 2, "foo");
         tokens.insertBefore(0, "z");
         stream.fill();
         // combine with left edge of rewrite
-        String result = tokens.getText();
-        String expecting = "zfoo";
+        var result = tokens.getText();
+        var expecting = "zfoo";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testCombineInsertOnLeftWithDelete()
+    public void TestCombineInsertOnLeftWithDelete()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.delete(0, 2);
         tokens.insertBefore(0, "z");
         stream.fill();
         // combine with left edge of rewrite
-        String result = tokens.getText();
-        String expecting = "z";
+        var result = tokens.getText();
+        var expecting = "z";
         stream.fill();
         // make sure combo is not znull
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testDisjointInserts()
+    public void TestDisjointInserts()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(2, "y");
         tokens.insertBefore(0, "z");
-        String result = tokens.getText();
-        String expecting = "zaxbyc";
+        var result = tokens.getText();
+        var expecting = "zaxbyc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testOverlappingReplace()
+    public void TestOverlappingReplace()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(0, 3, "bar");
         stream.fill();
         // wipes prior nested replace
-        String result = tokens.getText();
-        String expecting = "bar";
+        var result = tokens.getText();
+        var expecting = "bar";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testOverlappingReplace2()
+    public void TestOverlappingReplace2()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 3, "bar");
         tokens.replace(1, 2, "foo");
         stream.fill();
@@ -790,220 +790,220 @@ public class TestTokenStreamRewriter
         {
             exc = iae;
         }
-        String expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@2,2:2='c',<3>,1:2]:\"foo\"> overlap with previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@3,3:3='c',<3>,1:3]:\"bar\">";
+        var expecting = "replace op boundaries of <ReplaceOp@[@1,1:1='b',<2>,1:1]..[@2,2:2='c',<3>,1:2]:\"foo\"> overlap with previous <ReplaceOp@[@0,0:0='a',<1>,1:0]..[@3,3:3='c',<3>,1:3]:\"bar\">";
         Assert.IsNotNull(exc);
         Assert.AreEqual(expecting, exc.Message);
     }
 
     [TestMethod]
-    public void testOverlappingReplace3()
+    public void TestOverlappingReplace3()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(0, 2, "bar");
         stream.fill();
         // wipes prior nested replace
-        String result = tokens.getText();
-        String expecting = "barc";
+        var result = tokens.getText();
+        var expecting = "barc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testOverlappingReplace4()
+    public void TestOverlappingReplace4()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(1, 3, "bar");
         stream.fill();
         // wipes prior nested replace
-        String result = tokens.getText();
-        String expecting = "abar";
+        var result = tokens.getText();
+        var expecting = "abar";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testDropIdenticalReplace()
+    public void TestDropIdenticalReplace()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(1, 2, "foo");
         stream.fill();
         // drop previous, identical
-        String result = tokens.getText();
-        String expecting = "afooc";
+        var result = tokens.getText();
+        var expecting = "afooc";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testDropPrevCoveredInsert()
+    public void TestDropPrevCoveredInsert()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "foo");
         tokens.replace(1, 2, "foo");
         stream.fill();
         // kill prev insert
-        String result = tokens.getText();
-        String expecting = "afoofoo";
+        var result = tokens.getText();
+        var expecting = "afoofoo";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testLeaveAloneDisjointInsert()
+    public void TestLeaveAloneDisjointInsert()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.replace(2, 3, "foo");
-        String result = tokens.getText();
-        String expecting = "axbfoo";
+        var result = tokens.getText();
+        var expecting = "axbfoo";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testLeaveAloneDisjointInsert2()
+    public void TestLeaveAloneDisjointInsert2()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abcc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abcc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 3, "foo");
         tokens.insertBefore(1, "x");
-        String result = tokens.getText();
-        String expecting = "axbfoo";
+        var result = tokens.getText();
+        var expecting = "axbfoo";
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testInsertBeforeTokenThenDeleteThatToken()
+    public void TestInsertBeforeTokenThenDeleteThatToken()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "abc";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "abc";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
         tokens.delete(2);
-        String result = tokens.getText();
-        String expecting = "aby";
+        var result = tokens.getText();
+        var expecting = "aby";
         Assert.AreEqual(expecting, result);
     }
 
     // Test Fix for https://github.com/antlr/antlr4/issues/550
     [TestMethod]
-    public void testDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder()
+    public void TestDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "aa";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "aa";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<b>");
         tokens.insertAfter(0, "</b>");
         tokens.insertBefore(1, "<b>");
         tokens.insertAfter(1, "</b>");
-        String result = tokens.getText();
-        String expecting = "<b>a</b><b>a</b>"; // fails with <b>a<b></b>a</b>"
+        var result = tokens.getText();
+        var expecting = "<b>a</b><b>a</b>"; // fails with <b>a<b></b>a</b>"
         Assert.AreEqual(expecting, result);
     }
 
     [TestMethod]
-    public void testDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder2()
+    public void TestDistinguishBetweenInsertAfterAndInsertBeforeToPreserverOrder2()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "aa";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "aa";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");
         tokens.insertAfter(0, "</p>");
         tokens.insertAfter(0, "</b>");
         tokens.insertBefore(1, "<b>");
         tokens.insertAfter(1, "</b>");
-        String result = tokens.getText();
-        String expecting = "<b><p>a</p></b><b>a</b>";
+        var result = tokens.getText();
+        var expecting = "<b><p>a</p></b><b>a</b>";
         Assert.AreEqual(expecting, result);
     }
 
     // Test Fix for https://github.com/antlr/antlr4/issues/550
     [TestMethod]
-    public void testPreservesOrderOfContiguousInserts()
+    public void TestPreservesOrderOfContiguousInserts()
     {
-        LexerGrammar g = new LexerGrammar(
+        var g = new LexerGrammar(
                                              "lexer grammar T;\n" +
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        String input = "ab";
-        LexerInterpreter lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
-        CommonTokenStream stream = new CommonTokenStream(lexEngine);
+        var input = "ab";
+        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var stream = new CommonTokenStream(lexEngine);
         stream.fill();
-        TokenStreamRewriter tokens = new TokenStreamRewriter(stream);
+        var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");
         tokens.insertBefore(0, "<div>");
@@ -1011,8 +1011,8 @@ public class TestTokenStreamRewriter
         tokens.insertAfter(0, "</b>");
         tokens.insertAfter(0, "</div>");
         tokens.insertBefore(1, "!");
-        String result = tokens.getText();
-        String expecting = "<div><b><p>a</p></b></div>!b";
+        var result = tokens.getText();
+        var expecting = "<div><b><p>a</p></b></div>!b";
         Assert.AreEqual(expecting, result);
     }
 

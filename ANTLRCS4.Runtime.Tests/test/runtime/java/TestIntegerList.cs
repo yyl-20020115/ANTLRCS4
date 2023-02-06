@@ -7,6 +7,7 @@
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.test.runtime.java;
+
 [TestClass]
 public class TestIntegerList
 {

@@ -33,7 +33,7 @@ public class SwiftRunner : RuntimeRunner
         if (RuntimeTestUtils.IsWindows())
         {
             libraryPath = Path.Combine(includePath, "Antlr4.lib");
-            String path = Environment.GetEnvironmentVariable("PATH");
+            var path = Environment.GetEnvironmentVariable("PATH");
             environment.Add("PATH", path == null ? includePath : path + ";" + includePath);
         }
         else
@@ -43,15 +43,12 @@ public class SwiftRunner : RuntimeRunner
     }
 
     ////@Override
-    public override string GetCompilerName()
-    {
-        return "swift";
-    }
+    public override string GetCompilerName() => "swift";
 
     ////@Override
     protected override void InitRuntime()
     {
-        RunCommand(new String[] { GetCompilerPath(), "build", "-c", "release" }, swiftRuntimePath, "build Swift runtime");
+        RunCommand(new string[] { GetCompilerPath(), "build", "-c", "release" }, swiftRuntimePath, "build Swift runtime");
     }
 
     ////@Override
@@ -109,24 +106,15 @@ public class SwiftRunner : RuntimeRunner
     //}
 
     ////@Override
-    public override string GetRuntimeToolName()
-    {
-        return null;
-    }
+    public override string GetRuntimeToolName() => null;
 
     ////@Override
-    public override string GetExecFileName()
-    {
-        return Path.Combine(GetTempDirPath(),
+    public override string GetExecFileName() => Path.Combine(GetTempDirPath(),
                 ".build",
                 buildSuffix,
                 "release",
                 "Test" + (RuntimeTestUtils.IsWindows() ? ".exe" : "")).ToString();
-    }
 
     ////@Override
-    public override Dictionary<string, string> GetExecEnvironment()
-    {
-        return environment;
-    }
+    public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

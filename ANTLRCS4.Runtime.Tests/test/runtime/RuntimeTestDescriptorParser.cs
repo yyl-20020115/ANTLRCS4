@@ -123,7 +123,7 @@ public class RuntimeTestDescriptorParser
             {
                 value = value.Replace("\"\"\"", "");
             }
-            else if (value.IndexOf('\n') >= 0)
+            else if (value.Contains('\n'))
             {
                 value = value + "\n"; // if multi line and not quoted, leave \n on end.
             }

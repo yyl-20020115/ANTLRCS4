@@ -93,9 +93,7 @@ public abstract class RuntimeRunner
     protected readonly string tempTestDir;
 
     protected RuntimeRunner()
-        : this(null, false)
-    {
-    }
+        : this(null, false) { }
 
     protected RuntimeRunner(string tempDir, bool saveTestDir)
     {

@@ -36,10 +36,7 @@ public class GoRunner : RuntimeRunner
     }
 
     ////@Override
-    public override string[] GetExtraRunArgs()
-    {
-        return new string[] { "run" };
-    }
+    public override string[] GetExtraRunArgs() => new string[] { "run" };
 
     private static readonly string GoRuntimeImportPath = "github.com/antlr/antlr4/runtime/Go/antlr/v4";
 

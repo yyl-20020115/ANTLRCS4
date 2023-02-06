@@ -43,20 +43,11 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         ////@Override
         public string GetSourceName() => "test";
         ////@Override
-        public int getCharPositionInLine()
-        {
-            return 0;
-        }
+        public int getCharPositionInLine() => 0;
         ////@Override
-        public int getLine()
-        {
-            return 0;
-        }
+        public int getLine() => 0;
         ////@Override
-        public CharStream getInputStream()
-        {
-            return null;
-        }
+        public CharStream getInputStream() => null;
 
         ////@Override
         public void setTokenFactory(TokenFactory factory)

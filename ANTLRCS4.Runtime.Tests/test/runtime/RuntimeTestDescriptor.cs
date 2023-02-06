@@ -82,8 +82,5 @@ public class RuntimeTestDescriptor
     }
 
     //@Override
-    public override string ToString()
-    {
-        return name;
-    }
+    public override string ToString() => name;
 }

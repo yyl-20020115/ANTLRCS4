@@ -9,8 +9,5 @@ namespace org.antlr.v4.test.runtime.python3;
 public class Python3RuntimeTests : RuntimeTests
 {
     //////@Override
-    protected override RuntimeRunner CreateRuntimeRunner()
-    {
-        return new Python3Runner();
-    }
+    protected override RuntimeRunner CreateRuntimeRunner() => new Python3Runner();
 }

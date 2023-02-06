@@ -16,7 +16,6 @@ public class Processor
     public readonly bool throwOnNonZeroErrorCode;
 
     public static ProcessorResult Run(string[] arguments, string workingDirectory, Dictionary<string, string> environmentVariables)
-
     {
         return new Processor(arguments, workingDirectory, environmentVariables, true).Start();
     }
@@ -65,8 +64,8 @@ public class Processor
         stdoutReader.Join();
         stderrReader.Join();
 
-        String output = stdoutReader.ToString();
-        String errors = stderrReader.ToString();
+        var output = stdoutReader.ToString();
+        var errors = stderrReader.ToString();
         if (throwOnNonZeroErrorCode && process.ExitCode != 0)
         {
             throw new Exception(RuntimeTestUtils.JoinLines(output, errors));

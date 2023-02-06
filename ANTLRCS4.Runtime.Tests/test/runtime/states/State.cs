@@ -14,10 +14,7 @@ public abstract class State
 
     public abstract Stage Stage { get; }
 
-    public virtual bool ContainsErrors()
-    {
-        return exception != null;
-    }
+    public virtual bool ContainsErrors() => exception != null;
 
     public virtual string GetErrorMessage()
     {

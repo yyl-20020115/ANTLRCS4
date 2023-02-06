@@ -34,7 +34,6 @@ public class JavaRunner : RuntimeRunner
 
     public JavaRunner(string tempDir, bool saveTestDir) : base(tempDir, saveTestDir)
     {
-        ;
     }
 
     public JavaRunner() : base()
@@ -42,13 +41,13 @@ public class JavaRunner : RuntimeRunner
     }
 
     //@Override
-    protected void initRuntime()
+    protected override void InitRuntime()
     {
         //compiler = ToolProvider.getSystemJavaCompiler();
     }
 
     //@Override
-    protected String getCompilerName()
+    public override string GetCompilerName()
     {
         return "javac";
     }
@@ -112,23 +111,23 @@ public class JavaRunner : RuntimeRunner
 	}
 #endif
     //@Override
-    protected ExecutedState execute(RunOptions runOptions, CompiledState compiledState)
+    public override ExecutedState Execute(RunOptions runOptions, CompiledState compiledState)
     {
-        JavaCompiledState javaCompiledState = (JavaCompiledState)compiledState;
+        var javaCompiledState = (JavaCompiledState)compiledState;
 
         ExecutedState result;
         if (runOptions.returnObject)
         {
-            result = execWithObject(runOptions, javaCompiledState);
+            result = ExecWithObject(runOptions, javaCompiledState);
         }
         else
         {
-            result = execCommon(javaCompiledState);
+            result = ExecCommon(javaCompiledState);
         }
         return result;
     }
 
-    private JavaExecutedState execWithObject(RunOptions runOptions, JavaCompiledState javaCompiledState)
+    private static JavaExecutedState ExecWithObject(RunOptions runOptions, JavaCompiledState javaCompiledState)
     {
         ParseTree parseTree = null;
         Exception exception = null;
@@ -139,7 +138,7 @@ public class JavaRunner : RuntimeRunner
             if (runOptions.parserName != null)
             {
                 MethodInfo startRule;
-                Object[] args = null;
+                object[] args = null;
                 try
                 {
                     startRule = javaCompiledState.parserType.GetMethod(runOptions.startRuleName);
@@ -160,7 +159,7 @@ public class JavaRunner : RuntimeRunner
         return new JavaExecutedState(javaCompiledState, null, null, parseTree, exception);
     }
 
-    private ExecutedState execCommon(JavaCompiledState compiledState)
+    private ExecutedState ExecCommon(JavaCompiledState compiledState)
     {
         Exception exception = null;
         String output = null;

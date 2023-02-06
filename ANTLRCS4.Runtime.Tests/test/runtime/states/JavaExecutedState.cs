@@ -15,7 +15,6 @@ public class JavaExecutedState : ExecutedState
     public JavaExecutedState(JavaCompiledState previousState, String output, String errors, ParseTree parseTree,
                              Exception exception) : base(previousState, output, errors, exception)
     {
-        ;
         this.parseTree = parseTree;
     }
 }

@@ -34,7 +34,7 @@ public class RunOptions
         this.grammarStr = grammarStr;
         this.parserName = parserName;
         this.lexerName = lexerName;
-        String grammarName = null;
+        string grammarName = null;
         bool isCombinedGrammar = lexerName != null && parserName != null || language.Equals("Go");
         if (isCombinedGrammar)
         {
