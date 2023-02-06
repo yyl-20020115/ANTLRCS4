@@ -13,98 +13,105 @@ namespace org.antlr.v4.test.tool;
 /** Tests to ensure GrammarParserInterpreter subclass of ParserInterpreter
  *  hasn't messed anything up.
  */
-public class TestGrammarParserInterpreter {
-	public static readonly String lexerText = "lexer grammar L;\n" +
-										   "PLUS : '+' ;\n" +
-										   "MULT : '*' ;\n" +
-										   "ID : [a-z]+ ;\n" +
-										   "INT : [0-9]+ ;\n" +
-										   "WS : [ \\r\\t\\n]+ ;\n";
+[TestClass]
+public class TestGrammarParserInterpreter
+{
+    public static readonly string lexerText = "lexer grammar L;\n" +
+                                           "PLUS : '+' ;\n" +
+                                           "MULT : '*' ;\n" +
+                                           "ID : [a-z]+ ;\n" +
+                                           "INT : [0-9]+ ;\n" +
+                                           "WS : [ \\r\\t\\n]+ ;\n";
 
-	[TestMethod]
-	public void testAlts(){
-		LexerGrammar lg = new LexerGrammar(lexerText);
-		Grammar g = new Grammar(
-			"parser grammar T;\n" +
-			"s : ID\n"+
-			"  | INT{;}\n"+
-			"  ;\n",
-			lg);
-		testInterp(lg, g, "s", "a",		"(s:1 a)");
-		testInterp(lg, g, "s", "3", 	"(s:2 3)");
-	}
+    [TestMethod]
+    public void TestAlts()
+    {
+        var lg = new LexerGrammar(lexerText);
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "s : ID\n" +
+            "  | INT{;}\n" +
+            "  ;\n",
+            lg);
+        TestInterp(lg, g, "s", "a", "(s:1 a)");
+        TestInterp(lg, g, "s", "3", "(s:2 3)");
+    }
 
-	[TestMethod]
-	public void testAltsAsSet(){
-		LexerGrammar lg = new LexerGrammar(lexerText);
-		Grammar g = new Grammar(
-			"parser grammar T;\n" +
-			"s : ID\n"+
-			"  | INT\n"+
-			"  ;\n",
-			lg);
-		testInterp(lg, g, "s", "a",		"(s:1 a)");
-		testInterp(lg, g, "s", "3", 	"(s:1 3)");
-	}
+    [TestMethod]
+    public void TestAltsAsSet()
+    {
+        var lg = new LexerGrammar(lexerText);
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "s : ID\n" +
+            "  | INT\n" +
+            "  ;\n",
+            lg);
+        TestInterp(lg, g, "s", "a", "(s:1 a)");
+        TestInterp(lg, g, "s", "3", "(s:1 3)");
+    }
 
-	[TestMethod]
-	public void testAltsWithLabels(){
-		LexerGrammar lg = new LexerGrammar(lexerText);
-		Grammar g = new Grammar(
-			"parser grammar T;\n" +
-			"s : ID  # foo\n" +
-			"  | INT # bar\n" +
-			"  ;\n",
-			lg);
-		// it won't show the labels here because my simple node text provider above just shows the alternative
-		testInterp(lg, g, "s", "a",		"(s:1 a)");
-		testInterp(lg, g, "s", "3", 	"(s:2 3)");
-	}
+    [TestMethod]
+    public void TestAltsWithLabels()
+    {
+        var lg = new LexerGrammar(lexerText);
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "s : ID  # foo\n" +
+            "  | INT # bar\n" +
+            "  ;\n",
+            lg);
+        // it won't show the labels here because my simple node text provider above just shows the alternative
+        TestInterp(lg, g, "s", "a", "(s:1 a)");
+        TestInterp(lg, g, "s", "3", "(s:2 3)");
+    }
 
-	[TestMethod]
-	public void testOneAlt(){
-		LexerGrammar lg = new LexerGrammar(lexerText);
-		Grammar g = new Grammar(
-			"parser grammar T;\n" +
-			"s : ID\n"+
-			"  ;\n",
-			lg);
-		testInterp(lg, g, "s", "a",		"(s:1 a)");
-	}
+    [TestMethod]
+    public void TestOneAlt()
+    {
+        var lg = new LexerGrammar(lexerText);
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "s : ID\n" +
+            "  ;\n",
+            lg);
+        TestInterp(lg, g, "s", "a", "(s:1 a)");
+    }
 
 
-	[TestMethod]
-	public void testLeftRecursionWithMultiplePrimaryAndRecursiveOps(){
-		LexerGrammar lg = new LexerGrammar(lexerText);
-		Grammar g = new Grammar(
-			"parser grammar T;\n" +
-			"s : e EOF ;\n" +
-			"e : e MULT e\n" +
-			"  | e PLUS e\n" +
-			"  | INT\n" +
-			"  | ID\n" +
-			"  ;\n",
-			lg);
+    [TestMethod]
+    public void TestLeftRecursionWithMultiplePrimaryAndRecursiveOps()
+    {
+        var lg = new LexerGrammar(lexerText);
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "s : e EOF ;\n" +
+            "e : e MULT e\n" +
+            "  | e PLUS e\n" +
+            "  | INT\n" +
+            "  | ID\n" +
+            "  ;\n",
+            lg);
 
-		testInterp(lg, g, "s", "a",		"(s:1 (e:4 a) <EOF>)");
-		testInterp(lg, g, "e", "a",		"(e:4 a)");
-		testInterp(lg, g, "e", "34",	"(e:3 34)");
-		testInterp(lg, g, "e", "a+1",	"(e:2 (e:4 a) + (e:3 1))");
-		testInterp(lg, g, "e", "1+2*a",	"(e:2 (e:3 1) + (e:1 (e:3 2) * (e:4 a)))");
-	}
+        TestInterp(lg, g, "s", "a", "(s:1 (e:4 a) <EOF>)");
+        TestInterp(lg, g, "e", "a", "(e:4 a)");
+        TestInterp(lg, g, "e", "34", "(e:3 34)");
+        TestInterp(lg, g, "e", "a+1", "(e:2 (e:4 a) + (e:3 1))");
+        TestInterp(lg, g, "e", "1+2*a", "(e:2 (e:3 1) + (e:1 (e:3 2) * (e:4 a)))");
+    }
 
-	InterpreterRuleContext testInterp(LexerGrammar lg, Grammar g,
-	                                  String startRule, String input,
-	                                  String expectedParseTree)
-	{
-		LexerInterpreter lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
-		CommonTokenStream tokens = new CommonTokenStream(lexEngine);
-		GrammarParserInterpreter parser = g.createGrammarParserInterpreter(tokens);
-		ParseTree t = parser.parse(g.rules[(startRule)].index);
-		InterpreterTreeTextProvider nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
-		String treeStr = Trees.toStringTree(t, nodeTextProvider);
-//		Console.Out.WriteLine("parse tree: "+treeStr);
-		Assert.AreEqual(expectedParseTree, treeStr);
-		return (InterpreterRuleContext)t;
-	}
+    static InterpreterRuleContext TestInterp(LexerGrammar lg, Grammar g,
+                                      string startRule, string input,
+                                      string expectedParseTree)
+    {
+        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var tokens = new CommonTokenStream(lexEngine);
+        var parser = g.createGrammarParserInterpreter(tokens);
+        var t = parser.parse(g.rules[(startRule)].index);
+        var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
+        var treeStr = Trees.toStringTree(t, nodeTextProvider);
+        //		Console.Out.WriteLine("parse tree: "+treeStr);
+        Assert.AreEqual(expectedParseTree, treeStr);
+        return (InterpreterRuleContext)t;
+    }
 }

@@ -11,17 +11,18 @@ namespace org.antlr.v4.runtime.misc;
  *
  * @see IntervalSet
  */
-public interface IntSet {
-	/**
+public interface IntSet
+{
+    /**
 	 * Adds the specified value to the current set.
 	 *
 	 * @param el the value to add
 	 *
 	 * @exception IllegalStateException if the current set is read-only
 	 */
-	void add(int el);
+    void Add(int el);
 
-	/**
+    /**
 	 * Modify the current {@link IntSet} object to contain all elements that are
 	 * present in itself, the specified {@code set}, or both.
 	 *
@@ -32,9 +33,9 @@ public interface IntSet {
 	 * @exception IllegalStateException if the current set is read-only
 	 */
 
-	IntSet addAll(IntSet set);
+    IntSet AddAll(IntSet set);
 
-	/**
+    /**
 	 * Return a new {@link IntSet} object containing all elements that are
 	 * present in both the current set and the specified set {@code a}.
 	 *
@@ -45,9 +46,9 @@ public interface IntSet {
 	 * place of an empty result set.
 	 */
 
-	IntSet and(IntSet a);
+    IntSet And(IntSet a);
 
-	/**
+    /**
 	 * Return a new {@link IntSet} object containing all elements that are
 	 * present in {@code elements} but not present in the current set. The
 	 * following expressions are equivalent for input non-null {@link IntSet}
@@ -65,9 +66,9 @@ public interface IntSet {
 	 * {@code null} may be returned in place of an empty result set.
 	 */
 
-	IntSet complement(IntSet elements);
+    IntSet Complement(IntSet elements);
 
-	/**
+    /**
 	 * Return a new {@link IntSet} object containing all elements that are
 	 * present in the current set, the specified set {@code a}, or both.
 	 *
@@ -82,9 +83,9 @@ public interface IntSet {
 	 * empty result set.
 	 */
 
-	IntSet or(IntSet a);
+    IntSet Or(IntSet a);
 
-	/**
+    /**
 	 * Return a new {@link IntSet} object containing all elements that are
 	 * present in the current set but not present in the input set {@code a}.
 	 * The following expressions are equivalent for input non-null
@@ -102,38 +103,38 @@ public interface IntSet {
 	 * {@code null} may be returned in place of an empty result set.
 	 */
 
-	IntSet subtract(IntSet a);
+    IntSet Subtract(IntSet a);
 
-	/**
+    /**
 	 * Return the total number of elements represented by the current set.
 	 *
 	 * @return the total number of elements represented by the current set,
 	 * regardless of the manner in which the elements are stored.
 	 */
-	int size();
+    int Size { get; }
 
-	/**
+    /**
 	 * Returns {@code true} if this set contains no elements.
 	 *
 	 * @return {@code true} if the current set contains no elements; otherwise,
 	 * {@code false}.
 	 */
-	bool isNil();
+    bool IsNil { get; }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	bool Equals(Object? obj);
+    bool Equals(object? obj);
 
-	/**
+    /**
 	 * Returns {@code true} if the set contains the specified element.
 	 *
 	 * @param el The element to check for.
 	 * @return {@code true} if the set contains {@code el}; otherwise {@code false}.
 	 */
-	bool contains(int el);
+    bool Contains(int el);
 
-	/**
+    /**
 	 * Removes the specified value from the current set. If the current set does
 	 * not contain the element, no changes are made.
 	 *
@@ -141,9 +142,9 @@ public interface IntSet {
 	 *
 	 * @exception IllegalStateException if the current set is read-only
 	 */
-	void remove(int el);
+    void Remove(int el);
 
-	/**
+    /**
 	 * Return a list containing the elements represented by the current set. The
 	 * list is returned in ascending numerical order.
 	 *
@@ -151,10 +152,10 @@ public interface IntSet {
 	 * in ascending numerical order.
 	 */
 
-	List<int> toList();
+    List<int> ToList();
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	String ToString();
+    String ToString();
 }

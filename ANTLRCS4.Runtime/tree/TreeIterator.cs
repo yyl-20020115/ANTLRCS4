@@ -75,12 +75,12 @@ public class TreeIterator
     {
         firstTime = true;
         tree = root;
-        nodes.clear();
+        nodes.Clear();
     }
     public bool hasNext()
     {
         if (firstTime) return root != null;
-        if (nodes != null && nodes.size() > 0) return true;
+        if (nodes != null && nodes.Count > 0) return true;
         if (tree == null) return false;
         if (adaptor.getChildCount(tree) > 0) return true;
         return adaptor.getParent(tree) != null; // back at root?
@@ -93,13 +93,13 @@ public class TreeIterator
             firstTime = false;
             if (adaptor.getChildCount(tree) == 0)
             { // single node tree (special)
-                nodes.add(eof);
+                nodes.Add(eof);
                 return tree;
             }
             return tree;
         }
         // if any queued up, use those first
-        if (nodes != null && nodes.size() > 0) return nodes.remove();
+        if (nodes != null && nodes.Count > 0) return nodes.Remove();
 
         // no nodes left?
         if (tree == null) return eof;
@@ -108,7 +108,7 @@ public class TreeIterator
         if (adaptor.getChildCount(tree) > 0)
         {
             tree = adaptor.getChild(tree, 0);
-            nodes.add(tree); // real node is next after DOWN
+            nodes.Add(tree); // real node is next after DOWN
             return down;
         }
         // if no children, look for next sibling of tree or ancestor
@@ -117,7 +117,7 @@ public class TreeIterator
         while (parent != null &&
                 adaptor.getChildIndex(tree) + 1 >= adaptor.getChildCount(parent))
         {
-            nodes.add(up); // we're moving back up
+            nodes.Add(up); // we're moving back up
             tree = parent;
             parent = adaptor.getParent(tree);
         }
@@ -125,16 +125,16 @@ public class TreeIterator
         if (parent == null)
         {
             tree = null; // back at root? nothing left then
-            nodes.add(eof); // add to queue, might have UP nodes in there
-            return nodes.remove();
+            nodes.Add(eof); // add to queue, might have UP nodes in there
+            return nodes.Remove();
         }
 
         // must have found a node with an unvisited sibling
         // move to it and return it
         int nextSiblingIndex = adaptor.getChildIndex(tree) + 1;
         tree = adaptor.getChild(parent, nextSiblingIndex);
-        nodes.add(tree); // add to queue, might have UP nodes in there
-        return nodes.remove();
+        nodes.Add(tree); // add to queue, might have UP nodes in there
+        return nodes.Remove();
     }
 
     public void remove() { throw new UnsupportedOperationException(); }

@@ -77,7 +77,7 @@ public class ParserATNFactory : ATNFactory
                 }
 
                 var analyzer = new LL1Analyzer(atn);
-                if (analyzer.LOOK(startState, pair.c, null).contains(org.antlr.v4.runtime.Token.EPSILON))
+                if (analyzer.LOOK(startState, pair.c, null).Contains(org.antlr.v4.runtime.Token.EPSILON))
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
                     break;
@@ -100,12 +100,12 @@ public class ParserATNFactory : ATNFactory
             var blkStart = pair.b;
             var blkStop = pair.c;
             var lookahead = analyzer.LOOK(blkStart, blkStop, null);
-            if (lookahead.contains(org.antlr.v4.runtime.Token.EPSILON))
+            if (lookahead.Contains(org.antlr.v4.runtime.Token.EPSILON))
             {
                 ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
                 g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
             }
-            if (lookahead.contains(org.antlr.v4.runtime.Token.EOF))
+            if (lookahead.Contains(org.antlr.v4.runtime.Token.EOF))
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.EOF_CLOSURE, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
             }
@@ -192,7 +192,7 @@ public class ParserATNFactory : ATNFactory
         foreach (var t in terminals)
         {
             int ttype = g.getTokenType(t.getText());
-            set.add(ttype);
+            set.Add(ttype);
         }
         if (invert)
         {

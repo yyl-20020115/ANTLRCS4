@@ -11,7 +11,7 @@ using System.Text;
 namespace org.antlr.v4.runtime.tree;
 public interface TreeTextProvider
 {
-    String getText(Tree node);
+    String GetText(Tree node);
 }
 /** A set of utility routines useful for all kinds of ANTLR trees. */
 public static class Trees 
@@ -26,11 +26,11 @@ public static class Trees
     public static String toStringTree(Tree t, TreeTextProvider nodeTextProvider)
     {
         if (t == null) return "null";
-        String s = RuntimeUtils.escapeWhitespace(nodeTextProvider.getText(t), false);
+        String s = RuntimeUtils.escapeWhitespace(nodeTextProvider.GetText(t), false);
         if (t.getChildCount() == 0) return s;
         StringBuilder buf = new StringBuilder();
         buf.Append('(');
-        s = RuntimeUtils.escapeWhitespace(nodeTextProvider.getText(t), false);
+        s = RuntimeUtils.escapeWhitespace(nodeTextProvider.GetText(t), false);
         buf.Append(s);
         buf.Append(' ');
         for (int i = 0; i < t.getChildCount(); i++)

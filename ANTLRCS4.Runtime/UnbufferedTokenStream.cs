@@ -177,7 +177,7 @@ public class UnbufferedTokenStream : TokenStream {
 				return i;
 			}
 
-			Token t = tokenSource.nextToken();
+			Token t = tokenSource.NextToken();
 			add(t);
 		}
 
@@ -271,13 +271,11 @@ public class UnbufferedTokenStream : TokenStream {
 		}
 	}
 
-	//@Override
-	public int size() {
-		throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
-	}
+    //@Override
+    public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
-	//@Override
-	public String getSourceName() {
+    //@Override
+    public String getSourceName() {
 		return tokenSource.GetSourceName();
 	}
 

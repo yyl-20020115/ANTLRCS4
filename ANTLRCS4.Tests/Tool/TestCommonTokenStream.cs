@@ -6,15 +6,13 @@
 
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
-using org.antlr.v4.unicode;
-using System.Threading.Channels;
 
 namespace org.antlr.v4.test.tool;
 
 public class TestCommonTokenStream : TestBufferedTokenStream
 {
     //@Override
-    protected TokenStream createTokenStream(TokenSource src)
+    protected static TokenStream CreateTokenStream(TokenSource src)
     {
         return new CommonTokenStream(src);
     }
@@ -43,12 +41,10 @@ public class TestCommonTokenStream : TestBufferedTokenStream
             };
         }
         //@Override
-        public Token nextToken()
-        {
-            return tokens[i++];
-        }
+        public Token NextToken() => tokens[i++];
+
         ////@Override
-        public String GetSourceName() { return "test"; }
+        public string GetSourceName() => "test";
         ////@Override
         public int getCharPositionInLine()
         {
@@ -77,12 +73,12 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
     }
     [TestMethod]
-    public void testOffChannel()
+    public void TestOffChannel()
     {
-        TokenSource lexer = // simulate input " x =34  ;\n"
+        var lexer = // simulate input " x =34  ;\n"
             new TS1();
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
 
         Assert.AreEqual("x", tokens.LT(1).getText()); // must skip first off channel token
         tokens.consume();
@@ -108,8 +104,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     public class TS : TokenSource
     {
         int i = 0;
-
-        WritableToken[] tokens = {
+        readonly WritableToken[] tokens = {
                 new CommonToken(1," ") {channel = Lexer.HIDDEN }, // 0
 				new CommonToken(1,"x"),								// 1
 				new CommonToken(1," ") {channel = Lexer.HIDDEN},	// 2
@@ -123,12 +118,12 @@ public class TestCommonTokenStream : TestBufferedTokenStream
 				new CommonToken(Token.EOF,"")						// 10
 				};
         //@Override
-        public Token nextToken()
+        public Token NextToken()
         {
             return tokens[i++];
         }
         //@Override
-        public String GetSourceName() { return "test"; }
+        public string GetSourceName() { return "test"; }
         //@Override
         public int getCharPositionInLine()
         {
@@ -158,13 +153,13 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     }
 
     [TestMethod]
-    public void testFetchOffChannel()
+    public void TestFetchOffChannel()
     {
-        TokenSource lexer = // simulate input " x =34  ; \n"
+        var lexer = // simulate input " x =34  ; \n"
                             // token indexes   01234 56789
             new TS();
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
         tokens.fill();
         Assert.AreEqual(null, tokens.getHiddenTokensToLeft(0));
         Assert.AreEqual(null, tokens.getHiddenTokensToRight(0));
@@ -210,7 +205,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     {
 
         //@Override
-        public Token nextToken()
+        public Token NextToken()
         {
             return new CommonToken(Token.EOF);
         }
@@ -252,23 +247,23 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
     }
     [TestMethod]
-    public void testSingleEOF()
+    public void TestSingleEOF()
     {
-        TokenSource lexer = new TS2();
+        var lexer = new TS2();
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
         tokens.fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
         Assert.AreEqual(0, tokens.index());
-        Assert.AreEqual(1, tokens.size());
+        Assert.AreEqual(1, tokens.Count);
     }
 
     public class TS3 : TokenSource
     {
 
         //@Override
-        public Token nextToken()
+        public Token NextToken()
         {
             return new CommonToken(Token.EOF);
         }
@@ -310,19 +305,18 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         }
     }
     [TestMethod]
-    public void testCannotConsumeEOF()
+    public void TestCannotConsumeEOF()
     {
-        TokenSource lexer = new TS3();
-        ;
+        var lexer = new TS3();
 
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
         tokens.fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
         Assert.AreEqual(0, tokens.index());
-        Assert.AreEqual(1, tokens.size());
+        Assert.AreEqual(1, tokens.Count);
         //assertThrows(IllegalStateException, tokens::consume);
-        Assert.ThrowsException<IllegalStateException>(()=>tokens.consume());
+        Assert.ThrowsException<IllegalStateException>(() => tokens.consume());
 
     }
 }

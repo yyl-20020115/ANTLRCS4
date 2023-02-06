@@ -49,7 +49,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public List<GrammarAST> getNodesWithType(int ttype) {
-		return getNodesWithType(IntervalSet.of(ttype));
+		return getNodesWithType(IntervalSet.Of(ttype));
 	}
 
 	public List<GrammarAST> getAllChildrenWithType(int type) {
@@ -71,7 +71,7 @@ public class GrammarAST : CommonTree {
 		while ( work.Count>0 ) {
 			t = work[0];
 			work.RemoveAt(0);
-			if ( types==null || types.contains(t.getType()) ) nodes.Add(t);
+			if ( types==null || types.Contains(t.getType()) ) nodes.Add(t);
 			if ( t.children!=null ) {
 				work.AddRange(Arrays.AsList(t.getChildrenAsArray()));
 			}
@@ -86,7 +86,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public void getNodesWithTypePreorderDFS_(List<GrammarAST> nodes, IntervalSet types) {
-		if ( types.contains(this.getType()) ) nodes.Add(this);
+		if ( types.Contains(this.getType()) ) nodes.Add(this);
 		// walk all children of root.
 		for (int i= 0; i < getChildCount(); i++) {
 			GrammarAST child = (GrammarAST)getChild(i);

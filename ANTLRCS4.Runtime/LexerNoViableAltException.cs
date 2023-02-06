@@ -43,7 +43,7 @@ public class LexerNoViableAltException : RecognitionException {
     //@Override
     public override String ToString() {
 		String symbol = "";
-		if (startIndex >= 0 && startIndex < getInputStream().size()) {
+		if (startIndex >= 0 && startIndex < getInputStream().Count) {
 			symbol = getInputStream().getText(Interval.of(startIndex,startIndex));
 			symbol = RuntimeUtils.escapeWhitespace(symbol, false);
 		}

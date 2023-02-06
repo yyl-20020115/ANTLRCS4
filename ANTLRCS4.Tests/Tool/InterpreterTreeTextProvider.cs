@@ -9,17 +9,15 @@ using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.test.tool;
 
-
-
 public class InterpreterTreeTextProvider : TreeTextProvider
 {
-	public List<String> ruleNames;
-	public InterpreterTreeTextProvider(String[] ruleNames) {this.ruleNames = Arrays.AsList(ruleNames);}
+	public List<string> ruleNames;
+    public InterpreterTreeTextProvider(string[] ruleNames) => this.ruleNames = Arrays.AsList(ruleNames);
 
-	////@Override
-	public String getText(Tree node) {
+    ////@Override
+    public string GetText(Tree node) {
 		if ( node==null ) return "null";
-		String nodeText = Trees.getNodeText(node, ruleNames);
+		var nodeText = Trees.getNodeText(node, ruleNames);
 		if ( node is ErrorNode) {
 			return "<error "+nodeText+">";
 		}

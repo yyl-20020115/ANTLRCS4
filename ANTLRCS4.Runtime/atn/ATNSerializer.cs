@@ -333,7 +333,7 @@ public class ATNSerializer {
 		data.add(nSets);
 
 		foreach (IntervalSet set in sets) {
-			bool containsEof = set.contains(Token.EOF);
+			bool containsEof = set.Contains(Token.EOF);
 			if (containsEof && set.getIntervals()[(0)].b == Token.EOF) {
 				data.add(set.getIntervals().Count - 1);
 			}

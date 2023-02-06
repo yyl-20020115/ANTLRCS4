@@ -361,7 +361,7 @@ public class ATNDeserializer {
 
 			bool containsEof = data[p++] != 0;
 			if (containsEof) {
-				set.add(-1);
+				set.Add(-1);
 			}
 
 			for (int j=0; j<nintervals; j++) {

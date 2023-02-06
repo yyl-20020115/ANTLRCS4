@@ -104,14 +104,12 @@ public abstract class CodePointCharStream : CharStream {
 		return position;
 	}
 
-	//@Override
-	public int size() {
-		return _size;
-	}
+    //@Override
+    public int Count => _size;
 
-	/** mark/release do nothing; we have entire buffer */
-	//@Override
-	public int mark() {
+    /** mark/release do nothing; we have entire buffer */
+    //@Override
+    public int mark() {
 		return -1;
 	}
 
@@ -195,7 +193,7 @@ public abstract class CodePointCharStream : CharStream {
         /** Return the UTF-16 encoded string for the given interval */
         //@Override
         public virtual String getText(Interval interval) {
-			int startIdx = Math.Min(interval.a, size());
+			int startIdx = Math.Min(interval.a, Count);
 			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// We know the maximum code point in byteArray is U+00FF,
@@ -250,7 +248,7 @@ public abstract class CodePointCharStream : CharStream {
 		/** Return the UTF-16 encoded string for the given interval */
 		//@Override
 		public String getText(Interval interval) {
-			int startIdx = Math.Min(interval.a, size());
+			int startIdx = Math.Min(interval.a, Count);
 			int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
 			// We know there are no surrogates in this

@@ -89,7 +89,7 @@ public class XPathLexer : Lexer {
 	}
 
 	//@Override
-	public override Token nextToken() {
+	public override Token NextToken() {
 		_tokenStartCharIndex = input.index();
 		CommonToken t = null;
 		while ( t==null ) {

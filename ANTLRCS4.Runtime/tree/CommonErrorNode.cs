@@ -83,7 +83,7 @@ public class CommonErrorNode : CommonTree
             int j = stop.getTokenIndex();
             if (stop.getType() == Token.EOF)
             {
-                j = ((TokenStream)input).size();
+                j = ((TokenStream)input).Count;
             }
             badText = ((TokenStream)input).toString(i, j);
         }

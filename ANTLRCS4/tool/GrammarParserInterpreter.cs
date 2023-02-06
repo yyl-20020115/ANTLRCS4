@@ -259,9 +259,9 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
-		if ( stopIndex>=(tokens.size()-1) ) { // if we are pointing at EOF token
+		if ( stopIndex>=(tokens.Count-1) ) { // if we are pointing at EOF token
 			// EOF is not in tree, so must be 1 less than last non-EOF token
-			stopIndex = tokens.size()-2;
+			stopIndex = tokens.Count-2;
 		}
 
 		// get ambig trees
@@ -415,7 +415,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			}
 //			Console.Error.WriteLine("recover: error at " + errIndex);
 			TokenStream input = recognizer.getInputStream();
-			if ( input.index()<input.size()-1 ) { // don't consume() eof
+			if ( input.index()<input.Count-1 ) { // don't consume() eof
 				recognizer.consume(); // just kill this bad token and let it continue.
 			}
 		}

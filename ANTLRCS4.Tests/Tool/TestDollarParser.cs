@@ -4,19 +4,20 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.test.runtime.states;
-
 namespace org.antlr.v4.test.tool;
 
-public class TestDollarParser {
-	[TestMethod]
-	public void testSimpleCall() {
-		String grammar = "grammar T;\n" +
+[TestClass]
+public class TestDollarParser
+{
+    [TestMethod]
+    public void TestSimpleCall()
+    {
+        var grammar = "grammar T;\n" +
                       "a : ID  { outStream.println(new java.io.File($parser.getSourceName()).getAbsolutePath()); }\n" +
                       "  ;\n" +
                       "ID : 'a'..'z'+ ;\n";
-		ExecutedState executedState = ToolTestUtils.execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
-		Assert.IsTrue(executedState.output.Contains("input"));
-		Assert.AreEqual("", executedState.errors);
-	}
+        var executedState = ToolTestUtils.execParser("T.g4", grammar, "TParser", "TLexer", "a", "x", true);
+        Assert.IsTrue(executedState.output.Contains("input"));
+        Assert.AreEqual("", executedState.errors);
+    }
 }

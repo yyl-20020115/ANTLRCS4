@@ -395,7 +395,7 @@ public class ParserInterpreter : Parser {
 				InputMismatchException ime = (InputMismatchException)e;
 				Token tok = e.getOffendingToken();
 				int expectedTokenType = Token.INVALID_TYPE;
-				if ( !ime.getExpectedTokens().isNil() ) {
+				if ( !ime.getExpectedTokens().IsNil ) {
 					expectedTokenType = ime.getExpectedTokens().getMinElement(); // get any element
 				}
 				Token errToken =

@@ -503,7 +503,7 @@ public class LexerATNFactory : ParserATNFactory
         // Whether or not we were in a range, we'll add the last code point found to the set.
         ApplyPrevState(charSetAST, set, state);
 
-        if (set.isNil())
+        if (set.IsNil)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, charSetAST.getToken(), "[]");
         }
@@ -618,7 +618,7 @@ public class LexerATNFactory : ParserATNFactory
             {
                 for (int i = a; i <= b; i++)
                 {
-                    if (set.contains(i))
+                    if (set.Contains(i))
                     {
                         string setText;
                         if (rootAst.getChildren() == null)

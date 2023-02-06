@@ -197,22 +197,22 @@ public interface IntStream {
 	 */
 	void seek(int index);
 
-	/**
+    /**
 	 * Returns the total number of symbols in the stream, including a single EOF
 	 * symbol.
 	 *
 	 * @throws UnsupportedOperationException if the size of the stream is
 	 * unknown.
 	 */
-	int size();
+    int Count { get; }
 
-	/**
+    /**
 	 * Gets the name of the underlying symbol source. This method returns a
 	 * non-null, non-empty string. If such a name is not known, this method
 	 * returns {@link #UNKNOWN_SOURCE_NAME}.
 	 */
 
-	public String getSourceName();
+    public String getSourceName();
     void rewind(int nvaeMark);
     void rewind();
 }

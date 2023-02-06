@@ -139,7 +139,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     {
         if (tokens == null) return null;
         int i = tokens.index();
-        int n = tokens.size();
+        int n = tokens.Count;
         if (i >= n) i = n - 1; // seems index == n as we lex
         bool withinOptionsBlock = false;
         while (i >= 0 && i < n)

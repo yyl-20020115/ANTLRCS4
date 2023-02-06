@@ -28,7 +28,7 @@ public interface TokenSource {
 	 * on the characters until you get a good one; errors are not passed through
 	 * to the parser.
 	 */
-	public Token nextToken();
+	public Token NextToken();
 
 	/**
 	 * Get the line number for the current position in the input stream. The

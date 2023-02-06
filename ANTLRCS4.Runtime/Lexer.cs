@@ -177,7 +177,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  stream.
 	 */
     //@Override
-    public virtual Token nextToken()
+    public virtual Token NextToken()
     {
         if (input == null)
         {
@@ -449,11 +449,11 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     public List<Token> getAllTokens()
     {
         List<Token> tokens = new();
-        Token t = nextToken();
+        Token t = NextToken();
         while (t.getType() != Token.EOF)
         {
             tokens.Add(t);
-            t = nextToken();
+            t = NextToken();
         }
         return tokens;
     }

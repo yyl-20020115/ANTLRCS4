@@ -17,7 +17,7 @@ public class TestCodePointCharStream
     public void EmptyBytesHasSize0()
     {
         var s = CharStreams.fromString("");
-        Assert.AreEqual(0, s.size());
+        Assert.AreEqual(0, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("", s.ToString());
     }
@@ -45,7 +45,7 @@ public class TestCodePointCharStream
     public void SingleLatinCodePointHasSize1()
     {
         var s = CharStreams.fromString("X");
-        Assert.AreEqual(1, s.size());
+        Assert.AreEqual(1, s.Count);
     }
 
     [TestMethod]
@@ -97,7 +97,7 @@ public class TestCodePointCharStream
     public void SingleCJKCodePointHasSize1()
     {
         var s = CharStreams.fromString("\u611B");
-        Assert.AreEqual(1, s.size());
+        Assert.AreEqual(1, s.Count);
         Assert.AreEqual(0, s.index());
     }
 
@@ -140,7 +140,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString(
                 new StringBuilder().Append(char.ConvertFromUtf32(0x1F4A9)).ToString());
-        Assert.AreEqual(1, s.size());
+        Assert.AreEqual(1, s.Count);
         Assert.AreEqual(0, s.index());
     }
 
@@ -317,7 +317,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("hello");
         Assert.IsTrue(s.getInternalStorage() is byte[]);
-        Assert.AreEqual(5, s.size());
+        Assert.AreEqual(5, s.Count);
     }
 
     [TestMethod]
@@ -325,7 +325,7 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("hello \u4E16\u754C");
         Assert.IsTrue(s.getInternalStorage() is char[]);
-        Assert.AreEqual(8, s.size());
+        Assert.AreEqual(8, s.Count);
     }
 
     [TestMethod]
@@ -333,6 +333,6 @@ public class TestCodePointCharStream
     {
         var s = CharStreams.fromString("hello \uD83C\uDF0D");
         Assert.IsTrue(s.getInternalStorage() is int[]);
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
     }
 }

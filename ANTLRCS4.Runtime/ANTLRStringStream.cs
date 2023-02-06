@@ -164,10 +164,7 @@ public class ANTLRStringStream : CharStream
     }
 
     //@Override
-    public int size()
-    {
-        return n;
-    }
+    public int Count => n;
 
     //@Override
     public int mark()

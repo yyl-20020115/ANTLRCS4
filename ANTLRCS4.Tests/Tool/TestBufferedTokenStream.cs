@@ -9,14 +9,17 @@ using org.antlr.v4.tool;
 
 namespace org.antlr.v4.test.tool;
 
-public class TestBufferedTokenStream {
-	protected TokenStream createTokenStream(TokenSource src) {
-		return new BufferedTokenStream(src);
-	}
+[TestClass]
+public class TestBufferedTokenStream
+{
+    protected static TokenStream CreateTokenStream(TokenSource src) 
+        => new BufferedTokenStream(src);
 
-	[TestMethod] public void testFirstToken(){
-        LexerGrammar g = new LexerGrammar(
-            "lexer grammar t;\n"+
+    [TestMethod]
+    public void TestFirstToken()
+    {
+        var g = new LexerGrammar(
+            "lexer grammar t;\n" +
             "ID : 'a'..'z'+;\n" +
             "INT : '0'..'9'+;\n" +
             "SEMI : ';';\n" +
@@ -26,18 +29,20 @@ public class TestBufferedTokenStream {
             "WS : ' '+;\n");
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
-        CharStream input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = createTokenStream(lexEngine);
+        var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
+        var lexEngine = g.createLexerInterpreter(input);
+        var tokens = CreateTokenStream(lexEngine);
 
-        String result = tokens.LT(1).getText();
-        String expecting = "x";
+        var result = tokens.LT(1).getText();
+        var expecting = "x";
         Assert.AreEqual(expecting, result);
     }
 
-    [TestMethod] public void test2ndToken(){
-        LexerGrammar g = new LexerGrammar(
-            "lexer grammar t;\n"+
+    [TestMethod]
+    public void Test2ndToken()
+    {
+        var g = new LexerGrammar(
+            "lexer grammar t;\n" +
             "ID : 'a'..'z'+;\n" +
             "INT : '0'..'9'+;\n" +
             "SEMI : ';';\n" +
@@ -47,18 +52,20 @@ public class TestBufferedTokenStream {
             "WS : ' '+;\n");
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
-        CharStream input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = createTokenStream(lexEngine);
+        var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
+        var lexEngine = g.createLexerInterpreter(input);
+        var tokens = CreateTokenStream(lexEngine);
 
-        String result = tokens.LT(2).getText();
-        String expecting = " ";
+        var result = tokens.LT(2).getText();
+        var expecting = " ";
         Assert.AreEqual(expecting, result);
     }
 
-    [TestMethod] public void testCompleteBuffer(){
-        LexerGrammar g = new LexerGrammar(
-            "lexer grammar t;\n"+
+    [TestMethod]
+    public void TestCompleteBuffer()
+    {
+        var g = new LexerGrammar(
+            "lexer grammar t;\n" +
             "ID : 'a'..'z'+;\n" +
             "INT : '0'..'9'+;\n" +
             "SEMI : ';';\n" +
@@ -68,27 +75,30 @@ public class TestBufferedTokenStream {
             "WS : ' '+;\n");
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
-        CharStream input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = createTokenStream(lexEngine);
+        var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
+        var lexEngine = g.createLexerInterpreter(input);
+        var tokens = CreateTokenStream(lexEngine);
 
         int i = 1;
-        Token t = tokens.LT(i);
-        while ( t.getType()!=Token.EOF ) {
+        var t = tokens.LT(i);
+        while (t.getType() != Token.EOF)
+        {
             i++;
             t = tokens.LT(i);
         }
         tokens.LT(i++); // push it past end
         tokens.LT(i++);
 
-        String result = tokens.getText();
-        String expecting = "x = 3 * 0 + 2 * 0;";
+        var result = tokens.getText();
+        var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
     }
 
-    [TestMethod] public void testCompleteBufferAfterConsuming(){
-        LexerGrammar g = new LexerGrammar(
-            "lexer grammar t;\n"+
+    [TestMethod]
+    public void TestCompleteBufferAfterConsuming()
+    {
+        var g = new LexerGrammar(
+            "lexer grammar t;\n" +
             "ID : 'a'..'z'+;\n" +
             "INT : '0'..'9'+;\n" +
             "SEMI : ';';\n" +
@@ -98,24 +108,27 @@ public class TestBufferedTokenStream {
             "WS : ' '+;\n");
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
-        CharStream input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = createTokenStream(lexEngine);
+        var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
+        var lexEngine = g.createLexerInterpreter(input);
+        var tokens = CreateTokenStream(lexEngine);
 
-        Token t = tokens.LT(1);
-        while ( t.getType()!=Token.EOF ) {
+        var t = tokens.LT(1);
+        while (t.getType() != Token.EOF)
+        {
             tokens.consume();
             t = tokens.LT(1);
         }
 
-        String result = tokens.getText();
-        String expecting = "x = 3 * 0 + 2 * 0;";
+        var result = tokens.getText();
+        var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
     }
 
-    [TestMethod] public void testLookback(){
-        LexerGrammar g = new LexerGrammar(
-            "lexer grammar t;\n"+
+    [TestMethod]
+    public void TestLookback()
+    {
+        var g = new LexerGrammar(
+            "lexer grammar t;\n" +
             "ID : 'a'..'z'+;\n" +
             "INT : '0'..'9'+;\n" +
             "SEMI : ';';\n" +
@@ -125,12 +138,12 @@ public class TestBufferedTokenStream {
             "WS : ' '+;\n");
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
-        CharStream input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        LexerInterpreter lexEngine = g.createLexerInterpreter(input);
-        TokenStream tokens = createTokenStream(lexEngine);
+        var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
+        var lexEngine = g.createLexerInterpreter(input);
+        var tokens = CreateTokenStream(lexEngine);
 
         tokens.consume(); // get x into buffer
-        Token t = tokens.LT(-1);
+        var t = tokens.LT(-1);
         Assert.AreEqual("x", t.getText());
 
         tokens.consume();
@@ -142,5 +155,4 @@ public class TestBufferedTokenStream {
         t = tokens.LT(-1);
         Assert.AreEqual("=", t.getText());
     }
-
 }

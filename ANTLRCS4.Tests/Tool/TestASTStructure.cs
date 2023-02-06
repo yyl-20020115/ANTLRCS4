@@ -8,364 +8,450 @@ using org.antlr.runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.tree;
-using System.Reflection;
 
 namespace org.antlr.v4.test.tool;
 
-public class TestASTStructure {
-	String lexerClassName = "org.antlr.v4.parse.ANTLRLexer";
-	String parserClassName = "org.antlr.v4.parse.ANTLRParser";
-	String  adaptorClassName = "org.antlr.v4.parse.GrammarASTAdaptor";
+public class TestASTStructure
+{
+    readonly string lexerClassName = "org.antlr.v4.parse.ANTLRLexer";
+    readonly string parserClassName = "org.antlr.v4.parse.ANTLRParser";
+    readonly string adaptorClassName = "org.antlr.v4.parse.GrammarASTAdaptor";
 
-	public Object execParser(
-	String ruleName,
-	String input,
-	int scriptLine)
-	
-	{
-		ANTLRStringStream @is = new ANTLRStringStream(input);
-		Type lexerClass = Type.GetType(lexerClassName);
-		ConstructorInfo lexConstructor = lexerClass.GetConstructor(new Type[] { typeof(CharStream) });
-		TokenSource lexer = lexConstructor.Invoke(new object[] { @is }) as TokenSource;
+    public object execParser(
+        string ruleName,
+        string input,
+        int scriptLine)
+    {
+        var @is = new ANTLRStringStream(input);
+        var lexerClass = Type.GetType(lexerClassName);
+        var lexConstructor = lexerClass.GetConstructor(new Type[] { typeof(CharStream) });
+        var lexer = lexConstructor.Invoke(new object[] { @is }) as TokenSource;
         @is.setLine(scriptLine);
 
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
+        var tokens = new CommonTokenStream(lexer);
 
-		Type parserClass = Type.GetType(parserClassName);
-		ConstructorInfo parConstructor = parserClass.GetConstructor(new Type[] { typeof(TokenStream) });
+        var parserClass = Type.GetType(parserClassName);
+        var parConstructor = parserClass.GetConstructor(new Type[] { typeof(TokenStream) });
         antlr.runtime.Parser parser = parConstructor.Invoke(new object[] { tokens }) as antlr.runtime.Parser;
 
-		// set up customized tree adaptor if necessary
-		if ( adaptorClassName!=null ) {
-			MethodInfo m = parserClass.GetMethod("setTreeAdaptor", new Type[] { typeof(TreeAdaptor) });
-			Type adaptorClass = Type.GetType(adaptorClassName);
-			m.Invoke(parser, 
-				new object[] { adaptorClass.GetConstructor(new Type[0]).Invoke(new object[0]) });
-		}
+        // set up customized tree adaptor if necessary
+        if (adaptorClassName != null)
+        {
+            var m = parserClass.GetMethod("setTreeAdaptor", new Type[] { typeof(TreeAdaptor) });
+            var adaptorClass = Type.GetType(adaptorClassName);
+            m.Invoke(parser,
+                new object[] { adaptorClass.GetConstructor(new Type[0]).Invoke(new object[0]) });
+        }
 
-		MethodInfo ruleMethod = parserClass.GetMethod(ruleName);
+        var ruleMethod = parserClass.GetMethod(ruleName);
 
-		// INVOKE RULE
-		return ruleMethod.Invoke(parser,new object[0]);
-	}
+        // INVOKE RULE
+        return ruleMethod.Invoke(parser, new object[0]);
+    }
 
-	[TestMethod] public void test_grammarSpec1(){
-		// gunit test on line 15
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "parser grammar P; a : A;", 15);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(PARSER_GRAMMAR P (RULES (RULE a (BLOCK (ALT A)))))";
-		Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
-	}
+    [TestMethod]
+    public void TestGrammarSpec1()
+    {
+        // gunit test on line 15
+        var rstruct = (RuleReturnScope)execParser("grammarSpec", "parser grammar P; a : A;", 15);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(PARSER_GRAMMAR P (RULES (RULE a (BLOCK (ALT A)))))";
+        Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
+    }
 
-	[TestMethod] public void test_grammarSpec2(){
-		// gunit test on line 18
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    tokens { A, B }\n    @header {foo}\n    a : A;\n    ", 18);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(PARSER_GRAMMAR P (tokens { A B) (@ header {foo}) (RULES (RULE a (BLOCK (ALT A)))))";
-		Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
-	}
+    [TestMethod]
+    public void TestGrammarSpec2()
+    {
+        // gunit test on line 18
+        var rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    tokens { A, B }\n    @header {foo}\n    a : A;\n    ", 18);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(PARSER_GRAMMAR P (tokens { A B) (@ header {foo}) (RULES (RULE a (BLOCK (ALT A)))))";
+        Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
+    }
 
-	[TestMethod] public void test_grammarSpec3(){
-		// gunit test on line 30
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    @header {foo}\n    tokens { A,B }\n    a : A;\n    ", 30);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(PARSER_GRAMMAR P (@ header {foo}) (tokens { A B) (RULES (RULE a (BLOCK (ALT A)))))";
-		Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
-	}
+    [TestMethod]
+    public void TestGrammarSpec3()
+    {
+        // gunit test on line 30
+        var rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    @header {foo}\n    tokens { A,B }\n    a : A;\n    ", 30);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(PARSER_GRAMMAR P (@ header {foo}) (tokens { A B) (RULES (RULE a (BLOCK (ALT A)))))";
+        Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
+    }
 
-	[TestMethod] public void test_grammarSpec4(){
-		// gunit test on line 42
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    import A=B, C;\n    a : A;\n    ", 42);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(PARSER_GRAMMAR P (import (= A B) C) (RULES (RULE a (BLOCK (ALT A)))))";
-		Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
-	} [TestMethod] public void test_delegateGrammars1(){
-		// gunit test on line 53
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("delegateGrammars", "import A;", 53);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(import A)";
-		Assert.AreEqual(expecting, actual, "testing rule delegateGrammars");
-	} [TestMethod] public void test_rule1(){
-		// gunit test on line 56
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "a : A<X,Y=a.b.c>;", 56);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a (BLOCK (ALT (A (ELEMENT_OPTIONS X (= Y a.b.c))))))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestGrammarSpec4()
+    {
+        // gunit test on line 42
+        var rstruct = (RuleReturnScope)execParser("grammarSpec", "\n    parser grammar P;\n    import A=B, C;\n    a : A;\n    ", 42);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(PARSER_GRAMMAR P (import (= A B) C) (RULES (RULE a (BLOCK (ALT A)))))";
+        Assert.AreEqual(expecting, actual, "testing rule grammarSpec");
+    }
+    [TestMethod]
+    public void TestDelegateGrammars1()
+    {
+        // gunit test on line 53
+        var rstruct = (RuleReturnScope)execParser("delegateGrammars", "import A;", 53);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(import A)";
+        Assert.AreEqual(expecting, actual, "testing rule delegateGrammars");
+    }
+    [TestMethod]
+    public void TestRule1()
+    {
+        // gunit test on line 56
+        var rstruct = (RuleReturnScope)execParser("rule", "a : A<X,Y=a.b.c>;", 56);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a (BLOCK (ALT (A (ELEMENT_OPTIONS X (= Y a.b.c))))))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule2(){
-		// gunit test on line 58
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "A : B+;", 58);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE A (BLOCK (ALT (+ (BLOCK (ALT B))))))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule2()
+    {
+        // gunit test on line 58
+        var rstruct = (RuleReturnScope)execParser("rule", "A : B+;", 58);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE A (BLOCK (ALT (+ (BLOCK (ALT B))))))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule3(){
-		// gunit test on line 60
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n      : ID ;\n    ", 60);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a int i (returns int y) (@ init {blort}) (BLOCK (ALT ID)))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule3()
+    {
+        // gunit test on line 60
+        var rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n      : ID ;\n    ", 60);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a int i (returns int y) (@ init {blort}) (BLOCK (ALT ID)))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule4(){
-		// gunit test on line 75
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n    options {backtrack=true;}\n      : ID;\n    ", 75);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a int i (returns int y) (@ init {blort}) (OPTIONS (= backtrack true)) (BLOCK (ALT ID)))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule4()
+    {
+        // gunit test on line 75
+        var rstruct = (RuleReturnScope)execParser("rule", "\n    a[int i] returns [int y]\n    @init {blort}\n    options {backtrack=true;}\n      : ID;\n    ", 75);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a int i (returns int y) (@ init {blort}) (OPTIONS (= backtrack true)) (BLOCK (ALT ID)))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule5(){
-		// gunit test on line 88
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A b] {foo}\n      finally {bar}\n    ", 88);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a (BLOCK (ALT ID)) (catch A b {foo}) (finally {bar}))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule5()
+    {
+        // gunit test on line 88
+        var rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A b] {foo}\n      finally {bar}\n    ", 88);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a (BLOCK (ALT ID)) (catch A b {foo}) (finally {bar}))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule6(){
-		// gunit test on line 97
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A a] {foo}\n      catch[B b] {fu}\n      finally {bar}\n    ", 97);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a (BLOCK (ALT ID)) (catch A a {foo}) (catch B b {fu}) (finally {bar}))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule6()
+    {
+        // gunit test on line 97
+        var rstruct = (RuleReturnScope)execParser("rule", "\n    a : ID ;\n      catch[A a] {foo}\n      catch[B b] {fu}\n      finally {bar}\n    ", 97);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a (BLOCK (ALT ID)) (catch A a {foo}) (catch B b {fu}) (finally {bar}))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule7(){
-		// gunit test on line 107
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i]\n\tlocals [int a, float b]\n\t\t:\tA\n\t\t;\n\t", 107);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a int i (locals int a, float b) (BLOCK (ALT A)))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	}
+    [TestMethod]
+    public void TestRule7()
+    {
+        // gunit test on line 107
+        var rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i]\n\tlocals [int a, float b]\n\t\t:\tA\n\t\t;\n\t", 107);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a int i (locals int a, float b) (BLOCK (ALT A)))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
 
-	[TestMethod] public void test_rule8(){
-		// gunit test on line 115
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i] throws a.b.c\n\t\t:\tA\n\t\t;\n\t", 115);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(RULE a int i (throws a.b.c) (BLOCK (ALT A)))";
-		Assert.AreEqual(expecting, actual, "testing rule rule");
-	} [TestMethod] public void test_ebnf1(){
-		// gunit test on line 123
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)", 123);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(BLOCK (ALT A) (ALT B))";
-		Assert.AreEqual(expecting, actual, "testing rule ebnf");
-	}
+    [TestMethod]
+    public void TestRule8()
+    {
+        // gunit test on line 115
+        var rstruct = (RuleReturnScope)execParser("rule", "\n\ta[int i] throws a.b.c\n\t\t:\tA\n\t\t;\n\t", 115);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(RULE a int i (throws a.b.c) (BLOCK (ALT A)))";
+        Assert.AreEqual(expecting, actual, "testing rule rule");
+    }
+    [TestMethod]
+    public void TestEbnf1()
+    {
+        // gunit test on line 123
+        var rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)", 123);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(BLOCK (ALT A) (ALT B))";
+        Assert.AreEqual(expecting, actual, "testing rule ebnf");
+    }
 
-	[TestMethod] public void test_ebnf2(){
-		// gunit test on line 124
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)?", 124);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(? (BLOCK (ALT A) (ALT B)))";
-		Assert.AreEqual(expecting, actual, "testing rule ebnf");
-	}
+    [TestMethod]
+    public void TestEbnf2()
+    {
+        // gunit test on line 124
+        var rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)?", 124);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(? (BLOCK (ALT A) (ALT B)))";
+        Assert.AreEqual(expecting, actual, "testing rule ebnf");
+    }
 
-	[TestMethod] public void test_ebnf3(){
-		// gunit test on line 125
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)*", 125);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT A) (ALT B)))";
-		Assert.AreEqual(expecting, actual, "testing rule ebnf");
-	}
+    [TestMethod]
+    public void TestEbnf3()
+    {
+        // gunit test on line 125
+        var rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)*", 125);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT A) (ALT B)))";
+        Assert.AreEqual(expecting, actual, "testing rule ebnf");
+    }
 
-	[TestMethod] public void test_ebnf4(){
-		// gunit test on line 126
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)+", 126);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT A) (ALT B)))";
-		Assert.AreEqual(expecting, actual, "testing rule ebnf");
-	} [TestMethod] public void test_element1(){
-		// gunit test on line 129
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "~A", 129);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(~ (SET A))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestEbnf4()
+    {
+        // gunit test on line 126
+        var rstruct = (RuleReturnScope)execParser("ebnf", "(A|B)+", 126);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT A) (ALT B)))";
+        Assert.AreEqual(expecting, actual, "testing rule ebnf");
+    }
+    [TestMethod]
+    public void TestElement1()
+    {
+        // gunit test on line 129
+        var rstruct = (RuleReturnScope)execParser("element", "~A", 129);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(~ (SET A))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element2(){
-		// gunit test on line 130
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b+", 130);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement2()
+    {
+        // gunit test on line 130
+        var rstruct = (RuleReturnScope)execParser("element", "b+", 130);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element3(){
-		// gunit test on line 131
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)+", 131);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement3()
+    {
+        // gunit test on line 131
+        var rstruct = (RuleReturnScope)execParser("element", "(b)+", 131);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element4(){
-		// gunit test on line 132
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b?", 132);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(? (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement4()
+    {
+        // gunit test on line 132
+        var rstruct = (RuleReturnScope)execParser("element", "b?", 132);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(? (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element5(){
-		// gunit test on line 133
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)?", 133);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(? (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement5()
+    {
+        // gunit test on line 133
+        var rstruct = (RuleReturnScope)execParser("element", "(b)?", 133);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(? (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element6(){
-		// gunit test on line 134
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "(b)*", 134);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement6()
+    {
+        // gunit test on line 134
+        var rstruct = (RuleReturnScope)execParser("element", "(b)*", 134);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element7(){
-		// gunit test on line 135
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "b*", 135);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT b)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement7()
+    {
+        // gunit test on line 135
+        var rstruct = (RuleReturnScope)execParser("element", "b*", 135);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT b)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element8(){
-		// gunit test on line 136
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'while'*", 136);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT 'while')))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement8()
+    {
+        // gunit test on line 136
+        var rstruct = (RuleReturnScope)execParser("element", "'while'*", 136);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT 'while')))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element9(){
-		// gunit test on line 137
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'a'+", 137);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT 'a')))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement9()
+    {
+        // gunit test on line 137
+        var rstruct = (RuleReturnScope)execParser("element", "'a'+", 137);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT 'a')))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element10(){
-		// gunit test on line 138
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "a[3]", 138);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(a 3)";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement10()
+    {
+        // gunit test on line 138
+        var rstruct = (RuleReturnScope)execParser("element", "a[3]", 138);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(a 3)";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element11(){
-		// gunit test on line 139
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "'a'..'z'+", 139);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT (.. 'a' 'z'))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement11()
+    {
+        // gunit test on line 139
+        var rstruct = (RuleReturnScope)execParser("element", "'a'..'z'+", 139);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT (.. 'a' 'z'))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element12(){
-		// gunit test on line 140
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID", 140);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(= x ID)";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement12()
+    {
+        // gunit test on line 140
+        var rstruct = (RuleReturnScope)execParser("element", "x=ID", 140);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(= x ID)";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element13(){
-		// gunit test on line 141
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID?", 141);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(? (BLOCK (ALT (= x ID))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement13()
+    {
+        // gunit test on line 141
+        var rstruct = (RuleReturnScope)execParser("element", "x=ID?", 141);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(? (BLOCK (ALT (= x ID))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element14(){
-		// gunit test on line 142
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=ID*", 142);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT (= x ID))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement14()
+    {
+        // gunit test on line 142
+        var rstruct = (RuleReturnScope)execParser("element", "x=ID*", 142);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT (= x ID))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element15(){
-		// gunit test on line 143
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=b", 143);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(= x b)";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement15()
+    {
+        // gunit test on line 143
+        var rstruct = (RuleReturnScope)execParser("element", "x=b", 143);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(= x b)";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element16(){
-		// gunit test on line 144
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=(A|B)", 144);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(= x (BLOCK (ALT A) (ALT B)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement16()
+    {
+        // gunit test on line 144
+        var rstruct = (RuleReturnScope)execParser("element", "x=(A|B)", 144);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(= x (BLOCK (ALT A) (ALT B)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element17(){
-		// gunit test on line 145
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=~(A|B)", 145);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(= x (~ (SET A B)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement17()
+    {
+        // gunit test on line 145
+        var rstruct = (RuleReturnScope)execParser("element", "x=~(A|B)", 145);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(= x (~ (SET A B)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element18(){
-		// gunit test on line 146
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)", 146);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+= x (~ (SET A B)))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement18()
+    {
+        // gunit test on line 146
+        var rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)", 146);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+= x (~ (SET A B)))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element19(){
-		// gunit test on line 147
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)+", 147);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT (+= x (~ (SET A B))))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement19()
+    {
+        // gunit test on line 147
+        var rstruct = (RuleReturnScope)execParser("element", "x+=~(A|B)+", 147);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT (+= x (~ (SET A B))))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element20(){
-		// gunit test on line 148
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x=b+", 148);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT (= x b))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public virtual void TestElement20()
+    {
+        // gunit test on line 148
+        var rstruct = (RuleReturnScope)execParser("element", "x=b+", 148);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT (= x b))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element21(){
-		// gunit test on line 149
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=ID*", 149);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT (+= x ID))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement21()
+    {
+        // gunit test on line 149
+        var rstruct = (RuleReturnScope)execParser("element", "x+=ID*", 149);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT (+= x ID))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element22(){
-		// gunit test on line 150
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+='int'*", 150);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT (+= x 'int'))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement22()
+    {
+        // gunit test on line 150
+        var rstruct = (RuleReturnScope)execParser("element", "x+='int'*", 150);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT (+= x 'int'))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element23(){
-		// gunit test on line 151
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "x+=b+", 151);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(+ (BLOCK (ALT (+= x b))))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement23()
+    {
+        // gunit test on line 151
+        var rstruct = (RuleReturnScope)execParser("element", "x+=b+", 151);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(+ (BLOCK (ALT (+= x b))))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 
-	[TestMethod] public void test_element24(){
-		// gunit test on line 152
-		RuleReturnScope rstruct = (RuleReturnScope)execParser("element", "({blort} 'x')*", 152);
-		Object actual = ((Tree)rstruct.getTree()).toStringTree();
-		Object expecting = "(* (BLOCK (ALT {blort} 'x')))";
-		Assert.AreEqual(expecting, actual, "testing rule element");
-	}
+    [TestMethod]
+    public void TestElement24()
+    {
+        // gunit test on line 152
+        var rstruct = (RuleReturnScope)execParser("element", "({blort} 'x')*", 152);
+        var actual = ((Tree)rstruct.getTree()).toStringTree();
+        var expecting = "(* (BLOCK (ALT {blort} 'x')))";
+        Assert.AreEqual(expecting, actual, "testing rule element");
+    }
 }

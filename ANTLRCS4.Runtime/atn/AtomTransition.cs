@@ -26,7 +26,7 @@ public class AtomTransition : Transition {
 
 	//@Override
 
-	public override IntervalSet label() { return IntervalSet.of(_label); }
+	public override IntervalSet label() { return IntervalSet.Of(_label); }
 
 	//@Override
 	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {

@@ -47,7 +47,7 @@ public class AnalysisPipeline
 
             var analyzer = new LL1Analyzer(g.atn);
             var look = analyzer.LOOK(g.atn.ruleToStartState[rule.index], null);
-            if (look.contains(Token.EPSILON))
+            if (look.Contains(Token.EPSILON))
                 g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_TOKEN, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
         }
     }
@@ -86,7 +86,7 @@ public class AnalysisPipeline
         foreach (var look in altLook)
         {
             if (look == null) return false; // lookahead must've computation failed
-            if (!look.and(combined).isNil())
+            if (!look.and(combined).IsNil)
             {
                 collision = true;
                 break;

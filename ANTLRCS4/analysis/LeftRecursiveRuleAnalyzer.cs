@@ -251,7 +251,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     {
         if (t == null) return null;
         // get all top-level rule refs from ALT
-        List<GrammarAST> outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.of(RULE_REF));
+        List<GrammarAST> outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.Of(RULE_REF));
         foreach (GrammarAST x in outerAltRuleRefs)
         {
             RuleRefAST rref = (RuleRefAST)x;
@@ -366,14 +366,14 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         List<GrammarAST> labeledSubTrees = t.getNodesWithType(new IntervalSet(ASSIGN, PLUS_ASSIGN));
         foreach (GrammarAST sub in labeledSubTrees)
         {
-            noOptions.add(sub.getChild(0).getTokenStartIndex());
+            noOptions.Add(sub.getChild(0).getTokenStartIndex());
         }
 
         StringBuilder buf = new StringBuilder();
         int i = tokenStartIndex;
         while (i <= tokenStopIndex)
         {
-            if (ignore.contains(i))
+            if (ignore.Contains(i))
             {
                 i++;
                 continue;
@@ -383,7 +383,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
             // Compute/hold any element options
             StringBuilder elementOptions = new StringBuilder();
-            if (!noOptions.contains(i))
+            if (!noOptions.Contains(i))
             {
                 GrammarAST node = t.getNodeWithTokenIndex(tok.getTokenIndex());
                 if (node != null &&

@@ -10,35 +10,40 @@ namespace org.antlr.v4.test.tool;
 
 /** Test errors with the set stuff in lexer and parser */
 [TestClass]
-public class TestErrorSets {
-	protected bool debug = false;
+public class TestErrorSets
+{
+    protected bool debug = false;
 
-	[TestMethod] public void testNotCharSetWithRuleRef(){
-		// might be a useful feature to add someday
-		String[] pair = new String[] {
-			"grammar T;\n" +
-			"a : A {Console.Out.WriteLine($A.text);} ;\n" +
-			"A : ~('a'|B) ;\n" +
-			"B : 'b' ;\n",
-			"error(" + ErrorType.UNSUPPORTED_REFERENCE_IN_LEXER_SET + "): T.g4:3:10: rule reference B is not currently supported in a set\n"
-		};
-		testErrors(pair, true);
-	}
+    [TestMethod]
+    public void TestNotCharSetWithRuleRef()
+    {
+        // might be a useful feature to add someday
+        var pair = new String[] {
+            "grammar T;\n" +
+            "a : A {Console.Out.WriteLine($A.text);} ;\n" +
+            "A : ~('a'|B) ;\n" +
+            "B : 'b' ;\n",
+            "error(" + ErrorType.UNSUPPORTED_REFERENCE_IN_LEXER_SET + "): T.g4:3:10: rule reference B is not currently supported in a set\n"
+        };
+        TestErrors(pair, true);
+    }
 
-    private void testErrors(string[] pair, bool v)
+    private void TestErrors(string[] pair, bool v)
     {
         throw new NotImplementedException();
     }
 
-    [TestMethod] public void testNotCharSetWithString(){
-		// might be a useful feature to add someday
-		String[] pair = new String[] {
-			"grammar T;\n" +
-			"a : A {Console.Out.WriteLine($A.text);} ;\n" +
-			"A : ~('a'|'aa') ;\n" +
-			"B : 'b' ;\n",
-			"error(" + ErrorType.INVALID_LITERAL_IN_LEXER_SET + "): T.g4:3:10: multi-character literals are not allowed in lexer sets: 'aa'\n"
-		};
-		testErrors(pair, true);
-	}
+    [TestMethod]
+    public void TestNotCharSetWithString()
+    {
+        // might be a useful feature to add someday
+        var pair = new String[] {
+            "grammar T;\n" +
+            "a : A {Console.Out.WriteLine($A.text);} ;\n" +
+            "A : ~('a'|'aa') ;\n" +
+            "B : 'b' ;\n",
+            "error(" + ErrorType.INVALID_LITERAL_IN_LEXER_SET + "): T.g4:3:10: multi-character literals are not allowed in lexer sets: 'aa'\n"
+        };
+        TestErrors(pair, true);
+    }
 }

@@ -84,7 +84,7 @@ public interface TreeNodeStream : IntStream
     /** Reset the tree node stream in such a way that it acts like
      *  a freshly constructed stream.
      */
-    public void reset();
+    public void Reset();
 
     /**
      * Return the text of all nodes from {@code start} to {@code stop},

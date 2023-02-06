@@ -180,7 +180,7 @@ public class CommonToken : WritableToken /*Serializable*/
 
         var input = getInputStream();
         if (input == null) return null;
-        int n = input.size();
+        int n = input.Count;
         if (start < n && stop < n)
         {
             return input.getText(Interval.of(start, stop));

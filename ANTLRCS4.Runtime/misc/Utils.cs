@@ -148,7 +148,7 @@ public static class RuntimeUtils
         int i = bits.NextSetBit(0);
         while (i >= 0)
         {
-            s.add(i);
+            s.Add(i);
             i = bits.NextSetBit(i + 1);
         }
         return s;

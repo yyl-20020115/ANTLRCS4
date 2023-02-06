@@ -83,9 +83,9 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         it = new TreeIterator(adaptor, root);
     }
 
-    public override void reset()
+    public override void Reset()
     {
-        base.reset();
+        base.Reset();
         it.reset();
         hasNilRoot = false;
         level = 0;
@@ -118,9 +118,9 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public override Object remove()
+    public override Object Remove()
     {
-        Object result = base.remove();
+        Object result = base.Remove();
         if (p == 0 && hasPositionInformation(prevElement))
         {
             previousLocationElement = prevElement;
@@ -254,7 +254,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     /** For debugging; destructive: moves tree iterator to end. */
     public String toTokenTypeString()
     {
-        reset();
+        Reset();
         StringBuilder buf = new StringBuilder();
         Object o = LT(1);
         int type = adaptor.getType(o);

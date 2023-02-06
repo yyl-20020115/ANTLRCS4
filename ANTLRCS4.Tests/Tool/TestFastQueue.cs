@@ -10,99 +10,116 @@ using System.Text;
 namespace org.antlr.v4.test.tool;
 
 [TestClass]
-public class TestFastQueue {
-    [TestMethod] public void testQueueNoRemove(){
-        FastQueue<String> q = new FastQueue<String>();
-        q.add("a");
-        q.add("b");
-        q.add("c");
-        q.add("d");
-        q.add("e");
-        String expecting = "a b c d e";
-        String found = q.ToString();
+public class TestFastQueue
+{
+    [TestMethod]
+    public void TestQueueNoRemove()
+    {
+        var q = new FastQueue<String>();
+        q.Add("a");
+        q.Add("b");
+        q.Add("c");
+        q.Add("d");
+        q.Add("e");
+        var expecting = "a b c d e";
+        var found = q.ToString();
         Assert.AreEqual(expecting, found);
     }
 
-    [TestMethod] public void testQueueThenRemoveAll(){
-        FastQueue<String> q = new FastQueue<String>();
-        q.add("a");
-        q.add("b");
-        q.add("c");
-        q.add("d");
-        q.add("e");
-        StringBuilder buf = new StringBuilder();
-        while ( q.size()>0 ) {
-            String o = q.remove();
-            buf.Append(o);
-            if ( q.size()>0 ) buf.Append(" ");
+    [TestMethod]
+    public void TestQueueThenRemoveAll()
+    {
+        var q = new FastQueue<String>();
+        q.Add("a");
+        q.Add("b");
+        q.Add("c");
+        q.Add("d");
+        q.Add("e");
+        var buffer = new StringBuilder();
+        while (q.Count > 0)
+        {
+            var o = q.Remove();
+            buffer.Append(o);
+            if (q.Count > 0) buffer.Append(" ");
         }
-        Assert.AreEqual(0, q.size(), "queue should be empty");
-        String expecting = "a b c d e";
-        String found = buf.ToString();
+        Assert.AreEqual(0, q.Count, "queue should be empty");
+        var expecting = "a b c d e";
+        var found = buffer.ToString();
         Assert.AreEqual(expecting, found);
     }
 
-    [TestMethod] public void testQueueThenRemoveOneByOne(){
-        StringBuilder buf = new StringBuilder();
-        FastQueue<String> q = new FastQueue<String>();
-        q.add("a");
-        buf.Append(q.remove());
-        q.add("b");
-        buf.Append(q.remove());
-        q.add("c");
-        buf.Append(q.remove());
-        q.add("d");
-        buf.Append(q.remove());
-        q.add("e");
-        buf.Append(q.remove());
-        Assert.AreEqual(0, q.size(), "queue should be empty");
-        String expecting = "abcde";
-        String found = buf.ToString();
+    [TestMethod]
+    public void TestQueueThenRemoveOneByOne()
+    {
+        var buffer = new StringBuilder();
+        var q = new FastQueue<string>();
+        q.Add("a");
+        buffer.Append(q.Remove());
+        q.Add("b");
+        buffer.Append(q.Remove());
+        q.Add("c");
+        buffer.Append(q.Remove());
+        q.Add("d");
+        buffer.Append(q.Remove());
+        q.Add("e");
+        buffer.Append(q.Remove());
+        Assert.AreEqual(0, q.Count, "queue should be empty");
+        var expecting = "abcde";
+        var found = buffer.ToString();
         Assert.AreEqual(expecting, found);
     }
 
     // E r r o r s
 
-    [TestMethod] public void testGetFromEmptyQueue(){
-        FastQueue<String> q = new FastQueue<String>();
-        String msg = null;
-        try { q.remove(); }
-        catch (NoSuchElementException nsee) {
+    [TestMethod]
+    public void TestGetFromEmptyQueue()
+    {
+        var q = new FastQueue<String>();
+        string msg = null;
+        try { q.Remove(); }
+        catch (NoSuchElementException nsee)
+        {
             msg = nsee.Message;
         }
-        String expecting = "queue index 0 > last index -1";
-        String found = msg;
+        var expecting = "queue index 0 > last index -1";
+        var found = msg;
         Assert.AreEqual(expecting, found);
     }
 
-    [TestMethod] public void testGetFromEmptyQueueAfterSomeAdds(){
-        FastQueue<String> q = new FastQueue<String>();
-        q.add("a");
-        q.add("b");
-        q.remove();
-        q.remove();
-        String msg = null;
-        try { q.remove(); }
-        catch (NoSuchElementException nsee) {
+    [TestMethod]
+    public void TestGetFromEmptyQueueAfterSomeAdds()
+    {
+        var q = new FastQueue<String>();
+        q.Add("a");
+        q.Add("b");
+        q.Remove();
+        q.Remove();
+        string msg = null;
+        try { q.Remove(); }
+        catch (NoSuchElementException nsee)
+        {
             msg = nsee.Message;
         }
-        String expecting = "queue index 0 > last index -1";
-        String found = msg;
+        var expecting = "queue index 0 > last index -1";
+        var found = msg;
         Assert.AreEqual(expecting, found);
     }
 
-    [TestMethod] public void testGetFromEmptyQueueAfterClear(){
-        FastQueue<String> q = new FastQueue<String>();
-        q.add("a");
-        q.add("b");
-        q.clear();
-        String msg = null;
-        try { q.remove(); }
-        catch (NoSuchElementException nsee) {
+    [TestMethod]
+    public void TestGetFromEmptyQueueAfterClear()
+    {
+        var q = new FastQueue<String>();
+        q.Add("a");
+        q.Add("b");
+        q.Clear();
+        string msg = null;
+        try { q.Remove(); }
+        catch (NoSuchElementException nsee)
+        {
             msg = nsee.Message;
         }
-        String expecting = "queue index 0 > last index -1";
-        String found = msg;
+        var expecting = "queue index 0 > last index -1";
+        var found = msg;
         Assert.AreEqual(expecting, found);
     }
 }

@@ -107,8 +107,7 @@ public class BufferedTokenStream : TokenStream {
     }
 
     //@Override
-    public int size() { return tokens.Count; }
-
+    public int Count => tokens.Count;
     //@Override
     public void consume() {
 		bool skipEofCheck;
@@ -165,7 +164,7 @@ public class BufferedTokenStream : TokenStream {
 		}
 
         for (int i = 0; i < n; i++) {
-            Token t = tokenSource.nextToken();
+            Token t = tokenSource.NextToken();
             if ( t is WritableToken ) {
                 ((WritableToken)t).setTokenIndex(tokens.Count);
             }
@@ -310,8 +309,8 @@ public class BufferedTokenStream : TokenStream {
 	 */
 	protected int nextTokenOnChannel(int i, int channel) {
 		sync(i);
-		if (i >= size()) {
-			return size() - 1;
+		if (i >= Count) {
+			return Count - 1;
 		}
 
 		Token token = tokens[i];
@@ -340,9 +339,9 @@ public class BufferedTokenStream : TokenStream {
 	 */
 	protected int previousTokenOnChannel(int i, int channel) {
 		sync(i);
-		if (i >= size()) {
+		if (i >= Count) {
 			// the EOF token is on every channel
-			return size() - 1;
+			return Count - 1;
 		}
 
 		while (i >= 0) {
@@ -372,7 +371,7 @@ public class BufferedTokenStream : TokenStream {
 		int to;
 		int from = tokenIndex+1;
 		// if none onchannel to right, nextOnChannel=-1 so set to = last token
-		if ( nextOnChannel == -1 ) to = size()-1;
+		if ( nextOnChannel == -1 ) to = Count-1;
 		else to = nextOnChannel;
 
 		return filterForChannel(from, to, channel);
@@ -440,7 +439,7 @@ public class BufferedTokenStream : TokenStream {
 
 	//@Override
 	public String getText() {
-		return getText(Interval.of(0,size()-1));
+		return getText(Interval.of(0,Count-1));
 	}
 
 	//@Override

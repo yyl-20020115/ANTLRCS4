@@ -909,7 +909,7 @@ public class ParserATNSimulator : ATNSimulator {
 
 			if (lookToEndOfRule && config.state.onlyHasEpsilonTransitions()) {
 				IntervalSet nextTokens = atn.nextTokens(config.state);
-				if (nextTokens.contains(Token.EPSILON)) {
+				if (nextTokens.Contains(Token.EPSILON)) {
 					ATNState endOfRuleState = atn.ruleToStopState[config.state.ruleIndex];
 					result.add(new ATNConfig(config, endOfRuleState), mergeCache);
 				}
@@ -1296,10 +1296,10 @@ public class ParserATNSimulator : ATNSimulator {
 		IntervalSet alts = new IntervalSet();
         foreach (ATNConfig c in configs) {
 			if ( c.getOuterContextDepth()>0 || (c.state is RuleStopState && c.context.hasEmptyPath()) ) {
-				alts.add(c.alt);
+				alts.Add(c.alt);
 			}
 		}
-		if ( alts.size()==0 ) return ATN.INVALID_ALT_NUMBER;
+		if ( alts.Size==0 ) return ATN.INVALID_ALT_NUMBER;
 		return alts.getMinElement();
 	}
 

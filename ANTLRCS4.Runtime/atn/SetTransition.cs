@@ -17,7 +17,7 @@ public class SetTransition : Transition {
 	public SetTransition(ATNState target, IntervalSet set):base(target)
     {
 		;
-		if ( set == null ) set = IntervalSet.of(Token.INVALID_TYPE);
+		if ( set == null ) set = IntervalSet.Of(Token.INVALID_TYPE);
 		this.set = set;
 	}
 
@@ -32,7 +32,7 @@ public class SetTransition : Transition {
 
 	//@Override
 	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return set.contains(symbol);
+		return set.Contains(symbol);
 	}
 
 	//@Override

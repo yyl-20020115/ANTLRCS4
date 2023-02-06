@@ -168,14 +168,12 @@ public class ANTLRInputStream : CharStream {
         return p;
     }
 
-	//@Override
-	public int size() {
-		return n;
-	}
+    //@Override
+    public int Count => n;
 
     /** mark/release do nothing; we have entire buffer */
-	//@Override
-	public int mark() {
+    //@Override
+    public int mark() {
 		return -1;
     }
 

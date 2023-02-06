@@ -160,7 +160,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 //						   ", states="+lastErrorStates);
 		if ( lastErrorIndex==recognizer.getInputStream().index() &&
 			lastErrorStates != null &&
-			lastErrorStates.contains(recognizer.getState()) ) {
+			lastErrorStates.Contains(recognizer.getState()) ) {
 			// uh oh, another error at same token index and previously-visited
 			// state in ATN; must be a case where LT(1) is in the recovery
 			// token set so nothing got consumed. Consume a single token
@@ -172,7 +172,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		}
 		lastErrorIndex = recognizer.getInputStream().index();
 		if ( lastErrorStates==null ) lastErrorStates = new IntervalSet();
-		lastErrorStates.add(recognizer.getState());
+		lastErrorStates.Add(recognizer.getState());
 		IntervalSet followSet = getErrorRecoverySet(recognizer);
 		consumeUntil(recognizer, followSet);
 	}
@@ -237,14 +237,14 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 
         // try cheaper subset first; might get lucky. seems to shave a wee bit off
 		IntervalSet nextTokens = recognizer.getATN().nextTokens(s);
-		if (nextTokens.contains(la)) {
+		if (nextTokens.Contains(la)) {
 			// We are sure the token matches
 			nextTokensContext = null;
 			nextTokensState = ATNState.INVALID_STATE_NUMBER;
 			return;
 		}
 
-		if (nextTokens.contains(Token.EPSILON)) {
+		if (nextTokens.Contains(Token.EPSILON)) {
 			if (nextTokensContext == null) {
 				// It's possible the next token won't match; information tracked
 				// by sync is restricted for performance.
@@ -512,7 +512,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		ATN atn = recognizer.getInterpreter().atn;
 		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer.GetCtx());
 //		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
-		if ( expectingAtLL2.contains(currentSymbolType) ) {
+		if ( expectingAtLL2.Contains(currentSymbolType) ) {
 			reportMissingToken(recognizer);
 			return true;
 		}
@@ -541,7 +541,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	protected Token singleTokenDeletion(Parser recognizer) {
 		int nextTokenType = recognizer.getInputStream().LA(2);
 		IntervalSet expecting = getExpectedTokens(recognizer);
-		if ( expecting.contains(nextTokenType) ) {
+		if ( expecting.Contains(nextTokenType) ) {
 			reportUnwantedToken(recognizer);
 			/*
 			Console.Error.WriteLine("recoverFromMismatchedToken deleting "+
@@ -581,7 +581,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		Token currentSymbol = recognizer.getCurrentToken();
 		IntervalSet expecting = getExpectedTokens(recognizer);
 		int expectedTokenType = Token.INVALID_TYPE;
-		if ( !expecting.isNil() ) {
+		if ( !expecting.IsNil ) {
 			expectedTokenType = expecting.getMinElement(); // get any element
 		}
 		String tokenText;
@@ -747,7 +747,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			recoverSet.addAll(follow);
 			ctx = ctx.parent;
 		}
-        recoverSet.remove(Token.EPSILON);
+        recoverSet.Remove(Token.EPSILON);
 //		Console.Out.WriteLine("recover set "+recoverSet.toString(recognizer.getTokenNames()));
 		return recoverSet;
 	}
@@ -756,7 +756,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	protected void consumeUntil(Parser recognizer, IntervalSet set) {
 //		Console.Error.WriteLine("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
 		int ttype = recognizer.getInputStream().LA(1);
-		while (ttype != Token.EOF && !set.contains(ttype) ) {
+		while (ttype != Token.EOF && !set.Contains(ttype) ) {
             //Console.Out.WriteLine("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
 //			recognizer.getInputStream().consume();
             recognizer.consume();

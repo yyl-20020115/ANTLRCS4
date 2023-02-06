@@ -283,8 +283,8 @@ public class TokenStreamRewriter {
 	}
 
 	public void replace(String programName, int from, int to, Object text) {
-		if ( from > to || from<0 || to<0 || to >= tokens.size() ) {
-			throw new ArgumentException("replace: range invalid: "+from+".."+to+"(size="+tokens.size()+")");
+		if ( from > to || from<0 || to<0 || to >= tokens.Count ) {
+			throw new ArgumentException("replace: range invalid: "+from+".."+to+"(size="+tokens.Count+")");
 		}
 		RewriteOperation op = new ReplaceOp(this,from, to, text);
 		List<RewriteOperation> rewrites = getProgram(programName);
@@ -355,14 +355,14 @@ public class TokenStreamRewriter {
 	 *  instructions given to this rewriter.
  	 */
 	public String getText() {
-		return getText(DEFAULT_PROGRAM_NAME, Interval.of(0,tokens.size()-1));
+		return getText(DEFAULT_PROGRAM_NAME, Interval.of(0,tokens.Count-1));
 	}
 
 	/** Return the text from the original tokens altered per the
 	 *  instructions given to this rewriter in programName.
  	 */
 	public String getText(String programName) {
-		return getText(programName, Interval.of(0,tokens.size()-1));
+		return getText(programName, Interval.of(0,tokens.Count-1));
 	}
 
 	/** Return the text associated with the tokens in the interval from the
@@ -388,7 +388,7 @@ public class TokenStreamRewriter {
 		int stop = interval.b;
 
 		// ensure start/end are in range
-		if ( stop>tokens.size()-1 ) stop = tokens.size()-1;
+		if ( stop>tokens.Count-1 ) stop = tokens.Count-1;
 		if ( start<0 ) start = 0;
 
 		if ( rewrites==null || rewrites.Count==0 ) {
@@ -401,7 +401,7 @@ public class TokenStreamRewriter {
 
 		// Walk buffer, executing instructions and emitting tokens
 		int i = start;
-		while ( i <= stop && i < tokens.size() ) {
+		while ( i <= stop && i < tokens.Count ) {
 			RewriteOperation op = indexToOp[(i)];
 			indexToOp.Remove(i); // remove so any left have index size-1
 			Token t = tokens.get(i);
@@ -418,11 +418,11 @@ public class TokenStreamRewriter {
 		// include stuff after end if it's last index in buffer
 		// So, if they did an insertAfter(lastValidIndex, "foo"), include
 		// foo if end==lastValidIndex.
-		if ( stop==tokens.size()-1 ) {
+		if ( stop==tokens.Count-1 ) {
 			// Scan any remaining operations after last token
 			// should be included (they will be inserts).
 			foreach (RewriteOperation op in indexToOp.Values) {
-				if ( op.index >= tokens.size()-1 ) buf.Append(op.text);
+				if ( op.index >= tokens.Count-1 ) buf.Append(op.text);
 			}
 		}
 		return buf.ToString();

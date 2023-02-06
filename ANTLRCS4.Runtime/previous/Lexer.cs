@@ -78,7 +78,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     /** Return a token from this source; i.e., match a token on the char
      *  stream.
      */
-    public Token nextToken()
+    public Token NextToken()
     {
         while (true)
         {

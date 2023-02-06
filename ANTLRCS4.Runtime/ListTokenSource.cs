@@ -117,7 +117,7 @@ public class ListTokenSource : TokenSource {
 	 * {@inheritDoc}
 	 */
 	//@Override
-	public Token nextToken() {
+	public Token NextToken() {
 		if (i >= tokens.Count) {
 			if (eofToken == null) {
 				int start = -1;

@@ -969,7 +969,7 @@ public class Grammar : AttributeResolver
         {
             return getAllCharValues();
         }
-        return IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, getMaxTokenType());
+        return IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, getMaxTokenType());
     }
 
     /** Return min to max char as defined by the target.
@@ -977,7 +977,7 @@ public class Grammar : AttributeResolver
 	 */
     public IntSet getAllCharValues()
     {
-        return IntervalSet.of(Lexer.MIN_CHAR_VALUE, getMaxCharValue());
+        return IntervalSet.Of(Lexer.MIN_CHAR_VALUE, getMaxCharValue());
     }
 
     /** How many token types have been allocated so far? */

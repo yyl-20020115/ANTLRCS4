@@ -48,37 +48,36 @@ public class FastQueue<T>
     protected int p = 0;
     protected int _range = -1; // how deep have we gone?	
 
-    public virtual void reset() { clear(); }
-    public virtual void clear() { p = 0; data.Clear(); }
+    public virtual void Reset() { Clear(); }
+    public virtual void Clear() { p = 0; data.Clear(); }
 
     /** Get and remove first element in queue */
-    public virtual T remove()
+    public virtual T Remove()
     {
-        T o = elementAt(0);
+        T o = ElementAt(0);
         p++;
         // have we hit end of buffer?
         if (p == data.Count)
         {
             // if so, it's an opportunity to start filling at index 0 again
-            clear(); // size goes to 0, but retains memory
+            Clear(); // size goes to 0, but retains memory
         }
         return o;
     }
 
-    public virtual void add(T o) { data.Add(o); }
+    public virtual void Add(T o) => data.Add(o);
 
-    public virtual int size() { return data.Count - p; }
+    public virtual int Count => data.Count - p;
 
-    public virtual int range() { return _range; }
-
-    public virtual T head() { return elementAt(0); }
+    public virtual int Range => _range;
+    public virtual T Head => ElementAt(0);
 
     /**
      * Return element {@code i} elements ahead of current element. {@code i==0}
      * gets current element. This is not an absolute index into {@link #data}
      * since {@code p} defines the start of the real list.
      */
-    public virtual T elementAt(int i)
+    public virtual T ElementAt(int i)
     {
         int absIndex = p + i;
         if (absIndex >= data.Count)
@@ -94,13 +93,13 @@ public class FastQueue<T>
     }
 
     /** Return string of current buffer contents; non-destructive */
-    public override String ToString()
+    public override string ToString()
     {
         var buf = new StringBuilder();
-        int n = size();
+        int n = Count;
         for (int i = 0; i < n; i++)
         {
-            buf.Append(elementAt(i));
+            buf.Append(ElementAt(i));
             if ((i + 1) < n) buf.Append(' ');
         }
         return buf.ToString();

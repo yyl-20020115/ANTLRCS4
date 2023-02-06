@@ -895,19 +895,19 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         ParserRuleContext ctx = _ctx;
         ATNState s = atn.states[getState()];
         IntervalSet following = atn.nextTokens(s);
-        if (following.contains(symbol))
+        if (following.Contains(symbol))
         {
             return true;
         }
         //        Console.Out.println("following "+s+"="+following);
-        if (!following.contains(Token.EPSILON)) return false;
+        if (!following.Contains(Token.EPSILON)) return false;
 
-        while (ctx != null && ctx.invokingState >= 0 && following.contains(Token.EPSILON))
+        while (ctx != null && ctx.invokingState >= 0 && following.Contains(Token.EPSILON))
         {
             ATNState invokingState = atn.states[ctx.invokingState];
             RuleTransition rt = (RuleTransition)invokingState.transition(0);
             following = atn.nextTokens(rt.followState);
-            if (following.contains(symbol))
+            if (following.Contains(symbol))
             {
                 return true;
             }
@@ -915,7 +915,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             ctx = (ParserRuleContext)ctx.parent;
         }
 
-        if (following.contains(Token.EPSILON) && symbol == Token.EOF)
+        if (following.Contains(Token.EPSILON) && symbol == Token.EOF)
         {
             return true;
         }

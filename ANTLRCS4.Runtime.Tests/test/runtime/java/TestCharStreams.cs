@@ -15,7 +15,7 @@ public class TestCharStreams
     public void FromBMPStringHasExpectedSize()
     {
         CharStream s = CharStreams.fromString("hello");
-        Assert.AreEqual(5, s.size());
+        Assert.AreEqual(5, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello", s.ToString());
     }
@@ -25,7 +25,7 @@ public class TestCharStreams
     {
         CharStream s = CharStreams.fromString(
                 "hello \uD83C\uDF0E");
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
     }
@@ -36,7 +36,7 @@ public class TestCharStreams
         string test = Path.Combine(tempDir, "test");
         File.WriteAllBytes(test, Encoding.UTF8.GetBytes("hello"));
         CharStream s = CharStreams.fromPath(test);
-        Assert.AreEqual(5, s.size());
+        Assert.AreEqual(5, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello", s.ToString());
         Assert.AreEqual(test.ToString(), s.getSourceName());
@@ -48,7 +48,7 @@ public class TestCharStreams
         string p = GetTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
         CharStream s = CharStreams.fromPath(p);
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         Assert.AreEqual(p.ToString(), s.getSourceName());
@@ -61,7 +61,7 @@ public class TestCharStreams
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello"));
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(5, s.size());
+            Assert.AreEqual(5, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("hello", s.ToString());
         }
@@ -74,7 +74,7 @@ public class TestCharStreams
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(7, s.size());
+            Assert.AreEqual(7, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         }
@@ -87,7 +87,7 @@ public class TestCharStreams
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello"));
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(5, s.size());
+            Assert.AreEqual(5, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("hello", s.ToString());
             Assert.AreEqual("foo", s.getSourceName());
@@ -102,7 +102,7 @@ public class TestCharStreams
 
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(7, s.size());
+            Assert.AreEqual(7, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
             Assert.AreEqual("foo", s.getSourceName());
@@ -117,7 +117,7 @@ public class TestCharStreams
         File.WriteAllBytes(p, toWrite);
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(4, s.size());
+            Assert.AreEqual(4, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("\uFFFD\uFFFD\uFFFD\uFFFD", s.ToString());
         }
@@ -144,7 +144,7 @@ public class TestCharStreams
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
         {
             CharStream s = CharStreams.fromReader(new StreamReader(p));
-            Assert.AreEqual(7, s.size());
+            Assert.AreEqual(7, s.Count);
             Assert.AreEqual(0, s.index());
             Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         }
@@ -156,7 +156,7 @@ public class TestCharStreams
         string p = GetTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
         CharStream s = CharStreams.fromFileName(p.ToString());
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         Assert.AreEqual(p.ToString(), s.getSourceName());
@@ -169,7 +169,7 @@ public class TestCharStreams
         string p = GetTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.Latin1.GetBytes("hello \u00CA\u00FE"));
         CharStream s = CharStreams.fromPath(p.ToString(), Encoding.Latin1);
-        Assert.AreEqual(8, s.size());
+        Assert.AreEqual(8, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \u00CA\u00FE", s.ToString());
         Assert.AreEqual(p.ToString(), s.getSourceName());
@@ -181,7 +181,7 @@ public class TestCharStreams
         string p = GetTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.UTF8.GetBytes("hello \uD83C\uDF0E"));
         CharStream s = CharStreams.fromPath(p, Encoding.UTF8);
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
     }
@@ -192,7 +192,7 @@ public class TestCharStreams
         string p = GetTestFile(tempDir);
         File.WriteAllBytes(p, Encoding.Unicode.GetBytes("hello \uD83C\uDF0E"));
         CharStream s = CharStreams.fromPath(p, Encoding.Unicode);
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         Assert.AreEqual(p.ToString(), s.getSourceName());
@@ -205,7 +205,7 @@ public class TestCharStreams
         // UTF-32 isn't popular enough to have an entry in StandardCharsets.
         File.WriteAllBytes(p, Encoding.UTF32.GetBytes("hello \uD83C\uDF0E"));
         CharStream s = CharStreams.fromPath(p, Encoding.UTF32);
-        Assert.AreEqual(7, s.size());
+        Assert.AreEqual(7, s.Count);
         Assert.AreEqual(0, s.index());
         Assert.AreEqual("hello \uD83C\uDF0E", s.ToString());
         Assert.AreEqual(p.ToString(), s.getSourceName());

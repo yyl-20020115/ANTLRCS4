@@ -43,7 +43,7 @@ public class LL1Analyzer {
 				  look[alt], lookBusy, new BitSet(), seeThruPreds, false);
 			// Wipe out lookahead for this alternative if we found nothing
 			// or we had a predicate when we !seeThruPreds
-			if ( look[alt].size()==0 || look[alt].contains(HIT_PRED) ) {
+			if ( look[alt].Size==0 || look[alt].Contains(HIT_PRED) ) {
 				look[alt] = null;
 			}
 		}
@@ -142,22 +142,22 @@ public class LL1Analyzer {
 
 		if (s == stopState) {
 			if (ctx == null) {
-				look.add(Token.EPSILON);
+				look.Add(Token.EPSILON);
 				return;
 			}
 			else if (ctx.isEmpty() && addEOF) {
-				look.add(Token.EOF);
+				look.Add(Token.EOF);
 				return;
 			}
 		}
 
         if ( s is RuleStopState ) {
             if ( ctx==null ) {
-                look.add(Token.EPSILON);
+                look.Add(Token.EPSILON);
                 return;
             }
             else if (ctx.isEmpty() && addEOF) {
-				look.add(Token.EOF);
+				look.Add(Token.EOF);
 				return;
 			}
 
@@ -205,21 +205,21 @@ public class LL1Analyzer {
 					_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 				}
 				else {
-					look.add(HIT_PRED);
+					look.Add(HIT_PRED);
 				}
 			}
 			else if ( t.isEpsilon() ) {
 				_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 			}
 			else if ( t.GetType() == typeof(WildcardTransition) ) {
-				look.addAll( IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
+				look.addAll( IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
 			}
 			else {
 //				Console.Out.WriteLine("adding "+ t);
 				IntervalSet set = t.label();
 				if (set != null) {
 					if (t is NotSetTransition) {
-						set = set.complement(IntervalSet.of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType));
+						set = set.complement(IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType));
 					}
 					look.addAll(set);
 				}

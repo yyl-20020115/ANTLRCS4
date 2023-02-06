@@ -377,10 +377,10 @@ public class ParseTreePatternMatcher {
 				TextChunk textChunk = (TextChunk)chunk;
 				ANTLRInputStream @in = new ANTLRInputStream(textChunk.getText());
 				lexer.setInputStream(@in);
-				Token t = lexer.nextToken();
+				Token t = lexer.NextToken();
 				while ( t.getType()!=Token.EOF ) {
 					tokens.Add(t);
-					t = lexer.nextToken();
+					t = lexer.NextToken();
 				}
 			}
 		}

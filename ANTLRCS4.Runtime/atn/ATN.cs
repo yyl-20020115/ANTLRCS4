@@ -163,24 +163,24 @@ public class ATN
 		RuleContext ctx = context;
 		ATNState s = states[stateNumber];
 		IntervalSet following = nextTokens(s);
-		if (!following.contains(Token.EPSILON)) {
+		if (!following.Contains(Token.EPSILON)) {
 			return following;
 		}
 
 		IntervalSet expected = new IntervalSet();
 		expected.addAll(following);
-		expected.remove(Token.EPSILON);
-		while (ctx != null && ctx.invokingState >= 0 && following.contains(Token.EPSILON)) {
+		expected.Remove(Token.EPSILON);
+		while (ctx != null && ctx.invokingState >= 0 && following.Contains(Token.EPSILON)) {
 			ATNState invokingState = states[ctx.invokingState];
 			RuleTransition rt = (RuleTransition)invokingState.transition(0);
 			following = nextTokens(rt.followState);
 			expected.addAll(following);
-			expected.remove(Token.EPSILON);
+			expected.Remove(Token.EPSILON);
 			ctx = ctx.parent;
 		}
 
-		if (following.contains(Token.EPSILON)) {
-			expected.add(Token.EOF);
+		if (following.Contains(Token.EPSILON)) {
+			expected.Add(Token.EOF);
 		}
 
 		return expected;

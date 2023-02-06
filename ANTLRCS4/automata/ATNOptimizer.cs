@@ -78,7 +78,7 @@ public static class ATNOptimizer
                     || transition is RangeTransition
                     || transition is SetTransition)
                 {
-                    setTransitions.add(i);
+                    setTransitions.Add(i);
                 }
             }
 
@@ -112,7 +112,7 @@ public static class ATNOptimizer
                         {
                             for (int v = a; v <= b; v++)
                             {
-                                if (matchSet.contains(v))
+                                if (matchSet.Contains(v))
                                 {
                                     // TODO: Token is missing (i.e. position in source is not displayed).
                                     g.Tools.ErrMgr.GrammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName,
@@ -130,7 +130,7 @@ public static class ATNOptimizer
                 Transition newTransition;
                 if (matchSet.getIntervals().Count == 1)
                 {
-                    if (matchSet.size() == 1)
+                    if (matchSet.Size == 1)
                     {
                         newTransition = CodePointTransitions.createWithCodePoint(blockEndState, matchSet.getMinElement());
                     }

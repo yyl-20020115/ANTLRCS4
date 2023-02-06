@@ -60,9 +60,9 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     /** tracks how deep mark() calls are nested */
     protected int markDepth = 0;
 
-    public override void reset()
+    public override void Reset()
     {
-        base.reset();
+        base.Reset();
         currentElementIndex = 0;
         p = 0;
         prevElement = default;
@@ -82,16 +82,16 @@ public abstract class LookaheadStream<T> : FastQueue<T>
      * {@link FastQueue#remove()}; it's the same, just checks for backtracking.
      */
     
-    public override T remove()
+    public override T Remove()
     {
-        T o = elementAt(0);
+        T o = ElementAt(0);
         p++;
         // have we hit end of buffer and not backtracking?
         if (p == data.Count && markDepth == 0)
         {
             prevElement = o;
             // if so, it's an opportunity to start filling at index 0 again
-            clear(); // size goes to 0, but retains memory
+            Clear(); // size goes to 0, but retains memory
         }
         return o;
     }
@@ -100,7 +100,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     public void consume()
     {
         syncAhead(1);
-        remove();
+        Remove();
         currentElementIndex++;
     }
 
@@ -126,8 +126,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     }
 
     /** Size of entire stream is unknown; we only know buffer size from FastQueue. */
-    public override int size() { throw new UnsupportedOperationException("streams are of unknown size"); }
-
+    public override int Count => throw new UnsupportedOperationException("streams are of unknown size");
     public T LT(int k)
     {
         if (k == 0)
@@ -138,7 +137,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         //System.out.print("LT(p="+p+","+k+")=");
         syncAhead(k);
         if ((p + k - 1) > data.Count) return eof;
-        return elementAt(k - 1);
+        return ElementAt(k - 1);
     }
 
     public int index() { return currentElementIndex; }

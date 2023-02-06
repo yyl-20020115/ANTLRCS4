@@ -17,359 +17,401 @@ namespace org.antlr.v4.test.tool;
 // NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
 // NOTICE: TOKENS IN LEXER, PARSER MUST BE SAME OR TOKEN TYPE MISMATCH
 [TestClass]
-public class TestATNInterpreter {
-	[TestMethod] public void testSimpleNoBlock(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A B ;");
-		checkMatchedAlt(lg, g, "ab", 1);
-	}
+public class TestATNInterpreter
+{
+    [TestMethod]
+    public void TestSimpleNoBlock()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A B ;");
+        CheckMatchedAlt(lg, g, "ab", 1);
+    }
 
-	[TestMethod] public void testSet(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"tokens {A,B,C}\n" +
-			"a : ~A ;");
-		checkMatchedAlt(lg, g, "b", 1);
-	}
+    [TestMethod]
+    public void TestSet()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "tokens {A,B,C}\n" +
+            "a : ~A ;");
+        CheckMatchedAlt(lg, g, "b", 1);
+    }
 
-	[TestMethod] public void testPEGAchillesHeel(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A | A B ;");
-		checkMatchedAlt(lg, g, "a", 1);
-		checkMatchedAlt(lg, g, "ab", 2);
-		checkMatchedAlt(lg, g, "abc", 2);
-	}
+    [TestMethod]
+    public void TestPEGAchillesHeel()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A | A B ;");
+        CheckMatchedAlt(lg, g, "a", 1);
+        CheckMatchedAlt(lg, g, "ab", 2);
+        CheckMatchedAlt(lg, g, "abc", 2);
+    }
 
-	[TestMethod] public void testMustTrackPreviousGoodAlt(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A | A B ;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAlt()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A | A B ;");
 
-		checkMatchedAlt(lg, g, "a", 1);
-		checkMatchedAlt(lg, g, "ab", 2);
+        CheckMatchedAlt(lg, g, "a", 1);
+        CheckMatchedAlt(lg, g, "ab", 2);
 
-		checkMatchedAlt(lg, g, "ac", 1);
-		checkMatchedAlt(lg, g, "abc", 2);
-	}
+        CheckMatchedAlt(lg, g, "ac", 1);
+        CheckMatchedAlt(lg, g, "abc", 2);
+    }
 
-	[TestMethod]
-	public void testMustTrackPreviousGoodAltWithEOF(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A | A B) EOF;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAltWithEOF()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A | A B) EOF;");
 
-		checkMatchedAlt(lg, g, "a", 1);
-		checkMatchedAlt(lg, g, "ab", 2);
+        CheckMatchedAlt(lg, g, "a", 1);
+        CheckMatchedAlt(lg, g, "ab", 2);
 
-		try {
-			checkMatchedAlt(lg, g, "ac", 1);
-			Assert.Fail();
-		}
-		catch (NoViableAltException re) {
-			Assert.AreEqual(1, re.getOffendingToken().getTokenIndex());
-			Assert.AreEqual(3, re.getOffendingToken().getType());
-		}
-	}
+        try
+        {
+            CheckMatchedAlt(lg, g, "ac", 1);
+            Assert.Fail();
+        }
+        catch (NoViableAltException re)
+        {
+            Assert.AreEqual(1, re.getOffendingToken().getTokenIndex());
+            Assert.AreEqual(3, re.getOffendingToken().getType());
+        }
+    }
 
-	[TestMethod] public void testMustTrackPreviousGoodAlt2(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A | A B | A B C ;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAlt2()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A | A B | A B C ;");
 
-		checkMatchedAlt(lg, g, "a", 1);
-		checkMatchedAlt(lg, g, "ab", 2);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "a", 1);
+        CheckMatchedAlt(lg, g, "ab", 2);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		checkMatchedAlt(lg, g, "ad", 1);
-		checkMatchedAlt(lg, g, "abd", 2);
-		checkMatchedAlt(lg, g, "abcd", 3);
-	}
+        CheckMatchedAlt(lg, g, "ad", 1);
+        CheckMatchedAlt(lg, g, "abd", 2);
+        CheckMatchedAlt(lg, g, "abcd", 3);
+    }
 
-	[TestMethod]
-	public void testMustTrackPreviousGoodAlt2WithEOF(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A | A B | A B C) EOF;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAlt2WithEOF()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A | A B | A B C) EOF;");
 
-		checkMatchedAlt(lg, g, "a", 1);
-		checkMatchedAlt(lg, g, "ab", 2);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "a", 1);
+        CheckMatchedAlt(lg, g, "ab", 2);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		try {
-			checkMatchedAlt(lg, g, "abd", 1);
-			Assert.Fail();
-		}
-		catch (NoViableAltException re) {
-			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
-			Assert.AreEqual(4, re.getOffendingToken().getType());
-		}
-	}
+        try
+        {
+            CheckMatchedAlt(lg, g, "abd", 1);
+            Assert.Fail();
+        }
+        catch (NoViableAltException re)
+        {
+            Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+            Assert.AreEqual(4, re.getOffendingToken().getType());
+        }
+    }
 
-	[TestMethod] public void testMustTrackPreviousGoodAlt3(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A B | A | A B C ;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAlt3()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A B | A | A B C ;");
 
-		checkMatchedAlt(lg, g, "a", 2);
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "a", 2);
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		checkMatchedAlt(lg, g, "ad", 2);
-		checkMatchedAlt(lg, g, "abd", 1);
-		checkMatchedAlt(lg, g, "abcd", 3);
-	}
+        CheckMatchedAlt(lg, g, "ad", 2);
+        CheckMatchedAlt(lg, g, "abd", 1);
+        CheckMatchedAlt(lg, g, "abcd", 3);
+    }
 
-	[TestMethod]
-	public void testMustTrackPreviousGoodAlt3WithEOF(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A B | A | A B C) EOF;");
+    [TestMethod]
+    public void TestMustTrackPreviousGoodAlt3WithEOF()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A B | A | A B C) EOF;");
 
-		checkMatchedAlt(lg, g, "a", 2);
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "a", 2);
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		try {
-			checkMatchedAlt(lg, g, "abd", 1);
-			Assert.Fail();
-		}
-		catch (NoViableAltException re) {
-			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
-			Assert.AreEqual(4, re.getOffendingToken().getType());
-		}
-	}
+        try
+        {
+            CheckMatchedAlt(lg, g, "abd", 1);
+            Assert.Fail();
+        }
+        catch (NoViableAltException re)
+        {
+            Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+            Assert.AreEqual(4, re.getOffendingToken().getType());
+        }
+    }
 
-	[TestMethod] public void testAmbigAltChooseFirst(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A B | A B ;"); // first alt
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "abc", 1);
-	}
+    [TestMethod]
+    public void TestAmbigAltChooseFirst()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A B | A B ;"); // first alt
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "abc", 1);
+    }
 
-	[TestMethod] public void testAmbigAltChooseFirstWithFollowingToken(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A B | A B) C ;"); // first alt
-		checkMatchedAlt(lg, g, "abc", 1);
-		checkMatchedAlt(lg, g, "abcd", 1);
-	}
+    [TestMethod]
+    public void TestAmbigAltChooseFirstWithFollowingToken()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A B | A B) C ;"); // first alt
+        CheckMatchedAlt(lg, g, "abc", 1);
+        CheckMatchedAlt(lg, g, "abcd", 1);
+    }
 
-	[TestMethod] public void testAmbigAltChooseFirstWithFollowingToken2(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A B | A B | C) D ;");
-		checkMatchedAlt(lg, g, "abd", 1);
-		checkMatchedAlt(lg, g, "abdc", 1);
-		checkMatchedAlt(lg, g, "cd", 3);
-	}
+    [TestMethod]
+    public void TestAmbigAltChooseFirstWithFollowingToken2()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A B | A B | C) D ;");
+        CheckMatchedAlt(lg, g, "abd", 1);
+        CheckMatchedAlt(lg, g, "abdc", 1);
+        CheckMatchedAlt(lg, g, "cd", 3);
+    }
 
-	[TestMethod] public void testAmbigAltChooseFirst2(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A B | A B | A B C ;");
+    [TestMethod]
+    public void TestAmbigAltChooseFirst2()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A B | A B | A B C ;");
 
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		checkMatchedAlt(lg, g, "abd", 1);
-		checkMatchedAlt(lg, g, "abcd", 3);
-	}
+        CheckMatchedAlt(lg, g, "abd", 1);
+        CheckMatchedAlt(lg, g, "abcd", 3);
+    }
 
-	[TestMethod]
-	public void testAmbigAltChooseFirst2WithEOF(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : (A B | A B | A B C) EOF;");
+    [TestMethod]
+    public void TestAmbigAltChooseFirst2WithEOF()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : (A B | A B | A B C) EOF;");
 
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "abc", 3);
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "abc", 3);
 
-		try {
-			checkMatchedAlt(lg, g, "abd", 1);
-			Assert.Fail();
-		}
-		catch (NoViableAltException re) {
-			Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
-			Assert.AreEqual(4, re.getOffendingToken().getType());
-		}
-	}
+        try
+        {
+            CheckMatchedAlt(lg, g, "abd", 1);
+            Assert.Fail();
+        }
+        catch (NoViableAltException re)
+        {
+            Assert.AreEqual(2, re.getOffendingToken().getTokenIndex());
+            Assert.AreEqual(4, re.getOffendingToken().getType());
+        }
+    }
 
-	[TestMethod] public void testSimpleLoop(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"D : 'd' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A+ B ;");
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "aab", 1);
-		checkMatchedAlt(lg, g, "aaaaaab", 1);
-		checkMatchedAlt(lg, g, "aabd", 1);
-	}
+    [TestMethod]
+    public void TestSimpleLoop()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "D : 'd' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A+ B ;");
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "aab", 1);
+        CheckMatchedAlt(lg, g, "aaaaaab", 1);
+        CheckMatchedAlt(lg, g, "aabd", 1);
+    }
 
-	[TestMethod] public void testCommonLeftPrefix(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A B | A C ;");
-		checkMatchedAlt(lg, g, "ab", 1);
-		checkMatchedAlt(lg, g, "ac", 2);
-	}
+    [TestMethod]
+    public void TestCommonLeftPrefix()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A B | A C ;");
+        CheckMatchedAlt(lg, g, "ab", 1);
+        CheckMatchedAlt(lg, g, "ac", 2);
+    }
 
-	[TestMethod] public void testArbitraryLeftPrefix(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n");
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"a : A+ B | A+ C ;");
-		checkMatchedAlt(lg, g, "aac", 2);
-	}
+    [TestMethod]
+    public void TestArbitraryLeftPrefix()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n");
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "a : A+ B | A+ C ;");
+        CheckMatchedAlt(lg, g, "aac", 2);
+    }
 
-	[TestMethod] public void testRecursiveLeftPrefix(){
-		LexerGrammar lg = new LexerGrammar(
-			"lexer grammar L;\n" +
-			"A : 'a' ;\n" +
-			"B : 'b' ;\n" +
-			"C : 'c' ;\n" +
-			"LP : '(' ;\n" +
-			"RP : ')' ;\n" +
-			"INT : '0'..'9'+ ;\n"
-		);
-		Grammar g = new Grammar(
-			"parser grammar T;\n"+
-			"tokens {A,B,C,LP,RP,INT}\n" +
-			"a : e B | e C ;\n" +
-			"e : LP e RP\n" +
-			"  | INT\n" +
-			"  ;");
-		checkMatchedAlt(lg, g, "34b", 1);
-		checkMatchedAlt(lg, g, "34c", 2);
-		checkMatchedAlt(lg, g, "(34)b", 1);
-		checkMatchedAlt(lg, g, "(34)c", 2);
-		checkMatchedAlt(lg, g, "((34))b", 1);
-		checkMatchedAlt(lg, g, "((34))c", 2);
-	}
+    [TestMethod]
+    public void TestRecursiveLeftPrefix()
+    {
+        var lg = new LexerGrammar(
+            "lexer grammar L;\n" +
+            "A : 'a' ;\n" +
+            "B : 'b' ;\n" +
+            "C : 'c' ;\n" +
+            "LP : '(' ;\n" +
+            "RP : ')' ;\n" +
+            "INT : '0'..'9'+ ;\n"
+        );
+        var g = new Grammar(
+            "parser grammar T;\n" +
+            "tokens {A,B,C,LP,RP,INT}\n" +
+            "a : e B | e C ;\n" +
+            "e : LP e RP\n" +
+            "  | INT\n" +
+            "  ;");
+        CheckMatchedAlt(lg, g, "34b", 1);
+        CheckMatchedAlt(lg, g, "34c", 2);
+        CheckMatchedAlt(lg, g, "(34)b", 1);
+        CheckMatchedAlt(lg, g, "(34)c", 2);
+        CheckMatchedAlt(lg, g, "((34))b", 1);
+        CheckMatchedAlt(lg, g, "((34))c", 2);
+    }
 
-	public void checkMatchedAlt(LexerGrammar lg, Grammar g,
-								String inputString,
-								int expected)
-	{
-		ATN lexatn =ToolTestUtils.createATN(lg, true);
-		LexerATNSimulator lexInterp = new LexerATNSimulator(lexatn,new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) },null);
-		IntegerList types = ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
-//		Console.Out.WriteLine(types);
+    public static void CheckMatchedAlt(LexerGrammar lg, Grammar g,
+                                String inputString,
+                                int expected)
+    {
+        var lexatn = ToolTestUtils.createATN(lg, true);
+        var lexInterp = new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.modeToStartState[(Lexer.DEFAULT_MODE)]) }, null);
+        var types = ToolTestUtils.getTokenTypesViaATN(inputString, lexInterp);
+        //		Console.Out.WriteLine(types);
 
-		g.importVocab(lg);
+        g.importVocab(lg);
 
-		ParserATNFactory f = new ParserATNFactory(g);
-		ATN atn = f.CreateATN();
+        var f = new ParserATNFactory(g);
+        var atn = f.CreateATN();
 
-		TokenStream input = new MockIntTokenStream(types);
-//		Console.Out.WriteLine("input="+input.types);
-		ParserInterpreterForTesting interp = new ParserInterpreterForTesting(g, input);
-		ATNState startState = atn.ruleToStartState[g.getRule("a").index];
-		if ( startState.transition(0).target is BlockStartState ) {
-			startState = startState.transition(0).target;
-		}
+        var input = new MockIntTokenStream(types);
+        //		Console.Out.WriteLine("input="+input.types);
+        var interp = new ParserInterpreterForTesting(g, input);
+        ATNState startState = atn.ruleToStartState[g.getRule("a").index];
+        if (startState.transition(0).target is BlockStartState)
+        {
+            startState = startState.transition(0).target;
+        }
 
-		DOTGenerator dot = new DOTGenerator(g);
-//		Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[g.getRule("a").index]));
-		Rule r = g.getRule("e");
-//		if ( r!=null ) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
+        var dot = new DOTGenerator(g);
+        //		Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[g.getRule("a").index]));
+        var r = g.getRule("e");
+        //		if ( r!=null ) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
-		int result = interp.matchATN(input, startState);
-		Assert.AreEqual(expected, result);
-	}
+        int result = interp.MatchATN(input, startState);
+        Assert.AreEqual(expected, result);
+    }
 }
