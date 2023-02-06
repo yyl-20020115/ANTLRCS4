@@ -19,18 +19,14 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition {
 		this.precedence = precedence;
 	}
 
-	//@Override
-	public override int getSerializationType() {
-		return PRECEDENCE;
-	}
+    //@Override
+    public override int SerializationType => PRECEDENCE;
 
-	//@Override
-	public override bool isEpsilon() {
-		return true;
-	}
+    //@Override
+    public override bool IsEpsilon => true;
 
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 

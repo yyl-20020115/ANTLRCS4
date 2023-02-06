@@ -761,7 +761,7 @@ public class BlockSetTransformer : TreeRewriter
         {
             // org\\antlr\\v4\\parse\\BlockSetTransformer.g:97:2: ({...}? ^( BLOCK ^(alt= ALT ( elementOptions )? {...}? setElement[inLexer] ) ( ^( ALT ( elementOptions )? setElement[inLexer] ) )+ ) -> ^( BLOCK[$BLOCK.token] ^( ALT[$BLOCK.token,\"ALT\"] ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ ) ) ) |{...}? ^( BLOCK ^( ALT ( elementOptions )? setElement[inLexer] ) ( ^( ALT ( elementOptions )? setElement[inLexer] ) )+ ) -> ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ ) )
             int alt10 = 2;
-            alt10 = dfa10.predict(input);
+            alt10 = dfa10.Predict(input);
             switch (alt10)
             {
                 case 1:
@@ -2182,7 +2182,7 @@ public class BlockSetTransformer : TreeRewriter
             NoViableAltException nvae =
 
                         new NoViableAltException(getDescription(), 10, _s, input);
-            error(nvae);
+            Error(nvae);
             throw nvae;
         }
     }

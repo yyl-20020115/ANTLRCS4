@@ -21,11 +21,12 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerCustomAction : LexerAction {
-	private readonly int ruleIndex;
-	private readonly int actionIndex;
+public class LexerCustomAction : LexerAction
+{
+    private readonly int ruleIndex;
+    private readonly int actionIndex;
 
-	/**
+    /**
 	 * Constructs a custom lexer action with the specified rule and action
 	 * indexes.
 	 *
@@ -34,38 +35,39 @@ public class LexerCustomAction : LexerAction {
 	 * @param actionIndex The action index to use for calls to
 	 * {@link Recognizer#action}.
 	 */
-	public LexerCustomAction(int ruleIndex, int actionIndex) {
-		this.ruleIndex = ruleIndex;
-		this.actionIndex = actionIndex;
-	}
+    public LexerCustomAction(int ruleIndex, int actionIndex)
+    {
+        this.ruleIndex = ruleIndex;
+        this.actionIndex = actionIndex;
+    }
 
-	/**
+    /**
 	 * Gets the rule index to use for calls to {@link Recognizer#action}.
 	 *
 	 * @return The rule index for the custom action.
 	 */
-	public int getRuleIndex() {
-		return ruleIndex;
-	}
+    public int GetRuleIndex()
+    {
+        return ruleIndex;
+    }
 
-	/**
+    /**
 	 * Gets the action index to use for calls to {@link Recognizer#action}.
 	 *
 	 * @return The action index for the custom action.
 	 */
-	public int getActionIndex() {
-		return actionIndex;
-	}
+    public int GetActionIndex()
+    {
+        return actionIndex;
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * @return This method returns {@link LexerActionType#CUSTOM}.
 	 */
-	//@Override
-	public LexerActionType getActionType() {
-		return LexerActionType.CUSTOM;
-	}
+    //@Override
+    public LexerActionType ActionType => LexerActionType.CUSTOM;
 
     /**
 	 * Gets whether the lexer action is position-dependent. Position-dependent
@@ -79,9 +81,7 @@ public class LexerCustomAction : LexerAction {
 	 * @return This method returns {@code true}.
 	 */
     //@Override
-    public bool isPositionDependent() {
-		return true;
-	}
+    public bool IsPositionDependent => true;
 
     /**
 	 * {@inheritDoc}
@@ -90,30 +90,35 @@ public class LexerCustomAction : LexerAction {
 	 * appropriate rule and action indexes.</p>
 	 */
     //@Override
-    public void execute(Lexer lexer) {
-		lexer.action(null, ruleIndex, actionIndex);
-	}
+    public void Execute(Lexer lexer)
+    {
+        lexer.action(null, ruleIndex, actionIndex);
+    }
 
     //@Override
-    public int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType());
-		hash = MurmurHash.update(hash, ruleIndex);
-		hash = MurmurHash.update(hash, actionIndex);
-		return MurmurHash.finish(hash, 3);
-	}
+    public override int GetHashCode()
+    {
+        int hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, ActionType);
+        hash = MurmurHash.Update(hash, ruleIndex);
+        hash = MurmurHash.Update(hash, actionIndex);
+        return MurmurHash.Finish(hash, 3);
+    }
 
     //@Override
-    public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerCustomAction)) {
-			return false;
-		}
+    public override bool Equals(Object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (!(obj is LexerCustomAction))
+        {
+            return false;
+        }
 
-		LexerCustomAction other = (LexerCustomAction)obj;
-		return ruleIndex == other.ruleIndex
-			&& actionIndex == other.actionIndex;
-	}
+        LexerCustomAction other = (LexerCustomAction)obj;
+        return ruleIndex == other.ruleIndex
+            && actionIndex == other.actionIndex;
+    }
 }

@@ -18,17 +18,14 @@ public class RangeTransition : Transition {
 		this.to = to;
 	}
 
-	//@Override
-	public override int getSerializationType() {
-		return RANGE;
-	}
+    //@Override
+    public override int SerializationType => RANGE;
 
     //@Override
 
-    public override IntervalSet label() { return IntervalSet.Of(from, to); }
-
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    public override IntervalSet Label => IntervalSet.Of(from, to);
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= from && symbol <= to;
 	}
 

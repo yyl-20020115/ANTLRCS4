@@ -20,7 +20,5 @@ public class StarLoopEntryState : DecisionState {
 	 */
 	public bool isPrecedenceDecision;
 
-	public override int getStateType() {
-		return STAR_LOOP_ENTRY;
-	}
+    public override int StateType => STAR_LOOP_ENTRY;
 }

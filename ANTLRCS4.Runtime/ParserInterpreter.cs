@@ -97,10 +97,10 @@ public class ParserInterpreter : Parser {
 		this.vocabulary = vocabulary;
 
 		// init decision DFA
-		int numberOfDecisions = atn.getNumberOfDecisions();
+		int numberOfDecisions = atn.NumberOfDecisions();
 		this.decisionToDFA = new DFA[numberOfDecisions];
 		for (int i = 0; i < numberOfDecisions; i++) {
-			DecisionState decisionState = atn.getDecisionState(i);
+			DecisionState decisionState = atn.GetDecisionState(i);
 			decisionToDFA[i] = new DFA(decisionState, i);
 		}
 
@@ -157,7 +157,7 @@ public class ParserInterpreter : Parser {
 
 		while ( true ) {
 			ATNState p = getATNState();
-			switch ( p.getStateType() ) {
+			switch ( p.StateType ) {
 			case ATNState.RULE_STOP :
 				// pop; return from rule
 				if ( _ctx.isEmpty() ) {
@@ -210,10 +210,10 @@ public class ParserInterpreter : Parser {
 			predictedAlt = visitDecisionState((DecisionState) p);
 		}
 
-		Transition transition = p.transition(predictedAlt - 1);
-		switch (transition.getSerializationType()) {
+		Transition transition = p.Transition(predictedAlt - 1);
+		switch (transition.SerializationType) {
 			case Transition.EPSILON:
-				if ( p.getStateType()==ATNState.STAR_LOOP_ENTRY &&
+				if ( p.StateType==ATNState.STAR_LOOP_ENTRY &&
 					 ((StarLoopEntryState)p).isPrecedenceDecision &&
 					 !(transition.target is LoopEndState))
 				{
@@ -236,7 +236,7 @@ public class ParserInterpreter : Parser {
 			case Transition.RANGE:
 			case Transition.SET:
 			case Transition.NOT_SET:
-				if (!transition.matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535)) {
+				if (!transition.Matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535)) {
 					recoverInline();
 				}
 				matchWildcard();
@@ -290,7 +290,7 @@ public class ParserInterpreter : Parser {
 	 */
 	protected int visitDecisionState(DecisionState p) {
 		int predictedAlt = 1;
-		if ( p.getNumberOfTransitions()>1 ) {
+		if ( p.NumberOfTransitions>1 ) {
 			getErrorHandler().sync(this);
 			int decision = p.decision;
 			if ( decision == overrideDecision && input.index() == overrideDecisionInputIndex &&
@@ -328,7 +328,7 @@ public class ParserInterpreter : Parser {
 			exitRule();
 		}
 
-		RuleTransition ruleTransition = (RuleTransition)atn.states[(getState())].transition(0);
+		RuleTransition ruleTransition = (RuleTransition)atn.states[(getState())].Transition(0);
 		setState(ruleTransition.followState.stateNumber);
 	}
 
@@ -396,7 +396,7 @@ public class ParserInterpreter : Parser {
 				Token tok = e.getOffendingToken();
 				int expectedTokenType = Token.INVALID_TYPE;
 				if ( !ime.getExpectedTokens().IsNil ) {
-					expectedTokenType = ime.getExpectedTokens().getMinElement(); // get any element
+					expectedTokenType = ime.getExpectedTokens().GetMinElement(); // get any element
 				}
 				Token errToken =
 					(getTokenFactory() as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().getInputStream()),

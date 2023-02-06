@@ -168,9 +168,9 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
         _hitEOF = false;
         _mode = Lexer.DEFAULT_MODE;
-        _modeStack.clear();
+        _modeStack.Clear();
 
-        getInterpreter().reset();
+        getInterpreter().Reset();
     }
 
     /** Return a token from this source; i.e., match a token on the char
@@ -201,8 +201,8 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                 token = null;
                 _channel = Token.DEFAULT_CHANNEL;
                 _tokenStartCharIndex = input.index();
-                _tokenStartCharPositionInLine = getInterpreter().getCharPositionInLine();
-                _tokenStartLine = getInterpreter().getLine();
+                _tokenStartCharPositionInLine = getInterpreter().GetCharPositionInLine();
+                _tokenStartLine = getInterpreter().GetLine();
                 _text = null;
                 do
                 {
@@ -213,7 +213,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                     int ttype;
                     try
                     {
-                        ttype = getInterpreter().match(input, _mode);
+                        ttype = getInterpreter().Match(input, _mode);
                     }
                     catch (LexerNoViableAltException e)
                     {
@@ -273,7 +273,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     public int popMode()
     {
-        if (_modeStack.isEmpty()) throw new EmptyStackException();
+        if (_modeStack.IsEmpty) throw new EmptyStackException();
         if (LexerATNSimulator.debug) Console.WriteLine("popMode back to " + _modeStack.peek());
         mode(_modeStack.pop());
         return _mode;
@@ -352,23 +352,23 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     //@Override
     public int getLine()
     {
-        return getInterpreter().getLine();
+        return getInterpreter().GetLine();
     }
 
     //@Override
     public int getCharPositionInLine()
     {
-        return getInterpreter().getCharPositionInLine();
+        return getInterpreter().GetCharPositionInLine();
     }
 
     public void setLine(int line)
     {
-        getInterpreter().setLine(line);
+        getInterpreter().SetLine(line);
     }
 
     public void setCharPositionInLine(int charPositionInLine)
     {
-        getInterpreter().setCharPositionInLine(charPositionInLine);
+        getInterpreter().SetCharPositionInLine(charPositionInLine);
     }
 
     /** What is the index of the current character of lookahead? */
@@ -386,7 +386,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         {
             return _text;
         }
-        return getInterpreter().getText(input);
+        return getInterpreter().GetText(input);
     }
 
     /** Set the complete text of this token; it wipes any previous
@@ -463,7 +463,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         if (input.LA(1) != IntStream.EOF)
         {
             // skip a char and try again
-            getInterpreter().consume(input);
+            getInterpreter().Consume(input);
         }
     }
 

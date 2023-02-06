@@ -14,16 +14,14 @@ public class NotSetTransition : SetTransition {
     {
 	}
 
-	//@Override
-	public override int getSerializationType() {
-		return NOT_SET;
-	}
+    //@Override
+    public override int SerializationType => NOT_SET;
 
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol
 			&& symbol <= maxVocabSymbol
-			&& !base.matches(symbol, minVocabSymbol, maxVocabSymbol);
+			&& !base.Matches(symbol, minVocabSymbol, maxVocabSymbol);
 	}
 
 	//@Override

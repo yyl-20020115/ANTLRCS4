@@ -14,15 +14,16 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public interface LexerAction {
-	/**
+public interface LexerAction
+{
+    /**
 	 * Gets the serialization type of the lexer action.
 	 *
 	 * @return The serialization type of the lexer action.
 	 */
-	LexerActionType getActionType();
+    LexerActionType ActionType { get; }
 
-	/**
+    /**
 	 * Gets whether the lexer action is position-dependent. Position-dependent
 	 * actions may have different semantics depending on the {@link CharStream}
 	 * index at the time the action is executed.
@@ -36,9 +37,9 @@ public interface LexerAction {
 	 * position of the input {@link CharStream} at the time it is executed;
 	 * otherwise, {@code false}.
 	 */
-	bool isPositionDependent();
+    bool IsPositionDependent { get; }
 
-	/**
+    /**
 	 * Execute the lexer action in the context of the specified {@link Lexer}.
 	 *
 	 * <p>For position-dependent actions, the input stream must already be
@@ -46,5 +47,5 @@ public interface LexerAction {
 	 *
 	 * @param lexer The lexer instance.
 	 */
-	void execute(Lexer lexer);
+    void Execute(Lexer lexer);
 }

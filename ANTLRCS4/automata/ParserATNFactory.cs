@@ -67,9 +67,9 @@ public class ParserATNFactory : ATNFactory
         foreach (var pair in preventEpsilonOptionalBlocks)
         {
             int bypassCount = 0;
-            for (int i = 0; i < pair.b.getNumberOfTransitions(); i++)
+            for (int i = 0; i < pair.b.NumberOfTransitions; i++)
             {
-                var startState = pair.b.transition(i).target;
+                var startState = pair.b.Transition(i).target;
                 if (startState == pair.c)
                 {
                     bypassCount++;
@@ -403,24 +403,24 @@ public class ParserATNFactory : ATNFactory
                 return h;
             }
             var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
-            if (alts.Count > 1) atn.defineDecisionState(start);
+            if (alts.Count > 1) atn.DefineDecisionState(start);
             return MakeBlock(start, blkAST, alts);
         }
         switch (ebnfRoot.getType())
         {
             case ANTLRParser.OPTIONAL:
                 var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
-                atn.defineDecisionState(start);
+                atn.DefineDecisionState(start);
                 Handle h = MakeBlock(start, blkAST, alts);
                 return Optional(ebnfRoot, h);
             case ANTLRParser.CLOSURE:
                 var _star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
-                if (alts.Count > 1) atn.defineDecisionState(_star);
+                if (alts.Count > 1) atn.DefineDecisionState(_star);
                 h = MakeBlock(_star, blkAST, alts);
                 return Star(ebnfRoot, h);
             case ANTLRParser.POSITIVE_CLOSURE:
                 var _plus = newState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
-                if (alts.Count > 1) atn.defineDecisionState(_plus);
+                if (alts.Count > 1) atn.DefineDecisionState(_plus);
                 h = MakeBlock(_plus, blkAST, alts);
                 return Plus(ebnfRoot, h);
         }
@@ -464,11 +464,11 @@ public class ParserATNFactory : ATNFactory
             // if el is of form o-x->o for x in {rule, action, pred, token, ...}
             // and not last in alt
             Transition tr = null;
-            if (el.left.getNumberOfTransitions() == 1) tr = el.left.transition(0);
+            if (el.left.NumberOfTransitions == 1) tr = el.left.Transition(0);
             bool isRuleTrans = tr is RuleTransition;
-            if (el.left.getStateType() == ATNState.BASIC &&
+            if (el.left.StateType == ATNState.BASIC &&
                 el.right != null &&
-                el.right.getStateType() == ATNState.BASIC &&
+                el.right.                StateType == ATNState.BASIC &&
                 tr != null && (isRuleTrans && ((RuleTransition)tr).followState == el.right || tr.target == el.right))
             {
                 // we can avoid epsilon edge to next el
@@ -488,7 +488,7 @@ public class ParserATNFactory : ATNFactory
                         tr.target = handle.left;
                     }
                 }
-                atn.removeState(el.right); // we skipped over this state
+                atn.RemoveState(el.right); // we skipped over this state
             }
             else
             { // need epsilon if previous block's right end node is complicated
@@ -560,7 +560,7 @@ public class ParserATNFactory : ATNFactory
 
         var loop = newState<PlusLoopbackState>(plusAST);
         loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
-        atn.defineDecisionState(loop);
+        atn.DefineDecisionState(loop);
         var end = newState<LoopEndState>(plusAST);
         blkStart.loopBackState = loop;
         end.loopBackState = loop;
@@ -614,7 +614,7 @@ public class ParserATNFactory : ATNFactory
 
         var entry = newState<StarLoopEntryState>(starAST);
         entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
-        atn.defineDecisionState(entry);
+        atn.DefineDecisionState(entry);
         LoopEndState end = newState<LoopEndState>(starAST);
         StarLoopbackState loop = newState<StarLoopbackState>(starAST);
         entry.loopBackState = loop;
@@ -662,8 +662,8 @@ public class ParserATNFactory : ATNFactory
     {
         if (a != null)
         {
-            int index = prepend ? 0 : a.getNumberOfTransitions();
-            a.addTransition(index, new EpsilonTransition(b));
+            int index = prepend ? 0 : a.NumberOfTransitions;
+            a.AddTransition(index, new EpsilonTransition(b));
         }
     }
 
@@ -680,8 +680,8 @@ public class ParserATNFactory : ATNFactory
             var stop = newState<RuleStopState>(r.ast);
             start.stopState = stop;
             start.isLeftRecursiveRule = r is LeftRecursiveRule;
-            start.setRuleIndex(r.index);
-            stop.setRuleIndex(r.index);
+            start.SetRuleIndex(r.index);
+            stop.SetRuleIndex(r.index);
             atn.ruleToStartState[r.index] = start;
             atn.ruleToStopState[r.index] = stop;
         }
@@ -692,10 +692,10 @@ public class ParserATNFactory : ATNFactory
         foreach (var p in atn.states)
         {
             if (p != null &&
-                 p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions() == 1 &&
-                 p.transition(0) is RuleTransition)
+                 p.                 StateType == ATNState.BASIC && p.NumberOfTransitions == 1 &&
+                 p.Transition(0) is RuleTransition)
             {
-                var rt = (RuleTransition)p.transition(0);
+                var rt = (RuleTransition)p.Transition(0);
                 AddFollowLink(rt.ruleIndex, rt.followState);
             }
         }
@@ -716,7 +716,7 @@ public class ParserATNFactory : ATNFactory
         foreach (Rule r in g.rules.Values)
         {
             ATNState stop = atn.ruleToStopState[r.index];
-            if (stop.getNumberOfTransitions() > 0) continue;
+            if (stop.NumberOfTransitions > 0) continue;
             n++;
             Transition t = new AtomTransition(eofTarget, Token.EOF);
             stop.AddTransition(t);
@@ -747,9 +747,9 @@ public class ParserATNFactory : ATNFactory
         {
             ConstructorInfo ctor = nodeType.GetConstructor(Array.Empty<Type>());
             T s = ctor.Invoke(Array.Empty<object>()) as T;
-            if (currentRule == null) s.setRuleIndex(-1);
-            else s.setRuleIndex(currentRule.index);
-            atn.addState(s);
+            if (currentRule == null) s.SetRuleIndex(-1);
+            else s.SetRuleIndex(currentRule.index);
+            atn.AddState(s);
             return s;
         }
         catch (Exception ex)
@@ -765,8 +765,8 @@ public class ParserATNFactory : ATNFactory
     public ATNState NewState(GrammarAST node)
     {
         ATNState n = new BasicState();
-        n.setRuleIndex(currentRule.index);
-        atn.addState(n);
+        n.SetRuleIndex(currentRule.index);
+        atn.AddState(n);
         return n;
     }
 

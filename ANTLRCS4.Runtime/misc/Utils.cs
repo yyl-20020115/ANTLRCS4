@@ -135,7 +135,7 @@ public static class RuntimeUtils
         return m;
     }
 
-    public static char[] ToCharArray(IntegerList data) => data?.toCharArray();
+    public static char[] ToCharArray(IntegerList data) => data?.ToCharArray();
 
     public static IntervalSet ToSet(BitSet bits)
     {

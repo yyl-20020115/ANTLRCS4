@@ -16,22 +16,24 @@ namespace org.antlr.v4.runtime.atn;
  *  See {@link ATNDeserializer#encodeIntsWith16BitWords(IntegerList)} and
  *  {@link org.antlr.v4.codegen.model.SerializedJavaATN}.
  */
-public class ATNSerializer {
-	public ATN atn;
+public class ATNSerializer
+{
+    public ATN atn;
 
-	private readonly IntegerList data = new ();
-	/** Note that we use a LinkedHashMap as a set to mainintain insertion order while deduplicating
+    private readonly IntegerList data = new();
+    /** Note that we use a LinkedHashMap as a set to mainintain insertion order while deduplicating
 	    entries with the same key. */
-	private readonly Dictionary<IntervalSet, bool> sets = new ();
-	private readonly IntegerList nonGreedyStates = new ();
-	private readonly IntegerList _precedenceStates = new ();
+    private readonly Dictionary<IntervalSet, bool> sets = new();
+    private readonly IntegerList nonGreedyStates = new();
+    private readonly IntegerList _precedenceStates = new();
 
-	public ATNSerializer(ATN atn) {
-		//assert atn.grammarType != null;
-		this.atn = atn;
-	}
+    public ATNSerializer(ATN atn)
+    {
+        //assert atn.grammarType != null;
+        this.atn = atn;
+    }
 
-	/** Serialize state descriptors, edge descriptors, and decision&rarr;state map
+    /** Serialize state descriptors, edge descriptors, and decision&rarr;state map
 	 *  into list of ints.  Likely out of date, but keeping as it could be helpful:
 	 *
 	 *      SERIALIZED_VERSION
@@ -56,267 +58,305 @@ public class ATNSerializer {
 	 *
 	 *  Convenient to pack into unsigned shorts to make as Java string.
 	 */
-	public IntegerList serialize() {
-		addPreamble();
-		int nedges = addEdges();
-		addNonGreedyStates();
-		addPrecedenceStates();
-		addRuleStatesAndLexerTokenTypes();
-		addModeStartStates();
-		Dictionary<IntervalSet, int> setIndices = null;
-		setIndices = addSets();
-		addEdges(nedges, setIndices);
-		addDecisionStartStates();
-		addLexerActions();
+    public IntegerList Serialize()
+    {
+        AddPreamble();
+        int nedges = AddEdges();
+        AddNonGreedyStates();
+        AddPrecedenceStates();
+        AddRuleStatesAndLexerTokenTypes();
+        AddModeStartStates();
+        Dictionary<IntervalSet, int> setIndices = null;
+        setIndices = AddSets();
+        AddEdges(nedges, setIndices);
+        AddDecisionStartStates();
+        AddLexerActions();
 
-		return data;
-	}
+        return data;
+    }
 
-	private void addPreamble() {
-		data.add(ATNDeserializer.SERIALIZED_VERSION);
+    private void AddPreamble()
+    {
+        data.Add(ATNDeserializer.SERIALIZED_VERSION);
 
-		// convert grammar type to ATN const to avoid dependence on ANTLRParser
-		data.add((int)atn.grammarType);
-		data.add(atn.maxTokenType);
-	}
+        // convert grammar type to ATN const to avoid dependence on ANTLRParser
+        data.Add((int)atn.grammarType);
+        data.Add(atn.maxTokenType);
+    }
 
-	private void addLexerActions() {
-		if (atn.grammarType == ATNType.LEXER) {
-			data.add(atn.lexerActions.Length);
-			foreach (LexerAction action in atn.lexerActions) {
-				data.add((int)action.getActionType());
-				switch (action.getActionType()) {
-				case LexerActionType.CHANNEL:
-					int channel = ((LexerChannelAction)action).getChannel();
-					data.add(channel);
-					data.add(0);
-					break;
+    private void AddLexerActions()
+    {
+        if (atn.grammarType == ATNType.LEXER)
+        {
+            data.Add(atn.lexerActions.Length);
+            foreach (LexerAction action in atn.lexerActions)
+            {
+                data.Add((int)action.ActionType);
+                switch (action.ActionType)
+                {
+                    case LexerActionType.CHANNEL:
+                        int channel = ((LexerChannelAction)action).GetChannel();
+                        data.Add(channel);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.CUSTOM:
-					int ruleIndex = ((LexerCustomAction)action).getRuleIndex();
-					int actionIndex = ((LexerCustomAction)action).getActionIndex();
-					data.add(ruleIndex);
-					data.add(actionIndex);
-					break;
+                    case LexerActionType.CUSTOM:
+                        int ruleIndex = ((LexerCustomAction)action).GetRuleIndex();
+                        int actionIndex = ((LexerCustomAction)action).GetActionIndex();
+                        data.Add(ruleIndex);
+                        data.Add(actionIndex);
+                        break;
 
-				case LexerActionType.MODE:
-					int mode = ((LexerModeAction)action).getMode();
-					data.add(mode);
-					data.add(0);
-					break;
+                    case LexerActionType.MODE:
+                        int mode = ((LexerModeAction)action).getMode();
+                        data.Add(mode);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.MORE:
-					data.add(0);
-					data.add(0);
-					break;
+                    case LexerActionType.MORE:
+                        data.Add(0);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.POP_MODE:
-					data.add(0);
-					data.add(0);
-					break;
+                    case LexerActionType.POP_MODE:
+                        data.Add(0);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.PUSH_MODE:
-					mode = ((LexerPushModeAction)action).getMode();
-					data.add(mode);
-					data.add(0);
-					break;
+                    case LexerActionType.PUSH_MODE:
+                        mode = ((LexerPushModeAction)action).getMode();
+                        data.Add(mode);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.SKIP:
-					data.add(0);
-					data.add(0);
-					break;
+                    case LexerActionType.SKIP:
+                        data.Add(0);
+                        data.Add(0);
+                        break;
 
-				case LexerActionType.TYPE:
-					int type = ((LexerTypeAction)action).getType();
-					data.add(type);
-					data.add(0);
-					break;
+                    case LexerActionType.TYPE:
+                        int type = ((LexerTypeAction)action).getType();
+                        data.Add(type);
+                        data.Add(0);
+                        break;
 
-				default:
-					String message = $"The specified lexer action type {action.getActionType()} is not valid.";
-					throw new ArgumentException(message);
-				}
-			}
-		}
-	}
+                    default:
+                        var message = $"The specified lexer action type {action.ActionType} is not valid.";
+                        throw new ArgumentException(message);
+                }
+            }
+        }
+    }
 
-	private void addDecisionStartStates() {
-		int ndecisions = atn.decisionToState.Count;
-		data.add(ndecisions);
-		foreach (DecisionState decStartState in atn.decisionToState) {
-			data.add(decStartState.stateNumber);
-		}
-	}
+    private void AddDecisionStartStates()
+    {
+        int ndecisions = atn.decisionToState.Count;
+        data.Add(ndecisions);
+        foreach (var decStartState in atn.decisionToState)
+        {
+            data.Add(decStartState.stateNumber);
+        }
+    }
 
-	private void addEdges(int nedges, Dictionary<IntervalSet, int> setIndices) {
-		data.add(nedges);
-		foreach (ATNState s in atn.states) {
-			if ( s==null ) {
-				// might be optimized away
-				continue;
-			}
+    private void AddEdges(int nedges, Dictionary<IntervalSet, int> setIndices)
+    {
+        data.Add(nedges);
+        foreach (var s in atn.states)
+        {
+            if (s == null)
+            {
+                // might be optimized away
+                continue;
+            }
 
-			if (s.getStateType() == ATNState.RULE_STOP) {
-				continue;
-			}
+            if (s.StateType == ATNState.RULE_STOP)
+            {
+                continue;
+            }
 
-			for (int i=0; i<s.getNumberOfTransitions(); i++) {
-				Transition t = s.transition(i);
+            for (int i = 0; i < s.NumberOfTransitions; i++)
+            {
+                var t = s.Transition(i);
 
-				if (atn.states[(t.target.stateNumber)] == null) {
-					throw new IllegalStateException("Cannot serialize a transition to a removed state.");
-				}
+                if (atn.states[(t.target.stateNumber)] == null)
+                {
+                    throw new IllegalStateException("Cannot serialize a transition to a removed state.");
+                }
 
-				int src = s.stateNumber;
-				int trg = t.target.stateNumber;
-				int edgeType = Transition.serializationTypes[(t.GetType())];
-				int arg1 = 0;
-				int arg2 = 0;
-				int arg3 = 0;
-				switch ( edgeType ) {
-					case Transition.RULE :
-						trg = ((RuleTransition)t).followState.stateNumber;
-						arg1 = ((RuleTransition)t).target.stateNumber;
-						arg2 = ((RuleTransition)t).ruleIndex;
-						arg3 = ((RuleTransition)t).precedence;
-						break;
-					case Transition.PRECEDENCE:
-						PrecedencePredicateTransition ppt = (PrecedencePredicateTransition)t;
-						arg1 = ppt.precedence;
-						break;
-					case Transition.PREDICATE :
-						PredicateTransition pt = (PredicateTransition)t;
-						arg1 = pt.ruleIndex;
-						arg2 = pt.predIndex;
-						arg3 = pt.isCtxDependent ? 1 : 0 ;
-						break;
-					case Transition.RANGE :
-						arg1 = ((RangeTransition)t).from;
-						arg2 = ((RangeTransition)t).to;
-						if (arg1 == Token.EOF) {
-							arg1 = 0;
-							arg3 = 1;
-						}
-						break;
-					case Transition.ATOM :
-						arg1 = ((AtomTransition)t)._label;
-						if (arg1 == Token.EOF) {
-							arg1 = 0;
-							arg3 = 1;
-						}
-						break;
-					case Transition.ACTION :
-						ActionTransition at = (ActionTransition)t;
-						arg1 = at.ruleIndex;
-						arg2 = at.actionIndex;
-						arg3 = at.isCtxDependent ? 1 : 0 ;
-						break;
-					case Transition.SET :
+                int src = s.stateNumber;
+                int trg = t.target.stateNumber;
+                int edgeType = Transition.serializationTypes[(t.GetType())];
+                int arg1 = 0;
+                int arg2 = 0;
+                int arg3 = 0;
+                switch (edgeType)
+                {
+                    case Transition.RULE:
+                        trg = ((RuleTransition)t).followState.stateNumber;
+                        arg1 = ((RuleTransition)t).target.stateNumber;
+                        arg2 = ((RuleTransition)t).ruleIndex;
+                        arg3 = ((RuleTransition)t).precedence;
+                        break;
+                    case Transition.PRECEDENCE:
+                        PrecedencePredicateTransition ppt = (PrecedencePredicateTransition)t;
+                        arg1 = ppt.precedence;
+                        break;
+                    case Transition.PREDICATE:
+                        PredicateTransition pt = (PredicateTransition)t;
+                        arg1 = pt.ruleIndex;
+                        arg2 = pt.predIndex;
+                        arg3 = pt.isCtxDependent ? 1 : 0;
+                        break;
+                    case Transition.RANGE:
+                        arg1 = ((RangeTransition)t).from;
+                        arg2 = ((RangeTransition)t).to;
+                        if (arg1 == Token.EOF)
+                        {
+                            arg1 = 0;
+                            arg3 = 1;
+                        }
+                        break;
+                    case Transition.ATOM:
+                        arg1 = ((AtomTransition)t)._label;
+                        if (arg1 == Token.EOF)
+                        {
+                            arg1 = 0;
+                            arg3 = 1;
+                        }
+                        break;
+                    case Transition.ACTION:
+                        ActionTransition at = (ActionTransition)t;
+                        arg1 = at.ruleIndex;
+                        arg2 = at.actionIndex;
+                        arg3 = at.isCtxDependent ? 1 : 0;
+                        break;
+                    case Transition.SET:
                     case Transition.NOT_SET:
                         if (setIndices.TryGetValue(((SetTransition)t).set, out var ret))
-						{
-							arg1 = ret;
-						}
-						break;
-					case Transition.WILDCARD :
-						break;
-				}
+                        {
+                            arg1 = ret;
+                        }
+                        break;
+                    case Transition.WILDCARD:
+                        break;
+                }
 
-				data.add(src);
-				data.add(trg);
-				data.add(edgeType);
-				data.add(arg1);
-				data.add(arg2);
-				data.add(arg3);
-			}
-		}
-	}
+                data.Add(src);
+                data.Add(trg);
+                data.Add(edgeType);
+                data.Add(arg1);
+                data.Add(arg2);
+                data.Add(arg3);
+            }
+        }
+    }
 
-	private Dictionary<IntervalSet, int> addSets() {
-		serializeSets(data,	sets.Keys);
-        Dictionary<IntervalSet, int> setIndices = new ();
-		int setIndex = 0;
-		foreach (IntervalSet s in sets.Keys) {
-			setIndices[s]=setIndex++;
-		}
-		return setIndices;
-	}
+    private Dictionary<IntervalSet, int> AddSets()
+    {
+        SerializeSets(data, sets.Keys);
+        Dictionary<IntervalSet, int> setIndices = new();
+        int setIndex = 0;
+        foreach (IntervalSet s in sets.Keys)
+        {
+            setIndices[s] = setIndex++;
+        }
+        return setIndices;
+    }
 
-	private void addModeStartStates() {
-		int nmodes = atn.modeToStartState.Count;
-		data.add(nmodes);
-		if ( nmodes>0 ) {
-			foreach (ATNState modeStartState in atn.modeToStartState) {
-				data.add(modeStartState.stateNumber);
-			}
-		}
-	}
+    private void AddModeStartStates()
+    {
+        int nmodes = atn.modeToStartState.Count;
+        data.Add(nmodes);
+        if (nmodes > 0)
+        {
+            foreach (ATNState modeStartState in atn.modeToStartState)
+            {
+                data.Add(modeStartState.stateNumber);
+            }
+        }
+    }
 
-	private void addRuleStatesAndLexerTokenTypes() {
-		int nrules = atn.ruleToStartState.Length;
-		data.add(nrules);
-		for (int r=0; r<nrules; r++) {
-			ATNState ruleStartState = atn.ruleToStartState[r];
-			data.add(ruleStartState.stateNumber);
-			if (atn.grammarType == ATNType.LEXER) {
-				//assert atn.ruleToTokenType[r]>=0; // 0 implies fragment rule, other token types > 0
-				data.add(atn.ruleToTokenType[r]);
-			}
-		}
-	}
+    private void AddRuleStatesAndLexerTokenTypes()
+    {
+        int nrules = atn.ruleToStartState.Length;
+        data.Add(nrules);
+        for (int r = 0; r < nrules; r++)
+        {
+            ATNState ruleStartState = atn.ruleToStartState[r];
+            data.Add(ruleStartState.stateNumber);
+            if (atn.grammarType == ATNType.LEXER)
+            {
+                //assert atn.ruleToTokenType[r]>=0; // 0 implies fragment rule, other token types > 0
+                data.Add(atn.ruleToTokenType[r]);
+            }
+        }
+    }
 
-	private void addPrecedenceStates() {
-		data.add(_precedenceStates.size());
-		for (int i = 0; i < _precedenceStates.size(); i++) {
-			data.add(_precedenceStates.get(i));
-		}
-	}
+    private void AddPrecedenceStates()
+    {
+        data.Add(_precedenceStates.Size());
+        for (int i = 0; i < _precedenceStates.Size(); i++)
+        {
+            data.Add(_precedenceStates.Get(i));
+        }
+    }
 
-	private void addNonGreedyStates() {
-		data.add(nonGreedyStates.size());
-		for (int i = 0; i < nonGreedyStates.size(); i++) {
-			data.add(nonGreedyStates.get(i));
-		}
-	}
+    private void AddNonGreedyStates()
+    {
+        data.Add(nonGreedyStates.Size());
+        for (int i = 0; i < nonGreedyStates.Size(); i++)
+        {
+            data.Add(nonGreedyStates.Get(i));
+        }
+    }
 
-	private int addEdges() {
-		int nedges = 0;
-		data.add(atn.states.Count);
-		foreach (ATNState s in atn.states) {
-			if ( s==null ) { // might be optimized away
-				data.add(ATNState.INVALID_TYPE);
-				continue;
-			}
+    private int AddEdges()
+    {
+        int nedges = 0;
+        data.Add(atn.states.Count);
+        foreach (ATNState s in atn.states)
+        {
+            if (s == null)
+            { // might be optimized away
+                data.Add(ATNState.INVALID_TYPE);
+                continue;
+            }
 
-			int stateType = s.getStateType();
-			if (s is DecisionState && ((DecisionState)s).nonGreedy) {
-				nonGreedyStates.add(s.stateNumber);
-			}
+            int stateType = s.StateType;
+            if (s is DecisionState state && state.nonGreedy)
+            {
+                nonGreedyStates.Add(s.stateNumber);
+            }
 
-			if (s is RuleStartState && ((RuleStartState)s).isLeftRecursiveRule) {
-				_precedenceStates.add(s.stateNumber);
-			}
+            if (s is RuleStartState state1 && state1.isLeftRecursiveRule)
+            {
+                _precedenceStates.Add(s.stateNumber);
+            }
 
-			data.add(stateType);
+            data.Add(stateType);
 
-			data.add(s.ruleIndex);
+            data.Add(s.ruleIndex);
 
-			if ( s.getStateType() == ATNState.LOOP_END ) {
-				data.add(((LoopEndState)s).loopBackState.stateNumber);
-			}
-			else if ( s is BlockStartState ) {
-				data.add(((BlockStartState)s).endState.stateNumber);
-			}
+            if (s.StateType == ATNState.LOOP_END)
+            {
+                data.Add(((LoopEndState)s).loopBackState.stateNumber);
+            }
+            else if (s is BlockStartState state2)
+            {
+                data.Add(state2.endState.stateNumber);
+            }
 
-			if (s.getStateType() != ATNState.RULE_STOP) {
-				// the deserializer can trivially derive these edges, so there's no need to serialize them
-				nedges += s.getNumberOfTransitions();
-			}
+            if (s.StateType != ATNState.RULE_STOP)
+            {
+                // the deserializer can trivially derive these edges, so there's no need to serialize them
+                nedges += s.NumberOfTransitions;
+            }
 
-			for (int i=0; i<s.getNumberOfTransitions(); i++) {
-				Transition t = s.transition(i);
-				if(Transition.serializationTypes.TryGetValue(t.GetType(),out var edgeType))
-				{
+            for (int i = 0; i < s.NumberOfTransitions; i++)
+            {
+                var t = s.Transition(i);
+                if (Transition.serializationTypes.TryGetValue(t.GetType(), out var edgeType))
+                {
                     if (edgeType == Transition.SET || edgeType == Transition.NOT_SET)
                     {
                         SetTransition st = (SetTransition)t;
@@ -324,42 +364,52 @@ public class ATNSerializer {
                     }
                 }
             }
-		}
-		return nedges;
-	}
+        }
+        return nedges;
+    }
 
-	private static void serializeSets(IntegerList data, ICollection<IntervalSet> sets) {
-		int nSets = sets.Count;
-		data.add(nSets);
+    private static void SerializeSets(IntegerList data, ICollection<IntervalSet> sets)
+    {
+        int nSets = sets.Count;
+        data.Add(nSets);
 
-		foreach (IntervalSet set in sets) {
-			bool containsEof = set.Contains(Token.EOF);
-			if (containsEof && set.getIntervals()[(0)].b == Token.EOF) {
-				data.add(set.getIntervals().Count - 1);
-			}
-			else {
-				data.add(set.getIntervals().Count);
-			}
+        foreach (var set in sets)
+        {
+            bool containsEof = set.Contains(Token.EOF);
+            if (containsEof && set.GetIntervals()[(0)].b == Token.EOF)
+            {
+                data.Add(set.GetIntervals().Count - 1);
+            }
+            else
+            {
+                data.Add(set.GetIntervals().Count);
+            }
 
-			data.add(containsEof ? 1 : 0);
-			foreach (Interval I in set.getIntervals()) {
-				if (I.a == Token.EOF) {
-					if (I.b == Token.EOF) {
-						continue;
-					}
-					else {
-						data.add(0);
-					}
-				}
-				else {
-					data.add(I.a);
-				}
-				data.add(I.b);
-			}
-		}
-	}
+            data.Add(containsEof ? 1 : 0);
+            foreach (Interval I in set.GetIntervals())
+            {
+                if (I.a == Token.EOF)
+                {
+                    if (I.b == Token.EOF)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        data.Add(0);
+                    }
+                }
+                else
+                {
+                    data.Add(I.a);
+                }
+                data.Add(I.b);
+            }
+        }
+    }
 
-	public static IntegerList getSerialized(ATN atn) {
-		return new ATNSerializer(atn).serialize();
-	}
+    public static IntegerList GetSerialized(ATN atn)
+    {
+        return new ATNSerializer(atn).Serialize();
+    }
 }

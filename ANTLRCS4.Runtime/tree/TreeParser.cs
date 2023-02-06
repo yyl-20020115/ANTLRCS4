@@ -274,4 +274,19 @@ public class TreeParser : BaseRecognizer
     {
         base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }
+    // $ANTLR end "atom"
+
+    // $ANTLR start synpred1_LeftRecursiveRuleWalker
+    public void synpred1LeftRecursiveRuleWalkerFragment()
+    {
+        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:9: ( binary )
+        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:10: binary
+        {
+            PushFollow(FOLLOW_binary_in_synpred1_LeftRecursiveRuleWalker348);
+            Binary();
+            state._fsp--;
+            if (state.failed) return;
+        }
+
+    }
 }

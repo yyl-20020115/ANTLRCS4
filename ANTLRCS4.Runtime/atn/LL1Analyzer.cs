@@ -34,12 +34,12 @@ public class LL1Analyzer {
 			return null;
 		}
 
-		IntervalSet[] look = new IntervalSet[s.getNumberOfTransitions()];
-		for (int alt = 0; alt < s.getNumberOfTransitions(); alt++) {
+		IntervalSet[] look = new IntervalSet[s.NumberOfTransitions];
+		for (int alt = 0; alt < s.NumberOfTransitions; alt++) {
 			look[alt] = new IntervalSet();
 			HashSet<ATNConfig> lookBusy = new HashSet<ATNConfig>();
 			bool seeThruPreds = false; // fail to get lookahead upon pred
-			_LOOK(s.transition(alt).target, null, EmptyPredictionContext.Instance,
+			_LOOK(s.Transition(alt).target, null, EmptyPredictionContext.Instance,
 				  look[alt], lookBusy, new BitSet(), seeThruPreds, false);
 			// Wipe out lookahead for this alternative if we found nothing
 			// or we had a predicate when we !seeThruPreds
@@ -92,7 +92,7 @@ public class LL1Analyzer {
    	public IntervalSet LOOK(ATNState s, ATNState stopState, RuleContext ctx) {
    		IntervalSet r = new IntervalSet();
 		bool seeThruPreds = true; // ignore preds; get all lookahead
-		PredictionContext lookContext = ctx != null ? PredictionContext.fromRuleContext(s.atn, ctx) : null;
+		PredictionContext lookContext = ctx != null ? PredictionContext.FromRuleContext(s.atn, ctx) : null;
    		_LOOK(s, stopState, lookContext,
 			  r, new HashSet<ATNConfig>(), new BitSet(), seeThruPreds, true);
    		return r;
@@ -145,7 +145,7 @@ public class LL1Analyzer {
 				look.Add(Token.EPSILON);
 				return;
 			}
-			else if (ctx.isEmpty() && addEOF) {
+			else if (ctx.IsEmpty && addEOF) {
 				look.Add(Token.EOF);
 				return;
 			}
@@ -156,7 +156,7 @@ public class LL1Analyzer {
                 look.Add(Token.EPSILON);
                 return;
             }
-            else if (ctx.isEmpty() && addEOF) {
+            else if (ctx.IsEmpty && addEOF) {
 				look.Add(Token.EOF);
 				return;
 			}
@@ -166,10 +166,10 @@ public class LL1Analyzer {
 				bool removed = calledRuleStack.Get(s.ruleIndex);
 				try {
 					calledRuleStack.Clear(s.ruleIndex);
-					for (int i = 0; i < ctx.size(); i++) {
-						ATNState returnState = atn.states[ctx.getReturnState(i)];
+					for (int i = 0; i < ctx.Count; i++) {
+						ATNState returnState = atn.states[ctx.GetReturnState(i)];
 //					    Console.Out.WriteLine("popping back to "+retState);
-						_LOOK(returnState, stopState, ctx.getParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
+						_LOOK(returnState, stopState, ctx.GetParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 					}
 				}
 				finally {
@@ -181,9 +181,9 @@ public class LL1Analyzer {
 			}
         }
 
-        int n = s.getNumberOfTransitions();
+        int n = s.NumberOfTransitions;
         for (int i=0; i<n; i++) {
-			Transition t = s.transition(i);
+			Transition t = s.Transition(i);
 			if ( t.GetType() == typeof(RuleTransition) ) {
 				if (calledRuleStack.Get(((RuleTransition)t).target.ruleIndex)) {
 					continue;
@@ -208,20 +208,20 @@ public class LL1Analyzer {
 					look.Add(HIT_PRED);
 				}
 			}
-			else if ( t.isEpsilon() ) {
+			else if ( t.IsEpsilon ) {
 				_LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
 			}
 			else if ( t.GetType() == typeof(WildcardTransition) ) {
-				look.addAll( IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
+				look.AddAll( IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType) );
 			}
 			else {
 //				Console.Out.WriteLine("adding "+ t);
-				IntervalSet set = t.label();
+				IntervalSet set = t.Label;
 				if (set != null) {
 					if (t is NotSetTransition) {
-						set = set.complement(IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType));
+						set = set.Complement(IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, atn.maxTokenType));
 					}
-					look.addAll(set);
+					look.AddAll(set);
 				}
 			}
 		}

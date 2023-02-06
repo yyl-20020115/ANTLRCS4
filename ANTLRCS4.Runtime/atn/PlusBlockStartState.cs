@@ -15,7 +15,5 @@ public class PlusBlockStartState : BlockStartState {
 	public PlusLoopbackState loopBackState;
 
 
-	public override int getStateType() {
-		return PLUS_BLOCK_START;
-	}
+    public override int StateType => PLUS_BLOCK_START;
 }

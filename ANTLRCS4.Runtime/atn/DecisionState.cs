@@ -6,7 +6,8 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public abstract class DecisionState : ATNState {
-	public int decision = -1;
-	public bool nonGreedy;
+public abstract class DecisionState : ATNState
+{
+    public int decision = -1;
+    public bool nonGreedy;
 }

@@ -24,34 +24,34 @@ public class TailEpsilonRemover : ATNVisitor
 
     public override void VisitState(ATNState p)
     {
-        if (p.getStateType() == ATNState.BASIC && p.getNumberOfTransitions() == 1)
+        if (p.StateType == ATNState.BASIC && p.NumberOfTransitions == 1)
         {
-            var q = p.transition(0).target;
-            if (p.transition(0) is RuleTransition transition)
+            var q = p.Transition(0).target;
+            if (p.Transition(0) is RuleTransition transition)
             {
                 q = transition.followState;
             }
-            if (q.getStateType() == ATNState.BASIC)
+            if (q.StateType == ATNState.BASIC)
             {
                 // we have p-x->q for x in {rule, action, pred, token, ...}
                 // if edge out of q is single epsilon to block end
                 // we can strip epsilon p-x->q-eps->r
-                var trans = q.transition(0);
-                if (q.getNumberOfTransitions() == 1 && trans is EpsilonTransition)
+                var trans = q.Transition(0);
+                if (q.NumberOfTransitions == 1 && trans is EpsilonTransition)
                 {
                     var r = trans.target;
                     if (r is BlockEndState || r is PlusLoopbackState || r is StarLoopbackState)
                     {
                         // skip over q
-                        if (p.transition(0) is RuleTransition transition1)
+                        if (p.Transition(0) is RuleTransition transition1)
                         {
                             transition1.followState = r;
                         }
                         else
                         {
-                            p.transition(0).target = r;
+                            p.Transition(0).target = r;
                         }
-                        _atn.removeState(q);
+                        _atn.RemoveState(q);
                     }
                 }
             }

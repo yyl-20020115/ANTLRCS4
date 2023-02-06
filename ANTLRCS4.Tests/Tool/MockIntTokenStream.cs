@@ -30,7 +30,7 @@ public class MockIntTokenStream : TokenStream
     public void seek(int index) => p = index;
 
     ////@Override
-    public int Count => types.size();
+    public int Count => types.Size();
 
     ////@Override
     public string getSourceName() => IntStream.UNKNOWN_SOURCE_NAME;
@@ -40,14 +40,14 @@ public class MockIntTokenStream : TokenStream
     {
         CommonToken t;
         int rawIndex = p + i - 1;
-        if (rawIndex >= types.size()) t = new CommonToken(Token.EOF);
-        else t = new CommonToken(types.get(rawIndex));
+        if (rawIndex >= types.Size()) t = new CommonToken(Token.EOF);
+        else t = new CommonToken(types.Get(rawIndex));
         t.setTokenIndex(rawIndex);
         return t;
     }
 
     ////@Override
-    public Token get(int i) => new CommonToken(types.get(i));
+    public Token get(int i) => new CommonToken(types.Get(i));
 
     ////@Override
     public TokenSource getTokenSource()

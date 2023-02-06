@@ -29,39 +29,35 @@ public class LexerPopModeAction : LexerAction {
 	private LexerPopModeAction() {
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#POP_MODE}.
 	 */
-	//@Override
-	public LexerActionType getActionType() {
-		return LexerActionType.POP_MODE;
-	}
+    //@Override
+    public LexerActionType ActionType => LexerActionType.POP_MODE;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	//@Override
-	public bool isPositionDependent() {
-		return false;
-	}
+    //@Override
+    public bool IsPositionDependent => false;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#popMode}.</p>
 	 */
-	//@Override
-	public void execute(Lexer lexer) {
+    //@Override
+    public void Execute(Lexer lexer) {
 		lexer.popMode();
 	}
 
 	//@Override
 	public override int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType());
-		return MurmurHash.finish(hash, 1);
+		int hash = MurmurHash.Initialize();
+		hash = MurmurHash.Update(hash, ActionType);
+		return MurmurHash.Finish(hash, 1);
 	}
 
     //@Override

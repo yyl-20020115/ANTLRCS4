@@ -54,14 +54,14 @@ public class AnalysisPipeline
 
     protected void ProcessParser()
     {
-        g.decisionLOOK = new(g.atn.getNumberOfDecisions() + 1);
+        g.decisionLOOK = new(g.atn.NumberOfDecisions() + 1);
         foreach (var state in g.atn.decisionToState)
         {
             g.Tools.Log("LL1", "\nDECISION " + state.decision + " in rule " + g.getRule(state.ruleIndex).name);
             IntervalSet[] look;
             if (state.nonGreedy)
             { // nongreedy decisions can't be LL(1)
-                look = new IntervalSet[state.getNumberOfTransitions() + 1];
+                look = new IntervalSet[state.NumberOfTransitions + 1];
             }
             else
             {
@@ -86,12 +86,12 @@ public class AnalysisPipeline
         foreach (var look in altLook)
         {
             if (look == null) return false; // lookahead must've computation failed
-            if (!look.and(combined).IsNil)
+            if (!look.And(combined).IsNil)
             {
                 collision = true;
                 break;
             }
-            combined.addAll(look);
+            combined.AddAll(look);
         }
         return !collision;
     }

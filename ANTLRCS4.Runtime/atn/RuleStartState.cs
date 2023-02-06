@@ -10,7 +10,5 @@ public class RuleStartState : ATNState {
 	public RuleStopState stopState;
 	public bool isLeftRecursiveRule;
 
-	public override int getStateType() {
-		return RULE_START;
-	}
+    public override int StateType => RULE_START;
 }

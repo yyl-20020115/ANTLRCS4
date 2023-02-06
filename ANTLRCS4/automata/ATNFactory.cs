@@ -31,12 +31,12 @@ public interface ATNFactory
 
     ATN CreateATN();
 
-    void SetCurrentRuleName(String name);
+    void SetCurrentRuleName(string name);
 
     void SetCurrentOuterAlt(int alt);
 
 
-    Handle Rule(GrammarAST ruleAST, String name, Handle blk);
+    Handle Rule(GrammarAST ruleAST, string name, Handle blk);
 
 
     ATNState NewState();
@@ -105,7 +105,7 @@ public interface ATNFactory
     Handle Action(ActionAST action);
 
 
-    Handle Action(String action);
+    Handle Action(string action);
 
 
     Handle Alt(List<Handle> els);

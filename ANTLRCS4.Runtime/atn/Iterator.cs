@@ -8,7 +8,7 @@ using org.antlr.v4.runtime.dfa;
 
 namespace ANTLRCS4.Runtime;
 
-public interface Iterator<E>
+public interface Iterator<T>
 {
     /**
      * Returns {@code true} if the iteration has more elements.
@@ -17,7 +17,7 @@ public interface Iterator<E>
      *
      * @return {@code true} if the iteration has more elements
      */
-    bool hasNext();
+    bool HasNext();
 
     /**
      * Returns the next element in the iteration.
@@ -25,7 +25,7 @@ public interface Iterator<E>
      * @return the next element in the iteration
      * @throws NoSuchElementException if the iteration has no more elements
      */
-    E next();
+    T Next();
 
     /**
      * Removes from the underlying collection the last element returned
@@ -52,7 +52,7 @@ public interface Iterator<E>
      *         been called after the last call to the {@code next}
      *         method
      */
-    void remove()
+    void Remove()
     {
         throw new UnsupportedOperationException("remove");
     }

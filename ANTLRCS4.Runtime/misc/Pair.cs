@@ -32,10 +32,10 @@ public class Pair<A,B> {
 
 
 	public override int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, a);
-		hash = MurmurHash.update(hash, b);
-		return MurmurHash.finish(hash, 2);
+		int hash = MurmurHash.Initialize();
+		hash = MurmurHash.Update(hash, a);
+		hash = MurmurHash.Update(hash, b);
+		return MurmurHash.Finish(hash, 2);
 	}
 
 	public override String ToString() {

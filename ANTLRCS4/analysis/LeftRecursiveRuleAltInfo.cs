@@ -11,22 +11,22 @@ namespace org.antlr.v4.analysis;
 public class LeftRecursiveRuleAltInfo
 {
     public int altNum; // original alt index (from 1)
-    public String leftRecursiveRuleRefLabel;
-    public String altLabel;
+    public string leftRecursiveRuleRefLabel;
+    public string altLabel;
     public readonly bool isListLabel;
-    public String altText;
+    public string altText;
     public AltAST altAST; // transformed ALT
     public AltAST originalAltAST;
     public int nextPrec;
 
-    public LeftRecursiveRuleAltInfo(int altNum, String altText)
+    public LeftRecursiveRuleAltInfo(int altNum, string altText)
         : this(altNum, altText, null, null, false, null)
     {
     }
 
-    public LeftRecursiveRuleAltInfo(int altNum, String altText,
-                                    String leftRecursiveRuleRefLabel,
-                                    String altLabel,
+    public LeftRecursiveRuleAltInfo(int altNum, string altText,
+                                    string leftRecursiveRuleRefLabel,
+                                    string altLabel,
                                     bool isListLabel,
                                     AltAST originalAltAST)
     {

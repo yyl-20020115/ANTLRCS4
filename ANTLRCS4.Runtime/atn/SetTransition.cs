@@ -21,17 +21,14 @@ public class SetTransition : Transition {
 		this.set = set;
 	}
 
-	//@Override
-	public override int getSerializationType() {
-		return SET;
-	}
+    //@Override
+    public override int SerializationType => SET;
 
-	//@Override
+    //@Override
 
-	public override IntervalSet label() { return set; }
-
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    public override IntervalSet Label => set;
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return set.Contains(symbol);
 	}
 

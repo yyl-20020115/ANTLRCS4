@@ -60,9 +60,9 @@ public class LexerInterpreter : Lexer {
 		this.modeNames = modeNames.ToArray();
 		this.vocabulary = vocabulary;
 
-		this._decisionToDFA = new DFA[atn.getNumberOfDecisions()];
+		this._decisionToDFA = new DFA[atn.NumberOfDecisions()];
 		for (int i = 0; i < _decisionToDFA.Length; i++) {
-			_decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+			_decisionToDFA[i] = new DFA(atn.GetDecisionState(i), i);
 		}
 		this._interp = new LexerATNSimulator(this,atn,_decisionToDFA,_sharedContextCache);
 	}

@@ -68,14 +68,14 @@ public class JavaUnicodeInputStream : CharStream
         // make sure the next character has been processed
         this.LA(1);
 
-        if (escapeListIndex >= escapeIndexes.size() || escapeIndexes.get(escapeListIndex) != index())
+        if (escapeListIndex >= escapeIndexes.Size() || escapeIndexes.Get(escapeListIndex) != index())
         {
             source.consume();
             slashCount++;
         }
         else
         {
-            int indirectionLevel = escapeIndirectionLevels.get(escapeListIndex);
+            int indirectionLevel = escapeIndirectionLevels.Get(escapeListIndex);
             for (int i = 0; i < 6 + indirectionLevel; i++)
             {
                 source.consume();
@@ -102,14 +102,14 @@ public class JavaUnicodeInputStream : CharStream
             int desiredIndex = index() + i;
             for (int j = escapeListIndex - 1; j >= 0; j--)
             {
-                if (escapeIndexes.get(j) + 6 + escapeIndirectionLevels.get(j) > desiredIndex)
+                if (escapeIndexes.Get(j) + 6 + escapeIndirectionLevels.Get(j) > desiredIndex)
                 {
-                    desiredIndex -= 5 + escapeIndirectionLevels.get(j);
+                    desiredIndex -= 5 + escapeIndirectionLevels.Get(j);
                 }
 
-                if (escapeIndexes.get(j) == desiredIndex)
+                if (escapeIndexes.Get(j) == desiredIndex)
                 {
-                    return escapeCharacters.get(j);
+                    return escapeCharacters.Get(j);
                 }
             }
 
@@ -118,15 +118,15 @@ public class JavaUnicodeInputStream : CharStream
         else
         {
             int desiredIndex = index() + i - 1;
-            for (int j = escapeListIndex; j < escapeIndexes.size(); j++)
+            for (int j = escapeListIndex; j < escapeIndexes.Size(); j++)
             {
-                if (escapeIndexes.get(j) == desiredIndex)
+                if (escapeIndexes.Get(j) == desiredIndex)
                 {
-                    return escapeCharacters.get(j);
+                    return escapeCharacters.Get(j);
                 }
-                else if (escapeIndexes.get(j) < desiredIndex)
+                else if (escapeIndexes.Get(j) < desiredIndex)
                 {
-                    desiredIndex += 5 + escapeIndirectionLevels.get(j);
+                    desiredIndex += 5 + escapeIndirectionLevels.Get(j);
                 }
                 else
                 {
@@ -145,9 +145,9 @@ public class JavaUnicodeInputStream : CharStream
                 {
                     if (currentIndex[0] - previousIndex > 1)
                     {
-                        escapeIndexes.add(previousIndex);
-                        escapeCharacters.add(c);
-                        escapeIndirectionLevels.add(indirectionLevelPtr[0]);
+                        escapeIndexes.Add(previousIndex);
+                        escapeCharacters.Add(c);
+                        escapeIndirectionLevels.Add(indirectionLevelPtr[0]);
                     }
 
                     range = currentIndex[0];
@@ -192,7 +192,7 @@ public class JavaUnicodeInputStream : CharStream
             slashCount++;
         }
 
-        escapeListIndex = escapeIndexes.binarySearch(source.index());
+        escapeListIndex = escapeIndexes.BinarySearch(source.index());
         if (escapeListIndex < 0)
         {
             escapeListIndex = -escapeListIndex - 1;

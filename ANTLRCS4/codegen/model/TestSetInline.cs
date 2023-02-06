@@ -33,7 +33,7 @@ public class TestSetInline : SrcOp
         List<Bitset> bitsetList = new();
         var target = factory.GetGenerator().Target;
         Bitset current = null;
-        foreach (int ttype in set.toArray())
+        foreach (int ttype in set.ToArray())
         {
             if (current == null || ttype > (current.shift + wordSize - 1))
             {

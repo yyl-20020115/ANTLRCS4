@@ -70,8 +70,8 @@ public class TestInterpreterDataReader
         Assert.IsNull(channels);
         Assert.IsNull(modes);
 
-        var serialized = ATNSerializer.getSerialized(atn);
-        Assert.AreEqual(ATNDeserializer.SERIALIZED_VERSION, serialized.get(0));
+        var serialized = ATNSerializer.GetSerialized(atn);
+        Assert.AreEqual(ATNDeserializer.SERIALIZED_VERSION, serialized.Get(0));
     }
 
     private static List<T> CastList<T>(object obj)

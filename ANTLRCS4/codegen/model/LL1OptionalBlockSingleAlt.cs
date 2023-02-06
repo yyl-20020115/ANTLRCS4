@@ -31,7 +31,7 @@ public class LL1OptionalBlockSingleAlt : LL1Choice
         altLook = GetAltLookaheadAsStringLists(altLookSets);
         var look = altLookSets[0];
         var followLook = altLookSets[1];
-        var expecting = look.or(followLook);
+        var expecting = look.Or(followLook);
         this.error = GetThrowNoViableAlt(factory, blkAST, expecting);
 
         expr = AddCodeForLookaheadTempVar(look);

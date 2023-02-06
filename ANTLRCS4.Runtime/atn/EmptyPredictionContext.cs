@@ -6,43 +6,40 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class EmptyPredictionContext : SingletonPredictionContext {
-	/**
+public class EmptyPredictionContext : SingletonPredictionContext
+{
+    /**
 	 * Represents {@code $} in local context prediction, which means wildcard.
 	 * {@code *+x = *}.
 	 */
-	public static readonly EmptyPredictionContext Instance = new ();
+    public static readonly EmptyPredictionContext Instance = new();
 
-	private EmptyPredictionContext() :base(null, EMPTY_RETURN_STATE)
+    private EmptyPredictionContext() : base(null, EMPTY_RETURN_STATE)
     {
-		;
-	}
+        ;
+    }
 
-	//@Override
-	public bool isEmpty() { return true; }
+    //@Override
+    public bool IsEmpty() => true;
 
-	//@Override
-	public int size() {
-		return 1;
-	}
+    //@Override
+    public int Size => 1;
 
-	//@Override
-	public PredictionContext getParent(int index) {
-		return null;
-	}
+    //@Override
+    public PredictionContext GetParent(int index)
+    {
+        return null;
+    }
 
-	//@Override
-	public int getReturnState(int index) {
-		return returnState;
-	}
+    //@Override
+    public int GetReturnState(int index) => returnState;
 
-	//@Override
-	public bool equals(Object o) {
-		return this == o;
-	}
+    //@Override
+    public override bool Equals(object? o)
+    {
+        return this == o;
+    }
 
-	//@Override
-	public override String ToString() {
-		return "$";
-	}
+    //@Override
+    public override string ToString() => "$";
 }

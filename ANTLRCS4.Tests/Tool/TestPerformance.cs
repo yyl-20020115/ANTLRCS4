@@ -1249,17 +1249,17 @@ public class TestPerformance
         }
 
         //@Override
-        protected override DFAState getExistingTargetState(DFAState s, int t)
+        protected override DFAState GetExistingTargetState(DFAState s, int t)
         {
             totalTransitions++;
-            return base.getExistingTargetState(s, t);
+            return base.GetExistingTargetState(s, t);
         }
 
         //@Override
-        protected override DFAState computeTargetState(CharStream input, DFAState s, int t)
+        protected override DFAState ComputeTargetState(CharStream input, DFAState s, int t)
         {
             computedTransitions++;
-            return base.computeTargetState(input, s, t);
+            return base.ComputeTargetState(input, s, t);
         }
     }
 
@@ -1648,18 +1648,18 @@ public class TestPerformance
 
         public MurmurHashChecksum()
         {
-            this.value = MurmurHash.initialize();
+            this.value = MurmurHash.Initialize();
         }
 
         public void Update(int value)
         {
-            this.value = MurmurHash.update(this.value, value);
+            this.value = MurmurHash.Update(this.value, value);
             this.count++;
         }
 
         public int GetValue()
         {
-            return MurmurHash.finish(value, count);
+            return MurmurHash.Finish(value, count);
         }
     }
 

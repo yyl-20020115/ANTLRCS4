@@ -19,7 +19,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestDollarDollar()
     {
-        var r = PredictionContext.merge(
+        var r = PredictionContext.Merge(
                 EmptyPredictionContext.Instance, EmptyPredictionContext.Instance, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
@@ -33,7 +33,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestDollarDollarFullctx()
     {
-        var r = PredictionContext.merge(
+        var r = PredictionContext.Merge(
                 EmptyPredictionContext.Instance, EmptyPredictionContext.Instance, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
@@ -47,7 +47,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestXDollar()
     {
-        var r = PredictionContext.merge(X(), EmptyPredictionContext.Instance, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(X(), EmptyPredictionContext.Instance, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -60,7 +60,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestXDollarFullctx()
     {
-        var r = PredictionContext.merge(X(), EmptyPredictionContext.Instance, FullCtx(), null);
+        var r = PredictionContext.Merge(X(), EmptyPredictionContext.Instance, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -75,7 +75,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestDollarX()
     {
-        var r = PredictionContext.merge(EmptyPredictionContext.Instance, X(), RootIsWildcard(), null);
+        var r = PredictionContext.Merge(EmptyPredictionContext.Instance, X(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -88,7 +88,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestDollarXFullctx()
     {
-        PredictionContext r = PredictionContext.merge(EmptyPredictionContext.Instance, X(), FullCtx(), null);
+        PredictionContext r = PredictionContext.Merge(EmptyPredictionContext.Instance, X(), FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         String expecting =
             "digraph G {\n" +
@@ -103,7 +103,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestAA()
     {
-        var r = PredictionContext.merge(A(), A(), RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A(), A(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -121,7 +121,7 @@ public class TestGraphNodes
         var a1 = A();
         var _x = X();
         var a2 = CreateSingleton(_x, 1);
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -139,7 +139,7 @@ public class TestGraphNodes
         var a1 = A();
         var _x = X();
         var a2 = CreateSingleton(_x, 1);
-        var r = PredictionContext.merge(a1, a2, FullCtx(), null);
+        var r = PredictionContext.Merge(a1, a2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -159,7 +159,7 @@ public class TestGraphNodes
         var _x = X();
         var a1 = CreateSingleton(_x, 1);
         var a2 = A();
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -176,9 +176,9 @@ public class TestGraphNodes
     {
         var empty = EmptyPredictionContext.Instance;
         var child1 = CreateSingleton(empty, 8);
-        var right = PredictionContext.merge(empty, child1, false, null);
+        var right = PredictionContext.Merge(empty, child1, false, null);
         var left = CreateSingleton(right, 8);
-        var merged = PredictionContext.merge(left, right, false, null);
+        var merged = PredictionContext.Merge(left, right, false, null);
         var actual = ToDOTString(merged, false);
         //		Console.Out.WriteLine(actual);
         var expecting =
@@ -199,7 +199,7 @@ public class TestGraphNodes
         var _x = X();
         var a1 = CreateSingleton(_x, 1);
         var a2 = A();
-        var r = PredictionContext.merge(a1, a2, FullCtx(), null);
+        var r = PredictionContext.Merge(a1, a2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -216,7 +216,7 @@ public class TestGraphNodes
     [TestMethod]
     public void TestAB()
     {
-        var r = PredictionContext.merge(A(), B(), RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A(), B(), RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -235,7 +235,7 @@ public class TestGraphNodes
         var _x = X();
         var a1 = CreateSingleton(_x, 1);
         var a2 = CreateSingleton(_x, 1);
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -256,7 +256,7 @@ public class TestGraphNodes
         var x2 = X();
         var a1 = CreateSingleton(x1, 1);
         var a2 = CreateSingleton(x2, 1);
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -279,7 +279,7 @@ public class TestGraphNodes
         var b2 = CreateSingleton(x2, 2);
         var a1 = CreateSingleton(b1, 1);
         var a2 = CreateSingleton(b2, 1);
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -304,7 +304,7 @@ public class TestGraphNodes
         var c = CreateSingleton(x2, 3);
         var a1 = CreateSingleton(b, 1);
         var a2 = CreateSingleton(c, 1);
-        var r = PredictionContext.merge(a1, a2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a1, a2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -327,7 +327,7 @@ public class TestGraphNodes
         var _x = X();
         var a = CreateSingleton(_x, 1);
         var b = CreateSingleton(_x, 2);
-        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -349,7 +349,7 @@ public class TestGraphNodes
         var x2 = X();
         var a = CreateSingleton(x1, 1);
         var b = CreateSingleton(x2, 2);
-        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -369,7 +369,7 @@ public class TestGraphNodes
     {
         var a = CreateSingleton(X(), 1);
         var b = CreateSingleton(Y(), 2);
-        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -392,7 +392,7 @@ public class TestGraphNodes
         var x2 = X();
         var _a = A();
         var _b = CreateSingleton(x2, 2);
-        var r = PredictionContext.merge(_a, _b, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(_a, _b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -413,7 +413,7 @@ public class TestGraphNodes
         var x2 = X();
         var _a = A();
         var b = CreateSingleton(x2, 2);
-        var r = PredictionContext.merge(_a, b, FullCtx(), null);
+        var r = PredictionContext.Merge(_a, b, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -439,7 +439,7 @@ public class TestGraphNodes
         var f = CreateSingleton(x2, 6);
         var a = CreateSingleton(e, 1);
         var b = CreateSingleton(f, 2);
-        var r = PredictionContext.merge(a, b, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(a, b, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -465,7 +465,7 @@ public class TestGraphNodes
     {
         var A1 = Array(EmptyPredictionContext.Instance);
         var A2 = Array(EmptyPredictionContext.Instance);
-        var r = PredictionContext.merge(A1, A2, FullCtx(), null);
+        var r = PredictionContext.Merge(A1, A2, FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
         var expecting =
             "digraph G {\n" +
@@ -483,7 +483,7 @@ public class TestGraphNodes
         var _c = C();
         var A1 = Array(_a, _b);
         var A2 = Array(_c);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -504,7 +504,7 @@ public class TestGraphNodes
         var a2 = A();
         var A1 = Array(a1);
         var A2 = Array(a2);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -524,7 +524,7 @@ public class TestGraphNodes
         var _c = C();
         var A1 = Array(_a);
         var A2 = Array(_b, _c);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -546,7 +546,7 @@ public class TestGraphNodes
         var _c = C();
         var A1 = Array(_a, _c);
         var A2 = Array(_b);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -565,7 +565,7 @@ public class TestGraphNodes
     { // a,b + a
         var A1 = Array(A(), B());
         var A2 = Array(A());
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -583,7 +583,7 @@ public class TestGraphNodes
     { // a,b + b
         var A1 = Array(A(), B());
         var A2 = Array(B());
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -603,7 +603,7 @@ public class TestGraphNodes
         var b = CreateSingleton(Y(), 2);
         var A1 = Array(a);
         var A2 = Array(b);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -627,7 +627,7 @@ public class TestGraphNodes
         var a2 = CreateSingleton(Y(), 1);
         var A1 = Array(a1);
         var A2 = Array(a2);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -649,7 +649,7 @@ public class TestGraphNodes
         var a2 = CreateSingleton(Y(), 1);
         var A1 = Array(a1, C());
         var A2 = Array(a2, D());
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -675,7 +675,7 @@ public class TestGraphNodes
         var d = CreateSingleton(X(), 4);
         var A1 = Array(a, b);
         var A2 = Array(c, d);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -707,7 +707,7 @@ public class TestGraphNodes
         var d = CreateSingleton(X(), 4);
         var A1 = Array(a, b1);
         var A2 = Array(b2, d);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -736,7 +736,7 @@ public class TestGraphNodes
         var d = CreateSingleton(X(), 4);
         var A1 = Array(a, b1);
         var A2 = Array(b2, d);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -766,7 +766,7 @@ public class TestGraphNodes
         var d = CreateSingleton(U(), 4);
         var A1 = Array(a, b1);
         var A2 = Array(b2, d);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -793,7 +793,7 @@ public class TestGraphNodes
         var d = CreateSingleton(U(), 4);
         var A1 = Array(a, b);
         var A2 = Array(c, d);
-        var r = PredictionContext.merge(A1, A2, RootIsWildcard(), null);
+        var r = PredictionContext.Merge(A1, A2, RootIsWildcard(), null);
         //		Console.Out.WriteLine(toDOTString(r, rootIsWildcard()));
         var expecting =
             "digraph G {\n" +
@@ -891,20 +891,20 @@ public class TestGraphNodes
             var current = workList.Pop();
             nodes.Append("  s").Append(contextIds[(current)]).Append('[');
 
-            if (current.size() > 1)
+            if (current.Count > 1)
             {
                 nodes.Append("shape=record, ");
             }
 
             nodes.Append("label=\"");
 
-            if (current.size() == 0)
+            if (current.Count == 0)
             {
                 nodes.Append(rootIsWildcard ? '*' : '$');
             }
-            else if (current.size() > 1)
+            else if (current.Count > 1)
             {
-                for (int i = 0; i < current.size(); i++)
+                for (int i = 0; i < current.Count; i++)
                 {
                     if (i > 0)
                     {
@@ -912,7 +912,7 @@ public class TestGraphNodes
                     }
 
                     nodes.Append("<p").Append(i).Append('>');
-                    if (current.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE)
+                    if (current.GetReturnState(i) == PredictionContext.EMPTY_RETURN_STATE)
                     {
                         nodes.Append(rootIsWildcard ? '*' : '$');
                     }
@@ -925,18 +925,18 @@ public class TestGraphNodes
 
             nodes.Append("\"];\n");
 
-            if (current.size() == 0)
+            if (current.Count == 0)
             {
                 continue;
             }
 
-            for (int i = 0; i < current.size(); i++)
+            for (int i = 0; i < current.Count; i++)
             {
-                if (current.getReturnState(i) == PredictionContext.EMPTY_RETURN_STATE)
+                if (current.GetReturnState(i) == PredictionContext.EMPTY_RETURN_STATE)
                 {
                     continue;
                 }
-                var parent = current.getParent(i);
+                var parent = current.GetParent(i);
 
                 if (!visited.ContainsKey(parent))
                 {
@@ -950,14 +950,14 @@ public class TestGraphNodes
                 //}
 
                 edges.Append("  s").Append(contextIds[(current)]);
-                if (current.size() > 1)
+                if (current.Count > 1)
                 {
                     edges.Append(":p").Append(i);
                 }
 
                 edges.Append("->");
-                edges.Append('s').Append(contextIds[current.getParent(i)]);
-                edges.Append("[label=\"").Append(current.getReturnState(i)).Append("\"]");
+                edges.Append('s').Append(contextIds[current.GetParent(i)]);
+                edges.Append("[label=\"").Append(current.GetReturnState(i)).Append("\"]");
                 edges.Append(";\n");
             }
         }

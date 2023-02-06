@@ -8,110 +8,120 @@ using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
 
-public class LexerATNConfig : ATNConfig {
-	/**
+public class LexerATNConfig : ATNConfig
+{
+    /**
 	 * This is the backing field for {@link #getLexerActionExecutor}.
 	 */
-	private readonly LexerActionExecutor lexerActionExecutor;
+    private readonly LexerActionExecutor lexerActionExecutor;
 
-	private readonly bool passedThroughNonGreedyDecision;
+    private readonly bool passedThroughNonGreedyDecision;
 
-	public LexerATNConfig(ATNState state,
-						  int alt,
-						  PredictionContext context)
-		:base(state, alt, context, SemanticContext.Empty.Instance)
+    public LexerATNConfig(ATNState state,
+                          int alt,
+                          PredictionContext context)
+        : base(state, alt, context, SemanticContext.Empty.Instance)
     {
-		;
-		this.passedThroughNonGreedyDecision = false;
-		this.lexerActionExecutor = null;
-	}
+        ;
+        this.passedThroughNonGreedyDecision = false;
+        this.lexerActionExecutor = null;
+    }
 
-	public LexerATNConfig(ATNState state,
-						  int alt,
-						  PredictionContext context,
-						  LexerActionExecutor lexerActionExecutor)
-		:base(state, alt, context, SemanticContext.Empty.Instance)
+    public LexerATNConfig(ATNState state,
+                          int alt,
+                          PredictionContext context,
+                          LexerActionExecutor lexerActionExecutor)
+        : base(state, alt, context, SemanticContext.Empty.Instance)
     {
-		;
-		this.lexerActionExecutor = lexerActionExecutor;
-		this.passedThroughNonGreedyDecision = false;
-	}
+        ;
+        this.lexerActionExecutor = lexerActionExecutor;
+        this.passedThroughNonGreedyDecision = false;
+    }
 
-	public LexerATNConfig(LexerATNConfig c, ATNState state)
-        :base(c, state, c.context, c.semanticContext)
+    public LexerATNConfig(LexerATNConfig c, ATNState state)
+        : base(c, state, c.context, c.semanticContext)
     {
-		;
-		this.lexerActionExecutor = c.lexerActionExecutor;
-		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
-	}
+        ;
+        this.lexerActionExecutor = c.lexerActionExecutor;
+        this.passedThroughNonGreedyDecision = CheckNonGreedyDecision(c, state);
+    }
 
-	public LexerATNConfig(LexerATNConfig c, ATNState state,
-						  LexerActionExecutor lexerActionExecutor)
-		:base(c, state, c.context, c.semanticContext)
-	{
-		
-		this.lexerActionExecutor = lexerActionExecutor;
-		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
-	}
+    public LexerATNConfig(LexerATNConfig c, ATNState state,
+                          LexerActionExecutor lexerActionExecutor)
+        : base(c, state, c.context, c.semanticContext)
+    {
 
-	public LexerATNConfig(LexerATNConfig c, ATNState state,
-						  PredictionContext context) 
-	:base(c, state, context, c.semanticContext)
-	{
-	
+        this.lexerActionExecutor = lexerActionExecutor;
+        this.passedThroughNonGreedyDecision = CheckNonGreedyDecision(c, state);
+    }
+
+    public LexerATNConfig(LexerATNConfig c, ATNState state,
+                          PredictionContext context)
+    : base(c, state, context, c.semanticContext)
+    {
+
 
         this.lexerActionExecutor = c.lexerActionExecutor;
-		this.passedThroughNonGreedyDecision = checkNonGreedyDecision(c, state);
-	}
+        this.passedThroughNonGreedyDecision = CheckNonGreedyDecision(c, state);
+    }
 
-	/**
+    /**
 	 * Gets the {@link LexerActionExecutor} capable of executing the embedded
 	 * action(s) for the current configuration.
 	 */
-	public LexerActionExecutor getLexerActionExecutor() {
-		return lexerActionExecutor;
-	}
+    public LexerActionExecutor getLexerActionExecutor()
+    {
+        return lexerActionExecutor;
+    }
 
-	public bool hasPassedThroughNonGreedyDecision() {
-		return passedThroughNonGreedyDecision;
-	}
+    public bool hasPassedThroughNonGreedyDecision()
+    {
+        return passedThroughNonGreedyDecision;
+    }
 
-	//@Override
-	public override int GetHashCode() {
-		int hashCode = MurmurHash.initialize(7);
-		hashCode = MurmurHash.update(hashCode, state.stateNumber);
-		hashCode = MurmurHash.update(hashCode, alt);
-		hashCode = MurmurHash.update(hashCode, context);
-		hashCode = MurmurHash.update(hashCode, semanticContext);
-		hashCode = MurmurHash.update(hashCode, passedThroughNonGreedyDecision ? 1 : 0);
-		hashCode = MurmurHash.update(hashCode, lexerActionExecutor);
-		hashCode = MurmurHash.finish(hashCode, 6);
-		return hashCode;
-	}
+    //@Override
+    public override int GetHashCode()
+    {
+        int hashCode = MurmurHash.Initialize(7);
+        hashCode = MurmurHash.Update(hashCode, state.stateNumber);
+        hashCode = MurmurHash.Update(hashCode, alt);
+        hashCode = MurmurHash.Update(hashCode, context);
+        hashCode = MurmurHash.Update(hashCode, semanticContext);
+        hashCode = MurmurHash.Update(hashCode, passedThroughNonGreedyDecision ? 1 : 0);
+        hashCode = MurmurHash.Update(hashCode, lexerActionExecutor);
+        hashCode = MurmurHash.Finish(hashCode, 6);
+        return hashCode;
+    }
 
-	//@Override
-	public new bool Equals(ATNConfig other) {
-		if (this == other) {
-			return true;
-		}
-		else if (!(other is LexerATNConfig)) {
-			return false;
-		}
+    //@Override
+    public new bool Equals(ATNConfig other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
+        else if (other is not LexerATNConfig)
+        {
+            return false;
+        }
 
-		LexerATNConfig lexerOther = (LexerATNConfig)other;
-		if (passedThroughNonGreedyDecision != lexerOther.passedThroughNonGreedyDecision) {
-			return false;
-		}
+        LexerATNConfig lexerOther = (LexerATNConfig)other;
+        if (passedThroughNonGreedyDecision != lexerOther.passedThroughNonGreedyDecision)
+        {
+            return false;
+        }
 
-		if (!ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor)) {
-			return false;
-		}
+        if (!ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor))
+        {
+            return false;
+        }
 
-		return base.Equals(other);
-	}
+        return base.Equals(other);
+    }
 
-	private static bool checkNonGreedyDecision(LexerATNConfig source, ATNState target) {
-		return source.passedThroughNonGreedyDecision
-			|| target is DecisionState state1 && state1.nonGreedy;
-	}
+    private static bool CheckNonGreedyDecision(LexerATNConfig source, ATNState target)
+    {
+        return source.passedThroughNonGreedyDecision
+            || target is DecisionState state1 && state1.nonGreedy;
+    }
 }

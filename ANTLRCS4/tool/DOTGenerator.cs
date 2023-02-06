@@ -99,11 +99,11 @@ public class DOTGenerator {
 				buf.Append("\\n");
 				// separate alts
 				IntegerList altList = new IntegerList();
-				altList.addAll(alts);
-				altList.sort();
+				altList.AddAll(alts);
+				altList.Sort();
 				HashSet<ATNConfig> configurations = s.configs;
-				for (int altIndex = 0; altIndex < altList.size(); altIndex++) {
-					int alt = altList.get(altIndex);
+				for (int altIndex = 0; altIndex < altList.Size(); altIndex++) {
+					int alt = altList.Get(altIndex);
 					if ( altIndex>0 ) {
 						buf.Append("\\n");
 					}
@@ -121,7 +121,7 @@ public class DOTGenerator {
 					for (int cIndex = 0; cIndex < configsInAlt.Count; cIndex++) {
 						ATNConfig c = configsInAlt[(cIndex)];
 						n++;
-						buf.Append(c.toString(null, false));
+						buf.Append(c.ToString(null, false));
 						if ( (cIndex+1)<configsInAlt.Count ) {
 							buf.Append(", ");
 						}
@@ -188,8 +188,8 @@ public class DOTGenerator {
 
 			// make a DOT edge for each transition
 			Template edgeST;
-			for (int i = 0; i < s.getNumberOfTransitions(); i++) {
-				Transition edge = s.transition(i);
+			for (int i = 0; i < s.NumberOfTransitions; i++) {
+				Transition edge = s.Transition(i);
 				if ( edge is RuleTransition ) {
 					RuleTransition rr = ((RuleTransition)edge);
 					// don't jump to other rules, but display edge to follow node
@@ -217,7 +217,7 @@ public class DOTGenerator {
 					edgeST = stlib.GetInstanceOf("edge");
 					edgeST.Add("label", getEdgeLabel(edge.ToString()));
 				}
-				else if ( edge.isEpsilon() ) {
+				else if ( edge.IsEpsilon ) {
 					edgeST = stlib.GetInstanceOf("epsilon-edge");
 					edgeST.Add("label", getEdgeLabel(edge.ToString()));
 					bool loopback = false;
@@ -241,18 +241,18 @@ public class DOTGenerator {
 				else if ( edge is SetTransition ) {
 					edgeST = stlib.GetInstanceOf("edge");
 					SetTransition set = (SetTransition)edge;
-					String label = set.label().ToString();
-					if ( isLexer ) label = set.label().toString(true);
-					else if ( grammar!=null ) label = set.label().toString(grammar.getVocabulary());
+					String label = set.Label.ToString();
+					if ( isLexer ) label = set.Label.ToString(true);
+					else if ( grammar!=null ) label = set.Label.ToString(grammar.getVocabulary());
 					if ( edge is NotSetTransition ) label = "~"+label;
 					edgeST.Add("label", getEdgeLabel(label));
 				}
 				else if ( edge is RangeTransition ) {
 					edgeST = stlib.GetInstanceOf("edge");
 					RangeTransition range = (RangeTransition)edge;
-					String label = range.label().ToString();
+					String label = range.Label.ToString();
 					if ( isLexer ) label = range.ToString();
-					else if ( grammar!=null ) label = range.label().toString(grammar.getVocabulary());
+					else if ( grammar!=null ) label = range.Label.ToString(grammar.getVocabulary());
 					edgeST.Add("label", getEdgeLabel(label));
 				}
 				else {
@@ -262,7 +262,7 @@ public class DOTGenerator {
 				edgeST.Add("src", "s"+s.stateNumber);
 				edgeST.Add("target", "s"+edge.target.stateNumber);
 				edgeST.Add("arrowhead", arrowhead);
-				if (s.getNumberOfTransitions() > 1) {
+				if (s.NumberOfTransitions > 1) {
 					edgeST.Add("transitionIndex", i);
 				}
 				else {
@@ -297,7 +297,7 @@ public class DOTGenerator {
             Template st = stlib.GetInstanceOf("state");
 			st.Add("name", "s"+s.stateNumber);
 			st.Add("label", getStateLabel(s));
-			st.Add("transitions", s.getTransitions());
+			st.Add("transitions", s.GetTransitions());
 			dot.Add("states", st);
 		}
 

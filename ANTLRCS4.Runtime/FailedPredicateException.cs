@@ -33,7 +33,7 @@ public class FailedPredicateException : RecognitionException {
     {
 		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
 
-		AbstractPredicateTransition trans = (AbstractPredicateTransition)s.transition(0);
+		AbstractPredicateTransition trans = (AbstractPredicateTransition)s.Transition(0);
 		if (trans is PredicateTransition) {
 			this.ruleIndex = ((PredicateTransition)trans).ruleIndex;
 			this.predicateIndex = ((PredicateTransition)trans).predIndex;

@@ -177,7 +177,7 @@ public class CodePointBuffer {
 		}
 
 		private static int roundUpToNextPowerOfTwo(int i) {
-			int nextPowerOfTwo = 32 - Integer.numberOfLeadingZeros(i - 1);
+			int nextPowerOfTwo = 32 - Integer.NumberOfLeadingZeros(i - 1);
 			return (int) Math.Pow(2, nextPowerOfTwo);
 		}
 

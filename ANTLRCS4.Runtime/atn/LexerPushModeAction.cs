@@ -35,41 +35,37 @@ public class LexerPushModeAction : LexerAction {
 		return mode;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#PUSH_MODE}.
 	 */
-	//@Override
-	public LexerActionType getActionType() {
-		return LexerActionType.PUSH_MODE;
-	}
+    //@Override
+    public LexerActionType ActionType => LexerActionType.PUSH_MODE;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	//@Override
-	public bool isPositionDependent() {
-		return false;
-	}
+    //@Override
+    public bool IsPositionDependent => false;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#pushMode} with the
 	 * value provided by {@link #getMode}.</p>
 	 */
-	//@Override
-	public void execute(Lexer lexer) {
+    //@Override
+    public void Execute(Lexer lexer) {
 		lexer.pushMode(mode);
 	}
 
 	//@Override
 	public override int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType());
-		hash = MurmurHash.update(hash, mode);
-		return MurmurHash.finish(hash, 2);
+		int hash = MurmurHash.Initialize();
+		hash = MurmurHash.Update(hash, ActionType);
+		hash = MurmurHash.Update(hash, mode);
+		return MurmurHash.Finish(hash, 2);
 	}
 
 	//@Override

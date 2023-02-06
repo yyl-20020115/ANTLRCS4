@@ -19,19 +19,20 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class DecisionInfo {
-	/**
+public class DecisionInfo
+{
+    /**
 	 * The decision number, which is an index into {@link ATN#decisionToState}.
 	 */
-	public readonly int decision;
+    public readonly int decision;
 
-	/**
+    /**
 	 * The total number of times {@link ParserATNSimulator#adaptivePredict} was
 	 * invoked for this decision.
 	 */
-	public long invocations;
+    public long invocations;
 
-	/**
+    /**
 	 * The total time spent in {@link ParserATNSimulator#adaptivePredict} for
 	 * this decision, in nanoseconds.
 	 *
@@ -45,102 +46,102 @@ public class DecisionInfo {
 	 * call {@link ATNSimulator#clearDFA} to reset the DFA cache to its initial
 	 * state before starting the profiling measurement pass.</p>
 	 */
-	public long timeInPrediction;
+    public long timeInPrediction;
 
-	/**
+    /**
 	 * The sum of the lookahead required for SLL prediction for this decision.
 	 * Note that SLL prediction is used before LL prediction for performance
 	 * reasons even when {@link PredictionMode#LL} or
 	 * {@link PredictionMode#LL_EXACT_AMBIG_DETECTION} is used.
 	 */
-	public long SLL_TotalLook;
+    public long SLL_TotalLook;
 
-	/**
+    /**
 	 * Gets the minimum lookahead required for any single SLL prediction to
 	 * complete for this decision, by reaching a unique prediction, reaching an
 	 * SLL conflict state, or encountering a syntax error.
 	 */
-	public long SLL_MinLook;
+    public long SLL_MinLook;
 
-	/**
+    /**
 	 * Gets the maximum lookahead required for any single SLL prediction to
 	 * complete for this decision, by reaching a unique prediction, reaching an
 	 * SLL conflict state, or encountering a syntax error.
 	 */
-	public long SLL_MaxLook;
+    public long SLL_MaxLook;
 
-	/**
+    /**
 	 * Gets the {@link LookaheadEventInfo} associated with the event where the
 	 * {@link #SLL_MaxLook} value was set.
 	 */
-	public LookaheadEventInfo SLL_MaxLookEvent;
+    public LookaheadEventInfo SLL_MaxLookEvent;
 
-	/**
+    /**
 	 * The sum of the lookahead required for LL prediction for this decision.
 	 * Note that LL prediction is only used when SLL prediction reaches a
 	 * conflict state.
 	 */
-	public long LL_TotalLook;
+    public long LL_TotalLook;
 
-	/**
+    /**
 	 * Gets the minimum lookahead required for any single LL prediction to
 	 * complete for this decision. An LL prediction completes when the algorithm
 	 * reaches a unique prediction, a conflict state (for
 	 * {@link PredictionMode#LL}, an ambiguity state (for
 	 * {@link PredictionMode#LL_EXACT_AMBIG_DETECTION}, or a syntax error.
 	 */
-	public long LL_MinLook;
+    public long LL_MinLook;
 
-	/**
+    /**
 	 * Gets the maximum lookahead required for any single LL prediction to
 	 * complete for this decision. An LL prediction completes when the algorithm
 	 * reaches a unique prediction, a conflict state (for
 	 * {@link PredictionMode#LL}, an ambiguity state (for
 	 * {@link PredictionMode#LL_EXACT_AMBIG_DETECTION}, or a syntax error.
 	 */
-	public long LL_MaxLook;
+    public long LL_MaxLook;
 
-	/**
+    /**
 	 * Gets the {@link LookaheadEventInfo} associated with the event where the
 	 * {@link #LL_MaxLook} value was set.
 	 */
-	public LookaheadEventInfo LL_MaxLookEvent;
+    public LookaheadEventInfo LL_MaxLookEvent;
 
-	/**
+    /**
 	 * A collection of {@link ContextSensitivityInfo} instances describing the
 	 * context sensitivities encountered during LL prediction for this decision.
 	 *
 	 * @see ContextSensitivityInfo
 	 */
-	public readonly List<ContextSensitivityInfo> contextSensitivities = new ();
+    public readonly List<ContextSensitivityInfo> contextSensitivities = new();
 
-	/**
+    /**
 	 * A collection of {@link ErrorInfo} instances describing the parse errors
 	 * identified during calls to {@link ParserATNSimulator#adaptivePredict} for
 	 * this decision.
 	 *
 	 * @see ErrorInfo
 	 */
-	public readonly List<ErrorInfo> errors = new ();
+    public readonly List<ErrorInfo> errors = new();
 
-	/**
+    /**
 	 * A collection of {@link AmbiguityInfo} instances describing the
 	 * ambiguities encountered during LL prediction for this decision.
 	 *
 	 * @see AmbiguityInfo
 	 */
-	public readonly List<AmbiguityInfo> ambiguities = new ();
+    public readonly List<AmbiguityInfo> ambiguities = new();
 
-	/**
+    /**
 	 * A collection of {@link PredicateEvalInfo} instances describing the
 	 * results of evaluating individual predicates during prediction for this
 	 * decision.
 	 *
 	 * @see PredicateEvalInfo
 	 */
-	public readonly List<PredicateEvalInfo> predicateEvals = new ();
+    public readonly List<PredicateEvalInfo> predicateEvals = new();
 
-	/**
+    /**
 	 * The total number of ATN transitions required during SLL prediction for
 	 * this decision. An ATN transition is determined by the number of times the
 	 * DFA does not contain an edge that is required for prediction, resulting
@@ -156,9 +157,9 @@ public class DecisionInfo {
 	 * @see ParserATNSimulator#computeTargetState
 	 * @see LexerATNSimulator#computeTargetState
 	 */
-	public long SLL_ATNTransitions;
+    public long SLL_ATNTransitions;
 
-	/**
+    /**
 	 * The total number of DFA transitions required during SLL prediction for
 	 * this decision.
 	 *
@@ -168,9 +169,9 @@ public class DecisionInfo {
 	 * @see ParserATNSimulator#getExistingTargetState
 	 * @see LexerATNSimulator#getExistingTargetState
 	 */
-	public long SLL_DFATransitions;
+    public long SLL_DFATransitions;
 
-	/**
+    /**
 	 * Gets the total number of times SLL prediction completed in a conflict
 	 * state, resulting in fallback to LL prediction.
 	 *
@@ -181,9 +182,9 @@ public class DecisionInfo {
 	 * this decision, {@link PredictionMode#SLL} would produce the same overall
 	 * parsing result as {@link PredictionMode#LL}.</p>
 	 */
-	public long LL_Fallback;
+    public long LL_Fallback;
 
-	/**
+    /**
 	 * The total number of ATN transitions required during LL prediction for
 	 * this decision. An ATN transition is determined by the number of times the
 	 * DFA does not contain an edge that is required for prediction, resulting
@@ -199,9 +200,9 @@ public class DecisionInfo {
 	 * @see ParserATNSimulator#computeTargetState
 	 * @see LexerATNSimulator#computeTargetState
 	 */
-	public long LL_ATNTransitions;
+    public long LL_ATNTransitions;
 
-	/**
+    /**
 	 * The total number of DFA transitions required during LL prediction for
 	 * this decision.
 	 *
@@ -211,30 +212,29 @@ public class DecisionInfo {
 	 * @see ParserATNSimulator#getExistingTargetState
 	 * @see LexerATNSimulator#getExistingTargetState
 	 */
-	public long LL_DFATransitions;
+    public long LL_DFATransitions;
 
-	/**
+    /**
 	 * Constructs a new instance of the {@link DecisionInfo} class to contain
 	 * statistics for a particular decision.
 	 *
 	 * @param decision The decision number
 	 */
-	public DecisionInfo(int decision) {
-		this.decision = decision;
-	}
+    public DecisionInfo(int decision)
+    {
+        this.decision = decision;
+    }
 
-	public override String ToString() {
-		return "{" +
-			   "decision=" + decision +
-			   ", contextSensitivities=" + contextSensitivities.Count +
-			   ", errors=" + errors.Count +
-			   ", ambiguities=" + ambiguities.Count +
-			   ", SLL_lookahead=" + SLL_TotalLook +
-			   ", SLL_ATNTransitions=" + SLL_ATNTransitions +
-			   ", SLL_DFATransitions=" + SLL_DFATransitions +
-			   ", LL_Fallback=" + LL_Fallback +
-			   ", LL_lookahead=" + LL_TotalLook +
-			   ", LL_ATNTransitions=" + LL_ATNTransitions +
-			   '}';
-	}
+    public override string ToString() => "{" +
+               "decision=" + decision +
+               ", contextSensitivities=" + contextSensitivities.Count +
+               ", errors=" + errors.Count +
+               ", ambiguities=" + ambiguities.Count +
+               ", SLL_lookahead=" + SLL_TotalLook +
+               ", SLL_ATNTransitions=" + SLL_ATNTransitions +
+               ", SLL_DFATransitions=" + SLL_DFATransitions +
+               ", LL_Fallback=" + LL_Fallback +
+               ", LL_lookahead=" + LL_TotalLook +
+               ", LL_ATNTransitions=" + LL_ATNTransitions +
+               '}';
 }

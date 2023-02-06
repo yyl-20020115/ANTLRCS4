@@ -10,7 +10,8 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public abstract class AbstractPredicateTransition : Transition {
+public abstract class AbstractPredicateTransition : Transition
+{
 
-	public AbstractPredicateTransition(ATNState target) : base(target) { }
+    public AbstractPredicateTransition(ATNState target) : base(target) { }
 }

@@ -265,7 +265,7 @@ public class TestAmbigParseTrees
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
         var ruleStartState = g.atn.ruleToStartState[g.getRule(startRule).index];
-        var tr = ruleStartState.transition(0);
+        var tr = ruleStartState.Transition(0);
         var t2 = tr.target;
         if (t2 is not BasicBlockStartState)
         {

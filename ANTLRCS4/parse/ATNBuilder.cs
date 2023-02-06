@@ -471,7 +471,7 @@ public class ATNBuilder : TreeParser
         {
             // org\\antlr\\v4\\parse\\ATNBuilder.g:105:5: ( ^( LEXER_ALT_ACTION a= alternative lexerCommands ) | ^( ALT ( elementOptions )? EPSILON ) | ^( ALT ( elementOptions )? (e= element )+ ) )
             int alt10 = 3;
-            alt10 = dfa10.predict(input);
+            alt10 = dfa10.Predict(input);
             switch (alt10)
             {
                 case 1:

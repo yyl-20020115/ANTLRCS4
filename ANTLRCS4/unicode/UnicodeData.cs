@@ -23,7 +23,7 @@ public abstract class UnicodeData
                     Interval.of(127, 159)
             };
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Cc".ToLower(), codePointRanges);
         }
     }
@@ -744,7 +744,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("C".ToLower(), codePointRanges);
         }
     }
@@ -771,7 +771,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Zs".ToLower(), codePointRanges);
         }
     }
@@ -799,7 +799,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Z".ToLower(), codePointRanges);
         }
     }
@@ -1004,7 +1004,7 @@ public abstract class UnicodeData
                     Interval.of(125278, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Po".ToLower(), codePointRanges);
         }
     }
@@ -1213,7 +1213,7 @@ public abstract class UnicodeData
                     Interval.of(125278, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("P".ToLower(), codePointRanges);
         }
     }
@@ -1254,7 +1254,7 @@ public abstract class UnicodeData
                     Interval.of(126128, 126128)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Sc".ToLower(), codePointRanges);
         }
     }
@@ -1508,7 +1508,7 @@ public abstract class UnicodeData
                     Interval.of(129940, 129994)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("S".ToLower(), codePointRanges);
         }
     }
@@ -1607,7 +1607,7 @@ public abstract class UnicodeData
                     Interval.of(65378, 65378)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Ps".ToLower(), codePointRanges);
         }
     }
@@ -1703,7 +1703,7 @@ public abstract class UnicodeData
                     Interval.of(65379, 65379)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pe".ToLower(), codePointRanges);
         }
     }
@@ -1787,7 +1787,7 @@ public abstract class UnicodeData
                     Interval.of(126704, 126705)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Sm".ToLower(), codePointRanges);
         }
     }
@@ -1826,7 +1826,7 @@ public abstract class UnicodeData
                     Interval.of(69293, 69293)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pd".ToLower(), codePointRanges);
         }
     }
@@ -1908,7 +1908,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Nd".ToLower(), codePointRanges);
         }
     }
@@ -2062,7 +2062,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("N".ToLower(), codePointRanges);
         }
     }
@@ -2728,7 +2728,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125217)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Lu".ToLower(), codePointRanges);
         }
     }
@@ -3396,7 +3396,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("L".ToLower(), codePointRanges);
         }
     }
@@ -3447,7 +3447,7 @@ public abstract class UnicodeData
                     Interval.of(127995, 127999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Sk".ToLower(), codePointRanges);
         }
     }
@@ -3473,7 +3473,7 @@ public abstract class UnicodeData
                     Interval.of(65343, 65343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pc".ToLower(), codePointRanges);
         }
     }
@@ -4150,7 +4150,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Ll".ToLower(), codePointRanges);
         }
     }
@@ -4356,7 +4356,7 @@ public abstract class UnicodeData
                     Interval.of(129940, 129994)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("So".ToLower(), codePointRanges);
         }
     }
@@ -4877,7 +4877,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Lo".ToLower(), codePointRanges);
         }
     }
@@ -4908,7 +4908,7 @@ public abstract class UnicodeData
                     Interval.of(11808, 11808)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pi".ToLower(), codePointRanges);
         }
     }
@@ -4949,7 +4949,7 @@ public abstract class UnicodeData
                     Interval.of(917536, 917631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Cf".ToLower(), codePointRanges);
         }
     }
@@ -5040,7 +5040,7 @@ public abstract class UnicodeData
                     Interval.of(127232, 127244)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("No".ToLower(), codePointRanges);
         }
     }
@@ -5070,7 +5070,7 @@ public abstract class UnicodeData
                     Interval.of(11809, 11809)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pf".ToLower(), codePointRanges);
         }
     }
@@ -5100,7 +5100,7 @@ public abstract class UnicodeData
                     Interval.of(8188, 8188)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Lt".ToLower(), codePointRanges);
         }
     }
@@ -5189,7 +5189,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 125259)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Lm".ToLower(), codePointRanges);
         }
     }
@@ -5545,7 +5545,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Mn".ToLower(), codePointRanges);
         }
     }
@@ -5864,7 +5864,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("M".ToLower(), codePointRanges);
         }
     }
@@ -6582,7 +6582,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Cn".ToLower(), codePointRanges);
         }
     }
@@ -6607,7 +6607,7 @@ public abstract class UnicodeData
                     Interval.of(42608, 42610)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Me".ToLower(), codePointRanges);
         }
     }
@@ -6804,7 +6804,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Mc".ToLower(), codePointRanges);
         }
     }
@@ -6836,7 +6836,7 @@ public abstract class UnicodeData
                     Interval.of(74752, 74862)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Nl".ToLower(), codePointRanges);
         }
     }
@@ -6857,7 +6857,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8232)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Zl".ToLower(), codePointRanges);
         }
     }
@@ -6878,7 +6878,7 @@ public abstract class UnicodeData
                     Interval.of(8233, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Zp".ToLower(), codePointRanges);
         }
     }
@@ -6899,7 +6899,7 @@ public abstract class UnicodeData
                     Interval.of(55296, 57343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Cs".ToLower(), codePointRanges);
         }
     }
@@ -6922,7 +6922,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Co".ToLower(), codePointRanges);
         }
     }
@@ -7664,7 +7664,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Alpha".ToLower(), codePointRanges);
         }
     }
@@ -7687,7 +7687,7 @@ public abstract class UnicodeData
                     Interval.of(97, 102)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("AHex".ToLower(), codePointRanges);
         }
     }
@@ -7711,7 +7711,7 @@ public abstract class UnicodeData
                     Interval.of(8294, 8297)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Bidi_C".ToLower(), codePointRanges);
         }
     }
@@ -7845,7 +7845,7 @@ public abstract class UnicodeData
                     Interval.of(120771, 120771)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Bidi_M".ToLower(), codePointRanges);
         }
     }
@@ -7888,7 +7888,7 @@ public abstract class UnicodeData
                     Interval.of(69293, 69293)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Dash".ToLower(), codePointRanges);
         }
     }
@@ -7925,7 +7925,7 @@ public abstract class UnicodeData
                     Interval.of(917504, 921599)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("DI".ToLower(), codePointRanges);
         }
     }
@@ -7953,7 +7953,7 @@ public abstract class UnicodeData
                     Interval.of(917505, 917505)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Dep".ToLower(), codePointRanges);
         }
     }
@@ -8165,7 +8165,7 @@ public abstract class UnicodeData
                     Interval.of(125256, 125258)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Dia".ToLower(), codePointRanges);
         }
     }
@@ -8218,7 +8218,7 @@ public abstract class UnicodeData
                     Interval.of(125252, 125254)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Ext".ToLower(), codePointRanges);
         }
     }
@@ -8311,7 +8311,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Comp_Ex".ToLower(), codePointRanges);
         }
     }
@@ -9192,7 +9192,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Gr_Base".ToLower(), codePointRanges);
         }
     }
@@ -9565,7 +9565,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Gr_Ext".ToLower(), codePointRanges);
         }
     }
@@ -9640,7 +9640,7 @@ public abstract class UnicodeData
                     Interval.of(73111, 73111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Gr_Link".ToLower(), codePointRanges);
         }
     }
@@ -9666,7 +9666,7 @@ public abstract class UnicodeData
                     Interval.of(65345, 65350)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Hex".ToLower(), codePointRanges);
         }
     }
@@ -9696,7 +9696,7 @@ public abstract class UnicodeData
                     Interval.of(65381, 65381)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Hyphen".ToLower(), codePointRanges);
         }
     }
@@ -10472,7 +10472,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("IDC".ToLower(), codePointRanges);
         }
     }
@@ -11140,7 +11140,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("IDS".ToLower(), codePointRanges);
         }
     }
@@ -11179,7 +11179,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Ideo".ToLower(), codePointRanges);
         }
     }
@@ -11201,7 +11201,7 @@ public abstract class UnicodeData
                     Interval.of(12276, 12283)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("IDSB".ToLower(), codePointRanges);
         }
     }
@@ -11222,7 +11222,7 @@ public abstract class UnicodeData
                     Interval.of(12274, 12275)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("IDST".ToLower(), codePointRanges);
         }
     }
@@ -11243,7 +11243,7 @@ public abstract class UnicodeData
                     Interval.of(8204, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Join_C".ToLower(), codePointRanges);
         }
     }
@@ -11270,7 +11270,7 @@ public abstract class UnicodeData
                     Interval.of(43707, 43708)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("LOE".ToLower(), codePointRanges);
         }
     }
@@ -11958,7 +11958,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Lower".ToLower(), codePointRanges);
         }
     }
@@ -12116,7 +12116,7 @@ public abstract class UnicodeData
                     Interval.of(126704, 126705)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Math".ToLower(), codePointRanges);
         }
     }
@@ -12154,7 +12154,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NChar".ToLower(), codePointRanges);
         }
     }
@@ -12187,7 +12187,7 @@ public abstract class UnicodeData
                     Interval.of(65378, 65379)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("QMark".ToLower(), codePointRanges);
         }
     }
@@ -12210,7 +12210,7 @@ public abstract class UnicodeData
                     Interval.of(12032, 12245)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Radical".ToLower(), codePointRanges);
         }
     }
@@ -12262,7 +12262,7 @@ public abstract class UnicodeData
                     Interval.of(122650, 122650)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SD".ToLower(), codePointRanges);
         }
     }
@@ -12389,7 +12389,7 @@ public abstract class UnicodeData
                     Interval.of(121479, 121482)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Term".ToLower(), codePointRanges);
         }
     }
@@ -12424,7 +12424,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("UIdeo".ToLower(), codePointRanges);
         }
     }
@@ -13095,7 +13095,7 @@ public abstract class UnicodeData
                     Interval.of(127344, 127369)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Upper".ToLower(), codePointRanges);
         }
     }
@@ -13125,7 +13125,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WSpace".ToLower(), codePointRanges);
         }
     }
@@ -13908,7 +13908,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("XIDC".ToLower(), codePointRanges);
         }
     }
@@ -14583,7 +14583,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("XIDS".ToLower(), codePointRanges);
         }
     }
@@ -14743,7 +14743,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Sensitive".ToLower(), codePointRanges);
         }
     }
@@ -14842,7 +14842,7 @@ public abstract class UnicodeData
                     Interval.of(121480, 121480)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("STerm".ToLower(), codePointRanges);
         }
     }
@@ -14866,7 +14866,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("VS".ToLower(), codePointRanges);
         }
     }
@@ -15290,7 +15290,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nfdinert".ToLower(), codePointRanges);
         }
     }
@@ -15873,7 +15873,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nfkdinert".ToLower(), codePointRanges);
         }
     }
@@ -16790,7 +16790,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nfcinert".ToLower(), codePointRanges);
         }
     }
@@ -17872,7 +17872,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nfkcinert".ToLower(), codePointRanges);
         }
     }
@@ -18106,7 +18106,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("segstart".ToLower(), codePointRanges);
         }
     }
@@ -18154,7 +18154,7 @@ public abstract class UnicodeData
                     Interval.of(65093, 65094)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pat_Syn".ToLower(), codePointRanges);
         }
     }
@@ -18179,7 +18179,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Pat_WS".ToLower(), codePointRanges);
         }
     }
@@ -18959,7 +18959,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("alnum".ToLower(), codePointRanges);
         }
     }
@@ -18987,7 +18987,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blank".ToLower(), codePointRanges);
         }
     }
@@ -19710,7 +19710,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("graph".ToLower(), codePointRanges);
         }
     }
@@ -20430,7 +20430,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("print".ToLower(), codePointRanges);
         }
     }
@@ -20516,7 +20516,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("xdigit".ToLower(), codePointRanges);
         }
     }
@@ -20691,7 +20691,7 @@ public abstract class UnicodeData
                     Interval.of(127344, 127369)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Cased".ToLower(), codePointRanges);
         }
     }
@@ -21138,7 +21138,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CI".ToLower(), codePointRanges);
         }
     }
@@ -21767,7 +21767,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125217)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWL".ToLower(), codePointRanges);
         }
     }
@@ -22414,7 +22414,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWU".ToLower(), codePointRanges);
         }
     }
@@ -23060,7 +23060,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWT".ToLower(), codePointRanges);
         }
     }
@@ -23702,7 +23702,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125217)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWCF".ToLower(), codePointRanges);
         }
     }
@@ -23853,7 +23853,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWCM".ToLower(), codePointRanges);
         }
     }
@@ -24711,7 +24711,7 @@ public abstract class UnicodeData
                     Interval.of(917504, 921599)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("CWKCF".ToLower(), codePointRanges);
         }
     }
@@ -24884,7 +24884,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Emoji".ToLower(), codePointRanges);
         }
     }
@@ -24987,7 +24987,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EPres".ToLower(), codePointRanges);
         }
     }
@@ -25008,7 +25008,7 @@ public abstract class UnicodeData
                     Interval.of(127995, 127999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EMod".ToLower(), codePointRanges);
         }
     }
@@ -25068,7 +25068,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EBase".ToLower(), codePointRanges);
         }
     }
@@ -25098,7 +25098,7 @@ public abstract class UnicodeData
                     Interval.of(917536, 917631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EComp".ToLower(), codePointRanges);
         }
     }
@@ -25119,7 +25119,7 @@ public abstract class UnicodeData
                     Interval.of(127462, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RI".ToLower(), codePointRanges);
         }
     }
@@ -25146,7 +25146,7 @@ public abstract class UnicodeData
                     Interval.of(69837, 69837)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("PCM".ToLower(), codePointRanges);
         }
     }
@@ -25244,7 +25244,7 @@ public abstract class UnicodeData
                     Interval.of(130048, 131069)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ExtPict".ToLower(), codePointRanges);
         }
     }
@@ -25346,7 +25346,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Basic_Emoji".ToLower(), codePointRanges);
         }
     }
@@ -25366,7 +25366,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Emoji_Keycap_Sequence".ToLower(), codePointRanges);
         }
     }
@@ -25386,7 +25386,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RGI_Emoji_Modifier_Sequence".ToLower(), codePointRanges);
         }
     }
@@ -25406,7 +25406,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RGI_Emoji_Flag_Sequence".ToLower(), codePointRanges);
         }
     }
@@ -25426,7 +25426,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RGI_Emoji_Tag_Sequence".ToLower(), codePointRanges);
         }
     }
@@ -25446,7 +25446,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RGI_Emoji_ZWJ_Sequence".ToLower(), codePointRanges);
         }
     }
@@ -25548,7 +25548,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("RGI_Emoji".ToLower(), codePointRanges);
         }
     }
@@ -26038,7 +26038,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=L".ToLower(), codePointRanges);
         }
     }
@@ -26097,7 +26097,7 @@ public abstract class UnicodeData
                     Interval.of(126720, 126975)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=R".ToLower(), codePointRanges);
         }
     }
@@ -26130,7 +26130,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=EN".ToLower(), codePointRanges);
         }
     }
@@ -26159,7 +26159,7 @@ public abstract class UnicodeData
                     Interval.of(65293, 65293)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=ES".ToLower(), codePointRanges);
         }
     }
@@ -26203,7 +26203,7 @@ public abstract class UnicodeData
                     Interval.of(123647, 123647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=ET".ToLower(), codePointRanges);
         }
     }
@@ -26231,7 +26231,7 @@ public abstract class UnicodeData
                     Interval.of(69216, 69246)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=AN".ToLower(), codePointRanges);
         }
     }
@@ -26264,7 +26264,7 @@ public abstract class UnicodeData
                     Interval.of(65306, 65306)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=CS".ToLower(), codePointRanges);
         }
     }
@@ -26289,7 +26289,7 @@ public abstract class UnicodeData
                     Interval.of(8233, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=B".ToLower(), codePointRanges);
         }
     }
@@ -26312,7 +26312,7 @@ public abstract class UnicodeData
                     Interval.of(31, 31)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=S".ToLower(), codePointRanges);
         }
     }
@@ -26339,7 +26339,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=WS".ToLower(), codePointRanges);
         }
     }
@@ -26550,7 +26550,7 @@ public abstract class UnicodeData
                     Interval.of(129940, 129994)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=ON".ToLower(), codePointRanges);
         }
     }
@@ -26571,7 +26571,7 @@ public abstract class UnicodeData
                     Interval.of(8234, 8234)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=LRE".ToLower(), codePointRanges);
         }
     }
@@ -26592,7 +26592,7 @@ public abstract class UnicodeData
                     Interval.of(8237, 8237)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=LRO".ToLower(), codePointRanges);
         }
     }
@@ -26640,7 +26640,7 @@ public abstract class UnicodeData
                     Interval.of(126706, 126719)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=AL".ToLower(), codePointRanges);
         }
     }
@@ -26661,7 +26661,7 @@ public abstract class UnicodeData
                     Interval.of(8235, 8235)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=RLE".ToLower(), codePointRanges);
         }
     }
@@ -26682,7 +26682,7 @@ public abstract class UnicodeData
                     Interval.of(8238, 8238)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=RLO".ToLower(), codePointRanges);
         }
     }
@@ -26703,7 +26703,7 @@ public abstract class UnicodeData
                     Interval.of(8236, 8236)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=PDF".ToLower(), codePointRanges);
         }
     }
@@ -27054,7 +27054,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=NSM".ToLower(), codePointRanges);
         }
     }
@@ -27106,7 +27106,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=BN".ToLower(), codePointRanges);
         }
     }
@@ -27127,7 +27127,7 @@ public abstract class UnicodeData
                     Interval.of(8296, 8296)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=FSI".ToLower(), codePointRanges);
         }
     }
@@ -27148,7 +27148,7 @@ public abstract class UnicodeData
                     Interval.of(8294, 8294)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=LRI".ToLower(), codePointRanges);
         }
     }
@@ -27169,7 +27169,7 @@ public abstract class UnicodeData
                     Interval.of(8295, 8295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=RLI".ToLower(), codePointRanges);
         }
     }
@@ -27190,7 +27190,7 @@ public abstract class UnicodeData
                     Interval.of(8297, 8297)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bc=PDI".ToLower(), codePointRanges);
         }
     }
@@ -27261,7 +27261,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 983039)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=NB".ToLower(), codePointRanges);
         }
     }
@@ -27282,7 +27282,7 @@ public abstract class UnicodeData
                     Interval.of(0, 127)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=ASCII".ToLower(), codePointRanges);
         }
     }
@@ -27303,7 +27303,7 @@ public abstract class UnicodeData
                     Interval.of(128, 255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_1_Sup".ToLower(), codePointRanges);
         }
     }
@@ -27324,7 +27324,7 @@ public abstract class UnicodeData
                     Interval.of(256, 383)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -27345,7 +27345,7 @@ public abstract class UnicodeData
                     Interval.of(384, 591)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -27366,7 +27366,7 @@ public abstract class UnicodeData
                     Interval.of(592, 687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=IPA_Ext".ToLower(), codePointRanges);
         }
     }
@@ -27387,7 +27387,7 @@ public abstract class UnicodeData
                     Interval.of(688, 767)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Modifier_Letters".ToLower(), codePointRanges);
         }
     }
@@ -27408,7 +27408,7 @@ public abstract class UnicodeData
                     Interval.of(768, 879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Diacriticals".ToLower(), codePointRanges);
         }
     }
@@ -27429,7 +27429,7 @@ public abstract class UnicodeData
                     Interval.of(880, 1023)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Greek".ToLower(), codePointRanges);
         }
     }
@@ -27450,7 +27450,7 @@ public abstract class UnicodeData
                     Interval.of(1024, 1279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cyrillic".ToLower(), codePointRanges);
         }
     }
@@ -27471,7 +27471,7 @@ public abstract class UnicodeData
                     Interval.of(1328, 1423)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Armenian".ToLower(), codePointRanges);
         }
     }
@@ -27492,7 +27492,7 @@ public abstract class UnicodeData
                     Interval.of(1424, 1535)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hebrew".ToLower(), codePointRanges);
         }
     }
@@ -27513,7 +27513,7 @@ public abstract class UnicodeData
                     Interval.of(1536, 1791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic".ToLower(), codePointRanges);
         }
     }
@@ -27534,7 +27534,7 @@ public abstract class UnicodeData
                     Interval.of(1792, 1871)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Syriac".ToLower(), codePointRanges);
         }
     }
@@ -27555,7 +27555,7 @@ public abstract class UnicodeData
                     Interval.of(1920, 1983)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Thaana".ToLower(), codePointRanges);
         }
     }
@@ -27576,7 +27576,7 @@ public abstract class UnicodeData
                     Interval.of(2304, 2431)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Devanagari".ToLower(), codePointRanges);
         }
     }
@@ -27597,7 +27597,7 @@ public abstract class UnicodeData
                     Interval.of(2432, 2559)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bengali".ToLower(), codePointRanges);
         }
     }
@@ -27618,7 +27618,7 @@ public abstract class UnicodeData
                     Interval.of(2560, 2687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Gurmukhi".ToLower(), codePointRanges);
         }
     }
@@ -27639,7 +27639,7 @@ public abstract class UnicodeData
                     Interval.of(2688, 2815)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Gujarati".ToLower(), codePointRanges);
         }
     }
@@ -27660,7 +27660,7 @@ public abstract class UnicodeData
                     Interval.of(2816, 2943)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Oriya".ToLower(), codePointRanges);
         }
     }
@@ -27681,7 +27681,7 @@ public abstract class UnicodeData
                     Interval.of(2944, 3071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tamil".ToLower(), codePointRanges);
         }
     }
@@ -27702,7 +27702,7 @@ public abstract class UnicodeData
                     Interval.of(3072, 3199)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Telugu".ToLower(), codePointRanges);
         }
     }
@@ -27723,7 +27723,7 @@ public abstract class UnicodeData
                     Interval.of(3200, 3327)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kannada".ToLower(), codePointRanges);
         }
     }
@@ -27744,7 +27744,7 @@ public abstract class UnicodeData
                     Interval.of(3328, 3455)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Malayalam".ToLower(), codePointRanges);
         }
     }
@@ -27765,7 +27765,7 @@ public abstract class UnicodeData
                     Interval.of(3456, 3583)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sinhala".ToLower(), codePointRanges);
         }
     }
@@ -27786,7 +27786,7 @@ public abstract class UnicodeData
                     Interval.of(3584, 3711)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Thai".ToLower(), codePointRanges);
         }
     }
@@ -27807,7 +27807,7 @@ public abstract class UnicodeData
                     Interval.of(3712, 3839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lao".ToLower(), codePointRanges);
         }
     }
@@ -27828,7 +27828,7 @@ public abstract class UnicodeData
                     Interval.of(3840, 4095)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tibetan".ToLower(), codePointRanges);
         }
     }
@@ -27849,7 +27849,7 @@ public abstract class UnicodeData
                     Interval.of(4096, 4255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Myanmar".ToLower(), codePointRanges);
         }
     }
@@ -27870,7 +27870,7 @@ public abstract class UnicodeData
                     Interval.of(4256, 4351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Georgian".ToLower(), codePointRanges);
         }
     }
@@ -27891,7 +27891,7 @@ public abstract class UnicodeData
                     Interval.of(4352, 4607)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Jamo".ToLower(), codePointRanges);
         }
     }
@@ -27912,7 +27912,7 @@ public abstract class UnicodeData
                     Interval.of(4608, 4991)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ethiopic".ToLower(), codePointRanges);
         }
     }
@@ -27933,7 +27933,7 @@ public abstract class UnicodeData
                     Interval.of(5024, 5119)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cherokee".ToLower(), codePointRanges);
         }
     }
@@ -27954,7 +27954,7 @@ public abstract class UnicodeData
                     Interval.of(5120, 5759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=UCAS".ToLower(), codePointRanges);
         }
     }
@@ -27975,7 +27975,7 @@ public abstract class UnicodeData
                     Interval.of(5760, 5791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ogham".ToLower(), codePointRanges);
         }
     }
@@ -27996,7 +27996,7 @@ public abstract class UnicodeData
                     Interval.of(5792, 5887)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Runic".ToLower(), codePointRanges);
         }
     }
@@ -28017,7 +28017,7 @@ public abstract class UnicodeData
                     Interval.of(6016, 6143)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Khmer".ToLower(), codePointRanges);
         }
     }
@@ -28038,7 +28038,7 @@ public abstract class UnicodeData
                     Interval.of(6144, 6319)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mongolian".ToLower(), codePointRanges);
         }
     }
@@ -28059,7 +28059,7 @@ public abstract class UnicodeData
                     Interval.of(7680, 7935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_Additional".ToLower(), codePointRanges);
         }
     }
@@ -28080,7 +28080,7 @@ public abstract class UnicodeData
                     Interval.of(7936, 8191)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Greek_Ext".ToLower(), codePointRanges);
         }
     }
@@ -28101,7 +28101,7 @@ public abstract class UnicodeData
                     Interval.of(8192, 8303)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Punctuation".ToLower(), codePointRanges);
         }
     }
@@ -28122,7 +28122,7 @@ public abstract class UnicodeData
                     Interval.of(8304, 8351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Super_And_Sub".ToLower(), codePointRanges);
         }
     }
@@ -28143,7 +28143,7 @@ public abstract class UnicodeData
                     Interval.of(8352, 8399)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Currency_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -28164,7 +28164,7 @@ public abstract class UnicodeData
                     Interval.of(8400, 8447)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Diacriticals_For_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -28185,7 +28185,7 @@ public abstract class UnicodeData
                     Interval.of(8448, 8527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Letterlike_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -28206,7 +28206,7 @@ public abstract class UnicodeData
                     Interval.of(8528, 8591)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Number_Forms".ToLower(), codePointRanges);
         }
     }
@@ -28227,7 +28227,7 @@ public abstract class UnicodeData
                     Interval.of(8592, 8703)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arrows".ToLower(), codePointRanges);
         }
     }
@@ -28248,7 +28248,7 @@ public abstract class UnicodeData
                     Interval.of(8704, 8959)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Math_Operators".ToLower(), codePointRanges);
         }
     }
@@ -28269,7 +28269,7 @@ public abstract class UnicodeData
                     Interval.of(8960, 9215)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Technical".ToLower(), codePointRanges);
         }
     }
@@ -28290,7 +28290,7 @@ public abstract class UnicodeData
                     Interval.of(9216, 9279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Control_Pictures".ToLower(), codePointRanges);
         }
     }
@@ -28311,7 +28311,7 @@ public abstract class UnicodeData
                     Interval.of(9280, 9311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=OCR".ToLower(), codePointRanges);
         }
     }
@@ -28332,7 +28332,7 @@ public abstract class UnicodeData
                     Interval.of(9312, 9471)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Enclosed_Alphanum".ToLower(), codePointRanges);
         }
     }
@@ -28353,7 +28353,7 @@ public abstract class UnicodeData
                     Interval.of(9472, 9599)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Box_Drawing".ToLower(), codePointRanges);
         }
     }
@@ -28374,7 +28374,7 @@ public abstract class UnicodeData
                     Interval.of(9600, 9631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Block_Elements".ToLower(), codePointRanges);
         }
     }
@@ -28395,7 +28395,7 @@ public abstract class UnicodeData
                     Interval.of(9632, 9727)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Geometric_Shapes".ToLower(), codePointRanges);
         }
     }
@@ -28416,7 +28416,7 @@ public abstract class UnicodeData
                     Interval.of(9728, 9983)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -28437,7 +28437,7 @@ public abstract class UnicodeData
                     Interval.of(9984, 10175)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Dingbats".ToLower(), codePointRanges);
         }
     }
@@ -28458,7 +28458,7 @@ public abstract class UnicodeData
                     Interval.of(10240, 10495)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Braille".ToLower(), codePointRanges);
         }
     }
@@ -28479,7 +28479,7 @@ public abstract class UnicodeData
                     Interval.of(11904, 12031)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Radicals_Sup".ToLower(), codePointRanges);
         }
     }
@@ -28500,7 +28500,7 @@ public abstract class UnicodeData
                     Interval.of(12032, 12255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kangxi".ToLower(), codePointRanges);
         }
     }
@@ -28521,7 +28521,7 @@ public abstract class UnicodeData
                     Interval.of(12272, 12287)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=IDC".ToLower(), codePointRanges);
         }
     }
@@ -28542,7 +28542,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -28563,7 +28563,7 @@ public abstract class UnicodeData
                     Interval.of(12352, 12447)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hiragana".ToLower(), codePointRanges);
         }
     }
@@ -28584,7 +28584,7 @@ public abstract class UnicodeData
                     Interval.of(12448, 12543)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Katakana".ToLower(), codePointRanges);
         }
     }
@@ -28605,7 +28605,7 @@ public abstract class UnicodeData
                     Interval.of(12544, 12591)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bopomofo".ToLower(), codePointRanges);
         }
     }
@@ -28626,7 +28626,7 @@ public abstract class UnicodeData
                     Interval.of(12592, 12687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Compat_Jamo".ToLower(), codePointRanges);
         }
     }
@@ -28647,7 +28647,7 @@ public abstract class UnicodeData
                     Interval.of(12688, 12703)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kanbun".ToLower(), codePointRanges);
         }
     }
@@ -28668,7 +28668,7 @@ public abstract class UnicodeData
                     Interval.of(12704, 12735)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bopomofo_Ext".ToLower(), codePointRanges);
         }
     }
@@ -28689,7 +28689,7 @@ public abstract class UnicodeData
                     Interval.of(12800, 13055)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Enclosed_CJK".ToLower(), codePointRanges);
         }
     }
@@ -28710,7 +28710,7 @@ public abstract class UnicodeData
                     Interval.of(13056, 13311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Compat".ToLower(), codePointRanges);
         }
     }
@@ -28731,7 +28731,7 @@ public abstract class UnicodeData
                     Interval.of(13312, 19903)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -28752,7 +28752,7 @@ public abstract class UnicodeData
                     Interval.of(19968, 40959)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK".ToLower(), codePointRanges);
         }
     }
@@ -28773,7 +28773,7 @@ public abstract class UnicodeData
                     Interval.of(40960, 42127)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Yi_Syllables".ToLower(), codePointRanges);
         }
     }
@@ -28794,7 +28794,7 @@ public abstract class UnicodeData
                     Interval.of(42128, 42191)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Yi_Radicals".ToLower(), codePointRanges);
         }
     }
@@ -28815,7 +28815,7 @@ public abstract class UnicodeData
                     Interval.of(44032, 55215)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hangul".ToLower(), codePointRanges);
         }
     }
@@ -28836,7 +28836,7 @@ public abstract class UnicodeData
                     Interval.of(55296, 56191)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=High_Surrogates".ToLower(), codePointRanges);
         }
     }
@@ -28857,7 +28857,7 @@ public abstract class UnicodeData
                     Interval.of(56192, 56319)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=High_PU_Surrogates".ToLower(), codePointRanges);
         }
     }
@@ -28878,7 +28878,7 @@ public abstract class UnicodeData
                     Interval.of(56320, 57343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Low_Surrogates".ToLower(), codePointRanges);
         }
     }
@@ -28899,7 +28899,7 @@ public abstract class UnicodeData
                     Interval.of(57344, 63743)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=PUA".ToLower(), codePointRanges);
         }
     }
@@ -28920,7 +28920,7 @@ public abstract class UnicodeData
                     Interval.of(63744, 64255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Compat_Ideographs".ToLower(), codePointRanges);
         }
     }
@@ -28941,7 +28941,7 @@ public abstract class UnicodeData
                     Interval.of(64256, 64335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Alphabetic_PF".ToLower(), codePointRanges);
         }
     }
@@ -28962,7 +28962,7 @@ public abstract class UnicodeData
                     Interval.of(64336, 65023)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_PF_A".ToLower(), codePointRanges);
         }
     }
@@ -28983,7 +28983,7 @@ public abstract class UnicodeData
                     Interval.of(65056, 65071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Half_Marks".ToLower(), codePointRanges);
         }
     }
@@ -29004,7 +29004,7 @@ public abstract class UnicodeData
                     Interval.of(65072, 65103)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Compat_Forms".ToLower(), codePointRanges);
         }
     }
@@ -29025,7 +29025,7 @@ public abstract class UnicodeData
                     Interval.of(65104, 65135)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Small_Forms".ToLower(), codePointRanges);
         }
     }
@@ -29046,7 +29046,7 @@ public abstract class UnicodeData
                     Interval.of(65136, 65279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_PF_B".ToLower(), codePointRanges);
         }
     }
@@ -29067,7 +29067,7 @@ public abstract class UnicodeData
                     Interval.of(65520, 65535)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Specials".ToLower(), codePointRanges);
         }
     }
@@ -29088,7 +29088,7 @@ public abstract class UnicodeData
                     Interval.of(65280, 65519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Half_And_Full_Forms".ToLower(), codePointRanges);
         }
     }
@@ -29109,7 +29109,7 @@ public abstract class UnicodeData
                     Interval.of(66304, 66351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Italic".ToLower(), codePointRanges);
         }
     }
@@ -29130,7 +29130,7 @@ public abstract class UnicodeData
                     Interval.of(66352, 66383)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Gothic".ToLower(), codePointRanges);
         }
     }
@@ -29151,7 +29151,7 @@ public abstract class UnicodeData
                     Interval.of(66560, 66639)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Deseret".ToLower(), codePointRanges);
         }
     }
@@ -29172,7 +29172,7 @@ public abstract class UnicodeData
                     Interval.of(118784, 119039)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Byzantine_Music".ToLower(), codePointRanges);
         }
     }
@@ -29193,7 +29193,7 @@ public abstract class UnicodeData
                     Interval.of(119040, 119295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Music".ToLower(), codePointRanges);
         }
     }
@@ -29214,7 +29214,7 @@ public abstract class UnicodeData
                     Interval.of(119808, 120831)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Math_Alphanum".ToLower(), codePointRanges);
         }
     }
@@ -29235,7 +29235,7 @@ public abstract class UnicodeData
                     Interval.of(131072, 173791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -29256,7 +29256,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195103)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Compat_Ideographs_Sup".ToLower(), codePointRanges);
         }
     }
@@ -29277,7 +29277,7 @@ public abstract class UnicodeData
                     Interval.of(917504, 917631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tags".ToLower(), codePointRanges);
         }
     }
@@ -29298,7 +29298,7 @@ public abstract class UnicodeData
                     Interval.of(1280, 1327)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cyrillic_Sup".ToLower(), codePointRanges);
         }
     }
@@ -29319,7 +29319,7 @@ public abstract class UnicodeData
                     Interval.of(5888, 5919)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tagalog".ToLower(), codePointRanges);
         }
     }
@@ -29340,7 +29340,7 @@ public abstract class UnicodeData
                     Interval.of(5920, 5951)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hanunoo".ToLower(), codePointRanges);
         }
     }
@@ -29361,7 +29361,7 @@ public abstract class UnicodeData
                     Interval.of(5952, 5983)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Buhid".ToLower(), codePointRanges);
         }
     }
@@ -29382,7 +29382,7 @@ public abstract class UnicodeData
                     Interval.of(5984, 6015)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tagbanwa".ToLower(), codePointRanges);
         }
     }
@@ -29403,7 +29403,7 @@ public abstract class UnicodeData
                     Interval.of(10176, 10223)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Math_Symbols_A".ToLower(), codePointRanges);
         }
     }
@@ -29424,7 +29424,7 @@ public abstract class UnicodeData
                     Interval.of(10224, 10239)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Arrows_A".ToLower(), codePointRanges);
         }
     }
@@ -29445,7 +29445,7 @@ public abstract class UnicodeData
                     Interval.of(10496, 10623)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Arrows_B".ToLower(), codePointRanges);
         }
     }
@@ -29466,7 +29466,7 @@ public abstract class UnicodeData
                     Interval.of(10624, 10751)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Math_Symbols_B".ToLower(), codePointRanges);
         }
     }
@@ -29487,7 +29487,7 @@ public abstract class UnicodeData
                     Interval.of(10752, 11007)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Math_Operators".ToLower(), codePointRanges);
         }
     }
@@ -29508,7 +29508,7 @@ public abstract class UnicodeData
                     Interval.of(12784, 12799)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Katakana_Ext".ToLower(), codePointRanges);
         }
     }
@@ -29529,7 +29529,7 @@ public abstract class UnicodeData
                     Interval.of(65024, 65039)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=VS".ToLower(), codePointRanges);
         }
     }
@@ -29550,7 +29550,7 @@ public abstract class UnicodeData
                     Interval.of(983040, 1048575)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_PUA_A".ToLower(), codePointRanges);
         }
     }
@@ -29571,7 +29571,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_PUA_B".ToLower(), codePointRanges);
         }
     }
@@ -29592,7 +29592,7 @@ public abstract class UnicodeData
                     Interval.of(6400, 6479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Limbu".ToLower(), codePointRanges);
         }
     }
@@ -29613,7 +29613,7 @@ public abstract class UnicodeData
                     Interval.of(6480, 6527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tai_Le".ToLower(), codePointRanges);
         }
     }
@@ -29634,7 +29634,7 @@ public abstract class UnicodeData
                     Interval.of(6624, 6655)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Khmer_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -29655,7 +29655,7 @@ public abstract class UnicodeData
                     Interval.of(7424, 7551)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Phonetic_Ext".ToLower(), codePointRanges);
         }
     }
@@ -29676,7 +29676,7 @@ public abstract class UnicodeData
                     Interval.of(11008, 11263)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Arrows".ToLower(), codePointRanges);
         }
     }
@@ -29697,7 +29697,7 @@ public abstract class UnicodeData
                     Interval.of(19904, 19967)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Yijing".ToLower(), codePointRanges);
         }
     }
@@ -29718,7 +29718,7 @@ public abstract class UnicodeData
                     Interval.of(65536, 65663)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Linear_B_Syllabary".ToLower(), codePointRanges);
         }
     }
@@ -29739,7 +29739,7 @@ public abstract class UnicodeData
                     Interval.of(65664, 65791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Linear_B_Ideograms".ToLower(), codePointRanges);
         }
     }
@@ -29760,7 +29760,7 @@ public abstract class UnicodeData
                     Interval.of(65792, 65855)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Aegean_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -29781,7 +29781,7 @@ public abstract class UnicodeData
                     Interval.of(66432, 66463)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ugaritic".ToLower(), codePointRanges);
         }
     }
@@ -29802,7 +29802,7 @@ public abstract class UnicodeData
                     Interval.of(66640, 66687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Shavian".ToLower(), codePointRanges);
         }
     }
@@ -29823,7 +29823,7 @@ public abstract class UnicodeData
                     Interval.of(66688, 66735)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Osmanya".ToLower(), codePointRanges);
         }
     }
@@ -29844,7 +29844,7 @@ public abstract class UnicodeData
                     Interval.of(67584, 67647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cypriot_Syllabary".ToLower(), codePointRanges);
         }
     }
@@ -29865,7 +29865,7 @@ public abstract class UnicodeData
                     Interval.of(119552, 119647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tai_Xuan_Jing".ToLower(), codePointRanges);
         }
     }
@@ -29886,7 +29886,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=VS_Sup".ToLower(), codePointRanges);
         }
     }
@@ -29907,7 +29907,7 @@ public abstract class UnicodeData
                     Interval.of(119296, 119375)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ancient_Greek_Music".ToLower(), codePointRanges);
         }
     }
@@ -29928,7 +29928,7 @@ public abstract class UnicodeData
                     Interval.of(65856, 65935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ancient_Greek_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -29949,7 +29949,7 @@ public abstract class UnicodeData
                     Interval.of(1872, 1919)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_Sup".ToLower(), codePointRanges);
         }
     }
@@ -29970,7 +29970,7 @@ public abstract class UnicodeData
                     Interval.of(6656, 6687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Buginese".ToLower(), codePointRanges);
         }
     }
@@ -29991,7 +29991,7 @@ public abstract class UnicodeData
                     Interval.of(12736, 12783)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Strokes".ToLower(), codePointRanges);
         }
     }
@@ -30012,7 +30012,7 @@ public abstract class UnicodeData
                     Interval.of(7616, 7679)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Diacriticals_Sup".ToLower(), codePointRanges);
         }
     }
@@ -30033,7 +30033,7 @@ public abstract class UnicodeData
                     Interval.of(11392, 11519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Coptic".ToLower(), codePointRanges);
         }
     }
@@ -30054,7 +30054,7 @@ public abstract class UnicodeData
                     Interval.of(11648, 11743)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ethiopic_Ext".ToLower(), codePointRanges);
         }
     }
@@ -30075,7 +30075,7 @@ public abstract class UnicodeData
                     Interval.of(4992, 5023)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ethiopic_Sup".ToLower(), codePointRanges);
         }
     }
@@ -30096,7 +30096,7 @@ public abstract class UnicodeData
                     Interval.of(11520, 11567)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Georgian_Sup".ToLower(), codePointRanges);
         }
     }
@@ -30117,7 +30117,7 @@ public abstract class UnicodeData
                     Interval.of(11264, 11359)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Glagolitic".ToLower(), codePointRanges);
         }
     }
@@ -30138,7 +30138,7 @@ public abstract class UnicodeData
                     Interval.of(68096, 68191)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kharoshthi".ToLower(), codePointRanges);
         }
     }
@@ -30159,7 +30159,7 @@ public abstract class UnicodeData
                     Interval.of(42752, 42783)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Modifier_Tone_Letters".ToLower(), codePointRanges);
         }
     }
@@ -30180,7 +30180,7 @@ public abstract class UnicodeData
                     Interval.of(6528, 6623)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=New_Tai_Lue".ToLower(), codePointRanges);
         }
     }
@@ -30201,7 +30201,7 @@ public abstract class UnicodeData
                     Interval.of(66464, 66527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Persian".ToLower(), codePointRanges);
         }
     }
@@ -30222,7 +30222,7 @@ public abstract class UnicodeData
                     Interval.of(7552, 7615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Phonetic_Ext_Sup".ToLower(), codePointRanges);
         }
     }
@@ -30243,7 +30243,7 @@ public abstract class UnicodeData
                     Interval.of(11776, 11903)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Punctuation".ToLower(), codePointRanges);
         }
     }
@@ -30264,7 +30264,7 @@ public abstract class UnicodeData
                     Interval.of(43008, 43055)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Syloti_Nagri".ToLower(), codePointRanges);
         }
     }
@@ -30285,7 +30285,7 @@ public abstract class UnicodeData
                     Interval.of(11568, 11647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tifinagh".ToLower(), codePointRanges);
         }
     }
@@ -30306,7 +30306,7 @@ public abstract class UnicodeData
                     Interval.of(65040, 65055)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Vertical_Forms".ToLower(), codePointRanges);
         }
     }
@@ -30327,7 +30327,7 @@ public abstract class UnicodeData
                     Interval.of(1984, 2047)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=NKo".ToLower(), codePointRanges);
         }
     }
@@ -30348,7 +30348,7 @@ public abstract class UnicodeData
                     Interval.of(6912, 7039)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Balinese".ToLower(), codePointRanges);
         }
     }
@@ -30369,7 +30369,7 @@ public abstract class UnicodeData
                     Interval.of(11360, 11391)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_C".ToLower(), codePointRanges);
         }
     }
@@ -30390,7 +30390,7 @@ public abstract class UnicodeData
                     Interval.of(42784, 43007)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_D".ToLower(), codePointRanges);
         }
     }
@@ -30411,7 +30411,7 @@ public abstract class UnicodeData
                     Interval.of(43072, 43135)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Phags_Pa".ToLower(), codePointRanges);
         }
     }
@@ -30432,7 +30432,7 @@ public abstract class UnicodeData
                     Interval.of(67840, 67871)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Phoenician".ToLower(), codePointRanges);
         }
     }
@@ -30453,7 +30453,7 @@ public abstract class UnicodeData
                     Interval.of(73728, 74751)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cuneiform".ToLower(), codePointRanges);
         }
     }
@@ -30474,7 +30474,7 @@ public abstract class UnicodeData
                     Interval.of(74752, 74879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cuneiform_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -30495,7 +30495,7 @@ public abstract class UnicodeData
                     Interval.of(119648, 119679)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Counting_Rod".ToLower(), codePointRanges);
         }
     }
@@ -30516,7 +30516,7 @@ public abstract class UnicodeData
                     Interval.of(7040, 7103)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sundanese".ToLower(), codePointRanges);
         }
     }
@@ -30537,7 +30537,7 @@ public abstract class UnicodeData
                     Interval.of(7168, 7247)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lepcha".ToLower(), codePointRanges);
         }
     }
@@ -30558,7 +30558,7 @@ public abstract class UnicodeData
                     Interval.of(7248, 7295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ol_Chiki".ToLower(), codePointRanges);
         }
     }
@@ -30579,7 +30579,7 @@ public abstract class UnicodeData
                     Interval.of(11744, 11775)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cyrillic_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -30600,7 +30600,7 @@ public abstract class UnicodeData
                     Interval.of(42240, 42559)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Vai".ToLower(), codePointRanges);
         }
     }
@@ -30621,7 +30621,7 @@ public abstract class UnicodeData
                     Interval.of(42560, 42655)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cyrillic_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -30642,7 +30642,7 @@ public abstract class UnicodeData
                     Interval.of(43136, 43231)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Saurashtra".ToLower(), codePointRanges);
         }
     }
@@ -30663,7 +30663,7 @@ public abstract class UnicodeData
                     Interval.of(43264, 43311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kayah_Li".ToLower(), codePointRanges);
         }
     }
@@ -30684,7 +30684,7 @@ public abstract class UnicodeData
                     Interval.of(43312, 43359)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Rejang".ToLower(), codePointRanges);
         }
     }
@@ -30705,7 +30705,7 @@ public abstract class UnicodeData
                     Interval.of(43520, 43615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cham".ToLower(), codePointRanges);
         }
     }
@@ -30726,7 +30726,7 @@ public abstract class UnicodeData
                     Interval.of(65936, 65999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ancient_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -30747,7 +30747,7 @@ public abstract class UnicodeData
                     Interval.of(66000, 66047)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Phaistos".ToLower(), codePointRanges);
         }
     }
@@ -30768,7 +30768,7 @@ public abstract class UnicodeData
                     Interval.of(66176, 66207)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lycian".ToLower(), codePointRanges);
         }
     }
@@ -30789,7 +30789,7 @@ public abstract class UnicodeData
                     Interval.of(66208, 66271)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Carian".ToLower(), codePointRanges);
         }
     }
@@ -30810,7 +30810,7 @@ public abstract class UnicodeData
                     Interval.of(67872, 67903)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lydian".ToLower(), codePointRanges);
         }
     }
@@ -30831,7 +30831,7 @@ public abstract class UnicodeData
                     Interval.of(126976, 127023)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mahjong".ToLower(), codePointRanges);
         }
     }
@@ -30852,7 +30852,7 @@ public abstract class UnicodeData
                     Interval.of(127024, 127135)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Domino".ToLower(), codePointRanges);
         }
     }
@@ -30873,7 +30873,7 @@ public abstract class UnicodeData
                     Interval.of(2048, 2111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Samaritan".ToLower(), codePointRanges);
         }
     }
@@ -30894,7 +30894,7 @@ public abstract class UnicodeData
                     Interval.of(6320, 6399)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=UCAS_Ext".ToLower(), codePointRanges);
         }
     }
@@ -30915,7 +30915,7 @@ public abstract class UnicodeData
                     Interval.of(6688, 6831)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tai_Tham".ToLower(), codePointRanges);
         }
     }
@@ -30936,7 +30936,7 @@ public abstract class UnicodeData
                     Interval.of(7376, 7423)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Vedic_Ext".ToLower(), codePointRanges);
         }
     }
@@ -30957,7 +30957,7 @@ public abstract class UnicodeData
                     Interval.of(42192, 42239)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lisu".ToLower(), codePointRanges);
         }
     }
@@ -30978,7 +30978,7 @@ public abstract class UnicodeData
                     Interval.of(42656, 42751)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bamum".ToLower(), codePointRanges);
         }
     }
@@ -30999,7 +30999,7 @@ public abstract class UnicodeData
                     Interval.of(43056, 43071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Indic_Number_Forms".ToLower(), codePointRanges);
         }
     }
@@ -31020,7 +31020,7 @@ public abstract class UnicodeData
                     Interval.of(43232, 43263)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Devanagari_Ext".ToLower(), codePointRanges);
         }
     }
@@ -31041,7 +31041,7 @@ public abstract class UnicodeData
                     Interval.of(43360, 43391)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Jamo_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -31062,7 +31062,7 @@ public abstract class UnicodeData
                     Interval.of(43392, 43487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Javanese".ToLower(), codePointRanges);
         }
     }
@@ -31083,7 +31083,7 @@ public abstract class UnicodeData
                     Interval.of(43616, 43647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Myanmar_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -31104,7 +31104,7 @@ public abstract class UnicodeData
                     Interval.of(43648, 43743)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tai_Viet".ToLower(), codePointRanges);
         }
     }
@@ -31125,7 +31125,7 @@ public abstract class UnicodeData
                     Interval.of(43968, 44031)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Meetei_Mayek".ToLower(), codePointRanges);
         }
     }
@@ -31146,7 +31146,7 @@ public abstract class UnicodeData
                     Interval.of(55216, 55295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Jamo_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -31167,7 +31167,7 @@ public abstract class UnicodeData
                     Interval.of(67648, 67679)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Imperial_Aramaic".ToLower(), codePointRanges);
         }
     }
@@ -31188,7 +31188,7 @@ public abstract class UnicodeData
                     Interval.of(68192, 68223)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_South_Arabian".ToLower(), codePointRanges);
         }
     }
@@ -31209,7 +31209,7 @@ public abstract class UnicodeData
                     Interval.of(68352, 68415)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Avestan".ToLower(), codePointRanges);
         }
     }
@@ -31230,7 +31230,7 @@ public abstract class UnicodeData
                     Interval.of(68416, 68447)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Inscriptional_Parthian".ToLower(), codePointRanges);
         }
     }
@@ -31251,7 +31251,7 @@ public abstract class UnicodeData
                     Interval.of(68448, 68479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Inscriptional_Pahlavi".ToLower(), codePointRanges);
         }
     }
@@ -31272,7 +31272,7 @@ public abstract class UnicodeData
                     Interval.of(68608, 68687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Turkic".ToLower(), codePointRanges);
         }
     }
@@ -31293,7 +31293,7 @@ public abstract class UnicodeData
                     Interval.of(69216, 69247)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Rumi".ToLower(), codePointRanges);
         }
     }
@@ -31314,7 +31314,7 @@ public abstract class UnicodeData
                     Interval.of(69760, 69839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kaithi".ToLower(), codePointRanges);
         }
     }
@@ -31335,7 +31335,7 @@ public abstract class UnicodeData
                     Interval.of(77824, 78895)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Egyptian_Hieroglyphs".ToLower(), codePointRanges);
         }
     }
@@ -31356,7 +31356,7 @@ public abstract class UnicodeData
                     Interval.of(127232, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Enclosed_Alphanum_Sup".ToLower(), codePointRanges);
         }
     }
@@ -31377,7 +31377,7 @@ public abstract class UnicodeData
                     Interval.of(127488, 127743)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Enclosed_Ideographic_Sup".ToLower(), codePointRanges);
         }
     }
@@ -31398,7 +31398,7 @@ public abstract class UnicodeData
                     Interval.of(173824, 177983)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_C".ToLower(), codePointRanges);
         }
     }
@@ -31419,7 +31419,7 @@ public abstract class UnicodeData
                     Interval.of(2112, 2143)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mandaic".ToLower(), codePointRanges);
         }
     }
@@ -31440,7 +31440,7 @@ public abstract class UnicodeData
                     Interval.of(7104, 7167)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Batak".ToLower(), codePointRanges);
         }
     }
@@ -31461,7 +31461,7 @@ public abstract class UnicodeData
                     Interval.of(43776, 43823)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ethiopic_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -31482,7 +31482,7 @@ public abstract class UnicodeData
                     Interval.of(69632, 69759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Brahmi".ToLower(), codePointRanges);
         }
     }
@@ -31503,7 +31503,7 @@ public abstract class UnicodeData
                     Interval.of(92160, 92735)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bamum_Sup".ToLower(), codePointRanges);
         }
     }
@@ -31524,7 +31524,7 @@ public abstract class UnicodeData
                     Interval.of(110592, 110847)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kana_Sup".ToLower(), codePointRanges);
         }
     }
@@ -31545,7 +31545,7 @@ public abstract class UnicodeData
                     Interval.of(127136, 127231)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Playing_Cards".ToLower(), codePointRanges);
         }
     }
@@ -31566,7 +31566,7 @@ public abstract class UnicodeData
                     Interval.of(127744, 128511)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Misc_Pictographs".ToLower(), codePointRanges);
         }
     }
@@ -31587,7 +31587,7 @@ public abstract class UnicodeData
                     Interval.of(128512, 128591)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Emoticons".ToLower(), codePointRanges);
         }
     }
@@ -31608,7 +31608,7 @@ public abstract class UnicodeData
                     Interval.of(128640, 128767)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Transport_And_Map".ToLower(), codePointRanges);
         }
     }
@@ -31629,7 +31629,7 @@ public abstract class UnicodeData
                     Interval.of(128768, 128895)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Alchemical".ToLower(), codePointRanges);
         }
     }
@@ -31650,7 +31650,7 @@ public abstract class UnicodeData
                     Interval.of(177984, 178207)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_D".ToLower(), codePointRanges);
         }
     }
@@ -31671,7 +31671,7 @@ public abstract class UnicodeData
                     Interval.of(2208, 2303)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -31692,7 +31692,7 @@ public abstract class UnicodeData
                     Interval.of(126464, 126719)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_Math".ToLower(), codePointRanges);
         }
     }
@@ -31713,7 +31713,7 @@ public abstract class UnicodeData
                     Interval.of(69888, 69967)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Chakma".ToLower(), codePointRanges);
         }
     }
@@ -31734,7 +31734,7 @@ public abstract class UnicodeData
                     Interval.of(43744, 43775)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Meetei_Mayek_Ext".ToLower(), codePointRanges);
         }
     }
@@ -31755,7 +31755,7 @@ public abstract class UnicodeData
                     Interval.of(68000, 68095)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Meroitic_Cursive".ToLower(), codePointRanges);
         }
     }
@@ -31776,7 +31776,7 @@ public abstract class UnicodeData
                     Interval.of(67968, 67999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Meroitic_Hieroglyphs".ToLower(), codePointRanges);
         }
     }
@@ -31797,7 +31797,7 @@ public abstract class UnicodeData
                     Interval.of(93952, 94111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Miao".ToLower(), codePointRanges);
         }
     }
@@ -31818,7 +31818,7 @@ public abstract class UnicodeData
                     Interval.of(70016, 70111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sharada".ToLower(), codePointRanges);
         }
     }
@@ -31839,7 +31839,7 @@ public abstract class UnicodeData
                     Interval.of(69840, 69887)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sora_Sompeng".ToLower(), codePointRanges);
         }
     }
@@ -31860,7 +31860,7 @@ public abstract class UnicodeData
                     Interval.of(7360, 7375)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sundanese_Sup".ToLower(), codePointRanges);
         }
     }
@@ -31881,7 +31881,7 @@ public abstract class UnicodeData
                     Interval.of(71296, 71375)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Takri".ToLower(), codePointRanges);
         }
     }
@@ -31902,7 +31902,7 @@ public abstract class UnicodeData
                     Interval.of(92880, 92927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bassa_Vah".ToLower(), codePointRanges);
         }
     }
@@ -31923,7 +31923,7 @@ public abstract class UnicodeData
                     Interval.of(66864, 66927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Caucasian_Albanian".ToLower(), codePointRanges);
         }
     }
@@ -31944,7 +31944,7 @@ public abstract class UnicodeData
                     Interval.of(66272, 66303)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Coptic_Epact_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -31965,7 +31965,7 @@ public abstract class UnicodeData
                     Interval.of(6832, 6911)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Diacriticals_Ext".ToLower(), codePointRanges);
         }
     }
@@ -31986,7 +31986,7 @@ public abstract class UnicodeData
                     Interval.of(113664, 113823)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Duployan".ToLower(), codePointRanges);
         }
     }
@@ -32007,7 +32007,7 @@ public abstract class UnicodeData
                     Interval.of(66816, 66863)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Elbasan".ToLower(), codePointRanges);
         }
     }
@@ -32028,7 +32028,7 @@ public abstract class UnicodeData
                     Interval.of(128896, 129023)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Geometric_Shapes_Ext".ToLower(), codePointRanges);
         }
     }
@@ -32049,7 +32049,7 @@ public abstract class UnicodeData
                     Interval.of(70400, 70527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Grantha".ToLower(), codePointRanges);
         }
     }
@@ -32070,7 +32070,7 @@ public abstract class UnicodeData
                     Interval.of(70144, 70223)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Khojki".ToLower(), codePointRanges);
         }
     }
@@ -32091,7 +32091,7 @@ public abstract class UnicodeData
                     Interval.of(70320, 70399)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Khudawadi".ToLower(), codePointRanges);
         }
     }
@@ -32112,7 +32112,7 @@ public abstract class UnicodeData
                     Interval.of(43824, 43887)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_E".ToLower(), codePointRanges);
         }
     }
@@ -32133,7 +32133,7 @@ public abstract class UnicodeData
                     Interval.of(67072, 67455)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Linear_A".ToLower(), codePointRanges);
         }
     }
@@ -32154,7 +32154,7 @@ public abstract class UnicodeData
                     Interval.of(69968, 70015)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mahajani".ToLower(), codePointRanges);
         }
     }
@@ -32175,7 +32175,7 @@ public abstract class UnicodeData
                     Interval.of(68288, 68351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Manichaean".ToLower(), codePointRanges);
         }
     }
@@ -32196,7 +32196,7 @@ public abstract class UnicodeData
                     Interval.of(124928, 125151)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mende_Kikakui".ToLower(), codePointRanges);
         }
     }
@@ -32217,7 +32217,7 @@ public abstract class UnicodeData
                     Interval.of(71168, 71263)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Modi".ToLower(), codePointRanges);
         }
     }
@@ -32238,7 +32238,7 @@ public abstract class UnicodeData
                     Interval.of(92736, 92783)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mro".ToLower(), codePointRanges);
         }
     }
@@ -32259,7 +32259,7 @@ public abstract class UnicodeData
                     Interval.of(43488, 43519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Myanmar_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -32280,7 +32280,7 @@ public abstract class UnicodeData
                     Interval.of(67712, 67759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Nabataean".ToLower(), codePointRanges);
         }
     }
@@ -32301,7 +32301,7 @@ public abstract class UnicodeData
                     Interval.of(68224, 68255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_North_Arabian".ToLower(), codePointRanges);
         }
     }
@@ -32322,7 +32322,7 @@ public abstract class UnicodeData
                     Interval.of(66384, 66431)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Permic".ToLower(), codePointRanges);
         }
     }
@@ -32343,7 +32343,7 @@ public abstract class UnicodeData
                     Interval.of(128592, 128639)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ornamental_Dingbats".ToLower(), codePointRanges);
         }
     }
@@ -32364,7 +32364,7 @@ public abstract class UnicodeData
                     Interval.of(92928, 93071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Pahawh_Hmong".ToLower(), codePointRanges);
         }
     }
@@ -32385,7 +32385,7 @@ public abstract class UnicodeData
                     Interval.of(67680, 67711)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Palmyrene".ToLower(), codePointRanges);
         }
     }
@@ -32406,7 +32406,7 @@ public abstract class UnicodeData
                     Interval.of(72384, 72447)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Pau_Cin_Hau".ToLower(), codePointRanges);
         }
     }
@@ -32427,7 +32427,7 @@ public abstract class UnicodeData
                     Interval.of(68480, 68527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Psalter_Pahlavi".ToLower(), codePointRanges);
         }
     }
@@ -32448,7 +32448,7 @@ public abstract class UnicodeData
                     Interval.of(113824, 113839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Shorthand_Format_Controls".ToLower(), codePointRanges);
         }
     }
@@ -32469,7 +32469,7 @@ public abstract class UnicodeData
                     Interval.of(71040, 71167)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Siddham".ToLower(), codePointRanges);
         }
     }
@@ -32490,7 +32490,7 @@ public abstract class UnicodeData
                     Interval.of(70112, 70143)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sinhala_Archaic_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -32511,7 +32511,7 @@ public abstract class UnicodeData
                     Interval.of(129024, 129279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Arrows_C".ToLower(), codePointRanges);
         }
     }
@@ -32532,7 +32532,7 @@ public abstract class UnicodeData
                     Interval.of(70784, 70879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tirhuta".ToLower(), codePointRanges);
         }
     }
@@ -32553,7 +32553,7 @@ public abstract class UnicodeData
                     Interval.of(71840, 71935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Warang_Citi".ToLower(), codePointRanges);
         }
     }
@@ -32574,7 +32574,7 @@ public abstract class UnicodeData
                     Interval.of(71424, 71503)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ahom".ToLower(), codePointRanges);
         }
     }
@@ -32595,7 +32595,7 @@ public abstract class UnicodeData
                     Interval.of(82944, 83583)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Anatolian_Hieroglyphs".ToLower(), codePointRanges);
         }
     }
@@ -32616,7 +32616,7 @@ public abstract class UnicodeData
                     Interval.of(43888, 43967)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cherokee_Sup".ToLower(), codePointRanges);
         }
     }
@@ -32637,7 +32637,7 @@ public abstract class UnicodeData
                     Interval.of(178208, 183983)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_E".ToLower(), codePointRanges);
         }
     }
@@ -32658,7 +32658,7 @@ public abstract class UnicodeData
                     Interval.of(74880, 75087)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Early_Dynastic_Cuneiform".ToLower(), codePointRanges);
         }
     }
@@ -32679,7 +32679,7 @@ public abstract class UnicodeData
                     Interval.of(67808, 67839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hatran".ToLower(), codePointRanges);
         }
     }
@@ -32700,7 +32700,7 @@ public abstract class UnicodeData
                     Interval.of(70272, 70319)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Multani".ToLower(), codePointRanges);
         }
     }
@@ -32721,7 +32721,7 @@ public abstract class UnicodeData
                     Interval.of(68736, 68863)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Hungarian".ToLower(), codePointRanges);
         }
     }
@@ -32742,7 +32742,7 @@ public abstract class UnicodeData
                     Interval.of(129280, 129535)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sup_Symbols_And_Pictographs".ToLower(), codePointRanges);
         }
     }
@@ -32763,7 +32763,7 @@ public abstract class UnicodeData
                     Interval.of(120832, 121519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sutton_SignWriting".ToLower(), codePointRanges);
         }
     }
@@ -32784,7 +32784,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Adlam".ToLower(), codePointRanges);
         }
     }
@@ -32805,7 +32805,7 @@ public abstract class UnicodeData
                     Interval.of(72704, 72815)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Bhaiksuki".ToLower(), codePointRanges);
         }
     }
@@ -32826,7 +32826,7 @@ public abstract class UnicodeData
                     Interval.of(7296, 7311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cyrillic_Ext_C".ToLower(), codePointRanges);
         }
     }
@@ -32847,7 +32847,7 @@ public abstract class UnicodeData
                     Interval.of(122880, 122927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Glagolitic_Sup".ToLower(), codePointRanges);
         }
     }
@@ -32868,7 +32868,7 @@ public abstract class UnicodeData
                     Interval.of(94176, 94207)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ideographic_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -32889,7 +32889,7 @@ public abstract class UnicodeData
                     Interval.of(72816, 72895)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Marchen".ToLower(), codePointRanges);
         }
     }
@@ -32910,7 +32910,7 @@ public abstract class UnicodeData
                     Interval.of(71264, 71295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mongolian_Sup".ToLower(), codePointRanges);
         }
     }
@@ -32931,7 +32931,7 @@ public abstract class UnicodeData
                     Interval.of(70656, 70783)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Newa".ToLower(), codePointRanges);
         }
     }
@@ -32952,7 +32952,7 @@ public abstract class UnicodeData
                     Interval.of(66736, 66815)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Osage".ToLower(), codePointRanges);
         }
     }
@@ -32973,7 +32973,7 @@ public abstract class UnicodeData
                     Interval.of(94208, 100351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tangut".ToLower(), codePointRanges);
         }
     }
@@ -32994,7 +32994,7 @@ public abstract class UnicodeData
                     Interval.of(100352, 101119)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tangut_Components".ToLower(), codePointRanges);
         }
     }
@@ -33015,7 +33015,7 @@ public abstract class UnicodeData
                     Interval.of(183984, 191471)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_F".ToLower(), codePointRanges);
         }
     }
@@ -33036,7 +33036,7 @@ public abstract class UnicodeData
                     Interval.of(110848, 110895)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kana_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -33057,7 +33057,7 @@ public abstract class UnicodeData
                     Interval.of(72960, 73055)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Masaram_Gondi".ToLower(), codePointRanges);
         }
     }
@@ -33078,7 +33078,7 @@ public abstract class UnicodeData
                     Interval.of(110960, 111359)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Nushu".ToLower(), codePointRanges);
         }
     }
@@ -33099,7 +33099,7 @@ public abstract class UnicodeData
                     Interval.of(72272, 72367)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Soyombo".ToLower(), codePointRanges);
         }
     }
@@ -33120,7 +33120,7 @@ public abstract class UnicodeData
                     Interval.of(2144, 2159)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Syriac_Sup".ToLower(), codePointRanges);
         }
     }
@@ -33141,7 +33141,7 @@ public abstract class UnicodeData
                     Interval.of(72192, 72271)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Zanabazar_Square".ToLower(), codePointRanges);
         }
     }
@@ -33162,7 +33162,7 @@ public abstract class UnicodeData
                     Interval.of(129536, 129647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Chess_Symbols".ToLower(), codePointRanges);
         }
     }
@@ -33183,7 +33183,7 @@ public abstract class UnicodeData
                     Interval.of(71680, 71759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Dogra".ToLower(), codePointRanges);
         }
     }
@@ -33204,7 +33204,7 @@ public abstract class UnicodeData
                     Interval.of(7312, 7359)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Georgian_Ext".ToLower(), codePointRanges);
         }
     }
@@ -33225,7 +33225,7 @@ public abstract class UnicodeData
                     Interval.of(73056, 73135)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Gunjala_Gondi".ToLower(), codePointRanges);
         }
     }
@@ -33246,7 +33246,7 @@ public abstract class UnicodeData
                     Interval.of(68864, 68927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Hanifi_Rohingya".ToLower(), codePointRanges);
         }
     }
@@ -33267,7 +33267,7 @@ public abstract class UnicodeData
                     Interval.of(126064, 126143)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Indic_Siyaq_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -33288,7 +33288,7 @@ public abstract class UnicodeData
                     Interval.of(73440, 73471)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Makasar".ToLower(), codePointRanges);
         }
     }
@@ -33309,7 +33309,7 @@ public abstract class UnicodeData
                     Interval.of(119520, 119551)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Mayan_Numerals".ToLower(), codePointRanges);
         }
     }
@@ -33330,7 +33330,7 @@ public abstract class UnicodeData
                     Interval.of(93760, 93855)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Medefaidrin".ToLower(), codePointRanges);
         }
     }
@@ -33351,7 +33351,7 @@ public abstract class UnicodeData
                     Interval.of(69376, 69423)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Sogdian".ToLower(), codePointRanges);
         }
     }
@@ -33372,7 +33372,7 @@ public abstract class UnicodeData
                     Interval.of(69424, 69487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Sogdian".ToLower(), codePointRanges);
         }
     }
@@ -33393,7 +33393,7 @@ public abstract class UnicodeData
                     Interval.of(78896, 78911)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Egyptian_Hieroglyph_Format_Controls".ToLower(), codePointRanges);
         }
     }
@@ -33414,7 +33414,7 @@ public abstract class UnicodeData
                     Interval.of(69600, 69631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Elymaic".ToLower(), codePointRanges);
         }
     }
@@ -33435,7 +33435,7 @@ public abstract class UnicodeData
                     Interval.of(72096, 72191)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Nandinagari".ToLower(), codePointRanges);
         }
     }
@@ -33456,7 +33456,7 @@ public abstract class UnicodeData
                     Interval.of(123136, 123215)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Nyiakeng_Puachue_Hmong".ToLower(), codePointRanges);
         }
     }
@@ -33477,7 +33477,7 @@ public abstract class UnicodeData
                     Interval.of(126208, 126287)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ottoman_Siyaq_Numbers".ToLower(), codePointRanges);
         }
     }
@@ -33498,7 +33498,7 @@ public abstract class UnicodeData
                     Interval.of(110896, 110959)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Small_Kana_Ext".ToLower(), codePointRanges);
         }
     }
@@ -33519,7 +33519,7 @@ public abstract class UnicodeData
                     Interval.of(129648, 129791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Symbols_And_Pictographs_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -33540,7 +33540,7 @@ public abstract class UnicodeData
                     Interval.of(73664, 73727)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tamil_Sup".ToLower(), codePointRanges);
         }
     }
@@ -33561,7 +33561,7 @@ public abstract class UnicodeData
                     Interval.of(123584, 123647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Wancho".ToLower(), codePointRanges);
         }
     }
@@ -33582,7 +33582,7 @@ public abstract class UnicodeData
                     Interval.of(69552, 69599)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Chorasmian".ToLower(), codePointRanges);
         }
     }
@@ -33603,7 +33603,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201551)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=CJK_Ext_G".ToLower(), codePointRanges);
         }
     }
@@ -33624,7 +33624,7 @@ public abstract class UnicodeData
                     Interval.of(71936, 72031)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Dives_Akuru".ToLower(), codePointRanges);
         }
     }
@@ -33645,7 +33645,7 @@ public abstract class UnicodeData
                     Interval.of(101120, 101631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Khitan_Small_Script".ToLower(), codePointRanges);
         }
     }
@@ -33666,7 +33666,7 @@ public abstract class UnicodeData
                     Interval.of(73648, 73663)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Lisu_Sup".ToLower(), codePointRanges);
         }
     }
@@ -33687,7 +33687,7 @@ public abstract class UnicodeData
                     Interval.of(129792, 130047)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Symbols_For_Legacy_Computing".ToLower(), codePointRanges);
         }
     }
@@ -33708,7 +33708,7 @@ public abstract class UnicodeData
                     Interval.of(101632, 101759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tangut_Sup".ToLower(), codePointRanges);
         }
     }
@@ -33729,7 +33729,7 @@ public abstract class UnicodeData
                     Interval.of(69248, 69311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Yezidi".ToLower(), codePointRanges);
         }
     }
@@ -33750,7 +33750,7 @@ public abstract class UnicodeData
                     Interval.of(2160, 2207)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Arabic_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -33771,7 +33771,7 @@ public abstract class UnicodeData
                     Interval.of(77712, 77823)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Cypro_Minoan".ToLower(), codePointRanges);
         }
     }
@@ -33792,7 +33792,7 @@ public abstract class UnicodeData
                     Interval.of(124896, 124927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Ethiopic_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -33813,7 +33813,7 @@ public abstract class UnicodeData
                     Interval.of(110576, 110591)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Kana_Ext_B".ToLower(), codePointRanges);
         }
     }
@@ -33834,7 +33834,7 @@ public abstract class UnicodeData
                     Interval.of(67456, 67519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_F".ToLower(), codePointRanges);
         }
     }
@@ -33855,7 +33855,7 @@ public abstract class UnicodeData
                     Interval.of(122624, 122879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Latin_Ext_G".ToLower(), codePointRanges);
         }
     }
@@ -33876,7 +33876,7 @@ public abstract class UnicodeData
                     Interval.of(69488, 69551)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Old_Uyghur".ToLower(), codePointRanges);
         }
     }
@@ -33897,7 +33897,7 @@ public abstract class UnicodeData
                     Interval.of(92784, 92879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Tangsa".ToLower(), codePointRanges);
         }
     }
@@ -33918,7 +33918,7 @@ public abstract class UnicodeData
                     Interval.of(123536, 123583)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Toto".ToLower(), codePointRanges);
         }
     }
@@ -33939,7 +33939,7 @@ public abstract class UnicodeData
                     Interval.of(72368, 72383)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=UCAS_Ext_A".ToLower(), codePointRanges);
         }
     }
@@ -33960,7 +33960,7 @@ public abstract class UnicodeData
                     Interval.of(66928, 67007)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Vithkuqi".ToLower(), codePointRanges);
         }
     }
@@ -33981,7 +33981,7 @@ public abstract class UnicodeData
                     Interval.of(118528, 118735)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("blk=Znamenny_Music".ToLower(), codePointRanges);
         }
     }
@@ -34190,7 +34190,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=NR".ToLower(), codePointRanges);
         }
     }
@@ -34221,7 +34221,7 @@ public abstract class UnicodeData
                     Interval.of(119143, 119145)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=OV".ToLower(), codePointRanges);
         }
     }
@@ -34241,7 +34241,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=null".ToLower(), codePointRanges);
         }
     }
@@ -34262,7 +34262,7 @@ public abstract class UnicodeData
                     Interval.of(94192, 94193)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=HANR".ToLower(), codePointRanges);
         }
     }
@@ -34308,7 +34308,7 @@ public abstract class UnicodeData
                     Interval.of(125258, 125258)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=NK".ToLower(), codePointRanges);
         }
     }
@@ -34329,7 +34329,7 @@ public abstract class UnicodeData
                     Interval.of(12441, 12442)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=KV".ToLower(), codePointRanges);
         }
     }
@@ -34404,7 +34404,7 @@ public abstract class UnicodeData
                     Interval.of(73111, 73111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=VR".ToLower(), codePointRanges);
         }
     }
@@ -34425,7 +34425,7 @@ public abstract class UnicodeData
                     Interval.of(1456, 1456)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC10".ToLower(), codePointRanges);
         }
     }
@@ -34446,7 +34446,7 @@ public abstract class UnicodeData
                     Interval.of(1457, 1457)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC11".ToLower(), codePointRanges);
         }
     }
@@ -34467,7 +34467,7 @@ public abstract class UnicodeData
                     Interval.of(1458, 1458)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC12".ToLower(), codePointRanges);
         }
     }
@@ -34488,7 +34488,7 @@ public abstract class UnicodeData
                     Interval.of(1459, 1459)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC13".ToLower(), codePointRanges);
         }
     }
@@ -34509,7 +34509,7 @@ public abstract class UnicodeData
                     Interval.of(1460, 1460)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC14".ToLower(), codePointRanges);
         }
     }
@@ -34530,7 +34530,7 @@ public abstract class UnicodeData
                     Interval.of(1461, 1461)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC15".ToLower(), codePointRanges);
         }
     }
@@ -34551,7 +34551,7 @@ public abstract class UnicodeData
                     Interval.of(1462, 1462)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC16".ToLower(), codePointRanges);
         }
     }
@@ -34572,7 +34572,7 @@ public abstract class UnicodeData
                     Interval.of(1463, 1463)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC17".ToLower(), codePointRanges);
         }
     }
@@ -34594,7 +34594,7 @@ public abstract class UnicodeData
                     Interval.of(1479, 1479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC18".ToLower(), codePointRanges);
         }
     }
@@ -34615,7 +34615,7 @@ public abstract class UnicodeData
                     Interval.of(1465, 1466)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC19".ToLower(), codePointRanges);
         }
     }
@@ -34636,7 +34636,7 @@ public abstract class UnicodeData
                     Interval.of(1467, 1467)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC20".ToLower(), codePointRanges);
         }
     }
@@ -34657,7 +34657,7 @@ public abstract class UnicodeData
                     Interval.of(1468, 1468)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC21".ToLower(), codePointRanges);
         }
     }
@@ -34678,7 +34678,7 @@ public abstract class UnicodeData
                     Interval.of(1469, 1469)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC22".ToLower(), codePointRanges);
         }
     }
@@ -34699,7 +34699,7 @@ public abstract class UnicodeData
                     Interval.of(1471, 1471)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC23".ToLower(), codePointRanges);
         }
     }
@@ -34720,7 +34720,7 @@ public abstract class UnicodeData
                     Interval.of(1473, 1473)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC24".ToLower(), codePointRanges);
         }
     }
@@ -34741,7 +34741,7 @@ public abstract class UnicodeData
                     Interval.of(1474, 1474)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC25".ToLower(), codePointRanges);
         }
     }
@@ -34762,7 +34762,7 @@ public abstract class UnicodeData
                     Interval.of(64286, 64286)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC26".ToLower(), codePointRanges);
         }
     }
@@ -34784,7 +34784,7 @@ public abstract class UnicodeData
                     Interval.of(2288, 2288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC27".ToLower(), codePointRanges);
         }
     }
@@ -34806,7 +34806,7 @@ public abstract class UnicodeData
                     Interval.of(2289, 2289)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC28".ToLower(), codePointRanges);
         }
     }
@@ -34828,7 +34828,7 @@ public abstract class UnicodeData
                     Interval.of(2290, 2290)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC29".ToLower(), codePointRanges);
         }
     }
@@ -34850,7 +34850,7 @@ public abstract class UnicodeData
                     Interval.of(1614, 1614)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC30".ToLower(), codePointRanges);
         }
     }
@@ -34872,7 +34872,7 @@ public abstract class UnicodeData
                     Interval.of(1615, 1615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC31".ToLower(), codePointRanges);
         }
     }
@@ -34894,7 +34894,7 @@ public abstract class UnicodeData
                     Interval.of(1616, 1616)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC32".ToLower(), codePointRanges);
         }
     }
@@ -34915,7 +34915,7 @@ public abstract class UnicodeData
                     Interval.of(1617, 1617)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC33".ToLower(), codePointRanges);
         }
     }
@@ -34936,7 +34936,7 @@ public abstract class UnicodeData
                     Interval.of(1618, 1618)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC34".ToLower(), codePointRanges);
         }
     }
@@ -34957,7 +34957,7 @@ public abstract class UnicodeData
                     Interval.of(1648, 1648)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC35".ToLower(), codePointRanges);
         }
     }
@@ -34978,7 +34978,7 @@ public abstract class UnicodeData
                     Interval.of(1809, 1809)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC36".ToLower(), codePointRanges);
         }
     }
@@ -34999,7 +34999,7 @@ public abstract class UnicodeData
                     Interval.of(3157, 3157)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC84".ToLower(), codePointRanges);
         }
     }
@@ -35020,7 +35020,7 @@ public abstract class UnicodeData
                     Interval.of(3158, 3158)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC91".ToLower(), codePointRanges);
         }
     }
@@ -35041,7 +35041,7 @@ public abstract class UnicodeData
                     Interval.of(3640, 3641)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC103".ToLower(), codePointRanges);
         }
     }
@@ -35062,7 +35062,7 @@ public abstract class UnicodeData
                     Interval.of(3656, 3659)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC107".ToLower(), codePointRanges);
         }
     }
@@ -35083,7 +35083,7 @@ public abstract class UnicodeData
                     Interval.of(3768, 3769)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC118".ToLower(), codePointRanges);
         }
     }
@@ -35104,7 +35104,7 @@ public abstract class UnicodeData
                     Interval.of(3784, 3787)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC122".ToLower(), codePointRanges);
         }
     }
@@ -35125,7 +35125,7 @@ public abstract class UnicodeData
                     Interval.of(3953, 3953)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC129".ToLower(), codePointRanges);
         }
     }
@@ -35148,7 +35148,7 @@ public abstract class UnicodeData
                     Interval.of(3968, 3968)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC130".ToLower(), codePointRanges);
         }
     }
@@ -35169,7 +35169,7 @@ public abstract class UnicodeData
                     Interval.of(3956, 3956)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC132".ToLower(), codePointRanges);
         }
     }
@@ -35189,7 +35189,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=CCC133".ToLower(), codePointRanges);
         }
     }
@@ -35209,7 +35209,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=ATBL".ToLower(), codePointRanges);
         }
     }
@@ -35232,7 +35232,7 @@ public abstract class UnicodeData
                     Interval.of(7632, 7632)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=ATB".ToLower(), codePointRanges);
         }
     }
@@ -35253,7 +35253,7 @@ public abstract class UnicodeData
                     Interval.of(7630, 7630)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=ATA".ToLower(), codePointRanges);
         }
     }
@@ -35277,7 +35277,7 @@ public abstract class UnicodeData
                     Interval.of(119150, 119154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=ATAR".ToLower(), codePointRanges);
         }
     }
@@ -35299,7 +35299,7 @@ public abstract class UnicodeData
                     Interval.of(12330, 12330)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=BL".ToLower(), codePointRanges);
         }
     }
@@ -35402,7 +35402,7 @@ public abstract class UnicodeData
                     Interval.of(125136, 125142)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=B".ToLower(), codePointRanges);
         }
     }
@@ -35426,7 +35426,7 @@ public abstract class UnicodeData
                     Interval.of(12333, 12333)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=BR".ToLower(), codePointRanges);
         }
     }
@@ -35447,7 +35447,7 @@ public abstract class UnicodeData
                     Interval.of(12334, 12335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=L".ToLower(), codePointRanges);
         }
     }
@@ -35468,7 +35468,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119149)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=R".ToLower(), codePointRanges);
         }
     }
@@ -35492,7 +35492,7 @@ public abstract class UnicodeData
                     Interval.of(12331, 12331)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=AL".ToLower(), codePointRanges);
         }
     }
@@ -35639,7 +35639,7 @@ public abstract class UnicodeData
                     Interval.of(125252, 125257)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=A".ToLower(), codePointRanges);
         }
     }
@@ -35664,7 +35664,7 @@ public abstract class UnicodeData
                     Interval.of(12332, 12332)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=AR".ToLower(), codePointRanges);
         }
     }
@@ -35688,7 +35688,7 @@ public abstract class UnicodeData
                     Interval.of(7676, 7676)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=DB".ToLower(), codePointRanges);
         }
     }
@@ -35711,7 +35711,7 @@ public abstract class UnicodeData
                     Interval.of(7629, 7629)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=DA".ToLower(), codePointRanges);
         }
     }
@@ -35732,7 +35732,7 @@ public abstract class UnicodeData
                     Interval.of(837, 837)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ccc=IS".ToLower(), codePointRanges);
         }
     }
@@ -36149,7 +36149,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=None".ToLower(), codePointRanges);
         }
     }
@@ -36401,7 +36401,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Can".ToLower(), codePointRanges);
         }
     }
@@ -36495,7 +36495,7 @@ public abstract class UnicodeData
                     Interval.of(127552, 127560)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Com".ToLower(), codePointRanges);
         }
     }
@@ -36523,7 +36523,7 @@ public abstract class UnicodeData
                     Interval.of(127568, 127569)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Enc".ToLower(), codePointRanges);
         }
     }
@@ -36656,7 +36656,7 @@ public abstract class UnicodeData
                     Interval.of(65276, 65276)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Fin".ToLower(), codePointRanges);
         }
     }
@@ -36744,7 +36744,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Font".ToLower(), codePointRanges);
         }
     }
@@ -36767,7 +36767,7 @@ public abstract class UnicodeData
                     Interval.of(8585, 8585)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Fra".ToLower(), codePointRanges);
         }
     }
@@ -36862,7 +36862,7 @@ public abstract class UnicodeData
                     Interval.of(65267, 65267)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Init".ToLower(), codePointRanges);
         }
     }
@@ -36980,7 +36980,7 @@ public abstract class UnicodeData
                     Interval.of(65275, 65275)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Iso".ToLower(), codePointRanges);
         }
     }
@@ -37054,7 +37054,7 @@ public abstract class UnicodeData
                     Interval.of(65268, 65268)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Med".ToLower(), codePointRanges);
         }
     }
@@ -37080,7 +37080,7 @@ public abstract class UnicodeData
                     Interval.of(65512, 65518)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Nar".ToLower(), codePointRanges);
         }
     }
@@ -37105,7 +37105,7 @@ public abstract class UnicodeData
                     Interval.of(8239, 8239)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Nb".ToLower(), codePointRanges);
         }
     }
@@ -37128,7 +37128,7 @@ public abstract class UnicodeData
                     Interval.of(65128, 65131)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Sml".ToLower(), codePointRanges);
         }
     }
@@ -37157,7 +37157,7 @@ public abstract class UnicodeData
                     Interval.of(127504, 127547)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Sqr".ToLower(), codePointRanges);
         }
     }
@@ -37181,7 +37181,7 @@ public abstract class UnicodeData
                     Interval.of(11388, 11388)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Sub".ToLower(), codePointRanges);
         }
     }
@@ -37230,7 +37230,7 @@ public abstract class UnicodeData
                     Interval.of(127338, 127340)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Sup".ToLower(), codePointRanges);
         }
     }
@@ -37255,7 +37255,7 @@ public abstract class UnicodeData
                     Interval.of(65095, 65096)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Vert".ToLower(), codePointRanges);
         }
     }
@@ -37278,7 +37278,7 @@ public abstract class UnicodeData
                     Interval.of(65504, 65510)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("dt=Wide".ToLower(), codePointRanges);
         }
     }
@@ -37580,7 +37580,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=N".ToLower(), codePointRanges);
         }
     }
@@ -37779,7 +37779,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=A".ToLower(), codePointRanges);
         }
     }
@@ -37806,7 +37806,7 @@ public abstract class UnicodeData
                     Interval.of(65512, 65518)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=H".ToLower(), codePointRanges);
         }
     }
@@ -37829,7 +37829,7 @@ public abstract class UnicodeData
                     Interval.of(65504, 65510)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=F".ToLower(), codePointRanges);
         }
     }
@@ -37856,7 +37856,7 @@ public abstract class UnicodeData
                     Interval.of(10629, 10630)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=Na".ToLower(), codePointRanges);
         }
     }
@@ -37995,7 +37995,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 262141)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("ea=W".ToLower(), codePointRanges);
         }
     }
@@ -38713,7 +38713,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Cn".ToLower(), codePointRanges);
         }
     }
@@ -39379,7 +39379,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125217)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Lu".ToLower(), codePointRanges);
         }
     }
@@ -40056,7 +40056,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Ll".ToLower(), codePointRanges);
         }
     }
@@ -40086,7 +40086,7 @@ public abstract class UnicodeData
                     Interval.of(8188, 8188)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Lt".ToLower(), codePointRanges);
         }
     }
@@ -40175,7 +40175,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 125259)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Lm".ToLower(), codePointRanges);
         }
     }
@@ -40696,7 +40696,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Lo".ToLower(), codePointRanges);
         }
     }
@@ -41052,7 +41052,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Mn".ToLower(), codePointRanges);
         }
     }
@@ -41077,7 +41077,7 @@ public abstract class UnicodeData
                     Interval.of(42608, 42610)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Me".ToLower(), codePointRanges);
         }
     }
@@ -41274,7 +41274,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Mc".ToLower(), codePointRanges);
         }
     }
@@ -41356,7 +41356,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Nd".ToLower(), codePointRanges);
         }
     }
@@ -41388,7 +41388,7 @@ public abstract class UnicodeData
                     Interval.of(74752, 74862)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Nl".ToLower(), codePointRanges);
         }
     }
@@ -41479,7 +41479,7 @@ public abstract class UnicodeData
                     Interval.of(127232, 127244)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=No".ToLower(), codePointRanges);
         }
     }
@@ -41506,7 +41506,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Zs".ToLower(), codePointRanges);
         }
     }
@@ -41527,7 +41527,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8232)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Zl".ToLower(), codePointRanges);
         }
     }
@@ -41548,7 +41548,7 @@ public abstract class UnicodeData
                     Interval.of(8233, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Zp".ToLower(), codePointRanges);
         }
     }
@@ -41570,7 +41570,7 @@ public abstract class UnicodeData
                     Interval.of(127, 159)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Cc".ToLower(), codePointRanges);
         }
     }
@@ -41611,7 +41611,7 @@ public abstract class UnicodeData
                     Interval.of(917536, 917631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Cf".ToLower(), codePointRanges);
         }
     }
@@ -41634,7 +41634,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Co".ToLower(), codePointRanges);
         }
     }
@@ -41655,7 +41655,7 @@ public abstract class UnicodeData
                     Interval.of(55296, 57343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Cs".ToLower(), codePointRanges);
         }
     }
@@ -41694,7 +41694,7 @@ public abstract class UnicodeData
                     Interval.of(69293, 69293)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Pd".ToLower(), codePointRanges);
         }
     }
@@ -41793,7 +41793,7 @@ public abstract class UnicodeData
                     Interval.of(65378, 65378)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Ps".ToLower(), codePointRanges);
         }
     }
@@ -41889,7 +41889,7 @@ public abstract class UnicodeData
                     Interval.of(65379, 65379)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Pe".ToLower(), codePointRanges);
         }
     }
@@ -41915,7 +41915,7 @@ public abstract class UnicodeData
                     Interval.of(65343, 65343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Pc".ToLower(), codePointRanges);
         }
     }
@@ -42120,7 +42120,7 @@ public abstract class UnicodeData
                     Interval.of(125278, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Po".ToLower(), codePointRanges);
         }
     }
@@ -42204,7 +42204,7 @@ public abstract class UnicodeData
                     Interval.of(126704, 126705)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Sm".ToLower(), codePointRanges);
         }
     }
@@ -42245,7 +42245,7 @@ public abstract class UnicodeData
                     Interval.of(126128, 126128)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Sc".ToLower(), codePointRanges);
         }
     }
@@ -42296,7 +42296,7 @@ public abstract class UnicodeData
                     Interval.of(127995, 127999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Sk".ToLower(), codePointRanges);
         }
     }
@@ -42502,7 +42502,7 @@ public abstract class UnicodeData
                     Interval.of(129940, 129994)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=So".ToLower(), codePointRanges);
         }
     }
@@ -42533,7 +42533,7 @@ public abstract class UnicodeData
                     Interval.of(11808, 11808)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Pi".ToLower(), codePointRanges);
         }
     }
@@ -42563,7 +42563,7 @@ public abstract class UnicodeData
                     Interval.of(11809, 11809)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("gc=Pf".ToLower(), codePointRanges);
         }
     }
@@ -42616,7 +42616,7 @@ public abstract class UnicodeData
                     Interval.of(68900, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=No_Joining_Group".ToLower(), codePointRanges);
         }
     }
@@ -42642,7 +42642,7 @@ public abstract class UnicodeData
                     Interval.of(2243, 2243)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Ain".ToLower(), codePointRanges);
         }
     }
@@ -42663,7 +42663,7 @@ public abstract class UnicodeData
                     Interval.of(1808, 1808)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Alaph".ToLower(), codePointRanges);
         }
     }
@@ -42690,7 +42690,7 @@ public abstract class UnicodeData
                     Interval.of(2160, 2178)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Alef".ToLower(), codePointRanges);
         }
     }
@@ -42718,7 +42718,7 @@ public abstract class UnicodeData
                     Interval.of(2238, 2240)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Beh".ToLower(), codePointRanges);
         }
     }
@@ -42740,7 +42740,7 @@ public abstract class UnicodeData
                     Interval.of(1837, 1837)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Beth".ToLower(), codePointRanges);
         }
     }
@@ -42765,7 +42765,7 @@ public abstract class UnicodeData
                     Interval.of(2222, 2222)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Dal".ToLower(), codePointRanges);
         }
     }
@@ -42788,7 +42788,7 @@ public abstract class UnicodeData
                     Interval.of(1839, 1839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Dalath_Rish".ToLower(), codePointRanges);
         }
     }
@@ -42809,7 +42809,7 @@ public abstract class UnicodeData
                     Interval.of(1829, 1829)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=E".ToLower(), codePointRanges);
         }
     }
@@ -42833,7 +42833,7 @@ public abstract class UnicodeData
                     Interval.of(2212, 2212)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Feh".ToLower(), codePointRanges);
         }
     }
@@ -42854,7 +42854,7 @@ public abstract class UnicodeData
                     Interval.of(1828, 1828)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Final_Semkath".ToLower(), codePointRanges);
         }
     }
@@ -42883,7 +42883,7 @@ public abstract class UnicodeData
                     Interval.of(2248, 2248)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Gaf".ToLower(), codePointRanges);
         }
     }
@@ -42905,7 +42905,7 @@ public abstract class UnicodeData
                     Interval.of(1838, 1838)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Gamal".ToLower(), codePointRanges);
         }
     }
@@ -42936,7 +42936,7 @@ public abstract class UnicodeData
                     Interval.of(2245, 2246)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Hah".ToLower(), codePointRanges);
         }
     }
@@ -42957,7 +42957,7 @@ public abstract class UnicodeData
                     Interval.of(1731, 1731)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Teh_Marbuta_Goal".ToLower(), codePointRanges);
         }
     }
@@ -42978,7 +42978,7 @@ public abstract class UnicodeData
                     Interval.of(1815, 1815)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=He".ToLower(), codePointRanges);
         }
     }
@@ -42999,7 +42999,7 @@ public abstract class UnicodeData
                     Interval.of(1607, 1607)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Heh".ToLower(), codePointRanges);
         }
     }
@@ -43020,7 +43020,7 @@ public abstract class UnicodeData
                     Interval.of(1729, 1730)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Heh_Goal".ToLower(), codePointRanges);
         }
     }
@@ -43041,7 +43041,7 @@ public abstract class UnicodeData
                     Interval.of(1818, 1818)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Heth".ToLower(), codePointRanges);
         }
     }
@@ -43065,7 +43065,7 @@ public abstract class UnicodeData
                     Interval.of(2228, 2228)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Kaf".ToLower(), codePointRanges);
         }
     }
@@ -43086,7 +43086,7 @@ public abstract class UnicodeData
                     Interval.of(1823, 1823)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Kaph".ToLower(), codePointRanges);
         }
     }
@@ -43108,7 +43108,7 @@ public abstract class UnicodeData
                     Interval.of(1791, 1791)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Knotted_Heh".ToLower(), codePointRanges);
         }
     }
@@ -43133,7 +43133,7 @@ public abstract class UnicodeData
                     Interval.of(2247, 2247)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Lam".ToLower(), codePointRanges);
         }
     }
@@ -43154,7 +43154,7 @@ public abstract class UnicodeData
                     Interval.of(1824, 1824)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Lamadh".ToLower(), codePointRanges);
         }
     }
@@ -43177,7 +43177,7 @@ public abstract class UnicodeData
                     Interval.of(2215, 2215)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Meem".ToLower(), codePointRanges);
         }
     }
@@ -43198,7 +43198,7 @@ public abstract class UnicodeData
                     Interval.of(1825, 1825)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Mim".ToLower(), codePointRanges);
         }
     }
@@ -43222,7 +43222,7 @@ public abstract class UnicodeData
                     Interval.of(2185, 2185)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Noon".ToLower(), codePointRanges);
         }
     }
@@ -43243,7 +43243,7 @@ public abstract class UnicodeData
                     Interval.of(1826, 1826)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Nun".ToLower(), codePointRanges);
         }
     }
@@ -43264,7 +43264,7 @@ public abstract class UnicodeData
                     Interval.of(1830, 1830)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Pe".ToLower(), codePointRanges);
         }
     }
@@ -43289,7 +43289,7 @@ public abstract class UnicodeData
                     Interval.of(2229, 2229)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Qaf".ToLower(), codePointRanges);
         }
     }
@@ -43310,7 +43310,7 @@ public abstract class UnicodeData
                     Interval.of(1833, 1833)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Qaph".ToLower(), codePointRanges);
         }
     }
@@ -43339,7 +43339,7 @@ public abstract class UnicodeData
                     Interval.of(2233, 2233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Reh".ToLower(), codePointRanges);
         }
     }
@@ -43360,7 +43360,7 @@ public abstract class UnicodeData
                     Interval.of(1831, 1831)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Reversed_Pe".ToLower(), codePointRanges);
         }
     }
@@ -43384,7 +43384,7 @@ public abstract class UnicodeData
                     Interval.of(2223, 2223)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Sad".ToLower(), codePointRanges);
         }
     }
@@ -43405,7 +43405,7 @@ public abstract class UnicodeData
                     Interval.of(1832, 1832)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Sadhe".ToLower(), codePointRanges);
         }
     }
@@ -43432,7 +43432,7 @@ public abstract class UnicodeData
                     Interval.of(1917, 1918)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Seen".ToLower(), codePointRanges);
         }
     }
@@ -43453,7 +43453,7 @@ public abstract class UnicodeData
                     Interval.of(1827, 1827)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Semkath".ToLower(), codePointRanges);
         }
     }
@@ -43474,7 +43474,7 @@ public abstract class UnicodeData
                     Interval.of(1835, 1835)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Shin".ToLower(), codePointRanges);
         }
     }
@@ -43495,7 +43495,7 @@ public abstract class UnicodeData
                     Interval.of(1706, 1706)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Swash_Kaf".ToLower(), codePointRanges);
         }
     }
@@ -43516,7 +43516,7 @@ public abstract class UnicodeData
                     Interval.of(1816, 1816)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Syriac_Waw".ToLower(), codePointRanges);
         }
     }
@@ -43540,7 +43540,7 @@ public abstract class UnicodeData
                     Interval.of(2211, 2211)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Tah".ToLower(), codePointRanges);
         }
     }
@@ -43561,7 +43561,7 @@ public abstract class UnicodeData
                     Interval.of(1836, 1836)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Taw".ToLower(), codePointRanges);
         }
     }
@@ -43584,7 +43584,7 @@ public abstract class UnicodeData
                     Interval.of(1749, 1749)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Teh_Marbuta".ToLower(), codePointRanges);
         }
     }
@@ -43605,7 +43605,7 @@ public abstract class UnicodeData
                     Interval.of(1819, 1820)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Teth".ToLower(), codePointRanges);
         }
     }
@@ -43632,7 +43632,7 @@ public abstract class UnicodeData
                     Interval.of(2219, 2219)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Waw".ToLower(), codePointRanges);
         }
     }
@@ -43660,7 +43660,7 @@ public abstract class UnicodeData
                     Interval.of(2234, 2234)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Yeh".ToLower(), codePointRanges);
         }
     }
@@ -43681,7 +43681,7 @@ public abstract class UnicodeData
                     Interval.of(1746, 1747)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Yeh_Barree".ToLower(), codePointRanges);
         }
     }
@@ -43702,7 +43702,7 @@ public abstract class UnicodeData
                     Interval.of(1741, 1741)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Yeh_With_Tail".ToLower(), codePointRanges);
         }
     }
@@ -43723,7 +43723,7 @@ public abstract class UnicodeData
                     Interval.of(1821, 1821)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Yudh".ToLower(), codePointRanges);
         }
     }
@@ -43744,7 +43744,7 @@ public abstract class UnicodeData
                     Interval.of(1822, 1822)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Yudh_He".ToLower(), codePointRanges);
         }
     }
@@ -43765,7 +43765,7 @@ public abstract class UnicodeData
                     Interval.of(1817, 1817)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Zain".ToLower(), codePointRanges);
         }
     }
@@ -43786,7 +43786,7 @@ public abstract class UnicodeData
                     Interval.of(1871, 1871)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Fe".ToLower(), codePointRanges);
         }
     }
@@ -43807,7 +43807,7 @@ public abstract class UnicodeData
                     Interval.of(1870, 1870)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Khaph".ToLower(), codePointRanges);
         }
     }
@@ -43828,7 +43828,7 @@ public abstract class UnicodeData
                     Interval.of(1869, 1869)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Zhain".ToLower(), codePointRanges);
         }
     }
@@ -43849,7 +43849,7 @@ public abstract class UnicodeData
                     Interval.of(1914, 1915)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Burushaski_Yeh_Barree".ToLower(), codePointRanges);
         }
     }
@@ -43873,7 +43873,7 @@ public abstract class UnicodeData
                     Interval.of(1909, 1910)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Farsi_Yeh".ToLower(), codePointRanges);
         }
     }
@@ -43894,7 +43894,7 @@ public abstract class UnicodeData
                     Interval.of(1725, 1725)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Nya".ToLower(), codePointRanges);
         }
     }
@@ -43915,7 +43915,7 @@ public abstract class UnicodeData
                     Interval.of(2220, 2220)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Rohingya_Yeh".ToLower(), codePointRanges);
         }
     }
@@ -43936,7 +43936,7 @@ public abstract class UnicodeData
                     Interval.of(68288, 68288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Aleph".ToLower(), codePointRanges);
         }
     }
@@ -43957,7 +43957,7 @@ public abstract class UnicodeData
                     Interval.of(68313, 68314)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Ayin".ToLower(), codePointRanges);
         }
     }
@@ -43978,7 +43978,7 @@ public abstract class UnicodeData
                     Interval.of(68289, 68290)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Beth".ToLower(), codePointRanges);
         }
     }
@@ -43999,7 +43999,7 @@ public abstract class UnicodeData
                     Interval.of(68293, 68293)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Daleth".ToLower(), codePointRanges);
         }
     }
@@ -44020,7 +44020,7 @@ public abstract class UnicodeData
                     Interval.of(68308, 68308)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Dhamedh".ToLower(), codePointRanges);
         }
     }
@@ -44041,7 +44041,7 @@ public abstract class UnicodeData
                     Interval.of(68332, 68332)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Five".ToLower(), codePointRanges);
         }
     }
@@ -44062,7 +44062,7 @@ public abstract class UnicodeData
                     Interval.of(68291, 68292)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Gimel".ToLower(), codePointRanges);
         }
     }
@@ -44083,7 +44083,7 @@ public abstract class UnicodeData
                     Interval.of(68301, 68301)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Heth".ToLower(), codePointRanges);
         }
     }
@@ -44104,7 +44104,7 @@ public abstract class UnicodeData
                     Interval.of(68335, 68335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Hundred".ToLower(), codePointRanges);
         }
     }
@@ -44125,7 +44125,7 @@ public abstract class UnicodeData
                     Interval.of(68304, 68306)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Kaph".ToLower(), codePointRanges);
         }
     }
@@ -44146,7 +44146,7 @@ public abstract class UnicodeData
                     Interval.of(68307, 68307)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Lamedh".ToLower(), codePointRanges);
         }
     }
@@ -44167,7 +44167,7 @@ public abstract class UnicodeData
                     Interval.of(68310, 68310)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Mem".ToLower(), codePointRanges);
         }
     }
@@ -44188,7 +44188,7 @@ public abstract class UnicodeData
                     Interval.of(68311, 68311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Nun".ToLower(), codePointRanges);
         }
     }
@@ -44209,7 +44209,7 @@ public abstract class UnicodeData
                     Interval.of(68331, 68331)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_One".ToLower(), codePointRanges);
         }
     }
@@ -44230,7 +44230,7 @@ public abstract class UnicodeData
                     Interval.of(68315, 68316)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Pe".ToLower(), codePointRanges);
         }
     }
@@ -44251,7 +44251,7 @@ public abstract class UnicodeData
                     Interval.of(68318, 68320)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Qoph".ToLower(), codePointRanges);
         }
     }
@@ -44272,7 +44272,7 @@ public abstract class UnicodeData
                     Interval.of(68321, 68321)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Resh".ToLower(), codePointRanges);
         }
     }
@@ -44293,7 +44293,7 @@ public abstract class UnicodeData
                     Interval.of(68317, 68317)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Sadhe".ToLower(), codePointRanges);
         }
     }
@@ -44314,7 +44314,7 @@ public abstract class UnicodeData
                     Interval.of(68312, 68312)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Samekh".ToLower(), codePointRanges);
         }
     }
@@ -44335,7 +44335,7 @@ public abstract class UnicodeData
                     Interval.of(68324, 68324)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Taw".ToLower(), codePointRanges);
         }
     }
@@ -44356,7 +44356,7 @@ public abstract class UnicodeData
                     Interval.of(68333, 68333)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Ten".ToLower(), codePointRanges);
         }
     }
@@ -44377,7 +44377,7 @@ public abstract class UnicodeData
                     Interval.of(68302, 68302)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Teth".ToLower(), codePointRanges);
         }
     }
@@ -44398,7 +44398,7 @@ public abstract class UnicodeData
                     Interval.of(68309, 68309)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Thamedh".ToLower(), codePointRanges);
         }
     }
@@ -44419,7 +44419,7 @@ public abstract class UnicodeData
                     Interval.of(68334, 68334)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Twenty".ToLower(), codePointRanges);
         }
     }
@@ -44440,7 +44440,7 @@ public abstract class UnicodeData
                     Interval.of(68295, 68295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Waw".ToLower(), codePointRanges);
         }
     }
@@ -44461,7 +44461,7 @@ public abstract class UnicodeData
                     Interval.of(68303, 68303)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Yodh".ToLower(), codePointRanges);
         }
     }
@@ -44482,7 +44482,7 @@ public abstract class UnicodeData
                     Interval.of(68297, 68298)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Manichaean_Zayin".ToLower(), codePointRanges);
         }
     }
@@ -44503,7 +44503,7 @@ public abstract class UnicodeData
                     Interval.of(2225, 2225)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Straight_Waw".ToLower(), codePointRanges);
         }
     }
@@ -44524,7 +44524,7 @@ public abstract class UnicodeData
                     Interval.of(2235, 2235)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=African_Feh".ToLower(), codePointRanges);
         }
     }
@@ -44545,7 +44545,7 @@ public abstract class UnicodeData
                     Interval.of(2237, 2237)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=African_Noon".ToLower(), codePointRanges);
         }
     }
@@ -44567,7 +44567,7 @@ public abstract class UnicodeData
                     Interval.of(2244, 2244)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=African_Qaf".ToLower(), codePointRanges);
         }
     }
@@ -44588,7 +44588,7 @@ public abstract class UnicodeData
                     Interval.of(2150, 2150)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Bha".ToLower(), codePointRanges);
         }
     }
@@ -44609,7 +44609,7 @@ public abstract class UnicodeData
                     Interval.of(2145, 2145)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Ja".ToLower(), codePointRanges);
         }
     }
@@ -44630,7 +44630,7 @@ public abstract class UnicodeData
                     Interval.of(2152, 2152)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Lla".ToLower(), codePointRanges);
         }
     }
@@ -44651,7 +44651,7 @@ public abstract class UnicodeData
                     Interval.of(2153, 2153)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Llla".ToLower(), codePointRanges);
         }
     }
@@ -44672,7 +44672,7 @@ public abstract class UnicodeData
                     Interval.of(2144, 2144)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Nga".ToLower(), codePointRanges);
         }
     }
@@ -44693,7 +44693,7 @@ public abstract class UnicodeData
                     Interval.of(2148, 2148)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Nna".ToLower(), codePointRanges);
         }
     }
@@ -44714,7 +44714,7 @@ public abstract class UnicodeData
                     Interval.of(2149, 2149)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Nnna".ToLower(), codePointRanges);
         }
     }
@@ -44735,7 +44735,7 @@ public abstract class UnicodeData
                     Interval.of(2146, 2146)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Nya".ToLower(), codePointRanges);
         }
     }
@@ -44756,7 +44756,7 @@ public abstract class UnicodeData
                     Interval.of(2151, 2151)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Ra".ToLower(), codePointRanges);
         }
     }
@@ -44777,7 +44777,7 @@ public abstract class UnicodeData
                     Interval.of(2154, 2154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Ssa".ToLower(), codePointRanges);
         }
     }
@@ -44798,7 +44798,7 @@ public abstract class UnicodeData
                     Interval.of(2147, 2147)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Malayalam_Tta".ToLower(), codePointRanges);
         }
     }
@@ -44822,7 +44822,7 @@ public abstract class UnicodeData
                     Interval.of(68899, 68899)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Hanifi_Rohingya_Kinna_Ya".ToLower(), codePointRanges);
         }
     }
@@ -44845,7 +44845,7 @@ public abstract class UnicodeData
                     Interval.of(68892, 68892)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Hanifi_Rohingya_Pa".ToLower(), codePointRanges);
         }
     }
@@ -44866,7 +44866,7 @@ public abstract class UnicodeData
                     Interval.of(2182, 2182)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Thin_Yeh".ToLower(), codePointRanges);
         }
     }
@@ -44887,7 +44887,7 @@ public abstract class UnicodeData
                     Interval.of(2190, 2190)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jg=Vertical_Tail".ToLower(), codePointRanges);
         }
     }
@@ -45280,7 +45280,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=U".ToLower(), codePointRanges);
         }
     }
@@ -45305,7 +45305,7 @@ public abstract class UnicodeData
                     Interval.of(8205, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=C".ToLower(), codePointRanges);
         }
     }
@@ -45400,7 +45400,7 @@ public abstract class UnicodeData
                     Interval.of(125184, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=D".ToLower(), codePointRanges);
         }
     }
@@ -45425,7 +45425,7 @@ public abstract class UnicodeData
                     Interval.of(69579, 69579)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=L".ToLower(), codePointRanges);
         }
     }
@@ -45510,7 +45510,7 @@ public abstract class UnicodeData
                     Interval.of(69577, 69577)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=R".ToLower(), codePointRanges);
         }
     }
@@ -45877,7 +45877,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("jt=T".ToLower(), codePointRanges);
         }
     }
@@ -46551,7 +46551,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=XX".ToLower(), codePointRanges);
         }
     }
@@ -46680,7 +46680,7 @@ public abstract class UnicodeData
                     Interval.of(127344, 127404)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=AI".ToLower(), codePointRanges);
         }
     }
@@ -47498,7 +47498,7 @@ public abstract class UnicodeData
                     Interval.of(129940, 129994)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=AL".ToLower(), codePointRanges);
         }
     }
@@ -47520,7 +47520,7 @@ public abstract class UnicodeData
                     Interval.of(11834, 11835)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=B2".ToLower(), codePointRanges);
         }
     }
@@ -47640,7 +47640,7 @@ public abstract class UnicodeData
                     Interval.of(121479, 121482)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=BA".ToLower(), codePointRanges);
         }
     }
@@ -47684,7 +47684,7 @@ public abstract class UnicodeData
                     Interval.of(72816, 72816)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=BB".ToLower(), codePointRanges);
         }
     }
@@ -47706,7 +47706,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=BK".ToLower(), codePointRanges);
         }
     }
@@ -47727,7 +47727,7 @@ public abstract class UnicodeData
                     Interval.of(65532, 65532)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CB".ToLower(), codePointRanges);
         }
     }
@@ -47834,7 +47834,7 @@ public abstract class UnicodeData
                     Interval.of(83407, 83407)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CL".ToLower(), codePointRanges);
         }
     }
@@ -48141,7 +48141,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CM".ToLower(), codePointRanges);
         }
     }
@@ -48162,7 +48162,7 @@ public abstract class UnicodeData
                     Interval.of(13, 13)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CR".ToLower(), codePointRanges);
         }
     }
@@ -48207,7 +48207,7 @@ public abstract class UnicodeData
                     Interval.of(72817, 72817)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=EX".ToLower(), codePointRanges);
         }
     }
@@ -48240,7 +48240,7 @@ public abstract class UnicodeData
                     Interval.of(94180, 94180)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=GL".ToLower(), codePointRanges);
         }
     }
@@ -48261,7 +48261,7 @@ public abstract class UnicodeData
                     Interval.of(45, 45)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=HY".ToLower(), codePointRanges);
         }
     }
@@ -48448,7 +48448,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 262141)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=ID".ToLower(), codePointRanges);
         }
     }
@@ -48472,7 +48472,7 @@ public abstract class UnicodeData
                     Interval.of(68342, 68342)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=IN".ToLower(), codePointRanges);
         }
     }
@@ -48502,7 +48502,7 @@ public abstract class UnicodeData
                     Interval.of(65043, 65044)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=IS".ToLower(), codePointRanges);
         }
     }
@@ -48523,7 +48523,7 @@ public abstract class UnicodeData
                     Interval.of(10, 10)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=LF".ToLower(), codePointRanges);
         }
     }
@@ -48560,7 +48560,7 @@ public abstract class UnicodeData
                     Interval.of(128633, 128635)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=NS".ToLower(), codePointRanges);
         }
     }
@@ -48642,7 +48642,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=NU".ToLower(), codePointRanges);
         }
     }
@@ -48751,7 +48751,7 @@ public abstract class UnicodeData
                     Interval.of(125278, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=OP".ToLower(), codePointRanges);
         }
     }
@@ -48795,7 +48795,7 @@ public abstract class UnicodeData
                     Interval.of(126128, 126128)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=PO".ToLower(), codePointRanges);
         }
     }
@@ -48840,7 +48840,7 @@ public abstract class UnicodeData
                     Interval.of(123647, 123647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=PR".ToLower(), codePointRanges);
         }
     }
@@ -48873,7 +48873,7 @@ public abstract class UnicodeData
                     Interval.of(128630, 128632)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=QU".ToLower(), codePointRanges);
         }
     }
@@ -48928,7 +48928,7 @@ public abstract class UnicodeData
                     Interval.of(71487, 71494)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=SA".ToLower(), codePointRanges);
         }
     }
@@ -48949,7 +48949,7 @@ public abstract class UnicodeData
                     Interval.of(55296, 57343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=SG".ToLower(), codePointRanges);
         }
     }
@@ -48970,7 +48970,7 @@ public abstract class UnicodeData
                     Interval.of(32, 32)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=SP".ToLower(), codePointRanges);
         }
     }
@@ -48991,7 +48991,7 @@ public abstract class UnicodeData
                     Interval.of(47, 47)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=SY".ToLower(), codePointRanges);
         }
     }
@@ -49012,7 +49012,7 @@ public abstract class UnicodeData
                     Interval.of(8203, 8203)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=ZW".ToLower(), codePointRanges);
         }
     }
@@ -49033,7 +49033,7 @@ public abstract class UnicodeData
                     Interval.of(133, 133)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=NL".ToLower(), codePointRanges);
         }
     }
@@ -49055,7 +49055,7 @@ public abstract class UnicodeData
                     Interval.of(65279, 65279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=WJ".ToLower(), codePointRanges);
         }
     }
@@ -49474,7 +49474,7 @@ public abstract class UnicodeData
                     Interval.of(55176, 55176)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=H2".ToLower(), codePointRanges);
         }
     }
@@ -49893,7 +49893,7 @@ public abstract class UnicodeData
                     Interval.of(55177, 55203)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=H3".ToLower(), codePointRanges);
         }
     }
@@ -49915,7 +49915,7 @@ public abstract class UnicodeData
                     Interval.of(43360, 43388)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=JL".ToLower(), codePointRanges);
         }
     }
@@ -49937,7 +49937,7 @@ public abstract class UnicodeData
                     Interval.of(55243, 55291)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=JT".ToLower(), codePointRanges);
         }
     }
@@ -49959,7 +49959,7 @@ public abstract class UnicodeData
                     Interval.of(55216, 55238)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=JV".ToLower(), codePointRanges);
         }
     }
@@ -49981,7 +49981,7 @@ public abstract class UnicodeData
                     Interval.of(93, 93)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CP".ToLower(), codePointRanges);
         }
     }
@@ -50028,7 +50028,7 @@ public abstract class UnicodeData
                     Interval.of(110948, 110951)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=CJ".ToLower(), codePointRanges);
         }
     }
@@ -50058,7 +50058,7 @@ public abstract class UnicodeData
                     Interval.of(64326, 64335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=HL".ToLower(), codePointRanges);
         }
     }
@@ -50079,7 +50079,7 @@ public abstract class UnicodeData
                     Interval.of(127462, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=RI".ToLower(), codePointRanges);
         }
     }
@@ -50139,7 +50139,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=EB".ToLower(), codePointRanges);
         }
     }
@@ -50160,7 +50160,7 @@ public abstract class UnicodeData
                     Interval.of(127995, 127999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=EM".ToLower(), codePointRanges);
         }
     }
@@ -50181,7 +50181,7 @@ public abstract class UnicodeData
                     Interval.of(8205, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lb=ZWJ".ToLower(), codePointRanges);
         }
     }
@@ -50408,7 +50408,7 @@ public abstract class UnicodeData
                     Interval.of(194705, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nt=None".ToLower(), codePointRanges);
         }
     }
@@ -50490,7 +50490,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nt=De".ToLower(), codePointRanges);
         }
     }
@@ -50530,7 +50530,7 @@ public abstract class UnicodeData
                     Interval.of(127232, 127242)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nt=Di".ToLower(), codePointRanges);
         }
     }
@@ -50701,7 +50701,7 @@ public abstract class UnicodeData
                     Interval.of(194704, 194704)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("nt=Nu".ToLower(), codePointRanges);
         }
     }
@@ -50895,7 +50895,7 @@ public abstract class UnicodeData
                     Interval.of(917536, 917631)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zyyy".ToLower(), codePointRanges);
         }
     }
@@ -50944,7 +50944,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zinh".ToLower(), codePointRanges);
         }
     }
@@ -51021,7 +51021,7 @@ public abstract class UnicodeData
                     Interval.of(126704, 126705)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Arab".ToLower(), codePointRanges);
         }
     }
@@ -51045,7 +51045,7 @@ public abstract class UnicodeData
                     Interval.of(64275, 64279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Armn".ToLower(), codePointRanges);
         }
     }
@@ -51079,7 +51079,7 @@ public abstract class UnicodeData
                     Interval.of(2534, 2558)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Beng".ToLower(), codePointRanges);
         }
     }
@@ -51102,7 +51102,7 @@ public abstract class UnicodeData
                     Interval.of(12704, 12735)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bopo".ToLower(), codePointRanges);
         }
     }
@@ -51125,7 +51125,7 @@ public abstract class UnicodeData
                     Interval.of(43888, 43967)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cher".ToLower(), codePointRanges);
         }
     }
@@ -51148,7 +51148,7 @@ public abstract class UnicodeData
                     Interval.of(11513, 11519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Copt".ToLower(), codePointRanges);
         }
     }
@@ -51176,7 +51176,7 @@ public abstract class UnicodeData
                     Interval.of(65070, 65071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cyrl".ToLower(), codePointRanges);
         }
     }
@@ -51197,7 +51197,7 @@ public abstract class UnicodeData
                     Interval.of(66560, 66639)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Dsrt".ToLower(), codePointRanges);
         }
     }
@@ -51221,7 +51221,7 @@ public abstract class UnicodeData
                     Interval.of(43232, 43263)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Deva".ToLower(), codePointRanges);
         }
     }
@@ -51277,7 +51277,7 @@ public abstract class UnicodeData
                     Interval.of(124912, 124926)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ethi".ToLower(), codePointRanges);
         }
     }
@@ -51307,7 +51307,7 @@ public abstract class UnicodeData
                     Interval.of(11565, 11565)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Geor".ToLower(), codePointRanges);
         }
     }
@@ -51328,7 +51328,7 @@ public abstract class UnicodeData
                     Interval.of(66352, 66378)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Goth".ToLower(), codePointRanges);
         }
     }
@@ -51384,7 +51384,7 @@ public abstract class UnicodeData
                     Interval.of(119296, 119365)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Grek".ToLower(), codePointRanges);
         }
     }
@@ -51418,7 +51418,7 @@ public abstract class UnicodeData
                     Interval.of(2809, 2815)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Gujr".ToLower(), codePointRanges);
         }
     }
@@ -51454,7 +51454,7 @@ public abstract class UnicodeData
                     Interval.of(2662, 2678)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Guru".ToLower(), codePointRanges);
         }
     }
@@ -51494,7 +51494,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hani".ToLower(), codePointRanges);
         }
     }
@@ -51528,7 +51528,7 @@ public abstract class UnicodeData
                     Interval.of(65498, 65500)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hang".ToLower(), codePointRanges);
         }
     }
@@ -51557,7 +51557,7 @@ public abstract class UnicodeData
                     Interval.of(64326, 64335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hebr".ToLower(), codePointRanges);
         }
     }
@@ -51582,7 +51582,7 @@ public abstract class UnicodeData
                     Interval.of(127488, 127488)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hira".ToLower(), codePointRanges);
         }
     }
@@ -51615,7 +51615,7 @@ public abstract class UnicodeData
                     Interval.of(3313, 3314)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Knda".ToLower(), codePointRanges);
         }
     }
@@ -51648,7 +51648,7 @@ public abstract class UnicodeData
                     Interval.of(110948, 110951)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kana".ToLower(), codePointRanges);
         }
     }
@@ -51672,7 +51672,7 @@ public abstract class UnicodeData
                     Interval.of(6624, 6655)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Khmr".ToLower(), codePointRanges);
         }
     }
@@ -51703,7 +51703,7 @@ public abstract class UnicodeData
                     Interval.of(3804, 3807)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Laoo".ToLower(), codePointRanges);
         }
     }
@@ -51761,7 +51761,7 @@ public abstract class UnicodeData
                     Interval.of(122624, 122654)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Latn".ToLower(), codePointRanges);
         }
     }
@@ -51788,7 +51788,7 @@ public abstract class UnicodeData
                     Interval.of(3430, 3455)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mlym".ToLower(), codePointRanges);
         }
     }
@@ -51814,7 +51814,7 @@ public abstract class UnicodeData
                     Interval.of(71264, 71276)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mong".ToLower(), codePointRanges);
         }
     }
@@ -51837,7 +51837,7 @@ public abstract class UnicodeData
                     Interval.of(43616, 43647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mymr".ToLower(), codePointRanges);
         }
     }
@@ -51858,7 +51858,7 @@ public abstract class UnicodeData
                     Interval.of(5760, 5788)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ogam".ToLower(), codePointRanges);
         }
     }
@@ -51880,7 +51880,7 @@ public abstract class UnicodeData
                     Interval.of(66349, 66351)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ital".ToLower(), codePointRanges);
         }
     }
@@ -51914,7 +51914,7 @@ public abstract class UnicodeData
                     Interval.of(2918, 2935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Orya".ToLower(), codePointRanges);
         }
     }
@@ -51936,7 +51936,7 @@ public abstract class UnicodeData
                     Interval.of(5870, 5880)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Runr".ToLower(), codePointRanges);
         }
     }
@@ -51969,7 +51969,7 @@ public abstract class UnicodeData
                     Interval.of(70113, 70132)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sinh".ToLower(), codePointRanges);
         }
     }
@@ -51993,7 +51993,7 @@ public abstract class UnicodeData
                     Interval.of(2144, 2154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Syrc".ToLower(), codePointRanges);
         }
     }
@@ -52031,7 +52031,7 @@ public abstract class UnicodeData
                     Interval.of(73727, 73727)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Taml".ToLower(), codePointRanges);
         }
     }
@@ -52064,7 +52064,7 @@ public abstract class UnicodeData
                     Interval.of(3191, 3199)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Telu".ToLower(), codePointRanges);
         }
     }
@@ -52085,7 +52085,7 @@ public abstract class UnicodeData
                     Interval.of(1920, 1969)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Thaa".ToLower(), codePointRanges);
         }
     }
@@ -52107,7 +52107,7 @@ public abstract class UnicodeData
                     Interval.of(3648, 3675)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Thai".ToLower(), codePointRanges);
         }
     }
@@ -52134,7 +52134,7 @@ public abstract class UnicodeData
                     Interval.of(4057, 4058)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tibt".ToLower(), codePointRanges);
         }
     }
@@ -52157,7 +52157,7 @@ public abstract class UnicodeData
                     Interval.of(72368, 72383)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cans".ToLower(), codePointRanges);
         }
     }
@@ -52179,7 +52179,7 @@ public abstract class UnicodeData
                     Interval.of(42128, 42182)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Yiii".ToLower(), codePointRanges);
         }
     }
@@ -52201,7 +52201,7 @@ public abstract class UnicodeData
                     Interval.of(5919, 5919)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tglg".ToLower(), codePointRanges);
         }
     }
@@ -52222,7 +52222,7 @@ public abstract class UnicodeData
                     Interval.of(5920, 5940)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hano".ToLower(), codePointRanges);
         }
     }
@@ -52243,7 +52243,7 @@ public abstract class UnicodeData
                     Interval.of(5952, 5971)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Buhd".ToLower(), codePointRanges);
         }
     }
@@ -52266,7 +52266,7 @@ public abstract class UnicodeData
                     Interval.of(6002, 6003)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tagb".ToLower(), codePointRanges);
         }
     }
@@ -52287,7 +52287,7 @@ public abstract class UnicodeData
                     Interval.of(10240, 10495)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Brai".ToLower(), codePointRanges);
         }
     }
@@ -52313,7 +52313,7 @@ public abstract class UnicodeData
                     Interval.of(67647, 67647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cprt".ToLower(), codePointRanges);
         }
     }
@@ -52338,7 +52338,7 @@ public abstract class UnicodeData
                     Interval.of(6468, 6479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Limb".ToLower(), codePointRanges);
         }
     }
@@ -52365,7 +52365,7 @@ public abstract class UnicodeData
                     Interval.of(65664, 65786)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Linb".ToLower(), codePointRanges);
         }
     }
@@ -52387,7 +52387,7 @@ public abstract class UnicodeData
                     Interval.of(66720, 66729)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Osma".ToLower(), codePointRanges);
         }
     }
@@ -52408,7 +52408,7 @@ public abstract class UnicodeData
                     Interval.of(66640, 66687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Shaw".ToLower(), codePointRanges);
         }
     }
@@ -52430,7 +52430,7 @@ public abstract class UnicodeData
                     Interval.of(6512, 6516)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tale".ToLower(), codePointRanges);
         }
     }
@@ -52452,7 +52452,7 @@ public abstract class UnicodeData
                     Interval.of(66463, 66463)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ugar".ToLower(), codePointRanges);
         }
     }
@@ -52472,7 +52472,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hrkt".ToLower(), codePointRanges);
         }
     }
@@ -52494,7 +52494,7 @@ public abstract class UnicodeData
                     Interval.of(6686, 6687)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bugi".ToLower(), codePointRanges);
         }
     }
@@ -52520,7 +52520,7 @@ public abstract class UnicodeData
                     Interval.of(122918, 122922)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Glag".ToLower(), codePointRanges);
         }
     }
@@ -52548,7 +52548,7 @@ public abstract class UnicodeData
                     Interval.of(68176, 68184)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Khar".ToLower(), codePointRanges);
         }
     }
@@ -52569,7 +52569,7 @@ public abstract class UnicodeData
                     Interval.of(43008, 43052)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sylo".ToLower(), codePointRanges);
         }
     }
@@ -52593,7 +52593,7 @@ public abstract class UnicodeData
                     Interval.of(6622, 6623)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Talu".ToLower(), codePointRanges);
         }
     }
@@ -52616,7 +52616,7 @@ public abstract class UnicodeData
                     Interval.of(11647, 11647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tfng".ToLower(), codePointRanges);
         }
     }
@@ -52638,7 +52638,7 @@ public abstract class UnicodeData
                     Interval.of(66504, 66517)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Xpeo".ToLower(), codePointRanges);
         }
     }
@@ -52660,7 +52660,7 @@ public abstract class UnicodeData
                     Interval.of(6992, 7038)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bali".ToLower(), codePointRanges);
         }
     }
@@ -52682,7 +52682,7 @@ public abstract class UnicodeData
                     Interval.of(7164, 7167)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Batk".ToLower(), codePointRanges);
         }
     }
@@ -52702,7 +52702,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Blis".ToLower(), codePointRanges);
         }
     }
@@ -52725,7 +52725,7 @@ public abstract class UnicodeData
                     Interval.of(69759, 69759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Brah".ToLower(), codePointRanges);
         }
     }
@@ -52749,7 +52749,7 @@ public abstract class UnicodeData
                     Interval.of(43612, 43615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cham".ToLower(), codePointRanges);
         }
     }
@@ -52769,7 +52769,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cirt".ToLower(), codePointRanges);
         }
     }
@@ -52789,7 +52789,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cyrs".ToLower(), codePointRanges);
         }
     }
@@ -52809,7 +52809,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Egyd".ToLower(), codePointRanges);
         }
     }
@@ -52829,7 +52829,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Egyh".ToLower(), codePointRanges);
         }
     }
@@ -52851,7 +52851,7 @@ public abstract class UnicodeData
                     Interval.of(78896, 78904)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Egyp".ToLower(), codePointRanges);
         }
     }
@@ -52871,7 +52871,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Geok".ToLower(), codePointRanges);
         }
     }
@@ -52891,7 +52891,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hans".ToLower(), codePointRanges);
         }
     }
@@ -52911,7 +52911,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hant".ToLower(), codePointRanges);
         }
     }
@@ -52936,7 +52936,7 @@ public abstract class UnicodeData
                     Interval.of(93053, 93071)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hmng".ToLower(), codePointRanges);
         }
     }
@@ -52959,7 +52959,7 @@ public abstract class UnicodeData
                     Interval.of(68858, 68863)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hung".ToLower(), codePointRanges);
         }
     }
@@ -52979,7 +52979,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Inds".ToLower(), codePointRanges);
         }
     }
@@ -53002,7 +53002,7 @@ public abstract class UnicodeData
                     Interval.of(43486, 43487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Java".ToLower(), codePointRanges);
         }
     }
@@ -53024,7 +53024,7 @@ public abstract class UnicodeData
                     Interval.of(43311, 43311)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kali".ToLower(), codePointRanges);
         }
     }
@@ -53044,7 +53044,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Latf".ToLower(), codePointRanges);
         }
     }
@@ -53064,7 +53064,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Latg".ToLower(), codePointRanges);
         }
     }
@@ -53087,7 +53087,7 @@ public abstract class UnicodeData
                     Interval.of(7245, 7247)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lepc".ToLower(), codePointRanges);
         }
     }
@@ -53110,7 +53110,7 @@ public abstract class UnicodeData
                     Interval.of(67424, 67431)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lina".ToLower(), codePointRanges);
         }
     }
@@ -53132,7 +53132,7 @@ public abstract class UnicodeData
                     Interval.of(2142, 2142)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mand".ToLower(), codePointRanges);
         }
     }
@@ -53152,7 +53152,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Maya".ToLower(), codePointRanges);
         }
     }
@@ -53173,7 +53173,7 @@ public abstract class UnicodeData
                     Interval.of(67968, 67999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mero".ToLower(), codePointRanges);
         }
     }
@@ -53195,7 +53195,7 @@ public abstract class UnicodeData
                     Interval.of(2045, 2047)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Nkoo".ToLower(), codePointRanges);
         }
     }
@@ -53216,7 +53216,7 @@ public abstract class UnicodeData
                     Interval.of(68608, 68680)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Orkh".ToLower(), codePointRanges);
         }
     }
@@ -53237,7 +53237,7 @@ public abstract class UnicodeData
                     Interval.of(66384, 66426)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Perm".ToLower(), codePointRanges);
         }
     }
@@ -53258,7 +53258,7 @@ public abstract class UnicodeData
                     Interval.of(43072, 43127)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Phag".ToLower(), codePointRanges);
         }
     }
@@ -53280,7 +53280,7 @@ public abstract class UnicodeData
                     Interval.of(67871, 67871)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Phnx".ToLower(), codePointRanges);
         }
     }
@@ -53303,7 +53303,7 @@ public abstract class UnicodeData
                     Interval.of(94095, 94111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Plrd".ToLower(), codePointRanges);
         }
     }
@@ -53323,7 +53323,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Roro".ToLower(), codePointRanges);
         }
     }
@@ -53343,7 +53343,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sara".ToLower(), codePointRanges);
         }
     }
@@ -53363,7 +53363,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Syre".ToLower(), codePointRanges);
         }
     }
@@ -53383,7 +53383,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Syrj".ToLower(), codePointRanges);
         }
     }
@@ -53403,7 +53403,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Syrn".ToLower(), codePointRanges);
         }
     }
@@ -53423,7 +53423,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Teng".ToLower(), codePointRanges);
         }
     }
@@ -53444,7 +53444,7 @@ public abstract class UnicodeData
                     Interval.of(42240, 42539)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Vaii".ToLower(), codePointRanges);
         }
     }
@@ -53464,7 +53464,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Visp".ToLower(), codePointRanges);
         }
     }
@@ -53488,7 +53488,7 @@ public abstract class UnicodeData
                     Interval.of(74880, 75075)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Xsux".ToLower(), codePointRanges);
         }
     }
@@ -53508,7 +53508,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zxxx".ToLower(), codePointRanges);
         }
     }
@@ -54224,7 +54224,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zzzz".ToLower(), codePointRanges);
         }
     }
@@ -54245,7 +54245,7 @@ public abstract class UnicodeData
                     Interval.of(66208, 66256)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cari".ToLower(), codePointRanges);
         }
     }
@@ -54265,7 +54265,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Jpan".ToLower(), codePointRanges);
         }
     }
@@ -54290,7 +54290,7 @@ public abstract class UnicodeData
                     Interval.of(6816, 6829)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lana".ToLower(), codePointRanges);
         }
     }
@@ -54311,7 +54311,7 @@ public abstract class UnicodeData
                     Interval.of(66176, 66204)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lyci".ToLower(), codePointRanges);
         }
     }
@@ -54333,7 +54333,7 @@ public abstract class UnicodeData
                     Interval.of(67903, 67903)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lydi".ToLower(), codePointRanges);
         }
     }
@@ -54354,7 +54354,7 @@ public abstract class UnicodeData
                     Interval.of(7248, 7295)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Olck".ToLower(), codePointRanges);
         }
     }
@@ -54376,7 +54376,7 @@ public abstract class UnicodeData
                     Interval.of(43359, 43359)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Rjng".ToLower(), codePointRanges);
         }
     }
@@ -54398,7 +54398,7 @@ public abstract class UnicodeData
                     Interval.of(43214, 43225)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Saur".ToLower(), codePointRanges);
         }
     }
@@ -54421,7 +54421,7 @@ public abstract class UnicodeData
                     Interval.of(121505, 121519)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sgnw".ToLower(), codePointRanges);
         }
     }
@@ -54443,7 +54443,7 @@ public abstract class UnicodeData
                     Interval.of(7360, 7367)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sund".ToLower(), codePointRanges);
         }
     }
@@ -54463,7 +54463,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Moon".ToLower(), codePointRanges);
         }
     }
@@ -54486,7 +54486,7 @@ public abstract class UnicodeData
                     Interval.of(44016, 44025)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mtei".ToLower(), codePointRanges);
         }
     }
@@ -54508,7 +54508,7 @@ public abstract class UnicodeData
                     Interval.of(67671, 67679)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Armi".ToLower(), codePointRanges);
         }
     }
@@ -54530,7 +54530,7 @@ public abstract class UnicodeData
                     Interval.of(68409, 68415)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Avst".ToLower(), codePointRanges);
         }
     }
@@ -54552,7 +54552,7 @@ public abstract class UnicodeData
                     Interval.of(69942, 69959)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cakm".ToLower(), codePointRanges);
         }
     }
@@ -54572,7 +54572,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kore".ToLower(), codePointRanges);
         }
     }
@@ -54594,7 +54594,7 @@ public abstract class UnicodeData
                     Interval.of(69837, 69837)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kthi".ToLower(), codePointRanges);
         }
     }
@@ -54616,7 +54616,7 @@ public abstract class UnicodeData
                     Interval.of(68331, 68342)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mani".ToLower(), codePointRanges);
         }
     }
@@ -54638,7 +54638,7 @@ public abstract class UnicodeData
                     Interval.of(68472, 68479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Phli".ToLower(), codePointRanges);
         }
     }
@@ -54661,7 +54661,7 @@ public abstract class UnicodeData
                     Interval.of(68521, 68527)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Phlp".ToLower(), codePointRanges);
         }
     }
@@ -54681,7 +54681,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Phlv".ToLower(), codePointRanges);
         }
     }
@@ -54703,7 +54703,7 @@ public abstract class UnicodeData
                     Interval.of(68440, 68447)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Prti".ToLower(), codePointRanges);
         }
     }
@@ -54725,7 +54725,7 @@ public abstract class UnicodeData
                     Interval.of(2096, 2110)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Samr".ToLower(), codePointRanges);
         }
     }
@@ -54747,7 +54747,7 @@ public abstract class UnicodeData
                     Interval.of(43739, 43743)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tavt".ToLower(), codePointRanges);
         }
     }
@@ -54767,7 +54767,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zmth".ToLower(), codePointRanges);
         }
     }
@@ -54787,7 +54787,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zsym".ToLower(), codePointRanges);
         }
     }
@@ -54809,7 +54809,7 @@ public abstract class UnicodeData
                     Interval.of(92160, 92728)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bamu".ToLower(), codePointRanges);
         }
     }
@@ -54831,7 +54831,7 @@ public abstract class UnicodeData
                     Interval.of(73648, 73648)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Lisu".ToLower(), codePointRanges);
         }
     }
@@ -54851,7 +54851,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Nkgb".ToLower(), codePointRanges);
         }
     }
@@ -54872,7 +54872,7 @@ public abstract class UnicodeData
                     Interval.of(68192, 68223)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sarb".ToLower(), codePointRanges);
         }
     }
@@ -54894,7 +54894,7 @@ public abstract class UnicodeData
                     Interval.of(92912, 92917)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bass".ToLower(), codePointRanges);
         }
     }
@@ -54919,7 +54919,7 @@ public abstract class UnicodeData
                     Interval.of(113820, 113823)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Dupl".ToLower(), codePointRanges);
         }
     }
@@ -54940,7 +54940,7 @@ public abstract class UnicodeData
                     Interval.of(66816, 66855)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Elba".ToLower(), codePointRanges);
         }
     }
@@ -54975,7 +54975,7 @@ public abstract class UnicodeData
                     Interval.of(70512, 70516)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Gran".ToLower(), codePointRanges);
         }
     }
@@ -54995,7 +54995,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kpel".ToLower(), codePointRanges);
         }
     }
@@ -55015,7 +55015,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Loma".ToLower(), codePointRanges);
         }
     }
@@ -55037,7 +55037,7 @@ public abstract class UnicodeData
                     Interval.of(125127, 125142)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mend".ToLower(), codePointRanges);
         }
     }
@@ -55060,7 +55060,7 @@ public abstract class UnicodeData
                     Interval.of(68050, 68095)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Merc".ToLower(), codePointRanges);
         }
     }
@@ -55081,7 +55081,7 @@ public abstract class UnicodeData
                     Interval.of(68224, 68255)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Narb".ToLower(), codePointRanges);
         }
     }
@@ -55103,7 +55103,7 @@ public abstract class UnicodeData
                     Interval.of(67751, 67759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Nbat".ToLower(), codePointRanges);
         }
     }
@@ -55124,7 +55124,7 @@ public abstract class UnicodeData
                     Interval.of(67680, 67711)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Palm".ToLower(), codePointRanges);
         }
     }
@@ -55146,7 +55146,7 @@ public abstract class UnicodeData
                     Interval.of(70384, 70393)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sind".ToLower(), codePointRanges);
         }
     }
@@ -55168,7 +55168,7 @@ public abstract class UnicodeData
                     Interval.of(71935, 71935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Wara".ToLower(), codePointRanges);
         }
     }
@@ -55188,7 +55188,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Afak".ToLower(), codePointRanges);
         }
     }
@@ -55208,7 +55208,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Jurc".ToLower(), codePointRanges);
         }
     }
@@ -55231,7 +55231,7 @@ public abstract class UnicodeData
                     Interval.of(92782, 92783)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mroo".ToLower(), codePointRanges);
         }
     }
@@ -55253,7 +55253,7 @@ public abstract class UnicodeData
                     Interval.of(110960, 111355)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Nshu".ToLower(), codePointRanges);
         }
     }
@@ -55274,7 +55274,7 @@ public abstract class UnicodeData
                     Interval.of(70016, 70111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Shrd".ToLower(), codePointRanges);
         }
     }
@@ -55296,7 +55296,7 @@ public abstract class UnicodeData
                     Interval.of(69872, 69881)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sora".ToLower(), codePointRanges);
         }
     }
@@ -55318,7 +55318,7 @@ public abstract class UnicodeData
                     Interval.of(71360, 71369)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Takr".ToLower(), codePointRanges);
         }
     }
@@ -55342,7 +55342,7 @@ public abstract class UnicodeData
                     Interval.of(101632, 101640)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tang".ToLower(), codePointRanges);
         }
     }
@@ -55362,7 +55362,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Wole".ToLower(), codePointRanges);
         }
     }
@@ -55383,7 +55383,7 @@ public abstract class UnicodeData
                     Interval.of(82944, 83526)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hluw".ToLower(), codePointRanges);
         }
     }
@@ -55405,7 +55405,7 @@ public abstract class UnicodeData
                     Interval.of(70163, 70206)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Khoj".ToLower(), codePointRanges);
         }
     }
@@ -55427,7 +55427,7 @@ public abstract class UnicodeData
                     Interval.of(70864, 70873)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tirh".ToLower(), codePointRanges);
         }
     }
@@ -55449,7 +55449,7 @@ public abstract class UnicodeData
                     Interval.of(66927, 66927)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Aghb".ToLower(), codePointRanges);
         }
     }
@@ -55470,7 +55470,7 @@ public abstract class UnicodeData
                     Interval.of(69968, 70006)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mahj".ToLower(), codePointRanges);
         }
     }
@@ -55493,7 +55493,7 @@ public abstract class UnicodeData
                     Interval.of(71472, 71494)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ahom".ToLower(), codePointRanges);
         }
     }
@@ -55516,7 +55516,7 @@ public abstract class UnicodeData
                     Interval.of(67835, 67839)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hatr".ToLower(), codePointRanges);
         }
     }
@@ -55538,7 +55538,7 @@ public abstract class UnicodeData
                     Interval.of(71248, 71257)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Modi".ToLower(), codePointRanges);
         }
     }
@@ -55563,7 +55563,7 @@ public abstract class UnicodeData
                     Interval.of(70303, 70313)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Mult".ToLower(), codePointRanges);
         }
     }
@@ -55584,7 +55584,7 @@ public abstract class UnicodeData
                     Interval.of(72384, 72440)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Pauc".ToLower(), codePointRanges);
         }
     }
@@ -55606,7 +55606,7 @@ public abstract class UnicodeData
                     Interval.of(71096, 71133)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sidd".ToLower(), codePointRanges);
         }
     }
@@ -55629,7 +55629,7 @@ public abstract class UnicodeData
                     Interval.of(125278, 125279)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Adlm".ToLower(), codePointRanges);
         }
     }
@@ -55653,7 +55653,7 @@ public abstract class UnicodeData
                     Interval.of(72784, 72812)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Bhks".ToLower(), codePointRanges);
         }
     }
@@ -55676,7 +55676,7 @@ public abstract class UnicodeData
                     Interval.of(72873, 72886)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Marc".ToLower(), codePointRanges);
         }
     }
@@ -55698,7 +55698,7 @@ public abstract class UnicodeData
                     Interval.of(70749, 70753)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Newa".ToLower(), codePointRanges);
         }
     }
@@ -55720,7 +55720,7 @@ public abstract class UnicodeData
                     Interval.of(66776, 66811)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Osge".ToLower(), codePointRanges);
         }
     }
@@ -55740,7 +55740,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hanb".ToLower(), codePointRanges);
         }
     }
@@ -55760,7 +55760,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Jamo".ToLower(), codePointRanges);
         }
     }
@@ -55780,7 +55780,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zsye".ToLower(), codePointRanges);
         }
     }
@@ -55807,7 +55807,7 @@ public abstract class UnicodeData
                     Interval.of(73040, 73049)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Gonm".ToLower(), codePointRanges);
         }
     }
@@ -55828,7 +55828,7 @@ public abstract class UnicodeData
                     Interval.of(72272, 72354)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Soyo".ToLower(), codePointRanges);
         }
     }
@@ -55849,7 +55849,7 @@ public abstract class UnicodeData
                     Interval.of(72192, 72263)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Zanb".ToLower(), codePointRanges);
         }
     }
@@ -55870,7 +55870,7 @@ public abstract class UnicodeData
                     Interval.of(71680, 71739)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Dogr".ToLower(), codePointRanges);
         }
     }
@@ -55896,7 +55896,7 @@ public abstract class UnicodeData
                     Interval.of(73120, 73129)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Gong".ToLower(), codePointRanges);
         }
     }
@@ -55917,7 +55917,7 @@ public abstract class UnicodeData
                     Interval.of(73440, 73464)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Maka".ToLower(), codePointRanges);
         }
     }
@@ -55938,7 +55938,7 @@ public abstract class UnicodeData
                     Interval.of(93760, 93850)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Medf".ToLower(), codePointRanges);
         }
     }
@@ -55960,7 +55960,7 @@ public abstract class UnicodeData
                     Interval.of(68912, 68921)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Rohg".ToLower(), codePointRanges);
         }
     }
@@ -55981,7 +55981,7 @@ public abstract class UnicodeData
                     Interval.of(69424, 69465)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sogd".ToLower(), codePointRanges);
         }
     }
@@ -56002,7 +56002,7 @@ public abstract class UnicodeData
                     Interval.of(69376, 69415)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Sogo".ToLower(), codePointRanges);
         }
     }
@@ -56023,7 +56023,7 @@ public abstract class UnicodeData
                     Interval.of(69600, 69622)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Elym".ToLower(), codePointRanges);
         }
     }
@@ -56047,7 +56047,7 @@ public abstract class UnicodeData
                     Interval.of(123214, 123215)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Hmnp".ToLower(), codePointRanges);
         }
     }
@@ -56070,7 +56070,7 @@ public abstract class UnicodeData
                     Interval.of(72154, 72164)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Nand".ToLower(), codePointRanges);
         }
     }
@@ -56092,7 +56092,7 @@ public abstract class UnicodeData
                     Interval.of(123647, 123647)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Wcho".ToLower(), codePointRanges);
         }
     }
@@ -56113,7 +56113,7 @@ public abstract class UnicodeData
                     Interval.of(69552, 69579)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Chrs".ToLower(), codePointRanges);
         }
     }
@@ -56141,7 +56141,7 @@ public abstract class UnicodeData
                     Interval.of(72016, 72025)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Diak".ToLower(), codePointRanges);
         }
     }
@@ -56163,7 +56163,7 @@ public abstract class UnicodeData
                     Interval.of(101120, 101589)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Kits".ToLower(), codePointRanges);
         }
     }
@@ -56186,7 +56186,7 @@ public abstract class UnicodeData
                     Interval.of(69296, 69297)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Yezi".ToLower(), codePointRanges);
         }
     }
@@ -56207,7 +56207,7 @@ public abstract class UnicodeData
                     Interval.of(77712, 77810)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Cpmn".ToLower(), codePointRanges);
         }
     }
@@ -56228,7 +56228,7 @@ public abstract class UnicodeData
                     Interval.of(69488, 69513)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Ougr".ToLower(), codePointRanges);
         }
     }
@@ -56250,7 +56250,7 @@ public abstract class UnicodeData
                     Interval.of(92864, 92873)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Tnsa".ToLower(), codePointRanges);
         }
     }
@@ -56271,7 +56271,7 @@ public abstract class UnicodeData
                     Interval.of(123536, 123566)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Toto".ToLower(), codePointRanges);
         }
     }
@@ -56299,7 +56299,7 @@ public abstract class UnicodeData
                     Interval.of(67003, 67004)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("sc=Vith".ToLower(), codePointRanges);
         }
     }
@@ -56325,7 +56325,7 @@ public abstract class UnicodeData
                     Interval.of(55292, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=NA".ToLower(), codePointRanges);
         }
     }
@@ -56347,7 +56347,7 @@ public abstract class UnicodeData
                     Interval.of(43360, 43388)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=L".ToLower(), codePointRanges);
         }
     }
@@ -56369,7 +56369,7 @@ public abstract class UnicodeData
                     Interval.of(55216, 55238)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=V".ToLower(), codePointRanges);
         }
     }
@@ -56391,7 +56391,7 @@ public abstract class UnicodeData
                     Interval.of(55243, 55291)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=T".ToLower(), codePointRanges);
         }
     }
@@ -56810,7 +56810,7 @@ public abstract class UnicodeData
                     Interval.of(55176, 55176)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=LV".ToLower(), codePointRanges);
         }
     }
@@ -57229,7 +57229,7 @@ public abstract class UnicodeData
                     Interval.of(55177, 55203)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("hst=LVT".ToLower(), codePointRanges);
         }
     }
@@ -57481,7 +57481,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFD_QC=N".ToLower(), codePointRanges);
         }
     }
@@ -57734,7 +57734,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFD_QC=Y".ToLower(), codePointRanges);
         }
     }
@@ -58150,7 +58150,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFKD_QC=N".ToLower(), codePointRanges);
         }
     }
@@ -58567,7 +58567,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFKD_QC=Y".ToLower(), codePointRanges);
         }
     }
@@ -58660,7 +58660,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFC_QC=N".ToLower(), codePointRanges);
         }
     }
@@ -58793,7 +58793,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFC_QC=Y".ToLower(), codePointRanges);
         }
     }
@@ -58855,7 +58855,7 @@ public abstract class UnicodeData
                     Interval.of(71984, 71984)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFC_QC=M".ToLower(), codePointRanges);
         }
     }
@@ -59129,7 +59129,7 @@ public abstract class UnicodeData
                     Interval.of(194560, 195101)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFKC_QC=N".ToLower(), codePointRanges);
         }
     }
@@ -59442,7 +59442,7 @@ public abstract class UnicodeData
                     Interval.of(195102, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFKC_QC=Y".ToLower(), codePointRanges);
         }
     }
@@ -59504,7 +59504,7 @@ public abstract class UnicodeData
                     Interval.of(71984, 71984)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("NFKC_QC=M".ToLower(), codePointRanges);
         }
     }
@@ -59711,7 +59711,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=NR".ToLower(), codePointRanges);
         }
     }
@@ -59742,7 +59742,7 @@ public abstract class UnicodeData
                     Interval.of(119143, 119145)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=OV".ToLower(), codePointRanges);
         }
     }
@@ -59762,7 +59762,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=null".ToLower(), codePointRanges);
         }
     }
@@ -59783,7 +59783,7 @@ public abstract class UnicodeData
                     Interval.of(94192, 94193)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=HANR".ToLower(), codePointRanges);
         }
     }
@@ -59829,7 +59829,7 @@ public abstract class UnicodeData
                     Interval.of(125258, 125258)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=NK".ToLower(), codePointRanges);
         }
     }
@@ -59850,7 +59850,7 @@ public abstract class UnicodeData
                     Interval.of(12441, 12442)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=KV".ToLower(), codePointRanges);
         }
     }
@@ -59925,7 +59925,7 @@ public abstract class UnicodeData
                     Interval.of(73111, 73111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=VR".ToLower(), codePointRanges);
         }
     }
@@ -59946,7 +59946,7 @@ public abstract class UnicodeData
                     Interval.of(1456, 1456)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC10".ToLower(), codePointRanges);
         }
     }
@@ -59967,7 +59967,7 @@ public abstract class UnicodeData
                     Interval.of(1457, 1457)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC11".ToLower(), codePointRanges);
         }
     }
@@ -59988,7 +59988,7 @@ public abstract class UnicodeData
                     Interval.of(1458, 1458)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC12".ToLower(), codePointRanges);
         }
     }
@@ -60009,7 +60009,7 @@ public abstract class UnicodeData
                     Interval.of(1459, 1459)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC13".ToLower(), codePointRanges);
         }
     }
@@ -60030,7 +60030,7 @@ public abstract class UnicodeData
                     Interval.of(1460, 1460)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC14".ToLower(), codePointRanges);
         }
     }
@@ -60051,7 +60051,7 @@ public abstract class UnicodeData
                     Interval.of(1461, 1461)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC15".ToLower(), codePointRanges);
         }
     }
@@ -60072,7 +60072,7 @@ public abstract class UnicodeData
                     Interval.of(1462, 1462)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC16".ToLower(), codePointRanges);
         }
     }
@@ -60093,7 +60093,7 @@ public abstract class UnicodeData
                     Interval.of(1463, 1463)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC17".ToLower(), codePointRanges);
         }
     }
@@ -60115,7 +60115,7 @@ public abstract class UnicodeData
                     Interval.of(1479, 1479)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC18".ToLower(), codePointRanges);
         }
     }
@@ -60136,7 +60136,7 @@ public abstract class UnicodeData
                     Interval.of(1465, 1466)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC19".ToLower(), codePointRanges);
         }
     }
@@ -60157,7 +60157,7 @@ public abstract class UnicodeData
                     Interval.of(1467, 1467)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC20".ToLower(), codePointRanges);
         }
     }
@@ -60178,7 +60178,7 @@ public abstract class UnicodeData
                     Interval.of(1468, 1468)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC21".ToLower(), codePointRanges);
         }
     }
@@ -60199,7 +60199,7 @@ public abstract class UnicodeData
                     Interval.of(1469, 1469)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC22".ToLower(), codePointRanges);
         }
     }
@@ -60220,7 +60220,7 @@ public abstract class UnicodeData
                     Interval.of(1471, 1471)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC23".ToLower(), codePointRanges);
         }
     }
@@ -60241,7 +60241,7 @@ public abstract class UnicodeData
                     Interval.of(1473, 1473)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC24".ToLower(), codePointRanges);
         }
     }
@@ -60262,7 +60262,7 @@ public abstract class UnicodeData
                     Interval.of(1474, 1474)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC25".ToLower(), codePointRanges);
         }
     }
@@ -60283,7 +60283,7 @@ public abstract class UnicodeData
                     Interval.of(64286, 64286)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC26".ToLower(), codePointRanges);
         }
     }
@@ -60305,7 +60305,7 @@ public abstract class UnicodeData
                     Interval.of(2288, 2288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC27".ToLower(), codePointRanges);
         }
     }
@@ -60327,7 +60327,7 @@ public abstract class UnicodeData
                     Interval.of(2289, 2289)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC28".ToLower(), codePointRanges);
         }
     }
@@ -60349,7 +60349,7 @@ public abstract class UnicodeData
                     Interval.of(2290, 2290)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC29".ToLower(), codePointRanges);
         }
     }
@@ -60371,7 +60371,7 @@ public abstract class UnicodeData
                     Interval.of(1614, 1614)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC30".ToLower(), codePointRanges);
         }
     }
@@ -60393,7 +60393,7 @@ public abstract class UnicodeData
                     Interval.of(1615, 1615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC31".ToLower(), codePointRanges);
         }
     }
@@ -60415,7 +60415,7 @@ public abstract class UnicodeData
                     Interval.of(1616, 1616)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC32".ToLower(), codePointRanges);
         }
     }
@@ -60436,7 +60436,7 @@ public abstract class UnicodeData
                     Interval.of(1617, 1617)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC33".ToLower(), codePointRanges);
         }
     }
@@ -60457,7 +60457,7 @@ public abstract class UnicodeData
                     Interval.of(1618, 1618)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC34".ToLower(), codePointRanges);
         }
     }
@@ -60478,7 +60478,7 @@ public abstract class UnicodeData
                     Interval.of(1648, 1648)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC35".ToLower(), codePointRanges);
         }
     }
@@ -60499,7 +60499,7 @@ public abstract class UnicodeData
                     Interval.of(1809, 1809)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC36".ToLower(), codePointRanges);
         }
     }
@@ -60520,7 +60520,7 @@ public abstract class UnicodeData
                     Interval.of(3157, 3157)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC84".ToLower(), codePointRanges);
         }
     }
@@ -60541,7 +60541,7 @@ public abstract class UnicodeData
                     Interval.of(3158, 3158)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC91".ToLower(), codePointRanges);
         }
     }
@@ -60562,7 +60562,7 @@ public abstract class UnicodeData
                     Interval.of(3640, 3641)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC103".ToLower(), codePointRanges);
         }
     }
@@ -60583,7 +60583,7 @@ public abstract class UnicodeData
                     Interval.of(3656, 3659)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC107".ToLower(), codePointRanges);
         }
     }
@@ -60604,7 +60604,7 @@ public abstract class UnicodeData
                     Interval.of(3768, 3769)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC118".ToLower(), codePointRanges);
         }
     }
@@ -60625,7 +60625,7 @@ public abstract class UnicodeData
                     Interval.of(3784, 3787)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC122".ToLower(), codePointRanges);
         }
     }
@@ -60649,7 +60649,7 @@ public abstract class UnicodeData
                     Interval.of(3969, 3969)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC129".ToLower(), codePointRanges);
         }
     }
@@ -60672,7 +60672,7 @@ public abstract class UnicodeData
                     Interval.of(3968, 3968)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC130".ToLower(), codePointRanges);
         }
     }
@@ -60693,7 +60693,7 @@ public abstract class UnicodeData
                     Interval.of(3956, 3956)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC132".ToLower(), codePointRanges);
         }
     }
@@ -60713,7 +60713,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=CCC133".ToLower(), codePointRanges);
         }
     }
@@ -60733,7 +60733,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=ATBL".ToLower(), codePointRanges);
         }
     }
@@ -60756,7 +60756,7 @@ public abstract class UnicodeData
                     Interval.of(7632, 7632)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=ATB".ToLower(), codePointRanges);
         }
     }
@@ -60777,7 +60777,7 @@ public abstract class UnicodeData
                     Interval.of(7630, 7630)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=ATA".ToLower(), codePointRanges);
         }
     }
@@ -60801,7 +60801,7 @@ public abstract class UnicodeData
                     Interval.of(119150, 119154)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=ATAR".ToLower(), codePointRanges);
         }
     }
@@ -60823,7 +60823,7 @@ public abstract class UnicodeData
                     Interval.of(12330, 12330)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=BL".ToLower(), codePointRanges);
         }
     }
@@ -60926,7 +60926,7 @@ public abstract class UnicodeData
                     Interval.of(125136, 125142)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=B".ToLower(), codePointRanges);
         }
     }
@@ -60950,7 +60950,7 @@ public abstract class UnicodeData
                     Interval.of(12333, 12333)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=BR".ToLower(), codePointRanges);
         }
     }
@@ -60971,7 +60971,7 @@ public abstract class UnicodeData
                     Interval.of(12334, 12335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=L".ToLower(), codePointRanges);
         }
     }
@@ -60992,7 +60992,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119149)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=R".ToLower(), codePointRanges);
         }
     }
@@ -61016,7 +61016,7 @@ public abstract class UnicodeData
                     Interval.of(12331, 12331)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=AL".ToLower(), codePointRanges);
         }
     }
@@ -61163,7 +61163,7 @@ public abstract class UnicodeData
                     Interval.of(125252, 125257)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=A".ToLower(), codePointRanges);
         }
     }
@@ -61188,7 +61188,7 @@ public abstract class UnicodeData
                     Interval.of(12332, 12332)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=AR".ToLower(), codePointRanges);
         }
     }
@@ -61212,7 +61212,7 @@ public abstract class UnicodeData
                     Interval.of(7676, 7676)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=DB".ToLower(), codePointRanges);
         }
     }
@@ -61235,7 +61235,7 @@ public abstract class UnicodeData
                     Interval.of(7629, 7629)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=DA".ToLower(), codePointRanges);
         }
     }
@@ -61256,7 +61256,7 @@ public abstract class UnicodeData
                     Interval.of(837, 837)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("lccc=IS".ToLower(), codePointRanges);
         }
     }
@@ -61632,7 +61632,7 @@ public abstract class UnicodeData
                     Interval.of(125259, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=NR".ToLower(), codePointRanges);
         }
     }
@@ -61687,7 +61687,7 @@ public abstract class UnicodeData
                     Interval.of(119143, 119145)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=OV".ToLower(), codePointRanges);
         }
     }
@@ -61707,7 +61707,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=null".ToLower(), codePointRanges);
         }
     }
@@ -61728,7 +61728,7 @@ public abstract class UnicodeData
                     Interval.of(94192, 94193)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=HANR".ToLower(), codePointRanges);
         }
     }
@@ -61788,7 +61788,7 @@ public abstract class UnicodeData
                     Interval.of(125258, 125258)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=NK".ToLower(), codePointRanges);
         }
     }
@@ -61854,7 +61854,7 @@ public abstract class UnicodeData
                     Interval.of(12542, 12542)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=KV".ToLower(), codePointRanges);
         }
     }
@@ -61931,7 +61931,7 @@ public abstract class UnicodeData
                     Interval.of(73111, 73111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=VR".ToLower(), codePointRanges);
         }
     }
@@ -61952,7 +61952,7 @@ public abstract class UnicodeData
                     Interval.of(1456, 1456)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC10".ToLower(), codePointRanges);
         }
     }
@@ -61973,7 +61973,7 @@ public abstract class UnicodeData
                     Interval.of(1457, 1457)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC11".ToLower(), codePointRanges);
         }
     }
@@ -61994,7 +61994,7 @@ public abstract class UnicodeData
                     Interval.of(1458, 1458)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC12".ToLower(), codePointRanges);
         }
     }
@@ -62015,7 +62015,7 @@ public abstract class UnicodeData
                     Interval.of(1459, 1459)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC13".ToLower(), codePointRanges);
         }
     }
@@ -62037,7 +62037,7 @@ public abstract class UnicodeData
                     Interval.of(64285, 64285)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC14".ToLower(), codePointRanges);
         }
     }
@@ -62058,7 +62058,7 @@ public abstract class UnicodeData
                     Interval.of(1461, 1461)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC15".ToLower(), codePointRanges);
         }
     }
@@ -62079,7 +62079,7 @@ public abstract class UnicodeData
                     Interval.of(1462, 1462)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC16".ToLower(), codePointRanges);
         }
     }
@@ -62102,7 +62102,7 @@ public abstract class UnicodeData
                     Interval.of(64302, 64302)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC17".ToLower(), codePointRanges);
         }
     }
@@ -62125,7 +62125,7 @@ public abstract class UnicodeData
                     Interval.of(64303, 64303)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC18".ToLower(), codePointRanges);
         }
     }
@@ -62147,7 +62147,7 @@ public abstract class UnicodeData
                     Interval.of(64331, 64331)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC19".ToLower(), codePointRanges);
         }
     }
@@ -62168,7 +62168,7 @@ public abstract class UnicodeData
                     Interval.of(1467, 1467)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC20".ToLower(), codePointRanges);
         }
     }
@@ -62195,7 +62195,7 @@ public abstract class UnicodeData
                     Interval.of(64326, 64330)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC21".ToLower(), codePointRanges);
         }
     }
@@ -62216,7 +62216,7 @@ public abstract class UnicodeData
                     Interval.of(1469, 1469)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC22".ToLower(), codePointRanges);
         }
     }
@@ -62238,7 +62238,7 @@ public abstract class UnicodeData
                     Interval.of(64332, 64334)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC23".ToLower(), codePointRanges);
         }
     }
@@ -62261,7 +62261,7 @@ public abstract class UnicodeData
                     Interval.of(64300, 64300)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC24".ToLower(), codePointRanges);
         }
     }
@@ -62284,7 +62284,7 @@ public abstract class UnicodeData
                     Interval.of(64301, 64301)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC25".ToLower(), codePointRanges);
         }
     }
@@ -62305,7 +62305,7 @@ public abstract class UnicodeData
                     Interval.of(64286, 64286)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC26".ToLower(), codePointRanges);
         }
     }
@@ -62327,7 +62327,7 @@ public abstract class UnicodeData
                     Interval.of(2288, 2288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC27".ToLower(), codePointRanges);
         }
     }
@@ -62349,7 +62349,7 @@ public abstract class UnicodeData
                     Interval.of(2289, 2289)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC28".ToLower(), codePointRanges);
         }
     }
@@ -62371,7 +62371,7 @@ public abstract class UnicodeData
                     Interval.of(2290, 2290)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC29".ToLower(), codePointRanges);
         }
     }
@@ -62393,7 +62393,7 @@ public abstract class UnicodeData
                     Interval.of(1614, 1614)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC30".ToLower(), codePointRanges);
         }
     }
@@ -62415,7 +62415,7 @@ public abstract class UnicodeData
                     Interval.of(1615, 1615)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC31".ToLower(), codePointRanges);
         }
     }
@@ -62437,7 +62437,7 @@ public abstract class UnicodeData
                     Interval.of(1616, 1616)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC32".ToLower(), codePointRanges);
         }
     }
@@ -62458,7 +62458,7 @@ public abstract class UnicodeData
                     Interval.of(1617, 1617)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC33".ToLower(), codePointRanges);
         }
     }
@@ -62479,7 +62479,7 @@ public abstract class UnicodeData
                     Interval.of(1618, 1618)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC34".ToLower(), codePointRanges);
         }
     }
@@ -62500,7 +62500,7 @@ public abstract class UnicodeData
                     Interval.of(1648, 1648)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC35".ToLower(), codePointRanges);
         }
     }
@@ -62521,7 +62521,7 @@ public abstract class UnicodeData
                     Interval.of(1809, 1809)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC36".ToLower(), codePointRanges);
         }
     }
@@ -62542,7 +62542,7 @@ public abstract class UnicodeData
                     Interval.of(3157, 3157)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC84".ToLower(), codePointRanges);
         }
     }
@@ -62564,7 +62564,7 @@ public abstract class UnicodeData
                     Interval.of(3158, 3158)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC91".ToLower(), codePointRanges);
         }
     }
@@ -62585,7 +62585,7 @@ public abstract class UnicodeData
                     Interval.of(3640, 3641)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC103".ToLower(), codePointRanges);
         }
     }
@@ -62606,7 +62606,7 @@ public abstract class UnicodeData
                     Interval.of(3656, 3659)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC107".ToLower(), codePointRanges);
         }
     }
@@ -62627,7 +62627,7 @@ public abstract class UnicodeData
                     Interval.of(3768, 3769)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC118".ToLower(), codePointRanges);
         }
     }
@@ -62648,7 +62648,7 @@ public abstract class UnicodeData
                     Interval.of(3784, 3787)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC122".ToLower(), codePointRanges);
         }
     }
@@ -62669,7 +62669,7 @@ public abstract class UnicodeData
                     Interval.of(3953, 3953)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC129".ToLower(), codePointRanges);
         }
     }
@@ -62694,7 +62694,7 @@ public abstract class UnicodeData
                     Interval.of(3968, 3969)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC130".ToLower(), codePointRanges);
         }
     }
@@ -62715,7 +62715,7 @@ public abstract class UnicodeData
                     Interval.of(3956, 3957)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC132".ToLower(), codePointRanges);
         }
     }
@@ -62735,7 +62735,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=CCC133".ToLower(), codePointRanges);
         }
     }
@@ -62755,7 +62755,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=ATBL".ToLower(), codePointRanges);
         }
     }
@@ -62795,7 +62795,7 @@ public abstract class UnicodeData
                     Interval.of(7720, 7721)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=ATB".ToLower(), codePointRanges);
         }
     }
@@ -62816,7 +62816,7 @@ public abstract class UnicodeData
                     Interval.of(7630, 7630)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=ATA".ToLower(), codePointRanges);
         }
     }
@@ -62843,7 +62843,7 @@ public abstract class UnicodeData
                     Interval.of(119227, 119232)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=ATAR".ToLower(), codePointRanges);
         }
     }
@@ -62865,7 +62865,7 @@ public abstract class UnicodeData
                     Interval.of(12330, 12330)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=BL".ToLower(), codePointRanges);
         }
     }
@@ -62993,7 +62993,7 @@ public abstract class UnicodeData
                     Interval.of(125136, 125142)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=B".ToLower(), codePointRanges);
         }
     }
@@ -63017,7 +63017,7 @@ public abstract class UnicodeData
                     Interval.of(12333, 12333)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=BR".ToLower(), codePointRanges);
         }
     }
@@ -63038,7 +63038,7 @@ public abstract class UnicodeData
                     Interval.of(12334, 12335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=L".ToLower(), codePointRanges);
         }
     }
@@ -63059,7 +63059,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119149)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=R".ToLower(), codePointRanges);
         }
     }
@@ -63083,7 +63083,7 @@ public abstract class UnicodeData
                     Interval.of(12331, 12331)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=AL".ToLower(), codePointRanges);
         }
     }
@@ -63341,7 +63341,7 @@ public abstract class UnicodeData
                     Interval.of(125252, 125257)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=A".ToLower(), codePointRanges);
         }
     }
@@ -63366,7 +63366,7 @@ public abstract class UnicodeData
                     Interval.of(12332, 12332)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=AR".ToLower(), codePointRanges);
         }
     }
@@ -63390,7 +63390,7 @@ public abstract class UnicodeData
                     Interval.of(7676, 7676)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=DB".ToLower(), codePointRanges);
         }
     }
@@ -63413,7 +63413,7 @@ public abstract class UnicodeData
                     Interval.of(7629, 7629)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=DA".ToLower(), codePointRanges);
         }
     }
@@ -63444,7 +63444,7 @@ public abstract class UnicodeData
                     Interval.of(8188, 8188)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("tccc=IS".ToLower(), codePointRanges);
         }
     }
@@ -63784,7 +63784,7 @@ public abstract class UnicodeData
                     Interval.of(921600, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=XX".ToLower(), codePointRanges);
         }
     }
@@ -63823,7 +63823,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 921599)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=CN".ToLower(), codePointRanges);
         }
     }
@@ -63844,7 +63844,7 @@ public abstract class UnicodeData
                     Interval.of(13, 13)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=CR".ToLower(), codePointRanges);
         }
     }
@@ -64218,7 +64218,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=EX".ToLower(), codePointRanges);
         }
     }
@@ -64240,7 +64240,7 @@ public abstract class UnicodeData
                     Interval.of(43360, 43388)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=L".ToLower(), codePointRanges);
         }
     }
@@ -64261,7 +64261,7 @@ public abstract class UnicodeData
                     Interval.of(10, 10)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=LF".ToLower(), codePointRanges);
         }
     }
@@ -64680,7 +64680,7 @@ public abstract class UnicodeData
                     Interval.of(55176, 55176)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=LV".ToLower(), codePointRanges);
         }
     }
@@ -65099,7 +65099,7 @@ public abstract class UnicodeData
                     Interval.of(55177, 55203)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=LVT".ToLower(), codePointRanges);
         }
     }
@@ -65121,7 +65121,7 @@ public abstract class UnicodeData
                     Interval.of(55243, 55291)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=T".ToLower(), codePointRanges);
         }
     }
@@ -65143,7 +65143,7 @@ public abstract class UnicodeData
                     Interval.of(55216, 55238)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=V".ToLower(), codePointRanges);
         }
     }
@@ -65323,7 +65323,7 @@ public abstract class UnicodeData
                     Interval.of(119149, 119149)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=SM".ToLower(), codePointRanges);
         }
     }
@@ -65357,7 +65357,7 @@ public abstract class UnicodeData
                     Interval.of(73030, 73030)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=PP".ToLower(), codePointRanges);
         }
     }
@@ -65378,7 +65378,7 @@ public abstract class UnicodeData
                     Interval.of(127462, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=RI".ToLower(), codePointRanges);
         }
     }
@@ -65398,7 +65398,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=EB".ToLower(), codePointRanges);
         }
     }
@@ -65418,7 +65418,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=EBG".ToLower(), codePointRanges);
         }
     }
@@ -65438,7 +65438,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=EM".ToLower(), codePointRanges);
         }
     }
@@ -65458,7 +65458,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=GAZ".ToLower(), codePointRanges);
         }
     }
@@ -65479,7 +65479,7 @@ public abstract class UnicodeData
                     Interval.of(8205, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("GCB=ZWJ".ToLower(), codePointRanges);
         }
     }
@@ -66330,7 +66330,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=XX".ToLower(), codePointRanges);
         }
     }
@@ -66354,7 +66354,7 @@ public abstract class UnicodeData
                     Interval.of(65294, 65294)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=AT".ToLower(), codePointRanges);
         }
     }
@@ -66419,7 +66419,7 @@ public abstract class UnicodeData
                     Interval.of(128630, 128632)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=CL".ToLower(), codePointRanges);
         }
     }
@@ -66460,7 +66460,7 @@ public abstract class UnicodeData
                     Interval.of(917505, 917505)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=FO".ToLower(), codePointRanges);
         }
     }
@@ -67145,7 +67145,7 @@ public abstract class UnicodeData
                     Interval.of(125218, 125251)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=LO".ToLower(), codePointRanges);
         }
     }
@@ -67228,7 +67228,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=NU".ToLower(), codePointRanges);
         }
     }
@@ -67784,7 +67784,7 @@ public abstract class UnicodeData
                     Interval.of(196608, 201546)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=LE".ToLower(), codePointRanges);
         }
     }
@@ -67806,7 +67806,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=SE".ToLower(), codePointRanges);
         }
     }
@@ -67835,7 +67835,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=SP".ToLower(), codePointRanges);
         }
     }
@@ -67931,7 +67931,7 @@ public abstract class UnicodeData
                     Interval.of(121480, 121480)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=ST".ToLower(), codePointRanges);
         }
     }
@@ -68603,7 +68603,7 @@ public abstract class UnicodeData
                     Interval.of(127344, 127369)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=UP".ToLower(), codePointRanges);
         }
     }
@@ -68624,7 +68624,7 @@ public abstract class UnicodeData
                     Interval.of(13, 13)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=CR".ToLower(), codePointRanges);
         }
     }
@@ -68946,7 +68946,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=EX".ToLower(), codePointRanges);
         }
     }
@@ -68967,7 +68967,7 @@ public abstract class UnicodeData
                     Interval.of(10, 10)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=LF".ToLower(), codePointRanges);
         }
     }
@@ -69006,7 +69006,7 @@ public abstract class UnicodeData
                     Interval.of(65380, 65380)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("SB=SC".ToLower(), codePointRanges);
         }
     }
@@ -69797,7 +69797,7 @@ public abstract class UnicodeData
                     Interval.of(918000, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=XX".ToLower(), codePointRanges);
         }
     }
@@ -70387,7 +70387,7 @@ public abstract class UnicodeData
                     Interval.of(127344, 127369)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=LE".ToLower(), codePointRanges);
         }
     }
@@ -70427,7 +70427,7 @@ public abstract class UnicodeData
                     Interval.of(917505, 917505)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=FO".ToLower(), codePointRanges);
         }
     }
@@ -70461,7 +70461,7 @@ public abstract class UnicodeData
                     Interval.of(110948, 110951)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=KA".ToLower(), codePointRanges);
         }
     }
@@ -70490,7 +70490,7 @@ public abstract class UnicodeData
                     Interval.of(65306, 65306)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=ML".ToLower(), codePointRanges);
         }
     }
@@ -70524,7 +70524,7 @@ public abstract class UnicodeData
                     Interval.of(65307, 65307)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=MN".ToLower(), codePointRanges);
         }
     }
@@ -70607,7 +70607,7 @@ public abstract class UnicodeData
                     Interval.of(130032, 130041)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=NU".ToLower(), codePointRanges);
         }
     }
@@ -70634,7 +70634,7 @@ public abstract class UnicodeData
                     Interval.of(65343, 65343)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=EX".ToLower(), codePointRanges);
         }
     }
@@ -70655,7 +70655,7 @@ public abstract class UnicodeData
                     Interval.of(13, 13)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=CR".ToLower(), codePointRanges);
         }
     }
@@ -70978,7 +70978,7 @@ public abstract class UnicodeData
                     Interval.of(917760, 917999)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=Extend".ToLower(), codePointRanges);
         }
     }
@@ -70999,7 +70999,7 @@ public abstract class UnicodeData
                     Interval.of(10, 10)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=LF".ToLower(), codePointRanges);
         }
     }
@@ -71025,7 +71025,7 @@ public abstract class UnicodeData
                     Interval.of(65294, 65294)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=MB".ToLower(), codePointRanges);
         }
     }
@@ -71048,7 +71048,7 @@ public abstract class UnicodeData
                     Interval.of(8232, 8233)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=NL".ToLower(), codePointRanges);
         }
     }
@@ -71069,7 +71069,7 @@ public abstract class UnicodeData
                     Interval.of(127462, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=RI".ToLower(), codePointRanges);
         }
     }
@@ -71099,7 +71099,7 @@ public abstract class UnicodeData
                     Interval.of(64326, 64335)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=HL".ToLower(), codePointRanges);
         }
     }
@@ -71120,7 +71120,7 @@ public abstract class UnicodeData
                     Interval.of(39, 39)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=SQ".ToLower(), codePointRanges);
         }
     }
@@ -71141,7 +71141,7 @@ public abstract class UnicodeData
                     Interval.of(34, 34)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=DQ".ToLower(), codePointRanges);
         }
     }
@@ -71161,7 +71161,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=EB".ToLower(), codePointRanges);
         }
     }
@@ -71181,7 +71181,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=EBG".ToLower(), codePointRanges);
         }
     }
@@ -71201,7 +71201,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=EM".ToLower(), codePointRanges);
         }
     }
@@ -71221,7 +71221,7 @@ public abstract class UnicodeData
             List<Interval> intervals = Arrays.AsList<Interval>(
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=GAZ".ToLower(), codePointRanges);
         }
     }
@@ -71242,7 +71242,7 @@ public abstract class UnicodeData
                     Interval.of(8205, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=ZWJ".ToLower(), codePointRanges);
         }
     }
@@ -71268,7 +71268,7 @@ public abstract class UnicodeData
                     Interval.of(12288, 12288)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("WB=WSegSpace".ToLower(), codePointRanges);
         }
     }
@@ -71319,7 +71319,7 @@ public abstract class UnicodeData
                     Interval.of(65380, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bpt=n".ToLower(), codePointRanges);
         }
     }
@@ -71403,7 +71403,7 @@ public abstract class UnicodeData
                     Interval.of(65378, 65378)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bpt=o".ToLower(), codePointRanges);
         }
     }
@@ -71487,7 +71487,7 @@ public abstract class UnicodeData
                     Interval.of(65379, 65379)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("bpt=c".ToLower(), codePointRanges);
         }
     }
@@ -71722,7 +71722,7 @@ public abstract class UnicodeData
                     Interval.of(73463, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=NA".ToLower(), codePointRanges);
         }
     }
@@ -71887,7 +71887,7 @@ public abstract class UnicodeData
                     Interval.of(73460, 73460)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Bottom".ToLower(), codePointRanges);
         }
     }
@@ -71908,7 +71908,7 @@ public abstract class UnicodeData
                     Interval.of(43455, 43455)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Bottom_And_Left".ToLower(), codePointRanges);
         }
     }
@@ -71932,7 +71932,7 @@ public abstract class UnicodeData
                     Interval.of(72002, 72002)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Bottom_And_Right".ToLower(), codePointRanges);
         }
     }
@@ -71999,7 +71999,7 @@ public abstract class UnicodeData
                     Interval.of(73461, 73461)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Left".ToLower(), codePointRanges);
         }
     }
@@ -72033,7 +72033,7 @@ public abstract class UnicodeData
                     Interval.of(71992, 71992)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Left_And_Right".ToLower(), codePointRanges);
         }
     }
@@ -72057,7 +72057,7 @@ public abstract class UnicodeData
                     Interval.of(68102, 68102)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Overstruck".ToLower(), codePointRanges);
         }
     }
@@ -72243,7 +72243,7 @@ public abstract class UnicodeData
                     Interval.of(73462, 73462)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Right".ToLower(), codePointRanges);
         }
     }
@@ -72458,7 +72458,7 @@ public abstract class UnicodeData
                     Interval.of(73459, 73459)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top".ToLower(), codePointRanges);
         }
     }
@@ -72484,7 +72484,7 @@ public abstract class UnicodeData
                     Interval.of(69934, 69935)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Bottom".ToLower(), codePointRanges);
         }
     }
@@ -72505,7 +72505,7 @@ public abstract class UnicodeData
                     Interval.of(6973, 6973)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Bottom_And_Right".ToLower(), codePointRanges);
         }
     }
@@ -72531,7 +72531,7 @@ public abstract class UnicodeData
                     Interval.of(71097, 71097)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Left".ToLower(), codePointRanges);
         }
     }
@@ -72555,7 +72555,7 @@ public abstract class UnicodeData
                     Interval.of(71099, 71099)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Left_And_Right".ToLower(), codePointRanges);
         }
     }
@@ -72584,7 +72584,7 @@ public abstract class UnicodeData
                     Interval.of(70194, 70195)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Right".ToLower(), codePointRanges);
         }
     }
@@ -72611,7 +72611,7 @@ public abstract class UnicodeData
                     Interval.of(43707, 43708)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Visual_Order_Left".ToLower(), codePointRanges);
         }
     }
@@ -72633,7 +72633,7 @@ public abstract class UnicodeData
                     Interval.of(71454, 71454)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InPC=Top_And_Bottom_And_Left".ToLower(), codePointRanges);
         }
     }
@@ -72977,7 +72977,7 @@ public abstract class UnicodeData
                     Interval.of(73463, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Other".ToLower(), codePointRanges);
         }
     }
@@ -73014,7 +73014,7 @@ public abstract class UnicodeData
                     Interval.of(72768, 72768)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Avagraha".ToLower(), codePointRanges);
         }
     }
@@ -73090,7 +73090,7 @@ public abstract class UnicodeData
                     Interval.of(73109, 73109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Bindu".ToLower(), codePointRanges);
         }
     }
@@ -73111,7 +73111,7 @@ public abstract class UnicodeData
                     Interval.of(69714, 69733)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Brahmi_Joining_Number".ToLower(), codePointRanges);
         }
     }
@@ -73143,7 +73143,7 @@ public abstract class UnicodeData
                     Interval.of(70512, 70516)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Cantillation_Mark".ToLower(), codePointRanges);
         }
     }
@@ -73318,7 +73318,7 @@ public abstract class UnicodeData
                     Interval.of(73440, 73457)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant".ToLower(), codePointRanges);
         }
     }
@@ -73344,7 +73344,7 @@ public abstract class UnicodeData
                     Interval.of(7410, 7411)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Dead".ToLower(), codePointRanges);
         }
     }
@@ -73378,7 +73378,7 @@ public abstract class UnicodeData
                     Interval.of(72330, 72341)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Final".ToLower(), codePointRanges);
         }
     }
@@ -73399,7 +73399,7 @@ public abstract class UnicodeData
                     Interval.of(3976, 3980)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Head_Letter".ToLower(), codePointRanges);
         }
     }
@@ -73420,7 +73420,7 @@ public abstract class UnicodeData
                     Interval.of(6746, 6746)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Initial_Postfixed".ToLower(), codePointRanges);
         }
     }
@@ -73442,7 +73442,7 @@ public abstract class UnicodeData
                     Interval.of(6093, 6093)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Killer".ToLower(), codePointRanges);
         }
     }
@@ -73476,7 +73476,7 @@ public abstract class UnicodeData
                     Interval.of(73031, 73031)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Medial".ToLower(), codePointRanges);
         }
     }
@@ -73511,7 +73511,7 @@ public abstract class UnicodeData
                     Interval.of(73458, 73458)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Placeholder".ToLower(), codePointRanges);
         }
     }
@@ -73534,7 +73534,7 @@ public abstract class UnicodeData
                     Interval.of(73030, 73030)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Preceding_Repha".ToLower(), codePointRanges);
         }
     }
@@ -73558,7 +73558,7 @@ public abstract class UnicodeData
                     Interval.of(72324, 72329)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Prefixed".ToLower(), codePointRanges);
         }
     }
@@ -73590,7 +73590,7 @@ public abstract class UnicodeData
                     Interval.of(72873, 72879)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Subjoined".ToLower(), codePointRanges);
         }
     }
@@ -73611,7 +73611,7 @@ public abstract class UnicodeData
                     Interval.of(6092, 6092)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_Succeeding_Repha".ToLower(), codePointRanges);
         }
     }
@@ -73635,7 +73635,7 @@ public abstract class UnicodeData
                     Interval.of(70752, 70753)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Consonant_With_Stacker".ToLower(), codePointRanges);
         }
     }
@@ -73658,7 +73658,7 @@ public abstract class UnicodeData
                     Interval.of(72344, 72344)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Gemination_Mark".ToLower(), codePointRanges);
         }
     }
@@ -73690,7 +73690,7 @@ public abstract class UnicodeData
                     Interval.of(73111, 73111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Invisible_Stacker".ToLower(), codePointRanges);
         }
     }
@@ -73711,7 +73711,7 @@ public abstract class UnicodeData
                     Interval.of(8205, 8205)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Joiner".ToLower(), codePointRanges);
         }
     }
@@ -73732,7 +73732,7 @@ public abstract class UnicodeData
                     Interval.of(2947, 2947)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Modifying_Letter".ToLower(), codePointRanges);
         }
     }
@@ -73753,7 +73753,7 @@ public abstract class UnicodeData
                     Interval.of(8204, 8204)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Non_Joiner".ToLower(), codePointRanges);
         }
     }
@@ -73800,7 +73800,7 @@ public abstract class UnicodeData
                     Interval.of(73026, 73026)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Nukta".ToLower(), codePointRanges);
         }
     }
@@ -73865,7 +73865,7 @@ public abstract class UnicodeData
                     Interval.of(73120, 73129)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Number".ToLower(), codePointRanges);
         }
     }
@@ -73886,7 +73886,7 @@ public abstract class UnicodeData
                     Interval.of(69759, 69759)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Number_Joiner".ToLower(), codePointRanges);
         }
     }
@@ -73928,7 +73928,7 @@ public abstract class UnicodeData
                     Interval.of(73028, 73028)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Pure_Killer".ToLower(), codePointRanges);
         }
     }
@@ -73949,7 +73949,7 @@ public abstract class UnicodeData
                     Interval.of(6089, 6090)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Register_Shifter".ToLower(), codePointRanges);
         }
     }
@@ -73988,7 +73988,7 @@ public abstract class UnicodeData
                     Interval.of(72243, 72243)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Syllable_Modifier".ToLower(), codePointRanges);
         }
     }
@@ -74011,7 +74011,7 @@ public abstract class UnicodeData
                     Interval.of(43714, 43714)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Tone_Letter".ToLower(), codePointRanges);
         }
     }
@@ -74046,7 +74046,7 @@ public abstract class UnicodeData
                     Interval.of(44012, 44012)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Tone_Mark".ToLower(), codePointRanges);
         }
     }
@@ -74093,7 +74093,7 @@ public abstract class UnicodeData
                     Interval.of(72767, 72767)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Virama".ToLower(), codePointRanges);
         }
     }
@@ -74148,7 +74148,7 @@ public abstract class UnicodeData
                     Interval.of(73110, 73110)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Visarga".ToLower(), codePointRanges);
         }
     }
@@ -74173,7 +74173,7 @@ public abstract class UnicodeData
                     Interval.of(69968, 69972)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Vowel".ToLower(), codePointRanges);
         }
     }
@@ -74327,7 +74327,7 @@ public abstract class UnicodeData
                     Interval.of(73459, 73462)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Vowel_Dependent".ToLower(), codePointRanges);
         }
     }
@@ -74435,7 +74435,7 @@ public abstract class UnicodeData
                     Interval.of(73066, 73067)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("InSC=Vowel_Independent".ToLower(), codePointRanges);
         }
     }
@@ -74545,7 +74545,7 @@ public abstract class UnicodeData
                     Interval.of(1114110, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("vo=R".ToLower(), codePointRanges);
         }
     }
@@ -74579,7 +74579,7 @@ public abstract class UnicodeData
                     Interval.of(65507, 65507)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("vo=Tr".ToLower(), codePointRanges);
         }
     }
@@ -74633,7 +74633,7 @@ public abstract class UnicodeData
                     Interval.of(127488, 127489)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("vo=Tu".ToLower(), codePointRanges);
         }
     }
@@ -74781,7 +74781,7 @@ public abstract class UnicodeData
                     Interval.of(1048576, 1114109)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("vo=U".ToLower(), codePointRanges);
         }
     }
@@ -74903,7 +74903,7 @@ public abstract class UnicodeData
                     Interval.of(129473, 131069)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("Extended_Pictographic".ToLower(), codePointRanges);
         }
     }
@@ -74932,7 +74932,7 @@ public abstract class UnicodeData
                     Interval.of(127462, 127487)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EmojiRK".ToLower(), codePointRanges);
         }
     }
@@ -75096,7 +75096,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EmojiNRK".ToLower(), codePointRanges);
         }
     }
@@ -75199,7 +75199,7 @@ public abstract class UnicodeData
                     Interval.of(129776, 129782)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EmojiPresentation=EmojiDefault".ToLower(), codePointRanges);
         }
     }
@@ -75338,7 +75338,7 @@ public abstract class UnicodeData
                     Interval.of(128755, 128755)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EmojiPresentation=TextDefault".ToLower(), codePointRanges);
         }
     }
@@ -75512,7 +75512,7 @@ public abstract class UnicodeData
                     Interval.of(129783, 1114111)
             );
             IntervalSet codePointRanges = new IntervalSet(intervals);
-            codePointRanges.setReadonly(true);
+            codePointRanges.SetReadonly(true);
             propertyCodePointRanges.Add("EmojiPresentation=Text".ToLower(), codePointRanges);
         }
     }

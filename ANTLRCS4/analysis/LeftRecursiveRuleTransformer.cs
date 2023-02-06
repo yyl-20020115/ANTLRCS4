@@ -8,7 +8,6 @@ using org.antlr.runtime;
 using org.antlr.v4.misc;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -90,7 +89,7 @@ public class LeftRecursiveRuleTransformer
         {
             //			Console.Out.WriteLine("TESTING ---------------\n"+
             //							   leftRecursiveRuleWalker.text(ruleAST));
-            isLeftRec = leftRecursiveRuleWalker.rec_rule();
+            isLeftRec = leftRecursiveRuleWalker.recRule();
         }
         catch (RecognitionException re)
         {
@@ -179,8 +178,10 @@ public class LeftRecursiveRuleTransformer
         var adaptor = new GrammarASTAdaptor(lexer.getCharStream());
         var tokens = new CommonTokenStream(lexer);
         lexer.tokens = tokens;
-        var p = new ToolANTLRParser(tokens, tool);
-        p.        TreeAdaptor = adaptor;
+        var p = new ToolANTLRParser(tokens, tool)
+        {
+            TreeAdaptor = adaptor
+        };
         Token ruleStart = null;
         try
         {
@@ -243,5 +244,4 @@ public class LeftRecursiveRuleTransformer
             //			Console.Out.WriteLine(altInfo.altAST.toStringTree());
         }
     }
-
 }

@@ -195,23 +195,23 @@ public class TestATNDeserialization
     protected static void CheckDeserializationIsStable(Grammar g)
     {
         var atn = ToolTestUtils.CreateATN(g, false);
-        var serialized = ATNSerializer.getSerialized(atn);
-        var atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.toArray());
+        var serialized = ATNSerializer.GetSerialized(atn);
+        var atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.ToArray());
 
-        var serialized16 = ATNDeserializer.encodeIntsWith16BitWords(serialized);
-        var ints16 = serialized16.toArray();
+        var serialized16 = ATNDeserializer.EncodeIntsWith16BitWords(serialized);
+        var ints16 = serialized16.ToArray();
         var chars = new char[ints16.Length];
         for (int i = 0; i < ints16.Length; i++)
         {
             chars[i] = (char)ints16[i];
         }
-        var serialized32 = ATNDeserializer.decodeIntsEncodedAs16BitWords(chars, true);
+        var serialized32 = ATNDeserializer.DecodeIntsEncodedAs16BitWords(chars, true);
 
-        Assert.IsTrue(Enumerable.SequenceEqual(serialized.toArray(), serialized32));
+        Assert.IsTrue(Enumerable.SequenceEqual(serialized.ToArray(), serialized32));
 
-        var atn2 = new ATNDeserializer().deserialize(serialized.toArray());
-        var serialized1 = ATNSerializer.getSerialized(atn2);
-        var atn2Data = new ATNDescriber(atn2, Arrays.AsList(g.getTokenNames())).Decode(serialized1.toArray());
+        var atn2 = new ATNDeserializer().Deserialize(serialized.ToArray());
+        var serialized1 = ATNSerializer.GetSerialized(atn2);
+        var atn2Data = new ATNDescriber(atn2, Arrays.AsList(g.getTokenNames())).Decode(serialized1.ToArray());
 
         Assert.AreEqual(atnData, atn2Data);
     }

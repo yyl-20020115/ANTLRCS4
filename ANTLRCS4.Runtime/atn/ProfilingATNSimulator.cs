@@ -167,7 +167,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			conflictingAltResolvedBySLL = conflictingAlts.NextSetBit(0);
 		}
 		else {
-			conflictingAltResolvedBySLL = configs.getAlts().NextSetBit(0);
+			conflictingAltResolvedBySLL = configs.GetAlts().NextSetBit(0);
 		}
 		decisions[currentDecision].LL_Fallback++;
 		base.reportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
@@ -192,7 +192,7 @@ public class ProfilingATNSimulator : ParserATNSimulator {
 			prediction = ambigAlts.NextSetBit(0);
 		}
 		else {
-			prediction = configs.getAlts().NextSetBit(0);
+			prediction = configs.GetAlts().NextSetBit(0);
 		}
 		if ( configs.fullCtx && prediction != conflictingAltResolvedBySLL ) {
 			// Even though this is an ambiguity we are reporting, we can

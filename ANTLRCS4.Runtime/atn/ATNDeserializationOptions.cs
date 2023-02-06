@@ -12,61 +12,71 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public class ATNDeserializationOptions {
-	private static readonly ATNDeserializationOptions defaultOptions;
-	static ATNDeserializationOptions(){
-		defaultOptions = new ATNDeserializationOptions();
-		defaultOptions.makeReadOnly();
-	}
+public class ATNDeserializationOptions
+{
+    private static readonly ATNDeserializationOptions defaultOptions;
+    static ATNDeserializationOptions()
+    {
+        defaultOptions = new ATNDeserializationOptions();
+        defaultOptions.MakeReadOnly();
+    }
 
-	private bool readOnly;
-	private bool verifyATN;
-	private bool generateRuleBypassTransitions;
+    private bool readOnly;
+    private bool verifyATN;
+    private bool generateRuleBypassTransitions;
 
-	public ATNDeserializationOptions() {
-		this.verifyATN = true;
-		this.generateRuleBypassTransitions = false;
-	}
+    public ATNDeserializationOptions()
+    {
+        this.verifyATN = true;
+        this.generateRuleBypassTransitions = false;
+    }
 
-	public ATNDeserializationOptions(ATNDeserializationOptions options) {
-		this.verifyATN = options.verifyATN;
-		this.generateRuleBypassTransitions = options.generateRuleBypassTransitions;
-	}
+    public ATNDeserializationOptions(ATNDeserializationOptions options)
+    {
+        this.verifyATN = options.verifyATN;
+        this.generateRuleBypassTransitions = options.generateRuleBypassTransitions;
+    }
 
 
-	public static ATNDeserializationOptions getDefaultOptions() {
-		return defaultOptions;
-	}
+    public static ATNDeserializationOptions GetDefaultOptions() => defaultOptions;
 
-	public bool isReadOnly() {
-		return readOnly;
-	}
+    public bool IsReadOnly()
+    {
+        return readOnly;
+    }
 
-	public void makeReadOnly() {
-		readOnly = true;
-	}
+    public void MakeReadOnly()
+    {
+        readOnly = true;
+    }
 
-	public bool isVerifyATN() {
-		return verifyATN;
-	}
+    public bool IsVerifyATN()
+    {
+        return verifyATN;
+    }
 
-	public void setVerifyATN(bool verifyATN) {
-		throwIfReadOnly();
-		this.verifyATN = verifyATN;
-	}
+    public void SetVerifyATN(bool verifyATN)
+    {
+        ThrowIfReadOnly();
+        this.verifyATN = verifyATN;
+    }
 
-	public bool isGenerateRuleBypassTransitions() {
-		return generateRuleBypassTransitions;
-	}
+    public bool IsGenerateRuleBypassTransitions()
+    {
+        return generateRuleBypassTransitions;
+    }
 
-	public  void setGenerateRuleBypassTransitions(bool generateRuleBypassTransitions) {
-		throwIfReadOnly();
-		this.generateRuleBypassTransitions = generateRuleBypassTransitions;
-	}
+    public void SetGenerateRuleBypassTransitions(bool generateRuleBypassTransitions)
+    {
+        ThrowIfReadOnly();
+        this.generateRuleBypassTransitions = generateRuleBypassTransitions;
+    }
 
-	protected void throwIfReadOnly() {
-		if (isReadOnly()) {
-			throw new IllegalStateException("The object is read only.");
-		}
-	}
+    protected void ThrowIfReadOnly()
+    {
+        if (IsReadOnly())
+        {
+            throw new IllegalStateException("The object is read only.");
+        }
+    }
 }

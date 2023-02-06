@@ -7,7 +7,6 @@
 using Antlr4.StringTemplate;
 using ANTLRCS4.Runtime;
 using org.antlr.runtime.tree;
-using org.antlr.v4.automata;
 using org.antlr.v4.codegen;
 using org.antlr.v4.misc;
 using org.antlr.v4.parse;
@@ -78,7 +77,7 @@ public class LexerATNFactory : ParserATNFactory
                 newState<TokensStartState>(typeof(TokensStartState), null);
             atn.modeNameToStartState[modeName] = startState;
             atn.modeToStartState.Add(startState);
-            atn.defineDecisionState(startState);
+            atn.DefineDecisionState(startState);
         }
 
         // INIT ACTION, RULE->TOKEN_TYPE MAP
@@ -267,7 +266,7 @@ public class LexerATNFactory : ParserATNFactory
             }
             else if (t.getType() == ANTLRParser.LEXER_CHAR_SET)
             {
-                set.addAll(GetSetFromCharSetLiteral(t));
+                set.AddAll(GetSetFromCharSetLiteral(t));
             }
             else if (t.getType() == ANTLRParser.STRING_LITERAL)
             {
@@ -295,10 +294,10 @@ public class LexerATNFactory : ParserATNFactory
         else
         {
             Transition transition;
-            if (set.getIntervals().Count == 1)
+            if (set.GetIntervals().Count == 1)
             {
-                var interval = set.getIntervals()[(0)];
-                transition = CodePointTransitions.createWithCodePointRange(right, interval.a, interval.b);
+                var interval = set.GetIntervals()[(0)];
+                transition = CodePointTransitions.CreateWithCodePointRange(right, interval.a, interval.b);
             }
             else
             {
@@ -577,7 +576,7 @@ public class LexerATNFactory : ParserATNFactory
                 CheckCharAndAddToSet(charSetAST, set, state.prevCodePoint);
                 break;
             case CharSetParseState.Mode.PREV_PROPERTY:
-                set.addAll(state.prevProperty);
+                set.AddAll(state.prevProperty);
                 break;
         }
     }
@@ -667,7 +666,7 @@ public class LexerATNFactory : ParserATNFactory
         {
             if (charactersData.IsSingleRange())
             {
-                return CodePointTransitions.createWithCodePointRange(target, from, to);
+                return CodePointTransitions.CreateWithCodePointRange(target, from, to);
             }
             else
             {
@@ -679,7 +678,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else
         {
-            return CodePointTransitions.createWithCodePointRange(target, from, to);
+            return CodePointTransitions.CreateWithCodePointRange(target, from, to);
         }
     }
 

@@ -22,7 +22,7 @@ public class LL1AltBlock : LL1Choice
         var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
         altLook = GetAltLookaheadAsStringLists(altLookSets);
 
-        var expecting = IntervalSet.or(altLookSets); // combine alt sets
+        var expecting = IntervalSet.Or(altLookSets); // combine alt sets
         this.error = GetThrowNoViableAlt(factory, blkAST, expecting);
     }
 }

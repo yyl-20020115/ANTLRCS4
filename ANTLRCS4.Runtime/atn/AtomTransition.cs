@@ -9,32 +9,28 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.runtime.atn;
 
 /** TODO: make all transitions sets? no, should remove set edges */
-public class AtomTransition : Transition {
-	/** The token type or character value; or, signifies special label. */
-	public readonly int _label;
+public class AtomTransition : Transition
+{
+    /** The token type or character value; or, signifies special label. */
+    public readonly int _label;
 
-	public AtomTransition(ATNState target, int label):base(target)
+    public AtomTransition(ATNState target, int label) : base(target)
     {
-		;
-		this._label = label;
-	}
+        this._label = label;
+    }
 
-	//@Override
-	public override int getSerializationType() {
-		return ATOM;
-	}
+    //@Override
+    public override int SerializationType => ATOM;
 
-	//@Override
+    //@Override
 
-	public override IntervalSet label() { return IntervalSet.Of(_label); }
+    public override IntervalSet Label => IntervalSet.Of(_label);
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
+    {
+        return _label == symbol;
+    }
 
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return _label == symbol;
-	}
-
-	//@Override
-	public override String ToString() {
-		return this._label.ToString();	
-	}
+    //@Override
+    public override string ToString() => this._label.ToString();
 }

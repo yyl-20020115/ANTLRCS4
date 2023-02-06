@@ -25,10 +25,10 @@ public class ParserInterpreterForTesting
         {
             this.g = g;
             this.atn = atn;
-            this.decisionToDFA = new DFA[atn.getNumberOfDecisions()];
+            this.decisionToDFA = new DFA[atn.NumberOfDecisions()];
             for (int i = 0; i < decisionToDFA.Length; i++)
             {
-                decisionToDFA[i] = new DFA(atn.getDecisionState(i), i);
+                decisionToDFA[i] = new DFA(atn.GetDecisionState(i), i);
             }
         }
 
@@ -87,7 +87,7 @@ public class ParserInterpreterForTesting
     public int MatchATN(TokenStream input,
                         ATNState startState)
     {
-        if (startState.getNumberOfTransitions() == 1)
+        if (startState.NumberOfTransitions == 1)
         {
             return 1;
         }
@@ -95,7 +95,7 @@ public class ParserInterpreterForTesting
         {
             return atnSimulator.adaptivePredict(input, ((DecisionState)startState).decision, null);
         }
-        else if (startState.getNumberOfTransitions() > 0)
+        else if (startState.NumberOfTransitions > 0)
         {
             return 1;
         }

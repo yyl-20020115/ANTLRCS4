@@ -250,7 +250,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                             match('/'); if (state.failed) return;
                             // org\\antlr\\v4\\parse\\ANTLRLexer.g:228:13: ( ( ' $ANTLR' )=> ' $ANTLR' SRC | (~ NLCHARS )* )
                             int alt2 = 2;
-                            alt2 = dfa2.predict(input);
+                            alt2 = dfa2.Predict(input);
                             switch (alt2)
                             {
                                 case 1:
@@ -3308,7 +3308,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:1:8: ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR )
         int alt32 = 45;
-        alt32 = dfa32.predict(input);
+        alt32 = dfa32.Predict(input);
         switch (alt32)
         {
             case 1:
@@ -4007,7 +4007,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             NoViableAltException nvae =
 
                         new NoViableAltException(getDescription(), 2, _s, input);
-            error(nvae);
+            Error(nvae);
             throw nvae;
         }
     }
@@ -4288,7 +4288,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             NoViableAltException nvae =
 
                         new NoViableAltException(getDescription(), 32, _s, input);
-            error(nvae);
+            Error(nvae);
             throw nvae;
         }
     }

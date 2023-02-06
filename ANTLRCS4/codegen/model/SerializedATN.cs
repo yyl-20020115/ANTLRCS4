@@ -22,8 +22,8 @@ public class SerializedATN : OutputModelObject
 
     public SerializedATN(OutputModelFactory factory, ATN atn) : base(factory)
     {
-        var data = ATNSerializer.getSerialized(atn);
-        serialized = data.toArray();
+        var data = ATNSerializer.GetSerialized(atn);
+        serialized = data.ToArray();
     }
 
     public virtual object GetSerialized() => serialized;

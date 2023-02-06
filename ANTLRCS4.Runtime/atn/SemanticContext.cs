@@ -93,11 +93,11 @@ public abstract class SemanticContext {
 
 		//@Override
 		public int hashCode() {
-			int hashCode = MurmurHash.initialize();
-			hashCode = MurmurHash.update(hashCode, ruleIndex);
-			hashCode = MurmurHash.update(hashCode, predIndex);
-			hashCode = MurmurHash.update(hashCode, isCtxDependent ? 1 : 0);
-			hashCode = MurmurHash.finish(hashCode, 3);
+			int hashCode = MurmurHash.Initialize();
+			hashCode = MurmurHash.Update(hashCode, ruleIndex);
+			hashCode = MurmurHash.Update(hashCode, predIndex);
+			hashCode = MurmurHash.Update(hashCode, isCtxDependent ? 1 : 0);
+			hashCode = MurmurHash.Finish(hashCode, 3);
 			return hashCode;
 		}
 

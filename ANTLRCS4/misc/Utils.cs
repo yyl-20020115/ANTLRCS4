@@ -87,7 +87,7 @@ public static class Utils
     public static void WriteSerializedATNIntegerHistogram(string filename, IntegerList serializedATN)
     {
         Dictionary<int, int> histo = new();
-        foreach (int i in serializedATN.toArray())
+        foreach (int i in serializedATN.ToArray())
         {
             if (histo.TryGetValue(i, out var v))
             {

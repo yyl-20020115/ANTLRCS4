@@ -10,10 +10,10 @@ public class SerializedJavaATN : SerializedATN
 
     public SerializedJavaATN(OutputModelFactory factory, ATN atn) : base(factory)
     {
-        var data = ATNSerializer.getSerialized(atn);
-        data = ATNDeserializer.encodeIntsWith16BitWords(data);
+        var data = ATNSerializer.GetSerialized(atn);
+        data = ATNDeserializer.EncodeIntsWith16BitWords(data);
 
-        int size = data.size();
+        int size = data.Size();
         var target = factory.GetGenerator().Target;
         int segmentLimit = target.GetSerializedATNSegmentLimit();
         segments = new string[(int)(((long)size + segmentLimit - 1) / segmentLimit)][];
@@ -25,7 +25,7 @@ public class SerializedJavaATN : SerializedATN
             var segment = new string[segmentSize];
             segments[segmentIndex++] = segment;
             for (int j = 0; j < segmentSize; j++)
-                segment[j] = target.EncodeInt16AsCharEscape(data.get(i + j));
+                segment[j] = target.EncodeInt16AsCharEscape(data.Get(i + j));
         }
 
         serializedAsString = segments[0]; // serializedAsString is valid if only one segment

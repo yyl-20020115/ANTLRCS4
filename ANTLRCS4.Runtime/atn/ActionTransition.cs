@@ -6,33 +6,28 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class ActionTransition : Transition {
-	public readonly int ruleIndex;
-	public readonly int actionIndex;
-	public readonly bool isCtxDependent; // e.g., $i ref in action
+public class ActionTransition : Transition
+{
+    public readonly int ruleIndex;
+    public readonly int actionIndex;
+    public readonly bool isCtxDependent; // e.g., $i ref in action
 
-	
-	public ActionTransition(ATNState target, int ruleIndex, int actionIndex = -1, bool isCtxDependent = false) :base(target)
+    public ActionTransition(ATNState target, int ruleIndex, int actionIndex = -1, bool isCtxDependent = false) : base(target)
     {
-		;
-		this.ruleIndex = ruleIndex;
-		this.actionIndex = actionIndex;
-		this.isCtxDependent = isCtxDependent;
-	}
+        this.ruleIndex = ruleIndex;
+        this.actionIndex = actionIndex;
+        this.isCtxDependent = isCtxDependent;
+    }
 
-	public override int getSerializationType() {
-		return ACTION;
-	}
+    public override int SerializationType => ACTION;
 
-	public override bool isEpsilon() {
-		return true; // we are to be ignored by analysis 'cept for predicates
-	}
+    public override bool IsEpsilon => true; // we are to be ignored by analysis 'cept for predicates
 
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return false;
-	}
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
+    {
+        return false;
+    }
 
-	public override String ToString() {
-		return "action_"+ruleIndex+":"+actionIndex;
-	}
+    public override string ToString()
+        => "action_" + ruleIndex + ":" + actionIndex;
 }

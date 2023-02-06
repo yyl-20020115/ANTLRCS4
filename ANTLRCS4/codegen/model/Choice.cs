@@ -53,11 +53,11 @@ public abstract class Choice : RuleElement
         var grammar = factory.GetGrammar();
         foreach (var s in altLookSets)
         {
-            var list = s.toIntegerList();
-            var info = new TokenInfo[list.size()];
+            var list = s.ToIntegerList();
+            var info = new TokenInfo[list.Size()];
             for (int i = 0; i < info.Length; i++)
             {
-                info[i] = new TokenInfo(list.get(i), target.GetTokenTypeAsTargetLabel(grammar, list.get(i)));
+                info[i] = new TokenInfo(list.Get(i), target.GetTokenTypeAsTargetLabel(grammar, list.Get(i)));
             }
             altLook.Add(info);
         }

@@ -55,38 +55,38 @@ public class IntegerList
     {
         foreach (var value in list)
         {
-            add(value);
+            Add(value);
         }
     }
 
-    public void add(int value)
+    public void Add(int value)
     {
         if (_data.Length == _size)
         {
-            ensureCapacity(_size + 1);
+            EnsureCapacity(_size + 1);
         }
 
         _data[_size] = value;
         _size++;
     }
 
-    public void addAll(int[] array)
+    public void AddAll(int[] array)
     {
-        ensureCapacity(_size + array.Length);
+        EnsureCapacity(_size + array.Length);
         Array.Copy(array, 0, _data, _size, array.Length);
         _size += array.Length;
     }
 
-    public void addAll(IntegerList list)
+    public void AddAll(IntegerList list)
     {
-        ensureCapacity(_size + list._size);
+        EnsureCapacity(_size + list._size);
         Array.Copy(list._data, 0, _data, _size, list._size);
         _size += list._size;
     }
 
-    public void addAll(ICollection<int> list)
+    public void AddAll(ICollection<int> list)
     {
-        ensureCapacity(_size + list.Count);
+        EnsureCapacity(_size + list.Count);
         int current = 0;
         foreach (int x in list)
         {
@@ -96,7 +96,7 @@ public class IntegerList
         _size += list.Count;
     }
 
-    public int get(int index)
+    public int Get(int index)
     {
         if (index < 0 || index >= _size)
         {
@@ -106,7 +106,7 @@ public class IntegerList
         return _data[index];
     }
 
-    public bool contains(int value)
+    public bool Contains(int value)
     {
         for (int i = 0; i < _size; i++)
         {
@@ -119,7 +119,7 @@ public class IntegerList
         return false;
     }
 
-    public int set(int index, int value)
+    public int Set(int index, int value)
     {
         if (index < 0 || index >= _size)
         {
@@ -131,16 +131,16 @@ public class IntegerList
         return previous;
     }
 
-    public int removeAt(int index)
+    public int RemoveAt(int index)
     {
-        int value = get(index);
+        int value = Get(index);
         Array.Copy(_data, index + 1, _data, index, _size - index - 1);
         _data[_size - 1] = 0;
         _size--;
         return value;
     }
 
-    public void removeRange(int fromIndex, int toIndex)
+    public void RemoveRange(int fromIndex, int toIndex)
     {
         if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size)
         {
@@ -157,17 +157,14 @@ public class IntegerList
         _size -= (toIndex - fromIndex);
     }
 
-    public bool isEmpty()
-    {
-        return _size == 0;
-    }
+    public bool IsEmpty => _size == 0;
 
-    public int size()
+    public int Size()
     {
         return _size;
     }
 
-    public void trimToSize()
+    public void TrimToSize()
     {
         if (_data.Length == _size)
         {
@@ -177,13 +174,13 @@ public class IntegerList
         _data = Arrays.CopyOf(_data, _size);
     }
 
-    public void clear()
+    public void Clear()
     {
         Array.Fill(_data, _size, 0, 0);
         _size = 0;
     }
 
-    public int[] toArray()
+    public int[] ToArray()
     {
         if (_size == 0)
         {
@@ -193,7 +190,7 @@ public class IntegerList
         return Arrays.CopyOf(_data, _size);
     }
 
-    public void sort()
+    public void Sort()
     {
         Array.Sort(_data, 0, _size);
     }
@@ -217,19 +214,18 @@ public class IntegerList
 	 * @return {@code true} if the specified object is equal to this list
 	 */
     //@Override
-    public override bool Equals(Object? o)
+    public override bool Equals(object? o)
     {
         if (o == this)
         {
             return true;
         }
 
-        if (!(o is IntegerList))
+        if (o is not IntegerList other)
         {
             return false;
         }
 
-        IntegerList other = (IntegerList)o;
         if (_size != other._size)
         {
             return false;
@@ -271,17 +267,17 @@ public class IntegerList
 	 * Returns a string representation of this list.
 	 */
     //@Override
-    public String toString()
+    public override string ToString()
     {
-        return string.Join(',', toArray());
+        return string.Join(',', ToArray());
     }
 
-    public int binarySearch(int key)
+    public int BinarySearch(int key)
     {
         return Array.BinarySearch(_data, 0, _size, key);
     }
 
-    public int binarySearch(int fromIndex, int toIndex, int key)
+    public int BinarySearch(int fromIndex, int toIndex, int key)
     {
         if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size)
         {
@@ -295,7 +291,7 @@ public class IntegerList
         return Array.BinarySearch(_data, fromIndex, toIndex, key);
     }
 
-    private void ensureCapacity(int capacity)
+    private void EnsureCapacity(int capacity)
     {
         if (capacity < 0 || capacity > MAX_ARRAY_SIZE)
         {
@@ -314,7 +310,7 @@ public class IntegerList
 
         while (newLength < capacity)
         {
-            newLength = newLength * 2;
+            newLength <<= 1;
             if (newLength < 0 || newLength > MAX_ARRAY_SIZE)
             {
                 newLength = MAX_ARRAY_SIZE;
@@ -325,7 +321,7 @@ public class IntegerList
     }
     public const int MIN_SUPPLEMENTARY_CODE_POINT = 0x010000;
     public const int MAX_CODE_POINT = 0X10FFFF;
-    public static bool isSupplementaryCodePoint(int codePoint)
+    public static bool IsSupplementaryCodePoint(int codePoint)
     {
         return codePoint >= MIN_SUPPLEMENTARY_CODE_POINT
             && codePoint < MAX_CODE_POINT + 1;
@@ -336,7 +332,7 @@ public class IntegerList
 	 *  of 16-bit char as usual. For values in the supplementary range, encode
 	 * them as two UTF-16 code units.
 	 */
-    public char[] toCharArray()
+    public char[] ToCharArray()
     {
         // Optimize for the common case (all data values are
         // < 0xFFFF) to avoid an extra scan
@@ -349,9 +345,9 @@ public class IntegerList
             // Calculate the precise result size if we encounter
             // a code point > 0xFFFF
             if (!calculatedPreciseResultSize &&
-                isSupplementaryCodePoint(codePoint))
+                IsSupplementaryCodePoint(codePoint))
             {
-                resultArray = Arrays.CopyOf(resultArray, charArraySize());
+                resultArray = Arrays.CopyOf(resultArray, CharArraySize());
                 calculatedPreciseResultSize = true;
             }
             // This will throw IllegalArgumentException if
@@ -375,7 +371,7 @@ public class IntegerList
         return resultArray;
     }
 
-    private int charArraySize()
+    private int CharArraySize()
     {
         int result = 0;
         for (int i = 0; i < _size; i++)

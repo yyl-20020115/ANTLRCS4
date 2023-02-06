@@ -23,11 +23,12 @@ namespace org.antlr.v4.runtime.misc;
  */
 public class IntervalSet : IntSet
 {
-    public static readonly IntervalSet COMPLETE_CHAR_SET = Of(Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE);
+    public static readonly IntervalSet COMPLETE_CHAR_SET 
+        = Of(Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE);
     static IntervalSet()
     {
-        COMPLETE_CHAR_SET.setReadonly(true);
-        EMPTY_SET.setReadonly(true);
+        COMPLETE_CHAR_SET.SetReadonly(true);
+        EMPTY_SET.SetReadonly(true);
     }
 
     public static readonly IntervalSet EMPTY_SET = new();
@@ -44,7 +45,7 @@ public class IntervalSet : IntSet
 
     public IntervalSet(IntervalSet set) : this()
     {
-        addAll(set);
+        AddAll(set);
     }
 
     public IntervalSet(params int[] els)
@@ -102,11 +103,11 @@ public class IntervalSet : IntSet
      */
     public void Add(int a, int b)
     {
-        add(Interval.of(a, b));
+        Add(Interval.of(a, b));
     }
 
     // copy on write so we can cache a..a intervals and sets of that
-    protected void add(Interval addition)
+    protected void Add(Interval addition)
     {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
         //Console.Out.WriteLine("add "+addition+" to "+intervals.toString());
@@ -119,7 +120,7 @@ public class IntervalSet : IntSet
 
         for (int i = 0; i < intervals.Count; i++)
         {
-            Interval r = intervals[i];
+            var r = intervals[i];
             if (addition.Equals(r))
             {
                 return;
@@ -127,13 +128,13 @@ public class IntervalSet : IntSet
             if (addition.adjacent(r) || !addition.disjoint(r))
             {
                 // next to each other, make a single larger interval
-                Interval bigger = addition.union(r);
+                var bigger = addition.union(r);
                 intervals[i] = bigger;
                 // make sure we didn't just create an interval that
                 // should be merged with next interval in list
                 while (++i < intervals.Count)
                 {
-                    Interval next = intervals[i];
+                    var next = intervals[i];
                     if (!bigger.adjacent(next) && bigger.disjoint(next))
                     {
                         break;
@@ -167,29 +168,28 @@ public class IntervalSet : IntSet
     }
 
     /** combine all sets in the array returned the or'd value */
-    public static IntervalSet or(IntervalSet[] sets)
+    public static IntervalSet Or(IntervalSet[] sets)
     {
-        IntervalSet r = new IntervalSet();
-        foreach (IntervalSet s in sets) r.addAll(s);
+        var r = new IntervalSet();
+        foreach (IntervalSet s in sets) r.AddAll(s);
         return r;
     }
 
     //@Override
-    public IntervalSet addAll(IntSet set)
+    public IntervalSet AddAll(IntSet set)
     {
         if (set == null)
         {
             return this;
         }
 
-        if (set is IntervalSet)
+        if (set is IntervalSet other)
         {
-            IntervalSet other = (IntervalSet)set;
             // walk set and add each interval
             int n = other.intervals.Count;
             for (int i = 0; i < n; i++)
             {
-                Interval I = other.intervals[i];
+                var I = other.intervals[i];
                 this.Add(I.a, I.b);
             }
         }
@@ -204,14 +204,14 @@ public class IntervalSet : IntSet
         return this;
     }
 
-    public IntervalSet complement(int minElement, int maxElement)
+    public IntervalSet Complement(int minElement, int maxElement)
     {
-        return this.complement(IntervalSet.Of(minElement, maxElement));
+        return this.Complement(IntervalSet.Of(minElement, maxElement));
     }
 
     /** {@inheritDoc} */
     //@Override
-    public IntervalSet complement(IntSet vocabulary)
+    public IntervalSet Complement(IntSet vocabulary)
     {
         if (vocabulary == null || vocabulary.IsNil)
         {
@@ -219,35 +219,35 @@ public class IntervalSet : IntSet
         }
 
         IntervalSet vocabularyIS;
-        if (vocabulary is IntervalSet)
+        if (vocabulary is IntervalSet set)
         {
-            vocabularyIS = (IntervalSet)vocabulary;
+            vocabularyIS = set;
         }
         else
         {
             vocabularyIS = new IntervalSet();
-            vocabularyIS.addAll(vocabulary);
+            vocabularyIS.AddAll(vocabulary);
         }
 
-        return vocabularyIS.subtract(this);
+        return vocabularyIS.Subtract(this);
     }
 
     //@Override
-    public IntervalSet subtract(IntSet a)
+    public IntervalSet Subtract(IntSet a)
     {
         if (a == null || a.IsNil)
         {
             return new IntervalSet(this);
         }
 
-        if (a is IntervalSet)
+        if (a is IntervalSet set)
         {
-            return subtract(this, (IntervalSet)a);
+            return Subtract(this, set);
         }
 
-        IntervalSet other = new IntervalSet();
-        other.addAll(a);
-        return subtract(this, other);
+        var other = new IntervalSet();
+        other.AddAll(a);
+        return Subtract(this, other);
     }
 
     /**
@@ -256,14 +256,14 @@ public class IntervalSet : IntSet
 	 * {@code null}, it is treated as though it was an empty set.
 	 */
 
-    public static IntervalSet subtract(IntervalSet left, IntervalSet right)
+    public static IntervalSet Subtract(IntervalSet left, IntervalSet right)
     {
         if (left == null || left.IsNil)
         {
             return new IntervalSet();
         }
 
-        IntervalSet result = new IntervalSet(left);
+        var result = new IntervalSet(left);
         if (right == null || right.IsNil)
         {
             // right set has no elements; just return the copy of the current set
@@ -274,8 +274,8 @@ public class IntervalSet : IntSet
         int rightI = 0;
         while (resultI < result.intervals.Count && rightI < right.intervals.Count)
         {
-            Interval resultInterval = result.intervals[(resultI)];
-            Interval rightInterval = right.intervals[(rightI)];
+            var resultInterval = result.intervals[(resultI)];
+            var rightInterval = right.intervals[(rightI)];
 
             // operation: (resultInterval - rightInterval) and update indexes
 
@@ -347,17 +347,17 @@ public class IntervalSet : IntSet
     }
 
     //@Override
-    public IntervalSet or(IntSet a)
+    public IntervalSet Or(IntSet a)
     {
-        IntervalSet o = new IntervalSet();
-        o.addAll(this);
-        o.addAll(a);
+        var o = new IntervalSet();
+        o.AddAll(this);
+        o.AddAll(a);
         return o;
     }
 
     /** {@inheritDoc} */
     //@Override
-    public IntervalSet and(IntSet other)
+    public IntervalSet And(IntSet other)
     {
         if (other == null)
         { //|| !(other is IntervalSet) ) {
@@ -374,8 +374,8 @@ public class IntervalSet : IntSet
         // iterate down both interval lists looking for nondisjoint intervals
         while (i < mySize && j < theirSize)
         {
-            Interval mine = myIntervals[(i)];
-            Interval theirs = theirIntervals[(j)];
+            var mine = myIntervals[(i)];
+            var theirs = theirIntervals[(j)];
             //Console.Out.WriteLine("mine="+mine+" and theirs="+theirs);
             if (mine.startsBeforeDisjoint(theirs))
             {
@@ -394,7 +394,7 @@ public class IntervalSet : IntSet
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.add(mine.intersection(theirs));
+                intersection.Add(mine.intersection(theirs));
                 j++;
             }
             else if (theirs.properlyContains(mine))
@@ -404,7 +404,7 @@ public class IntervalSet : IntSet
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.add(mine.intersection(theirs));
+                intersection.Add(mine.intersection(theirs));
                 i++;
             }
             else if (!mine.disjoint(theirs))
@@ -414,7 +414,7 @@ public class IntervalSet : IntSet
                 {
                     intersection = new IntervalSet();
                 }
-                intersection.add(mine.intersection(theirs));
+                intersection.Add(mine.intersection(theirs));
                 // Move the iterator of lower range [a..b], but not
                 // the upper range as it may contain elements that will collide
                 // with the next iterator. So, if mine=[0..115] and
@@ -451,7 +451,7 @@ public class IntervalSet : IntSet
         while (l <= r)
         {
             int m = (l + r) / 2;
-            Interval I = intervals[(m)];
+            var I = intervals[(m)];
             int a = I.a;
             int b = I.b;
             if (b < el)
@@ -480,13 +480,13 @@ public class IntervalSet : IntSet
 	 * @return the maximum value contained in the set.
 	 * @throws RuntimeException if set is empty
 	 */
-    public int getMaxElement()
+    public int GetMaxElement()
     {
         if (IsNil)
         {
             throw new RuntimeException("set is empty");
         }
-        Interval last = intervals[(intervals.Count - 1)];
+        var last = intervals[^1];
         return last.b;
     }
 
@@ -496,7 +496,7 @@ public class IntervalSet : IntSet
 	 * @return the minimum value contained in the set.
 	 * @throws RuntimeException if set is empty
 	 */
-    public int getMinElement()
+    public int GetMinElement()
     {
         if (IsNil)
         {
@@ -507,22 +507,22 @@ public class IntervalSet : IntSet
     }
 
     /** Return a list of Interval objects. */
-    public List<Interval> getIntervals()
+    public List<Interval> GetIntervals()
     {
         return intervals;
     }
 
     ////@Override
-    public int hashCode()
+    public override int GetHashCode()
     {
-        int hash = MurmurHash.initialize();
+        int hash = MurmurHash.Initialize();
         foreach (Interval I in intervals)
         {
-            hash = MurmurHash.update(hash, I.a);
-            hash = MurmurHash.update(hash, I.b);
+            hash = MurmurHash.Update(hash, I.a);
+            hash = MurmurHash.Update(hash, I.b);
         }
 
-        hash = MurmurHash.finish(hash, intervals.Count * 2);
+        hash = MurmurHash.Finish(hash, intervals.Count * 2);
         return hash;
     }
 
@@ -532,29 +532,28 @@ public class IntervalSet : IntSet
      *  by the List.equals() method to check the ranges.
      */
     ////@Override
-    public override bool Equals(Object? obj)
+    public override bool Equals(object? obj)
     {
-        if (obj == null || !(obj is IntervalSet))
+        if (obj == null || obj is not IntervalSet other)
         {
             return false;
         }
-        IntervalSet other = (IntervalSet)obj;
         return Enumerable.SequenceEqual(this.intervals, other.intervals);
     }
 
     ////@Override
-    public override String ToString() { return toString(false); }
+    public override string ToString() => ToString(false);
 
-    public String toString(bool elemAreChar)
+    public string ToString(bool elemAreChar)
     {
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         if (this.intervals == null || this.intervals.Count == 0)
         {
             return "{}";
         }
         if (this.Size > 1)
         {
-            buf.Append("{");
+            buffer.Append("{");
         }
         //Iterator<Interval> iter = this.intervals.iterator();
         var first = true;
@@ -562,92 +561,92 @@ public class IntervalSet : IntSet
         {
             if (!first)
             {
-                buf.Append(", ");
+                buffer.Append(", ");
             }
             first = true;
             int a = I.a;
             int b = I.b;
             if (a == b)
             {
-                if (a == Token.EOF) buf.Append("<EOF>");
-                else if (elemAreChar) buf.Append('\'').Append(char.ConvertFromUtf32(a)).Append('\'');
-                else buf.Append(a);
+                if (a == Token.EOF) buffer.Append("<EOF>");
+                else if (elemAreChar) buffer.Append('\'').Append(char.ConvertFromUtf32(a)).Append('\'');
+                else buffer.Append(a);
             }
             else
             {
-                if (elemAreChar) buf.Append('\'').Append(char.ConvertFromUtf32(a)).Append("'..'").Append(char.ConvertFromUtf32(b)).Append('\'');
-                else buf.Append(a).Append("..").Append(b);
+                if (elemAreChar) buffer.Append('\'').Append(char.ConvertFromUtf32(a)).Append("'..'").Append(char.ConvertFromUtf32(b)).Append('\'');
+                else buffer.Append(a).Append("..").Append(b);
             }
 
         }
         if (this.Size > 1)
         {
-            buf.Append('}');
+            buffer.Append('}');
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
     /**
 	 * @deprecated Use {@link #toString(Vocabulary)} instead.
 	 */
     //@Deprecated
-    public String toString(String[] tokenNames)
+    public string ToString(string[] tokenNames)
     {
-        return toString(VocabularyImpl.fromTokenNames(tokenNames));
+        return ToString(VocabularyImpl.fromTokenNames(tokenNames));
     }
 
-    public String toString(Vocabulary vocabulary)
+    public string ToString(Vocabulary vocabulary)
     {
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         if (this.intervals == null || this.intervals.Count == 0)
         {
             return "{}";
         }
         if (this.Size > 1)
         {
-            buf.Append("{");
+            buffer.Append('{');
         }
         bool first = true;
         foreach (var I in this.intervals)
         {
             if (!first)
             {
-                buf.Append(", ");
+                buffer.Append(", ");
             }
             first = false;
             int a = I.a;
             int b = I.b;
             if (a == b)
             {
-                buf.Append(elementName(vocabulary, a));
+                buffer.Append(ElementName(vocabulary, a));
             }
             else
             {
                 for (int i = a; i <= b; i++)
                 {
-                    if (i > a) buf.Append(", ");
-                    buf.Append(elementName(vocabulary, i));
+                    if (i > a) buffer.Append(", ");
+                    buffer.Append(ElementName(vocabulary, i));
                 }
             }
         }
         if (this.Size > 1)
         {
-            buf.Append("}");
+            buffer.Append('}');
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
     /**
 	 * @deprecated Use {@link #elementName(Vocabulary, int)} instead.
 	 */
     //@Deprecated
-    protected String elementName(String[] tokenNames, int a)
+    protected string ElementName(string[] tokenNames, int a)
     {
-        return elementName(VocabularyImpl.fromTokenNames(tokenNames), a);
+        return ElementName(VocabularyImpl.fromTokenNames(tokenNames), a);
     }
 
 
-    protected String elementName(Vocabulary vocabulary, int a)
+    protected string ElementName(Vocabulary vocabulary, int a)
     {
         if (a == Token.EOF)
         {
@@ -672,30 +671,30 @@ public class IntervalSet : IntSet
             int numIntervals = intervals.Count;
             if (numIntervals == 1)
             {
-                Interval firstInterval = this.intervals[(0)];
+                var firstInterval = this.intervals[(0)];
                 return firstInterval.b - firstInterval.a + 1;
             }
             for (int i = 0; i < numIntervals; i++)
             {
-                Interval I = intervals[(i)];
+                var I = intervals[(i)];
                 n += (I.b - I.a + 1);
             }
             return n;
         }
     }
 
-    public IntegerList toIntegerList()
+    public IntegerList ToIntegerList()
     {
-        IntegerList values = new IntegerList(Size);
+        var values = new IntegerList(Size);
         int n = intervals.Count;
         for (int i = 0; i < n; i++)
         {
-            Interval I = intervals[(i)];
+            var I = intervals[(i)];
             int a = I.a;
             int b = I.b;
             for (int v = a; v <= b; v++)
             {
-                values.add(v);
+                values.Add(v);
             }
         }
         return values;
@@ -708,7 +707,7 @@ public class IntervalSet : IntSet
         int n = intervals.Count;
         for (int i = 0; i < n; i++)
         {
-            Interval I = intervals[(i)];
+            var I = intervals[(i)];
             int a = I.a;
             int b = I.b;
             for (int v = a; v <= b; v++)
@@ -719,17 +718,15 @@ public class IntervalSet : IntSet
         return values;
     }
 
-    public HashSet<int> toSet()
+    public HashSet<int> ToSet()
     {
-        HashSet<int> s = new HashSet<int>();
-        foreach (Interval I in intervals)
+        var s = new HashSet<int>();
+        foreach (var I in intervals)
         {
             int a = I.a;
             int b = I.b;
             for (int v = a; v <= b; v++)
-            {
                 s.Add(v);
-            }
         }
         return s;
     }
@@ -738,30 +735,27 @@ public class IntervalSet : IntSet
 	 *  don't bother to implement if you're not doing that for a new
 	 *  ANTLR code gen target.
 	 */
-    public int get(int i)
+    public int Get(int i)
     {
         int n = intervals.Count;
         int index = 0;
         for (int j = 0; j < n; j++)
         {
-            Interval I = intervals[(j)];
+            var I = intervals[(j)];
             int a = I.a;
             int b = I.b;
             for (int v = a; v <= b; v++)
             {
-                if (index == i)
-                {
-                    return v;
-                }
+                if (index == i) return v;
                 index++;
             }
         }
         return -1;
     }
 
-    public int[] toArray()
+    public int[] ToArray()
     {
-        return toIntegerList().toArray();
+        return ToIntegerList().ToArray();
     }
 
     //@Override
@@ -771,7 +765,7 @@ public class IntervalSet : IntSet
         int n = intervals.Count;
         for (int i = 0; i < n; i++)
         {
-            Interval I = intervals[(i)];
+            var I = intervals[(i)];
             int a = I.a;
             int b = I.b;
             if (el < a)
@@ -811,39 +805,19 @@ public class IntervalSet : IntSet
         return @readonly;
     }
 
-    public void setReadonly(bool @readonly)
+    public void SetReadonly(bool @readonly)
     {
         if (this.@readonly && !@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
         this.@readonly = @readonly;
     }
 
-    IntSet IntSet.AddAll(IntSet set)
-    {
-        throw new NotImplementedException();
-    }
+    IntSet IntSet.AddAll(IntSet set) => this.AddAll(set);
 
-    IntSet IntSet.And(IntSet a)
-    {
-        throw new NotImplementedException();
-    }
+    IntSet IntSet.And(IntSet a) => this.And(a);
 
-    IntSet IntSet.Complement(IntSet elements)
-    {
-        throw new NotImplementedException();
-    }
+    IntSet IntSet.Complement(IntSet elements)=>this.Complement(elements);
 
-    IntSet IntSet.Or(IntSet a)
-    {
-        throw new NotImplementedException();
-    }
+    IntSet IntSet.Or(IntSet a) => this.Or(a);
 
-    IntSet IntSet.Subtract(IntSet a)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override int GetHashCode()
-    {
-        throw new NotImplementedException();
-    }
+    IntSet IntSet.Subtract(IntSet a) => this.Subtract(a);
 }

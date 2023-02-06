@@ -12,37 +12,38 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public enum LexerActionType :int {
-	/**
+public enum LexerActionType : int
+{
+    /**
 	 * The type of a {@link LexerChannelAction} action.
 	 */
-	CHANNEL,
-	/**
+    CHANNEL,
+    /**
 	 * The type of a {@link LexerCustomAction} action.
 	 */
-	CUSTOM,
-	/**
+    CUSTOM,
+    /**
 	 * The type of a {@link LexerModeAction} action.
 	 */
-	MODE,
-	/**
+    MODE,
+    /**
 	 * The type of a {@link LexerMoreAction} action.
 	 */
-	MORE,
-	/**
+    MORE,
+    /**
 	 * The type of a {@link LexerPopModeAction} action.
 	 */
-	POP_MODE,
-	/**
+    POP_MODE,
+    /**
 	 * The type of a {@link LexerPushModeAction} action.
 	 */
-	PUSH_MODE,
-	/**
+    PUSH_MODE,
+    /**
 	 * The type of a {@link LexerSkipAction} action.
 	 */
-	SKIP,
-	/**
+    SKIP,
+    /**
 	 * The type of a {@link LexerTypeAction} action.
 	 */
-	TYPE,
+    TYPE,
 }

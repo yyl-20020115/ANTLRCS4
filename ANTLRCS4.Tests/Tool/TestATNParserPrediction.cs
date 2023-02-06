@@ -554,7 +554,7 @@ public class TestATNParserPrediction
         //		Tool.internalOption_ShowATNConfigsInDFA = true;
         var lexatn = ToolTestUtils.CreateATN(lg, true);
         var lexInterp =
-        new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.getDecisionState(Lexer.DEFAULT_MODE)) }, new PredictionContextCache());
+        new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.GetDecisionState(Lexer.DEFAULT_MODE)) }, new PredictionContextCache());
 
         ToolTestUtils.SemanticProcess(lg);
         g.importVocab(lg);

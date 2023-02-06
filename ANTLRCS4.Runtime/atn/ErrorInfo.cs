@@ -18,8 +18,9 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class ErrorInfo : DecisionEventInfo {
-	/**
+public class ErrorInfo : DecisionEventInfo
+{
+    /**
 	 * Constructs a new instance of the {@link ErrorInfo} class with the
 	 * specified detailed syntax error information.
 	 *
@@ -33,10 +34,10 @@ public class ErrorInfo : DecisionEventInfo {
 	 * prediction; otherwise, {@code false} if the syntax error was identified
 	 * during SLL prediction
 	 */
-	public ErrorInfo(int decision,
-					 ATNConfigSet configs,
-					 TokenStream input, int startIndex, int stopIndex,
-					 bool fullCtx):base(decision, configs, input, startIndex, stopIndex, fullCtx)
+    public ErrorInfo(int decision,
+                     ATNConfigSet configs,
+                     TokenStream input, int startIndex, int stopIndex,
+                     bool fullCtx) : base(decision, configs, input, startIndex, stopIndex, fullCtx)
     {
-	}
+    }
 }

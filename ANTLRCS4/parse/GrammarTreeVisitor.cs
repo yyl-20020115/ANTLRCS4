@@ -3495,7 +3495,7 @@ public class GrammarTreeVisitor : TreeParser
         {
             // org\\antlr\\v4\\parse\\g:792:2: ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) )
             int alt38 = 2;
-            alt38 = dfa38.predict(input);
+            alt38 = dfa38.Predict(input);
             switch (alt38)
             {
                 case 1:

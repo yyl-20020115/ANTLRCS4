@@ -96,10 +96,10 @@ public static class PredictionModeTools
 		 */
 		//@Override
 		public int hashCode(ATNConfig o) {
-			int hashCode = MurmurHash.initialize(7);
-			hashCode = MurmurHash.update(hashCode, o.state.stateNumber);
-			hashCode = MurmurHash.update(hashCode, o.context);
-			hashCode = MurmurHash.finish(hashCode, 2);
+			int hashCode = MurmurHash.Initialize(7);
+			hashCode = MurmurHash.Update(hashCode, o.state.stateNumber);
+			hashCode = MurmurHash.Update(hashCode, o.context);
+			hashCode = MurmurHash.Finish(hashCode, 2);
 	        return hashCode;
 		}
 
@@ -224,7 +224,7 @@ public static class PredictionModeTools
 				ATNConfigSet dup = new ATNConfigSet();
 				foreach (ATNConfig c in configs) {
 					var c2 = new ATNConfig(c,SemanticContext.Empty.Instance);
-					dup.add(c2);
+					dup.Add(c2);
 				}
 				configs = dup;
 			}

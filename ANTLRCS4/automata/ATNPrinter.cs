@@ -11,7 +11,6 @@ using System.Text;
 namespace org.antlr.v4.automata;
 
 
-
 /** An ATN walker that knows how to dump them to serialized strings. */
 public class ATNPrinter
 {
@@ -26,7 +25,7 @@ public class ATNPrinter
         this.start = start;
     }
 
-    public String AsString()
+    public string AsString()
     {
         if (start == null) return null;
         marked = new HashSet<ATNState>();
@@ -41,15 +40,15 @@ public class ATNPrinter
             s = work[0];
             work.RemoveAt(0);
             if (marked.Contains(s)) continue;
-            int n = s.getNumberOfTransitions();
+            int n = s.NumberOfTransitions;
             //			Console.Out.WriteLine("visit "+s+"; edges="+n);
             marked.Add(s);
             for (int i = 0; i < n; i++)
             {
-                Transition t = s.transition(i);
+                var t = s.Transition(i);
                 if (s is not RuleStopState)
                 { // don't add follow states to work
-                    if (t is RuleTransition) work.Add(((RuleTransition)t).followState);
+                    if (t is RuleTransition transition) work.Add(transition.followState);
                     else work.Add(t.target);
                 }
                 builder.Append(GetStateString(s));
@@ -61,9 +60,8 @@ public class ATNPrinter
                 {
                     builder.Append('-').Append(g.getRule(transition.ruleIndex).name).Append("->").Append(GetStateString(t.target)).Append('\n');
                 }
-                else if (t is ActionTransition)
+                else if (t is ActionTransition a)
                 {
-                    ActionTransition a = (ActionTransition)t;
                     builder.Append('-').Append(a.ToString()).Append("->").Append(GetStateString(t.target)).Append('\n');
                 }
                 else if (t is SetTransition st)
@@ -75,12 +73,12 @@ public class ATNPrinter
                     }
                     else
                     {
-                        builder.Append('-').Append(not ? "~" : "").Append(st.label().toString(g.getVocabulary())).Append("->").Append(GetStateString(t.target)).Append('\n');
+                        builder.Append('-').Append(not ? "~" : "").Append(st.Label.ToString(g.getVocabulary())).Append("->").Append(GetStateString(t.target)).Append('\n');
                     }
                 }
-                else if (t is AtomTransition a)
+                else if (t is AtomTransition a2)
                 {
-                    var label = g.getTokenDisplayName(a._label);
+                    var label = g.getTokenDisplayName(a2._label);
                     builder.Append('-').Append(label).Append("->").Append(GetStateString(t.target)).Append('\n');
                 }
                 else

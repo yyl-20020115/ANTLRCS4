@@ -7,11 +7,9 @@
 namespace org.antlr.v4.runtime.atn;
 
 /** Terminal node of a simple {@code (a|b|c)} block. */
-public class BlockEndState : ATNState {
-	public BlockStartState startState;
+public class BlockEndState : ATNState
+{
+    public BlockStartState startState;
 
-	
-	public override int getStateType() {
-		return BLOCK_END;
-	}
+    public override int StateType => BLOCK_END;
 }

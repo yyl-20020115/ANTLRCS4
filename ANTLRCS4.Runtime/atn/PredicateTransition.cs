@@ -23,16 +23,13 @@ public class PredicateTransition : AbstractPredicateTransition {
 		this.isCtxDependent = isCtxDependent;
 	}
 
-	//@Override
-	public override int getSerializationType() {
-		return PREDICATE;
-	}
+    //@Override
+    public override int SerializationType => PREDICATE;
 
-	//@Override
-	public override bool isEpsilon() { return true; }
-
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    //@Override
+    public override bool IsEpsilon => true;
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return false;
 	}
 

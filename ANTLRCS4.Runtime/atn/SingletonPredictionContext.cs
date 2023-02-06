@@ -11,7 +11,7 @@ public class SingletonPredictionContext : PredictionContext {
 	public readonly int returnState;
 
 	public SingletonPredictionContext(PredictionContext parent, int returnState)
-	: base(parent != null ? calculateHashCode(parent, returnState) : calculateEmptyHashCode())
+	: base(parent != null ? CalculateHashCode(parent, returnState) : CalculateEmptyHashCode())
     {
 		//assert returnState!=ATNState.INVALID_STATE_NUMBER;
 		this.parent = parent;
@@ -26,19 +26,17 @@ public class SingletonPredictionContext : PredictionContext {
 		return new SingletonPredictionContext(parent, returnState);
 	}
 
-	//@Override
-	public override int size() {
-		return 1;
-	}
+    //@Override
+    public override int Count => 1;
 
-	//@Override
-	public override PredictionContext getParent(int index) {
+    //@Override
+    public override PredictionContext GetParent(int index) {
 		//assert index == 0;
 		return parent;
 	}
 
 	//@Override
-	public override int getReturnState(int index) {
+	public override int GetReturnState(int index) {
         //assert index == 0;
         return returnState;
 	}

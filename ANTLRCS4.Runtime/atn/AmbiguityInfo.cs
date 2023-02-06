@@ -37,11 +37,12 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class AmbiguityInfo : DecisionEventInfo {
-	/** The set of alternative numbers for this decision event that lead to a valid parse. */
-	public BitSet ambigAlts;
+public class AmbiguityInfo : DecisionEventInfo
+{
+    /** The set of alternative numbers for this decision event that lead to a valid parse. */
+    public BitSet ambigAlts;
 
-	/**
+    /**
 	 * Constructs a new instance of the {@link AmbiguityInfo} class with the
 	 * specified detailed ambiguity information.
 	 *
@@ -58,13 +59,10 @@ public class AmbiguityInfo : DecisionEventInfo {
 	 * prediction; otherwise, {@code false} if the ambiguity was identified
 	 * during SLL prediction
 	 */
-	public AmbiguityInfo(int decision,
-						 ATNConfigSet configs,
-						 BitSet ambigAlts,
-						 TokenStream input, int startIndex, int stopIndex,
-						 bool fullCtx)
-		:base(decision, configs, input, startIndex, stopIndex, fullCtx)
-    {
-		this.ambigAlts = ambigAlts;
-	}
+    public AmbiguityInfo(int decision,
+                         ATNConfigSet configs,
+                         BitSet ambigAlts,
+                         TokenStream input, int startIndex, int stopIndex,
+                         bool fullCtx)
+        : base(decision, configs, input, startIndex, stopIndex, fullCtx) => this.ambigAlts = ambigAlts;
 }

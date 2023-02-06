@@ -1470,8 +1470,8 @@ public class Grammar : AttributeResolver
         allChannels.AddRange(channelValueToNameList);
 
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.getSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+        IntegerList serialized = ATNSerializer.GetSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
         return new LexerInterpreter(
                 fileName,
                 getVocabulary(),
@@ -1490,8 +1490,8 @@ public class Grammar : AttributeResolver
             throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
         }
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.getSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+        IntegerList serialized = ATNSerializer.GetSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
 
         return new GrammarParserInterpreter(this, deserializedATN, tokenStream);
     }
@@ -1504,8 +1504,8 @@ public class Grammar : AttributeResolver
         }
 
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.getSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().deserialize(serialized.toArray());
+        IntegerList serialized = ATNSerializer.GetSerialized(atn);
+        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
 
         return new ParserInterpreter(fileName, getVocabulary(), Arrays.AsList(getRuleNames()), deserializedATN, tokenStream);
     }

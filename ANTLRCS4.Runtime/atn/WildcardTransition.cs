@@ -9,13 +9,11 @@ namespace org.antlr.v4.runtime.atn;
 public class WildcardTransition : Transition {
 	public WildcardTransition(ATNState target):base(target) {  }
 
-	//@Override
-	public override int getSerializationType() {
-		return WILDCARD;
-	}
+    //@Override
+    public override int SerializationType => WILDCARD;
 
-	//@Override
-	public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
 		return symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 	}
 

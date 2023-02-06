@@ -10,9 +10,8 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public class BasicBlockStartState : BlockStartState {
-	//@Override
-	public override int getStateType() {
-		return BLOCK_START;
-	}
+public class BasicBlockStartState : BlockStartState
+{
+    //@Override
+    public override int StateType => BLOCK_START;
 }

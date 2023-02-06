@@ -27,9 +27,9 @@ public class TestIntervalSet
     [TestMethod]
     public void TestMin()
     {
-        Assert.AreEqual(0, IntervalSet.COMPLETE_CHAR_SET.getMinElement());
-        Assert.AreEqual(Token.EPSILON, IntervalSet.COMPLETE_CHAR_SET.or(IntervalSet.Of(Token.EPSILON)).getMinElement());
-        Assert.AreEqual(Token.EOF, IntervalSet.COMPLETE_CHAR_SET.or(IntervalSet.Of(Token.EOF)).getMinElement());
+        Assert.AreEqual(0, IntervalSet.COMPLETE_CHAR_SET.GetMinElement());
+        Assert.AreEqual(Token.EPSILON, IntervalSet.COMPLETE_CHAR_SET.Or(IntervalSet.Of(Token.EPSILON)).GetMinElement());
+        Assert.AreEqual(Token.EOF, IntervalSet.COMPLETE_CHAR_SET.Or(IntervalSet.Of(Token.EOF)).GetMinElement());
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of(10, 20);
         var s2 = IntervalSet.Of(13, 15);
         var expecting = "{13..15}";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -70,7 +70,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of('a', 'z');
         var s2 = IntervalSet.Of('d');
         var expecting = "100";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -80,7 +80,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of('a', 'z');
         var s2 = IntervalSet.Of('0', '9');
         var expecting = "{}";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -90,7 +90,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of('a');
         var s2 = IntervalSet.Of('d');
         var expecting = "{}";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -101,7 +101,7 @@ public class TestIntervalSet
         vocabulary.Add(2000, 3000);
         var s = IntervalSet.Of(50, 50);
         var expecting = "{1..49, 51..1000, 2000..3000}";
-        var result = (s.complement(vocabulary)).ToString();
+        var result = (s.Complement(vocabulary)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -113,7 +113,7 @@ public class TestIntervalSet
         s.Add(5);
         s.Add(250, 300);
         var expecting = "{1..4, 6..49, 61..249, 301..1000}";
-        var result = (s.complement(vocabulary)).ToString();
+        var result = (s.Complement(vocabulary)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -123,7 +123,7 @@ public class TestIntervalSet
         var vocabulary = IntervalSet.Of(1, 1000);
         var s = IntervalSet.Of(1, 1000);
         var expecting = "{}";
-        var result = (s.complement(vocabulary)).ToString();
+        var result = (s.Complement(vocabulary)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -133,7 +133,7 @@ public class TestIntervalSet
         var vocabulary = IntervalSet.Of(1, 2);
         var s = IntervalSet.Of(1);
         var expecting = "2";
-        var result = (s.complement(vocabulary)).ToString();
+        var result = (s.Complement(vocabulary)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -148,7 +148,7 @@ public class TestIntervalSet
         s.Add(250, 300);
         s.Add(10000); // this is outside range of vocab and should be ignored
         var expecting = "{1..2, 4..49, 61..249, 1000..2000, 9999}";
-        var result = (s.complement(vocabulary)).ToString();
+        var result = (s.Complement(vocabulary)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -158,7 +158,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of(10, 20);
         var s2 = IntervalSet.Of(12, 15);
         var expecting = "{10..11, 16..20}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -169,7 +169,7 @@ public class TestIntervalSet
         s.Add(Token.EOF);
         var s2 = IntervalSet.Of(12, 15);
         var expecting = "{<EOF>, 10..11, 16..20}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -179,12 +179,12 @@ public class TestIntervalSet
         var s = IntervalSet.Of(10, 20);
         var s2 = IntervalSet.Of(5, 11);
         var expecting = "{12..20}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
 
         var s3 = IntervalSet.Of(5, 10);
         expecting = "{11..20}";
-        result = (s.subtract(s3)).ToString();
+        result = (s.Subtract(s3)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -194,12 +194,12 @@ public class TestIntervalSet
         var s = IntervalSet.Of(10, 20);
         var s2 = IntervalSet.Of(15, 25);
         var expecting = "{10..14}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
 
         var s3 = IntervalSet.Of(20, 25);
         expecting = "{10..19}";
-        result = (s.subtract(s3)).ToString();
+        result = (s.Subtract(s3)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -209,7 +209,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of(10, 20);
         var s2 = IntervalSet.Of(1, 25);
         var expecting = "{}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -221,12 +221,12 @@ public class TestIntervalSet
         s.Add(50, 60); // s has 3 ranges now: 10..20, 30..40, 50..60
         var s2 = IntervalSet.Of(5, 55); // covers one and touches 2nd range
         var expecting = "{56..60}";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
 
         var s3 = IntervalSet.Of(15, 55); // touches both
         expecting = "{10..14, 56..60}";
-        result = (s.subtract(s3)).ToString();
+        result = (s.Subtract(s3)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -241,7 +241,7 @@ public class TestIntervalSet
         var s2 = IntervalSet.Of(0, 115);
         s2.Add(117, 200);
         var expecting = "116";
-        var result = (s.subtract(s2)).ToString();
+        var result = (s.Subtract(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -279,7 +279,7 @@ public class TestIntervalSet
         var s2 = IntervalSet.Of(1, 5);
         s2.Add(10, 20);
         var expecting = "{}"; // 15 - {1..5, 10..20} = {}
-        var result = s.subtract(s2).ToString();
+        var result = s.Subtract(s2).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -306,7 +306,7 @@ public class TestIntervalSet
         s2.Add(15);
         s2.Add(18);
         var expecting = "{15, 18}";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -318,7 +318,7 @@ public class TestIntervalSet
         s2.Add(15);
         s2.Add(18);
         var expecting = "{15, 18}";
-        var result = (s2.and(s)).ToString();
+        var result = (s2.And(s)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -329,7 +329,7 @@ public class TestIntervalSet
         s.Add(101, 101);
         var s2 = IntervalSet.Of(100, 102);
         var expecting = "102";
-        var result = (s.complement(s2)).ToString();
+        var result = (s.Complement(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -339,7 +339,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of(100, 101);
         var s2 = IntervalSet.Of(100, 102);
         var expecting = "102";
-        var result = (s.complement(s2)).ToString();
+        var result = (s.Complement(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -349,7 +349,7 @@ public class TestIntervalSet
         var s = IntervalSet.Of(1, 96);
         s.Add(99, Lexer.MAX_CHAR_VALUE);
         var expecting = "{97..98}";
-        var result = (s.complement(1, Lexer.MAX_CHAR_VALUE)).ToString();
+        var result = (s.Complement(1, Lexer.MAX_CHAR_VALUE)).ToString();
         Assert.AreEqual(expecting, result);
     }
 
@@ -454,7 +454,7 @@ public class TestIntervalSet
         var s2 = IntervalSet.Of(0, 'q');
         s2.Add('s', 200);
         var expecting = "{0..113, 115, 117..200}";
-        var result = (s.and(s2)).ToString();
+        var result = (s.And(s2)).ToString();
         Assert.AreEqual(expecting, result);
     }
 

@@ -9,7 +9,5 @@ namespace org.antlr.v4.runtime.atn;
 /** The Tokens rule start state linking to each lexer rule start state */
 public class TokensStartState : DecisionState {
 
-	public override int getStateType() {
-		return TOKEN_START;
-	}
+    public override int StateType => TOKEN_START;
 }

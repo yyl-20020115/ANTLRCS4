@@ -22,15 +22,15 @@ public class IntegerStack : IntegerList {
 	}
 
 	public void push(int value) {
-		add(value);
+		Add(value);
 	}
 
 	public int pop() {
-		return removeAt(size() - 1);
+		return RemoveAt(Size() - 1);
 	}
 
 	public int peek() {
-		return get(size() - 1);
+		return Get(Size() - 1);
 	}
 
 }

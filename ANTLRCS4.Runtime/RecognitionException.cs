@@ -89,7 +89,7 @@ public class RecognitionException : RuntimeException {
 	 */
 	public IntervalSet getExpectedTokens() {
 		if (recognizer != null) {
-			return recognizer.getATN().getExpectedTokens(offendingState, ctx);
+			return recognizer.getATN().GetExpectedTokens(offendingState, ctx);
 		}
 
 		return null;

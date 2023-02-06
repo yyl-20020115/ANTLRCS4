@@ -716,7 +716,7 @@ public class Tool {
 		}
 		content.Append('\n');
 
-		IntegerList serializedATN = ATNSerializer.getSerialized(g.atn);
+		IntegerList serializedATN = ATNSerializer.GetSerialized(g.atn);
 		// Uncomment if you'd like to write out histogram info on the numbers of
 		// each integer value:
 		//Utils.writeSerializedATNIntegerHistogram(g.name+"-histo.csv", serializedATN);

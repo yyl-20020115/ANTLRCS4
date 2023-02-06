@@ -11,7 +11,5 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class PlusLoopbackState : DecisionState {
 
-	public override int getStateType() {
-		return PLUS_LOOP_BACK;
-	}
+    public override int StateType => PLUS_LOOP_BACK;
 }

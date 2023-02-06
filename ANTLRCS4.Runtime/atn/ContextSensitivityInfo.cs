@@ -24,8 +24,9 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @since 4.3
  */
-public class ContextSensitivityInfo : DecisionEventInfo {
-	/**
+public class ContextSensitivityInfo : DecisionEventInfo
+{
+    /**
 	 * Constructs a new instance of the {@link ContextSensitivityInfo} class
 	 * with the specified detailed context sensitivity information.
 	 *
@@ -37,10 +38,10 @@ public class ContextSensitivityInfo : DecisionEventInfo {
 	 * @param stopIndex The index at which the context sensitivity was
 	 * identified during full-context prediction
 	 */
-	public ContextSensitivityInfo(int decision,
-								  ATNConfigSet configs,
-								  TokenStream input, int startIndex, int stopIndex)
-		:base(decision, configs, input, startIndex, stopIndex, true)
+    public ContextSensitivityInfo(int decision,
+                                  ATNConfigSet configs,
+                                  TokenStream input, int startIndex, int stopIndex)
+        : base(decision, configs, input, startIndex, stopIndex, true)
     {
-	}
+    }
 }

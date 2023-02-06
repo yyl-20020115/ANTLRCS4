@@ -174,8 +174,8 @@ public class ToolTestUtils
         if (useSerializer)
         {
             // sets some flags in ATN
-            var serialized = ATNSerializer.getSerialized(atn);
-            return new ATNDeserializer().deserialize(serialized.toArray());
+            var serialized = ATNSerializer.GetSerialized(atn);
+            return new ATNDeserializer().Deserialize(serialized.ToArray());
         }
 
         return atn;
@@ -206,8 +206,8 @@ public class ToolTestUtils
         int ttype;
         do
         {
-            ttype = lexerATN.match(@in, Lexer.DEFAULT_MODE);
-            tokenTypes.add(ttype);
+            ttype = lexerATN.Match(@in, Lexer.DEFAULT_MODE);
+            tokenTypes.Add(ttype);
         } while (ttype != Token.EOF);
         return tokenTypes;
     }

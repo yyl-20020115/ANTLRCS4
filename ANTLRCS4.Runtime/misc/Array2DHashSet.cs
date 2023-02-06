@@ -123,18 +123,18 @@ public class Array2DHashSet<T> : HashSet<T>
     //@Override
     public override int GetHashCode()
     {
-        int hash = MurmurHash.initialize();
+        int hash = MurmurHash.Initialize();
         foreach (T[] bucket in buckets)
         {
             if (bucket == null) continue;
             foreach (T o in bucket)
             {
                 if (o == null) break;
-                hash = MurmurHash.update(hash, comparator.GetHashCode(o));
+                hash = MurmurHash.Update(hash, comparator.GetHashCode(o));
             }
         }
 
-        hash = MurmurHash.finish(hash, Size());
+        hash = MurmurHash.Finish(hash, Size());
         return hash;
     }
 
@@ -554,15 +554,15 @@ public class Array2DHashSet<T> : HashSet<T>
         }
 
         //@Override
-        public bool hasNext()
+        public bool HasNext()
         {
             return nextIndex < data.Length;
         }
 
         //@Override
-        public T next()
+        public T Next()
         {
-            if (!hasNext())
+            if (!HasNext())
             {
                 throw new NoSuchElementException();
             }
@@ -572,7 +572,7 @@ public class Array2DHashSet<T> : HashSet<T>
         }
 
         //@Override
-        public void remove()
+        public void Remove()
         {
             if (removed)
             {

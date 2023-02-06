@@ -20,7 +20,7 @@ public class MatchSet : MatchToken
     public MatchSet(OutputModelFactory factory, GrammarAST ast)
         : base(factory, ast)
     {
-        var st = ast.atnState.transition(0) as SetTransition;
+        var st = ast.atnState.Transition(0) as SetTransition;
         int wordSize = factory.GetGenerator().Target.GetInlineTestSetWordSize();
         expr = new TestSetInline(factory, null, st.set, wordSize);
         var d = new TokenTypeDecl(factory, expr.varName);

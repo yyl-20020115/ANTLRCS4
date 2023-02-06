@@ -236,7 +236,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
         int la = tokens.LA(1);
 
         // try cheaper subset first; might get lucky. seems to shave a wee bit off
-		IntervalSet nextTokens = recognizer.getATN().nextTokens(s);
+		IntervalSet nextTokens = recognizer.getATN().NextTokens(s);
 		if (nextTokens.Contains(la)) {
 			// We are sure the token matches
 			nextTokensContext = null;
@@ -254,7 +254,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			return;
 		}
 
-		switch (s.getStateType()) {
+		switch (s.StateType) {
 		case ATNState.BLOCK_START:
 		case ATNState.STAR_BLOCK_START:
 		case ATNState.PLUS_BLOCK_START:
@@ -272,7 +272,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 			reportUnwantedToken(recognizer);
 			IntervalSet expecting = recognizer.getExpectedTokens();
 			IntervalSet whatFollowsLoopIterationOrRule =
-				expecting.or(getErrorRecoverySet(recognizer));
+				expecting.Or(getErrorRecoverySet(recognizer));
 			consumeUntil(recognizer, whatFollowsLoopIterationOrRule);
 			break;
 
@@ -320,7 +320,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 									   InputMismatchException e)
 	{
 		String msg = "mismatched input "+getTokenErrorDisplay(e.getOffendingToken())+
-		" expecting "+e.getExpectedTokens().toString(recognizer.getVocabulary());
+		" expecting "+e.getExpectedTokens().ToString(recognizer.getVocabulary());
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
 
@@ -370,7 +370,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		String tokenName = getTokenErrorDisplay(t);
 		IntervalSet expecting = getExpectedTokens(recognizer);
 		String msg = "extraneous input "+tokenName+" expecting "+
-			expecting.toString(recognizer.getVocabulary());
+			expecting.ToString(recognizer.getVocabulary());
 		recognizer.notifyErrorListeners(t, msg, null);
 	}
 
@@ -400,7 +400,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 
 		Token t = recognizer.getCurrentToken();
 		IntervalSet expecting = getExpectedTokens(recognizer);
-		String msg = "missing "+expecting.toString(recognizer.getVocabulary())+
+		String msg = "missing "+expecting.ToString(recognizer.getVocabulary())+
 			" at "+getTokenErrorDisplay(t);
 
 		recognizer.notifyErrorListeners(t, msg, null);
@@ -508,9 +508,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		// ATN state, then we know we're missing a token; error recovery
 		// is free to conjure up and insert the missing token
 		ATNState currentState = recognizer.getInterpreter().atn.states[(recognizer.getState())];
-		ATNState next = currentState.transition(0).target;
+		ATNState next = currentState.Transition(0).target;
 		ATN atn = recognizer.getInterpreter().atn;
-		IntervalSet expectingAtLL2 = atn.nextTokens(next, recognizer.GetCtx());
+		IntervalSet expectingAtLL2 = atn.NextTokens(next, recognizer.GetCtx());
 //		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
 		if ( expectingAtLL2.Contains(currentSymbolType) ) {
 			reportMissingToken(recognizer);
@@ -582,7 +582,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		IntervalSet expecting = getExpectedTokens(recognizer);
 		int expectedTokenType = Token.INVALID_TYPE;
 		if ( !expecting.IsNil ) {
-			expectedTokenType = expecting.getMinElement(); // get any element
+			expectedTokenType = expecting.GetMinElement(); // get any element
 		}
 		String tokenText;
 		if ( expectedTokenType== Token.EOF ) tokenText = "<missing EOF>";
@@ -742,9 +742,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 		while ( ctx!=null && ctx.invokingState>=0 ) {
 			// compute what follows who invoked us
 			ATNState invokingState = atn.states[(ctx.invokingState)];
-			RuleTransition rt = (RuleTransition)invokingState.transition(0);
-			IntervalSet follow = atn.nextTokens(rt.followState);
-			recoverSet.addAll(follow);
+			RuleTransition rt = (RuleTransition)invokingState.Transition(0);
+			IntervalSet follow = atn.NextTokens(rt.followState);
+			recoverSet.AddAll(follow);
 			ctx = ctx.parent;
 		}
         recoverSet.Remove(Token.EPSILON);

@@ -113,7 +113,7 @@ public class InterpreterDataReader {
 			}
 
 		  	ATNDeserializer deserializer = new ATNDeserializer();
-		  	result.atn = deserializer.deserialize(serializedATN);
+		  	result.atn = deserializer.Deserialize(serializedATN);
 		}
 		//catch (IOException e) {
 		//	// We just swallow the error and return empty objects instead.

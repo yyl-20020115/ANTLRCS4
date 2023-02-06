@@ -158,16 +158,16 @@ public class FlexibleHashMap<K,V> : Dictionary<K, V> {
 
 	//@Override
 	public int GetHashCode() {
-		int hash = MurmurHash.initialize();
+		int hash = MurmurHash.Initialize();
         foreach (LinkedList<Entry<K, V>> bucket in buckets) {
 			if ( bucket==null ) continue;
             foreach (Entry<K, V> e in bucket) {
 				if ( e==null ) break;
-				hash = MurmurHash.update(hash, comparator.GetHashCode(e.key));
+				hash = MurmurHash.Update(hash, comparator.GetHashCode(e.key));
 			}
 		}
 
-		hash = MurmurHash.finish(hash, size());
+		hash = MurmurHash.Finish(hash, size());
 		return hash;
 	}
 

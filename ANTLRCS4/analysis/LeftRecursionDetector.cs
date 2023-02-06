@@ -66,11 +66,11 @@ public class LeftRecursionDetector
         visitedStates.Add(s);
 
         //Console.Out.WriteLine("visit "+s);
-        int n = s.getNumberOfTransitions();
+        int n = s.NumberOfTransitions;
         bool stateReachesStopState = false;
         for (int i = 0; i < n; i++)
         {
-            var t = s.transition(i);
+            var t = s.Transition(i);
             if (t is RuleTransition rt)
             {
                 var r = g.getRule(rt.ruleIndex);
@@ -92,7 +92,7 @@ public class LeftRecursionDetector
                     }
                 }
             }
-            else if (t.isEpsilon())
+            else if (t.IsEpsilon)
             {
                 stateReachesStopState |= Check(enclosingRule, t.target, visitedStates);
             }

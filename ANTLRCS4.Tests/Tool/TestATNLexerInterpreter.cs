@@ -632,7 +632,7 @@ public class TestATNLexerInterpreter
                 break;
             }
             int t = input.LA(1);
-            ttype = interp.match(input, Lexer.DEFAULT_MODE);
+            ttype = interp.Match(input, Lexer.DEFAULT_MODE);
             if (ttype == Token.EOF)
             {
                 tokenTypes.Add("EOF");

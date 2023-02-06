@@ -62,7 +62,7 @@ public class DFA
 	 *  to the underlying CFL).  Return an alternative number 1..n.  Throw
 	 *  an exception upon error.
 	 */
-    public int predict(IntStream input)
+    public int Predict(IntStream input)
     {
         if (debug)
         {
@@ -84,7 +84,7 @@ public class DFA
                         Console.Error.WriteLine("DFA " + decisionNumber +
                             " state " + s + " is special state " + specialState);
                     }
-                    s = specialStateTransition(specialState, input);
+                    s = SpecialStateTransition(specialState, input);
                     if (debug)
                     {
                         Console.Error.WriteLine("DFA " + decisionNumber +
@@ -92,7 +92,7 @@ public class DFA
                     }
                     if (s == -1)
                     {
-                        noViableAlt(s, input);
+                        NoViableAlt(s, input);
                         return 0;
                     }
                     input.consume();
@@ -126,7 +126,7 @@ public class DFA
                             // target?
                             continue;
                         }
-                        noViableAlt(s, input);
+                        NoViableAlt(s, input);
                         return 0;
                     }
                     s = snext;
@@ -158,7 +158,7 @@ public class DFA
                     }
                     Console.Error.WriteLine();
                 }
-                noViableAlt(s, input);
+                NoViableAlt(s, input);
                 return 0;
             }
         }
@@ -168,7 +168,7 @@ public class DFA
         }
     }
 
-    protected void noViableAlt(int s, IntStream input)
+    protected void NoViableAlt(int s, IntStream input)
     {
         if (recognizer.state.backtracking > 0)
         {
@@ -181,19 +181,19 @@ public class DFA
                                          decisionNumber,
                                          s,
                                          input);
-        error(nvae);
+        Error(nvae);
         throw nvae;
     }
 
     /** A hook for debugging interface */
-    protected void error(NoViableAltException nvae) {; }
+    protected void Error(NoViableAltException nvae) {; }
 
-    public int specialStateTransition(int s, IntStream input)
+    public int SpecialStateTransition(int s, IntStream input)
     {
         return -1;
     }
 
-    public virtual String getDescription()
+    public virtual string GetDescription()
     {
         return "n/a";
     }
@@ -203,7 +203,7 @@ public class DFA
      *  static short[] which generates so much init code that the class won't
      *  compile. :(
      */
-    public static short[] unpackEncodedString(String encodedString)
+    public static short[] UnpackEncodedString(string encodedString)
     {
         // walk first to find how big it is.
         int size = 0;
@@ -227,7 +227,7 @@ public class DFA
     }
 
     /** Hideous duplication of code, but I need different typed arrays out :( */
-    public static char[] unpackEncodedStringToUnsignedChars(String encodedString)
+    public static char[] UnpackEncodedStringToUnsignedChars(String encodedString)
     {
         // walk first to find how big it is.
         int size = 0;

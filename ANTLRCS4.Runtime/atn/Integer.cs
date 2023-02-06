@@ -6,9 +6,9 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class Integer
+public static class Integer
 {
-    public static int bitCount(long v)
+    public static int BitCount(long v)
     {
         v = v - ((v >>> 1) & 0x5555555555555555L);
         v = (v & 0x3333333333333333L) + ((v >>> 2) & 0x3333333333333333L);
@@ -19,21 +19,21 @@ public class Integer
         return (int)v & 0x7f;
     }
 
-    public static int numberOfLeadingZeros(long v)
+    public static int NumberOfLeadingZeros(long v)
     {
         int x = (int)(v >>> 32);
-        return x == 0 ? 32 + Integer.numberOfLeadingZeros((int)v)
-                : Integer.numberOfLeadingZeros(x);
+        return x == 0 ? 32 + Integer.NumberOfLeadingZeros((int)v)
+                : Integer.NumberOfLeadingZeros(x);
     }
 
-    public static int numberOfTrailingZeros(long v)
+    public static int NumberOfTrailingZeros(long v)
     {
         int x = (int)v;
-        return x == 0 ? 32 + Integer.numberOfTrailingZeros((int)(v >>> 32))
-                : Integer.numberOfTrailingZeros(x);
+        return x == 0 ? 32 + Integer.NumberOfTrailingZeros((int)(v >>> 32))
+                : Integer.NumberOfTrailingZeros(x);
     }
 
-    public static int bitCount(int v)
+    public static int BitCount(int v)
     {
         v = v - ((v >>> 1) & 0x55555555);
         v = (v & 0x33333333) + ((v >>> 2) & 0x33333333);
@@ -43,7 +43,7 @@ public class Integer
         return v & 0x3f;
     }
 
-    public static int numberOfLeadingZeros(int v)
+    public static int NumberOfLeadingZeros(int v)
     {
         if (v <= 0)
             return v == 0 ? 32 : 0;
@@ -55,7 +55,7 @@ public class Integer
         return n - (v >>> 1);
     }
 
-    public static int numberOfTrailingZeros(int v)
+    public static int NumberOfTrailingZeros(int v)
     {
         v = ~v & (v - 1);
         if (v <= 0) return v & 32;

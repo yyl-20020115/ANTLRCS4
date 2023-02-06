@@ -34,11 +34,11 @@ public class Triple<A,B,C> {
 
 	
 	public override int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, a);
-		hash = MurmurHash.update(hash, b);
-		hash = MurmurHash.update(hash, c);
-		return MurmurHash.finish(hash, 3);
+		int hash = MurmurHash.Initialize();
+		hash = MurmurHash.Update(hash, a);
+		hash = MurmurHash.Update(hash, b);
+		hash = MurmurHash.Update(hash, c);
+		return MurmurHash.Finish(hash, 3);
 	}
 
 	public override String ToString() {

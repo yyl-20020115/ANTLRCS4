@@ -10,11 +10,10 @@ namespace org.antlr.v4.runtime.atn;
  *
  * @author Sam Harwell
  */
-public class BasicState : ATNState {
+public class BasicState : ATNState
+{
 
-	//@Override
-	public override int getStateType() {
-		return BASIC;
-	}
+    //@Override
+    public override int StateType => BASIC;
 
 }

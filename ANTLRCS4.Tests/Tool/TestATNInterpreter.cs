@@ -401,9 +401,9 @@ public class TestATNInterpreter
         //		Console.Out.WriteLine("input="+input.types);
         var interp = new ParserInterpreterForTesting(g, input);
         ATNState startState = atn.ruleToStartState[g.getRule("a").index];
-        if (startState.transition(0).target is BlockStartState)
+        if (startState.Transition(0).target is BlockStartState)
         {
-            startState = startState.transition(0).target;
+            startState = startState.Transition(0).target;
         }
 
         var dot = new DOTGenerator(g);

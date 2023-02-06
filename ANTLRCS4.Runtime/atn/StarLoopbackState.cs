@@ -8,10 +8,8 @@ namespace org.antlr.v4.runtime.atn;
 
 public class StarLoopbackState : ATNState {
 	public StarLoopEntryState getLoopEntryState() {
-		return (StarLoopEntryState)transition(0).target;
+		return (StarLoopEntryState)Transition(0).target;
 	}
 
-	public override int getStateType() {
-		return STAR_LOOP_BACK;
-	}
+    public override int StateType => STAR_LOOP_BACK;
 }

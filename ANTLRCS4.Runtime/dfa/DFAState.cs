@@ -115,9 +115,9 @@ public class DFAState {
 	}
 
 	public override int GetHashCode() {
-		int hash = MurmurHash.initialize(7);
-		hash = MurmurHash.update(hash, configs.GetHashCode());
-		hash = MurmurHash.finish(hash, 1);
+		int hash = MurmurHash.Initialize(7);
+		hash = MurmurHash.Update(hash, configs.GetHashCode());
+		hash = MurmurHash.Finish(hash, 1);
 		return hash;
 	}
 

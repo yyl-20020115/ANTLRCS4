@@ -15,16 +15,19 @@ namespace org.antlr.v4.runtime.atn;
  * transition for a Unicode code point > U+FFFF. Now that we can serialize
  * 32-bit int/chars in the ATN serialization, this is no longer necessary.
  */
-public abstract class CodePointTransitions {
-	/** Return new {@link AtomTransition} */
-	public static Transition createWithCodePoint(ATNState target, int codePoint) {
-		return createWithCodePointRange(target, codePoint, codePoint);
-	}
+public abstract class CodePointTransitions
+{
+    /** Return new {@link AtomTransition} */
+    public static Transition CreateWithCodePoint(ATNState target, int codePoint)
+    {
+        return CreateWithCodePointRange(target, codePoint, codePoint);
+    }
 
-	/** Return new {@link AtomTransition} if range represents one atom else {@link SetTransition}. */
-	public static Transition createWithCodePointRange(ATNState target, int codePointFrom, int codePointTo) {
-		return codePointFrom == codePointTo
-				? new AtomTransition(target, codePointFrom)
-				: new RangeTransition(target, codePointFrom, codePointTo);
-	}
+    /** Return new {@link AtomTransition} if range represents one atom else {@link SetTransition}. */
+    public static Transition CreateWithCodePointRange(ATNState target, int codePointFrom, int codePointTo)
+    {
+        return codePointFrom == codePointTo
+                ? new AtomTransition(target, codePointFrom)
+                : new RangeTransition(target, codePointFrom, codePointTo);
+    }
 }

@@ -27,10 +27,10 @@ public class ATNVisitor
         visited.Add(s.stateNumber);
 
         VisitState(s);
-        int n = s.getNumberOfTransitions();
+        int n = s.NumberOfTransitions;
         for (int i = 0; i < n; i++)
         {
-            var t = s.transition(i);
+            var t = s.Transition(i);
             Visit(t.target, visited);
         }
     }

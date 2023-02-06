@@ -384,7 +384,7 @@ public class SourceGenTriggers : TreeParser
         {
             // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:95:2: ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) )
             int alt7 = 2;
-            alt7 = dfa7.predict(input);
+            alt7 = dfa7.Predict(input);
             switch (alt7)
             {
                 case 1:

@@ -19,10 +19,10 @@ public abstract class ContextGetterDecl : Decl
 
     public override int GetHashCode()
     {
-        var hash = MurmurHash.initialize();
-        hash = MurmurHash.update(hash, name);
-        hash = MurmurHash.update(hash, GetArgType());
-        hash = MurmurHash.finish(hash, 2);
+        var hash = MurmurHash.Initialize();
+        hash = MurmurHash.Update(hash, name);
+        hash = MurmurHash.Update(hash, GetArgType());
+        hash = MurmurHash.Finish(hash, 2);
         return hash;
     }
 

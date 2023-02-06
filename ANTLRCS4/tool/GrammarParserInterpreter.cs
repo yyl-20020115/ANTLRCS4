@@ -77,9 +77,9 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 */
 	public BitSet findOuterMostDecisionStates() {
 		BitSet track = new BitSet(atn.states.Count);
-		int numberOfDecisions = atn.getNumberOfDecisions();
+		int numberOfDecisions = atn.NumberOfDecisions();
 		for (int i = 0; i < numberOfDecisions; i++) {
-			DecisionState decisionState = atn.getDecisionState(i);
+			DecisionState decisionState = atn.GetDecisionState(i);
 			RuleStartState startState = atn.ruleToStartState[decisionState.ruleIndex];
 			// Look for StarLoopEntryState that is in any left recursive rule
 			if ( decisionState is StarLoopEntryState) {
@@ -88,12 +88,12 @@ public class GrammarParserInterpreter : ParserInterpreter {
 					// Recursive alts always result in a (...)* in the transformed
 					// left recursive rule and that always has a BasicBlockStartState
 					// even if just 1 recursive alt exists.
-					ATNState blockStart = loopEntry.transition(0).target;
+					ATNState blockStart = loopEntry.Transition(0).target;
 					// track the StarBlockStartState associated with the recursive alternatives
 					track.Set(blockStart.stateNumber);
 				}
 			}
-			else if ( startState.transition(0).target == decisionState ) {
+			else if ( startState.Transition(0).target == decisionState ) {
 				// always track outermost block for any rule if it exists
 				track.Set(decisionState.stateNumber);
 			}
@@ -139,7 +139,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	//@Override
 	protected int visitDecisionState(DecisionState p) {
 		int predictedAlt = base.visitDecisionState(p);
-		if( p.getNumberOfTransitions() > 1) {
+		if( p.NumberOfTransitions > 1) {
 //			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
 			if( p.decision == this.overrideDecision &&
 				this.input.index() == this.overrideDecisionInputIndex )
@@ -155,13 +155,13 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if ( atn.ruleToStartState[r.index].isLeftRecursiveRule ) {
 				int[] alts = stateToAltsMap[p.stateNumber];
 				LeftRecursiveRule lr = (LeftRecursiveRule) g.getRule(p.ruleIndex);
-				if (p.getStateType() == ATNState.BLOCK_START) {
+				if (p.StateType == ATNState.BLOCK_START) {
 					if ( alts==null ) {
 						alts = lr.getPrimaryAlts();
 						stateToAltsMap[p.stateNumber] = alts; // cache it
 					}
 				}
-				else if ( p.getStateType() == ATNState.STAR_BLOCK_START ) {
+				else if ( p.StateType == ATNState.STAR_BLOCK_START ) {
 					if ( alts==null ) {
 						alts = lr.getRecursiveOpAlts();
 						stateToAltsMap[p.stateNumber] = alts; // cache it
@@ -325,7 +325,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 
 		DecisionState decisionState = originalParser.getATN().decisionToState[(decision)];
 
-		for (int alt = 1; alt<=decisionState.getTransitions().Length; alt++) {
+		for (int alt = 1; alt<=decisionState.GetTransitions().Length; alt++) {
 			// re-parse entire input for all ambiguous alternatives
 			// (don't have to do first as it's been parsed, but do again for simplicity
 			//  using this temp parser.)

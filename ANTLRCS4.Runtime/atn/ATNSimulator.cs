@@ -9,14 +9,15 @@ using org.antlr.v4.runtime.dfa;
 namespace org.antlr.v4.runtime.atn;
 
 
-public abstract class ATNSimulator {
-	/** Must distinguish between missing edge and edge we know leads nowhere */
+public abstract class ATNSimulator
+{
+    /** Must distinguish between missing edge and edge we know leads nowhere */
 
-	public static readonly DFAState ERROR;
+    public static readonly DFAState ERROR;
 
-	public readonly ATN atn;
+    public readonly ATN atn;
 
-	/** The context cache maps all PredictionContext objects that are equals()
+    /** The context cache maps all PredictionContext objects that are equals()
 	 *  to a single cached copy. This cache is shared across all contexts
 	 *  in all ATNConfigs in all DFA states.  We rebuild each ATNConfigSet
 	 *  to use only cached nodes/graphs in addDFAState(). We don't want to
@@ -36,23 +37,24 @@ public abstract class ATNSimulator {
 	 *  more time I think and doesn't save on the overall footprint
 	 *  so it's not worth the complexity.</p>
  	 */
-	public readonly PredictionContextCache sharedContextCache;
+    public readonly PredictionContextCache sharedContextCache;
 
-	static ATNSimulator() {
-		ERROR = new DFAState(new ATNConfigSet());
-		ERROR.stateNumber = int.MaxValue;// int.MaxValue;
-	}
+    static ATNSimulator()
+    {
+        ERROR = new (new ATNConfigSet());
+        ERROR.stateNumber = int.MaxValue;// int.MaxValue;
+    }
 
-	public ATNSimulator(ATN atn,
-						PredictionContextCache sharedContextCache)
-	{
-		this.atn = atn;
-		this.sharedContextCache = sharedContextCache;
-	}
+    public ATNSimulator(ATN atn,
+                        PredictionContextCache sharedContextCache)
+    {
+        this.atn = atn;
+        this.sharedContextCache = sharedContextCache;
+    }
 
-	public abstract void reset();
+    public abstract void Reset();
 
-	/**
+    /**
 	 * Clear the DFA cache used by the current instance. Since the DFA cache may
 	 * be shared by multiple ATN simulators, this method may affect the
 	 * performance (but not accuracy) of other parsers which are being used
@@ -63,23 +65,27 @@ public abstract class ATNSimulator {
 	 *
 	 * @since 4.3
 	 */
-	public void clearDFA() {
-		throw new UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
-	}
+    public void ClearDFA()
+    {
+        throw new UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
+    }
 
-	public PredictionContextCache getSharedContextCache() {
-		return sharedContextCache;
-	}
+    public PredictionContextCache GetSharedContextCache()
+    {
+        return sharedContextCache;
+    }
 
-	public PredictionContext getCachedContext(PredictionContext context) {
-		if ( sharedContextCache==null ) return context;
+    public PredictionContext GetCachedContext(PredictionContext context)
+    {
+        if (sharedContextCache == null) return context;
 
-		lock (sharedContextCache) {
-			var visited =
-				new Dictionary<PredictionContext, PredictionContext>();
-			return PredictionContext.getCachedContext(context,
-													  sharedContextCache,
-													  visited);
-		}
-	}
+        lock (sharedContextCache)
+        {
+            var visited =
+                new Dictionary<PredictionContext, PredictionContext>();
+            return PredictionContext.GetCachedContext(context,
+                                                      sharedContextCache,
+                                                      visited);
+        }
+    }
 }

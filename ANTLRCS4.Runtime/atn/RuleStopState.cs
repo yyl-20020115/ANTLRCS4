@@ -13,9 +13,6 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class RuleStopState : ATNState
 {
-    public override int getStateType()
-    {
-        return RULE_STOP;
-    }
+    public override int StateType => RULE_STOP;
 
 }

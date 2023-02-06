@@ -170,12 +170,12 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         _syntaxErrors = 0;
         matchedEOF = false;
         setTrace(false);
-        _precedenceStack.clear();
+        _precedenceStack.Clear();
         _precedenceStack.push(0);
         ATNSimulator interpreter = getInterpreter();
         if (interpreter != null)
         {
-            interpreter.reset();
+            interpreter.Reset();
         }
     }
     public Token match(int ttype)
@@ -514,8 +514,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 return bypassAltsAtnCache;
             }
             ATNDeserializationOptions deserializationOptions = new ATNDeserializationOptions();
-            deserializationOptions.setGenerateRuleBypassTransitions(true);
-            bypassAltsAtnCache = new ATNDeserializer(deserializationOptions).deserialize(serializedAtn.ToCharArray());
+            deserializationOptions.SetGenerateRuleBypassTransitions(true);
+            bypassAltsAtnCache = new ATNDeserializer(deserializationOptions).Deserialize(serializedAtn.ToCharArray());
             return bypassAltsAtnCache;
         }
     }
@@ -758,7 +758,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 	 */
     public int getPrecedence()
     {
-        if (_precedenceStack.isEmpty())
+        if (_precedenceStack.IsEmpty)
         {
             return -1;
         }
@@ -894,7 +894,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         ATN atn = getInterpreter().atn;
         ParserRuleContext ctx = _ctx;
         ATNState s = atn.states[getState()];
-        IntervalSet following = atn.nextTokens(s);
+        IntervalSet following = atn.NextTokens(s);
         if (following.Contains(symbol))
         {
             return true;
@@ -905,8 +905,8 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         while (ctx != null && ctx.invokingState >= 0 && following.Contains(Token.EPSILON))
         {
             ATNState invokingState = atn.states[ctx.invokingState];
-            RuleTransition rt = (RuleTransition)invokingState.transition(0);
-            following = atn.nextTokens(rt.followState);
+            RuleTransition rt = (RuleTransition)invokingState.Transition(0);
+            following = atn.NextTokens(rt.followState);
             if (following.Contains(symbol))
             {
                 return true;
@@ -937,7 +937,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 	 */
     public IntervalSet getExpectedTokens()
     {
-        return getATN().getExpectedTokens(getState(), getContext());
+        return getATN().GetExpectedTokens(getState(), getContext());
     }
 
 
@@ -945,7 +945,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     {
         ATN atn = getInterpreter().atn;
         ATNState s = atn.states[(getState())];
-        return atn.nextTokens(s);
+        return atn.NextTokens(s);
     }
 
     /** Get a rule's index (i.e., {@code RULE_ruleName} field) or -1 if not found. */
@@ -1057,7 +1057,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         else if (interp is ProfilingATNSimulator)
         {
             ParserATNSimulator sim =
-                new ParserATNSimulator(this, getATN(), interp.decisionToDFA, interp.getSharedContextCache());
+                new ParserATNSimulator(this, getATN(), interp.decisionToDFA, interp.GetSharedContextCache());
             setInterpreter(sim);
         }
         getInterpreter().setPredictionMode(saveMode);

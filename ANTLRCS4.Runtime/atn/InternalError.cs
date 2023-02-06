@@ -6,32 +6,27 @@
 
 using System.Runtime.Serialization;
 
-namespace org.antlr.v4.runtime.atn
+namespace org.antlr.v4.runtime.atn;
+
+public class InternalError : Exception
 {
-    [Serializable]
-    internal class InternalError : Exception
+    private InvalidOperationException e;
+
+    public InternalError()
     {
-        private InvalidOperationException e;
-
-        public InternalError()
-        {
-        }
-
-        public InternalError(InvalidOperationException e)
-        {
-            this.e = e;
-        }
-
-        public InternalError(string? message) : base(message)
-        {
-        }
-
-        public InternalError(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected InternalError(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
+
+    public InternalError(InvalidOperationException e)
+    {
+        this.e = e;
+    }
+
+    public InternalError(string? message) : base(message)
+    {
+    }
+
+    public InternalError(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
 }

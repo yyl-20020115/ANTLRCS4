@@ -6,15 +6,17 @@
 
 namespace org.antlr.v4.runtime.atn;
 
-public class EpsilonTransition : Transition {
+public class EpsilonTransition : Transition
+{
 
-	private readonly int _outermostPrecedenceReturn;
+    private readonly int _outermostPrecedenceReturn;
 
-	public EpsilonTransition(ATNState target, int outermostPrecedenceReturn = -1):base(target) {
-		this._outermostPrecedenceReturn = outermostPrecedenceReturn;
-	}
+    public EpsilonTransition(ATNState target, int outermostPrecedenceReturn = -1) : base(target)
+    {
+        this._outermostPrecedenceReturn = outermostPrecedenceReturn;
+    }
 
-	/**
+    /**
 	 * @return the rule index of a precedence rule for which this transition is
 	 * returning from, where the precedence value is 0; otherwise, -1.
 	 *
@@ -22,26 +24,20 @@ public class EpsilonTransition : Transition {
 	 * @see ParserATNSimulator#applyPrecedenceFilter(ATNConfigSet)
 	 * @since 4.4.1
 	 */
-	public int outermostPrecedenceReturn() {
-		return _outermostPrecedenceReturn;
-	}
-
-	//@Override
-	public override int getSerializationType() {
-		return EPSILON;
-	}
+    public int OutermostPrecedenceReturn => _outermostPrecedenceReturn;
 
     //@Override
-    public override bool isEpsilon() { return true; }
+    public override int SerializationType => EPSILON;
 
     //@Override
-    public override bool matches(int symbol, int minVocabSymbol, int maxVocabSymbol) {
-		return false;
-	}
+    public override bool IsEpsilon => true;
+    //@Override
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
+    {
+        return false;
+    }
 
     //@Override
 
-    public override String ToString() {
-		return "epsilon";
-	}
+    public override String ToString() => "epsilon";
 }

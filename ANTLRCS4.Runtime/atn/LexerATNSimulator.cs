@@ -6,19 +6,19 @@
 
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
-using System.ComponentModel.DataAnnotations;
 
 namespace org.antlr.v4.runtime.atn;
 
 /** "dup" of ParserInterpreter */
-public class LexerATNSimulator : ATNSimulator {
-	public static readonly bool debug = false;
-	public static readonly bool dfa_debug = false;
+public class LexerATNSimulator : ATNSimulator
+{
+    public static readonly bool debug = false;
+    public static readonly bool dfa_debug = false;
 
-	public static readonly int MIN_DFA_EDGE = 0;
-	public static readonly int MAX_DFA_EDGE = 127; // forces unicode to stay in ATN
+    public static readonly int MIN_DFA_EDGE = 0;
+    public static readonly int MAX_DFA_EDGE = 127; // forces unicode to stay in ATN
 
-	/** When we hit an accept state in either the DFA or the ATN, we
+    /** When we hit an accept state in either the DFA or the ATN, we
 	 *  have to notify the character stream to start buffering characters
 	 *  via {@link IntStream#mark} and record the current state. The current sim state
 	 *  includes the current index into the input, the current line,
@@ -33,197 +33,222 @@ public class LexerATNSimulator : ATNSimulator {
 	 *  then the ATN does the accept and the DFA simulator that invoked it
 	 *  can simply return the predicted token type.</p>
 	 */
-	public class SimState {
+    public class SimState
+    {
         public int index = -1;
         public int line = 0;
         public int charPos = -1;
-		public DFAState dfaState;
+        public DFAState dfaState;
 
-		public void reset() {
-			index = -1;
-			line = 0;
-			charPos = -1;
-			dfaState = null;
-		}
-	}
+        public void reset()
+        {
+            index = -1;
+            line = 0;
+            charPos = -1;
+            dfaState = null;
+        }
+    }
 
 
-	protected readonly Lexer recog;
+    protected readonly Lexer recog;
 
-	/** The current token's starting index into the character stream.
+    /** The current token's starting index into the character stream.
 	 *  Shared across DFA to ATN simulation in case the ATN fails and the
 	 *  DFA did not have a previous accept state. In this case, we use the
 	 *  ATN-generated exception object.
 	 */
-	protected int startIndex = -1;
+    protected int startIndex = -1;
 
-	/** line number 1..n within the input */
-	protected int line = 1;
+    /** line number 1..n within the input */
+    protected int line = 1;
 
-	/** The index of the character relative to the beginning of the line 0..n-1 */
-	protected int charPositionInLine = 0;
+    /** The index of the character relative to the beginning of the line 0..n-1 */
+    protected int charPositionInLine = 0;
 
 
-	public readonly DFA[] decisionToDFA;
-	protected int mode = Lexer.DEFAULT_MODE;
+    public readonly DFA[] decisionToDFA;
+    protected int mode = Lexer.DEFAULT_MODE;
 
-	/** Used during DFA/ATN exec to record the most recent accept configuration info */
+    /** Used during DFA/ATN exec to record the most recent accept configuration info */
 
-	protected readonly SimState prevAccept = new SimState();
+    protected readonly SimState prevAccept = new SimState();
 
-	public LexerATNSimulator(ATN atn, DFA[] decisionToDFA,
-							 PredictionContextCache sharedContextCache)
-		: this(null, atn, decisionToDFA, sharedContextCache)
+    public LexerATNSimulator(ATN atn, DFA[] decisionToDFA,
+                             PredictionContextCache sharedContextCache)
+        : this(null, atn, decisionToDFA, sharedContextCache)
     {
-	}
+    }
 
-	public LexerATNSimulator(Lexer recog, ATN atn,
-							 DFA[] decisionToDFA,
-							 PredictionContextCache sharedContextCache)
-		:base(atn, sharedContextCache)
+    public LexerATNSimulator(Lexer recog, ATN atn,
+                             DFA[] decisionToDFA,
+                             PredictionContextCache sharedContextCache)
+        : base(atn, sharedContextCache)
     {
-		this.decisionToDFA = decisionToDFA;
-		this.recog = recog;
-	}
+        this.decisionToDFA = decisionToDFA;
+        this.recog = recog;
+    }
 
-	public void copyState(LexerATNSimulator simulator) {
-		this.charPositionInLine = simulator.charPositionInLine;
-		this.line = simulator.line;
-		this.mode = simulator.mode;
-		this.startIndex = simulator.startIndex;
-	}
+    public void CopyState(LexerATNSimulator simulator)
+    {
+        this.charPositionInLine = simulator.charPositionInLine;
+        this.line = simulator.line;
+        this.mode = simulator.mode;
+        this.startIndex = simulator.startIndex;
+    }
 
-	public int match(CharStream input, int mode) {
-		this.mode = mode;
-		int mark = input.mark();
-		try {
-			this.startIndex = input.index();
-			this.prevAccept.reset();
-			DFA dfa = decisionToDFA[mode];
-			if ( dfa.s0==null ) {
-				return matchATN(input);
-			}
-			else {
-				return execATN(input, dfa.s0);
-			}
-		}
-		finally {
-			input.release(mark);
-		}
-	}
+    public int Match(CharStream input, int mode)
+    {
+        this.mode = mode;
+        int mark = input.mark();
+        try
+        {
+            this.startIndex = input.index();
+            this.prevAccept.reset();
+            DFA dfa = decisionToDFA[mode];
+            if (dfa.s0 == null)
+            {
+                return MatchATN(input);
+            }
+            else
+            {
+                return ExecATN(input, dfa.s0);
+            }
+        }
+        finally
+        {
+            input.release(mark);
+        }
+    }
 
-	//@Override
-	public override void reset() {
-		prevAccept.reset();
-		startIndex = -1;
-		line = 1;
-		charPositionInLine = 0;
-		mode = Lexer.DEFAULT_MODE;
-	}
+    //@Override
+    public override void Reset()
+    {
+        prevAccept.reset();
+        startIndex = -1;
+        line = 1;
+        charPositionInLine = 0;
+        mode = Lexer.DEFAULT_MODE;
+    }
 
-	//@Override
-	public void clearDFA() {
-		for (int d = 0; d < decisionToDFA.Length; d++) {
-			decisionToDFA[d] = new DFA(atn.getDecisionState(d), d);
-		}
-	}
+    //@Override
+    public void ClearDFA()
+    {
+        for (int d = 0; d < decisionToDFA.Length; d++)
+        {
+            decisionToDFA[d] = new DFA(atn.GetDecisionState(d), d);
+        }
+    }
 
-	protected int matchATN(CharStream input) {
-		ATNState startState = atn.modeToStartState[mode];
+    protected int MatchATN(CharStream input)
+    {
+        var startState = atn.modeToStartState[mode];
 
-		if ( debug ) {
-			Console.Out.WriteLine($"matchATN mode {mode} start: {startState}");
-		}
+        if (debug)
+        {
+            Console.Out.WriteLine($"matchATN mode {mode} start: {startState}");
+        }
 
-		int old_mode = mode;
+        int old_mode = mode;
 
-		ATNConfigSet s0_closure = computeStartState(input, startState);
-		bool suppressEdge = s0_closure.hasSemanticContext;
-		s0_closure.hasSemanticContext = false;
+        ATNConfigSet s0_closure = ComputeStartState(input, startState);
+        bool suppressEdge = s0_closure.hasSemanticContext;
+        s0_closure.hasSemanticContext = false;
 
-		DFAState next = addDFAState(s0_closure);
-		if (!suppressEdge) {
-			decisionToDFA[mode].s0 = next;
-		}
+        DFAState next = AddDFAState(s0_closure);
+        if (!suppressEdge)
+        {
+            decisionToDFA[mode].s0 = next;
+        }
 
-		int predict = execATN(input, next);
+        int predict = ExecATN(input, next);
 
-		if ( debug ) {
-			Console.Out.WriteLine("DFA after matchATN: %s", decisionToDFA[old_mode].toLexerString());
-		}
+        if (debug)
+        {
+            Console.Out.WriteLine("DFA after matchATN: %s", decisionToDFA[old_mode].toLexerString());
+        }
 
-		return predict;
-	}
+        return predict;
+    }
 
-	protected int execATN(CharStream input, DFAState ds0) {
-		//Console.Out.println("enter exec index "+input.index()+" from "+ds0.configs);
-		if ( debug ) {
-			Console.Out.WriteLine("start state closure=%s", ds0.configs);
-		}
+    protected int ExecATN(CharStream input, DFAState ds0)
+    {
+        //Console.Out.println("enter exec index "+input.index()+" from "+ds0.configs);
+        if (debug)
+        {
+            Console.Out.WriteLine("start state closure=%s", ds0.configs);
+        }
 
-		if (ds0.isAcceptState) {
-			// allow zero-length tokens
-			captureSimState(prevAccept, input, ds0);
-		}
+        if (ds0.isAcceptState)
+        {
+            // allow zero-length tokens
+            CaptureSimState(prevAccept, input, ds0);
+        }
 
-		int t = input.LA(1);
+        int t = input.LA(1);
 
-		DFAState s = ds0; // s is current/from DFA state
+        DFAState s = ds0; // s is current/from DFA state
 
-		while ( true ) { // while more work
-			if ( debug ) {
-				Console.Out.WriteLine($"execATN loop starting closure: {s.configs}");
-			}
+        while (true)
+        { // while more work
+            if (debug)
+            {
+                Console.Out.WriteLine($"execATN loop starting closure: {s.configs}");
+            }
 
-			// As we move src->trg, src->trg, we keep track of the previous trg to
-			// avoid looking up the DFA state again, which is expensive.
-			// If the previous target was already part of the DFA, we might
-			// be able to avoid doing a reach operation upon t. If s!=null,
-			// it means that semantic predicates didn't prevent us from
-			// creating a DFA state. Once we know s!=null, we check to see if
-			// the DFA state has an edge already for t. If so, we can just reuse
-			// it's configuration set; there's no point in re-computing it.
-			// This is kind of like doing DFA simulation within the ATN
-			// simulation because DFA simulation is really just a way to avoid
-			// computing reach/closure sets. Technically, once we know that
-			// we have a previously added DFA state, we could jump over to
-			// the DFA simulator. But, that would mean popping back and forth
-			// a lot and making things more complicated algorithmically.
-			// This optimization makes a lot of sense for loops within DFA.
-			// A character will take us back to an existing DFA state
-			// that already has lots of edges out of it. e.g., .* in comments.
-			DFAState target = getExistingTargetState(s, t);
-			if (target == null) {
-				target = computeTargetState(input, s, t);
-			}
+            // As we move src->trg, src->trg, we keep track of the previous trg to
+            // avoid looking up the DFA state again, which is expensive.
+            // If the previous target was already part of the DFA, we might
+            // be able to avoid doing a reach operation upon t. If s!=null,
+            // it means that semantic predicates didn't prevent us from
+            // creating a DFA state. Once we know s!=null, we check to see if
+            // the DFA state has an edge already for t. If so, we can just reuse
+            // it's configuration set; there's no point in re-computing it.
+            // This is kind of like doing DFA simulation within the ATN
+            // simulation because DFA simulation is really just a way to avoid
+            // computing reach/closure sets. Technically, once we know that
+            // we have a previously added DFA state, we could jump over to
+            // the DFA simulator. But, that would mean popping back and forth
+            // a lot and making things more complicated algorithmically.
+            // This optimization makes a lot of sense for loops within DFA.
+            // A character will take us back to an existing DFA state
+            // that already has lots of edges out of it. e.g., .* in comments.
+            DFAState target = GetExistingTargetState(s, t);
+            if (target == null)
+            {
+                target = ComputeTargetState(input, s, t);
+            }
 
-			if (target == ERROR) {
-				break;
-			}
+            if (target == ERROR)
+            {
+                break;
+            }
 
-			// If this is a consumable input element, make sure to consume before
-			// capturing the accept state so the input index, line, and char
-			// position accurately reflect the state of the interpreter at the
-			// end of the token.
-			if (t != IntStream.EOF) {
-				consume(input);
-			}
+            // If this is a consumable input element, make sure to consume before
+            // capturing the accept state so the input index, line, and char
+            // position accurately reflect the state of the interpreter at the
+            // end of the token.
+            if (t != IntStream.EOF)
+            {
+                Consume(input);
+            }
 
-			if (target.isAcceptState) {
-				captureSimState(prevAccept, input, target);
-				if (t == IntStream.EOF) {
-					break;
-				}
-			}
+            if (target.isAcceptState)
+            {
+                CaptureSimState(prevAccept, input, target);
+                if (t == IntStream.EOF)
+                {
+                    break;
+                }
+            }
 
-			t = input.LA(1);
-			s = target; // flip; current DFA target becomes new src/from state
-		}
+            t = input.LA(1);
+            s = target; // flip; current DFA target becomes new src/from state
+        }
 
-		return failOrAccept(prevAccept, input, s.configs, t);
-	}
+        return FailOrAccept(prevAccept, input, s.configs, t);
+    }
 
-	/**
+    /**
 	 * Get an existing target state for an edge in the DFA. If the target state
 	 * for the edge has not yet been computed or is otherwise not available,
 	 * this method returns {@code null}.
@@ -235,19 +260,22 @@ public class LexerATNSimulator : ATNSimulator {
 	 * already cached
 	 */
 
-	protected virtual DFAState getExistingTargetState(DFAState s, int t) {
-		if (s.edges == null || t < MIN_DFA_EDGE || t > MAX_DFA_EDGE) {
-			return null;
-		}
+    protected virtual DFAState GetExistingTargetState(DFAState s, int t)
+    {
+        if (s.edges == null || t < MIN_DFA_EDGE || t > MAX_DFA_EDGE)
+        {
+            return null;
+        }
 
-		var target = s.edges[t - MIN_DFA_EDGE];
-		if (debug && target != null) {
-			Console.Out.WriteLine("reuse state "+s.stateNumber+
-							   " edge to "+target.stateNumber);
-		}
+        var target = s.edges[t - MIN_DFA_EDGE];
+        if (debug && target != null)
+        {
+            Console.Out.WriteLine("reuse state " + s.stateNumber +
+                               " edge to " + target.stateNumber);
+        }
 
-		return target;
-	}
+        return target;
+    }
 
     /**
 	 * Compute a target state for an edge in the DFA, and attempt to add the
@@ -262,128 +290,147 @@ public class LexerATNSimulator : ATNSimulator {
 	 * returns {@link #ERROR}.
 	 */
 
-    protected virtual DFAState computeTargetState(CharStream input, DFAState s, int t) {
-		ATNConfigSet reach = new OrderedATNConfigSet();
+    protected virtual DFAState ComputeTargetState(CharStream input, DFAState s, int t)
+    {
+        ATNConfigSet reach = new OrderedATNConfigSet();
 
-		// if we don't find an existing DFA state
-		// Fill reach starting from closure, following t transitions
-		getReachableConfigSet(input, s.configs, reach, t);
+        // if we don't find an existing DFA state
+        // Fill reach starting from closure, following t transitions
+        GetReachableConfigSet(input, s.configs, reach, t);
 
-		if ( reach.isEmpty() ) { // we got nowhere on t from s
-			if (!reach.hasSemanticContext) {
-				// we got nowhere on t, don't throw out this knowledge; it'd
-				// cause a failover from DFA later.
-				addDFAEdge(s, t, ERROR);
-			}
+        if (reach.IsEmpty())
+        { // we got nowhere on t from s
+            if (!reach.hasSemanticContext)
+            {
+                // we got nowhere on t, don't throw out this knowledge; it'd
+                // cause a failover from DFA later.
+                AddDFAEdge(s, t, ERROR);
+            }
 
-			// stop when we can't match any more char
-			return ERROR;
-		}
+            // stop when we can't match any more char
+            return ERROR;
+        }
 
-		// Add an edge from s to target DFA found/created for reach
-		return addDFAEdge(s, t, reach);
-	}
+        // Add an edge from s to target DFA found/created for reach
+        return AddDFAEdge(s, t, reach);
+    }
 
-	protected int failOrAccept(SimState prevAccept, CharStream input,
-							   ATNConfigSet reach, int t)
-	{
-		if (prevAccept.dfaState != null) {
-			LexerActionExecutor lexerActionExecutor = prevAccept.dfaState.lexerActionExecutor;
-			accept(input, lexerActionExecutor, startIndex,
-				prevAccept.index, prevAccept.line, prevAccept.charPos);
-			return prevAccept.dfaState.prediction;
-		}
-		else {
-			// if no accept and EOF is first char, return EOF
-			if ( t==IntStream.EOF && input.index()==startIndex ) {
-				return Token.EOF;
-			}
+    protected int FailOrAccept(SimState prevAccept, CharStream input,
+                               ATNConfigSet reach, int t)
+    {
+        if (prevAccept.dfaState != null)
+        {
+            LexerActionExecutor lexerActionExecutor = prevAccept.dfaState.lexerActionExecutor;
+            Accept(input, lexerActionExecutor, startIndex,
+                prevAccept.index, prevAccept.line, prevAccept.charPos);
+            return prevAccept.dfaState.prediction;
+        }
+        else
+        {
+            // if no accept and EOF is first char, return EOF
+            if (t == IntStream.EOF && input.index() == startIndex)
+            {
+                return Token.EOF;
+            }
 
-			throw new LexerNoViableAltException(recog, input, startIndex, reach);
-		}
-	}
+            throw new LexerNoViableAltException(recog, input, startIndex, reach);
+        }
+    }
 
-	/** Given a starting configuration set, figure out all ATN configurations
+    /** Given a starting configuration set, figure out all ATN configurations
 	 *  we can reach upon input {@code t}. Parameter {@code reach} is a return
 	 *  parameter.
 	 */
-	protected void getReachableConfigSet(CharStream input, ATNConfigSet _closure, ATNConfigSet reach, int t) {
-		// this is used to skip processing for configs which have a lower priority
-		// than a config that already reached an accept state for the same rule
-		int skipAlt = ATN.INVALID_ALT_NUMBER;
-		foreach (ATNConfig c in _closure) {
-			bool currentAltReachedAcceptState = c.alt == skipAlt;
-			if (currentAltReachedAcceptState && ((LexerATNConfig)c).hasPassedThroughNonGreedyDecision()) {
-				continue;
-			}
+    protected void GetReachableConfigSet(CharStream input, ATNConfigSet _closure, ATNConfigSet reach, int t)
+    {
+        // this is used to skip processing for configs which have a lower priority
+        // than a config that already reached an accept state for the same rule
+        int skipAlt = ATN.INVALID_ALT_NUMBER;
+        foreach (var c in _closure)
+        {
+            bool currentAltReachedAcceptState = c.alt == skipAlt;
+            if (currentAltReachedAcceptState && ((LexerATNConfig)c).hasPassedThroughNonGreedyDecision())
+            {
+                continue;
+            }
 
-			if ( debug ) {
-				Console.Out.WriteLine("testing %s at %s", getTokenName(t), c.toString(recog, true));
-			}
+            if (debug)
+            {
+                Console.Out.WriteLine("testing %s at %s", GetTokenName(t), c.ToString(recog, true));
+            }
 
-			int n = c.state.getNumberOfTransitions();
-			for (int ti=0; ti<n; ti++) {               // for each transition
-				Transition trans = c.state.transition(ti);
-				ATNState target = getReachableTarget(trans, t);
-				if ( target!=null ) {
-					LexerActionExecutor lexerActionExecutor = ((LexerATNConfig)c).getLexerActionExecutor();
-					if (lexerActionExecutor != null) {
-						lexerActionExecutor = lexerActionExecutor.fixOffsetBeforeMatch(input.index() - startIndex);
-					}
+            int n = c.state.NumberOfTransitions;
+            for (int ti = 0; ti < n; ti++)
+            {               // for each transition
+                var trans = c.state.Transition(ti);
+                var target = GetReachableTarget(trans, t);
+                if (target != null)
+                {
+                    LexerActionExecutor lexerActionExecutor = ((LexerATNConfig)c).getLexerActionExecutor();
+                    if (lexerActionExecutor != null)
+                    {
+                        lexerActionExecutor = lexerActionExecutor.FixOffsetBeforeMatch(input.index() - startIndex);
+                    }
 
-					bool treatEofAsEpsilon = t == CharStream.EOF;
-					if (closure(input, new LexerATNConfig((LexerATNConfig)c, target, lexerActionExecutor), reach, currentAltReachedAcceptState, true, treatEofAsEpsilon)) {
-						// any remaining configs for this alt have a lower priority than
-						// the one that just reached an accept state.
-						skipAlt = c.alt;
-						break;
-					}
-				}
-			}
-		}
-	}
+                    bool treatEofAsEpsilon = t == CharStream.EOF;
+                    if (Closure(input, new LexerATNConfig((LexerATNConfig)c, target, lexerActionExecutor), reach, currentAltReachedAcceptState, true, treatEofAsEpsilon))
+                    {
+                        // any remaining configs for this alt have a lower priority than
+                        // the one that just reached an accept state.
+                        skipAlt = c.alt;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-	protected void accept(CharStream input, LexerActionExecutor lexerActionExecutor,
-						  int startIndex, int index, int line, int charPos)
-	{
-		if ( debug ) {
-			Console.Out.WriteLine("ACTION %s", lexerActionExecutor);
-		}
+    protected void Accept(CharStream input, LexerActionExecutor lexerActionExecutor,
+                          int startIndex, int index, int line, int charPos)
+    {
+        if (debug)
+        {
+            Console.Out.WriteLine("ACTION %s", lexerActionExecutor);
+        }
 
-		// seek to after last char in token
-		input.seek(index);
-		this.line = line;
-		this.charPositionInLine = charPos;
+        // seek to after last char in token
+        input.seek(index);
+        this.line = line;
+        this.charPositionInLine = charPos;
 
-		if (lexerActionExecutor != null && recog != null) {
-			lexerActionExecutor.execute(recog, input, startIndex);
-		}
-	}
-
-
-	protected ATNState getReachableTarget(Transition trans, int t) {
-		if (trans.matches(t, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE)) {
-			return trans.target;
-		}
-
-		return null;
-	}
+        if (lexerActionExecutor != null && recog != null)
+        {
+            lexerActionExecutor.Execute(recog, input, startIndex);
+        }
+    }
 
 
-	protected ATNConfigSet computeStartState(CharStream input,
-											 ATNState p)
-	{
-		PredictionContext initialContext = EmptyPredictionContext.Instance;
-		ATNConfigSet configs = new OrderedATNConfigSet();
-		for (int i=0; i<p.getNumberOfTransitions(); i++) {
-			ATNState target = p.transition(i).target;
-			LexerATNConfig c = new LexerATNConfig(target, i+1, initialContext);
-			closure(input, c, configs, false, false, false);
-		}
-		return configs;
-	}
+    protected ATNState GetReachableTarget(Transition trans, int t)
+    {
+        if (trans.Matches(t, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE))
+        {
+            return trans.target;
+        }
 
-	/**
+        return null;
+    }
+
+
+    protected ATNConfigSet ComputeStartState(CharStream input,
+                                             ATNState p)
+    {
+        var initialContext = EmptyPredictionContext.Instance;
+        var configs = new OrderedATNConfigSet();
+        for (int i = 0; i < p.NumberOfTransitions; i++)
+        {
+            var target = p.Transition(i).target;
+            var c = new LexerATNConfig(target, i + 1, initialContext);
+            Closure(input, c, configs, false, false, false);
+        }
+        return configs;
+    }
+
+    /**
 	 * Since the alternatives within any lexer decision are ordered by
 	 * preference, this method stops pursuing the closure as soon as an accept
 	 * state is reached. After the first accept state is reached by depth-first
@@ -393,88 +440,105 @@ public class LexerATNSimulator : ATNSimulator {
 	 * @return {@code true} if an accept state is reached, otherwise
 	 * {@code false}.
 	 */
-	protected bool closure(CharStream input, LexerATNConfig config, ATNConfigSet configs, bool currentAltReachedAcceptState, bool speculative, bool treatEofAsEpsilon) {
-		if ( debug ) {
-			Console.Out.WriteLine("closure("+config.toString(recog, true)+")");
-		}
+    protected bool Closure(CharStream input, LexerATNConfig config, ATNConfigSet configs, bool currentAltReachedAcceptState, bool speculative, bool treatEofAsEpsilon)
+    {
+        if (debug)
+        {
+            Console.Out.WriteLine("closure(" + config.ToString(recog, true) + ")");
+        }
 
-		if ( config.state is RuleStopState ) {
-			if ( debug ) {
-				if ( recog!=null ) {
-					Console.Out.WriteLine("closure at %s rule stop %s", recog.getRuleNames()[config.state.ruleIndex], config);
-				}
-				else {
-					Console.Out.WriteLine("closure at rule stop %s", config);
-				}
-			}
+        if (config.state is RuleStopState)
+        {
+            if (debug)
+            {
+                if (recog != null)
+                {
+                    Console.Out.WriteLine("closure at %s rule stop %s", recog.getRuleNames()[config.state.ruleIndex], config);
+                }
+                else
+                {
+                    Console.Out.WriteLine("closure at rule stop %s", config);
+                }
+            }
 
-			if ( config.context == null || config.context.hasEmptyPath() ) {
-				if (config.context == null || config.context.isEmpty()) {
-					configs.add(config);
-					return true;
-				}
-				else {
-					configs.add(new LexerATNConfig(config, config.state, EmptyPredictionContext.Instance));
-					currentAltReachedAcceptState = true;
-				}
-			}
+            if (config.context == null || config.context.HasEmptyPath)
+            {
+                if (config.context == null || config.context.IsEmpty)
+                {
+                    configs.Add(config);
+                    return true;
+                }
+                else
+                {
+                    configs.Add(new LexerATNConfig(config, config.state, EmptyPredictionContext.Instance));
+                    currentAltReachedAcceptState = true;
+                }
+            }
 
-			if ( config.context!=null && !config.context.isEmpty() ) {
-				for (int i = 0; i < config.context.size(); i++) {
-					if (config.context.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE) {
-						PredictionContext newContext = config.context.getParent(i); // "pop" return state
-						ATNState returnState = atn.states[config.context.getReturnState(i)];
-						LexerATNConfig c = new LexerATNConfig(config, returnState, newContext);
-						currentAltReachedAcceptState = closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
-					}
-				}
-			}
+            if (config.context != null && !config.context.IsEmpty)
+            {
+                for (int i = 0; i < config.context.Count; i++)
+                {
+                    if (config.context.GetReturnState(i) != PredictionContext.EMPTY_RETURN_STATE)
+                    {
+                        PredictionContext newContext = config.context.GetParent(i); // "pop" return state
+                        ATNState returnState = atn.states[config.context.GetReturnState(i)];
+                        LexerATNConfig c = new LexerATNConfig(config, returnState, newContext);
+                        currentAltReachedAcceptState = Closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
+                    }
+                }
+            }
 
-			return currentAltReachedAcceptState;
-		}
+            return currentAltReachedAcceptState;
+        }
 
-		// optimization
-		if ( !config.state.onlyHasEpsilonTransitions() ) {
-			if (!currentAltReachedAcceptState || !config.hasPassedThroughNonGreedyDecision()) {
-				configs.add(config);
-			}
-		}
+        // optimization
+        if (!config.state.OnlyHasEpsilonTransitions())
+        {
+            if (!currentAltReachedAcceptState || !config.hasPassedThroughNonGreedyDecision())
+            {
+                configs.Add(config);
+            }
+        }
 
-		ATNState p = config.state;
-		for (int i=0; i<p.getNumberOfTransitions(); i++) {
-			Transition t = p.transition(i);
-			LexerATNConfig c = getEpsilonTarget(input, config, t, configs, speculative, treatEofAsEpsilon);
-			if ( c!=null ) {
-				currentAltReachedAcceptState = closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
-			}
-		}
+        var p = config.state;
+        for (int i = 0; i < p.NumberOfTransitions; i++)
+        {
+            var t = p.Transition(i);
+            var c = GetEpsilonTarget(input, config, t, configs, speculative, treatEofAsEpsilon);
+            if (c != null)
+            {
+                currentAltReachedAcceptState = Closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
+            }
+        }
 
-		return currentAltReachedAcceptState;
-	}
+        return currentAltReachedAcceptState;
+    }
 
-	// side-effect: can alter configs.hasSemanticContext
+    // side-effect: can alter configs.hasSemanticContext
 
-	protected LexerATNConfig getEpsilonTarget(CharStream input,
-										   LexerATNConfig config,
-										   Transition t,
-										   ATNConfigSet configs,
-										   bool speculative,
-										   bool treatEofAsEpsilon)
-	{
-		LexerATNConfig c = null;
-		switch (t.getSerializationType()) {
-			case Transition.RULE:
-				RuleTransition ruleTransition = (RuleTransition)t;
-				PredictionContext newContext =
-					SingletonPredictionContext.create(config.context, ruleTransition.followState.stateNumber);
-				c = new LexerATNConfig(config, t.target, newContext);
-				break;
+    protected LexerATNConfig GetEpsilonTarget(CharStream input,
+                                           LexerATNConfig config,
+                                           Transition t,
+                                           ATNConfigSet configs,
+                                           bool speculative,
+                                           bool treatEofAsEpsilon)
+    {
+        LexerATNConfig c = null;
+        switch (t.SerializationType)
+        {
+            case Transition.RULE:
+                RuleTransition ruleTransition = (RuleTransition)t;
+                PredictionContext newContext =
+                    SingletonPredictionContext.create(config.context, ruleTransition.followState.stateNumber);
+                c = new LexerATNConfig(config, t.target, newContext);
+                break;
 
-			case Transition.PRECEDENCE:
-				throw new UnsupportedOperationException("Precedence predicates are not supported in lexers.");
+            case Transition.PRECEDENCE:
+                throw new UnsupportedOperationException("Precedence predicates are not supported in lexers.");
 
-			case Transition.PREDICATE:
-				/*  Track traversing semantic predicates. If we traverse,
+            case Transition.PREDICATE:
+                /*  Track traversing semantic predicates. If we traverse,
 				 we cannot add a DFA state for this "reach" computation
 				 because the DFA would not test the predicate again in the
 				 future. Rather than creating collections of semantic predicates
@@ -492,61 +556,67 @@ public class LexerATNSimulator : ATNSimulator {
 				 states reached by traversing predicates. Since this is when we
 				 test them, we cannot cash the DFA state target of ID.
 			 */
-				PredicateTransition pt = (PredicateTransition)t;
-				if ( debug ) {
-					Console.Out.WriteLine("EVAL rule "+pt.ruleIndex+":"+pt.predIndex);
-				}
-				configs.hasSemanticContext = true;
-				if (evaluatePredicate(input, pt.ruleIndex, pt.predIndex, speculative)) {
-					c = new LexerATNConfig(config, t.target);
-				}
-				break;
+                PredicateTransition pt = (PredicateTransition)t;
+                if (debug)
+                {
+                    Console.Out.WriteLine("EVAL rule " + pt.ruleIndex + ":" + pt.predIndex);
+                }
+                configs.hasSemanticContext = true;
+                if (EvaluatePredicate(input, pt.ruleIndex, pt.predIndex, speculative))
+                {
+                    c = new LexerATNConfig(config, t.target);
+                }
+                break;
 
-			case Transition.ACTION:
-				if (config.context == null || config.context.hasEmptyPath()) {
-					// execute actions anywhere in the start rule for a token.
-					//
-					// TODO: if the entry rule is invoked recursively, some
-					// actions may be executed during the recursive call. The
-					// problem can appear when hasEmptyPath() is true but
-					// isEmpty() is false. In this case, the config needs to be
-					// split into two contexts - one with just the empty path
-					// and another with everything but the empty path.
-					// Unfortunately, the current algorithm does not allow
-					// getEpsilonTarget to return two configurations, so
-					// additional modifications are needed before we can support
-					// the split operation.
-					LexerActionExecutor lexerActionExecutor = LexerActionExecutor.append(config.getLexerActionExecutor(), atn.lexerActions[((ActionTransition)t).actionIndex]);
-					c = new LexerATNConfig(config, t.target, lexerActionExecutor);
-					break;
-				}
-				else {
-					// ignore actions in referenced rules
-					c = new LexerATNConfig(config, t.target);
-					break;
-				}
+            case Transition.ACTION:
+                if (config.context == null || config.context.HasEmptyPath)
+                {
+                    // execute actions anywhere in the start rule for a token.
+                    //
+                    // TODO: if the entry rule is invoked recursively, some
+                    // actions may be executed during the recursive call. The
+                    // problem can appear when hasEmptyPath() is true but
+                    // isEmpty() is false. In this case, the config needs to be
+                    // split into two contexts - one with just the empty path
+                    // and another with everything but the empty path.
+                    // Unfortunately, the current algorithm does not allow
+                    // getEpsilonTarget to return two configurations, so
+                    // additional modifications are needed before we can support
+                    // the split operation.
+                    LexerActionExecutor lexerActionExecutor = LexerActionExecutor.Append(config.getLexerActionExecutor(), atn.lexerActions[((ActionTransition)t).actionIndex]);
+                    c = new LexerATNConfig(config, t.target, lexerActionExecutor);
+                    break;
+                }
+                else
+                {
+                    // ignore actions in referenced rules
+                    c = new LexerATNConfig(config, t.target);
+                    break;
+                }
 
-			case Transition.EPSILON:
-				c = new LexerATNConfig(config, t.target);
-				break;
+            case Transition.EPSILON:
+                c = new LexerATNConfig(config, t.target);
+                break;
 
-			case Transition.ATOM:
-			case Transition.RANGE:
-			case Transition.SET:
-				if (treatEofAsEpsilon) {
-					if (t.matches(CharStream.EOF, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE)) {
-						c = new LexerATNConfig(config, t.target);
-						break;
-					}
-				}
+            case Transition.ATOM:
+            case Transition.RANGE:
+            case Transition.SET:
+                if (treatEofAsEpsilon)
+                {
+                    if (t.Matches(CharStream.EOF, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE))
+                    {
+                        c = new LexerATNConfig(config, t.target);
+                        break;
+                    }
+                }
 
-				break;
-		}
+                break;
+        }
 
-		return c;
-	}
+        return c;
+    }
 
-	/**
+    /**
 	 * Evaluate a predicate specified in the lexer.
 	 *
 	 * <p>If {@code speculative} is {@code true}, this method was called before
@@ -567,48 +637,53 @@ public class LexerATNSimulator : ATNSimulator {
 	 * @return {@code true} if the specified predicate evaluates to
 	 * {@code true}.
 	 */
-	protected bool evaluatePredicate(CharStream input, int ruleIndex, int predIndex, bool speculative) {
-		// assume true if no recognizer was provided
-		if (recog == null) {
-			return true;
-		}
+    protected bool EvaluatePredicate(CharStream input, int ruleIndex, int predIndex, bool speculative)
+    {
+        // assume true if no recognizer was provided
+        if (recog == null)
+        {
+            return true;
+        }
 
-		if (!speculative) {
-			return recog.sempred(null, ruleIndex, predIndex);
-		}
+        if (!speculative)
+        {
+            return recog.sempred(null, ruleIndex, predIndex);
+        }
 
-		int savedCharPositionInLine = charPositionInLine;
-		int savedLine = line;
-		int index = input.index();
-		int marker = input.mark();
-		try {
-			consume(input);
-			return recog.sempred(null, ruleIndex, predIndex);
-		}
-		finally {
-			charPositionInLine = savedCharPositionInLine;
-			line = savedLine;
-			input.seek(index);
-			input.release(marker);
-		}
-	}
+        int savedCharPositionInLine = charPositionInLine;
+        int savedLine = line;
+        int index = input.index();
+        int marker = input.mark();
+        try
+        {
+            Consume(input);
+            return recog.sempred(null, ruleIndex, predIndex);
+        }
+        finally
+        {
+            charPositionInLine = savedCharPositionInLine;
+            line = savedLine;
+            input.seek(index);
+            input.release(marker);
+        }
+    }
 
-	protected void captureSimState(SimState settings,
-								   CharStream input,
-								   DFAState dfaState)
-	{
-		settings.index = input.index();
-		settings.line = line;
-		settings.charPos = charPositionInLine;
-		settings.dfaState = dfaState;
-	}
+    protected void CaptureSimState(SimState settings,
+                                   CharStream input,
+                                   DFAState dfaState)
+    {
+        settings.index = input.index();
+        settings.line = line;
+        settings.charPos = charPositionInLine;
+        settings.dfaState = dfaState;
+    }
 
 
-	protected DFAState addDFAEdge(DFAState from,
-								  int t,
-								  ATNConfigSet q)
-	{
-		/* leading to this call, ATNConfigSet.hasSemanticContext is used as a
+    protected DFAState AddDFAEdge(DFAState from,
+                                  int t,
+                                  ATNConfigSet q)
+    {
+        /* leading to this call, ATNConfigSet.hasSemanticContext is used as a
 		 * marker indicating dynamic predicate evaluation makes this edge
 		 * dependent on the specific input sequence, so the static edge in the
 		 * DFA should be omitted. The target DFAState is still created since
@@ -619,125 +694,146 @@ public class LexerATNSimulator : ATNSimulator {
 		 * If that gets us to a previously created (but dangling) DFA
 		 * state, we can continue in pure DFA mode from there.
 		 */
-		bool suppressEdge = q.hasSemanticContext;
-		q.hasSemanticContext = false;
+        bool suppressEdge = q.hasSemanticContext;
+        q.hasSemanticContext = false;
 
 
-		DFAState to = addDFAState(q);
+        DFAState to = AddDFAState(q);
 
-		if (suppressEdge) {
-			return to;
-		}
+        if (suppressEdge)
+        {
+            return to;
+        }
 
-		addDFAEdge(from, t, to);
-		return to;
-	}
+        AddDFAEdge(from, t, to);
+        return to;
+    }
 
-	protected void addDFAEdge(DFAState p, int t, DFAState q) {
-		if (t < MIN_DFA_EDGE || t > MAX_DFA_EDGE) {
-			// Only track edges within the DFA bounds
-			return;
-		}
+    protected static void AddDFAEdge(DFAState p, int t, DFAState q)
+    {
+        if (t < MIN_DFA_EDGE || t > MAX_DFA_EDGE)
+        {
+            // Only track edges within the DFA bounds
+            return;
+        }
 
-		if ( debug ) {
-			Console.Out.WriteLine("EDGE "+p+" -> "+q+" upon "+((char)t));
-		}
+        if (debug)
+        {
+            Console.Out.WriteLine("EDGE " + p + " -> " + q + " upon " + ((char)t));
+        }
 
-		lock (p) {
-			if ( p.edges==null ) {
-				//  make room for tokens 1..n and -1 masquerading as index 0
-				p.edges = new DFAState[MAX_DFA_EDGE-MIN_DFA_EDGE+1];
-			}
-			p.edges[t - MIN_DFA_EDGE] = q; // connect
-		}
-	}
+        lock (p)
+        {
+            if (p.edges == null)
+            {
+                //  make room for tokens 1..n and -1 masquerading as index 0
+                p.edges = new DFAState[MAX_DFA_EDGE - MIN_DFA_EDGE + 1];
+            }
+            p.edges[t - MIN_DFA_EDGE] = q; // connect
+        }
+    }
 
-	/** Add a new DFA state if there isn't one with this set of
+    /** Add a new DFA state if there isn't one with this set of
 		configurations already. This method also detects the first
 		configuration containing an ATN rule stop state. Later, when
 		traversing the DFA, we will know which rule to accept.
 	 */
 
-	protected DFAState addDFAState(ATNConfigSet configs) {
-		/* the lexer evaluates predicates on-the-fly; by this point configs
+    protected DFAState AddDFAState(ATNConfigSet configs)
+    {
+        /* the lexer evaluates predicates on-the-fly; by this point configs
 		 * should not contain any configurations with unevaluated predicates.
 		 */
-		//assert !configs.hasSemanticContext;
+        //assert !configs.hasSemanticContext;
 
-		DFAState proposed = new DFAState(configs);
-		ATNConfig firstConfigWithRuleStopState = null;
-		foreach (ATNConfig c in configs) {
-			if ( c.state is RuleStopState )	{
-				firstConfigWithRuleStopState = c;
-				break;
-			}
-		}
+        DFAState proposed = new DFAState(configs);
+        ATNConfig firstConfigWithRuleStopState = null;
+        foreach (ATNConfig c in configs)
+        {
+            if (c.state is RuleStopState)
+            {
+                firstConfigWithRuleStopState = c;
+                break;
+            }
+        }
 
-		if ( firstConfigWithRuleStopState!=null ) {
-			proposed.isAcceptState = true;
-			proposed.lexerActionExecutor = ((LexerATNConfig)firstConfigWithRuleStopState).getLexerActionExecutor();
-			proposed.prediction = atn.ruleToTokenType[firstConfigWithRuleStopState.state.ruleIndex];
-		}
+        if (firstConfigWithRuleStopState != null)
+        {
+            proposed.isAcceptState = true;
+            proposed.lexerActionExecutor = ((LexerATNConfig)firstConfigWithRuleStopState).getLexerActionExecutor();
+            proposed.prediction = atn.ruleToTokenType[firstConfigWithRuleStopState.state.ruleIndex];
+        }
 
-		DFA dfa = decisionToDFA[mode];
-		lock (dfa.states) {
-			if ( dfa.states.TryGetValue(proposed,out var existing) ) return existing;
+        DFA dfa = decisionToDFA[mode];
+        lock (dfa.states)
+        {
+            if (dfa.states.TryGetValue(proposed, out var existing)) return existing;
 
-			DFAState newState = proposed;
+            DFAState newState = proposed;
 
-			newState.stateNumber = dfa.states.Count;
-			configs.setReadonly(true);
-			newState.configs = configs;
-			dfa.states[newState] = newState;
-			return newState;
-		}
-	}
+            newState.stateNumber = dfa.states.Count;
+            configs.SetReadonly(true);
+            newState.configs = configs;
+            dfa.states[newState] = newState;
+            return newState;
+        }
+    }
 
 
-	public  DFA getDFA(int mode) {
-		return decisionToDFA[mode];
-	}
+    public DFA GetDFA(int mode)
+    {
+        return decisionToDFA[mode];
+    }
 
-	/** Get the text matched so far for the current token.
+    /** Get the text matched so far for the current token.
 	 */
 
-	public String getText(CharStream input) {
-		// index is first lookahead char, don't include.
-		return input.getText(Interval.of(startIndex, input.index()-1));
-	}
+    public string GetText(CharStream input)
+    {
+        // index is first lookahead char, don't include.
+        return input.getText(Interval.of(startIndex, input.index() - 1));
+    }
 
-	public int getLine() {
-		return line;
-	}
+    public int GetLine()
+    {
+        return line;
+    }
 
-	public void setLine(int line) {
-		this.line = line;
-	}
+    public void SetLine(int line)
+    {
+        this.line = line;
+    }
 
-	public int getCharPositionInLine() {
-		return charPositionInLine;
-	}
+    public int GetCharPositionInLine()
+    {
+        return charPositionInLine;
+    }
 
-	public void setCharPositionInLine(int charPositionInLine) {
-		this.charPositionInLine = charPositionInLine;
-	}
+    public void SetCharPositionInLine(int charPositionInLine)
+    {
+        this.charPositionInLine = charPositionInLine;
+    }
 
-	public void consume(CharStream input) {
-		int curChar = input.LA(1);
-		if ( curChar=='\n' ) {
-			line++;
-			charPositionInLine=0;
-		}
-		else {
-			charPositionInLine++;
-		}
-		input.consume();
-	}
+    public void Consume(CharStream input)
+    {
+        int curChar = input.LA(1);
+        if (curChar == '\n')
+        {
+            line++;
+            charPositionInLine = 0;
+        }
+        else
+        {
+            charPositionInLine++;
+        }
+        input.consume();
+    }
 
 
-	public String getTokenName(int t) {
-		if ( t==-1 ) return "EOF";
-		//if ( atn.g!=null ) return atn.g.getTokenDisplayName(t);
-		return "'"+(char)t+"'";
-	}
+    public string GetTokenName(int t)
+    {
+        if (t == -1) return "EOF";
+        //if ( atn.g!=null ) return atn.g.getTokenDisplayName(t);
+        return "'" + (char)t + "'";
+    }
 }

@@ -10,7 +10,5 @@ namespace org.antlr.v4.runtime.atn;
 public class LoopEndState : ATNState {
 	public ATNState loopBackState;
 
-	public override int getStateType() {
-		return LOOP_END;
-	}
+    public override int StateType => LOOP_END;
 }

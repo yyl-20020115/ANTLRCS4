@@ -49,20 +49,20 @@ public static class ATNOptimizer
             }
 
             var setTransitions = new IntervalSet();
-            for (int i = 0; i < decision.getNumberOfTransitions(); i++)
+            for (int i = 0; i < decision.NumberOfTransitions; i++)
             {
-                var epsTransition = decision.transition(i);
+                var epsTransition = decision.Transition(i);
                 if (epsTransition is not EpsilonTransition)
                 {
                     continue;
                 }
 
-                if (epsTransition.target.getNumberOfTransitions() != 1)
+                if (epsTransition.target.NumberOfTransitions != 1)
                 {
                     continue;
                 }
 
-                var transition = epsTransition.target.transition(0);
+                var transition = epsTransition.target.Transition(0);
                 if (transition.target is not BlockEndState)
                 {
                     continue;
@@ -83,25 +83,25 @@ public static class ATNOptimizer
             }
 
             // due to min alt resolution policies, can only collapse sequential alts
-            for (int i = setTransitions.getIntervals().Count - 1; i >= 0; i--)
+            for (int i = setTransitions.GetIntervals().Count - 1; i >= 0; i--)
             {
-                var interval = setTransitions.getIntervals()[i];
+                var interval = setTransitions.GetIntervals()[i];
                 if (interval.length() <= 1)
                 {
                     continue;
                 }
 
-                var blockEndState = decision.transition(interval.a).target.transition(0).target;
+                var blockEndState = decision.Transition(interval.a).target.Transition(0).target;
                 var matchSet = new IntervalSet();
                 for (int j = interval.a; j <= interval.b; j++)
                 {
-                    var matchTransition = decision.transition(j).target.transition(0);
+                    var matchTransition = decision.Transition(j).target.Transition(0);
                     if (matchTransition is NotSetTransition)
                     {
                         throw new UnsupportedOperationException("Not yet implemented.");
                     }
-                    var set = matchTransition.label();
-                    var intervals = set.getIntervals();
+                    var set = matchTransition.Label;
+                    var intervals = set.GetIntervals();
                     int n = intervals.Count;
                     for (int k = 0; k < n; k++)
                     {
@@ -124,20 +124,20 @@ public static class ATNOptimizer
                             }
                         }
                     }
-                    matchSet.addAll(set);
+                    matchSet.AddAll(set);
                 }
 
                 Transition newTransition;
-                if (matchSet.getIntervals().Count == 1)
+                if (matchSet.GetIntervals().Count == 1)
                 {
                     if (matchSet.Size == 1)
                     {
-                        newTransition = CodePointTransitions.createWithCodePoint(blockEndState, matchSet.getMinElement());
+                        newTransition = CodePointTransitions.CreateWithCodePoint(blockEndState, matchSet.GetMinElement());
                     }
                     else
                     {
-                        Interval matchInterval = matchSet.getIntervals()[0];
-                        newTransition = CodePointTransitions.createWithCodePointRange(blockEndState, matchInterval.a, matchInterval.b);
+                        var matchInterval = matchSet.GetIntervals()[0];
+                        newTransition = CodePointTransitions.CreateWithCodePointRange(blockEndState, matchInterval.a, matchInterval.b);
                     }
                 }
                 else
@@ -145,11 +145,11 @@ public static class ATNOptimizer
                     newTransition = new SetTransition(blockEndState, matchSet);
                 }
 
-                decision.transition(interval.a).target.setTransition(0, newTransition);
+                decision.Transition(interval.a).target.SetTransition(0, newTransition);
                 for (int j = interval.a + 1; j <= interval.b; j++)
                 {
-                    var removed = decision.removeTransition(interval.a + 1);
-                    atn.removeState(removed.target);
+                    var removed = decision.RemoveTransition(interval.a + 1);
+                    atn.RemoveState(removed.target);
                     removedStates++;
                 }
             }

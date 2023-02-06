@@ -21,31 +21,34 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public class LexerActionExecutor {
+public class LexerActionExecutor
+{
 
-	private readonly LexerAction[] lexerActions;
-	/**
+    private readonly LexerAction[] lexerActions;
+    /**
 	 * Caches the result of {@link #hashCode} since the hash code is an element
 	 * of the performance-critical {@link LexerATNConfig#hashCode} operation.
 	 */
-	private readonly int hashCode;
+    private readonly int hashCode;
 
-	/**
+    /**
 	 * Constructs an executor for a sequence of {@link LexerAction} actions.
 	 * @param lexerActions The lexer actions to execute.
 	 */
-	public LexerActionExecutor(LexerAction[] lexerActions) {
-		this.lexerActions = lexerActions;
+    public LexerActionExecutor(LexerAction[] lexerActions)
+    {
+        this.lexerActions = lexerActions;
 
-		int hash = MurmurHash.initialize();
-		foreach (LexerAction lexerAction in lexerActions) {
-			hash = MurmurHash.update(hash, lexerAction);
-		}
+        int hash = MurmurHash.Initialize();
+        foreach (LexerAction lexerAction in lexerActions)
+        {
+            hash = MurmurHash.Update(hash, lexerAction);
+        }
 
-		this.hashCode = MurmurHash.finish(hash, lexerActions.Length);
-	}
+        this.hashCode = MurmurHash.Finish(hash, lexerActions.Length);
+    }
 
-	/**
+    /**
 	 * Creates a {@link LexerActionExecutor} which executes the actions for
 	 * the input {@code lexerActionExecutor} followed by a specified
 	 * {@code lexerAction}.
@@ -60,17 +63,19 @@ public class LexerActionExecutor {
 	 * @return A {@link LexerActionExecutor} for executing the combine actions
 	 * of {@code lexerActionExecutor} and {@code lexerAction}.
 	 */
-	public static LexerActionExecutor append(LexerActionExecutor lexerActionExecutor, LexerAction lexerAction) {
-		if (lexerActionExecutor == null) {
-			return new LexerActionExecutor(new LexerAction[] { lexerAction });
-		}
+    public static LexerActionExecutor Append(LexerActionExecutor lexerActionExecutor, LexerAction lexerAction)
+    {
+        if (lexerActionExecutor == null)
+        {
+            return new LexerActionExecutor(new LexerAction[] { lexerAction });
+        }
 
-		LexerAction[] lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
-		lexerActions[lexerActions.Length - 1] = lexerAction;
-		return new LexerActionExecutor(lexerActions);
-	}
+        LexerAction[] lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
+        lexerActions[lexerActions.Length - 1] = lexerAction;
+        return new LexerActionExecutor(lexerActions);
+    }
 
-	/**
+    /**
 	 * Creates a {@link LexerActionExecutor} which encodes the current offset
 	 * for position-dependent lexer actions.
 	 *
@@ -99,34 +104,37 @@ public class LexerActionExecutor {
 	 * @return A {@link LexerActionExecutor} which stores input stream offsets
 	 * for all position-dependent lexer actions.
 	 */
-	public LexerActionExecutor fixOffsetBeforeMatch(int offset) {
-		LexerAction[] updatedLexerActions = null;
-		for (int i = 0; i < lexerActions.Length; i++) {
-			if (lexerActions[i].isPositionDependent() && !(lexerActions[i] is LexerIndexedCustomAction)) {
-				if (updatedLexerActions == null) {
-					updatedLexerActions = (LexerAction[])lexerActions.Clone();
-				}
+    public LexerActionExecutor FixOffsetBeforeMatch(int offset)
+    {
+        LexerAction[] updatedLexerActions = null;
+        for (int i = 0; i < lexerActions.Length; i++)
+        {
+            if (lexerActions[i].IsPositionDependent && !(lexerActions[i] is LexerIndexedCustomAction))
+            {
+                if (updatedLexerActions == null)
+                {
+                    updatedLexerActions = (LexerAction[])lexerActions.Clone();
+                }
 
-				updatedLexerActions[i] = new LexerIndexedCustomAction(offset, lexerActions[i]);
-			}
-		}
+                updatedLexerActions[i] = new LexerIndexedCustomAction(offset, lexerActions[i]);
+            }
+        }
 
-		if (updatedLexerActions == null) {
-			return this;
-		}
+        if (updatedLexerActions == null)
+        {
+            return this;
+        }
 
-		return new LexerActionExecutor(updatedLexerActions);
-	}
+        return new LexerActionExecutor(updatedLexerActions);
+    }
 
-	/**
+    /**
 	 * Gets the lexer actions to be executed by this executor.
 	 * @return The lexer actions to be executed by this executor.
 	 */
-	public LexerAction[] getLexerActions() {
-		return lexerActions;
-	}
+    public LexerAction[] LexerActions => lexerActions;
 
-	/**
+    /**
 	 * Execute the actions encapsulated by this executor within the context of a
 	 * particular {@link Lexer}.
 	 *
@@ -145,53 +153,61 @@ public class LexerActionExecutor {
 	 * {@link IntStream#seek} to set the {@code input} position to the beginning
 	 * of the token.
 	 */
-	public void execute(Lexer lexer, CharStream input, int startIndex) {
-		bool requiresSeek = false;
-		int stopIndex = input.index();
-		try {
-			foreach (LexerAction lexerAction in lexerActions) {
-				if (lexerAction is LexerIndexedCustomAction action) {
+    public void Execute(Lexer lexer, CharStream input, int startIndex)
+    {
+        bool requiresSeek = false;
+        int stopIndex = input.index();
+        try
+        {
+            foreach (var lexerAction in lexerActions)
+            {
+                if (lexerAction is LexerIndexedCustomAction action)
+                {
 
-					int offset = action.getOffset();
-					input.seek(startIndex + offset);
-					var _lexerAction = action.getAction();
+                    int offset = action.getOffset();
+                    input.seek(startIndex + offset);
+                    var _lexerAction = action.getAction();
 
-					requiresSeek = (startIndex + offset) != stopIndex;
+                    requiresSeek = (startIndex + offset) != stopIndex;
 
-					_lexerAction.execute(lexer);
-					continue;
+                    _lexerAction.Execute(lexer);
+                    continue;
                 }
-				else if (lexerAction.isPositionDependent()) {
-					input.seek(stopIndex);
-					requiresSeek = false;
-				}
+                else if (lexerAction.IsPositionDependent)
+                {
+                    input.seek(stopIndex);
+                    requiresSeek = false;
+                }
 
-				lexerAction.execute(lexer);
-			}
-		}
-		finally {
-			if (requiresSeek) {
-				input.seek(stopIndex);
-			}
-		}
-	}
+                lexerAction.Execute(lexer);
+            }
+        }
+        finally
+        {
+            if (requiresSeek)
+            {
+                input.seek(stopIndex);
+            }
+        }
+    }
 
-	
-	public override int GetHashCode() {
-		return this.hashCode;
-	}
 
-	
-	public override bool Equals(Object? obj) {
-		if (obj == this) {
-			return true;
-		}
-		else if (!(obj is LexerActionExecutor)) {
-			return false;
-		}
+    public override int GetHashCode() => this.hashCode;
 
-		LexerActionExecutor other = (LexerActionExecutor)obj;
-		return hashCode == other.hashCode
-			&& Enumerable.SequenceEqual(lexerActions, other.lexerActions);
-	}
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        else if (obj is not LexerActionExecutor)
+        {
+            return false;
+        }
+
+        LexerActionExecutor other = (LexerActionExecutor)obj;
+        return hashCode == other.hashCode
+            && Enumerable.SequenceEqual(lexerActions, other.lexerActions);
+    }
 }

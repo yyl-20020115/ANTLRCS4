@@ -20,8 +20,8 @@ public static class MurmurHash
 	 *
 	 * @return the intermediate hash value
 	 */
-	public static int initialize() {
-		return initialize(DEFAULT_SEED);
+	public static int Initialize() {
+		return Initialize(DEFAULT_SEED);
 	}
 
 	/**
@@ -30,7 +30,7 @@ public static class MurmurHash
 	 * @param seed the seed
 	 * @return the intermediate hash value
 	 */
-	public static int initialize(int seed) {
+	public static int Initialize(int seed) {
 		return seed;
 	}
 
@@ -41,7 +41,7 @@ public static class MurmurHash
 	 * @param value the value to add to the current hash
 	 * @return the updated intermediate hash value
 	 */
-	public static int update(int hash, int value) {
+	public static int Update(int hash, int value) {
 		int c1 = unchecked((int)0xCC9E2D51);
 		int c2 = unchecked((int)0x1B873593);
 		int r1 = unchecked((int)15);
@@ -50,11 +50,11 @@ public static class MurmurHash
 		int n = unchecked((int)0xE6546B64);
 
 		int k = value;
-		k = k * c1;
+		k *= c1;
 		k = (k << r1) | (k >>> (32 - r1));
-		k = k * c2;
+		k *= c2;
 
-		hash = hash ^ k;
+		hash ^= k;
 		hash = (hash << r2) | (hash >>> (32 - r2));
 		hash = hash * m + n;
 
@@ -68,8 +68,8 @@ public static class MurmurHash
 	 * @param value the value to add to the current hash
 	 * @return the updated intermediate hash value
 	 */
-	public static int update(int hash, Object value) {
-		return update(hash, value != null ? value.GetHashCode() : 0);
+	public static int Update(int hash, object value) {
+		return Update(hash, value != null ? value.GetHashCode() : 0);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public static class MurmurHash
 	 * @param numberOfWords the number of integer values added to the hash
 	 * @return the final hash result
 	 */
-	public static int finish(int hash, int numberOfWords) {
+	public static int Finish(int hash, int numberOfWords) {
 		hash ^= (numberOfWords * 4);
 		hash ^= (hash >>> 16);
 		hash *= unchecked((int)0x85EBCA6B);
@@ -100,12 +100,12 @@ public static class MurmurHash
 	 * @return the hash code of the data
 	 */
 	public static int GetHashCode<T>(T[] data, int seed) {
-		int hash = initialize(seed);
+		int hash = Initialize(seed);
 		foreach (T value in data) {
-			hash = update(hash, value);
+			hash = Update(hash, value);
 		}
 
-		hash = finish(hash, data.Length);
+		hash = Finish(hash, data.Length);
 		return hash;
 	}
 

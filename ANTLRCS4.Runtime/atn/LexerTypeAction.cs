@@ -34,41 +34,37 @@ public class LexerTypeAction : LexerAction {
 		return type;
 	}
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#TYPE}.
 	 */
-	//@Override
-	public LexerActionType getActionType() {
-		return LexerActionType.TYPE;
-	}
+    //@Override
+    public LexerActionType ActionType => LexerActionType.TYPE;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-	//@Override
-	public bool isPositionDependent() {
-		return false;
-	}
+    //@Override
+    public bool IsPositionDependent => false;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#setType} with the
 	 * value provided by {@link #getType}.</p>
 	 */
-	//@Override
-	public void execute(Lexer lexer) {
+    //@Override
+    public void Execute(Lexer lexer) {
 		lexer.setType(type);
 	}
 
 	//@Override
 	public int GetHashCode() {
-		int hash = MurmurHash.initialize();
-		hash = MurmurHash.update(hash, getActionType());
-		hash = MurmurHash.update(hash, type);
-		return MurmurHash.finish(hash, 2);
+		int hash = MurmurHash.Initialize();
+		hash = MurmurHash.Update(hash, ActionType);
+		hash = MurmurHash.Update(hash, type);
+		return MurmurHash.Finish(hash, 2);
 	}
 
 	//@Override

@@ -222,7 +222,7 @@ public class CharSupport
     {
         var buffer = new StringBuilder();
         bool first = true;
-        foreach (var interval in intervalSet.getIntervals())
+        foreach (var interval in intervalSet.GetIntervals())
         {
             if (!first) buffer.Append(" | ");
             first = false;

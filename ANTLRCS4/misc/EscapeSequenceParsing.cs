@@ -152,7 +152,7 @@ public abstract class EscapeSequenceParsing
             offset = closeBraceOffset + 1;
             if (escaped == 'P')
             {
-                propertyIntervalSet = propertyIntervalSet.complement(IntervalSet.COMPLETE_CHAR_SET);
+                propertyIntervalSet = propertyIntervalSet.Complement(IntervalSet.COMPLETE_CHAR_SET);
             }
             return new Result(
                 Result.Type.PROPERTY,

@@ -17,27 +17,28 @@ namespace org.antlr.v4.runtime.atn;
  *  the tree of semantic predicates encountered before reaching
  *  an ATN state.
  */
-public class ATNConfig {
-	/**
+public class ATNConfig
+{
+    /**
 	 * This field stores the bit mask for implementing the
 	 * {@link #isPrecedenceFilterSuppressed} property as a bit within the
 	 * existing {@link #reachesIntoOuterContext} field.
 	 */
-	private static readonly int SUPPRESS_PRECEDENCE_FILTER = 0x40000000;
+    private static readonly int SUPPRESS_PRECEDENCE_FILTER = 0x40000000;
 
-	/** The ATN state associated with this configuration */
-	public readonly ATNState state;
+    /** The ATN state associated with this configuration */
+    public readonly ATNState state;
 
-	/** What alt (or lexer rule) is predicted by this configuration */
-	public readonly int alt;
+    /** What alt (or lexer rule) is predicted by this configuration */
+    public readonly int alt;
 
-	/** The stack of invoking states leading to the rule/states associated
+    /** The stack of invoking states leading to the rule/states associated
 	 *  with this config.  We track only those contexts pushed during
 	 *  execution of the ATN simulator.
 	 */
-	public PredictionContext context;
+    public PredictionContext context;
 
-	/**
+    /**
 	 * We cannot execute predicates dependent upon local context unless
 	 * we know for sure we are in the correct context. Because there is
 	 * no way to do this efficiently, we simply cannot evaluate
@@ -60,162 +61,170 @@ public class ATNConfig {
 	 * {@link ATNConfigSet#add(ATNConfig, DoubleKeyMap)} method are
 	 * <em>completely</em> unaffected by the change.</p>
 	 */
-	public int reachesIntoOuterContext;
+    public int reachesIntoOuterContext;
 
 
     public readonly SemanticContext semanticContext;
 
-	public ATNConfig(ATNConfig old) { // dup
-		this.state = old.state;
-		this.alt = old.alt;
-		this.context = old.context;
-		this.semanticContext = old.semanticContext;
-		this.reachesIntoOuterContext = old.reachesIntoOuterContext;
-	}
-
-	public ATNConfig(ATNState state,
-					 int alt,
-					 PredictionContext context)
-		: this(state, alt, context, SemanticContext.Empty.Instance)
-    {
-	}
-
-	public ATNConfig(ATNState state,
-					 int alt,
-					 PredictionContext context,
-					 SemanticContext semanticContext)
-	{
-		this.state = state;
-		this.alt = alt;
-		this.context = context;
-		this.semanticContext = semanticContext;
-	}
-
-    public ATNConfig(ATNConfig c, ATNState state): this(c, state, c.context, c.semanticContext)
-    {
-   		;
-   	}
-
-	public ATNConfig(ATNConfig c, ATNState state,
-		 SemanticContext semanticContext): this(c, state, c.context, semanticContext)
-    {
-		;
-	}
-
-	public ATNConfig(ATNConfig c,
-					 SemanticContext semanticContext): this(c, c.state, c.context, semanticContext)
-    {
-		;
-	}
-
-    public ATNConfig(ATNConfig c, ATNState state,
-					 PredictionContext context): this(c, state, context, c.semanticContext)
-    {
-        ;
+    public ATNConfig(ATNConfig old)
+    { // dup
+        this.state = old.state;
+        this.alt = old.alt;
+        this.context = old.context;
+        this.semanticContext = old.semanticContext;
+        this.reachesIntoOuterContext = old.reachesIntoOuterContext;
     }
 
-	public ATNConfig(ATNConfig c, ATNState state,
-					 PredictionContext context,
+    public ATNConfig(ATNState state,
+                     int alt,
+                     PredictionContext context)
+        : this(state, alt, context, SemanticContext.Empty.Instance)
+    {
+    }
+
+    public ATNConfig(ATNState state,
+                     int alt,
+                     PredictionContext context,
                      SemanticContext semanticContext)
     {
-		this.state = state;
-		this.alt = c.alt;
-		this.context = context;
-		this.semanticContext = semanticContext;
-		this.reachesIntoOuterContext = c.reachesIntoOuterContext;
-	}
+        this.state = state;
+        this.alt = alt;
+        this.context = context;
+        this.semanticContext = semanticContext;
+    }
 
-	/**
+    public ATNConfig(ATNConfig c, ATNState state) : this(c, state, c.context, c.semanticContext)
+    {
+    }
+
+    public ATNConfig(ATNConfig c, ATNState state,
+         SemanticContext semanticContext) : this(c, state, c.context, semanticContext)
+    {
+    }
+
+    public ATNConfig(ATNConfig c,
+                     SemanticContext semanticContext) : this(c, c.state, c.context, semanticContext)
+    {
+    }
+
+    public ATNConfig(ATNConfig c, ATNState state,
+                     PredictionContext context) : this(c, state, context, c.semanticContext)
+    {
+    }
+
+    public ATNConfig(ATNConfig c, ATNState state,
+                     PredictionContext context,
+                     SemanticContext semanticContext)
+    {
+        this.state = state;
+        this.alt = c.alt;
+        this.context = context;
+        this.semanticContext = semanticContext;
+        this.reachesIntoOuterContext = c.reachesIntoOuterContext;
+    }
+
+    /**
 	 * This method gets the value of the {@link #reachesIntoOuterContext} field
 	 * as it existed prior to the introduction of the
 	 * {@link #isPrecedenceFilterSuppressed} method.
 	 */
-	public int getOuterContextDepth() {
-		return reachesIntoOuterContext & ~SUPPRESS_PRECEDENCE_FILTER;
-	}
+    public int OuterContextDepth => reachesIntoOuterContext & ~SUPPRESS_PRECEDENCE_FILTER;
 
-	public bool isPrecedenceFilterSuppressed() {
-		return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
-	}
+    public bool IsPrecedenceFilterSuppressed()
+    {
+        return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
+    }
 
-	public void setPrecedenceFilterSuppressed(bool value) {
-		if (value) {
-			this.reachesIntoOuterContext |= 0x40000000;
-		}
-		else {
-			this.reachesIntoOuterContext &= ~SUPPRESS_PRECEDENCE_FILTER;
-		}
-	}
+    public void SetPrecedenceFilterSuppressed(bool value)
+    {
+        if (value)
+        {
+            this.reachesIntoOuterContext |= 0x40000000;
+        }
+        else
+        {
+            this.reachesIntoOuterContext &= ~SUPPRESS_PRECEDENCE_FILTER;
+        }
+    }
 
-	/** An ATN configuration is equal to another if both have
+    /** An ATN configuration is equal to another if both have
      *  the same state, they predict the same alternative, and
      *  syntactic/semantic contexts are the same.
      */
     //@Override
-    public override bool Equals(Object? o) {
-		if (!(o is ATNConfig)) {
-			return false;
-		}
-
-		return this.Equals((ATNConfig)o);
-	}
-
-	public bool Equals(ATNConfig other) {
-		if (this == other) {
-			return true;
-		}
-		else if (other == null) {
-			return false;
-		}
-
-		return this.state.stateNumber==other.state.stateNumber
-			&& this.alt==other.alt
-			&& Objects.Equals(this.context, other.context)
-			&& this.semanticContext.Equals(other.semanticContext)
-			&& this.isPrecedenceFilterSuppressed() == other.isPrecedenceFilterSuppressed();
-	}
-
-	//@Override
-	public override int GetHashCode() {
-		int hashCode = MurmurHash.initialize(7);
-		hashCode = MurmurHash.update(hashCode, state.stateNumber);
-		hashCode = MurmurHash.update(hashCode, alt);
-		hashCode = MurmurHash.update(hashCode, context);
-		hashCode = MurmurHash.update(hashCode, semanticContext);
-		hashCode = MurmurHash.finish(hashCode, 4);
-		return hashCode;
-	}
-
-	//@Override
-	public override String ToString() {
-		return toString(null, true);
-	}
-
-	public String toString(Recognizer recog, bool showAlt) {
-		StringBuilder buf = new StringBuilder();
-//		if ( state.ruleIndex>=0 ) {
-//			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");
-//			else buf.append(state.ruleIndex+":");
-//		}
-		buf.Append('(');
-		buf.Append(state);
-		if ( showAlt ) {
-            buf.Append(",");
-            buf.Append(alt);
+    public override bool Equals(object? o)
+    {
+        if (o is not ATNConfig other)
+        {
+            return false;
         }
-        if ( context!=null ) {
-            buf.Append(",[");
-            buf.Append(context.ToString());
-			buf.Append("]");
+
+        return this.Equals(other);
+    }
+
+    public bool Equals(ATNConfig other)
+    {
+        if (this == other)
+        {
+            return true;
         }
-        if ( semanticContext!=null && semanticContext != SemanticContext.Empty.Instance ) {
-            buf.Append(",");
-            buf.Append(semanticContext);
+        else if (other == null)
+        {
+            return false;
         }
-        if ( getOuterContextDepth()>0 ) {
-            buf.Append(",up=").Append(getOuterContextDepth());
+
+        return this.state.stateNumber == other.state.stateNumber
+            && this.alt == other.alt
+            && Objects.Equals(this.context, other.context)
+            && this.semanticContext.Equals(other.semanticContext)
+            && this.IsPrecedenceFilterSuppressed() == other.IsPrecedenceFilterSuppressed();
+    }
+
+    //@Override
+    public override int GetHashCode()
+    {
+        int hashCode = MurmurHash.Initialize(7);
+        hashCode = MurmurHash.Update(hashCode, state.stateNumber);
+        hashCode = MurmurHash.Update(hashCode, alt);
+        hashCode = MurmurHash.Update(hashCode, context);
+        hashCode = MurmurHash.Update(hashCode, semanticContext);
+        hashCode = MurmurHash.Finish(hashCode, 4);
+        return hashCode;
+    }
+
+    //@Override
+    public override string ToString() => ToString(null, true);
+
+    public string ToString(Recognizer recog, bool showAlt)
+    {
+        var buffer = new StringBuilder();
+        //		if ( state.ruleIndex>=0 ) {
+        //			if ( recog!=null ) buf.append(recog.getRuleNames()[state.ruleIndex]+":");
+        //			else buf.append(state.ruleIndex+":");
+        //		}
+        buffer.Append('(');
+        buffer.Append(state);
+        if (showAlt)
+        {
+            buffer.Append(',');
+            buffer.Append(alt);
         }
-		buf.Append(')');
-		return buf.ToString();
+        if (context != null)
+        {
+            buffer.Append(",[");
+            buffer.Append(context.ToString());
+            buffer.Append(']');
+        }
+        if (semanticContext != null && semanticContext != SemanticContext.Empty.Instance)
+        {
+            buffer.Append(',');
+            buffer.Append(semanticContext);
+        }
+        if (OuterContextDepth > 0)
+        {
+            buffer.Append(",up=").Append(OuterContextDepth);
+        }
+        buffer.Append(')');
+        return buffer.ToString();
     }
 }
