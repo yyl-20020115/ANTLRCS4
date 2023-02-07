@@ -121,7 +121,7 @@ public class TokenStreamRewriter {
 			String opName = this.GetType().Name;
 			int index = opName.IndexOf('$');
 			opName = opName.Substring(index+1, opName.Length-(index+1));
-			return "<"+opName+"@"+this.writer.tokens.get(index)+
+			return "<"+opName+"@"+this.writer.tokens.Get(index)+
 					":\""+text+"\">";
 		}
 	}
@@ -135,8 +135,8 @@ public class TokenStreamRewriter {
 		//@Override
 		public int execute(StringBuilder buf) {
 			buf.Append(text);
-			if ( writer.tokens.get(index).getType()!=Token.EOF ) {
-				buf.Append(writer.tokens.get(index).getText());
+			if ( writer.tokens.Get(index).Type!=Token.EOF ) {
+				buf.Append(writer.tokens.Get(index).Text);
 			}
 			return index+1;
 		}
@@ -172,11 +172,11 @@ public class TokenStreamRewriter {
 		//@Override
 		public override String ToString() {
 			if ( text==null ) {
-				return "<DeleteOp@"+writer.tokens.get(index)+
-						".."+writer.tokens.get(lastIndex)+">";
+				return "<DeleteOp@"+writer.tokens.Get(index)+
+						".."+writer.tokens.Get(lastIndex)+">";
 			}
-			return "<ReplaceOp@"+writer.tokens.get(index)+
-					".."+writer.tokens.get(lastIndex)+":\""+text+"\">";
+			return "<ReplaceOp@"+writer.tokens.Get(index)+
+					".."+writer.tokens.Get(lastIndex)+":\""+text+"\">";
 		}
 	}
 
@@ -236,7 +236,7 @@ public class TokenStreamRewriter {
 	}
 
 	public void insertAfter(String programName, Token t, Object text) {
-		insertAfter(programName,t.getTokenIndex(), text);
+		insertAfter(programName,t.TokenIndex, text);
 	}
 
 	public void insertAfter(String programName, int index, Object text) {
@@ -256,7 +256,7 @@ public class TokenStreamRewriter {
 	}
 
 	public void insertBefore(String programName, Token t, Object text) {
-		insertBefore(programName, t.getTokenIndex(), text);
+		insertBefore(programName, t.TokenIndex, text);
 	}
 
 	public void insertBefore(String programName, int index, Object text) {
@@ -294,8 +294,8 @@ public class TokenStreamRewriter {
 
 	public void replace(String programName, Token from, Token to, Object text) {
 		replace(programName,
-				from.getTokenIndex(),
-				to.getTokenIndex(),
+				from.				TokenIndex,
+				to.				TokenIndex,
 				text);
 	}
 
@@ -392,7 +392,7 @@ public class TokenStreamRewriter {
 		if ( start<0 ) start = 0;
 
 		if ( rewrites==null || rewrites.Count==0 ) {
-			return tokens.getText(interval); // no instructions to execute
+			return tokens.GetText(interval); // no instructions to execute
 		}
 		StringBuilder buf = new StringBuilder();
 
@@ -404,10 +404,10 @@ public class TokenStreamRewriter {
 		while ( i <= stop && i < tokens.Count ) {
 			RewriteOperation op = indexToOp[(i)];
 			indexToOp.Remove(i); // remove so any left have index size-1
-			Token t = tokens.get(i);
+			Token t = tokens.Get(i);
 			if ( op==null ) {
 				// no operation at that index, just dump token
-				if ( t.getType()!=Token.EOF ) buf.Append(t.getText());
+				if ( t.Type!=Token.EOF ) buf.Append(t.Text);
 				i++; // move to next token
 			}
 			else {

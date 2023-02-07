@@ -5,25 +5,19 @@
  */
 using System.Runtime.Serialization;
 
-namespace org.antlr.v4.runtime
+namespace org.antlr.v4.runtime;
+
+public class EmptyStackException : Exception
 {
-    [Serializable]
-    internal class EmptyStackException : Exception
+    public EmptyStackException()
     {
-        public EmptyStackException()
-        {
-        }
+    }
 
-        public EmptyStackException(string? message) : base(message)
-        {
-        }
+    public EmptyStackException(string? message) : base(message)
+    {
+    }
 
-        public EmptyStackException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected EmptyStackException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+    public EmptyStackException(string? message, Exception? innerException) : base(message, innerException)
+    {
     }
 }

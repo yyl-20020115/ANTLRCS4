@@ -25,15 +25,15 @@ public class GrammarToken : CommonToken
     //@Override
     public override int GetCharPositionInLine()
     {
-        if (originalTokenIndex >= 0) return g.originalTokenStream.get(originalTokenIndex).getCharPositionInLine();
-        return base.getCharPositionInLine();
+        if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).CharPositionInLine;
+        return base.CharPositionInLine;
     }
 
     //@Override
     public int getLine()
     {
-        if (originalTokenIndex >= 0) return g.originalTokenStream.get(originalTokenIndex).getLine();
-        return base.getLine();
+        if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).Line;
+        return base.Line;
     }
 
     //@Override
@@ -47,15 +47,15 @@ public class GrammarToken : CommonToken
     {
         if (originalTokenIndex >= 0)
         {
-            return ((CommonToken)g.originalTokenStream.get(originalTokenIndex)).getStartIndex();
+            return ((CommonToken)g.originalTokenStream.Get(originalTokenIndex)).StartIndex;
         }
-        return base.getStartIndex();
+        return base.StartIndex;
     }
 
     //@Override
     public int getStopIndex()
     {
-        int n = base.getStopIndex() - base.getStartIndex() + 1;
+        int n = base.StopIndex - base.StartIndex + 1;
         return getStartIndex() + n - 1;
     }
 
@@ -67,7 +67,7 @@ public class GrammarToken : CommonToken
         {
             channelStr = ",channel=" + channel;
         }
-        String txt = getText();
+        String txt = Text;
         if (txt != null)
         {
             txt = txt.Replace("\n", "\\\\n");
@@ -79,6 +79,6 @@ public class GrammarToken : CommonToken
             txt = "<no text>";
         }
         return "[@" + getTokenIndex() + "," + getStartIndex() + ":" + getStopIndex() +
-               "='" + txt + "',<" + getType() + ">" + channelStr + "," + getLine() + ":" + getCharPositionInLine() + "]";
+               "='" + txt + "',<" + Type + ">" + channelStr + "," + getLine() + ":" + CharPositionInLine + "]";
     }
 }

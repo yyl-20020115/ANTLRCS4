@@ -14,39 +14,40 @@ namespace org.antlr.v4.runtime.tree;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public interface ParseTreeVisitor<T> {
+public interface ParseTreeVisitor<T>
+{
 
-	/**
+    /**
 	 * Visit a parse tree, and return a user-defined result of the operation.
 	 *
 	 * @param tree The {@link ParseTree} to visit.
 	 * @return The result of visiting the parse tree.
 	 */
-	T visit(ParseTree tree);
+    T Visit(ParseTree tree);
 
-	/**
+    /**
 	 * Visit the children of a node, and return a user-defined result of the
 	 * operation.
 	 *
 	 * @param node The {@link RuleNode} whose children should be visited.
 	 * @return The result of visiting the children of the node.
 	 */
-	T visitChildren(RuleNode node);
+    T VisitChildren(RuleNode node);
 
-	/**
+    /**
 	 * Visit a terminal node, and return a user-defined result of the operation.
 	 *
 	 * @param node The {@link TerminalNode} to visit.
 	 * @return The result of visiting the node.
 	 */
-	T visitTerminal(TerminalNode node);
+    T VisitTerminal(TerminalNode node);
 
-	/**
+    /**
 	 * Visit an error node, and return a user-defined result of the operation.
 	 *
 	 * @param node The {@link ErrorNode} to visit.
 	 * @return The result of visiting the node.
 	 */
-	T visitErrorNode(ErrorNode node);
+    T VisitErrorNode(ErrorNode node);
 
 }

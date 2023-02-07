@@ -19,8 +19,8 @@ public class TestVocabulary
     public void TestEmptyVocabulary()
     {
         Assert.IsNotNull(VocabularyImpl.EMPTY_VOCABULARY);
-        Assert.AreEqual("EOF", VocabularyImpl.EMPTY_VOCABULARY.getSymbolicName(Token.EOF));
-        Assert.AreEqual("0", VocabularyImpl.EMPTY_VOCABULARY.getDisplayName(Token.INVALID_TYPE));
+        Assert.AreEqual("EOF", VocabularyImpl.EMPTY_VOCABULARY.GetSymbolicName(Token.EOF));
+        Assert.AreEqual("0", VocabularyImpl.EMPTY_VOCABULARY.GetDisplayName(Token.INVALID_TYPE));
     }
 
     [TestMethod]
@@ -33,25 +33,25 @@ public class TestVocabulary
 
         var vocabulary = VocabularyImpl.fromTokenNames(tokenNames);
         Assert.IsNotNull(vocabulary);
-        Assert.AreEqual("EOF", vocabulary.getSymbolicName(Token.EOF));
+        Assert.AreEqual("EOF", vocabulary.GetSymbolicName(Token.EOF));
         for (int i = 0; i < tokenNames.Length; i++)
         {
-            Assert.AreEqual(tokenNames[i], vocabulary.getDisplayName(i));
+            Assert.AreEqual(tokenNames[i], vocabulary.GetDisplayName(i));
 
             if (tokenNames[i].StartsWith("'"))
             {
-                Assert.AreEqual(tokenNames[i], vocabulary.getLiteralName(i));
-                Assert.IsNull(vocabulary.getSymbolicName(i));
+                Assert.AreEqual(tokenNames[i], vocabulary.GetLiteralName(i));
+                Assert.IsNull(vocabulary.GetSymbolicName(i));
             }
             else if (char.IsUpper(tokenNames[i][(0)]))
             {
-                Assert.IsNull(vocabulary.getLiteralName(i));
-                Assert.AreEqual(tokenNames[i], vocabulary.getSymbolicName(i));
+                Assert.IsNull(vocabulary.GetLiteralName(i));
+                Assert.AreEqual(tokenNames[i], vocabulary.GetSymbolicName(i));
             }
             else
             {
-                Assert.IsNull(vocabulary.getLiteralName(i));
-                Assert.IsNull(vocabulary.getSymbolicName(i));
+                Assert.IsNull(vocabulary.GetLiteralName(i));
+                Assert.IsNull(vocabulary.GetSymbolicName(i));
             }
         }
     }

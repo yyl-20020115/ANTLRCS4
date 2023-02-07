@@ -86,10 +86,7 @@ public class TreeParser : BaseRecognizer
     }
 
     ////@Override
-    public override String GetSourceName()
-    {
-        return input.GetSourceName();
-    }
+    public override String SourceName => input.SourceName;
 
     ////@Override
     protected virtual Object getCurrentInputSymbol(IntStream input)

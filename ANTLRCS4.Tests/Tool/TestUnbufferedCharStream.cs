@@ -53,9 +53,9 @@ public class TestUnbufferedCharStream
     public void TestSeekPastEOF()
     {
         var input = CreateStream("");
-        Assert.AreEqual(0, input.Index());
+        Assert.AreEqual(0, input.Index);
         input.Seek(1);
-        Assert.AreEqual(0, input.Index());
+        Assert.AreEqual(0, input.Index);
     }
 
     /**
@@ -126,7 +126,7 @@ public class TestUnbufferedCharStream
         var input = CreateStream("xyz");
         input.Consume();
         int m1 = input.Mark();
-        Assert.AreEqual(1, input.Index());
+        Assert.AreEqual(1, input.Index);
         input.Consume();
         //assertThrows(ArgumentException, () => input.seek(0));
         Assert.ThrowsException<ArgumentException>(() => input.Seek(0));
@@ -138,7 +138,7 @@ public class TestUnbufferedCharStream
         var input = CreateStream("xyz");
         input.Consume();
         int m1 = input.Mark();
-        Assert.AreEqual(1, input.Index());
+        Assert.AreEqual(1, input.Index);
         //assertThrows(UnsupportedOperationException, () => input.getText(new Interval(0, 1)));
         Assert.ThrowsException<ArgumentException>(() => input.GetText(new Interval(0, 1)));
     }
@@ -149,7 +149,7 @@ public class TestUnbufferedCharStream
         var input = CreateStream("xyz");
         input.Consume();
         int m1 = input.Mark();
-        Assert.AreEqual(1, input.Index());
+        Assert.AreEqual(1, input.Index);
         input.Consume();
         input.Consume();
         Assert.AreEqual("yz", input.GetText(new Interval(1, 2)));
@@ -329,10 +329,10 @@ public class TestUnbufferedCharStream
         lexEngine.        // copy text into tokens from char stream
         TokenFactory = new CommonTokenFactory(true);
         var tokens = new CommonTokenStream(lexEngine);
-        var result = tokens.LT(1).getText();
+        var result = tokens.LT(1).Text;
         var expecting = "x";
         Assert.AreEqual(expecting, result);
-        tokens.fill();
+        tokens.Fill();
         expecting =
             "[[@0,0:0='x',<1>,1:0], [@1,1:1=' ',<7>,1:1], [@2,2:2='=',<4>,1:2]," +
             " [@3,3:3=' ',<7>,1:3], [@4,4:6='302',<2>,1:4], [@5,7:7=' ',<7>,1:7]," +
@@ -341,7 +341,7 @@ public class TestUnbufferedCharStream
             " [@12,15:22='20234234',<2>,1:15], [@13,23:23=' ',<7>,1:23]," +
             " [@14,24:24='*',<6>,1:24], [@15,25:25=' ',<7>,1:25], [@16,26:26='0',<2>,1:26]," +
             " [@17,27:27=';',<3>,1:27], [@18,28:27='',<-1>,1:28]]";
-        Assert.AreEqual(expecting, tokens.getTokens().ToString());
+        Assert.AreEqual(expecting, tokens.GetTokens().ToString());
     }
 
     [TestMethod]

@@ -314,11 +314,11 @@ public class ParserATNSimulator : ATNSimulator
         {
             Console.WriteLine("adaptivePredict decision " + decision +
                                    " exec LA(1)==" + GetLookaheadName(input) +
-                                   " line " + input.LT(1).getLine() + ":" + input.LT(1).getCharPositionInLine());
+                                   " line " + input.LT(1).Line + ":" + input.LT(1).CharPositionInLine);
         }
 
         _input = input;
-        _startIndex = input.Index();
+        _startIndex = input.Index;
         _outerContext = outerContext;
         var dfa = decisionToDFA[decision];
         _dfa = dfa;
@@ -380,7 +380,7 @@ public class ParserATNSimulator : ATNSimulator
             }
 
             int alt = ExecATN(dfa, s0, input, index, outerContext);
-            if (debug) Console.WriteLine("DFA after predictATN: " + dfa.ToString(parser.getVocabulary()));
+            if (debug) Console.WriteLine("DFA after predictATN: " + dfa.ToString(parser.GetVocabulary()));
             return alt;
         }
         finally
@@ -430,7 +430,7 @@ public class ParserATNSimulator : ATNSimulator
         {
             Console.WriteLine("execATN decision " + dfa.decision +
                                " exec LA(1)==" + GetLookaheadName(input) +
-                               " line " + input.LT(1).getLine() + ":" + input.LT(1).getCharPositionInLine());
+                               " line " + input.LT(1).Line + ":" + input.LT(1).CharPositionInLine);
         }
 
         var previousD = s0;
@@ -472,7 +472,7 @@ public class ParserATNSimulator : ATNSimulator
                 if (D.predicates != null)
                 {
                     if (debug) Console.WriteLine("DFA state has preds in DFA sim LL failover");
-                    int conflictIndex = input.Index();
+                    int conflictIndex = input.Index;
                     if (conflictIndex != startIndex)
                     {
                         input.Seek(startIndex);
@@ -498,7 +498,7 @@ public class ParserATNSimulator : ATNSimulator
                 var s0_closure =
                     ComputeStartState(dfa.atnStartState, outerContext,
                                       fullCtx);
-                ReportAttemptingFullContext(dfa, conflictingAlts, D.configs, startIndex, input.Index());
+                ReportAttemptingFullContext(dfa, conflictingAlts, D.configs, startIndex, input.Index);
                 int alt = ExecATNWithFullContext(dfa, D, s0_closure,
                                                  input, startIndex,
                                                  outerContext);
@@ -512,7 +512,7 @@ public class ParserATNSimulator : ATNSimulator
                     return D.prediction;
                 }
 
-                int stopIndex = input.Index();
+                int stopIndex = input.Index;
                 input.Seek(startIndex);
                 var alts = EvalSemanticContext(D.predicates, outerContext, true);
                 switch (alts.Cardinality())
@@ -753,7 +753,7 @@ public class ParserATNSimulator : ATNSimulator
         // not SLL.
         if (reach.uniqueAlt != ATN.INVALID_ALT_NUMBER)
         {
-            ReportContextSensitivity(dfa, predictedAlt, reach, startIndex, input.Index());
+            ReportContextSensitivity(dfa, predictedAlt, reach, startIndex, input.Index);
             return predictedAlt;
         }
 
@@ -784,7 +784,7 @@ public class ParserATNSimulator : ATNSimulator
 		the fact that we should predict alternative 1.  We just can't say for
 		sure that there is an ambiguity without looking further.
 		*/
-        ReportAmbiguity(dfa, D, startIndex, input.Index(), foundExactAmbig,
+        ReportAmbiguity(dfa, D, startIndex, input.Index, foundExactAmbig,
                         reach.GetAlts(), reach);
 
         return predictedAlt;
@@ -1844,7 +1844,7 @@ public class ParserATNSimulator : ATNSimulator
 
 
     public virtual string GetRuleName(int index) 
-        => parser != null && index >= 0 ? parser.getRuleNames()[index] : "<rule " + index + ">";
+        => parser != null && index >= 0 ? parser.GetRuleNames()[index] : "<rule " + index + ">";
 
 
     protected virtual ATNConfig GetEpsilonTarget(ATNConfig config,
@@ -1902,7 +1902,7 @@ public class ParserATNSimulator : ATNSimulator
                 // during closure, which dramatically reduces the size of
                 // the config sets. It also obviates the need to test predicates
                 // later during conflict resolution.
-                int currentPosition = _input.Index();
+                int currentPosition = _input.Index;
                 _input.Seek(_startIndex);
                 bool predSucceeds = EvalSemanticContext(pt.GetPredicate(), _outerContext, config.alt, fullCtx);
                 _input.Seek(currentPosition);
@@ -1956,7 +1956,7 @@ public class ParserATNSimulator : ATNSimulator
                 // during closure, which dramatically reduces the size of
                 // the config sets. It also obviates the need to test predicates
                 // later during conflict resolution.
-                int currentPosition = _input.Index();
+                int currentPosition = _input.Index;
                 _input.Seek(_startIndex);
                 bool predSucceeds = EvalSemanticContext(pt.GetPredicate(), _outerContext, config.alt, fullCtx);
                 _input.Seek(currentPosition);
@@ -2070,8 +2070,8 @@ public class ParserATNSimulator : ATNSimulator
             return "EOF";
         }
 
-        Vocabulary vocabulary = parser != null ? parser.getVocabulary() : VocabularyImpl.EMPTY_VOCABULARY;
-        String displayName = vocabulary.getDisplayName(t);
+        Vocabulary vocabulary = parser != null ? parser.GetVocabulary() : VocabularyImpl.EMPTY_VOCABULARY;
+        String displayName = vocabulary.GetDisplayName(t);
         if (displayName.Equals((t.ToString())))
         {
             return displayName;
@@ -2119,7 +2119,7 @@ public class ParserATNSimulator : ATNSimulator
                                             int startIndex)
     {
         return new NoViableAltException(parser, input,
-                                            input.get(startIndex),
+                                            input.Get(startIndex),
                                             input.LT(1),
                                             configs, outerContext);
     }
@@ -2191,7 +2191,7 @@ public class ParserATNSimulator : ATNSimulator
 
         if (debug)
         {
-            Console.WriteLine("DFA=\n" + dfa.ToString(parser != null ? parser.getVocabulary() : VocabularyImpl.EMPTY_VOCABULARY));
+            Console.WriteLine("DFA=\n" + dfa.ToString(parser != null ? parser.GetVocabulary() : VocabularyImpl.EMPTY_VOCABULARY));
         }
 
         return to;
@@ -2242,9 +2242,9 @@ public class ParserATNSimulator : ATNSimulator
         {
             Interval interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportAttemptingFullContext decision=" + dfa.decision + ":" + configs +
-                               ", input=" + parser.getTokenStream().getText(interval));
+                               ", input=" + parser.getTokenStream().GetText(interval));
         }
-        if (parser != null) parser.getErrorListenerDispatch().ReportAttemptingFullContext(parser, dfa, startIndex, stopIndex, conflictingAlts, configs);
+        if (parser != null) parser.GetErrorListenerDispatch().ReportAttemptingFullContext(parser, dfa, startIndex, stopIndex, conflictingAlts, configs);
     }
 
     protected virtual void ReportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex)
@@ -2253,9 +2253,9 @@ public class ParserATNSimulator : ATNSimulator
         {
             Interval interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportContextSensitivity decision=" + dfa.decision + ":" + configs +
-                               ", input=" + parser.getTokenStream().getText(interval));
+                               ", input=" + parser.getTokenStream().GetText(interval));
         }
-        parser?.getErrorListenerDispatch().ReportContextSensitivity(parser, dfa, startIndex, stopIndex, prediction, configs);
+        parser?.GetErrorListenerDispatch().ReportContextSensitivity(parser, dfa, startIndex, stopIndex, prediction, configs);
     }
 
     /** If context sensitive parsing, we know it's ambiguity not conflict */
@@ -2271,9 +2271,9 @@ public class ParserATNSimulator : ATNSimulator
             var interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportAmbiguity " +
                                ambigAlts + ":" + configs +
-                               ", input=" + parser.getTokenStream().getText(interval));
+                               ", input=" + parser.getTokenStream().GetText(interval));
         }
-        parser?.getErrorListenerDispatch().ReportAmbiguity(parser, dfa, startIndex, stopIndex,
+        parser?.GetErrorListenerDispatch().ReportAmbiguity(parser, dfa, startIndex, stopIndex,
                                                                               exact, ambigAlts, configs);
     }
 

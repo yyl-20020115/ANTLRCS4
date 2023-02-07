@@ -17,13 +17,14 @@ namespace org.antlr.v4.runtime;
  * parser, this class (with slightly more memory overhead per node) is used to
  * provide equivalent functionality.</p>
  */
-public class InterpreterRuleContext : ParserRuleContext {
-	/** This is the backing field for {@link #getRuleIndex}. */
-	protected int ruleIndex = -1;
+public class InterpreterRuleContext : ParserRuleContext
+{
+    /** This is the backing field for {@link #getRuleIndex}. */
+    protected int ruleIndex = -1;
 
-	public InterpreterRuleContext() { }
+    public InterpreterRuleContext() { }
 
-	/**
+    /**
 	 * Constructs a new {@link InterpreterRuleContext} with the specified
 	 * parent, invoking state, and rule index.
 	 *
@@ -31,16 +32,17 @@ public class InterpreterRuleContext : ParserRuleContext {
 	 * @param invokingStateNumber The invoking state number.
 	 * @param ruleIndex The rule index for the current context.
 	 */
-	public InterpreterRuleContext(ParserRuleContext parent,
-								  int invokingStateNumber,
-								  int ruleIndex)
-		:base(parent, invokingStateNumber)
+    public InterpreterRuleContext(ParserRuleContext parent,
+                                  int invokingStateNumber,
+                                  int ruleIndex)
+        : base(parent, invokingStateNumber)
     {
-		this.ruleIndex = ruleIndex;
-	}
+        this.ruleIndex = ruleIndex;
+    }
 
-	//@Override
-	public int getRuleIndex() {
-		return ruleIndex;
-	}
+    //@Override
+    public override int GetRuleIndex()
+    {
+        return ruleIndex;
+    }
 }

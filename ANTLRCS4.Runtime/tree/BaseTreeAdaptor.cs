@@ -42,7 +42,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     protected int uniqueNodeID = 1;
 
     //@Override
-    public Object nil()
+    public object nil()
     {
         return create(null);
     }
@@ -70,7 +70,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public bool isNil(Object tree)
     {
-        return ((Tree)tree).isNil();
+        return ((Tree)tree).IsNil;
     }
 
     //@Override
@@ -115,7 +115,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         if (t != null && child != null)
         {
-            ((Tree)t).addChild((Tree)child);
+            ((Tree)t).AddChild((Tree)child);
         }
     }
 
@@ -156,10 +156,10 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
             return newRoot;
         }
         // handle ^(nil real-node)
-        if (newRootTree.isNil())
+        if (newRootTree.IsNil)
         {
-            int nc = newRootTree.getChildCount();
-            if (nc == 1) newRootTree = newRootTree.getChild(0);
+            int nc = newRootTree.ChildCount;
+            if (nc == 1) newRootTree = newRootTree.GetChild(0);
             else if (nc > 1)
             {
                 // TODO: make tree run time exceptions hierarchy
@@ -169,7 +169,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         // add oldRoot to newRoot; addChild takes care of case where oldRoot
         // is a flat list (i.e., nil-rooted tree).  All children of oldRoot
         // are added to newRoot.
-        newRootTree.addChild(oldRootTree);
+        newRootTree.AddChild(oldRootTree);
         return newRootTree;
     }
 
@@ -179,18 +179,19 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         //Console.Out.WriteLine("rulePostProcessing: "+((Tree)root).toStringTree());
         Tree r = (Tree)root;
-        if (r != null && r.isNil())
+        if (r != null && r.IsNil)
         {
-            if (r.getChildCount() == 0)
+            if (r.ChildCount == 0)
             {
                 r = null;
             }
-            else if (r.getChildCount() == 1)
+            else if (r.ChildCount == 1)
             {
-                r = r.getChild(0);
+                r = r.GetChild(0);
                 // whoever invokes rule will set parent and child index
-                r.setParent(null);
-                r.setChildIndex(-1);
+                r.                // whoever invokes rule will set parent and child index
+                Parent = null;
+                r.                ChildIndex = -1;
             }
         }
         return r;
@@ -207,7 +208,8 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         fromToken = createToken(fromToken);
         //((ClassicToken)fromToken).setType(tokenType);
-        fromToken.setType(tokenType);
+        fromToken.        //((ClassicToken)fromToken).setType(tokenType);
+        Type = tokenType;
         Tree t = (Tree)create(fromToken);
         return t;
     }
@@ -217,8 +219,8 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     {
         if (fromToken == null) return create(tokenType, text);
         fromToken = createToken(fromToken);
-        fromToken.setType(tokenType);
-        fromToken.setText(text);
+        fromToken.        Type = tokenType;
+        fromToken.        Text = text;
         Tree t = (Tree)create(fromToken);
         return t;
     }
@@ -234,7 +236,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public int getType(Object t)
     {
-        return ((Tree)t).getType();
+        return ((Tree)t).Type;
     }
 
     //@Override
@@ -246,7 +248,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public String getText(Object t)
     {
-        return ((Tree)t).getText();
+        return ((Tree)t).Text;
     }
 
     //@Override
@@ -258,25 +260,25 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public Object getChild(Object t, int i)
     {
-        return ((Tree)t).getChild(i);
+        return ((Tree)t).GetChild(i);
     }
 
     //@Override
     public void setChild(Object t, int i, Object child)
     {
-        ((Tree)t).setChild(i, (Tree)child);
+        ((Tree)t).SetChild(i, (Tree)child);
     }
 
     //@Override
     public Object deleteChild(Object t, int i)
     {
-        return ((Tree)t).deleteChild(i);
+        return ((Tree)t).DeleteChild(i);
     }
 
     //@Override
     public int getChildCount(Object t)
     {
-        return ((Tree)t).getChildCount();
+        return ((Tree)t).ChildCount;
     }
 
     //@Override

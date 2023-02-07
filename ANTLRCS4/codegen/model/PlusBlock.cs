@@ -19,7 +19,7 @@ public class PlusBlock : Loop
                      List<CodeBlockForAlt> alts)
         : base(factory, plusRoot, alts)
     {
-        var blkAST = plusRoot.getChild(0) as BlockAST;
+        var blkAST = plusRoot.GetChild(0) as BlockAST;
         var blkStart = blkAST.atnState as PlusBlockStartState;
         var loop = blkStart.loopBackState;
         stateNumber = blkStart.loopBackState.stateNumber;

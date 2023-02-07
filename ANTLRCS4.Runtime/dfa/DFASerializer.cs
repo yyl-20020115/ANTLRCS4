@@ -59,7 +59,7 @@ public class DFASerializer
 
     protected virtual string GetEdgeLabel(int i)
     {
-        return vocabulary.getDisplayName(i - 1);
+        return vocabulary.GetDisplayName(i - 1);
     }
 
 

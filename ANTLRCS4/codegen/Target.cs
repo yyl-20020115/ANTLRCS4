@@ -380,9 +380,9 @@ public abstract class Target
 
     protected virtual string EscapeChar(int v) => $"\\u%{v:X4}";
 
-    public virtual string GetLoopLabel(GrammarAST ast) => "loop" + ast.token.getTokenIndex();
+    public virtual string GetLoopLabel(GrammarAST ast) => "loop" + ast.token.TokenIndex;
 
-    public virtual string GetLoopCounter(GrammarAST ast) => "cnt" + ast.token.getTokenIndex();
+    public virtual string GetLoopCounter(GrammarAST ast) => "cnt" + ast.token.TokenIndex;
 
     public virtual string GetListLabel(String label)
     {
@@ -544,10 +544,10 @@ public abstract class Target
 
     public virtual bool GrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
     {
-        switch (idNode.getParent().getType())
+        switch (idNode.getParent().Type)
         {
             case ANTLRParser.ASSIGN:
-                switch (idNode.getParent().getParent().getType())
+                switch (idNode.getParent().Parent.Type)
                 {
                     case ANTLRParser.ELEMENT_OPTIONS:
                     case ANTLRParser.OPTIONS:

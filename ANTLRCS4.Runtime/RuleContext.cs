@@ -3,7 +3,6 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree;
@@ -62,7 +61,8 @@ namespace org.antlr.v4.runtime;
  *
  *  @see ParserRuleContext
  */
-public class RuleContext : RuleNode {
+public class RuleContext : RuleNode 
+{
 	/** What context invoked this rule? */
 	public RuleContext parent;
 
@@ -98,15 +98,13 @@ public class RuleContext : RuleNode {
 		return invokingState == -1;
 	}
 
-	// satisfy the ParseTree / SyntaxTree interface
+    // satisfy the ParseTree / SyntaxTree interface
 
-	//@Override
-	public virtual Interval getSourceInterval() {
-		return Interval.INVALID;
-	}
+    //@Override
+    public virtual Interval SourceInterval => Interval.INVALID;
 
-	//@Override
-	public virtual RuleContext getRuleContext() { return this; }
+    //@Override
+    public virtual RuleContext getRuleContext() { return this; }
 
     //@Override
     public virtual RuleContext getParent() { return parent; }
@@ -122,20 +120,26 @@ public class RuleContext : RuleNode {
 	 *  method.
 	 */
     //@Override
-    public String getText() {
-		if (getChildCount() == 0) {
-			return "";
-		}
+    public String Text
+    {
+        get
+        {
+            if (ChildCount == 0)
+            {
+                return "";
+            }
 
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < getChildCount(); i++) {
-			builder.Append(getChild(i).getText());
-		}
+            var builder = new StringBuilder();
+            for (int i = 0; i < ChildCount; i++)
+            {
+                builder.Append(GetChild(i).Text);
+            }
 
-		return builder.ToString();
-	}
+            return builder.ToString();
+        }
+    }
 
-	public int getRuleIndex() { return -1; }
+    public virtual int GetRuleIndex() { return -1; }
 
 	/** For rule associated with this parse tree internal node, return
 	 *  the outer alternative number used to match the input. Default
@@ -160,42 +164,40 @@ public class RuleContext : RuleNode {
 
 	/** @since 4.7. {@see ParseTree#setParent} comment */
 	//@Override
-	public void setParent(RuleContext parent) {
+	public virtual void SetParent(RuleContext parent) {
 		this.parent = parent;
 	}
 
 	//@Override
-	public ParseTree getChild(int i) {
+	public virtual ParseTree GetChild(int i) {
 		return null;
 	}
 
-	//@Override
-	public int getChildCount() {
-		return 0;
-	}
+    //@Override
+    public int ChildCount => 0;
 
     //@Override
-    public  T accept<T>(ParseTreeVisitor<T> visitor) { return visitor.visitChildren(this); }
+    public virtual T Accept<T>(ParseTreeVisitor<T> visitor) { return visitor.VisitChildren(this); }
 
 	/** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 *  We have to know the recognizer so we can get rule names.
 	 */
 	//@Override
-    public String toStringTree(Parser recog) {
+    public virtual string ToStringTree(Parser recog) {
 		return Trees.toStringTree(this, recog);
 	}
 
-	/** Print out a whole tree, not just a node, in LISP format
+    /** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 */
-	public String toStringTree(List<String> ruleNames) {
+    public virtual string ToStringTree(List<String> ruleNames) {
 		return Trees.toStringTree(this, ruleNames);
 	}
 
-	//@Override
-	public String toStringTree() {
-		return toStringTree((List<String>)null);
+    //@Override
+    public virtual String ToStringTree() {
+		return ToStringTree((List<String>)null);
 	}
 
 	//@Override
@@ -203,22 +205,22 @@ public class RuleContext : RuleNode {
 		return toString((List<String>)null, (RuleContext)null);
 	}
 
-	public String toString(Recognizer recog) {
+    public virtual String toString(Recognizer recog) {
 		return toString(recog, ParserRuleContext.EMPTY);
 	}
 
-	public String toString(List<String> ruleNames) {
+    public virtual String toString(List<String> ruleNames) {
 		return toString(ruleNames, null);
 	}
 
-	// recog null unless ParserRuleContext, in which case we use subclass toString(...)
-	public String toString(Recognizer recog, RuleContext stop) {
-		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
+    // recog null unless ParserRuleContext, in which case we use subclass toString(...)
+    public virtual String toString(Recognizer recog, RuleContext stop) {
+		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
 		List<String> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
 		return toString(ruleNamesList, stop);
 	}
 
-	public String toString(List<String> ruleNames, RuleContext stop) {
+    public virtual String toString(List<String> ruleNames, RuleContext stop) {
 		StringBuilder buf = new StringBuilder();
 		RuleContext p = this;
 		buf.Append('[');
@@ -229,7 +231,7 @@ public class RuleContext : RuleNode {
 				}
 			}
 			else {
-				int ruleIndex = p.getRuleIndex();
+				int ruleIndex = p.GetRuleIndex();
 				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] : 
 					(ruleIndex.ToString());
 				buf.Append(ruleName);
@@ -246,103 +248,52 @@ public class RuleContext : RuleNode {
 		return buf.ToString();
 	}
 
-    ParseTree ParseTree.getParent()
+    ParseTree ParseTree.Parent => throw new NotImplementedException();
+
+    object Tree.Payload => throw new NotImplementedException();
+
+    Tree Tree.GetChild(int i)
     {
         throw new NotImplementedException();
     }
 
-    Tree Tree.getParent()
+    public int Type => throw new NotImplementedException();
+
+    public int TokenStartIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int TokenStopIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public void ReplaceChildren(int startChildIndex, int stopChildIndex, object t)
     {
         throw new NotImplementedException();
     }
 
-    object Tree.getPayload()
+    public object DupNode()
     {
         throw new NotImplementedException();
     }
 
-    Tree Tree.getChild(int i)
+    public object DeleteChild(int i)
     {
         throw new NotImplementedException();
     }
 
-    public int getType()
+    public int ChildIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public bool IsNil => throw new NotImplementedException();
+
+    public void AddChild(Tree child)
     {
         throw new NotImplementedException();
     }
 
-    public void setParent(Tree baseTree)
+    public void SetChild(int i, Tree child)
     {
         throw new NotImplementedException();
     }
 
-    public void setChildIndex(int i)
-    {
-        throw new NotImplementedException();
-    }
+    public int Line => throw new NotImplementedException();
 
-    public void setTokenStartIndex(int start)
-    {
-        throw new NotImplementedException();
-    }
+    public int CharPositionInLine => throw new NotImplementedException();
 
-    public void setTokenStopIndex(int stop)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getTokenStartIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getTokenStopIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void replaceChildren(int startChildIndex, int stopChildIndex, object t)
-    {
-        throw new NotImplementedException();
-    }
-
-    public object dupNode()
-    {
-        throw new NotImplementedException();
-    }
-
-    public object deleteChild(int i)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getChildIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool isNil()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void addChild(Tree child)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setChild(int i, Tree child)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getLine()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getCharPositionInLine()
-    {
-        throw new NotImplementedException();
-    }
+    public Tree Parent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

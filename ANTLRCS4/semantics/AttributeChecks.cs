@@ -63,7 +63,7 @@ public class AttributeChecks : ActionSplitterListener
             }
             foreach (GrammarAST e in r.exceptions)
             {
-                ActionAST a = (ActionAST)e.getChild(1);
+                ActionAST a = (ActionAST)e.GetChild(1);
                 AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
                 checker.examineAction();
             }
@@ -79,9 +79,9 @@ public class AttributeChecks : ActionSplitterListener
     public void examineAction()
     {
         //Console.Out.WriteLine("examine "+actionToken);
-        ANTLRStringStream @in = new ANTLRStringStream(actionToken.getText());
-        @in.setLine(actionToken.getLine());
-        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+        ANTLRStringStream @in = new ANTLRStringStream(actionToken.Text);
+        @in.SetLine(actionToken.Line);
+        @in.SetCharPositionInLine(actionToken.CharPositionInLine);
         ActionSplitter splitter = new ActionSplitter(@in, this);
         // forces eval, triggers listener methods
         node.chunks = splitter.GetActionTokens();
@@ -96,41 +96,41 @@ public class AttributeChecks : ActionSplitterListener
         if (g.isLexer())
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
-                                g.fileName, x, x.getText() + "." + y.getText(), expr);
+                                g.fileName, x, x.Text + "." + y.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.getText(), node) != null)
+        if (node.resolver.resolveToAttribute(x.Text, node) != null)
         {
             // must be a member access to a predefined attribute like $ctx.foo
             Attr(expr, x);
             return;
         }
 
-        if (node.resolver.resolveToAttribute(x.getText(), y.getText(), node) == null)
+        if (node.resolver.resolveToAttribute(x.Text, y.Text, node) == null)
         {
-            Rule rref = isolatedRuleRef(x.getText());
+            Rule rref = isolatedRuleRef(x.Text);
             if (rref != null)
             {
-                if (rref.args != null && rref.args.get(y.getText()) != null)
+                if (rref.args != null && rref.args.get(y.Text) != null)
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
-                                              g.fileName, y, y.getText(), rref.name, expr);
+                                              g.fileName, y, y.Text, rref.name, expr);
                 }
                 else
                 {
                     errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
-                                              g.fileName, y, y.getText(), rref.name, expr);
+                                              g.fileName, y, y.Text, rref.name, expr);
                 }
             }
-            else if (!node.resolver.resolvesToAttributeDict(x.getText(), node))
+            else if (!node.resolver.resolvesToAttributeDict(x.Text, node))
             {
                 errMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
-                                          g.fileName, x, x.getText(), expr);
+                                          g.fileName, x, x.Text, expr);
             }
             else
             {
                 errMgr.GrammarError(ErrorType.UNKNOWN_ATTRIBUTE_IN_SCOPE,
-                                          g.fileName, y, y.getText(), expr);
+                                          g.fileName, y, y.Text, expr);
             }
         }
     }
@@ -141,20 +141,20 @@ public class AttributeChecks : ActionSplitterListener
         if (g.isLexer())
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
-                                g.fileName, x, x.getText(), expr);
+                                g.fileName, x, x.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.getText(), node) == null)
+        if (node.resolver.resolveToAttribute(x.Text, node) == null)
         {
             ErrorType errorType = ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE;
-            if (node.resolver.resolvesToListLabel(x.getText(), node))
+            if (node.resolver.resolvesToListLabel(x.Text, node))
             {
                 // $ids for ids+=ID etc...
                 errorType = ErrorType.ASSIGNMENT_TO_LIST_LABEL;
             }
 
             errMgr.GrammarError(errorType,
-                                g.fileName, x, x.getText(), expr);
+                                g.fileName, x, x.Text, expr);
         }
         new AttributeChecks(g, r, alt, node, rhs).examineAction();
     }
@@ -165,43 +165,43 @@ public class AttributeChecks : ActionSplitterListener
         if (g.isLexer())
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
-                                g.fileName, x, x.getText(), expr);
+                                g.fileName, x, x.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.getText(), node) == null)
+        if (node.resolver.resolveToAttribute(x.Text, node) == null)
         {
-            if (node.resolver.resolvesToToken(x.getText(), node))
+            if (node.resolver.resolvesToToken(x.Text, node))
             {
                 return; // $ID for token ref or label of token
             }
-            if (node.resolver.resolvesToListLabel(x.getText(), node))
+            if (node.resolver.resolvesToListLabel(x.Text, node))
             {
                 return; // $ids for ids+=ID etc...
             }
-            if (isolatedRuleRef(x.getText()) != null)
+            if (isolatedRuleRef(x.Text) != null)
             {
                 errMgr.GrammarError(ErrorType.ISOLATED_RULE_REF,
-                                    g.fileName, x, x.getText(), expr);
+                                    g.fileName, x, x.Text, expr);
                 return;
             }
             errMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
-                                g.fileName, x, x.getText(), expr);
+                                g.fileName, x, x.Text, expr);
         }
     }
 
     //@Override
     public void NonLocalAttr(String expr, Token x, Token y)
     {
-        Rule r = g.getRule(x.getText());
+        Rule r = g.getRule(x.Text);
         if (r == null)
         {
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
-                                g.fileName, x, x.getText(), y.getText(), expr);
+                                g.fileName, x, x.Text, y.Text, expr);
         }
-        else if (r.resolveToAttribute(y.getText(), null) == null)
+        else if (r.resolveToAttribute(y.Text, null) == null)
         {
             errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
-                                g.fileName, y, y.getText(), x.getText(), expr);
+                                g.fileName, y, y.Text, x.Text, expr);
 
         }
     }
@@ -209,16 +209,16 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs)
     {
-        Rule r = g.getRule(x.getText());
+        Rule r = g.getRule(x.Text);
         if (r == null)
         {
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
-                                g.fileName, x, x.getText(), y.getText(), expr);
+                                g.fileName, x, x.Text, y.Text, expr);
         }
-        else if (r.resolveToAttribute(y.getText(), null) == null)
+        else if (r.resolveToAttribute(y.Text, null) == null)
         {
             errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
-                                g.fileName, y, y.getText(), x.getText(), expr);
+                                g.fileName, y, y.Text, x.Text, expr);
 
         }
     }

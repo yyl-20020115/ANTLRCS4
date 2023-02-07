@@ -19,20 +19,20 @@ public class TestParseTreeMatcher
     public void TestChunking()
     {
         var m = new ParseTreePatternMatcher(null, null);
-        Assert.AreEqual("[ID, ' = ', expr, ' ;']", m.split("<ID> = <expr> ;").ToString());
-        Assert.AreEqual("[' ', ID, ' = ', expr]", m.split(" <ID> = <expr>").ToString());
-        Assert.AreEqual("[ID, ' = ', expr]", m.split("<ID> = <expr>").ToString());
-        Assert.AreEqual("[expr]", m.split("<expr>").ToString());
-        Assert.AreEqual("['<x> foo']", m.split("\\<x\\> foo").ToString());
-        Assert.AreEqual("['foo <x> bar ', tag]", m.split("foo \\<x\\> bar <tag>").ToString());
+        Assert.AreEqual("[ID, ' = ', expr, ' ;']", m.Split("<ID> = <expr> ;").ToString());
+        Assert.AreEqual("[' ', ID, ' = ', expr]", m.Split(" <ID> = <expr>").ToString());
+        Assert.AreEqual("[ID, ' = ', expr]", m.Split("<ID> = <expr>").ToString());
+        Assert.AreEqual("[expr]", m.Split("<expr>").ToString());
+        Assert.AreEqual("['<x> foo']", m.Split("\\<x\\> foo").ToString());
+        Assert.AreEqual("['foo <x> bar ', tag]", m.Split("foo \\<x\\> bar <tag>").ToString());
     }
 
     [TestMethod]
     public void TestDelimiters()
     {
         var m = new ParseTreePatternMatcher(null, null);
-        m.setDelimiters("<<", ">>", "$");
-        var result = m.split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
+        m.SetDelimiters("<<", ">>", "$");
+        var result = m.Split("<<ID>> = <<expr>> ;$<< ick $>>").ToString();
         Assert.AreEqual("[ID, ' = ', expr, ' ;<< ick >>']", result);
     }
 
@@ -43,7 +43,7 @@ public class TestParseTreeMatcher
         string result = null;
         try
         {
-            m.split(">expr<");
+            m.Split(">expr<");
         }
         catch (ArgumentException iae)
         {
@@ -60,7 +60,7 @@ public class TestParseTreeMatcher
         string result = null;
         try
         {
-            m.split("<expr hi mom");
+            m.Split("<expr hi mom");
         }
         catch (ArgumentException iae)
         {
@@ -77,7 +77,7 @@ public class TestParseTreeMatcher
         string result = null;
         try
         {
-            m.split("<expr> >");
+            m.Split("<expr> >");
         }
         catch (ArgumentException iae)
         {
@@ -99,7 +99,7 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> skip ;\n";
         var m = GetPatternMatcher("X1.g4", grammar, "X1Parser", "X1Lexer", "s");
 
-        var tokens = m.tokenize("<ID> = <expr> ;");
+        var tokens = m.Tokenize("<ID> = <expr> ;");
         Assert.AreEqual("[ID:3, [@-1,1:1='=',<1>,1:1], expr:7, [@-1,1:1=';',<2>,1:1]]", tokens.ToString());
     }
 
@@ -115,8 +115,8 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> skip ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.compile("<ID> = <expr> ;", m.getParser().getRuleIndex("s"));
-        Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
+        var t = m.Compile("<ID> = <expr> ;", m.Parser.getRuleIndex("s"));
+        Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.PatternTree.ToStringTree(m.Parser));
     }
 
     [TestMethod]
@@ -134,7 +134,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.compile("<ID> = <expr> ; extra", m.getParser().getRuleIndex("s"));
+            m.Compile("<ID> = <expr> ; extra", m.Parser.getRuleIndex("s"));
         }
         catch (ParseTreePatternMatcher.StartRuleDoesNotConsumeFullPattern e)
         {
@@ -158,7 +158,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.compile("<ID> ;", m.getParser().getRuleIndex("s"));
+            m.Compile("<ID> ;", m.Parser.getRuleIndex("s"));
         }
         catch (InputMismatchException e)
         {
@@ -182,7 +182,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.compile("<ID> <ID> ;", m.getParser().getRuleIndex("s"));
+            m.Compile("<ID> <ID> ;", m.Parser.getRuleIndex("s"));
         }
         catch (NoViableAltException e)
         {
@@ -203,8 +203,8 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> channel(HIDDEN) ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.compile("<ID> = <expr> ;", m.getParser().getRuleIndex("s"));
-        Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.getPatternTree().toStringTree(m.getParser()));
+        var t = m.Compile("<ID> = <expr> ;", m.Parser.getRuleIndex("s"));
+        Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.PatternTree.ToStringTree(m.Parser));
     }
 
     [TestMethod]
@@ -217,8 +217,8 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> skip ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.compile("<ID> = <ID> ;", m.getParser().getRuleIndex("s"));
-        var results = t.getPatternTree().toStringTree(m.getParser());
+        var t = m.Compile("<ID> = <ID> ;", m.Parser.getRuleIndex("s"));
+        var results = t.PatternTree.ToStringTree(m.Parser);
         var expected = "(s <ID> = <ID> ;)";
         Assert.AreEqual(expected, results);
     }
@@ -249,16 +249,16 @@ public class TestParseTreeMatcher
         var input = "x ;";
         var pattern = "<id:ID>;";
         var m = CheckPatternMatch(grammar, "s", input, pattern, "X8");
-        Assert.AreEqual("{ID=[x], id=[x]}", m.getLabels().ToString());
-        Assert.IsNotNull(m.get("id"));
-        Assert.IsNotNull(m.get("ID"));
-        Assert.AreEqual("x", m.get("id").getText());
-        Assert.AreEqual("x", m.get("ID").getText());
-        Assert.AreEqual("[x]", m.getAll("id").ToString());
-        Assert.AreEqual("[x]", m.getAll("ID").ToString());
+        Assert.AreEqual("{ID=[x], id=[x]}", m.GetLabels().ToString());
+        Assert.IsNotNull(m.Get("id"));
+        Assert.IsNotNull(m.Get("ID"));
+        Assert.AreEqual("x", m.Get("id").Text);
+        Assert.AreEqual("x", m.Get("ID").Text);
+        Assert.AreEqual("[x]", m.GetAll("id").ToString());
+        Assert.AreEqual("[x]", m.GetAll("ID").ToString());
 
-        Assert.IsNull(m.get("undefined"));
-        Assert.AreEqual("[]", m.getAll("undefined").ToString());
+        Assert.IsNull(m.Get("undefined"));
+        Assert.AreEqual("[]", m.GetAll("undefined").ToString());
     }
 
     [TestMethod]
@@ -273,16 +273,16 @@ public class TestParseTreeMatcher
         var input = "x y;";
         var pattern = "<id:ID> <id:ID>;";
         var m = CheckPatternMatch(grammar, "s", input, pattern, "X9");
-        Assert.AreEqual("{ID=[x, y], id=[x, y]}", m.getLabels().ToString());
-        Assert.IsNotNull(m.get("id"));
-        Assert.IsNotNull(m.get("ID"));
-        Assert.AreEqual("y", m.get("id").getText());
-        Assert.AreEqual("y", m.get("ID").getText());
-        Assert.AreEqual("[x, y]", m.getAll("id").ToString());
-        Assert.AreEqual("[x, y]", m.getAll("ID").ToString());
+        Assert.AreEqual("{ID=[x, y], id=[x, y]}", m.GetLabels().ToString());
+        Assert.IsNotNull(m.Get("id"));
+        Assert.IsNotNull(m.Get("ID"));
+        Assert.AreEqual("y", m.Get("id").Text);
+        Assert.AreEqual("y", m.Get("ID").Text);
+        Assert.AreEqual("[x, y]", m.GetAll("id").ToString());
+        Assert.AreEqual("[x, y]", m.GetAll("ID").ToString());
 
-        Assert.IsNull(m.get("undefined"));
-        Assert.AreEqual("[]", m.getAll("undefined").ToString());
+        Assert.IsNull(m.Get("undefined"));
+        Assert.AreEqual("[]", m.GetAll("undefined").ToString());
     }
 
     [TestMethod]
@@ -297,21 +297,21 @@ public class TestParseTreeMatcher
         var input = "x y z;";
         var pattern = "<a:ID> <b:ID> <a:ID>;";
         ParseTreeMatch m = CheckPatternMatch(grammar, "s", input, pattern, "X7");
-        Assert.AreEqual("{ID=[x, y, z], a=[x, z], b=[y]}", m.getLabels().ToString());
-        Assert.IsNotNull(m.get("a")); // get first
-        Assert.IsNotNull(m.get("b"));
-        Assert.IsNotNull(m.get("ID"));
-        Assert.AreEqual("z", m.get("a").getText());
-        Assert.AreEqual("y", m.get("b").getText());
-        Assert.AreEqual("z", m.get("ID").getText()); // get last
-        Assert.AreEqual("[x, z]", m.getAll("a").ToString());
-        Assert.AreEqual("[y]", m.getAll("b").ToString());
-        Assert.AreEqual("[x, y, z]", m.getAll("ID").ToString()); // ordered
+        Assert.AreEqual("{ID=[x, y, z], a=[x, z], b=[y]}", m.GetLabels().ToString());
+        Assert.IsNotNull(m.Get("a")); // get first
+        Assert.IsNotNull(m.Get("b"));
+        Assert.IsNotNull(m.Get("ID"));
+        Assert.AreEqual("z", m.Get("a").Text);
+        Assert.AreEqual("y", m.Get("b").Text);
+        Assert.AreEqual("z", m.Get("ID").Text); // get last
+        Assert.AreEqual("[x, z]", m.GetAll("a").ToString());
+        Assert.AreEqual("[y]", m.GetAll("b").ToString());
+        Assert.AreEqual("[x, y, z]", m.GetAll("ID").ToString()); // ordered
 
-        Assert.AreEqual("xyz;", m.getTree().getText()); // whitespace stripped by lexer
+        Assert.AreEqual("xyz;", m.GetTree().Text); // whitespace stripped by lexer
 
-        Assert.IsNull(m.get("undefined"));
-        Assert.AreEqual("[]", m.getAll("undefined").ToString());
+        Assert.IsNull(m.Get("undefined"));
+        Assert.AreEqual("[]", m.GetAll("undefined").ToString());
     }
 
     [TestMethod]
@@ -434,8 +434,8 @@ public class TestParseTreeMatcher
 
             var p = parser.compileParseTreePattern(pattern, parser.getRuleIndex(startRule));
 
-            var match = p.match(executedState.parseTree);
-            bool matched = match.succeeded();
+            var match = p.Match(executedState.parseTree);
+            bool matched = match.Succeeded();
             if (invertMatch) Assert.IsFalse(matched);
             else Assert.IsTrue(matched);
             return match;

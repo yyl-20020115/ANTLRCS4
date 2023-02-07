@@ -6,19 +6,18 @@
 
 namespace org.antlr.v4.runtime.tree;
 
-public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
-	/**
+public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
+{
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation calls {@link ParseTree#accept} on the
 	 * specified tree.</p>
 	 */
-	//@Override
-	public T visit(ParseTree tree) {
-		return tree.accept(this);
-	}
+    //@Override
+    public T Visit(ParseTree tree) => tree.Accept(this);
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation initializes the aggregate result to
@@ -33,46 +32,51 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * the tree structure. Visitors that modify the tree should override this
 	 * method to behave properly in respect to the specific algorithm in use.</p>
 	 */
-	//@Override
-	public T visitChildren(RuleNode node) {
-		T result = defaultResult();
-		int n = node.getChildCount();
-		for (int i=0; i<n; i++) {
-			if (!shouldVisitNextChild(node, result)) {
-				break;
-			}
+    //@Override
+    public T VisitChildren(RuleNode node)
+    {
+        T result = defaultResult();
+        int n = node.ChildCount;
+        for (int i = 0; i < n; i++)
+        {
+            if (!shouldVisitNextChild(node, result))
+            {
+                break;
+            }
 
-			ParseTree c = node.getChild(i);
-			T childResult = c.accept(this);
-			result = aggregateResult(result, childResult);
-		}
+            ParseTree c = node.GetChild(i);
+            T childResult = c.Accept(this);
+            result = aggregateResult(result, childResult);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-	//@Override
-	public T visitTerminal(TerminalNode node) {
-		return defaultResult();
-	}
+    //@Override
+    public T VisitTerminal(TerminalNode node)
+    {
+        return defaultResult();
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-	//@Override
-	public T visitErrorNode(ErrorNode node) {
-		return defaultResult();
-	}
+    //@Override
+    public T VisitErrorNode(ErrorNode node)
+    {
+        return defaultResult();
+    }
 
-	/**
+    /**
 	 * Gets the default value returned by visitor methods. This value is
 	 * returned by the default implementations of
 	 * {@link #visitTerminal visitTerminal}, {@link #visitErrorNode visitErrorNode}.
@@ -83,11 +87,12 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 *
 	 * @return The default value returned by visitor methods.
 	 */
-	protected T defaultResult() {
-		return default;
-	}
+    protected T defaultResult()
+    {
+        return default;
+    }
 
-	/**
+    /**
 	 * Aggregates the results of visiting multiple children of a node. After
 	 * either all children are visited or {@link #shouldVisitNextChild} returns
 	 * {@code false}, the aggregate value is returned as the result of
@@ -106,11 +111,12 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 *
 	 * @return The updated aggregate result.
 	 */
-	protected T aggregateResult(T aggregate, T nextResult) {
-		return nextResult;
-	}
+    protected T aggregateResult(T aggregate, T nextResult)
+    {
+        return nextResult;
+    }
 
-	/**
+    /**
 	 * This method is called after visiting each child in
 	 * {@link #visitChildren}. This method is first called before the first
 	 * child is visited; at that point {@code currentResult} will be the initial
@@ -134,8 +140,9 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T> {
 	 * {@code false} to stop visiting children and immediately return the
 	 * current aggregate result from {@link #visitChildren}.
 	 */
-	protected bool shouldVisitNextChild(RuleNode node, T currentResult) {
-		return true;
-	}
+    protected bool shouldVisitNextChild(RuleNode node, T currentResult)
+    {
+        return true;
+    }
 
 }

@@ -54,7 +54,7 @@ public class LexerTypeAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.setType(type);
+        lexer.        Type = type;
     }
 
     //@Override

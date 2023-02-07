@@ -6,17 +6,16 @@
 
 namespace org.antlr.v4.runtime.tree.xpath;
 
-public class XPathWildcardElement : XPathElement {
-	public XPathWildcardElement() : base(XPath.WILDCARD)
-    {
-	}
+public class XPathWildcardElement : XPathElement
+{
+    public XPathWildcardElement() : base(XPath.WILDCARD) { }
 
-	public override ICollection<ParseTree> evaluate( ParseTree t) {
-		if ( invert ) return new List<ParseTree>(); // !* is weird but valid (empty)
-		List<ParseTree> kids = new ();
-		foreach (Tree c in Trees.getChildren(t)) {
-			kids.Add((ParseTree)c);
-		}
-		return kids;
-	}
+    public override ICollection<ParseTree> Evaluate(ParseTree t)
+    {
+        if (invert) return new List<ParseTree>(); // !* is weird but valid (empty)
+        List<ParseTree> kids = new();
+        foreach (Tree c in Trees.getChildren(t))
+            kids.Add((ParseTree)c);
+        return kids;
+    }
 }

@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
@@ -13,17 +12,18 @@ namespace org.antlr.v4.runtime;
  * This default implementation of {@link TokenFactory} creates
  * {@link CommonToken} objects.
  */
-public class CommonTokenFactory : TokenFactory<CommonToken> {
-	/**
+public class CommonTokenFactory : TokenFactory<CommonToken>
+{
+    /**
 	 * The default {@link CommonTokenFactory} instance.
 	 *
 	 * <p>
 	 * This token factory does not explicitly copy token text when constructing
 	 * tokens.</p>
 	 */
-	public static readonly TokenFactory<CommonToken> DEFAULT = new CommonTokenFactory();
+    public static readonly TokenFactory<CommonToken> DEFAULT = new CommonTokenFactory();
 
-	/**
+    /**
 	 * Indicates whether {@link CommonToken#setText} should be called after
 	 * constructing tokens to explicitly set the text. This is useful for cases
 	 * where the input stream might not be able to provide arbitrary substrings
@@ -38,9 +38,9 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 	 * The default value is {@code false} to avoid the performance and memory
 	 * overhead of copying text for every token unless explicitly requested.</p>
 	 */
-	protected readonly bool copyText;
+    protected readonly bool copyText;
 
-	/**
+    /**
 	 * Constructs a {@link CommonTokenFactory} with the specified value for
 	 * {@link #copyText}.
 	 *
@@ -50,9 +50,9 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 	 *
 	 * @param copyText The value for {@link #copyText}.
 	 */
-	public CommonTokenFactory(bool copyText) { this.copyText = copyText; }
+    public CommonTokenFactory(bool copyText) { this.copyText = copyText; }
 
-	/**
+    /**
 	 * Constructs a {@link CommonTokenFactory} with {@link #copyText} set to
 	 * {@code false}.
 	 *
@@ -60,27 +60,32 @@ public class CommonTokenFactory : TokenFactory<CommonToken> {
 	 * The {@link #DEFAULT} instance should be used instead of calling this
 	 * directly.</p>
 	 */
-	public CommonTokenFactory():this(false) {  }
+    public CommonTokenFactory() : this(false) { }
 
-	//@Override
-	public CommonToken create(Pair<TokenSource, CharStream> source, int type, String text,
-							  int channel, int start, int stop,
-							  int line, int charPositionInLine)
-	{
-		CommonToken t = new CommonToken(source, type, channel, start, stop);
-		t.setLine(line);
-		t.setCharPositionInLine(charPositionInLine);
-		if ( text!=null ) {
-			t.setText(text);
-		}
-		else if ( copyText && source.b != null ) {
-			t.setText(source.b.GetText(Interval.Of(start,stop)));
-		}
+    //@Override
+    public CommonToken Create(Pair<TokenSource, CharStream> source, int type, String text,
+                              int channel, int start, int stop,
+                              int line, int charPositionInLine)
+    {
+        var t = new CommonToken(source, type, channel, start, stop)
+        {
+            Line = line,
+            CharPositionInLine = charPositionInLine
+        };
+        if (text != null)
+        {
+            t.Text = text;
+        }
+        else if (copyText && source.b != null)
+        {
+            t.Text = source.b.GetText(Interval.Of(start, stop));
+        }
 
-		return t;
-	}
+        return t;
+    }
 
-	public virtual CommonToken create(int type, String text) {
-		return new CommonToken(type, text);
-	}
+    public virtual CommonToken Create(int type, string text)
+    {
+        return new CommonToken(type, text);
+    }
 }

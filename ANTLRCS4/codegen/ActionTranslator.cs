@@ -75,7 +75,7 @@ public class ActionTranslator : ActionSplitterListener
                                                     Token tokenWithinAction,
                                                     ActionAST node)
     {
-        var action = tokenWithinAction.getText();
+        var action = tokenWithinAction.Text;
         if (action != null && action.Length > 0 && action[(0)] == '{')
         {
             int firstCurly = action.IndexOf('{');
@@ -109,8 +109,8 @@ public class ActionTranslator : ActionSplitterListener
             }
         }
         var @in = new ANTLRStringStream(action);
-        @in.setLine(tokenWithinAction.getLine());
-        @in.setCharPositionInLine(tokenWithinAction.getCharPositionInLine());
+        @in.SetLine(tokenWithinAction.Line);
+        @in.SetCharPositionInLine(tokenWithinAction.CharPositionInLine);
         var trigger = new ActionSplitter(@in, translator);
         // forces eval, triggers listener methods
         trigger.GetActionTokens();
@@ -121,8 +121,8 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void Attr(string expr, Token x)
     {
         gen.g.Tools.Log("action-translator", "attr " + x);
-        var a = node.resolver.resolveToAttribute(x.getText(), node);
-        var name = x.getText();
+        var a = node.resolver.resolveToAttribute(x.Text, node);
+        var name = x.Text;
         var escapedName = target.EscapeIfNeeded(name);
         if (a != null)
         {
@@ -173,30 +173,30 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void QualifiedAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "qattr " + x + "." + y);
-        if (node.resolver.resolveToAttribute(x.getText(), node) != null)
+        if (node.resolver.resolveToAttribute(x.Text, node) != null)
         {
             // must be a member access to a predefined attribute like $ctx.foo
             Attr(expr, x);
-            chunks.Add(new ActionText(nodeContext, "." + y.getText()));
+            chunks.Add(new ActionText(nodeContext, "." + y.Text));
             return;
         }
-        var a = node.resolver.resolveToAttribute(x.getText(), y.getText(), node);
+        var a = node.resolver.resolveToAttribute(x.Text, y.Text, node);
         if (a == null)
         {
             // Added in response to https://github.com/antlr/antlr4/issues/1211
             gen.g.Tools.ErrMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
                                            gen.g.fileName, x,
-                                           x.getText(),
+                                           x.                                           Text,
                                            "rule");
             return;
         }
         switch (a.dict.type)
         {
             case AttributeDict.DictType.ARG: 
-                chunks.Add(new ArgRef(nodeContext, y.getText(), target.EscapeIfNeeded(y.getText()))); 
+                chunks.Add(new ArgRef(nodeContext, y.Text, target.EscapeIfNeeded(y.Text))); 
                 break; // has to be current rule
             case AttributeDict.DictType.RET:
-                chunks.Add(new QRetValueRef(nodeContext, GetRuleLabel(x.getText()), y.getText(), target.EscapeIfNeeded(y.getText())));
+                chunks.Add(new QRetValueRef(nodeContext, GetRuleLabel(x.Text), y.Text, target.EscapeIfNeeded(y.Text)));
                 break;
             case AttributeDict.DictType.PREDEFINED_RULE:
                 chunks.Add(GetRulePropertyRef(x, y));
@@ -213,8 +213,8 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void SetAttr(string expr, Token x, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setAttr " + x + " " + rhs);
-        var rhsChunks = TranslateActionChunk(factory, rf, rhs.getText(), node);
-        var name = x.getText();
+        var rhsChunks = TranslateActionChunk(factory, rf, rhs.Text, node);
+        var name = x.Text;
         var s = new SetAttr(nodeContext, name, target.EscapeIfNeeded(name), rhsChunks);
         chunks.Add(s);
     }
@@ -223,19 +223,19 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void NonLocalAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "nonLocalAttr " + x + "::" + y);
-        var r = factory.GetGrammar().getRule(x.getText());
-        var name = y.getText();
-        chunks.Add(new NonLocalAttrRef(nodeContext, x.getText(), name, target.EscapeIfNeeded(name), r.index));
+        var r = factory.GetGrammar().getRule(x.Text);
+        var name = y.Text;
+        chunks.Add(new NonLocalAttrRef(nodeContext, x.Text, name, target.EscapeIfNeeded(name), r.index));
     }
 
     //@Override
     public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setNonLocalAttr " + x + "::" + y + "=" + rhs);
-        var r = factory.GetGrammar().getRule(x.getText());
-        var rhsChunks = TranslateActionChunk(factory, rf, rhs.getText(), node);
-        var name = y.getText();
-        var s = new SetNonLocalAttr(nodeContext, x.getText(), name, target.EscapeIfNeeded(name), r.index, rhsChunks);
+        var r = factory.GetGrammar().getRule(x.Text);
+        var rhsChunks = TranslateActionChunk(factory, rf, rhs.Text, node);
+        var name = y.Text;
+        var s = new SetNonLocalAttr(nodeContext, x.Text, name, target.EscapeIfNeeded(name), r.index, rhsChunks);
         chunks.Add(s);
     }
 
@@ -249,9 +249,9 @@ public class ActionTranslator : ActionSplitterListener
     {
         try
         {
-            var c = tokenPropToModelMap[y.getText()];
+            var c = tokenPropToModelMap[y.Text];
             var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(string) });
-            return ctor.Invoke(new object[] { nodeContext, GetTokenLabel(x.getText()) }) as TokenPropertyRef;
+            return ctor.Invoke(new object[] { nodeContext, GetTokenLabel(x.Text) }) as TokenPropertyRef;
         }
         catch (Exception e)
         {
@@ -264,13 +264,13 @@ public class ActionTranslator : ActionSplitterListener
     {
         try
         {
-            var c = (x != null ? rulePropToModelMap : thisRulePropToModelMap)[prop.getText()];
+            var c = (x != null ? rulePropToModelMap : thisRulePropToModelMap)[prop.Text];
             var ctor = c.GetConstructor(new Type[] { typeof(StructDecl), typeof(string) });
-            return ctor.Invoke(new object[] { nodeContext, GetRuleLabel((x != null ? x : prop).getText()) }) as RulePropertyRef;
+            return ctor.Invoke(new object[] { nodeContext, GetRuleLabel((x != null ? x : prop).Text) }) as RulePropertyRef;
         }
         catch (Exception e)
         {
-            factory.GetGrammar().Tools.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, e, prop.getText());
+            factory.GetGrammar().Tools.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, e, prop.Text);
         }
         return null;
     }

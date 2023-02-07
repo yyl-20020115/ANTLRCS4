@@ -6,13 +6,13 @@
 
 namespace org.antlr.v4.runtime.tree.xpath;
 
-public class XPathTokenAnywhereElement : XPathElement {
-	protected int tokenType;
-	public XPathTokenAnywhereElement(String tokenName, int tokenType) :base(tokenName){
-		this.tokenType = tokenType;
-	}
+public class XPathTokenAnywhereElement : XPathElement
+{
+    protected int tokenType;
+    public XPathTokenAnywhereElement(string tokenName, int tokenType) : base(tokenName)
+    {
+        this.tokenType = tokenType;
+    }
 
-	public override ICollection<ParseTree> evaluate(ParseTree t) {
-		return Trees.findAllTokenNodes(t, tokenType);
-	}
+    public override ICollection<ParseTree> Evaluate(ParseTree t) => Trees.findAllTokenNodes(t, tokenType);
 }

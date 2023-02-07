@@ -28,7 +28,7 @@ public class LeftRecursionCyclesMessage : ANTLRMessage {
 
 	        foreach (Rule rule in collection) {
 	            if (rule.ast != null) {
-	                return rule.ast.getToken();
+	                return rule.ast.Token;
 	            }
 	        }
 	    }

@@ -26,7 +26,6 @@
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 using org.antlr.v4.runtime.dfa;
-using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.runtime.tree;
 using System.Text;
@@ -58,7 +57,7 @@ public abstract class BaseTree : Tree
     }
 
     //@Override
-    public Tree getChild(int i)
+    public Tree GetChild(int i)
     {
         if (children == null || i >= children.Count)
         {
@@ -70,17 +69,17 @@ public abstract class BaseTree : Tree
     /** Get the children internal List; note that if you directly mess with
      *  the list, do so at your own risk.
      */
-    public List<Tree> getChildren()
+    public List<Tree> GetChildren()
     {
         return children;
     }
 
-    public Tree getFirstChildWithType(int type)
+    public Tree GetFirstChildWithType(int type)
     {
         for (int i = 0; children != null && i < children.Count; i++)
         {
-            Tree t = (Tree)children[i];
-            if (t.getType() == type)
+            Tree t = children[i];
+            if (t.Type == type)
             {
                 return t;
             }
@@ -89,14 +88,7 @@ public abstract class BaseTree : Tree
     }
 
     //@Override
-    public int getChildCount()
-    {
-        if (children == null)
-        {
-            return 0;
-        }
-        return children.Count;
-    }
+    public int ChildCount => children == null ? 0 : children.Count;
 
     /** Add t as child of this node.
      *
@@ -105,7 +97,7 @@ public abstract class BaseTree : Tree
      *  t.children = child.children; i.e., without copying the array.
      */
     //@Override
-    public void addChild(Tree t)
+    public void AddChild(Tree t)
     {
         //Console.Out.WriteLine("add child "+t.toStringTree()+" "+this.toStringTree());
         //Console.Out.WriteLine("existing children: "+children);
@@ -114,7 +106,7 @@ public abstract class BaseTree : Tree
             return; // do nothing upon addChild(null)
         }
         BaseTree childTree = (BaseTree)t;
-        if (childTree.isNil())
+        if (childTree.IsNil)
         { // t is an empty node possibly with children
             if (this.children != null && this.children == childTree.children)
             {
@@ -131,8 +123,9 @@ public abstract class BaseTree : Tree
                         Tree c = (Tree)childTree.children[(i)];
                         this.children.Add(c);
                         // handle double-link stuff for each child of nil root
-                        c.setParent(this);
-                        c.setChildIndex(children.Count - 1);
+                        c.                        // handle double-link stuff for each child of nil root
+                        Parent = this;
+                        c.                        ChildIndex = children.Count - 1;
                     }
                 }
                 else
@@ -140,77 +133,68 @@ public abstract class BaseTree : Tree
                     // no children for this but t has children; just set pointer
                     // call general freshener routine
                     this.children = childTree.children;
-                    this.freshenParentAndChildIndexes();
+                    this.FreshenParentAndChildIndexes();
                 }
             }
         }
         else
         { // child is not nil (don't care about children)
-            if (children == null)
-            {
-                children = createChildrenList().Cast<Tree>().ToList(); // create children list on demand
-            }
+            children ??= CreateChildrenList().Cast<Tree>().ToList(); // create children list on demand
             children.Add(t);
-            childTree.setParent(this);
-            childTree.setChildIndex(children.Count - 1);
+            childTree.SetParent(this);
+            childTree.ChildIndex = children.Count - 1;
         }
         // Console.Out.WriteLine("now children are: "+children);
     }
 
     /** Add all elements of kids list as children of this node */
-    public void addChildren(List<Tree> kids)
+    public void AddChildren(List<Tree> kids)
     {
         for (int i = 0; i < kids.Count; i++)
         {
             Tree t = kids[(i)];
-            addChild(t);
+            AddChild(t);
         }
     }
 
     //@Override
-    public void setChild(int i, Tree t)
+    public void SetChild(int i, Tree t)
     {
         if (t == null)
         {
             return;
         }
-        if (t.isNil())
+        if (t.IsNil)
         {
             throw new ArgumentException("Can't set single child to a list");
         }
-        if (children == null)
-        {
-            children = createChildrenList().Cast<Tree>().ToList();
-        }
+        children ??= CreateChildrenList().Cast<Tree>().ToList();
         children[i]=t;
-        t.setParent(this);
-        t.setChildIndex(i);
+        t.        Parent = this;
+        t.        ChildIndex = i;
     }
 
     /** Insert child t at child position i (0..n-1) by shifting children
         i+1..n-1 to the right one position. Set parent / indexes properly
         but does NOT collapse nil-rooted t's that come in here like addChild.
      */
-    public void insertChild(int i, Tree t)
+    public void InsertChild(int i, Tree t)
     {
-        if (i < 0 || i > getChildCount())
+        if (i < 0 || i > ChildCount)
         {
             throw new IndexOutOfRangeException(i + " out or range");
         }
 
-        if (children == null)
-        {
-            children = createChildrenList().Cast<Tree>().ToList();
-        }
+        children ??= CreateChildrenList().Cast<Tree>().ToList();
 
         children.Insert(i, t);
         // walk others to increment their child indexes
         // set index, parent of this one too
-        this.freshenParentAndChildIndexes(i);
+        this.FreshenParentAndChildIndexes(i);
     }
 
     //@Override
-    public Object deleteChild(int i)
+    public Object DeleteChild(int i)
     {
         if (children == null)
         {
@@ -219,7 +203,7 @@ public abstract class BaseTree : Tree
         Tree killed = children[i];
         children.RemoveAt(i);
         // walk rest and decrement their child indexes
-        this.freshenParentAndChildIndexes(i);
+        this.FreshenParentAndChildIndexes(i);
         return killed;
     }
 
@@ -229,7 +213,7 @@ public abstract class BaseTree : Tree
      *  children to set their childindex; could be slow.
      */
     //@Override
-    public void replaceChildren(int startChildIndex, int stopChildIndex, Object t)
+    public void ReplaceChildren(int startChildIndex, int stopChildIndex, Object t)
     {
         /*
         Console.Out.WriteLine("replaceChildren "+startChildIndex+", "+stopChildIndex+
@@ -245,7 +229,7 @@ public abstract class BaseTree : Tree
         BaseTree newTree = (BaseTree)t;
         List<Tree> newChildren;
         // normalize to a list of children to add: newChildren
-        if (newTree.isNil())
+        if (newTree.IsNil)
         {
             newChildren = newTree.children;
         }
@@ -265,8 +249,8 @@ public abstract class BaseTree : Tree
             {
                 BaseTree child = (BaseTree)newChildren[j];
                 children[i] = child;
-                child.setParent(this);
-                child.setChildIndex(i);
+                child.SetParent(this);
+                child.                ChildIndex = i;
                 j++;
             }
         }
@@ -283,7 +267,7 @@ public abstract class BaseTree : Tree
                 // delete same index, shifting everybody down each time
                 children.RemoveAt(indexToDelete);
             }
-            freshenParentAndChildIndexes(startChildIndex);
+            FreshenParentAndChildIndexes(startChildIndex);
         }
         else
         { // more new nodes than were there before
@@ -297,118 +281,110 @@ public abstract class BaseTree : Tree
             {
                 children.Insert(startChildIndex + j, newChildren[(j)]);
             }
-            freshenParentAndChildIndexes(startChildIndex);
+            FreshenParentAndChildIndexes(startChildIndex);
         }
         //Console.Out.WriteLine("out="+toStringTree());
     }
 
     /** Override in a subclass to change the impl of children list */
-    protected List<Object> createChildrenList()
+    protected List<object> CreateChildrenList()
     {
         return new ();
     }
 
     //@Override
-    public bool isNil()
-    {
-        return false;
-    }
+    public bool IsNil => false;
 
     /** Set the parent and child index values for all child of t */
     //@Override
-    public void freshenParentAndChildIndexes()
+    public void FreshenParentAndChildIndexes()
     {
-        freshenParentAndChildIndexes(0);
+        FreshenParentAndChildIndexes(0);
     }
 
-    public void freshenParentAndChildIndexes(int offset)
+    public void FreshenParentAndChildIndexes(int offset)
     {
-        int n = getChildCount();
+        int n = ChildCount;
         for (int c = offset; c < n; c++)
         {
-            Tree child = getChild(c);
-            child.setChildIndex(c);
-            child.setParent(this);
+            Tree child = GetChild(c);
+            child.            ChildIndex = c;
+            child.            Parent = this;
         }
     }
 
-    public void freshenParentAndChildIndexesDeeply()
+    public void FreshenParentAndChildIndexesDeeply()
     {
-        freshenParentAndChildIndexesDeeply(0);
+        FreshenParentAndChildIndexesDeeply(0);
     }
 
-    public void freshenParentAndChildIndexesDeeply(int offset)
+    public void FreshenParentAndChildIndexesDeeply(int offset)
     {
-        int n = getChildCount();
+        int n = ChildCount;
         for (int c = offset; c < n; c++)
         {
-            BaseTree child = (BaseTree)getChild(c);
-            child.setChildIndex(c);
-            child.setParent(this);
-            child.freshenParentAndChildIndexesDeeply();
+            BaseTree child = (BaseTree)GetChild(c);
+            child.            ChildIndex = c;
+            child.SetParent(this);
+            child.FreshenParentAndChildIndexesDeeply();
         }
     }
 
-    public void sanityCheckParentAndChildIndexes()
+    public void SanityCheckParentAndChildIndexes()
     {
-        sanityCheckParentAndChildIndexes(null, -1);
+        SanityCheckParentAndChildIndexes(null, -1);
     }
 
-    public void sanityCheckParentAndChildIndexes(Tree parent, int i)
+    public void SanityCheckParentAndChildIndexes(Tree parent, int i)
     {
-        if (parent != this.getParent())
+        if (parent != this.Parent)
         {
-            throw new IllegalStateException("parents don't match; expected " + parent + " found " + this.getParent());
+            throw new IllegalStateException("parents don't match; expected " + parent + " found " + this.Parent);
         }
-        if (i != this.getChildIndex())
+        if (i != this.GetChildIndex())
         {
-            throw new IllegalStateException("child indexes don't match; expected " + i + " found " + this.getChildIndex());
+            throw new IllegalStateException("child indexes don't match; expected " + i + " found " + this.GetChildIndex());
         }
-        int n = this.getChildCount();
+        int n = this.ChildCount;
         for (int c = 0; c < n; c++)
         {
-            CommonTree child = (CommonTree)this.getChild(c);
-            child.sanityCheckParentAndChildIndexes(this, c);
+            CommonTree child = (CommonTree)this.GetChild(c);
+            child.SanityCheckParentAndChildIndexes(this, c);
         }
     }
 
     /** BaseTree doesn't track child indexes. */
     //@Override
-    public int getChildIndex()
+    public int GetChildIndex()
     {
         return 0;
-    }
-    //@Override
-    public void setChildIndex(int index)
-    {
     }
 
     /** BaseTree doesn't track parent pointers. */
     //@Override
-    public Tree getParent()
-    {
-        return null;
-    }
-
     //@Override
-    public void setParent(Tree t)
+    public Tree Parent
     {
+        get => null;
+        set
+        {
+        }
     }
 
     /** Walk upwards looking for ancestor with this token type. */
     //@Override
-    public bool hasAncestor(int ttype) { return getAncestor(ttype) != null; }
+    public bool HasAncestor(int ttype) { return GetAncestor(ttype) != null; }
 
     /** Walk upwards and get first ancestor with this token type. */
     //@Override
-    public Tree getAncestor(int ttype)
+    public Tree GetAncestor(int ttype)
     {
         Tree t = this;
-        t = t.getParent();
+        t = t.Parent;
         while (t != null)
         {
-            if (t.getType() == ttype) return t;
-            t = t.getParent();
+            if (t.Type == ttype) return t;
+            t = t.Parent;
         }
         return null;
     }
@@ -417,30 +393,30 @@ public abstract class BaseTree : Tree
      *  list is the root and the last is the parent of this node.
      */
     //@Override
-    public List<Tree> getAncestors()
+    public List<Tree> GetAncestors()
     {
-        if (getParent() == null) return null;
+        if (Parent == null) return null;
         List<Tree> ancestors = new ();
         Tree t = this;
-        t = t.getParent();
+        t = t.Parent;
         while (t != null)
         {
             ancestors.Insert(0, t); // insert at start
-            t = t.getParent();
+            t = t.Parent;
         }
         return ancestors;
     }
 
     /** Print out a whole tree not just a node */
     //@Override
-    public String toStringTree()
+    public string ToStringTree()
     {
         if (children == null || children.Count==0)
         {
             return this.ToString();
         }
         StringBuilder buf = new StringBuilder();
-        if (!isNil())
+        if (!IsNil)
         {
             buf.Append("(");
             buf.Append(this.ToString());
@@ -453,9 +429,9 @@ public abstract class BaseTree : Tree
             {
                 buf.Append(' ');
             }
-            buf.Append(t.toStringTree());
+            buf.Append(t.ToStringTree());
         }
-        if (!isNil())
+        if (!IsNil)
         {
             buf.Append(")");
         }
@@ -463,67 +439,32 @@ public abstract class BaseTree : Tree
     }
 
     //@Override
-    public virtual int getLine()
-    {
-        return 0;
-    }
+    public virtual int Line => 0;
 
     //@Override
-    public virtual int getCharPositionInLine()
-    {
-        return 0;
-    }
+    public virtual int CharPositionInLine => 0;
 
-    public object getPayload()
-    {
-        throw new NotImplementedException();
-    }
+    public object Payload => throw new NotImplementedException();
 
-    public int getType()
+    public int Type => throw new NotImplementedException();
+
+    public string Text => throw new NotImplementedException();
+
+    public void SetParent(BaseTree baseTree)
     {
         throw new NotImplementedException();
     }
 
-    public string getText()
+    public int TokenStartIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int TokenStopIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int ChildIndex {
+        get => throw new NotImplementedException(); 
+        set => throw new NotImplementedException(); }
+
+    public object DupNode()
     {
         throw new NotImplementedException();
     }
-
-    public void setParent(BaseTree baseTree)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setTokenStartIndex(int start)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setTokenStopIndex(int stop)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getTokenStartIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getTokenStopIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public object dupNode()
-    {
-        throw new NotImplementedException();
-    }
-
-    int Tree.getChildIndex()
-    {
-        throw new NotImplementedException();
-    }
-
     /** Override to say how a node (not a tree) should look as text */
     //@Override
     //public abstract String toString();

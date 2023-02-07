@@ -11,29 +11,31 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * {@code <ID>}. These tokens are created for {@link TagChunk} chunks where the
  * tag corresponds to a lexer rule or token type.
  */
-public class TokenTagToken : CommonToken {
-	/**
+public class TokenTagToken : CommonToken
+{
+    /**
 	 * This is the backing field for {@link #getTokenName}.
 	 */
 
-	private readonly String tokenName;
-	/**
+    private readonly string tokenName;
+    /**
 	 * This is the backing field for {@link #getLabel}.
 	 */
 
-	private readonly String label;
+    private readonly string label;
 
-	/**
+    /**
 	 * Constructs a new instance of {@link TokenTagToken} for an unlabeled tag
 	 * with the specified token name and type.
 	 *
 	 * @param tokenName The token name.
 	 * @param type The token type.
 	 */
-	public TokenTagToken(String tokenName, int type):this(tokenName,type,null) {
-	}
+    public TokenTagToken(string tokenName, int type) : this(tokenName, type, null)
+    {
+    }
 
-	/**
+    /**
 	 * Constructs a new instance of {@link TokenTagToken} with the specified
 	 * token name, type, and label.
 	 *
@@ -42,54 +44,43 @@ public class TokenTagToken : CommonToken {
 	 * @param label The label associated with the token tag, or {@code null} if
 	 * the token tag is unlabeled.
 	 */
-	public TokenTagToken(String tokenName, int type, String label):base(type) {
-		this.tokenName = tokenName;
-		this.label = label;
-	}
+    public TokenTagToken(string tokenName, int type, string label) : base(type)
+    {
+        this.tokenName = tokenName;
+        this.label = label;
+    }
 
-	/**
+    /**
 	 * Gets the token name.
 	 * @return The token name.
 	 */
 
-	public  String getTokenName() {
-		return tokenName;
-	}
+    public string TokenName => tokenName;
 
-	/**
+    /**
 	 * Gets the label associated with the rule tag.
 	 *
 	 * @return The name of the label associated with the rule tag, or
 	 * {@code null} if this is an unlabeled rule tag.
 	 */
 
-	public String getLabel() {
-		return label;
-	}
+    public string Label => label;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link TokenTagToken} returns the token tag
 	 * formatted with {@code <} and {@code >} delimiters.</p>
 	 */
-	//@Override
-	public String getText() {
-		if (label != null) {
-			return "<" + label + ":" + tokenName + ">";
-		}
+    //@Override
+    public override string Text => label != null ? "<" + label + ":" + tokenName + ">" : "<" + tokenName + ">";
 
-		return "<" + tokenName + ">";
-	}
-
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link TokenTagToken} returns a string of the form
 	 * {@code tokenName:type}.</p>
 	 */
-	//@Override
-	public override String ToString() {
-		return tokenName + ":" + type;
-	}
+    //@Override
+    public override string ToString() => tokenName + ":" + type;
 }

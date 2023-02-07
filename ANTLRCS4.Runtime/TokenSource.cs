@@ -21,14 +21,15 @@ namespace org.antlr.v4.runtime;
  * token. Keep lexing until you get a valid one. Just report errors and keep
  * going, looking for a valid token.</p>
  */
-public interface TokenSource {
-	/**
+public interface TokenSource
+{
+    /**
 	 * Return a {@link Token} object from your input stream (usually a
 	 * {@link CharStream}). Do not fail/return upon lexing error; keep chewing
 	 * on the characters until you get a good one; errors are not passed through
 	 * to the parser.
 	 */
-	public Token NextToken();
+    public Token NextToken();
 
     /**
 	 * Get the line number for the current position in the input stream. The
@@ -63,7 +64,7 @@ public interface TokenSource {
 	 * non-null, non-empty string. If such a name is not known, this method
 	 * returns {@link IntStream#UNKNOWN_SOURCE_NAME}.
 	 */
-    public String GetSourceName();
+    public string SourceName { get; }
 
     /**
 	 * Gets the {@link TokenFactory} this token source is currently using for

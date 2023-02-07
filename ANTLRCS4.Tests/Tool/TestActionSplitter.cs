@@ -48,9 +48,9 @@ public class TestActionSplitter
         List<string> chunks = new();
         var splitter = new ActionSplitter(new ANTLRStringStream(a), new BlankActionSplitterListener());
         var t = splitter.nextToken();
-        while (t.getType() != Token.EOF)
+        while (t.Type != Token.EOF)
         {
-            chunks.Add("'" + t.getText() + "'<" + t.getType() + ">");
+            chunks.Add("'" + t.Text + "'<" + t.Type + ">");
             t = splitter.nextToken();
         }
         return chunks;

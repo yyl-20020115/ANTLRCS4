@@ -25,7 +25,7 @@ public class RuleAST : GrammarASTWithOptions {
 	}
 
 	public String getRuleName() {
-		GrammarAST nameNode = (GrammarAST)getChild(0);
+		GrammarAST nameNode = (GrammarAST)GetChild(0);
 		if ( nameNode!=null ) return nameNode.getText();
 		return null;
 	}
@@ -34,11 +34,11 @@ public class RuleAST : GrammarASTWithOptions {
 	public override RuleAST dupNode() { return new RuleAST(this); }
 
 	public ActionAST getLexerAction() {
-		Tree blk = getFirstChildWithType(ANTLRParser.BLOCK);
-		if ( blk.getChildCount()==1 ) {
-			Tree onlyAlt = blk.getChild(0);
-			Tree lastChild = onlyAlt.getChild(onlyAlt.getChildCount()-1);
-			if ( lastChild.getType()==ANTLRParser.ACTION ) {
+		Tree blk = GetFirstChildWithType(ANTLRParser.BLOCK);
+		if ( blk.ChildCount==1 ) {
+			Tree onlyAlt = blk.GetChild(0);
+			Tree lastChild = onlyAlt.GetChild(onlyAlt.ChildCount-1);
+			if ( lastChild.Type==ANTLRParser.ACTION ) {
 				return (ActionAST)lastChild;
 			}
 		}

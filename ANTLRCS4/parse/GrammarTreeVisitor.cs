@@ -213,7 +213,7 @@ public class GrammarTreeVisitor : TreeParser
             if (errMgr == null)
             {
                 Console.Error.WriteLine("can't find rule " + ruleName +
-                                   " or tree structure error: " + t.toStringTree()
+                                   " or tree structure error: " + t.ToStringTree()
                                    );
                 //e.printStackTrace(System.err);
             }
@@ -904,7 +904,7 @@ public class GrammarTreeVisitor : TreeParser
 
 
         enterOptionValue(((GrammarAST)retval.start));
-        retval.v = ((GrammarAST)retval.start).token.getText();
+        retval.v = ((GrammarAST)retval.start).token.Text;
 
         try
         {
@@ -1923,9 +1923,9 @@ public class GrammarTreeVisitor : TreeParser
                 }
             exit21:
                 discoverRule((RuleAST)RULE15, RULE_REF14, mods, (ActionAST)ARG_ACTION16,
-                                            (ret != null ? ((GrammarAST)ret.start) : null) != null ? (ActionAST)(ret != null ? ((GrammarAST)ret.start) : null).getChild(0) : null,
+                                            (ret != null ? ((GrammarAST)ret.start) : null) != null ? (ActionAST)(ret != null ? ((GrammarAST)ret.start) : null).GetChild(0) : null,
                                             (thr != null ? ((GrammarAST)thr.start) : null), (opts != null ? ((GrammarAST)opts.start) : null),
-                                            (loc != null ? ((GrammarAST)loc.start) : null) != null ? (ActionAST)(loc != null ? ((GrammarAST)loc.start) : null).getChild(0) : null,
+                                            (loc != null ? ((GrammarAST)loc.start) : null) != null ? (ActionAST)(loc != null ? ((GrammarAST)loc.start) : null).GetChild(0) : null,
                                             actions, (GrammarAST)input.LT(1));
                 PushFollow(FOLLOW_ruleBlock_in_rule916);
                 ruleBlock17 = ruleBlock();

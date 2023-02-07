@@ -138,13 +138,13 @@ public class CommonToken : WritableToken /*Serializable*/
 	 */
     public CommonToken(Token oldToken)
     {
-        type = oldToken.getType();
-        line = oldToken.getLine();
-        index = oldToken.getTokenIndex();
-        charPositionInLine = oldToken.getCharPositionInLine();
-        channel = oldToken.getChannel();
-        start = oldToken.getStartIndex();
-        stop = oldToken.getStopIndex();
+        type = oldToken.Type;
+        line = oldToken.Line;
+        index = oldToken.TokenIndex;
+        charPositionInLine = oldToken.CharPositionInLine;
+        channel = oldToken.Channel;
+        start = oldToken.StartIndex;
+        stop = oldToken.StopIndex;
 
         if (oldToken is CommonToken token)
         {
@@ -153,140 +153,78 @@ public class CommonToken : WritableToken /*Serializable*/
         }
         else
         {
-            text = oldToken.getText();
-            source = new (oldToken.getTokenSource(), oldToken.getInputStream());
+            text = oldToken.Text;
+            source = new (oldToken.TokenSource, oldToken.InputStream);
         }
     }
 
     //@Override
-    public virtual int getType()
-    {
-        return type;
-    }
+    //@Override
+    public virtual int Type { get => type; set => this.type = value; }
 
     //@Override
-    public virtual void setLine(int line)
-    {
-        this.line = line;
-    }
-
-    //@Override
-    public virtual string getText()
-    {
-        if (text != null)
-        {
-            return text;
-        }
-
-        var input = getInputStream();
-        if (input == null) return null;
-        int n = input.Count;
-        if (start < n && stop < n)
-        {
-            return input.GetText(Interval.Of(start, stop));
-        }
-        else
-        {
-            return "<EOF>";
-        }
-    }
-
     /**
-	 * Explicitly set the text for this token. If {code text} is not
-	 * {@code null}, then {@link #getText} will return this value rather than
-	 * extracting the text from the input.
-	 *
-	 * @param text The explicit text of the token, or {@code null} if the text
-	 * should be obtained from the input along with the start and stop indexes
-	 * of the token.
-	 */
+ * Explicitly set the text for this token. If {code text} is not
+ * {@code null}, then {@link #getText} will return this value rather than
+ * extracting the text from the input.
+ *
+ * @param text The explicit text of the token, or {@code null} if the text
+ * should be obtained from the input along with the start and stop indexes
+ * of the token.
+ */
     //@Override
-    public virtual void setText(String text)
+    public virtual string Text
     {
-        this.text = text;
-    }
+        get
+        {
+            if (text != null)
+            {
+                return text;
+            }
 
-    //@Override
-    public virtual int getLine()
-    {
-        return line;
-    }
+            var input = InputStream;
+            if (input == null) return null;
+            int n = input.Count;
+            if (start < n && stop < n)
+            {
+                return input.GetText(Interval.Of(start, stop));
+            }
+            else
+            {
+                return "<EOF>";
+            }
+        }
 
-    //@Override
-    public virtual int getCharPositionInLine()
-    {
-        return charPositionInLine;
-    }
-
-    //@Override
-    public virtual void setCharPositionInLine(int charPositionInLine)
-    {
-        this.charPositionInLine = charPositionInLine;
-    }
-
-    //@Override
-    public virtual int getChannel()
-    {
-        return channel;
+        set => this.text = value;
     }
 
     //@Override
-    public virtual void setChannel(int channel)
-    {
-        this.channel = channel;
-    }
+    //@Override
+    public virtual int Line { get => line; set => this.line = value; }
 
     //@Override
-    public virtual void setType(int type)
-    {
-        this.type = type;
-    }
+    //@Override
+    public virtual int CharPositionInLine { get => charPositionInLine; set => this.charPositionInLine = value; }
 
     //@Override
-    public virtual int getStartIndex()
-    {
-        return start;
-    }
-
-    public virtual void setStartIndex(int start)
-    {
-        this.start = start;
-    }
+    //@Override
+    public virtual int Channel { get => channel; set => this.channel = value; }
 
     //@Override
-    public virtual int getStopIndex()
-    {
-        return stop;
-    }
-
-    public virtual void setStopIndex(int stop)
-    {
-        this.stop = stop;
-    }
+    public virtual int StartIndex { get => start; set => this.start = value; }
 
     //@Override
-    public virtual int getTokenIndex()
-    {
-        return index;
-    }
+    public virtual int StopIndex { get => stop; set => this.stop = value; }
 
     //@Override
-    public virtual void setTokenIndex(int index)
-    {
-        this.index = index;
-    }
+    //@Override
+    public virtual int TokenIndex { get => index; set => this.index = value; }
 
     //@Override
-    public virtual TokenSource getTokenSource()
-    {
-        return source.a;
-    }
+    public virtual TokenSource TokenSource { get => source.a; set => throw new NotImplementedException(); }
 
     //@Override
-    public virtual CharStream getInputStream()
-    {
-        return source.b;
-    }
+    public virtual CharStream InputStream { get => source.b; set => throw new NotImplementedException(); }
 
     //@Override
     public override string ToString()
@@ -301,7 +239,7 @@ public class CommonToken : WritableToken /*Serializable*/
         {
             channelStr = ",channel=" + channel;
         }
-        var txt = getText();
+        var txt = Text;
         if (txt != null)
         {
             txt = txt.Replace("\n", "\\n");
@@ -315,18 +253,8 @@ public class CommonToken : WritableToken /*Serializable*/
         var typeString = type.ToString();// String.valueOf(type);
         if (r != null)
         {
-            typeString = r.getVocabulary().getDisplayName(type);
+            typeString = r.GetVocabulary().GetDisplayName(type);
         }
-        return "[@" + getTokenIndex() + "," + start + ":" + stop + "='" + txt + "',<" + typeString + ">" + channelStr + "," + line + ":" + getCharPositionInLine() + "]";
-    }
-
-    public virtual void setTokenSource(TokenSource tokenSource)
-    {
-        throw new NotImplementedException();
-    }
-
-    public virtual void setInputStream(CharStream input)
-    {
-        throw new NotImplementedException();
+        return "[@" + TokenIndex + "," + start + ":" + stop + "='" + txt + "',<" + typeString + ">" + channelStr + "," + line + ":" + CharPositionInLine + "]";
     }
 }

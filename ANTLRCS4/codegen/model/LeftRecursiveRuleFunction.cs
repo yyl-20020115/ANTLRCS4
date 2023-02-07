@@ -23,12 +23,12 @@ public class LeftRecursiveRuleFunction : RuleFunction
             var idAST = pair.a;
             var altLabel = pair.b;
             var label = idAST.getText();
-            var rrefAST = (GrammarAST)idAST.getParent().getChild(1);
+            var rrefAST = (GrammarAST)idAST.getParent().GetChild(1);
             if (rrefAST.getType() == ANTLRParser.RULE_REF)
             {
                 var targetRule = factory.GetGrammar().getRule(rrefAST.getText());
                 var ctxName = gen.Target.GetRuleFunctionContextStructName(targetRule);
-                var d = idAST.getParent().getType() == ANTLRParser.ASSIGN
+                var d = idAST.getParent().Type == ANTLRParser.ASSIGN
                     ? new RuleContextDecl(factory, label, ctxName)
                     : new RuleContextListDecl(factory, label, ctxName);
                 var @struct = ruleCtx;

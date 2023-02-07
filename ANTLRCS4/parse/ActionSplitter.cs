@@ -34,7 +34,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     {
         List<Token> chunks = new();
         Token t = nextToken();
-        while (t.getType() != Token.EOF)
+        while (t.Type != Token.EOF)
         {
             chunks.Add(t);
             t = nextToken();
@@ -70,14 +70,14 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 Token eof = new CommonToken(input, Token.EOF,
                                             Token.DEFAULT_CHANNEL,
-                                            input.Index(), input.Index());
-                eof.setLine(Line);
-                eof.setCharPositionInLine(CharPositionInLine);
+                                            input.                                            Index, input.Index);
+                eof.                Line = Line;
+                eof.                CharPositionInLine = CharPositionInLine;
                 return eof;
             }
             state.token = null;
             state.channel = Token.DEFAULT_CHANNEL;
-            state.tokenStartCharIndex = input.Index();
+            state.tokenStartCharIndex = input.Index;
             state.tokenStartCharPositionInLine = input.CharPositionInLine;
             state.tokenStartLine = input.Line;
             state.text = null;
@@ -289,8 +289,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int xStartCharPos115 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart115, CharIndex - 1);
-                x.setLine(xStartLine115);
-                x.setCharPositionInLine(xStartCharPos115);
+                x.                Line = xStartLine115;
+                x.                CharPositionInLine = xStartCharPos115;
 
                 Match("::"); if (state.failed) return;
 
@@ -299,8 +299,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int yStartCharPos121 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart121, CharIndex - 1);
-                y.setLine(yStartLine121);
-                y.setCharPositionInLine(yStartCharPos121);
+                y.                Line = yStartLine121;
+                y.                CharPositionInLine = yStartCharPos121;
 
                 // org\\antlr\\v4\\parse\\ActionSplitter.g:76:23: ( WS )?
                 int alt4 = 2;
@@ -327,8 +327,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int exprStartCharPos130 = CharPositionInLine;
                 mATTR_VALUE_EXPR(); if (state.failed) return;
                 expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart130, CharIndex - 1);
-                expr.setLine(exprStartLine130);
-                expr.setCharPositionInLine(exprStartCharPos130);
+                expr.                Line = exprStartLine130;
+                expr.                CharPositionInLine = exprStartCharPos130;
 
                 Match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
@@ -366,8 +366,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int xStartCharPos151 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart151, CharIndex - 1);
-                x.setLine(xStartLine151);
-                x.setCharPositionInLine(xStartCharPos151);
+                x.                Line = xStartLine151;
+                x.                CharPositionInLine = xStartCharPos151;
 
                 Match("::"); if (state.failed) return;
 
@@ -376,8 +376,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int yStartCharPos157 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart157, CharIndex - 1);
-                y.setLine(yStartLine157);
-                y.setCharPositionInLine(yStartCharPos157);
+                y.                Line = yStartLine157;
+                y.                CharPositionInLine = yStartCharPos157;
 
                 if (state.backtracking == 1) { @delegate.NonLocalAttr(GetText(), x, y); }
             }
@@ -411,8 +411,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int xStartCharPos174 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart174, CharIndex - 1);
-                x.setLine(xStartLine174);
-                x.setCharPositionInLine(xStartCharPos174);
+                x.                Line = xStartLine174;
+                x.                CharPositionInLine = xStartCharPos174;
 
                 Match('.'); if (state.failed) return;
                 int yStart180 = CharIndex;
@@ -420,8 +420,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int yStartCharPos180 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 y = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yStart180, CharIndex - 1);
-                y.setLine(yStartLine180);
-                y.setCharPositionInLine(yStartCharPos180);
+                y.                Line = yStartLine180;
+                y.                CharPositionInLine = yStartCharPos180;
 
                 if (!((input.LA(1) != '(')))
                 {
@@ -460,8 +460,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int xStartCharPos199 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 x = new CommonToken( input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart199, CharIndex - 1);
-                x.setLine(xStartLine199);
-                x.setCharPositionInLine(xStartCharPos199);
+                x.                Line = xStartLine199;
+                x.                CharPositionInLine = xStartCharPos199;
 
                 // org\\antlr\\v4\\parse\\ActionSplitter.g:91:13: ( WS )?
                 int alt5 = 2;
@@ -488,8 +488,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int exprStartCharPos208 = CharPositionInLine;
                 mATTR_VALUE_EXPR(); if (state.failed) return;
                 expr = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, exprStart208, CharIndex - 1);
-                expr.setLine(exprStartLine208);
-                expr.setCharPositionInLine(exprStartCharPos208);
+                expr.                Line = exprStartLine208;
+                expr.                CharPositionInLine = exprStartCharPos208;
 
                 Match(';'); if (state.failed) return;
                 if (state.backtracking == 1)
@@ -526,8 +526,8 @@ public class ActionSplitter : antlr.runtime.Lexer
                 int xStartCharPos229 = CharPositionInLine;
                 mID(); if (state.failed) return;
                 x = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, xStart229, CharIndex - 1);
-                x.setLine(xStartLine229);
-                x.setCharPositionInLine(xStartCharPos229);
+                x.                Line = xStartLine229;
+                x.                CharPositionInLine = xStartCharPos229;
 
                 if (state.backtracking == 1) { @delegate.Attr(GetText(), x); }
             }

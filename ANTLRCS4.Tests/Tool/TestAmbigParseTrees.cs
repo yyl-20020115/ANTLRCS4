@@ -224,7 +224,7 @@ public class TestAmbigParseTrees
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
         parser.setProfile(true);
-        parser.getInterpreter().        PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
+        parser.GetInterpreter().        PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 
         // PARSE
         int ruleIndex = g.rules[(startRule)].index;

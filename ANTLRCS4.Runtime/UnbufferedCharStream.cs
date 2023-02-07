@@ -262,11 +262,9 @@ public class UnbufferedCharStream : CharStream {
     }
 
     //@Override
-    public int Index() {
-		return currentCharIndex;
-    }
+    public int Index => currentCharIndex;
 
-	/** Seek to absolute character index, which might not be in the current
+    /** Seek to absolute character index, which might not be in the current
 	 *  sliding window.  Move {@code p} to {@code index-bufferStartIndex}.
 	 */
     //@Override
@@ -304,16 +302,21 @@ public class UnbufferedCharStream : CharStream {
     public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
     //@Override
-    public String GetSourceName() {
-		if (string.IsNullOrEmpty(name)) {
-			return IntStream.UNKNOWN_SOURCE_NAME;
-		}
+    public String SourceName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return IntStream.UNKNOWN_SOURCE_NAME;
+            }
 
-		return name;
-	}
+            return name;
+        }
+    }
 
-	//@Override
-	public String GetText(Interval interval) {
+    //@Override
+    public String GetText(Interval interval) {
 		if (interval.a < 0 || interval.b < interval.a - 1) {
 			throw new ArgumentException("invalid interval");
 		}

@@ -35,13 +35,13 @@ public class GrammarAST : CommonTree {
     public GrammarAST(int type, Token t): this(new CommonToken(t))
     {
 		;
-		token.setType(type);
+		token.		Type = type;
 	}
     public GrammarAST(int type, Token t, String text) : this(new CommonToken(t))
     {
 		;
-		token.setType(type);
-		token.setText(text);
+		token.		Type = type;
+		token.		Text = text;
     }
 
 	public GrammarAST[] getChildrenAsArray() {
@@ -56,7 +56,7 @@ public class GrammarAST : CommonTree {
 		List<GrammarAST> nodes = new ();
 		for (int i = 0; children!=null && i < children.Count; i++) {
 			Tree t = (Tree) children[(i)];
-			if ( t.getType()==type ) {
+			if ( t.Type==type ) {
 				nodes.Add((GrammarAST)t);
 			}
 		}
@@ -88,19 +88,19 @@ public class GrammarAST : CommonTree {
 	public void getNodesWithTypePreorderDFS_(List<GrammarAST> nodes, IntervalSet types) {
 		if ( types.Contains(this.getType()) ) nodes.Add(this);
 		// walk all children of root.
-		for (int i= 0; i < getChildCount(); i++) {
-			GrammarAST child = (GrammarAST)getChild(i);
+		for (int i= 0; i < ChildCount; i++) {
+			GrammarAST child = (GrammarAST)GetChild(i);
 			child.getNodesWithTypePreorderDFS_(nodes, types);
 		}
 	}
 
 	public GrammarAST getNodeWithTokenIndex(int index) {
-		if ( this.getToken()!=null && this.getToken().getTokenIndex()==index ) {
+		if ( this.Token!=null && this.Token.TokenIndex==index ) {
 			return this;
 		}
 		// walk all children of root.
-		for (int i= 0; i < getChildCount(); i++) {
-			GrammarAST child = (GrammarAST)getChild(i);
+		for (int i= 0; i < ChildCount; i++) {
+			GrammarAST child = (GrammarAST)GetChild(i);
 			GrammarAST result = child.getNodeWithTokenIndex(index);
 			if ( result!=null ) {
 				return result;
@@ -122,7 +122,7 @@ public class GrammarAST : CommonTree {
 	 *  If not a rule element, just returns null.
 	 */
 	public String getAltLabel() {
-		List<Tree> ancestors = this.getAncestors();
+		List<Tree> ancestors = this.GetAncestors();
 		if ( ancestors==null ) return null;
 		for (int i=ancestors.Count-1; i>=0; i--) {
 			GrammarAST p = (GrammarAST)ancestors[i];
@@ -141,7 +141,7 @@ public class GrammarAST : CommonTree {
 		for (int i=0; i<children.Count; i++) {
 			Object c = children[(i)];
 			if ( c == t ) {
-				deleteChild(t.getChildIndex());
+				DeleteChild(t.ChildIndex);
 				return true;
 			}
 		}
@@ -177,7 +177,7 @@ public class GrammarAST : CommonTree {
 	}
 
 	public void setType(int type) {
-		token.setType(type);
+		token.		Type = type;
 	}
 //
 //	//@Override
@@ -191,7 +191,8 @@ public class GrammarAST : CommonTree {
 
 	public void setText(String text) {
 //		textOverride = text; // don't alt tokens as others might see
-		token.setText(text); // we delete surrounding tree, so ok to alter
+		token.//		textOverride = text; // don't alt tokens as others might see
+		Text = text; // we delete surrounding tree, so ok to alter
 	}
 
 //	//@Override
@@ -206,13 +207,13 @@ public class GrammarAST : CommonTree {
 
 	public GrammarAST dupTree() {
 		GrammarAST t = this;
-		CharStream input = this.token.getInputStream();
+		CharStream input = this.token.InputStream;
 		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(input);
 		return (GrammarAST)adaptor.dupTree(t);
 	}
 
 	public String toTokenString() {
-		CharStream input = this.token.getInputStream();
+		CharStream input = this.token.InputStream;
 		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(input);
 		CommonTreeNodeStream nodes =
 			new CommonTreeNodeStream(adaptor, this);

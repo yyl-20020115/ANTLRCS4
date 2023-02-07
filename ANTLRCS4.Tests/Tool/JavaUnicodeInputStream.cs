@@ -36,16 +36,10 @@ public class JavaUnicodeInputStream : CharStream
     public int Count => source.Count;
 
     ////@Override
-    public int Index()
-    {
-        return source.Index();
-    }
+    public int Index => source.Index;
 
     ////@Override
-    public String GetSourceName()
-    {
-        return source.GetSourceName();
-    }
+    public String SourceName => source.SourceName;
 
     ////@Override
     public string GetText(Interval interval)
@@ -60,7 +54,7 @@ public class JavaUnicodeInputStream : CharStream
         {
             source.Consume();
             la1 = source.LA(1);
-            range = Math.Max(range, source.Index());
+            range = Math.Max(range, source.Index);
             slashCount = 0;
             return;
         }
@@ -68,7 +62,7 @@ public class JavaUnicodeInputStream : CharStream
         // make sure the next character has been processed
         this.LA(1);
 
-        if (escapeListIndex >= escapeIndexes.Size || escapeIndexes.Get(escapeListIndex) != Index())
+        if (escapeListIndex >= escapeIndexes.Size || escapeIndexes.Get(escapeListIndex) != Index)
         {
             source.Consume();
             slashCount++;
@@ -99,7 +93,7 @@ public class JavaUnicodeInputStream : CharStream
 
         if (i <= 0)
         {
-            int desiredIndex = Index() + i;
+            int desiredIndex = Index + i;
             for (int j = escapeListIndex - 1; j >= 0; j--)
             {
                 if (escapeIndexes.Get(j) + 6 + escapeIndirectionLevels.Get(j) > desiredIndex)
@@ -113,11 +107,11 @@ public class JavaUnicodeInputStream : CharStream
                 }
             }
 
-            return source.LA(desiredIndex - Index());
+            return source.LA(desiredIndex - Index);
         }
         else
         {
-            int desiredIndex = Index() + i - 1;
+            int desiredIndex = Index + i - 1;
             for (int j = escapeListIndex; j < escapeIndexes.Size; j++)
             {
                 if (escapeIndexes.Get(j) == desiredIndex)
@@ -130,11 +124,11 @@ public class JavaUnicodeInputStream : CharStream
                 }
                 else
                 {
-                    return source.LA(desiredIndex - Index() + 1);
+                    return source.LA(desiredIndex - Index + 1);
                 }
             }
 
-            int[] currentIndex = { Index() };
+            int[] currentIndex = { Index };
             int[] slashCountPtr = { slashCount };
             int[] indirectionLevelPtr = { 0 };
             for (int j = 0; j < i; j++)
@@ -192,7 +186,7 @@ public class JavaUnicodeInputStream : CharStream
             slashCount++;
         }
 
-        escapeListIndex = escapeIndexes.BinarySearch(source.Index());
+        escapeListIndex = escapeIndexes.BinarySearch(source.Index);
         if (escapeListIndex < 0)
         {
             escapeListIndex = -escapeListIndex - 1;
@@ -234,27 +228,27 @@ public class JavaUnicodeInputStream : CharStream
 
         bool blockUnicodeEscape = (slashCountPtr[0] % 2) != 0;
 
-        int c0 = source.LA(nextIndexPtr[0] - Index() + 1);
+        int c0 = source.LA(nextIndexPtr[0] - Index + 1);
         if (c0 == '\\')
         {
             slashCountPtr[0]++;
 
             if (!blockUnicodeEscape)
             {
-                int c1 = source.LA(nextIndexPtr[0] - Index() + 2);
+                int c1 = source.LA(nextIndexPtr[0] - Index + 2);
                 if (c1 == 'u')
                 {
-                    int c2 = source.LA(nextIndexPtr[0] - Index() + 3);
+                    int c2 = source.LA(nextIndexPtr[0] - Index + 3);
                     indirectionLevelPtr[0] = 0;
                     while (c2 == 'u')
                     {
                         indirectionLevelPtr[0]++;
-                        c2 = source.LA(nextIndexPtr[0] - Index() + 3 + indirectionLevelPtr[0]);
+                        c2 = source.LA(nextIndexPtr[0] - Index + 3 + indirectionLevelPtr[0]);
                     }
 
-                    int c3 = source.LA(nextIndexPtr[0] - Index() + 4 + indirectionLevelPtr[0]);
-                    int c4 = source.LA(nextIndexPtr[0] - Index() + 5 + indirectionLevelPtr[0]);
-                    int c5 = source.LA(nextIndexPtr[0] - Index() + 6 + indirectionLevelPtr[0]);
+                    int c3 = source.LA(nextIndexPtr[0] - Index + 4 + indirectionLevelPtr[0]);
+                    int c4 = source.LA(nextIndexPtr[0] - Index + 5 + indirectionLevelPtr[0]);
+                    int c5 = source.LA(nextIndexPtr[0] - Index + 6 + indirectionLevelPtr[0]);
                     if (isHexDigit(c2) && isHexDigit(c3) && isHexDigit(c4) && isHexDigit(c5))
                     {
                         int value = hexValue(c2);

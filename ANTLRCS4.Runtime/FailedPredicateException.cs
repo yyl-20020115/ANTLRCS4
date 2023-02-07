@@ -13,59 +13,67 @@ namespace org.antlr.v4.runtime;
  *  Disambiguating predicate evaluation occurs when we test a predicate during
  *  prediction.
  */
-public class FailedPredicateException : RecognitionException {
-	private readonly int ruleIndex;
-	private readonly int predicateIndex;
-	private readonly String predicate;
+public class FailedPredicateException : RecognitionException
+{
+    private readonly int ruleIndex;
+    private readonly int predicateIndex;
+    private readonly string predicate;
     internal string predicateText;
     internal string ruleName;
     public FailedPredicateException(IntStream input,
-                                    String predicate = null,
-                                    String message = null)
-		: base(formatMessage(predicate, message), null, null,null)
+                                    string predicate = null,
+                                    string message = null)
+        : base(FormatMessage(predicate, message), null, null, null)
     {
 
     }
     public FailedPredicateException(Parser recognizer,
-									String predicate = null,
-									String message = null)
-		: base(formatMessage(predicate, message), recognizer, recognizer.InputStream, recognizer.GetCtx())
+                                    string predicate = null,
+                                    string message = null)
+        : base(FormatMessage(predicate, message), recognizer, recognizer.InputStream, recognizer.GetCtx())
     {
-		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
+        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
 
-		AbstractPredicateTransition trans = (AbstractPredicateTransition)s.Transition(0);
-		if (trans is PredicateTransition) {
-			this.ruleIndex = ((PredicateTransition)trans).ruleIndex;
-			this.predicateIndex = ((PredicateTransition)trans).predIndex;
-		}
-		else {
-			this.ruleIndex = 0;
-			this.predicateIndex = 0;
-		}
+        AbstractPredicateTransition trans = (AbstractPredicateTransition)s.Transition(0);
+        if (trans is PredicateTransition transition)
+        {
+            this.ruleIndex = transition.ruleIndex;
+            this.predicateIndex = transition.predIndex;
+        }
+        else
+        {
+            this.ruleIndex = 0;
+            this.predicateIndex = 0;
+        }
 
-		this.predicate = predicate;
-		this.setOffendingToken(recognizer.getCurrentToken());
-	}
+        this.predicate = predicate;
+        this.setOffendingToken(recognizer.getCurrentToken());
+    }
 
-	public int getRuleIndex() {
-		return ruleIndex;
-	}
+    public int GetRuleIndex()
+    {
+        return ruleIndex;
+    }
 
-	public int getPredIndex() {
-		return predicateIndex;
-	}
-
-
-	public String getPredicate() {
-		return predicate;
-	}
+    public int GetPredIndex()
+    {
+        return predicateIndex;
+    }
 
 
-	private static String formatMessage(String predicate, String message) {
-		if (message != null) {
-			return message;
-		}
+    public string GetPredicate()
+    {
+        return predicate;
+    }
 
-		return $"failed predicate: {{{predicate}}}?";
-	}
+
+    private static string FormatMessage(string predicate, string message)
+    {
+        if (message != null)
+        {
+            return message;
+        }
+
+        return $"failed predicate: {{{predicate}}}?";
+    }
 }

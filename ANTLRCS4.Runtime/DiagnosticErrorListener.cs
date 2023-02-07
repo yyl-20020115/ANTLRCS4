@@ -31,96 +31,102 @@ namespace org.antlr.v4.runtime;
  *
  * @author Sam Harwell
  */
-public class DiagnosticErrorListener : BaseErrorListener {
-	/**
+public class DiagnosticErrorListener : BaseErrorListener
+{
+    /**
 	 * When {@code true}, only exactly known ambiguities are reported.
 	 */
-	protected readonly bool exactOnly;
+    protected readonly bool exactOnly;
 
-	/**
+    /**
 	 * Initializes a new instance of {@link DiagnosticErrorListener} which only
 	 * reports exact ambiguities.
 	 */
-	
-	/**
+
+    /**
 	 * Initializes a new instance of {@link DiagnosticErrorListener}, specifying
 	 * whether all ambiguities or only exact ambiguities are reported.
 	 *
 	 * @param exactOnly {@code true} to report only exact ambiguities, otherwise
 	 * {@code false} to report all ambiguities.
 	 */
-	public DiagnosticErrorListener(bool exactOnly = true) {
-		this.exactOnly = exactOnly;
-	}
+    public DiagnosticErrorListener(bool exactOnly = true)
+    {
+        this.exactOnly = exactOnly;
+    }
 
-	////@Override
-	public void reportAmbiguity(Parser recognizer,
-								DFA dfa,
-								int startIndex,
-								int stopIndex,
-								bool exact,
-								BitSet ambigAlts,
-								ATNConfigSet configs)
-	{
-		if (exactOnly && !exact) {
-			return;
-		}
+    ////@Override
+    public override void ReportAmbiguity(Parser recognizer,
+                                DFA dfa,
+                                int startIndex,
+                                int stopIndex,
+                                bool exact,
+                                BitSet ambigAlts,
+                                ATNConfigSet configs)
+    {
+        if (exactOnly && !exact)
+        {
+            return;
+        }
 
-		String decision = getDecisionDescription(recognizer, dfa);
-		BitSet conflictingAlts = getConflictingAlts(ambigAlts, configs);
-		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
-		String message = $"reportAmbiguity d={decision}: ambigAlts={conflictingAlts}, input='{text}'";
-		recognizer.notifyErrorListeners(message);
-	}
+        var decision = GetDecisionDescription(recognizer, dfa);
+        var conflictingAlts = GetConflictingAlts(ambigAlts, configs);
+        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var message = $"reportAmbiguity d={decision}: ambigAlts={conflictingAlts}, input='{text}'";
+        recognizer.notifyErrorListeners(message);
+    }
 
-	//@Override
-	public void reportAttemptingFullContext(Parser recognizer,
-											DFA dfa,
-											int startIndex,
-											int stopIndex,
-											BitSet conflictingAlts,
-											ATNConfigSet configs)
-	{
-		String decision = getDecisionDescription(recognizer, dfa);
-		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
-		String message = $"reportAttemptingFullContext d={decision}, input='{text}'";
+    //@Override
+    public override void ReportAttemptingFullContext(Parser recognizer,
+                                            DFA dfa,
+                                            int startIndex,
+                                            int stopIndex,
+                                            BitSet conflictingAlts,
+                                            ATNConfigSet configs)
+    {
+        var decision = GetDecisionDescription(recognizer, dfa);
+        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var message = $"reportAttemptingFullContext d={decision}, input='{text}'";
 
         recognizer.notifyErrorListeners(message);
-	}
+    }
 
-	//@Override
-	public void reportContextSensitivity(Parser recognizer,
-										 DFA dfa,
-										 int startIndex,
-										 int stopIndex,
-										 int prediction,
-										 ATNConfigSet configs)
-	{
-		String decision = getDecisionDescription(recognizer, dfa);
-		String text = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
-		String message = $"reportContextSensitivity d={decision}, input='{text}'";
+    //@Override
+    public override void ReportContextSensitivity(Parser recognizer,
+                                         DFA dfa,
+                                         int startIndex,
+                                         int stopIndex,
+                                         int prediction,
+                                         ATNConfigSet configs)
+    {
+        var decision = GetDecisionDescription(recognizer, dfa);
+        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var message = $"reportContextSensitivity d={decision}, input='{text}'";
 
         recognizer.notifyErrorListeners(message);
-	}
+    }
 
-	protected String getDecisionDescription(Parser recognizer, DFA dfa) {
-		int decision = dfa.decision;
-		int ruleIndex = dfa.atnStartState.ruleIndex;
+    protected string GetDecisionDescription(Parser recognizer, DFA dfa)
+    {
+        int decision = dfa.decision;
+        int ruleIndex = dfa.atnStartState.ruleIndex;
 
-		String[] ruleNames = recognizer.getRuleNames();
-		if (ruleIndex < 0 || ruleIndex >= ruleNames.Length) {
-			return decision.ToString();
-		}
+        var ruleNames = recognizer.GetRuleNames();
+        if (ruleIndex < 0 || ruleIndex >= ruleNames.Length)
+        {
+            return decision.ToString();
+        }
 
-		String ruleName = ruleNames[ruleIndex];
-		if (ruleName == null || ruleName.Length==0) {
-			return decision.ToString();
-		}
+        var ruleName = ruleNames[ruleIndex];
+        if (ruleName == null || ruleName.Length == 0)
+        {
+            return decision.ToString();
+        }
 
-		return $"{decision} ({ruleName})";
-	}
+        return $"{decision} ({ruleName})";
+    }
 
-	/**
+    /**
 	 * Computes the set of conflicting or ambiguous alternatives from a
 	 * configuration set, if that information was not already provided by the
 	 * parser.
@@ -131,16 +137,19 @@ public class DiagnosticErrorListener : BaseErrorListener {
 	 * @return Returns {@code reportedAlts} if it is not {@code null}, otherwise
 	 * returns the set of alternatives represented in {@code configs}.
 	 */
-	protected BitSet getConflictingAlts(BitSet reportedAlts, ATNConfigSet configs) {
-		if (reportedAlts != null) {
-			return reportedAlts;
-		}
+    protected BitSet GetConflictingAlts(BitSet reportedAlts, ATNConfigSet configs)
+    {
+        if (reportedAlts != null)
+        {
+            return reportedAlts;
+        }
 
-		BitSet result = new BitSet();
-		foreach (ATNConfig config in configs) {
-			result.Set(config.alt);
-		}
+        var result = new BitSet();
+        foreach (var config in configs)
+        {
+            result.Set(config.alt);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

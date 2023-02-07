@@ -4,15 +4,13 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.atn;
-
 namespace org.antlr.v4.runtime.tree.xpath;
 
 
-public class XPathLexerErrorListener : BaseErrorListener {
-	public override void SyntaxError(Recognizer recognizer, Object offendingSymbol,
-							int line, int charPositionInLine, String msg,
-							RecognitionException e)
-	{
-	}
+public class XPathLexerErrorListener : BaseErrorListener
+{
+    public override void SyntaxError(Recognizer recognizer, object offendingSymbol,
+                            int line, int charPositionInLine, string msg,
+                            RecognitionException e)
+    { }
 }

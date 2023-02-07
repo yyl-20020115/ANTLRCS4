@@ -51,7 +51,7 @@ public class LexerSkipAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.skip();
+        lexer.Skip();
     }
 
     //@Override

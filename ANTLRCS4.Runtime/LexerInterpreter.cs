@@ -10,102 +10,114 @@ using org.antlr.v4.runtime.dfa;
 namespace org.antlr.v4.runtime;
 
 
-public class LexerInterpreter : Lexer {
-	protected String grammarFileName;
-	protected ATN atn;
+public class LexerInterpreter : Lexer
+{
+    protected string grammarFileName;
+    protected ATN atn;
 
-	//@Deprecated
-	protected String[] tokenNames;
-	protected String[] ruleNames;
-	protected String[] channelNames;
-	protected String[] modeNames;
+    //@Deprecated
+    protected string[] tokenNames;
+    protected string[] ruleNames;
+    protected string[] channelNames;
+    protected string[] modeNames;
 
 
-	private Vocabulary vocabulary;
+    private Vocabulary vocabulary;
 
-	protected DFA[] _decisionToDFA;
-	protected PredictionContextCache _sharedContextCache =
-		new PredictionContextCache();
+    protected DFA[] _decisionToDFA;
+    protected PredictionContextCache _sharedContextCache =
+        new PredictionContextCache();
 
-	//@Deprecated
-	public LexerInterpreter(String grammarFileName, ICollection<String> tokenNames, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) 
-	: this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
+    //@Deprecated
+    public LexerInterpreter(string grammarFileName, ICollection<string> tokenNames, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
+    : this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
     {
-	}
+    }
 
-	//@Deprecated
-	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, ICollection<String> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input) 
-	: this(grammarFileName, vocabulary, ruleNames, new List<String>(), modeNames, atn, input)
-	{
-		
-	}
+    //@Deprecated
+    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
+    : this(grammarFileName, vocabulary, ruleNames, new List<String>(), modeNames, atn, input)
+    {
 
-	public LexerInterpreter(String grammarFileName, Vocabulary vocabulary, ICollection<String> ruleNames, ICollection<String> channelNames, ICollection<String> modeNames, ATN atn, CharStream input)
+    }
+
+    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> channelNames, ICollection<String> modeNames, ATN atn, CharStream input)
         : base(input)
-	{
+    {
 
-		if (atn.grammarType != ATNType.LEXER) {
-			throw new ArgumentException("The ATN must be a lexer ATN.");
-		}
+        if (atn.grammarType != ATNType.LEXER)
+        {
+            throw new ArgumentException("The ATN must be a lexer ATN.");
+        }
 
-		this.grammarFileName = grammarFileName;
-		this.atn = atn;
-		this.tokenNames = new String[atn.maxTokenType];
-		for (int i = 0; i < tokenNames.Length; i++) {
-			tokenNames[i] = vocabulary.getDisplayName(i);
-		}
+        this.grammarFileName = grammarFileName;
+        this.atn = atn;
+        this.tokenNames = new String[atn.maxTokenType];
+        for (int i = 0; i < tokenNames.Length; i++)
+        {
+            tokenNames[i] = vocabulary.GetDisplayName(i);
+        }
 
-		this.ruleNames = ruleNames.ToArray();
-		this.channelNames = channelNames.ToArray();
-		this.modeNames = modeNames.ToArray();
-		this.vocabulary = vocabulary;
+        this.ruleNames = ruleNames.ToArray();
+        this.channelNames = channelNames.ToArray();
+        this.modeNames = modeNames.ToArray();
+        this.vocabulary = vocabulary;
 
-		this._decisionToDFA = new DFA[atn.NumberOfDecisions()];
-		for (int i = 0; i < _decisionToDFA.Length; i++) {
-			_decisionToDFA[i] = new DFA(atn.GetDecisionState(i), i);
-		}
-		this._interp = new LexerATNSimulator(this,atn,_decisionToDFA,_sharedContextCache);
-	}
-
-	//@Override
-	public override ATN getATN() {
-		return atn;
-	}
+        this._decisionToDFA = new DFA[atn.NumberOfDecisions()];
+        for (int i = 0; i < _decisionToDFA.Length; i++)
+        {
+            _decisionToDFA[i] = new DFA(atn.GetDecisionState(i), i);
+        }
+        this._interp = new LexerATNSimulator(this, atn, _decisionToDFA, _sharedContextCache);
+    }
 
     //@Override
-    public override String getGrammarFileName() {
-		return grammarFileName;
-	}
+    public override ATN GetATN()
+    {
+        return atn;
+    }
+
+    //@Override
+    public override String GetGrammarFileName()
+    {
+        return grammarFileName;
+    }
 
     //@Override
     //@Deprecated
-    public String[] getTokenNames() {
-		return tokenNames;
-	}
+    public String[] GetTokenNames()
+    {
+        return tokenNames;
+    }
 
     //@Override
-    public override String[] getRuleNames() {
-		return ruleNames;
-	}
+    public override String[] GetRuleNames()
+    {
+        return ruleNames;
+    }
 
     //@Override
-    public String[] getChannelNames() {
-		return channelNames;
-	}
+    public String[] GetChannelNames()
+    {
+        return channelNames;
+    }
 
     //@Override
-    public override String[] getModeNames() {
-		return modeNames;
-	}
+    public override String[] GetModeNames()
+    {
+        return modeNames;
+    }
 
     //@Override
-    public Vocabulary getVocabulary() {
-		if (vocabulary != null) {
-			return vocabulary;
-		}
+    public override Vocabulary GetVocabulary()
+    {
+        if (vocabulary != null)
+        {
+            return vocabulary;
+        }
 
-		return base.getVocabulary();
-	}
+        return base.GetVocabulary();
+    }
 
     public override TokenFactory TokenFactory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

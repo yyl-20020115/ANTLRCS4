@@ -152,7 +152,7 @@ public class TestUnicodeGrammar
     {
         var grammar = new Grammar(grammarText);
         var lexEngine = grammar.createLexerInterpreter(
-                CharStreams.fromString(inputText));
+                CharStreams.FromString(inputText));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = grammar.createGrammarParserInterpreter(tokens);
         var parseTree = parser.parse(grammar.rules[(rootRule)].index);

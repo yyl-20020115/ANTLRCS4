@@ -135,8 +135,8 @@ public class TreeRewriter : TreeParser
      */
     public void reportTransformation(Object oldTree, Object newTree)
     {
-        Console.WriteLine(((Tree)oldTree).toStringTree() + " -> " +
-                           ((Tree)newTree).toStringTree());
+        Console.WriteLine(((Tree)oldTree).ToStringTree() + " -> " +
+                           ((Tree)newTree).ToStringTree());
     }
 
     fptr topdown_fptr = new CFPTR1();

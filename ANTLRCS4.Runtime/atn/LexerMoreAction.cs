@@ -52,7 +52,7 @@ public class LexerMoreAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.more();
+        lexer.More();
     }
 
     //@Override

@@ -24,8 +24,8 @@ public class GrammarSyntaxMessage : ANTLRMessage {
 		this.fileName = fileName;
 		this.offendingToken = offendingToken;
 		if ( offendingToken!=null ) {
-			line = offendingToken.getLine();
-			charPosition = offendingToken.getCharPositionInLine();
+			line = offendingToken.Line;
+			charPosition = offendingToken.CharPositionInLine;
 		}
 	}
 

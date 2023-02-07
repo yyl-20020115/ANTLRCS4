@@ -274,8 +274,8 @@ public class OutputModelController
     {
         var gen = @delegate.GetGenerator();
         // TRIGGER factory functions for rule alts, elements
-        var adaptor = new GrammarASTAdaptor(r.ast.token.getInputStream());
-        var blk = (GrammarAST)r.ast.getFirstChildWithType(ANTLRParser.BLOCK);
+        var adaptor = new GrammarASTAdaptor(r.ast.token.InputStream);
+        var blk = (GrammarAST)r.ast.GetFirstChildWithType(ANTLRParser.BLOCK);
         var nodes = new CommonTreeNodeStream(adaptor, blk);
         walker = new SourceGenTriggers(nodes, this);
         try

@@ -15,25 +15,28 @@ namespace org.antlr.v4.runtime;
  * @deprecated as of 4.7 Please use {@link CharStreams} interface.
  */
 //@Deprecated
-public class ANTLRFileStream : ANTLRInputStream {
-	protected String fileName;
+public class ANTLRFileStream : ANTLRInputStream
+{
+    protected string fileName;
 
-	public ANTLRFileStream(String fileName): this(fileName, null)
-    {}
+    public ANTLRFileStream(string fileName) : this(fileName, null)
+    { }
 
-	public ANTLRFileStream(String fileName, Encoding encoding){
-		this.fileName = fileName;
-		load(fileName, encoding);
-	}
+    public ANTLRFileStream(string fileName, Encoding encoding)
+    {
+        this.fileName = fileName;
+        Load(fileName, encoding);
+    }
 
-	public void load(String fileName, Encoding encoding)
-	{
-		data = RuntimeUtils.ReadFile(fileName, encoding);
-		this.n = data.Length;
-	}
+    public void Load(string fileName, Encoding encoding)
+    {
+        data = RuntimeUtils.ReadFile(fileName, encoding);
+        this.n = data.Length;
+    }
 
-	//@Override
-	public String getSourceName() {
-		return fileName;
-	}
+    //@Override
+    public string GetSourceName()
+    {
+        return fileName;
+    }
 }

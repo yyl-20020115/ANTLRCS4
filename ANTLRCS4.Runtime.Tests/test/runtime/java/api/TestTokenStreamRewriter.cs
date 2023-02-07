@@ -28,7 +28,7 @@ public class TestTokenStreamRewriter
                                              "C : 'c';\n");
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream("abc"));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "0");
         var result = tokens.getText();
@@ -47,7 +47,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertAfter(2, "x");
         var result = tokens.getText();
@@ -66,7 +66,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertAfter(1, "x");
@@ -86,7 +86,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, "x");
         var result = tokens.getText();
@@ -105,7 +105,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, "x");
         var result = tokens.getText();
@@ -124,7 +124,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, "x");
         var result = tokens.getText();
@@ -148,13 +148,13 @@ public class TestTokenStreamRewriter
         var input = "x = 3 * 0;";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(4, 8, "0");
-        stream.fill();
+        stream.Fill();
         // replace 3 * 0 with 0
 
-        var result = tokens.getTokenStream().getText();
+        var result = tokens.getTokenStream().Text;
         var expecting = "x = 3 * 0;";
         Assert.AreEqual(expecting, result);
 
@@ -188,15 +188,15 @@ public class TestTokenStreamRewriter
         var input = "x = 3 * 0 + 2 * 0;";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
 
-        var result = tokens.getTokenStream().getText();
+        var result = tokens.getTokenStream().Text;
         var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
         tokens.replace(4, 8, "0");
-        stream.fill();
+        stream.Fill();
         // replace 3 * 0 with 0
         result = tokens.getText();
         expecting = "x = 0 + 2 * 0;";
@@ -224,7 +224,7 @@ public class TestTokenStreamRewriter
         Assert.AreEqual(expecting, result);
 
         result = tokens.getText(Interval.Of(0, 8));
-        stream.fill();
+        stream.Fill();
         // try again after insert at end
         expecting = "x = 0";
         Assert.AreEqual(expecting, result);
@@ -242,7 +242,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, "x");
         tokens.replace(1, "y");
@@ -262,7 +262,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "_");
         tokens.replace(1, "x");
@@ -283,7 +283,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, "x");
         tokens.delete(1);
@@ -303,7 +303,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 2, "x");
         tokens.insertBefore(1, "0");
@@ -332,11 +332,11 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "0");
         tokens.replace(0, "x");
-        stream.fill();
+        stream.Fill();
         // supercedes insert at 0
         var result = tokens.getText();
         var expecting = "0xbc";
@@ -354,7 +354,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(1, "y");
@@ -374,7 +374,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
@@ -395,7 +395,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, "x");
         tokens.insertBefore(2, "y");
@@ -415,7 +415,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
         tokens.replace(2, "x");
@@ -435,7 +435,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, "x");
         tokens.insertAfter(2, "y");
@@ -455,7 +455,7 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertBefore(2, "y");
@@ -475,11 +475,11 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertBefore(4, "y");
-        stream.fill(); // no effect; within range of a replace
+        stream.Fill(); // no effect; within range of a replace
         Exception exc = null;
         try
         {
@@ -505,7 +505,7 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "x");
         tokens.insertAfter(4, "y");
@@ -525,7 +525,7 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 6, "x");
         var result = tokens.getText();
@@ -544,7 +544,7 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
         var result = tokens.getText(Interval.Of(0, 6));
@@ -563,11 +563,11 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
         tokens.replace(3, 5, "foo");
-        stream.fill();
+        stream.Fill();
         // overlaps, error
         Exception exc = null;
         try
@@ -594,11 +594,11 @@ public class TestTokenStreamRewriter
         var input = "abcccba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 4, "xyz");
         tokens.replace(1, 3, "foo");
-        stream.fill();
+        stream.Fill();
         // overlap, error
         Exception exc = null;
         try
@@ -625,7 +625,7 @@ public class TestTokenStreamRewriter
         var input = "abcba";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 2, "xyz");
         tokens.replace(0, 3, "foo");
@@ -645,7 +645,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
@@ -665,7 +665,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(0, "y");
@@ -686,11 +686,11 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 2, "foo");
         tokens.insertBefore(0, "z");
-        stream.fill();
+        stream.Fill();
         // combine with left edge of rewrite
         var result = tokens.getText();
         var expecting = "zfoo";
@@ -708,15 +708,15 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.delete(0, 2);
         tokens.insertBefore(0, "z");
-        stream.fill();
+        stream.Fill();
         // combine with left edge of rewrite
         var result = tokens.getText();
         var expecting = "z";
-        stream.fill();
+        stream.Fill();
         // make sure combo is not znull
         Assert.AreEqual(expecting, result);
     }
@@ -732,7 +732,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(2, "y");
@@ -753,11 +753,11 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(0, 3, "bar");
-        stream.fill();
+        stream.Fill();
         // wipes prior nested replace
         var result = tokens.getText();
         var expecting = "bar";
@@ -775,11 +775,11 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(0, 3, "bar");
         tokens.replace(1, 2, "foo");
-        stream.fill();
+        stream.Fill();
         // cannot split earlier replace
         Exception exc = null;
         try
@@ -806,11 +806,11 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(0, 2, "bar");
-        stream.fill();
+        stream.Fill();
         // wipes prior nested replace
         var result = tokens.getText();
         var expecting = "barc";
@@ -828,11 +828,11 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(1, 3, "bar");
-        stream.fill();
+        stream.Fill();
         // wipes prior nested replace
         var result = tokens.getText();
         var expecting = "abar";
@@ -850,11 +850,11 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(1, 2, "foo");
         tokens.replace(1, 2, "foo");
-        stream.fill();
+        stream.Fill();
         // drop previous, identical
         var result = tokens.getText();
         var expecting = "afooc";
@@ -872,11 +872,11 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "foo");
         tokens.replace(1, 2, "foo");
-        stream.fill();
+        stream.Fill();
         // kill prev insert
         var result = tokens.getText();
         var expecting = "afoofoo";
@@ -894,7 +894,7 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.replace(2, 3, "foo");
@@ -914,7 +914,7 @@ public class TestTokenStreamRewriter
         var input = "abcc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.replace(2, 3, "foo");
         tokens.insertBefore(1, "x");
@@ -934,7 +934,7 @@ public class TestTokenStreamRewriter
         var input = "abc";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
         tokens.delete(2);
@@ -955,7 +955,7 @@ public class TestTokenStreamRewriter
         var input = "aa";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<b>");
         tokens.insertAfter(0, "</b>");
@@ -977,7 +977,7 @@ public class TestTokenStreamRewriter
         var input = "aa";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");
@@ -1002,7 +1002,7 @@ public class TestTokenStreamRewriter
         var input = "ab";
         var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
-        stream.fill();
+        stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");

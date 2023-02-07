@@ -11,22 +11,23 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * rule; e.g., {@code <expr>}. These tokens are created for {@link TagChunk}
  * chunks where the tag corresponds to a parser rule.
  */
-public class RuleTagToken : Token {
-	/**
+public class RuleTagToken : Token
+{
+    /**
 	 * This is the backing field for {@link #getRuleName}.
 	 */
-	private readonly String ruleName;
-	/**
+    private readonly string ruleName;
+    /**
 	 * The token type for the current token. This is the token type assigned to
 	 * the bypass alternative for the rule during ATN deserialization.
 	 */
-	private readonly int bypassTokenType;
-	/**
+    private readonly int bypassTokenType;
+    /**
 	 * This is the backing field for {@link #getLabel}.
 	 */
-	private readonly String label;
+    private readonly string label;
 
-	/**
+    /**
 	 * Constructs a new instance of {@link RuleTagToken} with the specified rule
 	 * name and bypass token type and no label.
 	 *
@@ -36,11 +37,11 @@ public class RuleTagToken : Token {
 	 * @exception IllegalArgumentException if {@code ruleName} is {@code null}
 	 * or empty.
 	 */
-	public RuleTagToken(String ruleName, int bypassTokenType): this(ruleName, bypassTokenType, null)
+    public RuleTagToken(string ruleName, int bypassTokenType) : this(ruleName, bypassTokenType, null)
     {
-	}
+    }
 
-	/**
+    /**
 	 * Constructs a new instance of {@link RuleTagToken} with the specified rule
 	 * name, bypass token type, and label.
 	 *
@@ -52,201 +53,128 @@ public class RuleTagToken : Token {
 	 * @exception IllegalArgumentException if {@code ruleName} is {@code null}
 	 * or empty.
 	 */
-	public RuleTagToken(String ruleName, int bypassTokenType, String label) {
-		if (string.IsNullOrEmpty(ruleName)) {
-			throw new ArgumentException("ruleName cannot be null or empty.",nameof(ruleName));
-		}
+    public RuleTagToken(string ruleName, int bypassTokenType, String label)
+    {
+        if (string.IsNullOrEmpty(ruleName))
+        {
+            throw new ArgumentException("ruleName cannot be null or empty.", nameof(ruleName));
+        }
 
-		this.ruleName = ruleName;
-		this.bypassTokenType = bypassTokenType;
-		this.label = label;
-	}
+        this.ruleName = ruleName;
+        this.bypassTokenType = bypassTokenType;
+        this.label = label;
+    }
 
-	/**
+    /**
 	 * Gets the name of the rule associated with this rule tag.
 	 *
 	 * @return The name of the parser rule associated with this rule tag.
 	 */
 
-	public String getRuleName() {
-		return ruleName;
-	}
+    public string RuleName => ruleName;
 
-	/**
+    /**
 	 * Gets the label associated with the rule tag.
 	 *
 	 * @return The name of the label associated with the rule tag, or
 	 * {@code null} if this is an unlabeled rule tag.
 	 */
 
-	public String getLabel() {
-		return label;
-	}
+    public string Label => label;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>Rule tag tokens are always placed on the {@link #DEFAULT_CHANNEL}.</p>
 	 */
-	//@Override
-	public int getChannel() {
-		return Token.DEFAULT_CHANNEL;
-	}
+    //@Override
+    public int Channel { get => Token.DEFAULT_CHANNEL; set ; }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>This method returns the rule tag formatted with {@code <} and {@code >}
 	 * delimiters.</p>
 	 */
-	//@Override
-	public String getText() {
-		if (label != null) {
-			return "<" + label + ":" + ruleName + ">";
-		}
+    //@Override
+    public string Text
+    {
+        get => label != null ? "<" + label + ":" + ruleName + ">" : "<" + ruleName + ">";
 
-		return "<" + ruleName + ">";
-	}
+        set ;
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>Rule tag tokens have types assigned according to the rule bypass
 	 * transitions created during ATN deserialization.</p>
 	 */
-	//@Override
-	public int getType() {
-		return bypassTokenType;
-	}
+    //@Override
+    public int Type { get => bypassTokenType; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns 0.</p>
 	 */
-	//@Override
-	public int getLine() {
-		return 0;
-	}
+    //@Override
+    public int Line { get => 0; set => throw new NotImplementedException(); }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	//@Override
-	public int getCharPositionInLine() {
-		return -1;
-	}
+    //@Override
+    public int CharPositionInLine { get => -1; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	//@Override
-	public int getTokenIndex() {
-		return -1;
-	}
+    //@Override
+    public int TokenIndex { get => -1; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	//@Override
-	public int getStartIndex() {
-		return -1;
-	}
+    //@Override
+    public int StartIndex { get => -1; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
-	//@Override
-	public int getStopIndex() {
-		return -1;
-	}
+    //@Override
+    public int StopIndex { get => -1; set =>{ } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns {@code null}.</p>
 	 */
-	//@Override
-	public TokenSource getTokenSource() {
-		return null;
-	}
+    //@Override
+    public TokenSource TokenSource { get => null; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} always returns {@code null}.</p>
 	 */
-	//@Override
-	public CharStream getInputStream() {
-		return null;
-	}
+    //@Override
+    public CharStream InputStream { get => null; set { } }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link RuleTagToken} returns a string of the form
 	 * {@code ruleName:bypassTokenType}.</p>
 	 */
-	//@Override
-	public override String ToString() {
-		return ruleName + ":" + bypassTokenType;
-	}
-
-    public void setText(string text)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setType(int ttype)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setLine(int line)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setCharPositionInLine(int pos)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setChannel(int channel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setTokenIndex(int index)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setStartIndex(int start)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setStopIndex(int stop)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setTokenSource(TokenSource tokenSource)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setInputStream(CharStream input)
-    {
-        throw new NotImplementedException();
-    }
+    //@Override
+    public override string ToString() => ruleName + ":" + bypassTokenType;
 }

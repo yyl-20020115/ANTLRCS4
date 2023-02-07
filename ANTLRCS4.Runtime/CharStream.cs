@@ -9,7 +9,8 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.runtime;
 
 /** A source of characters for an ANTLR lexer. */
-public interface CharStream : IntStream {
+public interface CharStream : IntStream
+{
     int CharPositionInLine { get; }
 
     int Line { get; }

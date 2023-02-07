@@ -77,7 +77,7 @@ public class UnbufferedTokenStream : TokenStream {
 	}
 
 	//@Override
-	public Token get(int i) { // get absolute index
+	public Token Get(int i) { // get absolute index
 		int bufferStartIndex = getBufferStartIndex();
 		if (i < bufferStartIndex || i >= bufferStartIndex + n) {
 			throw new IndexOutOfRangeException("get("+i+") outside buffer: "+
@@ -108,30 +108,26 @@ public class UnbufferedTokenStream : TokenStream {
 
 	//@Override
 	public int LA(int i) {
-		return LT(i).getType();
+		return LT(i).Type;
 	}
 
-	//@Override
-	public TokenSource getTokenSource() {
-		return tokenSource;
-	}
+    //@Override
+    public TokenSource TokenSource => tokenSource;
 
 
-	//@Override
-	public String getText() {
-		return "";
-	}
+    //@Override
+    public String Text => "";
 
 
-	//@Override
-	public String getText(RuleContext ctx) {
-		return getText(ctx.getSourceInterval());
+    //@Override
+    public String GetText(RuleContext ctx) {
+		return GetText(ctx.SourceInterval);
 	}
 
 
 	//@Override
-	public String getText(Token start, Token stop) {
-		return getText(Interval.Of(start.getTokenIndex(), stop.getTokenIndex()));
+	public String GetText(Token start, Token stop) {
+		return GetText(Interval.Of(start.TokenIndex, stop.TokenIndex));
 	}
 
 	//@Override
@@ -173,7 +169,7 @@ public class UnbufferedTokenStream : TokenStream {
 	 */
 	protected int fill(int n) {
 		for (int i=0; i<n; i++) {
-			if (this.n > 0 && tokens[this.n-1].getType() == Token.EOF) {
+			if (this.n > 0 && tokens[this.n-1].Type == Token.EOF) {
 				return i;
 			}
 
@@ -190,7 +186,7 @@ public class UnbufferedTokenStream : TokenStream {
 		}
 
 		if (t is WritableToken) {
-			((WritableToken)t).setTokenIndex(getBufferStartIndex() + n);
+			((WritableToken)t).			TokenIndex = getBufferStartIndex() + n;
 		}
 
 		tokens[n++] = t;
@@ -235,13 +231,11 @@ public class UnbufferedTokenStream : TokenStream {
 		}
 	}
 
-	//@Override
-	public int Index() {
-		return currentTokenIndex;
-	}
+    //@Override
+    public int Index => currentTokenIndex;
 
-	//@Override
-	public void Seek(int index) { // seek to absolute index
+    //@Override
+    public void Seek(int index) { // seek to absolute index
 		if (index == currentTokenIndex) {
 			return;
 		}
@@ -275,13 +269,11 @@ public class UnbufferedTokenStream : TokenStream {
     public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
     //@Override
-    public String GetSourceName() {
-		return tokenSource.GetSourceName();
-	}
+    public String SourceName => tokenSource.SourceName;
 
 
-	//@Override
-	public String getText(Interval interval) {
+    //@Override
+    public String GetText(Interval interval) {
 		int bufferStartIndex = getBufferStartIndex();
 		int bufferStopIndex = bufferStartIndex + tokens.Length - 1;
 
@@ -298,7 +290,7 @@ public class UnbufferedTokenStream : TokenStream {
 		StringBuilder buf = new StringBuilder();
 		for (int i = a; i <= b; i++) {
 			Token t = tokens[i];
-			buf.Append(t.getText());
+			buf.Append(t.Text);
 		}
 
 		return buf.ToString();
@@ -308,17 +300,17 @@ public class UnbufferedTokenStream : TokenStream {
 		return currentTokenIndex - p;
 	}
 
-    public int range()
+    public int Range()
     {
         throw new NotImplementedException();
     }
 
-    public string toString(int start, int stop)
+    public string ToString(int start, int stop)
     {
         throw new NotImplementedException();
     }
 
-    public string toString(Token start, Token stop)
+    public string ToString(Token start, Token stop)
     {
         throw new NotImplementedException();
     }

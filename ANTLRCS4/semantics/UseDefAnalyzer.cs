@@ -43,9 +43,9 @@ public class UseDefAnalyzer {
     }
     static bool[] dependent = new bool[] { false };
     public static bool actionIsContextDependent(ActionAST actionAST) {
-		ANTLRStringStream @in = new ANTLRStringStream(actionAST.token.getText());
-		@in.setLine(actionAST.token.getLine());
-		@in.setCharPositionInLine(actionAST.token.getCharPositionInLine());
+		ANTLRStringStream @in = new ANTLRStringStream(actionAST.token.Text);
+		@in.SetLine(actionAST.token.Line);
+		@in.SetCharPositionInLine(actionAST.token.CharPositionInLine);
 		// can't be simple bool with anon class
 		ActionSplitterListener listener = new BASListener();
 		ActionSplitter splitter = new ActionSplitter(@in, listener);

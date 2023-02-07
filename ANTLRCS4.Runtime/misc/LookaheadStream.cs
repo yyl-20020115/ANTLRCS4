@@ -140,7 +140,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         return ElementAt(k - 1);
     }
 
-    public int Index() => currentElementIndex;
+    public int Index => currentElementIndex;
 
     public int Mark()
     {

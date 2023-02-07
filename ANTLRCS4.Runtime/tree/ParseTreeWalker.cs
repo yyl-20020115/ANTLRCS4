@@ -29,9 +29,9 @@ public class ParseTreeWalker {
 		}
 		RuleNode r = (RuleNode)t;
         enterRule(listener, r);
-        int n = r.getChildCount();
+        int n = r.ChildCount;
         for (int i = 0; i<n; i++) {
-            walk(listener, r.getChild(i));
+            walk(listener, r.GetChild(i));
         }
 		exitRule(listener, r);
     }
@@ -45,7 +45,7 @@ public class ParseTreeWalker {
     protected void enterRule(ParseTreeListener listener, RuleNode r) {
 		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
 		listener.EnterEveryRule(ctx);
-		ctx.enterRule(listener);
+		ctx.EnterRule(listener);
     }
 
 
@@ -57,7 +57,7 @@ public class ParseTreeWalker {
 	 */
 	protected void exitRule(ParseTreeListener listener, RuleNode r) {
 		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
-		ctx.exitRule(listener);
+		ctx.ExitRule(listener);
 		listener.ExitEveryRule(ctx);
     }
 }

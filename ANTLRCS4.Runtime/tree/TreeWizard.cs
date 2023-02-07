@@ -427,7 +427,7 @@ public class TreeWizard
         }
         // check children
         int n1 = adaptor.getChildCount(t1);
-        int n2 = tpattern.getChildCount();
+        int n2 = tpattern.ChildCount;
         if (n1 != n2)
         {
             return false;
@@ -435,7 +435,7 @@ public class TreeWizard
         for (int i = 0; i < n1; i++)
         {
             Object child1 = adaptor.getChild(t1, i);
-            TreePattern child2 = (TreePattern)tpattern.getChild(i);
+            TreePattern child2 = (TreePattern)tpattern.GetChild(i);
             if (!_parse(child1, child2, labels))
             {
                 return false;

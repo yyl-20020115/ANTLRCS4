@@ -59,7 +59,7 @@ public class InvokeRule : RuleElement, LabeledOp
             rf.AddContextDecl(ast.getAltLabel(), decl);
         }
 
-        var arg = (ActionAST)ast.getFirstChildWithType(ANTLRParser.ARG_ACTION);
+        var arg = (ActionAST)ast.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
         if (arg != null)
         {
             argExprsChunks = ActionTranslator.TranslateAction(factory, rf, arg.token, arg);

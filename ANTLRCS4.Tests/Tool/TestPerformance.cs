@@ -830,12 +830,12 @@ public class TestPerformance
             return;
         }
 
-        UpdateChecksum(checksum, token.getStartIndex());
-        UpdateChecksum(checksum, token.getStopIndex());
-        UpdateChecksum(checksum, token.getLine());
-        UpdateChecksum(checksum, token.getCharPositionInLine());
-        UpdateChecksum(checksum, token.getType());
-        UpdateChecksum(checksum, token.getChannel());
+        UpdateChecksum(checksum, token.StartIndex);
+        UpdateChecksum(checksum, token.StopIndex);
+        UpdateChecksum(checksum, token.Line);
+        UpdateChecksum(checksum, token.CharPositionInLine);
+        UpdateChecksum(checksum, token.Type);
+        UpdateChecksum(checksum, token.Channel);
     }
 
     //public class PF : ParserFactory
@@ -1156,7 +1156,7 @@ public class TestPerformance
 
             if (lexer != null)
             {
-                var interpreter = lexer.getInterpreter();
+                var interpreter = lexer.GetInterpreter();
                 if (interpreter is StatisticsLexerATNSimulator simulator)
                 {
                     lexerTotalTransitions = simulator.totalTransitions;
@@ -1188,7 +1188,7 @@ public class TestPerformance
 
             if (parser != null)
             {
-                var interpreter = parser.getInterpreter();
+                var interpreter = parser.GetInterpreter();
                 if (interpreter is StatisticsParserATNSimulator simulator)
                 {
                     decisionInvocations = simulator.decisionInvocations;
@@ -1360,7 +1360,7 @@ public class TestPerformance
                 return;
             }
 
-            var sourceName = recognizer.InputStream.GetSourceName();
+            var sourceName = recognizer.InputStream.SourceName;
             if (sourceName.Length > 0)
             {
                 sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
@@ -1381,13 +1381,13 @@ public class TestPerformance
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
             {
-                BitSet sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
+                BitSet sllPredictions = GetConflictingAlts(_sllConflict, _sllConfigs);
                 int sllPrediction = sllPredictions.NextSetBit(0);
-                BitSet llPredictions = getConflictingAlts(ambigAlts, configs);
+                BitSet llPredictions = GetConflictingAlts(ambigAlts, configs);
                 int llPrediction = llPredictions.Cardinality() == 0 ? ATN.INVALID_ALT_NUMBER : llPredictions.NextSetBit(0);
                 if (sllPrediction != llPrediction)
                 {
-                    ((StatisticsParserATNSimulator)recognizer.getInterpreter()).nonSll[dfa.decision]++;
+                    ((StatisticsParserATNSimulator)recognizer.GetInterpreter()).nonSll[dfa.decision]++;
                 }
             }
 
@@ -1398,8 +1398,8 @@ public class TestPerformance
 
             // show the rule name along with the decision
             int decision = dfa.decision;
-            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
+            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
             recognizer.notifyErrorListeners(format);
         }
@@ -1416,9 +1416,9 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
-            var representedAlts = getConflictingAlts(conflictingAlts, configs);
+            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+            var representedAlts = GetConflictingAlts(conflictingAlts, configs);
             var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
             //String.Format(format, decision, rule, input, representedAlts)
             recognizer.notifyErrorListeners(format);
@@ -1429,11 +1429,11 @@ public class TestPerformance
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
             {
-                var sllPredictions = getConflictingAlts(_sllConflict, _sllConfigs);
+                var sllPredictions = GetConflictingAlts(_sllConflict, _sllConfigs);
                 int sllPrediction = sllPredictions.NextSetBit(0);
                 if (sllPrediction != prediction)
                 {
-                    ((StatisticsParserATNSimulator)recognizer.getInterpreter()).nonSll[dfa.decision]++;
+                    ((StatisticsParserATNSimulator)recognizer.GetInterpreter()).nonSll[dfa.decision]++;
                 }
             }
 
@@ -1444,8 +1444,8 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            var rule = recognizer.getRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().getText(Interval.Of(startIndex, stopIndex));
+            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
             recognizer.notifyErrorListeners(
                 format);
@@ -1531,16 +1531,16 @@ public class TestPerformance
         public void EnterEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(ENTER_RULE);
-            UpdateChecksum(checksum, ctx.getRuleIndex());
-            UpdateChecksum(checksum, ctx.getStart());
+            UpdateChecksum(checksum, ctx.GetRuleIndex());
+            UpdateChecksum(checksum, ctx.GetStart());
         }
 
         //@Override
         public void ExitEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(EXIT_RULE);
-            UpdateChecksum(checksum, ctx.getRuleIndex());
-            UpdateChecksum(checksum, ctx.getStop());
+            UpdateChecksum(checksum, ctx.GetRuleIndex());
+            UpdateChecksum(checksum, ctx.GetStop());
         }
 
     }
@@ -1599,7 +1599,7 @@ public class TestPerformance
         public ANTLRInputStream CreateCopy()
         {
             var stream = new ANTLRInputStream(this.data, this.n);
-            stream.name = this.getSourceName();
+            stream.name = this.GetSourceName();
             return stream;
         }
     }

@@ -257,9 +257,9 @@ public class LexerATNFactory : ParserATNFactory
         {
             if (t.getType() == ANTLRParser.RANGE)
             {
-                int a = CharSupport.GetCharValueFromGrammarCharLiteral(t.getChild(0).getText());
-                int b = CharSupport.GetCharValueFromGrammarCharLiteral(t.getChild(1).getText());
-                if (CheckRange((GrammarAST)t.getChild(0), (GrammarAST)t.getChild(1), a, b))
+                int a = CharSupport.GetCharValueFromGrammarCharLiteral(t.GetChild(0).Text);
+                int b = CharSupport.GetCharValueFromGrammarCharLiteral(t.GetChild(1).Text);
+                if (CheckRange((GrammarAST)t.GetChild(0), (GrammarAST)t.GetChild(1), a, b))
                 {
                     CheckRangeAndAddToSet(associatedAST, t, set, a, b, currentRule.caseInsensitive, null);
                 }
@@ -278,13 +278,13 @@ public class LexerATNFactory : ParserATNFactory
                 else
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                                               g.fileName, t.getToken(), t.getText());
+                                               g.fileName, t.Token, t.getText());
                 }
             }
             else if (t.getType() == ANTLRParser.TOKEN_REF)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.UNSUPPORTED_REFERENCE_IN_LEXER_SET,
-                                           g.fileName, t.getToken(), t.getText());
+                                           g.fileName, t.Token, t.getText());
             }
         }
         if (invert)
@@ -317,20 +317,20 @@ public class LexerATNFactory : ParserATNFactory
         {
             result = false;
             g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                    g.fileName, leftNode.getToken(), leftNode.getText());
+                    g.fileName, leftNode.Token, leftNode.getText());
         }
         if (rightValue == -1)
         {
             result = false;
             g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                    g.fileName, rightNode.getToken(), rightNode.getText());
+                    g.fileName, rightNode.Token, rightNode.getText());
         }
         if (!result) return false;
 
         if (rightValue < leftValue)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED,
-                    g.fileName, leftNode.parent.getToken(), leftNode.getText() + ".." + rightNode.getText());
+                    g.fileName, leftNode.parent.Token, leftNode.getText() + ".." + rightNode.getText());
             return false;
         }
         return true;
@@ -464,7 +464,7 @@ public class LexerATNFactory : ParserATNFactory
                         String invalid = chars.Substring(escapeParseResult.startOffset,
                                                          escapeParseResult.parseLength);
                         g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE,
-                                                   g.fileName, charSetAST.getToken(), invalid);
+                                                   g.fileName, charSetAST.Token, invalid);
                         state = CharSetParseState.ERROR;
                         break;
                     case EscapeSequenceParsing.Result.Type.CODE_POINT:
@@ -481,7 +481,7 @@ public class LexerATNFactory : ParserATNFactory
                 if (state.mode == CharSetParseState.Mode.PREV_PROPERTY)
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.UNICODE_PROPERTY_NOT_ALLOWED_IN_RANGE,
-                            g.fileName, charSetAST.getToken(), charSetAST.getText());
+                            g.fileName, charSetAST.Token, charSetAST.getText());
                     state = CharSetParseState.ERROR;
                 }
                 else
@@ -504,7 +504,7 @@ public class LexerATNFactory : ParserATNFactory
 
         if (set.IsNil)
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, charSetAST.getToken(), "[]");
+            g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, charSetAST.Token, "[]");
         }
 
         return set;
@@ -523,7 +523,7 @@ public class LexerATNFactory : ParserATNFactory
                 g.Tools.ErrMgr.GrammarError(
                         ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED,
                         g.fileName,
-                        charSetAST.getToken(),
+                        charSetAST.                        Token,
                         CharSupport.GetRangeEscapedString(state.prevCodePoint, codePoint));
             }
             CheckRangeAndAddToSet(charSetAST, set, state.prevCodePoint, codePoint);
@@ -550,7 +550,7 @@ public class LexerATNFactory : ParserATNFactory
         if (state.inRange)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.UNICODE_PROPERTY_NOT_ALLOWED_IN_RANGE,
-                           g.fileName, charSetAST.getToken(), charSetAST.getText());
+                           g.fileName, charSetAST.Token, charSetAST.getText());
             return CharSetParseState.ERROR;
         }
         else
@@ -620,20 +620,20 @@ public class LexerATNFactory : ParserATNFactory
                     if (set.Contains(i))
                     {
                         string setText;
-                        if (rootAst.getChildren() == null)
+                        if (rootAst.GetChildren() == null)
                         {
                             setText = rootAst.getText();
                         }
                         else
                         {
                             var sb = new StringBuilder();
-                            foreach (Object child in rootAst.getChildren())
+                            foreach (Object child in rootAst.GetChildren())
                             {
                                 if (child is RangeAST AST)
                                 {
-                                    sb.Append(AST.getChild(0).getText());
+                                    sb.Append(AST.GetChild(0).Text);
                                     sb.Append("..");
-                                    sb.Append(AST.getChild(1).getText());
+                                    sb.Append(AST.GetChild(1).Text);
                                 }
                                 else
                                 {
@@ -646,7 +646,7 @@ public class LexerATNFactory : ParserATNFactory
                             setText = sb.ToString();
                         }
                         var charsString = a == b ? ((char)a).ToString() : (char)a + "-" + (char)b;
-                        g.Tools.ErrMgr.GrammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName, ast.getToken(),
+                        g.Tools.ErrMgr.GrammarError(ErrorType.CHARACTERS_COLLISION_IN_SET, g.fileName, ast.Token,
                                 charsString, setText);
                         charactersCollision = true;
                         break;
@@ -699,7 +699,7 @@ public class LexerATNFactory : ParserATNFactory
     private LexerAction CreateLexerAction(GrammarAST ID, GrammarAST arg)
     {
         var command = ID.getText();
-        CheckCommands(command, ID.getToken());
+        CheckCommands(command, ID.Token);
 
         if ("skip".Equals(command) && arg == null)
         {
@@ -716,7 +716,7 @@ public class LexerATNFactory : ParserATNFactory
         else if ("mode".Equals(command) && arg != null)
         {
             var modeName = arg.getText();
-            int? mode = GetModeConstantValue(modeName, arg.getToken());
+            int? mode = GetModeConstantValue(modeName, arg.Token);
             if (mode == null)
             {
                 return null;
@@ -727,7 +727,7 @@ public class LexerATNFactory : ParserATNFactory
         else if ("pushMode".Equals(command) && arg != null)
         {
             var modeName = arg.getText();
-            int? mode = GetModeConstantValue(modeName, arg.getToken());
+            int? mode = GetModeConstantValue(modeName, arg.Token);
             if (mode == null)
             {
                 return null;
@@ -738,7 +738,7 @@ public class LexerATNFactory : ParserATNFactory
         else if ("type".Equals(command) && arg != null)
         {
             var typeName = arg.getText();
-            int? type = GetTokenConstantValue(typeName, arg.getToken());
+            int? type = GetTokenConstantValue(typeName, arg.Token);
             if (type == null)
             {
                 return null;
@@ -749,7 +749,7 @@ public class LexerATNFactory : ParserATNFactory
         else if ("channel".Equals(command) && arg != null)
         {
             var channelName = arg.getText();
-            int? channel = GetChannelConstantValue(channelName, arg.getToken());
+            int? channel = GetChannelConstantValue(channelName, arg.Token);
             if (channel == null)
             {
                 return null;
@@ -839,7 +839,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         if (COMMON_CONSTANTS.ContainsKey(modeName))
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.Text);
             return null;
         }
 
@@ -856,7 +856,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME, g.fileName, token, token.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_MODE_NAME, g.fileName, token, token.Text);
             return null;
         }
     }
@@ -873,7 +873,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         if (COMMON_CONSTANTS.ContainsKey(tokenName))
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.Text);
             return null;
         }
 
@@ -889,7 +889,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME, g.fileName, token, token.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.CONSTANT_VALUE_IS_NOT_A_RECOGNIZED_TOKEN_NAME, g.fileName, token, token.Text);
             return null;
         }
     }
@@ -911,7 +911,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         if (COMMON_CONSTANTS.ContainsKey(channelName))
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, token, token.Text);
             return null;
         }
 

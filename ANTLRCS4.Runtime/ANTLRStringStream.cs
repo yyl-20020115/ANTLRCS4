@@ -27,7 +27,6 @@
  */
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
-using System.Xml.Linq;
 
 namespace org.antlr.runtime;
 
@@ -66,14 +65,14 @@ public class ANTLRStringStream : CharStream
     protected int lastMarker;
 
     /** What is name or source of this char stream? */
-    public String name;
+    public string name;
 
     public ANTLRStringStream()
     {
     }
 
     /** Copy data in string to a local char array */
-    public ANTLRStringStream(String input)
+    public ANTLRStringStream(string input)
         :this()
     {
         this.data = input.ToCharArray();
@@ -92,7 +91,7 @@ public class ANTLRStringStream : CharStream
      *  when the object was created *except* the data array is not
      *  touched.
      */
-    public void reset()
+    public void Reset()
     {
         p = 0;
         line = 1;
@@ -158,10 +157,7 @@ public class ANTLRStringStream : CharStream
      *  be returned from LA(1).
      */
     //@Override
-    public int Index()
-    {
-        return p;
-    }
+    public int Index => p;
 
     //@Override
     public int Count => n;
@@ -195,7 +191,7 @@ public class ANTLRStringStream : CharStream
     //@Override
     public void Rewind(int m)
     {
-        CharStreamState state = markers[(m)];
+        var state = markers[(m)];
         // restore stream state
         Seek(state.p);
         line = state.line;
@@ -237,9 +233,9 @@ public class ANTLRStringStream : CharStream
     }
 
     //@Override
-    public String Substring(int start, int stop)
+    public string Substring(int start, int stop)
     {
-        return new String(data, start, stop - start + 1);
+        return new string(data, start, stop - start + 1);
     }
 
     //@Override
@@ -249,24 +245,15 @@ public class ANTLRStringStream : CharStream
     public int CharPositionInLine => charPositionInLine;
 
     //@Override
-    public void setLine(int line)
-    {
-        this.line = line;
-    }
+    public void SetLine(int line) => this.line = line;
 
     //@Override
-    public void setCharPositionInLine(int pos)
-    {
-        this.charPositionInLine = pos;
-    }
+    public void SetCharPositionInLine(int pos) => this.charPositionInLine = pos;
     //@Override
-    public String GetSourceName()
-    {
-        return name;
-    }
+    public string SourceName => name;
 
     //@Override
-    public override String ToString() { return new String(data); }
+    public override string ToString() => new (data);
 
     public string GetText(Interval interval)
     {

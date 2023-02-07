@@ -12,15 +12,16 @@ namespace org.antlr.v4.runtime;
  * @see Recognizer#getVocabulary()
  * @author Sam Harwell
  */
-public interface Vocabulary {
-	/**
+public interface Vocabulary
+{
+    /**
 	 * Returns the highest token type value. It can be used to iterate from
 	 * zero to that number, inclusively, thus querying all stored entries.
 	 * @return the highest token type value
 	 */
-	int getMaxTokenType();
+    int GetMaxTokenType();
 
-	/**
+    /**
 	 * Gets the string literal associated with a token type. The string returned
 	 * by this method, when not {@code null}, can be used unaltered in a parser
 	 * grammar to represent this token type.
@@ -56,9 +57,9 @@ public interface Vocabulary {
 	 * @return The string literal associated with the specified token type, or
 	 * {@code null} if no string literal is associated with the type.
 	 */
-	String getLiteralName(int tokenType);
+    string GetLiteralName(int tokenType);
 
-	/**
+    /**
 	 * Gets the symbolic name associated with a token type. The string returned
 	 * by this method, when not {@code null}, can be used unaltered in a parser
 	 * grammar to represent this token type.
@@ -101,9 +102,9 @@ public interface Vocabulary {
 	 * @return The symbolic name associated with the specified token type, or
 	 * {@code null} if no symbolic name is associated with the type.
 	 */
-	String getSymbolicName(int tokenType);
+    string GetSymbolicName(int tokenType);
 
-	/**
+    /**
 	 * Gets the display name of a token type.
 	 *
 	 * <p>ANTLR provides a default implementation of this method, but
@@ -123,5 +124,5 @@ public interface Vocabulary {
 	 * @return The display name of the token type, for use in error reporting or
 	 * other user-visible messages which reference specific token types.
 	 */
-	String getDisplayName(int tokenType);
+    string GetDisplayName(int tokenType);
 }

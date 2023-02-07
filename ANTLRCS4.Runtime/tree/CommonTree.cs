@@ -66,10 +66,7 @@ public class CommonTree : BaseTree
         this.token = t;
     }
 
-    public Token getToken()
-    {
-        return token;
-    }
+    public Token Token => token;
 
     //@Override
     public Tree dupNode()
@@ -90,7 +87,7 @@ public class CommonTree : BaseTree
         {
             return Token.INVALID_TYPE;
         }
-        return token.getType();
+        return token.Type;
     }
 
     //@Override
@@ -100,40 +97,44 @@ public class CommonTree : BaseTree
         {
             return null;
         }
-        return token.getText();
+        return token.Text;
     }
     //@Override
     public int getLine()
     {
-        if (token == null || token.getLine() == 0)
+        if (token == null || token.Line == 0)
         {
-            if (getChildCount() > 0)
+            if (ChildCount > 0)
             {
-                return getChild(0).getLine();
+                return GetChild(0).Line;
             }
             return 0;
         }
-        return token.getLine();
+        return token.Line;
     }
     //@Override
-    public override int getCharPositionInLine()
+    public override int CharPositionInLine
     {
-        if (token == null || token.getCharPositionInLine() == -1)
+        get
         {
-            if (getChildCount() > 0)
+            if (token == null || token.CharPositionInLine == -1)
             {
-                return getChild(0).getCharPositionInLine();
+                if (ChildCount > 0)
+                {
+                    return GetChild(0).CharPositionInLine;
+                }
+                return 0;
             }
-            return 0;
+            return token.CharPositionInLine;
         }
-        return token.getCharPositionInLine();
     }
+
     //@Override
     public int getTokenStartIndex()
     {
         if (startIndex == -1 && token != null)
         {
-            return token.getTokenIndex();
+            return token.TokenIndex;
         }
         return startIndex;
     }
@@ -148,7 +149,7 @@ public class CommonTree : BaseTree
     {
         if (stopIndex == -1 && token != null)
         {
-            return token.getTokenIndex();
+            return token.TokenIndex;
         }
         return stopIndex;
     }
@@ -169,7 +170,7 @@ public class CommonTree : BaseTree
         {
             if (startIndex < 0 || stopIndex < 0)
             {
-                startIndex = stopIndex = token.getTokenIndex();
+                startIndex = stopIndex = token.TokenIndex;
             }
             return;
         }
@@ -226,6 +227,6 @@ public class CommonTree : BaseTree
         {
             return null;
         }
-        return token.getText();
+        return token.Text;
     }
 }

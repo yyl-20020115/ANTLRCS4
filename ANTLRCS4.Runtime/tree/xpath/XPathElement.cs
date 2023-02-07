@@ -6,25 +6,25 @@
 
 namespace org.antlr.v4.runtime.tree.xpath;
 
-public abstract class XPathElement {
-	protected String nodeName;
-	public bool invert;
+public abstract class XPathElement
+{
+    protected string nodeName;
+    public bool invert;
 
-	/** Construct element like {@code /ID} or {@code ID} or {@code /*} etc...
+    /** Construct element like {@code /ID} or {@code ID} or {@code /*} etc...
 	 *  op is null if just node
 	 */
-	public XPathElement(String nodeName) {
-		this.nodeName = nodeName;
-	}
+    public XPathElement(string nodeName) => this.nodeName = nodeName;
 
-	/**
+    /**
 	 * Given tree rooted at {@code t} return all nodes matched by this path
 	 * element.
 	 */
-	public abstract ICollection<ParseTree> evaluate(ParseTree t);
+    public abstract ICollection<ParseTree> Evaluate(ParseTree t);
 
-	public override String ToString() {
-		String inv = invert ? "!" : "";
-		return GetType().Name+"["+inv+nodeName+"]";
-	}
+    public override string ToString()
+    {
+        var inv = invert ? "!" : "";
+        return GetType().Name + "[" + inv + nodeName + "]";
+    }
 }

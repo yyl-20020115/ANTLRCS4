@@ -41,7 +41,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public Token NextToken() => tokens[i++];
 
         ////@Override
-        public string GetSourceName() => "test";
+        public string SourceName => "test";
         ////@Override
         public int CharPositionInLine => 0;
         ////@Override
@@ -67,26 +67,26 @@ public class TestCommonTokenStream : TestBufferedTokenStream
 
         var tokens = new CommonTokenStream(lexer);
 
-        Assert.AreEqual("x", tokens.LT(1).getText()); // must skip first off channel token
+        Assert.AreEqual("x", tokens.LT(1).Text); // must skip first off channel token
         tokens.Consume();
-        Assert.AreEqual("=", tokens.LT(1).getText());
-        Assert.AreEqual("x", tokens.LT(-1).getText());
+        Assert.AreEqual("=", tokens.LT(1).Text);
+        Assert.AreEqual("x", tokens.LT(-1).Text);
 
         tokens.Consume();
-        Assert.AreEqual("34", tokens.LT(1).getText());
-        Assert.AreEqual("=", tokens.LT(-1).getText());
+        Assert.AreEqual("34", tokens.LT(1).Text);
+        Assert.AreEqual("=", tokens.LT(-1).Text);
 
         tokens.Consume();
-        Assert.AreEqual(";", tokens.LT(1).getText());
-        Assert.AreEqual("34", tokens.LT(-1).getText());
+        Assert.AreEqual(";", tokens.LT(1).Text);
+        Assert.AreEqual("34", tokens.LT(-1).Text);
 
         tokens.Consume();
         Assert.AreEqual(Token.EOF, tokens.LA(1));
-        Assert.AreEqual(";", tokens.LT(-1).getText());
+        Assert.AreEqual(";", tokens.LT(-1).Text);
 
-        Assert.AreEqual("34", tokens.LT(-2).getText());
-        Assert.AreEqual("=", tokens.LT(-3).getText());
-        Assert.AreEqual("x", tokens.LT(-4).getText());
+        Assert.AreEqual("34", tokens.LT(-2).Text);
+        Assert.AreEqual("=", tokens.LT(-3).Text);
+        Assert.AreEqual("x", tokens.LT(-4).Text);
     }
     public class TS : TokenSource
     {
@@ -110,8 +110,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
             return tokens[i++];
         }
         //@Override
-        public string GetSourceName() { return "test"; }
-        //@Override
+        public string SourceName => "test";         //@Override
         public int CharPositionInLine => 0;
         //@Override
         public int Line => 0;
@@ -137,46 +136,46 @@ public class TestCommonTokenStream : TestBufferedTokenStream
             new TS();
 
         var tokens = new CommonTokenStream(lexer);
-        tokens.fill();
-        Assert.AreEqual(null, tokens.getHiddenTokensToLeft(0));
-        Assert.AreEqual(null, tokens.getHiddenTokensToRight(0));
+        tokens.Fill();
+        Assert.AreEqual(null, tokens.GetHiddenTokensToLeft(0));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToRight(0));
 
         Assert.AreEqual("[[@0,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToLeft(1).ToString());
+                     tokens.GetHiddenTokensToLeft(1).ToString());
         Assert.AreEqual("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToRight(1).ToString());
+                     tokens.GetHiddenTokensToRight(1).ToString());
 
-        Assert.AreEqual(null, tokens.getHiddenTokensToLeft(2));
-        Assert.AreEqual(null, tokens.getHiddenTokensToRight(2));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToLeft(2));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToRight(2));
 
         Assert.AreEqual("[[@2,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToLeft(3).ToString());
-        Assert.AreEqual(null, tokens.getHiddenTokensToRight(3));
+                     tokens.GetHiddenTokensToLeft(3).ToString());
+        Assert.AreEqual(null, tokens.GetHiddenTokensToRight(3));
 
-        Assert.AreEqual(null, tokens.getHiddenTokensToLeft(4));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToLeft(4));
         Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToRight(4).ToString());
+                     tokens.GetHiddenTokensToRight(4).ToString());
 
-        Assert.AreEqual(null, tokens.getHiddenTokensToLeft(5));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToLeft(5));
         Assert.AreEqual("[[@6,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToRight(5).ToString());
+                     tokens.GetHiddenTokensToRight(5).ToString());
 
         Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToLeft(6).ToString());
-        Assert.AreEqual(null, tokens.getHiddenTokensToRight(6));
+                     tokens.GetHiddenTokensToLeft(6).ToString());
+        Assert.AreEqual(null, tokens.GetHiddenTokensToRight(6));
 
         Assert.AreEqual("[[@5,0:0=' ',<1>,channel=1,0:-1], [@6,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToLeft(7).ToString());
+                     tokens.GetHiddenTokensToLeft(7).ToString());
         Assert.AreEqual("[[@8,0:0=' ',<1>,channel=1,0:-1], [@9,0:0='\\n',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToRight(7).ToString());
+                     tokens.GetHiddenTokensToRight(7).ToString());
 
-        Assert.AreEqual(null, tokens.getHiddenTokensToLeft(8));
+        Assert.AreEqual(null, tokens.GetHiddenTokensToLeft(8));
         Assert.AreEqual("[[@9,0:0='\\n',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToRight(8).ToString());
+                     tokens.GetHiddenTokensToRight(8).ToString());
 
         Assert.AreEqual("[[@8,0:0=' ',<1>,channel=1,0:-1]]",
-                     tokens.getHiddenTokensToLeft(9).ToString());
-        Assert.AreEqual(null, tokens.getHiddenTokensToRight(9));
+                     tokens.GetHiddenTokensToLeft(9).ToString());
+        Assert.AreEqual(null, tokens.GetHiddenTokensToRight(9));
     }
     public class TS2 : TokenSource
     {
@@ -197,10 +196,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public CharStream InputStream => null;
 
         //@Override
-        public String GetSourceName()
-        {
-            return IntStream.UNKNOWN_SOURCE_NAME;
-        }
+        public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
         //@Override
         //@Override
@@ -212,10 +208,10 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         var lexer = new TS2();
 
         var tokens = new CommonTokenStream(lexer);
-        tokens.fill();
+        tokens.Fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
-        Assert.AreEqual(0, tokens.Index());
+        Assert.AreEqual(0, tokens.Index);
         Assert.AreEqual(1, tokens.Count);
     }
 
@@ -238,10 +234,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public CharStream InputStream => null;
 
         //@Override
-        public String GetSourceName()
-        {
-            return IntStream.UNKNOWN_SOURCE_NAME;
-        }
+        public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
         //@Override
         //@Override
@@ -253,10 +246,10 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         var lexer = new TS3();
 
         var tokens = new CommonTokenStream(lexer);
-        tokens.fill();
+        tokens.Fill();
 
         Assert.AreEqual(Token.EOF, tokens.LA(1));
-        Assert.AreEqual(0, tokens.Index());
+        Assert.AreEqual(0, tokens.Index);
         Assert.AreEqual(1, tokens.Count);
         //assertThrows(IllegalStateException, tokens::consume);
         Assert.ThrowsException<IllegalStateException>(() => tokens.Consume());

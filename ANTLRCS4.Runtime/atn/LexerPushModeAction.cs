@@ -58,7 +58,7 @@ public class LexerPushModeAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.pushMode(mode);
+        lexer.PushMode(mode);
     }
 
     //@Override

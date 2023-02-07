@@ -81,7 +81,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         {
             state.token = null;
             state.channel = Token.DEFAULT_CHANNEL;
-            state.tokenStartCharIndex = input.Index();
+            state.tokenStartCharIndex = input.Index;
             state.tokenStartCharPositionInLine = input.CharPositionInLine;
             state.tokenStartLine = input.Line;
             state.text = null;
@@ -127,9 +127,9 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     {
         var eof = new CommonToken(input, Token.EOF,
                                     Token.DEFAULT_CHANNEL,
-                                    input.Index(), input.Index());
-        eof.setLine(Line);
-        eof.setCharPositionInLine(CharPositionInLine);
+                                    input.                                    Index, input.Index);
+        eof.        Line = Line;
+        eof.        CharPositionInLine = CharPositionInLine;
         return eof;
     }
 
@@ -159,10 +159,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     {
         return this.input;
     }
-    public override string GetSourceName()
-    {
-        return input.GetSourceName();
-    }
+    public override string SourceName => input.SourceName;
 
     /** Currently does not support multiple emits per nextToken invocation
      *  for efficiency reasons.  Subclass and override this method and
@@ -186,9 +183,9 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     public Token Emit()
     {
         var t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
-        t.setLine(state.tokenStartLine);
-        t.setText(state.text);
-        t.setCharPositionInLine(state.tokenStartCharPositionInLine);
+        t.        Line = state.tokenStartLine;
+        t.        Text = state.text;
+        t.        CharPositionInLine = state.tokenStartCharPositionInLine;
         Emit(t);
         return t;
     }
@@ -263,7 +260,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     public int CharPositionInLine => input.CharPositionInLine;
 
     /** What is the index of the current character of lookahead? */
-    public int CharIndex => input.Index();
+    public int CharIndex => input.Index;
 
     /** Return the text matched so far for the current token or any
      *  text override.

@@ -25,7 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.runtime;
 using org.antlr.runtime.tree;
@@ -303,8 +302,8 @@ public abstract class BaseRecognizer
 
     /** What is the error header, normally line/character position information? */
     public virtual string GetErrorHeader(RecognitionException e) 
-        => GetSourceName() != null
-            ? GetSourceName() + " line " + e.line + ":" + e.charPositionInLine
+        => SourceName != null
+            ? SourceName + " line " + e.line + ":" + e.charPositionInLine
             : "line " + e.line + ":" + e.charPositionInLine;
 
     /** How should a token be displayed in an error message? The default
@@ -317,10 +316,10 @@ public abstract class BaseRecognizer
      */
     public static string GetTokenErrorDisplay(Token t)
     {
-        var s = t.getText();
+        var s = t.Text;
         if (s == null)
         {
-            s = t.getType() == Token.EOF ? "<EOF>" : "<" + t.getType() + ">";
+            s = t.Type == Token.EOF ? "<EOF>" : "<" + t.Type + ">";
         }
         s = s.Replace("\n", "\\\\n");
         s = s.Replace("\r", "\\\\r");
@@ -342,7 +341,7 @@ public abstract class BaseRecognizer
      */
     public virtual void Recover(IntStream input, RecognitionException re)
     {
-        if (state.lastErrorIndex == input.Index())
+        if (state.lastErrorIndex == input.Index)
         {
             // uh oh, another error at same token index; must be a case
             // where LT(1) is in the recovery token set so nothing is
@@ -350,7 +349,7 @@ public abstract class BaseRecognizer
             // an infinite loop; this is a failsafe.
             input.Consume();
         }
-        state.lastErrorIndex = input.Index();
+        state.lastErrorIndex = input.Index;
         BitSet followSet = ComputeErrorRecoverySet();
         BeginResync();
         ConsumeUntil(input, followSet);
@@ -776,7 +775,7 @@ public abstract class BaseRecognizer
      */
     public virtual string GetGrammarFileName() => null;
 
-    public abstract string GetSourceName();
+    public abstract string SourceName { get; }
 
     /** A convenience method for use most often with template rewrites.
      *  Convert a List&lt;Token&gt; to List&lt;String&gt;
@@ -787,7 +786,7 @@ public abstract class BaseRecognizer
         List<string> strings = new (tokens.Count);
         for (int i = 0; i < tokens.Count; i++)
         {
-            strings.Add(tokens[i].getText());
+            strings.Add(tokens[i].Text);
         }
         return strings;
     }
@@ -826,7 +825,7 @@ public abstract class BaseRecognizer
      */
     public bool AlreadyParsedRule(IntStream input, int ruleIndex)
     {
-        int stopIndex = GetRuleMemoization(ruleIndex, input.Index());
+        int stopIndex = GetRuleMemoization(ruleIndex, input.Index);
         if (stopIndex == MEMO_RULE_UNKNOWN)
         {
             return false;
@@ -851,7 +850,7 @@ public abstract class BaseRecognizer
                         int ruleIndex,
                         int ruleStartIndex)
     {
-        int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.Index() - 1;
+        int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.Index - 1;
         if (state.ruleMemo == null)
         {
             Console.Error.WriteLine("!!!!!!!!! memo array is null for " + GetGrammarFileName());

@@ -31,18 +31,19 @@ namespace org.antlr.v4.runtime;
  *  group values such as this aggregate.  The getters/setters are there to
  *  satisfy the superclass interface.
  */
-public class ParserRuleContext : RuleContext {
-	public static readonly ParserRuleContext EMPTY = new ParserRuleContext();
+public class ParserRuleContext : RuleContext
+{
+    public static readonly ParserRuleContext EMPTY = new ();
 
-	/** If we are debugging or building a parse tree for a visitor,
+    /** If we are debugging or building a parse tree for a visitor,
 	 *  we need to track all of the tokens and rule invocations associated
 	 *  with this rule's context. This is empty for parsing w/o tree constr.
 	 *  operation because we don't the need to track the details about
 	 *  how we parse this rule.
 	 */
-	public List<ParseTree> children;
+    public List<ParseTree> children;
 
-	/** For debugging/tracing purposes, we want to track all of the nodes in
+    /** For debugging/tracing purposes, we want to track all of the nodes in
 	 *  the ATN traversed by the parser for a particular rule.
 	 *  This list indicates the sequence of ATN nodes used to match
 	 *  the elements of the children list. This list does not include
@@ -60,19 +61,19 @@ public class ParserRuleContext : RuleContext {
 	 *
 	 *  This does not trace states visited during prediction.
 	 */
-//	public List<Integer> states;
+    //	public List<Integer> states;
 
-	public Token start, stop;
+    public Token start, stop;
 
-	/**
+    /**
 	 * The exception that forced this rule to return. If the rule successfully
 	 * completed, this is {@code null}.
 	 */
-	public RecognitionException exception;
+    public RecognitionException exception;
 
-	public ParserRuleContext() { }
+    public ParserRuleContext() { }
 
-	/** COPY a ctx (I'm deliberately not using copy constructor) to avoid
+    /** COPY a ctx (I'm deliberately not using copy constructor) to avoid
 	 *  confusion with creating node with parent. Does not copy children
 	 *  (except error leaves).
 	 *
@@ -84,36 +85,40 @@ public class ParserRuleContext : RuleContext {
 	 *  to the generic XContext so this function must copy those nodes to
 	 *  the YContext as well else they are lost!
 	 */
-	public void copyFrom(ParserRuleContext ctx) {
-		this.parent = ctx.parent;
-		this.invokingState = ctx.invokingState;
-
-		this.start = ctx.start;
-		this.stop = ctx.stop;
-
-		// copy any error nodes to alt label node
-		if ( ctx.children!=null ) {
-			this.children = new ();
-			// reset parent pointer for any error nodes
-			foreach (ParseTree child in ctx.children) {
-				if ( child is ErrorNode node) {
-					addChild(node);
-				}
-			}
-		}
-	}
-
-	public ParserRuleContext(ParserRuleContext parent, int invokingStateNumber):base(parent, invokingStateNumber)
+    public void CopyFrom(ParserRuleContext ctx)
     {
-		;
-	}
+        this.parent = ctx.parent;
+        this.invokingState = ctx.invokingState;
 
-	// Double dispatch methods for listeners
+        this.start = ctx.start;
+        this.stop = ctx.stop;
 
-	public void enterRule(ParseTreeListener listener) { }
-	public void exitRule(ParseTreeListener listener) { }
+        // copy any error nodes to alt label node
+        if (ctx.children != null)
+        {
+            this.children = new();
+            // reset parent pointer for any error nodes
+            foreach (ParseTree child in ctx.children)
+            {
+                if (child is ErrorNode node)
+                {
+                    AddChild(node);
+                }
+            }
+        }
+    }
 
-	/** Add a parse tree node to this as a child.  Works for
+    public ParserRuleContext(ParserRuleContext parent, int invokingStateNumber) 
+        : base(parent, invokingStateNumber)
+    {
+    }
+
+    // Double dispatch methods for listeners
+
+    public void EnterRule(ParseTreeListener listener) { }
+    public void ExitRule(ParseTreeListener listener) { }
+
+    /** Add a parse tree node to this as a child.  Works for
 	 *  internal and leaf nodes. Does not set parent link;
 	 *  other add methods must do that. Other addChild methods
 	 *  call this.
@@ -124,43 +129,48 @@ public class ParserRuleContext : RuleContext {
 	 *
 	 *  @since 4.7
 	 */
-	public T addAnyChild<T>(T t) where T:ParseTree {
-		if ( children==null ) children = new ();
-		children.Add(t);
-		return t;
-	}
+    public T AddAnyChild<T>(T t) where T : ParseTree
+    {
+        children ??= new();
+        children.Add(t);
+        return t;
+    }
 
-	public RuleContext addChild(RuleContext ruleInvocation) {
-		return addAnyChild(ruleInvocation);
-	}
+    public RuleContext AddChild(RuleContext ruleInvocation)
+    {
+        return AddAnyChild(ruleInvocation);
+    }
 
-	/** Add a token leaf node child and force its parent to be this node. */
-	public TerminalNode addChild(TerminalNode t) {
-		t.setParent(this);
-		return addAnyChild(t);
-	}
+    /** Add a token leaf node child and force its parent to be this node. */
+    public TerminalNode AddChild(TerminalNode t)
+    {
+        t.SetParent(this);
+        return AddAnyChild(t);
+    }
 
-	/** Add an error node child and force its parent to be this node.
+    /** Add an error node child and force its parent to be this node.
 	 *
 	 * @since 4.7
 	 */
-	public ErrorNode addErrorNode(ErrorNode errorNode) {
-		errorNode.setParent(this);
-		return addAnyChild(errorNode);
-	}
+    public ErrorNode addErrorNode(ErrorNode errorNode)
+    {
+        errorNode.SetParent(this);
+        return AddAnyChild(errorNode);
+    }
 
-	/** Add a child to this node based upon matchedToken. It
+    /** Add a child to this node based upon matchedToken. It
 	 *  creates a TerminalNodeImpl rather than using
 	 *  {@link Parser#createTerminalNode(ParserRuleContext, Token)}. I'm leaving this
      *  in for compatibility but the parser doesn't use this anymore.
 	 */
-	//@Deprecated
-	public TerminalNode addChild(Token matchedToken) {
-		TerminalNodeImpl t = new TerminalNodeImpl(matchedToken);
-		addAnyChild(t);
-		t.setParent(this);
-		return t;
-	}
+    //@Deprecated
+    public TerminalNode AddChild(Token matchedToken)
+    {
+        var t = new TerminalNodeImpl(matchedToken);
+        AddAnyChild(t);
+        t.SetParent(this);
+        return t;
+    }
 
     /** Add a child to this node based upon badToken.  It
 	 *  creates a ErrorNodeImpl rather than using
@@ -168,167 +178,196 @@ public class ParserRuleContext : RuleContext {
 	 *  in for compatibility but the parser doesn't use this anymore.
 	 */
     //@Deprecated
-    public ErrorNode addErrorNode(Token badToken) {
-		ErrorNodeImpl t = new ErrorNodeImpl(badToken);
-		addAnyChild(t);
-		t.setParent(this);
-		return t;
-	}
+    public ErrorNode AddErrorNode(Token badToken)
+    {
+        var t = new ErrorNodeImpl(badToken);
+        AddAnyChild(t);
+        t.SetParent(this);
+        return t;
+    }
 
-//	public void trace(int s) {
-//		if ( states==null ) states = new ArrayList<Integer>();
-//		states.add(s);
-//	}
+    //	public void trace(int s) {
+    //		if ( states==null ) states = new ArrayList<Integer>();
+    //		states.add(s);
+    //	}
 
-	/** Used by enterOuterAlt to toss out a RuleContext previously added as
+    /** Used by enterOuterAlt to toss out a RuleContext previously added as
 	 *  we entered a rule. If we have # label, we will need to remove
 	 *  generic ruleContext object.
 	 */
-	public void removeLastChild() {
-		if ( children!=null ) {
-			children.RemoveAt(children.Count-1);
-		}
-	}
+    public void RemoveLastChild()
+    {
+        children?.RemoveAt(children.Count - 1);
+    }
 
     ////@Override
     /** Override to make type more specific */
-    public ParserRuleContext getParent() {
-		return (ParserRuleContext)base.getParent();
-	}
+    public ParserRuleContext GetParent()
+    {
+        return (ParserRuleContext)base.getParent();
+    }
 
     ////@Override
-    public ParseTree getChild(int i) {
-		return children!=null && i>=0 && i<children.Count ? children[(i)] : null;
-	}
-
-	public T getChild<T>(Type ctxType, int i) where T:class {
-		if ( children==null || i < 0 || i >= children.Count ) {
-			return default;
-		}
-
-		int j = -1; // what element have we found with ctxType?
-		foreach (ParseTree o in children) {
-			if ( ctxType.IsInstanceOfType(o) ) {
-				j++;
-				if ( j == i ) {
-					return o as T;
-				}
-			}
-		}
-		return default;
-	}
-
-	public TerminalNode getToken(int ttype, int i) {
-		if ( children==null || i < 0 || i >= children.Count ) {
-			return null;
-		}
-
-		int j = -1; // what token with ttype have we found?
-		foreach (ParseTree o in children) {
-			if ( o is TerminalNode ) {
-				TerminalNode tnode = (TerminalNode)o;
-				Token symbol = tnode.getSymbol();
-				if ( symbol.getType()==ttype ) {
-					j++;
-					if ( j == i ) {
-						return tnode;
-					}
-				}
-			}
-		}
-
-		return null;
-	}
-
-	public List<TerminalNode> getTokens(int ttype) {
-		if ( children==null ) {
-			return new List<TerminalNode>();
-		}
-
-		List<TerminalNode> tokens = null;
-        foreach (ParseTree o in children) {
-			if ( o is TerminalNode ) {
-				TerminalNode tnode = (TerminalNode)o;
-				Token symbol = tnode.getSymbol();
-				if ( symbol.getType()==ttype ) {
-					if ( tokens==null ) {
-						tokens = new ();
-					}
-					tokens.Add(tnode);
-				}
-			}
-		}
-
-		if ( tokens==null ) {
-			return new List<TerminalNode>();
-		}
-
-		return tokens;
-	}
-
-	public T getRuleContext<T>(Type ctxType, int i) where T: ParserRuleContext
+    public ParseTree GetChild(int i)
     {
-		return getChild<T>(ctxType, i);
-	}
+        return children != null && i >= 0 && i < children.Count ? children[(i)] : null;
+    }
 
-	public List<T> getRuleContexts<T>(Type ctxType) where T : class {
-		if ( children==null ) {
-			return new List<T>();
-		}
+    public T GetChild<T>(Type ctxType, int i) where T : class
+    {
+        if (children == null || i < 0 || i >= children.Count)
+        {
+            return default;
+        }
 
-		List<T> contexts = null;
-		foreach (ParseTree o in children) {
-			if ( ctxType.IsInstanceOfType(o) ) {
-				if ( contexts==null ) {
-					contexts = new ();
-				}
+        int j = -1; // what element have we found with ctxType?
+        foreach (var o in children)
+        {
+            if (ctxType.IsInstanceOfType(o))
+            {
+                j++;
+                if (j == i)
+                {
+                    return o as T;
+                }
+            }
+        }
+        return default;
+    }
 
-				contexts.Add(o as T);
-			}
-		}
+    public TerminalNode GetToken(int ttype, int i)
+    {
+        if (children == null || i < 0 || i >= children.Count)
+        {
+            return null;
+        }
 
-		if ( contexts==null ) {
-			return new();
-		}
+        int j = -1; // what token with ttype have we found?
+        foreach (var o in children)
+        {
+            if (o is TerminalNode tnode)
+            {
+                var symbol = tnode.getSymbol();
+                if (symbol.Type == ttype)
+                {
+                    j++;
+                    if (j == i)
+                    {
+                        return tnode;
+                    }
+                }
+            }
+        }
 
-		return contexts;
-	}
+        return null;
+    }
 
-	//@Override
-	public int getChildCount() { return children!=null ? children.Count : 0; }
+    public List<TerminalNode> GetTokens(int ttype)
+    {
+        if (children == null)
+        {
+            return new List<TerminalNode>();
+        }
 
-	//@Override
-	public Interval getSourceInterval() {
-		if ( start == null ) {
-			return Interval.INVALID;
-		}
-		if ( stop==null || stop.getTokenIndex()<start.getTokenIndex() ) {
-			return Interval.Of(start.getTokenIndex(), start.getTokenIndex()-1); // empty
-		}
-		return Interval.Of(start.getTokenIndex(), stop.getTokenIndex());
-	}
+        List<TerminalNode> tokens = null;
+        foreach (ParseTree o in children)
+        {
+            if (o is TerminalNode)
+            {
+                TerminalNode tnode = (TerminalNode)o;
+                Token symbol = tnode.getSymbol();
+                if (symbol.Type == ttype)
+                {
+                    if (tokens == null)
+                    {
+                        tokens = new();
+                    }
+                    tokens.Add(tnode);
+                }
+            }
+        }
 
-	/**
+        if (tokens == null)
+        {
+            return new List<TerminalNode>();
+        }
+
+        return tokens;
+    }
+
+    public T GetRuleContext<T>(Type ctxType, int i) where T : ParserRuleContext
+    {
+        return GetChild<T>(ctxType, i);
+    }
+
+    public List<T> GetRuleContexts<T>(Type ctxType) where T : class
+    {
+        if (children == null)
+        {
+            return new List<T>();
+        }
+
+        List<T> contexts = null;
+        foreach (ParseTree o in children)
+        {
+            if (ctxType.IsInstanceOfType(o))
+            {
+                if (contexts == null)
+                {
+                    contexts = new();
+                }
+
+                contexts.Add(o as T);
+            }
+        }
+
+        if (contexts == null)
+        {
+            return new();
+        }
+
+        return contexts;
+    }
+
+    //@Override
+    public int GetChildCount() { return children != null ? children.Count : 0; }
+
+    //@Override
+    public Interval GetSourceInterval()
+    {
+        if (start == null)
+        {
+            return Interval.INVALID;
+        }
+        if (stop == null || stop.TokenIndex < start.TokenIndex)
+        {
+            return Interval.Of(start.TokenIndex, start.TokenIndex - 1); // empty
+        }
+        return Interval.Of(start.TokenIndex, stop.TokenIndex);
+    }
+
+    /**
 	 * Get the initial token in this context.
 	 * Note that the range from start to stop is inclusive, so for rules that do not consume anything
 	 * (for example, zero length or error productions) this token may exceed stop.
 	 */
-	public Token getStart() { return start; }
-	/**
+    public Token GetStart() { return start; }
+    /**
 	 * Get the final token in this context.
 	 * Note that the range from start to stop is inclusive, so for rules that do not consume anything
 	 * (for example, zero length or error productions) this token may precede start.
 	 */
-	public Token getStop() { return stop; }
+    public Token GetStop() { return stop; }
 
-	/** Used for rule context info debugging during parse-time, not so much for ATN debugging */
-	public String toInfoString(Parser recognizer) {
-		List<String> rules = recognizer.getRuleInvocationStack(this);
-		rules.Reverse();
-		return "ParserRuleContext"+rules+"{" +
-			"start=" + start +
-			", stop=" + stop +
-			'}';
-	}
+    /** Used for rule context info debugging during parse-time, not so much for ATN debugging */
+    public string ToInfoString(Parser recognizer)
+    {
+        var rules = recognizer.getRuleInvocationStack(this);
+        rules.Reverse();
+        return "ParserRuleContext" + rules + "{" +
+            "start=" + start +
+            ", stop=" + stop +
+            '}';
+    }
 }
 

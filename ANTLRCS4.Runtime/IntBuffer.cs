@@ -8,57 +8,57 @@ namespace org.antlr.v4.runtime;
 
 public class IntBuffer
 {
-    public static IntBuffer allocate(int newCapacity)
+    public static IntBuffer Allocate(int newCapacity)
     {
         throw new NotImplementedException();
     }
 
-    public int[] array()
+    public int[] Array()
     {
         throw new NotImplementedException();
     }
 
-    public int arrayOffset()
+    public int ArrayOffset()
     {
         throw new NotImplementedException();
     }
 
-    public int capacity()
+    public int Capacity()
     {
         throw new NotImplementedException();
     }
 
-    public void flip()
+    public void Flip()
     {
         throw new NotImplementedException();
     }
 
-    public int get(int offset)
+    public int Get(int offset)
     {
         throw new NotImplementedException();
     }
 
-    public int position(int newPosition)
+    public int Position(int newPosition)
     {
         throw new NotImplementedException();
     }
 
-    public int position()
+    public int Position()
     {
         throw new NotImplementedException();
     }
 
-    public void put(IntBuffer intBuffer)
+    public void Put(IntBuffer intBuffer)
     {
         throw new NotImplementedException();
     }
 
-    public void put(int v)
+    public void Put(int v)
     {
         throw new NotImplementedException();
     }
 
-    public int remaining()
+    public int Remaining()
     {
         throw new NotImplementedException();
     }

@@ -20,17 +20,18 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * This class does not perform any validation on the tag or label names aside
  * from ensuring that the tag is a non-null, non-empty string.
  */
-class TagChunk : Chunk {
-	/**
+class TagChunk : Chunk
+{
+    /**
 	 * This is the backing field for {@link #getTag}.
 	 */
-	private readonly String tag;
-	/**
+    private readonly string tag;
+    /**
 	 * This is the backing field for {@link #getLabel}.
 	 */
-	private readonly String label;
+    private readonly string label;
 
-	/**
+    /**
 	 * Construct a new instance of {@link TagChunk} using the specified tag and
 	 * no label.
 	 *
@@ -40,11 +41,11 @@ class TagChunk : Chunk {
 	 * @exception IllegalArgumentException if {@code tag} is {@code null} or
 	 * empty.
 	 */
-	public TagChunk(String tag): this(null, tag)
+    public TagChunk(string tag) : this(null, tag)
     {
-	}
+    }
 
-	/**
+    /**
 	 * Construct a new instance of {@link TagChunk} using the specified label
 	 * and tag.
 	 *
@@ -56,47 +57,39 @@ class TagChunk : Chunk {
 	 * @exception IllegalArgumentException if {@code tag} is {@code null} or
 	 * empty.
 	 */
-	public TagChunk(String label, String tag) {
-		if (string.IsNullOrEmpty(tag)) {
-			throw new ArgumentException("tag cannot be null or empty",nameof(tag));
-		}
+    public TagChunk(string label, string tag)
+    {
+        if (string.IsNullOrEmpty(tag))
+        {
+            throw new ArgumentException("tag cannot be null or empty", nameof(tag));
+        }
 
-		this.label = label;
-		this.tag = tag;
-	}
+        this.label = label;
+        this.tag = tag;
+    }
 
-	/**
+    /**
 	 * Get the tag for this chunk.
 	 *
 	 * @return The tag for the chunk.
 	 */
 
-	public String getTag() {
-		return tag;
-	}
+    public string Tag => tag;
 
-	/**
+    /**
 	 * Get the label, if any, assigned to this chunk.
 	 *
 	 * @return The label assigned to this chunk, or {@code null} if no label is
 	 * assigned to the chunk.
 	 */
 
-	public String getLabel() {
-		return label;
-	}
+    public string Label => label;
 
-	/**
+    /**
 	 * This method returns a text representation of the tag chunk. Labeled tags
 	 * are returned in the form {@code label:tag}, and unlabeled tags are
 	 * returned as just the tag name.
 	 */
-	//@Override
-	public override String ToString() {
-		if (label != null) {
-			return label + ":" + tag;
-		}
-
-		return tag;
-	}
+    //@Override
+    public override string ToString() => label != null ? label + ":" + tag : tag;
 }

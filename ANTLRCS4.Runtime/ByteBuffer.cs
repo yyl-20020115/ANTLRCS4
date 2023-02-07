@@ -8,62 +8,62 @@ namespace org.antlr.v4.runtime;
 
 public class ByteBuffer
 {
-    public static ByteBuffer? allocate(int initialBufferSize)
+    public static ByteBuffer? Allocate(int initialBufferSize)
     {
         throw new NotImplementedException();
     }
 
-    public byte[] array()
+    public byte[] Array()
     {
         throw new NotImplementedException();
     }
 
-    public int arrayOffset()
+    public int ArrayOffset()
     {
         throw new NotImplementedException();
     }
 
-    public int capacity()
+    public int Capacity()
     {
         throw new NotImplementedException();
     }
 
-    public void flip()
+    public void Flip()
     {
         throw new NotImplementedException();
     }
 
-    public int get(int offset)
+    public int Get(int offset)
     {
         throw new NotImplementedException();
     }
 
-    public int get()
+    public int Get()
     {
         throw new NotImplementedException();
     }
 
-    public bool hasRemaining()
+    public bool HasRemaining()
     {
         throw new NotImplementedException();
     }
 
-    public int position(int newPosition)
+    public int Position(int newPosition)
     {
         throw new NotImplementedException();
     }
 
-    public int position()
+    public int Position()
     {
         throw new NotImplementedException();
     }
 
-    public void put(ByteBuffer byteBuffer)
+    public void Put(ByteBuffer byteBuffer)
     {
         throw new NotImplementedException();
     }
 
-    public int remaining()
+    public int Remaining()
     {
         throw new NotImplementedException();
     }

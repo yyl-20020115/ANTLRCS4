@@ -59,8 +59,8 @@ public class GrammarRootAST : GrammarASTWithOptions {
     }
 
 	public String getGrammarName() {
-		Tree t = getChild(0);
-		if ( t!=null ) return t.getText();
+		Tree t = GetChild(0);
+		if ( t!=null ) return t.Text;
 		return null;
 	}
 

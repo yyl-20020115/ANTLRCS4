@@ -21,8 +21,8 @@ public class GrammarSemanticsMessage : ANTLRMessage {
         ;
         this.fileName = fileName;
 		if ( offendingToken!=null ) {
-            line = offendingToken.getLine();
-            charPosition = offendingToken.getCharPositionInLine();
+            line = offendingToken.Line;
+            charPosition = offendingToken.CharPositionInLine;
         }
     }
 }

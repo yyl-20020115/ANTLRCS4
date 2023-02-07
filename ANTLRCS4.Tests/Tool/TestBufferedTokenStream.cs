@@ -33,7 +33,7 @@ public class TestBufferedTokenStream
         var lexEngine = g.createLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
-        var result = tokens.LT(1).getText();
+        var result = tokens.LT(1).Text;
         var expecting = "x";
         Assert.AreEqual(expecting, result);
     }
@@ -56,7 +56,7 @@ public class TestBufferedTokenStream
         var lexEngine = g.createLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
-        var result = tokens.LT(2).getText();
+        var result = tokens.LT(2).Text;
         var expecting = " ";
         Assert.AreEqual(expecting, result);
     }
@@ -81,7 +81,7 @@ public class TestBufferedTokenStream
 
         int i = 1;
         var t = tokens.LT(i);
-        while (t.getType() != Token.EOF)
+        while (t.Type != Token.EOF)
         {
             i++;
             t = tokens.LT(i);
@@ -89,7 +89,7 @@ public class TestBufferedTokenStream
         tokens.LT(i++); // push it past end
         tokens.LT(i++);
 
-        var result = tokens.getText();
+        var result = tokens.Text;
         var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
     }
@@ -113,13 +113,13 @@ public class TestBufferedTokenStream
         var tokens = CreateTokenStream(lexEngine);
 
         var t = tokens.LT(1);
-        while (t.getType() != Token.EOF)
+        while (t.Type != Token.EOF)
         {
             tokens.Consume();
             t = tokens.LT(1);
         }
 
-        var result = tokens.getText();
+        var result = tokens.Text;
         var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
     }
@@ -144,15 +144,15 @@ public class TestBufferedTokenStream
 
         tokens.Consume(); // get x into buffer
         var t = tokens.LT(-1);
-        Assert.AreEqual("x", t.getText());
+        Assert.AreEqual("x", t.Text);
 
         tokens.Consume();
         tokens.Consume(); // consume '='
         t = tokens.LT(-3);
-        Assert.AreEqual("x", t.getText());
+        Assert.AreEqual("x", t.Text);
         t = tokens.LT(-2);
-        Assert.AreEqual(" ", t.getText());
+        Assert.AreEqual(" ", t.Text);
         t = tokens.LT(-1);
-        Assert.AreEqual("=", t.getText());
+        Assert.AreEqual("=", t.Text);
     }
 }

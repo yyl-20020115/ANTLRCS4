@@ -260,11 +260,11 @@ public class TestParserProfiler
         parser.setProfile(true);
         foreach (var s in input)
         {
-            lexEngine.reset();
+            lexEngine.Reset();
             parser.reset();
-            lexEngine.setInputStream(new ANTLRInputStream(s));
+            lexEngine.SetInputStream(new ANTLRInputStream(s));
             var tokens = new CommonTokenStream(lexEngine);
-            parser.setInputStream(tokens);
+            parser.SetInputStream(tokens);
             if (!g.rules.TryGetValue(startRule, out var r))
             {
                 return parser.getParseInfo().GetDecisionInfo();

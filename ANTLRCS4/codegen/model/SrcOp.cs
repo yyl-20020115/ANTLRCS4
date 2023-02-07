@@ -29,7 +29,7 @@ public abstract class SrcOp : OutputModelObject
     public SrcOp(OutputModelFactory factory) : this(factory, null) {; }
     public SrcOp(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)
     {
-        if (ast != null) uniqueID = ast.token.getTokenIndex();
+        if (ast != null) uniqueID = ast.token.TokenIndex;
         enclosingBlock = factory.GetCurrentBlock();
         enclosingRuleRunction = factory.GetCurrentRuleFunction();
     }

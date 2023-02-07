@@ -96,8 +96,8 @@ public class RuleFunction : OutputModelObject
             exceptions = new();
             foreach (var e in r.exceptions)
             {
-                var catchArg = (ActionAST)e.getChild(0);
-                var catchAction = (ActionAST)e.getChild(1);
+                var catchArg = (ActionAST)e.GetChild(0);
+                var catchAction = (ActionAST)e.GetChild(1);
                 exceptions.Add(new ExceptionClause(factory, catchArg, catchAction));
             }
         }

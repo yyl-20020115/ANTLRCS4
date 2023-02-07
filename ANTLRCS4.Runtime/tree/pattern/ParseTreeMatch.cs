@@ -11,28 +11,29 @@ namespace org.antlr.v4.runtime.tree.pattern;
 /**
  * Represents the result of matching a {@link ParseTree} against a tree pattern.
  */
-public class ParseTreeMatch {
-	/**
+public class ParseTreeMatch
+{
+    /**
 	 * This is the backing field for {@link #getTree()}.
 	 */
-	private readonly ParseTree tree;
+    private readonly ParseTree tree;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getPattern()}.
 	 */
-	private readonly ParseTreePattern pattern;
+    private readonly ParseTreePattern pattern;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getLabels()}.
 	 */
-	private readonly MultiMap<String, ParseTree> labels;
+    private readonly MultiMap<string, ParseTree> labels;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getMismatchedNode()}.
 	 */
-	private readonly ParseTree mismatchedNode;
+    private readonly ParseTree mismatchedNode;
 
-	/**
+    /**
 	 * Constructs a new instance of {@link ParseTreeMatch} from the specified
 	 * parse tree and pattern.
 	 *
@@ -47,26 +48,15 @@ public class ParseTreeMatch {
 	 * @exception IllegalArgumentException if {@code pattern} is {@code null}
 	 * @exception IllegalArgumentException if {@code labels} is {@code null}
 	 */
-	public ParseTreeMatch(ParseTree tree, ParseTreePattern pattern, MultiMap<String, ParseTree> labels, ParseTree mismatchedNode) {
-		if (tree == null) {
-			throw new ArgumentException("tree cannot be null",nameof(tree));
-		}
+    public ParseTreeMatch(ParseTree tree, ParseTreePattern pattern, MultiMap<string, ParseTree> labels, ParseTree mismatchedNode)
+    {
+        this.tree = tree ?? throw new ArgumentException("tree cannot be null", nameof(tree));
+        this.pattern = pattern ?? throw new ArgumentException("pattern cannot be null", nameof(pattern));
+        this.labels = labels ?? throw new ArgumentException("labels cannot be null", nameof(labels));
+        this.mismatchedNode = mismatchedNode;
+    }
 
-		if (pattern == null) {
-			throw new ArgumentException("pattern cannot be null",nameof(pattern));
-		}
-
-		if (labels == null) {
-			throw new ArgumentException("labels cannot be null",nameof(labels));
-		}
-
-		this.tree = tree;
-		this.pattern = pattern;
-		this.labels = labels;
-		this.mismatchedNode = mismatchedNode;
-	}
-
-	/**
+    /**
 	 * Get the last node associated with a specific {@code label}.
 	 *
 	 * <p>For example, for pattern {@code <id:ID>}, {@code get("id")} returns the
@@ -83,15 +73,15 @@ public class ParseTreeMatch {
 	 * label, or {@code null} if no parse tree matched a tag with the label.
 	 */
 
-	public ParseTree get(String label) {
-		if ( !labels.TryGetValue(label,out var parseTrees) || parseTrees.Count==0 ) {
-			return null;
-		}
+    public ParseTree Get(string label)
+    {
+        if (labels.TryGetValue(label, out var parseTrees) && parseTrees.Count != 0)
+            return parseTrees[^1]; // return last if multiple
+        else
+            return null;
+    }
 
-		return parseTrees[(parseTrees.Count -1 )]; // return last if multiple
-	}
-
-	/**
+    /**
 	 * Return all nodes matching a rule or token tag with the specified label.
 	 *
 	 * <p>If the {@code label} is the name of a parser rule or token in the
@@ -115,15 +105,10 @@ public class ParseTreeMatch {
 	 * is returned.
 	 */
 
-	public List<ParseTree> getAll(String label) {
-		if ( !labels.TryGetValue(label,out var nodes) ) {
-			return new List<ParseTree>();
-		}
+    public List<ParseTree> GetAll(string label)
+		=> !labels.TryGetValue(label, out var nodes) ? new List<ParseTree>() : nodes;
 
-		return nodes;
-	}
-
-	/**
+    /**
 	 * Return a mapping from label &rarr; [list of nodes].
 	 *
 	 * <p>The map includes special entries corresponding to the names of rules and
@@ -134,57 +119,45 @@ public class ParseTreeMatch {
 	 * pattern did not contain any rule or token tags, this map will be empty.
 	 */
 
-	public MultiMap<String, ParseTree> getLabels() {
-		return labels;
-	}
+    public MultiMap<string, ParseTree> GetLabels() => labels;
 
-	/**
+    /**
 	 * Get the node at which we first detected a mismatch.
 	 *
 	 * @return the node at which we first detected a mismatch, or {@code null}
 	 * if the match was successful.
 	 */
 
-	public ParseTree getMismatchedNode() {
-		return mismatchedNode;
-	}
+    public ParseTree GetMismatchedNode() => mismatchedNode;
 
-	/**
+    /**
 	 * Gets a value indicating whether the match operation succeeded.
 	 *
 	 * @return {@code true} if the match operation succeeded; otherwise,
 	 * {@code false}.
 	 */
-	public bool succeeded() {
-		return mismatchedNode == null;
-	}
+    public bool Succeeded() => mismatchedNode == null;
 
-	/**
+    /**
 	 * Get the tree pattern we are matching against.
 	 *
 	 * @return The tree pattern we are matching against.
 	 */
 
-	public ParseTreePattern getPattern() {
-		return pattern;
-	}
+    public ParseTreePattern GetPattern() => pattern;
 
-	/**
+    /**
 	 * Get the parse tree we are trying to match to a pattern.
 	 *
 	 * @return The {@link ParseTree} we are trying to match to a pattern.
 	 */
 
-	public ParseTree getTree() {
-		return tree;
-	}
+    public ParseTree GetTree() => tree;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public override String ToString() {
-		return
-			$"Match {(succeeded() ? "succeeded" : "failed")}; found {getLabels().Count} labels";
-	}
+    //@Override
+    public override string ToString() 
+		=> $"Match {(Succeeded() ? "succeeded" : "failed")}; found {GetLabels().Count} labels";
 }

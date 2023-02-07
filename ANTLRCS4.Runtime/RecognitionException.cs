@@ -45,7 +45,7 @@ public class RecognitionException : RuntimeException {
         this.recognizer = recognizer;
 		this.input = input;
 		this.ctx = ctx;
-		if ( recognizer!=null ) this.offendingState = recognizer.getState();
+		if ( recognizer!=null ) this.offendingState = recognizer.GetState();
 	}
 	public RecognitionException(String message,
 								Recognizer recognizer,
@@ -57,7 +57,7 @@ public class RecognitionException : RuntimeException {
 		this.recognizer = recognizer;
 		this.input = input;
 		this.ctx = ctx;
-		if ( recognizer!=null ) this.offendingState = recognizer.getState();
+		if ( recognizer!=null ) this.offendingState = recognizer.GetState();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class RecognitionException : RuntimeException {
 	 */
 	public IntervalSet getExpectedTokens() {
 		if (recognizer != null) {
-			return recognizer.getATN().GetExpectedTokens(offendingState, ctx);
+			return recognizer.GetATN().GetExpectedTokens(offendingState, ctx);
 		}
 
 		return null;

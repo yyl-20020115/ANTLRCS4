@@ -90,7 +90,7 @@ public class ParserInterpreter : Parser {
 		this.atn = atn;
 		this.tokenNames = new String[atn.maxTokenType];
 		for (int i = 0; i < tokenNames.Length; i++) {
-			tokenNames[i] = vocabulary.getDisplayName(i);
+			tokenNames[i] = vocabulary.GetDisplayName(i);
 		}
 
 		this.ruleNames = ruleNames.ToArray();
@@ -105,7 +105,7 @@ public class ParserInterpreter : Parser {
 		}
 
 		// get atn simulator that knows how to do predictions
-		setInterpreter(new ParserATNSimulator(this, atn,
+		SetInterpreter(new ParserATNSimulator(this, atn,
 											  decisionToDFA,
 											  sharedContextCache));
 	}
@@ -118,13 +118,13 @@ public class ParserInterpreter : Parser {
 	}
 
 	//@Override
-	public override ATN getATN() {
+	public override ATN GetATN() {
 		return atn;
 	}
 
 	//@Override
 	//@Deprecated
-	public override String[] getTokenNames() {
+	public override String[] GetTokenNames() {
 		return tokenNames;
 	}
 
@@ -134,12 +134,12 @@ public class ParserInterpreter : Parser {
 	}
 
 	//@Override
-	public override String[] getRuleNames() {
+	public override String[] GetRuleNames() {
 		return ruleNames;
 	}
 
 	//@Override
-	public override String getGrammarFileName() {
+	public override String GetGrammarFileName() {
 		return grammarFileName;
 	}
 
@@ -181,9 +181,9 @@ public class ParserInterpreter : Parser {
 					visitState(p);
 				}
 				catch (RecognitionException e) {
-					setState(atn.ruleToStopState[p.ruleIndex].stateNumber);
+					SetState(atn.ruleToStopState[p.ruleIndex].stateNumber);
 					getContext().exception = e;
-					getErrorHandler().reportError(this, e);
+					getErrorHandler().ReportError(this, e);
 					recover(e);
 				}
 
@@ -200,7 +200,7 @@ public class ParserInterpreter : Parser {
 	}
 
 	protected ATNState getATNState() {
-		return atn.states[(getState())];
+		return atn.states[(GetState())];
 	}
 
 	protected void visitState(ATNState p) {
@@ -222,10 +222,10 @@ public class ParserInterpreter : Parser {
 					InterpreterRuleContext localctx =
 						createInterpreterRuleContext(_parentContextStack.Peek().a,
 													 _parentContextStack.Peek().b,
-													 _ctx.getRuleIndex());
+													 _ctx.GetRuleIndex());
 					pushNewRecursionContext(localctx,
 											atn.ruleToStartState[p.ruleIndex].stateNumber,
-											_ctx.getRuleIndex());
+											_ctx.GetRuleIndex());
 				}
 				break;
 
@@ -260,7 +260,7 @@ public class ParserInterpreter : Parser {
 
 			case Transition.PREDICATE:
 				PredicateTransition predicateTransition = (PredicateTransition)transition;
-				if (!sempred(_ctx, predicateTransition.ruleIndex, predicateTransition.predIndex)) {
+				if (!Sempred(_ctx, predicateTransition.ruleIndex, predicateTransition.predIndex)) {
 					throw new FailedPredicateException(this);
 				}
 
@@ -268,7 +268,7 @@ public class ParserInterpreter : Parser {
 
 			case Transition.ACTION:
 				ActionTransition actionTransition = (ActionTransition)transition;
-				action(_ctx, actionTransition.ruleIndex, actionTransition.actionIndex);
+				Action(_ctx, actionTransition.ruleIndex, actionTransition.actionIndex);
 				break;
 
 			case Transition.PRECEDENCE:
@@ -281,7 +281,7 @@ public class ParserInterpreter : Parser {
 				throw new UnsupportedOperationException("Unrecognized ATN transition type.");
 		}
 
-		setState(transition.target.stateNumber);
+		SetState(transition.target.stateNumber);
 	}
 
 	/** Method visitDecisionState() is called when the interpreter reaches
@@ -291,16 +291,16 @@ public class ParserInterpreter : Parser {
 	protected int visitDecisionState(DecisionState p) {
 		int predictedAlt = 1;
 		if ( p.NumberOfTransitions>1 ) {
-			getErrorHandler().sync(this);
+			getErrorHandler().Sync(this);
 			int decision = p.decision;
-			if ( decision == overrideDecision && input.Index() == overrideDecisionInputIndex &&
+			if ( decision == overrideDecision && input.Index == overrideDecisionInputIndex &&
 			     !overrideDecisionReached )
 			{
 				predictedAlt = overrideDecisionAlt;
 				overrideDecisionReached = true;
 			}
 			else {
-				predictedAlt = getInterpreter().AdaptivePredict(input, decision, _ctx);
+				predictedAlt = GetInterpreter().AdaptivePredict(input, decision, _ctx);
 			}
 		}
 		return predictedAlt;
@@ -322,14 +322,14 @@ public class ParserInterpreter : Parser {
 		if (ruleStartState.isLeftRecursiveRule) {
 			Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
 			unrollRecursionContexts(parentContext.a);
-			setState(parentContext.b);
+			SetState(parentContext.b);
 		}
 		else {
 			exitRule();
 		}
 
-		RuleTransition ruleTransition = (RuleTransition)atn.states[(getState())].Transition(0);
-		setState(ruleTransition.followState.stateNumber);
+		RuleTransition ruleTransition = (RuleTransition)atn.states[(GetState())].Transition(0);
+		SetState(ruleTransition.followState.stateNumber);
 	}
 
 	/** Override this parser interpreters normal decision-making process
@@ -387,9 +387,9 @@ public class ParserInterpreter : Parser {
 	 *  tree.
 	 */
 	protected void recover(RecognitionException e) {
-		int i = input.Index();
-		getErrorHandler().recover(this, e);
-		if ( input.Index()==i ) {
+		int i = input.Index;
+		getErrorHandler().Recover(this, e);
+		if ( input.Index==i ) {
 			// no input consumed, better add an error node
 			if ( e is InputMismatchException ) {
 				InputMismatchException ime = (InputMismatchException)e;
@@ -399,28 +399,28 @@ public class ParserInterpreter : Parser {
 					expectedTokenType = ime.getExpectedTokens().GetMinElement(); // get any element
 				}
 				Token errToken =
-					(TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().InputStream),
-				                             expectedTokenType, tok.getText(),
+					(TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+				                             expectedTokenType, tok.Text,
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop
-				                             tok.getLine(), tok.getCharPositionInLine());
+				                             tok.				                             Line, tok.CharPositionInLine);
 				_ctx.addErrorNode(createErrorNode(_ctx,errToken));
 			}
 			else { // NoViableAlt
 				Token tok = e.getOffendingToken();
 				Token errToken =
-					(TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(tok.getTokenSource(), tok.getTokenSource().InputStream),
-				                             Token.INVALID_TYPE, tok.getText(),
+					(TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+				                             Token.INVALID_TYPE, tok.Text,
 				                             Token.DEFAULT_CHANNEL,
 				                            -1, -1, // invalid start/stop
-				                             tok.getLine(), tok.getCharPositionInLine());
+				                             tok.				                             Line, tok.CharPositionInLine);
 				_ctx.addErrorNode(createErrorNode(_ctx,errToken));
 			}
 		}
 	}
 
 	protected Token recoverInline() {
-		return _errHandler.recoverInline(this);
+		return _errHandler.RecoverInline(this);
 	}
 
 	/** Return the root of the parse, which can be useful if the parser

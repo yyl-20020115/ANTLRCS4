@@ -353,7 +353,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            var options = (GrammarAST)retval.tree.getFirstChildWithType(ANTLRParser.OPTIONS);
+            var options = (GrammarAST)retval.tree.GetFirstChildWithType(ANTLRParser.OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -533,7 +533,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            if (t != null) ((GrammarRootAST)retval.tree).grammarType = (t != null ? t.getType() : 0);
+            if (t != null) ((GrammarRootAST)retval.tree).grammarType = (t != null ? t.Type : 0);
             else ((GrammarRootAST)retval.tree).grammarType = COMBINED;
 
         }
@@ -2633,7 +2633,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
             paraphrases.Pop();
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -4800,30 +4800,30 @@ public class ANTLRParser : antlr.runtime.Parser
         {
 
             retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-            int ttype = input.get(input.range()).getType(); // seems to be next token
+            int ttype = input.Get(input.Range()).Type; // seems to be next token
                                                             // look for anything that really belongs at the start of the rule minus the initial ID
             if (ttype == COLON || ttype == RETURNS || ttype == CATCH || ttype == FINALLY || ttype == AT || ttype == EOF)
             {
                 RecognitionException missingSemi =
                     new V4ParserException("unterminated rule (missing ';') detected at '" +
-                                          input.LT(1).getText() + " " + input.LT(2).getText() + "'", input);
+                                          input.LT(1).                                          Text + " " + input.LT(2).Text + "'", input);
                 reportError(missingSemi);
                 if (ttype == EOF)
                 {
-                    input.Seek(input.Index() + 1);
+                    input.Seek(input.Index + 1);
                 }
                 else if (ttype == CATCH || ttype == FINALLY)
                 {
-                    input.Seek(input.range()); // ignore what's before rule trailer stuff
+                    input.Seek(input.Range()); // ignore what's before rule trailer stuff
                 }
                 else if (ttype == RETURNS || ttype == AT)
                 { // scan back looking for ID of rule header
-                    int p = input.Index();
-                    Token t = input.get(p);
-                    while (t.getType() != RULE_REF && t.getType() != TOKEN_REF)
+                    int p = input.Index;
+                    Token t = input.Get(p);
+                    while (t.Type != RULE_REF && t.Type != TOKEN_REF)
                     {
                         p--;
-                        t = input.get(p);
+                        t = input.Get(p);
                     }
                     input.Seek(p);
                 }
@@ -4958,7 +4958,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -6258,26 +6258,26 @@ public class ANTLRParser : antlr.runtime.Parser
         {
 
             retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
-            int ttype = input.get(input.range()).getType();
+            int ttype = input.Get(input.Range()).Type;
             // look for anything that really belongs at the start of the rule minus the initial ID
             if (ttype == COLON || ttype == RETURNS || ttype == CATCH || ttype == FINALLY || ttype == AT)
             {
                 RecognitionException missingSemi =
                     new V4ParserException("unterminated rule (missing ';') detected at '" +
-                                          input.LT(1).getText() + " " + input.LT(2).getText() + "'", input);
+                                          input.LT(1).                                          Text + " " + input.LT(2).Text + "'", input);
                 reportError(missingSemi);
                 if (ttype == CATCH || ttype == FINALLY)
                 {
-                    input.Seek(input.range()); // ignore what's before rule trailer stuff
+                    input.Seek(input.Range()); // ignore what's before rule trailer stuff
                 }
                 if (ttype == RETURNS || ttype == AT)
                 { // scan back looking for ID of rule header
-                    int p = input.Index();
-                    Token t = input.get(p);
-                    while (t.getType() != RULE_REF && t.getType() != TOKEN_REF)
+                    int p = input.Index;
+                    Token t = input.Get(p);
+                    while (t.Type != RULE_REF && t.Type != TOKEN_REF)
                     {
                         p--;
-                        t = input.get(p);
+                        t = input.Get(p);
                     }
                     input.Seek(p);
                 }
@@ -6514,7 +6514,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(ELEMENT_OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -7636,7 +7636,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(ELEMENT_OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -8356,7 +8356,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -8503,7 +8503,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(ELEMENT_OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -8777,7 +8777,7 @@ public class ANTLRParser : antlr.runtime.Parser
             adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
-            GrammarAST options = (GrammarAST)retval.tree.getFirstChildWithType(ELEMENT_OPTIONS);
+            GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
                 Grammar.setNodeOptions(retval.tree, options);
@@ -9323,7 +9323,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 root_0 = (GrammarAST)adaptor.nil();
                 // 874:17: -> ID[$qid.start, $text]
                 {
-                    adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, (retval.start), input.toString(retval.start, input.LT(-1))));
+                    adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, (retval.start), input.ToString(retval.start, input.LT(-1))));
                 }
 
 

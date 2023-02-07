@@ -102,7 +102,7 @@ public class LexerATNSimulator : ATNSimulator
         int mark = input.Mark();
         try
         {
-            this.startIndex = input.Index();
+            this.startIndex = input.Index;
             this.prevAccept.Reset();
             DFA dfa = decisionToDFA[mode];
             if (dfa.s0 == null)
@@ -325,7 +325,7 @@ public class LexerATNSimulator : ATNSimulator
         else
         {
             // if no accept and EOF is first char, return EOF
-            if (t == IntStream.EOF && input.Index() == startIndex)
+            if (t == IntStream.EOF && input.Index == startIndex)
             {
                 return Token.EOF;
             }
@@ -366,7 +366,7 @@ public class LexerATNSimulator : ATNSimulator
                     var lexerActionExecutor = ((LexerATNConfig)c).GetLexerActionExecutor();
                     if (lexerActionExecutor != null)
                     {
-                        lexerActionExecutor = lexerActionExecutor.FixOffsetBeforeMatch(input.Index() - startIndex);
+                        lexerActionExecutor = lexerActionExecutor.FixOffsetBeforeMatch(input.Index - startIndex);
                     }
 
                     bool treatEofAsEpsilon = t == CharStream.EOF;
@@ -450,7 +450,7 @@ public class LexerATNSimulator : ATNSimulator
             {
                 if (recog != null)
                 {
-                    Console.Out.WriteLine("closure at %s rule stop %s", recog.getRuleNames()[config.state.ruleIndex], config);
+                    Console.Out.WriteLine("closure at %s rule stop %s", recog.GetRuleNames()[config.state.ruleIndex], config);
                 }
                 else
                 {
@@ -644,17 +644,17 @@ public class LexerATNSimulator : ATNSimulator
 
         if (!speculative)
         {
-            return recog.sempred(null, ruleIndex, predIndex);
+            return recog.Sempred(null, ruleIndex, predIndex);
         }
 
         int savedCharPositionInLine = charPositionInLine;
         int savedLine = line;
-        int index = input.Index();
+        int index = input.Index;
         int marker = input.Mark();
         try
         {
             Consume(input);
-            return recog.sempred(null, ruleIndex, predIndex);
+            return recog.Sempred(null, ruleIndex, predIndex);
         }
         finally
         {
@@ -669,7 +669,7 @@ public class LexerATNSimulator : ATNSimulator
                                    CharStream input,
                                    DFAState dfaState)
     {
-        settings.index = input.Index();
+        settings.index = input.Index;
         settings.line = line;
         settings.charPos = charPositionInLine;
         settings.dfaState = dfaState;
@@ -785,7 +785,7 @@ public class LexerATNSimulator : ATNSimulator
     public string GetText(CharStream input)
     {
         // index is first lookahead char, don't include.
-        return input.GetText(Interval.Of(startIndex, input.Index() - 1));
+        return input.GetText(Interval.Of(startIndex, input.Index - 1));
     }
 
     public int GetLine()

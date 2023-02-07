@@ -92,18 +92,18 @@ public class ListTokenSource : TokenSource {
         {
             if (i < tokens.Count)
             {
-                return tokens[(i)].getCharPositionInLine();
+                return tokens[(i)].CharPositionInLine;
             }
             else if (eofToken != null)
             {
-                return eofToken.getCharPositionInLine();
+                return eofToken.CharPositionInLine;
             }
             else if (tokens.Count > 0)
             {
                 // have to calculate the result from the line/column of the previous
                 // token, along with the text of the token.
                 Token lastToken = tokens[(tokens.Count - 1)];
-                String tokenText = lastToken.getText();
+                String tokenText = lastToken.Text;
                 if (tokenText != null)
                 {
                     int lastNewLine = tokenText.LastIndexOf('\n');
@@ -113,7 +113,7 @@ public class ListTokenSource : TokenSource {
                     }
                 }
 
-                return lastToken.getCharPositionInLine() + lastToken.getStopIndex() - lastToken.getStartIndex() + 1;
+                return lastToken.CharPositionInLine + lastToken.StopIndex - lastToken.StartIndex + 1;
             }
 
             // only reach this if tokens is empty, meaning EOF occurs at the first
@@ -131,21 +131,21 @@ public class ListTokenSource : TokenSource {
 			if (eofToken == null) {
 				int start = -1;
 				if (tokens.Count > 0) {
-					int previousStop = tokens[(tokens.Count - 1)].getStopIndex();
+					int previousStop = tokens[(tokens.Count - 1)].StopIndex;
 					if (previousStop != -1) {
 						start = previousStop + 1;
 					}
 				}
 
 				int stop = Math.Max(-1, start - 1);
-				eofToken =(_factory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
+				eofToken =(_factory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
 			}
 
 			return eofToken;
 		}
 
 		Token t = tokens[(i)];
-		if (i == tokens.Count - 1 && t.getType() == Token.EOF) {
+		if (i == tokens.Count - 1 && t.Type == Token.EOF) {
 			eofToken = t;
 		}
 
@@ -163,20 +163,20 @@ public class ListTokenSource : TokenSource {
         {
             if (i < tokens.Count)
             {
-                return tokens[(i)].getLine();
+                return tokens[(i)].Line;
             }
             else if (eofToken != null)
             {
-                return eofToken.getLine();
+                return eofToken.Line;
             }
             else if (tokens.Count > 0)
             {
                 // have to calculate the result from the line/column of the previous
                 // token, along with the text of the token.
                 Token lastToken = tokens[(tokens.Count - 1)];
-                int line = lastToken.getLine();
+                int line = lastToken.Line;
 
-                String tokenText = lastToken.getText();
+                String tokenText = lastToken.Text;
                 if (tokenText != null)
                 {
                     for (int i = 0; i < tokenText.Length; i++)
@@ -208,15 +208,15 @@ public class ListTokenSource : TokenSource {
         {
             if (i < tokens.Count)
             {
-                return tokens[(i)].getInputStream();
+                return tokens[(i)].InputStream;
             }
             else if (eofToken != null)
             {
-                return eofToken.getInputStream();
+                return eofToken.InputStream;
             }
             else if (tokens.Count > 0)
             {
-                return tokens[(tokens.Count - 1)].getInputStream();
+                return tokens[(tokens.Count - 1)].InputStream;
             }
 
             // no input stream information is available
@@ -228,18 +228,24 @@ public class ListTokenSource : TokenSource {
 	 * {@inheritDoc}
 	 */
     //@Override
-    public String GetSourceName() {
-		if (sourceName != null) {
-			return sourceName;
-		}
+    public String SourceName
+    {
+        get
+        {
+            if (sourceName != null)
+            {
+                return sourceName;
+            }
 
-		CharStream inputStream = InputStream;
-		if (inputStream != null) {
-			return inputStream.GetSourceName();
-		}
+            CharStream inputStream = InputStream;
+            if (inputStream != null)
+            {
+                return inputStream.SourceName;
+            }
 
-		return "List";
-	}
+            return "List";
+        }
+    }
 
     /**
 	 * {@inheritDoc}

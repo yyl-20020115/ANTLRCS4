@@ -15,13 +15,13 @@ public class MockIntTokenStream : TokenStream
     public void Consume() => p++;
 
     ////@Override
-    public int LA(int i) => LT(i).getType();
+    public int LA(int i) => LT(i).Type;
 
     ////@Override
-    public int Mark() => Index();
+    public int Mark() => Index;
 
     ////@Override
-    public int Index() => p;
+    public int Index => p;
 
     ////@Override
     public void Release(int marker) => Seek(marker);
@@ -33,7 +33,7 @@ public class MockIntTokenStream : TokenStream
     public int Count => types.Size;
 
     ////@Override
-    public string GetSourceName() => IntStream.UNKNOWN_SOURCE_NAME;
+    public string SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
     ////@Override
     public Token LT(int i)
@@ -42,58 +42,52 @@ public class MockIntTokenStream : TokenStream
         int rawIndex = p + i - 1;
         if (rawIndex >= types.Size) t = new CommonToken(Token.EOF);
         else t = new CommonToken(types.Get(rawIndex));
-        t.setTokenIndex(rawIndex);
+        t.        TokenIndex = rawIndex;
         return t;
     }
 
     ////@Override
-    public Token get(int i) => new CommonToken(types.Get(i));
+    public Token Get(int i) => new CommonToken(types.Get(i));
 
     ////@Override
-    public TokenSource getTokenSource()
-    {
-        return null;
-    }
+    public TokenSource TokenSource => null;
 
 
     ////@Override
-    public string getText()
-    {
-        throw new UnsupportedOperationException("can't give strings");
-    }
+    public string Text => throw new UnsupportedOperationException("can't give strings");
 
 
     ////@Override
-    public string getText(Interval interval)
+    public string GetText(Interval interval)
     {
         throw new UnsupportedOperationException("can't give strings");
     }
 
 
     ////@Override
-    public string getText(RuleContext ctx)
+    public string GetText(RuleContext ctx)
     {
         throw new UnsupportedOperationException("can't give strings");
     }
 
 
     ////@Override
-    public string getText(Token start, Token stop)
+    public string GetText(Token start, Token stop)
     {
         throw new UnsupportedOperationException("can't give strings");
     }
 
-    public int range()
+    public int Range()
     {
         throw new NotImplementedException();
     }
 
-    public string toString(int start, int stop)
+    public string ToString(int start, int stop)
     {
         throw new NotImplementedException();
     }
 
-    public string toString(Token start, Token stop)
+    public string ToString(Token start, Token stop)
     {
         throw new NotImplementedException();
     }

@@ -15,7 +15,7 @@ public class LL1PlusBlockSingleAlt : LL1Loop
 {
     public LL1PlusBlockSingleAlt(OutputModelFactory factory, GrammarAST plusRoot, List<CodeBlockForAlt> alts) : base(factory, plusRoot, alts)
     {
-        var blkAST = plusRoot.getChild(0) as BlockAST;
+        var blkAST = plusRoot.GetChild(0) as BlockAST;
         var blkStart = blkAST.atnState as PlusBlockStartState;
         stateNumber = blkStart.loopBackState.stateNumber;
         blockStartStateNumber = blkStart.stateNumber;

@@ -2168,7 +2168,7 @@ public class BlockSetTransformer : TreeRewriter
                 case 0:
                     int LA10_60 = input.LA(1);
 
-                    int index10_60 = input.Index();
+                    int index10_60 = input.Index;
                     input.Rewind();
                     s = -1;
                     if (((this.transformer.inContext("RULE")))) { s = 70; }

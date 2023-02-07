@@ -19,13 +19,13 @@ public class GrammarASTErrorNode : GrammarAST {
     }
 
     //@Override
-    public bool isNil() { return @delegate.isNil(); }
+    public bool isNil() { return @delegate.IsNil; }
 
     //@Override
-    public int getType() { return @delegate.getType(); }
+    public int getType() { return @delegate.Type; }
 
     //@Override
-    public String getText() { return @delegate.getText(); }
+    public String getText() { return @delegate.Text; }
     //@Override
     public String toString() { return @delegate.toString(); }
 }

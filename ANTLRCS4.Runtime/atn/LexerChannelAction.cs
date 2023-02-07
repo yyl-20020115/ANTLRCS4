@@ -58,7 +58,7 @@ public class LexerChannelAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.setChannel(channel);
+        lexer.        Channel = channel;
     }
 
     //@Override

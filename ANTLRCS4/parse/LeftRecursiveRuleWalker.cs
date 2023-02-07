@@ -518,7 +518,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
         TreeRuleReturnScope o = null;
 
-        bool lr = false; this.numAlts = ((GrammarAST)retval.start).getChildCount();
+        bool lr = false; this.numAlts = ((GrammarAST)retval.start).ChildCount;
         try
         {
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:103:2: ( ^( BLOCK (o= outerAlternative )+ ) )

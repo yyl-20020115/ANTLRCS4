@@ -65,13 +65,13 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     /** The token type for the current token */
     public int _type;
 
-    public readonly IntegerStack _modeStack = new IntegerStack();
-    public int _mode = Lexer.DEFAULT_MODE;
+    public readonly IntegerStack _modeStack = new ();
+    public int _mode = DEFAULT_MODE;
 
     /** You can set the text for the current token to override what is in
 	 *  the input char buffer.  Use setText() or can set this instance var.
 	 */
-    public String _text;
+    public string _text;
     public RecognizerSharedState state;
     public Lexer() { }
 
@@ -87,9 +87,8 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, input);
 
     }
-    public void match(String s)
+    public void Match(string s)
     {
-
         int i = 0;
         while (i < s.Length)
         {
@@ -100,9 +99,9 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                     state.failed = true;
                     return;
                 }
-                MismatchedTokenException mte =
+                var mte =
                     new MismatchedTokenException(s[i], input);
-                recover(mte);
+                Recover(mte);
                 throw mte;
             }
             i++;
@@ -111,12 +110,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         }
     }
 
-    public void matchAny()
+    public void MatchAny()
     {
         input.Consume();
     }
 
-    public void match(int c)
+    public void Match(int c)
     {
         if (input.LA(1) != c)
         {
@@ -125,16 +124,16 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                 state.failed = true;
                 return;
             }
-            MismatchedTokenException mte =
+            var mte =
                 new MismatchedTokenException(c, input);
-            recover(mte);  // don't really recover; just consume in lexer
+            Recover(mte);  // don't really recover; just consume in lexer
             throw mte;
         }
         input.Consume();
         state.failed = false;
     }
 
-    public void matchRange(int a, int b)
+    public void MatchRange(int a, int b)
     {
         if (input.LA(1) < a || input.LA(1) > b)
         {
@@ -143,21 +142,18 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                 state.failed = true;
                 return;
             }
-            MismatchedRangeException mre =
+            var mre =
                 new MismatchedRangeException(a, b, input);
-            recover(mre);
+            Recover(mre);
             throw mre;
         }
         input.Consume();
         state.failed = false;
     }
-    public void reset()
+    public void Reset()
     {
         // wack Lexer state variables
-        if (input != null)
-        {
-            input.Seek(0); // rewind the input
-        }
+        input?.Seek(0); // rewind the input
         token = null;
         _type = Token.INVALID_TYPE;
         _channel = Token.DEFAULT_CHANNEL;
@@ -167,10 +163,10 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         _text = null;
 
         _hitEOF = false;
-        _mode = Lexer.DEFAULT_MODE;
+        _mode = DEFAULT_MODE;
         _modeStack.Clear();
 
-        getInterpreter().Reset();
+        GetInterpreter().Reset();
     }
 
     /** Return a token from this source; i.e., match a token on the char
@@ -180,9 +176,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     public virtual Token NextToken()
     {
         if (input == null)
-        {
             throw new IllegalStateException("nextToken requires a non-null input stream.");
-        }
 
         // Mark start location in char stream so unbuffered streams are
         // guaranteed at least have text of current token
@@ -194,15 +188,15 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
             {
                 if (_hitEOF)
                 {
-                    emitEOF();
+                    EmitEOF();
                     return token;
                 }
 
                 token = null;
                 _channel = Token.DEFAULT_CHANNEL;
-                _tokenStartCharIndex = input.Index();
-                _tokenStartCharPositionInLine = getInterpreter().GetCharPositionInLine();
-                _tokenStartLine = getInterpreter().GetLine();
+                _tokenStartCharIndex = input.Index;
+                _tokenStartCharPositionInLine = GetInterpreter().GetCharPositionInLine();
+                _tokenStartLine = GetInterpreter().GetLine();
                 _text = null;
                 do
                 {
@@ -213,12 +207,12 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                     int ttype;
                     try
                     {
-                        ttype = getInterpreter().Match(input, _mode);
+                        ttype = GetInterpreter().Match(input, _mode);
                     }
                     catch (LexerNoViableAltException e)
                     {
-                        notifyListeners(e);     // report error
-                        recover(e);
+                        NotifyListeners(e);     // report error
+                        Recover(e);
                         ttype = SKIP;
                     }
                     if (input.LA(1) == IntStream.EOF)
@@ -231,7 +225,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                         goto outer;
                     }
                 } while (_type == MORE);
-                if (token == null) emit();
+                if (token == null) Emit();
                 return token;
             }
         }
@@ -249,33 +243,33 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  if token==null at end of any token rule, it creates one for you
 	 *  and emits it.
 	 */
-    public void skip()
+    public void Skip()
     {
         _type = SKIP;
     }
 
-    public void more()
+    public void More()
     {
         _type = MORE;
     }
 
-    public void mode(int m)
+    public void Mode(int m)
     {
         _mode = m;
     }
 
-    public void pushMode(int m)
+    public void PushMode(int m)
     {
         if (LexerATNSimulator.debug) Console.WriteLine("pushMode " + m);
         _modeStack.Push(_mode);
-        mode(m);
+        Mode(m);
     }
 
-    public int popMode()
+    public int PopMode()
     {
         if (_modeStack.IsEmpty) throw new EmptyStackException();
         if (LexerATNSimulator.debug) Console.WriteLine("popMode back to " + _modeStack.Peek());
-        mode(_modeStack.Pop());
+        Mode(_modeStack.Pop());
         return _mode;
     }
 
@@ -285,20 +279,17 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     /** Set the char stream and reset the lexer */
     //@Override
-    public override void setInputStream(IntStream input)
+    public override void SetInputStream(IntStream input)
     {
         this.input = null;
         this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
-        reset();
+        Reset();
         this.input = (CharStream)input;
         this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
     }
 
     //@Override
-    public virtual String GetSourceName()
-    {
-        return input.GetSourceName();
-    }
+    public virtual string SourceName => input.SourceName;
 
     //@Override
     public override CharStream InputStream => input;
@@ -308,7 +299,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  and getToken (to push tokens into a list and pull from that list
 	 *  rather than a single variable as this implementation does).
 	 */
-    public void emit(Token token)
+    public void Emit(Token token)
     {
         //Console.Error.WriteLine("emit "+token);
         this.token = token;
@@ -320,100 +311,63 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  use that to set the token's text.  Override this method to emit
 	 *  custom Token objects or provide a new factory.
 	 */
-    public Token emit()
+    public Token Emit()
     {
-        Token t = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, getCharIndex() - 1,
+        var t = (_factory as TokenFactory<Token>).Create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, GetCharIndex() - 1,
                                   _tokenStartLine, _tokenStartCharPositionInLine);
-        emit(t);
+        Emit(t);
         return t;
     }
 
-    public Token emitEOF()
+    public Token EmitEOF()
     {
         int cpos = CharPositionInLine;
         int line = Line;
-        Token eof = (_factory as TokenFactory<Token>).create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.Index(), input.Index() - 1,
+        var eof = (_factory as TokenFactory<Token>).Create(_tokenFactorySourcePair, Token.EOF, null, Token.DEFAULT_CHANNEL, input.Index, input.Index - 1,
                                     line, cpos);
-        emit(eof);
+        Emit(eof);
         return eof;
     }
 
     //@Override
-    public int Line => getInterpreter().GetLine();
+    public int Line => GetInterpreter().GetLine();
 
     //@Override
-    public int CharPositionInLine => getInterpreter().GetCharPositionInLine();
+    public int CharPositionInLine => GetInterpreter().GetCharPositionInLine();
 
-    public void setLine(int line)
-    {
-        getInterpreter().SetLine(line);
-    }
+    public void SetLine(int line) => GetInterpreter().SetLine(line);
 
-    public void setCharPositionInLine(int charPositionInLine)
+    public void SetCharPositionInLine(int charPositionInLine)
     {
-        getInterpreter().SetCharPositionInLine(charPositionInLine);
+        GetInterpreter().SetCharPositionInLine(charPositionInLine);
     }
 
     /** What is the index of the current character of lookahead? */
-    public int getCharIndex()
+    public int GetCharIndex()
     {
-        return input.Index();
+        return input.Index;
     }
 
     /** Return the text matched so far for the current token or any
 	 *  text override.
 	 */
-    public String getText()
-    {
-        if (_text != null)
-        {
-            return _text;
-        }
-        return getInterpreter().GetText(input);
-    }
-
     /** Set the complete text of this token; it wipes any previous
-	 *  changes to the text.
-	 */
-    public void setText(String text)
+ *  changes to the text.
+ */
+    public string Text
     {
-        this._text = text;
+        get => _text ?? GetInterpreter().GetText(input);
+        set => this._text = value;
     }
 
     /** Override if emitting multiple tokens. */
-    public Token getToken() { return token; }
+    public Token Token { get => token; set => this.token = value; }
+    public int Type { get => _type; set => _type = value; }
+    public int Channel { get => _channel; set => _channel = value; }
 
-    public void setToken(Token _token)
-    {
-        this.token = _token;
-    }
+    public virtual string[] GetChannelNames() => null;
 
-    public void setType(int ttype)
-    {
-        _type = ttype;
-    }
-
-    public int getType()
-    {
-        return _type;
-    }
-
-    public void setChannel(int channel)
-    {
-        _channel = channel;
-    }
-
-    public int getChannel()
-    {
-        return _channel;
-    }
-
-    public String[] getChannelNames() { return null; }
-
-    public virtual String[] getModeNames()
-    {
-        return null;
-    }
+    public virtual string[] GetModeNames() => null;
 
     /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
@@ -421,19 +375,16 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 */
     //@Override
     //@Deprecated
-    public override String[] getTokenNames()
-    {
-        return null;
-    }
+    public override string[] GetTokenNames() => null;
 
     /** Return a list of all Token objects in input char stream.
 	 *  Forces load of all tokens. Does not include EOF token.
 	 */
-    public List<Token> getAllTokens()
+    public List<Token> GetAllTokens()
     {
         List<Token> tokens = new();
         Token t = NextToken();
-        while (t.getType() != Token.EOF)
+        while (t.Type != Token.EOF)
         {
             tokens.Add(t);
             t = NextToken();
@@ -441,37 +392,37 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         return tokens;
     }
 
-    public void recover(LexerNoViableAltException e)
+    public void Recover(LexerNoViableAltException e)
     {
         if (input.LA(1) != IntStream.EOF)
         {
             // skip a char and try again
-            getInterpreter().Consume(input);
+            GetInterpreter().Consume(input);
         }
     }
 
-    public void notifyListeners(LexerNoViableAltException e)
+    public void NotifyListeners(LexerNoViableAltException e)
     {
-        String text = input.GetText(Interval.Of(_tokenStartCharIndex, input.Index()));
-        String msg = "token recognition error at: '" + getErrorDisplay(text) + "'";
+        var text = input.GetText(Interval.Of(_tokenStartCharIndex, input.Index));
+        var msg = "token recognition error at: '" + GetErrorDisplay(text) + "'";
 
-        ANTLRErrorListener listener = getErrorListenerDispatch();
+        var listener = GetErrorListenerDispatch();
         listener.SyntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
     }
 
-    public String getErrorDisplay(String s)
+    public string GetErrorDisplay(String s)
     {
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         foreach (char c in s.ToCharArray())
         {
-            buf.Append(getErrorDisplay(c));
+            buffer.Append(GetErrorDisplay(c));
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
-    public String getErrorDisplay(int c)
+    public string GetErrorDisplay(int c)
     {
-        String s = c.ToString();// String.valueOf((char)c);
+        var s = c.ToString();// String.valueOf((char)c);
         switch (c)
         {
             case Token.EOF:
@@ -490,9 +441,9 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         return s;
     }
 
-    public String getCharErrorDisplay(int c)
+    public string GetCharErrorDisplay(int c)
     {
-        String s = getErrorDisplay(c);
+        var s = GetErrorDisplay(c);
         return "'" + s + "'";
     }
 
@@ -501,7 +452,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  it all works out.  You can instead use the rule invocation stack
 	 *  to do sophisticated error recovery if you are in a fragment rule.
 	 */
-    public void recover(RecognitionException re)
+    public virtual void Recover(RecognitionException re)
     {
         //Console.WriteLine("consuming char "+(char)input.LA(1)+" during recovery");
         //re.printStackTrace();

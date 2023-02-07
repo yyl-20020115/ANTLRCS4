@@ -166,7 +166,7 @@ public interface IntStream
 	 * {@link IntStream initializing method} has occurred after this stream was
 	 * constructed.</p>
 	 */
-    int Index();
+    int Index { get; }
 
     /**
 	 * Set the input cursor to the position indicated by {@code index}. If the
@@ -213,7 +213,7 @@ public interface IntStream
 	 * returns {@link #UNKNOWN_SOURCE_NAME}.
 	 */
 
-    public string GetSourceName();
+    public string SourceName { get; }
 
     void Rewind(int nvaeMark);
 

@@ -152,7 +152,7 @@ public class LexerActionExecutor
     public void Execute(Lexer lexer, CharStream input, int startIndex)
     {
         bool requiresSeek = false;
-        int stopIndex = input.Index();
+        int stopIndex = input.Index;
         try
         {
             foreach (var lexerAction in lexerActions)

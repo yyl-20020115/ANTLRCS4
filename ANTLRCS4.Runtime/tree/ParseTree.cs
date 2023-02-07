@@ -13,15 +13,17 @@ namespace org.antlr.v4.runtime.tree;
  *
  *  <p>The payload is either a {@link Token} or a {@link RuleContext} object.</p>
  */
-public interface ParseTree : SyntaxTree {
-	// the following methods narrow the return type; they are not additional methods
-	//@Override
-	ParseTree getParent();
-	//@Override
-	ParseTree getChild(int i);
+public interface ParseTree : SyntaxTree
+{
+    // the following methods narrow the return type; they are not additional methods
+    //@Override
+    new ParseTree Parent { get; }
+
+    //@Override
+    new ParseTree GetChild(int i);
 
 
-	/** Set the parent for this node.
+    /** Set the parent for this node.
 	 *
 	 *  This is not backward compatible as it changes
 	 *  the interface but no one was able to create custom
@@ -36,19 +38,19 @@ public interface ParseTree : SyntaxTree {
 	 *
 	 *  @since 4.7
 	 */
-	void setParent(RuleContext parent);
+    void SetParent(RuleContext parent);
 
-	/** The {@link ParseTreeVisitor} needs a double dispatch method. */
-	 T accept<T>(ParseTreeVisitor<T> visitor);
+    /** The {@link ParseTreeVisitor} needs a double dispatch method. */
+    T Accept<T>(ParseTreeVisitor<T> visitor);
 
-	/** Return the combined text of all leaf nodes. Does not get any
+    /** Return the combined text of all leaf nodes. Does not get any
 	 *  off-channel tokens (if any) so won't return whitespace and
 	 *  comments if they are sent to parser on hidden channel.
 	 */
-	String getText();
+    new string Text { get; }
 
-	/** Specialize toStringTree so that it can print out more information
+    /** Specialize toStringTree so that it can print out more information
 	 * 	based upon the parser.
 	 */
-	String toStringTree(Parser parser);
+    string ToStringTree(Parser parser);
 }

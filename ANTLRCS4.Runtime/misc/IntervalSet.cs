@@ -658,7 +658,7 @@ public class IntervalSet : IntSet
         }
         else
         {
-            return vocabulary.getDisplayName(a);
+            return vocabulary.GetDisplayName(a);
         }
     }
 

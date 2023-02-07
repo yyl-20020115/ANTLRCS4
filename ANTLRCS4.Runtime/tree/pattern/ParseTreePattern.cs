@@ -12,31 +12,32 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * A pattern like {@code <ID> = <expr>;} converted to a {@link ParseTree} by
  * {@link ParseTreePatternMatcher#compile(String, int)}.
  */
-public class ParseTreePattern {
-	/**
+public class ParseTreePattern
+{
+    /**
 	 * This is the backing field for {@link #getPatternRuleIndex()}.
 	 */
-	private readonly int patternRuleIndex;
+    private readonly int patternRuleIndex;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getPattern()}.
 	 */
 
-	private readonly String pattern;
+    private readonly string pattern;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getPatternTree()}.
 	 */
 
-	private readonly ParseTree patternTree;
+    private readonly ParseTree patternTree;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getMatcher()}.
 	 */
 
-	private readonly ParseTreePatternMatcher matcher;
+    private readonly ParseTreePatternMatcher matcher;
 
-	/**
+    /**
 	 * Construct a new instance of the {@link ParseTreePattern} class.
 	 *
 	 * @param matcher The {@link ParseTreePatternMatcher} which created this
@@ -46,16 +47,16 @@ public class ParseTreePattern {
 	 * tree pattern.
 	 * @param patternTree The tree pattern in {@link ParseTree} form.
 	 */
-	public ParseTreePattern(ParseTreePatternMatcher matcher,
-							String pattern, int patternRuleIndex, ParseTree patternTree)
-	{
-		this.matcher = matcher;
-		this.patternRuleIndex = patternRuleIndex;
-		this.pattern = pattern;
-		this.patternTree = patternTree;
-	}
+    public ParseTreePattern(ParseTreePatternMatcher matcher,
+                            string pattern, int patternRuleIndex, ParseTree patternTree)
+    {
+        this.matcher = matcher;
+        this.patternRuleIndex = patternRuleIndex;
+        this.pattern = pattern;
+        this.patternTree = patternTree;
+    }
 
-	/**
+    /**
 	 * Match a specific parse tree against this tree pattern.
 	 *
 	 * @param tree The parse tree to match against this tree pattern.
@@ -64,22 +65,18 @@ public class ParseTreePattern {
 	 * used to determine whether or not the match was successful.
 	 */
 
-	public ParseTreeMatch match(ParseTree tree) {
-		return matcher.match(tree, this);
-	}
+    public ParseTreeMatch Match(ParseTree tree) => matcher.Match(tree, this);
 
-	/**
+    /**
 	 * Determine whether or not a parse tree matches this tree pattern.
 	 *
 	 * @param tree The parse tree to match against this tree pattern.
 	 * @return {@code true} if {@code tree} is a match for the current tree
 	 * pattern; otherwise, {@code false}.
 	 */
-	public bool matches(ParseTree tree) {
-		return matcher.match(tree, this).succeeded();
-	}
+    public bool Matches(ParseTree tree) => matcher.Match(tree, this).Succeeded();
 
-	/**
+    /**
 	 * Find all nodes using XPath and then try to match those subtrees against
 	 * this tree pattern.
 	 *
@@ -91,51 +88,48 @@ public class ParseTreePattern {
 	 * regardless of the reason for the failure.
 	 */
 
-	public List<ParseTreeMatch> findAll(ParseTree tree, String xpath) {
-		ICollection<ParseTree> subtrees = XPath.findAll(tree, xpath, matcher.getParser());
-		List<ParseTreeMatch> matches = new ();
-		foreach (ParseTree t in subtrees) {
-			ParseTreeMatch matched = match(t);
-			if (matched.succeeded() ) {
-				matches.Add(matched);
-			}
-		}
-		return matches;
-	}
+    public List<ParseTreeMatch> FindAll(ParseTree tree, String xpath)
+    {
+        var subtrees = XPath.findAll(tree, xpath, matcher.Parser);
+        List<ParseTreeMatch> matches = new();
+        foreach (ParseTree t in subtrees)
+        {
+            var matched = Match(t);
+            if (matched.Succeeded())
+            {
+                matches.Add(matched);
+            }
+        }
+        return matches;
+    }
 
-	/**
+    /**
 	 * Get the {@link ParseTreePatternMatcher} which created this tree pattern.
 	 *
 	 * @return The {@link ParseTreePatternMatcher} which created this tree
 	 * pattern.
 	 */
 
-	public ParseTreePatternMatcher getMatcher() {
-		return matcher;
-	}
+    public ParseTreePatternMatcher Matcher => matcher;
 
-	/**
+    /**
 	 * Get the tree pattern in concrete syntax form.
 	 *
 	 * @return The tree pattern in concrete syntax form.
 	 */
 
-	public String getPattern() {
-		return pattern;
-	}
+    public string Pattern => pattern;
 
-	/**
+    /**
 	 * Get the parser rule which serves as the outermost rule for the tree
 	 * pattern.
 	 *
 	 * @return The parser rule which serves as the outermost rule for the tree
 	 * pattern.
 	 */
-	public int getPatternRuleIndex() {
-		return patternRuleIndex;
-	}
+    public int PatternRuleIndex => patternRuleIndex;
 
-	/**
+    /**
 	 * Get the tree pattern as a {@link ParseTree}. The rule and token tags from
 	 * the pattern are present in the parse tree as terminal nodes with a symbol
 	 * of type {@link RuleTagToken} or {@link TokenTagToken}.
@@ -143,7 +137,5 @@ public class ParseTreePattern {
 	 * @return The tree pattern as a {@link ParseTree}.
 	 */
 
-	public ParseTree getPatternTree() {
-		return patternTree;
-	}
+    public ParseTree PatternTree => patternTree;
 }

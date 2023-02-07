@@ -408,13 +408,13 @@ public class Tool {
         public void ruleRef(GrammarAST @ref, ActionAST arg)
         {
             RuleAST ruleAST = ruleToAST.TryGetValue(@ref.getText(),out var ret)?ret:null;
-            String fileName = @ref.getToken().getInputStream().GetSourceName();
+            String fileName = @ref.Token.InputStream.SourceName;
             if (char.IsUpper(currentRuleName[(0)]) &&
                 char.IsLower(@ref.getText()[(0)]))
             {
                 badref = true;
                 this.tool.ErrMgr.GrammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
-                                    fileName, @ref.getToken(), @ref.getText(), currentRuleName);
+                                    fileName, @ref.Token, @ref.getText(), currentRuleName);
             }
             else if (ruleAST == null)
             {
@@ -438,7 +438,7 @@ public class Tool {
 	Grammar gx;
     public bool checkForRuleIssues( Grammar g) {
 		// check for redefined rules
-		GrammarAST RULES = (GrammarAST)g.ast.getFirstChildWithType(ANTLRParser.RULES);
+		GrammarAST RULES = (GrammarAST)g.ast.GetFirstChildWithType(ANTLRParser.RULES);
 		List<GrammarAST> rules = new (RULES.getAllChildrenWithType(ANTLRParser.RULE));
         foreach (GrammarAST mode in g.ast.getAllChildrenWithType(ANTLRParser.MODE)) {
 			rules.AddRange(mode.getAllChildrenWithType(ANTLRParser.RULE));
@@ -448,15 +448,15 @@ public class Tool {
 		 Dictionary<String, RuleAST> ruleToAST = new ();
 		foreach (GrammarAST r in rules) {
 			RuleAST ruleAST = (RuleAST)r;
-			GrammarAST ID = (GrammarAST)ruleAST.getChild(0);
+			GrammarAST ID = (GrammarAST)ruleAST.GetChild(0);
 			String ruleName = ID.getText();
 			if (ruleToAST.TryGetValue(ruleName,out var prev)) {
-				GrammarAST prevChild = (GrammarAST)prev.getChild(0);
+				GrammarAST prevChild = (GrammarAST)prev.GetChild(0);
 				g.Tools.ErrMgr.GrammarError(ErrorType.RULE_REDEFINITION,
 										   g.fileName,
-										   ID.getToken(),
+										   ID.										   Token,
 										   ruleName,
-										   prevChild.getToken().getLine());
+										   prevChild.										   Token.										   Line);
 				redefinition = true;
 				continue;
 			}
@@ -480,7 +480,7 @@ public class Tool {
 			GrammarRootAST root = (GrammarRootAST)t;
 			roots.Add(root);
 			root.fileName = fileName;
-			String grammarName = root.getChild(0).getText();
+			String grammarName = root.GetChild(0).Text;
 
 			GrammarAST tokenVocabNode = findOptionValueAST(root, "tokenVocab");
 			// Make grammars depend on any tokenVocab options
@@ -524,14 +524,14 @@ public class Tool {
 
 	/** Manually get option node from tree; return null if no defined. */
 	public static GrammarAST findOptionValueAST(GrammarRootAST root, String option) {
-		GrammarAST options = (GrammarAST)root.getFirstChildWithType(ANTLRParser.OPTIONS);
-		if ( options!=null && options.getChildCount() > 0 ) {
-            foreach (Object o in options.getChildren()) {
+		GrammarAST options = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.OPTIONS);
+		if ( options!=null && options.ChildCount > 0 ) {
+            foreach (Object o in options.GetChildren()) {
 				GrammarAST c = (GrammarAST)o;
 				if ( c.getType() == ANTLRParser.ASSIGN &&
-					 c.getChild(0).getText().Equals(option) )
+					 c.GetChild(0).					 Text.Equals(option) )
 				{
-					return (GrammarAST)c.getChild(1);
+					return (GrammarAST)c.GetChild(1);
 				}
 			}
 		}
@@ -605,7 +605,7 @@ public class Tool {
 			}
 
 			if ( importedFile==null ) {
-				ErrMgr.GrammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.getToken(), name);
+				ErrMgr.GrammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.Token, name);
 				return null;
 			}
 

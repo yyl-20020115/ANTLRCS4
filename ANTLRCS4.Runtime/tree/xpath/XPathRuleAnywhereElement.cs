@@ -9,14 +9,10 @@ namespace org.antlr.v4.runtime.tree.xpath;
 /**
  * Either {@code ID} at start of path or {@code ...//ID} in middle of path.
  */
-public class XPathRuleAnywhereElement : XPathElement {
-	protected int ruleIndex;
-	public XPathRuleAnywhereElement(String ruleName, int ruleIndex):base(ruleName) {
-		this.ruleIndex = ruleIndex;
-	}
+public class XPathRuleAnywhereElement : XPathElement
+{
+    protected int ruleIndex;
+    public XPathRuleAnywhereElement(string ruleName, int ruleIndex) : base(ruleName) => this.ruleIndex = ruleIndex;
 
-	
-	public override ICollection<ParseTree> evaluate(ParseTree t) {
-		return Trees.findAllRuleNodes(t, ruleIndex);
-	}
+    public override ICollection<ParseTree> Evaluate(ParseTree t) => Trees.findAllRuleNodes(t, ruleIndex);
 }

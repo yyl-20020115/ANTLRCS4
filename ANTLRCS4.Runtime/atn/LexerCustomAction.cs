@@ -86,7 +86,7 @@ public class LexerCustomAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.action(null, ruleIndex, actionIndex);
+        lexer.Action(null, ruleIndex, actionIndex);
     }
 
     //@Override

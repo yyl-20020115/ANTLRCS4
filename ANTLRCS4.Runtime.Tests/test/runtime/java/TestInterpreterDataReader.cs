@@ -63,7 +63,7 @@ public class TestInterpreterDataReader
         var channels = CastList<string>(channelsField.GetValue(interpreterData));
         var modes = CastList<string>(modesField.GetValue(interpreterData));
 
-        Assert.AreEqual(6, vocabulary.getMaxTokenType());
+        Assert.AreEqual(6, vocabulary.GetMaxTokenType());
         Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "s", "expr" }, ruleNames.ToArray()));
         Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "", "", "'*'", "'/'", "'+'", "'-'", "" }, literalNames));
         Assert.IsTrue(Enumerable.SequenceEqual(new string[] { "", "INT", "MUL", "DIV", "ADD", "SUB", "WS" }, symbolicNames));

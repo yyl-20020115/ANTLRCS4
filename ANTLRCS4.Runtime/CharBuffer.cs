@@ -8,81 +8,81 @@ namespace org.antlr.v4.runtime;
 
 public class CharBuffer
 {
-    public static CharBuffer allocate(int newCapacity)
+    public static CharBuffer Allocate(int newCapacity)
     {
         throw new NotImplementedException();
     }
 
-    public char[] array()
+    public char[] Array()
     {
         throw new NotImplementedException();
     }
 
-    public int arrayOffset()
+    public int ArrayOffset()
     {
         throw new NotImplementedException();
     }
 
-    public int capacity()
+    public int Capacity()
     {
         throw new NotImplementedException();
     }
 
-    public void flip()
+    public void Flip()
     {
         throw new NotImplementedException();
     }
 
-    public int get(int offset)
+    public int Get(int offset)
     {
         throw new NotImplementedException();
     }
 
-    public int get()
+    public int Get()
     {
         throw new NotImplementedException();
     }
 
-    public bool hasArray()
+    public bool HasArray()
     {
         throw new NotImplementedException();
     }
 
-    public bool hasRemaining()
+    public bool HasRemaining()
     {
         throw new NotImplementedException();
     }
 
-    public int limit()
+    public int Limit()
     {
         throw new NotImplementedException();
     }
 
-    public int position(int newPosition)
+    public int Position(int newPosition)
     {
         throw new NotImplementedException();
     }
 
-    public int position()
+    public int Position()
     {
         throw new NotImplementedException();
     }
 
-    public void put(CharBuffer charBuffer)
+    public void Put(CharBuffer charBuffer)
     {
         throw new NotImplementedException();
     }
 
-    public int remaining()
+    public int Remaining()
     {
         throw new NotImplementedException();
     }
 
-    public void put(string s)
+    public void Put(string s)
     {
         throw new NotImplementedException();
     }
-    public void put(char c)
+    public void Put(char c)
     {
         throw new NotImplementedException();
     }

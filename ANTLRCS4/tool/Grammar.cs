@@ -241,7 +241,7 @@ public class Grammar : AttributeResolver
 
         this.Tools = tool;
         this.ast = ast;
-        this.name = (ast.getChild(0)).getText();
+        this.name = (ast.GetChild(0)).Text;
         this.tokenStream = ast.tokenStream;
         this.originalTokenStream = this.tokenStream;
 
@@ -362,17 +362,17 @@ public class Grammar : AttributeResolver
     private void loadImportedGrammars(HashSet<String> visited)
     {
         if (ast == null) return;
-        GrammarAST i = (GrammarAST)ast.getFirstChildWithType(ANTLRParser.IMPORT);
+        GrammarAST i = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.IMPORT);
         if (i == null) return;
         visited.Add(this.name);
         importedGrammars = new();
-        foreach (Object c in i.getChildren())
+        foreach (Object c in i.GetChildren())
         {
             GrammarAST t = (GrammarAST)c;
             String importedGrammarName = null;
             if (t.getType() == ANTLRParser.ASSIGN)
             {
-                t = (GrammarAST)t.getChild(1);
+                t = (GrammarAST)t.GetChild(1);
                 importedGrammarName = t.getText();
             }
             else if (t.getType() == ANTLRParser.ID)
@@ -392,7 +392,7 @@ public class Grammar : AttributeResolver
             {
                 Tools.ErrMgr.GrammarError(ErrorType.ERROR_READING_IMPORTED_GRAMMAR,
                                          importedGrammarName,
-                                         t.getToken(),
+                                         t.                                         Token,
                                          importedGrammarName,
                                          name);
                 continue;
@@ -407,19 +407,19 @@ public class Grammar : AttributeResolver
 
     public void defineAction(GrammarAST atAST)
     {
-        if (atAST.getChildCount() == 2)
+        if (atAST.ChildCount == 2)
         {
-            String name = atAST.getChild(0).getText();
-            namedActions[name] = (ActionAST)atAST.getChild(1);
+            String name = atAST.GetChild(0).Text;
+            namedActions[name] = (ActionAST)atAST.GetChild(1);
         }
         else
         {
-            String scope = atAST.getChild(0).getText();
+            String scope = atAST.GetChild(0).Text;
             String gtype = getTypeString();
             if (scope.Equals(gtype) || (scope.Equals("parser") && gtype.Equals("combined")))
             {
-                String name = atAST.getChild(1).getText();
-                namedActions[name] = (ActionAST)atAST.getChild(2);
+                String name = atAST.GetChild(1).Text;
+                namedActions[name] = (ActionAST)atAST.GetChild(2);
             }
         }
     }
@@ -1293,13 +1293,13 @@ public class Grammar : AttributeResolver
     {
         if (options == null) return;
         GrammarASTWithOptions t = (GrammarASTWithOptions)node;
-        if (t.getChildCount() == 0 || options.getChildCount() == 0) return;
-        foreach (Object o in options.getChildren())
+        if (t.ChildCount == 0 || options.ChildCount == 0) return;
+        foreach (Object o in options.GetChildren())
         {
             GrammarAST c = (GrammarAST)o;
             if (c.getType() == ANTLRParser.ASSIGN)
             {
-                t.setOption(c.getChild(0).getText(), (GrammarAST)c.getChild(1));
+                t.setOption(c.GetChild(0).Text, (GrammarAST)c.GetChild(1));
             }
             else
             {
@@ -1322,7 +1322,7 @@ public class Grammar : AttributeResolver
             "(RULE %name:TOKEN_REF (BLOCK (LEXER_ALT_ACTION (ALT %lit:STRING_LITERAL) (LEXER_ACTION_CALL . .) .)))",
 			// TODO: allow doc comment in there
 		};
-        GrammarASTAdaptor adaptor = new GrammarASTAdaptor(ast.token.getInputStream());
+        GrammarASTAdaptor adaptor = new GrammarASTAdaptor(ast.token.InputStream);
         TreeWizard wiz = new TreeWizard(adaptor, ANTLRParser.tokenNames);
         List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral =
             new();
@@ -1334,8 +1334,8 @@ public class Grammar : AttributeResolver
         {
             //tool.log("grammar", r.toStringTree());
             //			Console.Out.WriteLine("chk: "+r.toStringTree());
-            Tree name = r.getChild(0);
-            if (name.getType() == ANTLRParser.TOKEN_REF)
+            Tree name = r.GetChild(0);
+            if (name.Type == ANTLRParser.TOKEN_REF)
             {
                 // check rule against patterns
                 bool isLitRule;
@@ -1421,7 +1421,7 @@ public class Grammar : AttributeResolver
                         break;
                     case ANTLRParser.BLOCK:
                     case ANTLRParser.CLOSURE:
-                        ruleNode = n.getAncestor(ANTLRParser.RULE);
+                        ruleNode = n.GetAncestor(ANTLRParser.RULE);
                         break;
                 }
                 if (ruleNode is RuleAST)

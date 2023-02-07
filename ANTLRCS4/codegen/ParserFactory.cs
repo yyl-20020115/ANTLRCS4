@@ -279,7 +279,7 @@ public class ParserFactory : DefaultOutputModelFactory
         if (ast.getType() == ANTLRParser.SET || ast.getType() == ANTLRParser.WILDCARD)
         {
             var implLabel =
-                gen.Target.GetImplicitSetLabel((ast.token.getTokenIndex().ToString()));
+                gen.Target.GetImplicitSetLabel((ast.token.TokenIndex.ToString()));
             d = GetTokenLabelDecl(implLabel);
             ((TokenDecl)d).isImplicit = true;
         }

@@ -75,7 +75,7 @@ public class DFA
             while (true)
             {
                 if (debug) Console.Error.WriteLine("DFA " + decisionNumber + " state " + s + " LA(1)=" + (char)input.LA(1) + "(" + input.LA(1) +
-                                                "), index=" + input.Index());
+                                                "), index=" + input.Index);
                 int specialState = special[s];
                 if (specialState >= 0)
                 {

@@ -192,12 +192,12 @@ public class TestXPath
         {
             if (t is RuleContext r)
             {
-                nodes.Add(result.a[r.getRuleIndex()]);
+                nodes.Add(result.a[r.GetRuleIndex()]);
             }
             else
             {
                 TerminalNode token = (TerminalNode)t;
-                nodes.Add(token.getText());
+                nodes.Add(token.Text);
             }
         }
         return nodes;
@@ -218,7 +218,7 @@ public class TestXPath
             var parser = compiledState.InitializeLexerAndParser(input).b;
             var found = XPath.findAll(executedState.parseTree, xpath, parser);
 
-            return new(parser.getRuleNames(), found);
+            return new(parser.GetRuleNames(), found);
         }
     }
 }

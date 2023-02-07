@@ -36,17 +36,20 @@ namespace org.antlr.v4.runtime;
  *
  * @see Parser#setErrorHandler(ANTLRErrorStrategy)
  */
-public class BailErrorStrategy : DefaultErrorStrategy {
+public class BailErrorStrategy : DefaultErrorStrategy
+{
     /** Instead of recovering from exception {@code e}, re-throw it wrapped
      *  in a {@link ParseCancellationException} so it is not caught by the
      *  rule function catches.  Use {@link Exception#getCause()} to get the
 	 *  original {@link RecognitionException}.
      */
     //@Override
-    public void recover(Parser recognizer, RecognitionException e) {
-		for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.getParent()) {
-			context.exception = e;
-		}
+    public override void Recover(Parser recognizer, RecognitionException e)
+    {
+        for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.GetParent())
+        {
+            context.exception = e;
+        }
 
         throw new ParseCancellationException(e);
     }
@@ -55,17 +58,18 @@ public class BailErrorStrategy : DefaultErrorStrategy {
      *  successfully recovers, it won't throw an exception.
      */
     //@Override
-    public Token recoverInline(Parser recognizer)
+    public override Token RecoverInline(Parser recognizer)
     {
-		InputMismatchException e = new InputMismatchException(recognizer);
-		for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.getParent()) {
-			context.exception = e;
-		}
+        var e = new InputMismatchException(recognizer);
+        for (var context = recognizer.getContext(); context != null; context = context.GetParent())
+        {
+            context.exception = e;
+        }
 
         throw new ParseCancellationException(e);
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */
     //@Override
-    public void sync(Parser recognizer) { }
+    public override void Sync(Parser recognizer) { }
 }

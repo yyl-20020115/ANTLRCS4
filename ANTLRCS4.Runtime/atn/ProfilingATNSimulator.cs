@@ -37,9 +37,9 @@ public class ProfilingATNSimulator : ParserATNSimulator
     protected int conflictingAltResolvedBySLL;
 
     public ProfilingATNSimulator(Parser parser) : base(parser,
-                parser.getInterpreter().atn,
-                parser.getInterpreter().decisionToDFA,
-                parser.getInterpreter().sharedContextCache)
+                parser.GetInterpreter().atn,
+                parser.GetInterpreter().decisionToDFA,
+                parser.GetInterpreter().sharedContextCache)
     {
         numDecisions = atn.decisionToState.Count;
         decisions = new DecisionInfo[numDecisions];
@@ -97,7 +97,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
     {
         // this method is called after each time the input position advances
         // during SLL prediction
-        _sllStopIndex = _input.Index();
+        _sllStopIndex = _input.Index;
 
         var existingTargetState = base.GetExistingTargetState(previousD, t);
         if (existingTargetState != null)
@@ -130,7 +130,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         {
             // this method is called after each time the input position advances
             // during full context prediction
-            _llStopIndex = _input.Index();
+            _llStopIndex = _input.Index;
         }
 
         var reachConfigs = base.ComputeReachSet(closure, t, fullCtx);

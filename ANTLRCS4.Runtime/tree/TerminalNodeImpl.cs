@@ -16,16 +16,15 @@ public class TerminalNodeImpl : TerminalNode {
 	public TerminalNodeImpl(Token symbol) {	this.symbol = symbol;	}
 
 	//@Override
-	public ParseTree getChild(int i) {return null;}
+	public ParseTree GetChild(int i) {return null;}
 
 	//@Override
 	public Token getSymbol() {return symbol;}
 
-	//@Override
-	public ParseTree getParent() { return parent; }
-
-	//@Override
-	public void setParent(RuleContext parent) {
+    //@Override
+    public ParseTree Parent => parent;
+    //@Override
+    public void SetParent(RuleContext parent) {
 		this.parent = parent;
 	}
 
@@ -33,132 +32,86 @@ public class TerminalNodeImpl : TerminalNode {
 	public Token getPayload() { return symbol; }
 
     //@Override
-    public Interval getSourceInterval() {
-		if ( symbol ==null ) return Interval.INVALID;
+    public Interval SourceInterval
+    {
+        get
+        {
+            if (symbol == null) return Interval.INVALID;
 
-		int tokenIndex = symbol.getTokenIndex();
-		return new Interval(tokenIndex, tokenIndex);
-	}
-
-    //@Override
-    public int getChildCount() { return 0; }
-
-    //@Override
-    public  T accept<T>(ParseTreeVisitor<T> visitor) {
-		return visitor.visitTerminal(this);
+            int tokenIndex = symbol.TokenIndex;
+            return new Interval(tokenIndex, tokenIndex);
+        }
     }
 
-	//@Override
-    public String getText() { return symbol.getText(); }
+    //@Override
+    public int ChildCount => 0;
+    //@Override
+    public  T Accept<T>(ParseTreeVisitor<T> visitor) {
+		return visitor.VisitTerminal(this);
+    }
 
     //@Override
-    public String toStringTree(Parser parser) {
+    public String Text => symbol.Text;
+    //@Override
+    public String ToStringTree(Parser parser) {
 		return ToString();
 	}
 
     //@Override
     public override String ToString() {
-			if ( symbol.getType() == Token.EOF ) return "<EOF>";
-			return symbol.getText();
+			if ( symbol.Type == Token.EOF ) return "<EOF>";
+			return symbol.Text;
 	}
 
     //@Override
-    public String toStringTree() {
+    public String ToStringTree() {
 		return ToString();
 	}
 
-    Tree Tree.getParent()
+    Tree Tree.Parent => this.Parent;
+
+    object Tree.Payload => this.getPayload();
+
+    Tree Tree.GetChild(int i)
     {
-        return this.getParent();
+		return this.GetChild(i);	
     }
 
-    object Tree.getPayload()
-    {
-		return this.getPayload();
-    }
+    public int Type => throw new NotImplementedException();
 
-    Tree Tree.getChild(int i)
-    {
-		return this.getChild(i);	
-    }
+    public int TokenStartIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int TokenStopIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    public int getType()
+    public void ReplaceChildren(int startChildIndex, int stopChildIndex, object t)
     {
         throw new NotImplementedException();
     }
 
-    public void setParent(Tree baseTree)
+    public object DupNode()
     {
         throw new NotImplementedException();
     }
 
-    public void setChildIndex(int i)
+    public object DeleteChild(int i)
     {
         throw new NotImplementedException();
     }
 
-    public void setTokenStartIndex(int start)
+    public int ChildIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public bool IsNil => throw new NotImplementedException();
+
+    public void AddChild(Tree child)
     {
         throw new NotImplementedException();
     }
 
-    public void setTokenStopIndex(int stop)
+    public void SetChild(int i, Tree child)
     {
         throw new NotImplementedException();
     }
 
-    public int getTokenStartIndex()
-    {
-        throw new NotImplementedException();
-    }
+    public int Line => throw new NotImplementedException();
 
-    public int getTokenStopIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void replaceChildren(int startChildIndex, int stopChildIndex, object t)
-    {
-        throw new NotImplementedException();
-    }
-
-    public object dupNode()
-    {
-        throw new NotImplementedException();
-    }
-
-    public object deleteChild(int i)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getChildIndex()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool isNil()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void addChild(Tree child)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setChild(int i, Tree child)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getLine()
-    {
-        throw new NotImplementedException();
-    }
-
-    public int getCharPositionInLine()
-    {
-        throw new NotImplementedException();
-    }
+    public int CharPositionInLine => throw new NotImplementedException();
 }

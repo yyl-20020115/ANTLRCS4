@@ -46,24 +46,26 @@ namespace org.antlr.v4.runtime;
  *
  *  @since 4.7
  */
-public class CharStreams {
-	private static int DEFAULT_BUFFER_SIZE = 4096;
+public class CharStreams
+{
+    private static int DEFAULT_BUFFER_SIZE = 4096;
 
-	// Utility class; do not construct.
-	private CharStreams() { }
+    // Utility class; do not construct.
+    private CharStreams() { }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a path to a UTF-8
 	 * encoded file on disk.
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromPath(string path){
-		return fromReader(new StreamReader(path, Encoding.UTF8));
-	}
-    public static CharStream fromPath(string path,Encoding encoding)
+    public static CharStream FromPath(string path)
     {
-        return fromReader(new StreamReader(path, encoding));
+        return FromReader(new StreamReader(path, Encoding.UTF8));
+    }
+    public static CharStream FromPath(string path, Encoding encoding)
+    {
+        return FromReader(new StreamReader(path, encoding));
     }
 
     /**
@@ -91,206 +93,215 @@ public class CharStreams {
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-    public static CharStream fromFileName(String fileName){
-		return fromReader(new StreamReader(fileName, Encoding.UTF8));
-	}
+    public static CharStream FromFileName(string fileName)
+    {
+        return FromReader(new StreamReader(fileName, Encoding.UTF8));
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a string containing a
 	 * path to a file on disk and the charset of the bytes
 	 * contained in the file.
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-	public static CharStream fromFileName(String fileName, Encoding charset){
-		return fromReader(new StreamReader(fileName, charset));
-	}
+    public static CharStream FromFileName(String fileName, Encoding charset)
+    {
+        return FromReader(new StreamReader(fileName, charset));
+    }
 
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given an opened {@link InputStream}
 	 * containing UTF-8 bytes.
 	 *
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	//public static CharStream fromStream(Stream @is){
-	//	return fromStream(@is, Encoding.UTF8);
-	//}
+    //public static CharStream fromStream(Stream @is){
+    //	return fromStream(@is, Encoding.UTF8);
+    //}
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given an opened {@link InputStream} and the
 	 * charset of the bytes contained in the stream.
 	 *
 	 * Reads the entire contents of the {@code InputStream} into
 	 * the result before returning, then closes the {@code InputStream}.
 	 */
-	//public static CharStream fromStream(Stream @is, Encoding charset){
-	//	return fromStream(@is, charset, -1);
-	//}
+    //public static CharStream fromStream(Stream @is, Encoding charset){
+    //	return fromStream(@is, charset, -1);
+    //}
 
-	//public static CharStream fromStream(Stream @is, Encoding charset, long inputSize){
-	//	using (ReadableByteChannel channel = Channels.newChannel(@is)) {
-	//		return fromChannel(
-	//			channel,
-	//			charset,
-	//			DEFAULT_BUFFER_SIZE,
-	//			CodingErrorAction.REPLACE,
-	//			IntStream.UNKNOWN_SOURCE_NAME,
-	//			inputSize);
-	//	}
-	//}
+    //public static CharStream fromStream(Stream @is, Encoding charset, long inputSize){
+    //	using (ReadableByteChannel channel = Channels.newChannel(@is)) {
+    //		return fromChannel(
+    //			channel,
+    //			charset,
+    //			DEFAULT_BUFFER_SIZE,
+    //			CodingErrorAction.REPLACE,
+    //			IntStream.UNKNOWN_SOURCE_NAME,
+    //			inputSize);
+    //	}
+    //}
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given an opened {@link ReadableByteChannel}
 	 * containing UTF-8 bytes.
 	 *
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	//public static CharStream fromChannel(ReadableByteChannel channel){
-	//	return fromChannel(channel, StandardCharsets.UTF_8);
-	//}
+    //public static CharStream fromChannel(ReadableByteChannel channel){
+    //	return fromChannel(channel, StandardCharsets.UTF_8);
+    //}
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given an opened {@link ReadableByteChannel} and the
 	 * charset of the bytes contained in the channel.
 	 *
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	//public static CharStream fromChannel(ReadableByteChannel channel, Encoding charset){
-	//	return fromChannel(
-	//		channel,
-	//		DEFAULT_BUFFER_SIZE,
-	//		CodingErrorAction.REPLACE,
-	//		IntStream.UNKNOWN_SOURCE_NAME);
-	//}
+    //public static CharStream fromChannel(ReadableByteChannel channel, Encoding charset){
+    //	return fromChannel(
+    //		channel,
+    //		DEFAULT_BUFFER_SIZE,
+    //		CodingErrorAction.REPLACE,
+    //		IntStream.UNKNOWN_SOURCE_NAME);
+    //}
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a {@link Reader}. Closes
 	 * the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(TextReader r){
-		return fromReader(r, IntStream.UNKNOWN_SOURCE_NAME);
-	}
+    public static CodePointCharStream FromReader(TextReader r)
+    {
+        return FromReader(r, IntStream.UNKNOWN_SOURCE_NAME);
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a {@link Reader} and its
 	 * source name. Closes the reader before returning.
 	 */
-	public static CodePointCharStream fromReader(TextReader r, String sourceName){
-		try {
-			CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(DEFAULT_BUFFER_SIZE);
-			CharBuffer charBuffer = CharBuffer.allocate(DEFAULT_BUFFER_SIZE);
-			while ((r.Read(/*charBuffer*/)) != -1) {
-				//charBuffer.flip();
-				codePointBufferBuilder.append(charBuffer);
-				//charBuffer.compact();
-			}
-			return CodePointCharStream.fromBuffer(codePointBufferBuilder.build(), sourceName);
-		}
-		finally {
-			r.Close();
-		}
-	}
+    public static CodePointCharStream FromReader(TextReader r, string sourceName)
+    {
+        try
+        {
+            var codePointBufferBuilder = CodePointBuffer.GetBuilder(DEFAULT_BUFFER_SIZE);
+            var charBuffer = CharBuffer.Allocate(DEFAULT_BUFFER_SIZE);
+            while ((r.Read(/*charBuffer*/)) != -1)
+            {
+                //charBuffer.flip();
+                codePointBufferBuilder.Append(charBuffer);
+                //charBuffer.compact();
+            }
+            return CodePointCharStream.FromBuffer(codePointBufferBuilder.Build(), sourceName);
+        }
+        finally
+        {
+            r.Close();
+        }
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a {@link String}.
 	 */
-	public static CodePointCharStream fromString(String s) {
-		return fromString(s, IntStream.UNKNOWN_SOURCE_NAME);
-	}
+    public static CodePointCharStream FromString(String s)
+    {
+        return FromString(s, IntStream.UNKNOWN_SOURCE_NAME);
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given a {@link String} and the {@code sourceName}
 	 * from which it came.
 	 */
-	public static CodePointCharStream fromString(String s, String sourceName) {
-		// Initial guess assumes no code points > U+FFFF: one code
-		// point for each code unit in the string
-		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder(s.Length);
-		// TODO: CharBuffer.wrap(String) rightfully returns a read-only buffer
-		// which doesn't expose its array, so we make a copy.
-		CharBuffer cb = CharBuffer.allocate(s.Length);
-		cb.put(s);
-		cb.flip();
-		codePointBufferBuilder.append(cb);
-		return CodePointCharStream.fromBuffer(codePointBufferBuilder.build(), sourceName);
-	}
+    public static CodePointCharStream FromString(string s, string sourceName)
+    {
+        // Initial guess assumes no code points > U+FFFF: one code
+        // point for each code unit in the string
+        CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.GetBuilder(s.Length);
+        // TODO: CharBuffer.wrap(String) rightfully returns a read-only buffer
+        // which doesn't expose its array, so we make a copy.
+        CharBuffer cb = CharBuffer.Allocate(s.Length);
+        cb.Put(s);
+        cb.Flip();
+        codePointBufferBuilder.Append(cb);
+        return CodePointCharStream.FromBuffer(codePointBufferBuilder.Build(), sourceName);
+    }
 
-	/**
+    /**
 	 * Creates a {@link CharStream} given an opened {@link ReadableByteChannel}
 	 * containing UTF-8 bytes.
 	 *
 	 * Reads the entire contents of the {@code channel} into
 	 * the result before returning, then closes the {@code channel}.
 	 */
-	//public static CodePointCharStream fromChannel(
-	//	ReadableByteChannel channel,
-	//	int bufferSize,
-	//	CodingErrorAction decodingErrorAction,
-	//	String sourceName)
-		
-	//{
-	//	return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
-	//}
+    //public static CodePointCharStream fromChannel(
+    //	ReadableByteChannel channel,
+    //	int bufferSize,
+    //	CodingErrorAction decodingErrorAction,
+    //	String sourceName)
 
-	//public static CodePointCharStream fromChannel(
-	//	ReadableByteChannel channel,
-	//	Encoding charset,
-	//	int bufferSize,
-	//	CodingErrorAction decodingErrorAction,
-	//	String sourceName,
-	//	long inputSize)
-		
-	//{
-	//	try {
-	//		ByteBuffer utf8BytesIn = ByteBuffer.allocate(bufferSize);
-	//		CharBuffer utf16CodeUnitsOut = CharBuffer.allocate(bufferSize);
-	//		if (inputSize == -1) {
-	//			inputSize = bufferSize;
-	//		} else if (inputSize > int.MaxValue) {
-	//			// ByteBuffer et al don't support long sizes
-	//			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, int.MaxValue));
-	//		}
-	//		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
-	//		CharsetDecoder decoder = charset
-	//				.newDecoder()
-	//				.onMalformedInput(decodingErrorAction)
-	//				.onUnmappableCharacter(decodingErrorAction);
+    //{
+    //	return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
+    //}
 
-	//		bool endOfInput = false;
-	//		while (!endOfInput) {
-	//			int bytesRead = channel.read(utf8BytesIn);
-	//			endOfInput = (bytesRead == -1);
-	//			utf8BytesIn.flip();
-	//			CoderResult result = decoder.decode(
-	//				utf8BytesIn,
-	//				utf16CodeUnitsOut,
-	//				endOfInput);
-	//			if (result.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
-	//				result.throwException();
-	//			}
-	//			utf16CodeUnitsOut.flip();
-	//			codePointBufferBuilder.append(utf16CodeUnitsOut);
-	//			utf8BytesIn.compact();
-	//			utf16CodeUnitsOut.compact();
-	//		}
-	//		// Handle any bytes at the end of the file which need to
-	//		// be represented as errors or substitution characters.
-	//		CoderResult flushResult = decoder.flush(utf16CodeUnitsOut);
-	//		if (flushResult.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
-	//			flushResult.throwException();
-	//		}
-	//		utf16CodeUnitsOut.flip();
-	//		codePointBufferBuilder.append(utf16CodeUnitsOut);
+    //public static CodePointCharStream fromChannel(
+    //	ReadableByteChannel channel,
+    //	Encoding charset,
+    //	int bufferSize,
+    //	CodingErrorAction decodingErrorAction,
+    //	String sourceName,
+    //	long inputSize)
 
-	//		CodePointBuffer codePointBuffer = codePointBufferBuilder.build();
-	//		return CodePointCharStream.fromBuffer(codePointBuffer, sourceName);
-	//	}
-	//	finally {
-	//		channel.close();
-	//	}
-	//}
+    //{
+    //	try {
+    //		ByteBuffer utf8BytesIn = ByteBuffer.allocate(bufferSize);
+    //		CharBuffer utf16CodeUnitsOut = CharBuffer.allocate(bufferSize);
+    //		if (inputSize == -1) {
+    //			inputSize = bufferSize;
+    //		} else if (inputSize > int.MaxValue) {
+    //			// ByteBuffer et al don't support long sizes
+    //			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, int.MaxValue));
+    //		}
+    //		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
+    //		CharsetDecoder decoder = charset
+    //				.newDecoder()
+    //				.onMalformedInput(decodingErrorAction)
+    //				.onUnmappableCharacter(decodingErrorAction);
+
+    //		bool endOfInput = false;
+    //		while (!endOfInput) {
+    //			int bytesRead = channel.read(utf8BytesIn);
+    //			endOfInput = (bytesRead == -1);
+    //			utf8BytesIn.flip();
+    //			CoderResult result = decoder.decode(
+    //				utf8BytesIn,
+    //				utf16CodeUnitsOut,
+    //				endOfInput);
+    //			if (result.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
+    //				result.throwException();
+    //			}
+    //			utf16CodeUnitsOut.flip();
+    //			codePointBufferBuilder.append(utf16CodeUnitsOut);
+    //			utf8BytesIn.compact();
+    //			utf16CodeUnitsOut.compact();
+    //		}
+    //		// Handle any bytes at the end of the file which need to
+    //		// be represented as errors or substitution characters.
+    //		CoderResult flushResult = decoder.flush(utf16CodeUnitsOut);
+    //		if (flushResult.isError() && decodingErrorAction.Equals(CodingErrorAction.REPORT)) {
+    //			flushResult.throwException();
+    //		}
+    //		utf16CodeUnitsOut.flip();
+    //		codePointBufferBuilder.append(utf16CodeUnitsOut);
+
+    //		CodePointBuffer codePointBuffer = codePointBufferBuilder.build();
+    //		return CodePointCharStream.fromBuffer(codePointBuffer, sourceName);
+    //	}
+    //	finally {
+    //		channel.close();
+    //	}
+    //}
 }

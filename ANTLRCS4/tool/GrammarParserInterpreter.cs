@@ -142,7 +142,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		if( p.NumberOfTransitions > 1) {
 //			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
 			if( p.decision == this.overrideDecision &&
-				this.input.Index() == this.overrideDecisionInputIndex )
+				this.input.				Index == this.overrideDecisionInputIndex )
 			{
 				overrideDecisionRoot = (GrammarInterpreterRuleContext)getContext();
 			}
@@ -323,7 +323,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
-		DecisionState decisionState = originalParser.getATN().decisionToState[(decision)];
+		DecisionState decisionState = originalParser.GetATN().decisionToState[(decision)];
 
 		for (int alt = 1; alt<=decisionState.GetTransitions().Length; alt++) {
 			// re-parse entire input for all ambiguous alternatives
@@ -339,7 +339,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if ( errorHandler.firstErrorTokenIndex>=0 ) {
 				stopTreeAt = errorHandler.firstErrorTokenIndex; // cut off rest at first error
 			}
-			Interval overallRange = tt.getSourceInterval();
+			Interval overallRange = tt.GetSourceInterval();
 			if ( stopTreeAt>overallRange.b ) {
 				// If we try to look beyond range of tree, stopTreeAt must be EOF
 				// for which there is no EOF ref in grammar. That means tree
@@ -372,7 +372,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			Type c = originalParser.GetType();
 			try {
 				ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(Grammar), typeof(ATN), typeof(TokenStream) });
-				parser = ctor.Invoke(g,new object[] { originalParser.getATN(), originalParser.getTokenStream() }) as ParserInterpreter;
+				parser = ctor.Invoke(g,new object[] { originalParser.GetATN(), originalParser.getTokenStream() }) as ParserInterpreter;
 			}
 			catch (Exception e) {
 				throw new ArgumentException("can't create parser to match incoming "+originalParser.GetType().Name, e);
@@ -381,20 +381,20 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		else { // must've been a generated parser
 //			IntegerList serialized = ATNSerializer.getSerialized(originalParser.getATN(), g.getLanguage());
 //			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
-			parser = new ParserInterpreter(originalParser.getGrammarFileName(),
-										   originalParser.getVocabulary(),
-										   Arrays.AsList(originalParser.getRuleNames()),
-					                       originalParser.getATN(),
+			parser = new ParserInterpreter(originalParser.GetGrammarFileName(),
+										   originalParser.GetVocabulary(),
+										   Arrays.AsList(originalParser.GetRuleNames()),
+					                       originalParser.GetATN(),
 										   tokens);
 		}
 
-		parser.setInputStream(tokens);
+		parser.SetInputStream(tokens);
 
 		// Make sure that we don't get any error messages from using this temporary parser
 		parser.setErrorHandler(new BailErrorStrategy());
-		parser.removeErrorListeners();
+		parser.RemoveErrorListeners();
 		parser.removeParseListeners();
-		parser.getInterpreter().		PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
+		parser.GetInterpreter().		PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 		return parser;
 	}
 
@@ -409,20 +409,20 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		public int firstErrorTokenIndex = -1;
 		////@Override
 		public void recover(Parser recognizer, RecognitionException e) {
-			int errIndex = recognizer.InputStream.Index();
+			int errIndex = recognizer.InputStream.Index;
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}
 //			Console.Error.WriteLine("recover: error at " + errIndex);
 			TokenStream input = recognizer.InputStream;
-			if ( input.Index()<input.Count-1 ) { // don't consume() eof
+			if ( input.Index<input.Count-1 ) { // don't consume() eof
 				recognizer.consume(); // just kill this bad token and let it continue.
 			}
 		}
 
 		////@Override
 		public Token recoverInline(Parser recognizer) {
-			int errIndex = recognizer.InputStream.Index();
+			int errIndex = recognizer.InputStream.Index;
 			if ( firstErrorTokenIndex == -1 ) {
 				firstErrorTokenIndex = errIndex; // latch
 			}

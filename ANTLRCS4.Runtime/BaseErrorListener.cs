@@ -17,43 +17,44 @@ namespace org.antlr.v4.runtime;
  *
  * @author Sam Harwell
  */
-public class BaseErrorListener : ANTLRErrorListener {
-	public virtual void SyntaxError(Recognizer recognizer,
-							object offendingSymbol,
-							int line,
-							int charPositionInLine,
-							string msg,
-							RecognitionException e)
-	{
-	}
+public class BaseErrorListener : ANTLRErrorListener
+{
+    public virtual void SyntaxError(Recognizer recognizer,
+                            object offendingSymbol,
+                            int line,
+                            int charPositionInLine,
+                            string msg,
+                            RecognitionException e)
+    {
+    }
 
-	public virtual void ReportAmbiguity(Parser recognizer,
-								DFA dfa,
-								int startIndex,
-								int stopIndex,
-								bool exact,
-								BitSet ambigAlts,
-								ATNConfigSet configs)
-	{
-	}
+    public virtual void ReportAmbiguity(Parser recognizer,
+                                DFA dfa,
+                                int startIndex,
+                                int stopIndex,
+                                bool exact,
+                                BitSet ambigAlts,
+                                ATNConfigSet configs)
+    {
+    }
 
-	
-	public virtual void ReportAttemptingFullContext(Parser recognizer,
-											DFA dfa,
-											int startIndex,
-											int stopIndex,
-											BitSet conflictingAlts,
-											ATNConfigSet configs)
-	{
-	}
 
-	
-	public virtual void ReportContextSensitivity(Parser recognizer,
-										 DFA dfa,
-										 int startIndex,
-										 int stopIndex,
-										 int prediction,
-										 ATNConfigSet configs)
-	{
-	}
+    public virtual void ReportAttemptingFullContext(Parser recognizer,
+                                            DFA dfa,
+                                            int startIndex,
+                                            int stopIndex,
+                                            BitSet conflictingAlts,
+                                            ATNConfigSet configs)
+    {
+    }
+
+
+    public virtual void ReportContextSensitivity(Parser recognizer,
+                                         DFA dfa,
+                                         int startIndex,
+                                         int stopIndex,
+                                         int prediction,
+                                         ATNConfigSet configs)
+    {
+    }
 }

@@ -43,7 +43,7 @@ public class RuleCollector : GrammarTreeVisitor {
 							 List<GrammarAST> actions,
 							 GrammarAST block)
 	{
-		int numAlts = block.getChildCount();
+		int numAlts = block.ChildCount;
 		Rule r;
 		if ( LeftRecursiveRuleAnalyzer.hasImmediateRecursiveRuleRefs(rule, ID.getText()) ) {
 			r = new LeftRecursiveRule(g, ID.getText(), rule);
@@ -74,8 +74,8 @@ public class RuleCollector : GrammarTreeVisitor {
 
         foreach (GrammarAST a in actions) {
 			// a = ^(AT ID ACTION)
-			ActionAST action = (ActionAST) a.getChild(1);
-			r.namedActions[a.getChild(0).getText()]= action;
+			ActionAST action = (ActionAST) a.GetChild(1);
+			r.namedActions[a.GetChild(0).Text]= action;
 			action.resolver = r;
 		}
 	}
@@ -104,16 +104,16 @@ public class RuleCollector : GrammarTreeVisitor {
 	{
 		bool currentCaseInsensitive = grammarCaseInsensitive;
 		if (options != null) {
-			foreach (Object child in options.getChildren()) {
+			foreach (Object child in options.GetChildren()) {
 				GrammarAST childAST = (GrammarAST) child;
-				var caseInsensitive = getCaseInsensitiveValue((GrammarAST)childAST.getChild(0), (GrammarAST)childAST.getChild(1));
+				var caseInsensitive = getCaseInsensitiveValue((GrammarAST)childAST.GetChild(0), (GrammarAST)childAST.GetChild(1));
 				if (caseInsensitive != null) {
 					currentCaseInsensitive = caseInsensitive.GetValueOrDefault();
 				}
 			}
 		}
 
-		int numAlts = block.getChildCount();
+		int numAlts = block.ChildCount;
 		Rule r = new Rule(g, ID.getText(), rule, numAlts, currentModeName, currentCaseInsensitive);
 		if ( modifiers.Count>0 ) r.modifiers = modifiers;
 		rules.Put(r.name, r);

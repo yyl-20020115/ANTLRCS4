@@ -54,7 +54,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     public object dupNode(Object t)
     {
         if (t == null) return null;
-        return ((Tree)t).dupNode();
+        return ((Tree)t).DupNode();
     }
 
     //@Override
@@ -108,38 +108,38 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
         if (t == null) return;
         int start = 0;
         int stop = 0;
-        if (startToken != null) start = startToken.getTokenIndex();
-        if (stopToken != null) stop = stopToken.getTokenIndex();
-        ((Tree)t).setTokenStartIndex(start);
-        ((Tree)t).setTokenStopIndex(stop);
+        if (startToken != null) start = startToken.TokenIndex;
+        if (stopToken != null) stop = stopToken.TokenIndex;
+        ((Tree)t).        TokenStartIndex = start;
+        ((Tree)t).        TokenStopIndex = stop;
     }
 
     //@Override
     public int getTokenStartIndex(Object t)
     {
         if (t == null) return -1;
-        return ((Tree)t).getTokenStartIndex();
+        return ((Tree)t).TokenStartIndex;
     }
 
     //@Override
     public int getTokenStopIndex(Object t)
     {
         if (t == null) return -1;
-        return ((Tree)t).getTokenStopIndex();
+        return ((Tree)t).TokenStopIndex;
     }
 
     //@Override
     public String getText(Object t)
     {
         if (t == null) return null;
-        return ((Tree)t).getText();
+        return ((Tree)t).Text;
     }
 
     //@Override
     public int getType(Object t)
     {
         if (t == null) return Token.INVALID_TOKEN_TYPE;
-        return ((Tree)t).getType();
+        return ((Tree)t).Type;
     }
 
     /** What is the Token associated with this node?  If
@@ -151,7 +151,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     {
         if (t is CommonTree)
         {
-            return ((CommonTree)t).getToken();
+            return ((CommonTree)t).Token;
         }
         return null; // no idea what to do
     }
@@ -160,40 +160,40 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     public Object getChild(Object t, int i)
     {
         if (t == null) return null;
-        return ((Tree)t).getChild(i);
+        return ((Tree)t).GetChild(i);
     }
 
     //@Override
     public int getChildCount(Object t)
     {
         if (t == null) return 0;
-        return ((Tree)t).getChildCount();
+        return ((Tree)t).ChildCount;
     }
 
     //@Override
     public Object getParent(Object t)
     {
         if (t == null) return null;
-        return ((Tree)t).getParent();
+        return ((Tree)t).Parent;
     }
 
     //@Override
     public void setParent(Object t, Object parent)
     {
-        if (t != null) ((Tree)t).setParent((Tree)parent);
+        if (t != null) ((Tree)t).Parent = (Tree)parent;
     }
 
     //@Override
     public int getChildIndex(Object t)
     {
         if (t == null) return 0;
-        return ((Tree)t).getChildIndex();
+        return ((Tree)t).ChildIndex;
     }
 
     //@Override
     public void setChildIndex(Object t, int index)
     {
-        if (t != null) ((Tree)t).setChildIndex(index);
+        if (t != null) ((Tree)t).ChildIndex = index;
     }
 
     //@Override
@@ -201,7 +201,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     {
         if (parent != null)
         {
-            ((Tree)parent).replaceChildren(startChildIndex, stopChildIndex, t);
+            ((Tree)parent).ReplaceChildren(startChildIndex, stopChildIndex, t);
         }
     }
 

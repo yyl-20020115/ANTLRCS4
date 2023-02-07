@@ -13,27 +13,28 @@ namespace org.antlr.v4.runtime;
  * This is the default implementation of {@link ANTLRErrorStrategy} used for
  * error reporting and recovery in ANTLR parsers.
  */
-public class DefaultErrorStrategy : ANTLRErrorStrategy {
-	/**
+public class DefaultErrorStrategy : ANTLRErrorStrategy
+{
+    /**
 	 * Indicates whether the error strategy is currently "recovering from an
 	 * error". This is used to suppress reporting multiple error messages while
 	 * attempting to recover from a detected syntax error.
 	 *
 	 * @see #inErrorRecoveryMode
 	 */
-	protected bool errorRecoveryMode = false;
+    protected bool errorRecoveryMode = false;
 
-	/** The index into the input stream where the last error occurred.
+    /** The index into the input stream where the last error occurred.
 	 * 	This is used to prevent infinite loops where an error is found
 	 *  but no token is consumed during recovery...another error is found,
 	 *  ad nauseum.  This is a failsafe mechanism to guarantee that at least
 	 *  one token/tree node is consumed for two errors.
 	 */
-	protected int lastErrorIndex = -1;
+    protected int lastErrorIndex = -1;
 
-	protected IntervalSet lastErrorStates;
+    protected IntervalSet lastErrorStates;
 
-	/**
+    /**
 	 * This field is used to propagate information about the lookahead following
 	 * the previous match. Since prediction prefers completing the current rule
 	 * to error recovery efforts, error reporting may occur later than the
@@ -41,65 +42,70 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * compute the true expected sets as though the reporting occurred as early
 	 * as possible.
 	 */
-	protected ParserRuleContext nextTokensContext;
+    protected ParserRuleContext nextTokensContext;
 
-	/**
+    /**
 	 * @see #nextTokensContext
 	 */
-	protected int nextTokensState;
+    protected int nextTokensState;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation simply calls {@link #endErrorCondition} to
 	 * ensure that the handler is not in error recovery mode.</p>
 	 */
-	//@Override
-	public void reset(Parser recognizer) {
-		endErrorCondition(recognizer);
-	}
+    //@Override
+    public void Reset(Parser recognizer)
+    {
+        EndErrorCondition(recognizer);
+    }
 
-	/**
+    /**
 	 * This method is called to enter error recovery mode when a recognition
 	 * exception is reported.
 	 *
 	 * @param recognizer the parser instance
 	 */
-	protected void beginErrorCondition(Parser recognizer) {
-		errorRecoveryMode = true;
-	}
+    protected void BeginErrorCondition(Parser recognizer)
+    {
+        errorRecoveryMode = true;
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
-	//@Override
-	public bool inErrorRecoveryMode(Parser recognizer) {
-		return errorRecoveryMode;
-	}
+    //@Override
+    public bool InErrorRecoveryMode(Parser recognizer)
+    {
+        return errorRecoveryMode;
+    }
 
-	/**
+    /**
 	 * This method is called to leave error recovery mode after recovering from
 	 * a recognition exception.
 	 *
 	 * @param recognizer
 	 */
-	protected void endErrorCondition(Parser recognizer) {
-		errorRecoveryMode = false;
-		lastErrorStates = null;
-		lastErrorIndex = -1;
-	}
+    protected void EndErrorCondition(Parser recognizer)
+    {
+        errorRecoveryMode = false;
+        lastErrorStates = null;
+        lastErrorIndex = -1;
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation simply calls {@link #endErrorCondition}.</p>
 	 */
-	//@Override
-	public void reportMatch(Parser recognizer) {
-		endErrorCondition(recognizer);
-	}
+    //@Override
+    public void ReportMatch(Parser recognizer)
+    {
+        EndErrorCondition(recognizer);
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns immediately if the handler is already
@@ -118,66 +124,73 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * the exception</li>
 	 * </ul>
 	 */
-	//@Override
-	public void reportError(Parser recognizer,
-							RecognitionException e)
-	{
-		// if we've already reported an error and have not matched a token
-		// yet successfully, don't report any errors.
-		if (inErrorRecoveryMode(recognizer)) {
-//			System.err.print("[SPURIOUS] ");
-			return; // don't report spurious errors
-		}
-		beginErrorCondition(recognizer);
-		if ( e is NoViableAltException ) {
-			reportNoViableAlternative(recognizer, (NoViableAltException) e);
-		}
-		else if ( e is InputMismatchException ) {
-			reportInputMismatch(recognizer, (InputMismatchException)e);
-		}
-		else if ( e is FailedPredicateException ) {
-			reportFailedPredicate(recognizer, (FailedPredicateException)e);
-		}
-		else {
-			Console.Error.WriteLine("unknown recognition error type: "+e.GetType().Name);
-			recognizer.notifyErrorListeners(e.getOffendingToken(), e.Message, e);
-		}
-	}
+    //@Override
+    public void ReportError(Parser recognizer,
+                            RecognitionException e)
+    {
+        // if we've already reported an error and have not matched a token
+        // yet successfully, don't report any errors.
+        if (InErrorRecoveryMode(recognizer))
+        {
+            //			System.err.print("[SPURIOUS] ");
+            return; // don't report spurious errors
+        }
+        BeginErrorCondition(recognizer);
+        if (e is NoViableAltException)
+        {
+            ReportNoViableAlternative(recognizer, (NoViableAltException)e);
+        }
+        else if (e is InputMismatchException)
+        {
+            ReportInputMismatch(recognizer, (InputMismatchException)e);
+        }
+        else if (e is FailedPredicateException)
+        {
+            ReportFailedPredicate(recognizer, (FailedPredicateException)e);
+        }
+        else
+        {
+            Console.Error.WriteLine("unknown recognition error type: " + e.GetType().Name);
+            recognizer.notifyErrorListeners(e.getOffendingToken(), e.Message, e);
+        }
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation resynchronizes the parser by consuming tokens
 	 * until we find one in the resynchronization set--loosely the set of tokens
 	 * that can follow the current rule.</p>
 	 */
-	//@Override
-	public void recover(Parser recognizer, RecognitionException e) {
-//		Console.Out.WriteLine("recover in "+recognizer.getRuleInvocationStack()+
-//						   " index="+recognizer.getInputStream().index()+
-//						   ", lastErrorIndex="+
-//						   lastErrorIndex+
-//						   ", states="+lastErrorStates);
-		if ( lastErrorIndex==recognizer.InputStream.Index() &&
-			lastErrorStates != null &&
-			lastErrorStates.Contains(recognizer.getState()) ) {
-			// uh oh, another error at same token index and previously-visited
-			// state in ATN; must be a case where LT(1) is in the recovery
-			// token set so nothing got consumed. Consume a single token
-			// at least to prevent an infinite loop; this is a failsafe.
-//			Console.Error.WriteLine("seen error condition before index="+
-//							   lastErrorIndex+", states="+lastErrorStates);
-//			Console.Error.WriteLine("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
-			recognizer.consume();
-		}
-		lastErrorIndex = recognizer.InputStream.Index();
-		if ( lastErrorStates==null ) lastErrorStates = new IntervalSet();
-		lastErrorStates.Add(recognizer.getState());
-		IntervalSet followSet = getErrorRecoverySet(recognizer);
-		consumeUntil(recognizer, followSet);
-	}
+    //@Override
+    public virtual void Recover(Parser recognizer, RecognitionException e)
+    {
+        //		Console.Out.WriteLine("recover in "+recognizer.getRuleInvocationStack()+
+        //						   " index="+recognizer.getInputStream().index()+
+        //						   ", lastErrorIndex="+
+        //						   lastErrorIndex+
+        //						   ", states="+lastErrorStates);
+        if (lastErrorIndex == recognizer.InputStream.Index &&
+            lastErrorStates != null &&
+            lastErrorStates.Contains(recognizer.GetState()))
+        {
+            // uh oh, another error at same token index and previously-visited
+            // state in ATN; must be a case where LT(1) is in the recovery
+            // token set so nothing got consumed. Consume a single token
+            // at least to prevent an infinite loop; this is a failsafe.
+            //			Console.Error.WriteLine("seen error condition before index="+
+            //							   lastErrorIndex+", states="+lastErrorStates);
+            //			Console.Error.WriteLine("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
+            recognizer.consume();
+        }
+        lastErrorIndex = recognizer.InputStream.Index;
+        lastErrorStates ??= new IntervalSet();
+        lastErrorStates.Add(recognizer.GetState());
+        IntervalSet followSet = GetErrorRecoverySet(recognizer);
+        ConsumeUntil(recognizer, followSet);
+    }
 
-	/**
+    /**
 	 * The default implementation of {@link ANTLRErrorStrategy#sync} makes sure
 	 * that the current lookahead symbol is consistent with what were expecting
 	 * at this point in the ATN. You can call this anytime but ANTLR only
@@ -223,66 +236,73 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * some reason speed is suffering for you, you can turn off this
 	 * functionality by simply overriding this method as a blank { }.</p>
 	 */
-	//@Override
-	public void sync(Parser recognizer)  {
-		ATNState s = recognizer.getInterpreter().atn.states[(recognizer.getState())];
-//		Console.Error.WriteLine("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
-		// If already recovering, don't try to sync
-		if (inErrorRecoveryMode(recognizer)) {
-			return;
-		}
+    //@Override
+    public virtual void Sync(Parser recognizer)
+    {
+        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
+        //		Console.Error.WriteLine("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
+        // If already recovering, don't try to sync
+        if (InErrorRecoveryMode(recognizer))
+        {
+            return;
+        }
 
-        TokenStream tokens = recognizer.InputStream;
+        var tokens = recognizer.InputStream;
         int la = tokens.LA(1);
 
         // try cheaper subset first; might get lucky. seems to shave a wee bit off
-		IntervalSet nextTokens = recognizer.getATN().NextTokens(s);
-		if (nextTokens.Contains(la)) {
-			// We are sure the token matches
-			nextTokensContext = null;
-			nextTokensState = ATNState.INVALID_STATE_NUMBER;
-			return;
-		}
+        var nextTokens = recognizer.GetATN().NextTokens(s);
+        if (nextTokens.Contains(la))
+        {
+            // We are sure the token matches
+            nextTokensContext = null;
+            nextTokensState = ATNState.INVALID_STATE_NUMBER;
+            return;
+        }
 
-		if (nextTokens.Contains(Token.EPSILON)) {
-			if (nextTokensContext == null) {
-				// It's possible the next token won't match; information tracked
-				// by sync is restricted for performance.
-				nextTokensContext = recognizer.getContext();
-				nextTokensState = recognizer.getState();
-			}
-			return;
-		}
+        if (nextTokens.Contains(Token.EPSILON))
+        {
+            if (nextTokensContext == null)
+            {
+                // It's possible the next token won't match; information tracked
+                // by sync is restricted for performance.
+                nextTokensContext = recognizer.getContext();
+                nextTokensState = recognizer.GetState();
+            }
+            return;
+        }
 
-		switch (s.StateType) {
-		case ATNState.BLOCK_START:
-		case ATNState.STAR_BLOCK_START:
-		case ATNState.PLUS_BLOCK_START:
-		case ATNState.STAR_LOOP_ENTRY:
-			// report error and recover if possible
-			if ( singleTokenDeletion(recognizer)!=null ) {
-				return;
-			}
+        switch (s.StateType)
+        {
+            case ATNState.BLOCK_START:
+            case ATNState.STAR_BLOCK_START:
+            case ATNState.PLUS_BLOCK_START:
+            case ATNState.STAR_LOOP_ENTRY:
+                // report error and recover if possible
+                if (SingleTokenDeletion(recognizer) != null)
+                {
+                    return;
+                }
 
-			throw new InputMismatchException(recognizer);
+                throw new InputMismatchException(recognizer);
 
-		case ATNState.PLUS_LOOP_BACK:
-		case ATNState.STAR_LOOP_BACK:
-//			Console.Error.WriteLine("at loop back: "+s.getClass().getSimpleName());
-			reportUnwantedToken(recognizer);
-			IntervalSet expecting = recognizer.getExpectedTokens();
-			IntervalSet whatFollowsLoopIterationOrRule =
-				expecting.Or(getErrorRecoverySet(recognizer));
-			consumeUntil(recognizer, whatFollowsLoopIterationOrRule);
-			break;
+            case ATNState.PLUS_LOOP_BACK:
+            case ATNState.STAR_LOOP_BACK:
+                //			Console.Error.WriteLine("at loop back: "+s.getClass().getSimpleName());
+                ReportUnwantedToken(recognizer);
+                IntervalSet expecting = recognizer.getExpectedTokens();
+                IntervalSet whatFollowsLoopIterationOrRule =
+                    expecting.Or(GetErrorRecoverySet(recognizer));
+                ConsumeUntil(recognizer, whatFollowsLoopIterationOrRule);
+                break;
 
-		default:
-			// do nothing if we can't identify the exact kind of ATN state
-			break;
-		}
-	}
+            default:
+                // do nothing if we can't identify the exact kind of ATN state
+                break;
+        }
+    }
 
-	/**
+    /**
 	 * This is called by {@link #reportError} when the exception is a
 	 * {@link NoViableAltException}.
 	 *
@@ -291,23 +311,25 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception
 	 */
-	protected void reportNoViableAlternative(Parser recognizer,
-											 NoViableAltException e)
-	{
-		TokenStream tokens = recognizer.InputStream;
-		String input;
-		if ( tokens!=null ) {
-			if ( e.getStartToken().getType()==Token.EOF ) input = "<EOF>";
-			else input = tokens.getText(e.getStartToken(), e.getOffendingToken());
-		}
-		else {
-			input = "<unknown input>";
-		}
-		String msg = "no viable alternative at input "+escapeWSAndQuote(input);
-		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
-	}
+    protected void ReportNoViableAlternative(Parser recognizer,
+                                             NoViableAltException e)
+    {
+        var tokens = recognizer.InputStream;
+        string input;
+        if (tokens != null)
+        {
+            if (e.getStartToken().Type == Token.EOF) input = "<EOF>";
+            else input = tokens.GetText(e.getStartToken(), e.getOffendingToken());
+        }
+        else
+        {
+            input = "<unknown input>";
+        }
+        var msg = "no viable alternative at input " + EscapeWSAndQuote(input);
+        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+    }
 
-	/**
+    /**
 	 * This is called by {@link #reportError} when the exception is an
 	 * {@link InputMismatchException}.
 	 *
@@ -316,15 +338,15 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception
 	 */
-	protected void reportInputMismatch(Parser recognizer,
-									   InputMismatchException e)
-	{
-		String msg = "mismatched input "+getTokenErrorDisplay(e.getOffendingToken())+
-		" expecting "+e.getExpectedTokens().ToString(recognizer.getVocabulary());
-		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
-	}
+    protected void ReportInputMismatch(Parser recognizer,
+                                       InputMismatchException e)
+    {
+        var msg = "mismatched input " + GetTokenErrorDisplay(e.getOffendingToken()) +
+        " expecting " + e.getExpectedTokens().ToString(recognizer.GetVocabulary());
+        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+    }
 
-	/**
+    /**
 	 * This is called by {@link #reportError} when the exception is a
 	 * {@link FailedPredicateException}.
 	 *
@@ -333,15 +355,15 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception
 	 */
-	protected void reportFailedPredicate(Parser recognizer,
-										 FailedPredicateException e)
-	{
-		String ruleName = recognizer.getRuleNames()[recognizer.GetCtx().getRuleIndex()];
-		String msg = "rule "+ruleName+" "+e.Message;
-		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
-	}
+    protected void ReportFailedPredicate(Parser recognizer,
+                                         FailedPredicateException e)
+    {
+        var ruleName = recognizer.GetRuleNames()[recognizer.GetCtx().GetRuleIndex()];
+        var msg = "rule " + ruleName + " " + e.Message;
+        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+    }
 
-	/**
+    /**
 	 * This method is called to report a syntax error which requires the removal
 	 * of a token from the input stream. At the time this method is called, the
 	 * erroneous symbol is current {@code LT(1)} symbol and has not yet been
@@ -359,22 +381,24 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 *
 	 * @param recognizer the parser instance
 	 */
-	protected void reportUnwantedToken(Parser recognizer) {
-		if (inErrorRecoveryMode(recognizer)) {
-			return;
-		}
+    protected void ReportUnwantedToken(Parser recognizer)
+    {
+        if (InErrorRecoveryMode(recognizer))
+        {
+            return;
+        }
 
-		beginErrorCondition(recognizer);
+        BeginErrorCondition(recognizer);
 
-		Token t = recognizer.getCurrentToken();
-		String tokenName = getTokenErrorDisplay(t);
-		IntervalSet expecting = getExpectedTokens(recognizer);
-		String msg = "extraneous input "+tokenName+" expecting "+
-			expecting.ToString(recognizer.getVocabulary());
-		recognizer.notifyErrorListeners(t, msg, null);
-	}
+        var t = recognizer.getCurrentToken();
+        var tokenName = GetTokenErrorDisplay(t);
+        var expecting = GetExpectedTokens(recognizer);
+        var msg = "extraneous input " + tokenName + " expecting " +
+            expecting.ToString(recognizer.GetVocabulary());
+        recognizer.notifyErrorListeners(t, msg, null);
+    }
 
-	/**
+    /**
 	 * This method is called to report a syntax error which requires the
 	 * insertion of a missing token into the input stream. At the time this
 	 * method is called, the missing token has not yet been inserted. When this
@@ -391,22 +415,24 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 *
 	 * @param recognizer the parser instance
 	 */
-	protected void reportMissingToken(Parser recognizer) {
-		if (inErrorRecoveryMode(recognizer)) {
-			return;
-		}
+    protected void ReportMissingToken(Parser recognizer)
+    {
+        if (InErrorRecoveryMode(recognizer))
+        {
+            return;
+        }
 
-		beginErrorCondition(recognizer);
+        BeginErrorCondition(recognizer);
 
-		Token t = recognizer.getCurrentToken();
-		IntervalSet expecting = getExpectedTokens(recognizer);
-		String msg = "missing "+expecting.ToString(recognizer.getVocabulary())+
-			" at "+getTokenErrorDisplay(t);
+        var t = recognizer.getCurrentToken();
+        var expecting = GetExpectedTokens(recognizer);
+        var msg = "missing " + expecting.ToString(recognizer.GetVocabulary()) +
+            " at " + GetTokenErrorDisplay(t);
 
-		recognizer.notifyErrorListeners(t, msg, null);
-	}
+        recognizer.notifyErrorListeners(t, msg, null);
+    }
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation attempts to recover from the mismatched input
@@ -456,36 +482,41 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * is in the set of tokens that can follow the {@code ')'} token reference
 	 * in rule {@code atom}. It can assume that you forgot the {@code ')'}.
 	 */
-	//@Override
-	public Token recoverInline(Parser recognizer)
-		
-	{
-		// SINGLE TOKEN DELETION
-		Token matchedSymbol = singleTokenDeletion(recognizer);
-		if ( matchedSymbol!=null ) {
-			// we have deleted the extra token.
-			// now, move past ttype token as if all were ok
-			recognizer.consume();
-			return matchedSymbol;
-		}
+    //@Override
+    public virtual Token RecoverInline(Parser recognizer)
 
-		// SINGLE TOKEN INSERTION
-		if ( singleTokenInsertion(recognizer) ) {
-			return getMissingSymbol(recognizer);
-		}
+    {
+        // SINGLE TOKEN DELETION
+        var matchedSymbol = SingleTokenDeletion(recognizer);
+        if (matchedSymbol != null)
+        {
+            // we have deleted the extra token.
+            // now, move past ttype token as if all were ok
+            recognizer.consume();
+            return matchedSymbol;
+        }
 
-		// even that didn't work; must throw the exception
-		InputMismatchException e;
-		if (nextTokensContext == null) {
-			e = new InputMismatchException(recognizer);
-		} else {
-			e = new InputMismatchException(recognizer, nextTokensState, nextTokensContext);
-		}
+        // SINGLE TOKEN INSERTION
+        if (SingleTokenInsertion(recognizer))
+        {
+            return GetMissingSymbol(recognizer);
+        }
 
-		throw e;
-	}
+        // even that didn't work; must throw the exception
+        InputMismatchException e;
+        if (nextTokensContext == null)
+        {
+            e = new InputMismatchException(recognizer);
+        }
+        else
+        {
+            e = new InputMismatchException(recognizer, nextTokensState, nextTokensContext);
+        }
 
-	/**
+        throw e;
+    }
+
+    /**
 	 * This method implements the single-token insertion inline error recovery
 	 * strategy. It is called by {@link #recoverInline} if the single-token
 	 * deletion strategy fails to recover from the mismatched input. If this
@@ -502,24 +533,26 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * @return {@code true} if single-token insertion is a viable recovery
 	 * strategy for the current mismatched input, otherwise {@code false}
 	 */
-	protected bool singleTokenInsertion(Parser recognizer) {
-		int currentSymbolType = recognizer.InputStream.LA(1);
-		// if current token is consistent with what could come after current
-		// ATN state, then we know we're missing a token; error recovery
-		// is free to conjure up and insert the missing token
-		ATNState currentState = recognizer.getInterpreter().atn.states[(recognizer.getState())];
-		ATNState next = currentState.Transition(0).target;
-		ATN atn = recognizer.getInterpreter().atn;
-		IntervalSet expectingAtLL2 = atn.NextTokens(next, recognizer.GetCtx());
-//		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
-		if ( expectingAtLL2.Contains(currentSymbolType) ) {
-			reportMissingToken(recognizer);
-			return true;
-		}
-		return false;
-	}
+    protected bool SingleTokenInsertion(Parser recognizer)
+    {
+        int currentSymbolType = recognizer.InputStream.LA(1);
+        // if current token is consistent with what could come after current
+        // ATN state, then we know we're missing a token; error recovery
+        // is free to conjure up and insert the missing token
+        var currentState = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
+        var next = currentState.Transition(0).target;
+        var atn = recognizer.GetInterpreter().atn;
+        var expectingAtLL2 = atn.NextTokens(next, recognizer.GetCtx());
+        //		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
+        if (expectingAtLL2.Contains(currentSymbolType))
+        {
+            ReportMissingToken(recognizer);
+            return true;
+        }
+        return false;
+    }
 
-	/**
+    /**
 	 * This method implements the single-token deletion inline error recovery
 	 * strategy. It is called by {@link #recoverInline} to attempt to recover
 	 * from mismatched input. If this method returns null, the parser and error
@@ -538,27 +571,29 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 * deletion successfully recovers from the mismatched input, otherwise
 	 * {@code null}
 	 */
-	protected Token singleTokenDeletion(Parser recognizer) {
-		int nextTokenType = recognizer.InputStream.LA(2);
-		IntervalSet expecting = getExpectedTokens(recognizer);
-		if ( expecting.Contains(nextTokenType) ) {
-			reportUnwantedToken(recognizer);
-			/*
+    protected Token SingleTokenDeletion(Parser recognizer)
+    {
+        int nextTokenType = recognizer.InputStream.LA(2);
+        var expecting = GetExpectedTokens(recognizer);
+        if (expecting.Contains(nextTokenType))
+        {
+            ReportUnwantedToken(recognizer);
+            /*
 			Console.Error.WriteLine("recoverFromMismatchedToken deleting "+
 							   ((TokenStream)recognizer.getInputStream()).LT(1)+
 							   " since "+((TokenStream)recognizer.getInputStream()).LT(2)+
 							   " is what we want");
 			*/
-			recognizer.consume(); // simply delete extra token
-			// we want to return the token we're actually matching
-			Token matchedSymbol = recognizer.getCurrentToken();
-			reportMatch(recognizer);  // we know current token is correct
-			return matchedSymbol;
-		}
-		return null;
-	}
+            recognizer.consume(); // simply delete extra token
+                                  // we want to return the token we're actually matching
+            Token matchedSymbol = recognizer.getCurrentToken();
+            ReportMatch(recognizer);  // we know current token is correct
+            return matchedSymbol;
+        }
+        return null;
+    }
 
-	/** Conjure up a missing token during error recovery.
+    /** Conjure up a missing token during error recovery.
 	 *
 	 *  The recognizer attempts to recover from single missing
 	 *  symbols. But, actions might refer to that missing symbol.
@@ -577,34 +612,38 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 *  If you change what tokens must be created by the lexer,
 	 *  override this method to create the appropriate tokens.
 	 */
-	protected Token getMissingSymbol(Parser recognizer) {
-		Token currentSymbol = recognizer.getCurrentToken();
-		IntervalSet expecting = getExpectedTokens(recognizer);
-		int expectedTokenType = Token.INVALID_TYPE;
-		if ( !expecting.IsNil ) {
-			expectedTokenType = expecting.GetMinElement(); // get any element
-		}
-		String tokenText;
-		if ( expectedTokenType== Token.EOF ) tokenText = "<missing EOF>";
-		else tokenText = "<missing "+recognizer.getVocabulary().getDisplayName(expectedTokenType)+">";
-		Token current = currentSymbol;
-		Token lookback = recognizer.InputStream.LT(-1);
-		if ( current.getType() == Token.EOF && lookback!=null ) {
-			current = lookback;
-		}
-		return
-			(recognizer.TokenFactory as TokenFactory<Token>).create(new Pair<TokenSource, CharStream>(current.getTokenSource(), current.getTokenSource().InputStream), expectedTokenType, tokenText,
-							Token.DEFAULT_CHANNEL,
-							-1, -1,
-							current.getLine(), current.getCharPositionInLine());
-	}
+    protected virtual Token GetMissingSymbol(Parser recognizer)
+    {
+        var currentSymbol = recognizer.getCurrentToken();
+        var expecting = GetExpectedTokens(recognizer);
+        int expectedTokenType = Token.INVALID_TYPE;
+        if (!expecting.IsNil)
+        {
+            expectedTokenType = expecting.GetMinElement(); // get any element
+        }
+        string tokenText;
+        if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
+        else tokenText = "<missing " + recognizer.GetVocabulary().GetDisplayName(expectedTokenType) + ">";
+        var current = currentSymbol;
+        var lookback = recognizer.InputStream.LT(-1);
+        if (current.Type == Token.EOF && lookback != null)
+        {
+            current = lookback;
+        }
+        return
+            (recognizer.TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(current.TokenSource, current.TokenSource.InputStream), expectedTokenType, tokenText,
+                            Token.DEFAULT_CHANNEL,
+                            -1, -1,
+                            current.Line, current.CharPositionInLine);
+    }
 
 
-	protected IntervalSet getExpectedTokens(Parser recognizer) {
-		return recognizer.getExpectedTokens();
-	}
+    protected IntervalSet GetExpectedTokens(Parser recognizer)
+    {
+        return recognizer.getExpectedTokens();
+    }
 
-	/** How should a token be displayed in an error message? The default
+    /** How should a token be displayed in an error message? The default
 	 *  is to display just the text, but during development you might
 	 *  want to have a lot of information spit out.  Override in that case
 	 *  to use t.toString() (which, for CommonToken, dumps everything about
@@ -612,38 +651,45 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 *  your token objects because you don't have to go modify your lexer
 	 *  so that it creates a new Java type.
 	 */
-	protected String getTokenErrorDisplay(Token t) {
-		if ( t==null ) return "<no token>";
-		String s = getSymbolText(t);
-		if ( s==null ) {
-			if ( getSymbolType(t)==Token.EOF ) {
-				s = "<EOF>";
-			}
-			else {
-				s = "<"+getSymbolType(t)+">";
-			}
-		}
-		return escapeWSAndQuote(s);
-	}
+    protected string GetTokenErrorDisplay(Token t)
+    {
+        if (t == null) return "<no token>";
+        var s = GetSymbolText(t);
+        if (s == null)
+        {
+            if (GetSymbolType(t) == Token.EOF)
+            {
+                s = "<EOF>";
+            }
+            else
+            {
+                s = "<" + GetSymbolType(t) + ">";
+            }
+        }
+        return EscapeWSAndQuote(s);
+    }
 
-	protected String getSymbolText(Token symbol) {
-		return symbol.getText();
-	}
+    protected string GetSymbolText(Token symbol)
+    {
+        return symbol.Text;
+    }
 
-	protected int getSymbolType(Token symbol) {
-		return symbol.getType();
-	}
+    protected int GetSymbolType(Token symbol)
+    {
+        return symbol.Type;
+    }
 
 
-	protected String escapeWSAndQuote(String s) {
-//		if ( s==null ) return s;
-		s = s.Replace("\n","\\n");
-		s = s.Replace("\r","\\r");
-		s = s.Replace("\t","\\t");
-		return "'"+s+"'";
-	}
+    protected string EscapeWSAndQuote(String s)
+    {
+        //		if ( s==null ) return s;
+        s = s.Replace("\n", "\\n");
+        s = s.Replace("\r", "\\r");
+        s = s.Replace("\t", "\\t");
+        return "'" + s + "'";
+    }
 
-	/*  Compute the error recovery set for the current rule.  During
+    /*  Compute the error recovery set for the current rule.  During
 	 *  rule invocation, the parser pushes the set of tokens that can
 	 *  follow that rule reference on the stack; this amounts to
 	 *  computing FIRST of what follows the rule reference in the
@@ -735,30 +781,34 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy {
 	 *  Like Grosch I implement context-sensitive FOLLOW sets that are combined
 	 *  at run-time upon error to avoid overhead during parsing.
 	 */
-	protected IntervalSet getErrorRecoverySet(Parser recognizer) {
-		ATN atn = recognizer.getInterpreter().atn;
-		RuleContext ctx = recognizer.GetCtx();
-		IntervalSet recoverSet = new IntervalSet();
-		while ( ctx!=null && ctx.invokingState>=0 ) {
-			// compute what follows who invoked us
-			ATNState invokingState = atn.states[(ctx.invokingState)];
-			RuleTransition rt = (RuleTransition)invokingState.Transition(0);
-			IntervalSet follow = atn.NextTokens(rt.followState);
-			recoverSet.AddAll(follow);
-			ctx = ctx.parent;
-		}
+    protected IntervalSet GetErrorRecoverySet(Parser recognizer)
+    {
+        var atn = recognizer.GetInterpreter().atn;
+        RuleContext ctx = recognizer.GetCtx();
+        var recoverSet = new IntervalSet();
+        while (ctx != null && ctx.invokingState >= 0)
+        {
+            // compute what follows who invoked us
+            var invokingState = atn.states[(ctx.invokingState)];
+            var rt = (RuleTransition)invokingState.Transition(0);
+            var follow = atn.NextTokens(rt.followState);
+            recoverSet.AddAll(follow);
+            ctx = ctx.parent;
+        }
         recoverSet.Remove(Token.EPSILON);
-//		Console.Out.WriteLine("recover set "+recoverSet.toString(recognizer.getTokenNames()));
-		return recoverSet;
-	}
+        //		Console.Out.WriteLine("recover set "+recoverSet.toString(recognizer.getTokenNames()));
+        return recoverSet;
+    }
 
-	/** Consume tokens until one matches the given token set. */
-	protected void consumeUntil(Parser recognizer, IntervalSet set) {
-//		Console.Error.WriteLine("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
-		int ttype = recognizer.InputStream.LA(1);
-		while (ttype != Token.EOF && !set.Contains(ttype) ) {
+    /** Consume tokens until one matches the given token set. */
+    protected void ConsumeUntil(Parser recognizer, IntervalSet set)
+    {
+        //		Console.Error.WriteLine("consumeUntil("+set.toString(recognizer.getTokenNames())+")");
+        int ttype = recognizer.InputStream.LA(1);
+        while (ttype != Token.EOF && !set.Contains(ttype))
+        {
             //Console.Out.WriteLine("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
-//			recognizer.getInputStream().consume();
+            //			recognizer.getInputStream().consume();
             recognizer.consume();
             ttype = recognizer.InputStream.LA(1);
         }

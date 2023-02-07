@@ -45,7 +45,7 @@ public class RangeBorderCharactersData
             }
             if (notImpliedCharacters.Length > 0)
             {
-                grammar.Tools.ErrMgr.GrammarError(ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS, grammar.fileName, tree.getToken(),
+                grammar.Tools.ErrMgr.GrammarError(ErrorType.RANGE_PROBABLY_CONTAINS_NOT_IMPLIED_CHARACTERS, grammar.fileName, tree.Token,
                         (char)from, (char)to, notImpliedCharacters.ToString());
             }
         }

@@ -606,7 +606,7 @@ public class TestATNLexerInterpreter
     private static void CheckLexerMatches(LexerGrammar lg, String inputString, String expecting)
     {
         var atn = ToolTestUtils.CreateATN(lg, true);
-        var input = CharStreams.fromString(inputString);
+        var input = CharStreams.FromString(inputString);
         var startState = atn.modeNameToStartState[("DEFAULT_MODE")];
         var dot = new DOTGenerator(lg);
         //		Console.Out.WriteLine(dot.getDOT(startState, true));

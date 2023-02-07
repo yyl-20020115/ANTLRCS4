@@ -55,7 +55,7 @@ public class LeftRecursiveRuleTransformer
                     }
                     else
                     { // better given an error that non-conforming left-recursion exists
-                        tool.ErrMgr.GrammarError(ErrorType.NONCONFORMING_LR_RULE, g.fileName, ((GrammarAST)r.ast.getChild(0)).token, r.name);
+                        tool.ErrMgr.GrammarError(ErrorType.NONCONFORMING_LR_RULE, g.fileName, ((GrammarAST)r.ast.GetChild(0)).token, r.name);
                     }
                 }
             }
@@ -64,7 +64,7 @@ public class LeftRecursiveRuleTransformer
         // update all refs to recursive rules to have [0] argument
         foreach (var r in ast.getNodesWithType(ANTLRParser.RULE_REF))
         {
-            if (r.getParent().getType() == ANTLRParser.RULE) continue; // must be rule def
+            if (r.getParent().Type == ANTLRParser.RULE) continue; // must be rule def
             if (((GrammarASTWithOptions)r).getOptionString(PRECEDENCE_OPTION_NAME) != null) continue; // already has arg; must be in rewritten rule
             if (leftRecursiveRuleNames.Contains(r.getText()))
             {
@@ -81,7 +81,7 @@ public class LeftRecursiveRuleTransformer
     {
         //tool.log("grammar", ruleAST.toStringTree());
         var prevRuleAST = r.ast;
-        var ruleName = prevRuleAST.getChild(0).getText();
+        var ruleName = prevRuleAST.GetChild(0).Text;
         var leftRecursiveRuleWalker =
             new LeftRecursiveRuleAnalyzer(prevRuleAST, tool, ruleName, language);
         bool isLeftRec;
@@ -98,7 +98,7 @@ public class LeftRecursiveRuleTransformer
         if (!isLeftRec) return false;
 
         // replace old rule's AST; first create text of altered rule
-        var RULES = (GrammarAST)ast.getFirstChildWithType(ANTLRParser.RULES);
+        var RULES = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.RULES);
         var newRuleText = leftRecursiveRuleWalker.getArtificialOpPrecRule();
         //		Console.Out.WriteLine("created: "+newRuleText);
         // now parse within the context of the grammar that originally created
@@ -108,10 +108,10 @@ public class LeftRecursiveRuleTransformer
         var t = ParseArtificialRule(prevRuleAST.g, newRuleText);
 
         // reuse the name token from the original AST since it refers to the proper source location in the original grammar
-        ((GrammarAST)t.getChild(0)).token = ((GrammarAST)prevRuleAST.getChild(0)).getToken();
+        ((GrammarAST)t.GetChild(0)).token = ((GrammarAST)prevRuleAST.GetChild(0)).Token;
 
         // update grammar AST and set rule's AST.
-        RULES.setChild(prevRuleAST.getChildIndex(), t);
+        RULES.SetChild(prevRuleAST.getChildIndex(), t);
         r.ast = t;
 
         // Reduce sets in newly created rule tree
@@ -133,7 +133,7 @@ public class LeftRecursiveRuleTransformer
         r.recPrimaryAlts.AddRange(leftRecursiveRuleWalker.prefixAndOtherAlts);
         if (r.recPrimaryAlts.Count == 0)
         {
-            tool.ErrMgr.GrammarError(ErrorType.NO_NON_LR_ALTS, g.fileName, ((GrammarAST)r.ast.getChild(0)).getToken(), r.name);
+            tool.ErrMgr.GrammarError(ErrorType.NO_NON_LR_ALTS, g.fileName, ((GrammarAST)r.ast.GetChild(0)).Token, r.name);
         }
 
         r.recOpAlts = new OrderedHashMap<int, LeftRecursiveRuleAltInfo>();
@@ -146,7 +146,7 @@ public class LeftRecursiveRuleTransformer
         SetAltASTPointers(r, t);
 
         // update Rule to just one alt and add prec alt
-        var arg = (ActionAST)r.ast.getFirstChildWithType(ANTLRParser.ARG_ACTION);
+        var arg = (ActionAST)r.ast.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
         if (arg != null)
         {
             r.args = ScopeParser.ParseTypedArgList(arg, arg.getText(), g);
@@ -161,14 +161,14 @@ public class LeftRecursiveRuleTransformer
         {
             var labelNode = pair.a;
             var labelOpNode = (GrammarAST)labelNode.getParent();
-            var elementNode = (GrammarAST)labelOpNode.getChild(1);
+            var elementNode = (GrammarAST)labelOpNode.GetChild(1);
             var lp = new LabelElementPair(g, labelNode, elementNode, labelOpNode.getType());
             r.alt[1].labelDefs.Map(labelNode.getText(), lp);
         }
         // copy to rule from walker
         r.leftRecursiveRuleRefLabels = leftRecursiveRuleWalker.leftRecursiveRuleRefLabels;
 
-        tool.Log("grammar", "added: " + t.toStringTree());
+        tool.Log("grammar", "added: " + t.ToStringTree());
         return true;
     }
 
@@ -221,14 +221,14 @@ public class LeftRecursiveRuleTransformer
     public static void SetAltASTPointers(LeftRecursiveRule r, RuleAST t)
     {
         //		Console.Out.WriteLine("RULE: "+t.toStringTree());
-        var ruleBlk = (BlockAST)t.getFirstChildWithType(ANTLRParser.BLOCK);
-        var mainAlt = (AltAST)ruleBlk.getChild(0);
-        var primaryBlk = (BlockAST)mainAlt.getChild(0);
-        var opsBlk = (BlockAST)mainAlt.getChild(1).getChild(0); // (* BLOCK ...)
+        var ruleBlk = (BlockAST)t.GetFirstChildWithType(ANTLRParser.BLOCK);
+        var mainAlt = (AltAST)ruleBlk.GetChild(0);
+        var primaryBlk = (BlockAST)mainAlt.GetChild(0);
+        var opsBlk = (BlockAST)mainAlt.GetChild(1).GetChild(0); // (* BLOCK ...)
         for (int i = 0; i < r.recPrimaryAlts.Count; i++)
         {
             var altInfo = r.recPrimaryAlts[(i)];
-            altInfo.altAST = (AltAST)primaryBlk.getChild(i);
+            altInfo.altAST = (AltAST)primaryBlk.GetChild(i);
             altInfo.altAST.leftRecursiveAltInfo = altInfo;
             altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;
             //			altInfo.originalAltAST.parent = altInfo.altAST.parent;
@@ -237,7 +237,7 @@ public class LeftRecursiveRuleTransformer
         for (int i = 0; i < r.recOpAlts.Count; i++)
         {
             var altInfo = r.recOpAlts.GetElement(i);
-            altInfo.altAST = (AltAST)opsBlk.getChild(i);
+            altInfo.altAST = (AltAST)opsBlk.GetChild(i);
             altInfo.altAST.leftRecursiveAltInfo = altInfo;
             altInfo.originalAltAST.leftRecursiveAltInfo = altInfo;
             //			altInfo.originalAltAST.parent = altInfo.altAST.parent;

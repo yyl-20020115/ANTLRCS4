@@ -132,7 +132,7 @@ public class ScopeParser
             int declOffset = charIndexes[decl.b];
             int declLine = lines[declOffset + idStart];
 
-            int line = action.getToken().getLine() + declLine;
+            int line = action.Token.Line + declLine;
             int charPositionInLine = charPositionInLines[declOffset + idStart];
             if (declLine == 0)
             {
@@ -140,13 +140,13 @@ public class ScopeParser
 				 * since the ARG_ACTION text had the leading '[' stripped before
 				 * reaching the scope parser.
 				 */
-                charPositionInLine += action.getToken().getCharPositionInLine() + 1;
+                charPositionInLine += action.Token.CharPositionInLine + 1;
             }
 
-            int offset = ((CommonToken)action.getToken()).getStartIndex();
-            attr.token = new CommonToken(action.getToken().getInputStream(), ANTLRParser.ID, BaseRecognizer.DEFAULT_TOKEN_CHANNEL, offset + declOffset + idStart + 1, offset + declOffset + idStop);
-            attr.token.setLine(line);
-            attr.token.setCharPositionInLine(charPositionInLine);
+            int offset = ((CommonToken)action.Token).StartIndex;
+            attr.token = new CommonToken(action.Token.InputStream, ANTLRParser.ID, BaseRecognizer.DEFAULT_TOKEN_CHANNEL, offset + declOffset + idStart + 1, offset + declOffset + idStop);
+            attr.token.            Line = line;
+            attr.token.            CharPositionInLine = charPositionInLine;
             //assert attr.name.Equals(attr.token.getText()) : "Attribute text should match the pseudo-token text at this point.";
         }
 

@@ -88,7 +88,7 @@ public abstract class SemanticContext
         public override bool Eval(Recognizer parser, RuleContext parserCallStack)
         {
             RuleContext localctx = isCtxDependent ? parserCallStack : null;
-            return parser.sempred(localctx, ruleIndex, predIndex);
+            return parser.Sempred(localctx, ruleIndex, predIndex);
         }
 
         //@Override
@@ -129,11 +129,11 @@ public abstract class SemanticContext
 
         //@Override
         public override bool Eval(Recognizer parser, RuleContext parserCallStack) 
-            => parser.precpred(parserCallStack, precedence);
+            => parser.Precpred(parserCallStack, precedence);
 
         //@Override
         public SemanticContext EvalPrecedence(Recognizer parser, RuleContext parserCallStack)
-            => parser.precpred(parserCallStack, precedence) ? Empty.Instance : (SemanticContext?)null;
+            => parser.Precpred(parserCallStack, precedence) ? Empty.Instance : (SemanticContext?)null;
 
         //@Override
         public int CompareTo(PrecedencePredicate? o) => precedence - o.precedence;

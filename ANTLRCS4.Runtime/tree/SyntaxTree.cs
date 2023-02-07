@@ -12,8 +12,9 @@ namespace org.antlr.v4.runtime.tree;
  *  is some kind of syntax tree. Subinterfaces distinguish
  *  between parse trees and other kinds of syntax trees we might want to create.
  */
-public interface SyntaxTree : Tree {
-	/**
+public interface SyntaxTree : Tree
+{
+    /**
 	 * Return an {@link Interval} indicating the index in the
 	 * {@link TokenStream} of the first and last token associated with this
 	 * subtree. If this node is a leaf, then the interval represents a single
@@ -29,5 +30,5 @@ public interface SyntaxTree : Tree {
 	 * <p>As a weird special case, the source interval for rules matched after
 	 * EOF is unspecified.</p>
 	 */
-	Interval getSourceInterval();
+    Interval SourceInterval { get; }
 }

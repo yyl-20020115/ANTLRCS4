@@ -11,13 +11,14 @@ namespace org.antlr.v4.runtime;
  *
  * @author Sam Harwell
  */
-public class ConsoleErrorListener : BaseErrorListener {
-	/**
+public class ConsoleErrorListener : BaseErrorListener
+{
+    /**
 	 * Provides a default instance of {@link ConsoleErrorListener}.
 	 */
-	public static readonly ConsoleErrorListener INSTANCE = new ConsoleErrorListener();
+    public static readonly ConsoleErrorListener INSTANCE = new ();
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>
@@ -29,15 +30,15 @@ public class ConsoleErrorListener : BaseErrorListener {
 	 * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
 	 * </pre>
 	 */
-	//@Override
-	public override void SyntaxError(Recognizer recognizer,
-							Object offendingSymbol,
-							int line,
-							int charPositionInLine,
-							String msg,
-							RecognitionException e)
-	{
-		Console.Error.WriteLine("line " + line + ":" + charPositionInLine + " " + msg);
-	}
+    //@Override
+    public override void SyntaxError(Recognizer recognizer,
+                            object offendingSymbol,
+                            int line,
+                            int charPositionInLine,
+                            string msg,
+                            RecognitionException e)
+    {
+        Console.Error.WriteLine("line " + line + ":" + charPositionInLine + " " + msg);
+    }
 
 }

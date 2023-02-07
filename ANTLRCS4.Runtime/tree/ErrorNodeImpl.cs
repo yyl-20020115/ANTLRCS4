@@ -17,7 +17,7 @@ public class ErrorNodeImpl : TerminalNodeImpl , ErrorNode {
 	}
 
 	//@Override
-	public T accept<T>(ParseTreeVisitor<T> visitor) {
-		return visitor.visitErrorNode(this);
+	public T Accept<T>(ParseTreeVisitor<T> visitor) {
+		return visitor.VisitErrorNode(this);
 	}
 }

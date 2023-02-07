@@ -22,12 +22,12 @@ public class ToolANTLRLexer : ANTLRLexer
     public void DisplayRecognitionError(string[] tokenNames, RecognitionException e)
     {
         var msg = GetErrorMessage(e, tokenNames);
-        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, GetSourceName(), e.token, e, msg);
+        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
     }
 
     //@Override
     public void GrammarError(ErrorType etype, Token token, params Object[] args)
     {
-        tool.ErrMgr.GrammarError(etype, GetSourceName(), token, args);
+        tool.ErrMgr.GrammarError(etype, SourceName, token, args);
     }
 }

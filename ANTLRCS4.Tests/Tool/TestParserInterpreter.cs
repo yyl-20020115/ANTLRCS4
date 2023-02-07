@@ -40,7 +40,7 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "a", "(s a)");
-        Assert.AreEqual("0..0", t.getSourceInterval().ToString());
+        Assert.AreEqual("0..0", t.SourceInterval.ToString());
     }
 
     [TestMethod]
@@ -55,7 +55,7 @@ public class TestParserInterpreter
             lg);
 
         ParseTree t = TestInterp(lg, g, "s", "a", "(s a <EOF>)");
-        Assert.AreEqual("0..1", t.getSourceInterval().ToString());
+        Assert.AreEqual("0..1", t.SourceInterval.ToString());
     }
 
     [TestMethod]
@@ -71,8 +71,8 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "a", "(s (x a <EOF>))");
-        Assert.AreEqual("0..1", t.getSourceInterval().ToString());
-        Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString());
+        Assert.AreEqual("0..1", t.SourceInterval.ToString());
+        Assert.AreEqual("0..1", t.GetChild(0).SourceInterval.ToString());
     }
 
     [TestMethod]
@@ -89,8 +89,8 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "a", "(s (x a <EOF>) y)");
-        Assert.AreEqual("0..1", t.getSourceInterval().ToString()); // s
-        Assert.AreEqual("0..1", t.getChild(0).getSourceInterval().ToString()); // x
+        Assert.AreEqual("0..1", t.SourceInterval.ToString()); // s
+        Assert.AreEqual("0..1", t.GetChild(0).SourceInterval.ToString()); // x
                                                                                // unspecified		Assert.AreEqual("1..0", t.getChild(1).getSourceInterval().ToString()); // y
     }
 
@@ -108,8 +108,8 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "", "(s (x <EOF>) y)");
-        Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
-        Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
+        Assert.AreEqual("0..0", t.SourceInterval.ToString()); // s
+        Assert.AreEqual("0..0", t.GetChild(0).SourceInterval.ToString()); // x
                                                                                // this next one is a weird special case where somebody tries to match beyond in the file
                                                                                // unspecified		Assert.AreEqual("0..-1", t.getChild(1).getSourceInterval().ToString()); // y
     }
@@ -127,8 +127,8 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "", "(s x <EOF>)");
-        Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
-        Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
+        Assert.AreEqual("0..0", t.SourceInterval.ToString()); // s
+        Assert.AreEqual("0..-1", t.GetChild(0).SourceInterval.ToString()); // x
     }
 
     [TestMethod]
@@ -146,8 +146,8 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "", "(s (x <EOF>) (y z))");
-        Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
-        Assert.AreEqual("0..0", t.getChild(0).getSourceInterval().ToString()); // x
+        Assert.AreEqual("0..0", t.SourceInterval.ToString()); // s
+        Assert.AreEqual("0..0", t.GetChild(0).SourceInterval.ToString()); // x
                                                                                // unspecified		Assert.AreEqual("0..-1", t.getChild(1).getSourceInterval().ToString()); // x
     }
 
@@ -164,9 +164,9 @@ public class TestParserInterpreter
             lg);
 
         var t = TestInterp(lg, g, "s", "a", "(s x a)");
-        Assert.AreEqual("0..0", t.getSourceInterval().ToString()); // s
+        Assert.AreEqual("0..0", t.SourceInterval.ToString()); // s
                                                                    // This gets an empty interval because the stop token is null for x
-        Assert.AreEqual("0..-1", t.getChild(0).getSourceInterval().ToString()); // x
+        Assert.AreEqual("0..-1", t.GetChild(0).SourceInterval.ToString()); // x
     }
 
     [TestMethod]
@@ -387,7 +387,7 @@ public class TestParserInterpreter
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createParserInterpreter(tokens);
         var t = parser.parse(g.rules[(startRule)].index);
-        Assert.AreEqual(expectedParseTree, t.toStringTree(parser));
+        Assert.AreEqual(expectedParseTree, t.ToStringTree(parser));
         return t;
     }
 }

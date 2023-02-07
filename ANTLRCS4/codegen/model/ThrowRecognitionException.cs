@@ -21,7 +21,7 @@ public class ThrowRecognitionException : SrcOp
     {
         //this.decision = ((BlockStartState)ast.ATNState).decision;
         grammarLine = ast.getLine();
-        grammarLine = ast.getCharPositionInLine();
+        grammarLine = ast.CharPositionInLine;
         grammarFile = factory.GetGrammar().fileName;
         //this.expecting = factory.createExpectingBitSet(ast, decision, expecting, "error");
         //		factory.defineBitSet(this.expecting);

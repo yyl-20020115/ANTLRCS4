@@ -10,45 +10,39 @@ namespace org.antlr.v4.runtime.tree.pattern;
  * Represents a span of raw text (concrete syntax) between tags in a tree
  * pattern string.
  */
-class TextChunk : Chunk {
-	/**
+class TextChunk : Chunk
+{
+    /**
 	 * This is the backing field for {@link #getText}.
 	 */
 
-	private readonly String text;
+    private readonly string text;
 
-	/**
+    /**
 	 * Constructs a new instance of {@link TextChunk} with the specified text.
 	 *
 	 * @param text The text of this chunk.
 	 * @exception IllegalArgumentException if {@code text} is {@code null}.
 	 */
-	public TextChunk(String text) {
-		if (text == null) {
-			throw new ArgumentException("text cannot be null",nameof(text));
-		}
+    public TextChunk(string text)
+    {
+        this.text = text ?? throw new ArgumentException("text cannot be null", nameof(text));
+    }
 
-		this.text = text;
-	}
-
-	/**
+    /**
 	 * Gets the raw text of this chunk.
 	 *
 	 * @return The text of the chunk.
 	 */
 
-	public String getText() {
-		return text;
-	}
+    public string Text => text;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The implementation for {@link TextChunk} returns the result of
 	 * {@link #getText()} in single quotes.</p>
 	 */
-	//@Override
-	public override String ToString() {
-		return "'"+text+"'";
-	}
+    //@Override
+    public override string ToString() => "'" + text + "'";
 }

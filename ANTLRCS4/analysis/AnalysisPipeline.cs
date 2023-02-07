@@ -48,7 +48,7 @@ public class AnalysisPipeline
             var analyzer = new LL1Analyzer(g.atn);
             var look = analyzer.LOOK(g.atn.ruleToStartState[rule.index], null);
             if (look.Contains(Token.EPSILON))
-                g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_TOKEN, g.fileName, ((GrammarAST)rule.ast.getChild(0)).getToken(), rule.name);
+                g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_TOKEN, g.fileName, ((GrammarAST)rule.ast.GetChild(0)).Token, rule.name);
         }
     }
 

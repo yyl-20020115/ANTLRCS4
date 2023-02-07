@@ -189,10 +189,10 @@ public class SemanticPipeline {
 		}
 
 		// first child is the alt itself, subsequent are the actions
-		for (int i = 1; i < altActionAst.getChildCount(); i++) {
-			GrammarAST node = (GrammarAST)altActionAst.getChild(i);
+		for (int i = 1; i < altActionAst.ChildCount; i++) {
+			GrammarAST node = (GrammarAST)altActionAst.GetChild(i);
 			if (node.getType() == ANTLRParser.LEXER_ACTION_CALL) {
-				if ("type".Equals(node.getChild(0).getText())) {
+				if ("type".Equals(node.GetChild(0).Text)) {
 					return true;
 				}
 			}

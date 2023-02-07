@@ -37,7 +37,7 @@ public abstract class GrammarASTWithOptions : GrammarAST {
 			if ( v.StartsWith("'") || v.StartsWith("\"") ) {
 				v = CharSupport.GetStringFromGrammarStringLiteral(v);
 				if (v == null) {
-					g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.getToken(), value.getText());
+					g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.Token, value.getText());
 					v = "";
 				}
 			}

@@ -51,7 +51,7 @@ public class LexerPopModeAction : LexerAction
     //@Override
     public void Execute(Lexer lexer)
     {
-        lexer.popMode();
+        lexer.PopMode();
     }
 
     //@Override

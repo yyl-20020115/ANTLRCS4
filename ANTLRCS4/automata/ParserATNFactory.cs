@@ -79,7 +79,7 @@ public class ParserATNFactory : ATNFactory
                 var analyzer = new LL1Analyzer(atn);
                 if (analyzer.LOOK(startState, pair.c, null).Contains(org.antlr.v4.runtime.Token.EPSILON))
                 {
-                    g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+                    g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.GetChild(0)).Token, pair.a.name);
                     break;
                     //continue optionalCheck;
                 }
@@ -103,11 +103,11 @@ public class ParserATNFactory : ATNFactory
             if (lookahead.Contains(org.antlr.v4.runtime.Token.EPSILON))
             {
                 ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
-                g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+                g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.GetChild(0)).Token, pair.a.name);
             }
             if (lookahead.Contains(org.antlr.v4.runtime.Token.EOF))
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.EOF_CLOSURE, g.fileName, ((GrammarAST)pair.a.ast.getChild(0)).getToken(), pair.a.name);
+                g.Tools.ErrMgr.GrammarError(ErrorType.EOF_CLOSURE, g.fileName, ((GrammarAST)pair.a.ast.GetChild(0)).Token, pair.a.name);
             }
         }
     }
@@ -120,7 +120,7 @@ public class ParserATNFactory : ATNFactory
         foreach (var r in rules)
         {
             // find rule's block
-            var blk = (GrammarAST)r.ast.getFirstChildWithType(ANTLRParser.BLOCK);
+            var blk = (GrammarAST)r.ast.GetFirstChildWithType(ANTLRParser.BLOCK);
             var nodes = new CommonTreeNodeStream(adaptor, blk);
             var b = new ATNBuilder(nodes, this);
             try
@@ -212,9 +212,9 @@ public class ParserATNFactory : ATNFactory
     public Handle Range(GrammarAST a, GrammarAST b)
     {
         g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_RANGE_IN_PARSER, g.fileName,
-                                   a.getToken(),
-                                   a.getToken().getText(),
-                                   b.getToken().getText());
+                                   a.                                   Token,
+                                   a.                                   Token.                                   Text,
+                                   b.                                   Token.                                   Text);
         // From a..b, yield ATN for just a.
         return TokenRef((TerminalAST)a);
     }
@@ -254,7 +254,7 @@ public class ParserATNFactory : ATNFactory
         var r = g.getRule(node.getText());
         if (r == null)
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.getToken(), "Rule " + node.getText() + " undefined");
+            g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.Token, "Rule " + node.getText() + " undefined");
             return null;
         }
         var start = atn.ruleToStartState[r.index];
@@ -568,12 +568,12 @@ public class ParserATNFactory : ATNFactory
         plusAST.atnState = loop;
         Epsilon(blkEnd, loop);      // blk can see loop back
 
-        var blkAST = (BlockAST)plusAST.getChild(0);
+        var blkAST = (BlockAST)plusAST.GetChild(0);
         if (((QuantifierAST)plusAST).isGreedy())
         {
             if (expectNonGreedy(blkAST))
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, plusAST.getToken(), plusAST.getToken().getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, plusAST.Token, plusAST.Token.Text);
             }
 
             Epsilon(loop, blkStart);    // loop back to start
@@ -620,12 +620,12 @@ public class ParserATNFactory : ATNFactory
         entry.loopBackState = loop;
         end.loopBackState = loop;
 
-        var blkAST = (BlockAST)starAST.getChild(0);
+        var blkAST = (BlockAST)starAST.GetChild(0);
         if (((QuantifierAST)starAST).isGreedy())
         {
             if (expectNonGreedy(blkAST))
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, starAST.getToken(), starAST.getToken().getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, starAST.Token, starAST.Token.Text);
             }
 
             Epsilon(entry, blkStart);   // loop enter edge (alt 1)
@@ -789,14 +789,14 @@ public class ParserATNFactory : ATNFactory
 	 */
     public static bool blockHasWildcardAlt(GrammarAST block)
     {
-        foreach (Object alt in block.getChildren())
+        foreach (Object alt in block.GetChildren())
         {
             if (!(alt is AltAST)) continue;
             AltAST altAST = (AltAST)alt;
-            if (altAST.getChildCount() == 1 || (altAST.getChildCount() == 2 && altAST.getChild(0).getType() == ANTLRParser.ELEMENT_OPTIONS))
+            if (altAST.ChildCount == 1 || (altAST.ChildCount == 2 && altAST.GetChild(0).Type == ANTLRParser.ELEMENT_OPTIONS))
             {
-                Tree e = altAST.getChild(altAST.getChildCount() - 1);
-                if (e.getType() == ANTLRParser.WILDCARD)
+                Tree e = altAST.GetChild(altAST.ChildCount - 1);
+                if (e.Type == ANTLRParser.WILDCARD)
                 {
                     return true;
                 }

@@ -66,7 +66,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
     public LeftRecursiveRuleAnalyzer(GrammarAST ruleAST,
                                      Tool tool, String ruleName, String language)
-        : base(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.getInputStream()), ruleAST))
+        : base(new CommonTreeNodeStream(new GrammarASTAdaptor(ruleAST.token.InputStream), ruleAST))
     {
         this.tool = tool;
         this.ruleName = ruleName;
@@ -104,7 +104,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
                 }
                 else
                 {
-                    tool.ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION_VALUE, t.g.fileName, t.getOptionAST("assoc").getToken(), "assoc", assoc);
+                    tool.ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION_VALUE, t.g.fileName, t.getOptionAST("assoc").Token, "assoc", assoc);
                 }
             }
         }
@@ -130,7 +130,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         if (lrlabel != null)
         {
             label = lrlabel.getText();
-            isListLabel = lrlabel.getParent().getType() == PLUS_ASSIGN;
+            isListLabel = lrlabel.getParent().Type == PLUS_ASSIGN;
             leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
         }
 
@@ -181,7 +181,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         if (lrlabel != null)
         {
             label = lrlabel.getText();
-            isListLabel = lrlabel.getParent().getType() == PLUS_ASSIGN;
+            isListLabel = lrlabel.getParent().Type == PLUS_ASSIGN;
             leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
         }
         stripAltLabel(altTree);
@@ -273,25 +273,25 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     public static bool hasImmediateRecursiveRuleRefs(GrammarAST t, String ruleName)
     {
         if (t == null) return false;
-        GrammarAST blk = (GrammarAST)t.getFirstChildWithType(BLOCK);
+        GrammarAST blk = (GrammarAST)t.GetFirstChildWithType(BLOCK);
         if (blk == null) return false;
-        int n = blk.getChildren().Count;
+        int n = blk.GetChildren().Count;
         for (int i = 0; i < n; i++)
         {
-            GrammarAST alt = (GrammarAST)blk.getChildren()[(i)];
-            Tree first = alt.getChild(0);
+            GrammarAST alt = (GrammarAST)blk.GetChildren()[(i)];
+            Tree first = alt.GetChild(0);
             if (first == null) continue;
-            if (first.getType() == ELEMENT_OPTIONS)
+            if (first.Type == ELEMENT_OPTIONS)
             {
-                first = alt.getChild(1);
+                first = alt.GetChild(1);
                 if (first == null)
                 {
                     continue;
                 }
             }
-            if (first.getType() == RULE_REF && first.getText().Equals(ruleName)) return true;
-            Tree rref = first.getChild(1);
-            if (rref != null && rref.getType() == RULE_REF && rref.getText().Equals(ruleName)) return true;
+            if (first.Type == RULE_REF && first.Text.Equals(ruleName)) return true;
+            Tree rref = first.GetChild(1);
+            if (rref != null && rref.Type == RULE_REF && rref.Text.Equals(ruleName)) return true;
         }
         return false;
     }
@@ -302,23 +302,23 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     public GrammarAST stripLeftRecursion(GrammarAST altAST)
     {
         GrammarAST lrlabel = null;
-        GrammarAST first = (GrammarAST)altAST.getChild(0);
+        GrammarAST first = (GrammarAST)altAST.GetChild(0);
         int leftRecurRuleIndex = 0;
         if (first.getType() == ELEMENT_OPTIONS)
         {
-            first = (GrammarAST)altAST.getChild(1);
+            first = (GrammarAST)altAST.GetChild(1);
             leftRecurRuleIndex = 1;
         }
-        Tree rref = first.getChild(1); // if label=rule
+        Tree rref = first.GetChild(1); // if label=rule
         if ((first.getType() == RULE_REF && first.getText().Equals(ruleName)) ||
-             (rref != null && rref.getType() == RULE_REF && rref.getText().Equals(ruleName)))
+             (rref != null && rref.Type == RULE_REF && rref.Text.Equals(ruleName)))
         {
-            if (first.getType() == ASSIGN || first.getType() == PLUS_ASSIGN) lrlabel = (GrammarAST)first.getChild(0);
+            if (first.getType() == ASSIGN || first.getType() == PLUS_ASSIGN) lrlabel = (GrammarAST)first.GetChild(0);
             // remove rule ref (first child unless options present)
-            altAST.deleteChild(leftRecurRuleIndex);
+            altAST.DeleteChild(leftRecurRuleIndex);
             // reset index so it prints properly (sets token range of
             // ALT to start to right of left recur rule we deleted)
-            GrammarAST newFirstChild = (GrammarAST)altAST.getChild(leftRecurRuleIndex);
+            GrammarAST newFirstChild = (GrammarAST)altAST.GetChild(leftRecurRuleIndex);
             altAST.setTokenStartIndex(newFirstChild.getTokenStartIndex());
         }
         return lrlabel;
@@ -332,7 +332,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         // find =>
         for (int i = stop; i >= start; i--)
         {
-            if (tokenStream.get(i).getType() == POUND)
+            if (tokenStream.Get(i).Type == POUND)
             {
                 altAST.setTokenStopIndex(i - 1);
                 return;
@@ -366,7 +366,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         List<GrammarAST> labeledSubTrees = t.getNodesWithType(new IntervalSet(ASSIGN, PLUS_ASSIGN));
         foreach (GrammarAST sub in labeledSubTrees)
         {
-            noOptions.Add(sub.getChild(0).getTokenStartIndex());
+            noOptions.Add(sub.GetChild(0).TokenStartIndex);
         }
 
         StringBuilder buf = new StringBuilder();
@@ -379,19 +379,19 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
                 continue;
             }
 
-            Token tok = tokenStream.get(i);
+            Token tok = tokenStream.Get(i);
 
             // Compute/hold any element options
             StringBuilder elementOptions = new StringBuilder();
             if (!noOptions.Contains(i))
             {
-                GrammarAST node = t.getNodeWithTokenIndex(tok.getTokenIndex());
+                GrammarAST node = t.getNodeWithTokenIndex(tok.TokenIndex);
                 if (node != null &&
-                     (tok.getType() == TOKEN_REF ||
-                      tok.getType() == STRING_LITERAL ||
-                      tok.getType() == RULE_REF))
+                     (tok.Type == TOKEN_REF ||
+                      tok.                      Type == STRING_LITERAL ||
+                      tok.                      Type == RULE_REF))
                 {
-                    elementOptions.Append("tokenIndex=").Append(tok.getTokenIndex());
+                    elementOptions.Append("tokenIndex=").Append(tok.TokenIndex);
                 }
 
                 if (node is GrammarASTWithOptions)
@@ -411,13 +411,13 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
                 }
             }
 
-            buf.Append(tok.getText()); // add actual text of the current token to the rewritten alternative
+            buf.Append(tok.Text); // add actual text of the current token to the rewritten alternative
             i++;                       // move to the next token
 
             // Are there args on a rule?
-            if (tok.getType() == RULE_REF && i <= tokenStopIndex && tokenStream.get(i).getType() == ARG_ACTION)
+            if (tok.Type == RULE_REF && i <= tokenStopIndex && tokenStream.Get(i).Type == ARG_ACTION)
             {
-                buf.Append('[' + tokenStream.get(i).getText() + ']');
+                buf.Append('[' + tokenStream.Get(i).Text + ']');
                 i++;
             }
 

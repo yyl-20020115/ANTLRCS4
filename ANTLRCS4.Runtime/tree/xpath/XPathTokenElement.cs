@@ -7,26 +7,20 @@
 namespace org.antlr.v4.runtime.tree.xpath;
 
 
-public class XPathTokenElement : XPathElement {
-	protected int tokenType;
-	public XPathTokenElement(String tokenName, int tokenType) :base(tokenName){
-		this.tokenType = tokenType;
-	}
+public class XPathTokenElement : XPathElement
+{
+    protected int tokenType;
+    public XPathTokenElement(string tokenName, int tokenType) : base(tokenName) => this.tokenType = tokenType;
 
-	//@Override
-	public override ICollection<ParseTree> evaluate(ParseTree t) {
-		// return all children of t that match nodeName
-		List<ParseTree> nodes = new ();
-		foreach (Tree c in Trees.getChildren(t)) {
-            if (c is TerminalNode tnode)
-            {
-                if ((tnode.getSymbol().getType() == tokenType && !invert) ||
-                     (tnode.getSymbol().getType() != tokenType && invert))
-                {
-                    nodes.Add(tnode);
-                }
-            }
-        }
-		return nodes;
-	}
+    //@Override
+    public override ICollection<ParseTree> Evaluate(ParseTree t)
+    {
+        // return all children of t that match nodeName
+        List<ParseTree> nodes = new();
+        foreach (Tree c in Trees.getChildren(t))
+            if (c is TerminalNode tnode && ((tnode.getSymbol().Type == tokenType && !invert) ||
+                     (tnode.getSymbol().Type != tokenType && invert)))
+                nodes.Add(tnode);
+        return nodes;
+    }
 }

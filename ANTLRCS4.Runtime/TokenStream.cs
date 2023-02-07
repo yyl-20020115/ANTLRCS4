@@ -41,15 +41,15 @@ public interface TokenStream : IntStream {
 	 * @throws UnsupportedOperationException if the stream does not support
 	 * retrieving the token at the specified index
 	 */
-	public Token get(int index);
+	public Token Get(int index);
 
-	/**
+    /**
 	 * Gets the underlying {@link TokenSource} which provides tokens for this
 	 * stream.
 	 */
-	public TokenSource getTokenSource();
+    public TokenSource TokenSource { get; }
 
-	/**
+    /**
 	 * Return the text of all tokens within the specified {@code interval}. This
 	 * method behaves like the following code (including potential exceptions
 	 * for violating preconditions of {@link #get}, but may be optimized by the
@@ -70,9 +70,9 @@ public interface TokenStream : IntStream {
 	 *
 	 * @throws NullReferenceException if {@code interval} is {@code null}
 	 */
-	public String getText(Interval interval);
+    public String GetText(Interval interval);
 
-	/**
+    /**
 	 * Return the text of all tokens in the stream. This method behaves like the
 	 * following code, including potential exceptions from the calls to
 	 * {@link IntStream#size} and {@link #getText(Interval)}, but may be
@@ -85,9 +85,9 @@ public interface TokenStream : IntStream {
 	 *
 	 * @return The text of all tokens in the stream.
 	 */
-	public String getText();
+    public String Text { get; }
 
-	/**
+    /**
 	 * Return the text of all tokens in the source interval of the specified
 	 * context. This method behaves like the following code, including potential
 	 * exceptions from the call to {@link #getText(Interval)}, but may be
@@ -105,7 +105,7 @@ public interface TokenStream : IntStream {
 	 * text for.
 	 * @return The text of all tokens within the source interval of {@code ctx}.
 	 */
-	public String getText(RuleContext ctx);
+    public String GetText(RuleContext ctx);
 
 	/**
 	 * Return the text of all tokens in this stream between {@code start} and
@@ -136,15 +136,15 @@ public interface TokenStream : IntStream {
 	 * @throws UnsupportedOperationException if this stream does not support
 	 * this method for the specified tokens
 	 */
-	public String getText(Token start, Token stop);
-    int range();
+	public String GetText(Token start, Token stop);
+    int Range();
 
     /** Return the text of all tokens from start to stop, inclusive.
 	 *  If the stream does not buffer all the tokens then it can just
 	 *  return "" or null;  Users should not access $ruleLabel.text in
 	 *  an action of course in that case.
 	 */
-    public String toString(int start, int stop);
+    public String ToString(int start, int stop);
 
     /** Because the user is not required to use a token with an index stored
 	 *  in it, we must provide a means for two token objects themselves to
@@ -152,5 +152,5 @@ public interface TokenStream : IntStream {
 	 *  to the other toString(int,int).  This is also parallel with
 	 *  the TreeNodeStream.toString(Object,Object).
 	 */
-    public String toString(Token start, Token stop);
+    public String ToString(Token start, Token stop);
 }

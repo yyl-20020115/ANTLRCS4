@@ -127,12 +127,12 @@ public class VocabularyImpl : Vocabulary {
 	}
 
 	//@Override
-	public int getMaxTokenType() {
+	public int GetMaxTokenType() {
 		return maxTokenType;
 	}
 
 	//@Override
-	public String getLiteralName(int tokenType) {
+	public String GetLiteralName(int tokenType) {
 		if (tokenType >= 0 && tokenType < literalNames.Length) {
 			return literalNames[tokenType];
 		}
@@ -141,7 +141,7 @@ public class VocabularyImpl : Vocabulary {
 	}
 
 	//@Override
-	public String getSymbolicName(int tokenType) {
+	public String GetSymbolicName(int tokenType) {
 		if (tokenType >= 0 && tokenType < symbolicNames.Length) {
 			return symbolicNames[tokenType];
 		}
@@ -154,7 +154,7 @@ public class VocabularyImpl : Vocabulary {
 	}
 
 	//@Override
-	public String getDisplayName(int tokenType) {
+	public String GetDisplayName(int tokenType) {
 		if (tokenType >= 0 && tokenType < displayNames.Length) {
 			String displayName = displayNames[tokenType];
 			if (displayName != null) {
@@ -162,12 +162,12 @@ public class VocabularyImpl : Vocabulary {
 			}
 		}
 
-		String literalName = getLiteralName(tokenType);
+		String literalName = GetLiteralName(tokenType);
 		if (literalName != null) {
 			return literalName;
 		}
 
-		String symbolicName = getSymbolicName(tokenType);
+		String symbolicName = GetSymbolicName(tokenType);
 		if (symbolicName != null) {
 			return symbolicName;
 		}

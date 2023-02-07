@@ -34,7 +34,7 @@ public class ToolANTLRParser : ANTLRParser
         }
         //	List stack = getRuleInvocationStack(e, this.getClass().getName());
         //	msg += ", rule stack = "+stack;
-        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, GetSourceName(), e.token, e, msg);
+        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
     }
 
     public string GetParserErrorMessage(antlr.runtime.Parser parser, RecognitionException e)
@@ -59,6 +59,6 @@ public class ToolANTLRParser : ANTLRParser
     //@Override
     public void GrammarError(ErrorType etype, Token token, params object[] args)
     {
-        tool.ErrMgr.GrammarError(etype, GetSourceName(), token, args);
+        tool.ErrMgr.GrammarError(etype, SourceName, token, args);
     }
 }

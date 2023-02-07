@@ -27,16 +27,16 @@ public static class Trees
     {
         if (t == null) return "null";
         String s = RuntimeUtils.EscapeWhitespace(nodeTextProvider.GetText(t), false);
-        if (t.getChildCount() == 0) return s;
+        if (t.ChildCount == 0) return s;
         StringBuilder buf = new StringBuilder();
         buf.Append('(');
         s = RuntimeUtils.EscapeWhitespace(nodeTextProvider.GetText(t), false);
         buf.Append(s);
         buf.Append(' ');
-        for (int i = 0; i < t.getChildCount(); i++)
+        for (int i = 0; i < t.ChildCount; i++)
         {
             if (i > 0) buf.Append(' ');
-            buf.Append(ToStringTree(t.getChild(i), nodeTextProvider));
+            buf.Append(ToStringTree(t.GetChild(i), nodeTextProvider));
         }
         buf.Append(')');
         return buf.ToString();
@@ -47,7 +47,7 @@ public static class Trees
 	 *  parse trees and extract data appropriately.
 	 */
     public static String toStringTree(Tree t, Parser recog) {
-		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
+		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
 		List<String> ruleNamesList = ruleNames?.ToList();
 		return toStringTree(t, ruleNamesList);
 	}
@@ -57,22 +57,22 @@ public static class Trees
 	 */
 	public static String toStringTree(Tree t, List<String> ruleNames) {
 		String s = RuntimeUtils.EscapeWhitespace(getNodeText(t, ruleNames), false);
-		if ( t.getChildCount()==0 ) return s;
+		if ( t.ChildCount==0 ) return s;
 		StringBuilder buf = new StringBuilder();
 		buf.Append('(');
 		s = RuntimeUtils.EscapeWhitespace(getNodeText(t, ruleNames), false);
 		buf.Append(s);
 		buf.Append(' ');
-		for (int i = 0; i<t.getChildCount(); i++) {
+		for (int i = 0; i<t.ChildCount; i++) {
 			if ( i>0 ) buf.Append(' ');
-			buf.Append(toStringTree(t.getChild(i), ruleNames));
+			buf.Append(toStringTree(t.GetChild(i), ruleNames));
 		}
 		buf.Append(')');
 		return buf.ToString();
 	}
 
 	public static String getNodeText(Tree t, Parser recog) {
-		String[] ruleNames = recog != null ? recog.getRuleNames() : null;
+		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
 		List<String> ruleNamesList = ruleNames?.ToList();
 		return getNodeText(t, ruleNamesList);
 	}
@@ -80,7 +80,7 @@ public static class Trees
 	public static String getNodeText(Tree t, List<String> ruleNames) {
 		if ( ruleNames!=null ) {
 			if ( t is RuleContext ) {
-				int ruleIndex = ((RuleContext)t).getRuleContext().getRuleIndex();
+				int ruleIndex = ((RuleContext)t).getRuleContext().GetRuleIndex();
 				String ruleName = ruleNames[(ruleIndex)];
 				int altNumber = ((RuleContext) t).getAltNumber();
 				if ( altNumber!=ATN.INVALID_ALT_NUMBER ) {
@@ -94,24 +94,24 @@ public static class Trees
 			else if ( t is TerminalNode) {
 				Token symbol = ((TerminalNode)t).getSymbol();
 				if (symbol != null) {
-					String s = symbol.getText();
+					String s = symbol.Text;
 					return s;
 				}
 			}
 		}
 		// no recog for rule names
-		Object payload = t.getPayload();
+		Object payload = t.Payload;
 		if ( payload is Token ) {
-			return ((Token)payload).getText();
+			return ((Token)payload).Text;
 		}
-		return t.getPayload().ToString();
+		return t.Payload.ToString();
 	}
 
 	/** Return ordered list of all children of this node */
 	public static List<Tree> getChildren(Tree t) {
 		List<Tree> kids = new();
-		for (int i=0; i<t.getChildCount(); i++) {
-			kids.Add(t.getChild(i));
+		for (int i=0; i<t.ChildCount; i++) {
+			kids.Add(t.GetChild(i));
 		}
 		return kids;
 	}
@@ -122,12 +122,12 @@ public static class Trees
 	 *  @since 4.5.1
 	 */
 	public static List<Tree> getAncestors<T>(Tree t) where T: Tree {
-		if ( t.getParent()==null ) return new();
+		if ( t.Parent==null ) return new();
 		List<Tree> ancestors = new ();
-		t = t.getParent();
+		t = t.Parent;
 		while ( t!=null ) {
 			ancestors.Insert(0, t); // insert at start
-			t = t.getParent();
+			t = t.Parent;
 		}
 		return ancestors;
 	}
@@ -138,11 +138,11 @@ public static class Trees
 	 *  @since 4.5.1
 	 */
 	public static bool isAncestorOf(Tree t, Tree u) {
-		if ( t==null || u==null || t.getParent()==null ) return false;
-		Tree p = u.getParent();
+		if ( t==null || u==null || t.Parent==null ) return false;
+		Tree p = u.Parent;
 		while ( p!=null ) {
 			if ( t==p ) return true;
-			p = p.getParent();
+			p = p.Parent;
 		}
 		return false;
 	}
@@ -167,15 +167,15 @@ public static class Trees
 		// check this node (the root) first
 		if ( findTokens && t is TerminalNode ) {
 			TerminalNode tnode = (TerminalNode)t;
-			if ( tnode.getSymbol().getType()==index ) nodes.Add(t);
+			if ( tnode.getSymbol().Type==index ) nodes.Add(t);
 		}
 		else if ( !findTokens && t is ParserRuleContext ) {
 			ParserRuleContext ctx = (ParserRuleContext)t;
-			if ( ctx.getRuleIndex() == index ) nodes.Add(t);
+			if ( ctx.GetRuleIndex() == index ) nodes.Add(t);
 		}
 		// check children
-		for (int i = 0; i < t.getChildCount(); i++){
-			_findAllNodes<ParseTree>(t.getChild(i), index, findTokens, nodes);
+		for (int i = 0; i < t.ChildCount; i++){
+			_findAllNodes<ParseTree>(t.GetChild(i), index, findTokens, nodes);
 		}
 	}
 
@@ -187,9 +187,9 @@ public static class Trees
 		List<ParseTree> nodes = new ();
 		nodes.Add(t);
 
-		int n = t.getChildCount();
+		int n = t.ChildCount;
 		for (int i = 0 ; i < n ; i++){
-			nodes.AddRange(getDescendants(t.getChild(i)));
+			nodes.AddRange(getDescendants(t.GetChild(i)));
 		}
 		return nodes;
 	}
@@ -209,16 +209,16 @@ public static class Trees
 																	int startTokenIndex, // inclusive
 																	int stopTokenIndex)  // inclusive
 	{
-		int n = t.getChildCount();
+		int n = t.ChildCount;
 		for (int i = 0; i<n; i++) {
-			ParseTree child = t.getChild(i);
+			ParseTree child = t.GetChild(i);
 			ParserRuleContext r = getRootOfSubtreeEnclosingRegion(child, startTokenIndex, stopTokenIndex);
 			if ( r!=null ) return r;
 		}
 		if ( t is ParserRuleContext ) {
 			ParserRuleContext r = (ParserRuleContext) t;
-			if ( startTokenIndex>=r.getStart().getTokenIndex() && // is range fully contained in t?
-				 (r.getStop()==null || stopTokenIndex<=r.getStop().getTokenIndex()) )
+			if ( startTokenIndex>=r.GetStart().TokenIndex && // is range fully contained in t?
+				 (r.GetStop()==null || stopTokenIndex<=r.GetStop().TokenIndex) )
 			{
 				// note: r.getStop()==null likely implies that we bailed out of parser and there's nothing to the right
 				return r;
@@ -241,9 +241,9 @@ public static class Trees
 											   int stopIndex)
 	{
 		if ( t==null ) return;
-		for (int i = 0; i < t.getChildCount(); i++) {
-			ParseTree child = t.getChild(i);
-			Interval range = child.getSourceInterval();
+		for (int i = 0; i < t.GetChildCount(); i++) {
+			ParseTree child = t.GetChild(i);
+			Interval range = child.SourceInterval;
 			if ( child is ParserRuleContext && (range.b < startIndex || range.a > stopIndex) ) {
 				if ( isAncestorOf(child, root) ) { // replace only if subtree doesn't have displayed root
 					CommonToken abbrev = new CommonToken(Token.INVALID_TYPE, "...");
@@ -262,9 +262,9 @@ public static class Trees
 
 		if ( t==null ) return null;
 
-		int n = t.getChildCount();
+		int n = t.ChildCount;
 		for (int i = 0 ; i < n ; i++){
-			Tree u = findNodeSuchThat(t.getChild(i), pred);
+			Tree u = findNodeSuchThat(t.GetChild(i), pred);
 			if ( u!=null ) return u;
 		}
 		return null;

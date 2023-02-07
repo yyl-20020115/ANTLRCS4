@@ -138,13 +138,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     public Token GetRuleOrSubruleStartToken()
     {
         if (tokens == null) return null;
-        int i = tokens.Index();
+        int i = tokens.Index;
         int n = tokens.Count;
         if (i >= n) i = n - 1; // seems index == n as we lex
         bool withinOptionsBlock = false;
         while (i >= 0 && i < n)
         {
-            int ttype = tokens.get(i).getType();
+            int ttype = tokens.Get(i).Type;
             if (withinOptionsBlock)
             {
                 // Ignore rule options content
@@ -161,7 +161,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 }
                 else if (ttype == LPAREN || ttype == TOKEN_REF || ttype == RULE_REF)
                 {
-                    return tokens.get(i);
+                    return tokens.Get(i);
                 }
             }
             i--;
@@ -1438,8 +1438,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     Token t = GetRuleOrSubruleStartToken();
                     if (t != null)
                     {
-                        if (t.getType() == RULE_REF) isLexerRule = false;
-                        else if (t.getType() == TOKEN_REF) isLexerRule = true;
+                        if (t.Type == RULE_REF) isLexerRule = false;
+                        else if (t.Type == TOKEN_REF) isLexerRule = true;
                         // else must be subrule; don't alter context
                     }
                 }
@@ -1959,8 +1959,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 int aStartCharPos2773 = CharPositionInLine;
                 mNameStartChar(); if (state.failed) return;
                 a = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, aStart2773, CharIndex - 1);
-                a.setLine(aStartLine2773);
-                a.setCharPositionInLine(aStartCharPos2773);
+                a.                Line = aStartLine2773;
+                a.                CharPositionInLine = aStartCharPos2773;
 
             // org\\antlr\\v4\\parse\\ANTLRLexer.g:500:24: ( NameChar )*
             loop16:
@@ -2001,7 +2001,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             exit16:
                 if (state.backtracking == 0)
                 {
-                    if (Grammar.isTokenName((a != null ? a.getText() : null))) _type = TOKEN_REF;
+                    if (Grammar.isTokenName((a != null ? a.Text : null))) _type = TOKEN_REF;
                     else _type = RULE_REF;
                 }
             }
@@ -2451,8 +2451,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 int fileStartCharPos3345 = CharPositionInLine;
                 mACTION_STRING_LITERAL(); if (state.failed) return;
                 file = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fileStart3345, CharIndex - 1);
-                file.setLine(fileStartLine3345);
-                file.setCharPositionInLine(fileStartCharPos3345);
+                file.                Line = fileStartLine3345;
+                file.                CharPositionInLine = fileStartCharPos3345;
 
                 // org\\antlr\\v4\\parse\\ANTLRLexer.g:592:49: ( WSCHARS )+
                 int cnt21 = 0;
@@ -2500,8 +2500,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 int lineStartCharPos3352 = CharPositionInLine;
                 mINT(); if (state.failed) return;
                 line = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, lineStart3352, CharIndex - 1);
-                line.setLine(lineStartLine3352);
-                line.setCharPositionInLine(lineStartCharPos3352);
+                line.                Line = lineStartLine3352;
+                line.                CharPositionInLine = lineStartCharPos3352;
 
                 if (state.backtracking == 0)
                 {
@@ -2630,9 +2630,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                             if (state.backtracking == 0)
                             {
                                 Token t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
-                                t.setLine(state.tokenStartLine);
-                                t.setText(state.text);
-                                t.setCharPositionInLine(state.tokenStartCharPositionInLine);
+                                t.                                Line = state.tokenStartLine;
+                                t.                                Text = state.text;
+                                t.                                CharPositionInLine = state.tokenStartCharPositionInLine;
                                 GrammarError(ErrorType.UNTERMINATED_STRING_LITERAL, t);
                             }
                         }
@@ -2825,9 +2825,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                             if (state.backtracking == 0)
                             {
                                 Token t = new CommonToken(input, state.type, state.channel, CharIndex - 2, CharIndex - 1);
-                                t.setText(t.getText());
-                                t.setLine(input.Line);
-                                t.setCharPositionInLine(input.CharPositionInLine - 2);
+                                t.                                Text = t.Text;
+                                t.                                Line = input.Line;
+                                t.                                CharPositionInLine = input.CharPositionInLine - 2;
                                 GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.Substring(CharIndex - 2, CharIndex - 1));
                             }
                         }
@@ -3002,8 +3002,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         }
                         String bad = input.Substring(badRange.a, badRange.b);
                         Token t = new CommonToken(input, state.type, state.channel, badRange.a, badRange.b);
-                        t.setLine(input.Line);
-                        t.setCharPositionInLine(input.CharPositionInLine - hCount - 2);
+                        t.                        Line = input.Line;
+                        t.                        CharPositionInLine = input.CharPositionInLine - hCount - 2;
                         GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, bad);
                     }
                 }
@@ -3075,9 +3075,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if (numDigits > 6)
                     {
                         Token t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
-                        t.setText(t.getText());
-                        t.setLine(input.Line);
-                        t.setCharPositionInLine(input.CharPositionInLine - numDigits);
+                        t.                        Text = t.Text;
+                        t.                        Line = input.Line;
+                        t.                        CharPositionInLine = input.CharPositionInLine - numDigits;
                         GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, input.Substring(state.tokenStartCharIndex, CharIndex - 1));
                     }
                 }
@@ -3283,9 +3283,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 if (state.backtracking == 0)
                 {
                     Token t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
-                    t.setLine(state.tokenStartLine);
-                    t.setText(state.text);
-                    t.setCharPositionInLine(state.tokenStartCharPositionInLine);
+                    t.                    Line = state.tokenStartLine;
+                    t.                    Text = state.text;
+                    t.                    CharPositionInLine = state.tokenStartCharPositionInLine;
                     String msg = GetTokenErrorDisplay(t) + " came as a complete surprise to me";
                     GrammarError(ErrorType.SYNTAX_ERROR, t, msg);
                     state.syntaxErrors++;
@@ -3873,7 +3873,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 0:
                     int LA2_25 = input.LA(1);
 
-                    int index2_25 = input.Index();
+                    int index2_25 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
@@ -3885,7 +3885,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 1:
                     int LA2_24 = input.LA(1);
 
-                    int index2_24 = input.Index();
+                    int index2_24 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
@@ -3897,7 +3897,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 2:
                     int LA2_13 = input.LA(1);
 
-                    int index2_13 = input.Index();
+                    int index2_13 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_13 == '\\')) { s = 14; }
@@ -3912,7 +3912,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 3:
                     int LA2_18 = input.LA(1);
 
-                    int index2_18 = input.Index();
+                    int index2_18 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_18 == '\"')) { s = 16; }
@@ -3928,7 +3928,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 4:
                     int LA2_14 = input.LA(1);
 
-                    int index2_14 = input.Index();
+                    int index2_14 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_14 == '\"')) { s = 18; }
@@ -3943,7 +3943,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 5:
                     int LA2_15 = input.LA(1);
 
-                    int index2_15 = input.Index();
+                    int index2_15 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_15 == '\"')) { s = 16; }
@@ -3958,7 +3958,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 6:
                     int LA2_23 = input.LA(1);
 
-                    int index2_23 = input.Index();
+                    int index2_23 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_23 == '\"')) { s = 16; }
@@ -3975,7 +3975,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 7:
                     int LA2_19 = input.LA(1);
 
-                    int index2_19 = input.Index();
+                    int index2_19 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_19 == '\"')) { s = 18; }
@@ -3990,7 +3990,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 8:
                     int LA2_20 = input.LA(1);
 
-                    int index2_20 = input.Index();
+                    int index2_20 = input.Index;
                     input.Rewind();
                     s = -1;
                     if ((LA2_20 == '\"')) { s = 16; }
@@ -4273,7 +4273,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 case 1:
                     int LA32_2 = input.LA(1);
 
-                    int index32_2 = input.Index();
+                    int index32_2 = input.Index;
                     input.Rewind();
                     s = -1;
                     if (((LA32_2 >= '\u0000' && LA32_2 <= '\t') || (LA32_2 >= '\u000B' && LA32_2 <= '\f') || (LA32_2 >= '\u000E' && LA32_2 <= '\uFFFF')) && (((!lexer.isLexerRule) || (lexer.isLexerRule)))) { s = 40; }

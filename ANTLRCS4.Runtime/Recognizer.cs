@@ -12,175 +12,176 @@ namespace org.antlr.v4.runtime;
 
 public interface Recognizer
 {
-    String[] getTokenNames();
-
-    String[] getRuleNames();
-	bool precpred(RuleContext localctx, int precedence);
-	bool sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
-	int getState();
-    ATN getATN();
-
-
+    string[] GetTokenNames();
+    string[] GetRuleNames();
+    bool Precpred(RuleContext localctx, int precedence);
+    bool Sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
+    int GetState();
+    ATN GetATN();
 }
 public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNInterpreter : ATNSimulator
 {
-	public static readonly int EOF=-1;
+    public static readonly int EOF = -1;
 
-	private static readonly Dictionary<Vocabulary, Dictionary<String, int>> tokenTypeMapCache =
-		new ();
-	private static readonly Dictionary<String[], Dictionary<String, int>> ruleIndexMapCache =
-		new ();
+    private static readonly Dictionary<Vocabulary, Dictionary<string, int>> tokenTypeMapCache =
+        new();
+    private static readonly Dictionary<string[], Dictionary<string, int>> ruleIndexMapCache =
+        new();
 
 
-	private List<ANTLRErrorListener> _listeners = new List<ANTLRErrorListener>() { ConsoleErrorListener.INSTANCE };
-		//new CopyOnWriteArrayList<ANTLRErrorListener>() {{
-		//	add(ConsoleErrorListener.INSTANCE);
-		//}};
+    private List<ANTLRErrorListener> _listeners = new() { ConsoleErrorListener.INSTANCE };
+    //new CopyOnWriteArrayList<ANTLRErrorListener>() {{
+    //	add(ConsoleErrorListener.INSTANCE);
+    //}};
 
-	protected ATNInterpreter _interp;
+    protected ATNInterpreter _interp;
 
-	private int _stateNumber = -1;
+    private int _stateNumber = -1;
 
-	/** Used to print out token names like ID during debugging and
+    /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
 	 *  that overrides this to point to their String[] tokenNames.
 	 *
 	 * @deprecated Use {@link #getVocabulary()} instead.
 	 */
-	//@Deprecated
-	public abstract String[] getTokenNames();
+    //@Deprecated
+    public abstract string[] GetTokenNames();
 
-	public abstract String[] getRuleNames();
+    public abstract string[] GetRuleNames();
 
-	/**
+    /**
 	 * Get the vocabulary used by the recognizer.
 	 *
 	 * @return A {@link Vocabulary} instance providing information about the
 	 * vocabulary used by the grammar.
 	 */
-	//@SuppressWarnings("deprecation")
-	public Vocabulary getVocabulary() {
-		return VocabularyImpl.fromTokenNames(getTokenNames());
-	}
+    //@SuppressWarnings("deprecation")
+    public virtual Vocabulary GetVocabulary() => VocabularyImpl.fromTokenNames(GetTokenNames());
 
-	/**
+    /**
 	 * Get a map from token names to token types.
 	 *
 	 * <p>Used for XPath and tree pattern compilation.</p>
 	 */
-	public Dictionary<String, int> getTokenTypeMap() {
-		Vocabulary vocabulary = getVocabulary();
-		lock (tokenTypeMapCache) {
-			if (!tokenTypeMapCache.TryGetValue(vocabulary,out var result)) {
-				result = new ();
-				for (int i = 0; i <= getATN().maxTokenType; i++) {
-					String literalName = vocabulary.getLiteralName(i);
-					if (literalName != null) {
-						result[literalName] = i;
-					}
+    public Dictionary<string, int> GetTokenTypeMap()
+    {
+        var vocabulary = GetVocabulary();
+        lock (tokenTypeMapCache)
+        {
+            if (!tokenTypeMapCache.TryGetValue(vocabulary, out var result))
+            {
+                result = new();
+                for (int i = 0; i <= GetATN().maxTokenType; i++)
+                {
+                    var literalName = vocabulary.GetLiteralName(i);
+                    if (literalName != null)
+                    {
+                        result[literalName] = i;
+                    }
 
-					String symbolicName = vocabulary.getSymbolicName(i);
-					if (symbolicName != null) {
-						result[symbolicName]= i;
-					}
-				}
+                    var symbolicName = vocabulary.GetSymbolicName(i);
+                    if (symbolicName != null)
+                    {
+                        result[symbolicName] = i;
+                    }
+                }
 
-				result["EOF"]= Token.EOF;
+                result["EOF"] = Token.EOF;
+                result = new(result);
+                tokenTypeMapCache[vocabulary] = result;
+            }
 
-				result = new (result);
-				tokenTypeMapCache[vocabulary]= result;
-			}
+            return result;
+        }
+    }
 
-			return result;
-		}
-	}
-
-	/**
+    /**
 	 * Get a map from rule names to rule indexes.
 	 *
 	 * <p>Used for XPath and tree pattern compilation.</p>
 	 */
-	public Dictionary<String, int> getRuleIndexMap() {
-		String[] ruleNames = getRuleNames();
-		if (ruleNames == null) {
-			throw new UnsupportedOperationException("The current recognizer does not provide a list of rule names.");
-		}
+    public Dictionary<string, int> GetRuleIndexMap()
+    {
+        var ruleNames = GetRuleNames();
+        if (ruleNames == null)
+        {
+            throw new UnsupportedOperationException("The current recognizer does not provide a list of rule names.");
+        }
 
-		lock (ruleIndexMapCache) {
-			if (!ruleIndexMapCache.TryGetValue(ruleNames,out var result)) {
-				result = RuntimeUtils.ToMap(ruleNames);
+        lock (ruleIndexMapCache)
+        {
+            if (!ruleIndexMapCache.TryGetValue(ruleNames, out var result))
+            {
+                result = RuntimeUtils.ToMap(ruleNames);
 
-				ruleIndexMapCache.Add(ruleNames, result);
-			}
+                ruleIndexMapCache.Add(ruleNames, result);
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
-	public int getTokenType(String tokenName) {
-		if (getTokenTypeMap().TryGetValue(tokenName,out var ttype)) return ttype;
-		return Token.INVALID_TYPE;
-	}
+    public int GetTokenType(string tokenName)
+    {
+        if (GetTokenTypeMap().TryGetValue(tokenName, out var ttype)) return ttype;
+        return Token.INVALID_TYPE;
+    }
 
-	/**
+    /**
 	 * If this recognizer was generated, it will have a serialized ATN
 	 * representation of the grammar.
 	 *
 	 * <p>For interpreters, we don't know their serialized ATN despite having
 	 * created the interpreter from it.</p>
 	 */
-	public String getSerializedATN() {
-		throw new UnsupportedOperationException("there is no serialized ATN");
-	}
+    public string GetSerializedATN()
+    {
+        throw new UnsupportedOperationException("there is no serialized ATN");
+    }
 
-	/** For debugging and other purposes, might want the grammar name.
+    /** For debugging and other purposes, might want the grammar name.
 	 *  Have ANTLR generate an implementation for this method.
 	 */
-	public abstract String getGrammarFileName();
+    public abstract string GetGrammarFileName();
 
-	/**
+    /**
 	 * Get the {@link ATN} used by the recognizer for prediction.
 	 *
 	 * @return The {@link ATN} used by the recognizer for prediction.
 	 */
-	public abstract ATN getATN();
+    public abstract ATN GetATN();
 
-	/**
+    /**
 	 * Get the ATN interpreter used by the recognizer for prediction.
 	 *
 	 * @return The ATN interpreter used by the recognizer for prediction.
 	 */
-	public ATNInterpreter getInterpreter() {
-		return _interp;
-	}
+    public ATNInterpreter GetInterpreter() => _interp;
 
-	/** If profiling during the parse/lex, this will return DecisionInfo records
+    /** If profiling during the parse/lex, this will return DecisionInfo records
 	 *  for each decision in recognizer in a ParseInfo object.
 	 *
 	 * @since 4.3
 	 */
-	public ParseInfo getParseInfo() {
-		return null;
-	}
+    public ParseInfo GetParseInfo() => null;
 
-	/**
+    /**
 	 * Set the ATN interpreter used by the recognizer for prediction.
 	 *
 	 * @param interpreter The ATN interpreter used by the recognizer for
 	 * prediction.
 	 */
-	public void setInterpreter(ATNInterpreter interpreter) {
-		_interp = interpreter;
-	}
+    public void SetInterpreter(ATNInterpreter interpreter) => _interp = interpreter;
 
-	/** What is the error header, normally line/character position information? */
-	public String getErrorHeader(RecognitionException e) {
-		int line = e.getOffendingToken().getLine();
-		int charPositionInLine = e.getOffendingToken().getCharPositionInLine();
-		return "line "+line+":"+charPositionInLine;
-	}
+    /** What is the error header, normally line/character position information? */
+    public string GetErrorHeader(RecognitionException e)
+    {
+        int line = e.getOffendingToken().Line;
+        int charPositionInLine = e.getOffendingToken().CharPositionInLine;
+        return "line " + line + ":" + charPositionInLine;
+    }
 
-	/** How should a token be displayed in an error message? The default
+    /** How should a token be displayed in an error message? The default
 	 *  is to display just the text, but during development you might
 	 *  want to have a lot of information spit out.  Override in that case
 	 *  to use t.toString() (which, for CommonToken, dumps everything about
@@ -193,85 +194,79 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 * feature when necessary. For example, see
 	 * {@link DefaultErrorStrategy#getTokenErrorDisplay}.
 	 */
-	//@Deprecated
-	public String getTokenErrorDisplay(Token t) {
-		if ( t==null ) return "<no token>";
-		String s = t.getText();
-		if ( s==null ) {
-			if ( t.getType()==Token.EOF ) {
-				s = "<EOF>";
-			}
-			else {
-				s = "<"+t.getType()+">";
-			}
-		}
-		s = s.Replace("\n","\\n");
-		s = s.Replace("\r","\\r");
-		s = s.Replace("\t","\\t");
-		return "'"+s+"'";
-	}
+    //@Deprecated
+    public string GetTokenErrorDisplay(Token t)
+    {
+        if (t == null) return "<no token>";
+        var s = t.Text;
+        s ??= t.Type == Token.EOF ? "<EOF>" : "<" + t.Type + ">";
+        s = s.Replace("\n", "\\n");
+        s = s.Replace("\r", "\\r");
+        s = s.Replace("\t", "\\t");
+        return "'" + s + "'";
+    }
 
-	/**
+    /**
 	 * @exception NullReferenceException if {@code listener} is {@code null}.
 	 */
-	public void addErrorListener(ANTLRErrorListener listener) {
-		if (listener == null) {
-			throw new NullReferenceException("listener cannot be null.");
-		}
+    public void AddErrorListener(ANTLRErrorListener listener)
+    {
+        if (listener == null)
+        {
+            throw new NullReferenceException("listener cannot be null.");
+        }
 
-		_listeners.Add(listener);
-	}
+        _listeners.Add(listener);
+    }
 
-	public void removeErrorListener(ANTLRErrorListener listener) {
-		_listeners.Remove(listener);
-	}
+    public void RemoveErrorListener(ANTLRErrorListener listener)
+    {
+        _listeners.Remove(listener);
+    }
 
-	public void removeErrorListeners() {
-		_listeners.Clear();
-	}
+    public void RemoveErrorListeners()
+    {
+        _listeners.Clear();
+    }
 
 
-	public List<ANTLRErrorListener> getErrorListeners() {
-		return _listeners;
-	}
+    public List<ANTLRErrorListener> GetErrorListeners()
+    {
+        return _listeners;
+    }
 
-	public ANTLRErrorListener getErrorListenerDispatch() {
-		return new ProxyErrorListener(getErrorListeners());
-	}
+    public ANTLRErrorListener GetErrorListenerDispatch()
+    {
+        return new ProxyErrorListener(GetErrorListeners());
+    }
 
-	// subclass needs to override these if there are sempreds or actions
-	// that the ATN interp needs to execute
-	public bool sempred(RuleContext _localctx, int ruleIndex, int actionIndex) {
-		return true;
-	}
+    // subclass needs to override these if there are sempreds or actions
+    // that the ATN interp needs to execute
+    public bool Sempred(RuleContext _localctx, int ruleIndex, int actionIndex) => true;
 
-	public bool precpred(RuleContext localctx, int precedence) {
-		return true;
-	}
+    public bool Precpred(RuleContext localctx, int precedence) => true;
 
-	public void action(RuleContext _localctx, int ruleIndex, int actionIndex) {
-	}
+    public void Action(RuleContext _localctx, int ruleIndex, int actionIndex) { }
 
-	public int getState() {
-		return _stateNumber;
-	}
+    public int GetState() => _stateNumber;
 
-	/** Indicate that the recognizer has changed internal state that is
+    /** Indicate that the recognizer has changed internal state that is
 	 *  consistent with the ATN state passed in.  This way we always know
 	 *  where we are in the ATN as the parser goes along. The rule
 	 *  context objects form a stack that lets us see the stack of
 	 *  invoking rules. Combine this and we have complete ATN
 	 *  configuration information.
 	 */
-	public void setState(int atnState) {
-//		Console.Error.WriteLine("setState "+atnState);
-		_stateNumber = atnState;
-//		if ( traceATNStates ) _ctx.trace(atnState);
-	}
+    public void SetState(int atnState)
+    {
+        //		Console.Error.WriteLine("setState "+atnState);
+        _stateNumber = atnState;
+        //		if ( traceATNStates ) _ctx.trace(atnState);
+    }
 
     public abstract IntStream InputStream { get; }
 
-    public abstract void setInputStream(IntStream input);
+    public abstract void SetInputStream(IntStream input);
 
 
     public abstract TokenFactory TokenFactory { get; set; }

@@ -83,12 +83,12 @@ public class TokenVocabParser
         catch (FileNotFoundException fnfe)
         {
             var inTree = g.ast.getOptionAST("tokenVocab");
-            var inTreeValue = inTree.getToken().getText();
+            var inTreeValue = inTree.Token.Text;
             if (vocabName.Equals(inTreeValue))
             {
                 tool.ErrMgr.GrammarError(ErrorType.CANNOT_FIND_TOKENS_FILE_REFD_IN_GRAMMAR,
                                          g.fileName,
-                                         inTree.getToken(),
+                                         inTree.                                         Token,
                                          fullFile);
             }
             else

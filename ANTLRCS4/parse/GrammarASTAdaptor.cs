@@ -43,7 +43,7 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
         {
             t = (GrammarAST)base.create(tokenType, text);
         }
-        t.token.setInputStream(input);
+        t.token.        InputStream = input;
         return t;
     }
 

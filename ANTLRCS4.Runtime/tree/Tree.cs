@@ -4,54 +4,53 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.runtime.tree;
-
 namespace org.antlr.v4.runtime.tree;
 
 /** The basic notion of a tree has a parent, a payload, and a list of children.
  *  It is the most abstract interface for all the trees used by ANTLR.
  */
-public interface Tree {
-	/** The parent of this node. If the return value is null, then this
+public interface Tree
+{
+    /** The parent of this node. If the return value is null, then this
 	 *  node is the root of the tree.
 	 */
-	Tree getParent();
-	int getType();
-	/**
-	 * This method returns whatever object represents the data at this node. For
-	 * example, for parse trees, the payload can be a {@link Token} representing
-	 * a leaf node or a {@link RuleContext} object representing a rule
-	 * invocation. For abstract syntax trees (ASTs), this is a {@link Token}
-	 * object.
-	 */
-	Object getPayload();
+    Tree Parent { get; set; }
 
-	/** If there are children, get the {@code i}th value indexed from 0. */
-	Tree getChild(int i);
+    int Type { get; }
 
-	/** How many children are there? If there is none, then this
+    /**
+* This method returns whatever object represents the data at this node. For
+* example, for parse trees, the payload can be a {@link Token} representing
+* a leaf node or a {@link RuleContext} object representing a rule
+* invocation. For abstract syntax trees (ASTs), this is a {@link Token}
+* object.
+*/
+    object Payload { get; }
+
+    /** If there are children, get the {@code i}th value indexed from 0. */
+    Tree GetChild(int i);
+
+    /** How many children are there? If there is none, then this
 	 *  node represents a leaf node.
 	 */
-	int getChildCount();
+    int ChildCount { get; }
 
-	/** Print out a whole tree, not just a node, in LISP format
+    /** Print out a whole tree, not just a node, in LISP format
 	 *  {@code (root child1 .. childN)}. Print just a node if this is a leaf.
 	 */
-	String toStringTree();
-    string getText();
-    void setParent(Tree baseTree);
-    void setChildIndex(int i);
-    void setTokenStartIndex(int start);
-    void setTokenStopIndex(int stop);
-    int getTokenStartIndex();
-    int getTokenStopIndex();
-    void replaceChildren(int startChildIndex, int stopChildIndex, object t);
-    object dupNode();
-    object deleteChild(int i);
-    int getChildIndex();
-    bool isNil();
-    void addChild(Tree child);
-    void setChild(int i, Tree child);
-    int getLine();
-    int getCharPositionInLine();
+    string ToStringTree();
+    string Text { get; }
+    int TokenStartIndex { get; set; }
+    int TokenStopIndex { get; set; }
+    void ReplaceChildren(int startChildIndex, int stopChildIndex, object t);
+    object DupNode();
+    object DeleteChild(int i);
+    int ChildIndex { get; set; }
+
+    bool IsNil { get; }
+
+    void AddChild(Tree child);
+    void SetChild(int i, Tree child);
+    int Line { get; }
+    int CharPositionInLine { get; }
 }

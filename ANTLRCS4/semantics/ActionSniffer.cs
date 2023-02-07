@@ -39,9 +39,9 @@ public class ActionSniffer : BlankActionSplitterListener
     public void ExamineAction()
     {
         //Console.Out.WriteLine("examine "+actionToken);
-        var @in = new ANTLRStringStream(actionToken.getText());
-        @in.setLine(actionToken.getLine());
-        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+        var @in = new ANTLRStringStream(actionToken.Text);
+        @in.SetLine(actionToken.Line);
+        @in.SetCharPositionInLine(actionToken.CharPositionInLine);
         var splitter = new ActionSplitter(@in, this);
         // forces eval, triggers listener methods
         node.chunks = splitter.GetActionTokens();
@@ -49,9 +49,9 @@ public class ActionSniffer : BlankActionSplitterListener
 
     public void ProcessNested(Token actionToken)
     {
-        var @in = new ANTLRStringStream(actionToken.getText());
-        @in.setLine(actionToken.getLine());
-        @in.setCharPositionInLine(actionToken.getCharPositionInLine());
+        var @in = new ANTLRStringStream(actionToken.Text);
+        @in.SetLine(actionToken.Line);
+        @in.SetCharPositionInLine(actionToken.CharPositionInLine);
         var splitter = new ActionSplitter(@in, this);
         // forces eval, triggers listener methods
         splitter.GetActionTokens();
@@ -79,15 +79,15 @@ public class ActionSniffer : BlankActionSplitterListener
 
     public virtual void TrackRef(Token x)
     {
-        var xRefs = alt.tokenRefs[x.getText()];
+        var xRefs = alt.tokenRefs[x.Text];
         if (xRefs != null)
         {
-            alt.tokenRefsInActions.Map(x.getText(), node);
+            alt.tokenRefsInActions.Map(x.Text, node);
         }
-        var rRefs = alt.ruleRefs[x.getText()];
+        var rRefs = alt.ruleRefs[x.Text];
         if (rRefs != null)
         {
-            alt.ruleRefsInActions.Map(x.getText(), node);
+            alt.ruleRefsInActions.Map(x.Text, node);
         }
     }
 }

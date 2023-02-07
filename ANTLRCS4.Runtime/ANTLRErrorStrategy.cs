@@ -23,14 +23,15 @@ using org.antlr.v4.runtime;
  *
  * <p>TODO: what to do about lexers</p>
  */
-public interface ANTLRErrorStrategy {
-	/**
+public interface ANTLRErrorStrategy
+{
+    /**
 	 * Reset the error handler state for the specified {@code recognizer}.
 	 * @param recognizer the parser instance
 	 */
-	void reset(Parser recognizer);
+    void Reset(Parser recognizer);
 
-	/**
+    /**
 	 * This method is called when an unexpected symbol is encountered during an
 	 * inline match operation, such as {@link Parser#match}. If the error
 	 * strategy successfully recovers from the match failure, this method
@@ -48,9 +49,9 @@ public interface ANTLRErrorStrategy {
 	 * @throws RecognitionException if the error strategy was not able to
 	 * recover from the unexpected input symbol
 	 */
-	Token recoverInline(Parser recognizer) ;
+    Token RecoverInline(Parser recognizer);
 
-	/**
+    /**
 	 * This method is called to recover from exception {@code e}. This method is
 	 * called after {@link #reportError} by the default exception handler
 	 * generated for a rule method.
@@ -62,9 +63,9 @@ public interface ANTLRErrorStrategy {
 	 * @throws RecognitionException if the error strategy could not recover from
 	 * the recognition exception
 	 */
-	void recover(Parser recognizer, RecognitionException e) ;
+    void Recover(Parser recognizer, RecognitionException e);
 
-	/**
+    /**
 	 * This method provides the error handler with an opportunity to handle
 	 * syntactic or semantic errors in the input stream before they result in a
 	 * {@link RecognitionException}.
@@ -83,9 +84,9 @@ public interface ANTLRErrorStrategy {
 	 * strategy but cannot be automatically recovered at the current state in
 	 * the parsing process
 	 */
-	void sync(Parser recognizer);
+    void Sync(Parser recognizer);
 
-	/**
+    /**
 	 * Tests whether or not {@code recognizer} is in the process of recovering
 	 * from an error. In error recovery mode, {@link Parser#consume} adds
 	 * symbols to the parse tree by calling
@@ -97,22 +98,22 @@ public interface ANTLRErrorStrategy {
 	 * @return {@code true} if the parser is currently recovering from a parse
 	 * error, otherwise {@code false}
 	 */
-	bool inErrorRecoveryMode(Parser recognizer);
+    bool InErrorRecoveryMode(Parser recognizer);
 
-	/**
+    /**
 	 * This method is called by when the parser successfully matches an input
 	 * symbol.
 	 *
 	 * @param recognizer the parser instance
 	 */
-	void reportMatch(Parser recognizer);
+    void ReportMatch(Parser recognizer);
 
-	/**
+    /**
 	 * Report any kind of {@link RecognitionException}. This method is called by
 	 * the default exception handler generated for a rule method.
 	 *
 	 * @param recognizer the parser instance
 	 * @param e the recognition exception to report
 	 */
-	void reportError(Parser recognizer, RecognitionException e);
+    void ReportError(Parser recognizer, RecognitionException e);
 }

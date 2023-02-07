@@ -25,8 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.runtime.tree;
-using org.antlr.runtime;
 using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.tree;
 
@@ -47,8 +45,8 @@ public class CommonErrorNode : CommonTree
     {
         //System.out.println("start: "+start+", stop: "+stop);
         if (stop == null ||
-             (stop.getTokenIndex() < start.getTokenIndex() &&
-              stop.getType() != Token.EOF))
+             (stop.TokenIndex < start.TokenIndex &&
+              stop.              Type != Token.EOF))
         {
             // sometimes resync does not consume a token (when LT(1) is
             // in follow set.  So, stop will be 1 to left to start. adjust.
@@ -63,45 +61,44 @@ public class CommonErrorNode : CommonTree
     }
 
     //@Override
-    public bool isNil()
-    {
-        return false;
-    }
+    public bool IsNil => false;
 
     //@Override
-    public int getType()
-    {
-        return Token.INVALID_TOKEN_TYPE;
-    }
+    public int Type => Token.INVALID_TOKEN_TYPE;
 
     //@Override
-    public String getText()
+    public string Text
     {
-        String badText;
-        if (start is Token ) {
-            int i = start.getTokenIndex();
-            int j = stop.getTokenIndex();
-            if (stop.getType() == Token.EOF)
-            {
-                j = ((TokenStream)input).Count;
-            }
-            badText = ((TokenStream)input).toString(i, j);
-        }
-
-        else if (start is Tree ) {
-            badText = ((TreeNodeStream)input).toString(start, stop);
-        }
-        else
+        get
         {
-            // people should subclass if they alter the tree type so this
-            // next one is for sure correct.
-            badText = "<unknown>";
+            String badText;
+            if (start is Token)
+            {
+                int i = start.TokenIndex;
+                int j = stop.TokenIndex;
+                if (stop.Type == Token.EOF)
+                {
+                    j = ((TokenStream)input).Count;
+                }
+                badText = ((TokenStream)input).ToString(i, j);
+            }
+
+            else if (start is Tree)
+            {
+                badText = ((TreeNodeStream)input).toString(start, stop);
+            }
+            else
+            {
+                // people should subclass if they alter the tree type so this
+                // next one is for sure correct.
+                badText = "<unknown>";
+            }
+            return badText;
         }
-        return badText;
     }
 
     //@Override
-    public String ToString()
+    public override string ToString()
     {
         if (trappedException is MissingTokenException ) {
             return "<missing type: " +
@@ -112,17 +109,17 @@ public class CommonErrorNode : CommonTree
         else if (trappedException is UnwantedTokenException ) {
             return "<extraneous: " +
                    ((UnwantedTokenException)trappedException).getUnexpectedToken() +
-                   ", resync=" + getText() + ">";
+                   ", resync=" + Text + ">";
         }
 
         else if (trappedException is MismatchedTokenException ) {
-            return "<mismatched token: " + trappedException.token + ", resync=" + getText() + ">";
+            return "<mismatched token: " + trappedException.token + ", resync=" + Text + ">";
         }
 
         else if (trappedException is NoViableAltException ) {
             return "<unexpected: " + trappedException.token +
-                   ", resync=" + getText() + ">";
+                   ", resync=" + Text + ">";
         }
-        return "<error: " + getText() + ">";
+        return "<error: " + Text + ">";
     }
 }
