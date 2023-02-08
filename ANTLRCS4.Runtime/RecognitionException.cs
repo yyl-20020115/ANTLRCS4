@@ -48,7 +48,7 @@ public class RecognitionException : RuntimeException
         this.ctx = ctx;
         if (recognizer != null) this.offendingState = recognizer.State;
     }
-    public RecognitionException(String message,
+    public RecognitionException(string message,
                                 Recognizer recognizer,
                                 IntStream input,
                                 ParserRuleContext ctx)

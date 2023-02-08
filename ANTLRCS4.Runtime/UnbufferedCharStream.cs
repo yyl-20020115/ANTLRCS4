@@ -93,7 +93,6 @@ public class UnbufferedCharStream : CharStream
 
     public UnbufferedCharStream(Stream input) : this(input, 256)
     {
-        ;
     }
 
     public UnbufferedCharStream(TextReader input) : this(input, 256) {; }
@@ -102,16 +101,14 @@ public class UnbufferedCharStream : CharStream
 
     public UnbufferedCharStream(Stream input, int bufferSize, Encoding charset) : this(bufferSize)
     {
-        ;
         this.input = new StreamReader(input, charset);
-        fill(1); // prime
+        Fill(1); // prime
     }
 
     public UnbufferedCharStream(TextReader input, int bufferSize) : this(bufferSize)
     {
-        ;
         this.input = input;
-        fill(1); // prime
+        Fill(1); // prime
     }
 
     //@Override
@@ -134,7 +131,7 @@ public class UnbufferedCharStream : CharStream
 
         p++;
         currentCharIndex++;
-        sync(1);
+        Sync(1);
     }
 
     /**
@@ -143,13 +140,10 @@ public class UnbufferedCharStream : CharStream
 	 * the char index 'need' elements ahead. If we need 1 element,
 	 * {@code (p+1-1)==p} must be less than {@code data.length}.
 	 */
-    protected void sync(int want)
+    protected virtual void Sync(int want)
     {
         int need = (p + want - 1) - n + 1; // how many more elements we need?
-        if (need > 0)
-        {
-            fill(need);
-        }
+        if (need > 0) Fill(need);
     }
 
     /**
@@ -157,7 +151,7 @@ public class UnbufferedCharStream : CharStream
 	 * actually added to the buffer. If the return value is less than {@code n},
 	 * then EOF was reached before {@code n} characters could be added.
 	 */
-    protected int fill(int n)
+    protected virtual int Fill(int n)
     {
         for (int i = 0; i < n; i++)
         {
@@ -241,7 +235,7 @@ public class UnbufferedCharStream : CharStream
     public int LA(int i)
     {
         if (i == -1) return lastChar; // special case
-        sync(i);
+        Sync(i);
         int index = p + i - 1;
         if (index < 0) throw new IndexOutOfRangeException();
         if (index >= n) return IntStream.EOF;
@@ -308,12 +302,12 @@ public class UnbufferedCharStream : CharStream
 
         if (index > currentCharIndex)
         {
-            sync(index - currentCharIndex);
-            index = Math.Min(index, getBufferStartIndex() + n - 1);
+            Sync(index - currentCharIndex);
+            index = Math.Min(index, GetBufferStartIndex() + n - 1);
         }
 
         // index == to bufferStartIndex should set p to 0
-        int i = index - getBufferStartIndex();
+        int i = index - GetBufferStartIndex();
         if (i < 0)
         {
             throw new ArgumentException("cannot seek to negative index " + index);
@@ -321,7 +315,7 @@ public class UnbufferedCharStream : CharStream
         else if (i >= n)
         {
             throw new UnsupportedOperationException("seek to index outside buffer: " +
-                    index + " not in " + getBufferStartIndex() + ".." + (getBufferStartIndex() + n));
+                    index + " not in " + GetBufferStartIndex() + ".." + (GetBufferStartIndex() + n));
         }
 
         p = i;
@@ -354,14 +348,14 @@ public class UnbufferedCharStream : CharStream
     }
 
     //@Override
-    public String GetText(Interval interval)
+    public string GetText(Interval interval)
     {
         if (interval.a < 0 || interval.b < interval.a - 1)
         {
             throw new ArgumentException("invalid interval");
         }
 
-        int bufferStartIndex = getBufferStartIndex();
+        int bufferStartIndex = GetBufferStartIndex();
         if (n > 0 && data[n - 1] == char.MaxValue)
         {
             if (interval.a + interval.Length > bufferStartIndex + n)
@@ -386,10 +380,7 @@ public class UnbufferedCharStream : CharStream
         return builder.ToString();
     }
 
-    protected int getBufferStartIndex()
-    {
-        return currentCharIndex - p;
-    }
+    protected int GetBufferStartIndex() => currentCharIndex - p;
 
     public int CharPositionInLine => throw new NotImplementedException();
 

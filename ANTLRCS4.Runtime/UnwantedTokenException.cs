@@ -29,12 +29,12 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.runtime;
 
-public class UnwantedTokenException :RecognitionException
+public class UnwantedTokenException : RecognitionException
 {
     internal int expecting;
 
-    public UnwantedTokenException(int ttype,IntStream input)
-        :base(null,input,null)
+    public UnwantedTokenException(int ttype, IntStream input)
+        : base(null, input, null)
     {
 
     }

@@ -70,7 +70,7 @@ public class RuntimeMetaData
 	 */
     public static readonly String VERSION = "4.11.1";
 
-	/**
+    /**
 	 * Gets the currently executing version of the ANTLR 4 runtime library.
 	 *
 	 * <p>
@@ -80,10 +80,7 @@ public class RuntimeMetaData
 	 * @return The currently executing version of the ANTLR 4 library
 	 */
 
-	public static String getRuntimeVersion()
-    {
-        return VERSION;
-    }
+    public static string GetRuntimeVersion() => VERSION;
 
     /**
 	 * This method provides the ability to detect mismatches between the version
@@ -143,9 +140,9 @@ public class RuntimeMetaData
 	 * compiled against. This should always be passed using a direct reference
 	 * to {@link #VERSION}.
 	 */
-    public static void checkVersion(String generatingToolVersion, String compileTimeVersion)
+    public static void CheckVersion(string generatingToolVersion, string compileTimeVersion)
     {
-        String runtimeVersion = VERSION;
+        string runtimeVersion = VERSION;
         bool runtimeConflictsWithGeneratingTool = false;
         bool runtimeConflictsWithCompileTimeTool = false;
 
@@ -153,12 +150,12 @@ public class RuntimeMetaData
         {
             runtimeConflictsWithGeneratingTool =
                 !runtimeVersion.Equals(generatingToolVersion) &&
-                !getMajorMinorVersion(runtimeVersion).Equals(getMajorMinorVersion(generatingToolVersion));
+                !GetMajorMinorVersion(runtimeVersion).Equals(GetMajorMinorVersion(generatingToolVersion));
         }
 
         runtimeConflictsWithCompileTimeTool =
             !runtimeVersion.Equals(compileTimeVersion) &&
-            !getMajorMinorVersion(runtimeVersion).Equals(getMajorMinorVersion(compileTimeVersion));
+            !GetMajorMinorVersion(runtimeVersion).Equals(GetMajorMinorVersion(compileTimeVersion));
 
         if (runtimeConflictsWithGeneratingTool)
         {
@@ -179,7 +176,7 @@ public class RuntimeMetaData
 	 * @return A string of the form <em>major</em>.<em>minor</em> containing
 	 * only the major and minor components of the version string.
 	 */
-    public static String getMajorMinorVersion(String version)
+    public static string GetMajorMinorVersion(string version)
     {
         int firstDot = version.IndexOf('.');
         int secondDot = firstDot >= 0 ? version.IndexOf('.', firstDot + 1) : -1;
@@ -195,6 +192,6 @@ public class RuntimeMetaData
             referenceLength = Math.Min(referenceLength, firstDash);
         }
 
-        return version.Substring(0, referenceLength);
+        return version[..referenceLength];
     }
 }

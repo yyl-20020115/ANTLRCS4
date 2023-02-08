@@ -31,7 +31,7 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "0");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "0abc";
         Assert.AreEqual(expecting, result);
     }
@@ -49,8 +49,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertAfter(2, "x");
-        var result = tokens.getText();
+        tokens.InsertAfter(2, "x");
+        var result = tokens.GetText();
         var expecting = "abcx";
         Assert.AreEqual(expecting, result);
     }
@@ -69,8 +69,8 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
-        tokens.insertAfter(1, "x");
-        var result = tokens.getText();
+        tokens.InsertAfter(1, "x");
+        var result = tokens.GetText();
         var expecting = "axbxc";
         Assert.AreEqual(expecting, result);
     }
@@ -88,8 +88,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(0, "x");
-        var result = tokens.getText();
+        tokens.Replace(0, "x");
+        var result = tokens.GetText();
         var expecting = "xbc";
         Assert.AreEqual(expecting, result);
     }
@@ -107,8 +107,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, "x");
-        var result = tokens.getText();
+        tokens.Replace(2, "x");
+        var result = tokens.GetText();
         var expecting = "abx";
         Assert.AreEqual(expecting, result);
     }
@@ -126,8 +126,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, "x");
-        var result = tokens.getText();
+        tokens.Replace(1, "x");
+        var result = tokens.GetText();
         var expecting = "axc";
         Assert.AreEqual(expecting, result);
     }
@@ -150,23 +150,23 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(4, 8, "0");
+        tokens.Replace(4, 8, "0");
         stream.Fill();
         // replace 3 * 0 with 0
 
-        var result = tokens.getTokenStream().Text;
+        var result = tokens.GetTokenStream().Text;
         var expecting = "x = 3 * 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText();
+        result = tokens.GetText();
         expecting = "x = 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(0, 9));
+        result = tokens.GetText(Interval.Of(0, 9));
         expecting = "x = 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(4, 8));
+        result = tokens.GetText(Interval.Of(4, 8));
         expecting = "0";
         Assert.AreEqual(expecting, result);
     }
@@ -191,39 +191,39 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
 
-        var result = tokens.getTokenStream().Text;
+        var result = tokens.GetTokenStream().Text;
         var expecting = "x = 3 * 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
-        tokens.replace(4, 8, "0");
+        tokens.Replace(4, 8, "0");
         stream.Fill();
         // replace 3 * 0 with 0
-        result = tokens.getText();
+        result = tokens.GetText();
         expecting = "x = 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(0, 17));
+        result = tokens.GetText(Interval.Of(0, 17));
         expecting = "x = 0 + 2 * 0;";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(4, 8));
+        result = tokens.GetText(Interval.Of(4, 8));
         expecting = "0";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(0, 8));
+        result = tokens.GetText(Interval.Of(0, 8));
         expecting = "x = 0";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(12, 16));
+        result = tokens.GetText(Interval.Of(12, 16));
         expecting = "2 * 0";
         Assert.AreEqual(expecting, result);
 
-        tokens.insertAfter(17, "// comment");
-        result = tokens.getText(Interval.Of(12, 18));
+        tokens.InsertAfter(17, "// comment");
+        result = tokens.GetText(Interval.Of(12, 18));
         expecting = "2 * 0;// comment";
         Assert.AreEqual(expecting, result);
 
-        result = tokens.getText(Interval.Of(0, 8));
+        result = tokens.GetText(Interval.Of(0, 8));
         stream.Fill();
         // try again after insert at end
         expecting = "x = 0";
@@ -244,9 +244,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, "x");
-        tokens.replace(1, "y");
-        var result = tokens.getText();
+        tokens.Replace(1, "x");
+        tokens.Replace(1, "y");
+        var result = tokens.GetText();
         var expecting = "ayc";
         Assert.AreEqual(expecting, result);
     }
@@ -265,9 +265,9 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "_");
-        tokens.replace(1, "x");
-        tokens.replace(1, "y");
-        var result = tokens.getText();
+        tokens.Replace(1, "x");
+        tokens.Replace(1, "y");
+        var result = tokens.GetText();
         var expecting = "_ayc";
         Assert.AreEqual(expecting, result);
     }
@@ -285,9 +285,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, "x");
-        tokens.delete(1);
-        var result = tokens.getText();
+        tokens.Replace(1, "x");
+        tokens.Delete(1);
+        var result = tokens.GetText();
         var expecting = "ac";
         Assert.AreEqual(expecting, result);
     }
@@ -305,12 +305,12 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(0, 2, "x");
+        tokens.Replace(0, 2, "x");
         tokens.insertBefore(1, "0");
         Exception exc = null;
         try
         {
-            tokens.getText();
+            tokens.GetText();
         }
         catch (ArgumentException iae)
         {
@@ -335,10 +335,10 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "0");
-        tokens.replace(0, "x");
+        tokens.Replace(0, "x");
         stream.Fill();
         // supercedes insert at 0
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "0xbc";
         Assert.AreEqual(expecting, result);
     }
@@ -358,7 +358,7 @@ public class TestTokenStreamRewriter
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
         tokens.insertBefore(1, "y");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "ayxbc";
         Assert.AreEqual(expecting, result);
     }
@@ -378,8 +378,8 @@ public class TestTokenStreamRewriter
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
-        tokens.replace(0, "z");
-        var result = tokens.getText();
+        tokens.Replace(0, "z");
+        var result = tokens.GetText();
         var expecting = "yxzbc";
         Assert.AreEqual(expecting, result);
     }
@@ -397,9 +397,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, "x");
+        tokens.Replace(2, "x");
         tokens.insertBefore(2, "y");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "abyx";
         Assert.AreEqual(expecting, result);
     }
@@ -418,8 +418,8 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
-        tokens.replace(2, "x");
-        var result = tokens.getText();
+        tokens.Replace(2, "x");
+        var result = tokens.GetText();
         var expecting = "abyx";
         Assert.AreEqual(expecting, result);
     }
@@ -437,9 +437,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, "x");
-        tokens.insertAfter(2, "y");
-        var result = tokens.getText();
+        tokens.Replace(2, "x");
+        tokens.InsertAfter(2, "y");
+        var result = tokens.GetText();
         var expecting = "abxy";
         Assert.AreEqual(expecting, result);
     }
@@ -457,9 +457,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "x");
+        tokens.Replace(2, 4, "x");
         tokens.insertBefore(2, "y");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "abyxba";
         Assert.AreEqual(expecting, result);
     }
@@ -477,13 +477,13 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "x");
+        tokens.Replace(2, 4, "x");
         tokens.insertBefore(4, "y");
         stream.Fill(); // no effect; within range of a replace
         Exception exc = null;
         try
         {
-            tokens.getText();
+            tokens.GetText();
         }
         catch (ArgumentException iae)
         {
@@ -507,9 +507,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "x");
-        tokens.insertAfter(4, "y");
-        var result = tokens.getText();
+        tokens.Replace(2, 4, "x");
+        tokens.InsertAfter(4, "y");
+        var result = tokens.GetText();
         var expecting = "abxyba";
         Assert.AreEqual(expecting, result);
     }
@@ -527,8 +527,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(0, 6, "x");
-        var result = tokens.getText();
+        tokens.Replace(0, 6, "x");
+        var result = tokens.GetText();
         var expecting = "x";
         Assert.AreEqual(expecting, result);
     }
@@ -546,8 +546,8 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "xyz");
-        var result = tokens.getText(Interval.Of(0, 6));
+        tokens.Replace(2, 4, "xyz");
+        var result = tokens.GetText(Interval.Of(0, 6));
         var expecting = "abxyzba";
         Assert.AreEqual(expecting, result);
     }
@@ -565,14 +565,14 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "xyz");
-        tokens.replace(3, 5, "foo");
+        tokens.Replace(2, 4, "xyz");
+        tokens.Replace(3, 5, "foo");
         stream.Fill();
         // overlaps, error
         Exception exc = null;
         try
         {
-            tokens.getText();
+            tokens.GetText();
         }
         catch (ArgumentException iae)
         {
@@ -596,14 +596,14 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 4, "xyz");
-        tokens.replace(1, 3, "foo");
+        tokens.Replace(2, 4, "xyz");
+        tokens.Replace(1, 3, "foo");
         stream.Fill();
         // overlap, error
         Exception exc = null;
         try
         {
-            tokens.getText();
+            tokens.GetText();
         }
         catch (ArgumentException iae)
         {
@@ -627,9 +627,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 2, "xyz");
-        tokens.replace(0, 3, "foo");
-        var result = tokens.getText();
+        tokens.Replace(2, 2, "xyz");
+        tokens.Replace(0, 3, "foo");
+        var result = tokens.GetText();
         var expecting = "fooa";
         Assert.AreEqual(expecting, result);
     }
@@ -649,7 +649,7 @@ public class TestTokenStreamRewriter
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "x");
         tokens.insertBefore(0, "y");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "yxabc";
         Assert.AreEqual(expecting, result);
     }
@@ -670,7 +670,7 @@ public class TestTokenStreamRewriter
         tokens.insertBefore(1, "x");
         tokens.insertBefore(0, "y");
         tokens.insertBefore(1, "z");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "yazxbc";
         Assert.AreEqual(expecting, result);
     }
@@ -688,11 +688,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(0, 2, "foo");
+        tokens.Replace(0, 2, "foo");
         tokens.insertBefore(0, "z");
         stream.Fill();
         // combine with left edge of rewrite
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "zfoo";
         Assert.AreEqual(expecting, result);
     }
@@ -710,11 +710,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.delete(0, 2);
+        tokens.Delete(0, 2);
         tokens.insertBefore(0, "z");
         stream.Fill();
         // combine with left edge of rewrite
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "z";
         stream.Fill();
         // make sure combo is not znull
@@ -737,7 +737,7 @@ public class TestTokenStreamRewriter
         tokens.insertBefore(1, "x");
         tokens.insertBefore(2, "y");
         tokens.insertBefore(0, "z");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "zaxbyc";
         Assert.AreEqual(expecting, result);
     }
@@ -755,11 +755,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, 2, "foo");
-        tokens.replace(0, 3, "bar");
+        tokens.Replace(1, 2, "foo");
+        tokens.Replace(0, 3, "bar");
         stream.Fill();
         // wipes prior nested replace
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "bar";
         Assert.AreEqual(expecting, result);
     }
@@ -777,14 +777,14 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(0, 3, "bar");
-        tokens.replace(1, 2, "foo");
+        tokens.Replace(0, 3, "bar");
+        tokens.Replace(1, 2, "foo");
         stream.Fill();
         // cannot split earlier replace
         Exception exc = null;
         try
         {
-            tokens.getText();
+            tokens.GetText();
         }
         catch (ArgumentException iae)
         {
@@ -808,11 +808,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, 2, "foo");
-        tokens.replace(0, 2, "bar");
+        tokens.Replace(1, 2, "foo");
+        tokens.Replace(0, 2, "bar");
         stream.Fill();
         // wipes prior nested replace
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "barc";
         Assert.AreEqual(expecting, result);
     }
@@ -830,11 +830,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, 2, "foo");
-        tokens.replace(1, 3, "bar");
+        tokens.Replace(1, 2, "foo");
+        tokens.Replace(1, 3, "bar");
         stream.Fill();
         // wipes prior nested replace
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "abar";
         Assert.AreEqual(expecting, result);
     }
@@ -852,11 +852,11 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(1, 2, "foo");
-        tokens.replace(1, 2, "foo");
+        tokens.Replace(1, 2, "foo");
+        tokens.Replace(1, 2, "foo");
         stream.Fill();
         // drop previous, identical
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "afooc";
         Assert.AreEqual(expecting, result);
     }
@@ -875,10 +875,10 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "foo");
-        tokens.replace(1, 2, "foo");
+        tokens.Replace(1, 2, "foo");
         stream.Fill();
         // kill prev insert
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "afoofoo";
         Assert.AreEqual(expecting, result);
     }
@@ -897,8 +897,8 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(1, "x");
-        tokens.replace(2, 3, "foo");
-        var result = tokens.getText();
+        tokens.Replace(2, 3, "foo");
+        var result = tokens.GetText();
         var expecting = "axbfoo";
         Assert.AreEqual(expecting, result);
     }
@@ -916,9 +916,9 @@ public class TestTokenStreamRewriter
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.replace(2, 3, "foo");
+        tokens.Replace(2, 3, "foo");
         tokens.insertBefore(1, "x");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "axbfoo";
         Assert.AreEqual(expecting, result);
     }
@@ -937,8 +937,8 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(2, "y");
-        tokens.delete(2);
-        var result = tokens.getText();
+        tokens.Delete(2);
+        var result = tokens.GetText();
         var expecting = "aby";
         Assert.AreEqual(expecting, result);
     }
@@ -958,10 +958,10 @@ public class TestTokenStreamRewriter
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<b>");
-        tokens.insertAfter(0, "</b>");
+        tokens.InsertAfter(0, "</b>");
         tokens.insertBefore(1, "<b>");
-        tokens.insertAfter(1, "</b>");
-        var result = tokens.getText();
+        tokens.InsertAfter(1, "</b>");
+        var result = tokens.GetText();
         var expecting = "<b>a</b><b>a</b>"; // fails with <b>a<b></b>a</b>"
         Assert.AreEqual(expecting, result);
     }
@@ -981,11 +981,11 @@ public class TestTokenStreamRewriter
         var tokens = new TokenStreamRewriter(stream);
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");
-        tokens.insertAfter(0, "</p>");
-        tokens.insertAfter(0, "</b>");
+        tokens.InsertAfter(0, "</p>");
+        tokens.InsertAfter(0, "</b>");
         tokens.insertBefore(1, "<b>");
-        tokens.insertAfter(1, "</b>");
-        var result = tokens.getText();
+        tokens.InsertAfter(1, "</b>");
+        var result = tokens.GetText();
         var expecting = "<b><p>a</p></b><b>a</b>";
         Assert.AreEqual(expecting, result);
     }
@@ -1007,11 +1007,11 @@ public class TestTokenStreamRewriter
         tokens.insertBefore(0, "<p>");
         tokens.insertBefore(0, "<b>");
         tokens.insertBefore(0, "<div>");
-        tokens.insertAfter(0, "</p>");
-        tokens.insertAfter(0, "</b>");
-        tokens.insertAfter(0, "</div>");
+        tokens.InsertAfter(0, "</p>");
+        tokens.InsertAfter(0, "</b>");
+        tokens.InsertAfter(0, "</div>");
         tokens.insertBefore(1, "!");
-        var result = tokens.getText();
+        var result = tokens.GetText();
         var expecting = "<div><b><p>a</p></b></div>!b";
         Assert.AreEqual(expecting, result);
     }

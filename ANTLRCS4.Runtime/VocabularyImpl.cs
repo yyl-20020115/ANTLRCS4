@@ -25,7 +25,7 @@ public class VocabularyImpl : Vocabulary
 	 * {@link #getDisplayName(int)} returns the numeric value for all tokens
 	 * except {@link Token#EOF}.</p>
 	 */
-    public static readonly VocabularyImpl EMPTY_VOCABULARY = new (EMPTY_NAMES, EMPTY_NAMES, EMPTY_NAMES);
+    public static readonly VocabularyImpl EMPTY_VOCABULARY = new(EMPTY_NAMES, EMPTY_NAMES, EMPTY_NAMES);
 
 
     private readonly string[] literalNames;
@@ -135,7 +135,7 @@ public class VocabularyImpl : Vocabulary
     }
 
     //@Override
-    public virtual int GetMaxTokenType() => maxTokenType;
+    public virtual int MaxTokenType => maxTokenType;
 
     //@Override
     public virtual string GetLiteralName(int tokenType) => tokenType >= 0 && tokenType < literalNames.Length ? literalNames[tokenType] : null;
@@ -147,7 +147,7 @@ public class VocabularyImpl : Vocabulary
     }
 
     //@Override
-    public String GetDisplayName(int tokenType)
+    public string GetDisplayName(int tokenType)
     {
         if (tokenType >= 0 && tokenType < displayNames.Length)
         {

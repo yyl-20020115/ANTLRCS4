@@ -19,7 +19,7 @@ public class DFASerializer
     /**
 	 * @deprecated Use {@link #DFASerializer(DFA, Vocabulary)} instead.
 	 */
-    public DFASerializer(DFA dfa, String[] tokenNames) 
+    public DFASerializer(DFA dfa, string[] tokenNames) 
         : this(dfa, VocabularyImpl.FromTokenNames(tokenNames))
     {
     }
@@ -57,11 +57,7 @@ public class DFASerializer
         return output;
     }
 
-    protected virtual string GetEdgeLabel(int i)
-    {
-        return vocabulary.GetDisplayName(i - 1);
-    }
-
+    protected virtual string GetEdgeLabel(int i) => vocabulary.GetDisplayName(i - 1);
 
     protected virtual string GetStateString(DFAState s)
     {

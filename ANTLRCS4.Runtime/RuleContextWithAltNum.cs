@@ -22,12 +22,14 @@ namespace org.antlr.v4.runtime;
 public class RuleContextWithAltNum : ParserRuleContext
 {
 	public int altNum;
-	public RuleContextWithAltNum() { altNum = ATN.INVALID_ALT_NUMBER; }
+    public RuleContextWithAltNum() => altNum = ATN.INVALID_ALT_NUMBER;
 
-	public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber) : base(parent, invokingStateNumber)
+    public RuleContextWithAltNum(ParserRuleContext parent, int invokingStateNumber) : base(parent, invokingStateNumber)
 	{
-		;
 	}
-    public override int AltNumber { get => altNum;
-        set => this.altNum = value; }
+    public override int AltNumber 
+    { 
+        get => altNum;
+        set => this.altNum = value; 
+    }
 }

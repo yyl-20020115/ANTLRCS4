@@ -71,11 +71,11 @@ public class TreeRewriter : TreeParser
             BacktrackingLevel = 0;
             if (Failed) return t;
             if (showTransformations &&
-                 r != null && !t.Equals(r.getTree()) && r.getTree() != null)
+                 r != null && !t.Equals(r.Tree) && r.Tree != null)
             {
-                reportTransformation(t, r.getTree());
+                reportTransformation(t, r.Tree);
             }
-            if (r != null && r.getTree() != null) return r.getTree();
+            if (r != null && r.Tree != null) return r.Tree;
             else return t;
         }
         catch (RecognitionException e) {; }

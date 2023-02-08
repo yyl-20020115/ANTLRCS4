@@ -637,7 +637,7 @@ public class Tool {
 			ToolANTLRParser p = new ToolANTLRParser(tokens, this);
 			p.			TreeAdaptor = adaptor;
 			ParserRuleReturnScope r = p.GrammarSpec();
-			GrammarAST root = (GrammarAST) r.getTree();
+			GrammarAST root = (GrammarAST) r.Tree;
 			if (root is GrammarRootAST) {
 				((GrammarRootAST) root).hasErrors = lexer.GetNumberOfSyntaxErrors() > 0 || p.GetNumberOfSyntaxErrors() > 0;
 				//assert ((GrammarRootAST) root).tokenStream == tokens;

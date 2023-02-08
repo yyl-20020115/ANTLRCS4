@@ -85,7 +85,7 @@ public abstract class Target
             {
                 var version = GetVersion();
                 if (version == null ||
-                        !RuntimeMetaData.getMajorMinorVersion(version).Equals(RuntimeMetaData.getMajorMinorVersion(Tool.VERSION)))
+                        !RuntimeMetaData.GetMajorMinorVersion(version).Equals(RuntimeMetaData.GetMajorMinorVersion(Tool.VERSION)))
                 {
                     gen.tool.ErrMgr.toolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
                 }

@@ -196,7 +196,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             {
                 // we must have conjured up a new token during single token insertion
                 // if it's not the current symbol
-                _ctx.addErrorNode(CreateErrorNode(_ctx, t));
+                _ctx.AddErrorNode(CreateErrorNode(_ctx, t));
             }
         }
         return t;
@@ -239,7 +239,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             {
                 // we must have conjured up a new token during single token insertion
                 // if it's not the current symbol
-                _ctx.addErrorNode(CreateErrorNode(_ctx, t));
+                _ctx.AddErrorNode(CreateErrorNode(_ctx, t));
             }
         }
         return t;
@@ -278,7 +278,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             {
                 // we must have conjured up a new token during single token insertion
                 // if it's not the current symbol
-                _ctx.addErrorNode(CreateErrorNode(_ctx, t));
+                _ctx.AddErrorNode(CreateErrorNode(_ctx, t));
             }
         }
 
@@ -612,7 +612,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         {
             if (_errHandler.InErrorRecoveryMode(this))
             {
-                var node = _ctx.addErrorNode(CreateErrorNode(_ctx, o));
+                var node = _ctx.AddErrorNode(CreateErrorNode(_ctx, o));
                 if (_parseListeners != null)
                 {
                     foreach (var listener in _parseListeners)

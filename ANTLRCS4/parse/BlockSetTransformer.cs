@@ -371,7 +371,7 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.failed) return retval;
                         if (state.backtracking == 1)
 
-                            if (_first_0 == null) _first_0 = (GrammarAST)setAlt3.getTree();
+                            if (_first_0 == null) _first_0 = (GrammarAST)setAlt3.Tree;
 
                         if (state.backtracking == 1)
                         {
@@ -392,7 +392,7 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.failed) return retval;
                         if (state.backtracking == 1)
 
-                            if (_first_0 == null) _first_0 = (GrammarAST)ebnfBlockSet4.getTree();
+                            if (_first_0 == null) _first_0 = (GrammarAST)ebnfBlockSet4.Tree;
 
                         if (state.backtracking == 1)
                         {
@@ -413,7 +413,7 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.failed) return retval;
                         if (state.backtracking == 1)
 
-                            if (_first_0 == null) _first_0 = (GrammarAST)blockSet5.getTree();
+                            if (_first_0 == null) _first_0 = (GrammarAST)blockSet5.Tree;
 
                         if (state.backtracking == 1)
                         {
@@ -550,16 +550,16 @@ public class BlockSetTransformer : TreeRewriter
                     ebnfSuffix7 = ebnfSuffix();
                     state._fsp--;
                     if (state.failed) return retval;
-                    if (state.backtracking == 1) stream_ebnfSuffix.add(ebnfSuffix7.getTree());
+                    if (state.backtracking == 1) stream_ebnfSuffix.add(ebnfSuffix7.Tree);
                     if (state.backtracking == 1)
-                        if (_first_0 == null) _first_0 = (GrammarAST)ebnfSuffix7.getTree();
+                        if (_first_0 == null) _first_0 = (GrammarAST)ebnfSuffix7.Tree;
                     Match(input, Token.DOWN, null); if (state.failed) return retval;
                     _last = (GrammarAST)input.LT(1);
                     PushFollow(FOLLOW_blockSet_in_ebnfBlockSet163);
                     blockSet8 = blockSet();
                     state._fsp--;
                     if (state.failed) return retval;
-                    if (state.backtracking == 1) stream_blockSet.add(blockSet8.getTree());
+                    if (state.backtracking == 1) stream_blockSet.add(blockSet8.Tree);
                     Match(input, Token.UP, null); if (state.failed) return retval;
                     _last = _save_last_1;
                 }
@@ -813,7 +813,7 @@ public class BlockSetTransformer : TreeRewriter
                                             elementOptions11 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
-                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions11.getTree());
+                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions11.Tree);
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
@@ -836,7 +836,7 @@ public class BlockSetTransformer : TreeRewriter
                                 setElement12 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
-                                if (state.backtracking == 1) stream_setElement.add(setElement12.getTree());
+                                if (state.backtracking == 1) stream_setElement.add(setElement12.Tree);
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
@@ -888,7 +888,7 @@ public class BlockSetTransformer : TreeRewriter
                                                             elementOptions14 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
-                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions14.getTree());
+                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions14.Tree);
                                                             if (state.backtracking == 1)
                                                             {
                                                                 retval.tree = _first_0;
@@ -906,7 +906,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 setElement15 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
-                                                if (state.backtracking == 1) stream_setElement.add(setElement15.getTree());
+                                                if (state.backtracking == 1) stream_setElement.add(setElement15.Tree);
                                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
@@ -1044,7 +1044,7 @@ public class BlockSetTransformer : TreeRewriter
                                             elementOptions18 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
-                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions18.getTree());
+                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions18.Tree);
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
@@ -1062,7 +1062,7 @@ public class BlockSetTransformer : TreeRewriter
                                 setElement19 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
-                                if (state.backtracking == 1) stream_setElement.add(setElement19.getTree());
+                                if (state.backtracking == 1) stream_setElement.add(setElement19.Tree);
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
@@ -1114,7 +1114,7 @@ public class BlockSetTransformer : TreeRewriter
                                                             elementOptions21 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
-                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions21.getTree());
+                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions21.Tree);
                                                             if (state.backtracking == 1)
                                                             {
                                                                 retval.tree = _first_0;
@@ -1132,7 +1132,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 setElement22 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
-                                                if (state.backtracking == 1) stream_setElement.add(setElement22.getTree());
+                                                if (state.backtracking == 1) stream_setElement.add(setElement22.Tree);
                                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
@@ -1342,7 +1342,7 @@ public class BlockSetTransformer : TreeRewriter
                                 if (state.failed) return retval;
                                 if (state.backtracking == 1)
 
-                                    if (_first_1 == null) _first_1 = (GrammarAST)elementOptions23.getTree();
+                                    if (_first_1 == null) _first_1 = (GrammarAST)elementOptions23.Tree;
 
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_1;
@@ -1411,7 +1411,7 @@ public class BlockSetTransformer : TreeRewriter
                                 if (state.failed) return retval;
                                 if (state.backtracking == 1)
 
-                                    if (_first_1 == null) _first_1 = (GrammarAST)elementOptions25.getTree();
+                                    if (_first_1 == null) _first_1 = (GrammarAST)elementOptions25.Tree;
 
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_1;
@@ -1598,7 +1598,7 @@ public class BlockSetTransformer : TreeRewriter
                                         if (state.failed) return retval;
                                         if (state.backtracking == 1)
 
-                                            if (_first_1 == null) _first_1 = (GrammarAST)elementOption29.getTree();
+                                            if (_first_1 == null) _first_1 = (GrammarAST)elementOption29.Tree;
 
                                         if (state.backtracking == 1)
                                         {

@@ -19,7 +19,7 @@ public interface Vocabulary
 	 * zero to that number, inclusively, thus querying all stored entries.
 	 * @return the highest token type value
 	 */
-    int GetMaxTokenType();
+    int MaxTokenType { get; }
 
     /**
 	 * Gets the string literal associated with a token type. The string returned

@@ -31,13 +31,13 @@ namespace org.antlr.runtime;
 public class RuleReturnScope
 {
     /** Return the start token or tree */
-    public virtual Object getStart() { return null; }
+    public virtual object Start => null;
     /** Return the stop token or tree */
-    public virtual Object getStop() { return null; }
+    public virtual object Stop => null;
     /** Has a value potentially if output=AST; */
-    public virtual Object getTree() { return null; }
+    public virtual object Tree => null;
     /** Has a value potentially if output=template; Don't use StringTemplate
 	 *  type as it then causes a dependency with ST lib.
 	 */
-    public virtual Object getTemplate() { return null; }
+    public virtual object Template => null;
 }

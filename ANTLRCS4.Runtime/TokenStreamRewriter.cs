@@ -86,9 +86,9 @@ namespace org.antlr.v4.runtime;
  */
 public class TokenStreamRewriter
 {
-    public static readonly String DEFAULT_PROGRAM_NAME = "default";
-    public static readonly int PROGRAM_INIT_SIZE = 100;
-    public static readonly int MIN_TOKEN_INDEX = 0;
+    public const string DEFAULT_PROGRAM_NAME = "default";
+    public const int PROGRAM_INIT_SIZE = 100;
+    public const int MIN_TOKEN_INDEX = 0;
 
     // Define the rewrite operation hierarchy
 
@@ -116,17 +116,14 @@ public class TokenStreamRewriter
         /** Execute the rewrite operation by possibly adding to the buffer.
 		 *  Return the index of the next token to operate on.
 		 */
-        public int Execute(StringBuilder buf)
-        {
-            return index;
-        }
+        public virtual int Execute(StringBuilder buffer) => index;
 
         //@Override
         public override string ToString()
         {
-            String opName = this.GetType().Name;
-            int index = opName.IndexOf('$');
-            opName = opName.Substring(index + 1, opName.Length - (index + 1));
+            var opName = this.GetType().Name;
+            var index = opName.IndexOf('$');
+            opName = opName[(index + 1)..];
             return "<" + opName + "@" + this.writer.tokens.Get(index) +
                     ":\"" + text + "\">";
         }
@@ -136,16 +133,15 @@ public class TokenStreamRewriter
     {
         public InsertBeforeOp(TokenStreamRewriter writer, int index, Object text) : base(writer, index, text)
         {
-            ;
         }
 
         //@Override
-        public int execute(StringBuilder buf)
+        public override int Execute(StringBuilder buffer)
         {
-            buf.Append(text);
+            buffer.Append(text);
             if (writer.tokens.Get(index).Type != Token.EOF)
             {
-                buf.Append(writer.tokens.Get(index).Text);
+                buffer.Append(writer.tokens.Get(index).Text);
             }
             return index + 1;
         }
@@ -169,12 +165,9 @@ public class TokenStreamRewriter
     public class ReplaceOp : RewriteOperation
     {
         public int lastIndex;
-        public ReplaceOp(TokenStreamRewriter writer, int from, int to, Object text) : base(writer, from, text)
-        {
-            lastIndex = to;
-        }
+        public ReplaceOp(TokenStreamRewriter writer, int from, int to, Object text) : base(writer, from, text) => lastIndex = to;
         //@Override
-        public int execute(StringBuilder buf)
+        public override int Execute(StringBuilder buf)
         {
             if (text != null)
             {
@@ -183,14 +176,12 @@ public class TokenStreamRewriter
             return lastIndex + 1;
         }
         //@Override
-        public override String ToString()
+        public override string ToString()
         {
-            if (text == null)
-            {
-                return "<DeleteOp@" + writer.tokens.Get(index) +
-                        ".." + writer.tokens.Get(lastIndex) + ">";
-            }
-            return "<ReplaceOp@" + writer.tokens.Get(index) +
+            return text == null
+                ? "<DeleteOp@" + writer.tokens.Get(index) +
+                        ".." + writer.tokens.Get(lastIndex) + ">"
+                : "<ReplaceOp@" + writer.tokens.Get(index) +
                     ".." + writer.tokens.Get(lastIndex) + ":\"" + text + "\">";
         }
     }
@@ -216,21 +207,18 @@ public class TokenStreamRewriter
         lastRewriteTokenIndexes = new();
     }
 
-    public TokenStream getTokenStream()
-    {
-        return tokens;
-    }
+    public TokenStream GetTokenStream() => tokens;
 
-    public void rollback(int instructionIndex)
+    public void Rollback(int instructionIndex)
     {
-        rollback(DEFAULT_PROGRAM_NAME, instructionIndex);
+        Rollback(DEFAULT_PROGRAM_NAME, instructionIndex);
     }
 
     /** Rollback the instruction stream for a program so that
 	 *  the indicated instruction (via instructionIndex) @is no
 	 *  longer in the stream. UNTESTED!
 	 */
-    public void rollback(String programName, int instructionIndex)
+    public void Rollback(string programName, int instructionIndex)
     {
         if (programs.TryGetValue(programName, out var list))
         {
@@ -238,140 +226,140 @@ public class TokenStreamRewriter
         }
     }
 
-    public void deleteProgram()
+    public void DeleteProgram()
     {
-        deleteProgram(DEFAULT_PROGRAM_NAME);
+        DeleteProgram(DEFAULT_PROGRAM_NAME);
     }
 
     /** Reset the program so that no instructions exist */
-    public void deleteProgram(String programName)
+    public void DeleteProgram(string programName)
     {
-        rollback(programName, MIN_TOKEN_INDEX);
+        Rollback(programName, MIN_TOKEN_INDEX);
     }
 
-    public void insertAfter(Token t, Object text)
+    public void InsertAfter(Token t, object text)
     {
         insertAfter(DEFAULT_PROGRAM_NAME, t, text);
     }
 
-    public void insertAfter(int index, Object text)
+    public void InsertAfter(int index, object text)
     {
-        insertAfter(DEFAULT_PROGRAM_NAME, index, text);
+        InsertAfter(DEFAULT_PROGRAM_NAME, index, text);
     }
 
     public void insertAfter(String programName, Token t, Object text)
     {
-        insertAfter(programName, t.TokenIndex, text);
+        InsertAfter(programName, t.TokenIndex, text);
     }
 
-    public void insertAfter(String programName, int index, Object text)
+    public void InsertAfter(String programName, int index, object text)
     {
         // to insert after, just insert before next index (even if past end)
-        RewriteOperation op = new InsertAfterOp(this, index, text);
-        List<RewriteOperation> rewrites = getProgram(programName);
+        var op = new InsertAfterOp(this, index, text);
+        var rewrites = getProgram(programName);
         op.instructionIndex = rewrites.Count;
         rewrites.Add(op);
     }
 
-    public void insertBefore(Token t, Object text)
+    public void InsertBefore(Token t, Object text)
     {
-        insertBefore(DEFAULT_PROGRAM_NAME, t, text);
+        InsertBefore(DEFAULT_PROGRAM_NAME, t, text);
     }
 
     public void insertBefore(int index, Object text)
     {
-        insertBefore(DEFAULT_PROGRAM_NAME, index, text);
+        InsertBefore(DEFAULT_PROGRAM_NAME, index, text);
     }
 
-    public void insertBefore(String programName, Token t, Object text)
+    public void InsertBefore(String programName, Token t, Object text)
     {
-        insertBefore(programName, t.TokenIndex, text);
+        InsertBefore(programName, t.TokenIndex, text);
     }
 
-    public void insertBefore(String programName, int index, Object text)
+    public void InsertBefore(String programName, int index, Object text)
     {
-        RewriteOperation op = new InsertBeforeOp(this, index, text);
-        List<RewriteOperation> rewrites = getProgram(programName);
+        var op = new InsertBeforeOp(this, index, text);
+        var rewrites = getProgram(programName);
         op.instructionIndex = rewrites.Count;
         rewrites.Add(op);
     }
 
-    public void replace(int index, Object text)
+    public void Replace(int index, Object text)
     {
-        replace(DEFAULT_PROGRAM_NAME, index, index, text);
+        Replace(DEFAULT_PROGRAM_NAME, index, index, text);
     }
 
-    public void replace(int from, int to, Object text)
+    public void Replace(int from, int to, Object text)
     {
-        replace(DEFAULT_PROGRAM_NAME, from, to, text);
+        Replace(DEFAULT_PROGRAM_NAME, from, to, text);
     }
 
-    public void replace(Token indexT, Object text)
+    public void Replace(Token indexT, Object text)
     {
-        replace(DEFAULT_PROGRAM_NAME, indexT, indexT, text);
+        Replace(DEFAULT_PROGRAM_NAME, indexT, indexT, text);
     }
 
-    public void replace(Token from, Token to, Object text)
+    public void Replace(Token from, Token to, Object text)
     {
-        replace(DEFAULT_PROGRAM_NAME, from, to, text);
+        Replace(DEFAULT_PROGRAM_NAME, from, to, text);
     }
 
-    public void replace(String programName, int from, int to, Object text)
+    public void Replace(string programName, int from, int to, Object text)
     {
         if (from > to || from < 0 || to < 0 || to >= tokens.Count)
         {
             throw new ArgumentException("replace: range invalid: " + from + ".." + to + "(size=" + tokens.Count + ")");
         }
-        RewriteOperation op = new ReplaceOp(this, from, to, text);
-        List<RewriteOperation> rewrites = getProgram(programName);
+        var op = new ReplaceOp(this, from, to, text);
+        var rewrites = getProgram(programName);
         op.instructionIndex = rewrites.Count;
         rewrites.Add(op);
     }
 
-    public void replace(String programName, Token from, Token to, Object text)
+    public void Replace(string programName, Token from, Token to, Object text)
     {
-        replace(programName,
+        Replace(programName,
                 from.TokenIndex,
                 to.TokenIndex,
                 text);
     }
 
-    public void delete(int index)
+    public void Delete(int index)
     {
-        delete(DEFAULT_PROGRAM_NAME, index, index);
+        Delete(DEFAULT_PROGRAM_NAME, index, index);
     }
 
-    public void delete(int from, int to)
+    public void Delete(int from, int to)
     {
-        delete(DEFAULT_PROGRAM_NAME, from, to);
+        Delete(DEFAULT_PROGRAM_NAME, from, to);
     }
 
-    public void delete(Token indexT)
+    public void Delete(Token indexT)
     {
-        delete(DEFAULT_PROGRAM_NAME, indexT, indexT);
+        Delete(DEFAULT_PROGRAM_NAME, indexT, indexT);
     }
 
-    public void delete(Token from, Token to)
+    public void Delete(Token from, Token to)
     {
-        delete(DEFAULT_PROGRAM_NAME, from, to);
+        Delete(DEFAULT_PROGRAM_NAME, from, to);
     }
 
-    public void delete(String programName, int from, int to)
+    public void Delete(string programName, int from, int to)
     {
-        replace(programName, from, to, null);
+        Replace(programName, from, to, null);
     }
 
-    public void delete(String programName, Token from, Token to)
+    public void Delete(String programName, Token from, Token to)
     {
-        replace(programName, from, to, null);
+        Replace(programName, from, to, null);
     }
 
-    public int getLastRewriteTokenIndex()
+    public int GetLastRewriteTokenIndex()
     {
-        return getLastRewriteTokenIndex(DEFAULT_PROGRAM_NAME);
+        return GetLastRewriteTokenIndex(DEFAULT_PROGRAM_NAME);
     }
 
-    protected int getLastRewriteTokenIndex(String programName)
+    protected int GetLastRewriteTokenIndex(string programName)
     {
         if (!lastRewriteTokenIndexes.TryGetValue(programName, out var I))
         {
@@ -380,21 +368,21 @@ public class TokenStreamRewriter
         return I;
     }
 
-    protected void setLastRewriteTokenIndex(String programName, int i)
+    protected void setLastRewriteTokenIndex(string programName, int i)
     {
         lastRewriteTokenIndexes[programName] = i;
     }
 
-    protected List<RewriteOperation> getProgram(String name)
+    protected List<RewriteOperation> getProgram(string name)
     {
         if (!programs.TryGetValue(name, out var @is))
         {
-            @is = initializeProgram(name);
+            @is = InitializeProgram(name);
         }
         return @is;
     }
 
-    private List<RewriteOperation> initializeProgram(String name)
+    private List<RewriteOperation> InitializeProgram(String name)
     {
         List<RewriteOperation> @is = new(PROGRAM_INIT_SIZE);
         programs[name] = @is;
@@ -404,18 +392,12 @@ public class TokenStreamRewriter
     /** Return the text from the original tokens altered per the
 	 *  instructions given to this rewriter.
  	 */
-    public String getText()
-    {
-        return getText(DEFAULT_PROGRAM_NAME, Interval.Of(0, tokens.Count - 1));
-    }
+    public string GetText() => GetText(DEFAULT_PROGRAM_NAME, Interval.Of(0, tokens.Count - 1));
 
     /** Return the text from the original tokens altered per the
 	 *  instructions given to this rewriter in programName.
  	 */
-    public String getText(String programName)
-    {
-        return getText(programName, Interval.Of(0, tokens.Count - 1));
-    }
+    public string GetText(string programName) => GetText(programName, Interval.Of(0, tokens.Count - 1));
 
     /** Return the text associated with the tokens in the interval from the
 	 *  original token stream but with the alterations given to this rewriter.
@@ -426,14 +408,10 @@ public class TokenStreamRewriter
 	 *  insertBefore on the first token, you would get that insertion.
 	 *  The same @is true if you do an insertAfter the stop token.
  	 */
-    public String getText(Interval interval)
-    {
-        return getText(DEFAULT_PROGRAM_NAME, interval);
-    }
+    public string GetText(Interval interval) => GetText(DEFAULT_PROGRAM_NAME, interval);
 
-    public String getText(String programName, Interval interval)
+    public string GetText(string programName, Interval interval)
     {
-
         if (!programs.TryGetValue(programName, out var rewrites))
         {
             rewrites = new();
@@ -449,27 +427,27 @@ public class TokenStreamRewriter
         {
             return tokens.GetText(interval); // no instructions to execute
         }
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
 
         // First, optimize instruction stream
-        Dictionary<int, RewriteOperation> indexToOp = reduceToSingleOperationPerIndex(rewrites);
+        var indexToOp = ReduceToSingleOperationPerIndex(rewrites);
 
         // Walk buffer, executing instructions and emitting tokens
         int i = start;
         while (i <= stop && i < tokens.Count)
         {
-            RewriteOperation op = indexToOp[(i)];
+            var op = indexToOp[(i)];
             indexToOp.Remove(i); // remove so any left have index size-1
-            Token t = tokens.Get(i);
+            var t = tokens.Get(i);
             if (op == null)
             {
                 // no operation at that index, just dump token
-                if (t.Type != Token.EOF) buf.Append(t.Text);
+                if (t.Type != Token.EOF) buffer.Append(t.Text);
                 i++; // move to next token
             }
             else
             {
-                i = op.Execute(buf); // execute operation and skip
+                i = op.Execute(buffer); // execute operation and skip
             }
         }
 
@@ -480,12 +458,12 @@ public class TokenStreamRewriter
         {
             // Scan any remaining operations after last token
             // should be included (they will be inserts).
-            foreach (RewriteOperation op in indexToOp.Values)
+            foreach (var op in indexToOp.Values)
             {
-                if (op.index >= tokens.Count - 1) buf.Append(op.text);
+                if (op.index >= tokens.Count - 1) buffer.Append(op.text);
             }
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
     /** We need to combine operations and report invalid operations (like
@@ -537,20 +515,20 @@ public class TokenStreamRewriter
 	 *
 	 *  Return a map from token index to operation.
 	 */
-    protected Dictionary<int, RewriteOperation> reduceToSingleOperationPerIndex(List<RewriteOperation> rewrites)
+    protected Dictionary<int, RewriteOperation> ReduceToSingleOperationPerIndex(List<RewriteOperation> rewrites)
     {
         //		Console.WriteLine("rewrites="+rewrites);
 
         // WALK REPLACES
         for (int i = 0; i < rewrites.Count; i++)
         {
-            RewriteOperation op = rewrites[(i)];
+            var op = rewrites[(i)];
             if (op == null) continue;
-            if (!(op is ReplaceOp)) continue;
-            ReplaceOp rop = (ReplaceOp)rewrites[(i)];
+            if (op is not ReplaceOp rp) continue;
+            var rop = (ReplaceOp)rewrites[(i)];
             // Wipe prior inserts within range
-            var inserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
-            foreach (InsertBeforeOp iop in inserts)
+            var inserts = GetKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+            foreach (var iop in inserts)
             {
                 if (iop.index == rop.index)
                 {
@@ -566,7 +544,7 @@ public class TokenStreamRewriter
                 }
             }
             // Drop any prior replaces contained within
-            var prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+            var prevReplaces = GetKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
             foreach (ReplaceOp prevRop in prevReplaces)
             {
                 if (prevRop.index >= rop.index && prevRop.lastIndex <= rop.lastIndex)
@@ -598,38 +576,38 @@ public class TokenStreamRewriter
         // WALK INSERTS
         for (int i = 0; i < rewrites.Count; i++)
         {
-            RewriteOperation op = rewrites[(i)];
+            var op = rewrites[(i)];
             if (op == null) continue;
             if (!(op is InsertBeforeOp)) continue;
-            InsertBeforeOp iop = (InsertBeforeOp)rewrites[(i)];
+            var iop = (InsertBeforeOp)rewrites[(i)];
             // combine current insert with prior if any at same index
-            var prevInserts = getKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
-            foreach (InsertBeforeOp prevIop in prevInserts)
+            var prevInserts = GetKindOfOps<InsertBeforeOp>(rewrites, typeof(InsertBeforeOp), i);
+            foreach (var prevIop in prevInserts)
             {
                 if (prevIop.index == iop.index)
                 {
                     if (typeof(InsertAfterOp).IsInstanceOfType(prevIop))
                     {
-                        iop.text = catOpText(prevIop.text, iop.text);
+                        iop.text = CatOpText(prevIop.text, iop.text);
                         rewrites[prevIop.instructionIndex] = null;
                     }
                     else if (typeof(InsertBeforeOp).IsInstanceOfType(prevIop))
                     { // combine objects
                       // convert to strings...we're in process of toString'ing
                       // whole token buffer so no lazy eval issue with any templates
-                        iop.text = catOpText(iop.text, prevIop.text);
+                        iop.text = CatOpText(iop.text, prevIop.text);
                         // delete redundant prior insert
                         rewrites[prevIop.instructionIndex] = null;
                     }
                 }
             }
             // look for replaces where iop.index @is in range; error
-            var prevReplaces = getKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
-            foreach (ReplaceOp rop in prevReplaces)
+            var prevReplaces = GetKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
+            foreach (var rop in prevReplaces)
             {
                 if (iop.index == rop.index)
                 {
-                    rop.text = catOpText(iop.text, rop.text);
+                    rop.text = CatOpText(iop.text, rop.text);
                     rewrites[i] = null; // delete current insert
                     continue;
                 }
@@ -643,7 +621,7 @@ public class TokenStreamRewriter
         Dictionary<int, RewriteOperation> m = new();
         for (int i = 0; i < rewrites.Count; i++)
         {
-            RewriteOperation op = rewrites[(i)];
+            var op = rewrites[(i)];
             if (op == null) continue; // ignore deleted ops
             if (m.ContainsKey(op.index))
             {
@@ -655,27 +633,24 @@ public class TokenStreamRewriter
         return m;
     }
 
-    protected String catOpText(Object a, Object b)
+    protected static string CatOpText(object a, object b)
     {
-        String x = "";
-        String y = "";
+        var x = "";
+        string y = "";
         if (a != null) x = a.ToString();
         if (b != null) y = b.ToString();
         return x + y;
     }
 
     /** Get all operations before an index of a particular kind */
-    protected List<RewriteOperation> getKindOfOps<T>(List<RewriteOperation> rewrites, Type kind, int before) where T : RewriteOperation
+    protected static List<RewriteOperation> GetKindOfOps<T>(List<RewriteOperation> rewrites, Type kind, int before) where T : RewriteOperation
     {
         List<RewriteOperation> ops = new();
         for (int i = 0; i < before && i < rewrites.Count; i++)
         {
             var op = rewrites[(i)];
             if (op == null) continue; // ignore deleted
-            if (kind.IsInstanceOfType(op))
-            {
-                ops.Add(op);
-            }
+            if (kind.IsInstanceOfType(op)) ops.Add(op);
         }
         return ops;
     }

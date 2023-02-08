@@ -79,9 +79,9 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public Token Get(int i)
+    public virtual Token Get(int i)
     { // get absolute index
-        int bufferStartIndex = getBufferStartIndex();
+        int bufferStartIndex = GetBufferStartIndex();
         if (i < bufferStartIndex || i >= bufferStartIndex + n)
         {
             throw new IndexOutOfRangeException("get(" + i + ") outside buffer: " +
@@ -91,7 +91,7 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public Token LT(int i)
+    public virtual Token LT(int i)
     {
         if (i == -1)
         {
@@ -115,34 +115,28 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public int LA(int i)
+    public virtual int LA(int i)
     {
         return LT(i).Type;
     }
 
     //@Override
-    public TokenSource TokenSource => tokenSource;
+    public virtual TokenSource TokenSource => tokenSource;
 
 
     //@Override
-    public String Text => "";
+    public virtual string Text => "";
 
 
     //@Override
-    public String GetText(RuleContext ctx)
-    {
-        return GetText(ctx.SourceInterval);
-    }
+    public virtual string GetText(RuleContext ctx) => GetText(ctx.SourceInterval);
 
 
     //@Override
-    public String GetText(Token start, Token stop)
-    {
-        return GetText(Interval.Of(start.TokenIndex, stop.TokenIndex));
-    }
+    public string GetText(Token start, Token stop) => GetText(Interval.Of(start.TokenIndex, stop.TokenIndex));
 
     //@Override
-    public void Consume()
+    public virtual void Consume()
     {
         if (LA(1) == Token.EOF)
         {
@@ -169,7 +163,7 @@ public class UnbufferedTokenStream : TokenStream
 	 *  {@code p} index is {@code tokens.length-1}.  {@code p+need-1} is the tokens index 'need' elements
 	 *  ahead.  If we need 1 element, {@code (p+1-1)==p} must be less than {@code tokens.length}.
 	 */
-    protected void sync(int want)
+    public virtual void sync(int want)
     {
         int need = (p + want - 1) - n + 1; // how many more elements we need?
         if (need > 0)
@@ -183,7 +177,7 @@ public class UnbufferedTokenStream : TokenStream
 	 * actually added to the buffer. If the return value is less than {@code n},
 	 * then EOF was reached before {@code n} tokens could be added.
 	 */
-    protected int fill(int n)
+    public virtual int fill(int n)
     {
         for (int i = 0; i < n; i++)
         {
@@ -193,22 +187,22 @@ public class UnbufferedTokenStream : TokenStream
             }
 
             Token t = tokenSource.NextToken();
-            add(t);
+            Add(t);
         }
 
         return n;
     }
 
-    protected void add(Token t)
+    public virtual void Add(Token t)
     {
         if (n >= tokens.Length)
         {
             tokens = Arrays.CopyOf(tokens, tokens.Length * 2);
         }
 
-        if (t is WritableToken)
+        if (t is WritableToken token)
         {
-            ((WritableToken)t).TokenIndex = getBufferStartIndex() + n;
+            token.TokenIndex = GetBufferStartIndex() + n;
         }
 
         tokens[n++] = t;
@@ -222,7 +216,7 @@ public class UnbufferedTokenStream : TokenStream
 	 * {@code release()} is called in the wrong order.</p>
 	 */
     //@Override
-    public int Mark()
+    public virtual int Mark()
     {
         if (numMarkers == 0)
         {
@@ -235,7 +229,7 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public void Release(int marker)
+    public virtual void Release(int marker)
     {
         int expectedMark = -numMarkers;
         if (marker != expectedMark)
@@ -260,10 +254,10 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public int Index => currentTokenIndex;
+    public virtual int Index => currentTokenIndex;
 
     //@Override
-    public void Seek(int index)
+    public virtual void Seek(int index)
     { // seek to absolute index
         if (index == currentTokenIndex)
         {
@@ -273,10 +267,10 @@ public class UnbufferedTokenStream : TokenStream
         if (index > currentTokenIndex)
         {
             sync(index - currentTokenIndex);
-            index = Math.Min(index, getBufferStartIndex() + n - 1);
+            index = Math.Min(index, GetBufferStartIndex() + n - 1);
         }
 
-        int bufferStartIndex = getBufferStartIndex();
+        int bufferStartIndex = GetBufferStartIndex();
         int i = index - bufferStartIndex;
         if (i < 0)
         {
@@ -301,16 +295,16 @@ public class UnbufferedTokenStream : TokenStream
     }
 
     //@Override
-    public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
+    public virtual int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
     //@Override
-    public String SourceName => tokenSource.SourceName;
+    public virtual string SourceName => tokenSource.SourceName;
 
 
     //@Override
-    public String GetText(Interval interval)
+    public virtual string GetText(Interval interval)
     {
-        int bufferStartIndex = getBufferStartIndex();
+        int bufferStartIndex = GetBufferStartIndex();
         int bufferStopIndex = bufferStartIndex + tokens.Length - 1;
 
         int start = interval.a;
@@ -324,32 +318,32 @@ public class UnbufferedTokenStream : TokenStream
         int a = start - bufferStartIndex;
         int b = stop - bufferStartIndex;
 
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         for (int i = a; i <= b; i++)
         {
-            Token t = tokens[i];
-            buf.Append(t.Text);
+            vars t = tokens[i];
+            buffer.Append(t.Text);
         }
 
-        return buf.ToString();
+        return buffer.ToString();
     }
 
-    protected int getBufferStartIndex()
+    protected virtual int GetBufferStartIndex()
     {
         return currentTokenIndex - p;
     }
 
-    public int Range()
+    public virtual int Range()
     {
         throw new NotImplementedException();
     }
 
-    public string ToString(int start, int stop)
+    public virtual string ToString(int start, int stop)
     {
         throw new NotImplementedException();
     }
 
-    public string ToString(Token start, Token stop)
+    public virtual string ToString(Token start, Token stop)
     {
         throw new NotImplementedException();
     }

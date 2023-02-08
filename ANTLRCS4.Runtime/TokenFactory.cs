@@ -16,14 +16,15 @@ public interface TokenFactory
 {
 
 }
-public interface TokenFactory<Symbol>: TokenFactory where Symbol : Token {
+public interface TokenFactory<Symbol> : TokenFactory where Symbol : Token
+{
     /** This is the method used to create tokens in the lexer and in the
 	 *  error handling strategy. If text!=null, than the start and stop positions
 	 *  are wiped to -1 in the text override is set in the CommonToken.
 	 */
     Symbol Create(Pair<TokenSource, CharStream> source, int type, String text,
-				  int channel, int start, int stop,
-				  int line, int charPositionInLine);
+                  int channel, int start, int stop,
+                  int line, int charPositionInLine);
 
     /** Generically useful */
     Symbol Create(int type, String text);

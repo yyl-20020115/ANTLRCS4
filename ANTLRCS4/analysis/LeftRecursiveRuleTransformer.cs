@@ -187,7 +187,7 @@ public class LeftRecursiveRuleTransformer
         {
             var r = p.rule();
             var tree = (RuleAST)r.getTree();
-            ruleStart = (Token)r.getStart();
+            ruleStart = (Token)r.Start;
             GrammarTransformPipeline.setGrammarPtr(g, tree);
             GrammarTransformPipeline.augmentTokensWithOriginalPosition(g, tree);
             return tree;

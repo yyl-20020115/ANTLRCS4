@@ -144,7 +144,7 @@ public class ParserRuleContext : RuleContext
     /** Add a token leaf node child and force its parent to be this node. */
     public TerminalNode AddChild(TerminalNode t)
     {
-        t.        Parent1 = this;
+        (t as Tree).Parent = this;
         return AddAnyChild(t);
     }
 
@@ -152,9 +152,9 @@ public class ParserRuleContext : RuleContext
 	 *
 	 * @since 4.7
 	 */
-    public ErrorNode addErrorNode(ErrorNode errorNode)
+    public ErrorNode AddErrorNode(ErrorNode errorNode)
     {
-        errorNode.        Parent1 = this;
+        (errorNode as Tree).Parent = this;
         return AddAnyChild(errorNode);
     }
 
@@ -168,7 +168,7 @@ public class ParserRuleContext : RuleContext
     {
         var t = new TerminalNodeImpl(matchedToken);
         AddAnyChild(t);
-        t.        Parent1 = this;
+        (matchedToken as Tree).Parent = this;
         return t;
     }
 
@@ -182,7 +182,7 @@ public class ParserRuleContext : RuleContext
     {
         var t = new ErrorNodeImpl(badToken);
         AddAnyChild(t);
-        t.        Parent1 = this;
+        (t as Tree).Parent = this;
         return t;
     }
 

@@ -216,12 +216,12 @@ public class ANTLRParser : antlr.runtime.Parser
                 grammarType1 = GrammarType();
                 state._fsp--;
 
-                stream_grammarType.add(grammarType1.getTree());
+                stream_grammarType.add(grammarType1.Tree);
                 pushFollow(FOLLOW_id_in_grammarSpec283);
                 id2 = id();
                 state._fsp--;
 
-                stream_id.add(id2.getTree());
+                stream_id.add(id2.Tree);
                 SEMI3 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_grammarSpec285);
                 stream_SEMI.add(SEMI3);
 
@@ -229,7 +229,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync4 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync4.getTree());
+                stream_sync.add(sync4.Tree);
             // org\\antlr\\v4\\parse\\ANTLRParser.g:153:12: ( prequelConstruct sync )*
             loop1:
                 while (true)
@@ -250,12 +250,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 prequelConstruct5 = prequelConstruct();
                                 state._fsp--;
 
-                                stream_prequelConstruct.add(prequelConstruct5.getTree());
+                                stream_prequelConstruct.add(prequelConstruct5.Tree);
                                 pushFollow(FOLLOW_sync_in_grammarSpec329);
                                 sync6 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync6.getTree());
+                                stream_sync.add(sync6.Tree);
                             }
                             break;
 
@@ -269,7 +269,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 rules7 = rules();
                 state._fsp--;
 
-                stream_rules.add(rules7.getTree());
+                stream_rules.add(rules7.Tree);
             // org\\antlr\\v4\\parse\\ANTLRParser.g:161:4: ( modeSpec )*
             loop2:
                 while (true)
@@ -290,7 +290,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 modeSpec8 = modeSpec();
                                 state._fsp--;
 
-                                stream_modeSpec.add(modeSpec8.getTree());
+                                stream_modeSpec.add(modeSpec8.Tree);
                             }
                             break;
 
@@ -624,7 +624,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         optionsSpec10 = optionsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionsSpec10.getTree());
+                        adaptor.addChild(root_0, optionsSpec10.Tree);
 
                     }
                     break;
@@ -638,7 +638,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         delegateGrammars11 = delegateGrammars();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, delegateGrammars11.getTree());
+                        adaptor.addChild(root_0, delegateGrammars11.Tree);
 
                     }
                     break;
@@ -652,7 +652,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         tokensSpec12 = tokensSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, tokensSpec12.getTree());
+                        adaptor.addChild(root_0, tokensSpec12.Tree);
 
                     }
                     break;
@@ -666,7 +666,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         channelsSpec13 = channelsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, channelsSpec13.getTree());
+                        adaptor.addChild(root_0, channelsSpec13.Tree);
 
                     }
                     break;
@@ -680,7 +680,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         action14 = action();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, action14.getTree());
+                        adaptor.addChild(root_0, action14.Tree);
 
                     }
                     break;
@@ -765,7 +765,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 option16 = option();
                                 state._fsp--;
 
-                                stream_option.add(option16.getTree());
+                                stream_option.add(option16.Tree);
                                 SEMI17 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_optionsSpec796);
                                 stream_SEMI.add(SEMI17);
 
@@ -872,7 +872,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id19 = id();
                 state._fsp--;
 
-                adaptor.addChild(root_0, id19.getTree());
+                adaptor.addChild(root_0, id19.Tree);
 
                 ASSIGN20 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_option831);
                 ASSIGN20_tree = (GrammarAST)adaptor.create(ASSIGN20);
@@ -882,7 +882,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 optionValue21 = optionValue();
                 state._fsp--;
 
-                adaptor.addChild(root_0, optionValue21.getTree());
+                adaptor.addChild(root_0, optionValue21.Tree);
 
             }
 
@@ -977,7 +977,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         qid22 = qid();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, qid22.getTree());
+                        adaptor.addChild(root_0, qid22.Tree);
 
                     }
                     break;
@@ -1083,7 +1083,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 delegateGrammar27 = delegateGrammar();
                 state._fsp--;
 
-                stream_delegateGrammar.add(delegateGrammar27.getTree());
+                stream_delegateGrammar.add(delegateGrammar27.Tree);
             // org\\antlr\\v4\\parse\\g:251:27: ( COMMA delegateGrammar )*
             loop7:
                 while (true)
@@ -1107,7 +1107,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 delegateGrammar29 = delegateGrammar();
                                 state._fsp--;
 
-                                stream_delegateGrammar.add(delegateGrammar29.getTree());
+                                stream_delegateGrammar.add(delegateGrammar29.Tree);
                             }
                             break;
 
@@ -1286,7 +1286,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id31 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id31.getTree());
+                        adaptor.addChild(root_0, id31.Tree);
 
                         ASSIGN32 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar957);
                         ASSIGN32_tree = (GrammarAST)adaptor.create(ASSIGN32);
@@ -1296,7 +1296,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id33 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id33.getTree());
+                        adaptor.addChild(root_0, id33.Tree);
 
                     }
                     break;
@@ -1310,7 +1310,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id34 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id34.getTree());
+                        adaptor.addChild(root_0, id34.Tree);
 
                     }
                     break;
@@ -1426,7 +1426,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id36 = id();
                         state._fsp--;
 
-                        stream_id.add(id36.getTree());
+                        stream_id.add(id36.Tree);
                     // org\\antlr\\v4\\parse\\g:262:19: ( COMMA id )*
                     loop9:
                         while (true)
@@ -1450,7 +1450,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                         id38 = id();
                                         state._fsp--;
 
-                                        stream_id.add(id38.getTree());
+                                        stream_id.add(id38.Tree);
                                     }
                                     break;
 
@@ -1598,7 +1598,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id43 = id();
                 state._fsp--;
 
-                adaptor.addChild(root_0, id43.getTree());
+                adaptor.addChild(root_0, id43.Tree);
 
             // org\\antlr\\v4\\parse\\g:267:17: ( COMMA ! id )*
             loop11:
@@ -1621,7 +1621,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 id45 = id();
                                 state._fsp--;
 
-                                adaptor.addChild(root_0, id45.getTree());
+                                adaptor.addChild(root_0, id45.Tree);
 
                             }
                             break;
@@ -1734,7 +1734,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             actionScopeName48 = actionScopeName();
                             state._fsp--;
 
-                            stream_actionScopeName.add(actionScopeName48.getTree());
+                            stream_actionScopeName.add(actionScopeName48.Tree);
                             COLONCOLON49 = (Token)Match(input, COLONCOLON, FOLLOW_COLONCOLON_in_action1062);
                             stream_COLONCOLON.add(COLONCOLON49);
 
@@ -1747,7 +1747,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id50 = id();
                 state._fsp--;
 
-                stream_id.add(id50.getTree());
+                stream_id.add(id50.Tree);
                 ACTION51 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_action1068);
                 stream_ACTION.add(ACTION51);
 
@@ -1874,7 +1874,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id52 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id52.getTree());
+                        adaptor.addChild(root_0, id52.Tree);
 
                     }
                     break;
@@ -2001,7 +2001,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id56 = id();
                 state._fsp--;
 
-                stream_id.add(id56.getTree());
+                stream_id.add(id56.Tree);
                 SEMI57 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_modeSpec1140);
                 stream_SEMI.add(SEMI57);
 
@@ -2009,7 +2009,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync58 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync58.getTree());
+                stream_sync.add(sync58.Tree);
             // org\\antlr\\v4\\parse\\g:288:25: ( lexerRule sync )*
             loop14:
                 while (true)
@@ -2030,12 +2030,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 lexerRule59 = lexerRule();
                                 state._fsp--;
 
-                                stream_lexerRule.add(lexerRule59.getTree());
+                                stream_lexerRule.add(lexerRule59.Tree);
                                 pushFollow(FOLLOW_sync_in_modeSpec1147);
                                 sync60 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync60.getTree());
+                                stream_sync.add(sync60.Tree);
                             }
                             break;
 
@@ -2135,7 +2135,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync61 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync61.getTree());
+                stream_sync.add(sync61.Tree);
             // org\\antlr\\v4\\parse\\g:292:12: ( rule sync )*
             loop15:
                 while (true)
@@ -2156,12 +2156,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 rule62 = rule();
                                 state._fsp--;
 
-                                stream_rule.add(rule62.getTree());
+                                stream_rule.add(rule62.Tree);
                                 pushFollow(FOLLOW_sync_in_rules1183);
                                 sync63 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync63.getTree());
+                                stream_sync.add(sync63.Tree);
                             }
                             break;
 
@@ -2354,7 +2354,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         parserRule64 = parserRule();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, parserRule64.getTree());
+                        adaptor.addChild(root_0, parserRule64.Tree);
 
                     }
                     break;
@@ -2368,7 +2368,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerRule65 = lexerRule();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, lexerRule65.getTree());
+                        adaptor.addChild(root_0, lexerRule65.Tree);
 
                     }
                     break;
@@ -2483,7 +2483,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             ruleReturns68 = ruleReturns();
                             state._fsp--;
 
-                            stream_ruleReturns.add(ruleReturns68.getTree());
+                            stream_ruleReturns.add(ruleReturns68.Tree);
                         }
                         break;
 
@@ -2505,7 +2505,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             throwsSpec69 = throwsSpec();
                             state._fsp--;
 
-                            stream_throwsSpec.add(throwsSpec69.getTree());
+                            stream_throwsSpec.add(throwsSpec69.Tree);
                         }
                         break;
 
@@ -2527,7 +2527,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             localsSpec70 = localsSpec();
                             state._fsp--;
 
-                            stream_localsSpec.add(localsSpec70.getTree());
+                            stream_localsSpec.add(localsSpec70.Tree);
                         }
                         break;
 
@@ -2537,7 +2537,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 rulePrequels71 = rulePrequels();
                 state._fsp--;
 
-                stream_rulePrequels.add(rulePrequels71.getTree());
+                stream_rulePrequels.add(rulePrequels71.Tree);
                 COLON72 = (Token)Match(input, COLON, FOLLOW_COLON_in_parserRule1397);
                 stream_COLON.add(COLON72);
 
@@ -2545,7 +2545,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 ruleBlock73 = ruleBlock();
                 state._fsp--;
 
-                stream_ruleBlock.add(ruleBlock73.getTree());
+                stream_ruleBlock.add(ruleBlock73.Tree);
                 SEMI74 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_parserRule1429);
                 stream_SEMI.add(SEMI74);
 
@@ -2553,7 +2553,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 exceptionGroup75 = exceptionGroup();
                 state._fsp--;
 
-                stream_exceptionGroup.add(exceptionGroup75.getTree());
+                stream_exceptionGroup.add(exceptionGroup75.Tree);
 
                 // AST REWRITE
                 // elements: ruleBlock, ruleReturns, throwsSpec, rulePrequels, RULE_REF, ARG_ACTION, exceptionGroup, localsSpec
@@ -2715,7 +2715,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 exceptionHandler76 = exceptionHandler();
                                 state._fsp--;
 
-                                adaptor.addChild(root_0, exceptionHandler76.getTree());
+                                adaptor.addChild(root_0, exceptionHandler76.Tree);
 
                             }
                             break;
@@ -2742,7 +2742,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             finallyClause77 = finallyClause();
                             state._fsp--;
 
-                            adaptor.addChild(root_0, finallyClause77.getTree());
+                            adaptor.addChild(root_0, finallyClause77.Tree);
 
                         }
                         break;
@@ -2985,7 +2985,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync83 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync83.getTree());
+                stream_sync.add(sync83.Tree);
             // org\\antlr\\v4\\parse\\g:406:9: ( rulePrequel sync )*
             loop23:
                 while (true)
@@ -3006,12 +3006,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 rulePrequel84 = rulePrequel();
                                 state._fsp--;
 
-                                stream_rulePrequel.add(rulePrequel84.getTree());
+                                stream_rulePrequel.add(rulePrequel84.Tree);
                                 pushFollow(FOLLOW_sync_in_rulePrequels1611);
                                 sync85 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync85.getTree());
+                                stream_sync.add(sync85.Tree);
                             }
                             break;
 
@@ -3125,7 +3125,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         optionsSpec86 = optionsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionsSpec86.getTree());
+                        adaptor.addChild(root_0, optionsSpec86.Tree);
 
                     }
                     break;
@@ -3139,7 +3139,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         ruleAction87 = ruleAction();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ruleAction87.getTree());
+                        adaptor.addChild(root_0, ruleAction87.Tree);
 
                     }
                     break;
@@ -3268,7 +3268,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 qid91 = qid();
                 state._fsp--;
 
-                stream_qid.add(qid91.getTree());
+                stream_qid.add(qid91.Tree);
             // org\\antlr\\v4\\parse\\g:439:18: ( COMMA qid )*
             loop25:
                 while (true)
@@ -3292,7 +3292,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 qid93 = qid();
                                 state._fsp--;
 
-                                stream_qid.add(qid93.getTree());
+                                stream_qid.add(qid93.Tree);
                             }
                             break;
 
@@ -3462,7 +3462,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id97 = id();
                 state._fsp--;
 
-                stream_id.add(id97.getTree());
+                stream_id.add(id97.Tree);
                 ACTION98 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_ruleAction1756);
                 stream_ACTION.add(ACTION98);
 
@@ -3548,7 +3548,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 ruleAltList99 = ruleAltList();
                 state._fsp--;
 
-                stream_ruleAltList.add(ruleAltList99.getTree());
+                stream_ruleAltList.add(ruleAltList99.Tree);
 
                 // AST REWRITE
                 // elements: ruleAltList
@@ -3635,7 +3635,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 labeledAlt100 = labeledAlt();
                 state._fsp--;
 
-                stream_labeledAlt.add(labeledAlt100.getTree());
+                stream_labeledAlt.add(labeledAlt100.Tree);
             // org\\antlr\\v4\\parse\\g:474:15: ( OR labeledAlt )*
             loop26:
                 while (true)
@@ -3659,7 +3659,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 labeledAlt102 = labeledAlt();
                                 state._fsp--;
 
-                                stream_labeledAlt.add(labeledAlt102.getTree());
+                                stream_labeledAlt.add(labeledAlt102.Tree);
                             }
                             break;
 
@@ -3762,7 +3762,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 alternative103 = alternative();
                 state._fsp--;
 
-                adaptor.addChild(root_0, alternative103.getTree());
+                adaptor.addChild(root_0, alternative103.Tree);
 
                 // org\\antlr\\v4\\parse\\g:479:3: ( POUND ! id !)?
                 int alt27 = 2;
@@ -3781,7 +3781,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             id105 = id();
                             state._fsp--;
 
-                            ((AltAST)(alternative103 != null ? ((GrammarAST)alternative103.getTree()) : null)).altLabel = (id105 != null ? ((GrammarAST)id105.getTree()) : null);
+                            ((AltAST)(alternative103 != null ? ((GrammarAST)alternative103.Tree) : null)).altLabel = (id105 != null ? ((GrammarAST)id105.Tree) : null);
                         }
                         break;
 
@@ -3890,7 +3890,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             optionsSpec108 = optionsSpec();
                             state._fsp--;
 
-                            stream_optionsSpec.add(optionsSpec108.getTree());
+                            stream_optionsSpec.add(optionsSpec108.Tree);
                         }
                         break;
 
@@ -3903,7 +3903,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerRuleBlock110 = lexerRuleBlock();
                 state._fsp--;
 
-                stream_lexerRuleBlock.add(lexerRuleBlock110.getTree());
+                stream_lexerRuleBlock.add(lexerRuleBlock110.Tree);
                 SEMI111 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_lexerRule1917);
                 stream_SEMI.add(SEMI111);
 
@@ -4013,7 +4013,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAltList112 = lexerAltList();
                 state._fsp--;
 
-                stream_lexerAltList.add(lexerAltList112.getTree());
+                stream_lexerAltList.add(lexerAltList112.Tree);
 
                 // AST REWRITE
                 // elements: lexerAltList
@@ -4100,7 +4100,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAlt113 = lexerAlt();
                 state._fsp--;
 
-                stream_lexerAlt.add(lexerAlt113.getTree());
+                stream_lexerAlt.add(lexerAlt113.Tree);
             // org\\antlr\\v4\\parse\\g:509:13: ( OR lexerAlt )*
             loop30:
                 while (true)
@@ -4124,7 +4124,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 lexerAlt115 = lexerAlt();
                                 state._fsp--;
 
-                                stream_lexerAlt.add(lexerAlt115.getTree());
+                                stream_lexerAlt.add(lexerAlt115.Tree);
                             }
                             break;
 
@@ -4218,7 +4218,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerElements116 = lexerElements();
                 state._fsp--;
 
-                stream_lexerElements.add(lexerElements116.getTree());
+                stream_lexerElements.add(lexerElements116.Tree);
                 // org\\antlr\\v4\\parse\\g:514:3: ( lexerCommands -> ^( LEXER_ALT_ACTION lexerElements lexerCommands ) | -> lexerElements )
                 int alt31 = 2;
                 int LA31_0 = input.LA(1);
@@ -4247,7 +4247,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             lexerCommands117 = lexerCommands();
                             state._fsp--;
 
-                            stream_lexerCommands.add(lexerCommands117.getTree());
+                            stream_lexerCommands.add(lexerCommands117.Tree);
 
                             // AST REWRITE
                             // elements: lexerCommands, lexerElements
@@ -4397,7 +4397,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                         lexerElement118 = lexerElement();
                                         state._fsp--;
 
-                                        stream_lexerElement.add(lexerElement118.getTree());
+                                        stream_lexerElement.add(lexerElement118.Tree);
                                     }
                                     break;
 
@@ -4574,7 +4574,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerAtom119 = lexerAtom();
                         state._fsp--;
 
-                        stream_lexerAtom.add(lexerAtom119.getTree());
+                        stream_lexerAtom.add(lexerAtom119.Tree);
                         // org\\antlr\\v4\\parse\\g:531:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) ) ) | -> lexerAtom )
                         int alt34 = 2;
                         int LA34_0 = input.LA(1);
@@ -4603,7 +4603,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix120 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix120.getTree());
+                                    stream_ebnfSuffix.add(ebnfSuffix120.Tree);
 
                                     // AST REWRITE
                                     // elements: lexerAtom, ebnfSuffix
@@ -4684,7 +4684,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerBlock121 = lexerBlock();
                         state._fsp--;
 
-                        stream_lexerBlock.add(lexerBlock121.getTree());
+                        stream_lexerBlock.add(lexerBlock121.Tree);
                         // org\\antlr\\v4\\parse\\g:535:3: ( ebnfSuffix -> ^( ebnfSuffix lexerBlock ) | -> lexerBlock )
                         int alt35 = 2;
                         int LA35_0 = input.LA(1);
@@ -4713,7 +4713,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix122 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix122.getTree());
+                                    stream_ebnfSuffix.add(ebnfSuffix122.Tree);
 
                                     // AST REWRITE
                                     // elements: ebnfSuffix, lexerBlock
@@ -4783,7 +4783,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         actionElement123 = actionElement();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, actionElement123.getTree());
+                        adaptor.addChild(root_0, actionElement123.Tree);
 
                     }
                     break;
@@ -4899,7 +4899,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             optionsSpec125 = optionsSpec();
                             state._fsp--;
 
-                            stream_optionsSpec.add(optionsSpec125.getTree());
+                            stream_optionsSpec.add(optionsSpec125.Tree);
                             COLON126 = (Token)Match(input, COLON, FOLLOW_COLON_in_lexerBlock2284);
                             stream_COLON.add(COLON126);
 
@@ -4912,7 +4912,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAltList127 = lexerAltList();
                 state._fsp--;
 
-                stream_lexerAltList.add(lexerAltList127.getTree());
+                stream_lexerAltList.add(lexerAltList127.Tree);
                 RPAREN128 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerBlock2307);
                 stream_RPAREN.add(RPAREN128);
 
@@ -5020,7 +5020,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerCommand130 = lexerCommand();
                 state._fsp--;
 
-                stream_lexerCommand.add(lexerCommand130.getTree());
+                stream_lexerCommand.add(lexerCommand130.Tree);
             // org\\antlr\\v4\\parse\\g:587:24: ( COMMA lexerCommand )*
             loop38:
                 while (true)
@@ -5044,7 +5044,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 lexerCommand132 = lexerCommand();
                                 state._fsp--;
 
-                                stream_lexerCommand.add(lexerCommand132.getTree());
+                                stream_lexerCommand.add(lexerCommand132.Tree);
                             }
                             break;
 
@@ -5246,7 +5246,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerCommandName133 = lexerCommandName();
                         state._fsp--;
 
-                        stream_lexerCommandName.add(lexerCommandName133.getTree());
+                        stream_lexerCommandName.add(lexerCommandName133.Tree);
                         LPAREN134 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_lexerCommand2371);
                         stream_LPAREN.add(LPAREN134);
 
@@ -5254,7 +5254,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerCommandExpr135 = lexerCommandExpr();
                         state._fsp--;
 
-                        stream_lexerCommandExpr.add(lexerCommandExpr135.getTree());
+                        stream_lexerCommandExpr.add(lexerCommandExpr135.Tree);
                         RPAREN136 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerCommand2375);
                         stream_RPAREN.add(RPAREN136);
 
@@ -5298,7 +5298,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerCommandName137 = lexerCommandName();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, lexerCommandName137.getTree());
+                        adaptor.addChild(root_0, lexerCommandName137.Tree);
 
                     }
                     break;
@@ -5380,7 +5380,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id138 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id138.getTree());
+                        adaptor.addChild(root_0, id138.Tree);
 
                     }
                     break;
@@ -5475,7 +5475,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id140 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id140.getTree());
+                        adaptor.addChild(root_0, id140.Tree);
 
                     }
                     break;
@@ -5564,7 +5564,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 alternative142 = alternative();
                 state._fsp--;
 
-                stream_alternative.add(alternative142.getTree());
+                stream_alternative.add(alternative142.Tree);
             // org\\antlr\\v4\\parse\\g:606:19: ( OR alternative )*
             loop42:
                 while (true)
@@ -5588,7 +5588,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 alternative144 = alternative();
                                 state._fsp--;
 
-                                stream_alternative.add(alternative144.getTree());
+                                stream_alternative.add(alternative144.Tree);
                             }
                             break;
 
@@ -5695,7 +5695,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             o = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(o.getTree());
+                            stream_elementOptions.add(o.Tree);
                         }
                         break;
 
@@ -5746,9 +5746,9 @@ public class ANTLRParser : antlr.runtime.Parser
                                             e = element();
                                             state._fsp--;
 
-                                            stream_element.add(e.getTree());
+                                            stream_element.add(e.Tree);
                                             if (list_e == null) list_e = new ();
-                                            list_e.Add(e.getTree());
+                                            list_e.Add(e.Tree);
                                         }
                                         break;
 
@@ -5856,7 +5856,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
             paraphrases.Pop();
-            Grammar.setNodeOptions(retval.tree, (o != null ? ((GrammarAST)o.getTree()) : null));
+            Grammar.setNodeOptions(retval.tree, (o != null ? ((GrammarAST)o.Tree) : null));
 
         }
         catch (RecognitionException re)
@@ -6004,7 +6004,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         labeledElement145 = labeledElement();
                         state._fsp--;
 
-                        stream_labeledElement.add(labeledElement145.getTree());
+                        stream_labeledElement.add(labeledElement145.Tree);
                         // org\\antlr\\v4\\parse\\g:629:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) ) ) | -> labeledElement )
                         int alt46 = 2;
                         int LA46_0 = input.LA(1);
@@ -6033,7 +6033,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix146 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix146.getTree());
+                                    stream_ebnfSuffix.add(ebnfSuffix146.Tree);
 
                                     // AST REWRITE
                                     // elements: labeledElement, ebnfSuffix
@@ -6114,7 +6114,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         atom147 = atom();
                         state._fsp--;
 
-                        stream_atom.add(atom147.getTree());
+                        stream_atom.add(atom147.Tree);
                         // org\\antlr\\v4\\parse\\g:633:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) ) ) | -> atom )
                         int alt47 = 2;
                         int LA47_0 = input.LA(1);
@@ -6143,7 +6143,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix148 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix148.getTree());
+                                    stream_ebnfSuffix.add(ebnfSuffix148.Tree);
 
                                     // AST REWRITE
                                     // elements: atom, ebnfSuffix
@@ -6227,7 +6227,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         ebnf149 = ebnf();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ebnf149.getTree());
+                        adaptor.addChild(root_0, ebnf149.Tree);
 
                     }
                     break;
@@ -6241,7 +6241,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         actionElement150 = actionElement();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, actionElement150.getTree());
+                        adaptor.addChild(root_0, actionElement150.Tree);
 
                     }
                     break;
@@ -6424,7 +6424,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         elementOptions153 = elementOptions();
                         state._fsp--;
 
-                        stream_elementOptions.add(elementOptions153.getTree());
+                        stream_elementOptions.add(elementOptions153.Tree);
 
                         // AST REWRITE
                         // elements: ACTION, elementOptions
@@ -6476,7 +6476,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         elementOptions156 = elementOptions();
                         state._fsp--;
 
-                        stream_elementOptions.add(elementOptions156.getTree());
+                        stream_elementOptions.add(elementOptions156.Tree);
 
                         // AST REWRITE
                         // elements: elementOptions, SEMPRED
@@ -6574,7 +6574,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id157 = id();
                 state._fsp--;
 
-                stream_id.add(id157.getTree());
+                stream_id.add(id157.Tree);
                 // org\\antlr\\v4\\parse\\g:680:7: (ass= ASSIGN |ass= PLUS_ASSIGN )
                 int alt50 = 2;
                 int LA50_0 = input.LA(1);
@@ -6643,7 +6643,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             atom158 = atom();
                             state._fsp--;
 
-                            stream_atom.add(atom158.getTree());
+                            stream_atom.add(atom158.Tree);
 
                             // AST REWRITE
                             // elements: ass, id, atom
@@ -6682,7 +6682,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             block159 = block();
                             state._fsp--;
 
-                            stream_block.add(block159.getTree());
+                            stream_block.add(block159.Tree);
 
                             // AST REWRITE
                             // elements: ass, block, id
@@ -6772,7 +6772,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 block160 = block();
                 state._fsp--;
 
-                stream_block.add(block160.getTree());
+                stream_block.add(block160.Tree);
                 // org\\antlr\\v4\\parse\\g:692:7: ( blockSuffix -> ^( blockSuffix block ) | -> block )
                 int alt52 = 2;
                 int LA52_0 = input.LA(1);
@@ -6801,7 +6801,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             blockSuffix161 = blockSuffix();
                             state._fsp--;
 
-                            stream_blockSuffix.add(blockSuffix161.getTree());
+                            stream_blockSuffix.add(blockSuffix161.Tree);
 
                             // AST REWRITE
                             // elements: blockSuffix, block
@@ -6914,7 +6914,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 ebnfSuffix162 = ebnfSuffix();
                 state._fsp--;
 
-                adaptor.addChild(root_0, ebnfSuffix162.getTree());
+                adaptor.addChild(root_0, ebnfSuffix162.Tree);
 
             }
 
@@ -7269,7 +7269,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         range166 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range166.getTree());
+                        adaptor.addChild(root_0, range166.Tree);
 
                     }
                     break;
@@ -7283,7 +7283,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         terminal167 = terminal();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, terminal167.getTree());
+                        adaptor.addChild(root_0, terminal167.Tree);
 
                     }
                     break;
@@ -7309,7 +7309,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         notSet169 = notSet();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, notSet169.getTree());
+                        adaptor.addChild(root_0, notSet169.Tree);
 
                     }
                     break;
@@ -7323,7 +7323,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         wildcard170 = wildcard();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, wildcard170.getTree());
+                        adaptor.addChild(root_0, wildcard170.Tree);
 
                     }
                     break;
@@ -7459,7 +7459,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         range172 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range172.getTree());
+                        adaptor.addChild(root_0, range172.Tree);
 
                     }
                     break;
@@ -7473,7 +7473,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         terminal173 = terminal();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, terminal173.getTree());
+                        adaptor.addChild(root_0, terminal173.Tree);
 
                     }
                     break;
@@ -7487,7 +7487,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         ruleref174 = ruleref();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ruleref174.getTree());
+                        adaptor.addChild(root_0, ruleref174.Tree);
 
                     }
                     break;
@@ -7501,7 +7501,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         notSet175 = notSet();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, notSet175.getTree());
+                        adaptor.addChild(root_0, notSet175.Tree);
 
                     }
                     break;
@@ -7515,7 +7515,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         wildcard176 = wildcard();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, wildcard176.getTree());
+                        adaptor.addChild(root_0, wildcard176.Tree);
 
                     }
                     break;
@@ -7589,7 +7589,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOptions178 = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(elementOptions178.getTree());
+                            stream_elementOptions.add(elementOptions178.Tree);
                         }
                         break;
 
@@ -7740,7 +7740,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         setElement180 = setElement();
                         state._fsp--;
 
-                        stream_setElement.add(setElement180.getTree());
+                        stream_setElement.add(setElement180.Tree);
 
                         // AST REWRITE
                         // elements: setElement, NOT
@@ -7787,7 +7787,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         blockSet182 = blockSet();
                         state._fsp--;
 
-                        stream_blockSet.add(blockSet182.getTree());
+                        stream_blockSet.add(blockSet182.Tree);
 
                         // AST REWRITE
                         // elements: blockSet, NOT
@@ -7887,7 +7887,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 setElement184 = setElement();
                 state._fsp--;
 
-                stream_setElement.add(setElement184.getTree());
+                stream_setElement.add(setElement184.Tree);
             // org\\antlr\\v4\\parse\\g:772:25: ( OR setElement )*
             loop61:
                 while (true)
@@ -7911,7 +7911,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 setElement186 = setElement();
                                 state._fsp--;
 
-                                stream_setElement.add(setElement186.getTree());
+                                stream_setElement.add(setElement186.Tree);
                             }
                             break;
 
@@ -8090,7 +8090,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions189 = elementOptions();
                                     state._fsp--;
 
-                                    adaptor.addChild(root_0, elementOptions189.getTree());
+                                    adaptor.addChild(root_0, elementOptions189.Tree);
 
                                 }
                                 break;
@@ -8125,7 +8125,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions191 = elementOptions();
                                     state._fsp--;
 
-                                    adaptor.addChild(root_0, elementOptions191.getTree());
+                                    adaptor.addChild(root_0, elementOptions191.Tree);
 
                                 }
                                 break;
@@ -8144,7 +8144,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         range192 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range192.getTree());
+                        adaptor.addChild(root_0, range192.Tree);
 
                     }
                     break;
@@ -8253,7 +8253,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                         optionsSpec195 = optionsSpec();
                                         state._fsp--;
 
-                                        stream_optionsSpec.add(optionsSpec195.getTree());
+                                        stream_optionsSpec.add(optionsSpec195.Tree);
                                     }
                                     break;
 
@@ -8279,9 +8279,9 @@ public class ANTLRParser : antlr.runtime.Parser
                                             ra = ruleAction();
                                             state._fsp--;
 
-                                            stream_ruleAction.add(ra.getTree());
+                                            stream_ruleAction.add(ra.Tree);
                                             if (list_ra == null) list_ra = new ();
-                                            list_ra.Add(ra.getTree());
+                                            list_ra.Add(ra.Tree);
                                         }
                                         break;
 
@@ -8303,7 +8303,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 altList197 = altList();
                 state._fsp--;
 
-                stream_altList.add(altList197.getTree());
+                stream_altList.add(altList197.Tree);
                 RPAREN198 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_block3479);
                 stream_RPAREN.add(RPAREN198);
 
@@ -8449,7 +8449,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOptions201 = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(elementOptions201.getTree());
+                            stream_elementOptions.add(elementOptions201.Tree);
                         }
                         break;
 
@@ -8665,7 +8665,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions206 = elementOptions();
                                     state._fsp--;
 
-                                    stream_elementOptions.add(elementOptions206.getTree());
+                                    stream_elementOptions.add(elementOptions206.Tree);
                                 }
                                 break;
 
@@ -8728,7 +8728,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions208 = elementOptions();
                                     state._fsp--;
 
-                                    stream_elementOptions.add(elementOptions208.getTree());
+                                    stream_elementOptions.add(elementOptions208.Tree);
                                 }
                                 break;
 
@@ -8854,7 +8854,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOption210 = elementOption();
                             state._fsp--;
 
-                            stream_elementOption.add(elementOption210.getTree());
+                            stream_elementOption.add(elementOption210.Tree);
                         // org\\antlr\\v4\\parse\\g:848:27: ( COMMA elementOption )*
                         loop73:
                             while (true)
@@ -8878,7 +8878,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                             elementOption212 = elementOption();
                                             state._fsp--;
 
-                                            stream_elementOption.add(elementOption212.getTree());
+                                            stream_elementOption.add(elementOption212.Tree);
                                         }
                                         break;
 
@@ -9060,7 +9060,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         qid214 = qid();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, qid214.getTree());
+                        adaptor.addChild(root_0, qid214.Tree);
 
                     }
                     break;
@@ -9074,7 +9074,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         id215 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id215.getTree());
+                        adaptor.addChild(root_0, id215.Tree);
 
                         ASSIGN216 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption3757);
                         ASSIGN216_tree = (GrammarAST)adaptor.create(ASSIGN216);
@@ -9084,7 +9084,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         optionValue217 = optionValue();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionValue217.getTree());
+                        adaptor.addChild(root_0, optionValue217.Tree);
 
                     }
                     break;
@@ -9275,7 +9275,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id220 = id();
                 state._fsp--;
 
-                stream_id.add(id220.getTree());
+                stream_id.add(id220.Tree);
             // org\\antlr\\v4\\parse\\g:874:7: ( DOT id )*
             loop77:
                 while (true)
@@ -9299,7 +9299,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 id222 = id();
                                 state._fsp--;
 
-                                stream_id.add(id222.getTree());
+                                stream_id.add(id222.Tree);
                             }
                             break;
 
@@ -9387,7 +9387,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 alternative223 = alternative();
                 state._fsp--;
 
-                adaptor.addChild(root_0, alternative223.getTree());
+                adaptor.addChild(root_0, alternative223.Tree);
 
                 EOF224 = (Token)Match(input, EOF, FOLLOW_EOF_in_alternativeEntry3856);
                 EOF224_tree = (GrammarAST)adaptor.create(EOF224);
@@ -9450,7 +9450,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 element225 = element();
                 state._fsp--;
 
-                adaptor.addChild(root_0, element225.getTree());
+                adaptor.addChild(root_0, element225.Tree);
 
                 EOF226 = (Token)Match(input, EOF, FOLLOW_EOF_in_elementEntry3867);
                 EOF226_tree = (GrammarAST)adaptor.create(EOF226);
@@ -9513,7 +9513,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 rule227 = rule();
                 state._fsp--;
 
-                adaptor.addChild(root_0, rule227.getTree());
+                adaptor.addChild(root_0, rule227.Tree);
 
                 EOF228 = (Token)Match(input, EOF, FOLLOW_EOF_in_ruleEntry3877);
                 EOF228_tree = (GrammarAST)adaptor.create(EOF228);
@@ -9576,7 +9576,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 block229 = block();
                 state._fsp--;
 
-                adaptor.addChild(root_0, block229.getTree());
+                adaptor.addChild(root_0, block229.Tree);
 
                 EOF230 = (Token)Match(input, EOF, FOLLOW_EOF_in_blockEntry3887);
                 EOF230_tree = (GrammarAST)adaptor.create(EOF230);

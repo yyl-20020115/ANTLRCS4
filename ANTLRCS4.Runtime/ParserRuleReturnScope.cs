@@ -51,9 +51,9 @@ namespace org.antlr.runtime;
 public class ParserRuleReturnScope : RuleReturnScope
 {
 
-    public Token start, stop;
-    public override Object getStart() { return start; }
-    public override Object getStop() { return stop; }
-
-    public override Object getTree() { return null; }
+    public Token start;
+    public Token stop;
+    public override object Start => start; 
+    public override object Stop => stop;
+    public override object Tree => null;
 }

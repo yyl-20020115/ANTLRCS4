@@ -436,7 +436,7 @@ public class ParserInterpreter : Parser
                                              Token.DEFAULT_CHANNEL,
                                             -1, -1, // invalid start/stop
                                              tok.Line, tok.CharPositionInLine);
-                _ctx.addErrorNode(CreateErrorNode(_ctx, errToken));
+                _ctx.AddErrorNode(CreateErrorNode(_ctx, errToken));
             }
             else
             { // NoViableAlt
@@ -447,7 +447,7 @@ public class ParserInterpreter : Parser
                                              Token.DEFAULT_CHANNEL,
                                             -1, -1, // invalid start/stop
                                              tok.Line, tok.CharPositionInLine);
-                _ctx.addErrorNode(CreateErrorNode(_ctx, errToken));
+                _ctx.AddErrorNode(CreateErrorNode(_ctx, errToken));
             }
         }
     }
