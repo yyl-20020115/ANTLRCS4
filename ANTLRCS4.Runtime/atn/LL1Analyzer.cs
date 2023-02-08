@@ -43,14 +43,12 @@ public class LL1Analyzer
             look[alt] = new IntervalSet();
             var lookBusy = new HashSet<ATNConfig>();
             bool seeThruPreds = false; // fail to get lookahead upon pred
-            _LOOK(s.Transition(alt).target, null, EmptyPredictionContext.Instance,
+            LOOK(s.Transition(alt).target, null, EmptyPredictionContext.Instance,
                   look[alt], lookBusy, new BitSet(), seeThruPreds, false);
             // Wipe out lookahead for this alternative if we found nothing
             // or we had a predicate when we !seeThruPreds
             if (look[alt].Size == 0 || look[alt].Contains(HIT_PRED))
-            {
                 look[alt] = null;
-            }
         }
         return look;
     }
@@ -97,7 +95,7 @@ public class LL1Analyzer
         var r = new IntervalSet();
         var seeThruPreds = true; // ignore preds; get all lookahead
         var lookContext = ctx != null ? PredictionContext.FromRuleContext(s.atn, ctx) : null;
-        _LOOK(s, stopState, lookContext,
+        LOOK(s, stopState, lookContext,
            r, new HashSet<ATNConfig>(), new BitSet(), seeThruPreds, true);
         return r;
     }
@@ -132,7 +130,7 @@ public class LL1Analyzer
 	 * outermost context is reached. This parameter has no effect if {@code ctx}
 	 * is {@code null}.
 	 */
-    protected void _LOOK(ATNState s,
+    protected void LOOK(ATNState s,
                          ATNState stopState,
                          PredictionContext ctx,
                          IntervalSet look,
@@ -181,7 +179,7 @@ public class LL1Analyzer
                     {
                         var returnState = atn.states[ctx.GetReturnState(i)];
                         //					    Console.Out.WriteLine("popping back to "+retState);
-                        _LOOK(returnState, stopState, ctx.GetParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
+                        LOOK(returnState, stopState, ctx.GetParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
                     }
                 }
                 finally
@@ -212,7 +210,7 @@ public class LL1Analyzer
                 try
                 {
                     calledRuleStack.Set(rt.target.ruleIndex);
-                    _LOOK(t.target, stopState, newContext, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
+                    LOOK(t.target, stopState, newContext, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
                 }
                 finally
                 {
@@ -223,7 +221,7 @@ public class LL1Analyzer
             {
                 if (seeThruPreds)
                 {
-                    _LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
+                    LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
                 }
                 else
                 {
@@ -232,7 +230,7 @@ public class LL1Analyzer
             }
             else if (t.IsEpsilon)
             {
-                _LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
+                LOOK(t.target, stopState, ctx, look, lookBusy, calledRuleStack, seeThruPreds, addEOF);
             }
             else if (t is WildcardTransition wt)
             {

@@ -6,6 +6,7 @@
 
 using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
+using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime;
 
@@ -168,7 +169,7 @@ public class CodePointBuffer
 
         private static int RoundUpToNextPowerOfTwo(int i)
         {
-            int nextPowerOfTwo = 32 - Integer.NumberOfLeadingZeros(i - 1);
+            int nextPowerOfTwo = 32 - RuntimeUtils.NumberOfLeadingZeros(i - 1);
             return (int)Math.Pow(2, nextPowerOfTwo);
         }
 

@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using System.Text;
@@ -162,9 +161,9 @@ public class ATNConfigSet : HashSet<ATNConfig>
             Math.Max(existing.reachesIntoOuterContext, config.reachesIntoOuterContext);
 
         // make sure to preserve the precedence filter suppression during the merge
-        if (config.IsPrecedenceFilterSuppressed())
+        if (config.PrecedenceFilterSuppressed)
         {
-            existing.SetPrecedenceFilterSuppressed(true);
+            existing.            PrecedenceFilterSuppressed = true;
         }
 
         existing.context = merged; // replace context; no need to alt mapping
@@ -221,7 +220,7 @@ public class ATNConfigSet : HashSet<ATNConfig>
     public void OptimizeConfigs(ATNSimulator interpreter)
     {
         if (@readonly) throw new IllegalStateException("This set is readonly");
-        if (configLookup.IsEmpty()) return;
+        if (configLookup.IsEmpty) return;
 
         foreach (var config in configs)
         {

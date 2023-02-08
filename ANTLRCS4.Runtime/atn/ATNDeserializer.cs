@@ -18,23 +18,16 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class ATNDeserializer
 {
-    public static readonly int SERIALIZED_VERSION;
-    static ATNDeserializer()
-    {
-        SERIALIZED_VERSION = 4;
-    }
-
+    public static readonly int SERIALIZED_VERSION = 4;
     private readonly ATNDeserializationOptions deserializationOptions;
-
-    public ATNDeserializer() : this(ATNDeserializationOptions.GetDefaultOptions())
+    public ATNDeserializer()
+        : this(ATNDeserializationOptions.GetDefaultOptions())
     {
     }
 
     public ATNDeserializer(ATNDeserializationOptions deserializationOptions)
     {
-        deserializationOptions ??= ATNDeserializationOptions.GetDefaultOptions();
-
-        this.deserializationOptions = deserializationOptions;
+        this.deserializationOptions = deserializationOptions ?? ATNDeserializationOptions.GetDefaultOptions();
     }
 
     public ATN Deserialize(char[] data)
@@ -54,7 +47,7 @@ public class ATNDeserializer
 
         var values = (ATNType[])ATNType.GetValues(typeof(ATNType));
 
-        ATNType grammarType = values[data[p++]];
+        var grammarType = values[data[p++]];
         int maxTokenType = data[p++];
         var atn = new ATN(grammarType, maxTokenType);
 
@@ -90,12 +83,12 @@ public class ATNDeserializer
         }
 
         // delay the assignment of loop back and end states until we know all the state instances have been initialized
-        foreach (Pair<LoopEndState, int> pair in loopBackStateNumbers)
+        foreach (var pair in loopBackStateNumbers)
         {
             pair.a.loopBackState = atn.states[(pair.b)];
         }
 
-        foreach (Pair<BlockStartState, int> pair in endStateNumbers)
+        foreach (var pair in endStateNumbers)
         {
             pair.a.endState = (BlockEndState)atn.states[(pair.b)];
         }
@@ -139,14 +132,11 @@ public class ATNDeserializer
         atn.ruleToStopState = new RuleStopState[nrules];
         foreach (var state in atn.states)
         {
-            if (state is not RuleStopState)
+            if (state is RuleStopState stopState)
             {
-                continue;
+                atn.ruleToStopState[state.ruleIndex] = stopState;
+                atn.ruleToStartState[state.ruleIndex].stopState = stopState;
             }
-
-            RuleStopState stopState = (RuleStopState)state;
-            atn.ruleToStopState[state.ruleIndex] = stopState;
-            atn.ruleToStartState[state.ruleIndex].stopState = stopState;
         }
 
         //
@@ -188,28 +178,21 @@ public class ATNDeserializer
         }
 
         // edges for rule stop states can be derived, so they aren't serialized
-        foreach (ATNState state in atn.states)
+        foreach (var state in atn.states)
         {
             for (int i = 0; i < state.NumberOfTransitions; i++)
             {
                 var t = state.Transition(i);
-                if (t is not RuleTransition)
+                if (t is RuleTransition ruleTransition)
                 {
-                    continue;
-                }
+                    int outermostPrecedenceReturn = -1;
+                    if (atn.ruleToStartState[ruleTransition.target.ruleIndex].isLeftRecursiveRule)
+                        if (ruleTransition.precedence == 0)
+                            outermostPrecedenceReturn = ruleTransition.target.ruleIndex;
 
-                var ruleTransition = (RuleTransition)t;
-                int outermostPrecedenceReturn = -1;
-                if (atn.ruleToStartState[ruleTransition.target.ruleIndex].isLeftRecursiveRule)
-                {
-                    if (ruleTransition.precedence == 0)
-                    {
-                        outermostPrecedenceReturn = ruleTransition.target.ruleIndex;
-                    }
+                    var returnTransition = new EpsilonTransition(ruleTransition.followState, outermostPrecedenceReturn);
+                    atn.ruleToStopState[ruleTransition.target.ruleIndex].AddTransition(returnTransition);
                 }
-
-                var returnTransition = new EpsilonTransition(ruleTransition.followState, outermostPrecedenceReturn);
-                atn.ruleToStopState[ruleTransition.target.ruleIndex].AddTransition(returnTransition);
             }
         }
 
@@ -219,22 +202,17 @@ public class ATNDeserializer
             {
                 // we need to know the end state to set its start state
                 if (state1.endState == null)
-                {
                     throw new IllegalStateException();
-                }
 
                 // block end states can only be associated to a single block start state
                 if (state1.endState.startState != null)
-                {
                     throw new IllegalStateException();
-                }
 
                 state1.endState.startState = state1;
             }
 
-            if (state is PlusLoopbackState)
+            if (state is PlusLoopbackState loopbackState)
             {
-                PlusLoopbackState loopbackState = (PlusLoopbackState)state;
                 for (int i = 0; i < loopbackState.NumberOfTransitions; i++)
                 {
                     var target = loopbackState.Transition(i).target;
@@ -244,15 +222,14 @@ public class ATNDeserializer
                     }
                 }
             }
-            else if (state is StarLoopbackState)
+            else if (state is StarLoopbackState loopbackState2)
             {
-                var loopbackState = (StarLoopbackState)state;
-                for (int i = 0; i < loopbackState.NumberOfTransitions; i++)
+                for (int i = 0; i < loopbackState2.NumberOfTransitions; i++)
                 {
-                    var target = loopbackState.Transition(i).target;
-                    if (target is StarLoopEntryState)
+                    var target = loopbackState2.Transition(i).target;
+                    if (target is StarLoopEntryState s)
                     {
-                        ((StarLoopEntryState)target).loopBackState = loopbackState;
+                        s.loopBackState = loopbackState2;
                     }
                 }
             }
@@ -265,7 +242,7 @@ public class ATNDeserializer
         for (int i = 1; i <= ndecisions; i++)
         {
             int s = data[p++];
-            var decState = (DecisionState)atn.states[(s)];
+            var decState = atn.states[(s)] as DecisionState;
             atn.decisionToState.Add(decState);
             decState.decision = i - 1;
         }
@@ -278,12 +255,11 @@ public class ATNDeserializer
             atn.lexerActions = new LexerAction[data[p++]];
             for (int i = 0; i < atn.lexerActions.Length; i++)
             {
-
-                LexerActionType actionType = Enum.GetValues<LexerActionType>()[data[p++]];
+                var actionType = Enum.GetValues<LexerActionType>()[data[p++]];
                 int data1 = data[p++];
                 int data2 = data[p++];
 
-                LexerAction lexerAction = LexerActionFactory(actionType, data1, data2);
+                var lexerAction = LexerActionFactory(actionType, data1, data2);
 
                 atn.lexerActions[i] = lexerAction;
             }
@@ -291,12 +267,12 @@ public class ATNDeserializer
 
         MarkPrecedenceDecisions(atn);
 
-        if (deserializationOptions.IsVerifyATN())
+        if (deserializationOptions.VerifyATN)
         {
             VerifyATN(atn);
         }
 
-        if (deserializationOptions.IsGenerateRuleBypassTransitions() && atn.grammarType == ATNType.PARSER)
+        if (deserializationOptions.GenerateRuleBypassTransitions && atn.grammarType == ATNType.PARSER)
         {
             atn.ruleToTokenType = new int[atn.ruleToStartState.Length];
             for (int i = 0; i < atn.ruleToStartState.Length; i++)
@@ -396,7 +372,7 @@ public class ATNDeserializer
                 bypassStart.AddTransition(new EpsilonTransition(matchState));
             }
 
-            if (deserializationOptions.IsVerifyATN())
+            if (deserializationOptions.VerifyATN)
             {
                 // reverify after modification
                 VerifyATN(atn);
@@ -406,7 +382,7 @@ public class ATNDeserializer
         return atn;
     }
 
-    private int DeserializeSets(int[] data, int p, List<IntervalSet> sets)
+    private static int DeserializeSets(int[] data, int p, List<IntervalSet> sets)
     {
         int nsets = data[p++];
         for (int i = 0; i < nsets; i++)
@@ -439,9 +415,9 @@ public class ATNDeserializer
 	 *
 	 * @param atn The ATN.
 	 */
-    protected void MarkPrecedenceDecisions(ATN atn)
+    protected static void MarkPrecedenceDecisions(ATN atn)
     {
-        foreach (ATNState state in atn.states)
+        foreach (var state in atn.states)
         {
             if (state is not StarLoopEntryState s)
             {
@@ -546,7 +522,7 @@ public class ATNDeserializer
         CheckCondition(condition, null);
     }
 
-    protected void CheckCondition(bool condition, String message)
+    protected static void CheckCondition(bool condition, String message)
     {
         if (!condition)
         {
@@ -569,50 +545,26 @@ public class ATNDeserializer
         return data[offset] | (data[offset + 1] << 16);
     }
 
-    protected Transition EdgeFactory(ATN atn,
+    protected static Transition EdgeFactory(ATN atn,
                                          int type, int src, int trg,
                                          int arg1, int arg2, int arg3,
                                          List<IntervalSet> sets)
     {
         var target = atn.states[(trg)];
-        switch (type)
+        return type switch
         {
-            case Transition.EPSILON: return new EpsilonTransition(target);
-            case Transition.RANGE:
-                if (arg3 != 0)
-                {
-                    return new RangeTransition(target, Token.EOF, arg2);
-                }
-                else
-                {
-                    return new RangeTransition(target, arg1, arg2);
-                }
-            case Transition.RULE:
-                RuleTransition rt = new RuleTransition((RuleStartState)atn.states[(arg1)], arg2, arg3, target);
-                return rt;
-            case Transition.PREDICATE:
-                PredicateTransition pt = new PredicateTransition(target, arg1, arg2, arg3 != 0);
-                return pt;
-            case Transition.PRECEDENCE:
-                return new PrecedencePredicateTransition(target, arg1);
-            case Transition.ATOM:
-                if (arg3 != 0)
-                {
-                    return new AtomTransition(target, Token.EOF);
-                }
-                else
-                {
-                    return new AtomTransition(target, arg1);
-                }
-            case Transition.ACTION:
-                var a = new ActionTransition(target, arg1, arg2, arg3 != 0);
-                return a;
-            case Transition.SET: return new SetTransition(target, sets[(arg1)]);
-            case Transition.NOT_SET: return new NotSetTransition(target, sets[(arg1)]);
-            case Transition.WILDCARD: return new WildcardTransition(target);
-        }
-
-        throw new ArgumentException("The specified transition type is not valid.");
+            Transition.EPSILON => new EpsilonTransition(target),
+            Transition.RANGE => arg3 != 0 ? new RangeTransition(target, Token.EOF, arg2) : (Transition)new RangeTransition(target, arg1, arg2),
+            Transition.RULE => new RuleTransition((RuleStartState)atn.states[(arg1)], arg2, arg3, target),
+            Transition.PREDICATE => new PredicateTransition(target, arg1, arg2, arg3 != 0),
+            Transition.PRECEDENCE => new PrecedencePredicateTransition(target, arg1),
+            Transition.ATOM => arg3 != 0 ? new AtomTransition(target, Token.EOF) : (Transition)new AtomTransition(target, arg1),
+            Transition.ACTION => new ActionTransition(target, arg1, arg2, arg3 != 0),
+            Transition.SET => new SetTransition(target, sets[(arg1)]),
+            Transition.NOT_SET => new NotSetTransition(target, sets[(arg1)]),
+            Transition.WILDCARD => new WildcardTransition(target),
+            _ => throw new ArgumentException("The specified transition type is not valid."),
+        };
     }
 
     protected ATNState StateFactory(int type, int ruleIndex)
@@ -634,15 +586,14 @@ public class ATNDeserializer
             case ATNState.PLUS_LOOP_BACK: s = new PlusLoopbackState(); break;
             case ATNState.LOOP_END: s = new LoopEndState(); break;
             default:
-                String message = $"The specified state type {type} is not valid.";
-                throw new ArgumentException(message);
+                throw new ArgumentException($"The specified state type {type} is not valid.");
         }
 
         s.ruleIndex = ruleIndex;
         return s;
     }
 
-    protected LexerAction LexerActionFactory(LexerActionType type, int data1, int data2) => type switch
+    protected static LexerAction LexerActionFactory(LexerActionType type, int data1, int data2) => type switch
     {
         LexerActionType.CHANNEL => new LexerChannelAction(data1),
         LexerActionType.CUSTOM => new LexerCustomAction(data1, data2),
@@ -692,7 +643,7 @@ public class ATNDeserializer
                 { // too big to fit in 15 bits + 16 bits? (+1 would be 8000_0000 which is bad encoding)
                     throw new UnsupportedOperationException("Serialized ATN data element[" + i + "] = " + v + " doesn't fit in 31 bits");
                 }
-                v = v & 0x7FFF_FFFF;                    // strip high bit (sentinel) if set
+                v &= 0x7FFF_FFFF;                    // strip high bit (sentinel) if set
                 data16.Add((v >> 16) | 0x8000);   // store high 15-bit word first and set high bit to say word follows
                 data16.Add((v & 0xFFFF));       // then store lower 16-bit word
             }
@@ -700,10 +651,8 @@ public class ATNDeserializer
         return data16;
     }
 
-    public static int[] DecodeIntsEncodedAs16BitWords(char[] data16)
-    {
-        return DecodeIntsEncodedAs16BitWords(data16, false);
-    }
+    public static int[] DecodeIntsEncodedAs16BitWords(char[] data16) 
+        => DecodeIntsEncodedAs16BitWords(data16, false);
 
     /** Convert a list of chars (16 uint) that represent a serialized and compressed list of ints for an ATN.
 	 *  This method pairs with {@link #encodeIntsWith16BitWords(IntegerList)} above. Used only for Java Target.

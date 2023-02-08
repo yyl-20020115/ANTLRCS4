@@ -44,7 +44,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         numDecisions = atn.decisionToState.Count;
         decisions = new DecisionInfo[numDecisions];
         for (int i = 0; i < numDecisions; i++)
-            decisions[i] = new DecisionInfo(i);
+            decisions[i] = new (i);
     }
 
     //@Override
@@ -68,7 +68,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
             {
                 decisions[decision].SLL_MaxLook = SLL_k;
                 decisions[decision].SLL_MaxLookEvent =
-                        new LookaheadEventInfo(decision, null, alt, input, _startIndex, _sllStopIndex, false);
+                        new (decision, null, alt, input, _startIndex, _sllStopIndex, false);
             }
 
             if (_llStopIndex >= 0)
@@ -80,7 +80,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
                 {
                     decisions[decision].LL_MaxLook = LL_k;
                     decisions[decision].LL_MaxLookEvent =
-                            new LookaheadEventInfo(decision, null, alt, input, _startIndex, _llStopIndex, true);
+                            new (decision, null, alt, input, _startIndex, _llStopIndex, true);
                 }
             }
 
@@ -106,7 +106,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
             if (existingTargetState == ERROR)
             {
                 decisions[currentDecision].errors.Add(
-                        new ErrorInfo(currentDecision, previousD.configs, _input, _startIndex, _sllStopIndex, false)
+                        new (currentDecision, previousD.configs, _input, _startIndex, _sllStopIndex, false)
                 );
             }
         }
@@ -144,7 +144,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
             { // no reach on current lookahead symbol. ERROR.
               // TODO: does not handle delayed errors per getSynValidOrSemInvalidAltThatFinishedDecisionEntryRule()
                 decisions[currentDecision].errors.Add(
-                    new ErrorInfo(currentDecision, closure, _input, _startIndex, _llStopIndex, true)
+                    new (currentDecision, closure, _input, _startIndex, _llStopIndex, true)
                 );
             }
         }
@@ -157,7 +157,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
             else
             { // no reach on current lookahead symbol. ERROR.
                 decisions[currentDecision].errors.Add(
-                    new ErrorInfo(currentDecision, closure, _input, _startIndex, _sllStopIndex, false)
+                    new (currentDecision, closure, _input, _startIndex, _sllStopIndex, false)
                 );
             }
         }
@@ -173,7 +173,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
             bool fullContext = _llStopIndex >= 0;
             int stopIndex = fullContext ? _llStopIndex : _sllStopIndex;
             decisions[currentDecision].predicateEvals.Add(
-                new PredicateEvalInfo(currentDecision, _input, _startIndex, stopIndex, pred, result, alt, fullCtx)
+                new (currentDecision, _input, _startIndex, stopIndex, pred, result, alt, fullCtx)
             );
         }
 
@@ -194,7 +194,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         if (prediction != conflictingAltResolvedBySLL)
         {
             decisions[currentDecision].contextSensitivities.Add(
-                    new ContextSensitivityInfo(currentDecision, configs, _input, startIndex, stopIndex)
+                    new (currentDecision, configs, _input, startIndex, stopIndex)
             );
         }
         base.ReportContextSensitivity(dfa, prediction, configs, startIndex, stopIndex);
@@ -221,11 +221,11 @@ public class ProfilingATNSimulator : ParserATNSimulator
             // to different minimum alternatives we have also identified a
             // context sensitivity.
             decisions[currentDecision].contextSensitivities.Add(
-                    new ContextSensitivityInfo(currentDecision, configs, _input, startIndex, stopIndex)
+                    new (currentDecision, configs, _input, startIndex, stopIndex)
             );
         }
         decisions[currentDecision].ambiguities.Add(
-            new AmbiguityInfo(currentDecision, configs, ambigAlts,
+            new (currentDecision, configs, ambigAlts,
                               _input, startIndex, stopIndex, configs.fullCtx)
         );
         base.ReportAmbiguity(dfa, D, startIndex, stopIndex, exact, ambigAlts, configs);

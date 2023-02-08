@@ -23,10 +23,7 @@ public class ActionTransition : Transition
 
     public override bool IsEpsilon => true; // we are to be ignored by analysis 'cept for predicates
 
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol)
-    {
-        return false;
-    }
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
     public override string ToString()
         => "action_" + ruleIndex + ":" + actionIndex;

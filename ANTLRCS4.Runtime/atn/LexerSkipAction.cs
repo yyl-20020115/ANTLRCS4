@@ -49,10 +49,7 @@ public class LexerSkipAction : LexerAction
 	 * <p>This action is implemented by calling {@link Lexer#skip}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.Skip();
-    }
+    public void Execute(Lexer lexer) => lexer.Skip();
 
     //@Override
     public override int GetHashCode()

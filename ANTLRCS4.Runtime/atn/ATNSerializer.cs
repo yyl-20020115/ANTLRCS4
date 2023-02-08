@@ -89,13 +89,13 @@ public class ATNSerializer
         if (atn.grammarType == ATNType.LEXER)
         {
             data.Add(atn.lexerActions.Length);
-            foreach (LexerAction action in atn.lexerActions)
+            foreach (var action in atn.lexerActions)
             {
                 data.Add((int)action.ActionType);
                 switch (action.ActionType)
                 {
                     case LexerActionType.CHANNEL:
-                        int channel = ((LexerChannelAction)action).GetChannel();
+                        int channel = ((LexerChannelAction)action).Channel;
                         data.Add(channel);
                         data.Add(0);
                         break;
@@ -141,8 +141,7 @@ public class ATNSerializer
                         break;
 
                     default:
-                        var message = $"The specified lexer action type {action.ActionType} is not valid.";
-                        throw new ArgumentException(message);
+                        throw new ArgumentException($"The specified lexer action type {action.ActionType} is not valid.");
                 }
             }
         }
@@ -163,25 +162,15 @@ public class ATNSerializer
         data.Add(nedges);
         foreach (var s in atn.states)
         {
-            if (s == null)
-            {
-                // might be optimized away
-                continue;
-            }
-
-            if (s.StateType == ATNState.RULE_STOP)
-            {
-                continue;
-            }
+            // might be optimized away
+            if (s == null) continue;
+            if (s.StateType == ATNState.RULE_STOP) continue;
 
             for (int i = 0; i < s.NumberOfTransitions; i++)
             {
                 var t = s.Transition(i);
-
                 if (atn.states[(t.target.stateNumber)] == null)
-                {
                     throw new IllegalStateException("Cannot serialize a transition to a removed state.");
-                }
 
                 int src = s.stateNumber;
                 int trg = t.target.stateNumber;
@@ -256,10 +245,8 @@ public class ATNSerializer
         SerializeSets(data, sets.Keys);
         Dictionary<IntervalSet, int> setIndices = new();
         int setIndex = 0;
-        foreach (IntervalSet s in sets.Keys)
-        {
+        foreach (var s in sets.Keys)
             setIndices[s] = setIndex++;
-        }
         return setIndices;
     }
 
@@ -268,12 +255,8 @@ public class ATNSerializer
         int nmodes = atn.modeToStartState.Count;
         data.Add(nmodes);
         if (nmodes > 0)
-        {
-            foreach (ATNState modeStartState in atn.modeToStartState)
-            {
+            foreach (var modeStartState in atn.modeToStartState)
                 data.Add(modeStartState.stateNumber);
-            }
-        }
     }
 
     private void AddRuleStatesAndLexerTokenTypes()
@@ -282,7 +265,7 @@ public class ATNSerializer
         data.Add(nrules);
         for (int r = 0; r < nrules; r++)
         {
-            ATNState ruleStartState = atn.ruleToStartState[r];
+            var ruleStartState = atn.ruleToStartState[r];
             data.Add(ruleStartState.stateNumber);
             if (atn.grammarType == ATNType.LEXER)
             {
@@ -296,25 +279,21 @@ public class ATNSerializer
     {
         data.Add(_precedenceStates.Size);
         for (int i = 0; i < _precedenceStates.Size; i++)
-        {
             data.Add(_precedenceStates.Get(i));
-        }
     }
 
     private void AddNonGreedyStates()
     {
         data.Add(nonGreedyStates.Size);
         for (int i = 0; i < nonGreedyStates.Size; i++)
-        {
             data.Add(nonGreedyStates.Get(i));
-        }
     }
 
     private int AddEdges()
     {
         int nedges = 0;
         data.Add(atn.states.Count);
-        foreach (ATNState s in atn.states)
+        foreach (var s in atn.states)
         {
             if (s == null)
             { // might be optimized away
@@ -386,7 +365,7 @@ public class ATNSerializer
             }
 
             data.Add(containsEof ? 1 : 0);
-            foreach (Interval I in set.GetIntervals())
+            foreach (var I in set.GetIntervals())
             {
                 if (I.a == Token.EOF)
                 {
@@ -408,8 +387,6 @@ public class ATNSerializer
         }
     }
 
-    public static IntegerList GetSerialized(ATN atn)
-    {
-        return new ATNSerializer(atn).Serialize();
-    }
+    public static IntegerList GetSerialized(ATN atn) 
+        => new ATNSerializer(atn).Serialize();
 }

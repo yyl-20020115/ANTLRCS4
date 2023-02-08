@@ -23,10 +23,8 @@ public class LexerPushModeAction : LexerAction
 	 * Constructs a new {@code pushMode} action with the specified mode value.
 	 * @param mode The mode value to pass to {@link Lexer#pushMode}.
 	 */
-    public LexerPushModeAction(int mode)
-    {
-        this.mode = mode;
-    }
+    public LexerPushModeAction(int mode) 
+        => this.mode = mode;
 
     /**
 	 * Get the lexer mode this action should transition the lexer to.
@@ -56,10 +54,8 @@ public class LexerPushModeAction : LexerAction
 	 * value provided by {@link #getMode}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.PushMode(mode);
-    }
+    public void Execute(Lexer lexer) 
+        => lexer.PushMode(mode);
 
     //@Override
     public override int GetHashCode()
@@ -71,19 +67,8 @@ public class LexerPushModeAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(Object? obj)
-    {
-        if (obj == this)
-        {
-            return true;
-        }
-        else if (obj is LexerPushModeAction action)
-        {
-            return mode == action.mode;
-        }
-        return false;
-
-    }
+    public override bool Equals(object? o)
+        => o == this || (o is LexerPushModeAction action) && (mode == action.mode);
 
     //@Override
     public override string ToString() => $"pushMode({mode})";

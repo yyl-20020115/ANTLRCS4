@@ -85,11 +85,9 @@ public class LexerIndexedCustomAction : LexerAction
 	 * using the provided {@code lexer}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
+    public void Execute(Lexer lexer) =>
         // assume the input stream position was properly set by the calling code
         action.Execute(lexer);
-    }
 
     //@Override
     public override int GetHashCode()
@@ -101,19 +99,8 @@ public class LexerIndexedCustomAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(object? obj)
-    {
-        if (obj == this)
-        {
-            return true;
-        }
-        else if (obj is LexerIndexedCustomAction other)
-        {
-            return offset == other.offset
-                && action.Equals(other.action);
-        }
-
-        return false;
-    }
+    public override bool Equals(object? o) 
+		=> o == this || (o is LexerIndexedCustomAction other) && (offset == other.offset
+                && action.Equals(other.action));
 
 }

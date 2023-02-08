@@ -105,14 +105,7 @@ public class LexerATNSimulator : ATNSimulator
             this.startIndex = input.Index;
             this.prevAccept.Reset();
             DFA dfa = decisionToDFA[mode];
-            if (dfa.s0 == null)
-            {
-                return MatchATN(input);
-            }
-            else
-            {
-                return ExecATN(input, dfa.s0);
-            }
+            return dfa.s0 == null ? MatchATN(input) : ExecATN(input, dfa.s0);
         }
         finally
         {
@@ -131,15 +124,13 @@ public class LexerATNSimulator : ATNSimulator
     }
 
     //@Override
-    public void ClearDFA()
+    public override void ClearDFA()
     {
         for (int d = 0; d < decisionToDFA.Length; d++)
-        {
             decisionToDFA[d] = new DFA(atn.GetDecisionState(d), d);
-        }
     }
 
-    protected int MatchATN(CharStream input)
+    protected virtual int MatchATN(CharStream input)
     {
         var startState = atn.modeToStartState[mode];
 
@@ -170,7 +161,7 @@ public class LexerATNSimulator : ATNSimulator
         return predict;
     }
 
-    protected int ExecATN(CharStream input, DFAState ds0)
+    protected virtual int ExecATN(CharStream input, DFAState ds0)
     {
         //Console.Out.println("enter exec index "+input.index()+" from "+ds0.configs);
         if (debug)
@@ -212,30 +203,20 @@ public class LexerATNSimulator : ATNSimulator
             // This optimization makes a lot of sense for loops within DFA.
             // A character will take us back to an existing DFA state
             // that already has lots of edges out of it. e.g., .* in comments.
-            DFAState target = GetExistingTargetState(s, t);
+            var target = GetExistingTargetState(s, t);
             target ??= ComputeTargetState(input, s, t);
 
-            if (target == ERROR)
-            {
-                break;
-            }
+            if (target == ERROR) break;
 
             // If this is a consumable input element, make sure to consume before
             // capturing the accept state so the input index, line, and char
             // position accurately reflect the state of the interpreter at the
             // end of the token.
-            if (t != IntStream.EOF)
-            {
-                Consume(input);
-            }
-
+            if (t != IntStream.EOF) Consume(input);
             if (target.isAcceptState)
             {
                 CaptureSimState(prevAccept, input, target);
-                if (t == IntStream.EOF)
-                {
-                    break;
-                }
+                if (t == IntStream.EOF) break;
             }
 
             t = input.LA(1);
@@ -259,11 +240,7 @@ public class LexerATNSimulator : ATNSimulator
 
     protected virtual DFAState GetExistingTargetState(DFAState s, int t)
     {
-        if (s.edges == null || t < MIN_DFA_EDGE || t > MAX_DFA_EDGE)
-        {
-            return null;
-        }
-
+        if (s.edges == null || t < MIN_DFA_EDGE || t > MAX_DFA_EDGE) return null;
         var target = s.edges[t - MIN_DFA_EDGE];
         if (debug && target != null)
         {
@@ -312,7 +289,7 @@ public class LexerATNSimulator : ATNSimulator
         return AddDFAEdge(s, t, reach);
     }
 
-    protected int FailOrAccept(SimState prevAccept, CharStream input,
+    protected virtual int FailOrAccept(SimState prevAccept, CharStream input,
                                ATNConfigSet reach, int t)
     {
         if (prevAccept.dfaState != null)
@@ -325,11 +302,7 @@ public class LexerATNSimulator : ATNSimulator
         else
         {
             // if no accept and EOF is first char, return EOF
-            if (t == IntStream.EOF && input.Index == startIndex)
-            {
-                return Token.EOF;
-            }
-
+            if (t == IntStream.EOF && input.Index == startIndex) return Token.EOF;
             throw new LexerNoViableAltException(recog, input, startIndex, reach);
         }
     }
@@ -338,7 +311,7 @@ public class LexerATNSimulator : ATNSimulator
 	 *  we can reach upon input {@code t}. Parameter {@code reach} is a return
 	 *  parameter.
 	 */
-    protected void GetReachableConfigSet(CharStream input, ATNConfigSet _closure, ATNConfigSet reach, int t)
+    protected virtual void GetReachableConfigSet(CharStream input, ATNConfigSet _closure, ATNConfigSet reach, int t)
     {
         // this is used to skip processing for configs which have a lower priority
         // than a config that already reached an accept state for the same rule
@@ -347,10 +320,7 @@ public class LexerATNSimulator : ATNSimulator
         {
             bool currentAltReachedAcceptState = c.alt == skipAlt;
             if (currentAltReachedAcceptState && ((LexerATNConfig)c).HasPassedThroughNonGreedyDecision())
-            {
                 continue;
-            }
-
             if (debug)
             {
                 Console.Out.WriteLine("testing %s at %s", GetTokenName(t), c.ToString(recog, true));
@@ -382,7 +352,7 @@ public class LexerATNSimulator : ATNSimulator
         }
     }
 
-    protected void Accept(CharStream input, LexerActionExecutor lexerActionExecutor,
+    protected virtual void Accept(CharStream input, LexerActionExecutor lexerActionExecutor,
                           int startIndex, int index, int line, int charPos)
     {
         if (debug)
@@ -402,18 +372,11 @@ public class LexerATNSimulator : ATNSimulator
     }
 
 
-    protected ATNState GetReachableTarget(Transition trans, int t)
-    {
-        if (trans.Matches(t, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE))
-        {
-            return trans.target;
-        }
-
-        return null;
-    }
+    protected virtual ATNState GetReachableTarget(Transition trans, int t) 
+        => trans.Matches(t, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE) ? trans.target : null;
 
 
-    protected ATNConfigSet ComputeStartState(CharStream input,
+    protected virtual ATNConfigSet ComputeStartState(CharStream input,
                                              ATNState p)
     {
         var initialContext = EmptyPredictionContext.Instance;
@@ -437,7 +400,7 @@ public class LexerATNSimulator : ATNSimulator
 	 * @return {@code true} if an accept state is reached, otherwise
 	 * {@code false}.
 	 */
-    protected bool Closure(CharStream input, LexerATNConfig config, ATNConfigSet configs, bool currentAltReachedAcceptState, bool speculative, bool treatEofAsEpsilon)
+    protected virtual bool Closure(CharStream input, LexerATNConfig config, ATNConfigSet configs, bool currentAltReachedAcceptState, bool speculative, bool treatEofAsEpsilon)
     {
         if (debug)
         {
@@ -493,9 +456,7 @@ public class LexerATNSimulator : ATNSimulator
         if (!config.state.OnlyHasEpsilonTransitions())
         {
             if (!currentAltReachedAcceptState || !config.HasPassedThroughNonGreedyDecision())
-            {
                 configs.Add(config);
-            }
         }
 
         var p = config.state;
@@ -504,9 +465,7 @@ public class LexerATNSimulator : ATNSimulator
             var t = p.Transition(i);
             var c = GetEpsilonTarget(input, config, t, configs, speculative, treatEofAsEpsilon);
             if (c != null)
-            {
                 currentAltReachedAcceptState = Closure(input, c, configs, currentAltReachedAcceptState, speculative, treatEofAsEpsilon);
-            }
         }
 
         return currentAltReachedAcceptState;
@@ -514,7 +473,7 @@ public class LexerATNSimulator : ATNSimulator
 
     // side-effect: can alter configs.hasSemanticContext
 
-    protected LexerATNConfig GetEpsilonTarget(CharStream input,
+    protected virtual LexerATNConfig GetEpsilonTarget(CharStream input,
                                            LexerATNConfig config,
                                            Transition t,
                                            ATNConfigSet configs,
@@ -634,7 +593,7 @@ public class LexerATNSimulator : ATNSimulator
 	 * @return {@code true} if the specified predicate evaluates to
 	 * {@code true}.
 	 */
-    protected bool EvaluatePredicate(CharStream input, int ruleIndex, int predIndex, bool speculative)
+    protected virtual bool EvaluatePredicate(CharStream input, int ruleIndex, int predIndex, bool speculative)
     {
         // assume true if no recognizer was provided
         if (recog == null)
@@ -665,7 +624,7 @@ public class LexerATNSimulator : ATNSimulator
         }
     }
 
-    protected void CaptureSimState(SimState settings,
+    protected virtual void CaptureSimState(SimState settings,
                                    CharStream input,
                                    DFAState dfaState)
     {
@@ -676,7 +635,7 @@ public class LexerATNSimulator : ATNSimulator
     }
 
 
-    protected DFAState AddDFAEdge(DFAState from,
+    protected virtual DFAState AddDFAEdge(DFAState from,
                                   int t,
                                   ATNConfigSet q)
     {
@@ -697,11 +656,7 @@ public class LexerATNSimulator : ATNSimulator
 
         var to = AddDFAState(q);
 
-        if (suppressEdge)
-        {
-            return to;
-        }
-
+        if (suppressEdge) return to;
         AddDFAEdge(from, t, to);
         return to;
     }
@@ -733,7 +688,7 @@ public class LexerATNSimulator : ATNSimulator
 		traversing the DFA, we will know which rule to accept.
 	 */
 
-    protected DFAState AddDFAState(ATNConfigSet configs)
+    protected virtual DFAState AddDFAState(ATNConfigSet configs)
     {
         /* the lexer evaluates predicates on-the-fly; by this point configs
 		 * should not contain any configurations with unevaluated predicates.
@@ -774,41 +729,20 @@ public class LexerATNSimulator : ATNSimulator
     }
 
 
-    public DFA GetDFA(int mode)
-    {
-        return decisionToDFA[mode];
-    }
+    public virtual DFA GetDFA(int mode) => decisionToDFA[mode];
 
     /** Get the text matched so far for the current token.
 	 */
 
-    public string GetText(CharStream input)
-    {
+    public virtual string GetText(CharStream input) =>
         // index is first lookahead char, don't include.
-        return input.GetText(Interval.Of(startIndex, input.Index - 1));
-    }
+        input.GetText(Interval.Of(startIndex, input.Index - 1));
 
-    public int GetLine()
-    {
-        return line;
-    }
+    public virtual int Line { get => line; set => this.line = value; }
 
-    public void SetLine(int line)
-    {
-        this.line = line;
-    }
+    public virtual int CharPositionInLine { get => charPositionInLine; set => this.charPositionInLine = value; }
 
-    public int GetCharPositionInLine()
-    {
-        return charPositionInLine;
-    }
-
-    public void SetCharPositionInLine(int charPositionInLine)
-    {
-        this.charPositionInLine = charPositionInLine;
-    }
-
-    public void Consume(CharStream input)
+    public virtual void Consume(CharStream input)
     {
         int curChar = input.LA(1);
         if (curChar == '\n')
@@ -824,10 +758,7 @@ public class LexerATNSimulator : ATNSimulator
     }
 
 
-    public string GetTokenName(int t)
-    {
-        if (t == -1) return "EOF";
-        //if ( atn.g!=null ) return atn.g.getTokenDisplayName(t);
-        return "'" + (char)t + "'";
-    }
+    public static string GetTokenName(int t) =>
+        t == -1 ? "EOF" : "'" + char.ConvertFromUtf32(t) + "'";
+    //if ( atn.g!=null ) return atn.g.getTokenDisplayName(t);
 }

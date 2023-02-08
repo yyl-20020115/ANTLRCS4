@@ -93,17 +93,19 @@ public class ATNConfig
         this.semanticContext = semanticContext;
     }
 
-    public ATNConfig(ATNConfig c, ATNState state) : this(c, state, c.context, c.semanticContext)
+    public ATNConfig(ATNConfig c, ATNState state)
+        : this(c, state, c.context, c.semanticContext)
     {
     }
 
     public ATNConfig(ATNConfig c, ATNState state,
-         SemanticContext semanticContext) : this(c, state, c.context, semanticContext)
+         SemanticContext semanticContext) 
+        : this(c, state, c.context, semanticContext)
     {
     }
 
-    public ATNConfig(ATNConfig c,
-                     SemanticContext semanticContext) : this(c, c.state, c.context, semanticContext)
+    public ATNConfig(ATNConfig c, SemanticContext semanticContext)
+        : this(c, c.state, c.context, semanticContext)
     {
     }
 
@@ -130,20 +132,19 @@ public class ATNConfig
 	 */
     public int OuterContextDepth => reachesIntoOuterContext & ~SUPPRESS_PRECEDENCE_FILTER;
 
-    public bool IsPrecedenceFilterSuppressed()
+    public bool PrecedenceFilterSuppressed
     {
-        return (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
-    }
-
-    public void SetPrecedenceFilterSuppressed(bool value)
-    {
-        if (value)
+        get => (reachesIntoOuterContext & SUPPRESS_PRECEDENCE_FILTER) != 0;
+        set
         {
-            this.reachesIntoOuterContext |= 0x40000000;
-        }
-        else
-        {
-            this.reachesIntoOuterContext &= ~SUPPRESS_PRECEDENCE_FILTER;
+            if (value)
+            {
+                this.reachesIntoOuterContext |= 0x40000000;
+            }
+            else
+            {
+                this.reachesIntoOuterContext &= ~SUPPRESS_PRECEDENCE_FILTER;
+            }
         }
     }
 
@@ -152,15 +153,7 @@ public class ATNConfig
      *  syntactic/semantic contexts are the same.
      */
     //@Override
-    public override bool Equals(object? o)
-    {
-        if (o is not ATNConfig other)
-        {
-            return false;
-        }
-
-        return this.Equals(other);
-    }
+    public override bool Equals(object? o) => o is ATNConfig other && this.Equals(other);
 
     public bool Equals(ATNConfig other)
     {
@@ -175,9 +168,9 @@ public class ATNConfig
 
         return this.state.stateNumber == other.state.stateNumber
             && this.alt == other.alt
-            && Objects.DoEquals(this.context, other.context)
+            && RuntimeUtils.DoEquals(this.context, other.context)
             && this.semanticContext.Equals(other.semanticContext)
-            && this.IsPrecedenceFilterSuppressed() == other.IsPrecedenceFilterSuppressed();
+            && this.PrecedenceFilterSuppressed == other.PrecedenceFilterSuppressed;
     }
 
     //@Override

@@ -302,9 +302,7 @@ public class ParserATNSimulator : ATNSimulator
     public override void ClearDFA()
     {
         for (int d = 0; d < decisionToDFA.Length; d++)
-        {
             decisionToDFA[d] = new DFA(atn.GetDecisionState(d), d);
-        }
     }
 
     public virtual int AdaptivePredict(TokenStream input, int decision,
@@ -555,12 +553,7 @@ public class ParserATNSimulator : ATNSimulator
     protected virtual DFAState GetExistingTargetState(DFAState previousD, int t)
     {
         var edges = previousD.edges;
-        if (edges == null || t + 1 < 0 || t + 1 >= edges.Length)
-        {
-            return null;
-        }
-
-        return edges[t + 1];
+        return edges == null || t + 1 < 0 || t + 1 >= edges.Length ? null : edges[t + 1];
     }
 
     /**
@@ -920,7 +913,7 @@ public class ParserATNSimulator : ATNSimulator
         if (skippedStopStates != null && (!fullCtx || !PredictionModeTools.HasConfigInRuleStopState(reach)))
         {
             //assert !skippedStopStates.isEmpty();
-            foreach (ATNConfig c in skippedStopStates)
+            foreach (var c in skippedStopStates)
             {
                 reach.Add(c, mergeCache);
             }
@@ -1201,7 +1194,7 @@ public class ParserATNSimulator : ATNSimulator
                 continue;
             }
 
-            if (!config.IsPrecedenceFilterSuppressed())
+            if (!config.PrecedenceFilterSuppressed)
             {
                 /* In the future, this elimination step could be updated to also
 				 * filter the prediction context for alternatives predicting alt>1
@@ -1636,7 +1629,7 @@ public class ParserATNSimulator : ATNSimulator
                         int outermostPrecedenceReturn = e.OutermostPrecedenceReturn;
                         if (outermostPrecedenceReturn == _dfa.atnStartState.ruleIndex)
                         {
-                            c.SetPrecedenceFilterSuppressed(true);
+                            c.                            PrecedenceFilterSuppressed = true;
                         }
                     }
 

@@ -108,12 +108,12 @@ public abstract class PredictionContext
     {
         int hash = MurmurHash.Initialize(INITIAL_HASH);
 
-        foreach (PredictionContext parent in parents)
+        foreach (var parent in parents)
         {
             hash = MurmurHash.Update(hash, parent);
         }
 
-        foreach (int returnState in returnStates)
+        foreach (var returnState in returnStates)
         {
             hash = MurmurHash.Update(hash, returnState);
         }
@@ -197,22 +197,22 @@ public abstract class PredictionContext
     {
         if (mergeCache != null)
         {
-            PredictionContext previous = mergeCache.Get(a, b);
+            var previous = mergeCache.Get(a, b);
             if (previous != null) return previous;
             previous = mergeCache.Get(b, a);
             if (previous != null) return previous;
         }
 
-        PredictionContext rootMerge = MergeRoot(a, b, rootIsWildcard);
+        var rootMerge = MergeRoot(a, b, rootIsWildcard);
         if (rootMerge != null)
         {
-            if (mergeCache != null) mergeCache.Put(a, b, rootMerge);
+            mergeCache?.Put(a, b, rootMerge);
             return rootMerge;
         }
 
         if (a.returnState == b.returnState)
         { // a == b
-            PredictionContext parent = Merge(a.parent, b.parent, rootIsWildcard, mergeCache);
+            var parent = Merge(a.parent, b.parent, rootIsWildcard, mergeCache);
             // if parent is same as existing a or b parent or reduced to a parent, return it
             if (parent == a.parent) return a; // ax + bx = ax, if a=b
             if (parent == b.parent) return b; // ax + bx = bx, if a=b
@@ -220,8 +220,8 @@ public abstract class PredictionContext
                                               // merge parents x and y, giving array node with x,y then remainders
                                               // of those graphs.  dup a, a' points at merged array
                                               // new joined parent so create new singleton pointing to it, a'
-            PredictionContext a_ = SingletonPredictionContext.Create(parent, a.returnState);
-            if (mergeCache != null) mergeCache.Put(a, b, a_);
+            var a_ = SingletonPredictionContext.Create(parent, a.returnState);
+            mergeCache?.Put(a, b, a_);
             return a_;
         }
         else
@@ -243,7 +243,7 @@ public abstract class PredictionContext
                 }
                 PredictionContext[] _parents = { singleParent, singleParent };
                 PredictionContext _a_ = new ArrayPredictionContext(_parents, _payloads);
-                if (mergeCache != null) mergeCache.Put(a, b, _a_);
+                mergeCache?.Put(a, b, _a_);
                 return _a_;
             }
             // parents differ and can't merge them. Just pack together
@@ -257,8 +257,8 @@ public abstract class PredictionContext
                 payloads[1] = a.returnState;
                 parents = new PredictionContext[] { b.parent, a.parent };
             }
-            PredictionContext a_ = new ArrayPredictionContext(parents, payloads);
-            if (mergeCache != null) mergeCache.Put(a, b, a_);
+            var a_ = new ArrayPredictionContext(parents, payloads);
+            mergeCache?.Put(a, b, a_);
             return a_;
         }
     }
@@ -317,7 +317,7 @@ public abstract class PredictionContext
             { // $ + x = [x,$]
                 int[] payloads = { b.returnState, EMPTY_RETURN_STATE };
                 PredictionContext[] parents = { b.parent, null };
-                PredictionContext joined =
+                var joined =
                     new ArrayPredictionContext(parents, payloads);
                 return joined;
             }
@@ -325,7 +325,7 @@ public abstract class PredictionContext
             { // x + $ = [x,$] ($ is always last if present)
                 int[] payloads = { a.returnState, EMPTY_RETURN_STATE };
                 PredictionContext[] parents = { a.parent, null };
-                PredictionContext joined =
+                var joined =
                     new ArrayPredictionContext(parents, payloads);
                 return joined;
             }
@@ -489,7 +489,7 @@ public abstract class PredictionContext
 
         for (int p = 0; p < parents.Length; p++)
         {
-            PredictionContext parent = parents[p];
+            var parent = parents[p];
             if (!uniqueParents.ContainsKey(parent))
             { // don't replace
                 uniqueParents[parent] = parent;

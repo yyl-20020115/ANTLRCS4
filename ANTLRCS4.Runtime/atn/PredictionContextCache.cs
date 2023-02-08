@@ -34,5 +34,5 @@ public class PredictionContextCache
     public PredictionContext Get(PredictionContext ctx) 
         => cache.TryGetValue(ctx, out var prediction) ? prediction : null;
 
-    public int Size => cache.Count;
+    public int Count => cache.Count;
 }

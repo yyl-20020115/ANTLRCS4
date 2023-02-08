@@ -10,22 +10,84 @@ namespace org.antlr.v4.runtime.misc;
 
 public static class RuntimeUtils
 {
+    public static bool DoEquals(object? a, object? b)
+    => (a == b) || (a != null && a.Equals(b));
+
+    public static void RequireNonNull(object? o)
+    {
+        if (o == null) throw new ArgumentNullException(nameof(o));
+    }
+
+    public static int BitCount(long v)
+    {
+        v -= ((v >>> 1) & 0x5555555555555555L);
+        v = (v & 0x3333333333333333L) + ((v >>> 2) & 0x3333333333333333L);
+        v = (v + (v >>> 4)) & 0x0f0f0f0f0f0f0f0fL;
+        v += (v >>> 8);
+        v += (v >>> 16);
+        v += (v >>> 32);
+        return (int)v & 0x7f;
+    }
+
+    public static int NumberOfLeadingZeros(long v)
+    {
+        int x = (int)(v >>> 32);
+        return x == 0 ? 32 + NumberOfLeadingZeros((int)v)
+                : NumberOfLeadingZeros(x);
+    }
+
+    public static int NumberOfTrailingZeros(long v)
+    {
+        int x = (int)v;
+        return x == 0 ? 32 + NumberOfTrailingZeros((int)(v >>> 32))
+                : NumberOfTrailingZeros(x);
+    }
+
+    public static int BitCount(int v)
+    {
+        v -= ((v >>> 1) & 0x55555555);
+        v = (v & 0x33333333) + ((v >>> 2) & 0x33333333);
+        v = (v + (v >>> 4)) & 0x0f0f0f0f;
+        v += (v >>> 8);
+        v += (v >>> 16);
+        return v & 0x3f;
+    }
+
+    public static int NumberOfLeadingZeros(int v)
+    {
+        if (v <= 0)
+            return v == 0 ? 32 : 0;
+        int n = 31;
+        if (v >= 1 << 16) { n -= 16; v >>>= 16; }
+        if (v >= 1 << 8) { n -= 8; v >>>= 8; }
+        if (v >= 1 << 4) { n -= 4; v >>>= 4; }
+        if (v >= 1 << 2) { n -= 2; v >>>= 2; }
+        return n - (v >>> 1);
+    }
+
+    public static int NumberOfTrailingZeros(int v)
+    {
+        v = ~v & (v - 1);
+        if (v <= 0) return v & 32;
+        int n = 1;
+        if (v > 1 << 16) { n += 16; v >>>= 16; }
+        if (v > 1 << 8) { n += 8; v >>>= 8; }
+        if (v > 1 << 4) { n += 4; v >>>= 4; }
+        if (v > 1 << 2) { n += 2; v >>>= 2; }
+        return n + (v >>> 1);
+    }
+
     public static int ObjectsHash(params object[] array)
     {
         if (array == null)
             return 0;
 
         int result = 1;
-
         foreach (var element in array)
             result = 31 * result + (element == null ? 0 : element.GetHashCode());
-
         return result;
     }
-    public static bool ObjectsEquals(object a, object b)
-    {
-        return (a == b) || (a != null && a.Equals(b));
-    }
+    public static bool ObjectsEquals(object a, object b) => (a == b) || (a != null && a.Equals(b));
     public static short[] Convert(char[] chars)
     {
         var shorts = new short[chars.Length];
@@ -43,16 +105,12 @@ public static class RuntimeUtils
     {
         var list = new List<T>();
         while (iter.MoveNext())
-        {
             list.Add(iter.Current);
-        }
 
         return string.Join(separator, list);
     }
-    public static string Join<T>(IEnumerable<T> values, string separator)
-    {
-        return string.Join(separator, values.ToArray());
-    }
+    public static string Join<T>(IEnumerable<T> values, string separator) 
+        => string.Join(separator, values.ToArray());
 
     public static string Join<T>(T[] array, String separator)
     {
@@ -61,9 +119,7 @@ public static class RuntimeUtils
         {
             builder.Append(array[i]);
             if (i < array.Length - 1)
-            {
                 builder.Append(separator);
-            }
         }
 
         return builder.ToString();
@@ -74,9 +130,7 @@ public static class RuntimeUtils
         int n = 0;
         if (data == null) return n;
         foreach (var o in data)
-        {
             if (o != null) n++;
-        }
         return n;
     }
 
@@ -109,7 +163,6 @@ public static class RuntimeUtils
     {
         File.WriteAllText(fileName, content, Encoding.GetEncoding(encoding));
     }
-
 
     public static char[] ReadFile(string fileName)
     {

@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
@@ -441,10 +440,7 @@ public static class PredictionModeTools
 	 * @return {@code true} if every {@link BitSet} in {@code altsets} has
 	 * {@link BitSet#cardinality cardinality} &gt; 1, otherwise {@code false}
 	 */
-    public static bool AllSubsetsConflict(ICollection<BitSet> altsets)
-    {
-        return !HasNonConflictingAltSet(altsets);
-    }
+    public static bool AllSubsetsConflict(ICollection<BitSet> altsets) => !HasNonConflictingAltSet(altsets);
 
     /**
 	 * Determines if any single alternative subset in {@code altsets} contains

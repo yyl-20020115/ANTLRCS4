@@ -14,10 +14,7 @@ public class AtomTransition : Transition
     /** The token type or character value; or, signifies special label. */
     public readonly int _label;
 
-    public AtomTransition(ATNState target, int label) : base(target)
-    {
-        this._label = label;
-    }
+    public AtomTransition(ATNState target, int label) : base(target) => this._label = label;
 
     //@Override
     public override int SerializationType => ATOM;

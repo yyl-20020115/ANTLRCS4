@@ -49,10 +49,7 @@ public class LexerPopModeAction : LexerAction
 	 * <p>This action is implemented by calling {@link Lexer#popMode}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.PopMode();
-    }
+    public void Execute(Lexer lexer) => lexer.PopMode();
 
     //@Override
     public override int GetHashCode()

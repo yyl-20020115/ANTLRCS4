@@ -493,7 +493,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 return bypassAltsAtnCache;
             }
             var deserializationOptions = new ATNDeserializationOptions();
-            deserializationOptions.SetGenerateRuleBypassTransitions(true);
+            deserializationOptions.            GenerateRuleBypassTransitions = true;
             bypassAltsAtnCache = new ATNDeserializer(deserializationOptions).Deserialize(serializedAtn.ToCharArray());
             return bypassAltsAtnCache;
         }

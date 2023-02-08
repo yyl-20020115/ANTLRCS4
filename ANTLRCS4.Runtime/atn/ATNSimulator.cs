@@ -13,7 +13,7 @@ public abstract class ATNSimulator
 {
     /** Must distinguish between missing edge and edge we know leads nowhere */
 
-    public static readonly DFAState ERROR;
+    public static readonly DFAState ERROR = new(new ATNConfigSet());
 
     public readonly ATN atn;
 
@@ -41,7 +41,6 @@ public abstract class ATNSimulator
 
     static ATNSimulator()
     {
-        ERROR = new (new ATNConfigSet());
         ERROR.stateNumber = int.MaxValue;// int.MaxValue;
     }
 
@@ -81,11 +80,9 @@ public abstract class ATNSimulator
 
         lock (sharedContextCache)
         {
-            var visited =
-                new Dictionary<PredictionContext, PredictionContext>();
             return PredictionContext.GetCachedContext(context,
                                                       sharedContextCache,
-                                                      visited);
+                                                      new());
         }
     }
 }

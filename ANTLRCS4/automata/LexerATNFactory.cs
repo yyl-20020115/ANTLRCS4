@@ -428,10 +428,10 @@ public class LexerATNFactory : ParserATNFactory
             {
                 return true;
             }
-            return Objects.DoEquals(this.mode, that.mode) &&
-                Objects.DoEquals(this.inRange, that.inRange) &&
-                Objects.DoEquals(this.prevCodePoint, that.prevCodePoint) &&
-                Objects.DoEquals(this.prevProperty, that.prevProperty);
+            return RuntimeUtils.DoEquals(this.mode, that.mode) &&
+                RuntimeUtils.DoEquals(this.inRange, that.inRange) &&
+                RuntimeUtils.DoEquals(this.prevCodePoint, that.prevCodePoint) &&
+                RuntimeUtils.DoEquals(this.prevProperty, that.prevProperty);
         }
 
         //@Override

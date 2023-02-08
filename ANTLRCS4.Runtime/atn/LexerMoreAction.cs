@@ -50,10 +50,7 @@ public class LexerMoreAction : LexerAction
 	 * <p>This action is implemented by calling {@link Lexer#more}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.More();
-    }
+    public void Execute(Lexer lexer) => lexer.More();
 
     //@Override
     public override int GetHashCode()

@@ -8,12 +8,3 @@ using org.antlr.v4.runtime.atn;
 
 namespace ANTLRCS4.Runtime;
 
-public static class Objects
-{
-    public static bool DoEquals(object? a, object? b) => (a == b) || (a != null && a.Equals(b));
-
-    public static void RequireNonNull(object? o)
-    {
-        if(o == null) throw new ArgumentNullException(nameof(o));
-    }
-}

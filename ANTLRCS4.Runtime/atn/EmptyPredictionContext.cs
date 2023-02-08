@@ -20,7 +20,7 @@ public class EmptyPredictionContext : SingletonPredictionContext
     public override bool IsEmpty => true;
 
     //@Override
-    public int Size => 1;
+    public override int Count => 1;
 
     //@Override
     public override PredictionContext GetParent(int index) => null;

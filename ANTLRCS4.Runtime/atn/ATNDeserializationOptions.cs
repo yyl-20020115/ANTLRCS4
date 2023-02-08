@@ -14,10 +14,9 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class ATNDeserializationOptions
 {
-    private static readonly ATNDeserializationOptions defaultOptions;
+    private static readonly ATNDeserializationOptions defaultOptions = new();
     static ATNDeserializationOptions()
     {
-        defaultOptions = new ATNDeserializationOptions();
         defaultOptions.MakeReadOnly();
     }
 
@@ -40,43 +39,33 @@ public class ATNDeserializationOptions
 
     public static ATNDeserializationOptions GetDefaultOptions() => defaultOptions;
 
-    public bool IsReadOnly()
+    public bool IsReadOnly => this.readOnly;
+
+    public void MakeReadOnly() => this.readOnly = true;
+
+    public bool VerifyATN
     {
-        return readOnly;
+        get => verifyATN;
+        set
+        {
+            ThrowIfReadOnly();
+            this.verifyATN = value;
+        }
     }
 
-    public void MakeReadOnly()
+    public bool GenerateRuleBypassTransitions
     {
-        readOnly = true;
-    }
-
-    public bool IsVerifyATN()
-    {
-        return verifyATN;
-    }
-
-    public void SetVerifyATN(bool verifyATN)
-    {
-        ThrowIfReadOnly();
-        this.verifyATN = verifyATN;
-    }
-
-    public bool IsGenerateRuleBypassTransitions()
-    {
-        return generateRuleBypassTransitions;
-    }
-
-    public void SetGenerateRuleBypassTransitions(bool generateRuleBypassTransitions)
-    {
-        ThrowIfReadOnly();
-        this.generateRuleBypassTransitions = generateRuleBypassTransitions;
+        get => generateRuleBypassTransitions;
+        set
+        {
+            ThrowIfReadOnly();
+            this.generateRuleBypassTransitions = value;
+        }
     }
 
     protected void ThrowIfReadOnly()
     {
-        if (IsReadOnly())
-        {
+        if (IsReadOnly)
             throw new IllegalStateException("The object is read only.");
-        }
     }
 }

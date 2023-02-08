@@ -23,17 +23,14 @@ public class LexerChannelAction : LexerAction
 	 * Constructs a new {@code channel} action with the specified channel value.
 	 * @param channel The channel value to pass to {@link Lexer#setChannel}.
 	 */
-    public LexerChannelAction(int channel)
-    {
-        this.channel = channel;
-    }
+    public LexerChannelAction(int channel) => this.channel = channel;
 
     /**
 	 * Gets the channel to use for the {@link Token} created by the lexer.
 	 *
 	 * @return The channel to use for the {@link Token} created by the lexer.
 	 */
-    public int GetChannel() => channel;
+    public int Channel => channel;
 
     /**
 	 * {@inheritDoc}
@@ -56,10 +53,7 @@ public class LexerChannelAction : LexerAction
 	 * value provided by {@link #getChannel}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.        Channel = channel;
-    }
+    public void Execute(Lexer lexer) => lexer.Channel = channel;
 
     //@Override
     public override int GetHashCode()
@@ -71,19 +65,8 @@ public class LexerChannelAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(Object? obj)
-    {
-        if (obj == this)
-        {
-            return true;
-        }
-        else if (obj is LexerChannelAction action)
-        {
-            return channel == action.channel;
-        }
-        return false;
-
-    }
+    public override bool Equals(object? o) 
+        => o == this || (o is LexerChannelAction action) && (channel == action.channel);
 
     //@Override
     public override string ToString() => $"channel({channel})";

@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="atn\Integer.cs" />
+    <Compile Remove="atn\Objects.cs" />
     <Compile Remove="misc\Runtime.cs" />
     <Compile Remove="misc\TestRig.cs" />
   </ItemGroup>

@@ -25,9 +25,11 @@ public class RangeTransition : Transition
 
     //@Override
 
-    public override IntervalSet Label => IntervalSet.Of(from, to);
+    public override IntervalSet Label
+        => IntervalSet.Of(from, to);
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => symbol >= from && symbol <= to;
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
+        => symbol >= from && symbol <= to;
 
     //@Override
     public override string ToString() => new StringBuilder("'")

@@ -23,8 +23,6 @@ public class OrderedATNConfigSet : ATNConfigSet
     public class LexerConfigHashSet : AbstractConfigHashSet
     {
         public LexerConfigHashSet()
-            : base(TEqualityComparator<ATNConfig>.INSTANCE)
-        {
-        }
+            : base(TEqualityComparator<ATNConfig>.INSTANCE) { }
     }
 }

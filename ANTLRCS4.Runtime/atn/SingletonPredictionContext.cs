@@ -47,7 +47,7 @@ public class SingletonPredictionContext : PredictionContext
     }
 
     //@Override
-    public override bool Equals(Object? o)
+    public override bool Equals(object? o)
     {
         if (this == o)
         {
@@ -59,7 +59,7 @@ public class SingletonPredictionContext : PredictionContext
                 return false; // can't be same if hash is different
             else
                 return returnState == s.returnState &&
-                (parent != null && parent.Equals(s.parent));
+                    (parent != null && parent.Equals(s.parent));
         }
         return false;
 

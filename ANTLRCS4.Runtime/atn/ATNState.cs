@@ -127,7 +127,7 @@ public abstract class ATNState
     public override bool Equals(object? o)
     {
         // are these states same object?
-        return o is ATNState state ? stateNumber == state.stateNumber : false;
+        return o is ATNState state && stateNumber == state.stateNumber;
     }
 
     public bool IsNonGreedyExitState => false;

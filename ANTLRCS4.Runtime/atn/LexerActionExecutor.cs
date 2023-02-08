@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.atn;
@@ -38,13 +37,9 @@ public class LexerActionExecutor
     public LexerActionExecutor(LexerAction[] lexerActions)
     {
         this.lexerActions = lexerActions;
-
         int hash = MurmurHash.Initialize();
         foreach (LexerAction lexerAction in lexerActions)
-        {
             hash = MurmurHash.Update(hash, lexerAction);
-        }
-
         this.hashCode = MurmurHash.Finish(hash, lexerActions.Length);
     }
 
@@ -66,9 +61,7 @@ public class LexerActionExecutor
     public static LexerActionExecutor Append(LexerActionExecutor lexerActionExecutor, LexerAction lexerAction)
     {
         if (lexerActionExecutor == null)
-        {
             return new LexerActionExecutor(new LexerAction[] { lexerAction });
-        }
 
         var lexerActions = Arrays.CopyOf(lexerActionExecutor.lexerActions, lexerActionExecutor.lexerActions.Length + 1);
         lexerActions[^1] = lexerAction;
@@ -116,12 +109,7 @@ public class LexerActionExecutor
             }
         }
 
-        if (updatedLexerActions == null)
-        {
-            return this;
-        }
-
-        return new LexerActionExecutor(updatedLexerActions);
+        return updatedLexerActions == null ? this : new LexerActionExecutor(updatedLexerActions);
     }
 
     /**
@@ -151,8 +139,8 @@ public class LexerActionExecutor
 	 */
     public void Execute(Lexer lexer, CharStream input, int startIndex)
     {
-        bool requiresSeek = false;
-        int stopIndex = input.Index;
+        var requiresSeek = false;
+        var stopIndex = input.Index;
         try
         {
             foreach (var lexerAction in lexerActions)

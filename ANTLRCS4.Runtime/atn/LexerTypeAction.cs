@@ -52,10 +52,8 @@ public class LexerTypeAction : LexerAction
 	 * value provided by {@link #getType}.</p>
 	 */
     //@Override
-    public void Execute(Lexer lexer)
-    {
-        lexer.        Type = type;
-    }
+    public void Execute(Lexer lexer) 
+        => lexer.Type = type;
 
     //@Override
     public override int GetHashCode()
@@ -67,18 +65,8 @@ public class LexerTypeAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(object? obj)
-    {
-        if (obj == this)
-        {
-            return true;
-        }
-        else if (obj is LexerTypeAction)
-        {
-            return type == ((LexerTypeAction)obj).type;
-        }
-        return false;
-    }
+    public override bool Equals(object? o) 
+        => o == this || (o is LexerTypeAction a) && (type == a.type);
 
     //@Override
     public override string ToString() => $"type({type})";

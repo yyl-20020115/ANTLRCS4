@@ -4,8 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime.dfa;
-
 namespace org.antlr.v4.runtime.atn;
 
 
@@ -29,7 +27,7 @@ public class ParseInfo
 	 * @return An array of {@link DecisionInfo} instances, indexed by decision
 	 * number.
 	 */
-    public DecisionInfo[] GetDecisionInfo() => atnSimulator.getDecisionInfo();
+    public DecisionInfo[] GetDecisionInfo() => atnSimulator.GetDecisionInfo();
 
     /**
 	 * Gets the decision numbers for decisions that required one or more
@@ -41,7 +39,7 @@ public class ParseInfo
 	 */
     public List<int> GetLLDecisions()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         List<int> LL = new();
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -58,7 +56,7 @@ public class ParseInfo
 	 */
     public long GetTotalTimeInPrediction()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long t = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -74,7 +72,7 @@ public class ParseInfo
 	 */
     public long GetTotalSLLLookaheadOps()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -90,7 +88,7 @@ public class ParseInfo
 	 */
     public long GetTotalLLLookaheadOps()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -105,7 +103,7 @@ public class ParseInfo
 	 */
     public long GetTotalSLLATNLookaheadOps()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -120,7 +118,7 @@ public class ParseInfo
 	 */
     public long GetTotalLLATNLookaheadOps()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -139,7 +137,7 @@ public class ParseInfo
 	 */
     public long GetTotalATNLookaheadOps()
     {
-        var decisions = atnSimulator.getDecisionInfo();
+        var decisions = atnSimulator.GetDecisionInfo();
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {

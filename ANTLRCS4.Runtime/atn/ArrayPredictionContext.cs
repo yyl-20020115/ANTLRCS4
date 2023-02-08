@@ -81,7 +81,7 @@ public class ArrayPredictionContext : PredictionContext
             if (i > 0) buffer.Append(", ");
             if (returnStates[i] == EMPTY_RETURN_STATE)
             {
-                buffer.Append("$");
+                buffer.Append('$');
                 continue;
             }
             buffer.Append(returnStates[i]);

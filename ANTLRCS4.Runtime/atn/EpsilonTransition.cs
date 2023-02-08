@@ -12,9 +12,7 @@ public class EpsilonTransition : Transition
     private readonly int _outermostPrecedenceReturn;
 
     public EpsilonTransition(ATNState target, int outermostPrecedenceReturn = -1) : base(target)
-    {
-        this._outermostPrecedenceReturn = outermostPrecedenceReturn;
-    }
+        => this._outermostPrecedenceReturn = outermostPrecedenceReturn;
 
     /**
 	 * @return the rule index of a precedence rule for which this transition is
@@ -35,6 +33,5 @@ public class EpsilonTransition : Transition
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
     //@Override
-
     public override string ToString() => "epsilon";
 }

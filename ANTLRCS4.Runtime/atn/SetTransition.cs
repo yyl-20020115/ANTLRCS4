@@ -25,9 +25,11 @@ public class SetTransition : Transition
 
     //@Override
 
-    public override IntervalSet Label => label;
+    public override IntervalSet Label 
+        => label;
     //@Override
-    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => label.Contains(symbol);
+    public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
+        => label.Contains(symbol);
 
     //@Override
 

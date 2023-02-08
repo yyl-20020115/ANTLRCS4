@@ -100,17 +100,7 @@ public class LexerCustomAction : LexerAction
     }
 
     //@Override
-    public override bool Equals(object? obj)
-    {
-        if (obj == this)
-        {
-            return true;
-        }
-        else if (obj is LexerCustomAction other)
-        {
-            return ruleIndex == other.ruleIndex
-                && actionIndex == other.actionIndex;
-        }
-        return false;
-    }
+    public override bool Equals(object? o) 
+        => o == this || (o is LexerCustomAction other) && (ruleIndex == other.ruleIndex
+            && actionIndex == other.actionIndex);
 }

@@ -195,8 +195,8 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
                 token = null;
                 _channel = Token.DEFAULT_CHANNEL;
                 _tokenStartCharIndex = input.Index;
-                _tokenStartCharPositionInLine = GetInterpreter().GetCharPositionInLine();
-                _tokenStartLine = GetInterpreter().GetLine();
+                _tokenStartCharPositionInLine = GetInterpreter().CharPositionInLine;
+                _tokenStartLine = GetInterpreter().Line;
                 _text = null;
                 do
                 {
@@ -319,16 +319,16 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     }
 
     //@Override
-    public int Line => GetInterpreter().GetLine();
+    public int Line => GetInterpreter().Line;
 
     //@Override
-    public int CharPositionInLine => GetInterpreter().GetCharPositionInLine();
+    public int CharPositionInLine => GetInterpreter().CharPositionInLine;
 
-    public void SetLine(int line) => GetInterpreter().SetLine(line);
+    public void SetLine(int line) => GetInterpreter().Line = line;
 
     public void SetCharPositionInLine(int charPositionInLine)
     {
-        GetInterpreter().SetCharPositionInLine(charPositionInLine);
+        GetInterpreter().        CharPositionInLine = charPositionInLine;
     }
 
     /** What is the index of the current character of lookahead? */
