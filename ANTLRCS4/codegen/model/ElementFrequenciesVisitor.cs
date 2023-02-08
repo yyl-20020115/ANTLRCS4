@@ -23,8 +23,8 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 */
     private static readonly FrequencySet<string> SENTINEL = new ();
 
-    public readonly Deque<FrequencySet<string>> frequencies = new();
-    private readonly Deque<FrequencySet<string>> minFrequencies = new();
+    public readonly ArrayDeque<FrequencySet<string>> frequencies = new();
+    private readonly ArrayDeque<FrequencySet<string>> minFrequencies = new();
 
     public ElementFrequenciesVisitor(TreeNodeStream input) : base(input)
     {

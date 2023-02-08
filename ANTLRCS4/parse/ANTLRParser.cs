@@ -165,8 +165,8 @@ public class ANTLRParser : antlr.runtime.Parser
     public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\ANTLRParser.g";
 
 
-    public Deque<string> paraphrases = new ArrayDeque<string>();
-    public void GrammarError(ErrorType etyp                                 e, Token token, params Object[] args) { }
+    public ArrayDeque<string> paraphrases = new ();
+    public void GrammarError(ErrorType etype, Token token, params Object[] args) { }
 
 
     public class GrammarSpecReturn : ParserRuleReturnScope

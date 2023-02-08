@@ -14,66 +14,77 @@ namespace org.antlr.v4.runtime.tree;
  * doesn't use the thread stack but heap-based stacks. Makes it possible to
  * process deeply nested parse trees.
  */
-public class IterativeParseTreeWalker : ParseTreeWalker {
+public class IterativeParseTreeWalker : ParseTreeWalker
+{
 
-	//@Override
-	public void walk(ParseTreeListener listener, ParseTree t) {
+    //@Override
+    public void walk(ParseTreeListener listener, ParseTree t)
+    {
 
-		Deque<ParseTree> nodeStack = new ();
-		IntegerStack indexStack = new IntegerStack();
+        ArrayDeque<ParseTree> nodeStack = new();
+        IntegerStack indexStack = new();
 
-		ParseTree currentNode = t;
-		int currentIndex = 0;
+        ParseTree currentNode = t;
+        int currentIndex = 0;
 
-		while (currentNode != null) {
+        while (currentNode != null)
+        {
 
-			// pre-order visit
-			if (currentNode is ErrorNode) {
-				listener.VisitErrorNode((ErrorNode) currentNode);
-			}
-			else if (currentNode is TerminalNode) {
-				listener.VisitTerminal((TerminalNode) currentNode);
-			}
-			else {
-				 RuleNode r = (RuleNode) currentNode;
-				enterRule(listener, r);
-			}
+            // pre-order visit
+            if (currentNode is ErrorNode)
+            {
+                listener.VisitErrorNode((ErrorNode)currentNode);
+            }
+            else if (currentNode is TerminalNode)
+            {
+                listener.VisitTerminal((TerminalNode)currentNode);
+            }
+            else
+            {
+                RuleNode r = (RuleNode)currentNode;
+                enterRule(listener, r);
+            }
 
-			// Move down to first child, if exists
-			if (currentNode.ChildCount > 0) {
-				nodeStack.Push(currentNode);
-				indexStack.Push(currentIndex);
-				currentIndex = 0;
-				currentNode = currentNode.GetChild(0);
-				continue;
-			}
+            // Move down to first child, if exists
+            if (currentNode.ChildCount > 0)
+            {
+                nodeStack.Push(currentNode);
+                indexStack.Push(currentIndex);
+                currentIndex = 0;
+                currentNode = currentNode.GetChild(0);
+                continue;
+            }
 
-			// No child nodes, so walk tree
-			do {
+            // No child nodes, so walk tree
+            do
+            {
 
-				// post-order visit
-				if (currentNode is RuleNode node) {
-					exitRule(listener, node);
-				}
+                // post-order visit
+                if (currentNode is RuleNode node)
+                {
+                    exitRule(listener, node);
+                }
 
-				// No parent, so no siblings
-				if (nodeStack.isEmpty()) {
-					currentNode = null;
-					currentIndex = 0;
-					break;
-				}
+                // No parent, so no siblings
+                if (nodeStack.isEmpty())
+                {
+                    currentNode = null;
+                    currentIndex = 0;
+                    break;
+                }
 
-				// Move to next sibling if possible
-				currentNode = nodeStack.Peek().GetChild(++currentIndex);
-				if (currentNode != null) {
-					break;
-				}
+                // Move to next sibling if possible
+                currentNode = nodeStack.Peek().GetChild(++currentIndex);
+                if (currentNode != null)
+                {
+                    break;
+                }
 
-				// No next, sibling, so move up
-				currentNode = nodeStack.Pop();
-				currentIndex = indexStack.Pop();
+                // No next, sibling, so move up
+                currentNode = nodeStack.Pop();
+                currentIndex = indexStack.Pop();
 
-			} while (currentNode != null);
-		}
-	}
+            } while (currentNode != null);
+        }
+    }
 }
