@@ -20,7 +20,7 @@ public class DFASerializer
 	 * @deprecated Use {@link #DFASerializer(DFA, Vocabulary)} instead.
 	 */
     public DFASerializer(DFA dfa, String[] tokenNames) 
-        : this(dfa, VocabularyImpl.fromTokenNames(tokenNames))
+        : this(dfa, VocabularyImpl.FromTokenNames(tokenNames))
     {
     }
 

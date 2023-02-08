@@ -115,7 +115,7 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> skip ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.Compile("<ID> = <expr> ;", m.Parser.getRuleIndex("s"));
+        var t = m.Compile("<ID> = <expr> ;", m.Parser.GetRuleIndex("s"));
         Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.PatternTree.ToStringTree(m.Parser));
     }
 
@@ -134,7 +134,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.Compile("<ID> = <expr> ; extra", m.Parser.getRuleIndex("s"));
+            m.Compile("<ID> = <expr> ; extra", m.Parser.GetRuleIndex("s"));
         }
         catch (ParseTreePatternMatcher.StartRuleDoesNotConsumeFullPattern e)
         {
@@ -158,7 +158,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.Compile("<ID> ;", m.Parser.getRuleIndex("s"));
+            m.Compile("<ID> ;", m.Parser.GetRuleIndex("s"));
         }
         catch (InputMismatchException e)
         {
@@ -182,7 +182,7 @@ public class TestParseTreeMatcher
         bool failed = false;
         try
         {
-            m.Compile("<ID> <ID> ;", m.Parser.getRuleIndex("s"));
+            m.Compile("<ID> <ID> ;", m.Parser.GetRuleIndex("s"));
         }
         catch (NoViableAltException e)
         {
@@ -203,7 +203,7 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> channel(HIDDEN) ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.Compile("<ID> = <expr> ;", m.Parser.getRuleIndex("s"));
+        var t = m.Compile("<ID> = <expr> ;", m.Parser.GetRuleIndex("s"));
         Assert.AreEqual("(s <ID> = (expr <expr>) ;)", t.PatternTree.ToStringTree(m.Parser));
     }
 
@@ -217,7 +217,7 @@ public class TestParseTreeMatcher
             "WS : [ \\r\\n\\t]+ -> skip ;\n";
         var m = GetPatternMatcher("X2.g4", grammar, "X2Parser", "X2Lexer", "s");
 
-        var t = m.Compile("<ID> = <ID> ;", m.Parser.getRuleIndex("s"));
+        var t = m.Compile("<ID> = <ID> ;", m.Parser.GetRuleIndex("s"));
         var results = t.PatternTree.ToStringTree(m.Parser);
         var expected = "(s <ID> = <ID> ;)";
         Assert.AreEqual(expected, results);
@@ -432,7 +432,7 @@ public class TestParseTreeMatcher
             var compiledState = (JavaCompiledState)executedState.previousState;
             var parser = compiledState.InitializeLexerAndParser("").b;
 
-            var p = parser.compileParseTreePattern(pattern, parser.getRuleIndex(startRule));
+            var p = parser.CompileParseTreePattern(pattern, parser.GetRuleIndex(startRule));
 
             var match = p.Match(executedState.parseTree);
             bool matched = match.Succeeded();

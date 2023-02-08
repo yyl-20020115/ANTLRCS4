@@ -71,9 +71,9 @@ public class DiagnosticErrorListener : BaseErrorListener
 
         var decision = GetDecisionDescription(recognizer, dfa);
         var conflictingAlts = GetConflictingAlts(ambigAlts, configs);
-        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var text = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
         var message = $"reportAmbiguity d={decision}: ambigAlts={conflictingAlts}, input='{text}'";
-        recognizer.notifyErrorListeners(message);
+        recognizer.NotifyErrorListeners(message);
     }
 
     //@Override
@@ -85,10 +85,10 @@ public class DiagnosticErrorListener : BaseErrorListener
                                             ATNConfigSet configs)
     {
         var decision = GetDecisionDescription(recognizer, dfa);
-        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var text = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
         var message = $"reportAttemptingFullContext d={decision}, input='{text}'";
 
-        recognizer.notifyErrorListeners(message);
+        recognizer.NotifyErrorListeners(message);
     }
 
     //@Override
@@ -100,10 +100,10 @@ public class DiagnosticErrorListener : BaseErrorListener
                                          ATNConfigSet configs)
     {
         var decision = GetDecisionDescription(recognizer, dfa);
-        var text = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+        var text = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
         var message = $"reportContextSensitivity d={decision}, input='{text}'";
 
-        recognizer.notifyErrorListeners(message);
+        recognizer.NotifyErrorListeners(message);
     }
 
     protected string GetDecisionDescription(Parser recognizer, DFA dfa)

@@ -16,39 +16,40 @@ namespace org.antlr.v4.runtime;
  * as the EOF token for every call to {@link #nextToken} after the end of the
  * list is reached. Otherwise, an EOF token will be created.</p>
  */
-public class ListTokenSource : TokenSource {
-	/**
+public class ListTokenSource : TokenSource
+{
+    /**
 	 * The wrapped collection of {@link Token} objects to return.
 	 */
-	protected readonly List<Token> tokens;
+    protected readonly List<Token> tokens;
 
-	/**
+    /**
 	 * The name of the input source. If this value is {@code null}, a call to
 	 * {@link #getSourceName} should return the source name used to create the
 	 * the next token in {@link #tokens} (or the previous token if the end of
 	 * the input has been reached).
 	 */
-	private readonly String sourceName;
+    private readonly string sourceName;
 
-	/**
+    /**
 	 * The index into {@link #tokens} of token to return by the next call to
 	 * {@link #nextToken}. The end of the input is indicated by this value
 	 * being greater than or equal to the number of items in {@link #tokens}.
 	 */
-	protected int i;
+    protected int i;
 
-	/**
+    /**
 	 * This field caches the EOF token for the token source.
 	 */
-	protected Token eofToken;
+    protected Token eofToken;
 
-	/**
+    /**
 	 * This is the backing field for {@link #getTokenFactory} and
 	 * {@link setTokenFactory}.
 	 */
-	private TokenFactory _factory = CommonTokenFactory.DEFAULT;
+    private TokenFactory _factory = CommonTokenFactory.DEFAULT;
 
-	/**
+    /**
 	 * Constructs a new {@link ListTokenSource} instance from the specified
 	 * collection of {@link Token} objects.
 	 *
@@ -56,11 +57,11 @@ public class ListTokenSource : TokenSource {
 	 * {@link TokenSource}.
 	 * @exception NullReferenceException if {@code tokens} is {@code null}
 	 */
-	public ListTokenSource(List<Token> tokens): this(tokens, null)
+    public ListTokenSource(List<Token> tokens) : this(tokens, null)
     {
-	}
+    }
 
-	/**
+    /**
 	 * Constructs a new {@link ListTokenSource} instance from the specified
 	 * collection of {@link Token} objects and source name.
 	 *
@@ -73,20 +74,17 @@ public class ListTokenSource : TokenSource {
 	 *
 	 * @exception NullReferenceException if {@code tokens} is {@code null}
 	 */
-	public ListTokenSource(List<Token> tokens, String sourceName) {
-		if (tokens == null) {
-			throw new NullReferenceException("tokens cannot be null");
-		}
-
-		this.tokens = tokens;
-		this.sourceName = sourceName;
-	}
+    public ListTokenSource(List<Token> tokens, string sourceName)
+    {
+        this.tokens = tokens ?? throw new NullReferenceException("tokens cannot be null");
+        this.sourceName = sourceName;
+    }
 
     /**
 	 * {@inheritDoc}
 	 */
     //@Override
-    public int CharPositionInLine
+    public virtual int CharPositionInLine
     {
         get
         {
@@ -126,38 +124,44 @@ public class ListTokenSource : TokenSource {
 	 * {@inheritDoc}
 	 */
     //@Override
-    public Token NextToken() {
-		if (i >= tokens.Count) {
-			if (eofToken == null) {
-				int start = -1;
-				if (tokens.Count > 0) {
-					int previousStop = tokens[(tokens.Count - 1)].StopIndex;
-					if (previousStop != -1) {
-						start = previousStop + 1;
-					}
-				}
+    public virtual Token NextToken()
+    {
+        if (i >= tokens.Count)
+        {
+            if (eofToken == null)
+            {
+                int start = -1;
+                if (tokens.Count > 0)
+                {
+                    int previousStop = tokens[(tokens.Count - 1)].StopIndex;
+                    if (previousStop != -1)
+                    {
+                        start = previousStop + 1;
+                    }
+                }
 
-				int stop = Math.Max(-1, start - 1);
-				eofToken =(_factory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
-			}
+                int stop = Math.Max(-1, start - 1);
+                eofToken = (_factory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
+            }
 
-			return eofToken;
-		}
+            return eofToken;
+        }
 
-		Token t = tokens[(i)];
-		if (i == tokens.Count - 1 && t.Type == Token.EOF) {
-			eofToken = t;
-		}
+        Token t = tokens[(i)];
+        if (i == tokens.Count - 1 && t.Type == Token.EOF)
+        {
+            eofToken = t;
+        }
 
-		i++;
-		return t;
-	}
+        i++;
+        return t;
+    }
 
     /**
 	 * {@inheritDoc}
 	 */
     //@Override
-    public int Line
+    public virtual int Line
     {
         get
         {
@@ -202,7 +206,7 @@ public class ListTokenSource : TokenSource {
 	 * {@inheritDoc}
 	 */
     //@Override
-    public CharStream InputStream
+    public virtual CharStream InputStream
     {
         get
         {
@@ -228,7 +232,7 @@ public class ListTokenSource : TokenSource {
 	 * {@inheritDoc}
 	 */
     //@Override
-    public String SourceName
+    public virtual string SourceName
     {
         get
         {
@@ -255,5 +259,5 @@ public class ListTokenSource : TokenSource {
  * {@inheritDoc}
  */
     //@Override
-    public TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
+    public virtual TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 }

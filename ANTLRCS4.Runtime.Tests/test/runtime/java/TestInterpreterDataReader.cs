@@ -57,8 +57,8 @@ public class TestInterpreterDataReader
 
         var atn = (ATN)atnField.GetValue(interpreterData);
         var vocabulary = (Vocabulary)vocabularyField.GetValue(interpreterData);
-        var literalNames = ((VocabularyImpl)vocabulary).getLiteralNames();
-        var symbolicNames = ((VocabularyImpl)vocabulary).getSymbolicNames();
+        var literalNames = ((VocabularyImpl)vocabulary).GetLiteralNames();
+        var symbolicNames = ((VocabularyImpl)vocabulary).GetSymbolicNames();
         var ruleNames = CastList<string>(ruleNamesField.GetValue(interpreterData));
         var channels = CastList<string>(channelsField.GetValue(interpreterData));
         var modes = CastList<string>(modesField.GetValue(interpreterData));

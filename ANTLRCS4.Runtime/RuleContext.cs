@@ -61,42 +61,43 @@ namespace org.antlr.v4.runtime;
  *
  *  @see ParserRuleContext
  */
-public class RuleContext : RuleNode 
+public class RuleContext : RuleNode
 {
-	/** What context invoked this rule? */
-	public RuleContext parent;
+    /** What context invoked this rule? */
+    public RuleContext parent;
 
-	/** What state invoked the rule associated with this context?
+    /** What state invoked the rule associated with this context?
 	 *  The "return address" is the followState of invokingState
 	 *  If parent is null, this should be -1 this context object represents
 	 *  the start rule.
 	 */
-	public int invokingState = -1;
+    public int invokingState = -1;
 
-	public RuleContext() {}
+    public RuleContext() { }
 
-	public RuleContext(RuleContext parent, int invokingState) {
-		this.parent = parent;
-		//if ( parent!=null ) Console.Out.WriteLine("invoke "+stateNumber+" from "+parent);
-		this.invokingState = invokingState;
-	}
+    public RuleContext(RuleContext parent, int invokingState)
+    {
+        this.parent = parent;
+        //if ( parent!=null ) Console.Out.WriteLine("invoke "+stateNumber+" from "+parent);
+        this.invokingState = invokingState;
+    }
 
-	public int depth() {
-		int n = 0;
-		RuleContext p = this;
-		while ( p!=null ) {
-			p = p.parent;
-			n++;
-		}
-		return n;
-	}
+    public int Depth()
+    {
+        int n = 0;
+        RuleContext p = this;
+        while (p != null)
+        {
+            p = p.parent;
+            n++;
+        }
+        return n;
+    }
 
-	/** A context is empty if there is no invoking state; meaning nobody called
+    /** A context is empty if there is no invoking state; meaning nobody called
 	 *  current context.
 	 */
-	public bool isEmpty() {
-		return invokingState == -1;
-	}
+    public bool IsEmpty => invokingState == -1;
 
     // satisfy the ParseTree / SyntaxTree interface
 
@@ -104,14 +105,14 @@ public class RuleContext : RuleNode
     public virtual Interval SourceInterval => Interval.INVALID;
 
     //@Override
-    public virtual RuleContext getRuleContext() { return this; }
+    public virtual RuleContext CurrentRuleContext => this;
+    //@Override
+    /** @since 4.7. {@see ParseTree#setParent} comment */
+    //@Override
+    public virtual RuleContext Parent { get => parent; set => this.parent = value; }
 
     //@Override
-    public virtual RuleContext getParent() { return parent; }
-
-    //@Override
-    public virtual RuleContext getPayload() { return this; }
-
+    public virtual RuleContext Payload => this;
     /** Return the combined text of all child nodes. This method only considers
 	 *  tokens which have been added to the parse tree.
 	 *  <p>
@@ -120,7 +121,7 @@ public class RuleContext : RuleNode
 	 *  method.
 	 */
     //@Override
-    public String Text
+    public string Text
     {
         get
         {
@@ -139,9 +140,8 @@ public class RuleContext : RuleNode
         }
     }
 
-    public virtual int GetRuleIndex() { return -1; }
-
-	/** For rule associated with this parse tree internal node, return
+    public virtual int RuleIndex => -1;
+    /** For rule associated with this parse tree internal node, return
 	 *  the outer alternative number used to match the input. Default
 	 *  implementation does not compute nor store this alt num. Create
 	 *  a subclass of ParserRuleContext with backing field and set
@@ -150,28 +150,26 @@ public class RuleContext : RuleNode
 	 *
 	 *  @since 4.5.3
 	 */
-	public virtual int getAltNumber() { return ATN.INVALID_ALT_NUMBER; }
+    /** Set the outer alternative number for this context node. Default
+ *  implementation does nothing to avoid backing field overhead for
+ *  trees that don't need it.  Create
+ *  a subclass of ParserRuleContext with backing field and set
+ *  option contextSuperClass.
+ *
+ *  @since 4.5.3
+ */
+    public virtual int AltNumber
+    {
+        get => ATN.INVALID_ALT_NUMBER;
+        set
+        { }
+    }
 
-	/** Set the outer alternative number for this context node. Default
-	 *  implementation does nothing to avoid backing field overhead for
-	 *  trees that don't need it.  Create
-     *  a subclass of ParserRuleContext with backing field and set
-     *  option contextSuperClass.
-	 *
-	 *  @since 4.5.3
-	 */
-	public virtual void setAltNumber(int altNumber) { }
-
-	/** @since 4.7. {@see ParseTree#setParent} comment */
-	//@Override
-	public virtual void SetParent(RuleContext parent) {
-		this.parent = parent;
-	}
-
-	//@Override
-	public virtual ParseTree GetChild(int i) {
-		return null;
-	}
+    //@Override
+    public virtual ParseTree GetChild(int i)
+    {
+        return null;
+    }
 
     //@Override
     public int ChildCount => 0;
@@ -179,74 +177,87 @@ public class RuleContext : RuleNode
     //@Override
     public virtual T Accept<T>(ParseTreeVisitor<T> visitor) { return visitor.VisitChildren(this); }
 
-	/** Print out a whole tree, not just a node, in LISP format
+    /** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 *  We have to know the recognizer so we can get rule names.
 	 */
-	//@Override
-    public virtual string ToStringTree(Parser recog) {
-		return Trees.toStringTree(this, recog);
-	}
+    //@Override
+    public virtual string ToStringTree(Parser recog)
+    {
+        return Trees.toStringTree(this, recog);
+    }
 
     /** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 */
-    public virtual string ToStringTree(List<String> ruleNames) {
-		return Trees.toStringTree(this, ruleNames);
-	}
+    public virtual string ToStringTree(List<String> ruleNames)
+    {
+        return Trees.toStringTree(this, ruleNames);
+    }
 
     //@Override
-    public virtual String ToStringTree() {
-		return ToStringTree((List<String>)null);
-	}
+    public virtual string ToStringTree()
+    {
+        return ToStringTree((List<String>)null);
+    }
 
-	//@Override
-	public override String ToString() {
-		return toString((List<String>)null, (RuleContext)null);
-	}
+    //@Override
+    public override string ToString()
+    {
+        return ToString((List<String>)null, (RuleContext)null);
+    }
 
-    public virtual String toString(Recognizer recog) {
-		return toString(recog, ParserRuleContext.EMPTY);
-	}
+    public virtual string ToString(Recognizer recog)
+    {
+        return ToString(recog, ParserRuleContext.EMPTY);
+    }
 
-    public virtual String toString(List<String> ruleNames) {
-		return toString(ruleNames, null);
-	}
+    public virtual string ToString(List<string> ruleNames)
+    {
+        return ToString(ruleNames, null);
+    }
 
     // recog null unless ParserRuleContext, in which case we use subclass toString(...)
-    public virtual String toString(Recognizer recog, RuleContext stop) {
-		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
-		List<String> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
-		return toString(ruleNamesList, stop);
-	}
+    public virtual string ToString(Recognizer recog, RuleContext stop)
+    {
+        var ruleNames = recog != null ? recog.GetRuleNames() : null;
+        List<string> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
+        return ToString(ruleNamesList, stop);
+    }
 
-    public virtual String toString(List<String> ruleNames, RuleContext stop) {
-		StringBuilder buf = new StringBuilder();
-		RuleContext p = this;
-		buf.Append('[');
-		while (p != null && p != stop) {
-			if (ruleNames == null) {
-				if (!p.isEmpty()) {
-					buf.Append(p.invokingState);
-				}
-			}
-			else {
-				int ruleIndex = p.GetRuleIndex();
-				String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] : 
-					(ruleIndex.ToString());
-				buf.Append(ruleName);
-			}
+    public virtual string ToString(List<String> ruleNames, RuleContext stop)
+    {
+        var buffer = new StringBuilder();
+        RuleContext p = this;
+        buffer.Append('[');
+        while (p != null && p != stop)
+        {
+            if (ruleNames == null)
+            {
+                if (!p.IsEmpty)
+                {
+                    buffer.Append(p.invokingState);
+                }
+            }
+            else
+            {
+                int ruleIndex = p.RuleIndex;
+                String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] :
+                    (ruleIndex.ToString());
+                buffer.Append(ruleName);
+            }
 
-			if (p.parent != null && (ruleNames != null || !p.parent.isEmpty())) {
-				buf.Append(' ');
-			}
+            if (p.parent != null && (ruleNames != null || !p.parent.IsEmpty))
+            {
+                buffer.Append(' ');
+            }
 
-			p = p.parent;
-		}
+            p = p.parent;
+        }
 
-		buf.Append(']');
-		return buf.ToString();
-	}
+        buffer.Append(']');
+        return buffer.ToString();
+    }
 
     ParseTree ParseTree.Parent => throw new NotImplementedException();
 
@@ -295,5 +306,5 @@ public class RuleContext : RuleNode
 
     public int CharPositionInLine => throw new NotImplementedException();
 
-    public Tree Parent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    Tree Tree.Parent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

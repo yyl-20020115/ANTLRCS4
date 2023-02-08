@@ -1399,9 +1399,9 @@ public class TestPerformance
             // show the rule name along with the decision
             int decision = dfa.decision;
             var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+            var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
-            recognizer.notifyErrorListeners(format);
+            recognizer.NotifyErrorListeners(format);
         }
 
         //@Override
@@ -1417,11 +1417,11 @@ public class TestPerformance
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
             var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+            var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var representedAlts = GetConflictingAlts(conflictingAlts, configs);
             var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
             //String.Format(format, decision, rule, input, representedAlts)
-            recognizer.notifyErrorListeners(format);
+            recognizer.NotifyErrorListeners(format);
         }
 
         //@Override
@@ -1445,9 +1445,9 @@ public class TestPerformance
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
             var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
-            var input = recognizer.getTokenStream().GetText(Interval.Of(startIndex, stopIndex));
+            var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
-            recognizer.notifyErrorListeners(
+            recognizer.NotifyErrorListeners(
                 format);
         }
 
@@ -1531,7 +1531,7 @@ public class TestPerformance
         public void EnterEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(ENTER_RULE);
-            UpdateChecksum(checksum, ctx.GetRuleIndex());
+            UpdateChecksum(checksum, ctx.RuleIndex);
             UpdateChecksum(checksum, ctx.GetStart());
         }
 
@@ -1539,7 +1539,7 @@ public class TestPerformance
         public void ExitEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(EXIT_RULE);
-            UpdateChecksum(checksum, ctx.GetRuleIndex());
+            UpdateChecksum(checksum, ctx.RuleIndex);
             UpdateChecksum(checksum, ctx.GetStop());
         }
 

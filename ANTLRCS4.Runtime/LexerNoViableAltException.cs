@@ -10,44 +10,44 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.runtime;
 
 
-public class LexerNoViableAltException : RecognitionException {
-	/** Matching attempted at what input index? */
-	private readonly int startIndex;
+public class LexerNoViableAltException : RecognitionException
+{
+    /** Matching attempted at what input index? */
+    private readonly int startIndex;
 
-	/** Which configurations did we try at input.index() that couldn't match input.LA(1)? */
-	private readonly ATNConfigSet deadEndConfigs;
+    /** Which configurations did we try at input.index() that couldn't match input.LA(1)? */
+    private readonly ATNConfigSet deadEndConfigs;
 
-	public LexerNoViableAltException(Lexer lexer,
-									 CharStream input,
-									 int startIndex,
-									 ATNConfigSet deadEndConfigs): base(lexer, input, null)
+    public LexerNoViableAltException(Lexer lexer,
+                                     CharStream input,
+                                     int startIndex,
+                                     ATNConfigSet deadEndConfigs) : base(lexer, input, null)
     {
-		this.startIndex = startIndex;
-		this.deadEndConfigs = deadEndConfigs;
-	}
+        this.startIndex = startIndex;
+        this.deadEndConfigs = deadEndConfigs;
+    }
 
-	public int getStartIndex() {
-		return startIndex;
-	}
+    public int StartIndex => startIndex;
 
 
-	public ATNConfigSet getDeadEndConfigs() {
-		return deadEndConfigs;
-	}
-
-	//@Override
-	public CharStream getInputStream() {
-		return (CharStream)base.getInputStream();
-	}
+    public ATNConfigSet GetDeadEndConfigs()
+    {
+        return deadEndConfigs;
+    }
 
     //@Override
-    public override String ToString() {
-		String symbol = "";
-		if (startIndex >= 0 && startIndex < getInputStream().Count) {
-			symbol = getInputStream().GetText(Interval.Of(startIndex,startIndex));
-			symbol = RuntimeUtils.EscapeWhitespace(symbol, false);
-		}
+    public override CharStream InputStream => (CharStream)base.InputStream;
 
-		return $"{typeof(LexerNoViableAltException).Name}('{symbol}')";
-	}
+    //@Override
+    public override String ToString()
+    {
+        String symbol = "";
+        if (startIndex >= 0 && startIndex < InputStream.Count)
+        {
+            symbol = InputStream.GetText(Interval.Of(startIndex, startIndex));
+            symbol = RuntimeUtils.EscapeWhitespace(symbol, false);
+        }
+
+        return $"{typeof(LexerNoViableAltException).Name}('{symbol}')";
+    }
 }

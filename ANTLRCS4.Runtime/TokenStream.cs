@@ -11,8 +11,9 @@ namespace org.antlr.v4.runtime;
 /**
  * An {@link IntStream} whose symbols are {@link Token} instances.
  */
-public interface TokenStream : IntStream {
-	/**
+public interface TokenStream : IntStream
+{
+    /**
 	 * Get the {@link Token} instance associated with the value returned by
 	 * {@link #LA LA(k)}. This method has the same pre- and post-conditions as
 	 * {@link IntStream#LA}. In addition, when the preconditions of this method
@@ -21,9 +22,9 @@ public interface TokenStream : IntStream {
 	 *
 	 * @see IntStream#LA
 	 */
-	public Token LT(int k);
+    public Token LT(int k);
 
-	/**
+    /**
 	 * Gets the {@link Token} at the specified {@code index} in the stream. When
 	 * the preconditions of this method are met, the return value is non-null.
 	 *
@@ -41,7 +42,7 @@ public interface TokenStream : IntStream {
 	 * @throws UnsupportedOperationException if the stream does not support
 	 * retrieving the token at the specified index
 	 */
-	public Token Get(int index);
+    public Token Get(int index);
 
     /**
 	 * Gets the underlying {@link TokenSource} which provides tokens for this
@@ -107,7 +108,7 @@ public interface TokenStream : IntStream {
 	 */
     public String GetText(RuleContext ctx);
 
-	/**
+    /**
 	 * Return the text of all tokens in this stream between {@code start} and
 	 * {@code stop} (inclusive).
 	 *
@@ -136,7 +137,7 @@ public interface TokenStream : IntStream {
 	 * @throws UnsupportedOperationException if this stream does not support
 	 * this method for the specified tokens
 	 */
-	public String GetText(Token start, Token stop);
+    public String GetText(Token start, Token stop);
     int Range();
 
     /** Return the text of all tokens from start to stop, inclusive.

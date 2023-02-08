@@ -105,8 +105,8 @@ public class TestATNInterpreter
         }
         catch (NoViableAltException re)
         {
-            Assert.AreEqual(1, re.getOffendingToken().TokenIndex);
-            Assert.AreEqual(3, re.getOffendingToken().Type);
+            Assert.AreEqual(1, re.OffendingToken.TokenIndex);
+            Assert.AreEqual(3, re.OffendingToken.Type);
         }
     }
 
@@ -156,8 +156,8 @@ public class TestATNInterpreter
         }
         catch (NoViableAltException re)
         {
-            Assert.AreEqual(2, re.getOffendingToken().TokenIndex);
-            Assert.AreEqual(4, re.getOffendingToken().Type);
+            Assert.AreEqual(2, re.OffendingToken.TokenIndex);
+            Assert.AreEqual(4, re.OffendingToken.Type);
         }
     }
 
@@ -207,8 +207,8 @@ public class TestATNInterpreter
         }
         catch (NoViableAltException re)
         {
-            Assert.AreEqual(2, re.getOffendingToken().TokenIndex);
-            Assert.AreEqual(4, re.getOffendingToken().Type);
+            Assert.AreEqual(2, re.OffendingToken.TokenIndex);
+            Assert.AreEqual(4, re.OffendingToken.Type);
         }
     }
 
@@ -304,8 +304,8 @@ public class TestATNInterpreter
         }
         catch (NoViableAltException re)
         {
-            Assert.AreEqual(2, re.getOffendingToken().TokenIndex);
-            Assert.AreEqual(4, re.getOffendingToken().Type);
+            Assert.AreEqual(2, re.OffendingToken.TokenIndex);
+            Assert.AreEqual(4, re.OffendingToken.Type);
         }
     }
 

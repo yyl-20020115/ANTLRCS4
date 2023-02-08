@@ -592,7 +592,7 @@ public class IntervalSet : IntSet
     //@Deprecated
     public string ToString(string[] tokenNames)
     {
-        return ToString(VocabularyImpl.fromTokenNames(tokenNames));
+        return ToString(VocabularyImpl.FromTokenNames(tokenNames));
     }
 
     public string ToString(Vocabulary vocabulary)
@@ -642,7 +642,7 @@ public class IntervalSet : IntSet
     //@Deprecated
     protected string ElementName(string[] tokenNames, int a)
     {
-        return ElementName(VocabularyImpl.fromTokenNames(tokenNames), a);
+        return ElementName(VocabularyImpl.FromTokenNames(tokenNames), a);
     }
 
 

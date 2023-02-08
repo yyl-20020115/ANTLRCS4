@@ -46,6 +46,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int CharPositionInLine => 0;
         ////@Override
         public int Line => 0;
+
         ////@Override
         public CharStream InputStream => null;
 
@@ -114,6 +115,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int CharPositionInLine => 0;
         //@Override
         public int Line => 0;
+
         //@Override
         public CharStream InputStream => null;
 

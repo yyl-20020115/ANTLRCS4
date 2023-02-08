@@ -41,8 +41,5 @@ public class InterpreterRuleContext : ParserRuleContext
     }
 
     //@Override
-    public override int GetRuleIndex()
-    {
-        return ruleIndex;
-    }
+    public override int RuleIndex => ruleIndex;
 }

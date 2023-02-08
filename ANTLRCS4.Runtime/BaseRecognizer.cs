@@ -235,7 +235,7 @@ public abstract class BaseRecognizer
         var msg = e.Message;
         if (e is UnwantedTokenException ute) {
             string tokenName = ute.expecting == Token.EOF ? "EOF" : tokenNames[ute.expecting];
-            msg = "extraneous input " + GetTokenErrorDisplay(ute.getUnexpectedToken()) +
+            msg = "extraneous input " + GetTokenErrorDisplay(ute.UnexpectedToken) +
                 " expecting " + tokenName;
         }
 

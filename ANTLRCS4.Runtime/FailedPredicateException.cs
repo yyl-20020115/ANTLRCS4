@@ -30,9 +30,9 @@ public class FailedPredicateException : RecognitionException
     public FailedPredicateException(Parser recognizer,
                                     string predicate = null,
                                     string message = null)
-        : base(FormatMessage(predicate, message), recognizer, recognizer.InputStream, recognizer.GetCtx())
+        : base(FormatMessage(predicate, message), recognizer, recognizer.InputStream, recognizer.Ctx)
     {
-        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
+        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.State)];
 
         AbstractPredicateTransition trans = (AbstractPredicateTransition)s.Transition(0);
         if (trans is PredicateTransition transition)
@@ -47,7 +47,7 @@ public class FailedPredicateException : RecognitionException
         }
 
         this.predicate = predicate;
-        this.setOffendingToken(recognizer.getCurrentToken());
+        this.        OffendingToken = recognizer.GetCurrentToken();
     }
 
     public int GetRuleIndex()

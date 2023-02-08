@@ -28,6 +28,6 @@ public class RuleContextWithAltNum : ParserRuleContext
 	{
 		;
 	}
-	public override int getAltNumber() { return altNum; }
-	public override void setAltNumber(int altNum) { this.altNum = altNum; }
+    public override int AltNumber { get => altNum;
+        set => this.altNum = value; }
 }

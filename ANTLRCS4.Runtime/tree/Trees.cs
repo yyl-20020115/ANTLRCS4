@@ -80,9 +80,9 @@ public static class Trees
 	public static String getNodeText(Tree t, List<String> ruleNames) {
 		if ( ruleNames!=null ) {
 			if ( t is RuleContext ) {
-				int ruleIndex = ((RuleContext)t).getRuleContext().GetRuleIndex();
+				int ruleIndex = ((RuleContext)t).CurrentRuleContext.RuleIndex;
 				String ruleName = ruleNames[(ruleIndex)];
-				int altNumber = ((RuleContext) t).getAltNumber();
+				int altNumber = ((RuleContext) t).AltNumber;
 				if ( altNumber!=ATN.INVALID_ALT_NUMBER ) {
 					return ruleName+":"+altNumber;
 				}
@@ -171,7 +171,7 @@ public static class Trees
 		}
 		else if ( !findTokens && t is ParserRuleContext ) {
 			ParserRuleContext ctx = (ParserRuleContext)t;
-			if ( ctx.GetRuleIndex() == index ) nodes.Add(t);
+			if ( ctx.RuleIndex == index ) nodes.Add(t);
 		}
 		// check children
 		for (int i = 0; i < t.ChildCount; i++){

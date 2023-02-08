@@ -12,12 +12,13 @@ namespace org.antlr.v4.runtime;
 
 public interface Recognizer
 {
-    string[] GetTokenNames();
+    string[] TokenNames { get; }
+
     string[] GetRuleNames();
     bool Precpred(RuleContext localctx, int precedence);
     bool Sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
-    int GetState();
-    ATN GetATN();
+    int State { get; }
+    ATN ATN { get; }
 }
 public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNInterpreter : ATNSimulator
 {
@@ -45,7 +46,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 * @deprecated Use {@link #getVocabulary()} instead.
 	 */
     //@Deprecated
-    public abstract string[] GetTokenNames();
+    public abstract string[] TokenNames { get; }
 
     public abstract string[] GetRuleNames();
 
@@ -56,7 +57,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 * vocabulary used by the grammar.
 	 */
     //@SuppressWarnings("deprecation")
-    public virtual Vocabulary GetVocabulary() => VocabularyImpl.fromTokenNames(GetTokenNames());
+    public virtual Vocabulary GetVocabulary() => VocabularyImpl.FromTokenNames(TokenNames);
 
     /**
 	 * Get a map from token names to token types.
@@ -71,7 +72,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
             if (!tokenTypeMapCache.TryGetValue(vocabulary, out var result))
             {
                 result = new();
-                for (int i = 0; i <= GetATN().maxTokenType; i++)
+                for (int i = 0; i <= ATN.maxTokenType; i++)
                 {
                     var literalName = vocabulary.GetLiteralName(i);
                     if (literalName != null)
@@ -121,7 +122,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
         }
     }
 
-    public int GetTokenType(string tokenName)
+    public virtual int GetTokenType(string tokenName)
     {
         if (GetTokenTypeMap().TryGetValue(tokenName, out var ttype)) return ttype;
         return Token.INVALID_TYPE;
@@ -142,14 +143,14 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
     /** For debugging and other purposes, might want the grammar name.
 	 *  Have ANTLR generate an implementation for this method.
 	 */
-    public abstract string GetGrammarFileName();
+    public abstract string GrammarFileName { get; }
 
     /**
 	 * Get the {@link ATN} used by the recognizer for prediction.
 	 *
 	 * @return The {@link ATN} used by the recognizer for prediction.
 	 */
-    public abstract ATN GetATN();
+    public abstract ATN ATN { get; }
 
     /**
 	 * Get the ATN interpreter used by the recognizer for prediction.
@@ -176,8 +177,8 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
     /** What is the error header, normally line/character position information? */
     public string GetErrorHeader(RecognitionException e)
     {
-        int line = e.getOffendingToken().Line;
-        int charPositionInLine = e.getOffendingToken().CharPositionInLine;
+        int line = e.OffendingToken.Line;
+        int charPositionInLine = e.OffendingToken.CharPositionInLine;
         return "line " + line + ":" + charPositionInLine;
     }
 
@@ -235,10 +236,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
         return _listeners;
     }
 
-    public ANTLRErrorListener GetErrorListenerDispatch()
-    {
-        return new ProxyErrorListener(GetErrorListeners());
-    }
+    public ANTLRErrorListener GetErrorListenerDispatch() => new ProxyErrorListener(GetErrorListeners());
 
     // subclass needs to override these if there are sempreds or actions
     // that the ATN interp needs to execute
@@ -248,26 +246,19 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 
     public void Action(RuleContext _localctx, int ruleIndex, int actionIndex) { }
 
-    public int GetState() => _stateNumber;
-
     /** Indicate that the recognizer has changed internal state that is
-	 *  consistent with the ATN state passed in.  This way we always know
-	 *  where we are in the ATN as the parser goes along. The rule
-	 *  context objects form a stack that lets us see the stack of
-	 *  invoking rules. Combine this and we have complete ATN
-	 *  configuration information.
-	 */
-    public void SetState(int atnState)
-    {
-        //		Console.Error.WriteLine("setState "+atnState);
-        _stateNumber = atnState;
+ *  consistent with the ATN state passed in.  This way we always know
+ *  where we are in the ATN as the parser goes along. The rule
+ *  context objects form a stack that lets us see the stack of
+ *  invoking rules. Combine this and we have complete ATN
+ *  configuration information.
+ */
+    public int State { get => _stateNumber; set =>
+                                                    //		Console.Error.WriteLine("setState "+atnState);
+                                                    _stateNumber = value;
         //		if ( traceATNStates ) _ctx.trace(atnState);
-    }
-
-    public abstract IntStream InputStream { get; }
-
-    public abstract void SetInputStream(IntStream input);
-
+                                                   }
+    public abstract IntStream InputStream { get; set; }
 
     public abstract TokenFactory TokenFactory { get; set; }
 }

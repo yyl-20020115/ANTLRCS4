@@ -737,7 +737,7 @@ public abstract class PredictionContext
                         localBuffer.Append(' ');
                     }
 
-                    var atn = recognizer.GetATN();
+                    var atn = recognizer.ATN;
                     var s = atn.states[(stateNumber)];
                     var ruleName = recognizer.GetRuleNames()[s.ruleIndex];
                     localBuffer.Append(ruleName);

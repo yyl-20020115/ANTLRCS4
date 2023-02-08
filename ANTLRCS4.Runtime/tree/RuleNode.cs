@@ -7,5 +7,5 @@
 namespace org.antlr.v4.runtime.tree;
 
 public interface RuleNode : ParseTree {
-	RuleContext getRuleContext();
+    RuleContext CurrentRuleContext { get; }
 }

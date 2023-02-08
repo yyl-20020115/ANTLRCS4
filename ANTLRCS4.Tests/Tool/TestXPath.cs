@@ -192,7 +192,7 @@ public class TestXPath
         {
             if (t is RuleContext r)
             {
-                nodes.Add(result.a[r.GetRuleIndex()]);
+                nodes.Add(result.a[r.RuleIndex]);
             }
             else
             {

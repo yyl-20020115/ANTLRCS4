@@ -18,8 +18,8 @@ public class XPathRuleElement : XPathElement
         // return all children of t that match nodeName
         List<ParseTree> nodes = new();
         foreach (Tree c in Trees.getChildren(t))
-            if (c is ParserRuleContext ctx && ((ctx.GetRuleIndex() == ruleIndex && !invert) ||
-                     (ctx.GetRuleIndex() != ruleIndex && invert)))
+            if (c is ParserRuleContext ctx && ((ctx.RuleIndex == ruleIndex && !invert) ||
+                     (ctx.RuleIndex != ruleIndex && invert)))
                 nodes.Add(ctx);
         return nodes;
     }

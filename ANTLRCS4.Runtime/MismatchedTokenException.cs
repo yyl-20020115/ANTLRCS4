@@ -8,8 +8,8 @@ namespace org.antlr.v4.runtime;
 
 public class MismatchedTokenException : RecognitionException
 {
-	public readonly int CharValue;
+    public readonly int CharValue;
     internal int expecting;
 
-    public MismatchedTokenException(int CharValue, IntStream input) : base(null,input,null) { this.CharValue = CharValue; }
+    public MismatchedTokenException(int CharValue, IntStream input) : base(null, input, null) { this.CharValue = CharValue; }
 }

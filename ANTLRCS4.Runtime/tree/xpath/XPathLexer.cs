@@ -62,20 +62,15 @@ public class XPathLexer : Lexer
     }
 
     //@Override
-    public override string GetGrammarFileName() { return "XPathLexer.g4"; }
-
+    public override string GrammarFileName => "XPathLexer.g4";
     //@Override
     public override string[] GetRuleNames() { return ruleNames; }
 
     //@Override
-    public override string[] GetModeNames() { return modeNames; }
-
+    public override string[] ModeNames => modeNames;
     //@Override
     //@Deprecated
-    public override string[] GetTokenNames()
-    {
-        return tokenNames;
-    }
+    public override string[] TokenNames => tokenNames;
 
     //@Override
     public virtual Vocabulary getVocabulary()
@@ -84,10 +79,7 @@ public class XPathLexer : Lexer
     }
 
     //@Override
-    public override ATN GetATN()
-    {
-        return null;
-    }
+    public override ATN ATN => null;
 
     protected int line = 1;
     protected int charPositionInLine = 0;

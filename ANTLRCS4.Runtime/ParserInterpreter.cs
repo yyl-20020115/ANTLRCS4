@@ -25,20 +25,21 @@ namespace org.antlr.v4.runtime;
  *
  *  See TestParserInterpreter for examples.
  */
-public class ParserInterpreter : Parser {
-	protected readonly String grammarFileName;
-	protected readonly ATN atn;
+public class ParserInterpreter : Parser
+{
+    protected readonly String grammarFileName;
+    protected readonly ATN atn;
 
-	protected readonly DFA[] decisionToDFA; // not shared like it is for generated parsers
-	protected readonly PredictionContextCache sharedContextCache = new PredictionContextCache();
+    protected readonly DFA[] decisionToDFA; // not shared like it is for generated parsers
+    protected readonly PredictionContextCache sharedContextCache = new PredictionContextCache();
 
-	//@Deprecated
-	protected readonly String[] tokenNames;
-	protected readonly String[] ruleNames;
+    //@Deprecated
+    protected readonly String[] tokenNames;
+    protected readonly String[] ruleNames;
 
-	private readonly Vocabulary vocabulary;
+    private readonly Vocabulary vocabulary;
 
-	/** This stack corresponds to the _parentctx, _parentState pair of locals
+    /** This stack corresponds to the _parentctx, _parentState pair of locals
 	 *  that would exist on call stack frames with a recursive descent parser;
 	 *  in the generated function for a left-recursive rule you'd see:
 	 *
@@ -51,288 +52,313 @@ public class ParserInterpreter : Parser {
 	 *  Those values are used to create new recursive rule invocation contexts
 	 *  associated with left operand of an alt like "expr '*' expr".
 	 */
-	protected readonly Deque<Pair<ParserRuleContext, int>> _parentContextStack =
-		new ();
+    protected readonly ArrayDeque<Pair<ParserRuleContext, int>> _parentContextStack =
+        new ();
 
-	/** We need a map from (decision,inputIndex)->forced alt for computing ambiguous
+    /** We need a map from (decision,inputIndex)->forced alt for computing ambiguous
 	 *  parse trees. For now, we allow exactly one override.
 	 */
-	protected int overrideDecision = -1;
-	protected int overrideDecisionInputIndex = -1;
-	protected int overrideDecisionAlt = -1;
-	protected bool overrideDecisionReached = false; // latch and only override once; error might trigger infinite loop
+    protected int overrideDecision = -1;
+    protected int overrideDecisionInputIndex = -1;
+    protected int overrideDecisionAlt = -1;
+    protected bool overrideDecisionReached = false; // latch and only override once; error might trigger infinite loop
 
-	/** What is the current context when we override a decisions?  This tells
+    /** What is the current context when we override a decisions?  This tells
 	 *  us what the root of the parse tree is when using override
 	 *  for an ambiguity/lookahead check.
 	 */
-	protected InterpreterRuleContext overrideDecisionRoot = null;
+    protected InterpreterRuleContext overrideDecisionRoot = null;
 
 
-	protected InterpreterRuleContext rootContext;
+    protected InterpreterRuleContext rootContext;
 
-	/**
+    /**
 	 * @deprecated Use {@link #ParserInterpreter(String, Vocabulary, Collection, ATN, TokenStream)} instead.
 	 */
-	//@Deprecated
-	public ParserInterpreter(String grammarFileName, ICollection<String> tokenNames,
-							 ICollection<String> ruleNames, ATN atn, TokenStream input) : this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, atn, input)
+    //@Deprecated
+    public ParserInterpreter(String grammarFileName, ICollection<String> tokenNames,
+                             ICollection<String> ruleNames, ATN atn, TokenStream input) : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, atn, input)
     {
-		;
-	}
+        ;
+    }
 
-	public ParserInterpreter(String grammarFileName, Vocabulary vocabulary,
-							 ICollection<String> ruleNames, ATN atn, TokenStream input)
-		:base(input)
+    public ParserInterpreter(String grammarFileName, Vocabulary vocabulary,
+                             ICollection<String> ruleNames, ATN atn, TokenStream input)
+        : base(input)
     {
-		;
-		this.grammarFileName = grammarFileName;
-		this.atn = atn;
-		this.tokenNames = new String[atn.maxTokenType];
-		for (int i = 0; i < tokenNames.Length; i++) {
-			tokenNames[i] = vocabulary.GetDisplayName(i);
-		}
+        ;
+        this.grammarFileName = grammarFileName;
+        this.atn = atn;
+        this.tokenNames = new String[atn.maxTokenType];
+        for (int i = 0; i < tokenNames.Length; i++)
+        {
+            tokenNames[i] = vocabulary.GetDisplayName(i);
+        }
 
-		this.ruleNames = ruleNames.ToArray();
-		this.vocabulary = vocabulary;
+        this.ruleNames = ruleNames.ToArray();
+        this.vocabulary = vocabulary;
 
-		// init decision DFA
-		int numberOfDecisions = atn.NumberOfDecisions();
-		this.decisionToDFA = new DFA[numberOfDecisions];
-		for (int i = 0; i < numberOfDecisions; i++) {
-			DecisionState decisionState = atn.GetDecisionState(i);
-			decisionToDFA[i] = new DFA(decisionState, i);
-		}
+        // init decision DFA
+        int numberOfDecisions = atn.NumberOfDecisions();
+        this.decisionToDFA = new DFA[numberOfDecisions];
+        for (int i = 0; i < numberOfDecisions; i++)
+        {
+            DecisionState decisionState = atn.GetDecisionState(i);
+            decisionToDFA[i] = new DFA(decisionState, i);
+        }
 
-		// get atn simulator that knows how to do predictions
-		SetInterpreter(new ParserATNSimulator(this, atn,
-											  decisionToDFA,
-											  sharedContextCache));
-	}
+        // get atn simulator that knows how to do predictions
+        SetInterpreter(new ParserATNSimulator(this, atn,
+                                              decisionToDFA,
+                                              sharedContextCache));
+    }
 
-	//@Override
-	public void reset() {
-		base.reset();
-		overrideDecisionReached = false;
-		overrideDecisionRoot = null;
-	}
+    //@Override
+    public void reset()
+    {
+        base.Reset();
+        overrideDecisionReached = false;
+        overrideDecisionRoot = null;
+    }
 
-	//@Override
-	public override ATN GetATN() {
-		return atn;
-	}
+    //@Override
+    public override ATN ATN => atn;
 
-	//@Override
-	//@Deprecated
-	public override String[] GetTokenNames() {
-		return tokenNames;
-	}
+    //@Override
+    //@Deprecated
+    public override String[] TokenNames => tokenNames;
 
-	//@Override
-	public virtual Vocabulary getVocabulary() {
-		return vocabulary;
-	}
+    //@Override
+    public virtual Vocabulary getVocabulary()
+    {
+        return vocabulary;
+    }
 
-	//@Override
-	public override String[] GetRuleNames() {
-		return ruleNames;
-	}
+    //@Override
+    public override String[] GetRuleNames()
+    {
+        return ruleNames;
+    }
 
-	//@Override
-	public override String GetGrammarFileName() {
-		return grammarFileName;
-	}
+    //@Override
+    public override String GrammarFileName => grammarFileName;
 
-	/** Begin parsing at startRuleIndex */
-	public ParserRuleContext parse(int startRuleIndex) {
-		RuleStartState startRuleStartState = atn.ruleToStartState[startRuleIndex];
+    /** Begin parsing at startRuleIndex */
+    public ParserRuleContext parse(int startRuleIndex)
+    {
+        RuleStartState startRuleStartState = atn.ruleToStartState[startRuleIndex];
 
-		rootContext = createInterpreterRuleContext(null, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
-		if (startRuleStartState.isLeftRecursiveRule) {
-			enterRecursionRule(rootContext, startRuleStartState.stateNumber, startRuleIndex, 0);
-		}
-		else {
-			enterRule(rootContext, startRuleStartState.stateNumber, startRuleIndex);
-		}
+        rootContext = createInterpreterRuleContext(null, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
+        if (startRuleStartState.isLeftRecursiveRule)
+        {
+            enterRecursionRule(rootContext, startRuleStartState.stateNumber, startRuleIndex, 0);
+        }
+        else
+        {
+            EnterRule(rootContext, startRuleStartState.stateNumber, startRuleIndex);
+        }
 
-		while ( true ) {
-			ATNState p = getATNState();
-			switch ( p.StateType ) {
-			case ATNState.RULE_STOP :
-				// pop; return from rule
-				if ( _ctx.isEmpty() ) {
-					if (startRuleStartState.isLeftRecursiveRule) {
-						ParserRuleContext result = _ctx;
-						Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
-						unrollRecursionContexts(parentContext.a);
-						return result;
-					}
-					else {
-						exitRule();
-						return rootContext;
-					}
-				}
+        while (true)
+        {
+            ATNState p = getATNState();
+            switch (p.StateType)
+            {
+                case ATNState.RULE_STOP:
+                    // pop; return from rule
+                    if (_ctx.IsEmpty)
+                    {
+                        if (startRuleStartState.isLeftRecursiveRule)
+                        {
+                            ParserRuleContext result = _ctx;
+                            Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
+                            UnrollRecursionContexts(parentContext.a);
+                            return result;
+                        }
+                        else
+                        {
+                            ExitRule();
+                            return rootContext;
+                        }
+                    }
 
-				visitRuleStopState(p);
-				break;
+                    visitRuleStopState(p);
+                    break;
 
-			default :
-				try {
-					visitState(p);
-				}
-				catch (RecognitionException e) {
-					SetState(atn.ruleToStopState[p.ruleIndex].stateNumber);
-					getContext().exception = e;
-					getErrorHandler().ReportError(this, e);
-					recover(e);
-				}
+                default:
+                    try
+                    {
+                        visitState(p);
+                    }
+                    catch (RecognitionException e)
+                    {
+                        State = atn.ruleToStopState[p.ruleIndex].stateNumber;
+                        Context.exception = e;
+                        ErrorHandler.ReportError(this, e);
+                        recover(e);
+                    }
 
-				break;
-			}
-		}
-	}
+                    break;
+            }
+        }
+    }
 
-	//@Override
-	public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence) {
-		Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);
-		_parentContextStack.Push(pair);
-		base.enterRecursionRule(localctx, state, ruleIndex, precedence);
-	}
+    //@Override
+    public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
+    {
+        Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);
+        _parentContextStack.Push(pair);
+        base.EnterRecursionRule(localctx, state, ruleIndex, precedence);
+    }
 
-	protected ATNState getATNState() {
-		return atn.states[(GetState())];
-	}
+    protected ATNState getATNState()
+    {
+        return atn.states[(State)];
+    }
 
-	protected void visitState(ATNState p) {
-//		Console.Out.WriteLine("visitState "+p.stateNumber);
-		int predictedAlt = 1;
-		if ( p is DecisionState ) {
-			predictedAlt = visitDecisionState((DecisionState) p);
-		}
+    protected void visitState(ATNState p)
+    {
+        //		Console.Out.WriteLine("visitState "+p.stateNumber);
+        int predictedAlt = 1;
+        if (p is DecisionState)
+        {
+            predictedAlt = visitDecisionState((DecisionState)p);
+        }
 
-		Transition transition = p.Transition(predictedAlt - 1);
-		switch (transition.SerializationType) {
-			case Transition.EPSILON:
-				if ( p.StateType==ATNState.STAR_LOOP_ENTRY &&
-					 ((StarLoopEntryState)p).isPrecedenceDecision &&
-					 !(transition.target is LoopEndState))
-				{
-					// We are at the start of a left recursive rule's (...)* loop
-					// and we're not taking the exit branch of loop.
-					InterpreterRuleContext localctx =
-						createInterpreterRuleContext(_parentContextStack.Peek().a,
-													 _parentContextStack.Peek().b,
-													 _ctx.GetRuleIndex());
-					pushNewRecursionContext(localctx,
-											atn.ruleToStartState[p.ruleIndex].stateNumber,
-											_ctx.GetRuleIndex());
-				}
-				break;
+        Transition transition = p.Transition(predictedAlt - 1);
+        switch (transition.SerializationType)
+        {
+            case Transition.EPSILON:
+                if (p.StateType == ATNState.STAR_LOOP_ENTRY &&
+                     ((StarLoopEntryState)p).isPrecedenceDecision &&
+                     !(transition.target is LoopEndState))
+                {
+                    // We are at the start of a left recursive rule's (...)* loop
+                    // and we're not taking the exit branch of loop.
+                    InterpreterRuleContext localctx =
+                        createInterpreterRuleContext(_parentContextStack.Peek().a,
+                                                     _parentContextStack.Peek().b,
+                                                     _ctx.                                                     RuleIndex);
+                    PushNewRecursionContext(localctx,
+                                            atn.ruleToStartState[p.ruleIndex].stateNumber,
+                                            _ctx.                                            RuleIndex);
+                }
+                break;
 
-			case Transition.ATOM:
-				match(((AtomTransition)transition)._label);
-				break;
+            case Transition.ATOM:
+                Match(((AtomTransition)transition)._label);
+                break;
 
-			case Transition.RANGE:
-			case Transition.SET:
-			case Transition.NOT_SET:
-				if (!transition.Matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535)) {
-					recoverInline();
-				}
-				matchWildcard();
-				break;
+            case Transition.RANGE:
+            case Transition.SET:
+            case Transition.NOT_SET:
+                if (!transition.Matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535))
+                {
+                    recoverInline();
+                }
+                MatchWildcard();
+                break;
 
-			case Transition.WILDCARD:
-				matchWildcard();
-				break;
+            case Transition.WILDCARD:
+                MatchWildcard();
+                break;
 
-			case Transition.RULE:
-				RuleStartState ruleStartState = (RuleStartState)transition.target;
-				int ruleIndex = ruleStartState.ruleIndex;
-				InterpreterRuleContext newctx = createInterpreterRuleContext(_ctx, p.stateNumber, ruleIndex);
-				if (ruleStartState.isLeftRecursiveRule) {
-					enterRecursionRule(newctx, ruleStartState.stateNumber, ruleIndex, ((RuleTransition)transition).precedence);
-				}
-				else {
-					enterRule(newctx, transition.target.stateNumber, ruleIndex);
-				}
-				break;
+            case Transition.RULE:
+                RuleStartState ruleStartState = (RuleStartState)transition.target;
+                int ruleIndex = ruleStartState.ruleIndex;
+                InterpreterRuleContext newctx = createInterpreterRuleContext(_ctx, p.stateNumber, ruleIndex);
+                if (ruleStartState.isLeftRecursiveRule)
+                {
+                    enterRecursionRule(newctx, ruleStartState.stateNumber, ruleIndex, ((RuleTransition)transition).precedence);
+                }
+                else
+                {
+                    EnterRule(newctx, transition.target.stateNumber, ruleIndex);
+                }
+                break;
 
-			case Transition.PREDICATE:
-				PredicateTransition predicateTransition = (PredicateTransition)transition;
-				if (!Sempred(_ctx, predicateTransition.ruleIndex, predicateTransition.predIndex)) {
-					throw new FailedPredicateException(this);
-				}
+            case Transition.PREDICATE:
+                PredicateTransition predicateTransition = (PredicateTransition)transition;
+                if (!Sempred(_ctx, predicateTransition.ruleIndex, predicateTransition.predIndex))
+                {
+                    throw new FailedPredicateException(this);
+                }
 
-				break;
+                break;
 
-			case Transition.ACTION:
-				ActionTransition actionTransition = (ActionTransition)transition;
-				Action(_ctx, actionTransition.ruleIndex, actionTransition.actionIndex);
-				break;
+            case Transition.ACTION:
+                ActionTransition actionTransition = (ActionTransition)transition;
+                Action(_ctx, actionTransition.ruleIndex, actionTransition.actionIndex);
+                break;
 
-			case Transition.PRECEDENCE:
-				if (!precpred(_ctx, ((PrecedencePredicateTransition)transition).precedence)) {
-					throw new FailedPredicateException(this, $"precpred(_ctx, {(((PrecedencePredicateTransition)transition).precedence)})");
-				}
-				break;
+            case Transition.PRECEDENCE:
+                if (!Precpred(_ctx, ((PrecedencePredicateTransition)transition).precedence))
+                {
+                    throw new FailedPredicateException(this, $"precpred(_ctx, {(((PrecedencePredicateTransition)transition).precedence)})");
+                }
+                break;
 
-			default:
-				throw new UnsupportedOperationException("Unrecognized ATN transition type.");
-		}
+            default:
+                throw new UnsupportedOperationException("Unrecognized ATN transition type.");
+        }
 
-		SetState(transition.target.stateNumber);
-	}
+        State = transition.target.stateNumber;
+    }
 
-	/** Method visitDecisionState() is called when the interpreter reaches
+    /** Method visitDecisionState() is called when the interpreter reaches
 	 *  a decision state (instance of DecisionState). It gives an opportunity
 	 *  for subclasses to track interesting things.
 	 */
-	protected int visitDecisionState(DecisionState p) {
-		int predictedAlt = 1;
-		if ( p.NumberOfTransitions>1 ) {
-			getErrorHandler().Sync(this);
-			int decision = p.decision;
-			if ( decision == overrideDecision && input.Index == overrideDecisionInputIndex &&
-			     !overrideDecisionReached )
-			{
-				predictedAlt = overrideDecisionAlt;
-				overrideDecisionReached = true;
-			}
-			else {
-				predictedAlt = GetInterpreter().AdaptivePredict(input, decision, _ctx);
-			}
-		}
-		return predictedAlt;
-	}
+    protected int visitDecisionState(DecisionState p)
+    {
+        int predictedAlt = 1;
+        if (p.NumberOfTransitions > 1)
+        {
+            ErrorHandler.Sync(this);
+            int decision = p.decision;
+            if (decision == overrideDecision && input.Index == overrideDecisionInputIndex &&
+                 !overrideDecisionReached)
+            {
+                predictedAlt = overrideDecisionAlt;
+                overrideDecisionReached = true;
+            }
+            else
+            {
+                predictedAlt = GetInterpreter().AdaptivePredict(input, decision, _ctx);
+            }
+        }
+        return predictedAlt;
+    }
 
-	/** Provide simple "factory" for InterpreterRuleContext's.
+    /** Provide simple "factory" for InterpreterRuleContext's.
 	 *  @since 4.5.1
 	 */
-	protected InterpreterRuleContext createInterpreterRuleContext(
-		ParserRuleContext parent,
-		int invokingStateNumber,
-		int ruleIndex)
-	{
-		return new InterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
-	}
+    protected InterpreterRuleContext createInterpreterRuleContext(
+        ParserRuleContext parent,
+        int invokingStateNumber,
+        int ruleIndex)
+    {
+        return new InterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
+    }
 
-	protected void visitRuleStopState(ATNState p) {
-		RuleStartState ruleStartState = atn.ruleToStartState[p.ruleIndex];
-		if (ruleStartState.isLeftRecursiveRule) {
-			Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
-			unrollRecursionContexts(parentContext.a);
-			SetState(parentContext.b);
-		}
-		else {
-			exitRule();
-		}
+    protected void visitRuleStopState(ATNState p)
+    {
+        RuleStartState ruleStartState = atn.ruleToStartState[p.ruleIndex];
+        if (ruleStartState.isLeftRecursiveRule)
+        {
+            Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
+            UnrollRecursionContexts(parentContext.a);
+            State = parentContext.b;
+        }
+        else
+        {
+            ExitRule();
+        }
 
-		RuleTransition ruleTransition = (RuleTransition)atn.states[(GetState())].Transition(0);
-		SetState(ruleTransition.followState.stateNumber);
-	}
+        RuleTransition ruleTransition = (RuleTransition)atn.states[(State)].Transition(0);
+        State = ruleTransition.followState.stateNumber;
+    }
 
-	/** Override this parser interpreters normal decision-making process
+    /** Override this parser interpreters normal decision-making process
 	 *  at a particular decision and input token index. Instead of
 	 *  allowing the adaptive prediction mechanism to choose the
 	 *  first alternative within a block that leads to a successful parse,
@@ -372,58 +398,66 @@ public class ParserInterpreter : Parser {
 	 *
 	 *  @since 4.5.1
 	 */
-	public void addDecisionOverride(int decision, int tokenIndex, int forcedAlt) {
-		overrideDecision = decision;
-		overrideDecisionInputIndex = tokenIndex;
-		overrideDecisionAlt = forcedAlt;
-	}
+    public void addDecisionOverride(int decision, int tokenIndex, int forcedAlt)
+    {
+        overrideDecision = decision;
+        overrideDecisionInputIndex = tokenIndex;
+        overrideDecisionAlt = forcedAlt;
+    }
 
-	public InterpreterRuleContext getOverrideDecisionRoot() {
-		return overrideDecisionRoot;
-	}
+    public InterpreterRuleContext getOverrideDecisionRoot()
+    {
+        return overrideDecisionRoot;
+    }
 
-	/** Rely on the error handler for this parser but, if no tokens are consumed
+    /** Rely on the error handler for this parser but, if no tokens are consumed
 	 *  to recover, add an error node. Otherwise, nothing is seen in the parse
 	 *  tree.
 	 */
-	protected void recover(RecognitionException e) {
-		int i = input.Index;
-		getErrorHandler().Recover(this, e);
-		if ( input.Index==i ) {
-			// no input consumed, better add an error node
-			if ( e is InputMismatchException ) {
-				InputMismatchException ime = (InputMismatchException)e;
-				Token tok = e.getOffendingToken();
-				int expectedTokenType = Token.INVALID_TYPE;
-				if ( !ime.getExpectedTokens().IsNil ) {
-					expectedTokenType = ime.getExpectedTokens().GetMinElement(); // get any element
-				}
-				Token errToken =
-					(TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
-				                             expectedTokenType, tok.Text,
-				                             Token.DEFAULT_CHANNEL,
-				                            -1, -1, // invalid start/stop
-				                             tok.				                             Line, tok.CharPositionInLine);
-				_ctx.addErrorNode(createErrorNode(_ctx,errToken));
-			}
-			else { // NoViableAlt
-				Token tok = e.getOffendingToken();
-				Token errToken =
-					(TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
-				                             Token.INVALID_TYPE, tok.Text,
-				                             Token.DEFAULT_CHANNEL,
-				                            -1, -1, // invalid start/stop
-				                             tok.				                             Line, tok.CharPositionInLine);
-				_ctx.addErrorNode(createErrorNode(_ctx,errToken));
-			}
-		}
-	}
+    protected void recover(RecognitionException e)
+    {
+        int i = input.Index;
+        ErrorHandler.Recover(this, e);
+        if (input.Index == i)
+        {
+            // no input consumed, better add an error node
+            if (e is InputMismatchException)
+            {
+                InputMismatchException ime = (InputMismatchException)e;
+                Token tok = e.OffendingToken;
+                int expectedTokenType = Token.INVALID_TYPE;
+                if (!ime.GetExpectedTokens().IsNil)
+                {
+                    expectedTokenType = ime.GetExpectedTokens().GetMinElement(); // get any element
+                }
+                Token errToken =
+                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+                                             expectedTokenType, tok.Text,
+                                             Token.DEFAULT_CHANNEL,
+                                            -1, -1, // invalid start/stop
+                                             tok.Line, tok.CharPositionInLine);
+                _ctx.addErrorNode(CreateErrorNode(_ctx, errToken));
+            }
+            else
+            { // NoViableAlt
+                Token tok = e.OffendingToken;
+                Token errToken =
+                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+                                             Token.INVALID_TYPE, tok.Text,
+                                             Token.DEFAULT_CHANNEL,
+                                            -1, -1, // invalid start/stop
+                                             tok.Line, tok.CharPositionInLine);
+                _ctx.addErrorNode(CreateErrorNode(_ctx, errToken));
+            }
+        }
+    }
 
-	protected Token recoverInline() {
-		return _errHandler.RecoverInline(this);
-	}
+    protected Token recoverInline()
+    {
+        return _errHandler.RecoverInline(this);
+    }
 
-	/** Return the root of the parse, which can be useful if the parser
+    /** Return the root of the parse, which can be useful if the parser
 	 *  bails out. You still can access the top node. Note that,
 	 *  because of the way left recursive rules add children, it's possible
 	 *  that the root will not have any children if the start rule immediately
@@ -431,8 +465,9 @@ public class ParserInterpreter : Parser {
 	 *
 	 * @since 4.5.1
 	 */
-	public InterpreterRuleContext getRootContext() {
-		return rootContext;
-	}
+    public InterpreterRuleContext getRootContext()
+    {
+        return rootContext;
+    }
 }
 

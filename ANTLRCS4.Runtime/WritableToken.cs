@@ -6,5 +6,6 @@
 
 namespace org.antlr.v4.runtime;
 
-public interface WritableToken : Token {
+public interface WritableToken : Token
+{
 }

@@ -151,7 +151,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         else
         {
             Console.Error.WriteLine("unknown recognition error type: " + e.GetType().Name);
-            recognizer.notifyErrorListeners(e.getOffendingToken(), e.Message, e);
+            recognizer.NotifyErrorListeners(e.OffendingToken, e.Message, e);
         }
     }
 
@@ -172,7 +172,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         //						   ", states="+lastErrorStates);
         if (lastErrorIndex == recognizer.InputStream.Index &&
             lastErrorStates != null &&
-            lastErrorStates.Contains(recognizer.GetState()))
+            lastErrorStates.Contains(recognizer.State))
         {
             // uh oh, another error at same token index and previously-visited
             // state in ATN; must be a case where LT(1) is in the recovery
@@ -181,11 +181,11 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
             //			Console.Error.WriteLine("seen error condition before index="+
             //							   lastErrorIndex+", states="+lastErrorStates);
             //			Console.Error.WriteLine("FAILSAFE consumes "+recognizer.getTokenNames()[recognizer.getInputStream().LA(1)]);
-            recognizer.consume();
+            recognizer.Consume();
         }
         lastErrorIndex = recognizer.InputStream.Index;
         lastErrorStates ??= new IntervalSet();
-        lastErrorStates.Add(recognizer.GetState());
+        lastErrorStates.Add(recognizer.State);
         IntervalSet followSet = GetErrorRecoverySet(recognizer);
         ConsumeUntil(recognizer, followSet);
     }
@@ -239,7 +239,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     //@Override
     public virtual void Sync(Parser recognizer)
     {
-        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
+        ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.State)];
         //		Console.Error.WriteLine("sync @ "+s.stateNumber+"="+s.getClass().getSimpleName());
         // If already recovering, don't try to sync
         if (InErrorRecoveryMode(recognizer))
@@ -251,7 +251,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         int la = tokens.LA(1);
 
         // try cheaper subset first; might get lucky. seems to shave a wee bit off
-        var nextTokens = recognizer.GetATN().NextTokens(s);
+        var nextTokens = recognizer.ATN.NextTokens(s);
         if (nextTokens.Contains(la))
         {
             // We are sure the token matches
@@ -266,8 +266,8 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
             {
                 // It's possible the next token won't match; information tracked
                 // by sync is restricted for performance.
-                nextTokensContext = recognizer.getContext();
-                nextTokensState = recognizer.GetState();
+                nextTokensContext = recognizer.Context;
+                nextTokensState = recognizer.State;
             }
             return;
         }
@@ -290,7 +290,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
             case ATNState.STAR_LOOP_BACK:
                 //			Console.Error.WriteLine("at loop back: "+s.getClass().getSimpleName());
                 ReportUnwantedToken(recognizer);
-                IntervalSet expecting = recognizer.getExpectedTokens();
+                IntervalSet expecting = recognizer.GetExpectedTokens();
                 IntervalSet whatFollowsLoopIterationOrRule =
                     expecting.Or(GetErrorRecoverySet(recognizer));
                 ConsumeUntil(recognizer, whatFollowsLoopIterationOrRule);
@@ -318,15 +318,15 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         string input;
         if (tokens != null)
         {
-            if (e.getStartToken().Type == Token.EOF) input = "<EOF>";
-            else input = tokens.GetText(e.getStartToken(), e.getOffendingToken());
+            if (e.StartToken.Type == Token.EOF) input = "<EOF>";
+            else input = tokens.GetText(e.StartToken, e.OffendingToken);
         }
         else
         {
             input = "<unknown input>";
         }
         var msg = "no viable alternative at input " + EscapeWSAndQuote(input);
-        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+        recognizer.NotifyErrorListeners(e.OffendingToken, msg, e);
     }
 
     /**
@@ -341,9 +341,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     protected void ReportInputMismatch(Parser recognizer,
                                        InputMismatchException e)
     {
-        var msg = "mismatched input " + GetTokenErrorDisplay(e.getOffendingToken()) +
-        " expecting " + e.getExpectedTokens().ToString(recognizer.GetVocabulary());
-        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+        var msg = "mismatched input " + GetTokenErrorDisplay(e.OffendingToken) +
+        " expecting " + e.GetExpectedTokens().ToString(recognizer.GetVocabulary());
+        recognizer.NotifyErrorListeners(e.OffendingToken, msg, e);
     }
 
     /**
@@ -358,9 +358,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     protected void ReportFailedPredicate(Parser recognizer,
                                          FailedPredicateException e)
     {
-        var ruleName = recognizer.GetRuleNames()[recognizer.GetCtx().GetRuleIndex()];
+        var ruleName = recognizer.GetRuleNames()[recognizer.Ctx.RuleIndex];
         var msg = "rule " + ruleName + " " + e.Message;
-        recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+        recognizer.NotifyErrorListeners(e.OffendingToken, msg, e);
     }
 
     /**
@@ -390,12 +390,12 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 
         BeginErrorCondition(recognizer);
 
-        var t = recognizer.getCurrentToken();
+        var t = recognizer.GetCurrentToken();
         var tokenName = GetTokenErrorDisplay(t);
         var expecting = GetExpectedTokens(recognizer);
         var msg = "extraneous input " + tokenName + " expecting " +
             expecting.ToString(recognizer.GetVocabulary());
-        recognizer.notifyErrorListeners(t, msg, null);
+        recognizer.NotifyErrorListeners(t, msg, null);
     }
 
     /**
@@ -424,12 +424,12 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 
         BeginErrorCondition(recognizer);
 
-        var t = recognizer.getCurrentToken();
+        var t = recognizer.GetCurrentToken();
         var expecting = GetExpectedTokens(recognizer);
         var msg = "missing " + expecting.ToString(recognizer.GetVocabulary()) +
             " at " + GetTokenErrorDisplay(t);
 
-        recognizer.notifyErrorListeners(t, msg, null);
+        recognizer.NotifyErrorListeners(t, msg, null);
     }
 
     /**
@@ -492,7 +492,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         {
             // we have deleted the extra token.
             // now, move past ttype token as if all were ok
-            recognizer.consume();
+            recognizer.Consume();
             return matchedSymbol;
         }
 
@@ -539,10 +539,10 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         // if current token is consistent with what could come after current
         // ATN state, then we know we're missing a token; error recovery
         // is free to conjure up and insert the missing token
-        var currentState = recognizer.GetInterpreter().atn.states[(recognizer.GetState())];
+        var currentState = recognizer.GetInterpreter().atn.states[(recognizer.State)];
         var next = currentState.Transition(0).target;
         var atn = recognizer.GetInterpreter().atn;
-        var expectingAtLL2 = atn.NextTokens(next, recognizer.GetCtx());
+        var expectingAtLL2 = atn.NextTokens(next, recognizer.Ctx);
         //		Console.Out.WriteLine("LT(2) set="+expectingAtLL2.toString(recognizer.getTokenNames()));
         if (expectingAtLL2.Contains(currentSymbolType))
         {
@@ -584,9 +584,9 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 							   " since "+((TokenStream)recognizer.getInputStream()).LT(2)+
 							   " is what we want");
 			*/
-            recognizer.consume(); // simply delete extra token
+            recognizer.Consume(); // simply delete extra token
                                   // we want to return the token we're actually matching
-            Token matchedSymbol = recognizer.getCurrentToken();
+            Token matchedSymbol = recognizer.GetCurrentToken();
             ReportMatch(recognizer);  // we know current token is correct
             return matchedSymbol;
         }
@@ -614,7 +614,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 */
     protected virtual Token GetMissingSymbol(Parser recognizer)
     {
-        var currentSymbol = recognizer.getCurrentToken();
+        var currentSymbol = recognizer.GetCurrentToken();
         var expecting = GetExpectedTokens(recognizer);
         int expectedTokenType = Token.INVALID_TYPE;
         if (!expecting.IsNil)
@@ -640,7 +640,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 
     protected IntervalSet GetExpectedTokens(Parser recognizer)
     {
-        return recognizer.getExpectedTokens();
+        return recognizer.GetExpectedTokens();
     }
 
     /** How should a token be displayed in an error message? The default
@@ -784,7 +784,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     protected IntervalSet GetErrorRecoverySet(Parser recognizer)
     {
         var atn = recognizer.GetInterpreter().atn;
-        RuleContext ctx = recognizer.GetCtx();
+        RuleContext ctx = recognizer.Ctx;
         var recoverSet = new IntervalSet();
         while (ctx != null && ctx.invokingState >= 0)
         {
@@ -809,7 +809,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         {
             //Console.Out.WriteLine("consume during recover LA(1)="+getTokenNames()[input.LA(1)]);
             //			recognizer.getInputStream().consume();
-            recognizer.consume();
+            recognizer.Consume();
             ttype = recognizer.InputStream.LA(1);
         }
     }

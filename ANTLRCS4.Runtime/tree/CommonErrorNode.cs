@@ -102,13 +102,13 @@ public class CommonErrorNode : CommonTree
     {
         if (trappedException is MissingTokenException ) {
             return "<missing type: " +
-                   ((MissingTokenException)trappedException).getMissingType() +
+                   ((MissingTokenException)trappedException).                   MissingType +
                    ">";
         }
 
         else if (trappedException is UnwantedTokenException ) {
             return "<extraneous: " +
-                   ((UnwantedTokenException)trappedException).getUnexpectedToken() +
+                   ((UnwantedTokenException)trappedException).                   UnexpectedToken +
                    ", resync=" + Text + ">";
         }
 

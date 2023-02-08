@@ -257,17 +257,17 @@ public class TestParserProfiler
 
         var lexEngine = lg.createLexerInterpreter(null);
         var parser = g.createParserInterpreter(null);
-        parser.setProfile(true);
+        parser.SetProfile(true);
         foreach (var s in input)
         {
             lexEngine.Reset();
             parser.reset();
-            lexEngine.SetInputStream(new ANTLRInputStream(s));
+            lexEngine.            InputStream = new ANTLRInputStream(s);
             var tokens = new CommonTokenStream(lexEngine);
-            parser.SetInputStream(tokens);
+            parser.            InputStream = tokens;
             if (!g.rules.TryGetValue(startRule, out var r))
             {
-                return parser.getParseInfo().GetDecisionInfo();
+                return parser.GetParseInfo().GetDecisionInfo();
             }
             var t = parser.parse(r.index);
             //			try {
@@ -279,6 +279,6 @@ public class TestParserProfiler
             //
             //			Console.Out.WriteLine(t.toStringTree(parser));
         }
-        return parser.getParseInfo().GetDecisionInfo();
+        return parser.GetParseInfo().GetDecisionInfo();
     }
 }

@@ -223,7 +223,7 @@ public class TestAmbigParseTrees
         var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
-        parser.setProfile(true);
+        parser.SetProfile(true);
         parser.GetInterpreter().        PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 
         // PARSE
@@ -232,7 +232,7 @@ public class TestAmbigParseTrees
         Assert.AreEqual(overallTree, Trees.ToStringTree(parseTree, nodeTextProvider));
         Console.Out.WriteLine();
 
-        var decisionInfo = parser.getParseInfo().GetDecisionInfo();
+        var decisionInfo = parser.GetParseInfo().GetDecisionInfo();
         var ambiguities = decisionInfo[decision].ambiguities;
         Assert.AreEqual(1, ambiguities.Count);
         var ambiguityInfo = ambiguities[(0)];

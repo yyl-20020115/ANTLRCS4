@@ -166,7 +166,7 @@ public class XPath
         }
         var word = wordToken.Text;
         int ttype = parser.GetTokenType(word);
-        int ruleIndex = parser.getRuleIndex(word);
+        int ruleIndex = parser.GetRuleIndex(word);
         switch (wordToken.Type)
         {
             case XPathLexer.WILDCARD:

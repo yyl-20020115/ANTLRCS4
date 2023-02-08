@@ -57,7 +57,7 @@ public interface TokenSource
 	 * the input, or {@code null} if no input stream is available for the token
 	 * source.
 	 */
-    public CharStream InputStream { get; }
+    CharStream InputStream { get; }
 
     /**
 	 * Gets the name of the underlying input source. This method returns a

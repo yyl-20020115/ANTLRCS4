@@ -29,7 +29,7 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.runtime;
 
-public class MissingTokenException :RecognitionException
+public class MissingTokenException : RecognitionException
 {
     internal int expecting;
     private int ttype;
@@ -37,15 +37,12 @@ public class MissingTokenException :RecognitionException
     private object inserted;
 
     public MissingTokenException(int ttype, IntStream input, object inserted)
-        :base(null,input,null)
+        : base(null, input, null)
     {
         this.ttype = ttype;
         this.input = input;
         this.inserted = inserted;
     }
 
-    internal string getMissingType()
-    {
-        throw new NotImplementedException();
-    }
+    public string MissingType => throw new NotImplementedException();
 }

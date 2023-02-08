@@ -10,14 +10,14 @@ namespace org.antlr.v4.runtime;
  */
 public class InputMismatchException : RecognitionException
 {
-    public InputMismatchException(Parser recognizer) : base(recognizer, recognizer.InputStream, recognizer.GetCtx())
+    public InputMismatchException(Parser recognizer) : base(recognizer, recognizer.InputStream, recognizer.Ctx)
     {
-        this.setOffendingToken(recognizer.getCurrentToken());
+        this.        OffendingToken = recognizer.GetCurrentToken();
     }
 
     public InputMismatchException(Parser recognizer, int state, ParserRuleContext ctx) : base(recognizer, recognizer.InputStream, ctx)
     {
-        this.setOffendingState(state);
-        this.setOffendingToken(recognizer.getCurrentToken());
+        this.        OffendingState = state;
+        this.        OffendingToken = recognizer.GetCurrentToken();
     }
 }

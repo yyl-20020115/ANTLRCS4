@@ -277,17 +277,6 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     //@Override
     public override TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 
-    /** Set the char stream and reset the lexer */
-    //@Override
-    public override void SetInputStream(IntStream input)
-    {
-        this.input = null;
-        this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
-        Reset();
-        this.input = (CharStream)input;
-        this._tokenFactorySourcePair = new Pair<TokenSource, CharStream>(this, this.input);
-    }
-
     //@Override
     public virtual string SourceName => input.SourceName;
 
@@ -313,7 +302,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 */
     public Token Emit()
     {
-        var t = (_factory as TokenFactory<Token>).Create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, GetCharIndex() - 1,
+        var t = (_factory as TokenFactory<Token>).Create(_tokenFactorySourcePair, _type, _text, _channel, _tokenStartCharIndex, CharIndex - 1,
                                   _tokenStartLine, _tokenStartCharPositionInLine);
         Emit(t);
         return t;
@@ -343,10 +332,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     }
 
     /** What is the index of the current character of lookahead? */
-    public int GetCharIndex()
-    {
-        return input.Index;
-    }
+    public int CharIndex => input.Index;
 
     /** Return the text matched so far for the current token or any
 	 *  text override.
@@ -365,9 +351,9 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     public int Type { get => _type; set => _type = value; }
     public int Channel { get => _channel; set => _channel = value; }
 
-    public virtual string[] GetChannelNames() => null;
+    public virtual string[] ChannelNames => null;
 
-    public virtual string[] GetModeNames() => null;
+    public virtual string[] ModeNames => null;
 
     /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
@@ -375,24 +361,27 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 */
     //@Override
     //@Deprecated
-    public override string[] GetTokenNames() => null;
+    public override string[] TokenNames => null;
 
     /** Return a list of all Token objects in input char stream.
 	 *  Forces load of all tokens. Does not include EOF token.
 	 */
-    public List<Token> GetAllTokens()
+    public virtual List<Token> AllTokens
     {
-        List<Token> tokens = new();
-        Token t = NextToken();
-        while (t.Type != Token.EOF)
+        get
         {
-            tokens.Add(t);
-            t = NextToken();
+            List<Token> tokens = new();
+            Token t = NextToken();
+            while (t.Type != Token.EOF)
+            {
+                tokens.Add(t);
+                t = NextToken();
+            }
+            return tokens;
         }
-        return tokens;
     }
 
-    public void Recover(LexerNoViableAltException e)
+    public virtual void Recover(LexerNoViableAltException e)
     {
         if (input.LA(1) != IntStream.EOF)
         {
@@ -422,30 +411,18 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     public string GetErrorDisplay(int c)
     {
-        var s = c.ToString();// String.valueOf((char)c);
-        switch (c)
+        // String.valueOf((char)c);
+        return c switch
         {
-            case Token.EOF:
-                s = "<EOF>";
-                break;
-            case '\n':
-                s = "\\n";
-                break;
-            case '\t':
-                s = "\\t";
-                break;
-            case '\r':
-                s = "\\r";
-                break;
-        }
-        return s;
+            Token.EOF => "<EOF>",
+            '\n' => "\\n",
+            '\t' => "\\t",
+            '\r' => "\\r",
+            _ => c.ToString(),
+        };
     }
 
-    public string GetCharErrorDisplay(int c)
-    {
-        var s = GetErrorDisplay(c);
-        return "'" + s + "'";
-    }
+    public string GetCharErrorDisplay(int c) => "'" + GetErrorDisplay(c) + "'";
 
     /** Lexers can normally match any char in it's vocabulary after matching
 	 *  a token, so do the easy thing and just kill a character and hope

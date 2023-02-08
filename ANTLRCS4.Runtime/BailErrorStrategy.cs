@@ -46,7 +46,7 @@ public class BailErrorStrategy : DefaultErrorStrategy
     //@Override
     public override void Recover(Parser recognizer, RecognitionException e)
     {
-        for (ParserRuleContext context = recognizer.getContext(); context != null; context = context.GetParent())
+        for (ParserRuleContext context = recognizer.Context; context != null; context = context.GetParent())
         {
             context.exception = e;
         }
@@ -61,7 +61,7 @@ public class BailErrorStrategy : DefaultErrorStrategy
     public override Token RecoverInline(Parser recognizer)
     {
         var e = new InputMismatchException(recognizer);
-        for (var context = recognizer.getContext(); context != null; context = context.GetParent())
+        for (var context = recognizer.Context; context != null; context = context.GetParent())
         {
             context.exception = e;
         }

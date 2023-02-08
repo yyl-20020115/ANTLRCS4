@@ -31,7 +31,7 @@ public class TestVocabulary
             "TOKEN_REF", "RULE_REF", "'//'", "'/'", "'*'", "'!'", "ID", "STRING"
         };
 
-        var vocabulary = VocabularyImpl.fromTokenNames(tokenNames);
+        var vocabulary = VocabularyImpl.FromTokenNames(tokenNames);
         Assert.IsNotNull(vocabulary);
         Assert.AreEqual("EOF", vocabulary.GetSymbolicName(Token.EOF));
         for (int i = 0; i < tokenNames.Length; i++)

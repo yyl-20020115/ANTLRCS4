@@ -102,7 +102,7 @@ public class TreeParser : BaseRecognizer
     {
         String tokenText =
             "<missing " + GetTokenNames()[expectedTokenType] + ">";
-        TreeAdaptor adaptor = ((TreeNodeStream)e.getInputStream()).getTreeAdaptor();
+        TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
         return adaptor.create(new CommonToken(expectedTokenType, tokenText));
     }
 
@@ -174,7 +174,7 @@ public class TreeParser : BaseRecognizer
     {
         if (this is TreeParser)
         {
-            TreeAdaptor adaptor = ((TreeNodeStream)e.getInputStream()).getTreeAdaptor();
+            TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
             e.token = adaptor.getToken(e.node);
             if (e.token == null)
             { // could be an UP/DOWN node

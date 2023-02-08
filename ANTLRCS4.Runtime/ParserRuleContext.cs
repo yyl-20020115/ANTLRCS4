@@ -144,7 +144,7 @@ public class ParserRuleContext : RuleContext
     /** Add a token leaf node child and force its parent to be this node. */
     public TerminalNode AddChild(TerminalNode t)
     {
-        t.SetParent(this);
+        t.        Parent1 = this;
         return AddAnyChild(t);
     }
 
@@ -154,7 +154,7 @@ public class ParserRuleContext : RuleContext
 	 */
     public ErrorNode addErrorNode(ErrorNode errorNode)
     {
-        errorNode.SetParent(this);
+        errorNode.        Parent1 = this;
         return AddAnyChild(errorNode);
     }
 
@@ -168,7 +168,7 @@ public class ParserRuleContext : RuleContext
     {
         var t = new TerminalNodeImpl(matchedToken);
         AddAnyChild(t);
-        t.SetParent(this);
+        t.        Parent1 = this;
         return t;
     }
 
@@ -182,7 +182,7 @@ public class ParserRuleContext : RuleContext
     {
         var t = new ErrorNodeImpl(badToken);
         AddAnyChild(t);
-        t.SetParent(this);
+        t.        Parent1 = this;
         return t;
     }
 
@@ -204,7 +204,7 @@ public class ParserRuleContext : RuleContext
     /** Override to make type more specific */
     public ParserRuleContext GetParent()
     {
-        return (ParserRuleContext)base.getParent();
+        return (ParserRuleContext)base.Parent;
     }
 
     ////@Override

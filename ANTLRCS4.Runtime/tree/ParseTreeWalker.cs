@@ -43,7 +43,7 @@ public class ParseTreeWalker {
 	 * @param r The grammar rule containing the rule context
 	 */
     protected void enterRule(ParseTreeListener listener, RuleNode r) {
-		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
+		ParserRuleContext ctx = (ParserRuleContext)r.CurrentRuleContext;
 		listener.EnterEveryRule(ctx);
 		ctx.EnterRule(listener);
     }
@@ -56,7 +56,7 @@ public class ParseTreeWalker {
 	 * @param r The grammar rule containing the rule context
 	 */
 	protected void exitRule(ParseTreeListener listener, RuleNode r) {
-		ParserRuleContext ctx = (ParserRuleContext)r.getRuleContext();
+		ParserRuleContext ctx = (ParserRuleContext)r.CurrentRuleContext;
 		ctx.ExitRule(listener);
 		listener.ExitEveryRule(ctx);
     }

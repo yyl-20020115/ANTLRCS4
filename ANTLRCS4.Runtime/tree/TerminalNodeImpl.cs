@@ -23,13 +23,9 @@ public class TerminalNodeImpl : TerminalNode {
 
     //@Override
     public ParseTree Parent => parent;
-    //@Override
-    public void SetParent(RuleContext parent) {
-		this.parent = parent;
-	}
 
-	//@Override
-	public Token getPayload() { return symbol; }
+    //@Override
+    public Token getPayload() { return symbol; }
 
     //@Override
     public Interval SourceInterval

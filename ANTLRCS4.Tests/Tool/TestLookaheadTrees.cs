@@ -124,10 +124,10 @@ public class TestLookaheadTrees
         var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
-        parser.setProfile(true);
+        parser.SetProfile(true);
         var t = parser.parse(startRuleIndex);
 
-        var decisionInfo = parser.getParseInfo().GetDecisionInfo()[decision];
+        var decisionInfo = parser.GetParseInfo().GetDecisionInfo()[decision];
         var lookaheadEventInfo = decisionInfo.SLL_MaxLookEvent;
 
         var lookaheadParseTrees =

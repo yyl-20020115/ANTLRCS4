@@ -39,8 +39,5 @@ public class UnwantedTokenException :RecognitionException
 
     }
 
-    internal Token getUnexpectedToken()
-    {
-        throw new NotImplementedException();
-    }
+    public Token UnexpectedToken => throw new NotImplementedException();
 }

@@ -144,7 +144,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			if( p.decision == this.overrideDecision &&
 				this.input.				Index == this.overrideDecisionInputIndex )
 			{
-				overrideDecisionRoot = (GrammarInterpreterRuleContext)getContext();
+				overrideDecisionRoot = (GrammarInterpreterRuleContext)Context;
 			}
 		}
 
@@ -323,7 +323,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		// Create a new parser interpreter to parse the ambiguous subphrase
 		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
 
-		DecisionState decisionState = originalParser.GetATN().decisionToState[(decision)];
+		DecisionState decisionState = originalParser.ATN.decisionToState[(decision)];
 
 		for (int alt = 1; alt<=decisionState.GetTransitions().Length; alt++) {
 			// re-parse entire input for all ambiguous alternatives
@@ -331,7 +331,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			//  using this temp parser.)
 			GrammarParserInterpreter.BailButConsumeErrorStrategy errorHandler =
 				new GrammarParserInterpreter.BailButConsumeErrorStrategy();
-			parser.setErrorHandler(errorHandler);
+			parser.			ErrorHandler = errorHandler;
 			parser.reset();
 			parser.addDecisionOverride(decision, startIndex, alt);
 			ParserRuleContext tt = parser.parse(startRuleIndex);
@@ -372,7 +372,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			Type c = originalParser.GetType();
 			try {
 				ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(Grammar), typeof(ATN), typeof(TokenStream) });
-				parser = ctor.Invoke(g,new object[] { originalParser.GetATN(), originalParser.getTokenStream() }) as ParserInterpreter;
+				parser = ctor.Invoke(g,new object[] { originalParser.ATN, originalParser.TokenStream }) as ParserInterpreter;
 			}
 			catch (Exception e) {
 				throw new ArgumentException("can't create parser to match incoming "+originalParser.GetType().Name, e);
@@ -381,19 +381,22 @@ public class GrammarParserInterpreter : ParserInterpreter {
 		else { // must've been a generated parser
 //			IntegerList serialized = ATNSerializer.getSerialized(originalParser.getATN(), g.getLanguage());
 //			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
-			parser = new ParserInterpreter(originalParser.GetGrammarFileName(),
+			parser = new ParserInterpreter(originalParser.GrammarFileName,
 										   originalParser.GetVocabulary(),
 										   Arrays.AsList(originalParser.GetRuleNames()),
-					                       originalParser.GetATN(),
+					                       originalParser.					                       ATN,
 										   tokens);
 		}
 
-		parser.SetInputStream(tokens);
+		parser.
+		InputStream = tokens;
 
 		// Make sure that we don't get any error messages from using this temporary parser
-		parser.setErrorHandler(new BailErrorStrategy());
+		parser.
+		// Make sure that we don't get any error messages from using this temporary parser
+		ErrorHandler = new BailErrorStrategy();
 		parser.RemoveErrorListeners();
-		parser.removeParseListeners();
+		parser.RemoveParseListeners();
 		parser.GetInterpreter().		PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 		return parser;
 	}
@@ -416,7 +419,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 //			Console.Error.WriteLine("recover: error at " + errIndex);
 			TokenStream input = recognizer.InputStream;
 			if ( input.Index<input.Count-1 ) { // don't consume() eof
-				recognizer.consume(); // just kill this bad token and let it continue.
+				recognizer.Consume(); // just kill this bad token and let it continue.
 			}
 		}
 

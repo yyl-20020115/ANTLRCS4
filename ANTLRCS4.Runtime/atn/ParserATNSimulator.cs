@@ -335,7 +335,7 @@ public class ParserATNSimulator : ATNSimulator
             {
                 // the start state for a precedence DFA depends on the current
                 // parser precedence, and is provided by a DFA method.
-                s0 = dfa.GetPrecedenceStartState(parser.getPrecedence());
+                s0 = dfa.GetPrecedenceStartState(parser.GetPrecedence());
             }
             else
             {
@@ -350,7 +350,7 @@ public class ParserATNSimulator : ATNSimulator
                 {
                     Console.WriteLine("predictATN decision " + dfa.decision +
                                        " exec LA(1)==" + GetLookaheadName(input) +
-                                       ", outerContext=" + outerContext.toString(parser));
+                                       ", outerContext=" + outerContext.ToString(parser));
                 }
 
                 bool fullCtx = false;
@@ -370,7 +370,7 @@ public class ParserATNSimulator : ATNSimulator
                     dfa.s0.configs = s0_closure; // not used for prediction but useful to know start configs anyway
                     s0_closure = ApplyPrecedenceFilter(s0_closure);
                     s0 = AddDFAState(dfa, new DFAState(s0_closure));
-                    dfa.SetPrecedenceStartState(parser.getPrecedence(), s0);
+                    dfa.SetPrecedenceStartState(parser.GetPrecedence(), s0);
                 }
                 else
                 {
@@ -1889,7 +1889,7 @@ public class ParserATNSimulator : ATNSimulator
             if (parser != null)
             {
                 Console.WriteLine("context surrounding pred is " +
-                                   parser.getRuleInvocationStack());
+                                   parser.GetRuleInvocationStack());
             }
         }
 
@@ -1942,7 +1942,7 @@ public class ParserATNSimulator : ATNSimulator
             if (parser != null)
             {
                 Console.WriteLine("context surrounding pred is " +
-                                   parser.getRuleInvocationStack());
+                                   parser.GetRuleInvocationStack());
             }
         }
 
@@ -2092,7 +2092,7 @@ public class ParserATNSimulator : ATNSimulator
     public virtual void DumpDeadEndConfigs(NoViableAltException nvae)
     {
         Console.Error.WriteLine("dead end configs: ");
-        foreach (var c in nvae.getDeadEndConfigs())
+        foreach (var c in nvae.DeadEndConfigs)
         {
             var trans = "no edges";
             if (c.state.NumberOfTransitions > 0)
@@ -2242,7 +2242,7 @@ public class ParserATNSimulator : ATNSimulator
         {
             Interval interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportAttemptingFullContext decision=" + dfa.decision + ":" + configs +
-                               ", input=" + parser.getTokenStream().GetText(interval));
+                               ", input=" + parser.TokenStream.GetText(interval));
         }
         if (parser != null) parser.GetErrorListenerDispatch().ReportAttemptingFullContext(parser, dfa, startIndex, stopIndex, conflictingAlts, configs);
     }
@@ -2253,7 +2253,7 @@ public class ParserATNSimulator : ATNSimulator
         {
             Interval interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportContextSensitivity decision=" + dfa.decision + ":" + configs +
-                               ", input=" + parser.getTokenStream().GetText(interval));
+                               ", input=" + parser.TokenStream.GetText(interval));
         }
         parser?.GetErrorListenerDispatch().ReportContextSensitivity(parser, dfa, startIndex, stopIndex, prediction, configs);
     }
@@ -2271,7 +2271,7 @@ public class ParserATNSimulator : ATNSimulator
             var interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportAmbiguity " +
                                ambigAlts + ":" + configs +
-                               ", input=" + parser.getTokenStream().GetText(interval));
+                               ", input=" + parser.TokenStream.GetText(interval));
         }
         parser?.GetErrorListenerDispatch().ReportAmbiguity(parser, dfa, startIndex, stopIndex,
                                                                               exact, ambigAlts, configs);

@@ -22,7 +22,7 @@ public class LexerInterpreter : Lexer
     protected string[] modeNames;
 
 
-    private Vocabulary vocabulary;
+    private readonly Vocabulary vocabulary;
 
     protected DFA[] _decisionToDFA;
     protected PredictionContextCache _sharedContextCache =
@@ -30,7 +30,7 @@ public class LexerInterpreter : Lexer
 
     //@Deprecated
     public LexerInterpreter(string grammarFileName, ICollection<string> tokenNames, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
-    : this(grammarFileName, VocabularyImpl.fromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
+    : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
     {
     }
 
@@ -38,17 +38,13 @@ public class LexerInterpreter : Lexer
     public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
     : this(grammarFileName, vocabulary, ruleNames, new List<String>(), modeNames, atn, input)
     {
-
     }
 
     public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> channelNames, ICollection<String> modeNames, ATN atn, CharStream input)
         : base(input)
     {
-
         if (atn.grammarType != ATNType.LEXER)
-        {
             throw new ArgumentException("The ATN must be a lexer ATN.");
-        }
 
         this.grammarFileName = grammarFileName;
         this.atn = atn;
@@ -72,52 +68,29 @@ public class LexerInterpreter : Lexer
     }
 
     //@Override
-    public override ATN GetATN()
-    {
-        return atn;
-    }
+    public override ATN ATN => atn;
 
     //@Override
-    public override String GetGrammarFileName()
-    {
-        return grammarFileName;
-    }
+    public override string GrammarFileName => grammarFileName;
 
     //@Override
     //@Deprecated
-    public String[] GetTokenNames()
-    {
-        return tokenNames;
-    }
+    public override string[] TokenNames => tokenNames;
 
     //@Override
-    public override String[] GetRuleNames()
+    public override string[] GetRuleNames()
     {
         return ruleNames;
     }
 
     //@Override
-    public String[] GetChannelNames()
-    {
-        return channelNames;
-    }
+    public override string[] ChannelNames => channelNames;
 
     //@Override
-    public override String[] GetModeNames()
-    {
-        return modeNames;
-    }
+    public override string[] ModeNames => modeNames;
 
     //@Override
-    public override Vocabulary GetVocabulary()
-    {
-        if (vocabulary != null)
-        {
-            return vocabulary;
-        }
-
-        return base.GetVocabulary();
-    }
+    public override Vocabulary GetVocabulary() => vocabulary ?? base.GetVocabulary();
 
     public override TokenFactory TokenFactory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

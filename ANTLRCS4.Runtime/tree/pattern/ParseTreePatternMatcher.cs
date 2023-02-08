@@ -187,16 +187,16 @@ public class ParseTreePatternMatcher
         var tokenSrc = new ListTokenSource(tokenList);
         var tokens = new CommonTokenStream(tokenSrc);
 
-        var parserInterp = new ParserInterpreter(parser.GetGrammarFileName(),
+        var parserInterp = new ParserInterpreter(parser.GrammarFileName,
                                                                parser.GetVocabulary(),
                                                                parser.GetRuleNames(),
-                                                               parser.getATNWithBypassAlts(),
+                                                               parser.GetATNWithBypassAlts(),
                                                                tokens);
 
         ParseTree tree = null;
         try
         {
-            parserInterp.setErrorHandler(new BailErrorStrategy());
+            parserInterp.            ErrorHandler = new BailErrorStrategy();
             tree = parserInterp.parse(patternRuleIndex);
             //			Console.Out.WriteLine("pattern tree = "+tree.toStringTree(parserInterp));
         }
@@ -313,7 +313,7 @@ public class ParseTreePatternMatcher
             if (ruleTagToken != null)
             {
                 ParseTreeMatch m = null;
-                if (r1.getRuleContext().GetRuleIndex() == r2.getRuleContext().GetRuleIndex())
+                if (r1.CurrentRuleContext.RuleIndex == r2.CurrentRuleContext.RuleIndex)
                 {
                     // track label->list-of-nodes for both rule name and label (if any)
                     labels.Map(ruleTagToken.RuleName, tree);
@@ -403,12 +403,12 @@ public class ParseTreePatternMatcher
                 }
                 else if (char.IsLower(tagChunk.Tag[(0)]))
                 {
-                    int ruleIndex = parser.getRuleIndex(tagChunk.Tag);
+                    int ruleIndex = parser.GetRuleIndex(tagChunk.Tag);
                     if (ruleIndex == -1)
                     {
                         throw new ArgumentException("Unknown rule " + tagChunk.Tag + " in pattern: " + pattern);
                     }
-                    int ruleImaginaryTokenType = parser.getATNWithBypassAlts().ruleToTokenType[ruleIndex];
+                    int ruleImaginaryTokenType = parser.GetATNWithBypassAlts().ruleToTokenType[ruleIndex];
                     tokens.Add(new RuleTagToken(tagChunk.Tag, ruleImaginaryTokenType, tagChunk.Label));
                 }
                 else
@@ -420,7 +420,7 @@ public class ParseTreePatternMatcher
             {
                 var textChunk = (TextChunk)chunk;
                 var @in = new ANTLRInputStream(textChunk.Text);
-                lexer.SetInputStream(@in);
+                lexer.                InputStream = @in;
                 Token t = lexer.NextToken();
                 while (t.Type != Token.EOF)
                 {
