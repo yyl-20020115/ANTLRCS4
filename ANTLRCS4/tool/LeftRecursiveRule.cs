@@ -7,7 +7,6 @@
 using org.antlr.v4.analysis;
 using org.antlr.v4.misc;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.tool;
@@ -29,37 +28,32 @@ public class LeftRecursiveRule : Rule
         for (int i = 1; i <= numberOfAlts; i++) alt[i] = new Alternative(this, i);
     }
 
-    //@Override
-    public bool HasAltSpecificContexts()
+    public override bool HasAltSpecificContexts() => base.HasAltSpecificContexts() || GetAltLabels() != null;
+
+    public override int OriginalNumberOfAlts
     {
-        return base.HasAltSpecificContexts() || GetAltLabels() != null;
+        get
+        {
+            int n = 0;
+            if (recPrimaryAlts != null) n += recPrimaryAlts.Count;
+            if (recOpAlts != null) n += recOpAlts.Count;
+            return n;
+        }
     }
 
-    ////@Override
-    public int GetOriginalNumberOfAlts()
-    {
-        int n = 0;
-        if (recPrimaryAlts != null) n += recPrimaryAlts.Count;
-        if (recOpAlts != null) n += recOpAlts.Count;
-        return n;
-    }
-
-    public RuleAST GetOriginalAST()
-    {
-        return originalAST;
-    }
+    public RuleAST OriginalAST => originalAST;
 
     //@Override
-    public List<AltAST> GetUnlabeledAltASTs()
+    public override List<AltAST> GetUnlabeledAltASTs()
     {
         List<AltAST> alts = new();
-        foreach (LeftRecursiveRuleAltInfo altInfo in recPrimaryAlts)
+        foreach (var altInfo in recPrimaryAlts)
         {
             if (altInfo.altLabel == null) alts.Add(altInfo.originalAltAST);
         }
         for (int i = 0; i < recOpAlts.Count; i++)
         {
-            LeftRecursiveRuleAltInfo altInfo = recOpAlts.GetElement(i);
+            var altInfo = recOpAlts.GetElement(i);
             if (altInfo.altLabel == null) alts.Add(altInfo.originalAltAST);
         }
         if (alts.Count == 0) return null;
@@ -85,7 +79,7 @@ public class LeftRecursiveRule : Rule
         int[] alts = new int[recPrimaryAlts.Count + 1];
         for (int i = 0; i < recPrimaryAlts.Count; i++)
         { // recPrimaryAlts is a List not Map like recOpAlts
-            LeftRecursiveRuleAltInfo altInfo = recPrimaryAlts[(i)];
+            var altInfo = recPrimaryAlts[(i)];
             alts[i + 1] = altInfo.altNum;
         }
         return alts;
@@ -109,7 +103,7 @@ public class LeftRecursiveRule : Rule
         if (recOpAlts.Count == 0) return null;
         int[] alts = new int[recOpAlts.Count + 1];
         int alt = 1;
-        foreach (LeftRecursiveRuleAltInfo altInfo in recOpAlts.Values)
+        foreach (var altInfo in recOpAlts.Values)
         {
             alts[alt] = altInfo.altNum;
             alt++; // recOpAlts has alts possibly with gaps
@@ -118,18 +112,17 @@ public class LeftRecursiveRule : Rule
     }
 
     /** Get -&gt; labels from those alts we deleted for left-recursive rules. */
-    //@Override
-    public Dictionary<String, List<Pair<int, AltAST>>> GetAltLabels()
+    public override Dictionary<string, List<Pair<int, AltAST>>> GetAltLabels()
     {
-        Dictionary<String, List<Pair<int, AltAST>>> labels = new();
-        Dictionary<String, List<Pair<int, AltAST>>> normalAltLabels = base.GetAltLabels();
+        Dictionary<string, List<Pair<int, AltAST>>> labels = new();
+        var normalAltLabels = base.GetAltLabels();
         if (normalAltLabels != null)
         {
             labels = new(normalAltLabels);
         }
         if (recPrimaryAlts != null)
         {
-            foreach (LeftRecursiveRuleAltInfo altInfo in recPrimaryAlts)
+            foreach (var altInfo in recPrimaryAlts)
             {
                 if (altInfo.altLabel != null)
                 {
@@ -139,7 +132,7 @@ public class LeftRecursiveRule : Rule
                         labels[altInfo.altLabel] = pairs;
                     }
 
-                    pairs.Add(new Pair<int, AltAST>(altInfo.altNum, altInfo.originalAltAST));
+                    pairs.Add(new (altInfo.altNum, altInfo.originalAltAST));
                 }
             }
         }
@@ -147,7 +140,7 @@ public class LeftRecursiveRule : Rule
         {
             for (int i = 0; i < recOpAlts.Count; i++)
             {
-                LeftRecursiveRuleAltInfo altInfo = recOpAlts.GetElement(i);
+                var altInfo = recOpAlts.GetElement(i);
                 if (altInfo.altLabel != null)
                 {
                     if (!labels.TryGetValue(altInfo.altLabel, out var pairs))
@@ -156,7 +149,7 @@ public class LeftRecursiveRule : Rule
                         labels.Add(altInfo.altLabel, pairs);
                     }
 
-                    pairs.Add(new Pair<int, AltAST>(altInfo.altNum, altInfo.originalAltAST));
+                    pairs.Add(new (altInfo.altNum, altInfo.originalAltAST));
                 }
             }
         }

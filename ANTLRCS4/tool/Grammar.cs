@@ -301,7 +301,7 @@ public class Grammar : AttributeResolver
         this.text = grammarText;
         this.fileName = fileName;
         this.Tools = new Tool();
-        ANTLRToolListener hush = new ATL();
+        var hush = new ATL();
         Tools.addListener(hush); // we want to hush errors/warnings
         this.Tools.addListener(listener);
         org.antlr.runtime.ANTLRStringStream @in = new(grammarText)
@@ -426,7 +426,7 @@ public class Grammar : AttributeResolver
 	 * instance; otherwise, {@code false} if a rule with this name already
 	 * existed in the grammar instance.
 	 */
-    public bool DefineRule(Rule r)
+    public virtual bool DefineRule(Rule r)
     {
         if (rules.ContainsKey(r.name))
         {
@@ -454,7 +454,7 @@ public class Grammar : AttributeResolver
 	 * instance; otherwise, {@code false} if the specified rule was not defined
 	 * in the grammar.
 	 */
-    public bool UndefineRule(Rule r)
+    public virtual bool UndefineRule(Rule r)
     {
         if (r.index < 0 || r.index >= indexToRule.Count || indexToRule[(r.index)] != r)
         {
@@ -600,7 +600,7 @@ public class Grammar : AttributeResolver
         if (grammarsFromRootToMe != null)
         {
             var buffer = new StringBuilder();
-            foreach (Grammar g in grammarsFromRootToMe)
+            foreach (var g in grammarsFromRootToMe)
             {
                 buffer.Append(g.name);
                 buffer.Append('_');
@@ -1415,7 +1415,7 @@ public class Grammar : AttributeResolver
                     Rule r = ast.g.GetRule(ruleName);
                     if (r is LeftRecursiveRule)
                     {
-                        RuleAST originalAST = ((LeftRecursiveRule)r).GetOriginalAST();
+                        RuleAST originalAST = ((LeftRecursiveRule)r).OriginalAST;
                         tokenRegion = Interval.Of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
                     }
                 }
@@ -1449,14 +1449,16 @@ public class Grammar : AttributeResolver
             return implicitLexer.createLexerInterpreter(input);
         }
 
-        List<String> allChannels = new();
-        allChannels.Add("DEFAULT_TOKEN_CHANNEL");
-        allChannels.Add("HIDDEN");
+        List<string> allChannels = new()
+        {
+            "DEFAULT_TOKEN_CHANNEL",
+            "HIDDEN"
+        };
         allChannels.AddRange(channelValueToNameList);
 
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.GetSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
+        var serialized = ATNSerializer.GetSerialized(atn);
+        var deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
         return new LexerInterpreter(
                 fileName,
                 getVocabulary(),
@@ -1489,8 +1491,8 @@ public class Grammar : AttributeResolver
         }
 
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.GetSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
+        var serialized = ATNSerializer.GetSerialized(atn);
+        var deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
 
         return new ParserInterpreter(fileName, getVocabulary(), Arrays.AsList(getRuleNames()), deserializedATN, tokenStream);
     }

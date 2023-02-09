@@ -18,16 +18,9 @@ namespace org.antlr.v4.tool;
  */
 public class ToolMessage : ANTLRMessage
 {
-    public ToolMessage(ErrorType errorType) : base(errorType)
-    {
-    }
-    public ToolMessage(ErrorType errorType, params Object[] args)
-        : base(errorType, null, Token.INVALID_TOKEN, args)
-    {
-    }
-    public ToolMessage(ErrorType errorType, Exception e, params Object[] args)
-    : base(errorType, e, Token.INVALID_TOKEN, args)
-    {
-
-    }
+    public ToolMessage(ErrorType errorType) : base(errorType) { }
+    public ToolMessage(ErrorType errorType, params object[] args)
+        : base(errorType, null, Token.INVALID_TOKEN, args) { }
+    public ToolMessage(ErrorType errorType, Exception e, params object[] args)
+    : base(errorType, e, Token.INVALID_TOKEN, args) { }
 }

@@ -329,7 +329,7 @@ public class ParserATNFactory : ATNFactory
         }
         else
         {
-            bool isCtxDependent = UseDefAnalyzer.actionIsContextDependent(pred);
+            bool isCtxDependent = UseDefAnalyzer.ActionIsContextDependent(pred);
             if (g.sempreds.TryGetValue(pred, out var r))
             {
                 p = new PredicateTransition(right, currentRule.index, r, isCtxDependent);

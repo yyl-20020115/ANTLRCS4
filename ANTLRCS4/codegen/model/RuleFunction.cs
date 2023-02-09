@@ -61,7 +61,7 @@ public class RuleFunction : OutputModelObject
         index = r.index;
 
         ruleCtx = new StructDecl(factory, r);
-        altToContext = new AltLabelStructDecl[r.GetOriginalNumberOfAlts() + 1];
+        altToContext = new AltLabelStructDecl[r.OriginalNumberOfAlts + 1];
         AddContextGetters(factory, r);
 
         if (r.args != null)

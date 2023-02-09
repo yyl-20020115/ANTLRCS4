@@ -23,19 +23,19 @@ public class Alternative : AttributeResolver
     public int altNum;
 
     // token IDs, string literals in this alt
-    public MultiMap<String, TerminalAST> tokenRefs = new();
+    public MultiMap<string, TerminalAST> tokenRefs = new();
 
     // does not include labels
-    public MultiMap<String, GrammarAST> tokenRefsInActions = new();
+    public MultiMap<string, GrammarAST> tokenRefsInActions = new();
 
     // all rule refs in this alt
-    public MultiMap<String, GrammarAST> ruleRefs = new();
+    public MultiMap<string, GrammarAST> ruleRefs = new();
 
     // does not include labels
-    public MultiMap<String, GrammarAST> ruleRefsInActions = new();
+    public MultiMap<string, GrammarAST> ruleRefsInActions = new();
 
     /** A list of all LabelElementPair attached to tokens like id=ID, ids+=ID */
-    public MultiMap<String, LabelElementPair> labelDefs = new();
+    public MultiMap<string, LabelElementPair> labelDefs = new();
 
     // track all token, rule, label refs in rewrite (right of ->)
     //public List<GrammarAST> rewriteElements = new ArrayList<GrammarAST>();
@@ -51,21 +51,19 @@ public class Alternative : AttributeResolver
 
     public Alternative(Rule r, int altNum) { this.rule = r; this.altNum = altNum; }
 
-    //@Override
-    public bool ResolvesToToken(String x, ActionAST node)
+    public bool ResolvesToToken(string x, ActionAST node)
     {
         if (tokenRefs.ContainsKey(x)) return true;
-        var anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.TOKEN_LABEL) return true;
         return false;
     }
 
-    //@Override
-    public bool ResolvesToAttributeDict(String x, ActionAST node)
+    public bool ResolvesToAttributeDict(string x, ActionAST node)
     {
         if (ResolvesToToken(x, node)) return true;
         if (ruleRefs.ContainsKey(x)) return true; // rule ref in this alt?
-        var anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL) return true;
         return false;
     }
@@ -93,14 +91,14 @@ public class Alternative : AttributeResolver
            // look up rule, ask it to resolve y (must be retval or predefined)
             return rule.g.GetRule(x).ResolveRetvalOrProperty(y);
         }
-        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
         {
             return rule.g.GetRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
         }
         else if (anyLabelDef != null)
         {
-            AttributeDict scope = rule.GetPredefinedScope(anyLabelDef.type);
+            var scope = rule.GetPredefinedScope(anyLabelDef.type);
             if (scope == null)
             {
                 return null;
@@ -111,35 +109,33 @@ public class Alternative : AttributeResolver
         return null;
     }
 
-    //@Override
     public bool ResolvesToLabel(String x, ActionAST node)
     {
-        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
                (anyLabelDef.type == LabelType.TOKEN_LABEL ||
                 anyLabelDef.type == LabelType.RULE_LABEL);
     }
 
-    //@Override
     public bool ResolvesToListLabel(String x, ActionAST node)
     {
-        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
                (anyLabelDef.type == LabelType.RULE_LIST_LABEL ||
                 anyLabelDef.type == LabelType.TOKEN_LIST_LABEL);
     }
 
-    public LabelElementPair getAnyLabelDef(String x)
+    public LabelElementPair GetAnyLabelDef(String x)
     {
         if (labelDefs.TryGetValue(x, out var labels)) return labels[0];
         return null;
     }
 
     /** x can be ruleref or rule label. */
-    public Rule resolveToRule(String x)
+    public Rule ResolveToRule(string x)
     {
         if (ruleRefs.ContainsKey(x)) return rule.g.GetRule(x);
-        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
         {
             return rule.g.GetRule(anyLabelDef.element.getText());

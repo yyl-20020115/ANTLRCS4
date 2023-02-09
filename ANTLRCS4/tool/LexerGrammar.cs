@@ -12,7 +12,7 @@ namespace org.antlr.v4.tool;
 /** */
 public class LexerGrammar : Grammar
 {
-    public static readonly String DEFAULT_MODE_NAME = "DEFAULT_MODE";
+    public static readonly string DEFAULT_MODE_NAME = "DEFAULT_MODE";
 
     /** The grammar from which this lexer grammar was derived (if implicit) */
     public Grammar implicitLexerOwner;
@@ -48,8 +48,7 @@ public class LexerGrammar : Grammar
         return true;
     }
 
-    //@Override
-    public bool undefineRule(Rule r)
+    public override bool UndefineRule(Rule r)
     {
         if (!base.UndefineRule(r))
         {

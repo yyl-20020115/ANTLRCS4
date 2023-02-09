@@ -12,12 +12,12 @@ namespace org.antlr.v4.tool;
 public class LeftRecursionCyclesMessage : ANTLRMessage
 {
     public LeftRecursionCyclesMessage(string fileName, ICollection<HashSet<Rule>> cycles)
-    : base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles)
+    : base(ErrorType.LEFT_RECURSION_CYCLES, GetStartTokenOfFirstRule(cycles), cycles)
     {
         this.fileName = fileName;
     }
 
-    protected static Token getStartTokenOfFirstRule(ICollection<HashSet<Rule>> cycles)
+    protected static Token GetStartTokenOfFirstRule(ICollection<HashSet<Rule>> cycles)
     {
         if (cycles == null)
         {

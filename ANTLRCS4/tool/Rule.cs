@@ -22,11 +22,11 @@ public class Rule : AttributeResolver
         new (AttributeDict.DictType.PREDEFINED_RULE);
     static Rule()
     {
-        predefinedRulePropertiesDict.Add(new Attribute("parser"));
-        predefinedRulePropertiesDict.Add(new Attribute("text"));
-        predefinedRulePropertiesDict.Add(new Attribute("start"));
-        predefinedRulePropertiesDict.Add(new Attribute("stop"));
-        predefinedRulePropertiesDict.Add(new Attribute("ctx"));
+        predefinedRulePropertiesDict.Add(new ("parser"));
+        predefinedRulePropertiesDict.Add(new ("text"));
+        predefinedRulePropertiesDict.Add(new ("start"));
+        predefinedRulePropertiesDict.Add(new ("stop"));
+        predefinedRulePropertiesDict.Add(new ("ctx"));
         // CALLS
         validLexerCommands.Add("mode");
         validLexerCommands.Add("pushMode");
@@ -95,9 +95,7 @@ public class Rule : AttributeResolver
     public int actionIndex = -1; // if lexer; 0..n-1 for n actions in a rule
 
     public Rule(Grammar g, string name, RuleAST ast, int numberOfAlts)
-    : this(g, name, ast, numberOfAlts, null, false)
-    {
-    }
+    : this(g, name, ast, numberOfAlts, null, false) { }
 
     public Rule(Grammar g, string name, RuleAST ast, int numberOfAlts, string lexerMode, bool caseInsensitive)
     {
@@ -190,16 +188,10 @@ public class Rule : AttributeResolver
         return defs;
     }
 
-    public bool HasAltSpecificContexts()
-    {
-        return GetAltLabels() != null;
-    }
+    public virtual bool HasAltSpecificContexts() => GetAltLabels() != null;
 
     /** Used for recursive rules (subclass), which have 1 alt, but many original alts */
-    public int GetOriginalNumberOfAlts()
-    {
-        return numberOfAlts;
-    }
+    public virtual int OriginalNumberOfAlts => numberOfAlts;
 
     /**
 	 * Get {@code #} labels. The keys of the map are the labels applied to outer
@@ -207,7 +199,7 @@ public class Rule : AttributeResolver
 	 * (alternative number and {@link AltAST}) identifying the alternatives with
 	 * this label. Unlabeled alternatives are not included in the result.
 	 */
-    public Dictionary<string, List<Pair<int, AltAST>>> GetAltLabels()
+    public virtual Dictionary<string, List<Pair<int, AltAST>>> GetAltLabels()
     {
         Dictionary<string, List<Pair<int, AltAST>>> labels = new();
         for (int i = 1; i <= numberOfAlts; i++)
@@ -228,12 +220,12 @@ public class Rule : AttributeResolver
         return labels;
     }
 
-    public List<AltAST> GetUnlabeledAltASTs()
+    public virtual List<AltAST> GetUnlabeledAltASTs()
     {
         List<AltAST> alts = new();
         for (int i = 1; i <= numberOfAlts; i++)
         {
-            GrammarAST altLabel = alt[i].ast.altLabel;
+            var altLabel = alt[i].ast.altLabel;
             if (altLabel == null) alts.Add(alt[i].ast);
         }
         if (alts.Count == 0) return null;
@@ -290,7 +282,7 @@ public class Rule : AttributeResolver
     //@Override
     public bool ResolvesToLabel(string x, ActionAST node)
     {
-        LabelElementPair anyLabelDef = GetAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
                (anyLabelDef.type == LabelType.RULE_LABEL ||
                 anyLabelDef.type == LabelType.TOKEN_LABEL);
@@ -308,38 +300,29 @@ public class Rule : AttributeResolver
     //@Override
     public bool ResolvesToToken(string x, ActionAST node)
     {
-        LabelElementPair anyLabelDef = GetAnyLabelDef(x);
+        var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.TOKEN_LABEL) return true;
         return false;
     }
 
     //@Override
-    public bool ResolvesToAttributeDict(string x, ActionAST node)
-    {
-        if (ResolvesToToken(x, node)) return true;
-        return false;
-    }
+    public bool ResolvesToAttributeDict(string x, ActionAST node) => ResolvesToToken(x, node);
 
     public Rule ResolveToRule(String x)
     {
         if (x.Equals(this.name)) return this;
         var anyLabelDef = GetAnyLabelDef(x);
-        if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
-        {
-            return g.GetRule(anyLabelDef.element.getText());
-        }
-        return g.GetRule(x);
+        return anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL ? g.GetRule(anyLabelDef.element.getText()) : g.GetRule(x);
     }
 
     public LabelElementPair GetAnyLabelDef(String x)
     {
-        if (GetElementLabelDefs().TryGetValue(x, out var labels)) return labels[(0)];
-        return null;
+        return GetElementLabelDefs().TryGetValue(x, out var labels) ? labels[(0)] : null;
     }
 
     public AttributeDict GetPredefinedScope(LabelType ltype)
     {
-        String grammarLabelKey = g.getTypeString() + ":" + ltype;
+        var grammarLabelKey = g.getTypeString() + ":" + ltype;
         return Grammar.grammarAndLabelRefTypeToScope.TryGetValue(grammarLabelKey, out var v) ? v : null;
     }
 
@@ -358,20 +341,7 @@ public class Rule : AttributeResolver
 
     public override int GetHashCode() => name.GetHashCode();
 
-    public override bool Equals(object? obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-
-        if (!(obj is Rule))
-        {
-            return false;
-        }
-
-        return name.Equals(((Rule)obj).name);
-    }
+    public override bool Equals(object? o) => this == o || o is Rule rule && name.Equals(rule.name);
 
     public override string ToString()
     {

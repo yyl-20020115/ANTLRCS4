@@ -125,7 +125,7 @@ public class SemanticPipeline
         // CHECK ATTRIBUTE EXPRESSIONS FOR SEMANTIC VALIDITY
         AttributeChecks.CheckAllAttributeExpressions(g);
 
-        UseDefAnalyzer.trackTokenRuleRefsInActions(g);
+        UseDefAnalyzer.TrackTokenRuleRefsInActions(g);
     }
 
     void IdentifyStartRules(SymbolCollector collector)

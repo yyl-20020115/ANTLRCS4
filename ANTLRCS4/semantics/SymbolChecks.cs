@@ -79,7 +79,7 @@ public class SymbolChecks
             }
             if (!actionScopeToActionNames.TryGetValue(scope, out var scopeActions))
             { // init scope
-                scopeActions = new HashSet<String>();
+                scopeActions = new ();
                 actionScopeToActionNames[scope] = scopeActions;
             }
             if (!scopeActions.Contains(name))
@@ -107,7 +107,7 @@ public class SymbolChecks
         {
             CheckForAttributeConflicts(r);
 
-            Dictionary<String, LabelElementPair> labelNameSpace = new();
+            Dictionary<string, LabelElementPair> labelNameSpace = new();
             for (int i = 1; i <= r.numberOfAlts; i++)
             {
                 var a = r.alt[i];
@@ -131,7 +131,7 @@ public class SymbolChecks
                             }
                         }
 
-                        foreach (List<LabelElementPair> internalPairs in labelPairs.Values)
+                        foreach (var internalPairs in labelPairs.Values)
                         {
                             labelNameSpace.Clear();
                             CheckLabelPairs(r, labelNameSpace, internalPairs);
@@ -146,7 +146,7 @@ public class SymbolChecks
         }
     }
 
-    private void CheckLabelPairs(Rule r, Dictionary<String, LabelElementPair> labelNameSpace, List<LabelElementPair> pairs)
+    private void CheckLabelPairs(Rule r, Dictionary<string, LabelElementPair> labelNameSpace, List<LabelElementPair> pairs)
     {
         foreach (var p in pairs)
         {
@@ -200,7 +200,7 @@ public class SymbolChecks
             // See https://github.com/antlr/antlr4/pull/1585
             // Such behavior is referring to the fact that the warning is typically reported on the actual label redefinition,
             //   but for left-recursive rules the warning is reported on the enclosing rule.
-            Token token = r is LeftRecursiveRule
+            var token = r is LeftRecursiveRule
                     ? ((GrammarAST)r.ast.GetChild(0)).Token
                     : labelPair.label.token;
             errMgr.GrammarError(
@@ -215,11 +215,11 @@ public class SymbolChecks
             (labelPair.type.Equals(LabelType.RULE_LABEL) || labelPair.type.Equals(LabelType.RULE_LIST_LABEL)))
         {
 
-            Token token = r is LeftRecursiveRule
+            var token = r is LeftRecursiveRule
                     ? ((GrammarAST)r.ast.GetChild(0)).Token
                     : labelPair.label.token;
-            String prevLabelOp = prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
-            String labelOp = labelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
+            var prevLabelOp = prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
+            var labelOp = labelPair.type.Equals(LabelType.RULE_LIST_LABEL) ? "+=" : "=";
             errMgr.GrammarError(
                     ErrorType.LABEL_TYPE_CONFLICT,
                     g.fileName,
@@ -279,7 +279,7 @@ public class SymbolChecks
         CheckLocalConflictingDeclarations(r, r.locals, r.retvals, ErrorType.LOCAL_CONFLICTS_WITH_RETVAL);
     }
 
-    protected void CheckDeclarationRuleConflicts(Rule r, AttributeDict attributes, HashSet<String> ruleNames, ErrorType errorType)
+    protected void CheckDeclarationRuleConflicts(Rule r, AttributeDict attributes, HashSet<string> ruleNames, ErrorType errorType)
     {
         if (attributes == null)
         {
@@ -372,7 +372,7 @@ public class SymbolChecks
             {
                 // Collect string literal lexer rules for each mode
                 List<Rule> stringLiteralRules = new();
-                List<List<String>> stringLiteralValues = new();
+                List<List<string>> stringLiteralValues = new();
                 for (int i = 0; i < rules.Count; i++)
                 {
                     var rule = rules[(i)];
@@ -397,7 +397,7 @@ public class SymbolChecks
                     {
                         for (int j = i + 1; j < stringLiteralRules.Count; j++)
                         {
-                            Rule rule2 = stringLiteralRules[(j)];
+                            var rule2 = stringLiteralRules[(j)];
                             if (!rule2.IsFragment)
                             {
                                 CheckForOverlap(g, rule1, stringLiteralRules[(j)], firstTokenStringValues, stringLiteralValues[(j)]);
@@ -435,8 +435,8 @@ public class SymbolChecks
                 var currentValue = new StringBuilder();
                 for (int i = 0; i < rootNode.ChildCount; i++)
                 {
-                    Tree child = rootNode.GetChild(i);
-                    if (!(child is TerminalAST))
+                    var child = rootNode.GetChild(i);
+                    if (child is not TerminalAST)
                     {
                         ignore = true;
                         break;
@@ -451,7 +451,7 @@ public class SymbolChecks
                     else
                     {
                         var text = terminalAST.token.Text;
-                        currentValue.Append(text.Substring(1, text.Length - 1 - 1));
+                        currentValue.Append(text[1..^1]);
                     }
                 }
 
