@@ -43,7 +43,6 @@ public class BailErrorStrategy : DefaultErrorStrategy
      *  rule function catches.  Use {@link Exception#getCause()} to get the
 	 *  original {@link RecognitionException}.
      */
-    //@Override
     public override void Recover(Parser recognizer, RecognitionException e)
     {
         for (ParserRuleContext context = recognizer.Context; context != null; context = context.GetParent())
@@ -57,7 +56,6 @@ public class BailErrorStrategy : DefaultErrorStrategy
     /** Make sure we don't attempt to recover inline; if the parser
      *  successfully recovers, it won't throw an exception.
      */
-    //@Override
     public override Token RecoverInline(Parser recognizer)
     {
         var e = new InputMismatchException(recognizer);
@@ -70,6 +68,5 @@ public class BailErrorStrategy : DefaultErrorStrategy
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */
-    //@Override
     public override void Sync(Parser recognizer) { }
 }

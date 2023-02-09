@@ -60,8 +60,7 @@ public abstract class GrammarASTWithOptions : GrammarAST
 
     public int NumberOfOptions => options == null ? 0 : options.Count;
 
-    //@Override
-    public abstract GrammarASTWithOptions DupNode();
+    public new abstract GrammarASTWithOptions DupNode();
 
 
     public Dictionary<string, GrammarAST> Options

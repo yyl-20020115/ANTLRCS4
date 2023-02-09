@@ -34,14 +34,14 @@ public class LexerMoreAction : LexerAction
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#MORE}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.MORE;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => false;
 
     /**
@@ -49,10 +49,10 @@ public class LexerMoreAction : LexerAction
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#more}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) => lexer.More();
 
-    //@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -60,10 +60,10 @@ public class LexerMoreAction : LexerAction
         return MurmurHash.Finish(hash, 1);
     }
 
-    //@Override
+    
     //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public override bool Equals(object? o) => o == this;
 
-    //@Override
+    
     public override string ToString() => "more";
 }

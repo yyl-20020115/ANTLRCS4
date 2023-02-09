@@ -212,7 +212,6 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         threshold = (int)Math.Floor(this.initialCapacity * LOAD_FACTOR);
     }
 
-    //@Override
     public override string ToString()
     {
         if (Count == 0) return "{}";

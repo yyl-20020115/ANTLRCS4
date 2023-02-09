@@ -29,24 +29,20 @@ public class SingletonPredictionContext : PredictionContext
         return new SingletonPredictionContext(parent, returnState);
     }
 
-    //@Override
     public override int Count => 1;
 
-    //@Override
     public override PredictionContext GetParent(int index)
     {
         //assert index == 0;
         return parent;
     }
 
-    //@Override
     public override int GetReturnState(int index)
     {
         //assert index == 0;
         return returnState;
     }
 
-    //@Override
     public override bool Equals(object? o)
     {
         if (this == o)
@@ -65,7 +61,6 @@ public class SingletonPredictionContext : PredictionContext
 
     }
 
-    //@Override
     public override string ToString()
     {
         var up = parent != null ? parent.ToString() : "";

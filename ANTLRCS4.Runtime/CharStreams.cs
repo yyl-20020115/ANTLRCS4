@@ -205,7 +205,7 @@ public class CharStreams
     }
 
     /**
-	 * Creates a {@link CharStream} given a {@link String}.
+	 * Creates a {@link CharStream} given a {@link string}.
 	 */
     public static CodePointCharStream FromString(string s)
     {
@@ -213,7 +213,7 @@ public class CharStreams
     }
 
     /**
-	 * Creates a {@link CharStream} given a {@link String} and the {@code sourceName}
+	 * Creates a {@link CharStream} given a {@link string} and the {@code sourceName}
 	 * from which it came.
 	 */
     public static CodePointCharStream FromString(string s, string sourceName)
@@ -221,7 +221,7 @@ public class CharStreams
         // Initial guess assumes no code points > U+FFFF: one code
         // point for each code unit in the string
         var codePointBufferBuilder = CodePointBuffer.GetBuilder(s.Length);
-        // TODO: CharBuffer.wrap(String) rightfully returns a read-only buffer
+        // TODO: CharBuffer.wrap(string) rightfully returns a read-only buffer
         // which doesn't expose its array, so we make a copy.
         var cb = CharBuffer.Allocate(s.Length);
         cb.Put(s);
@@ -241,7 +241,7 @@ public class CharStreams
     //	ReadableByteChannel channel,
     //	int bufferSize,
     //	CodingErrorAction decodingErrorAction,
-    //	String sourceName)
+    //	string sourceName)
 
     //{
     //	return fromChannel(channel, StandardCharsets.UTF_8, bufferSize, decodingErrorAction, sourceName, -1);
@@ -252,7 +252,7 @@ public class CharStreams
     //	Encoding charset,
     //	int bufferSize,
     //	CodingErrorAction decodingErrorAction,
-    //	String sourceName,
+    //	string sourceName,
     //	long inputSize)
 
     //{
@@ -263,7 +263,7 @@ public class CharStreams
     //			inputSize = bufferSize;
     //		} else if (inputSize > int.MaxValue) {
     //			// ByteBuffer et al don't support long sizes
-    //			throw new IOException(String.format("inputSize %d larger than max %d", inputSize, int.MaxValue));
+    //			throw new IOException(string.format("inputSize %d larger than max %d", inputSize, int.MaxValue));
     //		}
     //		CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.builder((int) inputSize);
     //		CharsetDecoder decoder = charset

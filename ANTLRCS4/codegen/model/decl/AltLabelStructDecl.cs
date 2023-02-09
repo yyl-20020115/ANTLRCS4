@@ -25,8 +25,7 @@ public class AltLabelStructDecl : StructDecl
         derivedFromName = label;
     }
 
-    //@Override
-    public new void AddDispatchMethods(Rule rule)
+    public override void AddDispatchMethods(Rule rule)
     {
         dispatchMethods = new();
         if (factory.Grammar.Tools.gen_listener)
@@ -40,9 +39,7 @@ public class AltLabelStructDecl : StructDecl
         }
     }
 
-    //@Override
     public override int GetHashCode() => name.GetHashCode();
 
-    //@Override
     public override bool Equals(object? o) => o == this || (o is AltLabelStructDecl decl1 && name.Equals(decl1.name));
 }

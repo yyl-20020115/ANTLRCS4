@@ -38,11 +38,11 @@ public interface TreeVisitorAction
      *  with the return value.  Children of returned value will be
      *  visited if using TreeVisitor.visit().
      */
-    public Object Pre(Object t);
+    public object Pre(object t);
 
     /** Execute an action after visiting children of t.  Return t or
      *  a rewritten t.  It is up to the visitor to decide what to do
      *  with the return value.
      */
-    public Object Post(Object t);
+    public object Post(object t);
 }

@@ -25,7 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime;
 
@@ -43,28 +42,28 @@ public class RewriteRuleTokenStream : RewriteRuleElementStream
 
     /** Create a stream with one element */
     public RewriteRuleTokenStream(TreeAdaptor adaptor,
-                                  String elementDescription,
-                                  Object oneElement)
+                                  string elementDescription,
+                                  object oneElement)
             : base(adaptor, elementDescription, oneElement)
     {
     }
 
     /** Create a stream, but feed off an existing list */
     public RewriteRuleTokenStream(TreeAdaptor adaptor,
-                                  String elementDescription,
-                                  List<Object> elements)
+                                  string elementDescription,
+                                  List<object> elements)
             : base(adaptor, elementDescription, elements)
     {
     }
 
     /** Get next token from stream and make a node for it */
-    public Object nextNode()
+    public object NextNode()
     {
-        Token t = (Token)Next();
+        var t = (Token)Next();
         return adaptor.Create(t);
     }
 
-    public Token nextToken()
+    public Token NextToken()
     {
         return (Token)Next();
     }
@@ -72,14 +71,12 @@ public class RewriteRuleTokenStream : RewriteRuleElementStream
     /** Don't convert to a tree unless they explicitly call nextTree.
      *  This way we can do hetero tree nodes in rewrite.
      */
-    //@Override
-    protected Object toTree(Object el)
+    protected override object ToTree(object el)
     {
         return el;
     }
 
-    //@Override
-    protected override Object Dup(Object el)
+    protected override object Dup(object el)
     {
         throw new UnsupportedOperationException("dup can't be called for a token stream.");
     }

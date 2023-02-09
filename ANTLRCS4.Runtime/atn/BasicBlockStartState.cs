@@ -12,6 +12,5 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class BasicBlockStartState : BlockStartState
 {
-    //@Override
     public override int StateType => BLOCK_START;
 }

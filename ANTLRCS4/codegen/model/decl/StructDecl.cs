@@ -51,7 +51,7 @@ public class StructDecl : Decl
         provideCopyFrom = r.HasAltSpecificContexts();
     }
 
-    public void AddDispatchMethods(Rule r)
+    public virtual void AddDispatchMethods(Rule r)
     {
         dispatchMethods = new();
         if (!r.HasAltSpecificContexts())

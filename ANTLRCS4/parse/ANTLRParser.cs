@@ -166,13 +166,13 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
     public ArrayDeque<string> paraphrases = new ();
-    public void GrammarError(ErrorType etype, Token token, params object[] args) { }
+    public virtual void GrammarError(ErrorType etype, Token token, params object[] args) { }
 
 
     public class GrammarSpecReturn : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST GetTree() => tree;
     };
@@ -378,7 +378,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class GrammarTypeReturn : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST GetTree() => tree;
     };
@@ -555,7 +555,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class PrequelConstructReturn : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST GetTree() => tree;
     };
@@ -710,7 +710,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class optionsSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -840,7 +840,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class option_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -910,7 +910,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class optionValue_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1043,7 +1043,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class delegateGrammars_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1137,7 +1137,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:251:60: ^( IMPORT ( delegateGrammar )+ )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_IMPORT.nextNode(), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_IMPORT.NextNode(), root_1);
                         if (!(stream_delegateGrammar.HasNext()))
                         {
                             throw new RewriteEarlyExitException();
@@ -1182,7 +1182,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class delegateGrammar_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1340,7 +1340,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class tokensSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1480,7 +1480,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:262:41: ^( TOKENS_SPEC ( id )+ )
                             {
                                 GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                root_1 = (GrammarAST)adaptor.BecomeRoot(stream_TOKENS_SPEC.nextNode(), root_1);
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(stream_TOKENS_SPEC.NextNode(), root_1);
                                 if (!(stream_id.HasNext()))
                                 {
                                     throw new RewriteEarlyExitException();
@@ -1558,7 +1558,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class channelsSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1659,7 +1659,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class action_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1768,7 +1768,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:275:50: ^( AT ( actionScopeName )? id ACTION )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.nextNode(), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.NextNode(), root_1);
                         // org\\antlr\\v4\\parse\\g:275:55: ( actionScopeName )?
                         if (stream_actionScopeName.HasNext())
                         {
@@ -1777,7 +1777,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         stream_actionScopeName.Reset();
 
                         adaptor.AddChild(root_1, stream_id.NextTree());
-                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.NextToken()));
                         adaptor.AddChild(root_0, root_1);
                     }
 
@@ -1812,7 +1812,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class actionScopeName_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1960,7 +1960,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class modeSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2062,7 +2062,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:288:47: ^( MODE id ( lexerRule )* )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_MODE.nextNode(), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_MODE.NextNode(), root_1);
                         adaptor.AddChild(root_1, stream_id.NextTree());
                         // org\\antlr\\v4\\parse\\g:288:57: ( lexerRule )*
                         while (stream_lexerRule.HasNext())
@@ -2105,7 +2105,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class rules_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2230,7 +2230,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class sync_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2303,7 +2303,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class rule_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2398,7 +2398,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class parserRule_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2572,11 +2572,11 @@ public class ANTLRParser : antlr.runtime.Parser
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
                         root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleAST(RULE), root_1);
-                        adaptor.AddChild(root_1, stream_RULE_REF.nextNode());
+                        adaptor.AddChild(root_1, stream_RULE_REF.NextNode());
                         // org\\antlr\\v4\\parse\\g:378:36: ( ARG_ACTION )?
                         if (stream_ARG_ACTION.HasNext())
                         {
-                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
+                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.NextToken()));
                         }
                         stream_ARG_ACTION.Reset();
 
@@ -2669,7 +2669,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class exceptionGroup_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2775,7 +2775,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class exceptionHandler_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2831,9 +2831,9 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:396:31: ^( CATCH ARG_ACTION ACTION )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_CATCH.nextNode(), root_1);
-                        adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
-                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_CATCH.NextNode(), root_1);
+                        adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.NextToken()));
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.NextToken()));
                         adaptor.AddChild(root_0, root_1);
                     }
 
@@ -2868,7 +2868,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class finallyClause_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -2918,8 +2918,8 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:400:22: ^( FINALLY ACTION )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_FINALLY.nextNode(), root_1);
-                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_FINALLY.NextNode(), root_1);
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.NextToken()));
                         adaptor.AddChild(root_0, root_1);
                     }
 
@@ -2954,7 +2954,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class rulePrequels_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3074,7 +3074,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class rulePrequel_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3169,7 +3169,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleReturns_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3231,7 +3231,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class throwsSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3319,7 +3319,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:439:34: ^( THROWS ( qid )+ )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_THROWS.nextNode(), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_THROWS.NextNode(), root_1);
                         if (!(stream_qid.HasNext()))
                         {
                             throw new RewriteEarlyExitException();
@@ -3364,7 +3364,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class localsSpec_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3426,7 +3426,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleAction_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3483,9 +3483,9 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:455:20: ^( AT id ACTION )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.nextNode(), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.NextNode(), root_1);
                         adaptor.AddChild(root_1, stream_id.NextTree());
-                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.NextToken()));
                         adaptor.AddChild(root_0, root_1);
                     }
 
@@ -3520,7 +3520,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleBlock_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3604,7 +3604,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleAltList_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3730,7 +3730,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class labeledAlt_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3813,7 +3813,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerRule_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -3925,7 +3925,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
                         root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleAST(RULE), root_1);
-                        adaptor.AddChild(root_1, stream_TOKEN_REF.nextNode());
+                        adaptor.AddChild(root_1, stream_TOKEN_REF.NextNode());
                         // org\\antlr\\v4\\parse\\g:495:9: ( ^( RULEMODIFIERS FRAGMENT ) )?
                         if (stream_FRAGMENT.HasNext())
                         {
@@ -3933,7 +3933,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             {
                                 GrammarAST root_2 = (GrammarAST)adaptor.Nil();
                                 root_2 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(RULEMODIFIERS, "RULEMODIFIERS"), root_2);
-                                adaptor.AddChild(root_2, stream_FRAGMENT.nextNode());
+                                adaptor.AddChild(root_2, stream_FRAGMENT.NextNode());
                                 adaptor.AddChild(root_1, root_2);
                             }
 
@@ -3985,7 +3985,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerRuleBlock_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4069,7 +4069,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerAltList_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4189,7 +4189,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerAlt_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4332,7 +4332,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerElements_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4505,7 +4505,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerElement_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4846,7 +4846,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerBlock_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -4983,7 +4983,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerCommands_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5109,7 +5109,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerCommand_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5328,7 +5328,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerCommandExpr_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5422,7 +5422,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerCommandName_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5533,7 +5533,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class altList_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5653,7 +5653,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class alternative_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -5877,7 +5877,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class element_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -6300,7 +6300,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class actionElement_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -6442,7 +6442,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:674:31: ^( ACTION elementOptions )
                             {
                                 GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                root_1 = (GrammarAST)adaptor.BecomeRoot(new ActionAST(stream_ACTION.nextToken()), root_1);
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new ActionAST(stream_ACTION.NextToken()), root_1);
                                 adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                 adaptor.AddChild(root_0, root_1);
                             }
@@ -6494,7 +6494,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:676:32: ^( SEMPRED elementOptions )
                             {
                                 GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                root_1 = (GrammarAST)adaptor.BecomeRoot(new PredAST(stream_SEMPRED.nextToken()), root_1);
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new PredAST(stream_SEMPRED.NextToken()), root_1);
                                 adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                 adaptor.AddChild(root_0, root_1);
                             }
@@ -6539,7 +6539,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class labeledElement_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -6662,7 +6662,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 // org\\antlr\\v4\\parse\\g:681:18: ^( $ass id atom )
                                 {
                                     GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.nextNode(), root_1);
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.NextNode(), root_1);
                                     adaptor.AddChild(root_1, stream_id.NextTree());
                                     adaptor.AddChild(root_1, stream_atom.NextTree());
                                     adaptor.AddChild(root_0, root_1);
@@ -6701,7 +6701,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 // org\\antlr\\v4\\parse\\g:682:19: ^( $ass id block )
                                 {
                                     GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.nextNode(), root_1);
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.NextNode(), root_1);
                                     adaptor.AddChild(root_1, stream_id.NextTree());
                                     adaptor.AddChild(root_1, stream_block.NextTree());
                                     adaptor.AddChild(root_0, root_1);
@@ -6743,7 +6743,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ebnf_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -6885,7 +6885,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class blockSuffix_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -6942,7 +6942,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ebnfSuffix_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7167,7 +7167,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class lexerAtom_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7365,7 +7365,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class atom_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7544,7 +7544,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class wildcard_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7661,7 +7661,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class notSet_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7843,7 +7843,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class blockSet_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -7986,7 +7986,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class setElement_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8186,7 +8186,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class block_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8381,7 +8381,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleref_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8472,11 +8472,11 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:817:47: ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? )
                     {
                         GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                        root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleRefAST(stream_RULE_REF.nextToken()), root_1);
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleRefAST(stream_RULE_REF.NextToken()), root_1);
                         // org\\antlr\\v4\\parse\\g:817:70: ( ARG_ACTION )?
                         if (stream_ARG_ACTION.HasNext())
                         {
-                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
+                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.NextToken()));
                         }
                         stream_ARG_ACTION.Reset();
 
@@ -8527,7 +8527,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class range_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8595,7 +8595,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class terminal_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8688,7 +8688,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:841:36: ^( TOKEN_REF ( elementOptions )? )
                             {
                                 GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_TOKEN_REF.nextToken()), root_1);
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_TOKEN_REF.NextToken()), root_1);
                                 // org\\antlr\\v4\\parse\\g:841:61: ( elementOptions )?
                                 if (stream_elementOptions.HasNext())
                                 {
@@ -8751,7 +8751,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:842:40: ^( STRING_LITERAL ( elementOptions )? )
                             {
                                 GrammarAST root_1 = (GrammarAST)adaptor.Nil();
-                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_STRING_LITERAL.nextToken()), root_1);
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_STRING_LITERAL.NextToken()), root_1);
                                 // org\\antlr\\v4\\parse\\g:842:70: ( elementOptions )?
                                 if (stream_elementOptions.HasNext())
                                 {
@@ -8802,7 +8802,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class elementOptions_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -8956,7 +8956,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class elementOption_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9114,7 +9114,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class id_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9243,7 +9243,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class qid_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9356,7 +9356,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class alternativeEntry_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9419,7 +9419,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class elementEntry_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9482,7 +9482,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class ruleEntry_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -9545,7 +9545,7 @@ public class ANTLRParser : antlr.runtime.Parser
     public class blockEntry_return : ParserRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };

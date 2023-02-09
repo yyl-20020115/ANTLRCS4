@@ -134,7 +134,6 @@ public class LeftRecursiveRuleWalker : TreeParser
     }
 
     public override string[] TokenNames => tokenNames;
-    //@Override
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g";
 
 
@@ -2850,7 +2849,6 @@ public class LeftRecursiveRuleWalker : TreeParser
             this.special = DFA11_special;
             this.transition = DFA11_transition;
         }
-        //@Override
         public override string Description => "()* loopback of 124:35: ( element )*";
     }
 

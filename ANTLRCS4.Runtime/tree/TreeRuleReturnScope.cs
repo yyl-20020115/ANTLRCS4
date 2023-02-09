@@ -30,11 +30,11 @@ namespace org.antlr.runtime.tree;
 /** This is identical to the {@link ParserRuleReturnScope} except that
  *  the start property is a tree nodes not {@link Token} object
  *  when you are parsing trees.  To be generic the tree node types
- *  have to be {@link Object}.
+ *  have to be {@link object}.
  */
 public class TreeRuleReturnScope : RuleReturnScope
 {
     /** First node or root node of tree matched for this rule. */
-    public Object start;
-    public Object getStart() { return start; }	
+    public object start;
+    public override object Start => start;
 }

@@ -78,6 +78,5 @@ public class RuntimeTestDescriptor
     /** Return true if this test should be ignored for the indicated target */
     public bool Ignore(string targetName) => Arrays.AsList(skipTargets).Contains(targetName);
 
-    //@Override
     public override string ToString() => name;
 }

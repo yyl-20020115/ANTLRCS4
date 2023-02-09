@@ -93,7 +93,7 @@ public interface TreeNodeStream : IntStream
      * {@code null} or {@code ""} too, but users should not access
      * {@code $ruleLabel.text} in an action of course in that case.
      */
-    public string ToString(Object start, Object stop);
+    public string ToString(object start, object stop);
 
     // REWRITING TREES (used by tree parser)
 
@@ -109,6 +109,6 @@ public interface TreeNodeStream : IntStream
      * overall tree. Can't replace whatever points to the parent externally. Do
      * nothing.</p>
      */
-    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+    public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t);
     void Rewind(int nvaeMark);
 }

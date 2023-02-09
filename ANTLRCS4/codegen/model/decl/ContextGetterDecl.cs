@@ -30,7 +30,6 @@ public abstract class ContextGetterDecl : Decl
 	 *  OTOH, treat X() with two diff return values as the same.  Treat
 	 *  two X() with diff args as different.
 	 */
-    //@Override
     public override bool Equals(object? o) =>
         // A() and label A are different
         this == o || o is ContextGetterDecl decl1 && name.Equals(((Decl)o).name) &&

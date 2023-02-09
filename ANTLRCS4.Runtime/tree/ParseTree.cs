@@ -16,10 +16,8 @@ namespace org.antlr.v4.runtime.tree;
 public interface ParseTree : SyntaxTree
 {
     // the following methods narrow the return type; they are not additional methods
-    //@Override
     new ParseTree Parent { get; }
 
-    //@Override
     new ParseTree GetChild(int i);
 
     /** The {@link ParseTreeVisitor} needs a double dispatch method. */

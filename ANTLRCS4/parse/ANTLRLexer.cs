@@ -182,7 +182,6 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         dfa2 = new DFA2(this);
         dfa32 = new DFA32(this);
     }
-    //@Override 
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\ANTLRLexer.g";
 
     // $ANTLR start "DOC_COMMENT"
@@ -3305,7 +3304,6 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     }
     // $ANTLR end "ERRCHAR"
 
-    //@Override
     public override void MTokens()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:1:8: ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR )
@@ -4207,9 +4205,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             this.special = DFA32_special;
             this.transition = DFA32_transition;
         }
-        //@Override
         public override string Description => "1:1: Tokens : ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR );";
-        //@Override
         public override int SpecialStateTransition(int s, IntStream _input)
         {
             IntStream input = _input;

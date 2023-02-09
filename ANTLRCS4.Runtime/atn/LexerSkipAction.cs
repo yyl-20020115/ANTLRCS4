@@ -51,7 +51,6 @@ public class LexerSkipAction : LexerAction
     //@Override
     public void Execute(Lexer lexer) => lexer.Skip();
 
-    //@Override
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -59,10 +58,7 @@ public class LexerSkipAction : LexerAction
         return MurmurHash.Finish(hash, 1);
     }
 
-    //@Override
-    //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public override bool Equals(object? obj) => obj == this;
 
-    //@Override
     public override string ToString() => "skip";
 }

@@ -43,6 +43,5 @@ class TextChunk : Chunk
 	 * <p>The implementation for {@link TextChunk} returns the result of
 	 * {@link #getText()} in single quotes.</p>
 	 */
-    //@Override
     public override string ToString() => "'" + text + "'";
 }

@@ -17,15 +17,13 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
     public GrammarASTAdaptor() { }
     public GrammarASTAdaptor(CharStream input) { this.input = input; }
 
-    //@Override
     public override object Create(Token token)
     {
         return new GrammarAST(token);
     }
 
-    //@Override
     /** Make sure even imaginary nodes know the input stream */
-    public object create(int tokenType, string text)
+    public object Create(int tokenType, string text)
     {
         GrammarAST t;
         if (tokenType == ANTLRParser.RULE)
@@ -49,7 +47,7 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
     public override object DupNode(object t)
     {
         if (t == null) return null;
-        return ((GrammarAST)t).dupNode(); //create(((GrammarAST)t).token);
+        return ((GrammarAST)t).DupNode(); //create(((GrammarAST)t).token);
     }
 
     public object ErrorNode(TokenStream input, Token start, Token stop,

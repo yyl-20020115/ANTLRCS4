@@ -38,7 +38,6 @@ public class ATNConfigSet : HashSet<ATNConfig>
         {
         }
 
-        //@Override
         public override int GetHashCode(ATNConfig o)
         {
             int hashCode = 7;
@@ -48,8 +47,7 @@ public class ATNConfigSet : HashSet<ATNConfig>
             return hashCode;
         }
 
-        //@Override
-        public bool Equals(ATNConfig a, ATNConfig b)
+        public override bool Equals(ATNConfig a, ATNConfig b)
         {
             if (a == b) return true;
             if (a == null || b == null) return false;

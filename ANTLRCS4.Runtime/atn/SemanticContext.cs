@@ -60,7 +60,6 @@ public abstract class SemanticContext
 		 */
         public static readonly Empty Instance = new ();
 
-        //@Override
         public override bool Eval(Recognizer parser, RuleContext parserCallStack) => false;
     }
 
@@ -84,14 +83,12 @@ public abstract class SemanticContext
             this.isCtxDependent = isCtxDependent;
         }
 
-        //@Override
         public override bool Eval(Recognizer parser, RuleContext parserCallStack)
         {
-            RuleContext localctx = isCtxDependent ? parserCallStack : null;
+            var localctx = isCtxDependent ? parserCallStack : null;
             return parser.Sempred(localctx, ruleIndex, predIndex);
         }
 
-        //@Override
         public override int GetHashCode()
         {
             int hashCode = MurmurHash.Initialize();
@@ -102,13 +99,11 @@ public abstract class SemanticContext
             return hashCode;
         }
 
-        //@Override
         public override bool Equals(object? obj) 
             => obj is Predicate p && (this == obj || this.ruleIndex == p.ruleIndex &&
                        this.predIndex == p.predIndex &&
                        this.isCtxDependent == p.isCtxDependent);
 
-        //@Override
         public override string ToString()
             => "{" + ruleIndex + ":" + predIndex + "}?";
     }
@@ -127,18 +122,14 @@ public abstract class SemanticContext
             this.precedence = precedence;
         }
 
-        //@Override
         public override bool Eval(Recognizer parser, RuleContext parserCallStack) 
             => parser.Precpred(parserCallStack, precedence);
 
-        //@Override
         public SemanticContext EvalPrecedence(Recognizer parser, RuleContext parserCallStack)
             => parser.Precpred(parserCallStack, precedence) ? Empty.Instance : (SemanticContext?)null;
 
-        //@Override
         public int CompareTo(PrecedencePredicate? o) => precedence - o.precedence;
 
-        //@Override
         public override int GetHashCode()
         {
             int hashCode = 1;
@@ -146,7 +137,6 @@ public abstract class SemanticContext
             return hashCode;
         }
 
-        //@Override
         public override bool Equals(object? obj) 
             => obj is PrecedencePredicate other && (this == obj
                 || this.precedence == other.precedence);
@@ -369,7 +359,6 @@ public abstract class SemanticContext
             return result;
         }
 
-        //@Override
         public override string ToString() => RuntimeUtils.Join((opnds), "||");
     }
 

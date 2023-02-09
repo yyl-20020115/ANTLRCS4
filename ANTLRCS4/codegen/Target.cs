@@ -590,16 +590,12 @@ public abstract class Target
         public readonly Target target;
         public STE(Target target) => this.target = target;
 
-        //@Override
         public void CompiletimeError(TemplateMessage msg) => ReportError(msg);
 
-        //@Override
         public void RuntimeError(TemplateMessage msg) => ReportError(msg);
 
-        //@Override
         public void IOError(TemplateMessage msg) => ReportError(msg);
 
-        //@Override
         public void InternalError(TemplateMessage msg) => ReportError(msg);
 
         private void ReportError(TemplateMessage msg) => target.GetCodeGenerator().tool.ErrMgr.ToolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());

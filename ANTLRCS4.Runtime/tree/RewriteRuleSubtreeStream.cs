@@ -87,7 +87,7 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
         return el;
     }
 
-    protected override object Dup(Object el)
+    protected override object Dup(object el)
     {
         return adaptor.DupTree(el);
     }

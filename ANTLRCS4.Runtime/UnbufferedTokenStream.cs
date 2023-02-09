@@ -75,7 +75,7 @@ public class UnbufferedTokenStream : TokenStream
         this.tokenSource = tokenSource;
         tokens = new Token[bufferSize];
         n = 0;
-        fill(1); // prime the pump
+        Fill(1); // prime the pump
     }
 
     //@Override
@@ -98,7 +98,7 @@ public class UnbufferedTokenStream : TokenStream
             return lastToken;
         }
 
-        sync(i);
+        Sync(i);
         int index = p + i - 1;
         if (index < 0)
         {
@@ -114,28 +114,22 @@ public class UnbufferedTokenStream : TokenStream
         return tokens[index];
     }
 
-    //@Override
     public virtual int LA(int i)
     {
         return LT(i).Type;
     }
 
-    //@Override
     public virtual TokenSource TokenSource => tokenSource;
 
 
-    //@Override
     public virtual string Text => "";
 
 
-    //@Override
     public virtual string GetText(RuleContext ctx) => GetText(ctx.SourceInterval);
 
 
-    //@Override
     public string GetText(Token start, Token stop) => GetText(Interval.Of(start.TokenIndex, stop.TokenIndex));
 
-    //@Override
     public virtual void Consume()
     {
         if (LA(1) == Token.EOF)
@@ -156,19 +150,19 @@ public class UnbufferedTokenStream : TokenStream
 
         p++;
         currentTokenIndex++;
-        sync(1);
+        Sync(1);
     }
 
     /** Make sure we have 'need' elements from current position {@link #p p}. Last valid
 	 *  {@code p} index is {@code tokens.length-1}.  {@code p+need-1} is the tokens index 'need' elements
 	 *  ahead.  If we need 1 element, {@code (p+1-1)==p} must be less than {@code tokens.length}.
 	 */
-    public virtual void sync(int want)
+    public virtual void Sync(int want)
     {
         int need = (p + want - 1) - n + 1; // how many more elements we need?
         if (need > 0)
         {
-            fill(need);
+            Fill(need);
         }
     }
 
@@ -177,7 +171,7 @@ public class UnbufferedTokenStream : TokenStream
 	 * actually added to the buffer. If the return value is less than {@code n},
 	 * then EOF was reached before {@code n} tokens could be added.
 	 */
-    public virtual int fill(int n)
+    public virtual int Fill(int n)
     {
         for (int i = 0; i < n; i++)
         {
@@ -266,7 +260,7 @@ public class UnbufferedTokenStream : TokenStream
 
         if (index > currentTokenIndex)
         {
-            sync(index - currentTokenIndex);
+            Sync(index - currentTokenIndex);
             index = Math.Min(index, GetBufferStartIndex() + n - 1);
         }
 

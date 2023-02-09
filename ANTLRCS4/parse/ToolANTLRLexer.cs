@@ -18,8 +18,7 @@ public class ToolANTLRLexer : ANTLRLexer
         this.tool = tool;
     }
 
-    //@Override
-    public void DisplayRecognitionError(string[] tokenNames, RecognitionException e)
+    public override void DisplayRecognitionError(string[] tokenNames, RecognitionException e)
     {
         var msg = GetErrorMessage(e, tokenNames);
         tool.ErrMgr.SyntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);

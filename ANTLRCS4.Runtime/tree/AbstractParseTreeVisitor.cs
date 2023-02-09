@@ -14,8 +14,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 * <p>The default implementation calls {@link ParseTree#accept} on the
 	 * specified tree.</p>
 	 */
-    //@Override
-    public T Visit(ParseTree tree) => tree.Accept(this);
+    public virtual T Visit(ParseTree tree) => tree.Accept(this);
 
     /**
 	 * {@inheritDoc}
@@ -32,21 +31,20 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 * the tree structure. Visitors that modify the tree should override this
 	 * method to behave properly in respect to the specific algorithm in use.</p>
 	 */
-    //@Override
-    public T VisitChildren(RuleNode node)
+    public virtual T VisitChildren(RuleNode node)
     {
-        T result = defaultResult();
+        T result = DefaultResult();
         int n = node.ChildCount;
         for (int i = 0; i < n; i++)
         {
-            if (!shouldVisitNextChild(node, result))
+            if (!ShouldVisitNextChild(node, result))
             {
                 break;
             }
 
             ParseTree c = node.GetChild(i);
             T childResult = c.Accept(this);
-            result = aggregateResult(result, childResult);
+            result = AggregateResult(result, childResult);
         }
 
         return result;
@@ -58,10 +56,9 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-    //@Override
-    public T VisitTerminal(TerminalNode node)
+    public virtual T VisitTerminal(TerminalNode node)
     {
-        return defaultResult();
+        return DefaultResult();
     }
 
     /**
@@ -70,10 +67,9 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 * <p>The default implementation returns the result of
 	 * {@link #defaultResult defaultResult}.</p>
 	 */
-    //@Override
-    public T VisitErrorNode(ErrorNode node)
+    public virtual T VisitErrorNode(ErrorNode node)
     {
-        return defaultResult();
+        return DefaultResult();
     }
 
     /**
@@ -87,7 +83,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 *
 	 * @return The default value returned by visitor methods.
 	 */
-    protected T defaultResult()
+    protected T DefaultResult()
     {
         return default;
     }
@@ -111,7 +107,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 *
 	 * @return The updated aggregate result.
 	 */
-    protected T aggregateResult(T aggregate, T nextResult)
+    protected T AggregateResult(T aggregate, T nextResult)
     {
         return nextResult;
     }
@@ -140,7 +136,7 @@ public abstract class AbstractParseTreeVisitor<T> : ParseTreeVisitor<T>
 	 * {@code false} to stop visiting children and immediately return the
 	 * current aggregate result from {@link #visitChildren}.
 	 */
-    protected bool shouldVisitNextChild(RuleNode node, T currentResult)
+    protected bool ShouldVisitNextChild(RuleNode node, T currentResult)
     {
         return true;
     }

@@ -42,7 +42,6 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     }
 
     /** During code gen, we can assume tree is in good shape */
-    //@Override
     public override ErrorManager ErrorManager => base.ErrorManager;
 
     /*

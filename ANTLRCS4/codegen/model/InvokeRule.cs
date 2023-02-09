@@ -74,6 +74,5 @@ public class InvokeRule : RuleElement, LabeledOp
         }
     }
 
-    //@Override
     public virtual List<Decl> Labels => labels.Elements();
 }

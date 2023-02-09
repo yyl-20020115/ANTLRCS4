@@ -66,7 +66,6 @@ public class LexerATNConfig : ATNConfig
 
     public bool HasPassedThroughNonGreedyDecision() => passedThroughNonGreedyDecision;
 
-    //@Override
     public override int GetHashCode()
     {
         int hashCode = MurmurHash.Initialize(7);
@@ -80,7 +79,6 @@ public class LexerATNConfig : ATNConfig
         return hashCode;
     }
 
-    //@Override
     public new bool Equals(ATNConfig other)
         => this == other || (other is LexerATNConfig lexerOther) && (passedThroughNonGreedyDecision == lexerOther.passedThroughNonGreedyDecision)
                 && (ObjectEqualityComparator.INSTANCE.Equals(lexerActionExecutor, lexerOther.lexerActionExecutor) && base.Equals(other));

@@ -49,7 +49,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
 	 *  but reflection is slow.
 	 */
 
-    public virtual object DupNode(Object t) => t == null ? null : ((Tree)t).DupNode();
+    public virtual object DupNode(object t) => t == null ? null : ((Tree)t).DupNode();
 
     public virtual object Create(Token payload) => new CommonTree(payload);
 
@@ -84,7 +84,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  seems like this will yield start=i and stop=i-1 in a nil node.
      *  Might be useful info so I'll not force to be i..i.
      */
-    public void SetTokenBoundaries(Object t, Token startToken, Token stopToken)
+    public void SetTokenBoundaries(object t, Token startToken, Token stopToken)
     {
         if (t == null) return;
         int start = 0;
@@ -96,28 +96,28 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     }
 
     //@Override
-    public int getTokenStartIndex(Object t)
+    public int getTokenStartIndex(object t)
     {
         if (t == null) return -1;
         return ((Tree)t).TokenStartIndex;
     }
 
     //@Override
-    public int getTokenStopIndex(Object t)
+    public int getTokenStopIndex(object t)
     {
         if (t == null) return -1;
         return ((Tree)t).TokenStopIndex;
     }
 
     //@Override
-    public string getText(Object t)
+    public string getText(object t)
     {
         if (t == null) return null;
         return ((Tree)t).Text;
     }
 
     //@Override
-    public int getType(Object t)
+    public int getType(object t)
     {
         if (t == null) return Token.INVALID_TOKEN_TYPE;
         return ((Tree)t).Type;
@@ -128,7 +128,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  override this in your own adaptor.
      */
     //@Override
-    public Token getToken(Object t)
+    public Token getToken(object t)
     {
         if (t is CommonTree)
         {
@@ -137,48 +137,47 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
         return null; // no idea what to do
     }
 
-    //@Override
-    public Object getChild(Object t, int i)
+    public object GetChild(object t, int i)
     {
         if (t == null) return null;
         return ((Tree)t).GetChild(i);
     }
 
     //@Override
-    public int getChildCount(Object t)
+    public int getChildCount(object t)
     {
         if (t == null) return 0;
         return ((Tree)t).ChildCount;
     }
 
     //@Override
-    public Object getParent(Object t)
+    public object getParent(object t)
     {
         if (t == null) return null;
         return ((Tree)t).Parent;
     }
 
     //@Override
-    public void setParent(Object t, Object parent)
+    public void setParent(object t, object parent)
     {
         if (t != null) ((Tree)t).Parent = (Tree)parent;
     }
 
     //@Override
-    public int getChildIndex(Object t)
+    public int getChildIndex(object t)
     {
         if (t == null) return 0;
         return ((Tree)t).ChildIndex;
     }
 
     //@Override
-    public void setChildIndex(Object t, int index)
+    public void setChildIndex(object t, int index)
     {
         if (t != null) ((Tree)t).ChildIndex = index;
     }
 
     //@Override
-    public void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t)
+    public void replaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         if (parent != null)
         {

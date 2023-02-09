@@ -25,7 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.tree.pattern;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime;
@@ -41,7 +40,6 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     protected Dictionary<object, int> treeToUniqueIDMap;
     protected int uniqueNodeID = 1;
 
-    //@Override
     public object Nil()
     {
         return Create(null);
@@ -58,7 +56,6 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  You don't have to subclass CommonErrorNode; you will likely need to
      *  subclass your own tree node class to avoid class cast exception.
      */
-    //@Override
     object TreeAdaptor.ErrorNode(TokenStream input, Token start, Token stop,
                             RecognitionException e)
     {
@@ -67,14 +64,12 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return t;
     }
 
-    //@Override
     public bool IsNil(object tree)
     {
         return ((Tree)tree).IsNil;
     }
 
-    //@Override
-    public object DupTree(Object tree)
+    public object DupTree(object tree)
     {
         return DupTree(tree, null);
     }
@@ -110,7 +105,6 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  make sure that this is consistent with have the user will build
      *  ASTs.
      */
-    //@Override
     public void AddChild(object t,object child)
     {
         if (t != null && child != null)
@@ -145,7 +139,6 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  constructing these nodes so we should have this control for
      *  efficiency.
      */
-    //@Override
     public object BecomeRoot(object newRoot, object oldRoot)
     {
         //Console.Out.WriteLine("becomeroot new "+newRoot.toString()+" old "+oldRoot);
@@ -174,8 +167,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     /** Transform ^(nil x) to x and nil to null */
-    //@Override
-    public Object RulePostProcessing(Object root)
+    public object RulePostProcessing(object root)
     {
         //Console.Out.WriteLine("rulePostProcessing: "+((Tree)root).toStringTree());
         Tree r = (Tree)root;
@@ -197,14 +189,12 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return r;
     }
 
-    //@Override
-    public Object BecomeRoot(Token newRoot, Object oldRoot)
+    public object BecomeRoot(Token newRoot, object oldRoot)
     {
         return BecomeRoot(Create(newRoot), oldRoot);
     }
 
-    //@Override
-    public Object Create(int tokenType, Token fromToken)
+    public object Create(int tokenType, Token fromToken)
     {
         fromToken = CreateToken(fromToken);
         //((ClassicToken)fromToken).setType(tokenType);
@@ -214,8 +204,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return t;
     }
 
-    //@Override
-    public Object Create(int tokenType, Token fromToken, string text)
+    public object Create(int tokenType, Token fromToken, string text)
     {
         if (fromToken == null) return Create(tokenType, text);
         fromToken = CreateToken(fromToken);
@@ -225,69 +214,56 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return t;
     }
 
-    //@Override
-    public Object Create(int tokenType, string text)
+    public object Create(int tokenType, string text)
     {
         Token fromToken = CreateToken(tokenType, text);
         Tree t = (Tree)Create(fromToken);
         return t;
     }
 
-    //@Override
-    public int GetType(Object t)
+    public int GetType(object t)
     {
         return ((Tree)t).Type;
     }
 
-    //@Override
-    public void SetType(Object t, int type)
+    public void SetType(object t, int type)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
-    //@Override
-    public string GetText(Object t)
+    public string GetText(object t)
     {
         return ((Tree)t).Text;
     }
 
-    //@Override
-    public void SetText(Object t, string text)
+    public void SetText(object t, string text)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
-    //@Override
-    public Object GetChild(Object t, int i)
+    public object GetChild(object t, int i)
     {
         return ((Tree)t).GetChild(i);
     }
 
-    //@Override
-    public void SetChild(Object t, int i, Object child)
+    public void SetChild(object t, int i, object child)
     {
         ((Tree)t).SetChild(i, (Tree)child);
     }
 
-    //@Override
-    public Object DeleteChild(Object t, int i)
+    public object DeleteChild(object t, int i)
     {
         return ((Tree)t).DeleteChild(i);
     }
 
-    //@Override
-    public int GetChildCount(Object t)
+    public int GetChildCount(object t)
     {
         return ((Tree)t).ChildCount;
     }
 
-    //@Override
-    public int GetUniqueID(Object node)
+    public int GetUniqueID(object node)
     {
-        if (treeToUniqueIDMap == null)
-        {
-            treeToUniqueIDMap = new Dictionary<Object, int>();
-        }
+        treeToUniqueIDMap ??= new Dictionary<object, int>();
         if (treeToUniqueIDMap.TryGetValue(node, out var prevID))
         {
             return prevID;
@@ -326,57 +302,57 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      */
     public abstract Token CreateToken(Token fromToken);
 
-    public object Create(Token payload)
+    public virtual object Create(Token payload)
     {
         throw new NotImplementedException();
     }
 
-    public object DupNode(object treeNode)
+    public virtual object DupNode(object treeNode)
     {
         throw new NotImplementedException();
     }
 
-    public Token GetToken(object t)
+    public virtual Token GetToken(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void SetTokenBoundaries(object t, Token startToken, Token stopToken)
+    public virtual void SetTokenBoundaries(object t, Token startToken, Token stopToken)
     {
         throw new NotImplementedException();
     }
 
-    public int GetTokenStartIndex(object t)
+    public virtual int GetTokenStartIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public int GetTokenStopIndex(object t)
+    public virtual int GetTokenStopIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public object GetParent(object t)
+    public virtual object GetParent(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void SetParent(object t, object parent)
+    public virtual void SetParent(object t, object parent)
     {
         throw new NotImplementedException();
     }
 
-    public int GetChildIndex(object t)
+    public virtual int GetChildIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void SetChildIndex(object t, int index)
+    public virtual void SetChildIndex(object t, int index)
     {
         throw new NotImplementedException();
     }
 
-    public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
+    public virtual void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         throw new NotImplementedException();
     }

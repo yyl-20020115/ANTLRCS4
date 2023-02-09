@@ -58,14 +58,12 @@ public class Parser : BaseRecognizer
         input?.Seek(0); // rewind the input
     }
 
-    //@Override
-    protected object GetCurrentInputSymbol(IntStream input)
+    protected override object GetCurrentInputSymbol(IntStream input)
     {
         return ((TokenStream)input).LT(1);
     }
 
-    //@Override
-    protected object GetMissingSymbol(IntStream input,
+    protected override object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow)
@@ -99,7 +97,6 @@ public class Parser : BaseRecognizer
         return input;
     }
 
-    //@Override
     public override string SourceName => input.SourceName;
 
     public void TraceIn(string ruleName, int ruleIndex)

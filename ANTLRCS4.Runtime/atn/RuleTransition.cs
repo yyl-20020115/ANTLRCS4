@@ -40,11 +40,8 @@ public class RuleTransition : Transition
         this.followState = followState;
     }
 
-    //@Override
     public override int SerializationType => RULE;
 
-    //@Override
     public override bool IsEpsilon => true;
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 }

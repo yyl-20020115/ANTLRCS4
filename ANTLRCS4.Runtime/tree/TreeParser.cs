@@ -249,12 +249,12 @@ public class TreeParser : BaseRecognizer
         return null;
     }
 
-    public void TraceIn(string ruleName, int ruleIndex)
-    {
+    public virtual void TraceIn(string ruleName, int ruleIndex)
+    { 
         base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
-    public void TraceOut(string ruleName, int ruleIndex)
+    public virtual void TraceOut(string ruleName, int ruleIndex)
     {
         base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }

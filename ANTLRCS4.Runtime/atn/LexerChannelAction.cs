@@ -36,14 +36,14 @@ public class LexerChannelAction : LexerAction
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#CHANNEL}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.CHANNEL;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => false;
 
     /**
@@ -52,10 +52,10 @@ public class LexerChannelAction : LexerAction
 	 * <p>This action is implemented by calling {@link Lexer#setChannel} with the
 	 * value provided by {@link #getChannel}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) => lexer.Channel = channel;
 
-    //@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -64,10 +64,10 @@ public class LexerChannelAction : LexerAction
         return MurmurHash.Finish(hash, 2);
     }
 
-    //@Override
+    
     public override bool Equals(object? o) 
         => o == this || (o is LexerChannelAction action) && (channel == action.channel);
 
-    //@Override
+    
     public override string ToString() => $"channel({channel})";
 }

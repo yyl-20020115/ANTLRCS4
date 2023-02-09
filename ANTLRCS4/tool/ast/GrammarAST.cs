@@ -201,7 +201,6 @@ public class GrammarAST : CommonTree
         token.Type = type;
     }
     //
-    //	//@Override
     //	public string getText() {
     //		if ( textOverride!=null ) return textOverride;
     //        if ( token!=null ) {
@@ -217,7 +216,6 @@ public class GrammarAST : CommonTree
         Text = text; // we delete surrounding tree, so ok to alter
     }
 
-    //	//@Override
     //	public bool equals(object obj) {
     //		return base.Equals(obj);
     //	}

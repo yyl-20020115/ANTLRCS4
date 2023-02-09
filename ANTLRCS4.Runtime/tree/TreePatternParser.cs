@@ -47,15 +47,15 @@ public class TreePatternParser
         ttype = tokenizer.nextToken(); // kickstart
     }
 
-    public Object pattern()
+    public object Pattern()
     {
         if (ttype == TreePatternLexer.BEGIN)
         {
-            return parseTree();
+            return ParseTree();
         }
         else if (ttype == TreePatternLexer.ID)
         {
-            Object node = parseNode();
+            var node = ParseNode();
             if (ttype == TreePatternLexer.EOF)
             {
                 return node;
@@ -65,14 +65,14 @@ public class TreePatternParser
         return null;
     }
 
-    public Object parseTree()
+    public object ParseTree()
     {
         if (ttype != TreePatternLexer.BEGIN)
         {
             throw new RuntimeException("no BEGIN");
         }
         ttype = tokenizer.nextToken();
-        Object root = parseNode();
+        var root = ParseNode();
         if (root == null)
         {
             return null;
@@ -84,12 +84,12 @@ public class TreePatternParser
         {
             if (ttype == TreePatternLexer.BEGIN)
             {
-                Object subtree = parseTree();
+                var subtree = ParseTree();
                 adaptor.AddChild(root, subtree);
             }
             else
             {
-                Object child = parseNode();
+                var child = ParseNode();
                 if (child == null)
                 {
                     return null;
@@ -105,7 +105,7 @@ public class TreePatternParser
         return root;
     }
 
-    public Object parseNode()
+    public object ParseNode()
     {
         // "%label:" prefix
         string label = null;
@@ -161,13 +161,12 @@ public class TreePatternParser
         }
 
         // create node
-        int treeNodeType = wizard.getTokenType(tokenName);
+        int treeNodeType = wizard.GetTokenType(tokenName);
         if (treeNodeType == Token.INVALID_TOKEN_TYPE)
         {
             return null;
         }
-        Object node;
-        node = adaptor.Create(treeNodeType, text);
+        var node = adaptor.Create(treeNodeType, text);
         if (label != null && node is TreeWizard.TreePattern pattern2)
         {
             pattern2.label = label;

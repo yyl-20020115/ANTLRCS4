@@ -33,17 +33,11 @@ public class UseDefAnalyzer
 
     public class BASListener : BlankActionSplitterListener
     {
-        //@Override
         public override void NonLocalAttr(string expr, Token x, Token y) { dependent[0] = true; }
-        //@Override
         public override void QualifiedAttr(string expr, Token x, Token y) { dependent[0] = true; }
-        //@Override
         public override void SetAttr(string expr, Token x, Token rhs) { dependent[0] = true; }
-        //@Override
         public override void SetExprAttribute(string expr) { dependent[0] = true; }
-        //@Override
         public override void SetNonLocalAttr(string expr, Token x, Token y, Token rhs) { dependent[0] = true; }
-        //@Override
         public override void Attr(string expr, Token x) { dependent[0] = true; }
     }
     static readonly bool[] dependent = new bool[] { false };

@@ -6,6 +6,7 @@
 
 namespace org.antlr.v4.runtime.tree;
 
-public interface TerminalNode : ParseTree {
-	Token getSymbol();
+public interface TerminalNode : ParseTree
+{
+    Token GetSymbol();
 }

@@ -111,7 +111,7 @@ public class UnbufferedCharStream : CharStream
         Fill(1); // prime
     }
 
-    //@Override
+    
     public void Consume()
     {
         if (LA(1) == IntStream.EOF)
@@ -231,7 +231,7 @@ public class UnbufferedCharStream : CharStream
         data[n++] = c;
     }
 
-    //@Override
+    
     public int LA(int i)
     {
         if (i == -1) return lastChar; // special case
@@ -249,7 +249,7 @@ public class UnbufferedCharStream : CharStream
 	 * protection against misuse where {@code seek()} is called on a mark or
 	 * {@code release()} is called in the wrong order.</p>
 	 */
-    //@Override
+    
     public int Mark()
     {
         if (numMarkers == 0)
@@ -265,7 +265,7 @@ public class UnbufferedCharStream : CharStream
     /** Decrement number of markers, resetting buffer if we hit 0.
 	 * @param marker
 	 */
-    //@Override
+    
     public void Release(int marker)
     {
         int expectedMark = -numMarkers;
@@ -286,13 +286,13 @@ public class UnbufferedCharStream : CharStream
         }
     }
 
-    //@Override
+    
     public int Index => currentCharIndex;
 
     /** Seek to absolute character index, which might not be in the current
 	 *  sliding window.  Move {@code p} to {@code index-bufferStartIndex}.
 	 */
-    //@Override
+    
     public void Seek(int index)
     {
         if (index == currentCharIndex)
@@ -330,10 +330,10 @@ public class UnbufferedCharStream : CharStream
         }
     }
 
-    //@Override
+    
     public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
-    //@Override
+    
     public string SourceName
     {
         get
@@ -347,7 +347,7 @@ public class UnbufferedCharStream : CharStream
         }
     }
 
-    //@Override
+    
     public string GetText(Interval interval)
     {
         if (interval.a < 0 || interval.b < interval.a - 1)

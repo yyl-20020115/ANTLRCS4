@@ -46,7 +46,7 @@ public class GrammarTransformPipeline
         var adaptor = new GrammarASTAdaptor();
         var transformer = new BlockSetTransformer(nodes, g);
         transformer.        TreeAdaptor = adaptor;
-        transformer.downup(root);
+        transformer.Downup(root);
     }
     public class TVA : TreeVisitorAction
     {
@@ -221,7 +221,7 @@ public class GrammarTransformPipeline
                 rootGrammar.Tools.Log("grammar", "imported tokens: " + imp_tokensRoot.GetChildren());
                 if (tokensRoot == null)
                 {
-                    tokensRoot = (GrammarAST)adaptor.create(ANTLRParser.TOKENS_SPEC, "TOKENS");
+                    tokensRoot = (GrammarAST)adaptor.Create(ANTLRParser.TOKENS_SPEC, "TOKENS");
                     tokensRoot.g = rootGrammar;
                     root.InsertChild(1, tokensRoot); // ^(GRAMMAR ID TOKENS...)
                 }
@@ -434,7 +434,7 @@ public class GrammarTransformPipeline
             new GrammarRootAST(new CommonToken(ANTLRParser.GRAMMAR, "LEXER_GRAMMAR"), combinedGrammar.ast.tokenStream);
         lexerAST.grammarType = ANTLRParser.LEXER;
         lexerAST.token.InputStream = combinedAST.token.InputStream;
-        lexerAST.AddChild((GrammarAST)adaptor.create(ANTLRParser.ID, lexerName));
+        lexerAST.AddChild((GrammarAST)adaptor.Create(ANTLRParser.ID, lexerName));
 
         // COPY OPTIONS
         var optionsRoot =
@@ -483,7 +483,7 @@ public class GrammarTransformPipeline
         // MOVE lexer rules
 
         var lexerRulesRoot =
-            (GrammarAST)adaptor.create(ANTLRParser.RULES, "RULES");
+            (GrammarAST)adaptor.Create(ANTLRParser.RULES, "RULES");
         lexerAST.AddChild(lexerRulesRoot);
         List<GrammarAST> rulesWeMoved = new();
         GrammarASTWithOptions[] rules;

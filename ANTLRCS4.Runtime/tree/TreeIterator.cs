@@ -42,31 +42,31 @@ namespace org.antlr.runtime.tree;
 public class TreeIterator
 {
     protected TreeAdaptor adaptor;
-    protected Object root;
-    protected Object tree;
+    protected object root;
+    protected object tree;
     protected bool firstTime = true;
 
     // navigation nodes to return during walk and at end
-    public Object up;
-    public Object down;
-    public Object eof;
+    public object up;
+    public object down;
+    public object eof;
 
     /** If we emit UP/DOWN nodes, we need to spit out multiple nodes per
      *  next() call.
      */
-    protected FastQueue<Object> nodes;
+    protected FastQueue<object> nodes;
 
-    public TreeIterator(Object tree)
+    public TreeIterator(object tree)
         : this(new CommonTreeAdaptor(), tree)
     {
     }
 
-    public TreeIterator(TreeAdaptor adaptor, Object tree)
+    public TreeIterator(TreeAdaptor adaptor, object tree)
     {
         this.adaptor = adaptor;
         this.tree = tree;
         this.root = tree;
-        nodes = new FastQueue<Object>();
+        nodes = new FastQueue<object>();
         down = adaptor.Create(Token.DOWN, "DOWN");
         up = adaptor.Create(Token.UP, "UP");
         eof = adaptor.Create(Token.EOF, "EOF");
@@ -77,7 +77,7 @@ public class TreeIterator
         tree = root;
         nodes.Clear();
     }
-    public bool hasNext()
+    public bool HasNext()
     {
         if (firstTime) return root != null;
         if (nodes != null && nodes.Count > 0) return true;
@@ -86,7 +86,7 @@ public class TreeIterator
         return adaptor.GetParent(tree) != null; // back at root?
     }
 
-    public Object next()
+    public object Next()
     {
         if (firstTime)
         { // initial condition
@@ -112,7 +112,7 @@ public class TreeIterator
             return down;
         }
         // if no children, look for next sibling of tree or ancestor
-        Object parent = adaptor.GetParent(tree);
+        object parent = adaptor.GetParent(tree);
         // while we're out of siblings, keep popping back up towards root
         while (parent != null &&
                 adaptor.GetChildIndex(tree) + 1 >= adaptor.GetChildCount(parent))
@@ -137,5 +137,5 @@ public class TreeIterator
         return nodes.Remove();
     }
 
-    public void remove() { throw new UnsupportedOperationException(); }
+    public void Remove() => throw new UnsupportedOperationException();
 }

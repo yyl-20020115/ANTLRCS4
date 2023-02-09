@@ -25,16 +25,13 @@ public class PredicateTransition : AbstractPredicateTransition
         this.isCtxDependent = isCtxDependent;
     }
 
-    //@Override
     public override int SerializationType => PREDICATE;
 
-    //@Override
     public override bool IsEpsilon => true;
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
     public SemanticContext.Predicate GetPredicate()
-        => new SemanticContext.Predicate(ruleIndex, predIndex, isCtxDependent);
+        => new(ruleIndex, predIndex, isCtxDependent);
 
     //@Override
     public override string ToString() 

@@ -72,7 +72,6 @@ public class TokenTagToken : CommonToken
 	 * <p>The implementation for {@link TokenTagToken} returns the token tag
 	 * formatted with {@code <} and {@code >} delimiters.</p>
 	 */
-    //@Override
     public override string Text => label != null ? "<" + label + ":" + tokenName + ">" : "<" + tokenName + ">";
 
     /**
@@ -81,6 +80,5 @@ public class TokenTagToken : CommonToken
 	 * <p>The implementation for {@link TokenTagToken} returns a string of the form
 	 * {@code tokenName:type}.</p>
 	 */
-    //@Override
     public override string ToString() => tokenName + ":" + type;
 }

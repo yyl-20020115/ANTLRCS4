@@ -153,7 +153,7 @@ public class ATNBuilder : TreeParser
         dfa10 = new DFA10(this);
     }
 
-    public override string[] TokenNames => ATNBuilder.tokenNames;     //@Override 
+    public override string[] TokenNames => ATNBuilder.tokenNames; 
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\ATNBuilder.g";
 
     readonly ATNFactory factory;

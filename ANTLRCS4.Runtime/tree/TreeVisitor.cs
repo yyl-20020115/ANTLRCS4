@@ -53,7 +53,7 @@ public class TreeVisitor
      *
      *  Return result of applying post action to this node.
      */
-    public Object visit(Object t, TreeVisitorAction action)
+    public object visit(object t, TreeVisitorAction action)
     {
         // Console.Out.WriteLine("visit "+((Tree)t).toStringTree());
         bool isNil = adaptor.IsNil(t);
@@ -63,9 +63,9 @@ public class TreeVisitor
         }
         for (int i = 0; i < adaptor.GetChildCount(t); i++)
         {
-            Object child = adaptor.GetChild(t, i);
-            Object visitResult = visit(child, action);
-            Object childAfterVisit = adaptor.GetChild(t, i);
+            object child = adaptor.GetChild(t, i);
+            object visitResult = visit(child, action);
+            object childAfterVisit = adaptor.GetChild(t, i);
             if (visitResult != childAfterVisit)
             { // result & child differ?
                 adaptor.SetChild(t, i, visitResult);

@@ -44,7 +44,7 @@ public class RewriteRuleNodeStream : RewriteRuleElementStream
     /** Create a stream with one element */
     public RewriteRuleNodeStream(TreeAdaptor adaptor,
                                  string elementDescription,
-                                 Object oneElement)
+                                 object oneElement)
         : base(adaptor, elementDescription, oneElement)
     {
     }
@@ -52,22 +52,22 @@ public class RewriteRuleNodeStream : RewriteRuleElementStream
     /** Create a stream, but feed off an existing list */
     public RewriteRuleNodeStream(TreeAdaptor adaptor,
                                  string elementDescription,
-                                 List<Object> elements)
+                                 List<object> elements)
         : base(adaptor, elementDescription, elements)
     {
     }
 
-    public Object nextNode()
+    public object NextNode()
     {
         return Next();
     }
 
-    protected Object toTree(Object el)
+    protected object ToTree(object el)
     {
         return adaptor.DupNode(el);
     }
 
-    protected override Object Dup(Object el)
+    protected override object Dup(object el)
     {
         // we dup every node, so don't have to worry about calling dup; short-
         // circuited next() so it doesn't call.

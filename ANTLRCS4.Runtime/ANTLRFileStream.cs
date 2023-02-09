@@ -34,9 +34,5 @@ public class ANTLRFileStream : ANTLRInputStream
         this.n = data.Length;
     }
 
-    //@Override
-    public string GetSourceName()
-    {
-        return fileName;
-    }
+    public override string SourceName => fileName;
 }

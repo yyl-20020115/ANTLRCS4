@@ -69,7 +69,7 @@ public class LeftRecursiveRuleTransformer
             if (leftRecursiveRuleNames.Contains(r.Text))
             {
                 // found ref to recursive rule not already rewritten with arg
-                ((GrammarASTWithOptions)r).SetOption(PRECEDENCE_OPTION_NAME, (GrammarAST)new GrammarASTAdaptor().create(ANTLRParser.INT, "0"));
+                ((GrammarASTWithOptions)r).SetOption(PRECEDENCE_OPTION_NAME, (GrammarAST)new GrammarASTAdaptor().Create(ANTLRParser.INT, "0"));
             }
         }
     }

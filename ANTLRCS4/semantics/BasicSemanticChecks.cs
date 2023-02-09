@@ -251,7 +251,6 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         CheckElementOptions(elem, ID, valueAST);
     }
 
-    //@Override
     public override void FinishRule(RuleAST rule, GrammarAST ID, GrammarAST block)
     {
         if (rule.IsLexerRule) return;
@@ -415,7 +414,6 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         }
     }
 
-    //@Override
     public override void ActionInAlt(ActionAST action)
     {
         if (inFragmentRule)

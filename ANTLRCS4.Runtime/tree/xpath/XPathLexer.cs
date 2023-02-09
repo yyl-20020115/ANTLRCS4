@@ -42,7 +42,6 @@ public class XPathLexer : Lexer
     /**
 	 * @deprecated Use {@link #VOCABULARY} instead.
 	 */
-    //@Deprecated
     public static readonly string[] tokenNames = new string[_SYMBOLIC_NAMES.Length];
     static XPathLexer()
     {
@@ -61,20 +60,18 @@ public class XPathLexer : Lexer
         }
     }
 
-    //@Override
     public override string GrammarFileName => "XPathLexer.g4";
-    //@Override
     public override string[] RuleNames => ruleNames;
-    //@Override
+    
     public override string[] ModeNames => modeNames;
-    //@Override
+    
     //@Deprecated
     public override string[] TokenNames => tokenNames;
 
-    //@Override
+    
     public virtual Vocabulary Vocabulary => VOCABULARY;
 
-    //@Override
+    
     public override ATN ATN => null;
 
     protected int line = 1;
@@ -82,7 +79,6 @@ public class XPathLexer : Lexer
 
     public XPathLexer(CharStream input) : base(input) { }
 
-    //@Override
     public override Token NextToken()
     {
         _tokenStartCharIndex = input.Index;

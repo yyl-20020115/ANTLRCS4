@@ -22,8 +22,7 @@ public class ToolANTLRParser : ANTLRParser
         this.tool = tool;
     }
 
-    //@Override
-    public void DisplayRecognitionError(string[] tokenNames,
+    public override void DisplayRecognitionError(string[] tokenNames,
                                         RecognitionException e)
     {
         var msg = GetParserErrorMessage(this, e);
@@ -56,8 +55,7 @@ public class ToolANTLRParser : ANTLRParser
         return msg;
     }
 
-    //@Override
-    public void GrammarError(ErrorType etype, Token token, params object[] args)
+    public override void GrammarError(ErrorType etype, Token token, params object[] args)
     {
         tool.ErrMgr.GrammarError(etype, SourceName, token, args);
     }

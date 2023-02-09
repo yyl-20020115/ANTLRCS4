@@ -22,15 +22,17 @@ public class GrammarToken : CommonToken
         this.g = g;
     }
 
-  
-    public override int CharPositionInLine {
-        get {
+
+    public override int CharPositionInLine
+    {
+        get
+        {
             if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).CharPositionInLine;
             return base.CharPositionInLine;
-        } 
-        set => base.CharPositionInLine = value; }
+        }
+        set => base.CharPositionInLine = value;
+    }
 
-    //@Override
     public override int Line
     {
         get
@@ -41,11 +43,9 @@ public class GrammarToken : CommonToken
         set => base.Line = value;
     }
 
-    //@Override
-    public int TokenIndex => originalTokenIndex;
+    public override int TokenIndex => originalTokenIndex;
 
-    //@Override
-    public int StartIndex
+    public override int StartIndex
     {
         get
         {
@@ -57,8 +57,7 @@ public class GrammarToken : CommonToken
         }
     }
 
-    //@Override
-    public int StopIndex
+    public override int StopIndex
     {
         get
         {

@@ -16,21 +16,15 @@ public class EmptyPredictionContext : SingletonPredictionContext
 
     private EmptyPredictionContext() : base(null, EMPTY_RETURN_STATE) { }
 
-    //@Override
     public override bool IsEmpty => true;
 
-    //@Override
     public override int Count => 1;
 
-    //@Override
     public override PredictionContext GetParent(int index) => null;
 
-    //@Override
     public override int GetReturnState(int index) => returnState;
 
-    //@Override
     public override bool Equals(object? o) => this == o;
 
-    //@Override
     public override string ToString() => "$";
 }

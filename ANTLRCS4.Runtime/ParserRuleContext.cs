@@ -247,7 +247,7 @@ public class ParserRuleContext : RuleContext
         {
             if (o is TerminalNode tnode)
             {
-                var symbol = tnode.getSymbol();
+                var symbol = tnode.GetSymbol();
                 if (symbol.Type == ttype)
                 {
                     j++;
@@ -275,7 +275,7 @@ public class ParserRuleContext : RuleContext
             if (o is TerminalNode)
             {
                 TerminalNode tnode = (TerminalNode)o;
-                Token symbol = tnode.getSymbol();
+                Token symbol = tnode.GetSymbol();
                 if (symbol.Type == ttype)
                 {
                     if (tokens == null)

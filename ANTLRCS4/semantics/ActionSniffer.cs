@@ -58,20 +58,16 @@ public class ActionSniffer : BlankActionSplitterListener
     }
 
 
-    //@Override
     public override void Attr(string expr, Token x) { TrackRef(x); }
 
-    //@Override
     public override void QualifiedAttr(string expr, Token x, Token y) { TrackRef(x); }
 
-    //@Override
     public override void SetAttr(string expr, Token x, Token rhs)
     {
         TrackRef(x);
         ProcessNested(rhs);
     }
 
-    //@Override
     public override void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         ProcessNested(rhs);

@@ -103,7 +103,7 @@ public static class Trees
             }
             else if (t is TerminalNode)
             {
-                Token symbol = ((TerminalNode)t).getSymbol();
+                Token symbol = ((TerminalNode)t).GetSymbol();
                 if (symbol != null)
                 {
                     var s = symbol.Text;
@@ -112,12 +112,8 @@ public static class Trees
             }
         }
         // no recog for rule names
-        Object payload = t.Payload;
-        if (payload is Token)
-        {
-            return ((Token)payload).Text;
-        }
-        return t.Payload.ToString();
+        var payload = t.Payload;
+        return payload is Token token ? token.Text : t.Payload.ToString();
     }
 
     /** Return ordered list of all children of this node */
@@ -190,7 +186,7 @@ public static class Trees
         if (findTokens && t is TerminalNode)
         {
             TerminalNode tnode = (TerminalNode)t;
-            if (tnode.getSymbol().Type == index) nodes.Add(t);
+            if (tnode.GetSymbol().Type == index) nodes.Add(t);
         }
         else if (!findTokens && t is ParserRuleContext)
         {

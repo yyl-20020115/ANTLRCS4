@@ -58,9 +58,7 @@ public class ActionSplitter : antlr.runtime.Lexer
         : base(input, state) 
     {
     }
-    //@Override 
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\ActionSplitter.g";
-    //@Override
     public override Token NextToken()
     {
         while (true)
@@ -109,7 +107,6 @@ public class ActionSplitter : antlr.runtime.Lexer
         }
     }
 
-    //@Override
     public override void Memoize(IntStream input,
             int ruleIndex,
             int ruleStartIndex)
@@ -117,7 +114,6 @@ public class ActionSplitter : antlr.runtime.Lexer
         if (state.backtracking > 1) base.Memoize(input, ruleIndex, ruleStartIndex);
     }
 
-    //@Override
     public override bool AlreadyParsedRule(IntStream input, int ruleIndex)
     {
         if (state.backtracking > 1) return base.AlreadyParsedRule(input, ruleIndex);
@@ -866,7 +862,6 @@ public class ActionSplitter : antlr.runtime.Lexer
     }
     // $ANTLR end "WS"
 
-    //@Override
     public override void MTokens()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:39: ( COMMENT | LINE_COMMENT | SET_NONLOCAL_ATTR | NONLOCAL_ATTR | QUALIFIED_ATTR | SET_ATTR | ATTR | TEXT )

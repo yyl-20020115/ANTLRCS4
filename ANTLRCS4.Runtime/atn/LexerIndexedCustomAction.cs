@@ -68,14 +68,14 @@ public class LexerIndexedCustomAction : LexerAction
 	 * @return This method returns the result of calling {@link #getActionType}
 	 * on the {@link LexerAction} returned by {@link #getAction}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => action.ActionType;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code true}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => true;
 
     /**
@@ -84,12 +84,12 @@ public class LexerIndexedCustomAction : LexerAction
 	 * <p>This method calls {@link #execute} on the result of {@link #getAction}
 	 * using the provided {@code lexer}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) =>
         // assume the input stream position was properly set by the calling code
         action.Execute(lexer);
 
-    //@Override
+    
     public override int GetHashCode()
     {
         var hash = MurmurHash.Initialize();
@@ -98,7 +98,7 @@ public class LexerIndexedCustomAction : LexerAction
         return MurmurHash.Finish(hash, 2);
     }
 
-    //@Override
+    
     public override bool Equals(object? o) 
 		=> o == this || (o is LexerIndexedCustomAction other) && (offset == other.offset
                 && action.Equals(other.action));

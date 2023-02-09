@@ -33,14 +33,14 @@ public class LexerPopModeAction : LexerAction
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#POP_MODE}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.POP_MODE;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => false;
 
     /**
@@ -48,10 +48,10 @@ public class LexerPopModeAction : LexerAction
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#popMode}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) => lexer.PopMode();
 
-    //@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -59,10 +59,10 @@ public class LexerPopModeAction : LexerAction
         return MurmurHash.Finish(hash, 1);
     }
 
-    //@Override
+    
     //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public override bool Equals(object? obj) => obj == this;
 
-    //@Override
+    
     public override string ToString() => "popMode";
 }

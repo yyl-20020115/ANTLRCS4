@@ -234,8 +234,8 @@ public class Rule : AttributeResolver
 
     /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-    //@Override
-    public Attribute ResolveToAttribute(string x, ActionAST node)
+    
+    public virtual Attribute ResolveToAttribute(string x, ActionAST node)
     {
         if (args != null)
         {
@@ -254,8 +254,7 @@ public class Rule : AttributeResolver
     }
 
     /** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
-    //@Override
-    public Attribute ResolveToAttribute(string x, string y, ActionAST node)
+    public virtual Attribute ResolveToAttribute(string x, string y, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null)
@@ -279,8 +278,7 @@ public class Rule : AttributeResolver
 
     }
 
-    //@Override
-    public bool ResolvesToLabel(string x, ActionAST node)
+    public virtual bool ResolvesToLabel(string x, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
@@ -288,8 +286,7 @@ public class Rule : AttributeResolver
                 anyLabelDef.type == LabelType.TOKEN_LABEL);
     }
 
-    //@Override
-    public bool ResolvesToListLabel(string x, ActionAST node)
+    public virtual bool ResolvesToListLabel(string x, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
@@ -297,16 +294,14 @@ public class Rule : AttributeResolver
                 anyLabelDef.type == LabelType.TOKEN_LIST_LABEL);
     }
 
-    //@Override
-    public bool ResolvesToToken(string x, ActionAST node)
+    public virtual bool ResolvesToToken(string x, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.TOKEN_LABEL) return true;
         return false;
     }
 
-    //@Override
-    public bool ResolvesToAttributeDict(string x, ActionAST node) => ResolvesToToken(x, node);
+    public virtual bool ResolvesToAttributeDict(string x, ActionAST node) => ResolvesToToken(x, node);
 
     public Rule ResolveToRule(string x)
     {

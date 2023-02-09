@@ -6,5 +6,6 @@
 
 namespace org.antlr.v4.runtime.tree;
 
-public interface ErrorNode : TerminalNode {
+public interface ErrorNode : TerminalNode
+{
 }

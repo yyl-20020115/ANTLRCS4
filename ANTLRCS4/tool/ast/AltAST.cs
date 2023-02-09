@@ -37,6 +37,5 @@ public class AltAST : GrammarASTWithOptions
 
     public override AltAST DupNode() => new (this);
 
-    //@Override
     public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

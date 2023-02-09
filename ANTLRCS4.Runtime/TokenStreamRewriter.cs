@@ -118,7 +118,6 @@ public class TokenStreamRewriter
 		 */
         public virtual int Execute(StringBuilder buffer) => index;
 
-        //@Override
         public override string ToString()
         {
             var opName = this.GetType().Name;
@@ -135,7 +134,6 @@ public class TokenStreamRewriter
         {
         }
 
-        //@Override
         public override int Execute(StringBuilder buffer)
         {
             buffer.Append(text);
@@ -166,7 +164,6 @@ public class TokenStreamRewriter
     {
         public int lastIndex;
         public ReplaceOp(TokenStreamRewriter writer, int from, int to, object text) : base(writer, from, text) => lastIndex = to;
-        //@Override
         public override int Execute(StringBuilder buf)
         {
             if (text != null)
@@ -175,7 +172,6 @@ public class TokenStreamRewriter
             }
             return lastIndex + 1;
         }
-        //@Override
         public override string ToString()
         {
             return text == null

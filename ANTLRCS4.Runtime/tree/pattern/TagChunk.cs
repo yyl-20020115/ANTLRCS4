@@ -90,6 +90,5 @@ class TagChunk : Chunk
 	 * are returned in the form {@code label:tag}, and unlabeled tags are
 	 * returned as just the tag name.
 	 */
-    //@Override
     public override string ToString() => label != null ? label + ":" + tag : tag;
 }

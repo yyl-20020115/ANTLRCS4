@@ -325,7 +325,6 @@ public class TestPerformance
     }
     //public class R0new : Runnable
     //{
-    //    //@Override
     //    public void run()
     //    {
     //        try
@@ -345,7 +344,6 @@ public class TestPerformance
     }
     //public class R1
     //{
-    //    //@Override
     //    public void run()
     //    {
     //        if (CLEAR_DFA)
@@ -840,9 +838,7 @@ public class TestPerformance
 
     //public class PF : ParserFactory
     //{
-
-    //    //@Override
-    //    public FileParseResult parseFile(CharStream input, int currentPass, int thread)
+//    public FileParseResult parseFile(CharStream input, int currentPass, int thread)
     //    {
     //        MurmurHashChecksum checksum = new MurmurHashChecksum();
 
@@ -1248,14 +1244,12 @@ public class TestPerformance
         {
         }
 
-        //@Override
         protected override DFAState GetExistingTargetState(DFAState s, int t)
         {
             totalTransitions++;
             return base.GetExistingTargetState(s, t);
         }
 
-        //@Override
         protected override DFAState ComputeTargetState(CharStream input, DFAState s, int t)
         {
             computedTransitions++;
@@ -1296,7 +1290,6 @@ public class TestPerformance
             fullContextTransitions = new long[atn.decisionToState.Count];
         }
 
-        //@Override
         public override int AdaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
         {
             try
@@ -1311,28 +1304,24 @@ public class TestPerformance
             }
         }
 
-        //@Override
         protected override int ExecATNWithFullContext(DFA dfa, DFAState D, ATNConfigSet s0, TokenStream input, int startIndex, ParserRuleContext outerContext)
         {
             fullContextFallback[decision]++;
             return base.ExecATNWithFullContext(dfa, D, s0, input, startIndex, outerContext);
         }
 
-        //@Override
         protected override DFAState GetExistingTargetState(DFAState previousD, int t)
         {
             totalTransitions[decision]++;
             return base.GetExistingTargetState(previousD, t);
         }
 
-        //@Override
         protected override DFAState ComputeTargetState(DFA dfa, DFAState previousD, int t)
         {
             computedTransitions[decision]++;
             return base.ComputeTargetState(dfa, previousD, t);
         }
 
-        //@Override
         protected override ATNConfigSet ComputeReachSet(ATNConfigSet closure, int t, bool fullCtx)
         {
             if (fullCtx)
@@ -1350,7 +1339,6 @@ public class TestPerformance
     {
         public readonly static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
 
-        //@Override
         public override void SyntaxError(Recognizer recognizer, object offendingSymbol,
                                 int line, int charPositionInLine,
                                 string msg, RecognitionException e)
@@ -1377,7 +1365,6 @@ public class TestPerformance
         private BitSet _sllConflict;
         private ATNConfigSet _sllConfigs;
 
-        //@Override
         public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
@@ -1405,8 +1392,7 @@ public class TestPerformance
             recognizer.NotifyErrorListeners(format);
         }
 
-        //@Override
-        public void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+        public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
         {
             _sllConflict = conflictingAlts;
             _sllConfigs = configs;
@@ -1425,7 +1411,6 @@ public class TestPerformance
             recognizer.NotifyErrorListeners(format);
         }
 
-        //@Override
         public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
         {
             if (COMPUTE_TRANSITION_STATS && DETAILED_DFA_STATE_STATS)
@@ -1473,7 +1458,6 @@ public class TestPerformance
     {
         private readonly AtomicInteger nextThread = new AtomicInteger();
 
-        //@Override
         public NumberedThread NewThread(Runnable r)
         {
             int threadNumber = nextThread.GetAndIncrement();
@@ -1492,7 +1476,6 @@ public class TestPerformance
             this.threadNumber = threadNumber;
         }
 
-        //@Override
         public NumberedThread NewThread(Runnable r)
         {
             //assert threadNumber<NUMBER_OF_THREADS;
@@ -1514,21 +1497,18 @@ public class TestPerformance
             this.checksum = checksum;
         }
 
-        //@Override
         public void VisitTerminal(TerminalNode node)
         {
             checksum.Update(VISIT_TERMINAL);
-            UpdateChecksum(checksum, node.getSymbol());
+            UpdateChecksum(checksum, node.GetSymbol());
         }
 
-        //@Override
         public void VisitErrorNode(ErrorNode node)
         {
             checksum.Update(VISIT_ERROR_NODE);
-            UpdateChecksum(checksum, node.getSymbol());
+            UpdateChecksum(checksum, node.GetSymbol());
         }
 
-        //@Override
         public void EnterEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(ENTER_RULE);
@@ -1536,7 +1516,6 @@ public class TestPerformance
             UpdateChecksum(checksum, ctx.GetStart());
         }
 
-        //@Override
         public void ExitEveryRule(ParserRuleContext ctx)
         {
             checksum.Update(EXIT_RULE);
@@ -1600,7 +1579,7 @@ public class TestPerformance
         public ANTLRInputStream CreateCopy()
         {
             var stream = new ANTLRInputStream(this.data, this.n);
-            stream.name = this.GetSourceName();
+            stream.name = this.SourceName;
             return stream;
         }
     }

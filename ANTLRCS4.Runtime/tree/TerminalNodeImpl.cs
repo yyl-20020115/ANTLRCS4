@@ -20,13 +20,13 @@ public class TerminalNodeImpl : TerminalNode
     public ParseTree GetChild(int i) { return null; }
 
     //@Override
-    public Token getSymbol() { return symbol; }
+    public Token GetSymbol() { return symbol; }
 
     //@Override
     public ParseTree Parent => parent;
 
     //@Override
-    public Token getPayload() { return symbol; }
+    public Token GetPayload() { return symbol; }
 
     //@Override
     public Interval SourceInterval
@@ -67,7 +67,7 @@ public class TerminalNodeImpl : TerminalNode
 
     Tree Tree.Parent { get => this.Parent; set { } }
 
-    object Tree.Payload => this.getPayload();
+    object Tree.Payload => this.GetPayload();
 
     Tree Tree.GetChild(int i)
     {

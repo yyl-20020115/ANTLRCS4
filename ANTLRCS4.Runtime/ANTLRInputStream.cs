@@ -232,21 +232,8 @@ public class ANTLRInputStream : CharStream
         return new string(data, start, count);
     }
 
-    //@Override
-    public string SourceName
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return IntStream.UNKNOWN_SOURCE_NAME;
-            }
+    public virtual string SourceName => string.IsNullOrEmpty(name) ? IntStream.UNKNOWN_SOURCE_NAME : name;
 
-            return name;
-        }
-    }
-
-    //@Override
     public override string ToString() => new string(data);
 
     public int CharPositionInLine => throw new NotImplementedException();

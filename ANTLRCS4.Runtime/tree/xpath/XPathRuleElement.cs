@@ -12,7 +12,6 @@ public class XPathRuleElement : XPathElement
     protected int ruleIndex;
     public XPathRuleElement(string ruleName, int ruleIndex) : base(ruleName) => this.ruleIndex = ruleIndex;
 
-    //@Override
     public override ICollection<ParseTree> Evaluate(ParseTree t)
     {
         // return all children of t that match nodeName

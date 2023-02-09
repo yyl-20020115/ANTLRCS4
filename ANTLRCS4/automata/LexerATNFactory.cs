@@ -333,7 +333,6 @@ public class LexerATNFactory : ParserATNFactory
 	 *  if "caseInsensitive" option is enabled, "fog" will be treated as
 	 *  o-('f'|'F') -> o-('o'|'O') -> o-('g'|'G')
 	 */
-    //@Override
     public override Handle StringLiteral(TerminalAST stringLiteralAST)
     {
         var chars = stringLiteralAST.Text;
@@ -362,7 +361,6 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     /** [Aa\t \u1234a-z\]\p{Letter}\-] char sets */
-    //@Override
     public override Handle CharSetLiteral(GrammarAST charSetAST)
     {
         var left = NewState(charSetAST);
@@ -404,10 +402,8 @@ public class LexerATNFactory : ParserATNFactory
             this.prevProperty = prevProperty;
         }
 
-        //@Override
         public override string ToString() => $"{base.ToString()} mode={mode} inRange={inRange} prevCodePoint={prevCodePoint} prevProperty={prevProperty}";
 
-        //@Override
         public override bool Equals(object? other)
         {
             if (other is not CharSetParseState that)
@@ -424,7 +420,6 @@ public class LexerATNFactory : ParserATNFactory
                 RuntimeUtils.DoEquals(this.prevProperty, that.prevProperty);
         }
 
-        //@Override
         public override int GetHashCode()
             => RuntimeUtils.ObjectsHash(mode, inRange, prevCodePoint, prevProperty);
     }

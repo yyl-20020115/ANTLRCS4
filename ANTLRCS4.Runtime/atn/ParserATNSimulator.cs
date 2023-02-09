@@ -293,12 +293,10 @@ public class ParserATNSimulator : ATNSimulator
         //		Console.WriteLine(dot.getDOT(atn.rules.get(1), parser.getRuleNames()));
     }
 
-    //@Override
     public override void Reset()
     {
     }
 
-    //@Override
     public override void ClearDFA()
     {
         for (int d = 0; d < decisionToDFA.Length; d++)

@@ -90,7 +90,6 @@ public class AttributeChecks : ActionSplitterListener
     // LISTENER METHODS
 
     // $x.y
-    //@Override
     public void QualifiedAttr(string expr, Token x, Token y)
     {
         if (g.IsLexer)
@@ -135,7 +134,6 @@ public class AttributeChecks : ActionSplitterListener
         }
     }
 
-    //@Override
     public void SetAttr(string expr, Token x, Token rhs)
     {
         if (g.IsLexer)
@@ -159,7 +157,6 @@ public class AttributeChecks : ActionSplitterListener
         new AttributeChecks(g, r, alt, node, rhs).ExamineAction();
     }
 
-    //@Override
     public void Attr(string expr, Token x)
     {
         if (g.IsLexer)
@@ -189,7 +186,6 @@ public class AttributeChecks : ActionSplitterListener
         }
     }
 
-    //@Override
     public void NonLocalAttr(string expr, Token x, Token y)
     {
         var r = g.GetRule(x.Text);
@@ -206,7 +202,6 @@ public class AttributeChecks : ActionSplitterListener
         }
     }
 
-    //@Override
     public void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         Rule r = g.GetRule(x.Text);
@@ -223,10 +218,8 @@ public class AttributeChecks : ActionSplitterListener
         }
     }
 
-    //@Override
     public void Text(string text) { }
 
-    // don't care
     public void TemplateInstance(string expr) { }
     public void IndirectTemplateInstance(string expr) { }
     public void SetExprAttribute(string expr) { }

@@ -1320,8 +1320,7 @@ public class Grammar : AttributeResolver
         public readonly Grammar g;
         public GTV(Grammar g) => this.g = g;
 
-        //@Override
-
+        
         public override void StringRef(TerminalAST @ref)
         {
             g.strings.Add(@ref.Text);

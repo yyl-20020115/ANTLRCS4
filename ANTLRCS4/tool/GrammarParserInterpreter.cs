@@ -56,7 +56,6 @@ public class GrammarParserInterpreter : ParserInterpreter
         stateToAltsMap = new int[g.atn.states.Count][];
     }
 
-    //@Override
     protected override InterpreterRuleContext CreateInterpreterRuleContext(ParserRuleContext parent,
                                                                   int invokingStateNumber,
                                                                   int ruleIndex)
@@ -142,7 +141,6 @@ public class GrammarParserInterpreter : ParserInterpreter
 	 *  We use stateToAltsMap as a cache to avoid expensive calls to
 	 *  getRecursiveOpAlts().
 	 */
-    //@Override
     protected override int VisitDecisionState(DecisionState p)
     {
         int predictedAlt = base.VisitDecisionState(p);

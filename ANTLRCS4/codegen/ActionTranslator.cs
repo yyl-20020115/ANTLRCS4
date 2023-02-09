@@ -117,7 +117,6 @@ public class ActionTranslator : ActionSplitterListener
         return translator.chunks;
     }
 
-    //@Override
     public virtual void Attr(string expr, Token x)
     {
         gen.g.Tools.Log("action-translator", "attr " + x);
@@ -169,7 +168,6 @@ public class ActionTranslator : ActionSplitterListener
         }
     }
 
-    //@Override
     public virtual void QualifiedAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "qattr " + x + "." + y);
@@ -209,7 +207,6 @@ public class ActionTranslator : ActionSplitterListener
         }
     }
 
-    //@Override
     public virtual void SetAttr(string expr, Token x, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setAttr " + x + " " + rhs);
@@ -219,7 +216,6 @@ public class ActionTranslator : ActionSplitterListener
         chunks.Add(s);
     }
 
-    //@Override
     public virtual void NonLocalAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "nonLocalAttr " + x + "::" + y);
@@ -228,7 +224,6 @@ public class ActionTranslator : ActionSplitterListener
         chunks.Add(new NonLocalAttrRef(nodeContext, x.Text, name, target.EscapeIfNeeded(name), r.index));
     }
 
-    //@Override
     public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setNonLocalAttr " + x + "::" + y + "=" + rhs);
@@ -239,7 +234,6 @@ public class ActionTranslator : ActionSplitterListener
         chunks.Add(s);
     }
 
-    //@Override
     public virtual void Text(string text)
     {
         chunks.Add(new ActionText(nodeContext, text));

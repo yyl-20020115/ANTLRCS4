@@ -11,8 +11,7 @@ namespace org.antlr.v4.test.tool;
 
 public class TestCommonTokenStream : TestBufferedTokenStream
 {
-    //@Override
-    protected static TokenStream CreateTokenStream(TokenSource src) 
+    protected override TokenStream CreateTokenStream(TokenSource src) 
         => new CommonTokenStream(src);
 
     public class TS1 : TokenSource
@@ -37,7 +36,6 @@ public class TestCommonTokenStream : TestBufferedTokenStream
                     new CommonToken(Token.EOF,"")
             };
         }
-        //@Override
         public Token NextToken() => tokens[i++];
 
         
@@ -220,9 +218,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     public class TS3 : TokenSource
     {
 
-
         public Token NextToken() => new CommonToken(Token.EOF);
-
 
         public int Line => 0;
 
@@ -232,11 +228,8 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         
         public CharStream CharInputStream => null;
 
-        //@Override
         public string SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
-        //@Override
-        //@Override
         public TokenFactory TokenFactory { get => throw new UnsupportedOperationException("Not supported yet."); set => throw new UnsupportedOperationException("Not supported yet."); }
     }
     [TestMethod]

@@ -269,11 +269,11 @@ public class ParseTreePatternMatcher
             var t2 = (TerminalNode)patternTree;
             ParseTree mismatchedNode = null;
             // both are tokens and they have same type
-            if (t1.getSymbol().Type == t2.getSymbol().Type)
+            if (t1.GetSymbol().Type == t2.GetSymbol().Type)
             {
-                if (t2.getSymbol() is TokenTagToken)
+                if (t2.GetSymbol() is TokenTagToken)
                 { // x and <ID>
-                    var tokenTagToken = (TokenTagToken)t2.getSymbol();
+                    var tokenTagToken = (TokenTagToken)t2.GetSymbol();
                     // track label->list-of-nodes for both token name and label (if any)
                     labels.Map(tokenTagToken.TokenName, tree);
                     if (tokenTagToken.Label != null)
@@ -369,10 +369,10 @@ public class ParseTreePatternMatcher
             if (r.ChildCount == 1 && r.GetChild(0) is TerminalNode)
             {
                 TerminalNode c = (TerminalNode)r.GetChild(0);
-                if (c.getSymbol() is RuleTagToken)
+                if (c.GetSymbol() is RuleTagToken)
                 {
                     //					Console.Out.WriteLine("rule tag subtree "+t.toStringTree(parser));
-                    return (RuleTagToken)c.getSymbol();
+                    return (RuleTagToken)c.GetSymbol();
                 }
             }
         }

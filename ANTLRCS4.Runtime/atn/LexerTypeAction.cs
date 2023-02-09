@@ -35,14 +35,14 @@ public class LexerTypeAction : LexerAction
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#TYPE}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.TYPE;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => false;
 
     /**
@@ -51,11 +51,11 @@ public class LexerTypeAction : LexerAction
 	 * <p>This action is implemented by calling {@link Lexer#setType} with the
 	 * value provided by {@link #getType}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) 
         => lexer.Type = type;
 
-    //@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -64,10 +64,10 @@ public class LexerTypeAction : LexerAction
         return MurmurHash.Finish(hash, 2);
     }
 
-    //@Override
+    
     public override bool Equals(object? o) 
         => o == this || (o is LexerTypeAction a) && (type == a.type);
 
-    //@Override
+    
     public override string ToString() => $"type({type})";
 }

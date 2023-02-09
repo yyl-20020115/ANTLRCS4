@@ -20,18 +20,15 @@ public class RangeTransition : Transition
         this.to = to;
     }
 
-    //@Override
     public override int SerializationType => RANGE;
 
-    //@Override
-
+    
     public override IntervalSet Label
         => IntervalSet.Of(from, to);
-    //@Override
+
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => symbol >= from && symbol <= to;
 
-    //@Override
     public override string ToString() => new StringBuilder("'")
                 .Append(char.ConvertFromUtf32(from))
                 .Append("'..'")

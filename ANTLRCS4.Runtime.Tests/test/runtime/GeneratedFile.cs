@@ -11,6 +11,5 @@ public class GeneratedFile
         this.isParser = isParser;
     }
 
-    //@Override
     public override string ToString() => name + "; isParser:" + isParser;
 }

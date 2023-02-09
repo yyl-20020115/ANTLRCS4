@@ -134,19 +134,15 @@ public class VocabularyImpl : Vocabulary
         return new VocabularyImpl(literalNames, symbolicNames, tokenNames);
     }
 
-    //@Override
     public virtual int MaxTokenType => maxTokenType;
 
-    //@Override
     public virtual string GetLiteralName(int tokenType) => tokenType >= 0 && tokenType < literalNames.Length ? literalNames[tokenType] : null;
 
-    //@Override
     public string GetSymbolicName(int tokenType)
     {
         return tokenType >= 0 && tokenType < symbolicNames.Length ? symbolicNames[tokenType] : tokenType == Token.EOF ? "EOF" : null;
     }
 
-    //@Override
     public string GetDisplayName(int tokenType)
     {
         if (tokenType >= 0 && tokenType < displayNames.Length)

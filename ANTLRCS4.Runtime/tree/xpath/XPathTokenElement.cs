@@ -12,14 +12,13 @@ public class XPathTokenElement : XPathElement
     protected int tokenType;
     public XPathTokenElement(string tokenName, int tokenType) : base(tokenName) => this.tokenType = tokenType;
 
-    //@Override
     public override ICollection<ParseTree> Evaluate(ParseTree t)
     {
         // return all children of t that match nodeName
         List<ParseTree> nodes = new();
         foreach (Tree c in Trees.getChildren(t))
-            if (c is TerminalNode tnode && ((tnode.getSymbol().Type == tokenType && !invert) ||
-                     (tnode.getSymbol().Type != tokenType && invert)))
+            if (c is TerminalNode tnode && ((tnode.GetSymbol().Type == tokenType && !invert) ||
+                     (tnode.GetSymbol().Type != tokenType && invert)))
                 nodes.Add(tnode);
         return nodes;
     }

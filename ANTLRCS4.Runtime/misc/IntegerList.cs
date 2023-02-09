@@ -182,7 +182,6 @@ public class IntegerList
 	 * @param o the object to be compared for equality with this list
 	 * @return {@code true} if the specified object is equal to this list
 	 */
-    //@Override
     public override bool Equals(object? o)
     {
         if (o == this)
@@ -220,7 +219,6 @@ public class IntegerList
 	 *
 	 * @return the hash code value for this list
 	 */
-    //@Override
     public override int GetHashCode()
     {
         int hashCode = 1;
@@ -235,7 +233,6 @@ public class IntegerList
     /**
 	 * Returns a string representation of this list.
 	 */
-    //@Override
     public override string ToString() => string.Join(',', ToArray());
 
     public int BinarySearch(int key) => Array.BinarySearch(_data, 0, _size, key);

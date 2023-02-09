@@ -113,7 +113,6 @@ public class LexerATNSimulator : ATNSimulator
         }
     }
 
-    //@Override
     public override void Reset()
     {
         prevAccept.Reset();
@@ -123,7 +122,6 @@ public class LexerATNSimulator : ATNSimulator
         mode = Lexer.DEFAULT_MODE;
     }
 
-    //@Override
     public override void ClearDFA()
     {
         for (int d = 0; d < decisionToDFA.Length; d++)

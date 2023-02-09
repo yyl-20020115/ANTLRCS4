@@ -134,9 +134,7 @@ public class SourceGenTriggers : TreeParser
         dfa7 = new DFA7(this);
     }
 
-    //@Override 
     public override string[] TokenNames => tokenNames;
-    //@Override 
     public override string GrammarFileName => "org\\antlr\\v4\\codegen\\SourceGenTriggers.g";
 
 
@@ -2078,7 +2076,6 @@ public class SourceGenTriggers : TreeParser
             this.special = DFA7_special;
             this.transition = DFA7_transition;
         }
-        //@Override
         public override string Description => "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
     }
 

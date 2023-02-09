@@ -132,7 +132,7 @@ public class BlockSetTransformer : TreeRewriter
 
     public TreeAdaptor TreeAdaptor { get => adaptor; set => this.adaptor = value; }
 
-    public override string[] TokenNames => BlockSetTransformer.tokenNames;     //@Override 
+    public override string[] TokenNames => BlockSetTransformer.tokenNames;
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\BlockSetTransformer.g";
 
     public string currentRuleName;

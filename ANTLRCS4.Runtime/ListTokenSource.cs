@@ -83,7 +83,7 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public virtual int CharPositionInLine
     {
         get
@@ -123,7 +123,7 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public virtual Token NextToken()
     {
         if (i >= tokens.Count)
@@ -160,7 +160,7 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public virtual int Line
     {
         get
@@ -205,7 +205,7 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public virtual CharStream CharInputStream
     {
         get
@@ -231,7 +231,7 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public virtual string SourceName
     {
         get
@@ -254,10 +254,10 @@ public class ListTokenSource : TokenSource
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     /**
  * {@inheritDoc}
  */
-    //@Override
+    
     public virtual TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 }

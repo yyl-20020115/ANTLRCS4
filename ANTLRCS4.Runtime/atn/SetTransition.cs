@@ -20,18 +20,14 @@ public class SetTransition : Transition
         this.label = set ??= IntervalSet.Of(Token.INVALID_TYPE);
     }
 
-    //@Override
     public override int SerializationType => SET;
 
-    //@Override
-
+    
     public override IntervalSet Label 
         => label;
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => label.Contains(symbol);
 
-    //@Override
-
+    
     public override string ToString() => label.ToString();
 }

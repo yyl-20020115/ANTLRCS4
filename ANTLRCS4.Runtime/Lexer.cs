@@ -352,7 +352,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 
     /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
-	 *  that overrides this to point to their String[] tokenNames.
+	 *  that overrides this to point to their string[] tokenNames.
 	 */
     public override string[] TokenNames => null;
 

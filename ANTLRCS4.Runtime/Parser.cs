@@ -33,7 +33,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         //@Override
         public void VisitTerminal(TerminalNode node)
         {
-            Console.Out.WriteLine("consume " + node.getSymbol() + " rule " +
+            Console.Out.WriteLine("consume " + node.GetSymbol() + " rule " +
                                this.parser.                               RuleNames[this.parser._ctx.RuleIndex]);
         }
 
@@ -921,7 +921,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     {
         lock (_interp.decisionToDFA)
         {
-            List<String> s = new();
+            List<string> s = new();
             for (int d = 0; d < _interp.decisionToDFA.Length; d++)
             {
                 var dfa = _interp.decisionToDFA[d];

@@ -12,7 +12,7 @@ namespace org.antlr.v4.test.tool;
 [TestClass]
 public class TestBufferedTokenStream
 {
-    protected static TokenStream CreateTokenStream(TokenSource src) 
+    protected virtual TokenStream CreateTokenStream(TokenSource src) 
         => new BufferedTokenStream(src);
 
     [TestMethod]

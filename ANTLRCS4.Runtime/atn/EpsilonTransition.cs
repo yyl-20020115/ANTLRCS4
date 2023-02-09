@@ -24,14 +24,10 @@ public class EpsilonTransition : Transition
 	 */
     public int OutermostPrecedenceReturn => _outermostPrecedenceReturn;
 
-    //@Override
     public override int SerializationType => EPSILON;
 
-    //@Override
     public override bool IsEpsilon => true;
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
-    //@Override
     public override string ToString() => "epsilon";
 }

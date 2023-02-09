@@ -16,15 +16,12 @@ public class NotSetTransition : SetTransition
     {
     }
 
-    //@Override
     public override int SerializationType => NOT_SET;
 
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => symbol >= minVocabSymbol
             && symbol <= maxVocabSymbol
             && !base.Matches(symbol, minVocabSymbol, maxVocabSymbol);
 
-    //@Override
     public override string ToString() => '~' + base.ToString();
 }

@@ -10,13 +10,10 @@ public class WildcardTransition : Transition
 {
     public WildcardTransition(ATNState target) : base(target) { }
 
-    //@Override
     public override int SerializationType => WILDCARD;
 
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => symbol >= minVocabSymbol && symbol <= maxVocabSymbol;
 
-    //@Override
     public override string ToString() => ".";
 }

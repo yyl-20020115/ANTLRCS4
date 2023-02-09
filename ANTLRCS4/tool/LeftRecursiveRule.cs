@@ -43,7 +43,6 @@ public class LeftRecursiveRule : Rule
 
     public RuleAST OriginalAST => originalAST;
 
-    //@Override
     public override List<AltAST> GetUnlabeledAltASTs()
     {
         List<AltAST> alts = new();

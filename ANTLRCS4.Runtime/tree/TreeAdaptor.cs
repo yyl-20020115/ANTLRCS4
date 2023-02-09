@@ -53,10 +53,10 @@ public interface TreeAdaptor
     /** Duplicate a single tree node.
 	 *  Override if you want another kind of node to be built.
 	 */
-    public object DupNode(Object treeNode);
+    public object DupNode(object treeNode);
 
     /** Duplicate tree recursively, using dupNode() for each node */
-    public object DupTree(Object tree);
+    public object DupTree(object tree);
 
     /** Return a nil node (an empty but non-null node) that can hold
 	 *  a list of element as the children.  If you want a flat tree (a list)
@@ -81,7 +81,7 @@ public interface TreeAdaptor
     public object ErrorNode(TokenStream input, Token start, Token stop, RecognitionException e);
 
     /** Is tree considered a nil node used to make lists of child nodes? */
-    public bool IsNil(Object tree);
+    public bool IsNil(object tree);
 
     /** Add a child to the tree t.  If child is a flat tree (a list), make all
 	 *  in list children of t.  Warning: if t has no children, but child does
@@ -90,7 +90,7 @@ public interface TreeAdaptor
 	 *  make sure that this is consistent with have the user will build
 	 *  ASTs.  Do nothing if t or child is null.
 	 */
-    public void AddChild(Object t, Object child);
+    public void AddChild(object t, object child);
 
     /** If oldRoot is a nil root, just copy or move the children to newRoot.
 	 *  If not a nil root, make oldRoot a child of newRoot.
@@ -118,7 +118,7 @@ public interface TreeAdaptor
 	 *  constructing these nodes so we should have this control for
 	 *  efficiency.
 	 */
-    public object BecomeRoot(Object newRoot, Object oldRoot);
+    public object BecomeRoot(object newRoot, object oldRoot);
 
     /** Given the root of the subtree created for this rule, post process
 	 *  it to do any simplifications or whatever you want.  A required
@@ -133,7 +133,7 @@ public interface TreeAdaptor
 	 *  This method is executed after all rule tree construction and right
 	 *  before setTokenBoundaries().
 	 */
-    public Object RulePostProcessing(Object root);
+    public object RulePostProcessing(object root);
 
     /** For identifying trees.
 	 *
@@ -141,7 +141,7 @@ public interface TreeAdaptor
 	 *  Even becomeRoot is an issue.  Use System.identityHashCode(node)
 	 *  usually.
 	 */
-    public int GetUniqueID(Object node);
+    public int GetUniqueID(object node);
 
 
     // R e w r i t e  R u l e s
@@ -181,7 +181,7 @@ public interface TreeAdaptor
 	 *
 	 *  This should invoke createToken(int,string).
 	 */
-    public Object Create(int tokenType, string text);
+    public object Create(int tokenType, string text);
 
 
     // C o n t e n t
@@ -190,12 +190,12 @@ public interface TreeAdaptor
     public int GetType(object t);
 
     /** Node constructors can set the type of a node */
-    public void SetType(Object t, int type);
+    public void SetType(object t, int type);
 
-    public string GetText(Object t);
+    public string GetText(object t);
 
     /** Node constructors can set the text of a node */
-    public void SetText(Object t, string text);
+    public void SetText(object t, string text);
 
     /** Return the token object from which this node was created.
 	 *  Currently used only for printing an error message.
@@ -206,7 +206,7 @@ public interface TreeAdaptor
 	 *  the appropriate information and pass that back.  See
 	 *  BaseRecognizer.getErrorMessage().
 	 */
-    public Token GetToken(Object t);
+    public Token GetToken(object t);
 
     /** Where are the bounds in the input token stream for this node and
 	 *  all children?  Each rule that creates AST nodes will call this
@@ -214,42 +214,42 @@ public interface TreeAdaptor
 	 *  still usually have a nil root node just to hold the children list.
 	 *  That node would contain the start/stop indexes then.
 	 */
-    public void SetTokenBoundaries(Object t, Token startToken, Token stopToken);
+    public void SetTokenBoundaries(object t, Token startToken, Token stopToken);
 
     /** Get the token start index for this subtree; return -1 if no such index */
-    public int GetTokenStartIndex(Object t);
+    public int GetTokenStartIndex(object t);
 
     /** Get the token stop index for this subtree; return -1 if no such index */
-    public int GetTokenStopIndex(Object t);
+    public int GetTokenStopIndex(object t);
 
 
     // N a v i g a t i o n  /  T r e e  P a r s i n g
 
     /** Get a child 0..n-1 node */
-    public Object GetChild(Object t, int i);
+    public object GetChild(object t, int i);
 
     /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
-    public void SetChild(Object t, int i, Object child);
+    public void SetChild(object t, int i, object child);
 
     /** Remove ith child and shift children down from right. */
-    public Object DeleteChild(Object t, int i);
+    public object DeleteChild(object t, int i);
 
     /** How many children?  If 0, then this is a leaf node */
-    public int GetChildCount(Object t);
+    public int GetChildCount(object t);
 
     /** Who is the parent node of this node; if null, implies node is root.
 	 *  If your node type doesn't handle this, it's ok but the tree rewrites
 	 *  in tree parsers need this functionality.
 	 */
-    public Object GetParent(Object t);
-    public void SetParent(Object t, Object parent);
+    public object GetParent(object t);
+    public void SetParent(object t, object parent);
 
     /** What index is this node in the child list? Range: 0..n-1
 	 *  If your node type doesn't handle this, it's ok but the tree rewrites
 	 *  in tree parsers need this functionality.
 	 */
-    public int GetChildIndex(Object t);
-    public void SetChildIndex(Object t, int index);
+    public int GetChildIndex(object t);
+    public void SetChildIndex(object t, int index);
 
     /** Replace from start to stop child index of parent with t, which might
 	 *  be a list.  Number of children may be different
@@ -258,5 +258,5 @@ public interface TreeAdaptor
 	 *  If parent is null, don't do anything; must be at root of overall tree.
 	 *  Can't replace whatever points to the parent externally.  Do nothing.
 	 */
-    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+    public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t);
 }

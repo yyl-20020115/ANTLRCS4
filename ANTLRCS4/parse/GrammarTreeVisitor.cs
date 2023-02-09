@@ -173,9 +173,7 @@ public class GrammarTreeVisitor : TreeParser
         dfa38 = new DFA38(this);
     }
 
-    //@Override 
     public override string[] TokenNames => tokenNames;
-    //@Override
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g";
 
     public string grammarName;
@@ -428,14 +426,12 @@ public class GrammarTreeVisitor : TreeParser
     protected virtual void EnterElementOption(GrammarAST tree) { }
     protected virtual void ExitElementOption(GrammarAST tree) { }
 
-    //@Override
-    public virtual void TraceIn(string ruleName, int ruleIndex)
+    public override void TraceIn(string ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("enter " + ruleName + ": " + input.LT(1));
     }
 
-    //@Override
-    public virtual void TraceOut(string ruleName, int ruleIndex)
+    public override void TraceOut(string ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("exit " + ruleName + ": " + input.LT(1));
     }

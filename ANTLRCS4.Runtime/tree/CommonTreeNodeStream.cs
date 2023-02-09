@@ -33,14 +33,14 @@ using org.antlr.runtime.misc;
 namespace org.antlr.runtime.tree;
 
 
-public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, PositionTrackingStream<Object>
+public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, PositionTrackingStream<object>
 {
 
     public static readonly int DEFAULT_INITIAL_BUFFER_SIZE = 100;
     public static readonly int INITIAL_CALL_STACK_SIZE = 10;
 
     /** Pull nodes from which tree? */
-    protected Object root;
+    protected object root;
 
     /** If this tree (root) was created from a {@link TokenStream}, track it. */
     protected TokenStream tokens;
@@ -69,14 +69,14 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
      * @see #hasPositionInformation
      * @see RecognitionException#extractInformationFromTreeNodeStream
      */
-    protected Object previousLocationElement;
+    protected object previousLocationElement;
 
-    public CommonTreeNodeStream(Object tree)
+    public CommonTreeNodeStream(object tree)
         : this(new CommonTreeAdaptor(), tree)
     {
     }
 
-    public CommonTreeNodeStream(TreeAdaptor adaptor, Object tree)
+    public CommonTreeNodeStream(TreeAdaptor adaptor, object tree)
     {
         this.root = tree;
         this.adaptor = adaptor;
@@ -96,31 +96,29 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     /** Pull elements from tree iterator.  Track tree level 0..max_level.
      *  If nil rooted tree, don't give initial nil and DOWN nor final UP.
      */
-    //@Override
-    public override Object nextElement()
+    public override object nextElement()
     {
-        Object t = it.next();
+        var t = it.Next();
         //Console.Out.WriteLine("pulled "+adaptor.getType(t));
         if (t == it.up)
         {
             level--;
-            if (level == 0 && hasNilRoot) return it.next(); // don't give last UP; get EOF
+            if (level == 0 && hasNilRoot) return it.Next(); // don't give last UP; get EOF
         }
         else if (t == it.down) level++;
         if (level == 0 && adaptor.IsNil(t))
         { // if nil root, scarf nil, DOWN
             hasNilRoot = true;
-            t = it.next(); // t is now DOWN, so get first real node next
+            t = it.Next(); // t is now DOWN, so get first real node next
             level++;
-            t = it.next();
+            t = it.Next();
         }
         return t;
     }
 
-    //@Override
-    public override Object Remove()
+    public override object Remove()
     {
-        Object result = base.Remove();
+        var result = base.Remove();
         if (p == 0 && hasPositionInformation(prevElement))
         {
             previousLocationElement = prevElement;
@@ -129,13 +127,13 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         return result;
     }
 
-    //@Override
-    public override bool isEOF(Object o) { return adaptor.GetType(o) == Token.EOF; }
+    public override bool IsEOF(object o) => adaptor.GetType(o) == Token.EOF;
 
-    //@Override
     public void SetUniqueNavigationNodes(bool uniqueNavigationNodes) { }
-    //@Override
-    public Object GetTreeSource() { return root; }
+
+    public object GetRoot() => root;
+
+    public object GetTreeSource(object root) => root;
 
     //@Override
     public string SourceName => GetTokenStream().SourceName;
@@ -145,18 +143,16 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     public void setTokenStream(TokenStream tokens) { this.tokens = tokens; }
 
     //@Override
-    public TreeAdaptor GetTreeAdaptor() { return adaptor; }
+    public TreeAdaptor GetTreeAdaptor() => adaptor;
 
     public void setTreeAdaptor(TreeAdaptor adaptor) { this.adaptor = adaptor; }
 
-    //@Override
-    public Object Get(int i)
+    public object Get(int i)
     {
         throw new UnsupportedOperationException("Absolute node indexes are meaningless in an unbuffered stream");
     }
 
-    //@Override
-    public int LA(int i) { return adaptor.GetType(LT(i)); }
+    public int LA(int i) => adaptor.GetType(LT(i));
 
     /** Make stream jump to a new location, saving old location.
      *  Switch back with pop().
@@ -189,9 +185,9 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
      * @see #hasPositionInformation
      */
     //@Override
-    public Object getKnownPositionElement(bool allowApproximateLocation)
+    public object getKnownPositionElement(bool allowApproximateLocation)
     {
-        Object node = data[p];
+        var node = data[p];
         if (hasPositionInformation(node))
         {
             return node;
@@ -215,7 +211,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public bool hasPositionInformation(Object node)
+    public bool hasPositionInformation(object node)
     {
         Token token = adaptor.GetToken(node);
         if (token == null)
@@ -234,7 +230,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     // TREE REWRITE INTERFACE
 
     //@Override
-    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t)
+    public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         if (parent != null)
         {
@@ -242,8 +238,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         }
     }
 
-    //@Override
-    public string ToString(Object start, Object stop)
+    public string ToString(object start, object stop)
     {
         // we'll have to walk from start to stop in tree; we're not keeping
         // a complete node stream buffer
@@ -251,20 +246,20 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     /** For debugging; destructive: moves tree iterator to end. */
-    public string toTokenTypeString()
+    public string ToTokenTypeString()
     {
         Reset();
-        StringBuilder buf = new StringBuilder();
-        Object o = LT(1);
+        var buffer = new StringBuilder();
+        var o = LT(1);
         int type = adaptor.GetType(o);
         while (type != Token.EOF)
         {
-            buf.Append(" ");
-            buf.Append(type);
+            buffer.Append(' ');
+            buffer.Append(type);
             Consume();
             o = LT(1);
             type = adaptor.GetType(o);
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 }

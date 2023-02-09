@@ -17,8 +17,7 @@ namespace org.antlr.v4.runtime.tree;
 public class IterativeParseTreeWalker : ParseTreeWalker
 {
 
-    //@Override
-    public void walk(ParseTreeListener listener, ParseTree t)
+    public override void Walk(ParseTreeListener listener, ParseTree t)
     {
 
         ArrayDeque<ParseTree> nodeStack = new();
@@ -42,7 +41,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker
             else
             {
                 RuleNode r = (RuleNode)currentNode;
-                enterRule(listener, r);
+                EnterRule(listener, r);
             }
 
             // Move down to first child, if exists
@@ -62,7 +61,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker
                 // post-order visit
                 if (currentNode is RuleNode node)
                 {
-                    exitRule(listener, node);
+                    ExitRule(listener, node);
                 }
 
                 // No parent, so no siblings

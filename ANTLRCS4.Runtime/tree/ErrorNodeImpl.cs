@@ -12,12 +12,14 @@ namespace org.antlr.v4.runtime.tree;
  *  and deletion as well as during "consume until error recovery set"
  *  upon no viable alternative exceptions.
  */
-public class ErrorNodeImpl : TerminalNodeImpl , ErrorNode {
-	public ErrorNodeImpl(Token token):base(token) {
-	}
+public class ErrorNodeImpl : TerminalNodeImpl, ErrorNode
+{
+    public ErrorNodeImpl(Token token) : base(token)
+    {
+    }
 
-	//@Override
-	public T Accept<T>(ParseTreeVisitor<T> visitor) {
-		return visitor.VisitErrorNode(this);
-	}
+    public virtual T Accept<T>(ParseTreeVisitor<T> visitor)
+    {
+        return visitor.VisitErrorNode(this);
+    }
 }

@@ -75,7 +75,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
      */
     public abstract T nextElement();
 
-    public abstract bool isEOF(T o);
+    public abstract bool IsEOF(T o);
 
     /**
      * Get and remove first element in queue; override
@@ -120,7 +120,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         for (int i = 1; i <= n; i++)
         {
             T o = nextElement();
-            if (isEOF(o)) eof = o;
+            if (IsEOF(o)) eof = o;
             data.Add(o);
         }
     }

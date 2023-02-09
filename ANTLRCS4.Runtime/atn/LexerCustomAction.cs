@@ -60,7 +60,7 @@ public class LexerCustomAction : LexerAction
 	 *
 	 * @return This method returns {@link LexerActionType#CUSTOM}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.CUSTOM;
 
     /**
@@ -74,7 +74,7 @@ public class LexerCustomAction : LexerAction
 	 *
 	 * @return This method returns {@code true}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => true;
 
     /**
@@ -83,13 +83,13 @@ public class LexerCustomAction : LexerAction
 	 * <p>Custom actions are implemented by calling {@link Lexer#action} with the
 	 * appropriate rule and action indexes.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer)
     {
         lexer.Action(null, ruleIndex, actionIndex);
     }
 
-    //@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -99,7 +99,7 @@ public class LexerCustomAction : LexerAction
         return MurmurHash.Finish(hash, 3);
     }
 
-    //@Override
+    
     public override bool Equals(object? o) 
         => o == this || (o is LexerCustomAction other) && (ruleIndex == other.ruleIndex
             && actionIndex == other.actionIndex);

@@ -35,9 +35,9 @@ namespace org.antlr.runtime.tree;
 
 public class TreeRewriter : TreeParser
 {
-    public interface fptr
+    public interface FPtr
     {
-        public Object rule();
+        public object Rule();
     }
 
     protected bool showTransformations = false;
@@ -57,7 +57,7 @@ public class TreeRewriter : TreeParser
         originalTokenStream = input.GetTokenStream();
     }
 
-    public Object applyOnce(Object t, fptr whichRule)
+    public object ApplyOnce(object t, FPtr whichRule)
     {
         if (t == null) return null;
         try
@@ -67,7 +67,7 @@ public class TreeRewriter : TreeParser
             input = new CommonTreeNodeStream(originalAdaptor, t);
             ((CommonTreeNodeStream)input).setTokenStream(originalTokenStream);
             BacktrackingLevel = 1;
-            TreeRuleReturnScope r = (TreeRuleReturnScope)whichRule.rule();
+            TreeRuleReturnScope r = (TreeRuleReturnScope)whichRule.Rule();
             BacktrackingLevel = 0;
             if (Failed) return t;
             if (showTransformations &&
@@ -82,19 +82,19 @@ public class TreeRewriter : TreeParser
         return t;
     }
 
-    public Object applyRepeatedly(Object t, fptr whichRule)
+    public object ApplyRepeatedly(object t, FPtr whichRule)
     {
         bool treeChanged = true;
         while (treeChanged)
         {
-            Object u = applyOnce(t, whichRule);
+            var u = ApplyOnce(t, whichRule);
             treeChanged = !t.Equals(u);
             t = u;
         }
         return t;
     }
 
-    public Object downup(Object t) { return downup(t, false); }
+    public object Downup(object t) { return Downup(t, false); }
 
     public class TVA : TreeVisitorAction
     {
@@ -104,28 +104,26 @@ public class TreeRewriter : TreeParser
             this.treeRewriter = treeRewriter;
         }
 
-        //@Override
-        public Object Pre(Object t) { return treeRewriter.applyOnce(t, treeRewriter.topdown_fptr); }
-        //@Override
-        public Object Post(Object t) { return treeRewriter.applyRepeatedly(t, treeRewriter.bottomup_ftpr); }
+        public object Pre(object t) => treeRewriter.ApplyOnce(t, treeRewriter.topdown_fptr);
+        public object Post(object t) => treeRewriter.ApplyRepeatedly(t, treeRewriter.bottomup_ftpr);
     }
-    public class CFPTR1 : fptr
+    public class CFPTR1 : FPtr
     {
-        public Object rule() { return topdown(); }
-        public Object topdown() { return null; }
+        public object Rule() => Topdown();
+        public object Topdown() => null;
 
     }
-    public class CFPTR2 : fptr
+    public class CFPTR2 : FPtr
     {
-        public Object rule() { return bottomup(); }
-        public Object bottomup() { return null; }
+        public object Rule() => Bottomup();
+        public object Bottomup() => null;
 
     }
-    public Object downup(Object t, bool showTransformations)
+    public object Downup(object t, bool showTransformations)
     {
         this.showTransformations = showTransformations;
-        TreeVisitor v = new TreeVisitor(new CommonTreeAdaptor());
-        TreeVisitorAction actions = new TVA(this);
+        var v = new TreeVisitor(new CommonTreeAdaptor());
+        var actions = new TVA(this);
         t = v.visit(t, actions);
         return t;
     }
@@ -133,15 +131,15 @@ public class TreeRewriter : TreeParser
     /** Override this if you need transformation tracing to go somewhere
      *  other than stdout or if you're not using Tree-derived trees.
      */
-    public void reportTransformation(Object oldTree, Object newTree)
+    public void reportTransformation(object oldTree, object newTree)
     {
         Console.WriteLine(((Tree)oldTree).ToStringTree() + " -> " +
                            ((Tree)newTree).ToStringTree());
     }
 
-    fptr topdown_fptr = new CFPTR1();
+    FPtr topdown_fptr = new CFPTR1();
 
-    fptr bottomup_ftpr = new CFPTR2();
+    FPtr bottomup_ftpr = new CFPTR2();
 
     // methods the downup strategy uses to do the up and down rules.
     // to override, just define tree grammar rule topdown and turn on

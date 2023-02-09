@@ -113,8 +113,7 @@ public class ParserInterpreter : Parser
                                               sharedContextCache));
     }
 
-    //@Override
-    public void reset()
+    public override void Reset()
     {
         base.Reset();
         overrideDecisionReached = false;
@@ -190,7 +189,6 @@ public class ParserInterpreter : Parser
         }
     }
 
-    //@Override
     public override void EnterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
     {
         Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);

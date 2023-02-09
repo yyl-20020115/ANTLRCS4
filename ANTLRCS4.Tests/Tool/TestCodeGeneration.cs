@@ -66,7 +66,6 @@ public class TestCodeGeneration
             ErrMgrCopy = errMgr;
         }
 
-        //@Override
         protected override int WriteObject(ITemplateWriter @out, TemplateFrame scope, object o, string[] options)
         {
             if (o is Template template)
@@ -93,7 +92,6 @@ public class TestCodeGeneration
             return base.WriteObject(@out, scope, o, options);
         }
 #if false
-		//@Override
 		protected int writePOJO(ITemplateWriter @out, TemplateFrame scope, object o, string[] options){
 			Type type = o.GetType();
 			var name = type.Name;

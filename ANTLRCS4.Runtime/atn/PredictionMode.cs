@@ -97,7 +97,6 @@ public static class PredictionModeTools
 		 * The hash code is only a function of the {@link ATNState#stateNumber}
 		 * and {@link ATNConfig#context}.
 		 */
-        //@Override
         public override int GetHashCode(ATNConfig o)
         {
             int hashCode = MurmurHash.Initialize(7);
@@ -107,7 +106,6 @@ public static class PredictionModeTools
             return hashCode;
         }
 
-        //@Override
         public override bool Equals(ATNConfig a, ATNConfig b)
         {
             if (a == b) return true;

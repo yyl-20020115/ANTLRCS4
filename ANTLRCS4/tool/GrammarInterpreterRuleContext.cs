@@ -29,8 +29,6 @@ public class GrammarInterpreterRuleContext : InterpreterRuleContext
 	 */
     public int OuterAltNum { get => outerAltNum; set => this.outerAltNum = value; }
 
-    //@Override
-    //@Override
     public override int AltNumber { get =>
         // override here and called old functionality; makes it backward compatible vs changing names
         OuterAltNum; set => OuterAltNum = value; }

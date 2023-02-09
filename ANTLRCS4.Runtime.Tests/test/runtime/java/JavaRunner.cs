@@ -36,16 +36,13 @@ public class JavaRunner : RuntimeRunner
     {
     }
 
-    //@Override
     protected override void InitRuntime()
     {
         //compiler = ToolProvider.getSystemJavaCompiler();
     }
 
-    //@Override
     public override string GetCompilerName() => "javac";
 #if false
-	//@Override
 	protected JavaCompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
 		string tempTestDir = getTempDirPath();
 
@@ -103,7 +100,6 @@ public class JavaRunner : RuntimeRunner
 		return new JavaCompiledState(generatedState, loader, lexer, parser, exception);
 	}
 #endif
-    //@Override
     public override ExecutedState Execute(RunOptions runOptions, CompiledState compiledState)
     {
         var javaCompiledState = (JavaCompiledState)compiledState;

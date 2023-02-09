@@ -53,16 +53,16 @@ public class TreeWizard
     public interface ContextVisitor
     {
         // TODO: should this be called visit or something else?
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels);
+        public void Visit(object t, object parent, int childIndex, Dictionary<string, object> labels);
     }
 
     public abstract class Visitor : ContextVisitor
     {
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels)
+        public void Visit(object t, object parent, int childIndex, Dictionary<string, object> labels)
         {
             Visit(t);
         }
-        public abstract void Visit(Object t);
+        public abstract void Visit(object t);
     }
 
     /** When using %label:TOKENNAME in a tree for parse(), we must
@@ -92,10 +92,7 @@ public class TreeWizard
     /** This adaptor creates TreePattern objects for use during scan() */
     public class TreePatternTreeAdaptor : CommonTreeAdaptor
     {
-        public override object Create(Token payload)
-        {
-            return new TreePattern(payload);
-        }
+        public override object Create(Token payload) => new TreePattern(payload);
     }
 
     // TODO: build indexes for the wizard
@@ -133,7 +130,7 @@ public class TreeWizard
     public TreeWizard(TreeAdaptor adaptor, string[] tokenNames)
     {
         this.adaptor = adaptor;
-        this.tokenNameToTypeMap = computeTokenTypes(tokenNames);
+        this.tokenNameToTypeMap = ComputeTokenTypes(tokenNames);
     }
 
     public TreeWizard(string[] tokenNames)
@@ -144,7 +141,7 @@ public class TreeWizard
     /** Compute a Map&lt;string, Integer&gt; that is an inverted index of
      *  tokenNames (which maps int token types to names).
      */
-    public Dictionary<string, int> computeTokenTypes(string[] tokenNames)
+    public Dictionary<string, int> ComputeTokenTypes(string[] tokenNames)
     {
         Dictionary<string, int> m = new();
         if (tokenNames == null)
@@ -160,13 +157,11 @@ public class TreeWizard
     }
 
     /** Using the map of token names to token types, return the type. */
-    public int getTokenType(string tokenName)
+    public int GetTokenType(string tokenName)
     {
-        if (tokenNameToTypeMap == null)
-        {
-            return Token.INVALID_TOKEN_TYPE;
-        }
-        return tokenNameToTypeMap.TryGetValue(tokenName, out var i) ? i : Token.INVALID_TYPE;
+        return tokenNameToTypeMap == null
+            ? Token.INVALID_TOKEN_TYPE
+            : tokenNameToTypeMap.TryGetValue(tokenName, out var i) ? i : Token.INVALID_TYPE;
     }
 
     /** Walk the entire tree and make a node name to nodes mapping.
@@ -176,15 +171,15 @@ public class TreeWizard
      *
      *  TODO: save this index so that find and visit are faster
      */
-    public Dictionary<int, List<Object>> index(Object t)
+    public Dictionary<int, List<object>> Index(object t)
     {
-        Dictionary<int, List<Object>> m = new();
-        _index(t, m);
+        Dictionary<int, List<object>> m = new();
+        Index(t, m);
         return m;
     }
 
     /** Do the work for index */
-    protected void _index(Object t, Dictionary<int, List<Object>> m)
+    protected void Index(object t, Dictionary<int, List<object>> m)
     {
         if (t == null)
         {
@@ -200,8 +195,8 @@ public class TreeWizard
         int n = adaptor.GetChildCount(t);
         for (int i = 0; i < n; i++)
         {
-            Object child = adaptor.GetChild(t, i);
-            _index(child, m);
+            var child = adaptor.GetChild(t, i);
+            Index(child, m);
         }
     }
 
@@ -212,13 +207,13 @@ public class TreeWizard
         {
             this.nodes = nodes;
         }
-        public override void Visit(Object t)
+        public override void Visit(object t)
         {
             nodes.Add(t);
         }
     }
     /** Return a List of tree nodes with token type ttype */
-    public List<object> find(Object t, int ttype)
+    public List<object> Find(object t, int ttype)
     {
         List<object> nodes = new();
         Visit(t, ttype, new TVA(nodes));
@@ -228,7 +223,7 @@ public class TreeWizard
     {
         readonly TreeWizard wizard;
         readonly TreePattern tpattern;
-        readonly List<Object> subtrees;
+        readonly List<object> subtrees;
         public TVB(TreePattern tpattern, List<object> subtrees, TreeWizard wizard)
         {
             this.tpattern = tpattern;
@@ -236,7 +231,7 @@ public class TreeWizard
             this.wizard = wizard;
         }
 
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels)
+        public void Visit(object t, object parent, int childIndex, Dictionary<string, object> labels)
         {
             if (wizard.Parse(t, tpattern, null))
             {
@@ -246,14 +241,14 @@ public class TreeWizard
     }
 
     /** Return a List of subtrees matching pattern. */
-    public List<Object> find(Object t, string pattern)
+    public List<object> Find(object t, string pattern)
     {
-        List<Object> subtrees = new();
+        List<object> subtrees = new();
         // Create a TreePattern from the pattern
-        TreePatternLexer tokenizer = new TreePatternLexer(pattern);
-        TreePatternParser parser =
+        var tokenizer = new TreePatternLexer(pattern);
+        var parser =
             new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
-        TreePattern tpattern = (TreePattern)parser.pattern();
+        var tpattern = (TreePattern)parser.Pattern();
         // don't allow invalid patterns
         if (tpattern == null ||
              tpattern.             IsNil ||
@@ -266,12 +261,12 @@ public class TreeWizard
         return subtrees;
     }
 
-    public Object FindFirst(Object t, int ttype)
+    public object FindFirst(object t, int ttype)
     {
         return null;
     }
 
-    public Object FindFirst(object t, string pattern)
+    public object FindFirst(object t, string pattern)
     {
         return null;
     }
@@ -318,7 +313,7 @@ public class TreeWizard
             this.wizard1 = wizard1;
         }
 
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> unusedlabels)
+        public void Visit(object t, object parent, int childIndex, Dictionary<string, object> unusedlabels)
         {
             // the unusedlabels arg is null as visit on token type doesn't set.
             labels.Clear();
@@ -333,13 +328,13 @@ public class TreeWizard
      *  with visit(t, ttype, visitor) so nil-rooted patterns are not allowed.
      *  Patterns with wildcard roots are also not allowed.
      */
-    public void Visit(Object t, string pattern, ContextVisitor visitor)
+    public void Visit(object t, string pattern, ContextVisitor visitor)
     {
         // Create a TreePattern from the pattern
-        TreePatternLexer tokenizer = new TreePatternLexer(pattern);
-        TreePatternParser parser =
+        var tokenizer = new TreePatternLexer(pattern);
+        var parser =
             new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
-        TreePattern tpattern = (TreePattern)parser.pattern();
+        var tpattern = (TreePattern)parser.Pattern();
         // don't allow invalid patterns
         if (tpattern == null ||
              tpattern.             IsNil ||
@@ -363,12 +358,12 @@ public class TreeWizard
      *
      *  TODO: what's a better way to indicate bad pattern? Exceptions are a hassle 
      */
-    public bool Parse(Object t, string pattern, Dictionary<string, Object> labels)
+    public bool Parse(object t, string pattern, Dictionary<string, object> labels)
     {
         var tokenizer = new TreePatternLexer(pattern);
         var parser =
             new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
-        var tpattern = (TreePattern)parser.pattern();
+        var tpattern = (TreePattern)parser.Pattern();
         /*
         System.out.println("t="+((Tree)t).toStringTree());
         System.out.println("scant="+tpattern.toStringTree());
@@ -442,7 +437,7 @@ public class TreeWizard
     {
         var tokenizer = new TreePatternLexer(pattern);
         var parser = new TreePatternParser(tokenizer, this, adaptor);
-        var t = parser.pattern();
+        var t = parser.Pattern();
         return t;
     }
 
@@ -455,7 +450,7 @@ public class TreeWizard
      *  I cannot rely on the tree node's equals() implementation as I make
      *  no constraints at all on the node types nor interface etc... 
      */
-    public static bool EqualsWith(Object t1, Object t2, TreeAdaptor adaptor)
+    public static bool EqualsWith(object t1, object t2, TreeAdaptor adaptor)
     {
         return Equals(t1, t2, adaptor);
     }
@@ -463,12 +458,12 @@ public class TreeWizard
     /** Compare type, structure, and text of two trees, assuming adaptor in
      *  this instance of a TreeWizard.
      */
-    public bool Equals(Object? t1, Object? t2)
+    public new bool Equals(object? t1, object? t2)
     {
         return Equals(t1, t2, adaptor);
     }
 
-    protected static bool Equals(Object? t1, Object? t2, TreeAdaptor adaptor)
+    protected static bool Equals(object? t1, object? t2, TreeAdaptor adaptor)
     {
         // make sure both are non-null
         if (t1 == null || t2 == null)

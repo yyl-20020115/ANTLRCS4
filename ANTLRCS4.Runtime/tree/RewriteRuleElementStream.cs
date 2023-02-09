@@ -109,7 +109,7 @@ public abstract class RewriteRuleElementStream
         dirty = true;
     }
 
-    public void Add(Object el)
+    public void Add(object el)
     {
         //Console.Out.WriteLine("add '"+elementDescription+"' is "+el);
         if (el == null)
@@ -181,7 +181,7 @@ public abstract class RewriteRuleElementStream
             return ToTree(singleElement);
         }
         // must have more than one in list, pull from elements
-        Object o = ToTree(elements[(cursor)]);
+        object o = ToTree(elements[(cursor)]);
         cursor++;
         return o;
     }
@@ -191,12 +191,12 @@ public abstract class RewriteRuleElementStream
 	 *  around it.  For trees, you must call the adaptor.dupTree() unless
 	 *  the element is for a tree root; then it must be a node dup.
 	 */
-    protected abstract object Dup(Object el);
+    protected abstract object Dup(object el);
 
     /** Ensure stream emits trees; tokens must be converted to AST nodes.
 	 *  AST nodes can be passed through unmolested.
 	 */
-    protected object ToTree(object el)
+    protected virtual object ToTree(object el)
     {
         return el;
     }

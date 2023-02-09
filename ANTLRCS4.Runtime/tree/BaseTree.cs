@@ -343,12 +343,10 @@ public abstract class BaseTree : Tree
     }
 
     /** Walk upwards looking for ancestor with this token type. */
-    //@Override
-    public bool HasAncestor(int ttype) => GetAncestor(ttype) != null;
+    public virtual bool HasAncestor(int ttype) => GetAncestor(ttype) != null;
 
     /** Walk upwards and get first ancestor with this token type. */
-    //@Override
-    public Tree GetAncestor(int ttype)
+    public virtual Tree GetAncestor(int ttype)
     {
         Tree t = this;
         t = t.Parent;
@@ -407,10 +405,8 @@ public abstract class BaseTree : Tree
         return buffer.ToString();
     }
 
-    //@Override
     public virtual int Line => 0;
 
-    //@Override
     public virtual int CharPositionInLine => 0;
 
     public virtual object Payload => throw new NotImplementedException();
