@@ -5,7 +5,6 @@
  */
 
 using Antlr4.StringTemplate;
-using ANTLRCS4.Runtime;
 using org.antlr.runtime.tree;
 using org.antlr.v4.codegen;
 using org.antlr.v4.misc;
@@ -60,13 +59,13 @@ public class LexerATNFactory : ParserATNFactory
     {
 
         // use codegen to get correct language templates for lexer commands
-        codegenTemplates = (codeGenerator == null ? CodeGenerator.Create(g) : codeGenerator).Templates;
+        codegenTemplates = (codeGenerator ?? CodeGenerator.Create(g)).Templates;
     }
 
     public static HashSet<String> GetCommonConstants() => COMMON_CONSTANTS.Keys.ToHashSet();
 
     ////@Override
-    public ATN CreateATN()
+    public override ATN CreateATN()
     {
         // BUILD ALL START STATES (ONE PER MODE)
         var modes = ((LexerGrammar)g).modes.Keys.ToHashSet();
@@ -74,7 +73,7 @@ public class LexerATNFactory : ParserATNFactory
         {
             // create s0, start state; implied Tokens rule node
             var startState =
-                newState<TokensStartState>(typeof(TokensStartState), null);
+                NewState<TokensStartState>(typeof(TokensStartState), null);
             atn.modeNameToStartState[modeName] = startState;
             atn.modeToStartState.Add(startState);
             atn.DefineDecisionState(startState);
@@ -116,15 +115,13 @@ public class LexerATNFactory : ParserATNFactory
         return atn;
     }
 
-    //@Override
-    public Handle Rule(GrammarAST ruleAST, String name, Handle blk)
+    public override Handle Rule(GrammarAST ruleAST, String name, Handle blk)
     {
         ruleCommands.Clear();
         return base.Rule(ruleAST, name, blk);
     }
 
-    //@Override
-    public Handle Action(ActionAST _action)
+    public override Handle Action(ActionAST _action)
     {
         int ruleIndex = currentRule.index;
         int actionIndex = g.lexerActions[(_action)];
@@ -132,7 +129,7 @@ public class LexerATNFactory : ParserATNFactory
         return Action(_action, lexerAction);
     }
 
-    protected int getLexerActionIndex(LexerAction lexerAction)
+    protected int GetLexerActionIndex(LexerAction lexerAction)
     {
         if (!actionToIndexMap.TryGetValue(lexerAction,out var lexerActionIndex))
         {
@@ -145,7 +142,7 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     ////@Override
-    public Handle Action(String _action)
+    public override Handle Action(String _action)
     {
         if (_action.Trim().Length == 0)
         {
@@ -166,7 +163,7 @@ public class LexerATNFactory : ParserATNFactory
         var left = NewState(node);
         var right = NewState(node);
         bool isCtxDependent = false;
-        int lexerActionIndex = getLexerActionIndex(lexerAction);
+        int lexerActionIndex = GetLexerActionIndex(lexerAction);
         var a =
             new ActionTransition(right, currentRule.index, lexerActionIndex, isCtxDependent);
         left.AddTransition(a);
@@ -175,7 +172,7 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     ////@Override
-    public Handle LexerAltCommands(Handle alt, Handle cmds)
+    public override Handle LexerAltCommands(Handle alt, Handle cmds)
     {
         var h = new Handle(alt.left, cmds.right);
         Epsilon(alt.right, cmds.left);
@@ -183,13 +180,13 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     ////@Override
-    public Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
+    public override Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
     {
         return LexerCallCommandOrCommand(ID, arg);
     }
 
     ////@Override
-    public Handle LexerCommand(GrammarAST ID)
+    public override Handle LexerCommand(GrammarAST ID)
     {
         return LexerCallCommandOrCommand(ID, null);
     }
@@ -232,7 +229,7 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     //@Override
-    public Handle Range(GrammarAST a, GrammarAST b)
+    public override Handle Range(GrammarAST a, GrammarAST b)
     {
         var left = NewState(a);
         var right = NewState(b);
@@ -248,7 +245,7 @@ public class LexerATNFactory : ParserATNFactory
     }
 
     //@Override
-    public Handle Set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert)
+    public override Handle Set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert)
     {
         var left = NewState(associatedAST);
         var right = NewState(associatedAST);
@@ -344,7 +341,7 @@ public class LexerATNFactory : ParserATNFactory
 	 *  o-('f'|'F') -> o-('o'|'O') -> o-('g'|'G')
 	 */
     //@Override
-    public Handle StringLiteral(TerminalAST stringLiteralAST)
+    public override Handle StringLiteral(TerminalAST stringLiteralAST)
     {
         var chars = stringLiteralAST.getText();
         var left = NewState(stringLiteralAST);
@@ -373,7 +370,7 @@ public class LexerATNFactory : ParserATNFactory
 
     /** [Aa\t \u1234a-z\]\p{Letter}\-] char sets */
     //@Override
-    public Handle CharSetLiteral(GrammarAST charSetAST)
+    public override Handle CharSetLiteral(GrammarAST charSetAST)
     {
         var left = NewState(charSetAST);
         var right = NewState(charSetAST);
@@ -415,10 +412,10 @@ public class LexerATNFactory : ParserATNFactory
         }
 
         //@Override
-        public override String ToString() => $"{base.ToString()} mode={mode} inRange={inRange} prevCodePoint={prevCodePoint} prevProperty={prevProperty}";
+        public override string ToString() => $"{base.ToString()} mode={mode} inRange={inRange} prevCodePoint={prevCodePoint} prevProperty={prevProperty}";
 
         //@Override
-        public override bool Equals(Object other)
+        public override bool Equals(object? other)
         {
             if (other is not CharSetParseState that)
             {
@@ -682,8 +679,7 @@ public class LexerATNFactory : ParserATNFactory
         }
     }
 
-    ////@Override
-    public Handle TokenRef(TerminalAST node)
+    public override Handle TokenRef(TerminalAST node)
     {
         // Ref to EOF in lexer yields char transition on -1
         if (node.getText().Equals("EOF"))

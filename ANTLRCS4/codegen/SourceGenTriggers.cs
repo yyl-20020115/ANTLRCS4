@@ -135,9 +135,9 @@ public class SourceGenTriggers : TreeParser
     }
 
     //@Override 
-    public override string[] GetTokenNames() => tokenNames;
+    public override string[] TokenNames => tokenNames;
     //@Override 
-    public override string GetGrammarFileName() => "org\\antlr\\v4\\codegen\\SourceGenTriggers.g";
+    public override string GrammarFileName => "org\\antlr\\v4\\codegen\\SourceGenTriggers.g";
 
 
     public OutputModelController controller;

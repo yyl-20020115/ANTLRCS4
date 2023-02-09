@@ -59,8 +59,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     {
     }
     //@Override 
-    public override string GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ActionSplitter.g"; }
-
+    public override string GrammarFileName => "org\\antlr\\v4\\parse\\ActionSplitter.g";
     //@Override
     public virtual Token nextToken()
     {

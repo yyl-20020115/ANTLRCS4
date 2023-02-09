@@ -197,7 +197,7 @@ public abstract class BaseRecognizer
         state.syntaxErrors++; // don't count spurious
         state.errorRecovery = true;
 
-        DisplayRecognitionError(this.GetTokenNames(), e);
+        DisplayRecognitionError(this.TokenNames, e);
     }
 
     public virtual void DisplayRecognitionError(string[] tokenNames,
@@ -768,12 +768,12 @@ public abstract class BaseRecognizer
      *  error reporting.  The generated parsers implement a method
      *  that overrides this to point to their String[] tokenNames.
      */
-    public virtual string[] GetTokenNames() => null;
+    public virtual string[] TokenNames => null;
 
     /** For debugging and other purposes, might want the grammar name.
      *  Have ANTLR generate an implementation for this method.
      */
-    public virtual string GetGrammarFileName() => null;
+    public virtual string GrammarFileName => null;
 
     public abstract string SourceName { get; }
 
@@ -853,7 +853,7 @@ public abstract class BaseRecognizer
         int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.Index - 1;
         if (state.ruleMemo == null)
         {
-            Console.Error.WriteLine("!!!!!!!!! memo array is null for " + GetGrammarFileName());
+            Console.Error.WriteLine("!!!!!!!!! memo array is null for " + GrammarFileName);
         }
         if (ruleIndex >= state.ruleMemo.Length)
         {

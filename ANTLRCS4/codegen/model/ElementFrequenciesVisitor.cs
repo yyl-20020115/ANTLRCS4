@@ -43,7 +43,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 
     /** During code gen, we can assume tree is in good shape */
     //@Override
-    public override ErrorManager GetErrorManager() => base.GetErrorManager();
+    public override ErrorManager ErrorManager => base.ErrorManager;
 
     /*
 	 * Common
@@ -144,21 +144,21 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     }
 
     //@Override
-    public void tokenRef(TerminalAST @ref)
+    public void TokenRef(TerminalAST @ref)
     {
         frequencies.Peek().Add(@ref.getText());
         minFrequencies.Peek().Add(@ref.getText());
     }
 
     //@Override
-    public void ruleRef(GrammarAST @ref, ActionAST arg)
+    public void RuleRef(GrammarAST @ref, ActionAST arg)
     {
         frequencies.Peek().Add(@ref.getText());
         minFrequencies.Peek().Add(@ref.getText());
     }
 
     //@Override
-    public void stringRef(TerminalAST @ref)
+    public void StringRef(TerminalAST @ref)
     {
         var tokenName = @ref.g.getTokenName(@ref.getText());
 
@@ -174,7 +174,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 */
 
     //@Override
-    protected void enterAlternative(AltAST tree)
+    protected void EnterAlternative(AltAST tree)
     {
         frequencies.Push(new FrequencySet<string>());
         minFrequencies.Push(new FrequencySet<string>());
@@ -188,28 +188,28 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     }
 
     //@Override
-    protected void enterElement(GrammarAST tree)
+    protected void EnterElement(GrammarAST tree)
     {
         frequencies.Push(new FrequencySet<String>());
         minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
-    protected void exitElement(GrammarAST tree)
+    protected void ExitElement(GrammarAST tree)
     {
         frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
         minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
     //@Override
-    protected void enterBlockSet(GrammarAST tree)
+    protected void EnterBlockSet(GrammarAST tree)
     {
         frequencies.Push(new FrequencySet<String>());
         minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
-    protected void exitBlockSet(GrammarAST tree)
+    protected void ExitBlockSet(GrammarAST tree)
     {
         foreach (var entry in frequencies.Peek())
         {
@@ -231,7 +231,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     }
 
     //@Override
-    protected void exitSubrule(GrammarAST tree)
+    protected void ExitSubrule(GrammarAST tree)
     {
         if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
         {
@@ -254,35 +254,35 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 */
 
     //@Override
-    protected void enterLexerAlternative(GrammarAST tree)
+    protected void EnterLexerAlternative(GrammarAST tree)
     {
         frequencies.Push(new FrequencySet<String>());
         minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
-    protected void exitLexerAlternative(GrammarAST tree)
+    protected void ExitLexerAlternative(GrammarAST tree)
     {
         frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
         minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));
     }
 
     //@Override
-    protected void enterLexerElement(GrammarAST tree)
+    protected void EnterLexerElement(GrammarAST tree)
     {
         frequencies.Push(new FrequencySet<String>());
         minFrequencies.Push(new FrequencySet<String>());
     }
 
     //@Override
-    protected void exitLexerElement(GrammarAST tree)
+    protected void ExitLexerElement(GrammarAST tree)
     {
         frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
         minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
     //@Override
-    protected void exitLexerSubrule(GrammarAST tree)
+    protected void ExitLexerSubrule(GrammarAST tree)
     {
         if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
         {

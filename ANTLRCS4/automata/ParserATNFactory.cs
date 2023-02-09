@@ -53,20 +53,20 @@ public class ParserATNFactory : ATNFactory
     }
 
 
-    ////@Override
-    public ATN CreateATN()
+    public virtual ATN CreateATN()
     {
         CreateATN(g.rules.Values);
         //assert atn.maxTokenType == g.getMaxTokenType();
         AddRuleFollowLinks();
-        addEOFTransitionToStartRules();
+        AddEOFTransitionToStartRules();
         ATNOptimizer.Optimize(g, atn);
         CheckEpsilonClosure();
 
-    optionalCheck:
+    //optionalCheck:
         foreach (var pair in preventEpsilonOptionalBlocks)
         {
             int bypassCount = 0;
+            var usebp = true;
             for (int i = 0; i < pair.b.NumberOfTransitions; i++)
             {
                 var startState = pair.b.Transition(i).target;
@@ -80,12 +80,13 @@ public class ParserATNFactory : ATNFactory
                 if (analyzer.LOOK(startState, pair.c, null).Contains(org.antlr.v4.runtime.Token.EPSILON))
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.EPSILON_OPTIONAL, g.fileName, ((GrammarAST)pair.a.ast.GetChild(0)).Token, pair.a.name);
+                    usebp = false;
                     break;
                     //continue optionalCheck;
                 }
             }
 
-            if (bypassCount != 1)
+            if (usebp && bypassCount != 1)
                 throw new UnsupportedOperationException("Expected optional block with exactly 1 bypass alternative.");
         }
 
@@ -102,7 +103,7 @@ public class ParserATNFactory : ATNFactory
             var lookahead = analyzer.LOOK(blkStart, blkStop, null);
             if (lookahead.Contains(org.antlr.v4.runtime.Token.EPSILON))
             {
-                ErrorType errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
+                var errorType = pair.a is LeftRecursiveRule ? ErrorType.EPSILON_LR_FOLLOW : ErrorType.EPSILON_CLOSURE;
                 g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ((GrammarAST)pair.a.ast.GetChild(0)).Token, pair.a.name);
             }
             if (lookahead.Contains(org.antlr.v4.runtime.Token.EOF))
@@ -137,13 +138,13 @@ public class ParserATNFactory : ATNFactory
     }
 
     //@Override
-    public void SetCurrentRuleName(string name)
+    public virtual void SetCurrentRuleName(string name)
     {
         this.currentRule = g.getRule(name);
     }
 
     //@Override
-    public void SetCurrentOuterAlt(int alt)
+    public virtual void SetCurrentOuterAlt(int alt)
     {
         currentOuterAlt = alt;
     }
@@ -151,7 +152,7 @@ public class ParserATNFactory : ATNFactory
     /* start->ruleblock->end */
 
     //@Override
-    public Handle Rule(GrammarAST ruleAST, String name, Handle blk)
+    public virtual Handle Rule(GrammarAST ruleAST, String name, Handle blk)
     {
         var r = g.getRule(name);
         var start = atn.ruleToStartState[r.index];
@@ -168,7 +169,7 @@ public class ParserATNFactory : ATNFactory
     /** From label {@code A} build graph {@code o-A->o}. */
 
     //@Override
-    public Handle TokenRef(TerminalAST node)
+    public virtual Handle TokenRef(TerminalAST node)
     {
         var left = NewState(node);
         var right = NewState(node);
@@ -184,7 +185,7 @@ public class ParserATNFactory : ATNFactory
      */
 
     //@Override
-    public Handle Set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert)
+    public virtual Handle Set(GrammarAST associatedAST, List<GrammarAST> terminals, bool invert)
     {
         var left = NewState(associatedAST);
         var right = NewState(associatedAST);
@@ -209,7 +210,7 @@ public class ParserATNFactory : ATNFactory
     /** Not valid for non-lexers. */
 
     //@Override
-    public Handle Range(GrammarAST a, GrammarAST b)
+    public virtual Handle Range(GrammarAST a, GrammarAST b)
     {
         g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_RANGE_IN_PARSER, g.fileName,
                                    a.                                   Token,
@@ -225,13 +226,13 @@ public class ParserATNFactory : ATNFactory
     /** For a non-lexer, just build a simple token reference atom. */
 
     //@Override
-    public Handle StringLiteral(TerminalAST stringLiteralAST)
+    public virtual Handle StringLiteral(TerminalAST stringLiteralAST)
         => TokenRef(stringLiteralAST);
 
     /** {@code [Aa]} char sets not allowed in parser */
 
     //@Override
-    public Handle CharSetLiteral(GrammarAST charSetAST) => null;
+    public virtual Handle CharSetLiteral(GrammarAST charSetAST) => null;
 
     /**
 	 * For reference to rule {@code r}, build
@@ -246,7 +247,7 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle RuleRef(GrammarAST node) => GetRuleRef(node);
+    public virtual Handle RuleRef(GrammarAST node) => GetRuleRef(node);
 
 
     public Handle GetRuleRef(GrammarAST node)
@@ -291,7 +292,7 @@ public class ParserATNFactory : ATNFactory
     /** From an empty alternative build {@code o-e->o}. */
 
     //@Override
-    public Handle Epsilon(GrammarAST node)
+    public virtual Handle Epsilon(GrammarAST node)
     {
         var left = NewState(node);
         var right = NewState(node);
@@ -306,7 +307,7 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Sempred(PredAST pred)
+    public virtual Handle Sempred(PredAST pred)
     {
         //Console.Out.WriteLine("sempred: "+ pred);
         var left = NewState(pred);
@@ -350,7 +351,7 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Action(ActionAST action)
+    public virtual Handle Action(ActionAST action)
     {
         //Console.Out.WriteLine("action: "+action);
         var left = NewState(action);
@@ -363,7 +364,7 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public Handle Action(String action)
+    public virtual Handle Action(String action)
         => throw new UnsupportedOperationException("This element is not valid in parsers.");
 
     /**
@@ -392,7 +393,7 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts)
+    public virtual Handle Block(BlockAST blkAST, GrammarAST ebnfRoot, List<Handle> alts)
     {
         if (ebnfRoot == null)
         {
@@ -402,24 +403,24 @@ public class ParserATNFactory : ATNFactory
                 blkAST.atnState = h.left;
                 return h;
             }
-            var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
+            var start = NewState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
             if (alts.Count > 1) atn.DefineDecisionState(start);
             return MakeBlock(start, blkAST, alts);
         }
         switch (ebnfRoot.getType())
         {
             case ANTLRParser.OPTIONAL:
-                var start = newState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
+                var start = NewState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
                 atn.DefineDecisionState(start);
                 Handle h = MakeBlock(start, blkAST, alts);
                 return Optional(ebnfRoot, h);
             case ANTLRParser.CLOSURE:
-                var _star = newState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
+                var _star = NewState<BasicBlockStartState>(typeof(StarBlockStartState), ebnfRoot);
                 if (alts.Count > 1) atn.DefineDecisionState(_star);
                 h = MakeBlock(_star, blkAST, alts);
                 return Star(ebnfRoot, h);
             case ANTLRParser.POSITIVE_CLOSURE:
-                var _plus = newState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
+                var _plus = NewState<PlusBlockStartState>(typeof(PlusBlockStartState), ebnfRoot);
                 if (alts.Count > 1) atn.DefineDecisionState(_plus);
                 h = MakeBlock(_plus, blkAST, alts);
                 return Plus(ebnfRoot, h);
@@ -430,7 +431,7 @@ public class ParserATNFactory : ATNFactory
 
     protected Handle MakeBlock(BlockStartState start, BlockAST blkAST, List<Handle> alts)
     {
-        var end = newState<BlockEndState>(typeof(BlockEndState), blkAST);
+        var end = NewState<BlockEndState>(typeof(BlockEndState), blkAST);
         start.endState = end;
         foreach (Handle alt in alts)
         {
@@ -452,7 +453,7 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public Handle Alt(List<Handle> els) => ElemList(els);
+    public virtual Handle Alt(List<Handle> els) => ElemList(els);
 
 
     public Handle ElemList(List<Handle> els)
@@ -524,7 +525,7 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Optional(GrammarAST optAST, Handle blk)
+    public virtual Handle Optional(GrammarAST optAST, Handle blk)
     {
         var blkStart = (BlockStartState)blk.left;
         var blkEnd = blk.right;
@@ -552,16 +553,16 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Plus(GrammarAST plusAST, Handle blk)
+    public virtual Handle Plus(GrammarAST plusAST, Handle blk)
     {
         var blkStart = (PlusBlockStartState)blk.left;
         var blkEnd = (BlockEndState)blk.right;
         preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-        var loop = newState<PlusLoopbackState>(plusAST);
+        var loop = NewState<PlusLoopbackState>(plusAST);
         loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
         atn.DefineDecisionState(loop);
-        var end = newState<LoopEndState>(plusAST);
+        var end = NewState<LoopEndState>(plusAST);
         blkStart.loopBackState = loop;
         end.loopBackState = loop;
 
@@ -571,7 +572,7 @@ public class ParserATNFactory : ATNFactory
         var blkAST = (BlockAST)plusAST.GetChild(0);
         if (((QuantifierAST)plusAST).isGreedy())
         {
-            if (expectNonGreedy(blkAST))
+            if (ExpectNonGreedy(blkAST))
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, plusAST.Token, plusAST.Token.Text);
             }
@@ -606,24 +607,24 @@ public class ParserATNFactory : ATNFactory
 	 */
 
     //@Override
-    public Handle Star(GrammarAST starAST, Handle elem)
+    public virtual Handle Star(GrammarAST starAST, Handle elem)
     {
         var blkStart = (StarBlockStartState)elem.left;
         var blkEnd = (BlockEndState)elem.right;
         preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
-        var entry = newState<StarLoopEntryState>(starAST);
+        var entry = NewState<StarLoopEntryState>(starAST);
         entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
         atn.DefineDecisionState(entry);
-        LoopEndState end = newState<LoopEndState>(starAST);
-        StarLoopbackState loop = newState<StarLoopbackState>(starAST);
+        LoopEndState end = NewState<LoopEndState>(starAST);
+        StarLoopbackState loop = NewState<StarLoopbackState>(starAST);
         entry.loopBackState = loop;
         end.loopBackState = loop;
 
         var blkAST = (BlockAST)starAST.GetChild(0);
         if (((QuantifierAST)starAST).isGreedy())
         {
-            if (expectNonGreedy(blkAST))
+            if (ExpectNonGreedy(blkAST))
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.EXPECTED_NON_GREEDY_WILDCARD_BLOCK, g.fileName, starAST.Token, starAST.Token.Text);
             }
@@ -647,7 +648,7 @@ public class ParserATNFactory : ATNFactory
     /** Build an atom with all possible values in its label. */
 
     //@Override
-    public Handle Wildcard(GrammarAST node)
+    public virtual Handle Wildcard(GrammarAST node)
     {
         var left = NewState(node);
         var right = NewState(node);
@@ -676,8 +677,8 @@ public class ParserATNFactory : ATNFactory
         atn.ruleToStopState = new RuleStopState[g.rules.Count];
         foreach (var r in g.rules.Values)
         {
-            var start = newState<RuleStartState>(r.ast);
-            var stop = newState<RuleStopState>(r.ast);
+            var start = NewState<RuleStartState>(r.ast);
+            var stop = NewState<RuleStopState>(r.ast);
             start.stopState = stop;
             start.isLeftRecursiveRule = r is LeftRecursiveRule;
             start.SetRuleIndex(r.index);
@@ -709,7 +710,7 @@ public class ParserATNFactory : ATNFactory
 	 *  not invoked by another rule (they can only be invoked from outside).
 	 *  These are the start rules.
      */
-    public int addEOFTransitionToStartRules()
+    public int AddEOFTransitionToStartRules()
     {
         int n = 0;
         ATNState eofTarget = NewState(null); // one unique EOF target for all rules
@@ -726,21 +727,21 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public Handle Label(Handle t)
+    public virtual Handle Label(Handle t)
     {
         return t;
     }
 
 
     //@Override
-    public Handle ListLabel(Handle t)
+    public virtual Handle ListLabel(Handle t)
     {
         return t;
     }
 
-    public T newState<T>(GrammarAST node) where T : ATNState => newState<T>(typeof(T), node);
+    public T NewState<T>(GrammarAST node) where T : ATNState => NewState<T>(typeof(T), node);
 
-    protected T newState<T>(Type nodeType, GrammarAST node) where T : ATNState
+    protected T NewState<T>(Type nodeType, GrammarAST node) where T : ATNState
     {
         Exception cause;
         try
@@ -772,11 +773,11 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public ATNState NewState() { return NewState(null); }
+    public virtual ATNState NewState() { return NewState(null); }
 
-    public bool expectNonGreedy(BlockAST blkAST)
+    public static bool ExpectNonGreedy(BlockAST blkAST)
     {
-        if (blockHasWildcardAlt(blkAST))
+        if (BlockHasWildcardAlt(blkAST))
         {
             return true;
         }
@@ -787,9 +788,9 @@ public class ParserATNFactory : ATNFactory
     /**
 	 * {@code (BLOCK (ALT .))} or {@code (BLOCK (ALT 'a') (ALT .))}.
 	 */
-    public static bool blockHasWildcardAlt(GrammarAST block)
+    public static bool BlockHasWildcardAlt(GrammarAST block)
     {
-        foreach (Object alt in block.GetChildren())
+        foreach (var alt in block.GetChildren())
         {
             if (!(alt is AltAST)) continue;
             AltAST altAST = (AltAST)alt;
@@ -807,21 +808,21 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public Handle LexerAltCommands(Handle alt, Handle cmds)
+    public virtual Handle LexerAltCommands(Handle alt, Handle cmds)
     {
         throw new UnsupportedOperationException("This element is not allowed in parsers.");
     }
 
 
     //@Override
-    public Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
+    public virtual Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
     {
         throw new UnsupportedOperationException("This element is not allowed in parsers.");
     }
 
 
     //@Override
-    public Handle LexerCommand(GrammarAST ID)
+    public virtual Handle LexerCommand(GrammarAST ID)
     {
         throw new UnsupportedOperationException("This element is not allowed in parsers.");
     }

@@ -73,7 +73,7 @@ public class Parser : BaseRecognizer
     {
         string tokenText;
         if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
-        else tokenText = "<missing " + GetTokenNames()[expectedTokenType] + ">";
+        else tokenText = "<missing " + TokenNames[expectedTokenType] + ">";
         var t = new CommonToken(expectedTokenType, tokenText);
         var current = ((TokenStream)input).LT(1);
         if (current.Type == Token.EOF)

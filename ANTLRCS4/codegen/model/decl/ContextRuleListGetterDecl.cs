@@ -12,8 +12,5 @@ namespace org.antlr.v4.codegen.model.decl;
 public class ContextRuleListGetterDecl : ContextGetterDecl
 {
     public readonly string ctxName;
-    public ContextRuleListGetterDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name)
-    {
-        this.ctxName = ctxName;
-    }
+    public ContextRuleListGetterDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name) => this.ctxName = ctxName;
 }

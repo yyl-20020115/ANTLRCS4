@@ -16,10 +16,7 @@ namespace org.antlr.v4.automata;
  */
 public class ATNVisitor
 {
-    public void Visit(ATNState s)
-    {
-        Visit(s, new ());
-    }
+    public void Visit(ATNState s) => Visit(s, new());
 
     public void Visit(ATNState s, HashSet<int> visited)
     {

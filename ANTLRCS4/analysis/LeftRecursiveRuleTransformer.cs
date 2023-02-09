@@ -46,7 +46,7 @@ public class LeftRecursiveRuleTransformer
         {
             if (!Grammar.isTokenName(r.name))
             {
-                if (LeftRecursiveRuleAnalyzer.hasImmediateRecursiveRuleRefs(r.ast, r.name))
+                if (LeftRecursiveRuleAnalyzer.HasImmediateRecursiveRuleRefs(r.ast, r.name))
                 {
                     bool fitsPattern = TranslateLeftRecursiveRule(ast, (LeftRecursiveRule)r, language);
                     if (fitsPattern)
@@ -89,7 +89,7 @@ public class LeftRecursiveRuleTransformer
         {
             //			Console.Out.WriteLine("TESTING ---------------\n"+
             //							   leftRecursiveRuleWalker.text(ruleAST));
-            isLeftRec = leftRecursiveRuleWalker.recRule();
+            isLeftRec = leftRecursiveRuleWalker.RecRule();
         }
         catch (RecognitionException re)
         {
@@ -99,7 +99,7 @@ public class LeftRecursiveRuleTransformer
 
         // replace old rule's AST; first create text of altered rule
         var RULES = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.RULES);
-        var newRuleText = leftRecursiveRuleWalker.getArtificialOpPrecRule();
+        var newRuleText = leftRecursiveRuleWalker.GetArtificialOpPrecRule();
         //		Console.Out.WriteLine("created: "+newRuleText);
         // now parse within the context of the grammar that originally created
         // the AST we are transforming. This could be an imported grammar so
@@ -121,12 +121,12 @@ public class LeftRecursiveRuleTransformer
 
         // Rerun semantic checks on the new rule
         var ruleCollector = new RuleCollector(g);
-        ruleCollector.visit(t, "rule");
+        ruleCollector.Visit(t, "rule");
         var basics = new BasicSemanticChecks(g, ruleCollector);
         // disable the assoc element option checks because they are already
         // handled for the pre-transformed rule.
         basics.checkAssocElementOption = false;
-        basics.visit(t, "rule");
+        basics.Visit(t, "rule");
 
         // track recursive alt info for codegen
         r.recPrimaryAlts = new();

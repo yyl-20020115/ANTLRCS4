@@ -156,8 +156,7 @@ public class ATNBuilder : TreeParser
     //@Override
     public String[] getTokenNames() { return ATNBuilder.tokenNames; }
     //@Override 
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\ATNBuilder.g"; }
-
+    public override String GrammarFileName => "org\\antlr\\v4\\parse\\ATNBuilder.g";
 
     ATNFactory factory;
     public ATNBuilder(TreeNodeStream input, ATNFactory factory)

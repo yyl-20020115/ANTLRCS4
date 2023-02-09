@@ -285,7 +285,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         errorRecovery = true;
          */
 
-        DisplayRecognitionError(this.GetTokenNames(), e);
+        DisplayRecognitionError(this.TokenNames, e);
     }
 
     public override string GetErrorMessage(RecognitionException e, string[] tokenNames)

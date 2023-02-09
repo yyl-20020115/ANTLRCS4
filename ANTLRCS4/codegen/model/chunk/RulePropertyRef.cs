@@ -13,8 +13,5 @@ public class RulePropertyRef : ActionChunk
 {
     public readonly string label;
 
-    public RulePropertyRef(StructDecl ctx, string label) : base(ctx)
-    {
-        this.label = label;
-    }
+    public RulePropertyRef(StructDecl ctx, string label) : base(ctx) => this.label = label;
 }

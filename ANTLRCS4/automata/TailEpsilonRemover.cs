@@ -15,11 +15,11 @@ namespace org.antlr.v4.automata;
 public class TailEpsilonRemover : ATNVisitor
 {
 
-    private readonly ATN _atn;
+    private readonly ATN atn;
 
     public TailEpsilonRemover(ATN atn)
     {
-        this._atn = atn;
+        this.atn = atn;
     }
 
     public override void VisitState(ATNState p)
@@ -51,7 +51,7 @@ public class TailEpsilonRemover : ATNVisitor
                         {
                             p.Transition(0).target = r;
                         }
-                        _atn.RemoveState(q);
+                        atn.RemoveState(q);
                     }
                 }
             }

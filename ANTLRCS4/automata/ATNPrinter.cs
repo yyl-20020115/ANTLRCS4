@@ -90,7 +90,7 @@ public class ATNPrinter
         return builder.ToString();
     }
 
-    string GetStateString(ATNState s)
+    public string GetStateString(ATNState s)
     {
         int n = s.stateNumber;
         return s switch

@@ -10,5 +10,5 @@ public class ContextTokenListIndexedGetterDecl : ContextTokenListGetterDecl
 {
     public ContextTokenListIndexedGetterDecl(OutputModelFactory factory, string name) : base(factory, name) { }
 
-    public override string GetArgType() => "int";
+    public override string ArgType => "int";
 }

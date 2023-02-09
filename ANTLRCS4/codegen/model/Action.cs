@@ -41,19 +41,23 @@ public class Action : RuleElement
         if (rf != null)
         { // we can translate
             ast.resolver = rf.rule;
-            chunks = ActionTranslator.TranslateActionChunk(factory, rf, action, ast);
+            this.chunks = ActionTranslator.TranslateActionChunk(factory, rf, action, ast);
         }
         else
         {
-            chunks = new();
-            chunks.Add(new ActionText(ctx, action));
+            this.chunks = new()
+            {
+                new ActionText(ctx, action)
+            };
         }
     }
 
     public Action(OutputModelFactory factory, StructDecl ctx, Template actionST) : base(factory, null)
     {
-        chunks = new();
-        chunks.Add(new ActionTemplate(ctx, actionST));
+        this.chunks = new()
+        {
+            new ActionTemplate(ctx, actionST)
+        };
     }
 
 }

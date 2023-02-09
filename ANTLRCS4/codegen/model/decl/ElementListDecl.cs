@@ -4,8 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System.Xml.Linq;
-
 namespace org.antlr.v4.codegen.model.decl;
 
 public class ElementListDecl : Decl

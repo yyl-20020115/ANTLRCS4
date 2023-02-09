@@ -160,9 +160,9 @@ public class ANTLRParser : antlr.runtime.Parser
     public TreeAdaptor TreeAdaptor { get => adaptor; set => this.adaptor = value; }
 
     ////@Override 
-    public override string[] GetTokenNames() => tokenNames;
+    public override string[] TokenNames => tokenNames;
     ////@Override
-    public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\ANTLRParser.g";
+    public override string GrammarFileName => "org\\antlr\\v4\\parse\\ANTLRParser.g";
 
 
     public ArrayDeque<string> paraphrases = new ();

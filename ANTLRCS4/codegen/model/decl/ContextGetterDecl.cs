@@ -10,18 +10,18 @@ namespace org.antlr.v4.codegen.model.decl;
 
 public abstract class ContextGetterDecl : Decl
 {
-    public ContextGetterDecl(OutputModelFactory factory, String name) : base(factory, name) { }
+    public ContextGetterDecl(OutputModelFactory factory, string name) : base(factory, name) { }
 
     /** Not used for output; just used to distinguish between decl types
 	 *  to avoid dups.
 	 */
-    public virtual string GetArgType() => ""; // assume no args
+    public virtual string ArgType => ""; // assume no args
 
     public override int GetHashCode()
     {
         var hash = MurmurHash.Initialize();
         hash = MurmurHash.Update(hash, name);
-        hash = MurmurHash.Update(hash, GetArgType());
+        hash = MurmurHash.Update(hash, ArgType);
         hash = MurmurHash.Finish(hash, 2);
         return hash;
     }
@@ -31,12 +31,8 @@ public abstract class ContextGetterDecl : Decl
 	 *  two X() with diff args as different.
 	 */
     //@Override
-    public override bool Equals(Object obj)
-    {
-        if (this == obj) return true;
+    public override bool Equals(object? o) =>
         // A() and label A are different
-        if (obj is not ContextGetterDecl) return false;
-        return name.Equals(((Decl)obj).name) &&
-                GetArgType().Equals(((ContextGetterDecl)obj).GetArgType());
-    }
+        this == o || o is ContextGetterDecl decl1 && name.Equals(((Decl)o).name) &&
+                ArgType.Equals(decl1.ArgType);
 }

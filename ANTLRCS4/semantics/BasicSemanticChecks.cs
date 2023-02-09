@@ -101,7 +101,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor {
 	//@Override
 	public ErrorManager getErrorManager() { return errMgr; }
 
-	public void process() {	visitGrammar(g.ast); }
+	public void process() {	VisitGrammar(g.ast); }
 
 	// Routines to route visitor traffic to the checking routines
 

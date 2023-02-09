@@ -14,9 +14,5 @@ public class ActionTemplate : ActionChunk
 {
     public readonly Template st;
 
-    public ActionTemplate(StructDecl ctx, Template st) : base(ctx)
-    {
-
-        this.st = st;
-    }
+    public ActionTemplate(StructDecl ctx, Template st) : base(ctx) => this.st = st;
 }

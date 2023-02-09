@@ -33,7 +33,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	//@Override
 	public ErrorManager getErrorManager() { return errMgr; }
 
-	public void process(GrammarAST ast) { visitGrammar(ast); }
+	public void process(GrammarAST ast) { VisitGrammar(ast); }
 
 	//@Override
 	public void discoverRule(RuleAST rule, GrammarAST ID,
@@ -45,7 +45,7 @@ public class RuleCollector : GrammarTreeVisitor {
 	{
 		int numAlts = block.ChildCount;
 		Rule r;
-		if ( LeftRecursiveRuleAnalyzer.hasImmediateRecursiveRuleRefs(rule, ID.getText()) ) {
+		if ( LeftRecursiveRuleAnalyzer.HasImmediateRecursiveRuleRefs(rule, ID.getText()) ) {
 			r = new LeftRecursiveRule(g, ID.getText(), rule);
 		}
 		else {

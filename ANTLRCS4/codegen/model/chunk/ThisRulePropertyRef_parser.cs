@@ -9,10 +9,8 @@ using org.antlr.v4.codegen.model.decl;
 namespace org.antlr.v4.codegen.model.chunk;
 
 /** */
-public class ThisRulePropertyRef_parser : RulePropertyRef
+public class ThisRulePropertyRefParser : RulePropertyRef
 {
-    public ThisRulePropertyRef_parser(StructDecl ctx, String label)
-        : base(ctx, label)
-    {
-    }
+    public ThisRulePropertyRefParser(StructDecl ctx, String label)
+        : base(ctx, label) { }
 }

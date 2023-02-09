@@ -5,9 +5,7 @@
  */
 
 using org.antlr.v4.codegen.model.decl;
-using org.antlr.v4.misc;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -36,15 +34,9 @@ public abstract class Choice : RuleElement
     public Choice(OutputModelFactory factory,
                   GrammarAST blkOrEbnfRootAST,
                   List<CodeBlockForAlt> alts)
-        : base(factory, blkOrEbnfRootAST)
-    {
-        this.alts = alts;
-    }
+        : base(factory, blkOrEbnfRootAST) => this.alts = alts;
 
-    public void AddPreambleOp(SrcOp op)
-    {
-        preamble.Add(op);
-    }
+    public void AddPreambleOp(SrcOp op) => preamble.Add(op);
 
     public List<TokenInfo[]> GetAltLookaheadAsStringLists(IntervalSet[] altLookSets)
     {
@@ -81,8 +73,5 @@ public abstract class Choice : RuleElement
 
     public static ThrowNoViableAlt GetThrowNoViableAlt(OutputModelFactory factory,
                                                 GrammarAST blkAST,
-                                                IntervalSet expecting)
-    {
-        return new ThrowNoViableAlt(factory, blkAST, expecting);
-    }
+                                                IntervalSet expecting) => new (factory, blkAST, expecting);
 }

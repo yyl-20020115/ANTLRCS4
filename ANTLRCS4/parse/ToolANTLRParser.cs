@@ -51,7 +51,7 @@ public class ToolANTLRParser : ANTLRParser
         }
         else
         {
-            msg = parser.GetErrorMessage(e, parser.GetTokenNames());
+            msg = parser.GetErrorMessage(e, parser.TokenNames);
         }
         return msg;
     }

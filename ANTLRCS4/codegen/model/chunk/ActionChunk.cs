@@ -13,10 +13,7 @@ namespace org.antlr.v4.codegen.model.chunk;
 public class ActionChunk : OutputModelObject
 {
     /** Where is the ctx that defines attrs,labels etc... for this action? */
-    public StructDecl ctx;
+    public readonly StructDecl ctx;
 
-    public ActionChunk(StructDecl ctx)
-    {
-        this.ctx = ctx;
-    }
+    public ActionChunk(StructDecl ctx) => this.ctx = ctx;
 }

@@ -12,9 +12,6 @@ namespace org.antlr.v4.codegen.model;
 public class ArgAction : Action
 {
     /** Context type of invoked rule */
-    public string ctxType;
-    public ArgAction(OutputModelFactory factory, ActionAST ast, string ctxType) : base(factory, ast)
-    {
-        this.ctxType = ctxType;
-    }
+    public readonly string ctxType;
+    public ArgAction(OutputModelFactory factory, ActionAST ast, string ctxType) : base(factory, ast) => this.ctxType = ctxType;
 }

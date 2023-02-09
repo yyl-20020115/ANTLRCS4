@@ -101,7 +101,7 @@ public class TreeParser : BaseRecognizer
                                       BitSet follow)
     {
         String tokenText =
-            "<missing " + GetTokenNames()[expectedTokenType] + ">";
+            "<missing " + TokenNames[expectedTokenType] + ">";
         TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
         return adaptor.create(new CommonToken(expectedTokenType, tokenText));
     }
@@ -162,7 +162,7 @@ public class TreeParser : BaseRecognizer
     //@Override
     public String getErrorHeader(RecognitionException e)
     {
-        return GetGrammarFileName() + ": node from " +
+        return GrammarFileName + ": node from " +
                (e.approximateLineInfo ? "after " : "") + "line " + e.line + ":" + e.charPositionInLine;
     }
 
@@ -197,7 +197,7 @@ public class TreeParser : BaseRecognizer
      */
     public bool inContext(String context)
     {
-        return inContext(input.getTreeAdaptor(), GetTokenNames(), input.LT(1), context);
+        return inContext(input.getTreeAdaptor(), TokenNames, input.LT(1), context);
     }
 
     /** The worker for inContext.  It's static and full of parameters for

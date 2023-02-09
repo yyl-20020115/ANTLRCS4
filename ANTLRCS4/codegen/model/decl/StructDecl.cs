@@ -127,5 +127,5 @@ public class StructDecl : Decl
         extensionMembers.Add(member);
     }
 
-    public bool IsEmpty() => attrs.Count == 0;
+    public bool IsEmpty => attrs.Count == 0;
 }

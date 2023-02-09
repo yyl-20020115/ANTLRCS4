@@ -33,10 +33,7 @@ public class ParserInterpreterForTesting
         }
 
         //@Override
-        public override string GetGrammarFileName()
-        {
-            throw new UnsupportedOperationException("not implemented");
-        }
+        public override string GrammarFileName => throw new UnsupportedOperationException("not implemented");
 
         //@Override
         public string[] GetRuleNames()

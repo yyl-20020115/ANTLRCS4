@@ -22,23 +22,23 @@ public class ActionTranslator : ActionSplitterListener
     public static readonly Dictionary<string, Type> thisRulePropToModelMap = new();
     static ActionTranslator()
     {
-        thisRulePropToModelMap.Add("start", typeof(ThisRulePropertyRef_start));
-        thisRulePropToModelMap.Add("stop", typeof(ThisRulePropertyRef_stop));
-        thisRulePropToModelMap.Add("text", typeof(ThisRulePropertyRef_text));
-        thisRulePropToModelMap.Add("ctx", typeof(ThisRulePropertyRef_ctx));
-        thisRulePropToModelMap.Add("parser", typeof(ThisRulePropertyRef_parser));
+        thisRulePropToModelMap.Add("start", typeof(ThisRulePropertyRefStart));
+        thisRulePropToModelMap.Add("stop", typeof(ThisRulePropertyRefStop));
+        thisRulePropToModelMap.Add("text", typeof(ThisRulePropertyRefText));
+        thisRulePropToModelMap.Add("ctx", typeof(ThisRulePropertyRefCtx));
+        thisRulePropToModelMap.Add("parser", typeof(ThisRulePropertyRefParser));
         rulePropToModelMap.Add("start", typeof(RulePropertyRef_start));
         rulePropToModelMap.Add("stop", typeof(RulePropertyRef_stop));
         rulePropToModelMap.Add("text", typeof(RulePropertyRef_text));
         rulePropToModelMap.Add("ctx", typeof(RulePropertyRef_ctx));
         rulePropToModelMap.Add("parser", typeof(RulePropertyRef_parser));
-        tokenPropToModelMap.Add("text", typeof(TokenPropertyRef_text));
-        tokenPropToModelMap.Add("type", typeof(TokenPropertyRef_type));
-        tokenPropToModelMap.Add("line", typeof(TokenPropertyRef_line));
-        tokenPropToModelMap.Add("index", typeof(TokenPropertyRef_index));
-        tokenPropToModelMap.Add("pos", typeof(TokenPropertyRef_pos));
-        tokenPropToModelMap.Add("channel", typeof(TokenPropertyRef_channel));
-        tokenPropToModelMap.Add("int", typeof(TokenPropertyRef_int));
+        tokenPropToModelMap.Add("text", typeof(TokenPropertyRefText));
+        tokenPropToModelMap.Add("type", typeof(TokenPropertyRefType));
+        tokenPropToModelMap.Add("line", typeof(TokenPropertyRefLine));
+        tokenPropToModelMap.Add("index", typeof(TokenPropertyRefIndex));
+        tokenPropToModelMap.Add("pos", typeof(TokenPropertyRefPos));
+        tokenPropToModelMap.Add("channel", typeof(TokenPropertyRefChannel));
+        tokenPropToModelMap.Add("int", typeof(TokenPropertyRefInt));
     }
 
     public static readonly Dictionary<string, Type> rulePropToModelMap =

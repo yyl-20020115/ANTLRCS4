@@ -15,8 +15,5 @@ public class SetAttr : SymbolRefChunk
     public readonly List<ActionChunk> rhsChunks;
 
     public SetAttr(StructDecl ctx, string name, string escapedName, List<ActionChunk> rhsChunks)
-        : base(ctx, name, escapedName)
-    {
-        this.rhsChunks = rhsChunks;
-    }
+        : base(ctx, name, escapedName) => this.rhsChunks = rhsChunks;
 }

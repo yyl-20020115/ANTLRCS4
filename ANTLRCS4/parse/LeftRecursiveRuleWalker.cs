@@ -134,27 +134,27 @@ public class LeftRecursiveRuleWalker : TreeParser
     }
 
     //@Override
-    public override string[] GetTokenNames() => tokenNames;
+    public override string[] TokenNames => tokenNames;
     //@Override
-    public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g";
+    public override string GrammarFileName => "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g";
 
 
     private string ruleName;
     private int currentOuterAltNumber; // which outer alt of rule?
     public int numAlts;  // how many alts for this rule total?
 
-    public void SetAltAssoc(AltAST altTree, int alt) { }
-    public void BinaryAlt(AltAST altTree, int alt) { }
-    public void SprefixAlt(AltAST altTree, int alt) { }
-    public void SuffixAlt(AltAST altTree, int alt) { }
-    public void OtherAlt(AltAST altTree, int alt) { }
-    public void SetReturnValues(GrammarAST t) { }
+    public virtual void SetAltAssoc(AltAST altTree, int alt) { }
+    public virtual void BinaryAlt(AltAST altTree, int alt) { }
+    public virtual void SprefixAlt(AltAST altTree, int alt) { }
+    public virtual void SuffixAlt(AltAST altTree, int alt) { }
+    public virtual void OtherAlt(AltAST altTree, int alt) { }
+    public virtual void SetReturnValues(GrammarAST t) { }
 
 
 
     // $ANTLR start "rec_rule"
     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:64:1: public rec_rule returns [bool isLeftRec] : ^(r= RULE id= RULE_REF ( ruleModifier )? ( ^( RETURNS a= ARG_ACTION ) )? ( ^( LOCALS ARG_ACTION ) )? ( ^( OPTIONS ( . )* ) | ^( AT ID ACTION ) )* ruleBlock exceptionGroup ) ;
-    public bool recRule()
+    public bool RecRule()
     {
         bool isLeftRec = false;
 
@@ -324,7 +324,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 if (state.failed) return isLeftRec;
                 if (state.backtracking == 0) { isLeftRec = (ruleBlock1 != null ? ((LeftRecursiveRuleWalker.RuleBlockReturn)ruleBlock1).isLeftRec : false); }
                 PushFollow(FOLLOW_exceptionGroup_in_rec_rule179);
-                exceptionGroup();
+                ExceptionGroup();
                 state._fsp--;
                 if (state.failed) return isLeftRec;
                 Match(input, runtime.Token.UP, null); if (state.failed) return isLeftRec;
@@ -345,7 +345,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
     // $ANTLR start "exceptionGroup"
     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:83:1: exceptionGroup : ( exceptionHandler )* ( finallyClause )? ;
-    public void exceptionGroup()
+    public void ExceptionGroup()
     {
         try
         {
@@ -793,7 +793,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
     // $ANTLR start "prefix"
     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:128:1: prefix : ^( ALT ( elementOptions )? ( element )+ recurse ( epsilonElement )* ) ;
-    public void Prefix()
+    public virtual void Prefix()
     {
         GrammarAST ALT3 = null;
 
@@ -904,7 +904,7 @@ public class LeftRecursiveRuleWalker : TreeParser
 
     // $ANTLR start "suffix"
     // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:136:1: suffix : ^( ALT ( elementOptions )? recurse ( element )+ ) ;
-    public void Suffix()
+    public virtual void Suffix()
     {
         GrammarAST ALT4 = null;
 

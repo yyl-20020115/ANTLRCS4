@@ -13,8 +13,5 @@ public class QRetValueRef : RetValueRef
 {
     public readonly string dict;
 
-    public QRetValueRef(StructDecl ctx, string dict, string name, string escapedName) : base(ctx, name, escapedName)
-    {
-        this.dict = dict;
-    }
+    public QRetValueRef(StructDecl ctx, string dict, string name, string escapedName) : base(ctx, name, escapedName) => this.dict = dict;
 }

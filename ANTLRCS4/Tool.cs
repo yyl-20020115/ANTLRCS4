@@ -464,7 +464,7 @@ public class Tool {
 		}
 		gx = g;
 		UndefChecker chk = new UndefChecker(this,ruleToAST);
-		chk.visitGrammar(g.ast);
+		chk.VisitGrammar(g.ast);
 
 		return redefinition || chk.badref;
 	}

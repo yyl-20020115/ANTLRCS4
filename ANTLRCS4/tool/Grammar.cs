@@ -1392,7 +1392,7 @@ public class Grammar : AttributeResolver
     {
         strings.Clear();
         GrammarTreeVisitor collector = new GTV(this);
-        collector.visitGrammar(ast);
+        collector.VisitGrammar(ast);
         return strings;
     }
 

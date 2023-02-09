@@ -39,7 +39,7 @@ public class LeftRecursionDetector
             //FASerializer ser = new FASerializer(atn.g, start);
             //System.out.print(":\n"+ser+"\n");
 
-            Check(g.getRule(start.ruleIndex), start, new HashSet<ATNState>());
+            Check(g.getRule(start.ruleIndex), start, new ());
         }
         //Console.Out.WriteLine("cycles="+listOfRecursiveCycles);
         if (listOfRecursiveCycles.Count > 0)
@@ -83,7 +83,7 @@ public class LeftRecursionDetector
                     // must visit if not already visited; mark target, pop when done
                     rulesVisitedPerRuleCheck.Add((RuleStartState)t.target);
                     // send new visitedStates set per rule invocation
-                    bool nullable = Check(r, t.target, new ());
+                    var nullable = Check(r, t.target, new ());
                     // we're back from visiting that rule
                     rulesVisitedPerRuleCheck.Remove((RuleStartState)t.target);
                     if (nullable)
@@ -109,7 +109,7 @@ public class LeftRecursionDetector
     protected void AddRulesToCycle(Rule enclosingRule, Rule targetRule)
     {
         //Console.Error.WriteLine("left-recursion to "+targetRule.name+" from "+enclosingRule.name);
-        bool foundCycle = false;
+        var foundCycle = false;
         foreach (var rulesInCycle in listOfRecursiveCycles)
         {
             // ensure both rules are in same cycle
@@ -126,9 +126,11 @@ public class LeftRecursionDetector
         }
         if (!foundCycle)
         {
-            var cycle = new OrderedHashSet<Rule>();
-            cycle.Add(targetRule);
-            cycle.Add(enclosingRule);
+            var cycle = new OrderedHashSet<Rule>
+            {
+                targetRule,
+                enclosingRule
+            };
             listOfRecursiveCycles.Add(cycle);
         }
     }

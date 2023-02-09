@@ -13,8 +13,5 @@ public class TokenPropertyRef : ActionChunk
 {
     public readonly string label;
 
-    public TokenPropertyRef(StructDecl ctx, string label) : base(ctx)
-    {
-        this.label = label;
-    }
+    public TokenPropertyRef(StructDecl ctx, string label) : base(ctx) => this.label = label;
 }

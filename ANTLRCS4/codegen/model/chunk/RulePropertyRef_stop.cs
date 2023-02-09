@@ -11,7 +11,5 @@ namespace org.antlr.v4.codegen.model.chunk;
 /** */
 public class RulePropertyRef_stop : RulePropertyRef
 {
-    public RulePropertyRef_stop(StructDecl ctx, string label) : base(ctx, label)
-    {
-    }
+    public RulePropertyRef_stop(StructDecl ctx, string label) : base(ctx, label) { }
 }

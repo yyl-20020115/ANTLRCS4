@@ -183,7 +183,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         dfa32 = new DFA32(this);
     }
     //@Override 
-    public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\ANTLRLexer.g";
+    public override string GrammarFileName => "org\\antlr\\v4\\parse\\ANTLRLexer.g";
 
     // $ANTLR start "DOC_COMMENT"
     public void mDOC_COMMENT()

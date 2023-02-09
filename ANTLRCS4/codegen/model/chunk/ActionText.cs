@@ -14,8 +14,5 @@ public class ActionText : ActionChunk
 {
     public readonly string text;
 
-    public ActionText(StructDecl ctx, string text) : base(ctx)
-    {
-        this.text = text;
-    }
+    public ActionText(StructDecl ctx, string text) : base(ctx) => this.text = text;
 }

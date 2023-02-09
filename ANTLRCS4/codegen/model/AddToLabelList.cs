@@ -15,7 +15,7 @@ public class AddToLabelList : SrcOp
     public readonly Decl label;
     public readonly string listName;
 
-    public AddToLabelList(OutputModelFactory factory, String listName, Decl label) : base(factory)
+    public AddToLabelList(OutputModelFactory factory, string listName, Decl label) : base(factory)
     {
         this.label = label;
         this.listName = listName;

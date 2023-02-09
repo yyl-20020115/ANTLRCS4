@@ -11,5 +11,5 @@ public class ContextTokenGetterDecl : ContextGetterDecl
 {
     public readonly bool optional;
 
-    public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) : base(factory, name) { this.optional = optional; }
+    public ContextTokenGetterDecl(OutputModelFactory factory, String name, bool optional) : base(factory, name) => this.optional = optional;
 }

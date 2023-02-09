@@ -174,9 +174,9 @@ public class GrammarTreeVisitor : TreeParser
     }
 
     //@Override 
-    public override string[] GetTokenNames() => tokenNames;
+    public override string[] TokenNames => tokenNames;
     //@Override
-    public override string GetGrammarFileName() => "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g";
+    public override string GrammarFileName => "org\\antlr\\v4\\parse\\GrammarTreeVisitor.g";
 
     public string grammarName;
     public GrammarAST currentRuleAST;
@@ -190,10 +190,9 @@ public class GrammarTreeVisitor : TreeParser
 
     // Should be abstract but can't make gen'd parser abstract;
     // subclasses should implement else everything goes to stderr!
-    public virtual ErrorManager GetErrorManager() { return null; }
-
-    public void visitGrammar(GrammarAST t) { visit(t, "grammarSpec"); }
-    public void visit(GrammarAST t, String ruleName)
+    public virtual ErrorManager ErrorManager => null;
+    public virtual void VisitGrammar(GrammarAST t) => Visit(t, "grammarSpec");
+    public virtual void Visit(GrammarAST t, string ruleName)
     {
         var nodes = new CommonTreeNodeStream(new GrammarASTAdaptor(), t);
         setTreeNodeStream(nodes);
@@ -204,7 +203,7 @@ public class GrammarTreeVisitor : TreeParser
         }
         catch (Exception e)
         {
-            var errMgr = GetErrorManager();
+            var errMgr = ErrorManager;
             if (e is TargetInvocationException)
             {
                 e = e.InnerException;
@@ -221,236 +220,236 @@ public class GrammarTreeVisitor : TreeParser
         }
     }
 
-    public void discoverGrammar(GrammarRootAST root, GrammarAST ID) { }
-    public void finishPrequels(GrammarAST firstPrequel) { }
-    public void finishGrammar(GrammarRootAST root, GrammarAST ID) { }
+    public virtual void discoverGrammar(GrammarRootAST root, GrammarAST ID) { }
+    public virtual void finishPrequels(GrammarAST firstPrequel) { }
+    public virtual void finishGrammar(GrammarRootAST root, GrammarAST ID) { }
 
-    public void grammarOption(GrammarAST ID, GrammarAST valueAST) { }
-    public void ruleOption(GrammarAST ID, GrammarAST valueAST) { }
-    public void blockOption(GrammarAST ID, GrammarAST valueAST) { }
-    public void defineToken(GrammarAST ID) { }
-    public void defineChannel(GrammarAST ID) { }
-    public void globalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action) { }
-    public void importGrammar(GrammarAST label, GrammarAST ID) { }
+    public virtual void grammarOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void ruleOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void blockOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void defineToken(GrammarAST ID) { }
+    public virtual void defineChannel(GrammarAST ID) { }
+    public virtual void globalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action) { }
+    public virtual void importGrammar(GrammarAST label, GrammarAST ID) { }
 
-    public void modeDef(GrammarAST m, GrammarAST ID) { }
+    public virtual void modeDef(GrammarAST m, GrammarAST ID) { }
 
-    public void discoverRules(GrammarAST rules) { }
-    public void finishRules(GrammarAST rule) { }
-    public void discoverRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
+    public virtual void discoverRules(GrammarAST rules) { }
+    public virtual void finishRules(GrammarAST rule) { }
+    public virtual void discoverRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
                              ActionAST arg, ActionAST returns, GrammarAST thrws,
                              GrammarAST options, ActionAST locals,
                              List<GrammarAST> actions,
                              GrammarAST block)
     { }
-    public void finishRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
-    public void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
+    public virtual void finishRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
+    public virtual void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
                                   GrammarAST block)
     { }
-    public void finishLexerRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
-    public void ruleCatch(GrammarAST arg, ActionAST action) { }
-    public void finallyAction(ActionAST action) { }
-    public void discoverOuterAlt(AltAST alt) { }
-    public void finishOuterAlt(AltAST alt) { }
-    public void discoverAlt(AltAST alt) { }
-    public void finishAlt(AltAST alt) { }
+    public virtual void finishLexerRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
+    public virtual void ruleCatch(GrammarAST arg, ActionAST action) { }
+    public virtual void finallyAction(ActionAST action) { }
+    public virtual void discoverOuterAlt(AltAST alt) { }
+    public virtual void finishOuterAlt(AltAST alt) { }
+    public virtual void discoverAlt(AltAST alt) { }
+    public virtual void finishAlt(AltAST alt) { }
 
-    public void ruleRef(GrammarAST @ref, ActionAST arg) { }
-    public void tokenRef(TerminalAST @ref) { }
-    public void elementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST) { }
-    public void stringRef(TerminalAST @ref) { }
-    public void wildcardRef(GrammarAST @ref) { }
-    public void actionInAlt(ActionAST action) { }
-    public void sempredInAlt(PredAST pred) { }
-    public void label(GrammarAST op, GrammarAST ID, GrammarAST element) { }
-    public void lexerCallCommand(int outerAltNumber, GrammarAST ID, GrammarAST arg) { }
-    public void lexerCommand(int outerAltNumber, GrammarAST ID) { }
+    public virtual void ruleRef(GrammarAST @ref, ActionAST arg) { }
+    public virtual void tokenRef(TerminalAST @ref) { }
+    public virtual void elementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void stringRef(TerminalAST @ref) { }
+    public virtual void wildcardRef(GrammarAST @ref) { }
+    public virtual void actionInAlt(ActionAST action) { }
+    public virtual void sempredInAlt(PredAST pred) { }
+    public virtual void label(GrammarAST op, GrammarAST ID, GrammarAST element) { }
+    public virtual void lexerCallCommand(int outerAltNumber, GrammarAST ID, GrammarAST arg) { }
+    public virtual void lexerCommand(int outerAltNumber, GrammarAST ID) { }
 
-    protected void enterGrammarSpec(GrammarAST tree) { }
-    protected void exitGrammarSpec(GrammarAST tree) { }
+    protected virtual void enterGrammarSpec(GrammarAST tree) { }
+    protected virtual void exitGrammarSpec(GrammarAST tree) { }
 
-    protected void enterPrequelConstructs(GrammarAST tree) { }
-    protected void exitPrequelConstructs(GrammarAST tree) { }
+    protected virtual void enterPrequelConstructs(GrammarAST tree) { }
+    protected virtual void exitPrequelConstructs(GrammarAST tree) { }
 
-    protected void enterPrequelConstruct(GrammarAST tree) { }
-    protected void exitPrequelConstruct(GrammarAST tree) { }
+    protected virtual void enterPrequelConstruct(GrammarAST tree) { }
+    protected virtual void exitPrequelConstruct(GrammarAST tree) { }
 
-    protected void enterOptionsSpec(GrammarAST tree) { }
-    protected void exitOptionsSpec(GrammarAST tree) { }
+    protected virtual void enterOptionsSpec(GrammarAST tree) { }
+    protected virtual void exitOptionsSpec(GrammarAST tree) { }
 
-    protected void enterOption(GrammarAST tree) { }
-    protected void exitOption(GrammarAST tree) { }
+    protected virtual void enterOption(GrammarAST tree) { }
+    protected virtual void exitOption(GrammarAST tree) { }
 
-    protected void enterOptionValue(GrammarAST tree) { }
-    protected void exitOptionValue(GrammarAST tree) { }
+    protected virtual void enterOptionValue(GrammarAST tree) { }
+    protected virtual void exitOptionValue(GrammarAST tree) { }
 
-    protected void enterDelegateGrammars(GrammarAST tree) { }
-    protected void exitDelegateGrammars(GrammarAST tree) { }
+    protected virtual void enterDelegateGrammars(GrammarAST tree) { }
+    protected virtual void exitDelegateGrammars(GrammarAST tree) { }
 
-    protected void enterDelegateGrammar(GrammarAST tree) { }
-    protected void exitDelegateGrammar(GrammarAST tree) { }
+    protected virtual void enterDelegateGrammar(GrammarAST tree) { }
+    protected virtual void exitDelegateGrammar(GrammarAST tree) { }
 
-    protected void enterTokensSpec(GrammarAST tree) { }
-    protected void exitTokensSpec(GrammarAST tree) { }
+    protected virtual void enterTokensSpec(GrammarAST tree) { }
+    protected virtual void exitTokensSpec(GrammarAST tree) { }
 
-    protected void enterTokenSpec(GrammarAST tree) { }
-    protected void exitTokenSpec(GrammarAST tree) { }
+    protected virtual void enterTokenSpec(GrammarAST tree) { }
+    protected virtual void exitTokenSpec(GrammarAST tree) { }
 
-    protected void enterChannelsSpec(GrammarAST tree) { }
-    protected void exitChannelsSpec(GrammarAST tree) { }
+    protected virtual void enterChannelsSpec(GrammarAST tree) { }
+    protected virtual void exitChannelsSpec(GrammarAST tree) { }
 
-    protected void enterChannelSpec(GrammarAST tree) { }
-    protected void exitChannelSpec(GrammarAST tree) { }
+    protected virtual void enterChannelSpec(GrammarAST tree) { }
+    protected virtual void exitChannelSpec(GrammarAST tree) { }
 
-    protected void enterAction(GrammarAST tree) { }
-    protected void exitAction(GrammarAST tree) { }
+    protected virtual void enterAction(GrammarAST tree) { }
+    protected virtual void exitAction(GrammarAST tree) { }
 
-    protected void enterRules(GrammarAST tree) { }
-    protected void exitRules(GrammarAST tree) { }
+    protected virtual void enterRules(GrammarAST tree) { }
+    protected virtual void exitRules(GrammarAST tree) { }
 
-    protected void enterMode(GrammarAST tree) { }
-    protected void exitMode(GrammarAST tree) { }
+    protected virtual void enterMode(GrammarAST tree) { }
+    protected virtual void exitMode(GrammarAST tree) { }
 
-    protected void enterLexerRule(GrammarAST tree) { }
-    protected void exitLexerRule(GrammarAST tree) { }
+    protected virtual void enterLexerRule(GrammarAST tree) { }
+    protected virtual void exitLexerRule(GrammarAST tree) { }
 
-    protected void enterRule(GrammarAST tree) { }
-    protected void exitRule(GrammarAST tree) { }
+    protected virtual void enterRule(GrammarAST tree) { }
+    protected virtual void exitRule(GrammarAST tree) { }
 
-    protected void enterExceptionGroup(GrammarAST tree) { }
-    protected void exitExceptionGroup(GrammarAST tree) { }
+    protected virtual void enterExceptionGroup(GrammarAST tree) { }
+    protected virtual void exitExceptionGroup(GrammarAST tree) { }
 
-    protected void enterExceptionHandler(GrammarAST tree) { }
-    protected void exitExceptionHandler(GrammarAST tree) { }
+    protected virtual void enterExceptionHandler(GrammarAST tree) { }
+    protected virtual void exitExceptionHandler(GrammarAST tree) { }
 
-    protected void enterFinallyClause(GrammarAST tree) { }
-    protected void exitFinallyClause(GrammarAST tree) { }
+    protected virtual void enterFinallyClause(GrammarAST tree) { }
+    protected virtual void exitFinallyClause(GrammarAST tree) { }
 
-    protected void enterLocals(GrammarAST tree) { }
-    protected void exitLocals(GrammarAST tree) { }
+    protected virtual void enterLocals(GrammarAST tree) { }
+    protected virtual void exitLocals(GrammarAST tree) { }
 
-    protected void enterRuleReturns(GrammarAST tree) { }
-    protected void exitRuleReturns(GrammarAST tree) { }
+    protected virtual void enterRuleReturns(GrammarAST tree) { }
+    protected virtual void exitRuleReturns(GrammarAST tree) { }
 
-    protected void enterThrowsSpec(GrammarAST tree) { }
-    protected void exitThrowsSpec(GrammarAST tree) { }
+    protected virtual void enterThrowsSpec(GrammarAST tree) { }
+    protected virtual void exitThrowsSpec(GrammarAST tree) { }
 
-    protected void enterRuleAction(GrammarAST tree) { }
-    protected void exitRuleAction(GrammarAST tree) { }
+    protected virtual void enterRuleAction(GrammarAST tree) { }
+    protected virtual void exitRuleAction(GrammarAST tree) { }
 
-    protected void enterRuleModifier(GrammarAST tree) { }
-    protected void exitRuleModifier(GrammarAST tree) { }
+    protected virtual void enterRuleModifier(GrammarAST tree) { }
+    protected virtual void exitRuleModifier(GrammarAST tree) { }
 
-    protected void enterLexerRuleBlock(GrammarAST tree) { }
-    protected void exitLexerRuleBlock(GrammarAST tree) { }
+    protected virtual void enterLexerRuleBlock(GrammarAST tree) { }
+    protected virtual void exitLexerRuleBlock(GrammarAST tree) { }
 
-    protected void enterRuleBlock(GrammarAST tree) { }
-    protected void exitRuleBlock(GrammarAST tree) { }
+    protected virtual void enterRuleBlock(GrammarAST tree) { }
+    protected virtual void exitRuleBlock(GrammarAST tree) { }
 
-    protected void enterLexerOuterAlternative(AltAST tree) { }
-    protected void exitLexerOuterAlternative(AltAST tree) { }
+    protected virtual void enterLexerOuterAlternative(AltAST tree) { }
+    protected virtual void exitLexerOuterAlternative(AltAST tree) { }
 
-    protected void enterOuterAlternative(AltAST tree) { }
-    protected void exitOuterAlternative(AltAST tree) { }
+    protected virtual void enterOuterAlternative(AltAST tree) { }
+    protected virtual void exitOuterAlternative(AltAST tree) { }
 
-    protected void enterLexerAlternative(GrammarAST tree) { }
-    protected void exitLexerAlternative(GrammarAST tree) { }
+    protected virtual void enterLexerAlternative(GrammarAST tree) { }
+    protected virtual void exitLexerAlternative(GrammarAST tree) { }
 
-    protected void enterLexerElements(GrammarAST tree) { }
-    protected void exitLexerElements(GrammarAST tree) { }
+    protected virtual void enterLexerElements(GrammarAST tree) { }
+    protected virtual void exitLexerElements(GrammarAST tree) { }
 
-    protected void enterLexerElement(GrammarAST tree) { }
-    protected void exitLexerElement(GrammarAST tree) { }
+    protected virtual void enterLexerElement(GrammarAST tree) { }
+    protected virtual void exitLexerElement(GrammarAST tree) { }
 
-    protected void enterLexerBlock(GrammarAST tree) { }
-    protected void exitLexerBlock(GrammarAST tree) { }
+    protected virtual void enterLexerBlock(GrammarAST tree) { }
+    protected virtual void exitLexerBlock(GrammarAST tree) { }
 
-    protected void enterLexerAtom(GrammarAST tree) { }
-    protected void exitLexerAtom(GrammarAST tree) { }
+    protected virtual void enterLexerAtom(GrammarAST tree) { }
+    protected virtual void exitLexerAtom(GrammarAST tree) { }
 
-    protected void enterActionElement(GrammarAST tree) { }
-    protected void exitActionElement(GrammarAST tree) { }
+    protected virtual void enterActionElement(GrammarAST tree) { }
+    protected virtual void exitActionElement(GrammarAST tree) { }
 
-    protected void enterAlternative(AltAST tree) { }
-    protected void exitAlternative(AltAST tree) { }
+    protected virtual void enterAlternative(AltAST tree) { }
+    protected virtual void exitAlternative(AltAST tree) { }
 
-    protected void enterLexerCommand(GrammarAST tree) { }
-    protected void exitLexerCommand(GrammarAST tree) { }
+    protected virtual void enterLexerCommand(GrammarAST tree) { }
+    protected virtual void exitLexerCommand(GrammarAST tree) { }
 
-    protected void enterLexerCommandExpr(GrammarAST tree) { }
-    protected void exitLexerCommandExpr(GrammarAST tree) { }
+    protected virtual void enterLexerCommandExpr(GrammarAST tree) { }
+    protected virtual void exitLexerCommandExpr(GrammarAST tree) { }
 
-    protected void enterElement(GrammarAST tree) { }
-    protected void exitElement(GrammarAST tree) { }
+    protected virtual void enterElement(GrammarAST tree) { }
+    protected virtual void exitElement(GrammarAST tree) { }
 
-    protected void enterAstOperand(GrammarAST tree) { }
-    protected void exitAstOperand(GrammarAST tree) { }
+    protected virtual void enterAstOperand(GrammarAST tree) { }
+    protected virtual void exitAstOperand(GrammarAST tree) { }
 
-    protected void enterLabeledElement(GrammarAST tree) { }
-    protected void exitLabeledElement(GrammarAST tree) { }
+    protected virtual void enterLabeledElement(GrammarAST tree) { }
+    protected virtual void exitLabeledElement(GrammarAST tree) { }
 
-    protected void enterSubrule(GrammarAST tree) { }
-    protected void exitSubrule(GrammarAST tree) { }
+    protected virtual void enterSubrule(GrammarAST tree) { }
+    protected virtual void exitSubrule(GrammarAST tree) { }
 
-    protected void enterLexerSubrule(GrammarAST tree) { }
-    protected void exitLexerSubrule(GrammarAST tree) { }
+    protected virtual void enterLexerSubrule(GrammarAST tree) { }
+    protected virtual void exitLexerSubrule(GrammarAST tree) { }
 
-    protected void enterBlockSuffix(GrammarAST tree) { }
-    protected void exitBlockSuffix(GrammarAST tree) { }
+    protected virtual void enterBlockSuffix(GrammarAST tree) { }
+    protected virtual void exitBlockSuffix(GrammarAST tree) { }
 
-    protected void enterEbnfSuffix(GrammarAST tree) { }
-    protected void exitEbnfSuffix(GrammarAST tree) { }
+    protected virtual void enterEbnfSuffix(GrammarAST tree) { }
+    protected virtual void exitEbnfSuffix(GrammarAST tree) { }
 
-    protected void enterAtom(GrammarAST tree) { }
-    protected void exitAtom(GrammarAST tree) { }
+    protected virtual void enterAtom(GrammarAST tree) { }
+    protected virtual void exitAtom(GrammarAST tree) { }
 
-    protected void enterBlockSet(GrammarAST tree) { }
-    protected void exitBlockSet(GrammarAST tree) { }
+    protected virtual void enterBlockSet(GrammarAST tree) { }
+    protected virtual void exitBlockSet(GrammarAST tree) { }
 
-    protected void enterSetElement(GrammarAST tree) { }
-    protected void exitSetElement(GrammarAST tree) { }
+    protected virtual void enterSetElement(GrammarAST tree) { }
+    protected virtual void exitSetElement(GrammarAST tree) { }
 
-    protected void enterBlock(GrammarAST tree) { }
-    protected void exitBlock(GrammarAST tree) { }
+    protected virtual void enterBlock(GrammarAST tree) { }
+    protected virtual void exitBlock(GrammarAST tree) { }
 
-    protected void enterRuleref(GrammarAST tree) { }
-    protected void exitRuleref(GrammarAST tree) { }
+    protected virtual void enterRuleref(GrammarAST tree) { }
+    protected virtual void exitRuleref(GrammarAST tree) { }
 
-    protected void enterRange(GrammarAST tree) { }
-    protected void exitRange(GrammarAST tree) { }
+    protected virtual void enterRange(GrammarAST tree) { }
+    protected virtual void exitRange(GrammarAST tree) { }
 
-    protected void enterTerminal(GrammarAST tree) { }
-    protected void exitTerminal(GrammarAST tree) { }
+    protected virtual void enterTerminal(GrammarAST tree) { }
+    protected virtual void exitTerminal(GrammarAST tree) { }
 
-    protected void enterElementOptions(GrammarAST tree) { }
-    protected void exitElementOptions(GrammarAST tree) { }
+    protected virtual void enterElementOptions(GrammarAST tree) { }
+    protected virtual void exitElementOptions(GrammarAST tree) { }
 
-    protected void enterElementOption(GrammarAST tree) { }
-    protected void exitElementOption(GrammarAST tree) { }
+    protected virtual void enterElementOption(GrammarAST tree) { }
+    protected virtual void exitElementOption(GrammarAST tree) { }
 
     //@Override
-    public void traceIn(String ruleName, int ruleIndex)
+    public virtual void TraceIn(String ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("enter " + ruleName + ": " + input.LT(1));
     }
 
     //@Override
-    public void traceOut(String ruleName, int ruleIndex)
+    public virtual void TraceOut(String ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("exit " + ruleName + ": " + input.LT(1));
     }
 
 
-    public class grammarSpec_return : TreeRuleReturnScope
+    public class GrammarSpecReturn : TreeRuleReturnScope
     {
     };
 
 
     // $ANTLR start "grammarSpec"
     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:341:1: grammarSpec : ^( GRAMMAR ID prequelConstructs rules ( mode )* ) ;
-    public grammarSpec_return grammarSpec()
+    public GrammarSpecReturn GrammarSpec()
     {
-        grammarSpec_return retval = new grammarSpec_return();
+        var retval = new GrammarSpecReturn();
         retval.start = input.LT(1);
 
         GrammarAST ID1 = null;
@@ -474,7 +473,7 @@ public class GrammarTreeVisitor : TreeParser
                 prequelConstructs3 = prequelConstructs();
                 state._fsp--;
 
-                finishPrequels((prequelConstructs3 != null ? ((GrammarTreeVisitor.prequelConstructs_return)prequelConstructs3).firstOne : null));
+                finishPrequels((prequelConstructs3 != null ? ((GrammarTreeVisitor.prequelConstructsReturn)prequelConstructs3).firstOne : null));
                 PushFollow(FOLLOW_rules_in_grammarSpec123);
                 rules();
                 state._fsp--;
@@ -531,7 +530,7 @@ public class GrammarTreeVisitor : TreeParser
     // $ANTLR end "grammarSpec"
 
 
-    public class prequelConstructs_return : TreeRuleReturnScope
+    public class prequelConstructsReturn : TreeRuleReturnScope
     {
 
         public GrammarAST firstOne = null;
@@ -540,9 +539,9 @@ public class GrammarTreeVisitor : TreeParser
 
     // $ANTLR start "prequelConstructs"
     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:357:1: prequelConstructs returns [GrammarAST firstOne=null] : ( ( prequelConstruct )+ |);
-    public prequelConstructs_return prequelConstructs()
+    public prequelConstructsReturn prequelConstructs()
     {
-        prequelConstructs_return retval = new prequelConstructs_return();
+        prequelConstructsReturn retval = new prequelConstructsReturn();
         retval.start = input.LT(1);
 
 

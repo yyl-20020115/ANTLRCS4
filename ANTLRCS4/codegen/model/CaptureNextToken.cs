@@ -8,9 +8,6 @@ namespace org.antlr.v4.codegen.model;
 
 public class CaptureNextToken : SrcOp
 {
-    public string varName;
-    public CaptureNextToken(OutputModelFactory factory, string varName) : base(factory)
-    {
-        this.varName = varName;
-    }
+    public readonly string varName;
+    public CaptureNextToken(OutputModelFactory factory, string varName) : base(factory) => this.varName = varName;
 }

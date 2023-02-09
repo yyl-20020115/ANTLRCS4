@@ -141,8 +141,7 @@ public class BlockSetTransformer : TreeRewriter
     //@Override 
     public String[] getTokenNames() { return BlockSetTransformer.tokenNames; }
     //@Override 
-    public override String GetGrammarFileName() { return "org\\antlr\\v4\\parse\\BlockSetTransformer.g"; }
-
+    public override String GrammarFileName => "org\\antlr\\v4\\parse\\BlockSetTransformer.g";
 
     public String currentRuleName;
     public GrammarAST currentAlt;
