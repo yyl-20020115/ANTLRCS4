@@ -29,7 +29,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 
 	//@Override
 	public void SyntaxError(Recognizer recognizer,
-							Object offendingSymbol,
+							object offendingSymbol,
 							int line,
 							int charPositionInLine,
 							String msg,

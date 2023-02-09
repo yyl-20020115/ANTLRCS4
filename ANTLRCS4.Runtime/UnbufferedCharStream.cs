@@ -77,7 +77,7 @@ public class UnbufferedCharStream : CharStream
     protected TextReader input;
 
     /** The name or source of this char stream. */
-    public String name;
+    public string name;
 
     /** Useful for subclasses that pull char from other than this.input. */
     public UnbufferedCharStream() : this(256)
@@ -334,7 +334,7 @@ public class UnbufferedCharStream : CharStream
     public int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
     //@Override
-    public String SourceName
+    public string SourceName
     {
         get
         {

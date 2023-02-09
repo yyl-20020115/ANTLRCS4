@@ -21,7 +21,7 @@ public class RuleAST : GrammarASTWithOptions
         get
         {
             var name = RuleName;
-            return name != null && Grammar.isTokenName(name);
+            return name != null && Grammar.IsTokenName(name);
         }
     }
 

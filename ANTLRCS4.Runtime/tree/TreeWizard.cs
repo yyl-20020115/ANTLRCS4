@@ -25,11 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.runtime.tree;
-using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime;
-using System.Reflection.Emit;
-using System.Xml.Linq;
 
 namespace org.antlr.runtime.tree;
 
@@ -57,16 +53,16 @@ public class TreeWizard
     public interface ContextVisitor
     {
         // TODO: should this be called visit or something else?
-        public void visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels);
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels);
     }
 
     public abstract class Visitor : ContextVisitor
     {
-        public void visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
         {
-            visit(t);
+            Visit(t);
         }
-        public abstract void visit(Object t);
+        public abstract void Visit(Object t);
     }
 
     /** When using %label:TOKENNAME in a tree for parse(), we must
@@ -75,7 +71,7 @@ public class TreeWizard
     public class TreePattern : CommonTree
     {
 
-        public String label;
+        public string label;
         public bool hasTextArg;
         public TreePattern(Token payload)
             : base(payload)
@@ -96,9 +92,7 @@ public class TreeWizard
     /** This adaptor creates TreePattern objects for use during scan() */
     public class TreePatternTreeAdaptor : CommonTreeAdaptor
     {
-        //@Override
-
-        public Object create(Token payload)
+        public override object Create(Token payload)
         {
             return new TreePattern(payload);
         }
@@ -196,17 +190,17 @@ public class TreeWizard
         {
             return;
         }
-        int ttype = adaptor.getType(t);
+        int ttype = adaptor.GetType(t);
         if (!m.TryGetValue(ttype, out var elements))
         {
             elements = new();
             m.Add(ttype, elements);
         }
         elements.Add(t);
-        int n = adaptor.getChildCount(t);
+        int n = adaptor.GetChildCount(t);
         for (int i = 0; i < n; i++)
         {
-            Object child = adaptor.getChild(t, i);
+            Object child = adaptor.GetChild(t, i);
             _index(child, m);
         }
     }
@@ -218,16 +212,16 @@ public class TreeWizard
         {
             this.nodes = nodes;
         }
-        public override void visit(Object t)
+        public override void Visit(Object t)
         {
             nodes.Add(t);
         }
     }
     /** Return a List of tree nodes with token type ttype */
-    public List<Object> find(Object t, int ttype)
+    public List<object> find(Object t, int ttype)
     {
-        List<Object> nodes = new();
-        visit(t, ttype, new TVA(nodes));
+        List<object> nodes = new();
+        Visit(t, ttype, new TVA(nodes));
         return nodes;
     }
     class TVB : TreeWizard.ContextVisitor
@@ -242,9 +236,9 @@ public class TreeWizard
             this.wizard = wizard;
         }
 
-        public void visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
         {
-            if (wizard._parse(t, tpattern, null))
+            if (wizard.Parse(t, tpattern, null))
             {
                 subtrees.Add(t);
             }
@@ -268,16 +262,16 @@ public class TreeWizard
             return null;
         }
         int rootTokenType = tpattern.Type;
-        visit(t, rootTokenType, new TVB(tpattern, subtrees, this));
+        Visit(t, rootTokenType, new TVB(tpattern, subtrees, this));
         return subtrees;
     }
 
-    public Object findFirst(Object t, int ttype)
+    public Object FindFirst(Object t, int ttype)
     {
         return null;
     }
 
-    public Object findFirst(Object t, String pattern)
+    public Object FindFirst(object t, string pattern)
     {
         return null;
     }
@@ -287,34 +281,34 @@ public class TreeWizard
      *  of the visitor action method is never set (it's null) since using
      *  a token type rather than a pattern doesn't let us set a label.
      */
-    public void visit(Object t, int ttype, ContextVisitor visitor)
+    public void Visit(object t, int ttype, ContextVisitor visitor)
     {
-        _visit(t, null, 0, ttype, visitor);
+        Visit(t, null, 0, ttype, visitor);
     }
 
     /** Do the recursive work for visit */
-    protected void _visit(Object t, Object parent, int childIndex, int ttype, ContextVisitor visitor)
+    protected void Visit(object t, object parent, int childIndex, int ttype, ContextVisitor visitor)
     {
         if (t == null)
         {
             return;
         }
-        if (adaptor.getType(t) == ttype)
+        if (adaptor.GetType(t) == ttype)
         {
-            visitor.visit(t, parent, childIndex, null);
+            visitor.Visit(t, parent, childIndex, null);
         }
-        int n = adaptor.getChildCount(t);
+        int n = adaptor.GetChildCount(t);
         for (int i = 0; i < n; i++)
         {
-            Object child = adaptor.getChild(t, i);
-            _visit(child, t, i, ttype, visitor);
+            var child = adaptor.GetChild(t, i);
+            Visit(child, t, i, ttype, visitor);
         }
     }
     class TVC : TreeWizard.ContextVisitor
     {
         readonly TreeWizard wizard1;
         readonly ContextVisitor vistor1;
-        readonly Dictionary<String, Object> labels;
+        readonly Dictionary<string, object> labels;
         readonly TreePattern tpattern;
         public TVC(Dictionary<string, object> labels, TreePattern tpattern, ContextVisitor vistor1, TreeWizard wizard1)
         {
@@ -324,13 +318,13 @@ public class TreeWizard
             this.wizard1 = wizard1;
         }
 
-        public void visit(Object t, Object parent, int childIndex, Dictionary<String, Object> unusedlabels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> unusedlabels)
         {
             // the unusedlabels arg is null as visit on token type doesn't set.
             labels.Clear();
-            if (this.wizard1._parse(t, tpattern, labels))
+            if (this.wizard1.Parse(t, tpattern, labels))
             {
-                vistor1.visit(t, parent, childIndex, labels);
+                vistor1.Visit(t, parent, childIndex, labels);
             }
         }
     }
@@ -339,7 +333,7 @@ public class TreeWizard
      *  with visit(t, ttype, visitor) so nil-rooted patterns are not allowed.
      *  Patterns with wildcard roots are also not allowed.
      */
-    public void visit(Object t, String pattern, ContextVisitor visitor)
+    public void Visit(Object t, String pattern, ContextVisitor visitor)
     {
         // Create a TreePattern from the pattern
         TreePatternLexer tokenizer = new TreePatternLexer(pattern);
@@ -353,9 +347,9 @@ public class TreeWizard
         {
             return;
         }
-        Dictionary<String, Object> labels = new(); // reused for each _parse
+        Dictionary<string, object> labels = new(); // reused for each _parse
         int rootTokenType = tpattern.Type;
-        visit(t, rootTokenType, new TVC(labels, tpattern, visitor, this));
+        Visit(t, rootTokenType, new TVC(labels, tpattern, visitor, this));
     }
 
     /** Given a pattern like (ASSIGN %lhs:ID %rhs:.) with optional labels
@@ -369,31 +363,28 @@ public class TreeWizard
      *
      *  TODO: what's a better way to indicate bad pattern? Exceptions are a hassle 
      */
-    public bool parse(Object t, String pattern, Dictionary<String, Object> labels)
+    public bool Parse(Object t, String pattern, Dictionary<String, Object> labels)
     {
-        TreePatternLexer tokenizer = new TreePatternLexer(pattern);
-        TreePatternParser parser =
+        var tokenizer = new TreePatternLexer(pattern);
+        var parser =
             new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
-        TreePattern tpattern = (TreePattern)parser.pattern();
+        var tpattern = (TreePattern)parser.pattern();
         /*
         System.out.println("t="+((Tree)t).toStringTree());
         System.out.println("scant="+tpattern.toStringTree());
         */
-        bool matched = _parse(t, tpattern, labels);
+        bool matched = Parse(t, tpattern, labels);
         return matched;
     }
 
-    public bool parse(Object t, String pattern)
-    {
-        return parse(t, pattern, null);
-    }
+    public bool Parse(object t, string pattern) => Parse(t, pattern, null);
 
     /** Do the work for parse. Check to see if the t2 pattern fits the
      *  structure and token types in t1.  Check text if the pattern has
      *  text arguments on nodes.  Fill labels map with pointers to nodes
      *  in tree matched against nodes in pattern with labels.
      */
-    protected bool _parse(Object t1, TreePattern tpattern, Dictionary<String, Object> labels)
+    protected bool Parse(object t1, TreePattern tpattern, Dictionary<string, object> labels)
     {
         // make sure both are non-null
         if (t1 == null || tpattern == null)
@@ -403,9 +394,9 @@ public class TreeWizard
         // check roots (wildcard matches anything)
         if (tpattern is not WildcardTreePattern)
         {
-            if (adaptor.getType(t1) != tpattern.Type) return false;
+            if (adaptor.GetType(t1) != tpattern.Type) return false;
             // if pattern has text, check node text
-            if (tpattern.hasTextArg && !adaptor.getText(t1).Equals(tpattern.Text))
+            if (tpattern.hasTextArg && !adaptor.GetText(t1).Equals(tpattern.Text))
             {
                 return false;
             }
@@ -416,7 +407,7 @@ public class TreeWizard
             labels[tpattern.label] = t1;
         }
         // check children
-        int n1 = adaptor.getChildCount(t1);
+        int n1 = adaptor.GetChildCount(t1);
         int n2 = tpattern.ChildCount;
         if (n1 != n2)
         {
@@ -424,9 +415,9 @@ public class TreeWizard
         }
         for (int i = 0; i < n1; i++)
         {
-            Object child1 = adaptor.getChild(t1, i);
-            TreePattern child2 = (TreePattern)tpattern.GetChild(i);
-            if (!_parse(child1, child2, labels))
+            var child1 = adaptor.GetChild(t1, i);
+            var child2 = (TreePattern)tpattern.GetChild(i);
+            if (!Parse(child1, child2, labels))
             {
                 return false;
             }
@@ -447,11 +438,11 @@ public class TreeWizard
 	 *  nil is a special name meaning "give me a nil node".  Useful for
 	 *  making lists: (nil A B C) is a list of A B C.
  	 */
-    public Object create(String pattern)
+    public object Create(string pattern)
     {
-        TreePatternLexer tokenizer = new TreePatternLexer(pattern);
-        TreePatternParser parser = new TreePatternParser(tokenizer, this, adaptor);
-        Object t = parser.pattern();
+        var tokenizer = new TreePatternLexer(pattern);
+        var parser = new TreePatternParser(tokenizer, this, adaptor);
+        var t = parser.pattern();
         return t;
     }
 
@@ -464,20 +455,20 @@ public class TreeWizard
      *  I cannot rely on the tree node's equals() implementation as I make
      *  no constraints at all on the node types nor interface etc... 
      */
-    public static bool equals(Object t1, Object t2, TreeAdaptor adaptor)
+    public static bool EqualsWith(Object t1, Object t2, TreeAdaptor adaptor)
     {
-        return _equals(t1, t2, adaptor);
+        return Equals(t1, t2, adaptor);
     }
 
     /** Compare type, structure, and text of two trees, assuming adaptor in
      *  this instance of a TreeWizard.
      */
-    public bool equals(Object t1, Object t2)
+    public bool Equals(Object? t1, Object? t2)
     {
-        return _equals(t1, t2, adaptor);
+        return Equals(t1, t2, adaptor);
     }
 
-    protected static bool _equals(Object t1, Object t2, TreeAdaptor adaptor)
+    protected static bool Equals(Object? t1, Object? t2, TreeAdaptor adaptor)
     {
         // make sure both are non-null
         if (t1 == null || t2 == null)
@@ -485,26 +476,26 @@ public class TreeWizard
             return false;
         }
         // check roots
-        if (adaptor.getType(t1) != adaptor.getType(t2))
+        if (adaptor.GetType(t1) != adaptor.GetType(t2))
         {
             return false;
         }
-        if (!adaptor.getText(t1).Equals(adaptor.getText(t2)))
+        if (!adaptor.GetText(t1).Equals(adaptor.GetText(t2)))
         {
             return false;
         }
         // check children
-        int n1 = adaptor.getChildCount(t1);
-        int n2 = adaptor.getChildCount(t2);
+        int n1 = adaptor.GetChildCount(t1);
+        int n2 = adaptor.GetChildCount(t2);
         if (n1 != n2)
         {
             return false;
         }
         for (int i = 0; i < n1; i++)
         {
-            Object child1 = adaptor.getChild(t1, i);
-            Object child2 = adaptor.getChild(t2, i);
-            if (!_equals(child1, child2, adaptor))
+            var child1 = adaptor.GetChild(t1, i);
+            var child2 = adaptor.GetChild(t2, i);
+            if (!Equals(child1, child2, adaptor))
             {
                 return false;
             }
@@ -524,14 +515,14 @@ public class TreeWizard
      *
      *  If you really need to find a node of type, say, FUNC quickly then perhaps
      *
-     *    Map<Integertoken type,Map<Object tree node,Integer stream index>>
+     *    Map<Integertoken type,Map<object tree node,Integer stream index>>
      *
      *  would be better for you.  The interior maps map a tree node to
      *  the index so you don't have to search linearly for a specific node.
      *
      *  If you change this method, you will likely need to change
      *  getNodeIndex(), which extracts information.
-    protected void fillReverseIndex(Object node, int streamIndex) {
+    protected void fillReverseIndex(object node, int streamIndex) {
         //System.out.println("revIndex "+node+"@"+streamIndex);
         if ( tokenTypesToReverseIndex==null ) {
             return; // no indexing if this is empty (nothing of interest)
@@ -586,7 +577,7 @@ public class TreeWizard
      *  for node's token type, a linear search of entire stream is used.
      *
      *  Return -1 if exact node pointer not in stream.
-    public int getNodeIndex(Object node) {
+    public int getNodeIndex(object node) {
         //System.out.println("get "+node);
         if ( tokenTypeToStreamIndexesMap==null ) {
             return getNodeIndexLinearly(node);
@@ -600,7 +591,7 @@ public class TreeWizard
         }
         for (int i = 0; i < indexes.size(); i++) {
             Integer streamIndexI = (Integer)indexes.get(i);
-            Object n = get(streamIndexI.intValue());
+            object n = get(streamIndexI.intValue());
             if ( n==node ) {
                 //System.out.println("found in index; stream index = "+streamIndexI);
                 return streamIndexI.intValue(); // found it!

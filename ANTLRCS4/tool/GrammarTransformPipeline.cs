@@ -242,7 +242,7 @@ public class GrammarTransformPipeline
                 rootGrammar.Tools.Log("grammar", "imported actions: " + imp_actionRoots);
                 foreach (GrammarAST at in all_actionRoots)
                 {
-                    var scopeName = rootGrammar.getDefaultActionScope();
+                    var scopeName = rootGrammar.GetDefaultActionScope();
                     GrammarAST scope, name, action;
                     if (at.ChildCount > 2)
                     { // must have a scope
@@ -441,7 +441,7 @@ public class GrammarTransformPipeline
             (GrammarAST)combinedAST.GetFirstChildWithType(ANTLRParser.OPTIONS);
         if (optionsRoot != null && optionsRoot.ChildCount != 0)
         {
-            var lexerOptionsRoot = (GrammarAST)adaptor.dupNode(optionsRoot);
+            var lexerOptionsRoot = (GrammarAST)adaptor.DupNode(optionsRoot);
             lexerAST.AddChild(lexerOptionsRoot);
             var options = optionsRoot.GetChildren().Cast<GrammarAST>().ToArray();
             foreach (var o in options)
@@ -450,7 +450,7 @@ public class GrammarTransformPipeline
                 if (Grammar.lexerOptions.Contains(optionName) &&
                      !Grammar.doNotCopyOptionsToLexer.Contains(optionName))
                 {
-                    var optionTree = (GrammarAST)adaptor.dupTree(o);
+                    var optionTree = (GrammarAST)adaptor.DupTree(o);
                     lexerOptionsRoot.AddChild(optionTree);
                     lexerAST.SetOption(optionName, (GrammarAST)optionTree.GetChild(1));
                 }
@@ -463,7 +463,7 @@ public class GrammarTransformPipeline
         {
             if (e.Type == ANTLRParser.AT)
             {
-                lexerAST.AddChild((Tree)adaptor.dupTree(e));
+                lexerAST.AddChild((Tree)adaptor.DupTree(e));
                 if (e.GetChild(0).Text.Equals("lexer"))
                 {
                     actionsWeMoved.Add(e);
@@ -499,9 +499,9 @@ public class GrammarTransformPipeline
         foreach (var r in rules)
         {
             var ruleName = r.GetChild(0).Text;
-            if (Grammar.isTokenName(ruleName))
+            if (Grammar.IsTokenName(ruleName))
             {
-                lexerRulesRoot.AddChild((Tree)adaptor.dupTree(r));
+                lexerRulesRoot.AddChild((Tree)adaptor.DupTree(r));
                 rulesWeMoved.Add(r);
             }
         }
@@ -512,9 +512,9 @@ public class GrammarTransformPipeline
 
         // Will track 'if' from IF : 'if' ; rules to avoid defining new token for 'if'
         var litAliases =
-            Grammar.getStringLiteralAliasesFromLexerRules(lexerAST);
+            Grammar.GetStringLiteralAliasesFromLexerRules(lexerAST);
 
-        var stringLiterals = combinedGrammar.getStringLiterals();
+        var stringLiterals = combinedGrammar.GetStringLiterals();
         // add strings from combined grammar (and imported grammars) into lexer
         // put them first as they are keywords; must resolve ambigs to these rules
         //		tool.log("grammar", "strings from parser: "+stringLiterals);
@@ -532,7 +532,7 @@ public class GrammarTransformPipeline
                 }
             }
             // create for each literal: (RULE <uniquename> (BLOCK (ALT <lit>))
-            var rname = combinedGrammar.getStringLiteralLexerRuleName(lit);
+            var rname = combinedGrammar.GetStringLiteralLexerRuleName(lit);
             // can't use wizard; need special node types
             var litRule = new RuleAST(ANTLRParser.RULE);
             var blk = new BlockAST(ANTLRParser.BLOCK);

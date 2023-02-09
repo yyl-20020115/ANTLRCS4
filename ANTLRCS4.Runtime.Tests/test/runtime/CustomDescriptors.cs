@@ -104,7 +104,7 @@ public class CustomDescriptors
         // I tried playing around with different sizes, and I think 1002 works for Go but 1003 does not;
         // the executing lexer gets a token syntax error for T208 or something like that
         int tokensCount = 1024;
-        var suffix = new string('_', 70);// String.Join("", Collections.nCopies(70, "_"));
+        var suffix = new string('_', 70);// string.Join("", Collections.nCopies(70, "_"));
 
         var grammarName = "L";
         var grammar = new StringBuilder();

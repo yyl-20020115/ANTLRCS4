@@ -551,11 +551,11 @@ public static class PredictionModeTools
         var configToAlts = new AltAndContextMap();
         foreach (var c in configs)
         {
-            var alts = configToAlts.get(c);
+            var alts = configToAlts.Get(c);
             if (alts == null)
             {
                 alts = new BitSet();
-                configToAlts.put(c, alts);
+                configToAlts.Put(c, alts);
             }
             alts.Set(c.alt);
         }

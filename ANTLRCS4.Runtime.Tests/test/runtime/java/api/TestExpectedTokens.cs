@@ -36,7 +36,7 @@ public class TestExpectedTokens : JavaRunner
         var atn = g.GetATN();
         var blkStartStateNumber = 5;
         var tokens = atn.GetExpectedTokens(blkStartStateNumber, null);
-        Assert.AreEqual("{B, C}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{B, C}", tokens.ToString(g.GetTokenNames()));
     }
 
     [TestMethod]
@@ -61,7 +61,7 @@ public class TestExpectedTokens : JavaRunner
         var atn = g.GetATN();
         var blkStartStateNumber = 4;
         var tokens = atn.GetExpectedTokens(blkStartStateNumber, null);
-        Assert.AreEqual("{B, C}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{B, C}", tokens.ToString(g.GetTokenNames()));
     }
 
     [TestMethod]
@@ -94,11 +94,11 @@ public class TestExpectedTokens : JavaRunner
         // From the start of 'b' with empty stack, can only see B and EOF
         var blkStartStateNumber = 9;
         var tokens = atn.GetExpectedTokens(blkStartStateNumber, ParserRuleContext.EMPTY);
-        Assert.AreEqual("{<EOF>, B}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{<EOF>, B}", tokens.ToString(g.GetTokenNames()));
 
         // Now call from 'a'
         tokens = atn.GetExpectedTokens(blkStartStateNumber, new ParserRuleContext(ParserRuleContext.EMPTY, 4));
-        Assert.AreEqual("{A, B}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{A, B}", tokens.ToString(g.GetTokenNames()));
     }
 
     // Test for https://github.com/antlr/antlr4/issues/1480
@@ -142,7 +142,7 @@ public class TestExpectedTokens : JavaRunner
         var atn = g.GetATN();
 
         //		DOTGenerator gen = new DOTGenerator(g);
-        //		String dot = gen.getDOT(atn.states.get(2), g.getRuleNames(), false);
+        //		string dot = gen.getDOT(atn.states.get(2), g.getRuleNames(), false);
         //		Console.Out.WriteLine(dot);
 
         // Simulate call stack after input '(x' from rule s
@@ -150,11 +150,11 @@ public class TestExpectedTokens : JavaRunner
         var callStackFrom_expr = new ParserRuleContext(callStackFrom_s, 9);
         int afterID = 14;
         var tokens = atn.GetExpectedTokens(afterID, callStackFrom_expr);
-        Assert.AreEqual("{R, PLUS}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{R, PLUS}", tokens.ToString(g.GetTokenNames()));
 
         // Simulate call stack after input '(x' from within rule expr
         callStackFrom_expr = new ParserRuleContext(null, 9);
         tokens = atn.GetExpectedTokens(afterID, callStackFrom_expr);
-        Assert.AreEqual("{R, PLUS}", tokens.ToString(g.getTokenNames()));
+        Assert.AreEqual("{R, PLUS}", tokens.ToString(g.GetTokenNames()));
     }
 }

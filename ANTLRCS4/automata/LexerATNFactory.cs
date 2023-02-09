@@ -82,7 +82,7 @@ public class LexerATNFactory : ParserATNFactory
         atn.ruleToTokenType = new int[g.rules.Count];
         foreach (var r in g.rules.Values)
         {
-            atn.ruleToTokenType[r.index] = g.getTokenType(r.name);
+            atn.ruleToTokenType[r.index] = g.GetTokenType(r.name);
         }
 
         // CREATE ATN FOR EACH RULE
@@ -617,7 +617,7 @@ public class LexerATNFactory : ParserATNFactory
                         else
                         {
                             var sb = new StringBuilder();
-                            foreach (Object child in rootAst.GetChildren())
+                            foreach (var child in rootAst.GetChildren())
                             {
                                 if (child is RangeAST AST)
                                 {
@@ -866,7 +866,7 @@ public class LexerATNFactory : ParserATNFactory
             return null;
         }
 
-        int tokenType = g.getTokenType(tokenName);
+        int tokenType = g.GetTokenType(tokenName);
         if (tokenType != org.antlr.v4.runtime.Token.INVALID_TYPE)
         {
             return tokenType;
@@ -904,7 +904,7 @@ public class LexerATNFactory : ParserATNFactory
             return null;
         }
 
-        int channelValue = g.getChannelValue(channelName);
+        int channelValue = g.GetChannelValue(channelName);
         if (channelValue >= org.antlr.v4.runtime.Token.MIN_USER_CHANNEL_VALUE)
         {
             return channelValue;

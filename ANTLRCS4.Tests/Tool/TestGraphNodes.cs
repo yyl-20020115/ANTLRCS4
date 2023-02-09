@@ -90,7 +90,7 @@ public class TestGraphNodes
     {
         PredictionContext r = PredictionContext.Merge(EmptyPredictionContext.Instance, X(), FullCtx(), null);
         //		Console.Out.WriteLine(toDOTString(r, fullCtx()));
-        String expecting =
+        var expecting =
             "digraph G {\n" +
             "rankdir=LR;\n" +
             "  s0[shape=record, label=\"<p0>|<p1>$\"];\n" +

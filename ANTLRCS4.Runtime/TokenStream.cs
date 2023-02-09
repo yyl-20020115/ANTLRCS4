@@ -71,7 +71,7 @@ public interface TokenStream : IntStream
 	 *
 	 * @throws NullReferenceException if {@code interval} is {@code null}
 	 */
-    public String GetText(Interval interval);
+    public string GetText(Interval interval);
 
     /**
 	 * Return the text of all tokens in the stream. This method behaves like the
@@ -86,7 +86,7 @@ public interface TokenStream : IntStream
 	 *
 	 * @return The text of all tokens in the stream.
 	 */
-    public String Text { get; }
+    public string Text { get; }
 
     /**
 	 * Return the text of all tokens in the source interval of the specified
@@ -106,7 +106,7 @@ public interface TokenStream : IntStream
 	 * text for.
 	 * @return The text of all tokens within the source interval of {@code ctx}.
 	 */
-    public String GetText(RuleContext ctx);
+    public string GetText(RuleContext ctx);
 
     /**
 	 * Return the text of all tokens in this stream between {@code start} and
@@ -137,7 +137,7 @@ public interface TokenStream : IntStream
 	 * @throws UnsupportedOperationException if this stream does not support
 	 * this method for the specified tokens
 	 */
-    public String GetText(Token start, Token stop);
+    public string GetText(Token start, Token stop);
     int Range();
 
     /** Return the text of all tokens from start to stop, inclusive.
@@ -145,13 +145,13 @@ public interface TokenStream : IntStream
 	 *  return "" or null;  Users should not access $ruleLabel.text in
 	 *  an action of course in that case.
 	 */
-    public String ToString(int start, int stop);
+    public string ToString(int start, int stop);
 
     /** Because the user is not required to use a token with an index stored
 	 *  in it, we must provide a means for two token objects themselves to
 	 *  indicate the start/end location.  Most often this will just delegate
 	 *  to the other toString(int,int).  This is also parallel with
-	 *  the TreeNodeStream.toString(Object,Object).
+	 *  the TreeNodeStream.toString(object,Object).
 	 */
-    public String ToString(Token start, Token stop);
+    public string ToString(Token start, Token stop);
 }

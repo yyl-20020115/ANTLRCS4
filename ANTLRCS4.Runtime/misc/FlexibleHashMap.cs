@@ -25,10 +25,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
 
         public Entry(K key, V value) { this.key = key; this.value = value; }
 
-        public override String ToString()
-        {
-            return key.ToString() + ":" + value.ToString();
-        }
+        public override string ToString() => key.ToString() + ":" + value.ToString();
     }
 
 
@@ -48,47 +45,39 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
 
     public FlexibleHashMap() : this(null, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
     {
-        ;
     }
 
     public FlexibleHashMap(AbstractEqualityComparator<K> comparator) : this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
     {
-        ;
     }
 
     public FlexibleHashMap(AbstractEqualityComparator<K> comparator, int initialCapacity, int initialBucketCapacity)
     {
-        if (comparator == null)
-        {
-            comparator = TEqualityComparator<K>.INSTANCE;
-        }
-
-        this.comparator = comparator;
+        this.comparator = comparator ?? TEqualityComparator<K>.INSTANCE;
         this.initialCapacity = initialCapacity;
         this.initialBucketCapacity = initialBucketCapacity;
         this.threshold = (int)Math.Floor(initialCapacity * LOAD_FACTOR);
-        this.buckets = createEntryListArray<K, V>(initialBucketCapacity);
+        this.buckets = CreateEntryListArray<K, V>(initialBucketCapacity);
     }
 
-    private static LinkedList<Entry<K, V>>[] createEntryListArray<K, V>(int length)
+    private static LinkedList<Entry<K, V>>[] CreateEntryListArray<K, V>(int length)
     {
         LinkedList<Entry<K, V>>[] result = new LinkedList<Entry<K, V>>[length];
         return result;
     }
 
-    protected int getBucket(K key)
+    protected int GetBucket(K key)
     {
         int hash = comparator.GetHashCode(key);
         int b = hash & (buckets.Length - 1); // assumes len is power of 2
         return b;
     }
 
-    //@Override
-    public V get(Object key)
+    public V Get(object key)
     {
         K typedKey = (K)key;
         if (key == null) return default;
-        int b = getBucket(typedKey);
+        int b = GetBucket(typedKey);
         LinkedList<Entry<K, V>> bucket = buckets[b];
         if (bucket == null) return default; // no bucket
         foreach (Entry<K, V> e in bucket)
@@ -101,12 +90,11 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         return default;
     }
 
-    //@Override
-    public V put(K key, V value)
+    public V Put(K key, V value)
     {
         if (key == null) return default;
-        if (n > threshold) expand();
-        int b = getBucket(key);
+        if (n > threshold) Expand();
+        int b = GetBucket(key);
         LinkedList<Entry<K, V>> bucket = buckets[b];
         if (bucket == null)
         {
@@ -128,28 +116,24 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         return default;
     }
 
-    //@Override
-    public V remove(Object key)
+    public V Remove(object key)
     {
         throw new UnsupportedOperationException();
     }
 
-    //@Override
-    public void putAll(Dictionary<K, V> m)
+    public void PutAll(Dictionary<K, V> m)
     {
         throw new UnsupportedOperationException();
     }
 
-    //@Override
-    public HashSet<K> keySet()
+    public HashSet<K> KeySet()
     {
         throw new UnsupportedOperationException();
     }
 
-    //@Override
-    public ICollection<V> values()
+    public ICollection<V> Values()
     {
-        List<V> a = new(size());
+        List<V> a = new(Count);
         foreach (LinkedList<Entry<K, V>> bucket in buckets)
         {
             if (bucket == null) continue;
@@ -166,20 +150,11 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
     //	throw new UnsupportedOperationException();
     //}
 
-    //@Override
-    public bool containsKey(Object key)
-    {
-        return get(key) != null;
-    }
+    public bool ContainsKey(object key) => Get(key) != null;
 
-    //@Override
-    public bool containsValue(Object value)
-    {
-        throw new UnsupportedOperationException();
-    }
+    public bool ContainsValue(object value) => throw new UnsupportedOperationException();
 
-    //@Override
-    public int GetHashCode()
+    public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
         foreach (LinkedList<Entry<K, V>> bucket in buckets)
@@ -192,66 +167,58 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
             }
         }
 
-        hash = MurmurHash.Finish(hash, size());
+        hash = MurmurHash.Finish(hash, Count);
         return hash;
     }
 
-    //@Override
-    public bool equals(Object o)
+    public override bool Equals(object? o)
     {
         throw new UnsupportedOperationException();
     }
 
-    protected void expand()
+    protected void Expand()
     {
         LinkedList<Entry<K, V>>[] old = buckets;
         currentPrime += 4;
         int newCapacity = buckets.Length * 2;
-        LinkedList<Entry<K, V>>[] newTable = createEntryListArray<K, V>(newCapacity);
+        LinkedList<Entry<K, V>>[] newTable = CreateEntryListArray<K, V>(newCapacity);
         buckets = newTable;
         threshold = (int)(newCapacity * LOAD_FACTOR);
         //		Console.WriteLine("new size="+newCapacity+", thres="+threshold);
         // rehash all existing entries
-        int oldSize = size();
+        int oldSize = Count;
         foreach (LinkedList<Entry<K, V>> bucket in old)
         {
             if (bucket == null) continue;
             foreach (Entry<K, V> e in bucket)
             {
                 if (e == null) break;
-                put(e.key, e.value);
+                Put(e.key, e.value);
             }
         }
         n = oldSize;
     }
 
     //@Override
-    public int size()
-    {
-        return n;
-    }
+    public new int Count => n;
 
     //@Override
-    public bool isEmpty()
-    {
-        return n == 0;
-    }
+    public bool IsEmpty => n == 0;
 
-    //@Override
-    public void clear()
+    public new void Clear()
     {
-        buckets = createEntryListArray<K, V>(this.initialCapacity);
+        buckets = CreateEntryListArray<K, V>(this.initialCapacity);
         n = 0;
         threshold = (int)Math.Floor(this.initialCapacity * LOAD_FACTOR);
     }
 
     //@Override
-    public String toString()
+    public override string ToString()
     {
-        if (size() == 0) return "{}";
+        if (Count == 0) return "{}";
 
-        StringBuilder buf = new StringBuilder();
-        buf.Append('{');
+        var buffer = new StringBuilder();
+        buffer.Append('{');
         bool first = true;
         foreach (LinkedList<Entry<K, V>> bucket in buckets)
         {
@@ -260,51 +227,51 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
             {
                 if (e == null) break;
                 if (first) first = false;
-                else buf.Append(", ");
-                buf.Append(e.ToString());
+                else buffer.Append(", ");
+                buffer.Append(e.ToString());
             }
         }
-        buf.Append('}');
-        return buf.ToString();
+        buffer.Append('}');
+        return buffer.ToString();
     }
 
-    public String toTableString()
+    public string ToTableString()
     {
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         foreach (LinkedList<Entry<K, V>> bucket in buckets)
         {
             if (bucket == null)
             {
-                buf.Append("null\n");
+                buffer.Append("null\n");
                 continue;
             }
-            buf.Append('[');
+            buffer.Append('[');
             bool first = true;
             foreach (Entry<K, V> e in bucket)
             {
                 if (first) first = false;
-                else buf.Append(" ");
-                if (e == null) buf.Append("_");
-                else buf.Append(e.ToString());
+                else buffer.Append(" ");
+                if (e == null) buffer.Append("_");
+                else buffer.Append(e.ToString());
             }
-            buf.Append("]\n");
+            buffer.Append("]\n");
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
-    public static void TestMain(String[] args)
+    public static void TestMain(string[] args)
     {
-        FlexibleHashMap<String, int> map = new FlexibleHashMap<String, int>();
-        map.put("hi", 1);
-        map.put("mom", 2);
-        map.put("foo", 3);
-        map.put("ach", 4);
-        map.put("cbba", 5);
-        map.put("d", 6);
-        map.put("edf", 7);
-        map.put("mom", 8);
-        map.put("hi", 9);
+        FlexibleHashMap<string, int> map = new();
+        map.Put("hi", 1);
+        map.Put("mom", 2);
+        map.Put("foo", 3);
+        map.Put("ach", 4);
+        map.Put("cbba", 5);
+        map.Put("d", 6);
+        map.Put("edf", 7);
+        map.Put("mom", 8);
+        map.Put("hi", 9);
         Console.WriteLine(map);
-        Console.WriteLine(map.toTableString());
+        Console.WriteLine(map.ToTableString());
     }
 }

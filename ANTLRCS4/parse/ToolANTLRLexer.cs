@@ -24,9 +24,7 @@ public class ToolANTLRLexer : ANTLRLexer
         var msg = GetErrorMessage(e, tokenNames);
         tool.ErrMgr.SyntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
     }
-
-    //@Override
-    public void GrammarError(ErrorType etype, Token token, params Object[] args)
+    public override void GrammarError(ErrorType etype, Token token, params object[] args)
     {
         tool.ErrMgr.GrammarError(etype, SourceName, token, args);
     }

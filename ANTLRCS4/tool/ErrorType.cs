@@ -1412,7 +1412,7 @@ public class ErrorType
 	 * @param msg The error message template.
 	 * @param severity The error severity.
 	 */
-    public ErrorType(string name, int code, String msg, ErrorSeverity severity)
+    public ErrorType(string name, int code, string msg, ErrorSeverity severity)
     {
         this.name = name;
         this.code = code;

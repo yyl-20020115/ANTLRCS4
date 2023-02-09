@@ -48,10 +48,10 @@ public abstract class RewriteRuleElementStream
     protected int cursor = 0;
 
     /** Track single elements w/o creating a list.  Upon 2nd add, alloc list */
-    protected Object singleElement;
+    protected object singleElement;
 
     /** The list of tokens or subtrees we are tracking */
-    protected List<Object> elements;
+    protected List<object> elements;
 
     /** Once a node / subtree has been used in a stream, it must be dup'd
 	 *  from then on.  Streams are reset after subrules so that the streams
@@ -69,10 +69,10 @@ public abstract class RewriteRuleElementStream
 	 *  rule reference that this list tracks.  Can include rulename too, but
 	 *  the exception would track that info.
 	 */
-    protected String elementDescription;
+    protected string elementDescription;
     protected TreeAdaptor adaptor;
 
-    public RewriteRuleElementStream(TreeAdaptor adaptor, String elementDescription)
+    public RewriteRuleElementStream(TreeAdaptor adaptor, string elementDescription)
     {
         this.elementDescription = elementDescription;
         this.adaptor = adaptor;
@@ -81,17 +81,17 @@ public abstract class RewriteRuleElementStream
     /** Create a stream with one element */
 
     public RewriteRuleElementStream(TreeAdaptor adaptor,
-                                    String elementDescription,
-                                    Object oneElement)
+                                    string elementDescription,
+                                    object oneElement)
         : this(adaptor, elementDescription)
     {
-        add(oneElement);
+        Add(oneElement);
     }
 
     /** Create a stream, but feed off an existing list */
     public RewriteRuleElementStream(TreeAdaptor adaptor,
-                                    String elementDescription,
-                                    List<Object> elements)
+                                    string elementDescription,
+                                    List<object> elements)
         : this(adaptor, elementDescription)
     {
         this.singleElement = null;
@@ -103,13 +103,13 @@ public abstract class RewriteRuleElementStream
 	 *  Once we reset the stream, any future use will need duplicates.  Set
 	 *  the dirty bit.
 	 */
-    public void reset()
+    public void Reset()
     {
         cursor = 0;
         dirty = true;
     }
 
-    public void add(Object el)
+    public void Add(Object el)
     {
         //Console.Out.WriteLine("add '"+elementDescription+"' is "+el);
         if (el == null)
@@ -138,17 +138,17 @@ public abstract class RewriteRuleElementStream
 	 *  Return a duplicate node/subtree if stream is out of elements and
 	 *  size==1.  If we've already used the element, dup (dirty bit set).
 	 */
-    public Object nextTree()
+    public object NextTree()
     {
-        int n = size();
+        int n = Size();
         if (dirty || (cursor >= n && n == 1))
         {
             // if out of elements and size is 1, dup
-            var elx = _next();
-            return dup(elx);
+            var elx = Next();
+            return Dup(elx);
         }
         // test size above then fetch
-        Object el = _next();
+        var el = Next();
         return el;
     }
 
@@ -158,9 +158,9 @@ public abstract class RewriteRuleElementStream
 	 *  if the stream is empty or we're out of elements and size&gt;1.
 	 *  protected so you can override in a subclass if necessary.
 	 */
-    protected Object _next()
+    protected object Next()
     {
-        int n = size();
+        int n = Size();
         if (n == 0)
         {
             throw new RewriteEmptyStreamException(elementDescription);
@@ -169,7 +169,7 @@ public abstract class RewriteRuleElementStream
         { // out of elements?
             if (n == 1)
             {  // if size is 1, it's ok; return and we'll dup
-                return toTree(singleElement);
+                return ToTree(singleElement);
             }
             // out of elements and size was not 1, so we can't dup
             throw new RewriteCardinalityException(elementDescription);
@@ -178,10 +178,10 @@ public abstract class RewriteRuleElementStream
         if (singleElement != null)
         {
             cursor++; // move cursor even for single element list
-            return toTree(singleElement);
+            return ToTree(singleElement);
         }
         // must have more than one in list, pull from elements
-        Object o = toTree(elements[(cursor)]);
+        Object o = ToTree(elements[(cursor)]);
         cursor++;
         return o;
     }
@@ -191,23 +191,23 @@ public abstract class RewriteRuleElementStream
 	 *  around it.  For trees, you must call the adaptor.dupTree() unless
 	 *  the element is for a tree root; then it must be a node dup.
 	 */
-    protected abstract Object dup(Object el);
+    protected abstract object Dup(Object el);
 
     /** Ensure stream emits trees; tokens must be converted to AST nodes.
 	 *  AST nodes can be passed through unmolested.
 	 */
-    protected Object toTree(Object el)
+    protected object ToTree(object el)
     {
         return el;
     }
 
-    public bool hasNext()
+    public bool HasNext()
     {
         return (singleElement != null && cursor < 1) ||
               (elements != null && cursor < elements.Count);
     }
 
-    public int size()
+    public int Size()
     {
         int n = 0;
         if (singleElement != null)
@@ -221,8 +221,5 @@ public abstract class RewriteRuleElementStream
         return n;
     }
 
-    public String getDescription()
-    {
-        return elementDescription;
-    }
+    public string Description => elementDescription;
 }

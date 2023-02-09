@@ -101,7 +101,7 @@ public class XPath
         }
         catch (LexerNoViableAltException e)
         {
-            int pos = lexer.getCharPositionInLine();
+            int pos = lexer.CharPositionInLine;
             string msg = "Invalid tokens or characters at index " + pos + " in path '" + path + "'";
             throw new ArgumentException(msg, e);
         }

@@ -12,7 +12,7 @@ public class JavaExecutedState : ExecutedState
 {
     public readonly ParseTree parseTree;
 
-    public JavaExecutedState(JavaCompiledState previousState, String output, String errors, ParseTree parseTree,
+    public JavaExecutedState(JavaCompiledState previousState, string output, string errors, ParseTree parseTree,
                              Exception exception) : base(previousState, output, errors, exception)
     {
         this.parseTree = parseTree;

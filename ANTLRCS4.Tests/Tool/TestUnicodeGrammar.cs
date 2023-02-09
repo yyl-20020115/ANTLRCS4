@@ -132,12 +132,12 @@ public class TestUnicodeGrammar
         var charStream = new ANTLRInputStream(new StringReader(
             Encoding.Latin1.GetString(toParse)));
         var grammar = new Grammar(grammarText);
-        var lexEngine = grammar.createLexerInterpreter(charStream);
+        var lexEngine = grammar.CreateLexerInterpreter(charStream);
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = grammar.createGrammarParserInterpreter(tokens);
+        var parser = grammar.CreateGrammarParserInterpreter(tokens);
         var parseTree = parser.Parse(grammar.rules[("r")].index);
         var nodeTextProvider =
-                new InterpreterTreeTextProvider(grammar.getRuleNames());
+                new InterpreterTreeTextProvider(grammar.GetRuleNames());
         var result = Trees.ToStringTree(parseTree, nodeTextProvider);
 
         Assert.AreEqual(
@@ -151,13 +151,13 @@ public class TestUnicodeGrammar
             string inputText)
     {
         var grammar = new Grammar(grammarText);
-        var lexEngine = grammar.createLexerInterpreter(
+        var lexEngine = grammar.CreateLexerInterpreter(
                 CharStreams.FromString(inputText));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = grammar.createGrammarParserInterpreter(tokens);
+        var parser = grammar.CreateGrammarParserInterpreter(tokens);
         var parseTree = parser.Parse(grammar.rules[(rootRule)].index);
         var nodeTextProvider =
-                new InterpreterTreeTextProvider(grammar.getRuleNames());
+                new InterpreterTreeTextProvider(grammar.GetRuleNames());
         return Trees.ToStringTree(parseTree, nodeTextProvider);
     }
 }

@@ -8,7 +8,7 @@ using org.antlr.v4.runtime.misc;
 namespace org.antlr.v4.misc;
 
 
-/** A generic graph with edges; Each node as a single Object payload.
+/** A generic graph with edges; Each node as a single object payload.
  *  This is only used to topologically sort a list of file dependencies
  *  at the moment.
  */

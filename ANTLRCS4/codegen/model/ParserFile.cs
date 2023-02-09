@@ -29,15 +29,15 @@ public class ParserFile : OutputFile
         var g = factory.Grammar;
         namedActions = BuildNamedActions(factory.Grammar);
         genPackage = g.Tools.genPackage;
-        exportMacro = factory.Grammar.getOptionString("exportMacro");
+        exportMacro = factory.Grammar.GetOptionString("exportMacro");
         // need the below members in the ST for Python, C++
         genListener = g.Tools.gen_listener;
         genVisitor = g.Tools.gen_visitor;
         grammarName = g.name;
 
-        if (g.getOptionString("contextSuperClass") != null)
+        if (g.GetOptionString("contextSuperClass") != null)
         {
-            contextSuperClass = new ActionText(null, g.getOptionString("contextSuperClass"));
+            contextSuperClass = new ActionText(null, g.GetOptionString("contextSuperClass"));
         }
     }
 }

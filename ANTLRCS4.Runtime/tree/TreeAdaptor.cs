@@ -48,21 +48,21 @@ public interface TreeAdaptor
 	 *
 	 *  Override if you want another kind of node to be built.
 	 */
-    public object create(Token payload);
+    public object Create(Token payload);
 
     /** Duplicate a single tree node.
 	 *  Override if you want another kind of node to be built.
 	 */
-    public object dupNode(Object treeNode);
+    public object DupNode(Object treeNode);
 
     /** Duplicate tree recursively, using dupNode() for each node */
-    public object dupTree(Object tree);
+    public object DupTree(Object tree);
 
     /** Return a nil node (an empty but non-null node) that can hold
 	 *  a list of element as the children.  If you want a flat tree (a list)
 	 *  use "t=adaptor.nil(); t.addChild(x); t.addChild(y);"
 	 */
-    public object nil();
+    public object Nil();
 
     /** Return a tree node representing an error.  This node records the
 	 *  tokens consumed during error recovery.  The start token indicates the
@@ -78,10 +78,10 @@ public interface TreeAdaptor
 	 *  Tree parsing should happen only when parsing and tree construction
 	 *  succeed.
 	 */
-    public object errorNode(TokenStream input, Token start, Token stop, RecognitionException e);
+    public object ErrorNode(TokenStream input, Token start, Token stop, RecognitionException e);
 
     /** Is tree considered a nil node used to make lists of child nodes? */
-    public bool isNil(Object tree);
+    public bool IsNil(Object tree);
 
     /** Add a child to the tree t.  If child is a flat tree (a list), make all
 	 *  in list children of t.  Warning: if t has no children, but child does
@@ -90,7 +90,7 @@ public interface TreeAdaptor
 	 *  make sure that this is consistent with have the user will build
 	 *  ASTs.  Do nothing if t or child is null.
 	 */
-    public void addChild(Object t, Object child);
+    public void AddChild(Object t, Object child);
 
     /** If oldRoot is a nil root, just copy or move the children to newRoot.
 	 *  If not a nil root, make oldRoot a child of newRoot.
@@ -118,7 +118,7 @@ public interface TreeAdaptor
 	 *  constructing these nodes so we should have this control for
 	 *  efficiency.
 	 */
-    public object becomeRoot(Object newRoot, Object oldRoot);
+    public object BecomeRoot(Object newRoot, Object oldRoot);
 
     /** Given the root of the subtree created for this rule, post process
 	 *  it to do any simplifications or whatever you want.  A required
@@ -133,7 +133,7 @@ public interface TreeAdaptor
 	 *  This method is executed after all rule tree construction and right
 	 *  before setTokenBoundaries().
 	 */
-    public Object rulePostProcessing(Object root);
+    public Object RulePostProcessing(Object root);
 
     /** For identifying trees.
 	 *
@@ -141,7 +141,7 @@ public interface TreeAdaptor
 	 *  Even becomeRoot is an issue.  Use System.identityHashCode(node)
 	 *  usually.
 	 */
-    public int getUniqueID(Object node);
+    public int GetUniqueID(Object node);
 
 
     // R e w r i t e  R u l e s
@@ -157,7 +157,7 @@ public interface TreeAdaptor
 	 *  because it needs to trap calls to create, but it can't since it delegates
 	 *  to not inherits from the TreeAdaptor.
 	 */
-    public Object becomeRoot(Token newRoot, Object oldRoot);
+    public object BecomeRoot(Token newRoot, object oldRoot);
 
     /** Create a new node derived from a token, with a new token type.
 	 *  This is invoked from an imaginary node ref on right side of a
@@ -165,7 +165,7 @@ public interface TreeAdaptor
 	 *
 	 *  This should invoke createToken(Token).
 	 */
-    public Object create(int tokenType, Token fromToken);
+    public object Create(int tokenType, Token fromToken);
 
     /** Same as create(tokenType,fromToken) except set the text too.
 	 *  This is invoked from an imaginary node ref on right side of a
@@ -173,7 +173,7 @@ public interface TreeAdaptor
 	 *
 	 *  This should invoke createToken(Token).
 	 */
-    public Object create(int tokenType, Token fromToken, String text);
+    public object Create(int tokenType, Token fromToken, String text);
 
     /** Create a new node derived from a token, with a new token type.
 	 *  This is invoked from an imaginary node ref on right side of a
@@ -181,21 +181,21 @@ public interface TreeAdaptor
 	 *
 	 *  This should invoke createToken(int,String).
 	 */
-    public Object create(int tokenType, String text);
+    public Object Create(int tokenType, String text);
 
 
     // C o n t e n t
 
     /** For tree parsing, I need to know the token type of a node */
-    public int getType(Object t);
+    public int GetType(object t);
 
     /** Node constructors can set the type of a node */
-    public void setType(Object t, int type);
+    public void SetType(Object t, int type);
 
-    public String getText(Object t);
+    public String GetText(Object t);
 
     /** Node constructors can set the text of a node */
-    public void setText(Object t, String text);
+    public void SetText(Object t, String text);
 
     /** Return the token object from which this node was created.
 	 *  Currently used only for printing an error message.
@@ -206,7 +206,7 @@ public interface TreeAdaptor
 	 *  the appropriate information and pass that back.  See
 	 *  BaseRecognizer.getErrorMessage().
 	 */
-    public Token getToken(Object t);
+    public Token GetToken(Object t);
 
     /** Where are the bounds in the input token stream for this node and
 	 *  all children?  Each rule that creates AST nodes will call this
@@ -214,42 +214,42 @@ public interface TreeAdaptor
 	 *  still usually have a nil root node just to hold the children list.
 	 *  That node would contain the start/stop indexes then.
 	 */
-    public void setTokenBoundaries(Object t, Token startToken, Token stopToken);
+    public void SetTokenBoundaries(Object t, Token startToken, Token stopToken);
 
     /** Get the token start index for this subtree; return -1 if no such index */
-    public int getTokenStartIndex(Object t);
+    public int GetTokenStartIndex(Object t);
 
     /** Get the token stop index for this subtree; return -1 if no such index */
-    public int getTokenStopIndex(Object t);
+    public int GetTokenStopIndex(Object t);
 
 
     // N a v i g a t i o n  /  T r e e  P a r s i n g
 
     /** Get a child 0..n-1 node */
-    public Object getChild(Object t, int i);
+    public Object GetChild(Object t, int i);
 
     /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
-    public void setChild(Object t, int i, Object child);
+    public void SetChild(Object t, int i, Object child);
 
     /** Remove ith child and shift children down from right. */
-    public Object deleteChild(Object t, int i);
+    public Object DeleteChild(Object t, int i);
 
     /** How many children?  If 0, then this is a leaf node */
-    public int getChildCount(Object t);
+    public int GetChildCount(Object t);
 
     /** Who is the parent node of this node; if null, implies node is root.
 	 *  If your node type doesn't handle this, it's ok but the tree rewrites
 	 *  in tree parsers need this functionality.
 	 */
-    public Object getParent(Object t);
-    public void setParent(Object t, Object parent);
+    public Object GetParent(Object t);
+    public void SetParent(Object t, Object parent);
 
     /** What index is this node in the child list? Range: 0..n-1
 	 *  If your node type doesn't handle this, it's ok but the tree rewrites
 	 *  in tree parsers need this functionality.
 	 */
-    public int getChildIndex(Object t);
-    public void setChildIndex(Object t, int index);
+    public int GetChildIndex(Object t);
+    public void SetChildIndex(Object t, int index);
 
     /** Replace from start to stop child index of parent with t, which might
 	 *  be a list.  Number of children may be different
@@ -258,5 +258,5 @@ public interface TreeAdaptor
 	 *  If parent is null, don't do anything; must be at root of overall tree.
 	 *  Can't replace whatever points to the parent externally.  Do nothing.
 	 */
-    public void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
 }

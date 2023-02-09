@@ -66,7 +66,7 @@ public class TestBasicSemanticErrors
         var expected =
             "error(" + ErrorType.LABEL_BLOCK_NOT_A_SET + "): T.g4:2:5: label op assigned to a block which is not a set\n";
 
-        TestErrors(new String[] { grammar, expected }, false);
+        TestErrors(new string[] { grammar, expected }, false);
     }
 
     [TestMethod]
@@ -95,7 +95,7 @@ public class TestBasicSemanticErrors
         grammarST.Add("retvals", "int expr");
         grammarST.Add("locals", "int expr");
         grammarST.Add("body", "expr=expr");
-        TestErrors(new String[] { grammarST.Render(), expected }, false);
+        TestErrors(new string[] { grammarST.Render(), expected }, false);
     }
 
     private static void TestErrors(string[] strings, bool v)

@@ -22,7 +22,7 @@ namespace org.antlr.v4.tool;
 
 public class Grammar : AttributeResolver
 {
-    public static readonly String GRAMMAR_FROM_STRING_NAME = "<string>";
+    public static readonly string GRAMMAR_FROM_STRING_NAME = "<string>";
     /**
 	 * This value is used in the following situations to indicate that a token
 	 * type does not have an associated name which can be directly referenced in
@@ -36,16 +36,16 @@ public class Grammar : AttributeResolver
 	 * representation of the token type as an integer.</li>
 	 * </ul>
 	 */
-    public static readonly String INVALID_TOKEN_NAME = "<INVALID>";
+    public static readonly string INVALID_TOKEN_NAME = "<INVALID>";
     /**
 	 * This value is used as the name for elements in the array returned by
 	 * {@link #getRuleNames} for indexes not associated with a rule.
 	 */
-    public static readonly String INVALID_RULE_NAME = "<invalid>";
+    public static readonly string INVALID_RULE_NAME = "<invalid>";
 
-    public static readonly String caseInsensitiveOptionName = "caseInsensitive";
+    public static readonly string caseInsensitiveOptionName = "caseInsensitive";
 
-    public static readonly HashSet<String> parserOptions = new HashSet<String>();
+    public static readonly HashSet<string> parserOptions = new();
     static Grammar()
     {
         parserOptions.Add("superClass");
@@ -164,7 +164,7 @@ public class Grammar : AttributeResolver
 	 * Map token like {@code ID} (but not literals like {@code 'while'}) to its
 	 * token type.
 	 */
-    public readonly Dictionary<String, int> tokenNameToTypeMap = new();
+    public readonly Dictionary<string, int> tokenNameToTypeMap = new();
 
     /**
 	 * Map token literals like {@code 'while'} to its token type. It may be that
@@ -331,7 +331,7 @@ public class Grammar : AttributeResolver
 
         if (tokenVocabSource != null)
         {
-            importVocab(tokenVocabSource);
+            ImportVocab(tokenVocabSource);
         }
 
         Tools.Process(this, false);
@@ -351,7 +351,7 @@ public class Grammar : AttributeResolver
         this.LoadImportedGrammars(new());
     }
 
-    private void LoadImportedGrammars(HashSet<String> visited)
+    private void LoadImportedGrammars(HashSet<string> visited)
     {
         if (ast == null) return;
         var i = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.IMPORT);
@@ -407,7 +407,7 @@ public class Grammar : AttributeResolver
         else
         {
             var scope = atAST.GetChild(0).Text;
-            var gtype = getTypeString();
+            var gtype = GetTypeString();
             if (scope.Equals(gtype) || (scope.Equals("parser") && gtype.Equals("combined")))
             {
                 var name = atAST.GetChild(1).Text;
@@ -515,7 +515,7 @@ public class Grammar : AttributeResolver
     {
         if (grammarName != null)
         { // scope override
-            var g = getImportedGrammar(grammarName);
+            var g = GetImportedGrammar(grammarName);
             if (g == null)
             {
                 return null;
@@ -609,20 +609,20 @@ public class Grammar : AttributeResolver
             qualifiedName = buffer.ToString();
         }
 
-        if (isCombined() || (isLexer() && implicitLexer != null))
+        if (IsCombined || (IsLexer && implicitLexer != null))
         {
-            suffix = Grammar.getGrammarTypeToFileNameSuffix(getType());
+            suffix = Grammar.GetGrammarTypeToFileNameSuffix(Type);
         }
         return qualifiedName + suffix;
     }
 
-    public String getStringLiteralLexerRuleName(String lit)
+    public string GetStringLiteralLexerRuleName(string lit)
     {
         return AUTO_GENERATED_TOKEN_NAME_PREFIX + stringLiteralRuleNumber++;
     }
 
     /** Return grammar directly imported by this grammar */
-    public Grammar getImportedGrammar(String name)
+    public Grammar GetImportedGrammar(string name)
     {
         foreach (Grammar g in importedGrammars)
         {
@@ -631,7 +631,7 @@ public class Grammar : AttributeResolver
         return null;
     }
 
-    public int getTokenType(String token)
+    public int GetTokenType(String token)
     {
         if (token[(0)] == '\'')
         {
@@ -644,13 +644,13 @@ public class Grammar : AttributeResolver
         //tool.log("grammar", "grammar type "+type+" "+tokenName+"->"+i);
     }
 
-    public String getTokenName(String literal)
+    public string GetTokenName(string literal)
     {
-        Grammar grammar = this;
+        var grammar = this;
         while (grammar != null)
         {
             if (grammar.stringLiteralToTypeMap.TryGetValue(literal,out var v))
-                return grammar.getTokenName(v);
+                return grammar.GetTokenName(v);
             grammar = grammar.parent;
         }
         return null;
@@ -660,10 +660,10 @@ public class Grammar : AttributeResolver
 	 *  or string literal.  If this is a lexer and the ttype is in the
 	 *  char vocabulary, compute an ANTLR-valid (possibly escaped) char literal.
 	 */
-    public String getTokenDisplayName(int ttype)
+    public string GetTokenDisplayName(int ttype)
     {
         // inside any target's char range and is lexer grammar?
-        if (isLexer() &&
+        if (IsLexer &&
              ttype >= Lexer.MIN_CHAR_VALUE && ttype <= Lexer.MAX_CHAR_VALUE)
         {
             return CharSupport.GetANTLRCharLiteralForChar(ttype);
@@ -706,10 +706,10 @@ public class Grammar : AttributeResolver
 	 * @return The name of the token with the specified type.
 	 */
 
-    public String getTokenName(int ttype)
+    public string GetTokenName(int ttype)
     {
         // inside any target's char range and is lexer grammar?
-        if (isLexer() &&
+        if (IsLexer &&
              ttype >= Lexer.MIN_CHAR_VALUE && ttype <= Lexer.MAX_CHAR_VALUE)
         {
             return CharSupport.GetANTLRCharLiteralForChar(ttype);
@@ -742,7 +742,7 @@ public class Grammar : AttributeResolver
 	 * @return The channel value, if {@code channel} is the name of a known
 	 * user-defined token channel; otherwise, -1.
 	 */
-    public int getChannelValue(String channel)
+    public int GetChannelValue(string channel)
     {
         return channelNameToValueMap.TryGetValue(channel,out var r)?r:-1;
     }
@@ -757,11 +757,11 @@ public class Grammar : AttributeResolver
 	 *
 	 * @return The names of all rules defined in the grammar.
 	 */
-    public String[] getRuleNames()
+    public string[] GetRuleNames()
     {
-        String[] result = new String[rules.Count];
+        var result = new String[rules.Count];
         Array.Fill(result, INVALID_RULE_NAME);
-        foreach (Rule rule in rules.Values)
+        foreach (var rule in rules.Values)
         {
             result[rule.index] = rule.name;
         }
@@ -777,13 +777,13 @@ public class Grammar : AttributeResolver
 	 * @see #getTokenName
 	 * @return The token names of all tokens defined in the grammar.
 	 */
-    public String[] getTokenNames()
+    public string[] GetTokenNames()
     {
-        int numTokens = getMaxTokenType();
-        String[] tokenNames = new String[numTokens + 1];
+        int numTokens = GetMaxTokenType();
+        var tokenNames = new string[numTokens + 1];
         for (int i = 0; i < tokenNames.Length; i++)
         {
-            tokenNames[i] = getTokenName(i);
+            tokenNames[i] = GetTokenName(i);
         }
 
         return tokenNames;
@@ -797,13 +797,13 @@ public class Grammar : AttributeResolver
 	 * @see #getTokenDisplayName
 	 * @return The display names of all tokens defined in the grammar.
 	 */
-    public String[] getTokenDisplayNames()
+    public string[] GetTokenDisplayNames()
     {
-        int numTokens = getMaxTokenType();
-        String[] tokenNames = new String[numTokens + 1];
+        int numTokens = GetMaxTokenType();
+        var tokenNames = new string[numTokens + 1];
         for (int i = 0; i < tokenNames.Length; i++)
         {
-            tokenNames[i] = getTokenDisplayName(i);
+            tokenNames[i] = GetTokenDisplayName(i);
         }
 
         return tokenNames;
@@ -813,10 +813,10 @@ public class Grammar : AttributeResolver
 	 * Gets the literal names assigned to tokens in the grammar.
 	 */
 
-    public String[] getTokenLiteralNames()
+    public string[] GetTokenLiteralNames()
     {
-        int numTokens = getMaxTokenType();
-        String[] literalNames = new String[numTokens + 1];
+        int numTokens = GetMaxTokenType();
+        var literalNames = new string[numTokens + 1];
         for (int i = 0; i < Math.Min(literalNames.Length, typeToStringLiteralList.Count); i++)
         {
             literalNames[i] = typeToStringLiteralList[i];
@@ -838,10 +838,10 @@ public class Grammar : AttributeResolver
 	 * Gets the symbolic names assigned to tokens in the grammar.
 	 */
 
-    public String[] getTokenSymbolicNames()
+    public string[] GetTokenSymbolicNames()
     {
-        int numTokens = getMaxTokenType();
-        String[] symbolicNames = new String[numTokens + 1];
+        int numTokens = GetMaxTokenType();
+        var symbolicNames = new string[numTokens + 1];
         for (int i = 0; i < Math.Min(symbolicNames.Length, typeToTokenList.Count); i++)
         {
             if (typeToTokenList[i] == null || typeToTokenList[(i)].StartsWith(AUTO_GENERATED_TOKEN_NAME_PREFIX))
@@ -860,60 +860,54 @@ public class Grammar : AttributeResolver
 	 * grammar.
 	 */
 
-    public Vocabulary getVocabulary()
-    {
-        return new VocabularyImpl(getTokenLiteralNames(), getTokenSymbolicNames());
-    }
+    public Vocabulary Vocabulary => new VocabularyImpl(GetTokenLiteralNames(), GetTokenSymbolicNames());
 
     /** Given an arbitrarily complex SemanticContext, walk the "tree" and get display string.
 	 *  Pull predicates from grammar text.
 	 */
-    public String getSemanticContextDisplayString(SemanticContext semctx)
+    public string GetSemanticContextDisplayString(SemanticContext semctx)
     {
-        if (semctx is SemanticContext.Predicate)
+        if (semctx is SemanticContext.Predicate predicate)
         {
-            return getPredicateDisplayString((SemanticContext.Predicate)semctx);
+            return GetPredicateDisplayString(predicate);
         }
-        if (semctx is SemanticContext.AND)
+        if (semctx is SemanticContext.AND and)
         {
-            SemanticContext.AND and = (SemanticContext.AND)semctx;
-            return joinPredicateOperands(and, " and ");
+            return JoinPredicateOperands(and, " and ");
         }
-        if (semctx is SemanticContext.OR)
+        if (semctx is SemanticContext.OR or)
         {
-            SemanticContext.OR or = (SemanticContext.OR)semctx;
-            return joinPredicateOperands(or, " or ");
+            return JoinPredicateOperands(or, " or ");
         }
         return semctx.ToString();
     }
 
-    public String joinPredicateOperands(SemanticContext.Operator op, String separator)
+    public string JoinPredicateOperands(SemanticContext.Operator op, string separator)
     {
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         foreach (SemanticContext operand in op.GetOperands())
         {
-            if (buf.Length > 0)
+            if (buffer.Length > 0)
             {
-                buf.Append(separator);
+                buffer.Append(separator);
             }
 
-            buf.Append(getSemanticContextDisplayString(operand));
+            buffer.Append(GetSemanticContextDisplayString(operand));
         }
 
-        return buf.ToString();
+        return buffer.ToString();
     }
 
-    public Dictionary<int, PredAST> getIndexToPredicateMap()
+    public Dictionary<int, PredAST> GetIndexToPredicateMap()
     {
-        Dictionary<int, PredAST> indexToPredMap = new Dictionary<int, PredAST>();
-        foreach (Rule r in rules.Values)
+        Dictionary<int, PredAST> indexToPredMap = new();
+        foreach (var r in rules.Values)
         {
-            foreach (ActionAST a in r.actions)
+            foreach (var a in r.actions)
             {
-                if (a is PredAST)
+                if (a is PredAST p)
                 {
-                    PredAST p = (PredAST)a;
-                    if(sempreds.TryGetValue(p, out var r2))
+                    if (sempreds.TryGetValue(p, out var r2))
                     {
                         indexToPredMap[r2] = p;
                     }
@@ -923,100 +917,88 @@ public class Grammar : AttributeResolver
         return indexToPredMap;
     }
 
-    public String getPredicateDisplayString(SemanticContext.Predicate pred)
+    public string GetPredicateDisplayString(SemanticContext.Predicate pred)
     {
-        if (indexToPredMap == null)
-        {
-            indexToPredMap = getIndexToPredicateMap();
-        }
-        ActionAST? actionAST = indexToPredMap.TryGetValue(pred.predIndex,out var r)?r:null;
+        indexToPredMap ??= GetIndexToPredicateMap();
+        var actionAST = indexToPredMap.TryGetValue(pred.predIndex,out var r)?r:null;
         return actionAST?.Text;
     }
 
     /** What is the max char value possible for this grammar's target?  Use
 	 *  unicode max if no target defined.
 	 */
-    public int getMaxCharValue()
-    {
-        return org.antlr.v4.runtime.Lexer.MAX_CHAR_VALUE;
-        //		if ( generator!=null ) {
-        //			return generator.getTarget().getMaxCharValue(generator);
-        //		}
-        //		else {
-        //			return Label.MAX_CHAR_VALUE;
-        //		}
-    }
-
+    public static int MaxCharValue => org.antlr.v4.runtime.Lexer.MAX_CHAR_VALUE;
+    //		if ( generator!=null ) {//			return generator.getTarget().getMaxCharValue(generator);//		}//		else {//			return Label.MAX_CHAR_VALUE;//		}
     /** Return a set of all possible token or char types for this grammar */
-    public IntSet getTokenTypes()
+    public IntSet GetTokenTypes()
     {
-        if (isLexer())
+        if (IsLexer)
         {
-            return getAllCharValues();
+            return GetAllCharValues();
         }
-        return IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, getMaxTokenType());
+        return IntervalSet.Of(Token.MIN_USER_TOKEN_TYPE, GetMaxTokenType());
     }
 
     /** Return min to max char as defined by the target.
 	 *  If no target, use max unicode char value.
 	 */
-    public IntSet getAllCharValues()
+    public static IntSet GetAllCharValues()
     {
-        return IntervalSet.Of(Lexer.MIN_CHAR_VALUE, getMaxCharValue());
+        return IntervalSet.Of(Lexer.MIN_CHAR_VALUE, MaxCharValue);
     }
 
     /** How many token types have been allocated so far? */
-    public int getMaxTokenType()
+    public int GetMaxTokenType()
     {
         return typeToTokenList.Count - 1; // don't count 0 (invalid)
     }
 
     /** Return a new unique integer in the token type space */
-    public int getNewTokenType()
+    public int GetNewTokenType()
     {
         maxTokenType++;
         return maxTokenType;
     }
 
     /** Return a new unique integer in the channel value space. */
-    public int getNewChannelNumber()
+    public int GetNewChannelNumber()
     {
         maxChannelType++;
         return maxChannelType;
     }
 
-    public void importTokensFromTokensFile()
+    public void ImportTokensFromTokensFile()
     {
-        String vocab = getOptionString("tokenVocab");
+        var vocab = GetOptionString("tokenVocab");
         if (vocab != null)
         {
-            TokenVocabParser vparser = new TokenVocabParser(this);
-            Dictionary<String, int> tokens = vparser.Load();
+            var vparser = new TokenVocabParser(this);
+            var tokens = vparser.Load();
             Tools.Log("grammar", "tokens=" + tokens);
-            foreach (String t in tokens.Keys)
+            foreach (var t in tokens.Keys)
             {
                 if(tokens.TryGetValue(t, out var ret))
                 {
-                    if (t[0] == '\'') defineStringLiteral(t, ret);
-                    else defineTokenName(t, ret);
+                    if (t[0] == '\'') DefineStringLiteral(t, ret);
+                    else DefineTokenName(t, ret);
                 }
             }
         }
     }
 
-    public void importVocab(Grammar importG)
+    public void ImportVocab(Grammar importG)
     {
-        foreach (String tokenName in importG.tokenNameToTypeMap.Keys)
+        foreach (var tokenName in importG.tokenNameToTypeMap.Keys)
         {
-            defineTokenName(tokenName, importG.tokenNameToTypeMap[(tokenName)]);
+            DefineTokenName(tokenName, importG.tokenNameToTypeMap[(tokenName)]);
         }
-        foreach (String tokenName in importG.stringLiteralToTypeMap.Keys)
+        foreach (var tokenName in importG.stringLiteralToTypeMap.Keys)
         {
-            defineStringLiteral(tokenName, importG.stringLiteralToTypeMap[(tokenName)]);
+            DefineStringLiteral(tokenName, importG.stringLiteralToTypeMap[(tokenName)]);
         }
         foreach (var channel in importG.channelNameToValueMap)
         {
-            defineChannelName(channel.Key, channel.Value);
+            DefineChannelName(channel.Key, channel.Value);
         }
         //		this.tokenNameToTypeMap.putAll( importG.tokenNameToTypeMap );
         //		this.stringLiteralToTypeMap.putAll( importG.stringLiteralToTypeMap );
@@ -1037,33 +1019,28 @@ public class Grammar : AttributeResolver
         }
     }
 
-    public int defineTokenName(String name)
+    public int DefineTokenName(String name)
     {
         if (!tokenNameToTypeMap.TryGetValue(name,out var prev))
-            return defineTokenName(name, getNewTokenType());
+            return DefineTokenName(name, GetNewTokenType());
         return prev;
     }
 
-    public int defineTokenName(String name, int ttype)
+    public int DefineTokenName(String name, int ttype)
     {
         if (tokenNameToTypeMap.TryGetValue(name,out var prev)) return prev;
         tokenNameToTypeMap[name]= ttype;
-        setTokenForType(ttype, name);
+        SetTokenForType(ttype, name);
         maxTokenType = Math.Max(maxTokenType, ttype);
         return ttype;
     }
 
-    public int defineStringLiteral(String lit)
+    public int DefineStringLiteral(string lit)
     {
-        if (stringLiteralToTypeMap.ContainsKey(lit))
-        {
-            return stringLiteralToTypeMap[(lit)];
-        }
-        return defineStringLiteral(lit, getNewTokenType());
-
+        return stringLiteralToTypeMap.TryGetValue(lit, out int value) ? value : DefineStringLiteral(lit, GetNewTokenType());
     }
 
-    public int defineStringLiteral(String lit, int ttype)
+    public int DefineStringLiteral(string lit, int ttype)
     {
         if (!stringLiteralToTypeMap.ContainsKey(lit))
         {
@@ -1075,21 +1052,21 @@ public class Grammar : AttributeResolver
             }
             typeToStringLiteralList[ttype]= lit;
 
-            setTokenForType(ttype, lit);
+            SetTokenForType(ttype, lit);
             return ttype;
         }
         return Token.INVALID_TYPE;
     }
 
-    public int defineTokenAlias(String name, String lit)
+    public int DefineTokenAlias(String name, String lit)
     {
-        int ttype = defineTokenName(name);
+        int ttype = DefineTokenName(name);
         stringLiteralToTypeMap[lit] = ttype;
-        setTokenForType(ttype, name);
+        SetTokenForType(ttype, name);
         return ttype;
     }
 
-    public void setTokenForType(int ttype, String text)
+    public void SetTokenForType(int ttype, String text)
     {
         if (ttype == Token.EOF)
         {
@@ -1101,7 +1078,7 @@ public class Grammar : AttributeResolver
         {
             Utils.SetSize(typeToTokenList, ttype + 1);
         }
-        String prevToken = typeToTokenList[ttype];
+        var prevToken = typeToTokenList[ttype];
         if (prevToken == null || prevToken[(0)] == '\'')
         {
             // only record if nothing there before or if thing before was a literal
@@ -1119,14 +1096,9 @@ public class Grammar : AttributeResolver
 	 * @param name The channel name.
 	 * @return The constant channel value assigned to the channel.
 	 */
-    public int defineChannelName(String name)
+    public int DefineChannelName(String name)
     {
-        if (!channelNameToValueMap.TryGetValue(name,out var prev))
-        {
-            return defineChannelName(name, getNewChannelNumber());
-        }
-
-        return prev;
+        return !channelNameToValueMap.TryGetValue(name,out var prev) ? DefineChannelName(name, GetNewChannelNumber()) : prev;
     }
 
     /**
@@ -1139,7 +1111,7 @@ public class Grammar : AttributeResolver
 	 * @param name The channel name.
 	 * @return The constant channel value assigned to the channel.
 	 */
-    public int defineChannelName(String name, int value)
+    public int DefineChannelName(String name, int value)
     {
         if (channelNameToValueMap.TryGetValue(name,out var prev))
         {
@@ -1147,7 +1119,7 @@ public class Grammar : AttributeResolver
         }
 
         channelNameToValueMap[name] = value;
-        setChannelNameForValue(value, name);
+        SetChannelNameForValue(value, name);
         maxChannelType = Math.Max(maxChannelType, value);
         return value;
     }
@@ -1162,14 +1134,14 @@ public class Grammar : AttributeResolver
 	 * @param channelValue The constant value for the channel.
 	 * @param name The channel name.
 	 */
-    public void setChannelNameForValue(int channelValue, String name)
+    public void SetChannelNameForValue(int channelValue, String name)
     {
         if (channelValue >= channelValueToNameList.Count)
         {
             Utils.SetSize(channelValueToNameList, channelValue + 1);
         }
 
-        String prevChannel = channelValueToNameList[channelValue];
+        var prevChannel = channelValueToNameList[channelValue];
         if (prevChannel == null)
         {
             channelValueToNameList[channelValue]= name;
@@ -1178,14 +1150,14 @@ public class Grammar : AttributeResolver
 
     // no isolated attr at grammar action level
     //@Override
-    public Attribute ResolveToAttribute(String x, ActionAST node)
+    public Attribute ResolveToAttribute(string x, ActionAST node)
     {
         return null;
     }
 
     // no $x.y makes sense here
     //@Override
-    public Attribute ResolveToAttribute(String x, String y, ActionAST node)
+    public Attribute ResolveToAttribute(string x, string y, ActionAST node)
     {
         return null;
     }
@@ -1209,79 +1181,68 @@ public class Grammar : AttributeResolver
      *  If I say @members in a COMBINED grammar, for example, the
      *  default scope should be "parser".
      */
-    public String getDefaultActionScope()
+    public string GetDefaultActionScope() => this.Type switch
     {
-        switch (getType())
+        ANTLRParser.LEXER => "lexer",
+        ANTLRParser.PARSER or ANTLRParser.COMBINED => "parser",
+        _ => null,
+    };
+
+    public int Type
+    {
+        get
         {
-            case ANTLRParser.LEXER:
-                return "lexer";
-            case ANTLRParser.PARSER:
-            case ANTLRParser.COMBINED:
-                return "parser";
+            if (ast != null) return ast.grammarType;
+            return 0;
         }
-        return null;
     }
 
-    public int getType()
+    public TokenStream TokenStream
     {
-        if (ast != null) return ast.grammarType;
-        return 0;
+        get
+        {
+            if (ast != null) return ast.tokenStream;
+            return null;
+        }
     }
 
-    public TokenStream getTokenStream()
-    {
-        if (ast != null) return ast.tokenStream;
-        return null;
-    }
-
-    public bool isLexer() { return getType() == ANTLRParser.LEXER; }
-    public bool isParser() { return getType() == ANTLRParser.PARSER; }
-    public bool isCombined() { return getType() == ANTLRParser.COMBINED; }
-
+    public bool IsLexer => Type == ANTLRParser.LEXER;
+    public bool IsParser => Type == ANTLRParser.PARSER;
+    public bool IsCombined => Type == ANTLRParser.COMBINED;
     /** Is id a valid token name? Does id start with an uppercase letter? */
-    public static bool isTokenName(String id)
-    {
-        return char.IsUpper(id[(0)]);
-    }
+    public static bool IsTokenName(string id) => id.Length > 0 && char.IsUpper(id[(0)]);
 
-    public String getTypeString()
+    public string GetTypeString()
     {
         if (ast == null) return null;
-        return ANTLRParser.tokenNames[getType()].ToLower();
+        return ANTLRParser.tokenNames[Type].ToLower();
     }
 
-    public static String getGrammarTypeToFileNameSuffix(int type)
+    public static string GetGrammarTypeToFileNameSuffix(int type) => type switch
     {
-        switch (type)
-        {
-            case ANTLRParser.LEXER: return "Lexer";
-            case ANTLRParser.PARSER: return "Parser";
-            // if combined grammar, gen Parser and Lexer will be done later
-            // TODO: we are separate now right?
-            case ANTLRParser.COMBINED: return "Parser";
-            default:
-                return "<invalid>";
-        }
-    }
+        ANTLRParser.LEXER => "Lexer",
+        ANTLRParser.PARSER => "Parser",
+        // if combined grammar, gen Parser and Lexer will be done later
+        // TODO: we are separate now right?
+        ANTLRParser.COMBINED => "Parser",
+        _ => "<invalid>",
+    };
 
-    public String getLanguage()
-    {
-        return getOptionString("language");
-    }
+    public string Language => GetOptionString("language");
 
-    public String getOptionString(String key) { return ast.GetOptionString(key); }
+    public string GetOptionString(string key) { return ast.GetOptionString(key); }
 
     /** Given ^(TOKEN_REF ^(OPTIONS ^(ELEMENT_OPTIONS (= assoc right))))
 	 *  set option assoc=right in TOKEN_REF.
 	 */
-    public static void setNodeOptions(GrammarAST node, GrammarAST options)
+    public static void SetNodeOptions(GrammarAST node, GrammarAST options)
     {
         if (options == null) return;
-        GrammarASTWithOptions t = (GrammarASTWithOptions)node;
+        var t = (GrammarASTWithOptions)node;
         if (t.ChildCount == 0 || options.ChildCount == 0) return;
-        foreach (Object o in options.GetChildren())
+        foreach (var o in options.GetChildren())
         {
-            GrammarAST c = (GrammarAST)o;
+            var c = (GrammarAST)o;
             if (c.Type == ANTLRParser.ASSIGN)
             {
                 t.SetOption(c.GetChild(0).Text, (GrammarAST)c.GetChild(1));
@@ -1294,9 +1255,9 @@ public class Grammar : AttributeResolver
     }
 
     /** Return list of (TOKEN_NAME node, 'literal' node) pairs */
-    public static List<Pair<GrammarAST, GrammarAST>> getStringLiteralAliasesFromLexerRules(GrammarRootAST ast)
+    public static List<Pair<GrammarAST, GrammarAST>> GetStringLiteralAliasesFromLexerRules(GrammarRootAST ast)
     {
-        String[] patterns = {
+        string[] patterns = {
             "(RULE %name:TOKEN_REF (BLOCK (ALT %lit:STRING_LITERAL)))",
             "(RULE %name:TOKEN_REF (BLOCK (ALT %lit:STRING_LITERAL ACTION)))",
             "(RULE %name:TOKEN_REF (BLOCK (ALT %lit:STRING_LITERAL SEMPRED)))",
@@ -1315,19 +1276,19 @@ public class Grammar : AttributeResolver
         List<GrammarAST> ruleNodes = ast.GetNodesWithType(ANTLRParser.RULE);
         if (ruleNodes == null || ruleNodes.Count == 0) return null;
 
-        foreach (GrammarAST r in ruleNodes)
+        foreach (var r in ruleNodes)
         {
             //tool.log("grammar", r.toStringTree());
             //			Console.Out.WriteLine("chk: "+r.toStringTree());
-            Tree name = r.GetChild(0);
+            var name = r.GetChild(0);
             if (name.Type == ANTLRParser.TOKEN_REF)
             {
                 // check rule against patterns
                 bool isLitRule;
-                foreach (String pattern in patterns)
+                foreach (string pattern in patterns)
                 {
                     isLitRule =
-                        defAlias(r, pattern, wiz, lexerRuleToStringLiteral);
+                        DefAlias(r, pattern, wiz, lexerRuleToStringLiteral);
                     if (isLitRule) break;
                 }
                 //				if ( !isLitRule ) Console.Out.WriteLine("no pattern matched");
@@ -1336,17 +1297,17 @@ public class Grammar : AttributeResolver
         return lexerRuleToStringLiteral;
     }
 
-    protected static bool defAlias(GrammarAST r, String pattern,
+    protected static bool DefAlias(GrammarAST r, string pattern,
                                       TreeWizard wiz,
                                       List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral)
     {
         Dictionary<string, object> nodes = new();
-        if (wiz.parse(r, pattern, nodes))
+        if (wiz.Parse(r, pattern, nodes))
         {
             if(nodes.TryGetValue("lit",out var litNode) && litNode is GrammarAST ln 
                 && nodes.TryGetValue("name",out var nameNode) && nameNode is GrammarAST nn)
             {
-                Pair<GrammarAST, GrammarAST> pair =
+                var pair =
                     new Pair<GrammarAST, GrammarAST>(nn, ln);
                 lexerRuleToStringLiteral.Add(pair);
                 return true;
@@ -1357,23 +1318,18 @@ public class Grammar : AttributeResolver
     public class GTV : GrammarTreeVisitor
     {
         public readonly Grammar g;
-        public GTV(Grammar g)
-        {
-            this.g = g;
-        }
+        public GTV(Grammar g) => this.g = g;
 
         //@Override
 
-        public void stringRef(TerminalAST @ref)
+        public override void StringRef(TerminalAST @ref)
         {
             g.strings.Add(@ref.Text);
         }
-        //@Override
-
-        public ErrorManager getErrorManager() { return g.Tools.ErrMgr; }
+        public override ErrorManager ErrorManager => g.Tools.ErrMgr;
     }
-    HashSet<String> strings = new HashSet<String>();
-    public HashSet<String> getStringLiterals()
+    readonly HashSet<string> strings = new();
+    public HashSet<string> GetStringLiterals()
     {
         strings.Clear();
         GrammarTreeVisitor collector = new GTV(this);
@@ -1381,22 +1337,22 @@ public class Grammar : AttributeResolver
         return strings;
     }
 
-    public void setLookaheadDFA(int decision, DFA lookaheadDFA)
+    public void SetLookaheadDFA(int decision, DFA lookaheadDFA)
     {
         decisionDFAs[decision]= lookaheadDFA;
     }
 
-    public static Dictionary<int, Interval> getStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
+    public static Dictionary<int, Interval> GetStateToGrammarRegionMap(GrammarRootAST ast, IntervalSet grammarTokenTypes)
     {
         Dictionary<int, Interval> stateToGrammarRegionMap = new();
         if (ast == null) return stateToGrammarRegionMap;
 
-        List<GrammarAST> nodes = ast.GetNodesWithType(grammarTokenTypes);
-        foreach (GrammarAST n in nodes)
+        var nodes = ast.GetNodesWithType(grammarTokenTypes);
+        foreach (var n in nodes)
         {
             if (n.atnState != null)
             {
-                Interval tokenRegion = Interval.Of(n.TokenStartIndex, n.TokenStopIndex);
+                var tokenRegion = Interval.Of(n.TokenStartIndex, n.TokenStopIndex);
                 Tree ruleNode = null;
                 // RULEs, BLOCKs of transformed recursive rules point to original token interval
                 switch (n.Type)
@@ -1426,27 +1382,27 @@ public class Grammar : AttributeResolver
     }
 
     /** Given an ATN state number, return the token index range within the grammar from which that ATN state was derived. */
-    public Interval getStateToGrammarRegion(int atnStateNumber)
+    public Interval GetStateToGrammarRegion(int atnStateNumber)
     {
         if (stateToGrammarRegionMap == null)
         {
-            stateToGrammarRegionMap = getStateToGrammarRegionMap(ast, null); // map all nodes with non-null atn state ptr
+            stateToGrammarRegionMap = GetStateToGrammarRegionMap(ast, null); // map all nodes with non-null atn state ptr
         }
         if (stateToGrammarRegionMap == null) return Interval.INVALID;
 
         return stateToGrammarRegionMap.TryGetValue(atnStateNumber,out var r)?r:null;
     }
 
-    public LexerInterpreter createLexerInterpreter(CharStream input)
+    public LexerInterpreter CreateLexerInterpreter(CharStream input)
     {
-        if (this.isParser())
+        if (this.IsParser)
         {
             throw new IllegalStateException("A lexer interpreter can only be created for a lexer or combined grammar.");
         }
 
-        if (this.isCombined())
+        if (this.IsCombined)
         {
-            return implicitLexer.createLexerInterpreter(input);
+            return implicitLexer.CreateLexerInterpreter(input);
         }
 
         List<string> allChannels = new()
@@ -1461,8 +1417,8 @@ public class Grammar : AttributeResolver
         var deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
         return new LexerInterpreter(
                 fileName,
-                getVocabulary(),
-                Arrays.AsList(getRuleNames()),
+                Vocabulary,
+                Arrays.AsList(GetRuleNames()),
                 allChannels,
                 ((LexerGrammar)this).modes.Keys,
                 deserializedATN,
@@ -1470,22 +1426,22 @@ public class Grammar : AttributeResolver
     }
 
     /** @since 4.5.1 */
-    public GrammarParserInterpreter createGrammarParserInterpreter(TokenStream tokenStream)
+    public GrammarParserInterpreter CreateGrammarParserInterpreter(TokenStream tokenStream)
     {
-        if (this.isLexer())
+        if (this.IsLexer)
         {
             throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
         }
         // must run ATN through serializer to set some state flags
-        IntegerList serialized = ATNSerializer.GetSerialized(atn);
-        ATN deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
+        var serialized = ATNSerializer.GetSerialized(atn);
+        var deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
 
         return new GrammarParserInterpreter(this, deserializedATN, tokenStream);
     }
 
-    public ParserInterpreter createParserInterpreter(TokenStream tokenStream)
+    public ParserInterpreter CreateParserInterpreter(TokenStream tokenStream)
     {
-        if (this.isLexer())
+        if (this.IsLexer)
         {
             throw new IllegalStateException("A parser interpreter can only be created for a parser or combined grammar.");
         }
@@ -1494,6 +1450,6 @@ public class Grammar : AttributeResolver
         var serialized = ATNSerializer.GetSerialized(atn);
         var deserializedATN = new ATNDeserializer().Deserialize(serialized.ToArray());
 
-        return new ParserInterpreter(fileName, getVocabulary(), Arrays.AsList(getRuleNames()), deserializedATN, tokenStream);
+        return new ParserInterpreter(fileName, Vocabulary, Arrays.AsList(GetRuleNames()), deserializedATN, tokenStream);
     }
 }

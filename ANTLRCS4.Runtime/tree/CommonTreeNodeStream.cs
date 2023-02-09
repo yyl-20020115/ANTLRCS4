@@ -107,7 +107,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
             if (level == 0 && hasNilRoot) return it.next(); // don't give last UP; get EOF
         }
         else if (t == it.down) level++;
-        if (level == 0 && adaptor.isNil(t))
+        if (level == 0 && adaptor.IsNil(t))
         { // if nil root, scarf nil, DOWN
             hasNilRoot = true;
             t = it.next(); // t is now DOWN, so get first real node next
@@ -130,7 +130,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public override bool isEOF(Object o) { return adaptor.getType(o) == Token.EOF; }
+    public override bool isEOF(Object o) { return adaptor.GetType(o) == Token.EOF; }
 
     //@Override
     public void setUniqueNavigationNodes(bool uniqueNavigationNodes) { }
@@ -156,7 +156,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public int LA(int i) { return adaptor.getType(LT(i)); }
+    public int LA(int i) { return adaptor.GetType(LT(i)); }
 
     /** Make stream jump to a new location, saving old location.
      *  Switch back with pop().
@@ -217,7 +217,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     //@Override
     public bool hasPositionInformation(Object node)
     {
-        Token token = adaptor.getToken(node);
+        Token token = adaptor.GetToken(node);
         if (token == null)
         {
             return false;
@@ -238,7 +238,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     {
         if (parent != null)
         {
-            adaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
+            adaptor.ReplaceChildren(parent, startChildIndex, stopChildIndex, t);
         }
     }
 
@@ -256,14 +256,14 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
         Reset();
         StringBuilder buf = new StringBuilder();
         Object o = LT(1);
-        int type = adaptor.getType(o);
+        int type = adaptor.GetType(o);
         while (type != Token.EOF)
         {
             buf.Append(" ");
             buf.Append(type);
             Consume();
             o = LT(1);
-            type = adaptor.getType(o);
+            type = adaptor.GetType(o);
         }
         return buf.ToString();
     }

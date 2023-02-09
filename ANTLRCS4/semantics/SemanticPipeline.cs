@@ -98,8 +98,8 @@ public class SemanticPipeline
         }
 
         // ASSIGN TOKEN TYPES
-        g.importTokensFromTokensFile();
-        if (g.isLexer())
+        g.ImportTokensFromTokensFile();
+        if (g.IsLexer)
         {
             AssignLexerTokenTypes(g, collector.tokensDefs);
         }
@@ -144,9 +144,9 @@ public class SemanticPipeline
         foreach (var def in tokensDefs)
         {
             // tokens { id (',' id)* } so must check IDs not TOKEN_REF
-            if (Grammar.isTokenName(def.Text))
+            if (Grammar.IsTokenName(def.Text))
             {
-                G.defineTokenName(def.Text);
+                G.DefineTokenName(def.Text);
             }
         }
 
@@ -157,13 +157,13 @@ public class SemanticPipeline
         {
             if (!r.IsFragment && !HasTypeOrMoreCommand(r))
             {
-                G.defineTokenName(r.name);
+                G.DefineTokenName(r.name);
             }
         }
 
         // FOR ALL X in 'xxx'; RULES, DEFINE 'xxx' AS TYPE X
         var litAliases =
-            Grammar.getStringLiteralAliasesFromLexerRules(g.ast);
+            Grammar.GetStringLiteralAliasesFromLexerRules(g.ast);
         var conflictingLiterals = new HashSet<string>();
         if (litAliases != null)
         {
@@ -173,7 +173,7 @@ public class SemanticPipeline
                 var litAST = pair.b;
                 if (!G.stringLiteralToTypeMap.ContainsKey(litAST.Text))
                 {
-                    G.defineTokenAlias(nameAST.Text, litAST.Text);
+                    G.DefineTokenAlias(nameAST.Text, litAST.Text);
                 }
                 else
                 {
@@ -240,23 +240,23 @@ public class SemanticPipeline
         // create token types for tokens { A, B, C } ALIASES
         foreach (var alias in tokensDefs)
         {
-            if (g.getTokenType(alias.Text) != Token.INVALID_TYPE)
+            if (g.GetTokenType(alias.Text) != Token.INVALID_TYPE)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.Text);
             }
 
-            g.defineTokenName(alias.Text);
+            g.DefineTokenName(alias.Text);
         }
 
         // DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
         foreach (var idAST in tokenIDs)
         {
-            if (g.getTokenType(idAST.Text) == Token.INVALID_TYPE)
+            if (g.GetTokenType(idAST.Text) == Token.INVALID_TYPE)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.Text);
             }
 
-            g.defineTokenName(idAST.Text);
+            g.DefineTokenName(idAST.Text);
         }
 
         // VERIFY TOKEN TYPES FOR STRING LITERAL REFS LIKE 'while', ';'
@@ -267,7 +267,7 @@ public class SemanticPipeline
                 continue;
             }
 
-            if (g.getTokenType(termAST.Text) == Token.INVALID_TYPE)
+            if (g.GetTokenType(termAST.Text) == Token.INVALID_TYPE)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_STRING_DEFINITION, g.fileName, termAST.token, termAST.Text);
             }
@@ -289,7 +289,7 @@ public class SemanticPipeline
         var outermost = g.GetOutermostGrammar();
         foreach (var channel in channelDefs)
         {
-            String channelName = channel.Text;
+            var channelName = channel.Text;
 
             // Channel names can't alias tokens or modes, because constant
             // values are also assigned to them and the ->channel(NAME) lexer
@@ -298,7 +298,7 @@ public class SemanticPipeline
             // alias rules, because rule names are not associated with constant
             // values in ANTLR grammar semantics.
 
-            if (g.getTokenType(channelName) != Token.INVALID_TYPE)
+            if (g.GetTokenType(channelName) != Token.INVALID_TYPE)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.CHANNEL_CONFLICTS_WITH_TOKEN, g.fileName, channel.token, channelName);
             }
@@ -316,7 +316,7 @@ public class SemanticPipeline
                 }
             }
 
-            outermost.defineChannelName(channel.Text);
+            outermost.DefineChannelName(channel.Text);
         }
     }
 }

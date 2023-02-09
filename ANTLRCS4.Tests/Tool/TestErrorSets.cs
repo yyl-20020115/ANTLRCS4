@@ -32,7 +32,7 @@ public class TestErrorSets
     public void TestNotCharSetWithString()
     {
         // might be a useful feature to add someday
-        var pair = new String[] {
+        var pair = new string[] {
             "grammar T;\n" +
             "a : A {Console.Out.WriteLine($A.text);} ;\n" +
             "A : ~('a'|'aa') ;\n" +

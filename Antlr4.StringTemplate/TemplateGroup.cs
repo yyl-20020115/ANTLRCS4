@@ -110,7 +110,7 @@ public class TemplateGroup
      *  a particular kind of object for any template evaluated relative to this
      *  group.  For example, a date should be formatted differently depending
      *  on the culture.  You can set Date.class to an object whose
-     *  ToString(Object) method properly formats a Date attribute
+     *  ToString(object) method properly formats a Date attribute
      *  according to culture.  Or you can have a different renderer object
      *  for each culture.
      *
@@ -1640,7 +1640,7 @@ public class TemplateGroup
     }
 
     /** Add an adaptor for a kind of object so Template knows how to pull properties
-     *  from them. Add adaptors in increasing order of specificity.  Template adds Object,
+     *  from them. Add adaptors in increasing order of specificity.  Template adds object,
      *  Map, and Template model adaptors for you first. Adaptors you Add have
      *  priority over default adaptors.
      *

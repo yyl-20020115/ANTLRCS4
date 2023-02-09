@@ -57,7 +57,7 @@ public class VisitorFile : OutputFile
         if (g.namedActions.TryGetValue("header", out var ast) && ast.Scope == null)
             header = new Action(factory, ast);
         genPackage = g.Tools.genPackage;
-        accessLevel = g.getOptionString("accessLevel");
-        exportMacro = g.getOptionString("exportMacro");
+        accessLevel = g.GetOptionString("accessLevel");
+        exportMacro = g.GetOptionString("exportMacro");
     }
 }

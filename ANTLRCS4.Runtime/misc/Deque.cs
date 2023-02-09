@@ -50,9 +50,9 @@ public interface Deque<T>
     T Pop();
 
 
-    bool Remove(Object o);
+    bool Remove(object o);
 
-    bool Contains(Object o);
+    bool Contains(object o);
 
     int Count { get; }
 

@@ -87,7 +87,7 @@ public interface ITokenStream : IIntStream
      *  in it, we must provide a means for two token objects themselves to
      *  indicate the start/end location.  Most often this will just delegate
      *  to the other toString(int,int).  This is also parallel with
-     *  the TreeNodeStream.toString(Object,Object).
+     *  the TreeNodeStream.ToString(object,object).
      *  </summary>
      */
     string ToString( IToken start, IToken stop );

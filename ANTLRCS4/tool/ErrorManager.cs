@@ -15,9 +15,9 @@ namespace org.antlr.v4.tool;
 
 public class ErrorManager
 {
-    private readonly static Dictionary<String, TemplateGroupFile> loadedFormats = new();
+    private readonly static Dictionary<string, TemplateGroupFile> loadedFormats = new();
 
-    public static readonly String FORMATS_DIR = "org/antlr/v4/tool/templates/messages/formats/";
+    public static readonly string FORMATS_DIR = "org/antlr/v4/tool/templates/messages/formats/";
 
     public Tool tool;
     public int errors;
@@ -29,7 +29,7 @@ public class ErrorManager
     /** The group of templates that represent the current message format. */
     TemplateGroup format;
 
-    String formatName;
+    string formatName;
     readonly ErrorBuffer initSTListener = new ();
 
     public ErrorManager(Tool tool)
@@ -125,7 +125,7 @@ public class ErrorManager
                                    string fileName,
                                    Token token,
                                    RecognitionException antlrException,
-                                   params Object[] args)
+                                   params object[] args)
     {
         var msg = new GrammarSyntaxMessage(etype, fileName, token, antlrException, args);
         Emit(etype, msg);
@@ -157,12 +157,12 @@ public class ErrorManager
      * @param errorType The Message Descriptor
      * @param args The arguments to pass to the StringTemplate
      */
-    public void ToolError(ErrorType errorType, params Object[] args)
+    public void ToolError(ErrorType errorType, params object[] args)
     {
         ToolError(errorType, null, args);
     }
 
-    public void ToolError(ErrorType errorType, Exception e, params Object[] args)
+    public void ToolError(ErrorType errorType, Exception e, params object[] args)
     {
         var msg = new ToolMessage(errorType, e, args);
         Emit(errorType, msg);
@@ -178,7 +178,7 @@ public class ErrorManager
 
     }
 
-    public void LeftRecursionCycles(String fileName, ICollection<HashSet<Rule>> cycles)
+    public void LeftRecursionCycles(string fileName, ICollection<HashSet<Rule>> cycles)
     {
         errors++;
         var msg = new LeftRecursionCyclesMessage(fileName, cycles);
@@ -336,12 +336,12 @@ public class ErrorManager
     /** If there are errors during ErrorManager init, we have no choice
      *  but to go to System.err.
      */
-    static void RawError(String msg)
+    static void RawError(string msg)
     {
         Console.Error.WriteLine(msg);
     }
 
-    static void RawError(String msg, Exception e)
+    static void RawError(string msg, Exception e)
     {
         RawError(msg);
         //e.printStackTrace(System.err);
@@ -359,7 +359,7 @@ public class ErrorManager
         Panic(outputMsg);
     }
 
-    public static void Panic(String msg)
+    public static void Panic(string msg)
     {
         RawError(msg);
         Panic();

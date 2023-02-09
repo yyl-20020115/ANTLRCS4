@@ -391,15 +391,15 @@ public class TestPerformance
     ////@Disabled
     //public void compileJdk()
     //{
-    //    String jdkSourceRoot = getSourceRoot("JDK");
+    //    string jdkSourceRoot = getSourceRoot("JDK");
     //    Assert.IsTrue(jdkSourceRoot != null && jdkSourceRoot.Length > 0,
     //            "The JDK_SOURCE_ROOT environment variable must be set for performance testing.");
 
     //    JavaCompiledState javaCompiledState = compileJavaParser(USE_LR_GRAMMAR);
-    //    String lexerName = USE_LR_GRAMMAR ? "JavaLRLexer" : "JavaLexer";
-    //    String parserName = USE_LR_GRAMMAR ? "JavaLRParser" : "JavaParser";
-    //    String listenerName = USE_LR_GRAMMAR ? "JavaLRBaseListener" : "JavaBaseListener";
-    //    String entryPoint = "compilationUnit";
+    //    string lexerName = USE_LR_GRAMMAR ? "JavaLRLexer" : "JavaLexer";
+    //    string parserName = USE_LR_GRAMMAR ? "JavaLRParser" : "JavaParser";
+    //    string listenerName = USE_LR_GRAMMAR ? "JavaLRBaseListener" : "JavaBaseListener";
+    //    string entryPoint = "compilationUnit";
     //    ParserFactory factory = getParserFactory(javaCompiledState, listenerName, entryPoint);
 
     //    if (TOP_PACKAGE.Length > 0)
@@ -671,9 +671,9 @@ public class TestPerformance
   //      }
   //  }
 
-  //  private String getSourceRoot(String prefix)
+  //  private string getSourceRoot(string prefix)
   //  {
-  //      String sourceRoot =Environment.GetEnvironmentVariable(prefix + "_SOURCE_ROOT");
+  //      string sourceRoot =Environment.GetEnvironmentVariable(prefix + "_SOURCE_ROOT");
   //      //if (sourceRoot == null)
   //      //{
   //      //    sourceRoot = System.getProperty(prefix + "_SOURCE_ROOT");
@@ -682,7 +682,7 @@ public class TestPerformance
   //      return sourceRoot;
   //  }
 
-  //  public static String getOptionsDescription(String topPackage)
+  //  public static string getOptionsDescription(string topPackage)
   //  {
   //      StringBuilder builder = new StringBuilder();
   //      builder.Append("Input=");
@@ -783,11 +783,11 @@ public class TestPerformance
 
     //protected JavaCompiledState compileJavaParser(bool leftRecursive)
     //{
-    //    String grammarFileName = leftRecursive ? "JavaLR.g4" : "Java.g4";
-    //    String parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
-    //    String lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
-    //    String body = load(grammarFileName);
-    //    List<String> extraOptions = new();
+    //    string grammarFileName = leftRecursive ? "JavaLR.g4" : "Java.g4";
+    //    string parserName = leftRecursive ? "JavaLRParser" : "JavaParser";
+    //    string lexerName = leftRecursive ? "JavaLRLexer" : "JavaLexer";
+    //    string body = load(grammarFileName);
+    //    List<string> extraOptions = new();
     //    extraOptions.Add("-Werror");
     //    if (FORCE_ATN)
     //    {
@@ -805,7 +805,7 @@ public class TestPerformance
     //            extraOptions.Add("-XdbgSTWait");
     //        }
     //    }
-    //    String[] extraOptionsArray = extraOptions.ToArray();
+    //    string[] extraOptionsArray = extraOptions.ToArray();
 
     //    RunOptions runOptions = createOptionsForJavaToolTests(grammarFileName, body, parserName, lexerName,
     //            false, true, null, null,
@@ -981,7 +981,7 @@ public class TestPerformance
     //            }
 
     //            MethodInfo parseMethod = javaCompiledState.parser.getMethod(entryPoint);
-    //            Object parseResult;
+    //            object parseResult;
 
     //            try
     //            {
@@ -1007,7 +1007,7 @@ public class TestPerformance
     //                    throw ex;
     //                }
 
-    //                String sourceName = tokens.getSourceName();
+    //                string sourceName = tokens.getSourceName();
     //                sourceName = sourceName != null && sourceName.Length > 0 ? sourceName + ": " : "";
     //                if (REPORT_SECOND_STAGE_RETRY)
     //                {
@@ -1097,7 +1097,7 @@ public class TestPerformance
     //        }
     //    }
     //}
-    //protected ParserFactory getParserFactory(JavaCompiledState javaCompiledState, String listenerName, String entryPoint)
+    //protected ParserFactory getParserFactory(JavaCompiledState javaCompiledState, string listenerName, string entryPoint)
     //{
     //    try
     //    {
@@ -1126,7 +1126,7 @@ public class TestPerformance
 
     public class FileParseResult
     {
-        public readonly String sourceName;
+        public readonly string sourceName;
         public readonly int checksum;
         public readonly ParseTree parseTree;
         public readonly int tokenCount;
@@ -1145,7 +1145,7 @@ public class TestPerformance
         public readonly long[] parserComputedTransitions;
         public readonly long[] parserFullContextTransitions;
 
-        public FileParseResult(String sourceName, int checksum, ParseTree parseTree, int tokenCount, long startTime, Lexer lexer, Parser parser)
+        public FileParseResult(string sourceName, int checksum, ParseTree parseTree, int tokenCount, long startTime, Lexer lexer, Parser parser)
         {
             this.sourceName = sourceName;
             this.checksum = checksum;
@@ -1353,7 +1353,7 @@ public class TestPerformance
         //@Override
         public override void SyntaxError(Recognizer recognizer, object offendingSymbol,
                                 int line, int charPositionInLine,
-                                String msg, RecognitionException e)
+                                string msg, RecognitionException e)
         {
             if (!REPORT_SYNTAX_ERRORS)
             {
@@ -1421,7 +1421,7 @@ public class TestPerformance
             var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var representedAlts = GetConflictingAlts(conflictingAlts, configs);
             var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
-            //String.Format(format, decision, rule, input, representedAlts)
+            //string.Format(format, decision, rule, input, representedAlts)
             recognizer.NotifyErrorListeners(format);
         }
 
@@ -1592,7 +1592,7 @@ public class TestPerformance
     protected class CloneableANTLRFileStream : ANTLRFileStream
     {
 
-        public CloneableANTLRFileStream(String fileName, Encoding encoding)
+        public CloneableANTLRFileStream(string fileName, Encoding encoding)
             : base(fileName, encoding)
         {
         }
@@ -1668,11 +1668,11 @@ public class TestPerformance
         for (int level = 0; level < levels; level++)
         {
             var leafPrefix = level == levels - 1 ? "//" : "";
-            var grammar1 = String.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
+            var grammar1 = string.Format(grammarFormat, level, 1, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.WriteFile(tempDirPath, "Level_" + level + "_1.g4", grammar1);
             if (level > 0)
             {
-                var grammar2 = String.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
+                var grammar2 = string.Format(grammarFormat, level, 2, leafPrefix, level + 1, level + 1, level, 1);
                 FileUtils.WriteFile(tempDirPath, "Level_" + level + "_2.g4", grammar2);
             }
         }

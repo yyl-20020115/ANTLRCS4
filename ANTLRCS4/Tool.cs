@@ -361,7 +361,7 @@ public class Tool
                 //				Console.WriteLine("lexer strings="+lexerg.stringLiteralToTypeMap);
             }
         }
-        if (g.implicitLexer != null) g.importVocab(g.implicitLexer);
+        if (g.implicitLexer != null) g.ImportVocab(g.implicitLexer);
         //		Console.WriteLine("tokens="+g.tokenNameToTypeMap);
         //		Console.WriteLine("strings="+g.stringLiteralToTypeMap);
         ProcessNonCombinedGrammar(g, gencode);
@@ -389,7 +389,7 @@ public class Tool
 
         // BUILD ATN FROM AST
         ATNFactory factory;
-        if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar)g, codeGenerator);
+        if (g.IsLexer) factory = new LexerATNFactory((LexerGrammar)g, codeGenerator);
         else factory = new ParserATNFactory(g);
         g.atn = factory.CreateATN();
 
@@ -443,7 +443,7 @@ public class Tool
                 return;
             }
 
-            if (tool.gx.isLexer()) RuleRef(@ref, null);
+            if (tool.gx.IsLexer) RuleRef(@ref, null);
         }
 
         //@Override
@@ -741,7 +741,7 @@ public class Tool
             {
                 try
                 {
-                    var dot = dotGenerator.GetDOT(g.atn.ruleToStartState[r.index], g.isLexer());
+                    var dot = dotGenerator.GetDOT(g.atn.ruleToStartState[r.index], g.IsLexer);
                     if (dot != null)
                     {
                         WriteDOTFile(g, r, dot);
@@ -760,7 +760,7 @@ public class Tool
         var content = new StringBuilder();
 
         content.Append("token literal names:\n");
-        var names = g.getTokenLiteralNames();
+        var names = g.GetTokenLiteralNames();
         foreach (var name in names)
         {
             content.Append(name + "\n");
@@ -768,7 +768,7 @@ public class Tool
         content.Append('\n');
 
         content.Append("token symbolic names:\n");
-        names = g.getTokenSymbolicNames();
+        names = g.GetTokenSymbolicNames();
         foreach (var name in names)
         {
             content.Append(name + "\n");
@@ -776,14 +776,14 @@ public class Tool
         content.Append('\n');
 
         content.Append("rule names:\n");
-        names = g.getRuleNames();
+        names = g.GetRuleNames();
         foreach (var name in names)
         {
             content.Append(name + "\n");
         }
         content.Append('\n');
 
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             content.Append("channel names:\n");
             content.Append("DEFAULT_TOKEN_CHANNEL\n");

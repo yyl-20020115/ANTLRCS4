@@ -18,7 +18,7 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
     public GrammarASTAdaptor(CharStream input) { this.input = input; }
 
     //@Override
-    public object Create(Token token)
+    public override object Create(Token token)
     {
         return new GrammarAST(token);
     }
@@ -41,21 +41,18 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
         }
         else
         {
-            t = (GrammarAST)base.create(tokenType, text);
+            t = (GrammarAST)base.Create(tokenType, text);
         }
         t.token.        InputStream = input;
         return t;
     }
-
-    //@Override
-    public object dupNode(Object t)
+    public override object DupNode(object t)
     {
         if (t == null) return null;
         return ((GrammarAST)t).dupNode(); //create(((GrammarAST)t).token);
     }
 
-    //@Override
-    public object errorNode(TokenStream input, Token start, Token stop,
+    public object ErrorNode(TokenStream input, Token start, Token stop,
                             RecognitionException e)
     {
         return new GrammarASTErrorNode(input, start, stop, e);

@@ -324,7 +324,7 @@ public class TestUnbufferedCharStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = CreateStream("x = 302 * 91 + 20234234 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         // copy text into tokens from char stream
         lexEngine.        // copy text into tokens from char stream
         TokenFactory = new CommonTokenFactory(true);
@@ -408,7 +408,7 @@ public class TestUnbufferedCharStream
             {
                 // Don't pass -1 to new String().
                 return string.Join("", data[p..(len - 1)].Select(d => new Rune(d).ToString())) + "\uffff";
-                //return new String(data,p,len-p-1) + "\uFFFF";
+                //return new string(data,p,len-p-1) + "\uFFFF";
             }
             else
             {

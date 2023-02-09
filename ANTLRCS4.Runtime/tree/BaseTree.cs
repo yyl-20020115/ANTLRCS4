@@ -194,7 +194,7 @@ public abstract class BaseTree : Tree
      *  For huge child lists, inserting children can force walking rest of
      *  children to set their childindex; could be slow.
      */
-    public virtual void ReplaceChildren(int startChildIndex, int stopChildIndex, Object t)
+    public virtual void ReplaceChildren(int startChildIndex, int stopChildIndex, object t)
     {
         /*
         Console.Out.WriteLine("replaceChildren "+startChildIndex+", "+stopChildIndex+

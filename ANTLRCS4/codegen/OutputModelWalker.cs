@@ -123,7 +123,7 @@ public class OutputModelWalker
                 }
                 else if (o is IDictionary nestedOmoMap)
                 {
-                    var m = new Dictionary<Object, Template>();
+                    var m = new Dictionary<object, Template>();
                     var e = nestedOmoMap.GetEnumerator();
 
                     while (e.MoveNext())

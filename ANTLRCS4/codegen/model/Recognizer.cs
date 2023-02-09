@@ -43,7 +43,7 @@ public abstract class Recognizer : OutputModelObject
         grammarFileName = g.fileName;
         grammarName = g.name;
         name = g.GetRecognizerName();
-        accessLevel = g.getOptionString("accessLevel");
+        accessLevel = g.GetOptionString("accessLevel");
         tokens = new();
         foreach (var entry in g.tokenNameToTypeMap)
         {
@@ -57,10 +57,10 @@ public abstract class Recognizer : OutputModelObject
         ruleNames = g.rules.Keys.ToHashSet();
         rules = g.rules.Values;
         atn = gen.Target is JavaTarget ? new SerializedJavaATN(factory, g.atn) : new SerializedATN(factory, g.atn);
-        superClass = g.getOptionString("superClass") != null ? new ActionText(null, g.getOptionString("superClass")) : (ActionChunk?)null;
-        tokenNames = TranslateTokenStringsToTarget(g.getTokenDisplayNames(), gen);
-        literalNames = TranslateTokenStringsToTarget(g.getTokenLiteralNames(), gen);
-        symbolicNames = TranslateTokenStringsToTarget(g.getTokenSymbolicNames(), gen);
+        superClass = g.GetOptionString("superClass") != null ? new ActionText(null, g.GetOptionString("superClass")) : (ActionChunk?)null;
+        tokenNames = TranslateTokenStringsToTarget(g.GetTokenDisplayNames(), gen);
+        literalNames = TranslateTokenStringsToTarget(g.GetTokenLiteralNames(), gen);
+        symbolicNames = TranslateTokenStringsToTarget(g.GetTokenSymbolicNames(), gen);
     }
 
     protected static List<string> TranslateTokenStringsToTarget(string[] tokenStrings, CodeGenerator gen)

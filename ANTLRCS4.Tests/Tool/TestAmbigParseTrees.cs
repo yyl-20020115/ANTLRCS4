@@ -218,11 +218,11 @@ public class TestAmbigParseTrees
                                    string overallTree,
                                    string[] expectedParseTrees)
     {
-        var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
+        var nodeTextProvider = new InterpreterTreeTextProvider(g.GetRuleNames());
 
-        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = lg.CreateLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = g.createGrammarParserInterpreter(tokens);
+        var parser = g.CreateGrammarParserInterpreter(tokens);
         parser.SetProfile(true);
         parser.GetInterpreter().        PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
 
@@ -261,9 +261,9 @@ public class TestAmbigParseTrees
                                  string input,
                                  string expectedParseTree)
     {
-        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = lg.CreateLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = g.createGrammarParserInterpreter(tokens);
+        var parser = g.CreateGrammarParserInterpreter(tokens);
         var ruleStartState = g.atn.ruleToStartState[g.GetRule(startRule).index];
         var tr = ruleStartState.Transition(0);
         var t2 = tr.target;
@@ -273,7 +273,7 @@ public class TestAmbigParseTrees
         }
         parser.AddDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
         var t = parser.Parse(g.rules[(startRule)].index);
-        var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
+        var nodeTextProvider = new InterpreterTreeTextProvider(g.GetRuleNames());
         Assert.AreEqual(expectedParseTree, Trees.ToStringTree(t, nodeTextProvider));
     }
 }

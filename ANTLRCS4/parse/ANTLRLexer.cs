@@ -129,7 +129,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     public CommonTokenStream tokens; // track stream we push to; need for context info
     public bool isLexerRule = false;
 
-    public void GrammarError(ErrorType etype, Token token, params object[] args) { }
+    public virtual void GrammarError(ErrorType etype, Token token, params object[] args) { }
 
     /** scan backwards from current point in this.tokens list
      *  looking for the start of the rule or subrule.
@@ -451,7 +451,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                     {
                                         if (state.backtracking == 0)
                                         {
-                                            // ErrorManager.msg(Msg.UNTERMINATED_DOC_COMMENT, startLine, offset, state.tokenStartCharPositionInLine, startLine, offset, state.tokenStartCharPositionInLine, (Object)null);
+                                            // ErrorManager.msg(Msg.UNTERMINATED_DOC_COMMENT, startLine, offset, state.tokenStartCharPositionInLine, startLine, offset, state.tokenStartCharPositionInLine, (object)null);
                                         }
                                     }
                                     break;
@@ -2001,7 +2001,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             exit16:
                 if (state.backtracking == 0)
                 {
-                    if (Grammar.isTokenName((a != null ? a.Text : null))) _type = TOKEN_REF;
+                    if (Grammar.IsTokenName((a != null ? a.Text : null))) _type = TOKEN_REF;
                     else _type = RULE_REF;
                 }
             }

@@ -164,7 +164,7 @@ public class ToolTestUtils
             SemanticProcess(g);
             Assert.AreEqual(0, g.Tools.getNumErrors());
 
-            var f = g.isLexer() ? new LexerATNFactory((LexerGrammar)g) : new ParserATNFactory(g);
+            var f = g.IsLexer ? new LexerATNFactory((LexerGrammar)g) : new ParserATNFactory(g);
 
             g.atn = f.CreateATN();
             Assert.AreEqual(0, g.Tools.getNumErrors());

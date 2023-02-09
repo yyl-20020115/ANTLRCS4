@@ -57,7 +57,7 @@ public class ListenerFile : OutputFile
         if (g.namedActions.TryGetValue("header",out var ast)) 
             header = new (factory, ast);
         genPackage = g.Tools.genPackage;
-        accessLevel = g.getOptionString("accessLevel");
-        exportMacro = g.getOptionString("exportMacro");
+        accessLevel = g.GetOptionString("accessLevel");
+        exportMacro = g.GetOptionString("exportMacro");
     }
 }

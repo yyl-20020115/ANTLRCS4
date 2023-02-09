@@ -7,7 +7,7 @@ namespace org.antlr.v4.runtime.misc;
 
 /**
  * This interface provides an abstract concept of object equality independent of
- * {@link Object#equals} (object equality) and the {@code ==} operator
+ * {@link object#equals} (object equality) and the {@code ==} operator
  * (reference equality). It can be used to provide algorithm-specific unordered
  * comparisons without requiring changes to the object itself.
  *

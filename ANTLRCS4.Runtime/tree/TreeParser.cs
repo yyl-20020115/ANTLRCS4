@@ -92,7 +92,7 @@ public class TreeParser : BaseRecognizer
         var tokenText =
             "<missing " + TokenNames[expectedTokenType] + ">";
         var adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
-        return adaptor.create(new CommonToken(expectedTokenType, tokenText));
+        return adaptor.Create(new CommonToken(expectedTokenType, tokenText));
     }
 
     /** Match '.' in tree parser has special meaning.  Skip node or
@@ -105,7 +105,7 @@ public class TreeParser : BaseRecognizer
         state.errorRecovery = false;
         state.failed = false;
         var look = input.LT(1);
-        if (input.getTreeAdaptor().getChildCount(look) == 0)
+        if (input.getTreeAdaptor().GetChildCount(look) == 0)
         {
             input.Consume(); // not subtree, consume 1 node and return
             return;
@@ -113,12 +113,12 @@ public class TreeParser : BaseRecognizer
         // current node is a subtree, skip to corresponding UP.
         // must count nesting level to get right UP
         int level = 0;
-        int tokenType = input.getTreeAdaptor().getType(look);
+        int tokenType = input.getTreeAdaptor().GetType(look);
         while (tokenType != Token.EOF && !(tokenType == UP && level == 0))
         {
             input.Consume();
             look = input.LT(1);
-            tokenType = input.getTreeAdaptor().getType(look);
+            tokenType = input.getTreeAdaptor().GetType(look);
             if (tokenType == DOWN)
             {
                 level++;
@@ -162,11 +162,11 @@ public class TreeParser : BaseRecognizer
         if (this is TreeParser)
         {
             TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
-            e.token = adaptor.getToken(e.node);
+            e.token = adaptor.GetToken(e.node);
             if (e.token == null)
             { // could be an UP/DOWN node
-                e.token = new CommonToken(adaptor.getType(e.node),
-                                          adaptor.getText(e.node));
+                e.token = new CommonToken(adaptor.GetType(e.node),
+                                          adaptor.GetText(e.node));
             }
         }
         return base.GetErrorMessage(e, tokenNames);
@@ -209,7 +209,7 @@ public class TreeParser : BaseRecognizer
         context = context.Trim();
         var nodes = context.Split("\\s+");
         int ni = nodes.Length - 1;
-        t = adaptor.getParent(t);
+        t = adaptor.GetParent(t);
         while (ni >= 0 && t != null)
         {
             if (nodes[ni].Equals("..."))
@@ -222,7 +222,7 @@ public class TreeParser : BaseRecognizer
                 t = ancestor;
                 ni--;
             }
-            var name = tokenNames[adaptor.getType(t)];
+            var name = tokenNames[adaptor.GetType(t)];
             if (!name.Equals(nodes[ni]))
             {
                 //Console.Error.WriteLine("not matched: "+nodes[ni]+" at "+t);
@@ -230,7 +230,7 @@ public class TreeParser : BaseRecognizer
             }
             // advance to parent and to previous element in context node list
             ni--;
-            t = adaptor.getParent(t);
+            t = adaptor.GetParent(t);
         }
 
         if (t == null && ni >= 0) return false; // at root but more nodes to match
@@ -242,9 +242,9 @@ public class TreeParser : BaseRecognizer
     {
         while (t != null)
         {
-            var name = tokenNames[adaptor.getType(t)];
+            var name = tokenNames[adaptor.GetType(t)];
             if (name.Equals(goal)) return t;
-            t = adaptor.getParent(t);
+            t = adaptor.GetParent(t);
         }
         return null;
     }

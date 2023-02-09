@@ -255,8 +255,8 @@ public class TestParserProfiler
             string startRule, params string[] input)
     {
 
-        var lexEngine = lg.createLexerInterpreter(null);
-        var parser = g.createParserInterpreter(null);
+        var lexEngine = lg.CreateLexerInterpreter(null);
+        var parser = g.CreateParserInterpreter(null);
         parser.SetProfile(true);
         foreach (var s in input)
         {

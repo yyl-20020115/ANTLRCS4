@@ -12,10 +12,10 @@ public class BlockAST : GrammarASTWithOptions, RuleElementAST
 {
     // TODO: maybe I need a Subrule object like Rule so these options mov to that?
     /** What are the default options for a subrule? */
-    public static readonly Dictionary<String, String> defaultBlockOptions =
+    public static readonly Dictionary<string, string> defaultBlockOptions =
             new();
 
-    public static readonly Dictionary<String, String> defaultLexerBlockOptions =
+    public static readonly Dictionary<string, string> defaultLexerBlockOptions =
             new();
 
     public BlockAST(BlockAST node) : base(node) { }

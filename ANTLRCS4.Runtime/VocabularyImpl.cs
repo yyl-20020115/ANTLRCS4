@@ -69,7 +69,7 @@ public class VocabularyImpl : Vocabulary
 	 * @see #getSymbolicName(int)
 	 * @see #getDisplayName(int)
 	 */
-    public VocabularyImpl(string[] literalNames, string[] symbolicNames, String[] displayNames)
+    public VocabularyImpl(string[] literalNames, string[] symbolicNames, string[] displayNames)
     {
         this.literalNames = literalNames ?? EMPTY_NAMES;
         this.symbolicNames = symbolicNames ?? EMPTY_NAMES;
@@ -105,7 +105,7 @@ public class VocabularyImpl : Vocabulary
         string[] symbolicNames = Arrays.CopyOf(tokenNames, tokenNames.Length);
         for (int i = 0; i < tokenNames.Length; i++)
         {
-            String tokenName = tokenNames[i];
+            var tokenName = tokenNames[i];
             if (tokenName == null)
             {
                 continue;

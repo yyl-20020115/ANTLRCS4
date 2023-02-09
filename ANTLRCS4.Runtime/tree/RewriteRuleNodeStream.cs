@@ -59,15 +59,15 @@ public class RewriteRuleNodeStream : RewriteRuleElementStream
 
     public Object nextNode()
     {
-        return _next();
+        return Next();
     }
 
     protected Object toTree(Object el)
     {
-        return adaptor.dupNode(el);
+        return adaptor.DupNode(el);
     }
 
-    protected override Object dup(Object el)
+    protected override Object Dup(Object el)
     {
         // we dup every node, so don't have to worry about calling dup; short-
         // circuited next() so it doesn't call.

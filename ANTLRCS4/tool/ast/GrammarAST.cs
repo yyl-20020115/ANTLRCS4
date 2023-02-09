@@ -154,7 +154,7 @@ public class GrammarAST : CommonTree
     {
         for (int i = 0; i < children.Count; i++)
         {
-            Object c = children[(i)];
+            var c = children[(i)];
             if (c == t)
             {
                 DeleteChild(t.ChildIndex);
@@ -210,7 +210,7 @@ public class GrammarAST : CommonTree
     //        return "";
     //	}
 
-    public void SetText(String text)
+    public void SetText(string text)
     {
         //		textOverride = text; // don't alt tokens as others might see
         token.//		textOverride = text; // don't alt tokens as others might see
@@ -218,22 +218,18 @@ public class GrammarAST : CommonTree
     }
 
     //	//@Override
-    //	public bool equals(Object obj) {
+    //	public bool equals(object obj) {
     //		return base.Equals(obj);
     //	}
 
-    //@Override
-    public GrammarAST dupNode()
-    {
-        return new GrammarAST(this);
-    }
+    public override GrammarAST DupNode() => new(this);
 
     public GrammarAST DupTree()
     {
         var t = this;
         var input = this.token.InputStream;
         var adaptor = new GrammarASTAdaptor(input);
-        return (GrammarAST)adaptor.dupTree(t);
+        return (GrammarAST)adaptor.DupTree(t);
     }
 
     public string ToTokenString()

@@ -39,12 +39,12 @@ public class LeftRecursiveRuleTransformer
 
     public void TranslateLeftRecursiveRules()
     {
-        var language = g.getLanguage();
+        var language = g.Language;
         // translate all recursive rules
         List<string> leftRecursiveRuleNames = new();
         foreach (var r in rules)
         {
-            if (!Grammar.isTokenName(r.name))
+            if (!Grammar.IsTokenName(r.name))
             {
                 if (LeftRecursiveRuleAnalyzer.HasImmediateRecursiveRuleRefs(r.ast, r.name))
                 {

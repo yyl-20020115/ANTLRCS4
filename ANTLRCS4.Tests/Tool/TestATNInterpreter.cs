@@ -392,7 +392,7 @@ public class TestATNInterpreter
         var types = ToolTestUtils.GetTokenTypesViaATN(inputString, lexInterp);
         //		Console.Out.WriteLine(types);
 
-        g.importVocab(lg);
+        g.ImportVocab(lg);
 
         var f = new ParserATNFactory(g);
         var atn = f.CreateATN();

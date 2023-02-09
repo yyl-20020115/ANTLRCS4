@@ -30,7 +30,7 @@ public class TokenVocabParser
         var fullFile = GetImportedVocabFile();
 
         Tool tool = g.Tools;
-        var vocabName = g.getOptionString("tokenVocab");
+        var vocabName = g.GetOptionString("tokenVocab");
         TextReader br = null;
         try
         {
@@ -133,7 +133,7 @@ public class TokenVocabParser
 	 */
     public string GetImportedVocabFile()
     {
-        var vocabName = g.getOptionString("tokenVocab");
+        var vocabName = g.GetOptionString("tokenVocab");
         var f = Path.Combine(g.Tools.libDirectory,
                           vocabName,
                           CodeGenerator.VOCAB_FILE_EXTENSION);

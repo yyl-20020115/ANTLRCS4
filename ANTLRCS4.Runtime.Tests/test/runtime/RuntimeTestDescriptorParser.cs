@@ -140,7 +140,7 @@ public class RuntimeTestDescriptorParser
                     grammar = value;
                     break;
                 case "slaveGrammar":
-                    String gname = GetGrammarName(value.Split("\n")[0]);
+                    var gname = GetGrammarName(value.Split("\n")[0]);
                     slaveGrammars.Add(new(gname, value));
                     startRule = value;
                     break;

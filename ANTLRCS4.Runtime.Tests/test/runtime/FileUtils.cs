@@ -27,19 +27,19 @@ public static class FileUtils
         return null;
     }
 
-    public static void ReplaceInFile(string sourcePath, String target, String replacement)
+    public static void ReplaceInFile(string sourcePath, string target, string replacement)
     {
         ReplaceInFile(sourcePath, sourcePath, target, replacement);
     }
 
-    public static void ReplaceInFile(string sourcePath, string destPath, String target, String replacement)
+    public static void ReplaceInFile(string sourcePath, string destPath, string target, string replacement)
     {
         var content = File.ReadAllText(sourcePath);
         var newContent = content.Replace(target, replacement);
         File.WriteAllText(destPath, newContent);
     }
 
-    public static void MakeDirectory(String dir)
+    public static void MakeDirectory(string dir)
     {
         Directory.CreateDirectory(dir);
     }

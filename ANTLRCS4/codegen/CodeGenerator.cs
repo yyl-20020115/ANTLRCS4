@@ -32,7 +32,7 @@ public class CodeGenerator
     public int lineWidth = 72;
 
     public static CodeGenerator Create(Grammar g) 
-        => Create(g.Tools, g, g.getLanguage());
+        => Create(g.Tools, g, g.Language);
 
     public static CodeGenerator Create(Tool tool, Grammar g, string language)
     {

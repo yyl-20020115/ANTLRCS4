@@ -166,7 +166,7 @@ public class ANTLRParser : antlr.runtime.Parser
 
 
     public ArrayDeque<string> paraphrases = new ();
-    public void GrammarError(ErrorType etype, Token token, params Object[] args) { }
+    public void GrammarError(ErrorType etype, Token token, params object[] args) { }
 
 
     public class GrammarSpecReturn : ParserRuleReturnScope
@@ -216,20 +216,20 @@ public class ANTLRParser : antlr.runtime.Parser
                 grammarType1 = GrammarType();
                 state._fsp--;
 
-                stream_grammarType.add(grammarType1.Tree);
+                stream_grammarType.Add(grammarType1.Tree);
                 pushFollow(FOLLOW_id_in_grammarSpec283);
                 id2 = id();
                 state._fsp--;
 
-                stream_id.add(id2.Tree);
+                stream_id.Add(id2.Tree);
                 SEMI3 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_grammarSpec285);
-                stream_SEMI.add(SEMI3);
+                stream_SEMI.Add(SEMI3);
 
                 pushFollow(FOLLOW_sync_in_grammarSpec323);
                 sync4 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync4.Tree);
+                stream_sync.Add(sync4.Tree);
             // org\\antlr\\v4\\parse\\ANTLRParser.g:153:12: ( prequelConstruct sync )*
             loop1:
                 while (true)
@@ -250,12 +250,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 prequelConstruct5 = prequelConstruct();
                                 state._fsp--;
 
-                                stream_prequelConstruct.add(prequelConstruct5.Tree);
+                                stream_prequelConstruct.Add(prequelConstruct5.Tree);
                                 pushFollow(FOLLOW_sync_in_grammarSpec329);
                                 sync6 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync6.Tree);
+                                stream_sync.Add(sync6.Tree);
                             }
                             break;
 
@@ -269,7 +269,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 rules7 = rules();
                 state._fsp--;
 
-                stream_rules.add(rules7.Tree);
+                stream_rules.Add(rules7.Tree);
             // org\\antlr\\v4\\parse\\ANTLRParser.g:161:4: ( modeSpec )*
             loop2:
                 while (true)
@@ -290,7 +290,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 modeSpec8 = modeSpec();
                                 state._fsp--;
 
-                                stream_modeSpec.add(modeSpec8.Tree);
+                                stream_modeSpec.Add(modeSpec8.Tree);
                             }
                             break;
 
@@ -301,7 +301,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
             exit2:
                 EOF9 = (Token)Match(input, EOF, FOLLOW_EOF_in_grammarSpec398);
-                stream_EOF.add(EOF9);
+                stream_EOF.Add(EOF9);
 
 
                 // AST REWRITE
@@ -314,30 +314,30 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 var stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.GetTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 174:7: -> ^( grammarType id ( prequelConstruct )* rules ( modeSpec )* )
                 {
                     // org\\antlr\\v4\\parse\\ANTLRParser.g:174:10: ^( grammarType id ( prequelConstruct )* rules ( modeSpec )* )
                     {
-                        var root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_grammarType.nextNode(), root_1);
-                        adaptor.addChild(root_1, stream_id.nextTree());
+                        var root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_grammarType.NextNode(), root_1);
+                        adaptor.AddChild(root_1, stream_id.NextTree());
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:176:14: ( prequelConstruct )*
-                        while (stream_prequelConstruct.hasNext())
+                        while (stream_prequelConstruct.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_prequelConstruct.nextTree());
+                            adaptor.AddChild(root_1, stream_prequelConstruct.NextTree());
                         }
-                        stream_prequelConstruct.reset();
+                        stream_prequelConstruct.Reset();
 
-                        adaptor.addChild(root_1, stream_rules.nextTree());
+                        adaptor.AddChild(root_1, stream_rules.NextTree());
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:178:14: ( modeSpec )*
-                        while (stream_modeSpec.hasNext())
+                        while (stream_modeSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_modeSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_modeSpec.NextTree());
                         }
-                        stream_modeSpec.reset();
+                        stream_modeSpec.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -349,14 +349,14 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             var options = (GrammarAST)retval.tree.GetFirstChildWithType(ANTLRParser.OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -364,7 +364,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -436,10 +436,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:187:9: t= LEXER g= GRAMMAR
                         {
                             t = (Token)Match(input, LEXER, FOLLOW_LEXER_in_grammarType568);
-                            stream_LEXER.add(t);
+                            stream_LEXER.Add(t);
 
                             g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType572);
-                            stream_GRAMMAR.add(g);
+                            stream_GRAMMAR.Add(g);
 
 
                             // AST REWRITE
@@ -452,10 +452,10 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             var stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.GetTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 187:28: -> GRAMMAR[$g, \"LEXER_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "LEXER_GRAMMAR", GetTokenStream()));
+                                adaptor.AddChild(root_0, new GrammarRootAST(GRAMMAR, g, "LEXER_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -467,10 +467,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:189:6: t= PARSER g= GRAMMAR
                         {
                             t = (Token)Match(input, PARSER, FOLLOW_PARSER_in_grammarType595);
-                            stream_PARSER.add(t);
+                            stream_PARSER.Add(t);
 
                             g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType599);
-                            stream_GRAMMAR.add(g);
+                            stream_GRAMMAR.Add(g);
 
 
                             // AST REWRITE
@@ -483,10 +483,10 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             var stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.GetTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 189:25: -> GRAMMAR[$g, \"PARSER_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "PARSER_GRAMMAR", GetTokenStream()));
+                                adaptor.AddChild(root_0, new GrammarRootAST(GRAMMAR, g, "PARSER_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -498,7 +498,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\ANTLRParser.g:192:6: g= GRAMMAR
                         {
                             g = (Token)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarType620);
-                            stream_GRAMMAR.add(g);
+                            stream_GRAMMAR.Add(g);
 
 
                             // AST REWRITE
@@ -511,10 +511,10 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             var stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.GetTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 192:25: -> GRAMMAR[$g, \"COMBINED_GRAMMAR\", getTokenStream()]
                             {
-                                adaptor.addChild(root_0, new GrammarRootAST(GRAMMAR, g, "COMBINED_GRAMMAR", GetTokenStream()));
+                                adaptor.AddChild(root_0, new GrammarRootAST(GRAMMAR, g, "COMBINED_GRAMMAR", GetTokenStream()));
                             }
 
 
@@ -529,8 +529,8 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             if (t != null) ((GrammarRootAST)retval.tree).grammarType = (t != null ? t.Type : 0);
@@ -541,7 +541,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -617,70 +617,70 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:201:4: optionsSpec
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_optionsSpec_in_prequelConstruct662);
                         optionsSpec10 = optionsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionsSpec10.Tree);
+                        adaptor.AddChild(root_0, optionsSpec10.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:205:7: delegateGrammars
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_delegateGrammars_in_prequelConstruct685);
                         delegateGrammars11 = delegateGrammars();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, delegateGrammars11.Tree);
+                        adaptor.AddChild(root_0, delegateGrammars11.Tree);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\g:212:7: tokensSpec
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_tokensSpec_in_prequelConstruct729);
                         tokensSpec12 = tokensSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, tokensSpec12.Tree);
+                        adaptor.AddChild(root_0, tokensSpec12.Tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:215:4: channelsSpec
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_channelsSpec_in_prequelConstruct739);
                         channelsSpec13 = channelsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, channelsSpec13.Tree);
+                        adaptor.AddChild(root_0, channelsSpec13.Tree);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\g:221:7: action
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_action_in_prequelConstruct776);
                         action14 = action();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, action14.Tree);
+                        adaptor.AddChild(root_0, action14.Tree);
 
                     }
                     break;
@@ -688,15 +688,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -743,7 +743,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:226:4: OPTIONS ( option SEMI )* RBRACE
             {
                 OPTIONS15 = (Token)Match(input, OPTIONS, FOLLOW_OPTIONS_in_optionsSpec791);
-                stream_OPTIONS.add(OPTIONS15);
+                stream_OPTIONS.Add(OPTIONS15);
 
             // org\\antlr\\v4\\parse\\g:226:12: ( option SEMI )*
             loop5:
@@ -765,9 +765,9 @@ public class ANTLRParser : antlr.runtime.Parser
                                 option16 = option();
                                 state._fsp--;
 
-                                stream_option.add(option16.Tree);
+                                stream_option.Add(option16.Tree);
                                 SEMI17 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_optionsSpec796);
-                                stream_SEMI.add(SEMI17);
+                                stream_SEMI.Add(SEMI17);
 
                             }
                             break;
@@ -779,7 +779,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
             exit5:
                 RBRACE18 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_optionsSpec800);
-                stream_RBRACE.add(RBRACE18);
+                stream_RBRACE.Add(RBRACE18);
 
 
                 // AST REWRITE
@@ -792,21 +792,21 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 226:34: -> ^( OPTIONS[$OPTIONS, \"OPTIONS\"] ( option )* )
                 {
                     // org\\antlr\\v4\\parse\\g:226:37: ^( OPTIONS[$OPTIONS, \"OPTIONS\"] ( option )* )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(OPTIONS, OPTIONS15, "OPTIONS"), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(OPTIONS, OPTIONS15, "OPTIONS"), root_1);
                         // org\\antlr\\v4\\parse\\g:226:68: ( option )*
-                        while (stream_option.hasNext())
+                        while (stream_option.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_option.nextTree());
+                            adaptor.AddChild(root_1, stream_option.NextTree());
                         }
-                        stream_option.reset();
+                        stream_option.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -818,15 +818,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -865,38 +865,38 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:230:5: ( id ASSIGN ^ optionValue )
             // org\\antlr\\v4\\parse\\g:230:9: id ASSIGN ^ optionValue
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_id_in_option829);
                 id19 = id();
                 state._fsp--;
 
-                adaptor.addChild(root_0, id19.Tree);
+                adaptor.AddChild(root_0, id19.Tree);
 
                 ASSIGN20 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_option831);
-                ASSIGN20_tree = (GrammarAST)adaptor.create(ASSIGN20);
-                root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN20_tree, root_0);
+                ASSIGN20_tree = (GrammarAST)adaptor.Create(ASSIGN20);
+                root_0 = (GrammarAST)adaptor.BecomeRoot(ASSIGN20_tree, root_0);
 
                 pushFollow(FOLLOW_optionValue_in_option834);
                 optionValue21 = optionValue();
                 state._fsp--;
 
-                adaptor.addChild(root_0, optionValue21.Tree);
+                adaptor.AddChild(root_0, optionValue21.Tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -970,50 +970,50 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:242:7: qid
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_qid_in_optionValue877);
                         qid22 = qid();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, qid22.Tree);
+                        adaptor.AddChild(root_0, qid22.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:243:7: STRING_LITERAL
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         STRING_LITERAL23 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_optionValue885);
-                        STRING_LITERAL23_tree = (GrammarAST)adaptor.create(STRING_LITERAL23);
-                        adaptor.addChild(root_0, STRING_LITERAL23_tree);
+                        STRING_LITERAL23_tree = (GrammarAST)adaptor.Create(STRING_LITERAL23);
+                        adaptor.AddChild(root_0, STRING_LITERAL23_tree);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\g:244:4: ACTION
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         ACTION24 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_optionValue890);
                         ACTION24_tree = new ActionAST(ACTION24);
-                        adaptor.addChild(root_0, ACTION24_tree);
+                        adaptor.AddChild(root_0, ACTION24_tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:245:7: INT
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         INT25 = (Token)Match(input, INT, FOLLOW_INT_in_optionValue901);
-                        INT25_tree = (GrammarAST)adaptor.create(INT25);
-                        adaptor.addChild(root_0, INT25_tree);
+                        INT25_tree = (GrammarAST)adaptor.Create(INT25);
+                        adaptor.AddChild(root_0, INT25_tree);
 
                     }
                     break;
@@ -1021,15 +1021,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1077,13 +1077,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:251:4: IMPORT delegateGrammar ( COMMA delegateGrammar )* SEMI
             {
                 IMPORT26 = (Token)Match(input, IMPORT, FOLLOW_IMPORT_in_delegateGrammars917);
-                stream_IMPORT.add(IMPORT26);
+                stream_IMPORT.Add(IMPORT26);
 
                 pushFollow(FOLLOW_delegateGrammar_in_delegateGrammars919);
                 delegateGrammar27 = delegateGrammar();
                 state._fsp--;
 
-                stream_delegateGrammar.add(delegateGrammar27.Tree);
+                stream_delegateGrammar.Add(delegateGrammar27.Tree);
             // org\\antlr\\v4\\parse\\g:251:27: ( COMMA delegateGrammar )*
             loop7:
                 while (true)
@@ -1101,13 +1101,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:251:28: COMMA delegateGrammar
                             {
                                 COMMA28 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_delegateGrammars922);
-                                stream_COMMA.add(COMMA28);
+                                stream_COMMA.Add(COMMA28);
 
                                 pushFollow(FOLLOW_delegateGrammar_in_delegateGrammars924);
                                 delegateGrammar29 = delegateGrammar();
                                 state._fsp--;
 
-                                stream_delegateGrammar.add(delegateGrammar29.Tree);
+                                stream_delegateGrammar.Add(delegateGrammar29.Tree);
                             }
                             break;
 
@@ -1118,7 +1118,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
             exit7:
                 SEMI30 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_delegateGrammars928);
-                stream_SEMI.add(SEMI30);
+                stream_SEMI.Add(SEMI30);
 
 
                 // AST REWRITE
@@ -1131,24 +1131,24 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 251:57: -> ^( IMPORT ( delegateGrammar )+ )
                 {
                     // org\\antlr\\v4\\parse\\g:251:60: ^( IMPORT ( delegateGrammar )+ )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_IMPORT.nextNode(), root_1);
-                        if (!(stream_delegateGrammar.hasNext()))
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_IMPORT.nextNode(), root_1);
+                        if (!(stream_delegateGrammar.HasNext()))
                         {
                             throw new RewriteEarlyExitException();
                         }
-                        while (stream_delegateGrammar.hasNext())
+                        while (stream_delegateGrammar.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_delegateGrammar.nextTree());
+                            adaptor.AddChild(root_1, stream_delegateGrammar.NextTree());
                         }
-                        stream_delegateGrammar.reset();
+                        stream_delegateGrammar.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -1160,15 +1160,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1279,38 +1279,38 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:257:9: id ASSIGN ^ id
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_delegateGrammar955);
                         id31 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id31.Tree);
+                        adaptor.AddChild(root_0, id31.Tree);
 
                         ASSIGN32 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_delegateGrammar957);
-                        ASSIGN32_tree = (GrammarAST)adaptor.create(ASSIGN32);
-                        root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN32_tree, root_0);
+                        ASSIGN32_tree = (GrammarAST)adaptor.Create(ASSIGN32);
+                        root_0 = (GrammarAST)adaptor.BecomeRoot(ASSIGN32_tree, root_0);
 
                         pushFollow(FOLLOW_id_in_delegateGrammar960);
                         id33 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id33.Tree);
+                        adaptor.AddChild(root_0, id33.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:258:9: id
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_delegateGrammar970);
                         id34 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id34.Tree);
+                        adaptor.AddChild(root_0, id34.Tree);
 
                     }
                     break;
@@ -1318,15 +1318,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1420,13 +1420,13 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:262:4: TOKENS_SPEC id ( COMMA id )* RBRACE
                     {
                         TOKENS_SPEC35 = (Token)Match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec984);
-                        stream_TOKENS_SPEC.add(TOKENS_SPEC35);
+                        stream_TOKENS_SPEC.Add(TOKENS_SPEC35);
 
                         pushFollow(FOLLOW_id_in_tokensSpec986);
                         id36 = id();
                         state._fsp--;
 
-                        stream_id.add(id36.Tree);
+                        stream_id.Add(id36.Tree);
                     // org\\antlr\\v4\\parse\\g:262:19: ( COMMA id )*
                     loop9:
                         while (true)
@@ -1444,13 +1444,13 @@ public class ANTLRParser : antlr.runtime.Parser
                                     // org\\antlr\\v4\\parse\\g:262:20: COMMA id
                                     {
                                         COMMA37 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_tokensSpec989);
-                                        stream_COMMA.add(COMMA37);
+                                        stream_COMMA.Add(COMMA37);
 
                                         pushFollow(FOLLOW_id_in_tokensSpec991);
                                         id38 = id();
                                         state._fsp--;
 
-                                        stream_id.add(id38.Tree);
+                                        stream_id.Add(id38.Tree);
                                     }
                                     break;
 
@@ -1461,7 +1461,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         }
                     exit9:
                         RBRACE39 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec995);
-                        stream_RBRACE.add(RBRACE39);
+                        stream_RBRACE.Add(RBRACE39);
 
 
                         // AST REWRITE
@@ -1474,24 +1474,24 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 262:38: -> ^( TOKENS_SPEC ( id )+ )
                         {
                             // org\\antlr\\v4\\parse\\g:262:41: ^( TOKENS_SPEC ( id )+ )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(stream_TOKENS_SPEC.nextNode(), root_1);
-                                if (!(stream_id.hasNext()))
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(stream_TOKENS_SPEC.nextNode(), root_1);
+                                if (!(stream_id.HasNext()))
                                 {
                                     throw new RewriteEarlyExitException();
                                 }
-                                while (stream_id.hasNext())
+                                while (stream_id.HasNext())
                                 {
-                                    adaptor.addChild(root_1, stream_id.nextTree());
+                                    adaptor.AddChild(root_1, stream_id.NextTree());
                                 }
-                                stream_id.reset();
+                                stream_id.Reset();
 
-                                adaptor.addChild(root_0, root_1);
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -1505,10 +1505,10 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:263:7: TOKENS_SPEC RBRACE
                     {
                         TOKENS_SPEC40 = (Token)Match(input, TOKENS_SPEC, FOLLOW_TOKENS_SPEC_in_tokensSpec1012);
-                        stream_TOKENS_SPEC.add(TOKENS_SPEC40);
+                        stream_TOKENS_SPEC.Add(TOKENS_SPEC40);
 
                         RBRACE41 = (Token)Match(input, RBRACE, FOLLOW_RBRACE_in_tokensSpec1014);
-                        stream_RBRACE.add(RBRACE41);
+                        stream_RBRACE.Add(RBRACE41);
 
 
                         // AST REWRITE
@@ -1521,7 +1521,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 263:26: ->
                         {
                             root_0 = null;
@@ -1536,15 +1536,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1587,18 +1587,18 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:267:2: ( CHANNELS ^ id ( COMMA ! id )* RBRACE !)
             // org\\antlr\\v4\\parse\\g:267:4: CHANNELS ^ id ( COMMA ! id )* RBRACE !
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 CHANNELS42 = (Token)Match(input, CHANNELS, FOLLOW_CHANNELS_in_channelsSpec1027);
-                CHANNELS42_tree = (GrammarAST)adaptor.create(CHANNELS42);
-                root_0 = (GrammarAST)adaptor.becomeRoot(CHANNELS42_tree, root_0);
+                CHANNELS42_tree = (GrammarAST)adaptor.Create(CHANNELS42);
+                root_0 = (GrammarAST)adaptor.BecomeRoot(CHANNELS42_tree, root_0);
 
                 pushFollow(FOLLOW_id_in_channelsSpec1030);
                 id43 = id();
                 state._fsp--;
 
-                adaptor.addChild(root_0, id43.Tree);
+                adaptor.AddChild(root_0, id43.Tree);
 
             // org\\antlr\\v4\\parse\\g:267:17: ( COMMA ! id )*
             loop11:
@@ -1621,7 +1621,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 id45 = id();
                                 state._fsp--;
 
-                                adaptor.addChild(root_0, id45.Tree);
+                                adaptor.AddChild(root_0, id45.Tree);
 
                             }
                             break;
@@ -1637,15 +1637,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1694,7 +1694,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:275:4: AT ( actionScopeName COLONCOLON )? id ACTION
             {
                 AT47 = (Token)Match(input, AT, FOLLOW_AT_in_action1057);
-                stream_AT.add(AT47);
+                stream_AT.Add(AT47);
 
                 // org\\antlr\\v4\\parse\\g:275:7: ( actionScopeName COLONCOLON )?
                 int alt12 = 2;
@@ -1734,9 +1734,9 @@ public class ANTLRParser : antlr.runtime.Parser
                             actionScopeName48 = actionScopeName();
                             state._fsp--;
 
-                            stream_actionScopeName.add(actionScopeName48.Tree);
+                            stream_actionScopeName.Add(actionScopeName48.Tree);
                             COLONCOLON49 = (Token)Match(input, COLONCOLON, FOLLOW_COLONCOLON_in_action1062);
-                            stream_COLONCOLON.add(COLONCOLON49);
+                            stream_COLONCOLON.Add(COLONCOLON49);
 
                         }
                         break;
@@ -1747,9 +1747,9 @@ public class ANTLRParser : antlr.runtime.Parser
                 id50 = id();
                 state._fsp--;
 
-                stream_id.add(id50.Tree);
+                stream_id.Add(id50.Tree);
                 ACTION51 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_action1068);
-                stream_ACTION.add(ACTION51);
+                stream_ACTION.Add(ACTION51);
 
 
                 // AST REWRITE
@@ -1762,23 +1762,23 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 275:47: -> ^( AT ( actionScopeName )? id ACTION )
                 {
                     // org\\antlr\\v4\\parse\\g:275:50: ^( AT ( actionScopeName )? id ACTION )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_AT.nextNode(), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.nextNode(), root_1);
                         // org\\antlr\\v4\\parse\\g:275:55: ( actionScopeName )?
-                        if (stream_actionScopeName.hasNext())
+                        if (stream_actionScopeName.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_actionScopeName.nextTree());
+                            adaptor.AddChild(root_1, stream_actionScopeName.NextTree());
                         }
-                        stream_actionScopeName.reset();
+                        stream_actionScopeName.Reset();
 
-                        adaptor.addChild(root_1, stream_id.nextTree());
-                        adaptor.addChild(root_1, new ActionAST(stream_ACTION.nextToken()));
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_1, stream_id.NextTree());
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -1790,15 +1790,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1867,14 +1867,14 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:282:4: id
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_actionScopeName1097);
                         id52 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id52.Tree);
+                        adaptor.AddChild(root_0, id52.Tree);
 
                     }
                     break;
@@ -1882,7 +1882,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:283:4: LEXER
                     {
                         LEXER53 = (Token)Match(input, LEXER, FOLLOW_LEXER_in_actionScopeName1102);
-                        stream_LEXER.add(LEXER53);
+                        stream_LEXER.Add(LEXER53);
 
 
                         // AST REWRITE
@@ -1895,10 +1895,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 283:10: -> ID[$LEXER]
                         {
-                            adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, LEXER53));
+                            adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, LEXER53));
                         }
 
 
@@ -1910,7 +1910,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:284:9: PARSER
                     {
                         PARSER54 = (Token)Match(input, PARSER, FOLLOW_PARSER_in_actionScopeName1117);
-                        stream_PARSER.add(PARSER54);
+                        stream_PARSER.Add(PARSER54);
 
 
                         // AST REWRITE
@@ -1923,10 +1923,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 284:16: -> ID[$PARSER]
                         {
-                            adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, PARSER54));
+                            adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, PARSER54));
                         }
 
 
@@ -1938,15 +1938,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -1995,21 +1995,21 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:288:7: MODE id SEMI sync ( lexerRule sync )*
             {
                 MODE55 = (Token)Match(input, MODE, FOLLOW_MODE_in_modeSpec1136);
-                stream_MODE.add(MODE55);
+                stream_MODE.Add(MODE55);
 
                 pushFollow(FOLLOW_id_in_modeSpec1138);
                 id56 = id();
                 state._fsp--;
 
-                stream_id.add(id56.Tree);
+                stream_id.Add(id56.Tree);
                 SEMI57 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_modeSpec1140);
-                stream_SEMI.add(SEMI57);
+                stream_SEMI.Add(SEMI57);
 
                 pushFollow(FOLLOW_sync_in_modeSpec1142);
                 sync58 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync58.Tree);
+                stream_sync.Add(sync58.Tree);
             // org\\antlr\\v4\\parse\\g:288:25: ( lexerRule sync )*
             loop14:
                 while (true)
@@ -2030,12 +2030,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 lexerRule59 = lexerRule();
                                 state._fsp--;
 
-                                stream_lexerRule.add(lexerRule59.Tree);
+                                stream_lexerRule.Add(lexerRule59.Tree);
                                 pushFollow(FOLLOW_sync_in_modeSpec1147);
                                 sync60 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync60.Tree);
+                                stream_sync.Add(sync60.Tree);
                             }
                             break;
 
@@ -2056,22 +2056,22 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 288:44: -> ^( MODE id ( lexerRule )* )
                 {
                     // org\\antlr\\v4\\parse\\g:288:47: ^( MODE id ( lexerRule )* )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_MODE.nextNode(), root_1);
-                        adaptor.addChild(root_1, stream_id.nextTree());
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_MODE.nextNode(), root_1);
+                        adaptor.AddChild(root_1, stream_id.NextTree());
                         // org\\antlr\\v4\\parse\\g:288:57: ( lexerRule )*
-                        while (stream_lexerRule.hasNext())
+                        while (stream_lexerRule.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_lexerRule.nextTree());
+                            adaptor.AddChild(root_1, stream_lexerRule.NextTree());
                         }
-                        stream_lexerRule.reset();
+                        stream_lexerRule.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -2083,15 +2083,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2135,7 +2135,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync61 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync61.Tree);
+                stream_sync.Add(sync61.Tree);
             // org\\antlr\\v4\\parse\\g:292:12: ( rule sync )*
             loop15:
                 while (true)
@@ -2156,12 +2156,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 rule62 = rule();
                                 state._fsp--;
 
-                                stream_rule.add(rule62.Tree);
+                                stream_rule.Add(rule62.Tree);
                                 pushFollow(FOLLOW_sync_in_rules1183);
                                 sync63 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync63.Tree);
+                                stream_sync.Add(sync63.Tree);
                             }
                             break;
 
@@ -2182,21 +2182,21 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 296:7: -> ^( RULES ( rule )* )
                 {
                     // org\\antlr\\v4\\parse\\g:296:9: ^( RULES ( rule )* )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(RULES, "RULES"), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(RULES, "RULES"), root_1);
                         // org\\antlr\\v4\\parse\\g:296:17: ( rule )*
-                        while (stream_rule.hasNext())
+                        while (stream_rule.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_rule.nextTree());
+                            adaptor.AddChild(root_1, stream_rule.NextTree());
                         }
-                        stream_rule.reset();
+                        stream_rule.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -2208,15 +2208,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2259,15 +2259,15 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:308:3: ()
             // org\\antlr\\v4\\parse\\g:309:2: 
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         finally
@@ -2347,28 +2347,28 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:311:7: parserRule
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_parserRule_in_rule1245);
                         parserRule64 = parserRule();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, parserRule64.Tree);
+                        adaptor.AddChild(root_0, parserRule64.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:312:4: lexerRule
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_lexerRule_in_rule1250);
                         lexerRule65 = lexerRule();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, lexerRule65.Tree);
+                        adaptor.AddChild(root_0, lexerRule65.Tree);
 
                     }
                     break;
@@ -2376,15 +2376,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2445,7 +2445,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:337:4: RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? rulePrequels COLON ruleBlock SEMI exceptionGroup
             {
                 RULE_REF66 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_parserRule1299);
-                stream_RULE_REF.add(RULE_REF66);
+                stream_RULE_REF.Add(RULE_REF66);
 
                 // org\\antlr\\v4\\parse\\g:345:4: ( ARG_ACTION )?
                 int alt17 = 2;
@@ -2460,7 +2460,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\g:345:4: ARG_ACTION
                         {
                             ARG_ACTION67 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_parserRule1329);
-                            stream_ARG_ACTION.add(ARG_ACTION67);
+                            stream_ARG_ACTION.Add(ARG_ACTION67);
 
                         }
                         break;
@@ -2483,7 +2483,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             ruleReturns68 = ruleReturns();
                             state._fsp--;
 
-                            stream_ruleReturns.add(ruleReturns68.Tree);
+                            stream_ruleReturns.Add(ruleReturns68.Tree);
                         }
                         break;
 
@@ -2505,7 +2505,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             throwsSpec69 = throwsSpec();
                             state._fsp--;
 
-                            stream_throwsSpec.add(throwsSpec69.Tree);
+                            stream_throwsSpec.Add(throwsSpec69.Tree);
                         }
                         break;
 
@@ -2527,7 +2527,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             localsSpec70 = localsSpec();
                             state._fsp--;
 
-                            stream_localsSpec.add(localsSpec70.Tree);
+                            stream_localsSpec.Add(localsSpec70.Tree);
                         }
                         break;
 
@@ -2537,23 +2537,23 @@ public class ANTLRParser : antlr.runtime.Parser
                 rulePrequels71 = rulePrequels();
                 state._fsp--;
 
-                stream_rulePrequels.add(rulePrequels71.Tree);
+                stream_rulePrequels.Add(rulePrequels71.Tree);
                 COLON72 = (Token)Match(input, COLON, FOLLOW_COLON_in_parserRule1397);
-                stream_COLON.add(COLON72);
+                stream_COLON.Add(COLON72);
 
                 pushFollow(FOLLOW_ruleBlock_in_parserRule1420);
                 ruleBlock73 = ruleBlock();
                 state._fsp--;
 
-                stream_ruleBlock.add(ruleBlock73.Tree);
+                stream_ruleBlock.Add(ruleBlock73.Tree);
                 SEMI74 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_parserRule1429);
-                stream_SEMI.add(SEMI74);
+                stream_SEMI.Add(SEMI74);
 
                 pushFollow(FOLLOW_exceptionGroup_in_parserRule1438);
                 exceptionGroup75 = exceptionGroup();
                 state._fsp--;
 
-                stream_exceptionGroup.add(exceptionGroup75.Tree);
+                stream_exceptionGroup.Add(exceptionGroup75.Tree);
 
                 // AST REWRITE
                 // elements: ruleBlock, ruleReturns, throwsSpec, rulePrequels, RULE_REF, ARG_ACTION, exceptionGroup, localsSpec
@@ -2565,58 +2565,58 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 378:7: -> ^( RULE RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? ( rulePrequels )? ruleBlock ( exceptionGroup )* )
                 {
                     // org\\antlr\\v4\\parse\\g:378:10: ^( RULE RULE_REF ( ARG_ACTION )? ( ruleReturns )? ( throwsSpec )? ( localsSpec )? ( rulePrequels )? ruleBlock ( exceptionGroup )* )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new RuleAST(RULE), root_1);
-                        adaptor.addChild(root_1, stream_RULE_REF.nextNode());
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleAST(RULE), root_1);
+                        adaptor.AddChild(root_1, stream_RULE_REF.nextNode());
                         // org\\antlr\\v4\\parse\\g:378:36: ( ARG_ACTION )?
-                        if (stream_ARG_ACTION.hasNext())
+                        if (stream_ARG_ACTION.HasNext())
                         {
-                            adaptor.addChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
+                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
                         }
-                        stream_ARG_ACTION.reset();
+                        stream_ARG_ACTION.Reset();
 
                         // org\\antlr\\v4\\parse\\g:379:9: ( ruleReturns )?
-                        if (stream_ruleReturns.hasNext())
+                        if (stream_ruleReturns.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_ruleReturns.nextTree());
+                            adaptor.AddChild(root_1, stream_ruleReturns.NextTree());
                         }
-                        stream_ruleReturns.reset();
+                        stream_ruleReturns.Reset();
 
                         // org\\antlr\\v4\\parse\\g:379:22: ( throwsSpec )?
-                        if (stream_throwsSpec.hasNext())
+                        if (stream_throwsSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_throwsSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_throwsSpec.NextTree());
                         }
-                        stream_throwsSpec.reset();
+                        stream_throwsSpec.Reset();
 
                         // org\\antlr\\v4\\parse\\g:379:34: ( localsSpec )?
-                        if (stream_localsSpec.hasNext())
+                        if (stream_localsSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_localsSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_localsSpec.NextTree());
                         }
-                        stream_localsSpec.reset();
+                        stream_localsSpec.Reset();
 
                         // org\\antlr\\v4\\parse\\g:379:46: ( rulePrequels )?
-                        if (stream_rulePrequels.hasNext())
+                        if (stream_rulePrequels.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_rulePrequels.nextTree());
+                            adaptor.AddChild(root_1, stream_rulePrequels.NextTree());
                         }
-                        stream_rulePrequels.reset();
+                        stream_rulePrequels.Reset();
 
-                        adaptor.addChild(root_1, stream_ruleBlock.nextTree());
+                        adaptor.AddChild(root_1, stream_ruleBlock.NextTree());
                         // org\\antlr\\v4\\parse\\g:379:70: ( exceptionGroup )*
-                        while (stream_exceptionGroup.hasNext())
+                        while (stream_exceptionGroup.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_exceptionGroup.nextTree());
+                            adaptor.AddChild(root_1, stream_exceptionGroup.NextTree());
                         }
-                        stream_exceptionGroup.reset();
+                        stream_exceptionGroup.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -2628,15 +2628,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             paraphrases.Pop();
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -2644,7 +2644,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2692,7 +2692,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:390:5: ( ( exceptionHandler )* ( finallyClause )? )
             // org\\antlr\\v4\\parse\\g:390:7: ( exceptionHandler )* ( finallyClause )?
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
             // org\\antlr\\v4\\parse\\g:390:7: ( exceptionHandler )*
@@ -2715,7 +2715,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 exceptionHandler76 = exceptionHandler();
                                 state._fsp--;
 
-                                adaptor.addChild(root_0, exceptionHandler76.Tree);
+                                adaptor.AddChild(root_0, exceptionHandler76.Tree);
 
                             }
                             break;
@@ -2742,7 +2742,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             finallyClause77 = finallyClause();
                             state._fsp--;
 
-                            adaptor.addChild(root_0, finallyClause77.Tree);
+                            adaptor.AddChild(root_0, finallyClause77.Tree);
 
                         }
                         break;
@@ -2753,15 +2753,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2806,13 +2806,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:396:4: CATCH ARG_ACTION ACTION
             {
                 CATCH78 = (Token)Match(input, CATCH, FOLLOW_CATCH_in_exceptionHandler1541);
-                stream_CATCH.add(CATCH78);
+                stream_CATCH.Add(CATCH78);
 
                 ARG_ACTION79 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_exceptionHandler1543);
-                stream_ARG_ACTION.add(ARG_ACTION79);
+                stream_ARG_ACTION.Add(ARG_ACTION79);
 
                 ACTION80 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler1545);
-                stream_ACTION.add(ACTION80);
+                stream_ACTION.Add(ACTION80);
 
 
                 // AST REWRITE
@@ -2825,16 +2825,16 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 396:28: -> ^( CATCH ARG_ACTION ACTION )
                 {
                     // org\\antlr\\v4\\parse\\g:396:31: ^( CATCH ARG_ACTION ACTION )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_CATCH.nextNode(), root_1);
-                        adaptor.addChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
-                        adaptor.addChild(root_1, new ActionAST(stream_ACTION.nextToken()));
-                        adaptor.addChild(root_0, root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_CATCH.nextNode(), root_1);
+                        adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -2846,15 +2846,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2896,10 +2896,10 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:400:4: FINALLY ACTION
             {
                 FINALLY81 = (Token)Match(input, FINALLY, FOLLOW_FINALLY_in_finallyClause1572);
-                stream_FINALLY.add(FINALLY81);
+                stream_FINALLY.Add(FINALLY81);
 
                 ACTION82 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_finallyClause1574);
-                stream_ACTION.add(ACTION82);
+                stream_ACTION.Add(ACTION82);
 
 
                 // AST REWRITE
@@ -2912,15 +2912,15 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 400:19: -> ^( FINALLY ACTION )
                 {
                     // org\\antlr\\v4\\parse\\g:400:22: ^( FINALLY ACTION )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_FINALLY.nextNode(), root_1);
-                        adaptor.addChild(root_1, new ActionAST(stream_ACTION.nextToken()));
-                        adaptor.addChild(root_0, root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_FINALLY.nextNode(), root_1);
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -2932,15 +2932,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -2985,7 +2985,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 sync83 = sync();
                 state._fsp--;
 
-                stream_sync.add(sync83.Tree);
+                stream_sync.Add(sync83.Tree);
             // org\\antlr\\v4\\parse\\g:406:9: ( rulePrequel sync )*
             loop23:
                 while (true)
@@ -3006,12 +3006,12 @@ public class ANTLRParser : antlr.runtime.Parser
                                 rulePrequel84 = rulePrequel();
                                 state._fsp--;
 
-                                stream_rulePrequel.add(rulePrequel84.Tree);
+                                stream_rulePrequel.Add(rulePrequel84.Tree);
                                 pushFollow(FOLLOW_sync_in_rulePrequels1611);
                                 sync85 = sync();
                                 state._fsp--;
 
-                                stream_sync.add(sync85.Tree);
+                                stream_sync.Add(sync85.Tree);
                             }
                             break;
 
@@ -3032,15 +3032,15 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 406:29: -> ( rulePrequel )*
                 {
                     // org\\antlr\\v4\\parse\\g:406:32: ( rulePrequel )*
-                    while (stream_rulePrequel.hasNext())
+                    while (stream_rulePrequel.HasNext())
                     {
-                        adaptor.addChild(root_0, stream_rulePrequel.nextTree());
+                        adaptor.AddChild(root_0, stream_rulePrequel.NextTree());
                     }
-                    stream_rulePrequel.reset();
+                    stream_rulePrequel.Reset();
 
                 }
 
@@ -3051,8 +3051,8 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
             paraphrases.Pop();
         }
@@ -3060,7 +3060,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3118,28 +3118,28 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:413:7: optionsSpec
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_optionsSpec_in_rulePrequel1635);
                         optionsSpec86 = optionsSpec();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionsSpec86.Tree);
+                        adaptor.AddChild(root_0, optionsSpec86.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:414:7: ruleAction
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_ruleAction_in_rulePrequel1643);
                         ruleAction87 = ruleAction();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ruleAction87.Tree);
+                        adaptor.AddChild(root_0, ruleAction87.Tree);
 
                     }
                     break;
@@ -3147,15 +3147,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3194,30 +3194,30 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:424:2: ( RETURNS ^ ARG_ACTION )
             // org\\antlr\\v4\\parse\\g:424:4: RETURNS ^ ARG_ACTION
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 RETURNS88 = (Token)Match(input, RETURNS, FOLLOW_RETURNS_in_ruleReturns1663);
-                RETURNS88_tree = (GrammarAST)adaptor.create(RETURNS88);
-                root_0 = (GrammarAST)adaptor.becomeRoot(RETURNS88_tree, root_0);
+                RETURNS88_tree = (GrammarAST)adaptor.Create(RETURNS88);
+                root_0 = (GrammarAST)adaptor.BecomeRoot(RETURNS88_tree, root_0);
 
                 ARG_ACTION89 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleReturns1666);
                 ARG_ACTION89_tree = new ActionAST(ARG_ACTION89);
-                adaptor.addChild(root_0, ARG_ACTION89_tree);
+                adaptor.AddChild(root_0, ARG_ACTION89_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3262,13 +3262,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:439:7: THROWS qid ( COMMA qid )*
             {
                 THROWS90 = (Token)Match(input, THROWS, FOLLOW_THROWS_in_throwsSpec1694);
-                stream_THROWS.add(THROWS90);
+                stream_THROWS.Add(THROWS90);
 
                 pushFollow(FOLLOW_qid_in_throwsSpec1696);
                 qid91 = qid();
                 state._fsp--;
 
-                stream_qid.add(qid91.Tree);
+                stream_qid.Add(qid91.Tree);
             // org\\antlr\\v4\\parse\\g:439:18: ( COMMA qid )*
             loop25:
                 while (true)
@@ -3286,13 +3286,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:439:19: COMMA qid
                             {
                                 COMMA92 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_throwsSpec1699);
-                                stream_COMMA.add(COMMA92);
+                                stream_COMMA.Add(COMMA92);
 
                                 pushFollow(FOLLOW_qid_in_throwsSpec1701);
                                 qid93 = qid();
                                 state._fsp--;
 
-                                stream_qid.add(qid93.Tree);
+                                stream_qid.Add(qid93.Tree);
                             }
                             break;
 
@@ -3313,24 +3313,24 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 439:31: -> ^( THROWS ( qid )+ )
                 {
                     // org\\antlr\\v4\\parse\\g:439:34: ^( THROWS ( qid )+ )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_THROWS.nextNode(), root_1);
-                        if (!(stream_qid.hasNext()))
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_THROWS.nextNode(), root_1);
+                        if (!(stream_qid.HasNext()))
                         {
                             throw new RewriteEarlyExitException();
                         }
-                        while (stream_qid.hasNext())
+                        while (stream_qid.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_qid.nextTree());
+                            adaptor.AddChild(root_1, stream_qid.NextTree());
                         }
-                        stream_qid.reset();
+                        stream_qid.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -3342,15 +3342,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3389,30 +3389,30 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:443:12: ( LOCALS ^ ARG_ACTION )
             // org\\antlr\\v4\\parse\\g:443:14: LOCALS ^ ARG_ACTION
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 LOCALS94 = (Token)Match(input, LOCALS, FOLLOW_LOCALS_in_localsSpec1726);
-                LOCALS94_tree = (GrammarAST)adaptor.create(LOCALS94);
-                root_0 = (GrammarAST)adaptor.becomeRoot(LOCALS94_tree, root_0);
+                LOCALS94_tree = (GrammarAST)adaptor.Create(LOCALS94);
+                root_0 = (GrammarAST)adaptor.BecomeRoot(LOCALS94_tree, root_0);
 
                 ARG_ACTION95 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_localsSpec1729);
                 ARG_ACTION95_tree = new ActionAST(ARG_ACTION95);
-                adaptor.addChild(root_0, ARG_ACTION95_tree);
+                adaptor.AddChild(root_0, ARG_ACTION95_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3456,15 +3456,15 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:455:4: AT id ACTION
             {
                 AT96 = (Token)Match(input, AT, FOLLOW_AT_in_ruleAction1752);
-                stream_AT.add(AT96);
+                stream_AT.Add(AT96);
 
                 pushFollow(FOLLOW_id_in_ruleAction1754);
                 id97 = id();
                 state._fsp--;
 
-                stream_id.add(id97.Tree);
+                stream_id.Add(id97.Tree);
                 ACTION98 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_ruleAction1756);
-                stream_ACTION.add(ACTION98);
+                stream_ACTION.Add(ACTION98);
 
 
                 // AST REWRITE
@@ -3477,16 +3477,16 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 455:17: -> ^( AT id ACTION )
                 {
                     // org\\antlr\\v4\\parse\\g:455:20: ^( AT id ACTION )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(stream_AT.nextNode(), root_1);
-                        adaptor.addChild(root_1, stream_id.nextTree());
-                        adaptor.addChild(root_1, new ActionAST(stream_ACTION.nextToken()));
-                        adaptor.addChild(root_0, root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(stream_AT.nextNode(), root_1);
+                        adaptor.AddChild(root_1, stream_id.NextTree());
+                        adaptor.AddChild(root_1, new ActionAST(stream_ACTION.nextToken()));
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -3498,15 +3498,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3548,7 +3548,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 ruleAltList99 = ruleAltList();
                 state._fsp--;
 
-                stream_ruleAltList.add(ruleAltList99.Tree);
+                stream_ruleAltList.Add(ruleAltList99.Tree);
 
                 // AST REWRITE
                 // elements: ruleAltList
@@ -3560,15 +3560,15 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 466:19: -> ^( BLOCK[colon,\"BLOCK\"] ruleAltList )
                 {
                     // org\\antlr\\v4\\parse\\g:466:22: ^( BLOCK[colon,\"BLOCK\"] ruleAltList )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, colon, "BLOCK"), root_1);
-                        adaptor.addChild(root_1, stream_ruleAltList.nextTree());
-                        adaptor.addChild(root_0, root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, colon, "BLOCK"), root_1);
+                        adaptor.AddChild(root_1, stream_ruleAltList.NextTree());
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -3580,15 +3580,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (ResyncToEndOfRuleBlock e)
         {
 
             // just resyncing; ignore error
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), null);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), null);
 
         }
 
@@ -3635,7 +3635,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 labeledAlt100 = labeledAlt();
                 state._fsp--;
 
-                stream_labeledAlt.add(labeledAlt100.Tree);
+                stream_labeledAlt.Add(labeledAlt100.Tree);
             // org\\antlr\\v4\\parse\\g:474:15: ( OR labeledAlt )*
             loop26:
                 while (true)
@@ -3653,13 +3653,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:474:16: OR labeledAlt
                             {
                                 OR101 = (Token)Match(input, OR, FOLLOW_OR_in_ruleAltList1833);
-                                stream_OR.add(OR101);
+                                stream_OR.Add(OR101);
 
                                 pushFollow(FOLLOW_labeledAlt_in_ruleAltList1835);
                                 labeledAlt102 = labeledAlt();
                                 state._fsp--;
 
-                                stream_labeledAlt.add(labeledAlt102.Tree);
+                                stream_labeledAlt.Add(labeledAlt102.Tree);
                             }
                             break;
 
@@ -3680,18 +3680,18 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 474:32: -> ( labeledAlt )+
                 {
-                    if (!(stream_labeledAlt.hasNext()))
+                    if (!(stream_labeledAlt.HasNext()))
                     {
                         throw new RewriteEarlyExitException();
                     }
-                    while (stream_labeledAlt.hasNext())
+                    while (stream_labeledAlt.HasNext())
                     {
-                        adaptor.addChild(root_0, stream_labeledAlt.nextTree());
+                        adaptor.AddChild(root_0, stream_labeledAlt.NextTree());
                     }
-                    stream_labeledAlt.reset();
+                    stream_labeledAlt.Reset();
 
                 }
 
@@ -3702,15 +3702,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3755,14 +3755,14 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:478:2: ( alternative ( POUND ! id !)? )
             // org\\antlr\\v4\\parse\\g:478:4: alternative ( POUND ! id !)?
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_alternative_in_labeledAlt1853);
-                alternative103 = alternative();
+                alternative103 = Alternative();
                 state._fsp--;
 
-                adaptor.addChild(root_0, alternative103.Tree);
+                adaptor.AddChild(root_0, alternative103.Tree);
 
                 // org\\antlr\\v4\\parse\\g:479:3: ( POUND ! id !)?
                 int alt27 = 2;
@@ -3791,15 +3791,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -3864,7 +3864,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\g:488:7: FRAGMENT
                         {
                             FRAGMENT106 = (Token)Match(input, FRAGMENT, FOLLOW_FRAGMENT_in_lexerRule1894);
-                            stream_FRAGMENT.add(FRAGMENT106);
+                            stream_FRAGMENT.Add(FRAGMENT106);
 
                         }
                         break;
@@ -3872,7 +3872,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
 
                 TOKEN_REF107 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule1900);
-                stream_TOKEN_REF.add(TOKEN_REF107);
+                stream_TOKEN_REF.Add(TOKEN_REF107);
 
                 // org\\antlr\\v4\\parse\\g:491:4: ( optionsSpec )?
                 int alt29 = 2;
@@ -3890,22 +3890,22 @@ public class ANTLRParser : antlr.runtime.Parser
                             optionsSpec108 = optionsSpec();
                             state._fsp--;
 
-                            stream_optionsSpec.add(optionsSpec108.Tree);
+                            stream_optionsSpec.Add(optionsSpec108.Tree);
                         }
                         break;
 
                 }
 
                 COLON109 = (Token)Match(input, COLON, FOLLOW_COLON_in_lexerRule1913);
-                stream_COLON.add(COLON109);
+                stream_COLON.Add(COLON109);
 
                 pushFollow(FOLLOW_lexerRuleBlock_in_lexerRule1915);
                 lexerRuleBlock110 = lexerRuleBlock();
                 state._fsp--;
 
-                stream_lexerRuleBlock.add(lexerRuleBlock110.Tree);
+                stream_lexerRuleBlock.Add(lexerRuleBlock110.Tree);
                 SEMI111 = (Token)Match(input, SEMI, FOLLOW_SEMI_in_lexerRule1917);
-                stream_SEMI.add(SEMI111);
+                stream_SEMI.Add(SEMI111);
 
 
                 // AST REWRITE
@@ -3918,37 +3918,37 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 494:7: -> ^( RULE TOKEN_REF ( ^( RULEMODIFIERS FRAGMENT ) )? ( optionsSpec )? lexerRuleBlock )
                 {
                     // org\\antlr\\v4\\parse\\g:494:10: ^( RULE TOKEN_REF ( ^( RULEMODIFIERS FRAGMENT ) )? ( optionsSpec )? lexerRuleBlock )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new RuleAST(RULE), root_1);
-                        adaptor.addChild(root_1, stream_TOKEN_REF.nextNode());
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleAST(RULE), root_1);
+                        adaptor.AddChild(root_1, stream_TOKEN_REF.nextNode());
                         // org\\antlr\\v4\\parse\\g:495:9: ( ^( RULEMODIFIERS FRAGMENT ) )?
-                        if (stream_FRAGMENT.hasNext())
+                        if (stream_FRAGMENT.HasNext())
                         {
                             // org\\antlr\\v4\\parse\\g:495:9: ^( RULEMODIFIERS FRAGMENT )
                             {
-                                GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                root_2 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(RULEMODIFIERS, "RULEMODIFIERS"), root_2);
-                                adaptor.addChild(root_2, stream_FRAGMENT.nextNode());
-                                adaptor.addChild(root_1, root_2);
+                                GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                root_2 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(RULEMODIFIERS, "RULEMODIFIERS"), root_2);
+                                adaptor.AddChild(root_2, stream_FRAGMENT.nextNode());
+                                adaptor.AddChild(root_1, root_2);
                             }
 
                         }
-                        stream_FRAGMENT.reset();
+                        stream_FRAGMENT.Reset();
 
                         // org\\antlr\\v4\\parse\\g:495:36: ( optionsSpec )?
-                        if (stream_optionsSpec.hasNext())
+                        if (stream_optionsSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_optionsSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_optionsSpec.NextTree());
                         }
-                        stream_optionsSpec.reset();
+                        stream_optionsSpec.Reset();
 
-                        adaptor.addChild(root_1, stream_lexerRuleBlock.nextTree());
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_1, stream_lexerRuleBlock.NextTree());
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -3960,8 +3960,8 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             paraphrases.Pop();
@@ -3971,7 +3971,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -4013,7 +4013,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAltList112 = lexerAltList();
                 state._fsp--;
 
-                stream_lexerAltList.add(lexerAltList112.Tree);
+                stream_lexerAltList.Add(lexerAltList112.Tree);
 
                 // AST REWRITE
                 // elements: lexerAltList
@@ -4025,15 +4025,15 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 501:20: -> ^( BLOCK[colon,\"BLOCK\"] lexerAltList )
                 {
                     // org\\antlr\\v4\\parse\\g:501:23: ^( BLOCK[colon,\"BLOCK\"] lexerAltList )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, colon, "BLOCK"), root_1);
-                        adaptor.addChild(root_1, stream_lexerAltList.nextTree());
-                        adaptor.addChild(root_0, root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, colon, "BLOCK"), root_1);
+                        adaptor.AddChild(root_1, stream_lexerAltList.NextTree());
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -4045,15 +4045,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (ResyncToEndOfRuleBlock e)
         {
 
             // just resyncing; ignore error
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), null);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), null);
 
         }
 
@@ -4100,7 +4100,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAlt113 = lexerAlt();
                 state._fsp--;
 
-                stream_lexerAlt.add(lexerAlt113.Tree);
+                stream_lexerAlt.Add(lexerAlt113.Tree);
             // org\\antlr\\v4\\parse\\g:509:13: ( OR lexerAlt )*
             loop30:
                 while (true)
@@ -4118,13 +4118,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:509:14: OR lexerAlt
                             {
                                 OR114 = (Token)Match(input, OR, FOLLOW_OR_in_lexerAltList2023);
-                                stream_OR.add(OR114);
+                                stream_OR.Add(OR114);
 
                                 pushFollow(FOLLOW_lexerAlt_in_lexerAltList2025);
                                 lexerAlt115 = lexerAlt();
                                 state._fsp--;
 
-                                stream_lexerAlt.add(lexerAlt115.Tree);
+                                stream_lexerAlt.Add(lexerAlt115.Tree);
                             }
                             break;
 
@@ -4145,18 +4145,18 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 509:28: -> ( lexerAlt )+
                 {
-                    if (!(stream_lexerAlt.hasNext()))
+                    if (!(stream_lexerAlt.HasNext()))
                     {
                         throw new RewriteEarlyExitException();
                     }
-                    while (stream_lexerAlt.hasNext())
+                    while (stream_lexerAlt.HasNext())
                     {
-                        adaptor.addChild(root_0, stream_lexerAlt.nextTree());
+                        adaptor.AddChild(root_0, stream_lexerAlt.NextTree());
                     }
-                    stream_lexerAlt.reset();
+                    stream_lexerAlt.Reset();
 
                 }
 
@@ -4167,15 +4167,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -4218,7 +4218,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerElements116 = lexerElements();
                 state._fsp--;
 
-                stream_lexerElements.add(lexerElements116.Tree);
+                stream_lexerElements.Add(lexerElements116.Tree);
                 // org\\antlr\\v4\\parse\\g:514:3: ( lexerCommands -> ^( LEXER_ALT_ACTION lexerElements lexerCommands ) | -> lexerElements )
                 int alt31 = 2;
                 int LA31_0 = input.LA(1);
@@ -4247,7 +4247,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             lexerCommands117 = lexerCommands();
                             state._fsp--;
 
-                            stream_lexerCommands.add(lexerCommands117.Tree);
+                            stream_lexerCommands.Add(lexerCommands117.Tree);
 
                             // AST REWRITE
                             // elements: lexerCommands, lexerElements
@@ -4259,16 +4259,16 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 514:19: -> ^( LEXER_ALT_ACTION lexerElements lexerCommands )
                             {
                                 // org\\antlr\\v4\\parse\\g:514:22: ^( LEXER_ALT_ACTION lexerElements lexerCommands )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(new AltAST(LEXER_ALT_ACTION), root_1);
-                                    adaptor.addChild(root_1, stream_lexerElements.nextTree());
-                                    adaptor.addChild(root_1, stream_lexerCommands.nextTree());
-                                    adaptor.addChild(root_0, root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(new AltAST(LEXER_ALT_ACTION), root_1);
+                                    adaptor.AddChild(root_1, stream_lexerElements.NextTree());
+                                    adaptor.AddChild(root_1, stream_lexerCommands.NextTree());
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -4292,10 +4292,10 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 515:9: -> lexerElements
                             {
-                                adaptor.addChild(root_0, stream_lexerElements.nextTree());
+                                adaptor.AddChild(root_0, stream_lexerElements.NextTree());
                             }
 
 
@@ -4310,15 +4310,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -4397,7 +4397,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                         lexerElement118 = lexerElement();
                                         state._fsp--;
 
-                                        stream_lexerElement.add(lexerElement118.Tree);
+                                        stream_lexerElement.Add(lexerElement118.Tree);
                                     }
                                     break;
 
@@ -4420,24 +4420,24 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 520:21: -> ^( ALT ( lexerElement )+ )
                         {
                             // org\\antlr\\v4\\parse\\g:520:24: ^( ALT ( lexerElement )+ )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_1);
-                                if (!(stream_lexerElement.hasNext()))
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_1);
+                                if (!(stream_lexerElement.HasNext()))
                                 {
                                     throw new RewriteEarlyExitException();
                                 }
-                                while (stream_lexerElement.hasNext())
+                                while (stream_lexerElement.HasNext())
                                 {
-                                    adaptor.addChild(root_1, stream_lexerElement.nextTree());
+                                    adaptor.AddChild(root_1, stream_lexerElement.NextTree());
                                 }
-                                stream_lexerElement.reset();
+                                stream_lexerElement.Reset();
 
-                                adaptor.addChild(root_0, root_1);
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -4461,15 +4461,15 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 521:8: -> ^( ALT EPSILON )
                         {
                             // org\\antlr\\v4\\parse\\g:521:11: ^( ALT EPSILON )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_1);
-                                adaptor.addChild(root_1, (GrammarAST)adaptor.create(EPSILON, "EPSILON"));
-                                adaptor.addChild(root_0, root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_1);
+                                adaptor.AddChild(root_1, (GrammarAST)adaptor.Create(EPSILON, "EPSILON"));
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -4483,15 +4483,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -4574,7 +4574,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerAtom119 = lexerAtom();
                         state._fsp--;
 
-                        stream_lexerAtom.add(lexerAtom119.Tree);
+                        stream_lexerAtom.Add(lexerAtom119.Tree);
                         // org\\antlr\\v4\\parse\\g:531:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) ) ) | -> lexerAtom )
                         int alt34 = 2;
                         int LA34_0 = input.LA(1);
@@ -4603,7 +4603,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix120 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix120.Tree);
+                                    stream_ebnfSuffix.Add(ebnfSuffix120.Tree);
 
                                     // AST REWRITE
                                     // elements: lexerAtom, ebnfSuffix
@@ -4615,29 +4615,29 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 531:16: -> ^( ebnfSuffix ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) ) )
                                     {
                                         // org\\antlr\\v4\\parse\\g:531:19: ^( ebnfSuffix ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) ) )
                                         {
-                                            GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                            root_1 = (GrammarAST)adaptor.becomeRoot(stream_ebnfSuffix.nextNode(), root_1);
+                                            GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                            root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ebnfSuffix.NextNode(), root_1);
                                             // org\\antlr\\v4\\parse\\g:531:33: ^( BLOCK[$lexerAtom.start,\"BLOCK\"] ^( ALT lexerAtom ) )
                                             {
-                                                GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                                root_2 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, (lexerAtom119 != null ? (lexerAtom119.start) : null), "BLOCK"), root_2);
+                                                GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                                root_2 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, (lexerAtom119 != null ? (lexerAtom119.start) : null), "BLOCK"), root_2);
                                                 // org\\antlr\\v4\\parse\\g:531:77: ^( ALT lexerAtom )
                                                 {
-                                                    GrammarAST root_3 = (GrammarAST)adaptor.nil();
-                                                    root_3 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_3);
-                                                    adaptor.addChild(root_3, stream_lexerAtom.nextTree());
-                                                    adaptor.addChild(root_2, root_3);
+                                                    GrammarAST root_3 = (GrammarAST)adaptor.Nil();
+                                                    root_3 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_3);
+                                                    adaptor.AddChild(root_3, stream_lexerAtom.NextTree());
+                                                    adaptor.AddChild(root_2, root_3);
                                                 }
 
-                                                adaptor.addChild(root_1, root_2);
+                                                adaptor.AddChild(root_1, root_2);
                                             }
 
-                                            adaptor.addChild(root_0, root_1);
+                                            adaptor.AddChild(root_0, root_1);
                                         }
 
                                     }
@@ -4661,10 +4661,10 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 532:8: -> lexerAtom
                                     {
-                                        adaptor.addChild(root_0, stream_lexerAtom.nextTree());
+                                        adaptor.AddChild(root_0, stream_lexerAtom.NextTree());
                                     }
 
 
@@ -4684,7 +4684,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerBlock121 = lexerBlock();
                         state._fsp--;
 
-                        stream_lexerBlock.add(lexerBlock121.Tree);
+                        stream_lexerBlock.Add(lexerBlock121.Tree);
                         // org\\antlr\\v4\\parse\\g:535:3: ( ebnfSuffix -> ^( ebnfSuffix lexerBlock ) | -> lexerBlock )
                         int alt35 = 2;
                         int LA35_0 = input.LA(1);
@@ -4713,7 +4713,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix122 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix122.Tree);
+                                    stream_ebnfSuffix.Add(ebnfSuffix122.Tree);
 
                                     // AST REWRITE
                                     // elements: ebnfSuffix, lexerBlock
@@ -4725,15 +4725,15 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 535:16: -> ^( ebnfSuffix lexerBlock )
                                     {
                                         // org\\antlr\\v4\\parse\\g:535:19: ^( ebnfSuffix lexerBlock )
                                         {
-                                            GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                            root_1 = (GrammarAST)adaptor.becomeRoot(stream_ebnfSuffix.nextNode(), root_1);
-                                            adaptor.addChild(root_1, stream_lexerBlock.nextTree());
-                                            adaptor.addChild(root_0, root_1);
+                                            GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                            root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ebnfSuffix.NextNode(), root_1);
+                                            adaptor.AddChild(root_1, stream_lexerBlock.NextTree());
+                                            adaptor.AddChild(root_0, root_1);
                                         }
 
                                     }
@@ -4757,10 +4757,10 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 536:8: -> lexerBlock
                                     {
-                                        adaptor.addChild(root_0, stream_lexerBlock.nextTree());
+                                        adaptor.AddChild(root_0, stream_lexerBlock.NextTree());
                                     }
 
 
@@ -4776,14 +4776,14 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\g:538:4: actionElement
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_actionElement_in_lexerElement2234);
                         actionElement123 = actionElement();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, actionElement123.Tree);
+                        adaptor.AddChild(root_0, actionElement123.Tree);
 
                     }
                     break;
@@ -4791,15 +4791,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
             paraphrases.Pop();
         }
         catch (RecognitionException re)
         {
 
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
             int ttype = input.Get(input.Range()).Type; // seems to be next token
                                                             // look for anything that really belongs at the start of the rule minus the initial ID
             if (ttype == COLON || ttype == RETURNS || ttype == CATCH || ttype == FINALLY || ttype == AT || ttype == EOF)
@@ -4881,7 +4881,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:578:5: LPAREN ( optionsSpec COLON )? lexerAltList RPAREN
             {
                 LPAREN124 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_lexerBlock2270);
-                stream_LPAREN.add(LPAREN124);
+                stream_LPAREN.Add(LPAREN124);
 
                 // org\\antlr\\v4\\parse\\g:579:9: ( optionsSpec COLON )?
                 int alt37 = 2;
@@ -4899,9 +4899,9 @@ public class ANTLRParser : antlr.runtime.Parser
                             optionsSpec125 = optionsSpec();
                             state._fsp--;
 
-                            stream_optionsSpec.add(optionsSpec125.Tree);
+                            stream_optionsSpec.Add(optionsSpec125.Tree);
                             COLON126 = (Token)Match(input, COLON, FOLLOW_COLON_in_lexerBlock2284);
-                            stream_COLON.add(COLON126);
+                            stream_COLON.Add(COLON126);
 
                         }
                         break;
@@ -4912,9 +4912,9 @@ public class ANTLRParser : antlr.runtime.Parser
                 lexerAltList127 = lexerAltList();
                 state._fsp--;
 
-                stream_lexerAltList.add(lexerAltList127.Tree);
+                stream_lexerAltList.Add(lexerAltList127.Tree);
                 RPAREN128 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerBlock2307);
-                stream_RPAREN.add(RPAREN128);
+                stream_RPAREN.Add(RPAREN128);
 
 
                 // AST REWRITE
@@ -4927,22 +4927,22 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 582:7: -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? lexerAltList )
                 {
                     // org\\antlr\\v4\\parse\\g:582:10: ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? lexerAltList )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, LPAREN124, "BLOCK"), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, LPAREN124, "BLOCK"), root_1);
                         // org\\antlr\\v4\\parse\\g:582:45: ( optionsSpec )?
-                        if (stream_optionsSpec.hasNext())
+                        if (stream_optionsSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_optionsSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_optionsSpec.NextTree());
                         }
-                        stream_optionsSpec.reset();
+                        stream_optionsSpec.Reset();
 
-                        adaptor.addChild(root_1, stream_lexerAltList.nextTree());
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_1, stream_lexerAltList.NextTree());
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -4954,14 +4954,14 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -4969,7 +4969,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5014,13 +5014,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:587:4: RARROW lexerCommand ( COMMA lexerCommand )*
             {
                 RARROW129 = (Token)Match(input, RARROW, FOLLOW_RARROW_in_lexerCommands2344);
-                stream_RARROW.add(RARROW129);
+                stream_RARROW.Add(RARROW129);
 
                 pushFollow(FOLLOW_lexerCommand_in_lexerCommands2346);
                 lexerCommand130 = lexerCommand();
                 state._fsp--;
 
-                stream_lexerCommand.add(lexerCommand130.Tree);
+                stream_lexerCommand.Add(lexerCommand130.Tree);
             // org\\antlr\\v4\\parse\\g:587:24: ( COMMA lexerCommand )*
             loop38:
                 while (true)
@@ -5038,13 +5038,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:587:25: COMMA lexerCommand
                             {
                                 COMMA131 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_lexerCommands2349);
-                                stream_COMMA.add(COMMA131);
+                                stream_COMMA.Add(COMMA131);
 
                                 pushFollow(FOLLOW_lexerCommand_in_lexerCommands2351);
                                 lexerCommand132 = lexerCommand();
                                 state._fsp--;
 
-                                stream_lexerCommand.add(lexerCommand132.Tree);
+                                stream_lexerCommand.Add(lexerCommand132.Tree);
                             }
                             break;
 
@@ -5065,18 +5065,18 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 587:46: -> ( lexerCommand )+
                 {
-                    if (!(stream_lexerCommand.hasNext()))
+                    if (!(stream_lexerCommand.HasNext()))
                     {
                         throw new RewriteEarlyExitException();
                     }
-                    while (stream_lexerCommand.hasNext())
+                    while (stream_lexerCommand.HasNext())
                     {
-                        adaptor.addChild(root_0, stream_lexerCommand.nextTree());
+                        adaptor.AddChild(root_0, stream_lexerCommand.NextTree());
                     }
-                    stream_lexerCommand.reset();
+                    stream_lexerCommand.Reset();
 
                 }
 
@@ -5087,15 +5087,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5246,17 +5246,17 @@ public class ANTLRParser : antlr.runtime.Parser
                         lexerCommandName133 = lexerCommandName();
                         state._fsp--;
 
-                        stream_lexerCommandName.add(lexerCommandName133.Tree);
+                        stream_lexerCommandName.Add(lexerCommandName133.Tree);
                         LPAREN134 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_lexerCommand2371);
-                        stream_LPAREN.add(LPAREN134);
+                        stream_LPAREN.Add(LPAREN134);
 
                         pushFollow(FOLLOW_lexerCommandExpr_in_lexerCommand2373);
                         lexerCommandExpr135 = lexerCommandExpr();
                         state._fsp--;
 
-                        stream_lexerCommandExpr.add(lexerCommandExpr135.Tree);
+                        stream_lexerCommandExpr.Add(lexerCommandExpr135.Tree);
                         RPAREN136 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_lexerCommand2375);
-                        stream_RPAREN.add(RPAREN136);
+                        stream_RPAREN.Add(RPAREN136);
 
 
                         // AST REWRITE
@@ -5269,16 +5269,16 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 591:52: -> ^( LEXER_ACTION_CALL lexerCommandName lexerCommandExpr )
                         {
                             // org\\antlr\\v4\\parse\\g:591:55: ^( LEXER_ACTION_CALL lexerCommandName lexerCommandExpr )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(LEXER_ACTION_CALL, "LEXER_ACTION_CALL"), root_1);
-                                adaptor.addChild(root_1, stream_lexerCommandName.nextTree());
-                                adaptor.addChild(root_1, stream_lexerCommandExpr.nextTree());
-                                adaptor.addChild(root_0, root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(LEXER_ACTION_CALL, "LEXER_ACTION_CALL"), root_1);
+                                adaptor.AddChild(root_1, stream_lexerCommandName.NextTree());
+                                adaptor.AddChild(root_1, stream_lexerCommandExpr.NextTree());
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -5291,14 +5291,14 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\g:592:4: lexerCommandName
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_lexerCommandName_in_lexerCommand2390);
                         lexerCommandName137 = lexerCommandName();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, lexerCommandName137.Tree);
+                        adaptor.AddChild(root_0, lexerCommandName137.Tree);
 
                     }
                     break;
@@ -5306,15 +5306,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5373,26 +5373,26 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:596:4: id
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_lexerCommandExpr2401);
                         id138 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id138.Tree);
+                        adaptor.AddChild(root_0, id138.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:597:4: INT
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         INT139 = (Token)Match(input, INT, FOLLOW_INT_in_lexerCommandExpr2406);
-                        INT139_tree = (GrammarAST)adaptor.create(INT139);
-                        adaptor.addChild(root_0, INT139_tree);
+                        INT139_tree = (GrammarAST)adaptor.Create(INT139);
+                        adaptor.AddChild(root_0, INT139_tree);
 
                     }
                     break;
@@ -5400,15 +5400,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5468,14 +5468,14 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:601:17: id
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_lexerCommandName2430);
                         id140 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id140.Tree);
+                        adaptor.AddChild(root_0, id140.Tree);
 
                     }
                     break;
@@ -5483,7 +5483,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:602:17: MODE
                     {
                         MODE141 = (Token)Match(input, MODE, FOLLOW_MODE_in_lexerCommandName2448);
-                        stream_MODE.add(MODE141);
+                        stream_MODE.Add(MODE141);
 
 
                         // AST REWRITE
@@ -5496,10 +5496,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 602:25: -> ID[$MODE]
                         {
-                            adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, MODE141));
+                            adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, MODE141));
                         }
 
 
@@ -5511,15 +5511,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5561,10 +5561,10 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:606:7: alternative ( OR alternative )*
             {
                 pushFollow(FOLLOW_alternative_in_altList2476);
-                alternative142 = alternative();
+                alternative142 = Alternative();
                 state._fsp--;
 
-                stream_alternative.add(alternative142.Tree);
+                stream_alternative.Add(alternative142.Tree);
             // org\\antlr\\v4\\parse\\g:606:19: ( OR alternative )*
             loop42:
                 while (true)
@@ -5582,13 +5582,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:606:20: OR alternative
                             {
                                 OR143 = (Token)Match(input, OR, FOLLOW_OR_in_altList2479);
-                                stream_OR.add(OR143);
+                                stream_OR.Add(OR143);
 
                                 pushFollow(FOLLOW_alternative_in_altList2481);
-                                alternative144 = alternative();
+                                alternative144 = Alternative();
                                 state._fsp--;
 
-                                stream_alternative.add(alternative144.Tree);
+                                stream_alternative.Add(alternative144.Tree);
                             }
                             break;
 
@@ -5609,18 +5609,18 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 606:37: -> ( alternative )+
                 {
-                    if (!(stream_alternative.hasNext()))
+                    if (!(stream_alternative.HasNext()))
                     {
                         throw new RewriteEarlyExitException();
                     }
-                    while (stream_alternative.hasNext())
+                    while (stream_alternative.HasNext())
                     {
-                        adaptor.addChild(root_0, stream_alternative.nextTree());
+                        adaptor.AddChild(root_0, stream_alternative.NextTree());
                     }
-                    stream_alternative.reset();
+                    stream_alternative.Reset();
 
                 }
 
@@ -5631,15 +5631,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -5661,13 +5661,13 @@ public class ANTLRParser : antlr.runtime.Parser
 
     // $ANTLR start "alternative"
     // org\\antlr\\v4\\parse\\g:610:1: alternative : (o= elementOptions )? ( (e+= element )+ -> ^( ALT ( elementOptions )? ( $e)+ ) | -> ^( ALT ( elementOptions )? EPSILON ) ) ;
-    public alternative_return alternative()  {
+    public alternative_return Alternative()  {
         alternative_return retval = new alternative_return();
         retval.start = input.LT(1);
 
         GrammarAST root_0 = null;
 
-        List<Object> list_e = null;
+        List<object> list_e = null;
         ParserRuleReturnScope o = null;
         RuleReturnScope e = null;
         RewriteRuleSubtreeStream stream_elementOptions = new RewriteRuleSubtreeStream(adaptor, "rule elementOptions");
@@ -5695,7 +5695,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             o = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(o.Tree);
+                            stream_elementOptions.Add(o.Tree);
                         }
                         break;
 
@@ -5746,7 +5746,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                             e = element();
                                             state._fsp--;
 
-                                            stream_element.add(e.Tree);
+                                            stream_element.Add(e.Tree);
                                             if (list_e == null) list_e = new ();
                                             list_e.Add(e.Tree);
                                         }
@@ -5771,31 +5771,31 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
                             RewriteRuleSubtreeStream stream_e = new RewriteRuleSubtreeStream(adaptor, "token e", list_e);
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 617:37: -> ^( ALT ( elementOptions )? ( $e)+ )
                             {
                                 // org\\antlr\\v4\\parse\\g:617:40: ^( ALT ( elementOptions )? ( $e)+ )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_1);
                                     // org\\antlr\\v4\\parse\\g:617:54: ( elementOptions )?
-                                    if (stream_elementOptions.hasNext())
+                                    if (stream_elementOptions.HasNext())
                                     {
-                                        adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                                        adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                     }
-                                    stream_elementOptions.reset();
+                                    stream_elementOptions.Reset();
 
-                                    if (!(stream_e.hasNext()))
+                                    if (!(stream_e.HasNext()))
                                     {
                                         throw new RewriteEarlyExitException();
                                     }
-                                    while (stream_e.hasNext())
+                                    while (stream_e.HasNext())
                                     {
-                                        adaptor.addChild(root_1, stream_e.nextTree());
+                                        adaptor.AddChild(root_1, stream_e.NextTree());
                                     }
-                                    stream_e.reset();
+                                    stream_e.Reset();
 
-                                    adaptor.addChild(root_0, root_1);
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -5819,22 +5819,22 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 618:39: -> ^( ALT ( elementOptions )? EPSILON )
                             {
                                 // org\\antlr\\v4\\parse\\g:618:42: ^( ALT ( elementOptions )? EPSILON )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_1);
                                     // org\\antlr\\v4\\parse\\g:618:56: ( elementOptions )?
-                                    if (stream_elementOptions.hasNext())
+                                    if (stream_elementOptions.HasNext())
                                     {
-                                        adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                                        adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                     }
-                                    stream_elementOptions.reset();
+                                    stream_elementOptions.Reset();
 
-                                    adaptor.addChild(root_1, (GrammarAST)adaptor.create(EPSILON, "EPSILON"));
-                                    adaptor.addChild(root_0, root_1);
+                                    adaptor.AddChild(root_1, (GrammarAST)adaptor.Create(EPSILON, "EPSILON"));
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -5851,19 +5851,19 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             paraphrases.Pop();
-            Grammar.setNodeOptions(retval.tree, (o != null ? ((GrammarAST)o.Tree) : null));
+            Grammar.SetNodeOptions(retval.tree, (o != null ? ((GrammarAST)o.Tree) : null));
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -6004,7 +6004,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         labeledElement145 = labeledElement();
                         state._fsp--;
 
-                        stream_labeledElement.add(labeledElement145.Tree);
+                        stream_labeledElement.Add(labeledElement145.Tree);
                         // org\\antlr\\v4\\parse\\g:629:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) ) ) | -> labeledElement )
                         int alt46 = 2;
                         int LA46_0 = input.LA(1);
@@ -6033,7 +6033,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix146 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix146.Tree);
+                                    stream_ebnfSuffix.Add(ebnfSuffix146.Tree);
 
                                     // AST REWRITE
                                     // elements: labeledElement, ebnfSuffix
@@ -6045,29 +6045,29 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 629:16: -> ^( ebnfSuffix ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) ) )
                                     {
                                         // org\\antlr\\v4\\parse\\g:629:19: ^( ebnfSuffix ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) ) )
                                         {
-                                            GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                            root_1 = (GrammarAST)adaptor.becomeRoot(stream_ebnfSuffix.nextNode(), root_1);
+                                            GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                            root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ebnfSuffix.NextNode(), root_1);
                                             // org\\antlr\\v4\\parse\\g:629:33: ^( BLOCK[$labeledElement.start,\"BLOCK\"] ^( ALT labeledElement ) )
                                             {
-                                                GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                                root_2 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, (labeledElement145 != null ? (labeledElement145.start) : null), "BLOCK"), root_2);
+                                                GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                                root_2 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, (labeledElement145 != null ? (labeledElement145.start) : null), "BLOCK"), root_2);
                                                 // org\\antlr\\v4\\parse\\g:629:82: ^( ALT labeledElement )
                                                 {
-                                                    GrammarAST root_3 = (GrammarAST)adaptor.nil();
-                                                    root_3 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_3);
-                                                    adaptor.addChild(root_3, stream_labeledElement.nextTree());
-                                                    adaptor.addChild(root_2, root_3);
+                                                    GrammarAST root_3 = (GrammarAST)adaptor.Nil();
+                                                    root_3 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_3);
+                                                    adaptor.AddChild(root_3, stream_labeledElement.NextTree());
+                                                    adaptor.AddChild(root_2, root_3);
                                                 }
 
-                                                adaptor.addChild(root_1, root_2);
+                                                adaptor.AddChild(root_1, root_2);
                                             }
 
-                                            adaptor.addChild(root_0, root_1);
+                                            adaptor.AddChild(root_0, root_1);
                                         }
 
                                     }
@@ -6091,10 +6091,10 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 630:8: -> labeledElement
                                     {
-                                        adaptor.addChild(root_0, stream_labeledElement.nextTree());
+                                        adaptor.AddChild(root_0, stream_labeledElement.NextTree());
                                     }
 
 
@@ -6114,7 +6114,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         atom147 = atom();
                         state._fsp--;
 
-                        stream_atom.add(atom147.Tree);
+                        stream_atom.Add(atom147.Tree);
                         // org\\antlr\\v4\\parse\\g:633:3: ( ebnfSuffix -> ^( ebnfSuffix ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) ) ) | -> atom )
                         int alt47 = 2;
                         int LA47_0 = input.LA(1);
@@ -6143,7 +6143,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     ebnfSuffix148 = ebnfSuffix();
                                     state._fsp--;
 
-                                    stream_ebnfSuffix.add(ebnfSuffix148.Tree);
+                                    stream_ebnfSuffix.Add(ebnfSuffix148.Tree);
 
                                     // AST REWRITE
                                     // elements: atom, ebnfSuffix
@@ -6155,29 +6155,29 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 633:16: -> ^( ebnfSuffix ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) ) )
                                     {
                                         // org\\antlr\\v4\\parse\\g:633:19: ^( ebnfSuffix ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) ) )
                                         {
-                                            GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                            root_1 = (GrammarAST)adaptor.becomeRoot(stream_ebnfSuffix.nextNode(), root_1);
+                                            GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                            root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ebnfSuffix.NextNode(), root_1);
                                             // org\\antlr\\v4\\parse\\g:633:33: ^( BLOCK[$atom.start,\"BLOCK\"] ^( ALT atom ) )
                                             {
-                                                GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                                root_2 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, (atom147 != null ? (atom147.start) : null), "BLOCK"), root_2);
+                                                GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                                root_2 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, (atom147 != null ? (atom147.start) : null), "BLOCK"), root_2);
                                                 // org\\antlr\\v4\\parse\\g:633:72: ^( ALT atom )
                                                 {
-                                                    GrammarAST root_3 = (GrammarAST)adaptor.nil();
-                                                    root_3 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_3);
-                                                    adaptor.addChild(root_3, stream_atom.nextTree());
-                                                    adaptor.addChild(root_2, root_3);
+                                                    GrammarAST root_3 = (GrammarAST)adaptor.Nil();
+                                                    root_3 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_3);
+                                                    adaptor.AddChild(root_3, stream_atom.NextTree());
+                                                    adaptor.AddChild(root_2, root_3);
                                                 }
 
-                                                adaptor.addChild(root_1, root_2);
+                                                adaptor.AddChild(root_1, root_2);
                                             }
 
-                                            adaptor.addChild(root_0, root_1);
+                                            adaptor.AddChild(root_0, root_1);
                                         }
 
                                     }
@@ -6201,10 +6201,10 @@ public class ANTLRParser : antlr.runtime.Parser
                                     retval.tree = root_0;
                                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                                    root_0 = (GrammarAST)adaptor.nil();
+                                    root_0 = (GrammarAST)adaptor.Nil();
                                     // 634:8: -> atom
                                     {
-                                        adaptor.addChild(root_0, stream_atom.nextTree());
+                                        adaptor.AddChild(root_0, stream_atom.NextTree());
                                     }
 
 
@@ -6220,28 +6220,28 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\g:636:4: ebnf
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_ebnf_in_element2743);
                         ebnf149 = ebnf();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ebnf149.Tree);
+                        adaptor.AddChild(root_0, ebnf149.Tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:637:4: actionElement
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_actionElement_in_element2748);
                         actionElement150 = actionElement();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, actionElement150.Tree);
+                        adaptor.AddChild(root_0, actionElement150.Tree);
 
                     }
                     break;
@@ -6249,15 +6249,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
             paraphrases.Pop();
         }
         catch (RecognitionException re)
         {
 
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
             int ttype = input.Get(input.Range()).Type;
             // look for anything that really belongs at the start of the rule minus the initial ID
             if (ttype == COLON || ttype == RETURNS || ttype == CATCH || ttype == FINALLY || ttype == AT)
@@ -6405,12 +6405,12 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:673:4: ACTION
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         ACTION151 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_actionElement2774);
                         ACTION151_tree = new ActionAST(ACTION151);
-                        adaptor.addChild(root_0, ACTION151_tree);
+                        adaptor.AddChild(root_0, ACTION151_tree);
 
                     }
                     break;
@@ -6418,13 +6418,13 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:674:6: ACTION elementOptions
                     {
                         ACTION152 = (Token)Match(input, ACTION, FOLLOW_ACTION_in_actionElement2784);
-                        stream_ACTION.add(ACTION152);
+                        stream_ACTION.Add(ACTION152);
 
                         pushFollow(FOLLOW_elementOptions_in_actionElement2786);
                         elementOptions153 = elementOptions();
                         state._fsp--;
 
-                        stream_elementOptions.add(elementOptions153.Tree);
+                        stream_elementOptions.Add(elementOptions153.Tree);
 
                         // AST REWRITE
                         // elements: ACTION, elementOptions
@@ -6436,15 +6436,15 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 674:28: -> ^( ACTION elementOptions )
                         {
                             // org\\antlr\\v4\\parse\\g:674:31: ^( ACTION elementOptions )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new ActionAST(stream_ACTION.nextToken()), root_1);
-                                adaptor.addChild(root_1, stream_elementOptions.nextTree());
-                                adaptor.addChild(root_0, root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new ActionAST(stream_ACTION.nextToken()), root_1);
+                                adaptor.AddChild(root_1, stream_elementOptions.NextTree());
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -6457,12 +6457,12 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\g:675:6: SEMPRED
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         SEMPRED154 = (Token)Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2804);
                         SEMPRED154_tree = new PredAST(SEMPRED154);
-                        adaptor.addChild(root_0, SEMPRED154_tree);
+                        adaptor.AddChild(root_0, SEMPRED154_tree);
 
                     }
                     break;
@@ -6470,13 +6470,13 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:676:6: SEMPRED elementOptions
                     {
                         SEMPRED155 = (Token)Match(input, SEMPRED, FOLLOW_SEMPRED_in_actionElement2814);
-                        stream_SEMPRED.add(SEMPRED155);
+                        stream_SEMPRED.Add(SEMPRED155);
 
                         pushFollow(FOLLOW_elementOptions_in_actionElement2816);
                         elementOptions156 = elementOptions();
                         state._fsp--;
 
-                        stream_elementOptions.add(elementOptions156.Tree);
+                        stream_elementOptions.Add(elementOptions156.Tree);
 
                         // AST REWRITE
                         // elements: elementOptions, SEMPRED
@@ -6488,15 +6488,15 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 676:29: -> ^( SEMPRED elementOptions )
                         {
                             // org\\antlr\\v4\\parse\\g:676:32: ^( SEMPRED elementOptions )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new PredAST(stream_SEMPRED.nextToken()), root_1);
-                                adaptor.addChild(root_1, stream_elementOptions.nextTree());
-                                adaptor.addChild(root_0, root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new PredAST(stream_SEMPRED.nextToken()), root_1);
+                                adaptor.AddChild(root_1, stream_elementOptions.NextTree());
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -6510,14 +6510,14 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -6525,7 +6525,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -6574,7 +6574,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id157 = id();
                 state._fsp--;
 
-                stream_id.add(id157.Tree);
+                stream_id.Add(id157.Tree);
                 // org\\antlr\\v4\\parse\\g:680:7: (ass= ASSIGN |ass= PLUS_ASSIGN )
                 int alt50 = 2;
                 int LA50_0 = input.LA(1);
@@ -6600,7 +6600,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\g:680:8: ass= ASSIGN
                         {
                             ass = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_labeledElement2843);
-                            stream_ASSIGN.add(ass);
+                            stream_ASSIGN.Add(ass);
 
                         }
                         break;
@@ -6608,7 +6608,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\g:680:19: ass= PLUS_ASSIGN
                         {
                             ass = (Token)Match(input, PLUS_ASSIGN, FOLLOW_PLUS_ASSIGN_in_labeledElement2847);
-                            stream_PLUS_ASSIGN.add(ass);
+                            stream_PLUS_ASSIGN.Add(ass);
 
                         }
                         break;
@@ -6643,7 +6643,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             atom158 = atom();
                             state._fsp--;
 
-                            stream_atom.add(atom158.Tree);
+                            stream_atom.Add(atom158.Tree);
 
                             // AST REWRITE
                             // elements: ass, id, atom
@@ -6656,16 +6656,16 @@ public class ANTLRParser : antlr.runtime.Parser
                             RewriteRuleTokenStream stream_ass = new RewriteRuleTokenStream(adaptor, "token ass", ass);
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 681:15: -> ^( $ass id atom )
                             {
                                 // org\\antlr\\v4\\parse\\g:681:18: ^( $ass id atom )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(stream_ass.nextNode(), root_1);
-                                    adaptor.addChild(root_1, stream_id.nextTree());
-                                    adaptor.addChild(root_1, stream_atom.nextTree());
-                                    adaptor.addChild(root_0, root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.nextNode(), root_1);
+                                    adaptor.AddChild(root_1, stream_id.NextTree());
+                                    adaptor.AddChild(root_1, stream_atom.NextTree());
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -6682,7 +6682,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             block159 = block();
                             state._fsp--;
 
-                            stream_block.add(block159.Tree);
+                            stream_block.Add(block159.Tree);
 
                             // AST REWRITE
                             // elements: ass, block, id
@@ -6695,16 +6695,16 @@ public class ANTLRParser : antlr.runtime.Parser
                             RewriteRuleTokenStream stream_ass = new RewriteRuleTokenStream(adaptor, "token ass", ass);
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 682:16: -> ^( $ass id block )
                             {
                                 // org\\antlr\\v4\\parse\\g:682:19: ^( $ass id block )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(stream_ass.nextNode(), root_1);
-                                    adaptor.addChild(root_1, stream_id.nextTree());
-                                    adaptor.addChild(root_1, stream_block.nextTree());
-                                    adaptor.addChild(root_0, root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ass.nextNode(), root_1);
+                                    adaptor.AddChild(root_1, stream_id.NextTree());
+                                    adaptor.AddChild(root_1, stream_block.NextTree());
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -6721,15 +6721,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -6772,7 +6772,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 block160 = block();
                 state._fsp--;
 
-                stream_block.add(block160.Tree);
+                stream_block.Add(block160.Tree);
                 // org\\antlr\\v4\\parse\\g:692:7: ( blockSuffix -> ^( blockSuffix block ) | -> block )
                 int alt52 = 2;
                 int LA52_0 = input.LA(1);
@@ -6801,7 +6801,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             blockSuffix161 = blockSuffix();
                             state._fsp--;
 
-                            stream_blockSuffix.add(blockSuffix161.Tree);
+                            stream_blockSuffix.Add(blockSuffix161.Tree);
 
                             // AST REWRITE
                             // elements: blockSuffix, block
@@ -6813,15 +6813,15 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 692:21: -> ^( blockSuffix block )
                             {
                                 // org\\antlr\\v4\\parse\\g:692:24: ^( blockSuffix block )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(stream_blockSuffix.nextNode(), root_1);
-                                    adaptor.addChild(root_1, stream_block.nextTree());
-                                    adaptor.addChild(root_0, root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(stream_blockSuffix.NextNode(), root_1);
+                                    adaptor.AddChild(root_1, stream_block.NextTree());
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
@@ -6845,10 +6845,10 @@ public class ANTLRParser : antlr.runtime.Parser
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 693:12: -> block
                             {
-                                adaptor.addChild(root_0, stream_block.nextTree());
+                                adaptor.AddChild(root_0, stream_block.NextTree());
                             }
 
 
@@ -6863,15 +6863,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -6907,28 +6907,28 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:700:5: ( ebnfSuffix )
             // org\\antlr\\v4\\parse\\g:700:7: ebnfSuffix
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_ebnfSuffix_in_blockSuffix2986);
                 ebnfSuffix162 = ebnfSuffix();
                 state._fsp--;
 
-                adaptor.addChild(root_0, ebnfSuffix162.Tree);
+                adaptor.AddChild(root_0, ebnfSuffix162.Tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -7001,7 +7001,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:704:4: QUESTION (nongreedy= QUESTION )?
                     {
                         QUESTION163 = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3001);
-                        stream_QUESTION.add(QUESTION163);
+                        stream_QUESTION.Add(QUESTION163);
 
                         // org\\antlr\\v4\\parse\\g:704:22: (nongreedy= QUESTION )?
                         int alt53 = 2;
@@ -7016,7 +7016,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 // org\\antlr\\v4\\parse\\g:704:22: nongreedy= QUESTION
                                 {
                                     nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3005);
-                                    stream_QUESTION.add(nongreedy);
+                                    stream_QUESTION.Add(nongreedy);
 
                                 }
                                 break;
@@ -7034,10 +7034,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 704:33: -> OPTIONAL[$start, $nongreedy]
                         {
-                            adaptor.addChild(root_0, new OptionalBlockAST(OPTIONAL, (retval.start), nongreedy));
+                            adaptor.AddChild(root_0, new OptionalBlockAST(OPTIONAL, (retval.start), nongreedy));
                         }
 
 
@@ -7049,7 +7049,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:705:6: STAR (nongreedy= QUESTION )?
                     {
                         STAR164 = (Token)Match(input, STAR, FOLLOW_STAR_in_ebnfSuffix3021);
-                        stream_STAR.add(STAR164);
+                        stream_STAR.Add(STAR164);
 
                         // org\\antlr\\v4\\parse\\g:705:20: (nongreedy= QUESTION )?
                         int alt54 = 2;
@@ -7064,7 +7064,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 // org\\antlr\\v4\\parse\\g:705:20: nongreedy= QUESTION
                                 {
                                     nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3025);
-                                    stream_QUESTION.add(nongreedy);
+                                    stream_QUESTION.Add(nongreedy);
 
                                 }
                                 break;
@@ -7082,10 +7082,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 705:32: -> CLOSURE[$start, $nongreedy]
                         {
-                            adaptor.addChild(root_0, new StarBlockAST(CLOSURE, (retval.start), nongreedy));
+                            adaptor.AddChild(root_0, new StarBlockAST(CLOSURE, (retval.start), nongreedy));
                         }
 
 
@@ -7097,7 +7097,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:706:7: PLUS (nongreedy= QUESTION )?
                     {
                         PLUS165 = (Token)Match(input, PLUS, FOLLOW_PLUS_in_ebnfSuffix3043);
-                        stream_PLUS.add(PLUS165);
+                        stream_PLUS.Add(PLUS165);
 
                         // org\\antlr\\v4\\parse\\g:706:21: (nongreedy= QUESTION )?
                         int alt55 = 2;
@@ -7112,7 +7112,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                 // org\\antlr\\v4\\parse\\g:706:21: nongreedy= QUESTION
                                 {
                                     nongreedy = (Token)Match(input, QUESTION, FOLLOW_QUESTION_in_ebnfSuffix3047);
-                                    stream_QUESTION.add(nongreedy);
+                                    stream_QUESTION.Add(nongreedy);
 
                                 }
                                 break;
@@ -7130,10 +7130,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 706:33: -> POSITIVE_CLOSURE[$start, $nongreedy]
                         {
-                            adaptor.addChild(root_0, new PlusBlockAST(POSITIVE_CLOSURE, (retval.start), nongreedy));
+                            adaptor.AddChild(root_0, new PlusBlockAST(POSITIVE_CLOSURE, (retval.start), nongreedy));
                         }
 
 
@@ -7145,15 +7145,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -7262,80 +7262,80 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:710:4: range
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_range_in_lexerAtom3068);
                         range166 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range166.Tree);
+                        adaptor.AddChild(root_0, range166.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:711:4: terminal
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_terminal_in_lexerAtom3073);
                         terminal167 = terminal();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, terminal167.Tree);
+                        adaptor.AddChild(root_0, terminal167.Tree);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\g:712:9: RULE_REF
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         RULE_REF168 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_lexerAtom3083);
                         RULE_REF168_tree = new RuleRefAST(RULE_REF168);
-                        adaptor.addChild(root_0, RULE_REF168_tree);
+                        adaptor.AddChild(root_0, RULE_REF168_tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:713:7: notSet
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_notSet_in_lexerAtom3094);
                         notSet169 = notSet();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, notSet169.Tree);
+                        adaptor.AddChild(root_0, notSet169.Tree);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\g:714:7: wildcard
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_wildcard_in_lexerAtom3102);
                         wildcard170 = wildcard();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, wildcard170.Tree);
+                        adaptor.AddChild(root_0, wildcard170.Tree);
 
                     }
                     break;
                 case 6:
                     // org\\antlr\\v4\\parse\\g:715:7: LEXER_CHAR_SET
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         LEXER_CHAR_SET171 = (Token)Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_lexerAtom3110);
-                        LEXER_CHAR_SET171_tree = (GrammarAST)adaptor.create(LEXER_CHAR_SET171);
-                        adaptor.addChild(root_0, LEXER_CHAR_SET171_tree);
+                        LEXER_CHAR_SET171_tree = (GrammarAST)adaptor.Create(LEXER_CHAR_SET171);
+                        adaptor.AddChild(root_0, LEXER_CHAR_SET171_tree);
 
                     }
                     break;
@@ -7343,15 +7343,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -7452,70 +7452,70 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:733:9: range
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_range_in_atom3155);
                         range172 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range172.Tree);
+                        adaptor.AddChild(root_0, range172.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:734:4: terminal
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_terminal_in_atom3162);
                         terminal173 = terminal();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, terminal173.Tree);
+                        adaptor.AddChild(root_0, terminal173.Tree);
 
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\g:735:9: ruleref
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_ruleref_in_atom3172);
                         ruleref174 = ruleref();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, ruleref174.Tree);
+                        adaptor.AddChild(root_0, ruleref174.Tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:736:7: notSet
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_notSet_in_atom3180);
                         notSet175 = notSet();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, notSet175.Tree);
+                        adaptor.AddChild(root_0, notSet175.Tree);
 
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\g:737:7: wildcard
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_wildcard_in_atom3188);
                         wildcard176 = wildcard();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, wildcard176.Tree);
+                        adaptor.AddChild(root_0, wildcard176.Tree);
 
                     }
                     break;
@@ -7523,8 +7523,8 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
@@ -7571,7 +7571,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:753:6: DOT ( elementOptions )?
             {
                 DOT177 = (Token)Match(input, DOT, FOLLOW_DOT_in_wildcard3236);
-                stream_DOT.add(DOT177);
+                stream_DOT.Add(DOT177);
 
                 // org\\antlr\\v4\\parse\\g:753:10: ( elementOptions )?
                 int alt59 = 2;
@@ -7589,7 +7589,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOptions178 = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(elementOptions178.Tree);
+                            stream_elementOptions.Add(elementOptions178.Tree);
                         }
                         break;
 
@@ -7606,21 +7606,21 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 754:6: -> ^( WILDCARD[$DOT] ( elementOptions )? )
                 {
                     // org\\antlr\\v4\\parse\\g:754:9: ^( WILDCARD[$DOT] ( elementOptions )? )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new TerminalAST(WILDCARD, DOT177), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(WILDCARD, DOT177), root_1);
                         // org\\antlr\\v4\\parse\\g:754:39: ( elementOptions )?
-                        if (stream_elementOptions.hasNext())
+                        if (stream_elementOptions.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                            adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                         }
-                        stream_elementOptions.reset();
+                        stream_elementOptions.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -7632,14 +7632,14 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -7647,7 +7647,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -7734,13 +7734,13 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:763:7: NOT setElement
                     {
                         NOT179 = (Token)Match(input, NOT, FOLLOW_NOT_in_notSet3276);
-                        stream_NOT.add(NOT179);
+                        stream_NOT.Add(NOT179);
 
                         pushFollow(FOLLOW_setElement_in_notSet3278);
                         setElement180 = setElement();
                         state._fsp--;
 
-                        stream_setElement.add(setElement180.Tree);
+                        stream_setElement.Add(setElement180.Tree);
 
                         // AST REWRITE
                         // elements: setElement, NOT
@@ -7752,22 +7752,22 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 763:22: -> ^( NOT[$NOT] ^( SET[$setElement.start,\"SET\"] setElement ) )
                         {
                             // org\\antlr\\v4\\parse\\g:763:25: ^( NOT[$NOT] ^( SET[$setElement.start,\"SET\"] setElement ) )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new NotAST(NOT, NOT179), root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new NotAST(NOT, NOT179), root_1);
                                 // org\\antlr\\v4\\parse\\g:763:45: ^( SET[$setElement.start,\"SET\"] setElement )
                                 {
-                                    GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                    root_2 = (GrammarAST)adaptor.becomeRoot(new SetAST(SET, (setElement180 != null ? (setElement180.start) : null), "SET"), root_2);
-                                    adaptor.addChild(root_2, stream_setElement.nextTree());
-                                    adaptor.addChild(root_1, root_2);
+                                    GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                    root_2 = (GrammarAST)adaptor.BecomeRoot(new SetAST(SET, (setElement180 != null ? (setElement180.start) : null), "SET"), root_2);
+                                    adaptor.AddChild(root_2, stream_setElement.NextTree());
+                                    adaptor.AddChild(root_1, root_2);
                                 }
 
-                                adaptor.addChild(root_0, root_1);
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -7781,13 +7781,13 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:764:7: NOT blockSet
                     {
                         NOT181 = (Token)Match(input, NOT, FOLLOW_NOT_in_notSet3306);
-                        stream_NOT.add(NOT181);
+                        stream_NOT.Add(NOT181);
 
                         pushFollow(FOLLOW_blockSet_in_notSet3308);
                         blockSet182 = blockSet();
                         state._fsp--;
 
-                        stream_blockSet.add(blockSet182.Tree);
+                        stream_blockSet.Add(blockSet182.Tree);
 
                         // AST REWRITE
                         // elements: blockSet, NOT
@@ -7799,15 +7799,15 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 764:21: -> ^( NOT[$NOT] blockSet )
                         {
                             // org\\antlr\\v4\\parse\\g:764:24: ^( NOT[$NOT] blockSet )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new NotAST(NOT, NOT181), root_1);
-                                adaptor.addChild(root_1, stream_blockSet.nextTree());
-                                adaptor.addChild(root_0, root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new NotAST(NOT, NOT181), root_1);
+                                adaptor.AddChild(root_1, stream_blockSet.NextTree());
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -7821,15 +7821,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -7881,13 +7881,13 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:772:7: LPAREN setElement ( OR setElement )* RPAREN
             {
                 LPAREN183 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_blockSet3343);
-                stream_LPAREN.add(LPAREN183);
+                stream_LPAREN.Add(LPAREN183);
 
                 pushFollow(FOLLOW_setElement_in_blockSet3345);
                 setElement184 = setElement();
                 state._fsp--;
 
-                stream_setElement.add(setElement184.Tree);
+                stream_setElement.Add(setElement184.Tree);
             // org\\antlr\\v4\\parse\\g:772:25: ( OR setElement )*
             loop61:
                 while (true)
@@ -7905,13 +7905,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:772:26: OR setElement
                             {
                                 OR185 = (Token)Match(input, OR, FOLLOW_OR_in_blockSet3348);
-                                stream_OR.add(OR185);
+                                stream_OR.Add(OR185);
 
                                 pushFollow(FOLLOW_setElement_in_blockSet3350);
                                 setElement186 = setElement();
                                 state._fsp--;
 
-                                stream_setElement.add(setElement186.Tree);
+                                stream_setElement.Add(setElement186.Tree);
                             }
                             break;
 
@@ -7922,7 +7922,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
             exit61:
                 RPAREN187 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_blockSet3354);
-                stream_RPAREN.add(RPAREN187);
+                stream_RPAREN.Add(RPAREN187);
 
 
                 // AST REWRITE
@@ -7935,24 +7935,24 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 773:3: -> ^( SET[$LPAREN,\"SET\"] ( setElement )+ )
                 {
                     // org\\antlr\\v4\\parse\\g:773:6: ^( SET[$LPAREN,\"SET\"] ( setElement )+ )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new SetAST(SET, LPAREN183, "SET"), root_1);
-                        if (!(stream_setElement.hasNext()))
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new SetAST(SET, LPAREN183, "SET"), root_1);
+                        if (!(stream_setElement.HasNext()))
                         {
                             throw new RewriteEarlyExitException();
                         }
-                        while (stream_setElement.hasNext())
+                        while (stream_setElement.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_setElement.nextTree());
+                            adaptor.AddChild(root_1, stream_setElement.NextTree());
                         }
-                        stream_setElement.reset();
+                        stream_setElement.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -7964,15 +7964,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -8067,12 +8067,12 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:777:4: TOKEN_REF ^ ( elementOptions )?
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         TOKEN_REF188 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement3384);
                         TOKEN_REF188_tree = new TerminalAST(TOKEN_REF188);
-                        root_0 = (GrammarAST)adaptor.becomeRoot(TOKEN_REF188_tree, root_0);
+                        root_0 = (GrammarAST)adaptor.BecomeRoot(TOKEN_REF188_tree, root_0);
 
                         // org\\antlr\\v4\\parse\\g:777:28: ( elementOptions )?
                         int alt62 = 2;
@@ -8090,7 +8090,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions189 = elementOptions();
                                     state._fsp--;
 
-                                    adaptor.addChild(root_0, elementOptions189.Tree);
+                                    adaptor.AddChild(root_0, elementOptions189.Tree);
 
                                 }
                                 break;
@@ -8102,12 +8102,12 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 2:
                     // org\\antlr\\v4\\parse\\g:778:4: STRING_LITERAL ^ ( elementOptions )?
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         STRING_LITERAL190 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement3396);
                         STRING_LITERAL190_tree = new TerminalAST(STRING_LITERAL190);
-                        root_0 = (GrammarAST)adaptor.becomeRoot(STRING_LITERAL190_tree, root_0);
+                        root_0 = (GrammarAST)adaptor.BecomeRoot(STRING_LITERAL190_tree, root_0);
 
                         // org\\antlr\\v4\\parse\\g:778:33: ( elementOptions )?
                         int alt63 = 2;
@@ -8125,7 +8125,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions191 = elementOptions();
                                     state._fsp--;
 
-                                    adaptor.addChild(root_0, elementOptions191.Tree);
+                                    adaptor.AddChild(root_0, elementOptions191.Tree);
 
                                 }
                                 break;
@@ -8137,26 +8137,26 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 3:
                     // org\\antlr\\v4\\parse\\g:779:4: range
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_range_in_setElement3408);
                         range192 = range();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, range192.Tree);
+                        adaptor.AddChild(root_0, range192.Tree);
 
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:780:9: LEXER_CHAR_SET
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         LEXER_CHAR_SET193 = (Token)Match(input, LEXER_CHAR_SET, FOLLOW_LEXER_CHAR_SET_in_setElement3418);
-                        LEXER_CHAR_SET193_tree = (GrammarAST)adaptor.create(LEXER_CHAR_SET193);
-                        adaptor.addChild(root_0, LEXER_CHAR_SET193_tree);
+                        LEXER_CHAR_SET193_tree = (GrammarAST)adaptor.Create(LEXER_CHAR_SET193);
+                        adaptor.AddChild(root_0, LEXER_CHAR_SET193_tree);
 
                     }
                     break;
@@ -8164,15 +8164,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -8203,7 +8203,7 @@ public class ANTLRParser : antlr.runtime.Parser
         Token LPAREN194 = null;
         Token COLON196 = null;
         Token RPAREN198 = null;
-        List<Object> list_ra = null;
+        List<object> list_ra = null;
         ParserRuleReturnScope optionsSpec195 = null;
         ParserRuleReturnScope altList197 = null;
         RuleReturnScope ra = null;
@@ -8223,7 +8223,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:797:5: LPAREN ( ( optionsSpec )? (ra+= ruleAction )* COLON )? altList RPAREN
             {
                 LPAREN194 = (Token)Match(input, LPAREN, FOLLOW_LPAREN_in_block3442);
-                stream_LPAREN.add(LPAREN194);
+                stream_LPAREN.Add(LPAREN194);
 
                 // org\\antlr\\v4\\parse\\g:798:9: ( ( optionsSpec )? (ra+= ruleAction )* COLON )?
                 int alt67 = 2;
@@ -8253,7 +8253,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                         optionsSpec195 = optionsSpec();
                                         state._fsp--;
 
-                                        stream_optionsSpec.add(optionsSpec195.Tree);
+                                        stream_optionsSpec.Add(optionsSpec195.Tree);
                                     }
                                     break;
 
@@ -8279,7 +8279,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                             ra = ruleAction();
                                             state._fsp--;
 
-                                            stream_ruleAction.add(ra.Tree);
+                                            stream_ruleAction.Add(ra.Tree);
                                             if (list_ra == null) list_ra = new ();
                                             list_ra.Add(ra.Tree);
                                         }
@@ -8292,7 +8292,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             }
                         exit66:
                             COLON196 = (Token)Match(input, COLON, FOLLOW_COLON_in_block3462);
-                            stream_COLON.add(COLON196);
+                            stream_COLON.Add(COLON196);
 
                         }
                         break;
@@ -8303,9 +8303,9 @@ public class ANTLRParser : antlr.runtime.Parser
                 altList197 = altList();
                 state._fsp--;
 
-                stream_altList.add(altList197.Tree);
+                stream_altList.Add(altList197.Tree);
                 RPAREN198 = (Token)Match(input, RPAREN, FOLLOW_RPAREN_in_block3479);
-                stream_RPAREN.add(RPAREN198);
+                stream_RPAREN.Add(RPAREN198);
 
 
                 // AST REWRITE
@@ -8318,29 +8318,29 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
                 RewriteRuleSubtreeStream stream_ra = new RewriteRuleSubtreeStream(adaptor, "token ra", list_ra);
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 801:7: -> ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? ( $ra)* altList )
                 {
                     // org\\antlr\\v4\\parse\\g:801:10: ^( BLOCK[$LPAREN,\"BLOCK\"] ( optionsSpec )? ( $ra)* altList )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, LPAREN194, "BLOCK"), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, LPAREN194, "BLOCK"), root_1);
                         // org\\antlr\\v4\\parse\\g:801:45: ( optionsSpec )?
-                        if (stream_optionsSpec.hasNext())
+                        if (stream_optionsSpec.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_optionsSpec.nextTree());
+                            adaptor.AddChild(root_1, stream_optionsSpec.NextTree());
                         }
-                        stream_optionsSpec.reset();
+                        stream_optionsSpec.Reset();
 
                         // org\\antlr\\v4\\parse\\g:801:59: ( $ra)*
-                        while (stream_ra.hasNext())
+                        while (stream_ra.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_ra.nextTree());
+                            adaptor.AddChild(root_1, stream_ra.NextTree());
                         }
-                        stream_ra.reset();
+                        stream_ra.Reset();
 
-                        adaptor.addChild(root_1, stream_altList.nextTree());
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_1, stream_altList.NextTree());
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -8352,14 +8352,14 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -8367,7 +8367,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -8411,7 +8411,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:817:7: RULE_REF ( ARG_ACTION )? ( elementOptions )?
             {
                 RULE_REF199 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_ruleref3533);
-                stream_RULE_REF.add(RULE_REF199);
+                stream_RULE_REF.Add(RULE_REF199);
 
                 // org\\antlr\\v4\\parse\\g:817:16: ( ARG_ACTION )?
                 int alt68 = 2;
@@ -8426,7 +8426,7 @@ public class ANTLRParser : antlr.runtime.Parser
                         // org\\antlr\\v4\\parse\\g:817:16: ARG_ACTION
                         {
                             ARG_ACTION200 = (Token)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_ruleref3535);
-                            stream_ARG_ACTION.add(ARG_ACTION200);
+                            stream_ARG_ACTION.Add(ARG_ACTION200);
 
                         }
                         break;
@@ -8449,7 +8449,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOptions201 = elementOptions();
                             state._fsp--;
 
-                            stream_elementOptions.add(elementOptions201.Tree);
+                            stream_elementOptions.Add(elementOptions201.Tree);
                         }
                         break;
 
@@ -8466,28 +8466,28 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 817:44: -> ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? )
                 {
                     // org\\antlr\\v4\\parse\\g:817:47: ^( RULE_REF ( ARG_ACTION )? ( elementOptions )? )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot(new RuleRefAST(stream_RULE_REF.nextToken()), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot(new RuleRefAST(stream_RULE_REF.nextToken()), root_1);
                         // org\\antlr\\v4\\parse\\g:817:70: ( ARG_ACTION )?
-                        if (stream_ARG_ACTION.hasNext())
+                        if (stream_ARG_ACTION.HasNext())
                         {
-                            adaptor.addChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
+                            adaptor.AddChild(root_1, new ActionAST(stream_ARG_ACTION.nextToken()));
                         }
-                        stream_ARG_ACTION.reset();
+                        stream_ARG_ACTION.Reset();
 
                         // org\\antlr\\v4\\parse\\g:817:93: ( elementOptions )?
-                        if (stream_elementOptions.hasNext())
+                        if (stream_elementOptions.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                            adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                         }
-                        stream_elementOptions.reset();
+                        stream_elementOptions.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -8499,14 +8499,14 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -8554,34 +8554,34 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:831:5: ( STRING_LITERAL RANGE ^ STRING_LITERAL )
             // org\\antlr\\v4\\parse\\g:831:7: STRING_LITERAL RANGE ^ STRING_LITERAL
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 STRING_LITERAL202 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3594);
                 STRING_LITERAL202_tree = new TerminalAST(STRING_LITERAL202);
-                adaptor.addChild(root_0, STRING_LITERAL202_tree);
+                adaptor.AddChild(root_0, STRING_LITERAL202_tree);
 
                 RANGE203 = (Token)Match(input, RANGE, FOLLOW_RANGE_in_range3599);
                 RANGE203_tree = new RangeAST(RANGE203);
-                root_0 = (GrammarAST)adaptor.becomeRoot(RANGE203_tree, root_0);
+                root_0 = (GrammarAST)adaptor.BecomeRoot(RANGE203_tree, root_0);
 
                 STRING_LITERAL204 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_range3605);
                 STRING_LITERAL204_tree = new TerminalAST(STRING_LITERAL204);
-                adaptor.addChild(root_0, STRING_LITERAL204_tree);
+                adaptor.AddChild(root_0, STRING_LITERAL204_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -8647,7 +8647,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:841:6: TOKEN_REF ( elementOptions )?
                     {
                         TOKEN_REF205 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal3629);
-                        stream_TOKEN_REF.add(TOKEN_REF205);
+                        stream_TOKEN_REF.Add(TOKEN_REF205);
 
                         // org\\antlr\\v4\\parse\\g:841:16: ( elementOptions )?
                         int alt70 = 2;
@@ -8665,7 +8665,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions206 = elementOptions();
                                     state._fsp--;
 
-                                    stream_elementOptions.add(elementOptions206.Tree);
+                                    stream_elementOptions.Add(elementOptions206.Tree);
                                 }
                                 break;
 
@@ -8682,21 +8682,21 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 841:33: -> ^( TOKEN_REF ( elementOptions )? )
                         {
                             // org\\antlr\\v4\\parse\\g:841:36: ^( TOKEN_REF ( elementOptions )? )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new TerminalAST(stream_TOKEN_REF.nextToken()), root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_TOKEN_REF.nextToken()), root_1);
                                 // org\\antlr\\v4\\parse\\g:841:61: ( elementOptions )?
-                                if (stream_elementOptions.hasNext())
+                                if (stream_elementOptions.HasNext())
                                 {
-                                    adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                                    adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                 }
-                                stream_elementOptions.reset();
+                                stream_elementOptions.Reset();
 
-                                adaptor.addChild(root_0, root_1);
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -8710,7 +8710,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:842:6: STRING_LITERAL ( elementOptions )?
                     {
                         STRING_LITERAL207 = (Token)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal3652);
-                        stream_STRING_LITERAL.add(STRING_LITERAL207);
+                        stream_STRING_LITERAL.Add(STRING_LITERAL207);
 
                         // org\\antlr\\v4\\parse\\g:842:21: ( elementOptions )?
                         int alt71 = 2;
@@ -8728,7 +8728,7 @@ public class ANTLRParser : antlr.runtime.Parser
                                     elementOptions208 = elementOptions();
                                     state._fsp--;
 
-                                    stream_elementOptions.add(elementOptions208.Tree);
+                                    stream_elementOptions.Add(elementOptions208.Tree);
                                 }
                                 break;
 
@@ -8745,21 +8745,21 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 842:37: -> ^( STRING_LITERAL ( elementOptions )? )
                         {
                             // org\\antlr\\v4\\parse\\g:842:40: ^( STRING_LITERAL ( elementOptions )? )
                             {
-                                GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                root_1 = (GrammarAST)adaptor.becomeRoot(new TerminalAST(stream_STRING_LITERAL.nextToken()), root_1);
+                                GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                root_1 = (GrammarAST)adaptor.BecomeRoot(new TerminalAST(stream_STRING_LITERAL.nextToken()), root_1);
                                 // org\\antlr\\v4\\parse\\g:842:70: ( elementOptions )?
-                                if (stream_elementOptions.hasNext())
+                                if (stream_elementOptions.HasNext())
                                 {
-                                    adaptor.addChild(root_1, stream_elementOptions.nextTree());
+                                    adaptor.AddChild(root_1, stream_elementOptions.NextTree());
                                 }
-                                stream_elementOptions.reset();
+                                stream_elementOptions.Reset();
 
-                                adaptor.addChild(root_0, root_1);
+                                adaptor.AddChild(root_0, root_1);
                             }
 
                         }
@@ -8773,14 +8773,14 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
 
             GrammarAST options = (GrammarAST)retval.tree.GetFirstChildWithType(ELEMENT_OPTIONS);
             if (options != null)
             {
-                Grammar.setNodeOptions(retval.tree, options);
+                Grammar.SetNodeOptions(retval.tree, options);
             }
 
         }
@@ -8788,7 +8788,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -8836,7 +8836,7 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:848:9: LT ( elementOption ( COMMA elementOption )* )? GT
             {
                 LT209 = (Token)Match(input, LT, FOLLOW_LT_in_elementOptions3685);
-                stream_LT.add(LT209);
+                stream_LT.Add(LT209);
 
                 // org\\antlr\\v4\\parse\\g:848:12: ( elementOption ( COMMA elementOption )* )?
                 int alt74 = 2;
@@ -8854,7 +8854,7 @@ public class ANTLRParser : antlr.runtime.Parser
                             elementOption210 = elementOption();
                             state._fsp--;
 
-                            stream_elementOption.add(elementOption210.Tree);
+                            stream_elementOption.Add(elementOption210.Tree);
                         // org\\antlr\\v4\\parse\\g:848:27: ( COMMA elementOption )*
                         loop73:
                             while (true)
@@ -8872,13 +8872,13 @@ public class ANTLRParser : antlr.runtime.Parser
                                         // org\\antlr\\v4\\parse\\g:848:28: COMMA elementOption
                                         {
                                             COMMA211 = (Token)Match(input, COMMA, FOLLOW_COMMA_in_elementOptions3691);
-                                            stream_COMMA.add(COMMA211);
+                                            stream_COMMA.Add(COMMA211);
 
                                             pushFollow(FOLLOW_elementOption_in_elementOptions3693);
                                             elementOption212 = elementOption();
                                             state._fsp--;
 
-                                            stream_elementOption.add(elementOption212.Tree);
+                                            stream_elementOption.Add(elementOption212.Tree);
                                         }
                                         break;
 
@@ -8895,7 +8895,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 }
 
                 GT213 = (Token)Match(input, GT, FOLLOW_GT_in_elementOptions3699);
-                stream_GT.add(GT213);
+                stream_GT.Add(GT213);
 
 
                 // AST REWRITE
@@ -8908,21 +8908,21 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 849:13: -> ^( ELEMENT_OPTIONS[$LT,\"ELEMENT_OPTIONS\"] ( elementOption )* )
                 {
                     // org\\antlr\\v4\\parse\\g:849:16: ^( ELEMENT_OPTIONS[$LT,\"ELEMENT_OPTIONS\"] ( elementOption )* )
                     {
-                        GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                        root_1 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(ELEMENT_OPTIONS, LT209, "ELEMENT_OPTIONS"), root_1);
+                        GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                        root_1 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(ELEMENT_OPTIONS, LT209, "ELEMENT_OPTIONS"), root_1);
                         // org\\antlr\\v4\\parse\\g:849:57: ( elementOption )*
-                        while (stream_elementOption.hasNext())
+                        while (stream_elementOption.HasNext())
                         {
-                            adaptor.addChild(root_1, stream_elementOption.nextTree());
+                            adaptor.AddChild(root_1, stream_elementOption.NextTree());
                         }
-                        stream_elementOption.reset();
+                        stream_elementOption.Reset();
 
-                        adaptor.addChild(root_0, root_1);
+                        adaptor.AddChild(root_0, root_1);
                     }
 
                 }
@@ -8934,15 +8934,15 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9053,38 +9053,38 @@ public class ANTLRParser : antlr.runtime.Parser
                 case 1:
                     // org\\antlr\\v4\\parse\\g:856:7: qid
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_qid_in_elementOption3747);
                         qid214 = qid();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, qid214.Tree);
+                        adaptor.AddChild(root_0, qid214.Tree);
 
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:857:7: id ASSIGN ^ optionValue
                     {
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
 
 
                         pushFollow(FOLLOW_id_in_elementOption3755);
                         id215 = id();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, id215.Tree);
+                        adaptor.AddChild(root_0, id215.Tree);
 
                         ASSIGN216 = (Token)Match(input, ASSIGN, FOLLOW_ASSIGN_in_elementOption3757);
-                        ASSIGN216_tree = (GrammarAST)adaptor.create(ASSIGN216);
-                        root_0 = (GrammarAST)adaptor.becomeRoot(ASSIGN216_tree, root_0);
+                        ASSIGN216_tree = (GrammarAST)adaptor.Create(ASSIGN216);
+                        root_0 = (GrammarAST)adaptor.BecomeRoot(ASSIGN216_tree, root_0);
 
                         pushFollow(FOLLOW_optionValue_in_elementOption3760);
                         optionValue217 = optionValue();
                         state._fsp--;
 
-                        adaptor.addChild(root_0, optionValue217.Tree);
+                        adaptor.AddChild(root_0, optionValue217.Tree);
 
                     }
                     break;
@@ -9092,15 +9092,15 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9164,7 +9164,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:867:7: RULE_REF
                     {
                         RULE_REF218 = (Token)Match(input, RULE_REF, FOLLOW_RULE_REF_in_id3791);
-                        stream_RULE_REF.add(RULE_REF218);
+                        stream_RULE_REF.Add(RULE_REF218);
 
 
                         // AST REWRITE
@@ -9177,10 +9177,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 867:17: -> ID[$RULE_REF]
                         {
-                            adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, RULE_REF218));
+                            adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, RULE_REF218));
                         }
 
 
@@ -9192,7 +9192,7 @@ public class ANTLRParser : antlr.runtime.Parser
                     // org\\antlr\\v4\\parse\\g:868:7: TOKEN_REF
                     {
                         TOKEN_REF219 = (Token)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_id3804);
-                        stream_TOKEN_REF.add(TOKEN_REF219);
+                        stream_TOKEN_REF.Add(TOKEN_REF219);
 
 
                         // AST REWRITE
@@ -9205,10 +9205,10 @@ public class ANTLRParser : antlr.runtime.Parser
                         retval.tree = root_0;
                         RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                        root_0 = (GrammarAST)adaptor.nil();
+                        root_0 = (GrammarAST)adaptor.Nil();
                         // 868:17: -> ID[$TOKEN_REF]
                         {
-                            adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, TOKEN_REF219));
+                            adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, TOKEN_REF219));
                         }
 
 
@@ -9220,8 +9220,8 @@ public class ANTLRParser : antlr.runtime.Parser
             }
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
             paraphrases.Pop();
         }
@@ -9229,7 +9229,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9275,7 +9275,7 @@ public class ANTLRParser : antlr.runtime.Parser
                 id220 = id();
                 state._fsp--;
 
-                stream_id.add(id220.Tree);
+                stream_id.Add(id220.Tree);
             // org\\antlr\\v4\\parse\\g:874:7: ( DOT id )*
             loop77:
                 while (true)
@@ -9293,13 +9293,13 @@ public class ANTLRParser : antlr.runtime.Parser
                             // org\\antlr\\v4\\parse\\g:874:8: DOT id
                             {
                                 DOT221 = (Token)Match(input, DOT, FOLLOW_DOT_in_qid3835);
-                                stream_DOT.add(DOT221);
+                                stream_DOT.Add(DOT221);
 
                                 pushFollow(FOLLOW_id_in_qid3837);
                                 id222 = id();
                                 state._fsp--;
 
-                                stream_id.add(id222.Tree);
+                                stream_id.Add(id222.Tree);
                             }
                             break;
 
@@ -9320,10 +9320,10 @@ public class ANTLRParser : antlr.runtime.Parser
                 retval.tree = root_0;
                 RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
                 // 874:17: -> ID[$qid.start, $text]
                 {
-                    adaptor.addChild(root_0, (GrammarAST)adaptor.create(ID, (retval.start), input.ToString(retval.start, input.LT(-1))));
+                    adaptor.AddChild(root_0, (GrammarAST)adaptor.Create(ID, (retval.start), input.ToString(retval.start, input.LT(-1))));
                 }
 
 
@@ -9333,8 +9333,8 @@ public class ANTLRParser : antlr.runtime.Parser
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
             paraphrases.Pop();
         }
@@ -9342,7 +9342,7 @@ public class ANTLRParser : antlr.runtime.Parser
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9380,32 +9380,32 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:877:18: ( alternative EOF )
             // org\\antlr\\v4\\parse\\g:877:20: alternative EOF
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_alternative_in_alternativeEntry3854);
-                alternative223 = alternative();
+                alternative223 = Alternative();
                 state._fsp--;
 
-                adaptor.addChild(root_0, alternative223.Tree);
+                adaptor.AddChild(root_0, alternative223.Tree);
 
                 EOF224 = (Token)Match(input, EOF, FOLLOW_EOF_in_alternativeEntry3856);
-                EOF224_tree = (GrammarAST)adaptor.create(EOF224);
-                adaptor.addChild(root_0, EOF224_tree);
+                EOF224_tree = (GrammarAST)adaptor.Create(EOF224);
+                adaptor.AddChild(root_0, EOF224_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9443,32 +9443,32 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:878:14: ( element EOF )
             // org\\antlr\\v4\\parse\\g:878:16: element EOF
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_element_in_elementEntry3865);
                 element225 = element();
                 state._fsp--;
 
-                adaptor.addChild(root_0, element225.Tree);
+                adaptor.AddChild(root_0, element225.Tree);
 
                 EOF226 = (Token)Match(input, EOF, FOLLOW_EOF_in_elementEntry3867);
-                EOF226_tree = (GrammarAST)adaptor.create(EOF226);
-                adaptor.addChild(root_0, EOF226_tree);
+                EOF226_tree = (GrammarAST)adaptor.Create(EOF226);
+                adaptor.AddChild(root_0, EOF226_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9506,32 +9506,32 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:879:11: ( rule EOF )
             // org\\antlr\\v4\\parse\\g:879:13: rule EOF
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_rule_in_ruleEntry3875);
                 rule227 = rule();
                 state._fsp--;
 
-                adaptor.addChild(root_0, rule227.Tree);
+                adaptor.AddChild(root_0, rule227.Tree);
 
                 EOF228 = (Token)Match(input, EOF, FOLLOW_EOF_in_ruleEntry3877);
-                EOF228_tree = (GrammarAST)adaptor.create(EOF228);
-                adaptor.addChild(root_0, EOF228_tree);
+                EOF228_tree = (GrammarAST)adaptor.Create(EOF228);
+                adaptor.AddChild(root_0, EOF228_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {
@@ -9569,32 +9569,32 @@ public class ANTLRParser : antlr.runtime.Parser
             // org\\antlr\\v4\\parse\\g:880:12: ( block EOF )
             // org\\antlr\\v4\\parse\\g:880:14: block EOF
             {
-                root_0 = (GrammarAST)adaptor.nil();
+                root_0 = (GrammarAST)adaptor.Nil();
 
 
                 pushFollow(FOLLOW_block_in_blockEntry3885);
                 block229 = block();
                 state._fsp--;
 
-                adaptor.addChild(root_0, block229.Tree);
+                adaptor.AddChild(root_0, block229.Tree);
 
                 EOF230 = (Token)Match(input, EOF, FOLLOW_EOF_in_blockEntry3887);
-                EOF230_tree = (GrammarAST)adaptor.create(EOF230);
-                adaptor.addChild(root_0, EOF230_tree);
+                EOF230_tree = (GrammarAST)adaptor.Create(EOF230);
+                adaptor.AddChild(root_0, EOF230_tree);
 
             }
 
             retval.stop = input.LT(-1);
 
-            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+            adaptor.SetTokenBoundaries(retval.tree, retval.start, retval.stop);
 
         }
         catch (RecognitionException re)
         {
             reportError(re);
             recover(input, re);
-            retval.tree = (GrammarAST)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+            retval.tree = (GrammarAST)adaptor.ErrorNode(input, retval.start, input.LT(-1), re);
         }
         finally
         {

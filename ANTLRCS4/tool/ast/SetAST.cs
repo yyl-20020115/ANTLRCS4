@@ -13,7 +13,7 @@ public class SetAST : GrammarAST, RuleElementAST
 
     public SetAST(SetAST node) : base(node) { }
 
-    public SetAST(int type, Token t, String text) : base(type, t, text) { }
+    public SetAST(int type, Token t, string text) : base(type, t, text) { }
 
     public override SetAST DupNode() => new (this);
 

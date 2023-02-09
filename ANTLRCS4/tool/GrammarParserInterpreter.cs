@@ -46,8 +46,8 @@ public class GrammarParserInterpreter : ParserInterpreter
     }
 
     public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input) :
-        base(g.fileName, g.getVocabulary(),
-              Arrays.AsList(g.getRuleNames()),
+        base(g.fileName, g.Vocabulary,
+              Arrays.AsList(g.GetRuleNames()),
               atn, // must run ATN through serializer to set some state flags
               input)
     {

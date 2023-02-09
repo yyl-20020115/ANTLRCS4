@@ -67,7 +67,7 @@ public class TestCodeGeneration
         }
 
         //@Override
-        protected override int WriteObject(ITemplateWriter @out, TemplateFrame scope, Object o, String[] options)
+        protected override int WriteObject(ITemplateWriter @out, TemplateFrame scope, object o, string[] options)
         {
             if (o is Template template)
             {
@@ -94,9 +94,9 @@ public class TestCodeGeneration
         }
 #if false
 		//@Override
-		protected int writePOJO(ITemplateWriter @out, TemplateFrame scope, Object o, String[] options){
+		protected int writePOJO(ITemplateWriter @out, TemplateFrame scope, object o, string[] options){
 			Type type = o.GetType();
-			String name = type.Name;
+			var name = type.Name;
 			@out.Write("<pojo:"+name+">"+o.ToString()+"</pojo:"+name+">");
 			evals.Add("<pojo:" + name + ">" + o.ToString() + "</pojo:" + name + ">");
 			return base.WritePOJO(@out, scope, o, options);
@@ -111,7 +111,7 @@ public class TestCodeGeneration
         }
     }
 
-    public static List<string> GetEvalInfoForString(String grammarString, String pattern)
+    public static List<string> GetEvalInfoForString(string grammarString, string pattern)
     {
         var equeue = new ErrorQueue();
         var g = new Grammar(grammarString);
@@ -122,7 +122,7 @@ public class TestCodeGeneration
             sem.Process();
 
             var factory = new ParserATNFactory(g);
-            if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar)g);
+            if (g.IsLexer) factory = new LexerATNFactory((LexerGrammar)g);
             g.atn = factory.CreateATN();
 
             var gen = CodeGenerator.Create(g);

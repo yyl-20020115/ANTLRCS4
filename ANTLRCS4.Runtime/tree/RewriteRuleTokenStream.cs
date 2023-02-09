@@ -60,13 +60,13 @@ public class RewriteRuleTokenStream : RewriteRuleElementStream
     /** Get next token from stream and make a node for it */
     public Object nextNode()
     {
-        Token t = (Token)_next();
-        return adaptor.create(t);
+        Token t = (Token)Next();
+        return adaptor.Create(t);
     }
 
     public Token nextToken()
     {
-        return (Token)_next();
+        return (Token)Next();
     }
 
     /** Don't convert to a tree unless they explicitly call nextTree.
@@ -79,7 +79,7 @@ public class RewriteRuleTokenStream : RewriteRuleElementStream
     }
 
     //@Override
-    protected override Object dup(Object el)
+    protected override Object Dup(Object el)
     {
         throw new UnsupportedOperationException("dup can't be called for a token stream.");
     }

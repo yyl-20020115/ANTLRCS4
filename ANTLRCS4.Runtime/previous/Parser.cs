@@ -52,7 +52,6 @@ public class Parser : BaseRecognizer
         this.input = input;
     }
 
-    //@Override
     public override void Reset()
     {
         base.Reset(); // reset all recognizer state variables

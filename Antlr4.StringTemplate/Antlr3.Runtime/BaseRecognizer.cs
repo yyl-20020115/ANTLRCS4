@@ -859,7 +859,7 @@ public abstract class BaseRecognizer
      *  </summary>
      *
      *  <remarks>
-     *  For now we use a hashtable and just the slow Object-based one.
+     *  For now we use a hashtable and just the slow object-based one.
      *  Later, we can make a special one for ints and also one that
      *  tosses out data after we commit past input position i.
      *  </remarks>

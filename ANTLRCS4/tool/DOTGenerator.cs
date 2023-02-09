@@ -72,9 +72,9 @@ public class DOTGenerator
                     if (target == null) continue;
                     if (target.stateNumber == int.MaxValue) continue;
                     int ttype = i - 1; // we shift up for EOF as -1 for parser
-                    var label = ttype.ToString();// String.valueOf(ttype);
+                    var label = ttype.ToString();
                     if (isLexer) label = "'" + GetEdgeLabel(new StringBuilder().Append(char.ConvertFromUtf32(i)).ToString()) + "'";
-                    else if (grammar != null) label = grammar.getTokenDisplayName(ttype);
+                    else if (grammar != null) label = grammar.GetTokenDisplayName(ttype);
                     var st = stlib.GetInstanceOf("edge");
                     st.Add("label", label);
                     st.Add("src", "s" + d.stateNumber);
@@ -162,7 +162,7 @@ public class DOTGenerator
     public string GetDOT(ATNState startState, bool isLexer)
     {
         var ruleNames = grammar.rules.Keys.ToHashSet();
-        var names = new String[ruleNames.Count + 1];
+        var names = new string[ruleNames.Count + 1];
         int i = 0;
         foreach (var s in ruleNames) names[i++] = s;
         return GetDOT(startState, names, isLexer);
@@ -172,7 +172,7 @@ public class DOTGenerator
      *  will show the incoming state machine visually.  All nodes reachable
      *  from startState will be included.
      */
-    public string GetDOT(ATNState startState, String[] ruleNames, bool isLexer)
+    public string GetDOT(ATNState startState, string[] ruleNames, bool isLexer)
     {
         if (startState == null) return null;
 
@@ -265,7 +265,7 @@ public class DOTGenerator
                     var label = atom._label.ToString();
                     if (isLexer) label = "'" + GetEdgeLabel(new StringBuilder()
                         .Append(char.ConvertFromUtf32(atom._label)).ToString()) + "'";
-                    else if (grammar != null) label = grammar.getTokenDisplayName(atom._label);
+                    else if (grammar != null) label = grammar.GetTokenDisplayName(atom._label);
                     edgeST.Add("label", GetEdgeLabel(label));
                 }
                 else if (edge is SetTransition transition)
@@ -274,7 +274,7 @@ public class DOTGenerator
                     var set = transition;
                     var label = set.Label.ToString();
                     if (isLexer) label = set.Label.ToString(true);
-                    else if (grammar != null) label = set.Label.ToString(grammar.getVocabulary());
+                    else if (grammar != null) label = set.Label.ToString(grammar.Vocabulary);
                     if (edge is NotSetTransition) label = "~" + label;
                     edgeST.Add("label", GetEdgeLabel(label));
                 }
@@ -284,7 +284,7 @@ public class DOTGenerator
                     var range = transition1;
                     var label = range.Label.ToString();
                     if (isLexer) label = range.ToString();
-                    else if (grammar != null) label = range.Label.ToString(grammar.getVocabulary());
+                    else if (grammar != null) label = range.Label.ToString(grammar.Vocabulary);
                     edgeST.Add("label", GetEdgeLabel(label));
                 }
                 else
@@ -437,7 +437,7 @@ public class DOTGenerator
     /** Fix edge strings so they print out in DOT properly;
 	 *  generate any gated predicates on edge too.
 	 */
-    protected static string GetEdgeLabel(String label)
+    protected static string GetEdgeLabel(string label)
     {
         label = label.Replace("\\", "\\\\");
         label = label.Replace("\"", "\\\"");

@@ -119,11 +119,11 @@ public class TestLookaheadTrees
     {
         int startRuleIndex = g.GetRule(startRuleName).index;
         var nodeTextProvider =
-                    new InterpreterTreeTextProvider(g.getRuleNames());
+                    new InterpreterTreeTextProvider(g.GetRuleNames());
 
-        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = lg.CreateLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = g.createGrammarParserInterpreter(tokens);
+        var parser = g.CreateGrammarParserInterpreter(tokens);
         parser.SetProfile(true);
         var t = parser.Parse(startRuleIndex);
 

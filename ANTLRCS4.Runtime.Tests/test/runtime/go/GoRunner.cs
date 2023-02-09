@@ -59,8 +59,8 @@ public class GoRunner : RuntimeRunner
             File.Delete(goModFile);
         if (File.Exists(goModFile))
             throw new IOException("Can't delete " + goModFile);
-        Processor.Run(new String[] { runtimeToolPath, "mod", "init", "test" }, cachePath, environment);
-        Processor.Run(new String[] {runtimeToolPath, "mod", "edit",
+        Processor.Run(new string[] { runtimeToolPath, "mod", "init", "test" }, cachePath, environment);
+        Processor.Run(new string[] {runtimeToolPath, "mod", "edit",
                 "-replace=" + GoRuntimeImportPath + "=" + runtimeFilesPath}, cachePath, environment);
         cachedGoMod = FileUtils.ReadFile(cachePath, "go.mod");
     }

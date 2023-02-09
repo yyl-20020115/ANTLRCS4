@@ -198,7 +198,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public CharStream CharInputStream => null;
 
         
-        public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
+        public string SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
         
         
@@ -220,23 +220,20 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     public class TS3 : TokenSource
     {
 
-        
-        public Token NextToken()
-        {
-            return new CommonToken(Token.EOF);
-        }
 
-        
+        public Token NextToken() => new CommonToken(Token.EOF);
+
+
         public int Line => 0;
 
         
         public int CharPositionInLine => 0;
 
-        //@Override
+        
         public CharStream CharInputStream => null;
 
         //@Override
-        public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
+        public string SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
         //@Override
         //@Override

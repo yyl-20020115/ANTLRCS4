@@ -26,7 +26,7 @@ public class CodeGenPipeline
         // after the first error is reported
         int errorCount = g.Tools.ErrMgr.NumErrors;
 
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             if (gen.Target.NeedsHeader())
             {

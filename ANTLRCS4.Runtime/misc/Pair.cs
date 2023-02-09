@@ -19,7 +19,7 @@ public class Pair<A, B>
         this.b = b;
     }
 
-    public override bool Equals(Object? obj)
+    public override bool Equals(object? obj)
     {
         if (obj == this)
         {

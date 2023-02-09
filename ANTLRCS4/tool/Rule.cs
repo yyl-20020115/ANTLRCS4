@@ -113,7 +113,7 @@ public class Rule : AttributeResolver
     {
         actions.Add(actionAST);
         alt[currentAlt].actions.Add(actionAST);
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             DefineLexerAction(actionAST);
         }
@@ -322,7 +322,7 @@ public class Rule : AttributeResolver
 
     public AttributeDict GetPredefinedScope(LabelType ltype)
     {
-        var grammarLabelKey = g.getTypeString() + ":" + ltype;
+        var grammarLabelKey = g.GetTypeString() + ":" + ltype;
         return Grammar.grammarAndLabelRefTypeToScope.TryGetValue(grammarLabelKey, out var v) ? v : null;
     }
 

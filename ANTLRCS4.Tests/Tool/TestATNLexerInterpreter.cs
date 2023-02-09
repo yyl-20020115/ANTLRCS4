@@ -472,7 +472,7 @@ public class TestATNLexerInterpreter
             "A0bcDE93\n" +
             "АБВабв\n";
 
-        var expecting = RuntimeUtils.Join(new String[] {
+        var expecting = RuntimeUtils.Join(new string[] {
             "SIMPLE_TOKEN", "SIMPLE_TOKEN", "SIMPLE_TOKEN",
             "TOKEN_WITH_SPACES", "TOKEN_WITH_SPACES",
             "TOKEN_WITH_DIGITS",
@@ -550,7 +550,7 @@ public class TestATNLexerInterpreter
 
         var inputString = "abcXYZ äéöüßÄÉÖÜß àâæçÙÛÜŸ ćčđĐŠŽ àèéÌÒÙ áéÚÜ¡¿ αβγΧΨΩ абвЭЮЯ ";
 
-        var expecting = RuntimeUtils.Join(new String[] {
+        var expecting = RuntimeUtils.Join(new string[] {
                 "ENGLISH_TOKEN",
                 "GERMAN_TOKEN",
                 "FRENCH_TOKEN",
@@ -603,7 +603,7 @@ public class TestATNLexerInterpreter
         Assert.AreEqual("line 1:0 token recognition error at: 'n'\n", executedState.errors);
     }
 
-    private static void CheckLexerMatches(LexerGrammar lg, String inputString, String expecting)
+    private static void CheckLexerMatches(LexerGrammar lg, string inputString, string expecting)
     {
         var atn = ToolTestUtils.CreateATN(lg, true);
         var input = CharStreams.FromString(inputString);
@@ -621,7 +621,7 @@ public class TestATNLexerInterpreter
     private static List<string> GetTokenTypes(LexerGrammar lg, ATN atn, CharStream input)
     {
         var interp = new LexerATNSimulator(atn, new DFA[] { new DFA(atn.modeToStartState[(Lexer.DEFAULT_MODE)]) }, null);
-        List<String> tokenTypes = new();
+        List<string> tokenTypes = new();
         int ttype;
         bool hitEOF = false;
         do

@@ -25,7 +25,7 @@ public class TestLeftRecursionToolIssues
             "WS : (' '|'\\n') -> skip ;\n";
         var expected =
             "error(" + ErrorType.NO_NON_LR_ALTS + "): T.g4:3:0: left recursive rule a must contain an alternative which is not left recursive\n";
-        ToolTestUtils.TestErrors(new String[] { grammar, expected }, false);
+        ToolTestUtils.TestErrors(new string[] { grammar, expected }, false);
     }
 
 
@@ -42,7 +42,7 @@ public class TestLeftRecursionToolIssues
             "WS : (' '|'\\n') -> skip ;\n";
         var expected =
             "error(" + ErrorType.EPSILON_LR_FOLLOW + "): T.g4:3:0: left recursive rule a contains a left recursive alternative which can be followed by the empty string\n";
-        ToolTestUtils.TestErrors(new String[] { grammar, expected }, false);
+        ToolTestUtils.TestErrors(new string[] { grammar, expected }, false);
     }
 
     /** Reproduces https://github.com/antlr/antlr4/issues/855 */
@@ -92,7 +92,7 @@ public class TestLeftRecursionToolIssues
             "  ;";
         var expected =
             "error(" + ErrorType.NONCONFORMING_LR_RULE + "): T.g4:2:0: rule a is left recursive but doesn't conform to a pattern ANTLR can handle\n";
-        ToolTestUtils.TestErrors(new String[] { grammar, expected }, false);
+        ToolTestUtils.TestErrors(new string[] { grammar, expected }, false);
     }
 
     /** Reproduces https://github.com/antlr/antlr4/issues/822 */

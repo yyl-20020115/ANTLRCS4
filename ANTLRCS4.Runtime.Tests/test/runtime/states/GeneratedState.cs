@@ -21,7 +21,7 @@ public class GeneratedState : State
         return errorQueue.errors.Count > 0 || base.ContainsErrors();
     }
 
-    public override String GetErrorMessage()
+    public override string GetErrorMessage()
     {
         var result = base.GetErrorMessage();
 

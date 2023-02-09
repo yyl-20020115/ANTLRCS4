@@ -112,7 +112,7 @@ public class XPathLexer : Lexer
                     t = new CommonToken(BANG, "!");
                     break;
                 case '\'':
-                    String s = matchString();
+                    var s = MatchString();
                     t = new CommonToken(STRING, s);
                     break;
                 case CharStream.EOF:
@@ -120,7 +120,7 @@ public class XPathLexer : Lexer
                 default:
                     if (isNameStartChar(input.LA(1)))
                     {
-                        String id = matchID();
+                        var id = MatchID();
                         if (char.IsUpper(id[0])) t = new CommonToken(TOKEN_REF, id);
                         else t = new CommonToken(RULE_REF, id);
                     }
@@ -152,13 +152,9 @@ public class XPathLexer : Lexer
         input.Consume();
     }
 
-    //@Override
-    public int getCharPositionInLine()
-    {
-        return charPositionInLine;
-    }
+    public int CharPositionInLine => charPositionInLine;
 
-    public String matchID()
+    public string MatchID()
     {
         int start = input.Index;
         Consume(); // drop start char
@@ -169,7 +165,7 @@ public class XPathLexer : Lexer
         return input.GetText(Interval.Of(start, input.Index - 1));
     }
 
-    public String matchString()
+    public string MatchString()
     {
         int start = input.Index;
         Consume(); // drop first quote

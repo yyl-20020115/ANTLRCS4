@@ -38,13 +38,13 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
 	 *  track ourselves.  That's ok, it's only for debugging, though it's
 	 *  expensive: we have to create a hashtable with all tree nodes in it.
 	 */
-    protected Dictionary<Object, int> treeToUniqueIDMap;
+    protected Dictionary<object, int> treeToUniqueIDMap;
     protected int uniqueNodeID = 1;
 
     //@Override
-    public object nil()
+    public object Nil()
     {
-        return create(null);
+        return Create(null);
     }
 
     /** create tree node that holds the start and stop tokens associated
@@ -59,7 +59,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  subclass your own tree node class to avoid class cast exception.
      */
     //@Override
-    public Object errorNode(TokenStream input, Token start, Token stop,
+    object TreeAdaptor.ErrorNode(TokenStream input, Token start, Token stop,
                             RecognitionException e)
     {
         CommonErrorNode t = new CommonErrorNode(input, start, stop, e);
@@ -68,13 +68,13 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public bool isNil(Object tree)
+    public bool IsNil(Object tree)
     {
         return ((Tree)tree).IsNil;
     }
 
     //@Override
-    public Object dupTree(Object tree)
+    public Object DupTree(Object tree)
     {
         return dupTree(tree, null);
     }
@@ -89,16 +89,16 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         {
             return null;
         }
-        Object newTree = dupNode(t);
+        Object newTree = DupNode(t);
         // ensure new subtree root has parent/child index set
-        setChildIndex(newTree, getChildIndex(t)); // same index in new tree
-        setParent(newTree, parent);
-        int n = getChildCount(t);
+        SetChildIndex(newTree, GetChildIndex(t)); // same index in new tree
+        SetParent(newTree, parent);
+        int n = GetChildCount(t);
         for (int i = 0; i < n; i++)
         {
-            Object child = getChild(t, i);
+            Object child = GetChild(t, i);
             Object newSubTree = dupTree(child, t);
-            addChild(newTree, newSubTree);
+            AddChild(newTree, newSubTree);
         }
         return newTree;
     }
@@ -111,7 +111,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  ASTs.
      */
     //@Override
-    public void addChild(Object t, Object child)
+    public void AddChild(Object t, Object child)
     {
         if (t != null && child != null)
         {
@@ -146,7 +146,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  efficiency.
      */
     //@Override
-    public Object becomeRoot(Object newRoot, Object oldRoot)
+    public Object BecomeRoot(Object newRoot, Object oldRoot)
     {
         //Console.Out.WriteLine("becomeroot new "+newRoot.toString()+" old "+oldRoot);
         Tree newRootTree = (Tree)newRoot;
@@ -175,7 +175,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
 
     /** Transform ^(nil x) to x and nil to null */
     //@Override
-    public Object rulePostProcessing(Object root)
+    public Object RulePostProcessing(Object root)
     {
         //Console.Out.WriteLine("rulePostProcessing: "+((Tree)root).toStringTree());
         Tree r = (Tree)root;
@@ -198,91 +198,91 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public Object becomeRoot(Token newRoot, Object oldRoot)
+    public Object BecomeRoot(Token newRoot, Object oldRoot)
     {
-        return becomeRoot(create(newRoot), oldRoot);
+        return BecomeRoot(Create(newRoot), oldRoot);
     }
 
     //@Override
-    public Object create(int tokenType, Token fromToken)
+    public Object Create(int tokenType, Token fromToken)
     {
         fromToken = createToken(fromToken);
         //((ClassicToken)fromToken).setType(tokenType);
         fromToken.        //((ClassicToken)fromToken).setType(tokenType);
         Type = tokenType;
-        Tree t = (Tree)create(fromToken);
+        Tree t = (Tree)Create(fromToken);
         return t;
     }
 
     //@Override
-    public Object create(int tokenType, Token fromToken, String text)
+    public Object Create(int tokenType, Token fromToken, String text)
     {
-        if (fromToken == null) return create(tokenType, text);
+        if (fromToken == null) return Create(tokenType, text);
         fromToken = createToken(fromToken);
         fromToken.        Type = tokenType;
         fromToken.        Text = text;
-        Tree t = (Tree)create(fromToken);
+        Tree t = (Tree)Create(fromToken);
         return t;
     }
 
     //@Override
-    public Object create(int tokenType, String text)
+    public Object Create(int tokenType, String text)
     {
         Token fromToken = CreateToken(tokenType, text);
-        Tree t = (Tree)create(fromToken);
+        Tree t = (Tree)Create(fromToken);
         return t;
     }
 
     //@Override
-    public int getType(Object t)
+    public int GetType(Object t)
     {
         return ((Tree)t).Type;
     }
 
     //@Override
-    public void setType(Object t, int type)
+    public void SetType(Object t, int type)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
     //@Override
-    public String getText(Object t)
+    public String GetText(Object t)
     {
         return ((Tree)t).Text;
     }
 
     //@Override
-    public void setText(Object t, String text)
+    public void SetText(Object t, String text)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
     //@Override
-    public Object getChild(Object t, int i)
+    public Object GetChild(Object t, int i)
     {
         return ((Tree)t).GetChild(i);
     }
 
     //@Override
-    public void setChild(Object t, int i, Object child)
+    public void SetChild(Object t, int i, Object child)
     {
         ((Tree)t).SetChild(i, (Tree)child);
     }
 
     //@Override
-    public Object deleteChild(Object t, int i)
+    public Object DeleteChild(Object t, int i)
     {
         return ((Tree)t).DeleteChild(i);
     }
 
     //@Override
-    public int getChildCount(Object t)
+    public int GetChildCount(Object t)
     {
         return ((Tree)t).ChildCount;
     }
 
     //@Override
-    public int getUniqueID(Object node)
+    public int GetUniqueID(Object node)
     {
         if (treeToUniqueIDMap == null)
         {
@@ -326,57 +326,57 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      */
     public abstract Token createToken(Token fromToken);
 
-    public object create(Token payload)
+    public object Create(Token payload)
     {
         throw new NotImplementedException();
     }
 
-    public object dupNode(object treeNode)
+    public object DupNode(object treeNode)
     {
         throw new NotImplementedException();
     }
 
-    public Token getToken(object t)
+    public Token GetToken(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void setTokenBoundaries(object t, Token startToken, Token stopToken)
+    public void SetTokenBoundaries(object t, Token startToken, Token stopToken)
     {
         throw new NotImplementedException();
     }
 
-    public int getTokenStartIndex(object t)
+    public int GetTokenStartIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public int getTokenStopIndex(object t)
+    public int GetTokenStopIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public object getParent(object t)
+    public object GetParent(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void setParent(object t, object parent)
+    public void SetParent(object t, object parent)
     {
         throw new NotImplementedException();
     }
 
-    public int getChildIndex(object t)
+    public int GetChildIndex(object t)
     {
         throw new NotImplementedException();
     }
 
-    public void setChildIndex(object t, int index)
+    public void SetChildIndex(object t, int index)
     {
         throw new NotImplementedException();
     }
 
-    public void replaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
+    public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         throw new NotImplementedException();
     }

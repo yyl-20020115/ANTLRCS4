@@ -29,7 +29,7 @@ public class LexerInterpreter : Lexer
         new PredictionContextCache();
 
     //@Deprecated
-    public LexerInterpreter(string grammarFileName, ICollection<string> tokenNames, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
+    public LexerInterpreter(string grammarFileName, ICollection<string> tokenNames, ICollection<string> ruleNames, ICollection<string> modeNames, ATN atn, CharStream input)
     : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, new List<string>(), modeNames, atn, input)
     {
     }

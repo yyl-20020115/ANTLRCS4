@@ -39,7 +39,7 @@ public class JavaUnicodeInputStream : CharStream
     public int Index => source.Index;
 
     
-    public String SourceName => source.SourceName;
+    public string SourceName => source.SourceName;
 
     
     public string GetText(Interval interval)

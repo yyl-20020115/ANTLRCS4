@@ -67,18 +67,18 @@ public class ATNPrinter
                 else if (t is SetTransition st)
                 {
                     bool not = st is NotSetTransition;
-                    if (g.isLexer())
+                    if (g.IsLexer)
                     {
                         builder.Append('-').Append(not ? "~" : "").Append(st.ToString()).Append("->").Append(GetStateString(t.target)).Append('\n');
                     }
                     else
                     {
-                        builder.Append('-').Append(not ? "~" : "").Append(st.Label.ToString(g.getVocabulary())).Append("->").Append(GetStateString(t.target)).Append('\n');
+                        builder.Append('-').Append(not ? "~" : "").Append(st.Label.ToString(g.Vocabulary)).Append("->").Append(GetStateString(t.target)).Append('\n');
                     }
                 }
                 else if (t is AtomTransition a2)
                 {
-                    var label = g.getTokenDisplayName(a2._label);
+                    var label = g.GetTokenDisplayName(a2._label);
                     builder.Append('-').Append(label).Append("->").Append(GetStateString(t.target)).Append('\n');
                 }
                 else

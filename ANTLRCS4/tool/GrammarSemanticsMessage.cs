@@ -16,7 +16,7 @@ public class GrammarSemanticsMessage : ANTLRMessage
     public GrammarSemanticsMessage(ErrorType etype,
                                    String fileName,
                                    Token offendingToken,
-                                   params Object[] args)
+                                   params object[] args)
         : base(etype, offendingToken, args)
     {
         this.fileName = fileName;

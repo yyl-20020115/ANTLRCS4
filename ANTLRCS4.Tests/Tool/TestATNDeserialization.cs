@@ -196,7 +196,7 @@ public class TestATNDeserialization
     {
         var atn = ToolTestUtils.CreateATN(g, false);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var atnData = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.ToArray());
+        var atnData = new ATNDescriber(atn, Arrays.AsList(g.GetTokenNames())).Decode(serialized.ToArray());
 
         var serialized16 = ATNDeserializer.EncodeIntsWith16BitWords(serialized);
         var ints16 = serialized16.ToArray();
@@ -211,7 +211,7 @@ public class TestATNDeserialization
 
         var atn2 = new ATNDeserializer().Deserialize(serialized.ToArray());
         var serialized1 = ATNSerializer.GetSerialized(atn2);
-        var atn2Data = new ATNDescriber(atn2, Arrays.AsList(g.getTokenNames())).Decode(serialized1.ToArray());
+        var atn2Data = new ATNDescriber(atn2, Arrays.AsList(g.GetTokenNames())).Decode(serialized1.ToArray());
 
         Assert.AreEqual(atnData, atn2Data);
     }

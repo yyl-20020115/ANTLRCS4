@@ -30,7 +30,7 @@ public class TestUnbufferedTokenStream
         var input = new ANTLRInputStream(
             new StringReader("x = 302;")
         );
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = new UnbufferedTokenStream(lexEngine);
 
         Assert.AreEqual("x", tokens.LT(1).Text);
@@ -58,7 +58,7 @@ public class TestUnbufferedTokenStream
         var input = new ANTLRInputStream(
             new StringReader("x = 302;")
         );
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = new TestingUnbufferedTokenStream(lexEngine);
 
         Assert.AreEqual("[[@0,0:0='x',<1>,1:0]]", tokens.GetBuffer().ToString());
@@ -97,7 +97,7 @@ public class TestUnbufferedTokenStream
         var input = new ANTLRInputStream(
             new StringReader("x = 302;")
         );
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = new TestingUnbufferedTokenStream(lexEngine);
 
         int m = tokens.Mark();
@@ -134,7 +134,7 @@ public class TestUnbufferedTokenStream
         var input = new ANTLRInputStream(
             new StringReader("x = 302 + 1;")
         );
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = new TestingUnbufferedTokenStream(lexEngine);
 
         int m = tokens.Mark();

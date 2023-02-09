@@ -13,10 +13,12 @@ namespace org.antlr.v4.test.runtime.java.api.perf;
  *
  *  I'm not using at moment but I'm adding in case.
  */
-public class Instrumentor {
-	public static Instrumentation instrumentation;
+public class Instrumentor
+{
+    public static Instrumentation instrumentation;
 
-	public static void premain(String args, Instrumentation I) {
-		instrumentation = I;
-	}
+    public static void premain(string args, Instrumentation I)
+    {
+        instrumentation = I;
+    }
 }

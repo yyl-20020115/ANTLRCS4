@@ -71,7 +71,7 @@ public class SwiftRunner : RuntimeRunner
             outputFileST.Add("excludedFiles", excludedFiles);
             FileUtils.WriteFile(tempDirPath, "Package.swift", outputFileST.Render());
 
-            var buildProjectArgs = new String[]{
+            var buildProjectArgs = new string[]{
                     GetCompilerPath(),
                     "build",
                     "-c",
@@ -100,7 +100,7 @@ public class SwiftRunner : RuntimeRunner
     //class NoSwiftFileFilter : FilenameFilter {
     //	public static readonly NoSwiftFileFilter Instance = new NoSwiftFileFilter();
 
-    //	public bool accept(string dir, String name) {
+    //	public bool accept(string dir, string name) {
     //		return !name.EndsWith(".swift");
     //	}
     //}

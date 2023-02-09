@@ -46,7 +46,7 @@ using Console = System.Console;
  *
  *  This node stream sucks all nodes out of the tree specified in
  *  the constructor during construction and makes pointers into
- *  the tree using an array of Object pointers. The stream necessarily
+ *  the tree using an array of object pointers. The stream necessarily
  *  includes pointers to DOWN and UP and EOF nodes.
  *
  *  This stream knows how to mark/release for backtracking.
@@ -120,7 +120,7 @@ public class BufferedTreeNodeStream : ITreeNodeStream, ITokenStreamInformation
     /** <summary>The complete mapping from stream index to tree node.
      *  This buffer includes pointers to DOWN, UP, and EOF nodes.
      *  It is built upon ctor invocation.  The elements are type
-     *  Object as we don't what the trees look like.</summary>
+     *  object as we don't what the trees look like.</summary>
      *
      *  Load upon first need of the buffer so we can set token types
      *  of interest for reverseIndexing.  Slows us down a wee bit to

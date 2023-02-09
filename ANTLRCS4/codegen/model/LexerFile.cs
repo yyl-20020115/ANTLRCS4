@@ -22,7 +22,7 @@ public class LexerFile : OutputFile
     {
         namedActions = BuildNamedActions(factory.Grammar);
         genPackage = factory.Grammar.Tools.genPackage;
-        exportMacro = factory.Grammar.getOptionString("exportMacro");
+        exportMacro = factory.Grammar.GetOptionString("exportMacro");
         genListener = factory.Grammar.Tools.gen_listener;
         genVisitor = factory.Grammar.Tools.gen_visitor;
     }

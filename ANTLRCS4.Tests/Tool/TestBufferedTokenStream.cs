@@ -30,7 +30,7 @@ public class TestBufferedTokenStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
         var result = tokens.LT(1).Text;
@@ -53,7 +53,7 @@ public class TestBufferedTokenStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
         var result = tokens.LT(2).Text;
@@ -76,7 +76,7 @@ public class TestBufferedTokenStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
         int i = 1;
@@ -109,7 +109,7 @@ public class TestBufferedTokenStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
         var t = tokens.LT(1);
@@ -139,7 +139,7 @@ public class TestBufferedTokenStream
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = new ANTLRInputStream("x = 3 * 0 + 2 * 0;");
-        var lexEngine = g.createLexerInterpreter(input);
+        var lexEngine = g.CreateLexerInterpreter(input);
         var tokens = CreateTokenStream(lexEngine);
 
         tokens.Consume(); // get x into buffer

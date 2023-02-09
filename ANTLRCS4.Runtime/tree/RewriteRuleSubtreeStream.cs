@@ -25,7 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.runtime.tree;
 
 namespace org.antlr.runtime.tree;
 
@@ -41,16 +40,16 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
 
     /** Create a stream with one element */
     public RewriteRuleSubtreeStream(TreeAdaptor adaptor,
-                                    String elementDescription,
-                                    Object oneElement)
+                                    string elementDescription,
+                                    object oneElement)
             : base(adaptor, elementDescription, oneElement)
     {
     }
 
     /** Create a stream, but feed off an existing list */
     public RewriteRuleSubtreeStream(TreeAdaptor adaptor,
-                                    String elementDescription,
-                                    List<Object> elements)
+                                    string elementDescription,
+                                    List<object> elements)
             : base(adaptor, elementDescription, elements)
     {
     }
@@ -68,28 +67,28 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
      *  a proper way to refactor.  This needs to always call dup node
      *  and super.next() doesn't know which to call: dup node or dup tree.
      */
-    public Object nextNode()
+    public object NextNode()
     {
         //Console.Out.WriteLine("nextNode: elements="+elements+", singleElement="+((Tree)singleElement).toStringTree());
-        int n = size();
+        int n = Size();
         if (dirty || (cursor >= n && n == 1))
         {
             // if out of elements and size is 1, dup (at most a single node
             // since this is for making root nodes).
-            Object elx = _next();
-            return adaptor.dupNode(elx);
+            object elx = Next();
+            return adaptor.DupNode(elx);
         }
         // test size above then fetch
-        Object tree = _next();
-        while (adaptor.isNil(tree) && adaptor.getChildCount(tree) == 1)
-            tree = adaptor.getChild(tree, 0);
+        var tree = Next();
+        while (adaptor.IsNil(tree) && adaptor.GetChildCount(tree) == 1)
+            tree = adaptor.GetChild(tree, 0);
         //Console.Out.WriteLine("_next="+((Tree)tree).toStringTree());
-        Object el = adaptor.dupNode(tree); // dup just the root (want node here)
+        var el = adaptor.DupNode(tree); // dup just the root (want node here)
         return el;
     }
 
-    protected override Object dup(Object el)
+    protected override object Dup(Object el)
     {
-        return adaptor.dupTree(el);
+        return adaptor.DupTree(el);
     }
 }

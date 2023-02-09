@@ -41,7 +41,7 @@ public class LabelElementPair
         }
 
         // now reset if lexer and string
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             if (element.GetFirstDescendantWithType(ANTLRParser.STRING_LITERAL) != null)
             {

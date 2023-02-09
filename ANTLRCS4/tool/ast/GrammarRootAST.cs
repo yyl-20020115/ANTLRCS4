@@ -11,7 +11,7 @@ namespace org.antlr.v4.tool.ast;
 
 public class GrammarRootAST : GrammarASTWithOptions
 {
-    public static readonly Dictionary<String, String> defaultOptions = new();
+    public static readonly Dictionary<string, string> defaultOptions = new();
     static GrammarRootAST()
     {
         defaultOptions.Add("language", "Java");
@@ -42,19 +42,18 @@ public class GrammarRootAST : GrammarASTWithOptions
         this.tokenStream = tokenStream ?? throw new NullReferenceException("tokenStream");
     }
 
-    public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) : base(type, t, text)
+    public GrammarRootAST(int type, Token t, string text, TokenStream tokenStream) : base(type, t, text)
     {
         this.tokenStream = tokenStream ?? throw new NullReferenceException("tokenStream");
     }
 
     public string GetGrammarName()
     {
-        Tree t = GetChild(0);
+        var t = GetChild(0);
         if (t != null) return t.Text;
         return null;
     }
 
-    //@Override
     public override string GetOptionString(string key)
     {
         if (cmdLineOptions != null && cmdLineOptions.TryGetValue(key, out var v))

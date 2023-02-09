@@ -11,19 +11,15 @@ namespace org.antlr.v4.test.runtime.java;
 
 public class JavaRunner : RuntimeRunner
 {
-    //@Override
-    public override String GetLanguage()
-    {
-        return "Java";
-    }
+    public override string GetLanguage() => "Java";
 
-    public static readonly String classPath = Environment.GetEnvironmentVariable("java.class.path");
+    public static readonly string classPath = Environment.GetEnvironmentVariable("java.class.path");
 
-    public static readonly String runtimeTestLexerName = "RuntimeTestLexer";
-    public static readonly String runtimeTestParserName = "RuntimeTestParser";
+    public static readonly string runtimeTestLexerName = "RuntimeTestLexer";
+    public static readonly string runtimeTestParserName = "RuntimeTestParser";
 
-    private static readonly String testLexerContent;
-    private static readonly String testParserContent;
+    private static readonly string testLexerContent;
+    private static readonly string testParserContent;
     //private static JavaCompiler compiler;
 
     static JavaRunner()
@@ -47,14 +43,11 @@ public class JavaRunner : RuntimeRunner
     }
 
     //@Override
-    public override string GetCompilerName()
-    {
-        return "javac";
-    }
+    public override string GetCompilerName() => "javac";
 #if false
 	//@Override
 	protected JavaCompiledState compile(RunOptions runOptions, GeneratedState generatedState) {
-		String tempTestDir = getTempDirPath();
+		string tempTestDir = getTempDirPath();
 
 		List<GeneratedFile> generatedFiles = generatedState.generatedFiles;
 		GeneratedFile firstFile = generatedFiles[(0)];
@@ -162,13 +155,13 @@ public class JavaRunner : RuntimeRunner
     private ExecutedState ExecCommon(JavaCompiledState compiledState)
     {
         Exception exception = null;
-        String output = null;
-        String errors = null;
+        string output = null;
+        string errors = null;
         try
         {
             Type mainClass = this.GetType().Assembly.GetType(GetTestFileName());
             MethodInfo recognizeMethod = mainClass.GetMethod("recognize",
-                   new Type[] { typeof(String), typeof(TextWriter), typeof(TextWriter) });
+                   new Type[] { typeof(string), typeof(TextWriter), typeof(TextWriter) });
 
             //PipedInputStream stdoutIn = new PipedInputStream();
             //PipedInputStream stderrIn = new PipedInputStream();

@@ -78,7 +78,7 @@ public class Alternative : AttributeResolver
     /** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
 	 *  attr in that dictionary.  Can't see args on rule refs.
 	 */
-    public Attribute ResolveToAttribute(String x, String y, ActionAST node)
+    public Attribute ResolveToAttribute(string x, string y, ActionAST node)
     {
         if (tokenRefs.ContainsKey(x))
         { // token ref in this alt?

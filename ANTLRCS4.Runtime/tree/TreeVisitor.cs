@@ -56,19 +56,19 @@ public class TreeVisitor
     public Object visit(Object t, TreeVisitorAction action)
     {
         // Console.Out.WriteLine("visit "+((Tree)t).toStringTree());
-        bool isNil = adaptor.isNil(t);
+        bool isNil = adaptor.IsNil(t);
         if (action != null && !isNil)
         {
             t = action.Pre(t); // if rewritten, walk children of new t
         }
-        for (int i = 0; i < adaptor.getChildCount(t); i++)
+        for (int i = 0; i < adaptor.GetChildCount(t); i++)
         {
-            Object child = adaptor.getChild(t, i);
+            Object child = adaptor.GetChild(t, i);
             Object visitResult = visit(child, action);
-            Object childAfterVisit = adaptor.getChild(t, i);
+            Object childAfterVisit = adaptor.GetChild(t, i);
             if (visitResult != childAfterVisit)
             { // result & child differ?
-                adaptor.setChild(t, i, visitResult);
+                adaptor.SetChild(t, i, visitResult);
             }
         }
         if (action != null && !isNil) t = action.Post(t);

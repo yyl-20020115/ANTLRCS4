@@ -18,7 +18,7 @@ public class GrammarSyntaxMessage : ANTLRMessage
                                 String fileName,
                                 Token offendingToken,
                                 RecognitionException antlrException,
-                                params Object[] args)
+                                params object[] args)
         : base(etype, antlrException, offendingToken, args)
     {
         this.fileName = fileName;

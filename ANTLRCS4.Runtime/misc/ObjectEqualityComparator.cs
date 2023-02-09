@@ -12,7 +12,7 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 	 * {@inheritDoc}
 	 *
 	 * <p>This implementation returns
-	 * {@code obj.}{@link Object#hashCode hashCode()}.</p>
+	 * {@code obj.}{@link object#hashCode hashCode()}.</p>
 	 */
     public override int GetHashCode(T obj) => obj == null ? 0 : obj.GetHashCode();
 
@@ -23,7 +23,7 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 	 * {@code null}, this method returns {@code true}. Otherwise if only
 	 * {@code a} is {@code null}, this method returns {@code false}. Otherwise,
 	 * this method returns the result of
-	 * {@code a.}{@link Object#equals equals}{@code (b)}.</p>
+	 * {@code a.}{@link object#equals equals}{@code (b)}.</p>
 	 */
     public override bool Equals(T a, T b) => a == null ? b == null : a.Equals(b);
 
@@ -31,7 +31,7 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 
 /**
  * This default implementation of {@link EqualityComparator} uses object equality
- * for comparisons by calling {@link Object#hashCode} and {@link Object#equals}.
+ * for comparisons by calling {@link object#hashCode} and {@link Object#equals}.
  *
  * @author Sam Harwell
  */

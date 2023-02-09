@@ -18,7 +18,7 @@ public class ParserInterpreterForTesting
         public readonly ATN atn;
         public readonly DFA[] decisionToDFA; // not shared for interp
         public readonly PredictionContextCache sharedContextCache =
-            new PredictionContextCache();
+            new ();
 
         public Grammar g;
         public DummyParser(Grammar g, ATN atn, TokenStream input) : base(input)
@@ -32,27 +32,14 @@ public class ParserInterpreterForTesting
             }
         }
 
-        //@Override
         public override string GrammarFileName => throw new UnsupportedOperationException("not implemented");
 
         //@Override
-        public string[] GetRuleNames()
-        {
-            return g.rules.Keys.ToArray();//.toArray(new String[0]);
-        }
+        public string[] RuleNames => g.rules.Keys.ToArray();//.toArray(new String[0]);
 
-        //@Override
-        //@Deprecated
-        public String[] GetTokenNames()
-        {
-            return g.getTokenNames();
-        }
+        public override string[] TokenNames => g.GetTokenNames();
 
-        //@Override
-        public ATN GetATN()
-        {
-            return atn;
-        }
+        public virtual ATN ATN => atn;
     }
 
     protected Grammar g;

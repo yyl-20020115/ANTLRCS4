@@ -26,7 +26,7 @@ public class AnalysisPipeline
         lr.Check();
         if (lr.listOfRecursiveCycles.Count > 0) return; // bail out
 
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             ProcessLexer();
         }

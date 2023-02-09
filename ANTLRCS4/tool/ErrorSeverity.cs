@@ -34,7 +34,7 @@ public class ErrorSeverityClass
      *
      * @return The human readable string representing the severity level
      */
-    public String Text => text;
+    public string Text => text;
     /**
      * Standard constructor to build an instance of the Enum entries
      *

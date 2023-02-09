@@ -383,9 +383,9 @@ public class TestParserInterpreter
                     string startRule, string input,
                     string expectedParseTree)
     {
-        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = lg.CreateLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = g.createParserInterpreter(tokens);
+        var parser = g.CreateParserInterpreter(tokens);
         var t = parser.Parse(g.rules[(startRule)].index);
         Assert.AreEqual(expectedParseTree, t.ToStringTree(parser));
         return t;

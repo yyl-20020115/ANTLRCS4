@@ -704,7 +704,7 @@ public class TestATNConstruction
                 "parser grammar P;\n"+
                 "a : {p1}? {p1a}? A | {p2}? B | {p3} b;\n" +
                 "b : {p4}? B ;");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "a", expecting);
         }
@@ -716,7 +716,7 @@ public class TestATNConstruction
                 "c : (A|B) (A|B) ;\n" +
                 "d : ( A | B )* ;\n" +
                 "e : ( A | B )? ;");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "a", expecting);
             expecting =
@@ -737,7 +737,7 @@ public class TestATNConstruction
                 "parser grammar P;\n"+
                 "tokens { A; B; C; }\n"+
                 "a : ~A ;\n");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "a", expecting);
         }
@@ -746,7 +746,7 @@ public class TestATNConstruction
                 "parser grammar P;\n"+
                 "tokens { A; B; C; }\n"+
                 "a : ~(A) ;\n");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "a", expecting);
         }
@@ -754,7 +754,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : ~'3' ;\n");
-            String expecting =
+            var expecting =
                 "RuleStart_A_1->s5\n" +
                 "s5-{'\\u0000'..'2', '4'..'\\uFFFE'}->s6\n" +
                 "s6->RuleStop_A_2\n";
@@ -764,7 +764,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : ~('3'|'b') ;\n");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "A", expecting);
         }
@@ -772,7 +772,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : ~('3')* ;\n");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "A", expecting);
         }
@@ -780,7 +780,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : ~('3'|'b')* ;\n");
-            String expecting =
+            var expecting =
                 "\n";
             checkRule(g, "A", expecting);
         }
@@ -789,7 +789,7 @@ public class TestATNConstruction
                 "parser grammar P;\n"+
                 "tokens { A; B; C; }\n"+
                 "a : t=~A ;\n");
-            String expecting =
+            var expecting =
                 ".s0->.s1\n" +
                 ".s1->.s2\n" +
                 ".s2-B..C->.s3\n" +
@@ -801,7 +801,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : t=~'3' ;\n");
-            String expecting =
+            var expecting =
                 ".s0->.s1\n" +
                 ".s1->.s2\n" +
                 ".s2-{'\\u0000'..'2', '4'..'\\uFFFF'}->.s3\n" +
@@ -813,7 +813,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "lexer grammar P;\n"+
                 "A : t=~('3'|'b') ;\n");
-            String expecting =
+            var expecting =
                 ".s0->.s1\n" +
                 ".s1->.s2\n" +
                 ".s2-{'\\u0000'..'2', '4'..'a', 'c'..'\\uFFFF'}->.s3\n" +
@@ -825,7 +825,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "grammar P;\n"+
                 "a : '\\n';");
-            String expecting =
+            var expecting =
                 ".s0->.s1\n" +
                 ".s1->.s2\n" +
                 ".s2-'\\n'->.s3\n" +
@@ -837,7 +837,7 @@ public class TestATNConstruction
             Grammar g = new Grammar(
                 "grammar P;\n"+
                 "a : 'a\\nb\\u0030c\\'';");
-            String expecting =
+            var expecting =
                 "RuleStart_a_0->s2\n" +
                 "s2-'a\\nb\\u0030c\\''->s3\n" +
                 "s3->RuleStop_a_1\n" +
@@ -890,7 +890,7 @@ public class TestATNConstruction
         CheckTokensRule(g, "FOO", expecting);
     }
 
-    static void CheckTokensRule(LexerGrammar g, String modeName, String expecting)
+    static void CheckTokensRule(LexerGrammar g, string modeName, string expecting)
     {
         //		if ( g.ast!=null && !g.ast.hasErrors ) {
         //			Console.Out.WriteLine(g.ast.toStringTree());

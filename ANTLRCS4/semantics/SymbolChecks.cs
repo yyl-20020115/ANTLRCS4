@@ -62,7 +62,7 @@ public class SymbolChecks
     public void CheckActionRedefinitions(List<GrammarAST> actions)
     {
         if (actions == null) return;
-        var scope = g.getDefaultActionScope();
+        var scope = g.GetDefaultActionScope();
         string name;
         GrammarAST nameNode;
         foreach (var ampersandAST in actions)
@@ -332,7 +332,7 @@ public class SymbolChecks
 
     public void CheckForModeConflicts(Grammar g)
     {
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             var lexerGrammar = (LexerGrammar)g;
             foreach (var modeName in lexerGrammar.modes.Keys)
@@ -345,7 +345,7 @@ public class SymbolChecks
                     g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_COMMON_CONSTANTS, g.fileName, rule.ast.parent.Token, modeName);
                 }
 
-                if (g.getTokenType(modeName) != Token.INVALID_TYPE)
+                if (g.GetTokenType(modeName) != Token.INVALID_TYPE)
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.MODE_CONFLICTS_WITH_TOKEN, g.fileName, rule.ast.parent.Token, modeName);
                 }
@@ -365,7 +365,7 @@ public class SymbolChecks
 	 */
     public void CheckForUnreachableTokens(Grammar g)
     {
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             var lexerGrammar = (LexerGrammar)g;
             foreach (var rules in lexerGrammar.modes.Values)
@@ -471,7 +471,7 @@ public class SymbolChecks
 	 * TOKEN1: 'asdf';
 	 * TOKEN2: 'asdf';
 	 */
-    private void CheckForOverlap(Grammar g, Rule rule1, Rule rule2, List<String> firstTokenStringValues, List<String> secondTokenStringValues)
+    private void CheckForOverlap(Grammar g, Rule rule1, Rule rule2, List<string> firstTokenStringValues, List<string> secondTokenStringValues)
     {
         for (int i = 0; i < firstTokenStringValues.Count; i++)
         {
@@ -519,7 +519,7 @@ public class SymbolChecks
             var grammar = (GrammarAST)dot.GetChild(0);
             var rule = (GrammarAST)dot.GetChild(1);
             g.Tools.Log("semantics", grammar.Text + "." + rule.Text);
-            var @delegate = g.getImportedGrammar(grammar.Text);
+            var @delegate = g.GetImportedGrammar(grammar.Text);
             if (@delegate == null)
             {
                 errMgr.GrammarError(ErrorType.NO_SUCH_GRAMMAR_SCOPE,

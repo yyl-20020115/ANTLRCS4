@@ -45,7 +45,7 @@ public class Processor
         if (environmentVariables != null && environmentVariables.Count > 0)
         {
             var environment = processStartInfo.EnvironmentVariables;
-            foreach (String key in environmentVariables.Keys)
+            foreach (var key in environmentVariables.Keys)
             {
                 environment.Add(key, environmentVariables[(key)]);
             }

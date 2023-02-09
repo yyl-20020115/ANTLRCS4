@@ -502,7 +502,7 @@ public class TestATNParserPrediction
 	 *  Then check adaptive prediction.
 	 */
     public static void CheckPredictedAlt(LexerGrammar lg, Grammar g, int decision,
-                                  String inputString, int expectedAlt)
+                                  string inputString, int expectedAlt)
     {
         var lexatn = ToolTestUtils.CreateATN(lg, true);
         var lexInterp =
@@ -511,7 +511,7 @@ public class TestATNParserPrediction
         //		Console.Out.WriteLine(types);
 
         ToolTestUtils.SemanticProcess(lg);
-        g.importVocab(lg);
+        g.ImportVocab(lg);
         ToolTestUtils.SemanticProcess(g);
 
         var f = new ParserATNFactory(g);
@@ -557,7 +557,7 @@ public class TestATNParserPrediction
         new LexerATNSimulator(lexatn, new DFA[] { new DFA(lexatn.GetDecisionState(Lexer.DEFAULT_MODE)) }, new PredictionContextCache());
 
         ToolTestUtils.SemanticProcess(lg);
-        g.importVocab(lg);
+        g.ImportVocab(lg);
         ToolTestUtils.SemanticProcess(g);
 
         var interp = new ParserInterpreterForTesting(g, null);
@@ -576,7 +576,7 @@ public class TestATNParserPrediction
                 //nvae.printStackTrace(System.err);
             }
             var dfa = interp.parser.decisionToDFA[decision];
-            Assert.AreEqual(dfaString[i], dfa.ToString(g.getVocabulary()));
+            Assert.AreEqual(dfaString[i], dfa.ToString(g.Vocabulary));
         }
     }
 }

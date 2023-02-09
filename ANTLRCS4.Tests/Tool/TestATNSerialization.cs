@@ -99,7 +99,7 @@ public class TestATNSerialization
             "3->1 EPSILON 0,0,0\n";
         var atn = ToolTestUtils.CreateATN(g, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(g.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -280,7 +280,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -306,7 +306,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -332,7 +332,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -370,7 +370,7 @@ public class TestATNSerialization
                         "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -416,7 +416,7 @@ public class TestATNSerialization
                 "3:9\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -443,7 +443,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -469,7 +469,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -497,7 +497,7 @@ public class TestATNSerialization
                 "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -529,7 +529,7 @@ public class TestATNSerialization
                 "1:5\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -563,7 +563,7 @@ public class TestATNSerialization
                 "1:6\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -613,7 +613,7 @@ public class TestATNSerialization
                 "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -664,7 +664,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -691,7 +691,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -718,7 +718,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -745,7 +745,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -772,7 +772,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -799,7 +799,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -826,7 +826,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -853,7 +853,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -880,7 +880,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -907,7 +907,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -934,7 +934,7 @@ public class TestATNSerialization
             "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -1000,7 +1000,7 @@ public class TestATNSerialization
                 "2:11\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -1030,7 +1030,7 @@ public class TestATNSerialization
                 "0:0\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -1090,7 +1090,7 @@ public class TestATNSerialization
             "1:1\n";
         var atn = ToolTestUtils.CreateATN(lg, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(lg.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(lg.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
     }
 
@@ -1149,7 +1149,7 @@ public class TestATNSerialization
     {
         var atn = ToolTestUtils.CreateATN(g, true);
         var serialized = ATNSerializer.GetSerialized(atn);
-        var result = new ATNDescriber(atn, Arrays.AsList(g.getTokenNames())).Decode(serialized.ToArray());
+        var result = new ATNDescriber(atn, Arrays.AsList(g.GetTokenNames())).Decode(serialized.ToArray());
         Assert.AreEqual(expecting, result);
 
         var serialized16 = ATNDeserializer.EncodeIntsWith16BitWords(serialized);

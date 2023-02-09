@@ -107,7 +107,7 @@ public class TokenStreamRewriter
             this.writer = writer;
         }
 
-        protected RewriteOperation(TokenStreamRewriter writer, int index, Object text)
+        protected RewriteOperation(TokenStreamRewriter writer, int index, object text)
         {
             this.index = index;
             this.text = text;
@@ -131,7 +131,7 @@ public class TokenStreamRewriter
 
     class InsertBeforeOp : RewriteOperation
     {
-        public InsertBeforeOp(TokenStreamRewriter writer, int index, Object text) : base(writer, index, text)
+        public InsertBeforeOp(TokenStreamRewriter writer, int index, object text) : base(writer, index, text)
         {
         }
 
@@ -153,7 +153,7 @@ public class TokenStreamRewriter
 	 */
     class InsertAfterOp : InsertBeforeOp
     {
-        public InsertAfterOp(TokenStreamRewriter writer, int index, Object text) : base(writer, index + 1, text)
+        public InsertAfterOp(TokenStreamRewriter writer, int index, object text) : base(writer, index + 1, text)
         {
             // insert after @is insert before index+1
         }
@@ -165,7 +165,7 @@ public class TokenStreamRewriter
     public class ReplaceOp : RewriteOperation
     {
         public int lastIndex;
-        public ReplaceOp(TokenStreamRewriter writer, int from, int to, Object text) : base(writer, from, text) => lastIndex = to;
+        public ReplaceOp(TokenStreamRewriter writer, int from, int to, object text) : base(writer, from, text) => lastIndex = to;
         //@Override
         public override int Execute(StringBuilder buf)
         {
@@ -239,7 +239,7 @@ public class TokenStreamRewriter
 
     public void InsertAfter(Token t, object text)
     {
-        insertAfter(DEFAULT_PROGRAM_NAME, t, text);
+        InsertAfter(DEFAULT_PROGRAM_NAME, t, text);
     }
 
     public void InsertAfter(int index, object text)
@@ -247,12 +247,12 @@ public class TokenStreamRewriter
         InsertAfter(DEFAULT_PROGRAM_NAME, index, text);
     }
 
-    public void insertAfter(String programName, Token t, Object text)
+    public void InsertAfter(string programName, Token t, object text)
     {
         InsertAfter(programName, t.TokenIndex, text);
     }
 
-    public void InsertAfter(String programName, int index, object text)
+    public void InsertAfter(string programName, int index, object text)
     {
         // to insert after, just insert before next index (even if past end)
         var op = new InsertAfterOp(this, index, text);
@@ -261,22 +261,22 @@ public class TokenStreamRewriter
         rewrites.Add(op);
     }
 
-    public void InsertBefore(Token t, Object text)
+    public void InsertBefore(Token t, object text)
     {
         InsertBefore(DEFAULT_PROGRAM_NAME, t, text);
     }
 
-    public void insertBefore(int index, Object text)
+    public void InsertBefore(int index, object text)
     {
         InsertBefore(DEFAULT_PROGRAM_NAME, index, text);
     }
 
-    public void InsertBefore(String programName, Token t, Object text)
+    public void InsertBefore(String programName, Token t, object text)
     {
         InsertBefore(programName, t.TokenIndex, text);
     }
 
-    public void InsertBefore(String programName, int index, Object text)
+    public void InsertBefore(String programName, int index, object text)
     {
         var op = new InsertBeforeOp(this, index, text);
         var rewrites = getProgram(programName);
@@ -284,27 +284,27 @@ public class TokenStreamRewriter
         rewrites.Add(op);
     }
 
-    public void Replace(int index, Object text)
+    public void Replace(int index, object text)
     {
         Replace(DEFAULT_PROGRAM_NAME, index, index, text);
     }
 
-    public void Replace(int from, int to, Object text)
+    public void Replace(int from, int to, object text)
     {
         Replace(DEFAULT_PROGRAM_NAME, from, to, text);
     }
 
-    public void Replace(Token indexT, Object text)
+    public void Replace(Token indexT, object text)
     {
         Replace(DEFAULT_PROGRAM_NAME, indexT, indexT, text);
     }
 
-    public void Replace(Token from, Token to, Object text)
+    public void Replace(Token from, Token to, object text)
     {
         Replace(DEFAULT_PROGRAM_NAME, from, to, text);
     }
 
-    public void Replace(string programName, int from, int to, Object text)
+    public void Replace(string programName, int from, int to, object text)
     {
         if (from > to || from < 0 || to < 0 || to >= tokens.Count)
         {
@@ -316,7 +316,7 @@ public class TokenStreamRewriter
         rewrites.Add(op);
     }
 
-    public void Replace(string programName, Token from, Token to, Object text)
+    public void Replace(string programName, Token from, Token to, object text)
     {
         Replace(programName,
                 from.TokenIndex,

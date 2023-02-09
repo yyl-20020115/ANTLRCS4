@@ -28,7 +28,7 @@ public static class ATNOptimizer
 
     private static void OptimizeSets(Grammar g, ATN atn)
     {
-        if (g.isParser())
+        if (g.IsParser)
         {
             // parser codegen doesn't currently support SetTransition
             return;

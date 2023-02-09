@@ -241,11 +241,7 @@ public abstract class CodePointCharStream : CharStream
             throw new UnsupportedOperationException("Not reached");
         }
 
-        //@Override
-        public override Object GetInternalStorage()
-        {
-            return byteArray;
-        }
+        public override object GetInternalStorage() => byteArray;
     }
 
     // 16-bit internal storage for code points between U+0100 and U+FFFF.
@@ -304,11 +300,7 @@ public abstract class CodePointCharStream : CharStream
             throw new UnsupportedOperationException("Not reached");
         }
 
-        //@Override
-        public override Object GetInternalStorage()
-        {
-            return charArray;
-        }
+        public override object GetInternalStorage() => charArray;
     }
 
     // 32-bit internal storage for code points between U+10000 and U+10FFFF.
@@ -369,10 +361,6 @@ public abstract class CodePointCharStream : CharStream
             throw new UnsupportedOperationException("Not reached");
         }
 
-        //@Override
-        public override Object GetInternalStorage()
-        {
-            return intArray;
-        }
+        public override object GetInternalStorage() => intArray;
     }
 }

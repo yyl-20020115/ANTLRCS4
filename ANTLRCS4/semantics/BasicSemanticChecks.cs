@@ -158,7 +158,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
 
     public override void ModeDef(GrammarAST m, GrammarAST ID)
     {
-        if (!g.isLexer())
+        if (!g.IsLexer)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.MODE_NOT_IN_LEXER, g.fileName,
                                        ID.token, ID.token.Text, g);
@@ -230,9 +230,9 @@ public class BasicSemanticChecks : GrammarTreeVisitor
 
     protected override void EnterChannelsSpec(GrammarAST tree)
     {
-        ErrorType errorType = g.isParser()
+        ErrorType errorType = g.IsParser
                 ? ErrorType.CHANNELS_BLOCK_IN_PARSER_GRAMMAR
-                : g.isCombined()
+                : g.IsCombined
                 ? ErrorType.CHANNELS_BLOCK_IN_COMBINED_GRAMMAR
                 : null;
         if (errorType != null)
@@ -260,10 +260,10 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         var idAST = (GrammarAST)rule.GetChild(0);
         for (int i = 0; i < nalts; i++)
         {
-            AltAST altAST = (AltAST)blk.GetChild(i);
+            var altAST = (AltAST)blk.GetChild(i);
             if (altAST.altLabel != null)
             {
-                String altLabel = altAST.altLabel.Text;
+                var altLabel = altAST.altLabel.Text;
                 // first check that label doesn't conflict with a rule
                 // label X or x can't be rule x.
                 if (ruleCollector.rules.TryGetValue(Utils.Decapitalize(altLabel), out var r))
@@ -360,13 +360,13 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         {
             fileName = ruleID.InputStream.SourceName;
         }
-        if (g.isLexer() && char.IsLower(ruleID.Text[(0)]))
+        if (g.IsLexer && char.IsLower(ruleID.Text[(0)]))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.PARSER_RULES_NOT_ALLOWED,
                                        fileName, ruleID, ruleID.Text);
         }
-        if (g.isParser() &&
-            Grammar.isTokenName(ruleID.Text))
+        if (g.IsParser &&
+            Grammar.IsTokenName(ruleID.Text))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.LEXER_RULES_NOT_ALLOWED,
                                        fileName, ruleID, ruleID.Text);
@@ -376,7 +376,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     void CheckInvalidRuleRef(Token ruleID)
     {
         var fileName = ruleID.InputStream.SourceName;
-        if (g.isLexer() && char.IsLower(ruleID.Text[(0)]))
+        if (g.IsLexer && char.IsLower(ruleID.Text[(0)]))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
                                        fileName, ruleID, ruleID.Text, currentRuleName);
@@ -386,7 +386,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     void CheckTokenDefinition(Token tokenID)
     {
         var fileName = tokenID.InputStream.SourceName;
-        if (!Grammar.isTokenName(tokenID.Text))
+        if (!Grammar.IsTokenName(tokenID.Text))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_NAMES_MUST_START_UPPER,
                                        fileName,
@@ -468,7 +468,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
                 return;
 
             default:
-                String fileName = ID.token.InputStream.SourceName;
+                var fileName = ID.token.InputStream.SourceName;
                 g.Tools.ErrMgr.GrammarError(ErrorType.LABEL_BLOCK_NOT_A_SET, fileName, ID.token, ID.Text);
                 break;
         }
@@ -491,13 +491,13 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         switch (parentType)
         {
             case ANTLRParser.BLOCK:
-                optionsToCheck = g.isLexer() ? Grammar.lexerBlockOptions : Grammar.parserBlockOptions;
+                optionsToCheck = g.IsLexer ? Grammar.lexerBlockOptions : Grammar.parserBlockOptions;
                 break;
             case ANTLRParser.RULE:
-                optionsToCheck = g.isLexer() ? Grammar.lexerRuleOptions : Grammar.parseRuleOptions;
+                optionsToCheck = g.IsLexer ? Grammar.lexerRuleOptions : Grammar.parseRuleOptions;
                 break;
             case ANTLRParser.GRAMMAR:
-                optionsToCheck = g.getType() == ANTLRParser.LEXER
+                optionsToCheck = g.Type == ANTLRParser.LEXER
                         ? Grammar.lexerOptions
                         : Grammar.parserOptions;
                 break;
@@ -625,18 +625,18 @@ public class BasicSemanticChecks : GrammarTreeVisitor
 
     void CheckImport(Token importID)
     {
-        var @delegate = g.getImportedGrammar(importID.Text);
+        var @delegate = g.GetImportedGrammar(importID.Text);
         if (@delegate == null) return;
-        if (validImportTypes.TryGetValue(@delegate.getType(), out var validDelegators) && !validDelegators.Contains(g.getType()))
+        if (validImportTypes.TryGetValue(@delegate.Type, out var validDelegators) && !validDelegators.Contains(g.Type))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_IMPORT,
                                        g.fileName,
                                        importID,
                                        g, @delegate);
         }
-        if (g.isCombined() &&
-             (@delegate.name.Equals(g.name + Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.LEXER)) ||
-              @delegate.name.Equals(g.name + Grammar.getGrammarTypeToFileNameSuffix(ANTLRParser.PARSER))))
+        if (g.IsCombined &&
+             (@delegate.name.Equals(g.name + Grammar.GetGrammarTypeToFileNameSuffix(ANTLRParser.LEXER)) ||
+              @delegate.name.Equals(g.name + Grammar.GetGrammarTypeToFileNameSuffix(ANTLRParser.PARSER))))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.IMPORT_NAME_CLASH,
                                        g.fileName,

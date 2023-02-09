@@ -116,7 +116,7 @@ public abstract class Target
 	 */
     public virtual string GetTokenTypeAsTargetLabel(Grammar g, int ttype)
     {
-        var name = g.getTokenName(ttype);
+        var name = g.GetTokenName(ttype);
         // If name is not valid, return the token type instead
         if (Grammar.INVALID_TOKEN_NAME.Equals(name))
         {
@@ -391,7 +391,7 @@ public abstract class Target
         return st.Render();
     }
 
-    public virtual string GetRuleFunctionContextStructName(Rule r) => r.g.isLexer()
+    public virtual string GetRuleFunctionContextStructName(Rule r) => r.g.IsLexer
             ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
             : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
 
@@ -406,7 +406,7 @@ public abstract class Target
     public virtual string GetRuleFunctionContextStructName(model.RuleFunction function)
     {
         var r = function.rule;
-        return r.g.isLexer()
+        return r.g.IsLexer
             ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
             : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
     }
@@ -416,7 +416,7 @@ public abstract class Target
     public virtual string GetImplicitTokenLabel(string tokenName)
     {
         var st = GetTemplates().GetInstanceOf("ImplicitTokenLabel");
-        int ttype = GetCodeGenerator().g.getTokenType(tokenName);
+        int ttype = GetCodeGenerator().g.GetTokenType(tokenName);
         if (tokenName.StartsWith("'")) return "s" + ttype;
         var text = GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
         st.Add("tokenName", text);
@@ -449,7 +449,7 @@ public abstract class Target
     {
         if (".".Equals(name)) return "_wild";
         if (GetCodeGenerator().g.GetRule(name) != null) return name;
-        int ttype = GetCodeGenerator().g.getTokenType(name);
+        int ttype = GetCodeGenerator().g.GetTokenType(name);
         if (ttype == Token.INVALID_TYPE) return name;
         return GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
     }

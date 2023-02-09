@@ -23,7 +23,7 @@ public abstract class RuntimeTests
 {
     protected abstract RuntimeRunner CreateRuntimeRunner();
 
-    //private static readonly Dictionary<String, RuntimeTestDescriptor[]> testDescriptors = new ();
+    //private static readonly Dictionary<string, RuntimeTestDescriptor[]> testDescriptors = new ();
     private static readonly Dictionary<string, TemplateGroup> cachedTargetTemplates = new();
     private static readonly StringRenderer rendered = new();
 
@@ -52,7 +52,7 @@ public abstract class RuntimeTests
                     continue;
                 }
 
-                String text;
+                string text;
                 try
                 {
                     text = File.ReadAllText(descriptorFile);
@@ -67,7 +67,7 @@ public abstract class RuntimeTests
             //testDescriptors.put(groupName, descriptors.ToArray());
         }
 
-        //foreach (String key in CustomDescriptors.descriptors.Keys) {
+        //foreach (var key in CustomDescriptors.descriptors.Keys) {
         //	RuntimeTestDescriptor[] descriptors = CustomDescriptors.descriptors.get(key);
         //	RuntimeTestDescriptor[] existedDescriptors = testDescriptors.putIfAbsent(key, descriptors);
         //	if (existedDescriptors != null) {
@@ -82,13 +82,13 @@ public abstract class RuntimeTests
 	public List<DynamicNode> runtimeTests() {
 		List<DynamicNode> result = new ();
 
-		foreach (String group in testDescriptors.Keys) {
+		foreach (var group in testDescriptors.Keys) {
 			List<DynamicNode> descriptorTests = new ();
 			RuntimeTestDescriptor[] descriptors = testDescriptors.get(group);
 			foreach (RuntimeTestDescriptor descriptor in descriptors) {
 				descriptorTests.Add(dynamicTest(descriptor.name, descriptor.uri, () => {
 					using (RuntimeRunner runner = createRuntimeRunner()) {
-						String errorMessage = test(descriptor, runner);
+						var errorMessage = test(descriptor, runner);
 						if (errorMessage != null) {
 							runner.setSaveTestDir(true);
 							fail(joinLines("Test: " + descriptor.name + "; " + errorMessage, "Test directory: " + runner.getTempDirPath()));
@@ -183,7 +183,7 @@ public abstract class RuntimeTests
                 var templates = File.ReadAllText("org/antlr/v4/test/runtime/templates/" + targetName + ".test.stg");
                 //assert templates != null;
                 targetTemplates = new TemplateGroupFile(templates, Encoding.UTF8, '<', '>');
-                targetTemplates.RegisterRenderer(typeof(String), rendered);
+                targetTemplates.RegisterRenderer(typeof(string), rendered);
                 cachedTargetTemplates.Add(targetName, targetTemplates);
             }
         }
@@ -195,7 +195,7 @@ public abstract class RuntimeTests
             foreach (var spair in slaveGrammars)
             {
                 var gx = new TemplateGroup('<', '>');
-                gx.RegisterRenderer(typeof(String), rendered);
+                gx.RegisterRenderer(typeof(string), rendered);
                 gx.ImportTemplates(targetTemplates);
                 var _grammarST = new Template(gx, spair.b);
                 FileUtils.WriteFile(runner.GetTempDirPath(), spair.a + ".g4", _grammarST.Render());
@@ -209,7 +209,7 @@ public abstract class RuntimeTests
         return grammarST.Render();
     }
 
-    private static string AssertCorrectOutput(RuntimeTestDescriptor descriptor, String targetName, State state)
+    private static string AssertCorrectOutput(RuntimeTestDescriptor descriptor, string targetName, State state)
     {
         ExecutedState executedState;
         if (state is ExecutedState state1)

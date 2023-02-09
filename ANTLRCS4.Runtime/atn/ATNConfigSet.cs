@@ -377,27 +377,10 @@ public class ATNConfigSet : HashSet<ATNConfig>
         {
         }
 
-        //@Override
-        protected ATNConfig AsElementType(Object o)
-        {
-            if (o is not ATNConfig)
-            {
-                return null;
-            }
+        protected override ATNConfig AsElementType(object o) => o is not ATNConfig ? null : (ATNConfig)o;
 
-            return (ATNConfig)o;
-        }
+        protected override ATNConfig[][] CreateBuckets(int capacity) => new ATNConfig[capacity][];
 
-        //@Override
-        protected ATNConfig[][] CreateBuckets(int capacity)
-        {
-            return new ATNConfig[capacity][];
-        }
-
-        //@Override
-        protected ATNConfig[] CreateBucket(int capacity)
-        {
-            return new ATNConfig[capacity];
-        }
+        protected override ATNConfig[] CreateBucket(int capacity) => new ATNConfig[capacity];
     }
 }

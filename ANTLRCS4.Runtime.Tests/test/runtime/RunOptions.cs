@@ -22,7 +22,7 @@ public class RunOptions
     public readonly bool showDFA;
     public readonly Stage endStage;
     public readonly bool returnObject;
-    public readonly String superClass;
+    public readonly string superClass;
 
     public RunOptions(string grammarFileName, string grammarStr, string parserName, string lexerName,
                       bool useListener, bool useVisitor, string startRuleName,

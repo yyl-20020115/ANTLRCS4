@@ -134,7 +134,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestMissingRuleSemi5()
     {
-        var pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "a : A \n" +
             "  catch [Exception e] {...}\n",
@@ -193,7 +193,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestUnterminatedStringLiteral()
     {
-        var pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "a : 'x\n" +
             "  ;\n",
@@ -211,7 +211,7 @@ public class TestToolSyntaxErrors
     [TestMethod]
     public void TestParserRuleNameStartingWithUnderscore()
     {
-        var pair = new String[] {
+        var pair = new string[] {
             "grammar A;\n" +
             "_a : 'x' ;\n",
 
@@ -373,7 +373,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.EPSILON_CLOSURE + "): T.g4:2:0: rule s contains a closure with at least one alternative that can match an empty string\n";
 
-        String[] pair = new String[] {
+        string[] pair = new String[] {
             grammar,
             expected
         };
@@ -393,7 +393,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.EPSILON_CLOSURE + "): T.g4:3:9: rule FRAGMENT contains a closure with at least one alternative that can match an empty string\n";
 
-        String[] pair = new String[] {
+        string[] pair = new string[] {
                 grammar,
                 expected
         };

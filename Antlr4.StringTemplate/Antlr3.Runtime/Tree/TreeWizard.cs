@@ -604,7 +604,7 @@ public class TreeWizard
      *
      *  If you really need to find a node of type, say, FUNC quickly then perhaps
      *
-     *    Map&lt;Integertoken type,Map&lt;Object tree node,Integer stream index&gt;&gt;
+     *    Map&lt;Integertoken type,Map&lt;object tree node,Integer stream index&gt;&gt;
      *
      *  would be better for you.  The interior maps map a tree node to
      *  the index so you don't have to search linearly for a specific node.

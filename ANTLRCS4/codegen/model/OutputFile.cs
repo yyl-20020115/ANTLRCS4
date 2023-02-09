@@ -23,7 +23,7 @@ public abstract class OutputFile : OutputModelObject
         var g = factory.Grammar;
         grammarFileName = g.fileName;
         ANTLRVersion = Tool.VERSION;
-        TokenLabelType = g.getOptionString("TokenLabelType");
+        TokenLabelType = g.GetOptionString("TokenLabelType");
         InputSymbolType = TokenLabelType;
     }
 

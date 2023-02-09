@@ -214,8 +214,8 @@ public class ATNDescriber
                     }
                     // turn on the bit above max "\uFFFF" value so that we pad with zeros
                     // then only take last 4 digits
-                    //String hex = Integer.toHexString(t|0x10000).ToUpper().substring(1,5-1);
-                    String unicodeStr = $"'\\u{t:X4}'";
+                    //string hex = Integer.toHexString(t|0x10000).ToUpper().substring(1,5-1);
+                    var unicodeStr = $"'\\u{t:X4}'";
                     return unicodeStr;
             }
         }

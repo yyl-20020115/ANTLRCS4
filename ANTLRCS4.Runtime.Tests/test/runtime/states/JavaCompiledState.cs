@@ -29,7 +29,7 @@ public class JavaCompiledState : CompiledState
         this.parserType = parser;
     }
 
-    public Pair<Lexer, Parser> InitializeLexerAndParser(String input)
+    public Pair<Lexer, Parser> InitializeLexerAndParser(string input)
     {
         var @in = new ANTLRInputStream(new StringReader(input));
 

@@ -263,8 +263,8 @@ public class BlockSetTransformer : TreeRewriter
                                         if (state.backtracking == 1)
                                         {
                                             retval.tree = _first_0;
-                                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                         }
 
                                     }
@@ -281,8 +281,8 @@ public class BlockSetTransformer : TreeRewriter
                                         if (state.backtracking == 1)
                                         {
                                             retval.tree = _first_0;
-                                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                         }
 
                                     }
@@ -322,8 +322,8 @@ public class BlockSetTransformer : TreeRewriter
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
-                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                             }
 
                                         }
@@ -346,8 +346,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -367,8 +367,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -388,8 +388,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -409,8 +409,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -478,8 +478,8 @@ public class BlockSetTransformer : TreeRewriter
                 if (state.backtracking == 1)
                 {
                     retval.tree = _first_0;
-                    if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                        retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                    if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                        retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                 }
 
             }
@@ -541,7 +541,7 @@ public class BlockSetTransformer : TreeRewriter
                     ebnfSuffix7 = ebnfSuffix();
                     state._fsp--;
                     if (state.failed) return retval;
-                    if (state.backtracking == 1) stream_ebnfSuffix.add(ebnfSuffix7.Tree);
+                    if (state.backtracking == 1) stream_ebnfSuffix.Add(ebnfSuffix7.Tree);
                     if (state.backtracking == 1)
                         if (_first_0 == null) _first_0 = (GrammarAST)ebnfSuffix7.Tree;
                     Match(input, Token.DOWN, null); if (state.failed) return retval;
@@ -550,7 +550,7 @@ public class BlockSetTransformer : TreeRewriter
                     blockSet8 = blockSet();
                     state._fsp--;
                     if (state.failed) return retval;
-                    if (state.backtracking == 1) stream_blockSet.add(blockSet8.Tree);
+                    if (state.backtracking == 1) stream_blockSet.Add(blockSet8.Tree);
                     Match(input, Token.UP, null); if (state.failed) return retval;
                     _last = _save_last_1;
                 }
@@ -569,38 +569,38 @@ public class BlockSetTransformer : TreeRewriter
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                    root_0 = (GrammarAST)adaptor.nil();
+                    root_0 = (GrammarAST)adaptor.Nil();
                     // 80:27: -> ^( ebnfSuffix ^( BLOCK ^( ALT blockSet ) ) )
                     {
                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:80:30: ^( ebnfSuffix ^( BLOCK ^( ALT blockSet ) ) )
                         {
-                            GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                            root_1 = (GrammarAST)adaptor.becomeRoot(stream_ebnfSuffix.nextNode(), root_1);
+                            GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                            root_1 = (GrammarAST)adaptor.BecomeRoot(stream_ebnfSuffix.NextNode(), root_1);
                             // org\\antlr\\v4\\parse\\BlockSetTransformer.g:80:43: ^( BLOCK ^( ALT blockSet ) )
                             {
-                                GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                root_2 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK), root_2);
+                                GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                root_2 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK), root_2);
                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:80:61: ^( ALT blockSet )
                                 {
-                                    GrammarAST root_3 = (GrammarAST)adaptor.nil();
-                                    root_3 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT), root_3);
-                                    adaptor.addChild(root_3, stream_blockSet.nextTree());
-                                    adaptor.addChild(root_2, root_3);
+                                    GrammarAST root_3 = (GrammarAST)adaptor.Nil();
+                                    root_3 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT), root_3);
+                                    adaptor.AddChild(root_3, stream_blockSet.NextTree());
+                                    adaptor.AddChild(root_2, root_3);
                                 }
 
-                                adaptor.addChild(root_1, root_2);
+                                adaptor.AddChild(root_1, root_2);
                             }
 
-                            adaptor.addChild(root_0, root_1);
+                            adaptor.AddChild(root_0, root_1);
                         }
 
                     }
 
 
-                    retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-                    input.replaceChildren(adaptor.getParent(retval.start),
-                                          adaptor.getChildIndex(retval.start),
-                                          adaptor.getChildIndex(_last),
+                    retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+                    input.replaceChildren(adaptor.GetParent(retval.start),
+                                          adaptor.GetChildIndex(retval.start),
+                                          adaptor.GetChildIndex(_last),
                                           retval.tree);
                 }
 
@@ -674,14 +674,14 @@ public class BlockSetTransformer : TreeRewriter
                 if (state.backtracking == 1)
                 {
                     retval.tree = _first_0;
-                    if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                        retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                    if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                        retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                 }
 
 
             }
 
-            if (state.backtracking == 1) { retval.tree = (GrammarAST)adaptor.dupNode(((GrammarAST)retval.start)); }
+            if (state.backtracking == 1) { retval.tree = (GrammarAST)adaptor.DupNode(((GrammarAST)retval.start)); }
         }
         catch (RecognitionException re)
         {
@@ -746,7 +746,7 @@ public class BlockSetTransformer : TreeRewriter
         RewriteRuleSubtreeStream stream_setElement = new RewriteRuleSubtreeStream(adaptor, "rule setElement");
 
 
-        bool inLexer = Grammar.isTokenName(currentRuleName);
+        bool inLexer = Grammar.IsTokenName(currentRuleName);
 
         try
         {
@@ -770,7 +770,7 @@ public class BlockSetTransformer : TreeRewriter
                             _last = (GrammarAST)input.LT(1);
                             BLOCK10 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_blockSet244); if (state.failed) return retval;
 
-                            if (state.backtracking == 1) stream_BLOCK.add(BLOCK10);
+                            if (state.backtracking == 1) stream_BLOCK.Add(BLOCK10);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK10;
@@ -782,7 +782,7 @@ public class BlockSetTransformer : TreeRewriter
                                 _last = (GrammarAST)input.LT(1);
                                 alt = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet249); if (state.failed) return retval;
 
-                                if (state.backtracking == 1) stream_ALT.add(alt);
+                                if (state.backtracking == 1) stream_ALT.Add(alt);
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = alt;
@@ -804,12 +804,12 @@ public class BlockSetTransformer : TreeRewriter
                                             elementOptions11 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
-                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions11.Tree);
+                                            if (state.backtracking == 1) stream_elementOptions.Add(elementOptions11.Tree);
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
-                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                             }
 
                                         }
@@ -827,7 +827,7 @@ public class BlockSetTransformer : TreeRewriter
                                 setElement12 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
-                                if (state.backtracking == 1) stream_setElement.add(setElement12.Tree);
+                                if (state.backtracking == 1) stream_setElement.Add(setElement12.Tree);
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
@@ -857,7 +857,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 _last = (GrammarAST)input.LT(1);
                                                 ALT13 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet263); if (state.failed) return retval;
 
-                                                if (state.backtracking == 1) stream_ALT.add(ALT13);
+                                                if (state.backtracking == 1) stream_ALT.Add(ALT13);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT13;
@@ -879,12 +879,12 @@ public class BlockSetTransformer : TreeRewriter
                                                             elementOptions14 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
-                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions14.Tree);
+                                                            if (state.backtracking == 1) stream_elementOptions.Add(elementOptions14.Tree);
                                                             if (state.backtracking == 1)
                                                             {
                                                                 retval.tree = _first_0;
-                                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                                             }
 
                                                         }
@@ -897,7 +897,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 setElement15 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
-                                                if (state.backtracking == 1) stream_setElement.add(setElement15.Tree);
+                                                if (state.backtracking == 1) stream_setElement.Add(setElement15.Tree);
                                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
@@ -906,8 +906,8 @@ public class BlockSetTransformer : TreeRewriter
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
-                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                             }
 
                                         }
@@ -940,47 +940,47 @@ public class BlockSetTransformer : TreeRewriter
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 99:3: -> ^( BLOCK[$BLOCK.token] ^( ALT[$BLOCK.token,\"ALT\"] ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ ) ) )
                             {
                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:99:6: ^( BLOCK[$BLOCK.token] ^( ALT[$BLOCK.token,\"ALT\"] ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ ) ) )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot(new BlockAST(BLOCK, BLOCK10.token), root_1);
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot(new BlockAST(BLOCK, BLOCK10.token), root_1);
                                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:99:38: ^( ALT[$BLOCK.token,\"ALT\"] ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ ) )
                                     {
-                                        GrammarAST root_2 = (GrammarAST)adaptor.nil();
-                                        root_2 = (GrammarAST)adaptor.becomeRoot(new AltAST(ALT, BLOCK10.token, "ALT"), root_2);
+                                        GrammarAST root_2 = (GrammarAST)adaptor.Nil();
+                                        root_2 = (GrammarAST)adaptor.BecomeRoot(new AltAST(ALT, BLOCK10.token, "ALT"), root_2);
                                         // org\\antlr\\v4\\parse\\BlockSetTransformer.g:99:72: ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ )
                                         {
-                                            GrammarAST root_3 = (GrammarAST)adaptor.nil();
-                                            root_3 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(SET, BLOCK10.token, "SET"), root_3);
-                                            if (!(stream_setElement.hasNext()))
+                                            GrammarAST root_3 = (GrammarAST)adaptor.Nil();
+                                            root_3 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(SET, BLOCK10.token, "SET"), root_3);
+                                            if (!(stream_setElement.HasNext()))
                                             {
                                                 throw new RewriteEarlyExitException();
                                             }
-                                            while (stream_setElement.hasNext())
+                                            while (stream_setElement.HasNext())
                                             {
-                                                adaptor.addChild(root_3, stream_setElement.nextTree());
+                                                adaptor.AddChild(root_3, stream_setElement.NextTree());
                                             }
-                                            stream_setElement.reset();
+                                            stream_setElement.Reset();
 
-                                            adaptor.addChild(root_2, root_3);
+                                            adaptor.AddChild(root_2, root_3);
                                         }
 
-                                        adaptor.addChild(root_1, root_2);
+                                        adaptor.AddChild(root_1, root_2);
                                     }
 
-                                    adaptor.addChild(root_0, root_1);
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
 
 
-                            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-                            input.replaceChildren(adaptor.getParent(retval.start),
-                                                  adaptor.getChildIndex(retval.start),
-                                                  adaptor.getChildIndex(_last),
+                            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+                            input.replaceChildren(adaptor.GetParent(retval.start),
+                                                  adaptor.GetChildIndex(retval.start),
+                                                  adaptor.GetChildIndex(_last),
                                                   retval.tree);
                         }
 
@@ -1001,7 +1001,7 @@ public class BlockSetTransformer : TreeRewriter
                             _last = (GrammarAST)input.LT(1);
                             BLOCK16 = (GrammarAST)Match(input, BLOCK, FOLLOW_BLOCK_in_blockSet313); if (state.failed) return retval;
 
-                            if (state.backtracking == 1) stream_BLOCK.add(BLOCK16);
+                            if (state.backtracking == 1) stream_BLOCK.Add(BLOCK16);
 
                             if (state.backtracking == 1)
                                 if (_first_0 == null) _first_0 = BLOCK16;
@@ -1013,7 +1013,7 @@ public class BlockSetTransformer : TreeRewriter
                                 _last = (GrammarAST)input.LT(1);
                                 ALT17 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet316); if (state.failed) return retval;
 
-                                if (state.backtracking == 1) stream_ALT.add(ALT17);
+                                if (state.backtracking == 1) stream_ALT.Add(ALT17);
 
                                 if (state.backtracking == 1)
                                     if (_first_1 == null) _first_1 = ALT17;
@@ -1035,12 +1035,12 @@ public class BlockSetTransformer : TreeRewriter
                                             elementOptions18 = elementOptions();
                                             state._fsp--;
                                             if (state.failed) return retval;
-                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions18.Tree);
+                                            if (state.backtracking == 1) stream_elementOptions.Add(elementOptions18.Tree);
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
-                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                             }
 
                                         }
@@ -1053,7 +1053,7 @@ public class BlockSetTransformer : TreeRewriter
                                 setElement19 = setElement(inLexer);
                                 state._fsp--;
                                 if (state.failed) return retval;
-                                if (state.backtracking == 1) stream_setElement.add(setElement19.Tree);
+                                if (state.backtracking == 1) stream_setElement.Add(setElement19.Tree);
                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                 _last = _save_last_2;
                             }
@@ -1083,7 +1083,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 _last = (GrammarAST)input.LT(1);
                                                 ALT20 = (GrammarAST)Match(input, ALT, FOLLOW_ALT_in_blockSet328); if (state.failed) return retval;
 
-                                                if (state.backtracking == 1) stream_ALT.add(ALT20);
+                                                if (state.backtracking == 1) stream_ALT.Add(ALT20);
 
                                                 if (state.backtracking == 1)
                                                     if (_first_1 == null) _first_1 = ALT20;
@@ -1105,12 +1105,12 @@ public class BlockSetTransformer : TreeRewriter
                                                             elementOptions21 = elementOptions();
                                                             state._fsp--;
                                                             if (state.failed) return retval;
-                                                            if (state.backtracking == 1) stream_elementOptions.add(elementOptions21.Tree);
+                                                            if (state.backtracking == 1) stream_elementOptions.Add(elementOptions21.Tree);
                                                             if (state.backtracking == 1)
                                                             {
                                                                 retval.tree = _first_0;
-                                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                                             }
 
                                                         }
@@ -1123,7 +1123,7 @@ public class BlockSetTransformer : TreeRewriter
                                                 setElement22 = setElement(inLexer);
                                                 state._fsp--;
                                                 if (state.failed) return retval;
-                                                if (state.backtracking == 1) stream_setElement.add(setElement22.Tree);
+                                                if (state.backtracking == 1) stream_setElement.Add(setElement22.Tree);
                                                 Match(input, Token.UP, null); if (state.failed) return retval;
                                                 _last = _save_last_2;
                                             }
@@ -1132,8 +1132,8 @@ public class BlockSetTransformer : TreeRewriter
                                             if (state.backtracking == 1)
                                             {
                                                 retval.tree = _first_0;
-                                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                             }
 
                                         }
@@ -1166,33 +1166,33 @@ public class BlockSetTransformer : TreeRewriter
                             retval.tree = root_0;
                             RewriteRuleSubtreeStream stream_retval = new RewriteRuleSubtreeStream(adaptor, "rule retval", retval != null ? retval.getTree() : null);
 
-                            root_0 = (GrammarAST)adaptor.nil();
+                            root_0 = (GrammarAST)adaptor.Nil();
                             // 102:3: -> ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ )
                             {
                                 // org\\antlr\\v4\\parse\\BlockSetTransformer.g:102:6: ^( SET[$BLOCK.token, \"SET\"] ( setElement )+ )
                                 {
-                                    GrammarAST root_1 = (GrammarAST)adaptor.nil();
-                                    root_1 = (GrammarAST)adaptor.becomeRoot((GrammarAST)adaptor.create(SET, BLOCK16.token, "SET"), root_1);
-                                    if (!(stream_setElement.hasNext()))
+                                    GrammarAST root_1 = (GrammarAST)adaptor.Nil();
+                                    root_1 = (GrammarAST)adaptor.BecomeRoot((GrammarAST)adaptor.Create(SET, BLOCK16.token, "SET"), root_1);
+                                    if (!(stream_setElement.HasNext()))
                                     {
                                         throw new RewriteEarlyExitException();
                                     }
-                                    while (stream_setElement.hasNext())
+                                    while (stream_setElement.HasNext())
                                     {
-                                        adaptor.addChild(root_1, stream_setElement.nextTree());
+                                        adaptor.AddChild(root_1, stream_setElement.NextTree());
                                     }
-                                    stream_setElement.reset();
+                                    stream_setElement.Reset();
 
-                                    adaptor.addChild(root_0, root_1);
+                                    adaptor.AddChild(root_0, root_1);
                                 }
 
                             }
 
 
-                            retval.tree = (GrammarAST)adaptor.rulePostProcessing(root_0);
-                            input.replaceChildren(adaptor.getParent(retval.start),
-                                                  adaptor.getChildIndex(retval.start),
-                                                  adaptor.getChildIndex(_last),
+                            retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
+                            input.replaceChildren(adaptor.GetParent(retval.start),
+                                                  adaptor.GetChildIndex(retval.start),
+                                                  adaptor.GetChildIndex(_last),
                                                   retval.tree);
                         }
 
@@ -1348,8 +1348,8 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                             {
                                 retval.tree = _first_0;
-                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                             }
 
                         }
@@ -1371,8 +1371,8 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                             {
                                 retval.tree = _first_0;
-                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                             }
 
                         }
@@ -1412,8 +1412,8 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                             {
                                 retval.tree = _first_0;
-                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                             }
 
                         }
@@ -1435,8 +1435,8 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                             {
                                 retval.tree = _first_0;
-                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                             }
 
                         }
@@ -1485,8 +1485,8 @@ public class BlockSetTransformer : TreeRewriter
                             if (state.backtracking == 1)
                             {
                                 retval.tree = _first_0;
-                                if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                    retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                    retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                             }
 
                         }
@@ -1497,8 +1497,8 @@ public class BlockSetTransformer : TreeRewriter
                 if (state.backtracking == 1)
                 {
                     retval.tree = _first_0;
-                    if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                        retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                    if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                        retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                 }
 
             }
@@ -1594,8 +1594,8 @@ public class BlockSetTransformer : TreeRewriter
                                         if (state.backtracking == 1)
                                         {
                                             retval.tree = _first_0;
-                                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                                         }
 
                                     }
@@ -1616,8 +1616,8 @@ public class BlockSetTransformer : TreeRewriter
                 if (state.backtracking == 1)
                 {
                     retval.tree = _first_0;
-                    if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                        retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                    if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                        retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                 }
 
             }
@@ -1803,8 +1803,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -1842,8 +1842,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -1881,8 +1881,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -1920,8 +1920,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }
@@ -1959,8 +1959,8 @@ public class BlockSetTransformer : TreeRewriter
                         if (state.backtracking == 1)
                         {
                             retval.tree = _first_0;
-                            if (adaptor.getParent(retval.tree) != null && adaptor.isNil(adaptor.getParent(retval.tree)))
-                                retval.tree = (GrammarAST)adaptor.getParent(retval.tree);
+                            if (adaptor.GetParent(retval.tree) != null && adaptor.IsNil(adaptor.GetParent(retval.tree)))
+                                retval.tree = (GrammarAST)adaptor.GetParent(retval.tree);
                         }
 
                     }

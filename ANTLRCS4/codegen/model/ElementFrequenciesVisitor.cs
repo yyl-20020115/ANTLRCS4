@@ -157,7 +157,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 
     public override void StringRef(TerminalAST @ref)
     {
-        var tokenName = @ref.g.getTokenName(@ref.Text);
+        var tokenName = @ref.g.GetTokenName(@ref.Text);
 
         if (tokenName != null && !tokenName.StartsWith("T__"))
         {

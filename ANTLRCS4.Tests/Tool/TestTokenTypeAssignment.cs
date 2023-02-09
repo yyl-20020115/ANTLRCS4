@@ -87,7 +87,7 @@ public class TestTokenTypeAssignment
         foundLiterals = g.implicitLexer.stringLiteralToTypeMap.Keys.ToString();
         Assert.AreEqual("['x']", foundLiterals); // pushed in lexer from parser
 
-        string[] typeToTokenName = g.getTokenDisplayNames();
+        string[] typeToTokenName = g.GetTokenDisplayNames();
         HashSet<string> tokens = new();
         foreach (var t in typeToTokenName) if (t != null) tokens.Add(t);
         Assert.AreEqual("[<INVALID>, 'x', E]", tokens.ToString());
@@ -175,7 +175,7 @@ public class TestTokenTypeAssignment
                                 string allValidTokensStr)
 
     {
-        var typeToTokenName = g.getTokenNames();
+        var typeToTokenName = g.GetTokenNames();
         var tokens = new HashSet<string>();
         for (int i = 0; i < typeToTokenName.Length; i++)
         {
@@ -184,7 +184,7 @@ public class TestTokenTypeAssignment
             {
                 if (t.StartsWith(Grammar.AUTO_GENERATED_TOKEN_NAME_PREFIX))
                 {
-                    tokens.Add(g.getTokenDisplayName(i));
+                    tokens.Add(g.GetTokenDisplayName(i));
                 }
                 else
                 {
@@ -197,13 +197,13 @@ public class TestTokenTypeAssignment
         var parts = allValidTokensStr.Split(", ");
         foreach (var tokenName in parts)
         {
-            Assert.IsTrue(g.getTokenType(tokenName) != Token.INVALID_TYPE, "token " + tokenName + " expected, but was undefined");
+            Assert.IsTrue(g.GetTokenType(tokenName) != Token.INVALID_TYPE, "token " + tokenName + " expected, but was undefined");
             tokens.Remove(tokenName);
         }
         // make sure there are not any others (other than <EOF> etc...)
         foreach (var tokenName in tokens)
         {
-            Assert.IsTrue(g.getTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name " + tokenName);
+            Assert.IsTrue(g.GetTokenType(tokenName) < Token.MIN_USER_TOKEN_TYPE, "unexpected token name " + tokenName);
         }
         parts = rulesStr.Split(", ");
         int n = 0;

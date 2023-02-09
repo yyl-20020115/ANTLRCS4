@@ -48,7 +48,7 @@ public class ParserATNFactory : ATNFactory
         this.g = g ?? throw new NullReferenceException(nameof(g));
 
         var atnType = g is LexerGrammar ? ATNType.LEXER : ATNType.PARSER;
-        int maxTokenType = g.getMaxTokenType();
+        int maxTokenType = g.GetMaxTokenType();
         this.atn = new ATN(atnType, maxTokenType);
     }
 
@@ -173,7 +173,7 @@ public class ParserATNFactory : ATNFactory
     {
         var left = NewState(node);
         var right = NewState(node);
-        int ttype = g.getTokenType(node.Text);
+        int ttype = g.GetTokenType(node.Text);
         left.AddTransition(new AtomTransition(right, ttype));
         node.atnState = left;
         return new Handle(left, right);
@@ -192,7 +192,7 @@ public class ParserATNFactory : ATNFactory
         var set = new IntervalSet();
         foreach (var t in terminals)
         {
-            int ttype = g.getTokenType(t.Text);
+            int ttype = g.GetTokenType(t.Text);
             set.Add(ttype);
         }
         if (invert)
@@ -221,7 +221,7 @@ public class ParserATNFactory : ATNFactory
     }
 
     protected int GetTokenType(GrammarAST atom) 
-        => g.isLexer() ? CharSupport.GetCharValueFromGrammarCharLiteral(atom.Text) : g.getTokenType(atom.Text);
+        => g.IsLexer ? CharSupport.GetCharValueFromGrammarCharLiteral(atom.Text) : g.GetTokenType(atom.Text);
 
     /** For a non-lexer, just build a simple token reference atom. */
 

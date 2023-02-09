@@ -147,20 +147,20 @@ Warming up Java compiler....
  */
 public class TimeLexerSpeed
 { // don't call it Test else it'll run during "mvn test"
-    public static readonly String Parser_java_file = "Java/src/org/antlr/v4/runtime/Parser.java";
-    public static readonly String RuleContext_java_file = "Java/src/org/antlr/v4/runtime/RuleContext.java";
-    public static readonly String PerfDir = "org/antlr/v4/test/runtime/java/api/perf";
+    public static readonly string Parser_java_file = "Java/src/org/antlr/v4/runtime/Parser.java";
+    public static readonly string RuleContext_java_file = "Java/src/org/antlr/v4/runtime/RuleContext.java";
+    public static readonly string PerfDir = "org/antlr/v4/test/runtime/java/api/perf";
 
     public bool output = true;
 
-    public List<String> streamFootprints = new();
+    public List<string> streamFootprints = new();
 
-    //public static void main(String[] args)
+    //public static void main(string[] args)
     //{
     //    //RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
-    //    //List<String> vmArgs = runtimeMxBean.getInputArguments();
+    //    //List<string> vmArgs = runtimeMxBean.getInputArguments();
     //    Console.Out.Write("Java VM args: ");
-    //    foreach (String vmArg in args)
+    //    foreach (string vmArg in args)
     //    {
     //        if (!vmArg.StartsWith("-D"))
     //        {
@@ -207,7 +207,7 @@ public class TimeLexerSpeed
     //    tests.lex_new_grapheme_utf8("emoji.txt", n, false);
     //    tests.lex_new_grapheme_utf8("emoji.txt", n, true);
 
-    //    foreach (String streamFootprint in tests.streamFootprints)
+    //    foreach (string streamFootprint in tests.streamFootprints)
     //    {
     //        Console.Out.Write(streamFootprint);
     //    }
@@ -229,7 +229,7 @@ public class TimeLexerSpeed
         //output = true;
     }
 
-    //public void load_legacy_java_ascii_file(String resourceName, int n)
+    //public void load_legacy_java_ascii_file(string resourceName, int n)
     //{
     //    var sampleJavaFile = TimeLexerSpeed.getResource(resourceName);
     //    if (sampleJavaFile == null)
@@ -251,8 +251,8 @@ public class TimeLexerSpeed
     //    long stop = DateTime.Now.Nanosecond;
     //    long tus = (stop - start) / 1000;
     //    int size = input[0].size();
-    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
-    //    //GraphLayout olayout = GraphLayout.parseInstance((Object)input[0]);
+    //    string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    //GraphLayout olayout = GraphLayout.parseInstance((object)input[0]);
     //    long streamSize = 0;// olayout.totalSize();
     //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + olayout.toFootprint());
     //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
@@ -264,7 +264,7 @@ public class TimeLexerSpeed
     //                                    basename(resourceName));
     //}
 
-    //public void load_legacy_java_ascii(String resourceName, int n)
+    //public void load_legacy_java_ascii(string resourceName, int n)
     //{
     //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
     //    InputStream[] streams = new InputStream[n];
@@ -283,9 +283,9 @@ public class TimeLexerSpeed
     //    long stop = DateTime.Now.Nanosecond;
     //    long tus = (stop - start) / 1000;
     //    int size = input[0].size();
-    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    long streamSize = GraphLayout.parseInstance((object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((object)input[0]).toFootprint());
+    //    string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
     //                                    currentMethodName,
     //                                    tus / n,
@@ -295,7 +295,7 @@ public class TimeLexerSpeed
     //                                    basename(resourceName));
     //}
 
-    //public void load_legacy_java_utf8(String resourceName, int n)
+    //public void load_legacy_java_utf8(string resourceName, int n)
     //{
     //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
     //    InputStream[] streams = new InputStream[n];
@@ -317,9 +317,9 @@ public class TimeLexerSpeed
     //    long stop = DateTime.Now.Nanosecond;
     //    long tus = (stop - start) / 1000;
     //    int size = input[0].size();
-    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    long streamSize = GraphLayout.parseInstance((object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((object)input[0]).toFootprint());
+    //    string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //    if (output) Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
     //                                    currentMethodName,
     //                                    tus / n,
@@ -329,7 +329,7 @@ public class TimeLexerSpeed
     //                                    basename(resourceName));
     //}
 
-    //public void load_new_utf8(String resourceName, int n)
+    //public void load_new_utf8(string resourceName, int n)
     //{
     //    CharStream[] input = new CharStream[n]; // keep refs around so we can average memory
     //    ClassLoader loader = TimeLexerSpeed.getClassLoader();
@@ -350,9 +350,9 @@ public class TimeLexerSpeed
     //    long stop = DateTime.Now.Nanosecond;
     //    long tus = (stop - start) / 1000;
     //    int size = input[0].size();
-    //    long streamSize = GraphLayout.parseInstance((Object)input[0]).totalSize();
-    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((Object)input[0]).toFootprint());
-    //    String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //    long streamSize = GraphLayout.parseInstance((object)input[0]).totalSize();
+    //    streamFootprints.Add(basename(resourceName) + " (" + size + " char): " + GraphLayout.parseInstance((object)input[0]).toFootprint());
+    //    string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //    if (output)
     //        Console.Out.printf("%27s average time %5dus size %6db over %4d loads of %5d symbols from %s\n",
     //                        currentMethodName,
@@ -372,7 +372,7 @@ public class TimeLexerSpeed
     //        CharStream input = new ANTLRInputStream(br);
     //        JavaLexer lexer = new JavaLexer(input);
     //        double avg = tokenize(lexer, n, clearLexerDFACache);
-    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
     //                        currentMethodName,
     //                        (int)avg,
@@ -391,7 +391,7 @@ public class TimeLexerSpeed
     //        CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
     //        JavaLexer lexer = new JavaLexer(input);
     //        double avg = tokenize(lexer, n, clearLexerDFACache);
-    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols%s\n",
     //                        currentMethodName,
     //                        (int)avg,
@@ -401,7 +401,7 @@ public class TimeLexerSpeed
     //    }
     //}
 
-    //public void lex_legacy_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
+    //public void lex_legacy_grapheme_utf8(string fileName, int n, bool clearLexerDFACache)
     //{
     //    InputStream @is = TimeLexerSpeed.getClassLoader().getResourceAsStream(PerfDir + "/" + fileName);
     //    InputStreamReader isr = new InputStreamReader(@is, Encoding.UTF8);
@@ -410,7 +410,7 @@ public class TimeLexerSpeed
     //        CharStream input = new ANTLRInputStream(br);
     //        graphemesLexer lexer = new graphemesLexer(input);
     //        double avg = tokenize(lexer, n, clearLexerDFACache);
-    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
     //                        currentMethodName,
     //                        (int)avg,
@@ -421,9 +421,9 @@ public class TimeLexerSpeed
     //    }
     //}
 
-    //public void lex_new_grapheme_utf8(String fileName, int n, bool clearLexerDFACache)
+    //public void lex_new_grapheme_utf8(string fileName, int n, bool clearLexerDFACache)
     //{
-    //    String resourceName = PerfDir + "/" + fileName;
+    //    string resourceName = PerfDir + "/" + fileName;
     //    Assembly assembly = TimeLexerSpeed.getClassLoader();
     //    using (InputStream @is = loader.getResourceAsStream(resourceName))
     //    {
@@ -431,7 +431,7 @@ public class TimeLexerSpeed
     //        CharStream input = CharStreams.fromStream(@is, Encoding.UTF8, size);
     //        graphemesLexer lexer = new graphemesLexer(input);
     //        double avg = tokenize(lexer, n, clearLexerDFACache);
-    //        String currentMethodName = new Exception().getStackTrace()[0].getMethodName();
+    //        string currentMethodName = new Exception().getStackTrace()[0].getMethodName();
     //        if (output) Console.Out.printf("%27s average time %5dus over %4d runs of %5d symbols from %s%s\n",
     //                        currentMethodName,
     //                        (int)avg,

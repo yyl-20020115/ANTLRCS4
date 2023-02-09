@@ -268,7 +268,7 @@ public class TestActionTranslation
             sem.Process();
 
             var factory = new ParserATNFactory(g);
-            if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar)g);
+            if (g.IsLexer) factory = new LexerATNFactory((LexerGrammar)g);
             g.atn = factory.CreateATN();
 
             var anal = new AnalysisPipeline(g);

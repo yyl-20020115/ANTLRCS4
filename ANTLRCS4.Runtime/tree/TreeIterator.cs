@@ -67,9 +67,9 @@ public class TreeIterator
         this.tree = tree;
         this.root = tree;
         nodes = new FastQueue<Object>();
-        down = adaptor.create(Token.DOWN, "DOWN");
-        up = adaptor.create(Token.UP, "UP");
-        eof = adaptor.create(Token.EOF, "EOF");
+        down = adaptor.Create(Token.DOWN, "DOWN");
+        up = adaptor.Create(Token.UP, "UP");
+        eof = adaptor.Create(Token.EOF, "EOF");
     }
     public void reset()
     {
@@ -82,8 +82,8 @@ public class TreeIterator
         if (firstTime) return root != null;
         if (nodes != null && nodes.Count > 0) return true;
         if (tree == null) return false;
-        if (adaptor.getChildCount(tree) > 0) return true;
-        return adaptor.getParent(tree) != null; // back at root?
+        if (adaptor.GetChildCount(tree) > 0) return true;
+        return adaptor.GetParent(tree) != null; // back at root?
     }
 
     public Object next()
@@ -91,7 +91,7 @@ public class TreeIterator
         if (firstTime)
         { // initial condition
             firstTime = false;
-            if (adaptor.getChildCount(tree) == 0)
+            if (adaptor.GetChildCount(tree) == 0)
             { // single node tree (special)
                 nodes.Add(eof);
                 return tree;
@@ -105,21 +105,21 @@ public class TreeIterator
         if (tree == null) return eof;
 
         // next node will be child 0 if any children
-        if (adaptor.getChildCount(tree) > 0)
+        if (adaptor.GetChildCount(tree) > 0)
         {
-            tree = adaptor.getChild(tree, 0);
+            tree = adaptor.GetChild(tree, 0);
             nodes.Add(tree); // real node is next after DOWN
             return down;
         }
         // if no children, look for next sibling of tree or ancestor
-        Object parent = adaptor.getParent(tree);
+        Object parent = adaptor.GetParent(tree);
         // while we're out of siblings, keep popping back up towards root
         while (parent != null &&
-                adaptor.getChildIndex(tree) + 1 >= adaptor.getChildCount(parent))
+                adaptor.GetChildIndex(tree) + 1 >= adaptor.GetChildCount(parent))
         {
             nodes.Add(up); // we're moving back up
             tree = parent;
-            parent = adaptor.getParent(tree);
+            parent = adaptor.GetParent(tree);
         }
         // no nodes left?
         if (parent == null)
@@ -131,8 +131,8 @@ public class TreeIterator
 
         // must have found a node with an unvisited sibling
         // move to it and return it
-        int nextSiblingIndex = adaptor.getChildIndex(tree) + 1;
-        tree = adaptor.getChild(parent, nextSiblingIndex);
+        int nextSiblingIndex = adaptor.GetChildIndex(tree) + 1;
+        tree = adaptor.GetChild(parent, nextSiblingIndex);
         nodes.Add(tree); // add to queue, might have UP nodes in there
         return nodes.Remove();
     }

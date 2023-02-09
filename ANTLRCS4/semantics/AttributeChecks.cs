@@ -93,7 +93,7 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void QualifiedAttr(string expr, Token x, Token y)
     {
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
                                 g.fileName, x, x.Text + "." + y.Text, expr);
@@ -138,7 +138,7 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void SetAttr(string expr, Token x, Token rhs)
     {
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
                                 g.fileName, x, x.Text, expr);
@@ -162,7 +162,7 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void Attr(string expr, Token x)
     {
-        if (g.isLexer())
+        if (g.IsLexer)
         {
             errMgr.GrammarError(ErrorType.ATTRIBUTE_IN_LEXER_ACTION,
                                 g.fileName, x, x.Text, expr);
@@ -207,7 +207,7 @@ public class AttributeChecks : ActionSplitterListener
     }
 
     //@Override
-    public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs)
+    public void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         Rule r = g.GetRule(x.Text);
         if (r == null)

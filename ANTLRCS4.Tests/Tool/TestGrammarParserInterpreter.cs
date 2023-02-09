@@ -104,11 +104,11 @@ public class TestGrammarParserInterpreter
                                       string startRule, string input,
                                       string expectedParseTree)
     {
-        var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = lg.CreateLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
-        var parser = g.createGrammarParserInterpreter(tokens);
+        var parser = g.CreateGrammarParserInterpreter(tokens);
         var t = parser.Parse(g.rules[(startRule)].index);
-        var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
+        var nodeTextProvider = new InterpreterTreeTextProvider(g.GetRuleNames());
         var treeStr = Trees.ToStringTree(t, nodeTextProvider);
         //		Console.Out.WriteLine("parse tree: "+treeStr);
         Assert.AreEqual(expectedParseTree, treeStr);

@@ -15,7 +15,7 @@ namespace org.antlr.v4.tool;
  */
 public interface ANTLRToolListener
 {
-    public void Info(String msg);
+    public void Info(string msg);
     public void Error(ANTLRMessage msg);
     public void Warning(ANTLRMessage msg);
 }

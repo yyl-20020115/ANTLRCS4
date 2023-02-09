@@ -255,7 +255,7 @@ public class RuleFunction : OutputModelObject
     private string GetName(GrammarAST token)
     {
         var tokenText = token.Text;
-        var tokenName = token.Type != ANTLRParser.STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
+        var tokenName = token.Type != ANTLRParser.STRING_LITERAL ? tokenText : token.g.GetTokenName(tokenText);
         return tokenName == null || tokenName.StartsWith("T__") ? null : tokenName; // Do not include tokens with auto generated names
     }
 

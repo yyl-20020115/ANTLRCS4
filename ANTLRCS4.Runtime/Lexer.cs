@@ -315,17 +315,15 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         return eof;
     }
 
-    //@Override
-    public int Line => GetInterpreter().Line;
+    public virtual int Line => GetInterpreter().Line;
 
-    //@Override
-    public int CharPositionInLine => GetInterpreter().CharPositionInLine;
+    public virtual int CharPositionInLine => GetInterpreter().CharPositionInLine;
 
-    public void SetLine(int line) => GetInterpreter().Line = line;
+    public virtual void SetLine(int line) => GetInterpreter().Line = line;
 
-    public void SetCharPositionInLine(int charPositionInLine)
+    public virtual void SetCharPositionInLine(int charPositionInLine)
     {
-        GetInterpreter().        CharPositionInLine = charPositionInLine;
+        GetInterpreter().CharPositionInLine = charPositionInLine;
     }
 
     /** What is the index of the current character of lookahead? */

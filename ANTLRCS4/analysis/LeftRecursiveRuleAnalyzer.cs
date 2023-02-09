@@ -36,7 +36,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     public List<LeftRecursiveRuleAltInfo> prefixAndOtherAlts = new();
 
     /** Pointer to ID node of ^(= ID element) */
-    public List<Pair<GrammarAST, String>> leftRecursiveRuleRefLabels =
+    public List<Pair<GrammarAST, string>> leftRecursiveRuleRefLabels =
         new();
 
     /** Tokens from which rule AST comes from */
@@ -46,7 +46,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
     public readonly static TemplateGroup recRuleTemplates;
     public readonly TemplateGroup codegenTemplates;
-    public readonly String language;
+    public readonly string language;
 
     public Dictionary<int, ASSOC> altAssociativity = new();
 
@@ -129,7 +129,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         {
             label = lrlabel.Text;
             isListLabel = lrlabel.Parent.Type == PLUS_ASSIGN;
-            leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
+            leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, string>(lrlabel, altLabel));
         }
 
         StripAltLabel(altTree);
@@ -178,7 +178,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         {
             label = lrlabel.Text;
             isListLabel = lrlabel.Parent.Type == PLUS_ASSIGN;
-            leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
+            leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, string>(lrlabel, altLabel));
         }
         StripAltLabel(altTree);
         var altText = Text(altTree);
@@ -264,7 +264,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 	 * Match (RULE RULE_REF (BLOCK (ALT .*) (ALT RULE_REF[self] .*) (ALT .*)))
 	 * Match (RULE RULE_REF (BLOCK (ALT .*) (ALT (ASSIGN ID RULE_REF[self]) .*) (ALT .*)))
 	 */
-    public static bool HasImmediateRecursiveRuleRefs(GrammarAST t, String ruleName)
+    public static bool HasImmediateRecursiveRuleRefs(GrammarAST t, string ruleName)
     {
         if (t == null) return false;
         var blk = (GrammarAST)t.GetFirstChildWithType(BLOCK);

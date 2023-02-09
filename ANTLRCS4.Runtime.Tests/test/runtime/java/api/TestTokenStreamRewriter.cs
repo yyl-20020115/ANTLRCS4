@@ -26,11 +26,11 @@ public class TestTokenStreamRewriter
                                              "A : 'a';\n" +
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream("abc"));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream("abc"));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "0");
+        tokens.InsertBefore(0, "0");
         var result = tokens.GetText();
         var expecting = "0abc";
         Assert.AreEqual(expecting, result);
@@ -45,7 +45,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -64,11 +64,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "x");
+        tokens.InsertBefore(1, "x");
         tokens.InsertAfter(1, "x");
         var result = tokens.GetText();
         var expecting = "axbxc";
@@ -84,7 +84,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -103,7 +103,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -122,7 +122,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -146,7 +146,7 @@ public class TestTokenStreamRewriter
         // Tokens: 0123456789
         // Input:  x = 3 * 0;
         var input = "x = 3 * 0;";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -186,7 +186,7 @@ public class TestTokenStreamRewriter
         // Tokens: 012345678901234567
         // Input:  x = 3 * 0 + 2 * 0;
         var input = "x = 3 * 0 + 2 * 0;";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -240,7 +240,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -260,11 +260,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "_");
+        tokens.InsertBefore(0, "_");
         tokens.Replace(1, "x");
         tokens.Replace(1, "y");
         var result = tokens.GetText();
@@ -281,7 +281,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -301,12 +301,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(0, 2, "x");
-        tokens.insertBefore(1, "0");
+        tokens.InsertBefore(1, "0");
         Exception exc = null;
         try
         {
@@ -330,11 +330,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "0");
+        tokens.InsertBefore(0, "0");
         tokens.Replace(0, "x");
         stream.Fill();
         // supercedes insert at 0
@@ -352,12 +352,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "x");
-        tokens.insertBefore(1, "y");
+        tokens.InsertBefore(1, "x");
+        tokens.InsertBefore(1, "y");
         var result = tokens.GetText();
         var expecting = "ayxbc";
         Assert.AreEqual(expecting, result);
@@ -372,12 +372,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "x");
-        tokens.insertBefore(0, "y");
+        tokens.InsertBefore(0, "x");
+        tokens.InsertBefore(0, "y");
         tokens.Replace(0, "z");
         var result = tokens.GetText();
         var expecting = "yxzbc";
@@ -393,12 +393,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(2, "x");
-        tokens.insertBefore(2, "y");
+        tokens.InsertBefore(2, "y");
         var result = tokens.GetText();
         var expecting = "abyx";
         Assert.AreEqual(expecting, result);
@@ -413,11 +413,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(2, "y");
+        tokens.InsertBefore(2, "y");
         tokens.Replace(2, "x");
         var result = tokens.GetText();
         var expecting = "abyx";
@@ -433,7 +433,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -453,12 +453,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(2, 4, "x");
-        tokens.insertBefore(2, "y");
+        tokens.InsertBefore(2, "y");
         var result = tokens.GetText();
         var expecting = "abyxba";
         Assert.AreEqual(expecting, result);
@@ -473,12 +473,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(2, 4, "x");
-        tokens.insertBefore(4, "y");
+        tokens.InsertBefore(4, "y");
         stream.Fill(); // no effect; within range of a replace
         Exception exc = null;
         try
@@ -503,7 +503,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -523,7 +523,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -542,7 +542,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -561,7 +561,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -592,7 +592,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcccba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -623,7 +623,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcba";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -643,12 +643,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "x");
-        tokens.insertBefore(0, "y");
+        tokens.InsertBefore(0, "x");
+        tokens.InsertBefore(0, "y");
         var result = tokens.GetText();
         var expecting = "yxabc";
         Assert.AreEqual(expecting, result);
@@ -663,13 +663,13 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "x");
-        tokens.insertBefore(0, "y");
-        tokens.insertBefore(1, "z");
+        tokens.InsertBefore(1, "x");
+        tokens.InsertBefore(0, "y");
+        tokens.InsertBefore(1, "z");
         var result = tokens.GetText();
         var expecting = "yazxbc";
         Assert.AreEqual(expecting, result);
@@ -684,12 +684,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(0, 2, "foo");
-        tokens.insertBefore(0, "z");
+        tokens.InsertBefore(0, "z");
         stream.Fill();
         // combine with left edge of rewrite
         var result = tokens.GetText();
@@ -706,12 +706,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Delete(0, 2);
-        tokens.insertBefore(0, "z");
+        tokens.InsertBefore(0, "z");
         stream.Fill();
         // combine with left edge of rewrite
         var result = tokens.GetText();
@@ -730,13 +730,13 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "x");
-        tokens.insertBefore(2, "y");
-        tokens.insertBefore(0, "z");
+        tokens.InsertBefore(1, "x");
+        tokens.InsertBefore(2, "y");
+        tokens.InsertBefore(0, "z");
         var result = tokens.GetText();
         var expecting = "zaxbyc";
         Assert.AreEqual(expecting, result);
@@ -751,7 +751,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -773,7 +773,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -804,7 +804,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -826,7 +826,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -848,7 +848,7 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
@@ -870,11 +870,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "foo");
+        tokens.InsertBefore(1, "foo");
         tokens.Replace(1, 2, "foo");
         stream.Fill();
         // kill prev insert
@@ -892,11 +892,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(1, "x");
+        tokens.InsertBefore(1, "x");
         tokens.Replace(2, 3, "foo");
         var result = tokens.GetText();
         var expecting = "axbfoo";
@@ -912,12 +912,12 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abcc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
         tokens.Replace(2, 3, "foo");
-        tokens.insertBefore(1, "x");
+        tokens.InsertBefore(1, "x");
         var result = tokens.GetText();
         var expecting = "axbfoo";
         Assert.AreEqual(expecting, result);
@@ -932,11 +932,11 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "abc";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(2, "y");
+        tokens.InsertBefore(2, "y");
         tokens.Delete(2);
         var result = tokens.GetText();
         var expecting = "aby";
@@ -953,13 +953,13 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "aa";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "<b>");
+        tokens.InsertBefore(0, "<b>");
         tokens.InsertAfter(0, "</b>");
-        tokens.insertBefore(1, "<b>");
+        tokens.InsertBefore(1, "<b>");
         tokens.InsertAfter(1, "</b>");
         var result = tokens.GetText();
         var expecting = "<b>a</b><b>a</b>"; // fails with <b>a<b></b>a</b>"
@@ -975,15 +975,15 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "aa";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "<p>");
-        tokens.insertBefore(0, "<b>");
+        tokens.InsertBefore(0, "<p>");
+        tokens.InsertBefore(0, "<b>");
         tokens.InsertAfter(0, "</p>");
         tokens.InsertAfter(0, "</b>");
-        tokens.insertBefore(1, "<b>");
+        tokens.InsertBefore(1, "<b>");
         tokens.InsertAfter(1, "</b>");
         var result = tokens.GetText();
         var expecting = "<b><p>a</p></b><b>a</b>";
@@ -1000,17 +1000,17 @@ public class TestTokenStreamRewriter
                                              "B : 'b';\n" +
                                              "C : 'c';\n");
         var input = "ab";
-        var lexEngine = g.createLexerInterpreter(new ANTLRInputStream(input));
+        var lexEngine = g.CreateLexerInterpreter(new ANTLRInputStream(input));
         var stream = new CommonTokenStream(lexEngine);
         stream.Fill();
         var tokens = new TokenStreamRewriter(stream);
-        tokens.insertBefore(0, "<p>");
-        tokens.insertBefore(0, "<b>");
-        tokens.insertBefore(0, "<div>");
+        tokens.InsertBefore(0, "<p>");
+        tokens.InsertBefore(0, "<b>");
+        tokens.InsertBefore(0, "<div>");
         tokens.InsertAfter(0, "</p>");
         tokens.InsertAfter(0, "</b>");
         tokens.InsertAfter(0, "</div>");
-        tokens.insertBefore(1, "!");
+        tokens.InsertBefore(1, "!");
         var result = tokens.GetText();
         var expecting = "<div><b><p>a</p></b></div>!b";
         Assert.AreEqual(expecting, result);

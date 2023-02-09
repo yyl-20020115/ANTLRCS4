@@ -71,7 +71,7 @@ public class RuntimeTestDescriptor
         this.slaveGrammars = slaveGrammars;
         this.showDFA = showDFA;
         this.showDiagnosticErrors = showDiagnosticErrors;
-        this.skipTargets = skipTargets != null ? skipTargets : new String[0];
+        this.skipTargets = skipTargets != null ? skipTargets : new string[0];
         this.uri = uri;
     }
 

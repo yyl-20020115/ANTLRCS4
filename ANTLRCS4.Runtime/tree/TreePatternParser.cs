@@ -85,7 +85,7 @@ public class TreePatternParser
             if (ttype == TreePatternLexer.BEGIN)
             {
                 Object subtree = parseTree();
-                adaptor.addChild(root, subtree);
+                adaptor.AddChild(root, subtree);
             }
             else
             {
@@ -94,7 +94,7 @@ public class TreePatternParser
                 {
                     return null;
                 }
-                adaptor.addChild(root, child);
+                adaptor.AddChild(root, child);
             }
         }
         if (ttype != TreePatternLexer.END)
@@ -148,7 +148,7 @@ public class TreePatternParser
         ttype = tokenizer.nextToken();
         if (tokenName.Equals("nil"))
         {
-            return adaptor.nil();
+            return adaptor.Nil();
         }
         String text = tokenName;
         // check for arg
@@ -167,7 +167,7 @@ public class TreePatternParser
             return null;
         }
         Object node;
-        node = adaptor.create(treeNodeType, text);
+        node = adaptor.Create(treeNodeType, text);
         if (label != null && node is TreeWizard.TreePattern pattern2)
         {
             pattern2.label = label;
