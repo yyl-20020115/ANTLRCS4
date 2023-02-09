@@ -152,7 +152,6 @@ public class ATNConfig
      *  the same state, they predict the same alternative, and
      *  syntactic/semantic contexts are the same.
      */
-    //@Override
     public override bool Equals(object? o) => o is ATNConfig other && this.Equals(other);
 
     public bool Equals(ATNConfig other)
@@ -173,7 +172,6 @@ public class ATNConfig
             && this.PrecedenceFilterSuppressed == other.PrecedenceFilterSuppressed;
     }
 
-    //@Override
     public override int GetHashCode()
     {
         int hashCode = MurmurHash.Initialize(7);
@@ -185,7 +183,6 @@ public class ATNConfig
         return hashCode;
     }
 
-    //@Override
     public override string ToString() => ToString(null, true);
 
     public string ToString(Recognizer recog, bool showAlt)

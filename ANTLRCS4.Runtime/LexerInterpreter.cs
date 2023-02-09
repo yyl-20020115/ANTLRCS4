@@ -67,17 +67,12 @@ public class LexerInterpreter : Lexer
         this._interp = new LexerATNSimulator(this, atn, _decisionToDFA, _sharedContextCache);
     }
 
-    //@Override
     public override ATN ATN => atn;
 
-    //@Override
     public override string GrammarFileName => grammarFileName;
 
-    //@Override
-    //@Deprecated
     public override string[] TokenNames => tokenNames;
 
-    //@Override
     public override string[] RuleNames => ruleNames;
 
     public override string[] ChannelNames => channelNames;

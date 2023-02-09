@@ -60,8 +60,7 @@ public class CommonErrorNode : CommonTree
         this.trappedException = e;
     }
 
-    //@Override
-    public bool IsNil => false;
+    public override bool IsNil => false;
 
     public override int Type => Token.INVALID_TOKEN_TYPE;
 

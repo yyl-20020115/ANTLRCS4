@@ -269,7 +269,7 @@ public class BufferedTokenStream : TokenStream
 	 * @param i The target token index.
 	 * @return The adjusted target token index.
 	 */
-    protected int AdjustSeekIndex(int i)
+    protected virtual int AdjustSeekIndex(int i)
     {
         return i;
     }

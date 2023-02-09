@@ -434,6 +434,4 @@ public abstract class BaseTree : Tree
         throw new NotImplementedException();
     }
     /** Override to say how a node (not a tree) should look as text */
-    //@Override
-    //public abstract string toString();
 }

@@ -55,8 +55,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 * <p>The default implementation simply calls {@link #endErrorCondition} to
 	 * ensure that the handler is not in error recovery mode.</p>
 	 */
-    //@Override
-    public void Reset(Parser recognizer)
+    public virtual void Reset(Parser recognizer)
     {
         EndErrorCondition(recognizer);
     }

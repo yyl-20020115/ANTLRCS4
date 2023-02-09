@@ -1149,29 +1149,29 @@ public class Grammar : AttributeResolver
     }
 
     // no isolated attr at grammar action level
-    //@Override
+    
     public Attribute ResolveToAttribute(string x, ActionAST node)
     {
         return null;
     }
 
     // no $x.y makes sense here
-    //@Override
+    
     public Attribute ResolveToAttribute(string x, string y, ActionAST node)
     {
         return null;
     }
 
-    //@Override
+    
     public bool ResolvesToLabel(string x, ActionAST node) { return false; }
 
-    //@Override
+    
     public bool ResolvesToListLabel(string x, ActionAST node) { return false; }
 
-    //@Override
+    
     public bool ResolvesToToken(string x, ActionAST node) { return false; }
 
-    //@Override
+    
     public bool ResolvesToAttributeDict(string x, ActionAST node)
     {
         return false;

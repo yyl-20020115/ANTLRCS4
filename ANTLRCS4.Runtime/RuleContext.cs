@@ -85,7 +85,7 @@ public class RuleContext : RuleNode
     public int Depth()
     {
         int n = 0;
-        RuleContext p = this;
+        var p = this;
         while (p != null)
         {
             p = p.parent;

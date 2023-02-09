@@ -19,18 +19,14 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition
         this.precedence = precedence;
     }
 
-    //@Override
     public override int SerializationType => PRECEDENCE;
 
-    //@Override
     public override bool IsEpsilon => true;
 
-    //@Override
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
     public SemanticContext.PrecedencePredicate GetPredicate() => new(precedence);
 
-    //@Override
     public override string ToString() => precedence + " >= _p";
 
 }

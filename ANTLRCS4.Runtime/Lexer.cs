@@ -172,7 +172,6 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     /** Return a token from this source; i.e., match a token on the char
 	 *  stream.
 	 */
-    //@Override
     public virtual Token NextToken()
     {
         if (input == null)

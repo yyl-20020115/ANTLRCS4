@@ -33,7 +33,6 @@ public class PredicateTransition : AbstractPredicateTransition
     public SemanticContext.Predicate GetPredicate()
         => new(ruleIndex, predIndex, isCtxDependent);
 
-    //@Override
     public override string ToString() 
         => "pred_" + ruleIndex + ":" + predIndex;
 
