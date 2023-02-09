@@ -18,14 +18,14 @@ public class GrammarASTAdaptor : CommonTreeAdaptor
     public GrammarASTAdaptor(CharStream input) { this.input = input; }
 
     //@Override
-    public object create(Token token)
+    public object Create(Token token)
     {
         return new GrammarAST(token);
     }
 
     //@Override
     /** Make sure even imaginary nodes know the input stream */
-    public object create(int tokenType, String text)
+    public object create(int tokenType, string text)
     {
         GrammarAST t;
         if (tokenType == ANTLRParser.RULE)

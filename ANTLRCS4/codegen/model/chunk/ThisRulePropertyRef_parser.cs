@@ -11,6 +11,6 @@ namespace org.antlr.v4.codegen.model.chunk;
 /** */
 public class ThisRulePropertyRefParser : RulePropertyRef
 {
-    public ThisRulePropertyRefParser(StructDecl ctx, String label)
+    public ThisRulePropertyRefParser(StructDecl ctx, string label)
         : base(ctx, label) { }
 }

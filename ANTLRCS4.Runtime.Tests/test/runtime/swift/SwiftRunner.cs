@@ -11,10 +11,10 @@ namespace org.antlr.v4.test.runtime.swift;
 
 public class SwiftRunner : RuntimeRunner
 {
-    ////@Override
+    
     public override string GetLanguage() => "Swift";
 
-    ////@Override
+    
     public override string GetTestFileName() => "main";
 
     private static readonly string swiftRuntimePath;
@@ -42,16 +42,16 @@ public class SwiftRunner : RuntimeRunner
         }
     }
 
-    ////@Override
+    
     public override string GetCompilerName() => "swift";
 
-    ////@Override
+    
     protected override void InitRuntime()
     {
         RunCommand(new string[] { GetCompilerPath(), "build", "-c", "release" }, swiftRuntimePath, "build Swift runtime");
     }
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         Exception exception = null;
@@ -105,16 +105,16 @@ public class SwiftRunner : RuntimeRunner
     //	}
     //}
 
-    ////@Override
+    
     public override string GetRuntimeToolName() => null;
 
-    ////@Override
+    
     public override string GetExecFileName() => Path.Combine(GetTempDirPath(),
                 ".build",
                 buildSuffix,
                 "release",
                 "Test" + (RuntimeTestUtils.IsWindows() ? ".exe" : "")).ToString();
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

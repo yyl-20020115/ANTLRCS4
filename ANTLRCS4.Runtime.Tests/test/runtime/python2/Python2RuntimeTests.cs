@@ -8,6 +8,6 @@ namespace org.antlr.v4.test.runtime.python2;
 
 public class Python2RuntimeTests : RuntimeTests
 {
-    ////@Override
+    
     protected override RuntimeRunner CreateRuntimeRunner() => new Python2Runner();
 }

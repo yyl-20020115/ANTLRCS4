@@ -816,7 +816,7 @@ public abstract class BaseRecognizer
     /** <summary>
      *  Used to print out token names like ID during debugging and
      *  error reporting.  The generated parsers implement a method
-     *  that overrides this to point to their String[] tokenNames.
+     *  that overrides this to point to their string[] tokenNames.
      *  </summary>
      */
     public virtual string[] TokenNames => null;

@@ -45,7 +45,7 @@ public class GrammarTransformPipeline
         var nodes = new CommonTreeNodeStream(new GrammarASTAdaptor(), root);
         var adaptor = new GrammarASTAdaptor();
         var transformer = new BlockSetTransformer(nodes, g);
-        transformer.setTreeAdaptor(adaptor);
+        transformer.        TreeAdaptor = adaptor;
         transformer.downup(root);
     }
     public class TVA : TreeVisitorAction

@@ -32,22 +32,22 @@ public class JavaUnicodeInputStream : CharStream
         this.la1 = source.LA(1);
     }
 
-    ////@Override
+    
     public int Count => source.Count;
 
-    ////@Override
+    
     public int Index => source.Index;
 
-    ////@Override
+    
     public String SourceName => source.SourceName;
 
-    ////@Override
+    
     public string GetText(Interval interval)
     {
         return source.GetText(interval);
     }
 
-    ////@Override
+    
     public void Consume()
     {
         if (la1 != '\\')
@@ -83,7 +83,7 @@ public class JavaUnicodeInputStream : CharStream
         //assert range >= index();
     }
 
-    ////@Override
+    
     public int LA(int i)
     {
         if (i == 1 && la1 != '\\')
@@ -157,19 +157,19 @@ public class JavaUnicodeInputStream : CharStream
         }
     }
 
-    ////@Override
+    
     public int Mark()
     {
         return source.Mark();
     }
 
-    ////@Override
+    
     public void Release(int marker)
     {
         source.Release(marker);
     }
 
-    ////@Override
+    
     public void Seek(int index)
     {
         if (index > range)

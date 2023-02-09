@@ -105,7 +105,7 @@ public interface ITreeAdaptor
      *  </summary>
      *
      *  <remarks>
-     *  This should invoke createToken(int,String).
+     *  This should invoke createToken(int,string).
      *  </remarks>
      */
     object Create(int tokenType, string text);

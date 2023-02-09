@@ -11,31 +11,28 @@ public class GoRunner : RuntimeRunner
 {
     public override string GetLanguage() => "Go";
 
-    ////@Override
+    
     public override string GetLexerSuffix() => "_lexer";
 
-    ////@Override
+    
     public override string GetParserSuffix() => "_parser";
 
-    ////@Override
+    
     public override string GetBaseListenerSuffix() => "_base_listener";
 
-    ////@Override
+    
     public override string GetListenerSuffix() => "_listener";
 
-    ////@Override
+    
     public override string GetBaseVisitorSuffix() => "_base_visitor";
 
-    ////@Override
+    
     public override string GetVisitorSuffix() => "_visitor";
 
-    ////@Override
-    public override string GrammarNameToFileName(string grammarName)
-    {
-        return grammarName.ToLower();
-    }
 
-    ////@Override
+    public override string GrammarNameToFileName(string grammarName) => grammarName.ToLower();
+
+    
     public override string[] GetExtraRunArgs() => new string[] { "run" };
 
     private static readonly string GoRuntimeImportPath = "github.com/antlr/antlr4/runtime/Go/antlr/v4";
@@ -50,7 +47,7 @@ public class GoRunner : RuntimeRunner
         environment.Add("GOWORK", "off");
     }
 
-    ////@Override
+    
     protected override void InitRuntime()
     {
         var cachePath = GetCachePath();
@@ -68,7 +65,7 @@ public class GoRunner : RuntimeRunner
         cachedGoMod = FileUtils.ReadFile(cachePath, "go.mod");
     }
 
-    ////@Override
+    
     protected override string GrammarParseRuleToRecognizerName(string startRuleName)
     {
         if (startRuleName == null || startRuleName.Length == 0)
@@ -79,7 +76,7 @@ public class GoRunner : RuntimeRunner
         return startRuleName[..1].ToUpper() + startRuleName[1..];
     }
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         var generatedFiles = generatedState.generatedFiles;
@@ -123,6 +120,6 @@ public class GoRunner : RuntimeRunner
         return new CompiledState(generatedState, ex);
     }
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

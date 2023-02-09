@@ -40,18 +40,18 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         //@Override
         public Token NextToken() => tokens[i++];
 
-        ////@Override
+        
         public string SourceName => "test";
-        ////@Override
+        
         public int CharPositionInLine => 0;
-        ////@Override
+        
         public int Line => 0;
 
-        ////@Override
+        
         public CharStream CharInputStream => null;
 
-        ////@Override
-        ////@Override
+        
+        
         public TokenFactory TokenFactory
         {
             get => null;
@@ -105,22 +105,22 @@ public class TestCommonTokenStream : TestBufferedTokenStream
 				new CommonToken(1,"\n") { channel = Lexer.HIDDEN },// 9
 				new CommonToken(Token.EOF,"")						// 10
 				};
-        //@Override
+        
         public Token NextToken()
         {
             return tokens[i++];
         }
-        //@Override
-        public string SourceName => "test";         //@Override
+        
+        public string SourceName => "test";         
         public int CharPositionInLine => 0;
-        //@Override
+        
         public int Line => 0;
 
-        //@Override
+        
         public CharStream CharInputStream => null;
 
-        //@Override
-        //@Override
+        
+        
         public TokenFactory TokenFactory
         {
             get => null;
@@ -182,26 +182,26 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     public class TS2 : TokenSource
     {
 
-        //@Override
+        
         public Token NextToken()
         {
             return new CommonToken(Token.EOF);
         }
 
-        //@Override
+        
         public int Line => 0;
 
-        //@Override
+        
         public int CharPositionInLine => 0;
 
-        //@Override
+        
         public CharStream CharInputStream => null;
 
-        //@Override
+        
         public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
 
-        //@Override
-        //@Override
+        
+        
         public TokenFactory TokenFactory { get => throw new UnsupportedOperationException("Not supported yet."); set => throw new UnsupportedOperationException("Not supported yet."); }
     }
     [TestMethod]
@@ -220,16 +220,16 @@ public class TestCommonTokenStream : TestBufferedTokenStream
     public class TS3 : TokenSource
     {
 
-        //@Override
+        
         public Token NextToken()
         {
             return new CommonToken(Token.EOF);
         }
 
-        //@Override
+        
         public int Line => 0;
 
-        //@Override
+        
         public int CharPositionInLine => 0;
 
         //@Override

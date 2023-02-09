@@ -10,6 +10,6 @@ namespace org.antlr.v4.codegen.model.chunk;
 
 public class ThisRulePropertyRefCtx : RulePropertyRef
 {
-    public ThisRulePropertyRefCtx(StructDecl ctx, String label)
+    public ThisRulePropertyRefCtx(StructDecl ctx, string label)
         : base(ctx, label) { }
 }

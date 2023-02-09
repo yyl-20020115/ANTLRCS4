@@ -281,7 +281,7 @@ public class RuleFunction : OutputModelObject
         }
     }
 
-    public List<Decl> GetDeclForAltElement(GrammarAST t, String refLabelName, bool needList, bool optional)
+    public List<Decl> GetDeclForAltElement(GrammarAST t, string refLabelName, bool needList, bool optional)
     {
         List<Decl> decls = new();
         if (t.Type == ANTLRParser.RULE_REF)

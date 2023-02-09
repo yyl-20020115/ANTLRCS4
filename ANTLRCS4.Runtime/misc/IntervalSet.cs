@@ -87,7 +87,7 @@ public class IntervalSet : IntSet
     /** Add a single element to the set.  An isolated element is stored
      *  as a range el..el.
      */
-    //@Override
+    
     public void Add(int el)
     {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");
@@ -175,7 +175,7 @@ public class IntervalSet : IntSet
         return r;
     }
 
-    //@Override
+    
     public IntervalSet AddAll(IntSet set)
     {
         if (set == null)
@@ -210,7 +210,7 @@ public class IntervalSet : IntSet
     }
 
     /** {@inheritDoc} */
-    //@Override
+    
     public IntervalSet Complement(IntSet vocabulary)
     {
         if (vocabulary == null || vocabulary.IsNil)
@@ -232,7 +232,7 @@ public class IntervalSet : IntSet
         return vocabularyIS.Subtract(this);
     }
 
-    //@Override
+    
     public IntervalSet Subtract(IntSet a)
     {
         if (a == null || a.IsNil)
@@ -346,7 +346,7 @@ public class IntervalSet : IntSet
         return result;
     }
 
-    //@Override
+    
     public IntervalSet Or(IntSet a)
     {
         var o = new IntervalSet();
@@ -356,7 +356,7 @@ public class IntervalSet : IntSet
     }
 
     /** {@inheritDoc} */
-    //@Override
+    
     public IntervalSet And(IntSet other)
     {
         if (other == null)
@@ -440,7 +440,7 @@ public class IntervalSet : IntSet
     }
 
     /** {@inheritDoc} */
-    ////@Override
+    
     public bool Contains(int el)
     {
         int n = intervals.Count;
@@ -471,7 +471,7 @@ public class IntervalSet : IntSet
     }
 
     /** {@inheritDoc} */
-    //@Override
+    
     public bool IsNil => intervals == null || intervals.Count == 0;
 
     /**
@@ -512,7 +512,7 @@ public class IntervalSet : IntSet
         return intervals;
     }
 
-    ////@Override
+    
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
@@ -531,7 +531,7 @@ public class IntervalSet : IntSet
      *  to make sure they are the same.  Interval.equals() is used
      *  by the List.equals() method to check the ranges.
      */
-    ////@Override
+    
     public override bool Equals(object? obj)
     {
         if (obj == null || obj is not IntervalSet other)
@@ -541,7 +541,7 @@ public class IntervalSet : IntSet
         return Enumerable.SequenceEqual(this.intervals, other.intervals);
     }
 
-    ////@Override
+    
     public override string ToString() => ToString(false);
 
     public string ToString(bool elemAreChar)
@@ -662,7 +662,7 @@ public class IntervalSet : IntSet
         }
     }
 
-    ////@Override
+    
     public int Size
     {
         get
@@ -700,7 +700,7 @@ public class IntervalSet : IntSet
         return values;
     }
 
-    ////@Override
+    
     public List<int> ToList()
     {
         List<int> values = new();
@@ -758,7 +758,7 @@ public class IntervalSet : IntSet
         return ToIntegerList().ToArray();
     }
 
-    //@Override
+    
     public void Remove(int el)
     {
         if (@readonly) throw new IllegalStateException("can't alter readonly IntervalSet");

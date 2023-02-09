@@ -179,7 +179,7 @@ public class TreeWizard
     }
 
     /** <summary>
-     *  Compute a Map&lt;String, Integer&gt; that is an inverted index of
+     *  Compute a Map&lt;string, Integer&gt; that is an inverted index of
      *  tokenNames (which maps int token types to names).
      *  </summary>
      */

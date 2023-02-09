@@ -44,7 +44,7 @@ public class StructDecl : Decl
     {
     }
 
-    protected StructDecl(OutputModelFactory factory, Rule r, String name) : base(factory, name == null ? factory.Generator.Target.GetRuleFunctionContextStructName(r) : name)
+    protected StructDecl(OutputModelFactory factory, Rule r, string name) : base(factory, name == null ? factory.Generator.Target.GetRuleFunctionContextStructName(r) : name)
     {
         AddDispatchMethods(r);
         derivedFromName = r.name;

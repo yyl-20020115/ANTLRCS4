@@ -91,7 +91,7 @@ public class AttributeChecks : ActionSplitterListener
 
     // $x.y
     //@Override
-    public void QualifiedAttr(String expr, Token x, Token y)
+    public void QualifiedAttr(string expr, Token x, Token y)
     {
         if (g.isLexer())
         {
@@ -136,7 +136,7 @@ public class AttributeChecks : ActionSplitterListener
     }
 
     //@Override
-    public void SetAttr(String expr, Token x, Token rhs)
+    public void SetAttr(string expr, Token x, Token rhs)
     {
         if (g.isLexer())
         {
@@ -160,7 +160,7 @@ public class AttributeChecks : ActionSplitterListener
     }
 
     //@Override
-    public void Attr(String expr, Token x)
+    public void Attr(string expr, Token x)
     {
         if (g.isLexer())
         {
@@ -190,9 +190,9 @@ public class AttributeChecks : ActionSplitterListener
     }
 
     //@Override
-    public void NonLocalAttr(String expr, Token x, Token y)
+    public void NonLocalAttr(string expr, Token x, Token y)
     {
-        Rule r = g.GetRule(x.Text);
+        var r = g.GetRule(x.Text);
         if (r == null)
         {
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,

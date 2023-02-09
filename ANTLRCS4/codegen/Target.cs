@@ -207,7 +207,7 @@ public abstract class Target
     public virtual string GetTargetStringLiteralFromString(string s)
         => GetTargetStringLiteralFromString(s, true);
 
-    public virtual string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes)
+    public virtual string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, string literal, bool addQuotes)
         => GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, false);
 
     /**
@@ -221,7 +221,7 @@ public abstract class Target
 	 * </p>
 	 * <p>
 	 * Note that we have decided to allow people to use '\"' without penalty, so
-	 * we must build the target string in a loop as {@link String#replace}
+	 * we must build the target string in a loop as {@link string#replace}
 	 * cannot handle both {@code \"} and {@code "} without a lot of messing
 	 * around.
 	 * </p>

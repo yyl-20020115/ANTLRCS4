@@ -77,7 +77,7 @@ public class LeftRecursiveRuleTransformer
     /** Return true if successful */
     public bool TranslateLeftRecursiveRule(GrammarRootAST ast,
                                               LeftRecursiveRule r,
-                                              String language)
+                                              string language)
     {
         //tool.log("grammar", ruleAST.toStringTree());
         var prevRuleAST = r.ast;
@@ -172,7 +172,7 @@ public class LeftRecursiveRuleTransformer
         return true;
     }
 
-    public RuleAST ParseArtificialRule(Grammar g, String ruleText)
+    public RuleAST ParseArtificialRule(Grammar g, string ruleText)
     {
         var lexer = new ANTLRLexer(new ANTLRStringStream(ruleText));
         var adaptor = new GrammarASTAdaptor(lexer.CharStream);

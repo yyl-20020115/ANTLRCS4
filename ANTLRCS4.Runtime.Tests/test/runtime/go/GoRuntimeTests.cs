@@ -8,6 +8,6 @@ namespace org.antlr.v4.test.runtime.go;
 
 public class GoRuntimeTests : RuntimeTests
 {
-    ////@Override
+    
     protected override RuntimeRunner CreateRuntimeRunner() => new GoRunner();
 }

@@ -74,16 +74,16 @@ public class TreeParser : BaseRecognizer
     public TreeNodeStream TreeNodeStream { get => input; set => this.input = value; }
 
     public override string[] TokenNames => base.TokenNames;
-    ////@Override
-    public override String SourceName => input.SourceName;
+    
+    public override string SourceName => input.SourceName;
     public override string GrammarFileName => base.GrammarFileName;
-    ////@Override
+    
     protected override object GetCurrentInputSymbol(IntStream input)
     {
         return ((TreeNodeStream)input).LT(1);
     }
 
-    //@Override
+    
     protected override object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
@@ -99,12 +99,12 @@ public class TreeParser : BaseRecognizer
      *  entire tree if node has children.  If children, scan until
      *  corresponding UP node.
      */
-    //@Override
-    public void MatchAny(IntStream ignore)
+    
+    public override void MatchAny(IntStream ignore)
     { // ignore stream, copy of input
         state.errorRecovery = false;
         state.failed = false;
-        Object look = input.LT(1);
+        var look = input.LT(1);
         if (input.getTreeAdaptor().getChildCount(look) == 0)
         {
             input.Consume(); // not subtree, consume 1 node and return
@@ -135,8 +135,8 @@ public class TreeParser : BaseRecognizer
      *  plus we want to alter the exception type.  Don't try to recover
      *  from tree parser errors inline...
      */
-    //@Override
-    protected object RecoverFromMismatchedToken(IntStream input,
+    
+    protected override object RecoverFromMismatchedToken(IntStream input,
                                                 int ttype,
                                                 BitSet follow)
 

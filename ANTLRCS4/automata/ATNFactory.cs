@@ -25,7 +25,7 @@ public interface ATNFactory
             this.right = right;
         }
 
-        public override String ToString() => "(" + left + "," + right + ")";
+        public override string ToString() => "(" + left + "," + right + ")";
     }
 
 

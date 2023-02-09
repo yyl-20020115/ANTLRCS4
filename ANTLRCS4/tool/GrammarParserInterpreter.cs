@@ -438,8 +438,8 @@ public class GrammarParserInterpreter : ParserInterpreter
     public class BailButConsumeErrorStrategy : DefaultErrorStrategy
     {
         public int firstErrorTokenIndex = -1;
-        ////@Override
-        public void Recover(Parser recognizer, RecognitionException e)
+        
+        public override void Recover(Parser recognizer, RecognitionException e)
         {
             int errIndex = recognizer.InputStream.Index;
             if (firstErrorTokenIndex == -1)
@@ -454,8 +454,8 @@ public class GrammarParserInterpreter : ParserInterpreter
             }
         }
 
-        ////@Override
-        public Token RecoverInline(Parser recognizer)
+        
+        public override Token RecoverInline(Parser recognizer)
         {
             int errIndex = recognizer.InputStream.Index;
             if (firstErrorTokenIndex == -1)
@@ -469,7 +469,7 @@ public class GrammarParserInterpreter : ParserInterpreter
             throw e;
         }
 
-        ////@Override
+        
         public override void Sync(Parser recognizer) { } // don't consume anything; let it fail later
     }
 }

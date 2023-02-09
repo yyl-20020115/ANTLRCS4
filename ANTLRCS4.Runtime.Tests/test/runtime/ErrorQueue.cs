@@ -29,14 +29,14 @@ public class ErrorQueue : ANTLRToolListener
         infos.Add(msg);
     }
 
-    ////@Override
+    
     public virtual void Error(ANTLRMessage msg)
     {
         errors.Add(msg);
         all.Add(msg);
     }
 
-    ////@Override
+    
     public virtual void Warning(ANTLRMessage msg)
     {
         warnings.Add(msg);
@@ -51,7 +51,7 @@ public class ErrorQueue : ANTLRToolListener
 
     public int Count => all.Count + infos.Count;
 
-    ////@Override
+    
     public override string ToString() => ToString(false);
 
     public string ToString(bool rendered)

@@ -31,7 +31,7 @@ public class LexerATNFactory : ParserATNFactory
 	 * actions, but are required during code generation for creating
 	 * {@link LexerAction} instances that are usable by a lexer interpreter.
 	 */
-    public static readonly Dictionary<String, int> COMMON_CONSTANTS = new();
+    public static readonly Dictionary<string, int> COMMON_CONSTANTS = new();
     static LexerATNFactory()
     {
         COMMON_CONSTANTS.Add("HIDDEN", Lexer.HIDDEN);
@@ -62,9 +62,8 @@ public class LexerATNFactory : ParserATNFactory
         codegenTemplates = (codeGenerator ?? CodeGenerator.Create(g)).Templates;
     }
 
-    public static HashSet<String> GetCommonConstants() => COMMON_CONSTANTS.Keys.ToHashSet();
+    public static HashSet<string> GetCommonConstants() => COMMON_CONSTANTS.Keys.ToHashSet();
 
-    ////@Override
     public override ATN CreateATN()
     {
         // BUILD ALL START STATES (ONE PER MODE)
@@ -115,7 +114,7 @@ public class LexerATNFactory : ParserATNFactory
         return atn;
     }
 
-    public override Handle Rule(GrammarAST ruleAST, String name, Handle blk)
+    public override Handle Rule(GrammarAST ruleAST, string name, Handle blk)
     {
         ruleCommands.Clear();
         return base.Rule(ruleAST, name, blk);
@@ -141,8 +140,7 @@ public class LexerATNFactory : ParserATNFactory
         return lexerActionIndex;
     }
 
-    ////@Override
-    public override Handle Action(String _action)
+    public override Handle Action(string _action)
     {
         if (_action.Trim().Length == 0)
         {
@@ -171,7 +169,6 @@ public class LexerATNFactory : ParserATNFactory
         return new Handle(left, right);
     }
 
-    ////@Override
     public override Handle LexerAltCommands(Handle alt, Handle cmds)
     {
         var h = new Handle(alt.left, cmds.right);
@@ -179,13 +176,11 @@ public class LexerATNFactory : ParserATNFactory
         return h;
     }
 
-    ////@Override
     public override Handle LexerCallCommand(GrammarAST ID, GrammarAST arg)
     {
         return LexerCallCommandOrCommand(ID, arg);
     }
 
-    ////@Override
     public override Handle LexerCommand(GrammarAST ID)
     {
         return LexerCallCommandOrCommand(ID, null);
@@ -228,7 +223,6 @@ public class LexerATNFactory : ParserATNFactory
         return Action(cmdST.Render());
     }
 
-    //@Override
     public override Handle Range(GrammarAST a, GrammarAST b)
     {
         var left = NewState(a);
@@ -244,7 +238,6 @@ public class LexerATNFactory : ParserATNFactory
         return new Handle(left, right);
     }
 
-    //@Override
     public override Handle Set(GrammarAST associatedAST, List<GrammarAST> alts, bool invert)
     {
         var left = NewState(associatedAST);
@@ -458,7 +451,7 @@ public class LexerATNFactory : ParserATNFactory
                 switch (escapeParseResult.type)
                 {
                     case EscapeSequenceParsing.Result.Type.INVALID:
-                        String invalid = chars.Substring(escapeParseResult.startOffset,
+                        string invalid = chars.Substring(escapeParseResult.startOffset,
                                                          escapeParseResult.parseLength);
                         g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE,
                                                    g.fileName, charSetAST.Token, invalid);
@@ -759,7 +752,7 @@ public class LexerATNFactory : ParserATNFactory
         }
     }
 
-    private void CheckCommands(String command, Token commandToken)
+    private void CheckCommands(string command, Token commandToken)
     {
         // Command combinations list: https://github.com/antlr/antlr4/issues/1388#issuecomment-263344701
         if (!command.Equals("pushMode") && !command.Equals("popMode"))
@@ -856,7 +849,7 @@ public class LexerATNFactory : ParserATNFactory
             return null;
         }
     }
-    private int? GetTokenConstantValue(String tokenName, Token token)
+    private int? GetTokenConstantValue(string tokenName, Token token)
     {
         if (tokenName == null)
         {
@@ -890,7 +883,7 @@ public class LexerATNFactory : ParserATNFactory
         }
     }
 
-    private int? GetChannelConstantValue(String channelName, Token token)
+    private int? GetChannelConstantValue(string channelName, Token token)
     {
         if (channelName == null)
         {

@@ -250,7 +250,7 @@ public class CommonToken : WritableToken /*Serializable*/
         {
             txt = "<no text>";
         }
-        var typeString = type.ToString();// String.valueOf(type);
+        var typeString = type.ToString();
         if (r != null)
         {
             typeString = r.Vocabulary.GetDisplayName(type);

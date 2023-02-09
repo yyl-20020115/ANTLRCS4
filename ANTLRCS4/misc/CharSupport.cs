@@ -97,7 +97,7 @@ public class CharSupport
             : GetCharValueFromCharInGrammarLiteral(literal[1..^1]);
     }
 
-    public static string GetStringFromGrammarStringLiteral(String literal)
+    public static string GetStringFromGrammarStringLiteral(string literal)
     {
         var builder = new StringBuilder();
         int i = 1; // skip first quote

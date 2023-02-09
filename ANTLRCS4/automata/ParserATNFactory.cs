@@ -127,7 +127,7 @@ public class ParserATNFactory : ATNFactory
             try
             {
                 SetCurrentRuleName(r.name);
-                var h = b.ruleBlock(null);
+                var h = b.RuleBlock(null);
                 Rule(r.ast, r.name, h);
             }
             catch (RecognitionException re)
@@ -152,7 +152,7 @@ public class ParserATNFactory : ATNFactory
     /* start->ruleblock->end */
 
     //@Override
-    public virtual Handle Rule(GrammarAST ruleAST, String name, Handle blk)
+    public virtual Handle Rule(GrammarAST ruleAST, string name, Handle blk)
     {
         var r = g.GetRule(name);
         var start = atn.ruleToStartState[r.index];
@@ -364,7 +364,7 @@ public class ParserATNFactory : ATNFactory
 
 
     //@Override
-    public virtual Handle Action(String action)
+    public virtual Handle Action(string action)
         => throw new UnsupportedOperationException("This element is not valid in parsers.");
 
     /**
@@ -758,7 +758,7 @@ public class ParserATNFactory : ATNFactory
             cause = ex;
         }
 
-        String message = $"Could not create {typeof(ATNState).Name} of type {nodeType.Name}.";
+        var message = $"Could not create {typeof(ATNState).Name} of type {nodeType.Name}.";
         throw new UnsupportedOperationException(message, cause);
     }
 

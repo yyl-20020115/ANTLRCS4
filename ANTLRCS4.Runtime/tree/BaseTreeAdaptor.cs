@@ -228,7 +228,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public Object create(int tokenType, String text)
     {
-        Token fromToken = createToken(tokenType, text);
+        Token fromToken = CreateToken(tokenType, text);
         Tree t = (Tree)create(fromToken);
         return t;
     }
@@ -308,7 +308,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  If you care what the token payload objects' type is, you should
      *  override this method and any other createToken variant.
      */
-    public abstract Token createToken(int tokenType, String text);
+    public abstract Token CreateToken(int tokenType, String text);
 
     /** Tell me how to create a token for use with imaginary token nodes.
      *  For example, there is probably no input symbol associated with imaginary

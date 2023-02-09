@@ -45,7 +45,7 @@ public class CompilationState
     /** The compiled code implementation to fill in. */
     internal CompiledTemplate impl = new ();
 
-    /** Track unique strings; copy into CompiledTemplate's String[] after compilation */
+    /** Track unique strings; copy into CompiledTemplate's string[] after compilation */
     internal StringTable stringtable = new ();
 
     /** Track instruction location within code.instrs array; this is

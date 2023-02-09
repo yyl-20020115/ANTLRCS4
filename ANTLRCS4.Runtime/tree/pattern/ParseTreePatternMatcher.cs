@@ -334,7 +334,7 @@ public class ParseTreePatternMatcher
             }
 
             // (expr ...) and (expr ...)
-            if (r1.GetChildCount() != r2.GetChildCount())
+            if (r1.ChildCount != r2.ChildCount)
             {
                 if (mismatchedNode == null)
                 {
@@ -344,7 +344,7 @@ public class ParseTreePatternMatcher
                 return mismatchedNode;
             }
 
-            int n = r1.GetChildCount();
+            int n = r1.ChildCount;
             for (int i = 0; i < n; i++)
             {
                 ParseTree childMatch = MatchImpl(r1.GetChild(i), patternTree.GetChild(i), labels);

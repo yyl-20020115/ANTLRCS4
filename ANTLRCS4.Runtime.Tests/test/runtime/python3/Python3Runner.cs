@@ -17,9 +17,9 @@ public class Python3Runner : PythonRunner
         environment.Add("PYTHONIOENCODING", "utf-8");
     }
 
-    ////@Override
+    
     public override string GetLanguage() => "Python3";
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

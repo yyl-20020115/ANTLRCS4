@@ -15,9 +15,9 @@ public class PHPRunner : RuntimeRunner
         environment.Add("RUNTIME", GetRuntimePath("PHP"));
     }
 
-    ////@Override
+    
     public override string GetLanguage() => "PHP";
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

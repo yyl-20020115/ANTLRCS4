@@ -18,9 +18,9 @@ public class Python2Runner : PythonRunner
         environment.Add("PYTHONIOENCODING", "utf-8");
     }
 
-    ////@Override
+    
     public override string GetLanguage() => "Python2";
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment() => environment;
 }

@@ -375,7 +375,7 @@ public class ScopeParser
                             index++;
                         }
                         //Console.Out.WriteLine("arg="+arg);
-                        args.Add(new Pair<String, int>(arg.Trim(), index));
+                        args.Add(new Pair<string, int>(arg.Trim(), index));
                         last = p + 1;
                     }
                     p++;

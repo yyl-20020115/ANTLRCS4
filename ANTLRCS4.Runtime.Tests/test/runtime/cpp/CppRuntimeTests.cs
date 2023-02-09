@@ -8,6 +8,6 @@ namespace org.antlr.v4.test.runtime.cpp;
 
 public class CppRuntimeTests : RuntimeTests
 {
-    ////@Override
+    
     protected override RuntimeRunner CreateRuntimeRunner() => new CppRunner();
 }

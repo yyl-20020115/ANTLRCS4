@@ -55,7 +55,7 @@ public class DiagnosticErrorListener : BaseErrorListener
         this.exactOnly = exactOnly;
     }
 
-    ////@Override
+    
     public override void ReportAmbiguity(Parser recognizer,
                                 DFA dfa,
                                 int startIndex,
@@ -76,7 +76,7 @@ public class DiagnosticErrorListener : BaseErrorListener
         recognizer.NotifyErrorListeners(message);
     }
 
-    //@Override
+    
     public override void ReportAttemptingFullContext(Parser recognizer,
                                             DFA dfa,
                                             int startIndex,
@@ -91,7 +91,7 @@ public class DiagnosticErrorListener : BaseErrorListener
         recognizer.NotifyErrorListeners(message);
     }
 
-    //@Override
+    
     public override void ReportContextSensitivity(Parser recognizer,
                                          DFA dfa,
                                          int startIndex,

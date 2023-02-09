@@ -39,7 +39,7 @@ using HttpUtility = Antlr4.StringTemplate.Misc.HttpUtility;
 using SecurityElement = System.Security.SecurityElement;
 #endif
 
-/** This Render knows to perform a few operations on String objects:
+/** This Render knows to perform a few operations on string objects:
  *  upper, lower, cap, url-encode, xml-encode.
  */
 public class StringRenderer : IAttributeRenderer

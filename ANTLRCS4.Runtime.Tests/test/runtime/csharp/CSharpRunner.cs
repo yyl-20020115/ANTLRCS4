@@ -10,20 +10,20 @@ namespace org.antlr.v4.test.runtime.csharp;
 
 public class CSharpRunner : RuntimeRunner
 {
-    ////@Override
-    public override string GetLanguage() { return "CSharp"; }
 
-    ////@Override
-    public override string GetTitleName() { return "C#"; }
+    public override string GetLanguage() => "CSharp";
 
-    ////@Override
-    public override string GetExtension() { return "cs"; }
 
-    ////@Override
-    public override string GetRuntimeToolName() { return "dotnet"; }
+    public override string GetTitleName() => "C#";
 
-    ////@Override
-    public override string GetExecFileName() { return GetTestFileName() + ".dll"; }
+    
+    public override string GetExtension() => "cs";
+
+    
+    public override string GetRuntimeToolName() => "dotnet";
+
+    
+    public override string GetExecFileName() => GetTestFileName() + ".dll";
 
     private static readonly string testProjectFileName = "Antlr4.Test.csproj";
     private static readonly string cSharpAntlrRuntimeDllName =
@@ -38,7 +38,7 @@ public class CSharpRunner : RuntimeRunner
         cSharpTestProjectContent = projectTemplate.Render();
     }
 
-    ////@Override
+    
     protected override void InitRuntime()
     {
         var cachePath = GetCachePath();
@@ -48,7 +48,7 @@ public class CSharpRunner : RuntimeRunner
         RunCommand(args, cachePath, "build " + GetTitleName() + " ANTLR runtime");
     }
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         Exception exception = null;

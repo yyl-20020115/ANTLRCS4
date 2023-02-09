@@ -59,12 +59,12 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 * @return The union of the two sets, with the maximum value chosen
 	 * whenever both sets contain the same key.
 	 */
-    protected static FrequencySet<string> CombineMax(FrequencySet<String> a, FrequencySet<String> b)
+    protected static FrequencySet<string> CombineMax(FrequencySet<string> a, FrequencySet<string> b)
     {
         var result = CombineAndClip(a, b, 1);
         foreach (var entry in a)
         {
-            result[(entry.Key)].v = entry.Value.v;
+            result[entry.Key].v = entry.Value.v;
         }
 
         foreach (var entry in b)
@@ -143,22 +143,19 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         return result;
     }
 
-    //@Override
-    public void TokenRef(TerminalAST @ref)
+    public override void TokenRef(TerminalAST @ref)
     {
         frequencies.Peek().Add(@ref.Text);
         minFrequencies.Peek().Add(@ref.Text);
     }
 
-    //@Override
-    public void RuleRef(GrammarAST @ref, ActionAST arg)
+    public override void RuleRef(GrammarAST @ref, ActionAST arg)
     {
         frequencies.Peek().Add(@ref.Text);
         minFrequencies.Peek().Add(@ref.Text);
     }
 
-    //@Override
-    public void StringRef(TerminalAST @ref)
+    public override void StringRef(TerminalAST @ref)
     {
         var tokenName = @ref.g.getTokenName(@ref.Text);
 
@@ -173,43 +170,37 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 * Parser rules
 	 */
 
-    //@Override
-    protected void EnterAlternative(AltAST tree)
+    protected override void EnterAlternative(AltAST tree)
     {
         frequencies.Push(new FrequencySet<string>());
         minFrequencies.Push(new FrequencySet<string>());
     }
 
-    //@Override
-    protected void ExitAlternative(AltAST tree)
+    protected override void ExitAlternative(AltAST tree)
     {
         frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
         minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));
     }
-
-    //@Override
-    protected void EnterElement(GrammarAST tree)
+    protected override void EnterElement(GrammarAST tree)
     {
-        frequencies.Push(new FrequencySet<String>());
-        minFrequencies.Push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<string>());
+        minFrequencies.Push(new FrequencySet<string>());
     }
 
-    //@Override
-    protected void ExitElement(GrammarAST tree)
+
+    protected override void ExitElement(GrammarAST tree)
     {
         frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
         minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
-    //@Override
-    protected void EnterBlockSet(GrammarAST tree)
+    protected override void EnterBlockSet(GrammarAST tree)
     {
-        frequencies.Push(new FrequencySet<String>());
-        minFrequencies.Push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<string>());
+        minFrequencies.Push(new FrequencySet<string>());
     }
 
-    //@Override
-    protected void ExitBlockSet(GrammarAST tree)
+    protected override void ExitBlockSet(GrammarAST tree)
     {
         foreach (var entry in frequencies.Peek())
         {
@@ -230,8 +221,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
         minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
-    //@Override
-    protected void ExitSubrule(GrammarAST tree)
+    protected override void ExitSubrule(GrammarAST tree)
     {
         if (tree.Type == CLOSURE || tree.Type == POSITIVE_CLOSURE)
         {
@@ -253,36 +243,31 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
 	 * Lexer rules
 	 */
 
-    //@Override
-    protected void EnterLexerAlternative(GrammarAST tree)
+    protected override void EnterLexerAlternative(GrammarAST tree)
     {
-        frequencies.Push(new FrequencySet<String>());
-        minFrequencies.Push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<string>());
+        minFrequencies.Push(new FrequencySet<string>());
     }
 
-    //@Override
-    protected void ExitLexerAlternative(GrammarAST tree)
+    protected override void ExitLexerAlternative(GrammarAST tree)
     {
         frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
         minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));
     }
 
-    //@Override
-    protected void EnterLexerElement(GrammarAST tree)
+    protected override void EnterLexerElement(GrammarAST tree)
     {
-        frequencies.Push(new FrequencySet<String>());
-        minFrequencies.Push(new FrequencySet<String>());
+        frequencies.Push(new FrequencySet<string>());
+        minFrequencies.Push(new FrequencySet<string>());
     }
 
-    //@Override
-    protected void ExitLexerElement(GrammarAST tree)
+    protected override void ExitLexerElement(GrammarAST tree)
     {
         frequencies.Push(CombineAndClip(frequencies.Pop(), frequencies.Pop(), 2));
         minFrequencies.Push(CombineAndClip(minFrequencies.Pop(), minFrequencies.Pop(), 2));
     }
 
-    //@Override
-    protected void ExitLexerSubrule(GrammarAST tree)
+    protected override void ExitLexerSubrule(GrammarAST tree)
     {
         if (tree.Type == CLOSURE || tree.Type == POSITIVE_CLOSURE)
         {

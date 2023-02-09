@@ -21,7 +21,7 @@ public class UnicodeEscapes
         return result.ToString();
     }
 
-    public static void AppendEscapedCodePoint(StringBuilder builder, int codePoint, String language)
+    public static void AppendEscapedCodePoint(StringBuilder builder, int codePoint, string language)
     {
         switch (language)
         {
@@ -32,7 +32,7 @@ public class UnicodeEscapes
             case "Go":
             case "PHP":
                 {
-                    //String format = char.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
+                    //string format = char.isSupplementaryCodePoint(codePoint) ? "\\U%08X" : "\\u%04X";
                     int n = new Rune(codePoint).Utf16SequenceLength;
 
                     builder.Append(n == 1 ? $"\\u{codePoint & 0xffff:X4}" : $"\\U{codePoint:X8}");
@@ -50,8 +50,8 @@ public class UnicodeEscapes
                 {
                     // char is not an 'integral' type, so we have to explicitly convert
                     // to int before passing to the %X formatter or else it throws.
-                    //sb.Append(String.format("\\u%04X", (int)char.highSurrogate(codePoint)));
-                    //sb.Append(String.format("\\u%04X", (int)char.lowSurrogate(codePoint)));
+                    //sb.Append(string.format("\\u%04X", (int)char.highSurrogate(codePoint)));
+                    //sb.Append(string.format("\\u%04X", (int)char.lowSurrogate(codePoint)));
                     builder.Append($"\\u{(int)s[0] & 0xffff:X4}");//highSurrogate
                     builder.Append($"\\u{(int)s[1] & 0xffff:X4}");//lowSurrogate
                 }

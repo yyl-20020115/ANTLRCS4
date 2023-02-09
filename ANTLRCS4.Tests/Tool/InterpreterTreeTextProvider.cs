@@ -15,8 +15,8 @@ public class InterpreterTreeTextProvider : TreeTextProvider
     public InterpreterTreeTextProvider(string[] ruleNames)
 		=> this.ruleNames = Arrays.AsList(ruleNames);
 
-    ////@Override
-    public string GetText(Tree node) {
+    
+    public virtual string GetText(Tree node) {
 		if ( node==null ) return "null";
 		var nodeText = Trees.getNodeText(node, ruleNames);
 		if ( node is ErrorNode) {

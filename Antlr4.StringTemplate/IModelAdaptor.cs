@@ -49,7 +49,7 @@ public interface IModelAdaptor
      *  idea to cache a Method or Field reflection object to make
      *  this fast after the first look up.
      *
-     *  property is normally a String but doesn't have to be. E.g.,
+     *  property is normally a string but doesn't have to be. E.g.,
      *  if o is Map, property could be any key type.  If we need to convert
      *  to string, then it's done by Template and passed in here.
      */

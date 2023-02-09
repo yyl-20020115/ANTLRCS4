@@ -18,7 +18,7 @@ public class Sync : SrcOp
                 GrammarAST blkOrEbnfRootAST,
                 IntervalSet expecting,
                 int decision,
-                String position)
+                string position)
         : base(factory, blkOrEbnfRootAST)
     {
         this.decision = decision;

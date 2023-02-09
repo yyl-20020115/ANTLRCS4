@@ -35,13 +35,11 @@ public class LexerNoViableAltException : RecognitionException
         return deadEndConfigs;
     }
 
-    //@Override
     public override CharStream InputStream => (CharStream)base.InputStream;
 
-    //@Override
-    public override String ToString()
+    public override string ToString()
     {
-        String symbol = "";
+        var symbol = "";
         if (startIndex >= 0 && startIndex < InputStream.Count)
         {
             symbol = InputStream.GetText(Interval.Of(startIndex, startIndex));

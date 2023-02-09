@@ -49,19 +49,10 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
 	 *  I could use reflection to prevent having to override this
 	 *  but reflection is slow.
 	 */
-    //@Override
 
-    public object dupNode(Object t)
-    {
-        if (t == null) return null;
-        return ((Tree)t).DupNode();
-    }
+    public virtual object DupNode(Object t) => t == null ? null : ((Tree)t).DupNode();
 
-    //@Override
-    public Object create(Token payload)
-    {
-        return new CommonTree(payload);
-    }
+    public virtual object Create(Token payload) => new CommonTree(payload);
 
     /** Tell me how to create a token for use with imaginary token nodes.
      *  For example, there is probably no input symbol associated with imaginary
@@ -72,10 +63,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  override this method and any other createToken variant.
      */
     //@Override
-    public override Token createToken(int tokenType, String text)
-    {
-        return new CommonToken(tokenType, text);
-    }
+    public override Token CreateToken(int tokenType, string text) => new CommonToken(tokenType, text);
 
     /** Tell me how to create a token for use with imaginary token nodes.
      *  For example, there is probably no input symbol associated with imaginary
@@ -92,10 +80,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  override this method and any other createToken variant.
      */
     //@Override
-    public override Token createToken(Token fromToken)
-    {
-        return new CommonToken(fromToken);
-    }
+    public override Token createToken(Token fromToken) => new CommonToken(fromToken);
 
     /** Track start/stop token for subtree root created for a rule.
      *  Only works with Tree nodes.  For rules that match nothing,
@@ -110,8 +95,8 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
         int stop = 0;
         if (startToken != null) start = startToken.TokenIndex;
         if (stopToken != null) stop = stopToken.TokenIndex;
-        ((Tree)t).        TokenStartIndex = start;
-        ((Tree)t).        TokenStopIndex = stop;
+        ((Tree)t).TokenStartIndex = start;
+        ((Tree)t).TokenStopIndex = stop;
     }
 
     //@Override

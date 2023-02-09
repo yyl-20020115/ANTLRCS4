@@ -63,7 +63,7 @@ public abstract class Recognizer : OutputModelObject
         symbolicNames = TranslateTokenStringsToTarget(g.getTokenSymbolicNames(), gen);
     }
 
-    protected static List<string> TranslateTokenStringsToTarget(String[] tokenStrings, CodeGenerator gen)
+    protected static List<string> TranslateTokenStringsToTarget(string[] tokenStrings, CodeGenerator gen)
     {
         var result = (string[])tokenStrings.Clone();
         for (int i = 0; i < tokenStrings.Length; i++)

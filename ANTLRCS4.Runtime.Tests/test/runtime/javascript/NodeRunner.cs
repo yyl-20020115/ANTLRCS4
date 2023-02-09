@@ -10,25 +10,25 @@ namespace org.antlr.v4.test.runtime.javascript;
 
 public class NodeRunner : RuntimeRunner
 {
-    ////@Override
+    
     public override string GetLanguage() => "JavaScript";
 
-    ////@Override
+    
     public override string GetExtension() => "js";
 
-    ////@Override
+    
     public override string GetBaseListenerSuffix() => null;
 
-    ////@Override
+    
     public override string GetBaseVisitorSuffix() => null;
 
-    ////@Override
+    
     public override string GetRuntimeToolName() => "node";
 
     private static readonly string normalizedRuntimePath = GetRuntimePath("JavaScript").Replace('\\', '/');
     private static readonly string newImportAntlrString = "import antlr4 from 'file://" + normalizedRuntimePath + "/src/antlr4/index.js'";
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         var generatedFiles = generatedState.generatedFiles;
@@ -51,7 +51,7 @@ public class NodeRunner : RuntimeRunner
         return new CompiledState(generatedState, null);
     }
 
-    ////@Override
+    
     protected override void AddExtraRecognizerParameters(Template template)
     {
         template.Add("runtimePath", normalizedRuntimePath);

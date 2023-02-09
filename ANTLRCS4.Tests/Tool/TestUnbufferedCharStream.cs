@@ -189,7 +189,7 @@ public class TestUnbufferedCharStream
         Assert.AreEqual('x', input.LA(1));
         input.Consume();
         Assert.AreEqual(IntStream.EOF, input.LA(1));
-        String r = input.GetRemainingBuffer();
+        var r = input.GetRemainingBuffer();
         Assert.AreEqual("\uFFFF", r); // shouldn't include x
         Assert.AreEqual("\uFFFF", input.Buffer); // whole buffer
     }
@@ -425,10 +425,10 @@ public class TestUnbufferedCharStream
             {
                 if (n == 0) return "";
                 int len = n;
-                // Don't pass -1 to new String().
+                // Don't pass -1 to new string().
                 if (data[len - 1] == IntStream.EOF)
                 {
-                    // Don't pass -1 to new String().
+                    // Don't pass -1 to new string().
                     return string.Join("", data[..(len - 1)].Select(d => new Rune(d).ToString())) + "\uffff";
                 }
                 else

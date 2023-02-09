@@ -78,10 +78,6 @@ public class TestScopeParsing
             this.output = output;
         }
 
-        ////@Override
-        public override string ToString()
-        {
-            return input;
-        }
+        public override string ToString() => input;
     }
 }

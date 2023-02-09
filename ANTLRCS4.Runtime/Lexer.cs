@@ -396,7 +396,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         listener.SyntaxError(this, null, _tokenStartLine, _tokenStartCharPositionInLine, msg, e);
     }
 
-    public string GetErrorDisplay(String s)
+    public static string GetErrorDisplay(string s)
     {
         var buffer = new StringBuilder();
         foreach (char c in s.ToCharArray())
@@ -406,18 +406,14 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         return buffer.ToString();
     }
 
-    public string GetErrorDisplay(int c)
+    public static string GetErrorDisplay(int c) => c switch
     {
-        // String.valueOf((char)c);
-        return c switch
-        {
-            Token.EOF => "<EOF>",
-            '\n' => "\\n",
-            '\t' => "\\t",
-            '\r' => "\\r",
-            _ => c.ToString(),
-        };
-    }
+        Token.EOF => "<EOF>",
+        '\n' => "\\n",
+        '\t' => "\\t",
+        '\r' => "\\r",
+        _ => c.ToString(),
+    };
 
     public string GetCharErrorDisplay(int c) => "'" + GetErrorDisplay(c) + "'";
 

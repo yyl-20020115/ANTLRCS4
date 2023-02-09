@@ -63,7 +63,7 @@ public class CommonTokenFactory : TokenFactory<CommonToken>
     public CommonTokenFactory() : this(false) { }
 
     //@Override
-    public CommonToken Create(Pair<TokenSource, CharStream> source, int type, String text,
+    public CommonToken Create(Pair<TokenSource, CharStream> source, int type, string text,
                               int channel, int start, int stop,
                               int line, int charPositionInLine)
     {

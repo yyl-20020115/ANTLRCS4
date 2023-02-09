@@ -413,7 +413,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.EOF_CLOSURE + "): EofClosure.g4:2:0: rule EofClosure contains a closure with at least one alternative that can match EOF\n";
 
-        String[] pair = new String[] {
+        string[] pair = new string[] {
                 grammar,
                 expected
         };
@@ -944,7 +944,7 @@ public class TestToolSyntaxErrors
         var grammar =
                 "grammar T;\n" +
                 "tree : 'X';";
-        ToolTestUtils.TestErrors(new String[] { grammar, "" }, true);
+        ToolTestUtils.TestErrors(new string[] { grammar, "" }, true);
     }
 
     [TestMethod]

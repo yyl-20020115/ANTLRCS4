@@ -50,10 +50,10 @@ using Console = System.Console;
  *
  *  You can insert stuff, replace, and delete chunks.  Note that the
  *  operations are done lazily--only if you convert the buffer to a
- *  String.  This is very efficient because you are not moving data around
+ *  string.  This is very efficient because you are not moving data around
  *  all the time.  As the buffer of tokens is converted to strings, the
  *  toString() method(s) check to see if there is an operation at the
- *  current index.  If so, the operation is done and then normal String
+ *  current index.  If so, the operation is done and then normal string
  *  rendering continues on the buffer.  This is like having multiple Turing
  *  machine instruction streams (programs) operating on a single input tape. :)
  *
@@ -183,12 +183,12 @@ public class TokenRewriteStream : CommonTokenStream
     /** <summary>
      *  You may have multiple, named streams of rewrite operations.
      *  I'm calling these things "programs."
-     *  Maps String (name) -> rewrite (List)
+     *  Maps string (name) -> rewrite (List)
      *  </summary>
      */
     protected IDictionary<string, IList<RewriteOperation>> programs = null;
 
-    /** <summary>Map String (program name) -> Integer index</summary> */
+    /** <summary>Map string (program name) -> Integer index</summary> */
     protected IDictionary<string, int> lastRewriteTokenIndexes = null;
 
     public TokenRewriteStream() => Init();

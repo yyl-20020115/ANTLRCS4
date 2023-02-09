@@ -82,7 +82,7 @@ public interface ITemplateWriter
      *  See Interpreter.WriteObject where it checks for Template instance.
      *  If POJO, WritePlainObject passes wrap to ITemplateWriter's
      *
-     *     Write(String str, String wrap)
+     *     Write(string str, string wrap)
      *
      *  method.  Can't pass to exec(). 
      */

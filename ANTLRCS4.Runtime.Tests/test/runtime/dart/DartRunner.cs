@@ -11,12 +11,12 @@ namespace org.antlr.v4.test.runtime.dart;
 
 public class DartRunner : RuntimeRunner
 {
-    ////@Override
+    
     public override string GetLanguage() => "Dart";
 
     private static string cacheDartPackageConfig;
 
-    ////@Override
+    
     protected override void InitRuntime()
     {
         string cachePath = GetCachePath();
@@ -33,7 +33,7 @@ public class DartRunner : RuntimeRunner
             Path.Combine(cachePath, ".dart_tool"), "package_config.json");
     }
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         string dartToolDirPath = Path.Combine(GetTempDirPath(), ".dart_tool");

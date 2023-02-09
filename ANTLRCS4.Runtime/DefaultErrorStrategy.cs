@@ -680,7 +680,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     }
 
 
-    protected string EscapeWSAndQuote(String s)
+    protected string EscapeWSAndQuote(string s)
     {
         //		if ( s==null ) return s;
         s = s.Replace("\n", "\\n");

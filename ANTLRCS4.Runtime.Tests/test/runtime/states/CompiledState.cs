@@ -8,7 +8,7 @@ namespace org.antlr.v4.test.runtime.states;
 
 public class CompiledState : State
 {
-    ////@Override
+    
     public override Stage Stage => Stage.Compile;
 
     public CompiledState(GeneratedState previousState, Exception exception)

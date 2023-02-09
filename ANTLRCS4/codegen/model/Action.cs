@@ -27,7 +27,7 @@ public class Action : RuleElement
         //Console.Out.WriteLine("actions="+chunks);
     }
 
-    public Action(OutputModelFactory factory, StructDecl ctx, String action) : base(factory, null)
+    public Action(OutputModelFactory factory, StructDecl ctx, string action) : base(factory, null)
     {
         var ast = new ActionAST(new CommonToken(ANTLRParser.ACTION, action));
         var rf = factory.CurrentRuleFunction;

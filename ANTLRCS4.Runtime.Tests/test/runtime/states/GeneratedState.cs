@@ -9,13 +9,13 @@ namespace org.antlr.v4.test.runtime.states;
 
 public class GeneratedState : State
 {
-    ////@Override
+    
     public override Stage Stage => Stage.Generate;
 
     public readonly ErrorQueue errorQueue;
     public readonly List<GeneratedFile> generatedFiles;
 
-    ////@Override
+    
     public override bool ContainsErrors()
     {
         return errorQueue.errors.Count > 0 || base.ContainsErrors();

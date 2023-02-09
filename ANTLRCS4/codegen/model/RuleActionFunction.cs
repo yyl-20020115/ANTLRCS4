@@ -10,8 +10,8 @@ namespace org.antlr.v4.codegen.model;
 
 public class RuleActionFunction : OutputModelObject
 {
-    public readonly String escapedName;
-    public readonly String ctxType;
+    public readonly string escapedName;
+    public readonly string ctxType;
     public readonly int ruleIndex;
     public readonly string name;
     /** Map actionIndex to Action */

@@ -250,7 +250,7 @@ public class DFA
     static int SpecialStateTransitionDefault(DFA dfa, int s, IIntStream input) => -1;
 
     /** <summary>
-     *  Given a String that has a run-length-encoding of some unsigned shorts
+     *  Given a string that has a run-length-encoding of some unsigned shorts
      *  like "\1\2\3\9", convert to short[] {2,9,9,9}.  We do this to avoid
      *  static short[] which generates so much init code that the class won't
      *  compile. :(

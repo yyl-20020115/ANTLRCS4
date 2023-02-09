@@ -241,7 +241,7 @@ public static class Trees
 											   int stopIndex)
 	{
 		if ( t==null ) return;
-		for (int i = 0; i < t.GetChildCount(); i++) {
+		for (int i = 0; i < t.ChildCount; i++) {
 			ParseTree child = t.GetChild(i);
 			Interval range = child.SourceInterval;
 			if ( child is ParserRuleContext && (range.b < startIndex || range.a > stopIndex) ) {

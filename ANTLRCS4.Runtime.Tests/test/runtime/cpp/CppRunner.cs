@@ -29,10 +29,10 @@ namespace org.antlr.v4.test.runtime.cpp;
  */
 public class CppRunner : RuntimeRunner
 {
-    ////@Override
+    
     public override string GetLanguage() => "Cpp";
 
-    ////@Override
+    
     public override string GetTitleName() => "C++";
 
     private static readonly string runtimeSourcePath;
@@ -68,7 +68,7 @@ public class CppRunner : RuntimeRunner
             : null;
     }
 
-    ////@Override
+    
     public override string GetCompilerName()
     {
         if (compilerName == null)
@@ -86,7 +86,7 @@ public class CppRunner : RuntimeRunner
         return compilerName;
     }
 
-    ////@Override
+    
     protected override void InitRuntime()
     {
         var runtimePath = GetRuntimePath();
@@ -109,7 +109,7 @@ public class CppRunner : RuntimeRunner
         }
     }
 
-    ////@Override
+    
     public override CompiledState Compile(RunOptions runOptions, GeneratedState generatedState)
     {
         if (RuntimeTestUtils.IsWindows())
@@ -173,19 +173,19 @@ public class CppRunner : RuntimeRunner
         FileUtils.WriteFile(GetTempDirPath(), "Test.vcxproj", projectFileST.Render());
     }
 
-    ////@Override
+    
     public override string GetRuntimeToolName()
     {
         return null;
     }
 
-    ////@Override
+    
     public override string GetExecFileName()
     {
         return Path.Combine(GetTempDirPath(), GetTestFileName() + "." + (RuntimeTestUtils.IsWindows() ? "exe" : "out")).ToString();
     }
 
-    ////@Override
+    
     public override Dictionary<string, string> GetExecEnvironment()
     {
         return environment;

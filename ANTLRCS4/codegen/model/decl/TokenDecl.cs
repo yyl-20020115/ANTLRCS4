@@ -10,5 +10,5 @@ public class TokenDecl : Decl
 {
     public bool isImplicit;
 
-    public TokenDecl(OutputModelFactory factory, String varName) : base(factory, varName) { }
+    public TokenDecl(OutputModelFactory factory, string varName) : base(factory, varName) { }
 }

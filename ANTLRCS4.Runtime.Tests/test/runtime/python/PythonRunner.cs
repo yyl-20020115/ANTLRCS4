@@ -9,10 +9,10 @@ namespace org.antlr.v4.test.runtime.python;
 
 public abstract class PythonRunner : RuntimeRunner
 {
-    //////@Override
+    //
     public override string GetExtension() => "py";
 
-    ////@Override
+    
     protected override void AddExtraRecognizerParameters(Template template)
     {
         template.Add("python3", GetLanguage().Equals("Python3"));

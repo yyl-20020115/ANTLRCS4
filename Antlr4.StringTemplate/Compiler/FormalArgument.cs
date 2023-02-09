@@ -54,7 +54,7 @@ public class FormalArgument
         public static final int REQUIRED = 2;     // a
         public static final int ZERO_OR_MORE = 4; // a*
         public static final int ONE_OR_MORE = 8;  // a+
-        public static final String[] suffixes = {
+        public static final string[] suffixes = {
             null,
             "?",
             "",
@@ -108,7 +108,7 @@ public class FormalArgument
     }
 
     /*
-    public static String getCardinalityName(int cardinality) {
+    public static string getCardinalityName(int cardinality) {
         switch (cardinality) {
             case OPTIONAL : return "optional";
             case REQUIRED : return "exactly one";

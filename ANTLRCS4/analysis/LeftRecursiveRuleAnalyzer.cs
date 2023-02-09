@@ -83,10 +83,8 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         codegenTemplates = CodeGenerator.Create(tool, null, language).Templates;
     }
 
-    //@Override
     public override void SetReturnValues(GrammarAST t) => retvals = t;
 
-    //@Override
     public override void SetAltAssoc(AltAST t, int alt)
     {
         ASSOC assoc = ASSOC.Left;
@@ -119,7 +117,6 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         //		Console.Out.WriteLine("setAltAssoc: op " + alt + ": " + t.getText()+", assoc="+assoc);
     }
 
-    //@Override
     public override void BinaryAlt(AltAST originalAltTree, int alt)
     {
         var altTree = (AltAST)originalAltTree.DupTree();
@@ -151,7 +148,6 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         //Console.Out.WriteLine("binaryAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
     }
 
-    //@Override
     public virtual void PrefixAlt(AltAST originalAltTree, int alt)
     {
         var altTree = (AltAST)originalAltTree.DupTree();
@@ -170,7 +166,6 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         //Console.Out.WriteLine("prefixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
     }
 
-    //@Override
     public override void SuffixAlt(AltAST originalAltTree, int alt)
     {
         var altTree = (AltAST)originalAltTree.DupTree();
@@ -194,7 +189,6 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         //		Console.Out.WriteLine("suffixAlt " + alt + ": " + altText + ", rewrite=" + rewriteText);
     }
 
-    //@Override
     public override void OtherAlt(AltAST originalAltTree, int alt)
     {
         var altTree = (AltAST)originalAltTree.DupTree();
@@ -439,7 +433,6 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         return p + 1;
     }
 
-    //@Override
     public override string ToString() 
         => "PrecRuleOperatorCollector{" +
                "binaryAlts=" + binaryAlts +

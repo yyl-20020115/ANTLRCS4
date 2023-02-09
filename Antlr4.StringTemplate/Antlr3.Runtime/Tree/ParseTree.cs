@@ -40,7 +40,7 @@ using StringBuilder = System.Text.StringBuilder;
  *  A record of the rules used to match a token sequence.  The tokens
  *  end up as the leaves of this tree and rule nodes are the interior nodes.
  *  This really adds no functionality, it is just an alias for CommonTree
- *  that is more meaningful (specific) and holds a String to display for a node.
+ *  that is more meaningful (specific) and holds a string to display for a node.
  *  </summary>
  */
 [System.Serializable]

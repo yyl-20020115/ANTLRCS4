@@ -30,17 +30,17 @@ public class LexerInterpreter : Lexer
 
     //@Deprecated
     public LexerInterpreter(string grammarFileName, ICollection<string> tokenNames, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
-    : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, new List<String>(), modeNames, atn, input)
+    : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, new List<string>(), modeNames, atn, input)
     {
     }
 
     //@Deprecated
-    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> modeNames, ATN atn, CharStream input)
-    : this(grammarFileName, vocabulary, ruleNames, new List<String>(), modeNames, atn, input)
+    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<string> modeNames, ATN atn, CharStream input)
+    : this(grammarFileName, vocabulary, ruleNames, new List<string>(), modeNames, atn, input)
     {
     }
 
-    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<String> channelNames, ICollection<String> modeNames, ATN atn, CharStream input)
+    public LexerInterpreter(string grammarFileName, Vocabulary vocabulary, ICollection<string> ruleNames, ICollection<string> channelNames, ICollection<string> modeNames, ATN atn, CharStream input)
         : base(input)
     {
         if (atn.grammarType != ATNType.LEXER)
@@ -48,7 +48,7 @@ public class LexerInterpreter : Lexer
 
         this.grammarFileName = grammarFileName;
         this.atn = atn;
-        this.tokenNames = new String[atn.maxTokenType];
+        this.tokenNames = new string[atn.maxTokenType];
         for (int i = 0; i < tokenNames.Length; i++)
         {
             tokenNames[i] = vocabulary.GetDisplayName(i);

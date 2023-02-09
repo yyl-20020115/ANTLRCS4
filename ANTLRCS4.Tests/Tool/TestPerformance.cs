@@ -1612,33 +1612,17 @@ public class TestPerformance
     {
         public readonly T referent;
 
-        public StrongReference(T referent)
-        {
-            ;
-            this.referent = referent;
-        }
+        public StrongReference(T referent) => this.referent = referent;
 
-        //@Override
-        public T get()
-        {
-            return referent;
-        }
+        public T get() => referent;
     }
     public class SoftReference<T> : Reference<T>
     {
         public readonly T referent;
 
-        public SoftReference(T referent)
-        {
-            ;
-            this.referent = referent;
-        }
+        public SoftReference(T referent) => this.referent = referent;
 
-        //@Override
-        public T get()
-        {
-            return referent;
-        }
+        public T get() => referent;
     }
 
 

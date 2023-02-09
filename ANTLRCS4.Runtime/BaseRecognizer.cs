@@ -101,7 +101,7 @@ public abstract class BaseRecognizer
      *  immediate exit from rule.  Rule would recover by resynchronizing
      *  to the set of symbols that can follow rule ref.
 	 */
-    public object Match(IntStream input, int ttype, BitSet follow)
+    public virtual object Match(IntStream input, int ttype, BitSet follow)
     {
         //Console.Out.println("match "+((TokenStream)input).LT(1));
         var matchedSymbol = GetCurrentInputSymbol(input);
@@ -122,7 +122,7 @@ public abstract class BaseRecognizer
     }
 
     /** Match the wildcard: in a symbol */
-    public void MatchAny(IntStream input)
+    public virtual void MatchAny(IntStream input)
     {
         state.errorRecovery = false;
         state.failed = false;

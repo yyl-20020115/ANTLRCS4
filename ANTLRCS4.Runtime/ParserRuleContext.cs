@@ -200,14 +200,14 @@ public class ParserRuleContext : RuleContext
         children?.RemoveAt(children.Count - 1);
     }
 
-    ////@Override
+    
     /** Override to make type more specific */
     public ParserRuleContext GetParent()
     {
         return (ParserRuleContext)base.Parent;
     }
 
-    ////@Override
+    
     public ParseTree GetChild(int i)
     {
         return children != null && i >= 0 && i < children.Count ? children[(i)] : null;
@@ -329,10 +329,9 @@ public class ParserRuleContext : RuleContext
         return contexts;
     }
 
-    //@Override
-    public int GetChildCount() { return children != null ? children.Count : 0; }
-
-    //@Override
+    
+    public int ChildCount => children != null ? children.Count : 0;
+    
     public Interval GetSourceInterval()
     {
         if (start == null)

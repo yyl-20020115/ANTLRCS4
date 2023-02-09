@@ -8,5 +8,5 @@ namespace org.antlr.v4.codegen.model.decl;
 /** */
 public class TokenTypeDecl : Decl
 {
-    public TokenTypeDecl(OutputModelFactory factory, String name) : base(factory, name) { }
+    public TokenTypeDecl(OutputModelFactory factory, string name) : base(factory, name) { }
 }

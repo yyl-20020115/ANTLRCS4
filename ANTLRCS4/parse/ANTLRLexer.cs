@@ -563,7 +563,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         {
                             _type = ARG_ACTION;
                             // Set the token text to our gathered string minus outer [ ]
-                            String t = GetText();
+                            var t = GetText();
                             t = t.Substring(1, t.Length - 1 - 1);
                             SetText(t);
                         }
@@ -2994,16 +2994,18 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 {
                     if (hCount < 4)
                     {
-                        Interval badRange = Interval.Of(CharIndex - 2 - hCount, CharIndex);
-                        String lastChar = input.Substring(badRange.b, badRange.b);
+                        var badRange = Interval.Of(CharIndex - 2 - hCount, CharIndex);
+                        var lastChar = input.Substring(badRange.b, badRange.b);
                         if (char.ConvertToUtf32( lastChar,0) == '\'')
                         {
                             badRange.b--;
                         }
-                        String bad = input.Substring(badRange.a, badRange.b);
-                        Token t = new CommonToken(input, state.type, state.channel, badRange.a, badRange.b);
-                        t.                        Line = input.Line;
-                        t.                        CharPositionInLine = input.CharPositionInLine - hCount - 2;
+                        var bad = input.Substring(badRange.a, badRange.b);
+                        var t = new CommonToken(input, state.type, state.channel, badRange.a, badRange.b)
+                        {
+                            Line = input.Line,
+                            CharPositionInLine = input.CharPositionInLine - hCount - 2
+                        };
                         GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, t, bad);
                     }
                 }

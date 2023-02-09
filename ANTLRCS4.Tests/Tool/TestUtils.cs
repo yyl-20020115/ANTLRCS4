@@ -58,7 +58,6 @@ public class TestUtils
     }
     public class UFA<T> : Utils.Func1<T,string>
     {
-        //@Override
         public string Exec(T arg1) => "baz";
     }
 
@@ -98,7 +97,6 @@ public class TestUtils
 
     public class UFB<T> : Utils.Filter<T>
     {
-        //@Override
         public bool Select(T o) => true;
     }
     [TestMethod]
@@ -116,7 +114,6 @@ public class TestUtils
 
     public class UFC<T> : Utils.Filter<T>
     {
-        //@Override
         public bool Select(T o) => true;
     }
     [TestMethod]

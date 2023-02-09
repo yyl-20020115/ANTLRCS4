@@ -429,13 +429,13 @@ public class GrammarTreeVisitor : TreeParser
     protected virtual void ExitElementOption(GrammarAST tree) { }
 
     //@Override
-    public virtual void TraceIn(String ruleName, int ruleIndex)
+    public virtual void TraceIn(string ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("enter " + ruleName + ": " + input.LT(1));
     }
 
     //@Override
-    public virtual void TraceOut(String ruleName, int ruleIndex)
+    public virtual void TraceOut(string ruleName, int ruleIndex)
     {
         Console.Error.WriteLine("exit " + ruleName + ": " + input.LT(1));
     }
@@ -859,7 +859,7 @@ public class GrammarTreeVisitor : TreeParser
                 Match(input, Token.DOWN, null);
                 ID4 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_option297);
                 PushFollow(FOLLOW_optionValue_in_option301);
-                v = optionValue();
+                v = OptionValue();
                 state._fsp--;
 
                 Match(input, Token.UP, null);
@@ -896,10 +896,10 @@ public class GrammarTreeVisitor : TreeParser
 
 
     // $ANTLR start "optionValue"
-    // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:409:1: optionValue returns [String v] : ( ID | STRING_LITERAL | INT );
-    public optionValue_return optionValue()
+    // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:409:1: optionValue returns [string v] : ( ID | STRING_LITERAL | INT );
+    public optionValue_return OptionValue()
     {
-        optionValue_return retval = new optionValue_return();
+        var retval = new optionValue_return();
         retval.start = input.LT(1);
 
 
@@ -5799,11 +5799,7 @@ public class GrammarTreeVisitor : TreeParser
             this.special = DFA38_special;
             this.transition = DFA38_transition;
         }
-        //@Override
-        public String getDescription()
-        {
-            return "783:1: alternative : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
-        }
+        public override string Description => "783:1: alternative : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
     }
 
     public static readonly BitSet FOLLOW_GRAMMAR_in_grammarSpec85 = new BitSet(new long[] { 0x0000000000000004L });

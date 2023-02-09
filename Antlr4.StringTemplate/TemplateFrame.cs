@@ -68,7 +68,7 @@ public sealed class TemplateFrame
     public DebugEvents GetDebugState() => _debugState ??= new DebugEvents();
 
     /** If an instance of x is enclosed in a y which is in a z, return
-     *  a String of these instance names in order from topmost to lowest;
+     *  a string of these instance names in order from topmost to lowest;
      *  here that would be "[z y x]".
      */
     public string GetEnclosingInstanceStackString()
