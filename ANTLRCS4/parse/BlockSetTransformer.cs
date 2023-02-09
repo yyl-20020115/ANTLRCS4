@@ -598,7 +598,7 @@ public class BlockSetTransformer : TreeRewriter
 
 
                     retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
-                    input.replaceChildren(adaptor.GetParent(retval.start),
+                    input.ReplaceChildren(adaptor.GetParent(retval.start),
                                           adaptor.GetChildIndex(retval.start),
                                           adaptor.GetChildIndex(_last),
                                           retval.tree);
@@ -978,7 +978,7 @@ public class BlockSetTransformer : TreeRewriter
 
 
                             retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
-                            input.replaceChildren(adaptor.GetParent(retval.start),
+                            input.ReplaceChildren(adaptor.GetParent(retval.start),
                                                   adaptor.GetChildIndex(retval.start),
                                                   adaptor.GetChildIndex(_last),
                                                   retval.tree);
@@ -1190,7 +1190,7 @@ public class BlockSetTransformer : TreeRewriter
 
 
                             retval.tree = (GrammarAST)adaptor.RulePostProcessing(root_0);
-                            input.replaceChildren(adaptor.GetParent(retval.start),
+                            input.ReplaceChildren(adaptor.GetParent(retval.start),
                                                   adaptor.GetChildIndex(retval.start),
                                                   adaptor.GetChildIndex(_last),
                                                   retval.tree);

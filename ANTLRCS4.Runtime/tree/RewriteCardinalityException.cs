@@ -36,19 +36,9 @@ namespace org.antlr.runtime.tree;
 public class RewriteCardinalityException : RuntimeException
 {
 
-    public String elementDescription;
+    public string elementDescription;
 
-    public RewriteCardinalityException(String elementDescription)
-    {
-        this.elementDescription = elementDescription;
-    }
+    public RewriteCardinalityException(string elementDescription) => this.elementDescription = elementDescription;
 
-    public String getMessage()
-    {
-        if (elementDescription != null)
-        {
-            return elementDescription;
-        }
-        return null;
-    }
+    public override string Message => elementDescription ?? string.Empty;
 }

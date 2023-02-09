@@ -41,7 +41,7 @@ public class TreePatternLexer
     public const int DOT = 7;
 
     /** The tree pattern to lex like "(A B C)" */
-    protected String pattern;
+    protected string pattern;
 
     /** Index into input string */
     protected int p = -1;
@@ -57,7 +57,7 @@ public class TreePatternLexer
 
     public bool error = false;
 
-    public TreePatternLexer(String pattern)
+    public TreePatternLexer(string pattern)
     {
         this.pattern = pattern;
         this.n = pattern.Length;

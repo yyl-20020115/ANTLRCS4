@@ -105,7 +105,7 @@ public class CharStreams
 	 *
 	 * Reads the entire contents of the file into the result before returning.
 	 */
-    public static CharStream FromFileName(String fileName, Encoding charset)
+    public static CharStream FromFileName(string fileName, Encoding charset)
     {
         return FromReader(new StreamReader(fileName, charset));
     }
@@ -207,7 +207,7 @@ public class CharStreams
     /**
 	 * Creates a {@link CharStream} given a {@link String}.
 	 */
-    public static CodePointCharStream FromString(String s)
+    public static CodePointCharStream FromString(string s)
     {
         return FromString(s, IntStream.UNKNOWN_SOURCE_NAME);
     }
@@ -220,10 +220,10 @@ public class CharStreams
     {
         // Initial guess assumes no code points > U+FFFF: one code
         // point for each code unit in the string
-        CodePointBuffer.Builder codePointBufferBuilder = CodePointBuffer.GetBuilder(s.Length);
+        var codePointBufferBuilder = CodePointBuffer.GetBuilder(s.Length);
         // TODO: CharBuffer.wrap(String) rightfully returns a read-only buffer
         // which doesn't expose its array, so we make a copy.
-        CharBuffer cb = CharBuffer.Allocate(s.Length);
+        var cb = CharBuffer.Allocate(s.Length);
         cb.Put(s);
         cb.Flip();
         codePointBufferBuilder.Append(cb);

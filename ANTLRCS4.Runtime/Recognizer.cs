@@ -42,7 +42,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 
     /** Used to print out token names like ID during debugging and
 	 *  error reporting.  The generated parsers implement a method
-	 *  that overrides this to point to their String[] tokenNames.
+	 *  that overrides this to point to their string[] tokenNames.
 	 *
 	 * @deprecated Use {@link #getVocabulary()} instead.
 	 */

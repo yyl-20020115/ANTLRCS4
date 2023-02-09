@@ -63,15 +63,13 @@ public class CommonErrorNode : CommonTree
     //@Override
     public bool IsNil => false;
 
-    //@Override
-    public int Type => Token.INVALID_TOKEN_TYPE;
+    public override int Type => Token.INVALID_TOKEN_TYPE;
 
-    //@Override
-    public string Text
+    public override string Text
     {
         get
         {
-            String badText;
+            string badText;
             if (start is Token)
             {
                 int i = start.TokenIndex;
@@ -85,7 +83,7 @@ public class CommonErrorNode : CommonTree
 
             else if (start is Tree)
             {
-                badText = ((TreeNodeStream)input).toString(start, stop);
+                badText = ((TreeNodeStream)input).ToString(start, stop);
             }
             else
             {

@@ -53,7 +53,7 @@ public class RuleTagToken : Token
 	 * @exception IllegalArgumentException if {@code ruleName} is {@code null}
 	 * or empty.
 	 */
-    public RuleTagToken(string ruleName, int bypassTokenType, String label)
+    public RuleTagToken(string ruleName, int bypassTokenType, string label)
     {
         if (string.IsNullOrEmpty(ruleName))
         {

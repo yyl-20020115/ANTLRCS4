@@ -9,7 +9,7 @@ using org.antlr.v4.runtime.misc;
 
 /**
  * Vacuum all input from a {@link Reader}/{@link InputStream} and then treat it
- * like a {@code char[]} buffer. Can also pass in a {@link String} or
+ * like a {@code char[]} buffer. Can also pass in a {@link string} or
  * {@code char[]} to use.
  *
  * <p>If you need encoding, pass in stream/reader with correct encoding.</p>

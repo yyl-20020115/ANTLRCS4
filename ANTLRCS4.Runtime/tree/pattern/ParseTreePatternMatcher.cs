@@ -136,7 +136,7 @@ public class ParseTreePatternMatcher
     }
 
     /** Does {@code pattern} matched as rule {@code patternRuleIndex} match {@code tree}? */
-    public bool Matches(ParseTree tree, String pattern, int patternRuleIndex)
+    public bool Matches(ParseTree tree, string pattern, int patternRuleIndex)
     {
         var p = Compile(pattern, patternRuleIndex);
         return Matches(tree, p);
@@ -157,7 +157,7 @@ public class ParseTreePatternMatcher
 	 * {@code tree} and return a {@link ParseTreeMatch} object that contains the
 	 * matched elements, or the node at which the match failed.
 	 */
-    public ParseTreeMatch Match(ParseTree tree, String pattern, int patternRuleIndex)
+    public ParseTreeMatch Match(ParseTree tree, string pattern, int patternRuleIndex)
     {
         var p = Compile(pattern, patternRuleIndex);
         return Match(tree, p);
@@ -250,7 +250,7 @@ public class ParseTreePatternMatcher
 
     protected ParseTree MatchImpl(ParseTree tree,
                                   ParseTree patternTree,
-                                  MultiMap<String, ParseTree> labels)
+                                  MultiMap<string, ParseTree> labels)
     {
         if (tree == null)
         {
@@ -379,7 +379,7 @@ public class ParseTreePatternMatcher
         return null;
     }
 
-    public List<Token> Tokenize(String pattern)
+    public List<Token> Tokenize(string pattern)
     {
         // split pattern into chunks: sea (raw input) and islands (<ID>, <expr>)
         var chunks = Split(pattern);
@@ -435,7 +435,7 @@ public class ParseTreePatternMatcher
     }
 
     /** Split {@code <ID> = <e:expr> ;} into 4 chunks for tokenizing by {@link #tokenize}. */
-    public List<Chunk> Split(String pattern)
+    public List<Chunk> Split(string pattern)
     {
         int p = 0;
         int n = pattern.Length;
@@ -520,7 +520,7 @@ public class ParseTreePatternMatcher
             if (i + 1 < ntags)
             {
                 // copy from end of <tag> to start of next
-                String text = pattern.Substring(stops[(i)] + stop.Length, starts[(i + 1)] - (stops[(i)] + stop.Length));
+                var text = pattern.Substring(stops[(i)] + stop.Length, starts[(i + 1)] - (stops[(i)] + stop.Length));
                 chunks.Add(new TextChunk(text));
             }
         }

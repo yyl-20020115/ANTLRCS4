@@ -10,7 +10,7 @@ namespace org.antlr.v4.runtime.tree.pattern;
 
 /**
  * A pattern like {@code <ID> = <expr>;} converted to a {@link ParseTree} by
- * {@link ParseTreePatternMatcher#compile(String, int)}.
+ * {@link ParseTreePatternMatcher#compile(string, int)}.
  */
 public class ParseTreePattern
 {
@@ -88,7 +88,7 @@ public class ParseTreePattern
 	 * regardless of the reason for the failure.
 	 */
 
-    public List<ParseTreeMatch> FindAll(ParseTree tree, String xpath)
+    public List<ParseTreeMatch> FindAll(ParseTree tree, string xpath)
     {
         var subtrees = XPath.findAll(tree, xpath, matcher.Parser);
         List<ParseTreeMatch> matches = new();

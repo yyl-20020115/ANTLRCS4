@@ -100,8 +100,8 @@ public class ListTokenSource : TokenSource
             {
                 // have to calculate the result from the line/column of the previous
                 // token, along with the text of the token.
-                Token lastToken = tokens[(tokens.Count - 1)];
-                String tokenText = lastToken.Text;
+                var lastToken = tokens[(tokens.Count - 1)];
+                var tokenText = lastToken.Text;
                 if (tokenText != null)
                 {
                     int lastNewLine = tokenText.LastIndexOf('\n');
@@ -177,10 +177,10 @@ public class ListTokenSource : TokenSource
             {
                 // have to calculate the result from the line/column of the previous
                 // token, along with the text of the token.
-                Token lastToken = tokens[(tokens.Count - 1)];
+                var lastToken = tokens[(tokens.Count - 1)];
                 int line = lastToken.Line;
 
-                String tokenText = lastToken.Text;
+                var tokenText = lastToken.Text;
                 if (tokenText != null)
                 {
                     for (int i = 0; i < tokenText.Length; i++)

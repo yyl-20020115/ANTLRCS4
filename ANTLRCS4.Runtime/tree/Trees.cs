@@ -22,7 +22,7 @@ public static class Trees
 	 */
     public static string ToStringTree(Tree t)
     {
-        return ToStringTree(t, (List<String>)null);
+        return ToStringTree(t, (List<string>)null);
     }
     public static string ToStringTree(Tree t, TreeTextProvider nodeTextProvider)
     {
@@ -89,7 +89,7 @@ public static class Trees
             if (t is RuleContext context)
             {
                 int ruleIndex = context.CurrentRuleContext.RuleIndex;
-                string ruleName = ruleNames[(ruleIndex)];
+                var ruleName = ruleNames[(ruleIndex)];
                 int altNumber = context.AltNumber;
                 if (altNumber != ATN.INVALID_ALT_NUMBER)
                 {

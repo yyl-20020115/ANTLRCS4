@@ -31,8 +31,6 @@ namespace org.antlr.runtime.tree;
 public class RewriteEmptyStreamException : RewriteCardinalityException
 {
 
-    public RewriteEmptyStreamException(String elementDescription)
-        : base(elementDescription)
-    {
-    }
+    public RewriteEmptyStreamException(string elementDescription)
+        : base(elementDescription) { }
 }

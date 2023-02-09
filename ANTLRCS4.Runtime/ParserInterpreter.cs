@@ -27,15 +27,15 @@ namespace org.antlr.v4.runtime;
  */
 public class ParserInterpreter : Parser
 {
-    protected readonly String grammarFileName;
+    protected readonly string grammarFileName;
     protected readonly ATN atn;
 
     protected readonly DFA[] decisionToDFA; // not shared like it is for generated parsers
     protected readonly PredictionContextCache sharedContextCache = new PredictionContextCache();
 
     //@Deprecated
-    protected readonly String[] tokenNames;
-    protected readonly String[] ruleNames;
+    protected readonly string[] tokenNames;
+    protected readonly string[] ruleNames;
 
     private readonly Vocabulary vocabulary;
 
@@ -73,23 +73,23 @@ public class ParserInterpreter : Parser
     protected InterpreterRuleContext rootContext;
 
     /**
-	 * @deprecated Use {@link #ParserInterpreter(String, Vocabulary, Collection, ATN, TokenStream)} instead.
+	 * @deprecated Use {@link #ParserInterpreter(string, Vocabulary, Collection, ATN, TokenStream)} instead.
 	 */
     //@Deprecated
-    public ParserInterpreter(String grammarFileName, ICollection<String> tokenNames,
-                             ICollection<String> ruleNames, ATN atn, TokenStream input) : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, atn, input)
+    public ParserInterpreter(string grammarFileName, ICollection<string> tokenNames,
+                             ICollection<string> ruleNames, ATN atn, TokenStream input) : this(grammarFileName, VocabularyImpl.FromTokenNames(tokenNames.ToArray()), ruleNames, atn, input)
     {
         ;
     }
 
-    public ParserInterpreter(String grammarFileName, Vocabulary vocabulary,
-                             ICollection<String> ruleNames, ATN atn, TokenStream input)
+    public ParserInterpreter(string grammarFileName, Vocabulary vocabulary,
+                             ICollection<string> ruleNames, ATN atn, TokenStream input)
         : base(input)
     {
         ;
         this.grammarFileName = grammarFileName;
         this.atn = atn;
-        this.tokenNames = new String[atn.maxTokenType];
+        this.tokenNames = new string[atn.maxTokenType];
         for (int i = 0; i < tokenNames.Length; i++)
         {
             tokenNames[i] = vocabulary.GetDisplayName(i);
@@ -121,21 +121,15 @@ public class ParserInterpreter : Parser
         overrideDecisionRoot = null;
     }
 
-    //@Override
     public override ATN ATN => atn;
 
-    //@Override
-    //@Deprecated
-    public override String[] TokenNames => tokenNames;
+    public override string[] TokenNames => tokenNames;
 
-    //@Override
     public virtual Vocabulary Vocabulary => vocabulary;
 
-    //@Override
-    public override String[] RuleNames => ruleNames;
+    public override string[] RuleNames => ruleNames;
 
-    //@Override
-    public override String GrammarFileName => grammarFileName;
+    public override string GrammarFileName => grammarFileName;
 
     /** Begin parsing at startRuleIndex */
     public ParserRuleContext Parse(int startRuleIndex)

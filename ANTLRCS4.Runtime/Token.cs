@@ -69,7 +69,7 @@ public interface Token
     /**
 	 * Get the text of the token.
 	 */
-    String Text { get; set; }
+    string Text { get; set; }
 
     /** Get the token type of the token */
     int Type { get; set; }

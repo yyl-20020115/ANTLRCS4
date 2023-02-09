@@ -173,15 +173,15 @@ public interface TreeAdaptor
 	 *
 	 *  This should invoke createToken(Token).
 	 */
-    public object Create(int tokenType, Token fromToken, String text);
+    public object Create(int tokenType, Token fromToken, string text);
 
     /** Create a new node derived from a token, with a new token type.
 	 *  This is invoked from an imaginary node ref on right side of a
 	 *  rewrite rule as IMAG["IMAG"].
 	 *
-	 *  This should invoke createToken(int,String).
+	 *  This should invoke createToken(int,string).
 	 */
-    public Object Create(int tokenType, String text);
+    public Object Create(int tokenType, string text);
 
 
     // C o n t e n t
@@ -192,10 +192,10 @@ public interface TreeAdaptor
     /** Node constructors can set the type of a node */
     public void SetType(Object t, int type);
 
-    public String GetText(Object t);
+    public string GetText(Object t);
 
     /** Node constructors can set the text of a node */
-    public void SetText(Object t, String text);
+    public void SetText(Object t, string text);
 
     /** Return the token object from which this node was created.
 	 *  Currently used only for printing an error message.

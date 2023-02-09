@@ -37,7 +37,7 @@ public interface TreeNodeStream : IntStream
 	 *  If you don't want to buffer up nodes, then this method makes no
 	 *  sense for you.
 	 */
-    public Object get(int i);
+    public object Get(int i);
 
     /**
      * Get tree node at current input pointer + {@code k} ahead where
@@ -51,12 +51,12 @@ public interface TreeNodeStream : IntStream
      * instead of a {@link Token}. Makes code generation identical for both
      * parser and tree grammars.</p>
      */
-    public Object LT(int k);
+    public object LT(int k);
 
     /** Where is this stream pulling nodes from?  This is not the name, but
      *  the object that provides node objects.
      */
-    public Object getTreeSource();
+    public object GetTreeSource();
 
     /**
      * If the tree associated with this stream was created from a
@@ -65,12 +65,12 @@ public interface TreeNodeStream : IntStream
      * parser rule {@code $text} attribute or {@code output=template} and
      * {@code rewrite=true} options.
      */
-    public TokenStream getTokenStream();
+    public TokenStream GetTokenStream();
 
     /** What adaptor can tell me how to interpret/navigate nodes and
      *  trees.  E.g., get text of a node.
      */
-    public TreeAdaptor getTreeAdaptor();
+    public TreeAdaptor GetTreeAdaptor();
 
     /**
      * As we flatten the tree, we use {@link Token#UP}, {@link Token#DOWN} nodes
@@ -79,7 +79,7 @@ public interface TreeNodeStream : IntStream
      * slow and a waste of memory to create unique navigation nodes. Default
      * should be {@code false}.
      */
-    public void setUniqueNavigationNodes(bool uniqueNavigationNodes);
+    public void SetUniqueNavigationNodes(bool uniqueNavigationNodes);
 
     /** Reset the tree node stream in such a way that it acts like
      *  a freshly constructed stream.
@@ -93,7 +93,7 @@ public interface TreeNodeStream : IntStream
      * {@code null} or {@code ""} too, but users should not access
      * {@code $ruleLabel.text} in an action of course in that case.
      */
-    public String toString(Object start, Object stop);
+    public string ToString(Object start, Object stop);
 
     // REWRITING TREES (used by tree parser)
 
@@ -109,6 +109,6 @@ public interface TreeNodeStream : IntStream
      * overall tree. Can't replace whatever points to the parent externally. Do
      * nothing.</p>
      */
-    public void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
     void Rewind(int nvaeMark);
 }

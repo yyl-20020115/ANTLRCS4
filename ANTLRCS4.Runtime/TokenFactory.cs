@@ -22,10 +22,10 @@ public interface TokenFactory<Symbol> : TokenFactory where Symbol : Token
 	 *  error handling strategy. If text!=null, than the start and stop positions
 	 *  are wiped to -1 in the text override is set in the CommonToken.
 	 */
-    Symbol Create(Pair<TokenSource, CharStream> source, int type, String text,
+    Symbol Create(Pair<TokenSource, CharStream> source, int type, string text,
                   int channel, int start, int stop,
                   int line, int charPositionInLine);
 
     /** Generically useful */
-    Symbol Create(int type, String text);
+    Symbol Create(int type, string text);
 }

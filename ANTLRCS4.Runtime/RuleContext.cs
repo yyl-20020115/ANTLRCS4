@@ -190,7 +190,7 @@ public class RuleContext : RuleNode
     /** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 */
-    public virtual string ToStringTree(List<String> ruleNames)
+    public virtual string ToStringTree(List<string> ruleNames)
     {
         return Trees.ToStringTree(this, ruleNames);
     }
@@ -198,13 +198,13 @@ public class RuleContext : RuleNode
     //@Override
     public virtual string ToStringTree()
     {
-        return ToStringTree((List<String>)null);
+        return ToStringTree((List<string>)null);
     }
 
     //@Override
     public override string ToString()
     {
-        return ToString((List<String>)null, (RuleContext)null);
+        return ToString((List<string>)null, (RuleContext)null);
     }
 
     public virtual string ToString(Recognizer recog)
@@ -225,7 +225,7 @@ public class RuleContext : RuleNode
         return ToString(ruleNamesList, stop);
     }
 
-    public virtual string ToString(List<String> ruleNames, RuleContext stop)
+    public virtual string ToString(List<string> ruleNames, RuleContext stop)
     {
         var buffer = new StringBuilder();
         RuleContext p = this;
@@ -242,7 +242,7 @@ public class RuleContext : RuleNode
             else
             {
                 int ruleIndex = p.RuleIndex;
-                String ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] :
+                var ruleName = ruleIndex >= 0 && ruleIndex < ruleNames.Count ? ruleNames[ruleIndex] :
                     (ruleIndex.ToString());
                 buffer.Append(ruleName);
             }

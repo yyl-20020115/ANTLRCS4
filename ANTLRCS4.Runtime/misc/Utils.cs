@@ -112,7 +112,7 @@ public static class RuntimeUtils
     public static string Join<T>(IEnumerable<T> values, string separator) 
         => string.Join(separator, values.ToArray());
 
-    public static string Join<T>(T[] array, String separator)
+    public static string Join<T>(T[] array, string separator)
     {
         var builder = new StringBuilder();
         for (int i = 0; i < array.Length; i++)
@@ -154,12 +154,12 @@ public static class RuntimeUtils
         return buffer.ToString();
     }
 
-    public static void WriteFile(string fileName, String content)
+    public static void WriteFile(string fileName, string content)
     {
         WriteFile(fileName, content, null);
     }
 
-    public static void WriteFile(string fileName, String content, String encoding)
+    public static void WriteFile(string fileName, string content, string encoding)
     {
         File.WriteAllText(fileName, content, Encoding.GetEncoding(encoding));
     }
@@ -170,7 +170,7 @@ public static class RuntimeUtils
     }
 
 
-    public static char[] ReadFile(String fileName, Encoding encoding)
+    public static char[] ReadFile(string fileName, Encoding encoding)
     {
         return File.ReadAllText(fileName, encoding).ToArray();
     }
@@ -244,7 +244,7 @@ public static class RuntimeUtils
     }
 
     /** @since 4.6 */
-    public static string Sequence(int n, String s)
+    public static string Sequence(int n, string s)
     {
         var buffer = new StringBuilder();
         for (int sp = 1; sp <= n; sp++) buffer.Append(s);

@@ -113,7 +113,7 @@ public class ParseTreeMatch
 	 *
 	 * <p>The map includes special entries corresponding to the names of rules and
 	 * tokens referenced in tags in the original pattern. For additional
-	 * information, see the description of {@link #getAll(String)}.</p>
+	 * information, see the description of {@link #getAll(string)}.</p>
 	 *
 	 * @return A mapping from labels to parse tree nodes. If the parse tree
 	 * pattern did not contain any rule or token tags, this map will be empty.

@@ -13,7 +13,7 @@ namespace org.antlr.v4.runtime.atn;
  * algorithm is unable to identify an alternative which would lead to a
  * successful parse.
  *
- * @see Parser#notifyErrorListeners(Token, String, RecognitionException)
+ * @see Parser#notifyErrorListeners(Token, string, RecognitionException)
  * @see ANTLRErrorListener#syntaxError
  *
  * @since 4.3

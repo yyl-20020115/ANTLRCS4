@@ -133,24 +133,24 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     public override bool isEOF(Object o) { return adaptor.GetType(o) == Token.EOF; }
 
     //@Override
-    public void setUniqueNavigationNodes(bool uniqueNavigationNodes) { }
+    public void SetUniqueNavigationNodes(bool uniqueNavigationNodes) { }
     //@Override
-    public Object getTreeSource() { return root; }
+    public Object GetTreeSource() { return root; }
 
     //@Override
-    public string SourceName => getTokenStream().SourceName;
+    public string SourceName => GetTokenStream().SourceName;
     //@Override
-    public TokenStream getTokenStream() { return tokens; }
+    public TokenStream GetTokenStream() { return tokens; }
 
     public void setTokenStream(TokenStream tokens) { this.tokens = tokens; }
 
     //@Override
-    public TreeAdaptor getTreeAdaptor() { return adaptor; }
+    public TreeAdaptor GetTreeAdaptor() { return adaptor; }
 
     public void setTreeAdaptor(TreeAdaptor adaptor) { this.adaptor = adaptor; }
 
     //@Override
-    public Object get(int i)
+    public Object Get(int i)
     {
         throw new UnsupportedOperationException("Absolute node indexes are meaningless in an unbuffered stream");
     }
@@ -234,7 +234,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     // TREE REWRITE INTERFACE
 
     //@Override
-    public void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t)
+    public void ReplaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t)
     {
         if (parent != null)
         {
@@ -243,7 +243,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public string toString(Object start, Object stop)
+    public string ToString(Object start, Object stop)
     {
         // we'll have to walk from start to stop in tree; we're not keeping
         // a complete node stream buffer

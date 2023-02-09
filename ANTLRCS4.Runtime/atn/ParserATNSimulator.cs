@@ -2063,8 +2063,8 @@ public class ParserATNSimulator : ATNSimulator
             return "EOF";
         }
 
-        Vocabulary vocabulary = parser != null ? parser.Vocabulary : VocabularyImpl.EMPTY_VOCABULARY;
-        String displayName = vocabulary.GetDisplayName(t);
+        var vocabulary = parser != null ? parser.Vocabulary : VocabularyImpl.EMPTY_VOCABULARY;
+        var displayName = vocabulary.GetDisplayName(t);
         if (displayName.Equals((t.ToString())))
         {
             return displayName;

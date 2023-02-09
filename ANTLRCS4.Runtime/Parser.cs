@@ -507,10 +507,10 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 	 * ParseTree t = parser.expr();
 	 * ParseTreePattern p = parser.compileParseTreePattern("&lt;ID&gt;+0", MyParser.RULE_expr);
 	 * ParseTreeMatch m = p.match(t);
-	 * String id = m.get("ID");
+	 * string id = m.get("ID");
 	 * </pre>
 	 */
-    public ParseTreePattern CompileParseTreePattern(String pattern, int patternRuleIndex)
+    public ParseTreePattern CompileParseTreePattern(string pattern, int patternRuleIndex)
     {
         if (TokenStream != null)
         {
@@ -524,7 +524,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     }
 
     /**
-	 * The same as {@link #compileParseTreePattern(String, int)} but specify a
+	 * The same as {@link #compileParseTreePattern(string, int)} but specify a
 	 * {@link Lexer} rather than trying to deduce it from this parser.
 	 */
     public ParseTreePattern CompileParseTreePattern(string pattern, int patternRuleIndex,
@@ -560,12 +560,12 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         return input.LT(1);
     }
 
-    public void NotifyErrorListeners(String msg)
+    public void NotifyErrorListeners(string msg)
     {
         NotifyErrorListeners(GetCurrentToken(), msg, null);
     }
 
-    public void NotifyErrorListeners(Token offendingToken, String msg,
+    public void NotifyErrorListeners(Token offendingToken, string msg,
                                      RecognitionException e)
     {
         _syntaxErrors++;
@@ -811,7 +811,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         return precedence >= _precedenceStack.Peek();
     }
 
-    public bool InContext(String context)
+    public bool InContext(string context)
     {
         // TODO: useful in parser?
         return false;
@@ -889,7 +889,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     public int GetRuleIndex(string ruleName) => GetRuleIndexMap().TryGetValue(ruleName, out var ruleIndex) ? ruleIndex : -1;
 
     public ParserRuleContext RuleContext => _ctx;
-    /** Return List&lt;String&gt; of the rule names in your parser instance
+    /** Return List&lt;string&gt; of the rule names in your parser instance
 	 *  leading up to a call to the current rule.  You could override if
 	 *  you want more details such as the file/line info of where
 	 *  in the ATN a rule is invoked.
@@ -917,7 +917,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     }
 
     /** For debugging and other purposes. */
-    public List<String> getDFAStrings()
+    public List<string> GetDFAStrings()
     {
         lock (_interp.decisionToDFA)
         {

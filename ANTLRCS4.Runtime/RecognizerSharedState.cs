@@ -121,7 +121,7 @@ public class RecognizerSharedState
     /** You can set the text for the current token to override what is in
 	 *  the input char buffer.  Use setText() or can set this instance var.
  	 */
-    public String text;
+    public string text;
 
     public RecognizerSharedState() { }
 

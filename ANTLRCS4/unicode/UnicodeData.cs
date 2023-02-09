@@ -94571,7 +94571,7 @@ public abstract class UnicodeData
         AddPropertyAliases();
     }
 
-    private static String normalize(String propertyCodeOrAlias)
+    private static string normalize(string propertyCodeOrAlias)
     {
         return propertyCodeOrAlias.ToLower().Replace('-', '_');
     }
@@ -94580,9 +94580,9 @@ public abstract class UnicodeData
      * Given a Unicode property (general category code, binary property name, or script name),
      * returns the {@link IntervalSet} of Unicode code point ranges which have that property.
      */
-    public static IntervalSet getPropertyCodePoints(String propertyCodeOrAlias)
+    public static IntervalSet getPropertyCodePoints(string propertyCodeOrAlias)
     {
-        String normalizedPropertyCodeOrAlias = normalize(propertyCodeOrAlias);
+        var normalizedPropertyCodeOrAlias = normalize(propertyCodeOrAlias);
         if (!propertyCodePointRanges.TryGetValue(normalizedPropertyCodeOrAlias,out var result))
         {
             if (propertyAliases.TryGetValue(normalizedPropertyCodeOrAlias,out var propertyCode))

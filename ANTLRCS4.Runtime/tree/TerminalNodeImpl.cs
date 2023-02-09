@@ -9,17 +9,18 @@ using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.tree;
 
-public class TerminalNodeImpl : TerminalNode {
-	public Token symbol;
-	public ParseTree parent;
+public class TerminalNodeImpl : TerminalNode
+{
+    public Token symbol;
+    public ParseTree parent;
 
-	public TerminalNodeImpl(Token symbol) {	this.symbol = symbol;	}
+    public TerminalNodeImpl(Token symbol) { this.symbol = symbol; }
 
-	//@Override
-	public ParseTree GetChild(int i) {return null;}
+    //@Override
+    public ParseTree GetChild(int i) { return null; }
 
-	//@Override
-	public Token getSymbol() {return symbol;}
+    //@Override
+    public Token getSymbol() { return symbol; }
 
     //@Override
     public ParseTree Parent => parent;
@@ -41,28 +42,28 @@ public class TerminalNodeImpl : TerminalNode {
 
     //@Override
     public int ChildCount => 0;
-    //@Override
-    public  T Accept<T>(ParseTreeVisitor<T> visitor) {
-		return visitor.VisitTerminal(this);
+    public T Accept<T>(ParseTreeVisitor<T> visitor)
+    {
+        return visitor.VisitTerminal(this);
+    }
+
+    public string Text => symbol.Text;
+    public string ToStringTree(Parser parser)
+    {
+        return ToString();
+    }
+
+    public override string ToString()
+    {
+        if (symbol.Type == Token.EOF) return "<EOF>";
+        return symbol.Text;
     }
 
     //@Override
-    public String Text => symbol.Text;
-    //@Override
-    public String ToStringTree(Parser parser) {
-		return ToString();
-	}
-
-    //@Override
-    public override String ToString() {
-			if ( symbol.Type == Token.EOF ) return "<EOF>";
-			return symbol.Text;
-	}
-
-    //@Override
-    public String ToStringTree() {
-		return ToString();
-	}
+    public string ToStringTree()
+    {
+        return ToString();
+    }
 
     Tree Tree.Parent { get => this.Parent; set { } }
 
@@ -70,7 +71,7 @@ public class TerminalNodeImpl : TerminalNode {
 
     Tree Tree.GetChild(int i)
     {
-		return this.GetChild(i);	
+        return this.GetChild(i);
     }
 
     public int Type => throw new NotImplementedException();

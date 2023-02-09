@@ -522,7 +522,7 @@ public class ATNDeserializer
         CheckCondition(condition, null);
     }
 
-    protected static void CheckCondition(bool condition, String message)
+    protected static void CheckCondition(bool condition, string message)
     {
         if (!condition)
         {

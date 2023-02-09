@@ -53,8 +53,8 @@ public class TreeRewriter : TreeParser
     public TreeRewriter(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
-        originalAdaptor = input.getTreeAdaptor();
-        originalTokenStream = input.getTokenStream();
+        originalAdaptor = input.GetTreeAdaptor();
+        originalTokenStream = input.GetTokenStream();
     }
 
     public Object applyOnce(Object t, fptr whichRule)

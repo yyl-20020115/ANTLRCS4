@@ -36,7 +36,7 @@ public class RewriteRuleTokenStream : RewriteRuleElementStream
 {
 
 
-    public RewriteRuleTokenStream(TreeAdaptor adaptor, String elementDescription)
+    public RewriteRuleTokenStream(TreeAdaptor adaptor, string elementDescription)
         : base(adaptor, elementDescription)
     {
     }

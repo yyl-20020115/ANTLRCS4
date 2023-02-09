@@ -157,5 +157,5 @@ public interface IntSet
     /**
 	 * {@inheritDoc}
 	 */
-    String ToString();
+    string ToString();
 }

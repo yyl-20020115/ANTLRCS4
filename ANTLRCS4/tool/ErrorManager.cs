@@ -119,7 +119,7 @@ public class ErrorManager
         return format.GetInstanceOf("wantsSingleLineMessage").Render().Equals("true");
     }
 
-    public void Info(string msg) => tool.info(msg);
+    public void Info(string msg) => tool.Info(msg);
 
     public void SyntaxError(ErrorType etype,
                                    string fileName,
@@ -182,7 +182,7 @@ public class ErrorManager
     {
         errors++;
         var msg = new LeftRecursionCyclesMessage(fileName, cycles);
-        tool.error(msg);
+        tool.Error(msg);
     }
 
     public virtual int NumErrors => errors;
@@ -216,7 +216,7 @@ public class ErrorManager
         if (etype.severity == ErrorSeverity.WARNING_ONE_OFF)
         {
             warnings++;
-            tool.warning(msg);
+            tool.Warning(msg);
             goto exit_me;
         }
         if (etype.severity == ErrorSeverity.ERROR_ONE_OFF)
@@ -227,7 +227,7 @@ public class ErrorManager
         {
             if (errorTypes.Contains(etype)) goto exit_me;
             errors++;
-            tool.error(msg);
+            tool.Error(msg);
             goto exit_me;
         }
     exit_me:

@@ -35,7 +35,7 @@ namespace org.antlr.runtime.tree;
 public class RewriteRuleNodeStream : RewriteRuleElementStream
 {
 
-    public RewriteRuleNodeStream(TreeAdaptor adaptor, String elementDescription)
+    public RewriteRuleNodeStream(TreeAdaptor adaptor, string elementDescription)
         : base(adaptor, elementDescription)
     {
 
@@ -43,7 +43,7 @@ public class RewriteRuleNodeStream : RewriteRuleElementStream
 
     /** Create a stream with one element */
     public RewriteRuleNodeStream(TreeAdaptor adaptor,
-                                 String elementDescription,
+                                 string elementDescription,
                                  Object oneElement)
         : base(adaptor, elementDescription, oneElement)
     {
@@ -51,7 +51,7 @@ public class RewriteRuleNodeStream : RewriteRuleElementStream
 
     /** Create a stream, but feed off an existing list */
     public RewriteRuleNodeStream(TreeAdaptor adaptor,
-                                 String elementDescription,
+                                 string elementDescription,
                                  List<Object> elements)
         : base(adaptor, elementDescription, elements)
     {

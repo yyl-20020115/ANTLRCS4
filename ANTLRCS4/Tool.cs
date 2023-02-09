@@ -124,7 +124,7 @@ public class Tool
     public static void Main(string[] args)
     {
         var antlr = new Tool(args);
-        if (args.Length == 0) { antlr.Help(); antlr.exit(0); }
+        if (args.Length == 0) { antlr.Help(); Exit(0); }
 
         try
         {
@@ -149,12 +149,12 @@ public class Tool
 
         if (antlr.ErrMgr.NumErrors > 0)
         {
-            antlr.exit(1);
+            Exit(1);
         }
-        antlr.exit(0);
+        Exit(0);
     }
 
-    public Tool(params String[] args)
+    public Tool(params string[] args)
     {
         this.args = args;
         ErrMgr = new ErrorManager(this);
@@ -427,15 +427,14 @@ public class Tool
 
         public bool badref = false;
 
-        public Dictionary<String, RuleAST> ruleToAST;
+        public Dictionary<string, RuleAST> ruleToAST;
 
-        public UndefChecker(Tool tool, Dictionary<String, RuleAST> ruleToAST)
+        public UndefChecker(Tool tool, Dictionary<string, RuleAST> ruleToAST)
         {
             this.tool = tool;
             this.ruleToAST = ruleToAST;
         }
-        // @Override
-        public void TokenRef(TerminalAST @ref)
+        public override void TokenRef(TerminalAST @ref)
         {
             if ("EOF".Equals(@ref.Text))
             {
@@ -446,8 +445,7 @@ public class Tool
             if (tool.gx.IsLexer) RuleRef(@ref, null);
         }
 
-        //@Override
-        public void RuleRef(GrammarAST @ref, ActionAST arg)
+        public override void RuleRef(GrammarAST @ref, ActionAST arg)
         {
             var ruleAST = ruleToAST.TryGetValue(@ref.Text, out var ret) ? ret : null;
             var fileName = @ref.Token.InputStream.SourceName;
@@ -465,7 +463,6 @@ public class Tool
                                     fileName, @ref.token, @ref.Text);
             }
         }
-        //@Override
         public override ErrorManager ErrorManager => this.tool.ErrMgr;
     }
 
@@ -515,7 +512,7 @@ public class Tool
         return redefinition || chk.badref;
     }
 
-    public List<GrammarRootAST> SortGrammarByTokenVocab(List<String> fileNames)
+    public List<GrammarRootAST> SortGrammarByTokenVocab(List<string> fileNames)
     {
         //		Console.WriteLine(fileNames);
         Graph<string> g = new ();
@@ -577,7 +574,7 @@ public class Tool
     }
 
     /** Manually get option node from tree; return null if no defined. */
-    public static GrammarAST FindOptionValueAST(GrammarRootAST root, String option)
+    public static GrammarAST FindOptionValueAST(GrammarRootAST root, string option)
     {
         var options = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.OPTIONS);
         if (options != null && options.ChildCount > 0)
@@ -611,7 +608,7 @@ public class Tool
         return g;
     }
 
-    public GrammarRootAST ParseGrammar(String fileName)
+    public GrammarRootAST ParseGrammar(string fileName)
     {
         try
         {
@@ -637,7 +634,7 @@ public class Tool
 	 *  grammar created while processing a combined grammar, use
 	 *  getImplicitLexer() on returned grammar.
 	 */
-    public Grammar LoadGrammar(String fileName)
+    public Grammar LoadGrammar(string fileName)
     {
         var grammarRootAST = ParseGrammar(fileName);
         var g = CreateGrammar(grammarRootAST);
@@ -828,9 +825,9 @@ public class Tool
 	 *  If no -o is specified, then just write to the directory where the
 	 *  grammar file was found.
 	 *
-	 *  If outputDirectory==null then write a String.
+	 *  If outputDirectory==null then write a string.
 	 */
-    public TextWriter GetOutputFileWriter(Grammar g, String fileName)
+    public TextWriter GetOutputFileWriter(Grammar g, string fileName)
     {
         if (outputDirectory == null)
         {
@@ -953,7 +950,7 @@ public class Tool
     public string NewGetOutputDirectory(string fileNameWithPath)
     {
         string outputDir;
-        String fileDirectory;
+        string fileDirectory;
 
         if (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1)
         {
@@ -1005,12 +1002,12 @@ public class Tool
 
     public void Help()
     {
-        info("ANTLR Parser Generator  Version " + Tool.VERSION);
+        Info("ANTLR Parser Generator  Version " + Tool.VERSION);
         foreach (var o in optionDefs)
         {
             var name = o.name + (o.argType != OptionArgType.NONE ? " ___" : "");
-            var s = $"{name} {o.description}";// String.format(" %-19s %s", name, o.description);
-            info(s);
+            var s = $"{name} {o.description}";// string.format(" %-19s %s", name, o.description);
+            Info(s);
         }
     }
 
@@ -1027,7 +1024,7 @@ public class Tool
     public void removeListeners() { listeners.Clear(); }
     public List<ANTLRToolListener> getListeners() { return listeners; }
 
-    public void info(String msg)
+    public void Info(string msg)
     {
         if (listeners.Count == 0)
         {
@@ -1036,7 +1033,7 @@ public class Tool
         }
         foreach (ANTLRToolListener l in listeners) l.Info(msg);
     }
-    public void error(ANTLRMessage msg)
+    public void Error(ANTLRMessage msg)
     {
         if (listeners.Count == 0)
         {
@@ -1045,7 +1042,7 @@ public class Tool
         }
         foreach (ANTLRToolListener l in listeners) l.Error(msg);
     }
-    public void warning(ANTLRMessage msg)
+    public void Warning(ANTLRMessage msg)
     {
         if (listeners.Count == 0)
         {
@@ -1053,7 +1050,7 @@ public class Tool
         }
         else
         {
-            foreach (ANTLRToolListener l in listeners) l.Warning(msg);
+            foreach (var l in listeners) l.Warning(msg);
         }
 
         if (warnings_are_errors)
@@ -1062,13 +1059,13 @@ public class Tool
         }
     }
 
-    public void version()
+    public void Version()
     {
-        info("ANTLR Parser Generator  Version " + VERSION);
+        Info("ANTLR Parser Generator  Version " + VERSION);
     }
 
-    public void exit(int e) { Environment.Exit(e); }
+    public static void Exit(int e) => Environment.Exit(e);
 
-    public void panic() { throw new Error("ANTLR panic"); }
+    public static void Panic() => throw new Error("ANTLR panic");
 
 }

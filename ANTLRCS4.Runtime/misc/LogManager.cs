@@ -56,16 +56,16 @@ public class LogManager
         records.Add(r);
     }
 
-    public void Log(String msg) { Log(null, msg); }
+    public void Log(string msg) { Log(null, msg); }
 
-    public void Save(String filename)
+    public void Save(string filename)
     {
         File.WriteAllText(filename, ToString());
     }
 
     public string Save()
     {
-        //String dir = System.getProperty("java.io.tmpdir");
+        //string dir = System.getProperty("java.io.tmpdir");
         var dir = ".";
         var defaultFilename =
             dir + "/antlr-" +
@@ -89,7 +89,7 @@ public class LogManager
         return buffer.ToString();
     }
 
-    public static void TestMain(String[] args)
+    public static void TestMain(string[] args)
     {
         var mgr = new LogManager();
         mgr.Log("atn", "test msg");
