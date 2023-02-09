@@ -18,17 +18,12 @@ namespace org.antlr.v4.runtime.atn;
  */
 public class ATNDeserializer
 {
-    public static readonly int SERIALIZED_VERSION = 4;
+    public const int SERIALIZED_VERSION = 4;
     private readonly ATNDeserializationOptions deserializationOptions;
     public ATNDeserializer()
-        : this(ATNDeserializationOptions.GetDefaultOptions())
-    {
-    }
+        : this(ATNDeserializationOptions.DefaultOptions) { }
 
-    public ATNDeserializer(ATNDeserializationOptions deserializationOptions)
-    {
-        this.deserializationOptions = deserializationOptions ?? ATNDeserializationOptions.GetDefaultOptions();
-    }
+    public ATNDeserializer(ATNDeserializationOptions deserializationOptions) => this.deserializationOptions = deserializationOptions ?? ATNDeserializationOptions.DefaultOptions;
 
     public ATN Deserialize(char[] data)
     {
@@ -343,11 +338,7 @@ public class ATNDeserializer
                 {
                     foreach (var transition in state.transitions)
                     {
-                        if (transition == excludeTransition)
-                        {
-                            continue;
-                        }
-
+                        if (transition == excludeTransition) continue;
                         if (transition.target == endState)
                         {
                             transition.target = bypassStop;
@@ -419,10 +410,7 @@ public class ATNDeserializer
     {
         foreach (var state in atn.states)
         {
-            if (state is not StarLoopEntryState s)
-            {
-                continue;
-            }
+            if (state is not StarLoopEntryState s) continue;
 
             /* We analyze the ATN to determine if this ATN decision state is the
 			 * decision for the closure block that determines whether a
@@ -447,17 +435,12 @@ public class ATNDeserializer
         // verify assumptions
         foreach (var state in atn.states)
         {
-            if (state == null)
-            {
-                continue;
-            }
+            if (state == null) continue;
 
             CheckCondition(state.OnlyHasEpsilonTransitions() || state.NumberOfTransitions <= 1);
 
             if (state is PlusBlockStartState state1)
-            {
                 CheckCondition(state1.loopBackState != null);
-            }
 
             if (state is StarLoopEntryState starLoopEntryState)
             {
@@ -517,33 +500,21 @@ public class ATNDeserializer
         }
     }
 
-    protected void CheckCondition(bool condition)
+    protected static void CheckCondition(bool condition)
     {
         CheckCondition(condition, null);
     }
 
     protected static void CheckCondition(bool condition, string message)
     {
-        if (!condition)
-        {
-            throw new IllegalStateException(message);
-        }
+        if (!condition) throw new IllegalStateException(message);
     }
 
-    protected static int ToInt(char c)
-    {
-        return c;
-    }
+    protected static int ToInt(char c) => c;
 
-    protected static int ToInt32(char[] data, int offset)
-    {
-        return (int)data[offset] | ((int)data[offset + 1] << 16);
-    }
+    protected static int ToInt32(char[] data, int offset) => (int)data[offset] | ((int)data[offset + 1] << 16);
 
-    protected static int ToInt32(int[] data, int offset)
-    {
-        return data[offset] | (data[offset + 1] << 16);
-    }
+    protected static int ToInt32(int[] data, int offset) => data[offset] | (data[offset + 1] << 16);
 
     protected static Transition EdgeFactory(ATN atn,
                                          int type, int src, int trg,
@@ -660,19 +631,19 @@ public class ATNDeserializer
     public static int[] DecodeIntsEncodedAs16BitWords(char[] data16, bool trimToSize)
     {
         // will be strictly smaller but we waste bit of space to avoid copying during initialization of parsers
-        int[] data = new int[data16.Length];
+        var data = new int[data16.Length];
         int i = 0;
         int i2 = 0;
         while (i < data16.Length)
         {
-            char v = data16[i++];
+            var v = data16[i++];
             if ((v & 0x8000) == 0)
             { // hi bit not set? Implies 1-word value
                 data[i2++] = v; // 7 bit int
             }
             else
             { // hi bit set. Implies 2-word value
-                char vnext = data16[i++];
+                var vnext = data16[i++];
                 if (v == 0xFFFF && vnext == 0xFFFF)
                 { // is it -1?
                     data[i2++] = -1;
@@ -683,10 +654,6 @@ public class ATNDeserializer
                 }
             }
         }
-        if (trimToSize)
-        {
-            return Arrays.CopyOf(data, i2);
-        }
-        return data;
+        return trimToSize ? Arrays.CopyOf(data, i2) : data;
     }
 }

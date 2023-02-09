@@ -124,11 +124,9 @@ public abstract class ATNState
 
     public override int GetHashCode() => stateNumber;
 
-    public override bool Equals(object? o)
-    {
+    public override bool Equals(object? o) =>
         // are these states same object?
-        return o is ATNState state && stateNumber == state.stateNumber;
-    }
+        o is ATNState state && stateNumber == state.stateNumber;
 
     public bool IsNonGreedyExitState => false;
 
@@ -138,7 +136,8 @@ public abstract class ATNState
 
     public int NumberOfTransitions => transitions.Count;
 
-    public void AddTransition(Transition e) => AddTransition(transitions.Count, e);
+    public void AddTransition(Transition e) 
+        => AddTransition(transitions.Count, e);
 
     public void AddTransition(int index, Transition e)
     {

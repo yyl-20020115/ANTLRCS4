@@ -12,9 +12,7 @@ namespace org.antlr.v4.runtime.atn;
 public class NotSetTransition : SetTransition
 {
     public NotSetTransition(ATNState target, IntervalSet set)
-        : base(target, set)
-    {
-    }
+        : base(target, set) { }
 
     public override int SerializationType => NOT_SET;
 

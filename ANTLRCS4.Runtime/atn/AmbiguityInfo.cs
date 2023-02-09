@@ -40,7 +40,7 @@ namespace org.antlr.v4.runtime.atn;
 public class AmbiguityInfo : DecisionEventInfo
 {
     /** The set of alternative numbers for this decision event that lead to a valid parse. */
-    public BitSet ambigAlts;
+    public readonly BitSet ambigAlts;
 
     /**
 	 * Constructs a new instance of the {@link AmbiguityInfo} class with the
@@ -62,7 +62,9 @@ public class AmbiguityInfo : DecisionEventInfo
     public AmbiguityInfo(int decision,
                          ATNConfigSet configs,
                          BitSet ambigAlts,
-                         TokenStream input, int startIndex, int stopIndex,
+                         TokenStream input,
+						 int startIndex,
+						 int stopIndex,
                          bool fullCtx)
         : base(decision, configs, input, startIndex, stopIndex, fullCtx) => this.ambigAlts = ambigAlts;
 }

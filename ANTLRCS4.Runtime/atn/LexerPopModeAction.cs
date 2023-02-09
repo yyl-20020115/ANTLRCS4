@@ -59,8 +59,6 @@ public class LexerPopModeAction : LexerAction
         return MurmurHash.Finish(hash, 1);
     }
 
-    
-    //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public override bool Equals(object? obj) => obj == this;
 
     

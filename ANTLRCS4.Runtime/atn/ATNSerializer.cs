@@ -19,7 +19,6 @@ namespace org.antlr.v4.runtime.atn;
 public class ATNSerializer
 {
     public ATN atn;
-
     private readonly IntegerList data = new();
     /** Note that we use a LinkedHashMap as a set to mainintain insertion order while deduplicating
 	    entries with the same key. */
@@ -27,11 +26,9 @@ public class ATNSerializer
     private readonly IntegerList nonGreedyStates = new();
     private readonly IntegerList _precedenceStates = new();
 
-    public ATNSerializer(ATN atn)
-    {
+    public ATNSerializer(ATN atn) =>
         //assert atn.grammarType != null;
         this.atn = atn;
-    }
 
     /** Serialize state descriptors, edge descriptors, and decision&rarr;state map
 	 *  into list of ints.  Likely out of date, but keeping as it could be helpful:
@@ -66,8 +63,7 @@ public class ATNSerializer
         AddPrecedenceStates();
         AddRuleStatesAndLexerTokenTypes();
         AddModeStartStates();
-        Dictionary<IntervalSet, int> setIndices = null;
-        setIndices = AddSets();
+        var setIndices = AddSets();
         AddEdges(nedges, setIndices);
         AddDecisionStartStates();
         AddLexerActions();
@@ -78,7 +74,6 @@ public class ATNSerializer
     private void AddPreamble()
     {
         data.Add(ATNDeserializer.SERIALIZED_VERSION);
-
         // convert grammar type to ATN const to avoid dependence on ANTLRParser
         data.Add((int)atn.grammarType);
         data.Add(atn.maxTokenType);
@@ -152,9 +147,7 @@ public class ATNSerializer
         int ndecisions = atn.decisionToState.Count;
         data.Add(ndecisions);
         foreach (var decStartState in atn.decisionToState)
-        {
             data.Add(decStartState.stateNumber);
-        }
     }
 
     private void AddEdges(int nedges, Dictionary<IntervalSet, int> setIndices)
@@ -165,7 +158,6 @@ public class ATNSerializer
             // might be optimized away
             if (s == null) continue;
             if (s.StateType == ATNState.RULE_STOP) continue;
-
             for (int i = 0; i < s.NumberOfTransitions; i++)
             {
                 var t = s.Transition(i);
@@ -243,7 +235,7 @@ public class ATNSerializer
     private Dictionary<IntervalSet, int> AddSets()
     {
         SerializeSets(data, sets.Keys);
-        Dictionary<IntervalSet, int> setIndices = new();
+        var setIndices = new Dictionary<IntervalSet, int>();
         int setIndex = 0;
         foreach (var s in sets.Keys)
             setIndices[s] = setIndex++;
@@ -303,17 +295,12 @@ public class ATNSerializer
 
             int stateType = s.StateType;
             if (s is DecisionState state && state.nonGreedy)
-            {
                 nonGreedyStates.Add(s.stateNumber);
-            }
 
             if (s is RuleStartState state1 && state1.isLeftRecursiveRule)
-            {
                 _precedenceStates.Add(s.stateNumber);
-            }
 
             data.Add(stateType);
-
             data.Add(s.ruleIndex);
 
             if (s.StateType == ATNState.LOOP_END)
@@ -338,7 +325,7 @@ public class ATNSerializer
                 {
                     if (edgeType == Transition.SET || edgeType == Transition.NOT_SET)
                     {
-                        SetTransition st = (SetTransition)t;
+                        var st = (SetTransition)t;
                         sets[st.label] = true;
                     }
                 }

@@ -69,10 +69,7 @@ public abstract class ATNSimulator
         throw new UnsupportedOperationException("This ATN simulator does not support clearing the DFA.");
     }
 
-    public PredictionContextCache GetSharedContextCache()
-    {
-        return sharedContextCache;
-    }
+    public PredictionContextCache GetSharedContextCache() => sharedContextCache;
 
     public PredictionContext GetCachedContext(PredictionContext context)
     {

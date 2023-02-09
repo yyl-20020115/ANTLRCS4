@@ -62,7 +62,7 @@ public class PredicateEvalInfo : DecisionEventInfo
                              int predictedAlt,
                              bool fullCtx)
 
-        : base(decision, new ATNConfigSet(), input, startIndex, stopIndex, fullCtx)
+        : base(decision, new (), input, startIndex, stopIndex, fullCtx)
     {
         this.semctx = semctx;
         this.evalResult = evalResult;

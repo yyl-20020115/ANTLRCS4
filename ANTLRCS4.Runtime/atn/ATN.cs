@@ -11,7 +11,7 @@ namespace org.antlr.v4.runtime.atn;
 /** */
 public class ATN
 {
-    public static readonly int INVALID_ALT_NUMBER = 0;
+    public const int INVALID_ALT_NUMBER = 0;
 
     public readonly List<ATNState> states = new();
 
@@ -85,12 +85,16 @@ public class ATN
 	 * staying in same rule. {@link Token#EPSILON} is in set if we reach end of
 	 * rule.
      */
-    public IntervalSet NextTokens(ATNState s)
+    public IntervalSet NextTokens(ATNState state)
     {
-        if (s.nextTokenWithinRule != null) return s.nextTokenWithinRule;
-        s.nextTokenWithinRule = NextTokens(s, null);
-        s.nextTokenWithinRule.SetReadonly(true);
-        return s.nextTokenWithinRule;
+        if (state.nextTokenWithinRule != null) 
+            return state.nextTokenWithinRule;
+        else
+        {
+            state.nextTokenWithinRule = NextTokens(state, null);
+            state.nextTokenWithinRule.SetReadonly(true);
+            return state.nextTokenWithinRule;
+        }
     }
 
     public void AddState(ATNState state)
@@ -117,15 +121,10 @@ public class ATN
     }
 
     public DecisionState GetDecisionState(int decision)
-    {
-        if (decisionToState.Count > 0)
-        {
-            return decisionToState[decision];
-        }
-        return null;
-    }
+        => decisionToState.Count > 0 ? decisionToState[decision] : null;
 
-    public int NumberOfDecisions() => decisionToState.Count;
+    public int NumberOfDecisions() 
+        => decisionToState.Count;
 
     /**
 	 * Computes the set of input symbols which could follow ATN state number
@@ -164,25 +163,23 @@ public class ATN
     public IntervalSet GetExpectedTokens(int stateNumber, RuleContext context)
     {
         if (stateNumber < 0 || stateNumber >= states.Count)
-        {
             throw new ArgumentException(null, nameof(stateNumber));
-        }
 
         var ctx = context;
         var s = states[stateNumber];
         var following = NextTokens(s);
         if (!following.Contains(Token.EPSILON))
-        {
             return following;
-        }
 
         var expected = new IntervalSet();
         expected.AddAll(following);
         expected.Remove(Token.EPSILON);
-        while (ctx != null && ctx.invokingState >= 0 && following.Contains(Token.EPSILON))
+        while (ctx != null
+            && ctx.invokingState >= 0 
+            && following.Contains(Token.EPSILON))
         {
             var invokingState = states[ctx.invokingState];
-            var rt = (RuleTransition)invokingState.Transition(0);
+            var rt = invokingState.Transition(0) as RuleTransition;
             following = NextTokens(rt.followState);
             expected.AddAll(following);
             expected.Remove(Token.EPSILON);
@@ -190,9 +187,7 @@ public class ATN
         }
 
         if (following.Contains(Token.EPSILON))
-        {
             expected.Add(Token.EOF);
-        }
 
         return expected;
     }

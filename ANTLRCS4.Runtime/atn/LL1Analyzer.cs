@@ -32,11 +32,7 @@ public class LL1Analyzer
     public IntervalSet[] GetDecisionLookahead(ATNState s)
     {
         //		Console.Out.WriteLine("LOOK("+s.stateNumber+")");
-        if (s == null)
-        {
-            return null;
-        }
-
+        if (s == null) return null;
         var look = new IntervalSet[s.NumberOfTransitions];
         for (int alt = 0; alt < s.NumberOfTransitions; alt++)
         {

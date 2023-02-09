@@ -15,10 +15,7 @@ namespace org.antlr.v4.runtime.atn;
 public class OrderedATNConfigSet : ATNConfigSet
 {
 
-    public OrderedATNConfigSet()
-    {
-        this.configLookup = new LexerConfigHashSet();
-    }
+    public OrderedATNConfigSet() => this.configLookup = new LexerConfigHashSet();
 
     public class LexerConfigHashSet : AbstractConfigHashSet
     {

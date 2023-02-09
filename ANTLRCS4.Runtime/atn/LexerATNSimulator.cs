@@ -71,7 +71,7 @@ public class LexerATNSimulator : ATNSimulator
 
     /** Used during DFA/ATN exec to record the most recent accept configuration info */
 
-    protected readonly SimState prevAccept = new SimState();
+    protected readonly SimState prevAccept = new ();
 
     public LexerATNSimulator(ATN atn, DFA[] decisionToDFA,
                              PredictionContextCache sharedContextCache)
@@ -270,7 +270,7 @@ public class LexerATNSimulator : ATNSimulator
         // Fill reach starting from closure, following t transitions
         GetReachableConfigSet(input, s.configs, reach, t);
 
-        if (reach.IsEmpty())
+        if (reach.IsEmpty)
         { // we got nowhere on t from s
             if (!reach.hasSemanticContext)
             {
@@ -719,7 +719,7 @@ public class LexerATNSimulator : ATNSimulator
             var newState = proposed;
 
             newState.stateNumber = dfa.states.Count;
-            configs.SetReadonly(true);
+            configs.            Readonly = true;
             newState.configs = configs;
             dfa.states[newState] = newState;
             return newState;

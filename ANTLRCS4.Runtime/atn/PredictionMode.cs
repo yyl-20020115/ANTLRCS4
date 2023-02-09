@@ -80,18 +80,14 @@ public static class PredictionModeTools
     /** A Map that uses just the state and the stack context as the key. */
     class AltAndContextMap : FlexibleHashMap<ATNConfig, BitSet>
     {
-        public AltAndContextMap() : base(AltAndContextConfigEqualityComparator.INSTANCE)
-        {
-        }
+		public AltAndContextMap() : base(AltAndContextConfigEqualityComparator.INSTANCE) { }
     }
 
     private class AltAndContextConfigEqualityComparator : AbstractEqualityComparator<ATNConfig>
     {
         public static readonly AltAndContextConfigEqualityComparator INSTANCE = new ();
 
-        private AltAndContextConfigEqualityComparator()
-        {
-        }
+		private AltAndContextConfigEqualityComparator() { }
 
         /**
 		 * The hash code is only a function of the {@link ATNState#stateNumber}

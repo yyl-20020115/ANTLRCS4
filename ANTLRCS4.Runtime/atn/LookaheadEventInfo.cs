@@ -41,8 +41,6 @@ public class LookaheadEventInfo : DecisionEventInfo
                               int predictedAlt,
                               TokenStream input, int startIndex, int stopIndex,
                               bool fullCtx)
-        : base(decision, configs, input, startIndex, stopIndex, fullCtx)
-    {
-        this.predictedAlt = predictedAlt;
-    }
+        : base(decision, configs, input, startIndex, stopIndex, fullCtx) 
+		=> this.predictedAlt = predictedAlt;
 }

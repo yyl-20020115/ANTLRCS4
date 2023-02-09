@@ -4,6 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using org.antlr.v4.runtime.misc;
 using System.Text;
 
 namespace org.antlr.v4.runtime.atn;
@@ -21,11 +22,11 @@ public class ArrayPredictionContext : PredictionContext
  	 */
     public readonly int[] returnStates;
 
-    public ArrayPredictionContext(SingletonPredictionContext a) : this(new PredictionContext[] { a.parent }, new int[] { a.returnState })
-    {
-    }
+    public ArrayPredictionContext(SingletonPredictionContext a)
+        : this(new PredictionContext[] { a.parent }, new int[] { a.returnState }) { }
 
-    public ArrayPredictionContext(PredictionContext[] parents, int[] returnStates) : base(CalculateHashCode(parents, returnStates))
+    public ArrayPredictionContext(PredictionContext[] parents, int[] returnStates) 
+        : base(CalculateHashCode(parents, returnStates))
     {
         //assert parents!=null && parents.length>0;
         //assert returnStates!=null && returnStates.length>0;
@@ -56,19 +57,18 @@ public class ArrayPredictionContext : PredictionContext
         {
             return true;
         }
-        else if (o is not ArrayPredictionContext)
-        {
-            return false;
-        }
-
         if (this.GetHashCode() != o.GetHashCode())
         {
             return false; // can't be same if hash is different
         }
+        else if (o is ArrayPredictionContext ap)
+        {
+            return Enumerable.SequenceEqual(returnStates, ap.returnStates) &&
+                   Enumerable.SequenceEqual(parents, ap.parents);
 
-        ArrayPredictionContext a = (ArrayPredictionContext)o;
-        return Enumerable.SequenceEqual(returnStates, a.returnStates) &&
-               Enumerable.SequenceEqual(parents, a.parents);
+        }
+        return false;
+
     }
 
     public override string ToString()
@@ -98,4 +98,6 @@ public class ArrayPredictionContext : PredictionContext
         buffer.Append(']');
         return buffer.ToString();
     }
+
+    public override int GetHashCode() => base.GetHashCode() ^ RuntimeUtils.ObjectsHash(parents);
 }

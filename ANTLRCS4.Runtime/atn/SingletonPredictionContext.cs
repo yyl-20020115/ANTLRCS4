@@ -64,6 +64,7 @@ public class SingletonPredictionContext : PredictionContext
     public override string ToString()
     {
         var up = parent != null ? parent.ToString() : "";
-        return up.Length == 0 ? returnState == EMPTY_RETURN_STATE ? "$" : returnState.ToString() : returnState.ToString() + " " + up;
+        return up.Length == 0 ? returnState == EMPTY_RETURN_STATE ? "$" : 
+            returnState.ToString() : returnState.ToString() + " " + up;
     }
 }

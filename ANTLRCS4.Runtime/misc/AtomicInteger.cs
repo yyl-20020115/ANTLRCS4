@@ -4,7 +4,7 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-namespace org.antlr.v4.runtime.atn;
+namespace org.antlr.v4.runtime.misc;
 
 public class AtomicInteger
 {
@@ -17,7 +17,7 @@ public class AtomicInteger
     /// <summary>
     /// Creates a new <c>Atomic</c> instance with the initial value provided.
     /// </summary>
-    public AtomicInteger(int value = 0) 
+    public AtomicInteger(int value = 0)
         => this.value = value;
 
     /// <summary>
@@ -50,7 +50,7 @@ public class AtomicInteger
     /// <returns>
     /// The value before setting to the new value.
     /// </returns>
-    public int GetAndSet(int value) 
+    public int GetAndSet(int value)
         => Interlocked.Exchange(ref this.value, value);
 
     /// <summary>
@@ -65,12 +65,12 @@ public class AtomicInteger
     /// <returns>
     /// <c>true</c> if the comparison and set was successful. A <c>false</c> indicates the comparison failed.
     /// </returns>
-    public bool CompareAndSet(int expected, int result) 
+    public bool CompareAndSet(int expected, int result)
         => Interlocked.CompareExchange(ref value, result, expected) == expected;
 
     /// <summary>
     /// This operator allows an implicit cast from <c>Atomic&lt;T&gt;</c> to <c>T</c>.
     /// </summary>
-    public static implicit operator int(AtomicInteger value) 
+    public static implicit operator int(AtomicInteger value)
         => value.Value;
 }

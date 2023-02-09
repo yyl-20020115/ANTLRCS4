@@ -27,7 +27,7 @@ public class ParseInfo
 	 * @return An array of {@link DecisionInfo} instances, indexed by decision
 	 * number.
 	 */
-    public DecisionInfo[] GetDecisionInfo() => atnSimulator.GetDecisionInfo();
+    public DecisionInfo[] GetDecisionInfo() => atnSimulator.DecisionInfo;
 
     /**
 	 * Gets the decision numbers for decisions that required one or more
@@ -39,7 +39,7 @@ public class ParseInfo
 	 */
     public List<int> GetLLDecisions()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         List<int> LL = new();
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -56,7 +56,7 @@ public class ParseInfo
 	 */
     public long GetTotalTimeInPrediction()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long t = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -72,7 +72,7 @@ public class ParseInfo
 	 */
     public long GetTotalSLLLookaheadOps()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -88,7 +88,7 @@ public class ParseInfo
 	 */
     public long GetTotalLLLookaheadOps()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -103,7 +103,7 @@ public class ParseInfo
 	 */
     public long GetTotalSLLATNLookaheadOps()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -118,7 +118,7 @@ public class ParseInfo
 	 */
     public long GetTotalLLATNLookaheadOps()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {
@@ -137,7 +137,7 @@ public class ParseInfo
 	 */
     public long GetTotalATNLookaheadOps()
     {
-        var decisions = atnSimulator.GetDecisionInfo();
+        var decisions = atnSimulator.DecisionInfo;
         long k = 0;
         for (int i = 0; i < decisions.Length; i++)
         {

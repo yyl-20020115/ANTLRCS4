@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using ANTLRCS4.Runtime;
 using org.antlr.v4.runtime.misc;
 using System.Text;
 
@@ -24,7 +23,7 @@ public class ATNConfig
 	 * {@link #isPrecedenceFilterSuppressed} property as a bit within the
 	 * existing {@link #reachesIntoOuterContext} field.
 	 */
-    private static readonly int SUPPRESS_PRECEDENCE_FILTER = 0x40000000;
+    private const int SUPPRESS_PRECEDENCE_FILTER = 0x40000000;
 
     /** The ATN state associated with this configuration */
     public readonly ATNState state;
@@ -78,9 +77,7 @@ public class ATNConfig
     public ATNConfig(ATNState state,
                      int alt,
                      PredictionContext context)
-        : this(state, alt, context, SemanticContext.Empty.Instance)
-    {
-    }
+        : this(state, alt, context, SemanticContext.Empty.Instance) { }
 
     public ATNConfig(ATNState state,
                      int alt,
@@ -94,25 +91,17 @@ public class ATNConfig
     }
 
     public ATNConfig(ATNConfig c, ATNState state)
-        : this(c, state, c.context, c.semanticContext)
-    {
-    }
+        : this(c, state, c.context, c.semanticContext) { }
 
     public ATNConfig(ATNConfig c, ATNState state,
-         SemanticContext semanticContext) 
-        : this(c, state, c.context, semanticContext)
-    {
-    }
+         SemanticContext semanticContext)
+        : this(c, state, c.context, semanticContext) { }
 
     public ATNConfig(ATNConfig c, SemanticContext semanticContext)
-        : this(c, c.state, c.context, semanticContext)
-    {
-    }
+        : this(c, c.state, c.context, semanticContext) { }
 
     public ATNConfig(ATNConfig c, ATNState state,
-                     PredictionContext context) : this(c, state, context, c.semanticContext)
-    {
-    }
+                     PredictionContext context) : this(c, state, context, c.semanticContext) { }
 
     public ATNConfig(ATNConfig c, ATNState state,
                      PredictionContext context,
@@ -152,7 +141,8 @@ public class ATNConfig
      *  the same state, they predict the same alternative, and
      *  syntactic/semantic contexts are the same.
      */
-    public override bool Equals(object? o) => o is ATNConfig other && this.Equals(other);
+    public override bool Equals(object? o) 
+        => o is ATNConfig other && this.Equals(other);
 
     public bool Equals(ATNConfig other)
     {
@@ -185,7 +175,7 @@ public class ATNConfig
 
     public override string ToString() => ToString(null, true);
 
-    public string ToString(Recognizer recog, bool showAlt)
+    public string ToString(Recognizer r, bool showAlt)
     {
         var buffer = new StringBuilder();
         //		if ( state.ruleIndex>=0 ) {

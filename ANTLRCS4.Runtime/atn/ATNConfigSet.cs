@@ -25,18 +25,14 @@ public class ATNConfigSet : HashSet<ATNConfig>
 	 */
     public class ConfigHashSet : AbstractConfigHashSet
     {
-        public ConfigHashSet() : base(ConfigEqualityComparator.INSTANCE)
-        {
-        }
+        public ConfigHashSet() : base(ConfigEqualityComparator.INSTANCE) { }
     }
 
     public class ConfigEqualityComparator : AbstractEqualityComparator<ATNConfig>
     {
-        public static readonly ConfigEqualityComparator INSTANCE = new ();
+        public static readonly ConfigEqualityComparator INSTANCE = new();
 
-        private ConfigEqualityComparator()
-        {
-        }
+        private ConfigEqualityComparator() { }
 
         public override int GetHashCode(ATNConfig o)
         {
@@ -112,10 +108,7 @@ public class ATNConfigSet : HashSet<ATNConfig>
         this.dipsIntoOuterContext = old.dipsIntoOuterContext;
     }
 
-    public bool Add(ATNConfig config)
-    {
-        return Add(config, null);
-    }
+    public new bool Add(ATNConfig config) => Add(config, null);
 
     /**
 	 * Adding a new config means merging contexts with existing configs for
@@ -160,7 +153,7 @@ public class ATNConfigSet : HashSet<ATNConfig>
         // make sure to preserve the precedence filter suppression during the merge
         if (config.PrecedenceFilterSuppressed)
         {
-            existing.            PrecedenceFilterSuppressed = true;
+            existing.PrecedenceFilterSuppressed = true;
         }
 
         existing.context = merged; // replace context; no need to alt mapping
@@ -168,7 +161,7 @@ public class ATNConfigSet : HashSet<ATNConfig>
     }
 
     /** Return a List holding list of configs */
-    public List<ATNConfig> Elements() => configs;
+    public List<ATNConfig> Elements => configs;
 
     public HashSet<ATNState> GetStates()
     {
@@ -239,71 +232,47 @@ public class ATNConfigSet : HashSet<ATNConfig>
         {
             return true;
         }
-        else if (o is not ATNConfigSet)
+        else if (o is ATNConfigSet other)
         {
-            return false;
+            //		System.out.print("equals " + this + ", " + o+" = ");
+            var same = configs != null &&
+                configs.Equals(other.configs) &&  // includes stack context
+                this.fullCtx == other.fullCtx &&
+                this.uniqueAlt == other.uniqueAlt &&
+                this.conflictingAlts == other.conflictingAlts &&
+                this.hasSemanticContext == other.hasSemanticContext &&
+                this.dipsIntoOuterContext == other.dipsIntoOuterContext;
+
+            //		Console.Out.WriteLine(same);
+            return same;
         }
+        return false;
 
-        ATNConfigSet other = o as ATNConfigSet;
-        //		System.out.print("equals " + this + ", " + o+" = ");
-        bool same = configs != null &&
-            configs.Equals(other.configs) &&  // includes stack context
-            this.fullCtx == other.fullCtx &&
-            this.uniqueAlt == other.uniqueAlt &&
-            this.conflictingAlts == other.conflictingAlts &&
-            this.hasSemanticContext == other.hasSemanticContext &&
-            this.dipsIntoOuterContext == other.dipsIntoOuterContext;
-
-        //		Console.Out.WriteLine(same);
-        return same;
     }
 
-    public override int GetHashCode()
-    {
-        if (IsReadonly)
-        {
-            if (cachedHashCode == -1)
-            {
-                cachedHashCode = configs.GetHashCode();
-            }
+    public override int GetHashCode() 
+        => Readonly ? cachedHashCode == -1 ? (cachedHashCode = configs.GetHashCode()) : cachedHashCode : configs.GetHashCode();
 
-            return cachedHashCode;
-        }
 
-        return configs.GetHashCode();
-    }
+    public new int Count => configs.Count;
 
-    //@Override
-    public int Size => configs.Count;
 
-    //@Override
-    public bool IsEmpty() => configs.Count == 0;
+    public bool IsEmpty => configs.Count == 0;
 
-    //@Override
-    public bool Contains(object o)
-    {
-        if (configLookup == null)
-        {
-            throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
-        }
 
-        return configLookup.Contains(o);
-    }
+    public bool Contains(object o) => configLookup == null
+            ? throw new UnsupportedOperationException("This method is not implemented for readonly sets.")
+            : configLookup.Contains(o);
 
-    public bool ContainsFast(ATNConfig obj)
-    {
-        if (configLookup == null)
-        {
-            throw new UnsupportedOperationException("This method is not implemented for readonly sets.");
-        }
+    public bool ContainsFast(ATNConfig obj) => configLookup == null
+            ? throw new UnsupportedOperationException("This method is not implemented for readonly sets.")
+            : configLookup.ContainsFast(obj);
 
-        return configLookup.ContainsFast(obj);
-    }
 
-    //@Override
-    public new IEnumerator<ATNConfig> GetEnumerator() => configs.GetEnumerator();
+    public new IEnumerator<ATNConfig> GetEnumerator()
+        => configs.GetEnumerator();
 
-    //@Override
+
     public new void Clear()
     {
         if (@readonly) throw new IllegalStateException("This set is readonly");
@@ -312,19 +281,20 @@ public class ATNConfigSet : HashSet<ATNConfig>
         configLookup.Clear();
     }
 
-    public bool IsReadonly => @readonly;
-
-    public void SetReadonly(bool @readonly)
+    public bool Readonly
     {
-        this.@readonly = @readonly;
-        configLookup = null; // can't mod, no need for lookup cache
+        get => @readonly;
+        set
+        {
+            this.@readonly = value;
+            configLookup = null; // can't mod, no need for lookup cache
+        }
     }
 
-    //@Override
     public override string ToString()
     {
         var buffer = new StringBuilder();
-        buffer.Append(Elements().ToString());
+        buffer.Append(Elements.ToString());
         if (hasSemanticContext) buffer.Append(",hasSemanticContext=").Append(hasSemanticContext);
         if (uniqueAlt != ATN.INVALID_ALT_NUMBER) buffer.Append(",uniqueAlt=").Append(uniqueAlt);
         if (conflictingAlts != null) buffer.Append(",conflictingAlts=").Append(conflictingAlts);
@@ -334,41 +304,20 @@ public class ATNConfigSet : HashSet<ATNConfig>
 
     // satisfy interface
 
-    //@Override
     public ATNConfig[] ToArray() => configLookup.ToArray();
 
+    public bool Remove(object o) => throw new UnsupportedOperationException();
 
-    //@Override
-    public bool Remove(object o)
-    {
-        throw new UnsupportedOperationException();
-    }
+    public bool ContainsAll(ICollection<ATNConfig> c) => throw new UnsupportedOperationException();
 
-    //@Override
-    public bool ContainsAll(ICollection<ATNConfig> c)
-    {
-        throw new UnsupportedOperationException();
-    }
+    public bool RetainAll(ICollection<ATNConfig> c) => throw new UnsupportedOperationException();
 
-    //@Override
-    public bool RetainAll(ICollection<ATNConfig> c)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    //@Override
-    public bool RemoveAll(ICollection<ATNConfig> c)
-    {
-        throw new UnsupportedOperationException();
-    }
+    public bool RemoveAll(ICollection<ATNConfig> c) => throw new UnsupportedOperationException();
 
     public abstract class AbstractConfigHashSet : Array2DHashSet<ATNConfig>
     {
-
         public AbstractConfigHashSet(AbstractEqualityComparator<ATNConfig> comparator,
-            int initialCapacity = 16, int initialBucketCapacity = 2) : base(comparator, initialCapacity, initialBucketCapacity)
-        {
-        }
+            int initialCapacity = 16, int initialBucketCapacity = 2) : base(comparator, initialCapacity, initialBucketCapacity) { }
 
         protected override ATNConfig AsElementType(object o) => o is not ATNConfig ? null : (ATNConfig)o;
 

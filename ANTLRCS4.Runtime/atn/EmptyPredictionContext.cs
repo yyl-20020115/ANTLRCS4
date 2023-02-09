@@ -27,4 +27,6 @@ public class EmptyPredictionContext : SingletonPredictionContext
     public override bool Equals(object? o) => this == o;
 
     public override string ToString() => "$";
+
+    public override int GetHashCode() => 0;
 }

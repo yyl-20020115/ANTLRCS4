@@ -12,6 +12,5 @@ namespace org.antlr.v4.runtime.atn;
  */
 public abstract class AbstractPredicateTransition : Transition
 {
-
     public AbstractPredicateTransition(ATNState target) : base(target) { }
 }

@@ -25,6 +25,5 @@ public class ActionTransition : Transition
 
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) => false;
 
-    public override string ToString()
-        => "action_" + ruleIndex + ":" + actionIndex;
+    public override string ToString() => $"action_{ruleIndex}:{actionIndex}";
 }

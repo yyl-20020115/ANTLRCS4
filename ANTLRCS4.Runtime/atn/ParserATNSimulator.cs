@@ -4,8 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 
@@ -248,7 +246,7 @@ public class ParserATNSimulator : ATNSimulator
 
     /** Just in case this optimization is bad, add an ENV variable to turn it off */
     public static readonly bool TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT = bool.TryParse(
-        GetSafeEnv("TURN_kOFF_LR_LOOP_ENTRY_BRANCH_OPT"), out var ret) ? ret : false;
+        GetSafeEnv("TURN_kOFF_LR_LOOP_ENTRY_BRANCH_OPT"), out var ret) && ret;
 
     protected readonly Parser parser;
 
@@ -277,9 +275,7 @@ public class ParserATNSimulator : ATNSimulator
     /** Testing only! */
     public ParserATNSimulator(ATN atn, DFA[] decisionToDFA,
                               PredictionContextCache sharedContextCache)
-        : this(null, atn, decisionToDFA, sharedContextCache)
-    {
-    }
+        : this(null, atn, decisionToDFA, sharedContextCache) { }
 
     public ParserATNSimulator(Parser parser, ATN atn,
                               DFA[] decisionToDFA,
@@ -451,7 +447,7 @@ public class ParserATNSimulator : ATNSimulator
                 // ATN states in SLL implies LL will also get nowhere.
                 // If conflict in states that dip out, choose min since we
                 // will get error no matter what.
-                var e = noViableAlt(input, outerContext, previousD.configs, startIndex);
+                var e = NoViableAlt(input, outerContext, previousD.configs, startIndex);
                 input.Seek(startIndex);
                 int alt = GetSynValidOrSemInvalidAltThatFinishedDecisionEntryRule(previousD.configs, outerContext);
                 if (alt != ATN.INVALID_ALT_NUMBER)
@@ -514,7 +510,7 @@ public class ParserATNSimulator : ATNSimulator
                 switch (alts.Cardinality())
                 {
                     case 0:
-                        throw noViableAlt(input, outerContext, D.configs, startIndex);
+                        throw NoViableAlt(input, outerContext, D.configs, startIndex);
 
                     case 1:
                         return alts.NextSetBit(0);
@@ -679,7 +675,7 @@ public class ParserATNSimulator : ATNSimulator
                 // ATN states in SLL implies LL will also get nowhere.
                 // If conflict in states that dip out, choose min since we
                 // will get error no matter what.
-                var e = noViableAlt(input, outerContext, previous, startIndex);
+                var e = NoViableAlt(input, outerContext, previous, startIndex);
                 input.Seek(startIndex);
                 int alt = GetSynValidOrSemInvalidAltThatFinishedDecisionEntryRule(previous, outerContext);
                 if (alt != ATN.INVALID_ALT_NUMBER)
@@ -848,7 +844,7 @@ public class ParserATNSimulator : ATNSimulator
 		 */
         if (skippedStopStates == null && t != Token.EOF)
         {
-            if (intermediate.Size == 1)
+            if (intermediate.Count == 1)
             {
                 // Don't pursue the closure if there is just one state.
                 // It can only have one alternative; just add to result
@@ -917,7 +913,7 @@ public class ParserATNSimulator : ATNSimulator
             }
         }
 
-        if (reach.IsEmpty()) return null;
+        if (reach.IsEmpty) return null;
         return reach;
     }
 
@@ -1161,17 +1157,11 @@ public class ParserATNSimulator : ATNSimulator
         foreach (var config in configs)
         {
             // handle alt 1 first
-            if (config.alt != 1)
-            {
-                continue;
-            }
+            if (config.alt != 1) continue;
 
             var updatedContext = config.semanticContext.EvalPrecedence(parser, _outerContext);
-            if (updatedContext == null)
-            {
-                // the configuration was eliminated
-                continue;
-            }
+            if (updatedContext == null) continue;
+            // the configuration was eliminated
 
             statesFromAlt1[config.state.stateNumber] = config.context;
             if (updatedContext != config.semanticContext)
@@ -1352,7 +1342,7 @@ public class ParserATNSimulator : ATNSimulator
             return alt;
         }
         // Is there a syntactically valid path with a failed pred?
-        if (semInvalidConfigs.Size > 0)
+        if (semInvalidConfigs.Count > 0)
         {
             alt = GetAltThatFinishedDecisionEntryRule(semInvalidConfigs);
             if (alt != ATN.INVALID_ALT_NUMBER)
@@ -1369,9 +1359,7 @@ public class ParserATNSimulator : ATNSimulator
         foreach (var c in configs)
         {
             if (c.OuterContextDepth > 0 || (c.state is RuleStopState && c.context.HasEmptyPath))
-            {
                 alts.Add(c.alt);
-            }
         }
         if (alts.Size == 0) return ATN.INVALID_ALT_NUMBER;
         return alts.GetMinElement();
@@ -1485,10 +1473,7 @@ public class ParserATNSimulator : ATNSimulator
 	 *
 	 * @since 4.3
 	 */
-    protected virtual bool EvalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx)
-    {
-        return pred.Eval(parser, parserCallStack);
-    }
+    protected virtual bool EvalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx) => pred.Eval(parser, parserCallStack);
 
     /* TODO: If we are doing predicates, there is no point in pursuing
 		 closure operations if we reach a DFA state that uniquely predicts
@@ -1549,15 +1534,17 @@ public class ParserATNSimulator : ATNSimulator
                     var returnState = atn.states[(config.context.GetReturnState(i))];
                     var newContext = config.context.GetParent(i); // "pop" return state
                     var c = new ATNConfig(returnState, config.alt, newContext,
-                                                config.semanticContext);
-                    // While we have context to pop back from, we may have
-                    // gotten that context AFTER having falling off a rule.
-                    // Make sure we track that we are now out of context.
-                    //
-                    // This assignment also propagates the
-                    // isPrecedenceFilterSuppressed() value to the new
-                    // configuration.
-                    c.reachesIntoOuterContext = config.reachesIntoOuterContext;
+                                                config.semanticContext)
+                    {
+                        // While we have context to pop back from, we may have
+                        // gotten that context AFTER having falling off a rule.
+                        // Make sure we track that we are now out of context.
+                        //
+                        // This assignment also propagates the
+                        // isPrecedenceFilterSuppressed() value to the new
+                        // configuration.
+                        reachesIntoOuterContext = config.reachesIntoOuterContext
+                    };
                     //assert depth > Integer.MIN_VALUE;
                     ClosureCheckingStopState(c, configs, closureBusy, collectPredicates,
                                              fullCtx, depth - 1, treatEofAsEpsilon);
@@ -1759,7 +1746,7 @@ public class ParserATNSimulator : ATNSimulator
     protected virtual bool CanDropLoopEntryEdgeInLeftRecursiveRule(ATNConfig config)
     {
         if (TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT) return false;
-        ATNState p = config.state;
+        var p = config.state;
         // First check to see if we are in StarLoopEntryState generated during
         // left-recursion elimination. For efficiency, also check if
         // the context has an empty stack case. If so, it would mean
@@ -1981,8 +1968,8 @@ public class ParserATNSimulator : ATNSimulator
                                ", ctx=" + config.context);
         }
 
-        ATNState returnState = t.followState;
-        PredictionContext newContext =
+        var returnState = t.followState;
+        var newContext =
             SingletonPredictionContext.Create(config.context, returnState.stateNumber);
         return new ATNConfig(config, t.target, newContext);
     }
@@ -2056,19 +2043,10 @@ public class ParserATNSimulator : ATNSimulator
 
     public virtual string GetTokenName(int t)
     {
-        if (t == Token.EOF)
-        {
-            return "EOF";
-        }
-
+        if (t == Token.EOF) return "EOF";
         var vocabulary = parser != null ? parser.Vocabulary : VocabularyImpl.EMPTY_VOCABULARY;
         var displayName = vocabulary.GetDisplayName(t);
-        if (displayName.Equals((t.ToString())))
-        {
-            return displayName;
-        }
-
-        return displayName + "<" + t + ">";
+        return displayName.Equals((t.ToString())) ? displayName : displayName + "<" + t + ">";
     }
 
     public virtual string GetLookaheadName(TokenStream input)
@@ -2104,7 +2082,7 @@ public class ParserATNSimulator : ATNSimulator
     }
 
 
-    protected virtual NoViableAltException noViableAlt(TokenStream input,
+    protected virtual NoViableAltException NoViableAlt(TokenStream input,
                                             ParserRuleContext outerContext,
                                             ATNConfigSet configs,
                                             int startIndex)
@@ -2118,7 +2096,7 @@ public class ParserATNSimulator : ATNSimulator
     protected static int GetUniqueAlt(ATNConfigSet configs)
     {
         int alt = ATN.INVALID_ALT_NUMBER;
-        foreach (ATNConfig c in configs)
+        foreach (var c in configs)
         {
             if (alt == ATN.INVALID_ALT_NUMBER)
             {
@@ -2162,16 +2140,10 @@ public class ParserATNSimulator : ATNSimulator
             Console.WriteLine("EDGE " + from + " -> " + to + " upon " + GetTokenName(t));
         }
 
-        if (to == null)
-        {
-            return null;
-        }
+        if (to == null) return null;
 
         to = AddDFAState(dfa, to); // used existing if possible not incoming
-        if (from == null || t < -1 || t > atn.maxTokenType)
-        {
-            return to;
-        }
+        if (from == null || t < -1 || t > atn.maxTokenType) return to;
 
         lock (from)
         {
@@ -2205,21 +2177,18 @@ public class ParserATNSimulator : ATNSimulator
 	 */
     protected virtual DFAState AddDFAState(DFA dfa, DFAState D)
     {
-        if (D == ERROR)
-        {
-            return D;
-        }
-
+        if (D == ERROR) return D;
+ 
         lock (dfa.states)
         {
             var existing = dfa.states[(D)];
             if (existing != null) return existing;
 
             D.stateNumber = dfa.states.Count();
-            if (!D.configs.IsReadonly)
+            if (!D.configs.Readonly)
             {
                 D.configs.OptimizeConfigs(this);
-                D.configs.SetReadonly(true);
+                D.configs.                Readonly = true;
             }
             dfa.states[D] = D;
             if (debug) Console.WriteLine("adding new DFA state: " + D);
@@ -2231,7 +2200,7 @@ public class ParserATNSimulator : ATNSimulator
     {
         if (debug || retry_debug)
         {
-            Interval interval = Interval.Of(startIndex, stopIndex);
+            var interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportAttemptingFullContext decision=" + dfa.decision + ":" + configs +
                                ", input=" + parser.TokenStream.GetText(interval));
         }
@@ -2242,7 +2211,7 @@ public class ParserATNSimulator : ATNSimulator
     {
         if (debug || retry_debug)
         {
-            Interval interval = Interval.Of(startIndex, stopIndex);
+            var interval = Interval.Of(startIndex, stopIndex);
             Console.WriteLine("reportContextSensitivity decision=" + dfa.decision + ":" + configs +
                                ", input=" + parser.TokenStream.GetText(interval));
         }

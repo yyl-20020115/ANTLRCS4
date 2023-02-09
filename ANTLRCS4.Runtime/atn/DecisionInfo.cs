@@ -225,16 +225,6 @@ public class DecisionInfo
         this.decision = decision;
     }
 
-    public override string ToString() => "{" +
-               "decision=" + decision +
-               ", contextSensitivities=" + contextSensitivities.Count +
-               ", errors=" + errors.Count +
-               ", ambiguities=" + ambiguities.Count +
-               ", SLL_lookahead=" + SLL_TotalLook +
-               ", SLL_ATNTransitions=" + SLL_ATNTransitions +
-               ", SLL_DFATransitions=" + SLL_DFATransitions +
-               ", LL_Fallback=" + LL_Fallback +
-               ", LL_lookahead=" + LL_TotalLook +
-               ", LL_ATNTransitions=" + LL_ATNTransitions +
-               '}';
+    public override string ToString() 
+		=> $"{{decision={decision}, contextSensitivities={contextSensitivities.Count}, errors={errors.Count}, ambiguities={ambiguities.Count}, SLL_lookahead={SLL_TotalLook}, SLL_ATNTransitions={SLL_ATNTransitions}, SLL_DFATransitions={SLL_DFATransitions}, LL_Fallback={LL_Fallback}, LL_lookahead={LL_TotalLook}, LL_ATNTransitions={LL_ATNTransitions}}}";
 }

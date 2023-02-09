@@ -20,7 +20,7 @@ public abstract class PredictionContext
 
     private static readonly int INITIAL_HASH = 1;
 
-    private static readonly AtomicInteger globalNodeCount = new AtomicInteger();
+    private static readonly AtomicInteger globalNodeCount = new ();
     public readonly int id = globalNodeCount.GetAndIncrement();
 
     /**
@@ -63,7 +63,7 @@ public abstract class PredictionContext
         }
 
         // If we have a parent, convert it to a PredictionContext graph
-        PredictionContext parent = EmptyPredictionContext.Instance;
+        var parent = EmptyPredictionContext.Instance;
         parent = FromRuleContext(atn, outerContext.parent);
 
         var state = atn.states[(outerContext.invokingState)];

@@ -15,10 +15,7 @@ namespace org.antlr.v4.runtime.atn;
 public class ATNDeserializationOptions
 {
     private static readonly ATNDeserializationOptions defaultOptions = new();
-    static ATNDeserializationOptions()
-    {
-        defaultOptions.MakeReadOnly();
-    }
+    static ATNDeserializationOptions() => defaultOptions.MakeReadOnly();
 
     private bool readOnly;
     private bool verifyATN;
@@ -37,7 +34,7 @@ public class ATNDeserializationOptions
     }
 
 
-    public static ATNDeserializationOptions GetDefaultOptions() => defaultOptions;
+    public static ATNDeserializationOptions DefaultOptions => defaultOptions;
 
     public bool IsReadOnly => this.readOnly;
 

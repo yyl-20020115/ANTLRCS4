@@ -183,7 +183,7 @@ public class LexerActionExecutor
         {
             return true;
         }
-        else if (obj is  LexerActionExecutor other)
+        else if (obj is LexerActionExecutor other)
         {
             return hashCode == other.hashCode
                 && Enumerable.SequenceEqual(lexerActions, other.lexerActions);

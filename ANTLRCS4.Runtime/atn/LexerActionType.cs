@@ -12,7 +12,7 @@ namespace org.antlr.v4.runtime.atn;
  * @author Sam Harwell
  * @since 4.2
  */
-public enum LexerActionType : int
+public enum LexerActionType : uint
 {
     /**
 	 * The type of a {@link LexerChannelAction} action.

@@ -60,8 +60,6 @@ public class LexerMoreAction : LexerAction
         return MurmurHash.Finish(hash, 1);
     }
 
-    
-    //@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public override bool Equals(object? o) => o == this;
 
     

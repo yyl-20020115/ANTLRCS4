@@ -34,6 +34,6 @@ public class PredicateTransition : AbstractPredicateTransition
         => new(ruleIndex, predIndex, isCtxDependent);
 
     public override string ToString() 
-        => "pred_" + ruleIndex + ":" + predIndex;
+        => $"pred_{ruleIndex}:{predIndex}";
 
 }

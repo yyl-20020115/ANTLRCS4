@@ -17,14 +17,13 @@ public class SetTransition : Transition
     // TODO (sam): should we really allow null here?
     public SetTransition(ATNState target, IntervalSet set) : base(target)
     {
-        this.label = set ??= IntervalSet.Of(Token.INVALID_TYPE);
+        this.label = set ?? IntervalSet.Of(Token.INVALID_TYPE);
     }
 
     public override int SerializationType => SET;
 
     
-    public override IntervalSet Label 
-        => label;
+    public override IntervalSet Label  => label;
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => label.Contains(symbol);
 

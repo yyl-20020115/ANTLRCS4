@@ -232,7 +232,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
 
     // ---------------------------------------------------------------------
 
-    public DecisionInfo[] GetDecisionInfo() => decisions;
+    public DecisionInfo[] DecisionInfo => decisions;
 
-    public DFAState GetCurrentState() => currentState;
+    public DFAState CurrentState => currentState;
 }

@@ -14,10 +14,7 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition
 {
     public readonly int precedence;
 
-    public PrecedencePredicateTransition(ATNState target, int precedence) : base(target)
-    {
-        this.precedence = precedence;
-    }
+    public PrecedencePredicateTransition(ATNState target, int precedence) : base(target) => this.precedence = precedence;
 
     public override int SerializationType => PRECEDENCE;
 
@@ -27,6 +24,6 @@ public class PrecedencePredicateTransition : AbstractPredicateTransition
 
     public SemanticContext.PrecedencePredicate GetPredicate() => new(precedence);
 
-    public override string ToString() => precedence + " >= _p";
+    public override string ToString() => $"{precedence} >= _p";
 
 }
