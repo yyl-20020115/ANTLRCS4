@@ -55,7 +55,7 @@ public class TokenVocabParser
                     var tokenTypeS = matcher.Groups[2].Value;
                     if (!int.TryParse(tokenTypeS, out var tokenType))
                     {
-                        tool.ErrMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
+                        tool.ErrMgr.ToolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
                                               vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
                                               " bad token type: " + tokenTypeS,
                                               lineNum);
@@ -71,7 +71,7 @@ public class TokenVocabParser
                 {
                     if (tokenDef.Length > 0)
                     { // ignore blank lines
-                        tool.ErrMgr.toolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
+                        tool.ErrMgr.ToolError(ErrorType.TOKENS_FILE_SYNTAX_ERROR,
                                               vocabName + CodeGenerator.VOCAB_FILE_EXTENSION,
                                               " bad token def: " + tokenDef,
                                               lineNum);
@@ -93,14 +93,14 @@ public class TokenVocabParser
             }
             else
             { // must be from -D option on cmd-line not token in tree
-                tool.ErrMgr.toolError(ErrorType.CANNOT_FIND_TOKENS_FILE_GIVEN_ON_CMDLINE,
+                tool.ErrMgr.ToolError(ErrorType.CANNOT_FIND_TOKENS_FILE_GIVEN_ON_CMDLINE,
                                       fullFile,
                                       g.name);
             }
         }
         catch (Exception e)
         {
-            tool.ErrMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
+            tool.ErrMgr.ToolError(ErrorType.ERROR_READING_TOKENS_FILE,
                                   e,
                                   fullFile,
                                   e.Message);
@@ -113,7 +113,7 @@ public class TokenVocabParser
             }
             catch (IOException ioe)
             {
-                tool.ErrMgr.toolError(ErrorType.ERROR_READING_TOKENS_FILE,
+                tool.ErrMgr.ToolError(ErrorType.ERROR_READING_TOKENS_FILE,
                                       ioe,
                                       fullFile,
                                       ioe.Message);

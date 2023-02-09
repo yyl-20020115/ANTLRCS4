@@ -24,8 +24,8 @@ public class Lexer : Recognizer
     {
         this.file = file; // who contains us?
 
-        var g = factory.GetGrammar();
-        var target = factory.GetGenerator().Target;
+        var g = factory.Grammar;
+        var target = factory.Generator.Target;
 
         escapedChannels = new();
         channelNames = new List<string>();

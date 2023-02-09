@@ -49,7 +49,7 @@ public abstract class EscapeSequenceParsing
         public override string ToString() 
             => $"{base.ToString()} type={type} codePoint={codePoint} propertyIntervalSet={propertyIntervalSet} parseLength={parseLength}";
 
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             if (other is not Result that)
             {
@@ -188,13 +188,10 @@ public abstract class EscapeSequenceParsing
         }
     }
 
-    private static Result Invalid(int start, int stop)
-    { // start..stop is inclusive
-        return new (
+    private static Result Invalid(int start, int stop) => new(
             Result.Type.INVALID,
             0,
             IntervalSet.EMPTY_SET,
             start,
             stop - start + 1);
-    }
 }

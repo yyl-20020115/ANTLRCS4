@@ -30,7 +30,6 @@ public interface TokenSource
 	 * to the parser.
 	 */
     public Token NextToken();
-
     /**
 	 * Get the line number for the current position in the input stream. The
 	 * first line in the input is line 1.
@@ -57,7 +56,7 @@ public interface TokenSource
 	 * the input, or {@code null} if no input stream is available for the token
 	 * source.
 	 */
-    CharStream InputStream { get; }
+    CharStream CharInputStream { get; }
 
     /**
 	 * Gets the name of the underlying input source. This method returns a

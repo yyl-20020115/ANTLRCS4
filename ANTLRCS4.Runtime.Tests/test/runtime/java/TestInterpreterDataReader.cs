@@ -37,7 +37,7 @@ public class TestInterpreterDataReader
                 "ADD : '+';\n" +
                 "SUB : '-';\n" +
                 "WS : [ \\t]+ -> channel(HIDDEN);");
-        var interpString = Tool.generateInterpreterData(g);
+        var interpString = Tool.GenerateInterpreterData(g);
         var interpFile = Environment.CurrentDirectory + "test-" + Random.Shared.Next() + ".txt";// File.createTempFile(null, null);
         File.WriteAllBytes(interpFile, Encoding.UTF8.GetBytes(interpString));
 

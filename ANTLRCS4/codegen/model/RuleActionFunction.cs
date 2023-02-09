@@ -21,7 +21,7 @@ public class RuleActionFunction : OutputModelObject
     public RuleActionFunction(OutputModelFactory factory, Rule r, string ctxType) : base(factory)
     {
         name = r.name;
-        escapedName = factory.GetGenerator().Target.EscapeIfNeeded(name);
+        escapedName = factory.Generator.Target.EscapeIfNeeded(name);
         ruleIndex = r.index;
         this.ctxType = ctxType;
     }

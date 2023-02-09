@@ -11,7 +11,5 @@ namespace org.antlr.v4.codegen.model;
 
 public class Wildcard : MatchToken
 {
-    public Wildcard(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)
-    {
-    }
+    public Wildcard(OutputModelFactory factory, GrammarAST ast) : base(factory, ast) { }
 }

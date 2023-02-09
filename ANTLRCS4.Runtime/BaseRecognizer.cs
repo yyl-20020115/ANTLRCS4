@@ -621,7 +621,7 @@ public abstract class BaseRecognizer
     }
 
     /** Not currently used */
-    public Object RecoverFromMismatchedSet(IntStream input,
+    public object RecoverFromMismatchedSet(IntStream input,
                                            RecognitionException e,
                                            BitSet follow)
     {
@@ -645,7 +645,7 @@ public abstract class BaseRecognizer
      * 
      *  This is ignored for lexers.
      */
-    protected object GetCurrentInputSymbol(IntStream input) => null;
+    protected virtual object GetCurrentInputSymbol(IntStream input) => null;
 
     /** Conjure up a missing token during error recovery.
      *
@@ -666,7 +666,7 @@ public abstract class BaseRecognizer
      *  If you change what tokens must be created by the lexer,
      *  override this method to create the appropriate tokens.
      */
-    protected object GetMissingSymbol(IntStream input,
+    protected virtual object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow) => null;
@@ -823,7 +823,7 @@ public abstract class BaseRecognizer
      *  this rule and successfully parsed before, then seek ahead to
      *  1 past the stop token matched for this rule last time.
      */
-    public bool AlreadyParsedRule(IntStream input, int ruleIndex)
+    public virtual bool AlreadyParsedRule(IntStream input, int ruleIndex)
     {
         int stopIndex = GetRuleMemoization(ruleIndex, input.Index);
         if (stopIndex == MEMO_RULE_UNKNOWN)
@@ -846,7 +846,7 @@ public abstract class BaseRecognizer
     /** Record whether or not this rule parsed the input at this position
      *  successfully.  Use a standard java hashtable for now.
      */
-    public void Memoize(IntStream input,
+    public virtual void Memoize(IntStream input,
                         int ruleIndex,
                         int ruleStartIndex)
     {

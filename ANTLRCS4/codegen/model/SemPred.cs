@@ -17,11 +17,11 @@ public class SemPred : Action
 	 * <p>
 	 * {@code {pred}?<fail='message'>}</p>
 	 */
-    public String msg;
+    public string msg;
     /**
 	 * The predicate string with <code>{</code> and <code>}?</code> stripped from the ends.
 	 */
-    public String predicate;
+    public string predicate;
 
     /**
 	 * The translated chunks of the user-specified terminal option {@code fail},
@@ -40,7 +40,7 @@ public class SemPred : Action
         //	&& ast.atnState.transition(0) is AbstractPredicateTransition;
 
         var failNode = ast.getOptionAST("fail");
-        var gen = factory.GetGenerator();
+        var gen = factory.Generator;
         predicate = ast.getText();
         if (predicate.StartsWith("{") && predicate.EndsWith("}?"))
         {
@@ -52,7 +52,7 @@ public class SemPred : Action
 
         if (failNode is ActionAST failActionNode)
         {
-            var rf = factory.GetCurrentRuleFunction();
+            var rf = factory.CurrentRuleFunction;
             failChunks = ActionTranslator.TranslateAction(factory, rf,
                                                           failActionNode.token,
                                                           failActionNode);

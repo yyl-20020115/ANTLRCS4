@@ -54,7 +54,7 @@ public static class Utils
         return buffer.ToString();
     }
 
-    public static string sortLinesInString(string s)
+    public static string SortLinesInString(string s)
     {
         var lines = s.Split("\n");
         Array.Sort(lines);
@@ -68,7 +68,7 @@ public static class Utils
         return buffer.ToString();
     }
 
-    public static List<String> NodesToStrings<T>(List<T> nodes) where T : GrammarAST
+    public static List<string> NodesToStrings<T>(List<T> nodes) where T : GrammarAST
     {
         if (nodes == null) return null;
         List<string> a = new();
@@ -100,7 +100,7 @@ public static class Utils
         }
         Dictionary<int, int> sorted = new(histo);
 
-        String output = "";
+        string output = "";
         output += "value,count\n";
         foreach (int key in sorted.Keys)
         {
@@ -116,9 +116,9 @@ public static class Utils
         }
     }
 
-    public static string Capitalize(string s) => char.ToUpper(s[0]) + s.Substring(1);
+    public static string Capitalize(string s) => s.Length > 0 ? char.ToUpper(s[0]) + s[1..] : s;
 
-    public static string Decapitalize(string s) => char.ToLower(s[0]) + s.Substring(1);
+    public static string Decapitalize(string s) => s.Length > 0 ? char.ToLower(s[0]) + s[1..] : s;
 
     /** apply methodName to list and return list of results. method has
 	 *  no args.  This pulls data out of a list essentially.

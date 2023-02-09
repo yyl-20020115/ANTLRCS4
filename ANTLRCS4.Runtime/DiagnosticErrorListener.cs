@@ -111,7 +111,7 @@ public class DiagnosticErrorListener : BaseErrorListener
         int decision = dfa.decision;
         int ruleIndex = dfa.atnStartState.ruleIndex;
 
-        var ruleNames = recognizer.GetRuleNames();
+        var ruleNames = recognizer.RuleNames;
         if (ruleIndex < 0 || ruleIndex >= ruleNames.Length)
         {
             return decision.ToString();

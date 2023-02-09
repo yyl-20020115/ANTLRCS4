@@ -26,7 +26,7 @@ public abstract class Target
     static Target()
     {
         // https://docs.oracle.com/javase/tutorial/java/data/characters.html
-        Dictionary<char, String> map = new();
+        Dictionary<char, string> map = new();
         AddEscapedChar(map, '\t', 't');
         AddEscapedChar(map, '\b', 'b');
         AddEscapedChar(map, '\n', 'n');
@@ -52,12 +52,12 @@ public abstract class Target
 	 */
     public virtual Dictionary<char, string> GetTargetCharValueEscape() => defaultCharValueEscape;
 
-    protected static void AddEscapedChar(Dictionary<char, String> map, char key)
+    protected static void AddEscapedChar(Dictionary<char, string> map, char key)
     {
         AddEscapedChar(map, key, key);
     }
 
-    protected static void AddEscapedChar(Dictionary<char, String> map, char key, char representation)
+    protected static void AddEscapedChar(Dictionary<char, string> map, char key, char representation)
     {
         map[key] = ("\\" + representation);
     }
@@ -87,7 +87,7 @@ public abstract class Target
                 if (version == null ||
                         !RuntimeMetaData.GetMajorMinorVersion(version).Equals(RuntimeMetaData.GetMajorMinorVersion(Tool.VERSION)))
                 {
-                    gen.tool.ErrMgr.toolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+                    gen.tool.ErrMgr.ToolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
                 }
                 templates = LoadTemplates();
                 languageTemplates.Add(language, templates);
@@ -384,7 +384,7 @@ public abstract class Target
 
     public virtual string GetLoopCounter(GrammarAST ast) => "cnt" + ast.token.TokenIndex;
 
-    public virtual string GetListLabel(String label)
+    public virtual string GetListLabel(string label)
     {
         var st = GetTemplates().GetInstanceOf("ListLabelName");
         st.Add("label", label);
@@ -602,7 +602,7 @@ public abstract class Target
         //@Override
         public void InternalError(TemplateMessage msg) => ReportError(msg);
 
-        private void ReportError(TemplateMessage msg) => target.GetCodeGenerator().tool.ErrMgr.toolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
+        private void ReportError(TemplateMessage msg) => target.GetCodeGenerator().tool.ErrMgr.ToolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
 
     }
     protected TemplateGroup LoadTemplates()
@@ -628,7 +628,7 @@ public abstract class Target
         {
             if (reportErrorIfFail)
             {
-                gen.tool.ErrMgr.toolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, GetLanguage());
+                gen.tool.ErrMgr.ToolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, GetLanguage());
             }
             return null;
         }

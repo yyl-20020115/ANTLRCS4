@@ -314,7 +314,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     protected void ReportNoViableAlternative(Parser recognizer,
                                              NoViableAltException e)
     {
-        var tokens = recognizer.InputStream;
+        var tokens = recognizer.InputStream as TokenStream;
         string input;
         if (tokens != null)
         {
@@ -342,7 +342,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
                                        InputMismatchException e)
     {
         var msg = "mismatched input " + GetTokenErrorDisplay(e.OffendingToken) +
-        " expecting " + e.GetExpectedTokens().ToString(recognizer.GetVocabulary());
+        " expecting " + e.GetExpectedTokens().ToString(recognizer.Vocabulary);
         recognizer.NotifyErrorListeners(e.OffendingToken, msg, e);
     }
 
@@ -358,7 +358,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     protected void ReportFailedPredicate(Parser recognizer,
                                          FailedPredicateException e)
     {
-        var ruleName = recognizer.GetRuleNames()[recognizer.Ctx.RuleIndex];
+        var ruleName = recognizer.RuleNames[recognizer.Ctx.RuleIndex];
         var msg = "rule " + ruleName + " " + e.Message;
         recognizer.NotifyErrorListeners(e.OffendingToken, msg, e);
     }
@@ -394,7 +394,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         var tokenName = GetTokenErrorDisplay(t);
         var expecting = GetExpectedTokens(recognizer);
         var msg = "extraneous input " + tokenName + " expecting " +
-            expecting.ToString(recognizer.GetVocabulary());
+            expecting.ToString(recognizer.Vocabulary);
         recognizer.NotifyErrorListeners(t, msg, null);
     }
 
@@ -426,7 +426,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 
         var t = recognizer.GetCurrentToken();
         var expecting = GetExpectedTokens(recognizer);
-        var msg = "missing " + expecting.ToString(recognizer.GetVocabulary()) +
+        var msg = "missing " + expecting.ToString(recognizer.Vocabulary) +
             " at " + GetTokenErrorDisplay(t);
 
         recognizer.NotifyErrorListeners(t, msg, null);
@@ -623,15 +623,15 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         }
         string tokenText;
         if (expectedTokenType == Token.EOF) tokenText = "<missing EOF>";
-        else tokenText = "<missing " + recognizer.GetVocabulary().GetDisplayName(expectedTokenType) + ">";
+        else tokenText = "<missing " + recognizer.Vocabulary.GetDisplayName(expectedTokenType) + ">";
         var current = currentSymbol;
-        var lookback = recognizer.InputStream.LT(-1);
+        var lookback = (recognizer.InputStream as TokenStream).LT(-1);
         if (current.Type == Token.EOF && lookback != null)
         {
             current = lookback;
         }
         return
-            (recognizer.TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(current.TokenSource, current.TokenSource.InputStream), expectedTokenType, tokenText,
+            (recognizer.TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(current.TokenSource, current.TokenSource.CharInputStream), expectedTokenType, tokenText,
                             Token.DEFAULT_CHANNEL,
                             -1, -1,
                             current.Line, current.CharPositionInLine);

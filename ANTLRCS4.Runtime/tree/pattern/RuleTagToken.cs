@@ -88,7 +88,7 @@ public class RuleTagToken : Token
 	 * <p>Rule tag tokens are always placed on the {@link #DEFAULT_CHANNEL}.</p>
 	 */
     //@Override
-    public int Channel { get => Token.DEFAULT_CHANNEL; set ; }
+    public int Channel { get => Token.DEFAULT_CHANNEL; set { } }
 
     /**
 	 * {@inheritDoc}
@@ -101,7 +101,7 @@ public class RuleTagToken : Token
     {
         get => label != null ? "<" + label + ":" + ruleName + ">" : "<" + ruleName + ">";
 
-        set ;
+		set { }
     }
 
     /**
@@ -151,7 +151,7 @@ public class RuleTagToken : Token
 	 * <p>The implementation for {@link RuleTagToken} always returns -1.</p>
 	 */
     //@Override
-    public int StopIndex { get => -1; set =>{ } }
+    public int StopIndex { get => -1; set { } }
 
     /**
 	 * {@inheritDoc}

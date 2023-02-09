@@ -48,7 +48,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int Line => 0;
 
         ////@Override
-        public CharStream InputStream => null;
+        public CharStream CharInputStream => null;
 
         ////@Override
         ////@Override
@@ -117,7 +117,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int Line => 0;
 
         //@Override
-        public CharStream InputStream => null;
+        public CharStream CharInputStream => null;
 
         //@Override
         //@Override
@@ -195,7 +195,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int CharPositionInLine => 0;
 
         //@Override
-        public CharStream InputStream => null;
+        public CharStream CharInputStream => null;
 
         //@Override
         public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;
@@ -233,7 +233,7 @@ public class TestCommonTokenStream : TestBufferedTokenStream
         public int CharPositionInLine => 0;
 
         //@Override
-        public CharStream InputStream => null;
+        public CharStream CharInputStream => null;
 
         //@Override
         public String SourceName => IntStream.UNKNOWN_SOURCE_NAME;

@@ -44,7 +44,7 @@ public class LeftRecursionDetector
         //Console.Out.WriteLine("cycles="+listOfRecursiveCycles);
         if (listOfRecursiveCycles.Count > 0)
         {
-            g.Tools.ErrMgr.leftRecursionCycles(g.fileName, listOfRecursiveCycles);
+            g.Tools.ErrMgr.LeftRecursionCycles(g.fileName, listOfRecursiveCycles);
         }
     }
 

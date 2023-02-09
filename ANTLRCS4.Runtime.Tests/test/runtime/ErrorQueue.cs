@@ -10,65 +10,73 @@ using System.Text;
 
 namespace org.antlr.v4.test.runtime;
 
-public class ErrorQueue : ANTLRToolListener {
-	public readonly Tool tool;
-	public readonly List<string> infos = new ();
-	public readonly List<ANTLRMessage> errors = new ();
-	public readonly List<ANTLRMessage> warnings = new ();
-	public readonly List<ANTLRMessage> all = new ();
+public class ErrorQueue : ANTLRToolListener
+{
+    public readonly Tool tool;
+    public readonly List<string> infos = new();
+    public readonly List<ANTLRMessage> errors = new();
+    public readonly List<ANTLRMessage> warnings = new();
+    public readonly List<ANTLRMessage> all = new();
 
-	
-	public ErrorQueue(Tool tool = null) {
-		this.tool = tool;
-	}
 
-	////@Override
-	public void Info(string msg)
-	{
-		infos.Add(msg);
-	}
+    public ErrorQueue(Tool tool = null)
+    {
+        this.tool = tool;
+    }
 
-	////@Override
-	public void Error(ANTLRMessage msg) {
-		errors.Add(msg);
+    public virtual void Info(string msg)
+    {
+        infos.Add(msg);
+    }
+
+    ////@Override
+    public virtual void Error(ANTLRMessage msg)
+    {
+        errors.Add(msg);
         all.Add(msg);
-	}
+    }
 
-	////@Override
-	public void Warning(ANTLRMessage msg) {
-		warnings.Add(msg);
+    ////@Override
+    public virtual void Warning(ANTLRMessage msg)
+    {
+        warnings.Add(msg);
         all.Add(msg);
-	}
+    }
 
-	public void Error(ToolMessage msg) {
-		errors.Add(msg);
-		all.Add(msg);
-	}
+    public virtual void Error(ToolMessage msg)
+    {
+        errors.Add(msg);
+        all.Add(msg);
+    }
 
     public int Count => all.Count + infos.Count;
 
     ////@Override
     public override string ToString() => ToString(false);
 
-    public string ToString(bool rendered) {
-		if (!rendered) {
-			return RuntimeUtils.Join(all, "\n");
-		}
+    public string ToString(bool rendered)
+    {
+        if (!rendered)
+        {
+            return RuntimeUtils.Join(all, "\n");
+        }
 
-		if (tool == null) {
-			throw new IllegalStateException(
-				$"No {nameof(Tool)} instance is available.");
-		}
+        if (tool == null)
+        {
+            throw new IllegalStateException(
+                $"No {nameof(Tool)} instance is available.");
+        }
 
-		var buffer = new StringBuilder();
-		foreach (var m in all) {
-			var st = tool.ErrMgr.getMessageTemplate(m);
-			buffer.Append(st.Render());
-			buffer.Append('\n');
-		}
+        var buffer = new StringBuilder();
+        foreach (var m in all)
+        {
+            var st = tool.ErrMgr.GetMessageTemplate(m);
+            buffer.Append(st.Render());
+            buffer.Append('\n');
+        }
 
-		return buffer.ToString();
-	}
+        return buffer.ToString();
+    }
 
 }
 

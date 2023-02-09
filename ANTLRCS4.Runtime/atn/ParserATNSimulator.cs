@@ -378,7 +378,7 @@ public class ParserATNSimulator : ATNSimulator
             }
 
             int alt = ExecATN(dfa, s0, input, index, outerContext);
-            if (debug) Console.WriteLine("DFA after predictATN: " + dfa.ToString(parser.GetVocabulary()));
+            if (debug) Console.WriteLine("DFA after predictATN: " + dfa.ToString(parser.Vocabulary));
             return alt;
         }
         finally
@@ -1837,7 +1837,7 @@ public class ParserATNSimulator : ATNSimulator
 
 
     public virtual string GetRuleName(int index) 
-        => parser != null && index >= 0 ? parser.GetRuleNames()[index] : "<rule " + index + ">";
+        => parser != null && index >= 0 ? parser.RuleNames[index] : "<rule " + index + ">";
 
 
     protected virtual ATNConfig GetEpsilonTarget(ATNConfig config,
@@ -2063,7 +2063,7 @@ public class ParserATNSimulator : ATNSimulator
             return "EOF";
         }
 
-        Vocabulary vocabulary = parser != null ? parser.GetVocabulary() : VocabularyImpl.EMPTY_VOCABULARY;
+        Vocabulary vocabulary = parser != null ? parser.Vocabulary : VocabularyImpl.EMPTY_VOCABULARY;
         String displayName = vocabulary.GetDisplayName(t);
         if (displayName.Equals((t.ToString())))
         {
@@ -2184,7 +2184,7 @@ public class ParserATNSimulator : ATNSimulator
 
         if (debug)
         {
-            Console.WriteLine("DFA=\n" + dfa.ToString(parser != null ? parser.GetVocabulary() : VocabularyImpl.EMPTY_VOCABULARY));
+            Console.WriteLine("DFA=\n" + dfa.ToString(parser != null ? parser.Vocabulary : VocabularyImpl.EMPTY_VOCABULARY));
         }
 
         return to;

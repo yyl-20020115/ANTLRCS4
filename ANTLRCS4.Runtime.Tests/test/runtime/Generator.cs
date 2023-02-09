@@ -62,7 +62,7 @@ public static class Generator
         {
             antlr.addListener(new DefaultToolListener(antlr));
         }
-        antlr.processGrammarsOnCommandLine();
+        antlr.ProcessGrammarsOnCommandLine();
 
         List<string> errors = new();
 
@@ -71,7 +71,7 @@ public static class Generator
             for (int i = 0; i < equeue.errors.Count; i++)
             {
                 var msg = equeue.errors[(i)];
-                var msgST = antlr.ErrMgr.getMessageTemplate(msg);
+                var msgST = antlr.ErrMgr.GetMessageTemplate(msg);
                 errors.Add(msgST.Render());
             }
         }

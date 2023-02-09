@@ -175,7 +175,7 @@ public class LeftRecursiveRuleTransformer
     public RuleAST ParseArtificialRule(Grammar g, String ruleText)
     {
         var lexer = new ANTLRLexer(new ANTLRStringStream(ruleText));
-        var adaptor = new GrammarASTAdaptor(lexer.getCharStream());
+        var adaptor = new GrammarASTAdaptor(lexer.CharStream);
         var tokens = new CommonTokenStream(lexer);
         lexer.tokens = tokens;
         var p = new ToolANTLRParser(tokens, tool)
@@ -194,7 +194,7 @@ public class LeftRecursiveRuleTransformer
         }
         catch (Exception e)
         {
-            tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR,
+            tool.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR,
                                   e,
                                   ruleStart,
                                   "error parsing rule created during left-recursion detection: " + ruleText);

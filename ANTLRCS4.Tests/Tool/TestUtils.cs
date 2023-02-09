@@ -28,7 +28,7 @@ public class TestUtils
     public void TestSortLinesInString()
     {
         Assert.AreEqual("bar\nbaz\nfoo\n",
-            Utils.sortLinesInString("foo\nbar\nbaz"));
+            Utils.SortLinesInString("foo\nbar\nbaz"));
     }
 
     [TestMethod]

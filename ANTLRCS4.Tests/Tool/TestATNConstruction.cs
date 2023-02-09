@@ -618,12 +618,12 @@ public class TestATNConstruction
             tool.removeListeners();
             tool.addListener(errorQueue);
             Assert.AreEqual(0, errorQueue.Count);
-            GrammarRootAST grammarRootAST = tool.parseGrammarFromString(gstr);
+            GrammarRootAST grammarRootAST = tool.ParseGrammarFromString(gstr);
             Assert.AreEqual(0, errorQueue.Count);
-            Grammar g = tool.createGrammar(grammarRootAST);
+            Grammar g = tool.CreateGrammar(grammarRootAST);
             Assert.AreEqual(0, errorQueue.Count);
             g.fileName = "<string>";
-            tool.process(g, false);
+            tool.Process(g, false);
         }
         catch (Exception e)
         {

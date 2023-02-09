@@ -321,7 +321,7 @@ public class UnbufferedTokenStream : TokenStream
         var buffer = new StringBuilder();
         for (int i = a; i <= b; i++)
         {
-            vars t = tokens[i];
+            var t = tokens[i];
             buffer.Append(t.Text);
         }
 

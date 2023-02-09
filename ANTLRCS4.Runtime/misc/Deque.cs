@@ -54,7 +54,7 @@ public interface Deque<T>
 
     bool Contains(Object o);
 
-    int Size();
+    int Count { get; }
 
     IEnumerator<T> Iterator();
 

@@ -193,7 +193,7 @@ public class ToolTestUtils
             { // process imported grammars (if any)
                 foreach (var imp in gammar.getImportedGrammars())
                 {
-                    antlr.processNonCombinedGrammar(imp, false);
+                    antlr.ProcessNonCombinedGrammar(imp, false);
                 }
             }
         }

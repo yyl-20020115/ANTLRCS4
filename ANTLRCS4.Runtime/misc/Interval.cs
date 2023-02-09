@@ -12,7 +12,7 @@ public class Interval
 
     public static readonly Interval INVALID = new (-1, -2);
 
-    static readonly Interval[] cache = new [INTERVAL_POOL_MAX_VALUE + 1];
+    static readonly Interval[] cache = new Interval[INTERVAL_POOL_MAX_VALUE + 1];
 
     public int a;
     public int b;

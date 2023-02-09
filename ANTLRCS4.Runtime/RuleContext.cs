@@ -220,7 +220,7 @@ public class RuleContext : RuleNode
     // recog null unless ParserRuleContext, in which case we use subclass toString(...)
     public virtual string ToString(Recognizer recog, RuleContext stop)
     {
-        var ruleNames = recog != null ? recog.GetRuleNames() : null;
+        var ruleNames = recog != null ? recog.RuleNames : null;
         List<string> ruleNamesList = ruleNames != null ? new List<string>(ruleNames) : null;
         return ToString(ruleNamesList, stop);
     }

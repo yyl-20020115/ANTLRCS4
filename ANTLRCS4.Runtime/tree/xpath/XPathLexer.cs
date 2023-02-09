@@ -64,8 +64,7 @@ public class XPathLexer : Lexer
     //@Override
     public override string GrammarFileName => "XPathLexer.g4";
     //@Override
-    public override string[] GetRuleNames() { return ruleNames; }
-
+    public override string[] RuleNames => ruleNames;
     //@Override
     public override string[] ModeNames => modeNames;
     //@Override
@@ -73,10 +72,7 @@ public class XPathLexer : Lexer
     public override string[] TokenNames => tokenNames;
 
     //@Override
-    public virtual Vocabulary getVocabulary()
-    {
-        return VOCABULARY;
-    }
+    public virtual Vocabulary Vocabulary => VOCABULARY;
 
     //@Override
     public override ATN ATN => null;

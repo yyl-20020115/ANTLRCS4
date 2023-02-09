@@ -115,7 +115,7 @@ public class GrammarTransformPipeline {
 
 					elWithOpt.token = newTok;
 
-					GrammarAST originalNode = g.ast.getNodeWithTokenIndex(newTok.getTokenIndex());
+					GrammarAST originalNode = g.ast.getNodeWithTokenIndex(newTok.TokenIndex);
 					if (originalNode != null) {
 						// update the AST node start/stop index to match the values
 						// of the corresponding node in the original parse tree.
@@ -126,8 +126,8 @@ public class GrammarTransformPipeline {
 						// the original AST node could not be located by index;
 						// make sure to assign valid values for the start/stop
 						// index so toTokenString will not throw exceptions.
-						elWithOpt.setTokenStartIndex(newTok.getTokenIndex());
-						elWithOpt.setTokenStopIndex(newTok.getTokenIndex());
+						elWithOpt.setTokenStartIndex(newTok.TokenIndex);
+						elWithOpt.setTokenStopIndex(newTok.TokenIndex);
 					}
 				}
 			}

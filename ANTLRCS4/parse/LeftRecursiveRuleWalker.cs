@@ -133,7 +133,6 @@ public class LeftRecursiveRuleWalker : TreeParser
         dfa14 = new DFA14(this);
     }
 
-    //@Override
     public override string[] TokenNames => tokenNames;
     //@Override
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g";
@@ -146,7 +145,9 @@ public class LeftRecursiveRuleWalker : TreeParser
     public virtual void SetAltAssoc(AltAST altTree, int alt) { }
     public virtual void BinaryAlt(AltAST altTree, int alt) { }
     public virtual void SprefixAlt(AltAST altTree, int alt) { }
+    public virtual void PrefixAlt(AltAST altTree, int alt) { }
     public virtual void SuffixAlt(AltAST altTree, int alt) { }
+
     public virtual void OtherAlt(AltAST altTree, int alt) { }
     public virtual void SetReturnValues(GrammarAST t) { }
 
@@ -285,7 +286,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                                             case 1:
                                                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:75:21: .
                                                 {
-                                                    matchAny(input); if (state.failed) return isLeftRec;
+                                                    MatchAny(input); if (state.failed) return isLeftRec;
                                                 }
                                                 break;
 
@@ -643,7 +644,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                         Prefix();
                         state._fsp--;
                         if (state.failed) return retval;
-                        if (state.backtracking == 0) { prefixAlt((AltAST)((GrammarAST)retval.start), currentOuterAltNumber); }
+                        if (state.backtracking == 0) { PrefixAlt((AltAST)((GrammarAST)retval.start), currentOuterAltNumber); }
                     }
                     break;
                 case 3:
@@ -2663,7 +2664,7 @@ public class LeftRecursiveRuleWalker : TreeParser
         int start = input.Mark();
         try
         {
-            synpred1LeftRecursiveRuleWalkerFragment(); // can never throw exception
+            Synpred1LeftRecursiveRuleWalkerFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -2710,6 +2711,21 @@ public class LeftRecursiveRuleWalker : TreeParser
         state.backtracking--;
         state.failed = false;
         return success;
+    }
+    // $ANTLR end "atom"
+
+    // $ANTLR start synpred1_LeftRecursiveRuleWalker
+    public void Synpred1LeftRecursiveRuleWalkerFragment()
+    {
+        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:9: ( binary )
+        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:10: binary
+        {
+            PushFollow(FOLLOW_binary_in_synpred1_LeftRecursiveRuleWalker348);
+            Binary();
+            state._fsp--;
+            if (state.failed) return;
+        }
+
     }
 
 
@@ -2835,10 +2851,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             this.transition = DFA11_transition;
         }
         //@Override
-        public override string GetDescription()
-        {
-            return "()* loopback of 124:35: ( element )*";
-        }
+        public override string Description => "()* loopback of 124:35: ( element )*";
     }
 
     //static final short[] DFA14_eot = DFA.unpackEncodedString(DFA14_eotS);
@@ -2959,10 +2972,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             this.special = DFA14_special;
             this.transition = DFA14_transition;
         }
-        public override string GetDescription()
-        {
-            return "()+ loopback of 130:4: ( element )+";
-        }
+        public override string Description => "()+ loopback of 130:4: ( element )+";
     }
 
     public static readonly BitSet FOLLOW_RULE_in_rec_rule72 = new BitSet(new long[] { 0x0000000000000004L });

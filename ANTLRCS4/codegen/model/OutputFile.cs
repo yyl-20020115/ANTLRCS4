@@ -20,7 +20,7 @@ public abstract class OutputFile : OutputModelObject
     public OutputFile(OutputModelFactory factory, string fileName) : base(factory)
     {
         this.fileName = fileName;
-        var g = factory.GetGrammar();
+        var g = factory.Grammar;
         grammarFileName = g.fileName;
         ANTLRVersion = Tool.VERSION;
         TokenLabelType = g.getOptionString("TokenLabelType");

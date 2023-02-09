@@ -413,7 +413,7 @@ public class LexerATNSimulator : ATNSimulator
             {
                 if (recog != null)
                 {
-                    Console.Out.WriteLine("closure at %s rule stop %s", recog.GetRuleNames()[config.state.ruleIndex], config);
+                    Console.Out.WriteLine("closure at %s rule stop %s", recog.RuleNames[config.state.ruleIndex], config);
                 }
                 else
                 {

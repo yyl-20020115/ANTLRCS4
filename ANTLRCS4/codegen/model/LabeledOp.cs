@@ -12,5 +12,5 @@ namespace org.antlr.v4.codegen.model;
 /** All the rule elements we can label like tokens, rules, sets, wildcard. */
 public interface LabeledOp
 {
-    public List<Decl> GetLabels();
+    public List<Decl> Labels { get; }
 }

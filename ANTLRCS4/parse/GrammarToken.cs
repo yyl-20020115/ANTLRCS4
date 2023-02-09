@@ -22,52 +22,59 @@ public class GrammarToken : CommonToken
         this.g = g;
     }
 
-    //@Override
-    public override int GetCharPositionInLine()
-    {
-        if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).CharPositionInLine;
-        return base.CharPositionInLine;
-    }
+  
+    public override int CharPositionInLine {
+        get {
+            if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).CharPositionInLine;
+            return base.CharPositionInLine;
+        } 
+        set => base.CharPositionInLine = value; }
 
     //@Override
-    public int getLine()
+    public override int Line
     {
-        if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).Line;
-        return base.Line;
-    }
-
-    //@Override
-    public int getTokenIndex()
-    {
-        return originalTokenIndex;
-    }
-
-    //@Override
-    public int getStartIndex()
-    {
-        if (originalTokenIndex >= 0)
+        get
         {
-            return ((CommonToken)g.originalTokenStream.Get(originalTokenIndex)).StartIndex;
+            if (originalTokenIndex >= 0) return g.originalTokenStream.Get(originalTokenIndex).Line;
+            return base.Line;
         }
-        return base.StartIndex;
+        set => base.Line = value;
     }
 
     //@Override
-    public int getStopIndex()
+    public int TokenIndex => originalTokenIndex;
+
+    //@Override
+    public int StartIndex
     {
-        int n = base.StopIndex - base.StartIndex + 1;
-        return getStartIndex() + n - 1;
+        get
+        {
+            if (originalTokenIndex >= 0)
+            {
+                return ((CommonToken)g.originalTokenStream.Get(originalTokenIndex)).StartIndex;
+            }
+            return base.StartIndex;
+        }
     }
 
     //@Override
-    public String toString()
+    public int StopIndex
     {
-        String channelStr = "";
+        get
+        {
+            int n = base.StopIndex - base.StartIndex + 1;
+            return StartIndex + n - 1;
+        }
+    }
+
+    public override string ToString()
+    {
+        var channelStr = "";
         if (channel > 0)
         {
             channelStr = ",channel=" + channel;
         }
-        String txt = Text;
+        var txt = Text;
         if (txt != null)
         {
             txt = txt.Replace("\n", "\\\\n");
@@ -78,7 +85,7 @@ public class GrammarToken : CommonToken
         {
             txt = "<no text>";
         }
-        return "[@" + getTokenIndex() + "," + getStartIndex() + ":" + getStopIndex() +
-               "='" + txt + "',<" + Type + ">" + channelStr + "," + getLine() + ":" + CharPositionInLine + "]";
+        return "[@" + TokenIndex + "," + StartIndex + ":" + StopIndex +
+               "='" + txt + "',<" + Type + ">" + channelStr + "," + Line + ":" + CharPositionInLine + "]";
     }
 }

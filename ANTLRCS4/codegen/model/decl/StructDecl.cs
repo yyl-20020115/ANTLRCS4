@@ -44,7 +44,7 @@ public class StructDecl : Decl
     {
     }
 
-    protected StructDecl(OutputModelFactory factory, Rule r, String name) : base(factory, name == null ? factory.GetGenerator().Target.GetRuleFunctionContextStructName(r) : name)
+    protected StructDecl(OutputModelFactory factory, Rule r, String name) : base(factory, name == null ? factory.Generator.Target.GetRuleFunctionContextStructName(r) : name)
     {
         AddDispatchMethods(r);
         derivedFromName = r.name;
@@ -57,12 +57,12 @@ public class StructDecl : Decl
         if (!r.hasAltSpecificContexts())
         {
             // no enter/exit for this ruleContext if rule has labels
-            if (factory.GetGrammar().Tools.gen_listener)
+            if (factory.Grammar.Tools.gen_listener)
             {
                 dispatchMethods.Add(new ListenerDispatchMethod(factory, true));
                 dispatchMethods.Add(new ListenerDispatchMethod(factory, false));
             }
-            if (factory.GetGrammar().Tools.gen_visitor)
+            if (factory.Grammar.Tools.gen_visitor)
             {
                 dispatchMethods.Add(new VisitorDispatchMethod(factory));
             }

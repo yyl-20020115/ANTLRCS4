@@ -19,7 +19,7 @@ public class LL1AltBlock : LL1Choice
         this.decision = (blkAST.atnState as DecisionState).decision;
 
         /** Lookahead for each alt 1..n */
-        var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
+        var altLookSets = factory.Grammar.decisionLOOK[(decision)];
         altLook = GetAltLookaheadAsStringLists(altLookSets);
 
         var expecting = IntervalSet.Or(altLookSets); // combine alt sets

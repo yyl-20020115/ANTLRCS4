@@ -38,8 +38,8 @@ public abstract class Recognizer : OutputModelObject
 
     public Recognizer(OutputModelFactory factory) : base(factory)
     {
-        var g = factory.GetGrammar();
-        var gen = factory.GetGenerator();
+        var g = factory.Grammar;
+        var gen = factory.Generator;
         grammarFileName = g.fileName;
         grammarName = g.name;
         name = g.getRecognizerName();

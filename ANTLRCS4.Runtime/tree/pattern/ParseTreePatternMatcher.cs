@@ -188,8 +188,8 @@ public class ParseTreePatternMatcher
         var tokens = new CommonTokenStream(tokenSrc);
 
         var parserInterp = new ParserInterpreter(parser.GrammarFileName,
-                                                               parser.GetVocabulary(),
-                                                               parser.GetRuleNames(),
+                                                               parser.                                                               Vocabulary,
+                                                               parser.                                                               RuleNames,
                                                                parser.GetATNWithBypassAlts(),
                                                                tokens);
 
@@ -197,7 +197,7 @@ public class ParseTreePatternMatcher
         try
         {
             parserInterp.            ErrorHandler = new BailErrorStrategy();
-            tree = parserInterp.parse(patternRuleIndex);
+            tree = parserInterp.Parse(patternRuleIndex);
             //			Console.Out.WriteLine("pattern tree = "+tree.toStringTree(parserInterp));
         }
         catch (ParseCancellationException e)

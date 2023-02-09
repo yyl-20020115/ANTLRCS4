@@ -14,7 +14,7 @@ public class SerializedJavaATN : SerializedATN
         data = ATNDeserializer.EncodeIntsWith16BitWords(data);
 
         int size = data.Size;
-        var target = factory.GetGenerator().Target;
+        var target = factory.Generator.Target;
         int segmentLimit = target.GetSerializedATNSegmentLimit();
         segments = new string[(int)(((long)size + segmentLimit - 1) / segmentLimit)][];
         int segmentIndex = 0;

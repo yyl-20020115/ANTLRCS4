@@ -129,29 +129,23 @@ public class ParserInterpreter : Parser
     public override String[] TokenNames => tokenNames;
 
     //@Override
-    public virtual Vocabulary getVocabulary()
-    {
-        return vocabulary;
-    }
+    public virtual Vocabulary Vocabulary => vocabulary;
 
     //@Override
-    public override String[] GetRuleNames()
-    {
-        return ruleNames;
-    }
+    public override String[] RuleNames => ruleNames;
 
     //@Override
     public override String GrammarFileName => grammarFileName;
 
     /** Begin parsing at startRuleIndex */
-    public ParserRuleContext parse(int startRuleIndex)
+    public ParserRuleContext Parse(int startRuleIndex)
     {
-        RuleStartState startRuleStartState = atn.ruleToStartState[startRuleIndex];
+        var startRuleStartState = atn.ruleToStartState[startRuleIndex];
 
         rootContext = createInterpreterRuleContext(null, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
         if (startRuleStartState.isLeftRecursiveRule)
         {
-            enterRecursionRule(rootContext, startRuleStartState.stateNumber, startRuleIndex, 0);
+            EnterRecursionRule(rootContext, startRuleStartState.stateNumber, startRuleIndex, 0);
         }
         else
         {
@@ -160,7 +154,7 @@ public class ParserInterpreter : Parser
 
         while (true)
         {
-            ATNState p = getATNState();
+            ATNState p = GetATNState();
             switch (p.StateType)
             {
                 case ATNState.RULE_STOP:
@@ -203,14 +197,14 @@ public class ParserInterpreter : Parser
     }
 
     //@Override
-    public void enterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
+    public override void EnterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
     {
         Pair<ParserRuleContext, int> pair = new Pair<ParserRuleContext, int>(_ctx, localctx.invokingState);
         _parentContextStack.Push(pair);
         base.EnterRecursionRule(localctx, state, ruleIndex, precedence);
     }
 
-    protected ATNState getATNState()
+    protected ATNState GetATNState()
     {
         return atn.states[(State)];
     }
@@ -268,7 +262,7 @@ public class ParserInterpreter : Parser
                 InterpreterRuleContext newctx = createInterpreterRuleContext(_ctx, p.stateNumber, ruleIndex);
                 if (ruleStartState.isLeftRecursiveRule)
                 {
-                    enterRecursionRule(newctx, ruleStartState.stateNumber, ruleIndex, ((RuleTransition)transition).precedence);
+                    EnterRecursionRule(newctx, ruleStartState.stateNumber, ruleIndex, ((RuleTransition)transition).precedence);
                 }
                 else
                 {
@@ -431,7 +425,7 @@ public class ParserInterpreter : Parser
                     expectedTokenType = ime.GetExpectedTokens().GetMinElement(); // get any element
                 }
                 Token errToken =
-                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.CharInputStream),
                                              expectedTokenType, tok.Text,
                                              Token.DEFAULT_CHANNEL,
                                             -1, -1, // invalid start/stop
@@ -442,7 +436,7 @@ public class ParserInterpreter : Parser
             { // NoViableAlt
                 Token tok = e.OffendingToken;
                 Token errToken =
-                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.InputStream),
+                    (TokenFactory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(tok.TokenSource, tok.TokenSource.CharInputStream),
                                              Token.INVALID_TYPE, tok.Text,
                                              Token.DEFAULT_CHANNEL,
                                             -1, -1, // invalid start/stop
@@ -465,9 +459,6 @@ public class ParserInterpreter : Parser
 	 *
 	 * @since 4.5.1
 	 */
-    public InterpreterRuleContext getRootContext()
-    {
-        return rootContext;
-    }
+    public InterpreterRuleContext RootContext => rootContext;
 }
 

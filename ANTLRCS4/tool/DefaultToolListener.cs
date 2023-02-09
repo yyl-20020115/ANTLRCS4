@@ -14,7 +14,7 @@ public class DefaultToolListener : ANTLRToolListener {
 
 	//@Override
 	public void Info(String msg) {
-		if (tool.ErrMgr.formatWantsSingleLineMessage()) {
+		if (tool.ErrMgr.FormatWantsSingleLineMessage()) {
 			msg = msg.Replace('\n', ' ');
 		}
 		Console.Out.WriteLine(msg);
@@ -22,9 +22,9 @@ public class DefaultToolListener : ANTLRToolListener {
 
 	//@Override
 	public void Error(ANTLRMessage msg) {
-		var msgST = tool.ErrMgr.getMessageTemplate(msg);
+		var msgST = tool.ErrMgr.GetMessageTemplate(msg);
 		String outputMsg = msgST.Render();
-		if (tool.ErrMgr.formatWantsSingleLineMessage()) {
+		if (tool.ErrMgr.FormatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.Replace('\n', ' ');
 		}
 		Console.Error.WriteLine(outputMsg);
@@ -32,9 +32,9 @@ public class DefaultToolListener : ANTLRToolListener {
 
 	//@Override
 	public void Warning(ANTLRMessage msg) {
-		var msgST = tool.ErrMgr.getMessageTemplate(msg);
+		var msgST = tool.ErrMgr.GetMessageTemplate(msg);
 		String outputMsg = msgST.Render();
-		if (tool.ErrMgr.formatWantsSingleLineMessage()) {
+		if (tool.ErrMgr.FormatWantsSingleLineMessage()) {
 			outputMsg = outputMsg.Replace('\n', ' ');
 		}
 		Console.Error.WriteLine(outputMsg);

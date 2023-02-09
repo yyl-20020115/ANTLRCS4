@@ -253,7 +253,7 @@ public class CommonToken : WritableToken /*Serializable*/
         var typeString = type.ToString();// String.valueOf(type);
         if (r != null)
         {
-            typeString = r.GetVocabulary().GetDisplayName(type);
+            typeString = r.Vocabulary.GetDisplayName(type);
         }
         return "[@" + TokenIndex + "," + start + ":" + stop + "='" + txt + "',<" + typeString + ">" + channelStr + "," + line + ":" + CharPositionInLine + "]";
     }

@@ -47,7 +47,7 @@ public class CodeGenerator
         }
         catch (Exception e)
         {
-            g.Tools.ErrMgr.toolError(ErrorType.CANNOT_CREATE_TARGET_GENERATOR, e, language);
+            g.Tools.ErrMgr.ToolError(ErrorType.CANNOT_CREATE_TARGET_GENERATOR, e, language);
             return null;
         }
     }
@@ -76,7 +76,7 @@ public class CodeGenerator
     private Template Walk(OutputModelObject outputModel, bool header)
     {
         var walker = new OutputModelWalker(tool, Templates);
-        return walker.walk(outputModel, header);
+        return walker.Walk(outputModel, header);
     }
 
     public Template GenerateLexer() => GenerateLexer(false);
@@ -120,7 +120,7 @@ public class CodeGenerator
         vocabFileST.Add("tokens", tokens);
 
         // now dump the strings
-        var literals = new Dictionary<String, int>();
+        var literals = new Dictionary<string, int>();
         foreach (var literal in g.stringLiteralToTypeMap.Keys)
         {
             int tokenType = g.stringLiteralToTypeMap[literal];
@@ -161,7 +161,7 @@ public class CodeGenerator
         try
         {
             //			long start = System.currentTimeMillis();
-            var w = tool.getOutputFileWriter(g, fileName);
+            var w = tool.GetOutputFileWriter(g, fileName);
             var wr = new AutoIndentWriter(w)
             {
                 LineWidth = (lineWidth)
@@ -172,7 +172,7 @@ public class CodeGenerator
         }
         catch (IOException ioe)
         {
-            tool.ErrMgr.toolError(ErrorType.CANNOT_WRITE_FILE,
+            tool.ErrMgr.ToolError(ErrorType.CANNOT_WRITE_FILE,
                                   ioe,
                                   fileName);
         }

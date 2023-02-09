@@ -75,7 +75,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     /** Return a token from this source; i.e., match a token on the char
      *  stream.
      */
-    public Token NextToken()
+    public virtual Token NextToken()
     {
         while (true)
         {
@@ -115,7 +115,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
             catch (RecognitionException re)
             {
                 ReportError(re);
-                recover(re); // throw out current char and try again
+                Recover(re); // throw out current char and try again
             }
         }
     }
@@ -205,7 +205,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
                 }
                 var mte =
                     new MismatchedTokenException(s[i], input);
-                recover(mte);
+                Recover(mte);
                 throw mte;
             }
             i++;
@@ -230,7 +230,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
             }
             var mte =
                 new MismatchedTokenException(c, input);
-            recover(mte);  // don't really recover; just consume in lexer
+            Recover(mte);  // don't really recover; just consume in lexer
             throw mte;
         }
         input.Consume();
@@ -248,7 +248,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
             }
             var mre =
                 new MismatchedRangeException(a, b, input);
-            recover(mre);
+            Recover(mre);
             throw mre;
         }
         input.Consume();
@@ -292,32 +292,32 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     {
         string msg;
         if (e is MismatchedTokenException mte) {
-            msg = "mismatched character " + getCharErrorDisplay(e.c) + " expecting " + getCharErrorDisplay(mte.expecting);
+            msg = "mismatched character " + GetCharErrorDisplay(e.c) + " expecting " + GetCharErrorDisplay(mte.expecting);
         }
 
         else if (e is NoViableAltException nvae) {
             // for development, can add "decision=<<"+nvae.grammarDecisionDescription+">>"
             // and "(decision="+nvae.decisionNumber+") and
             // "state "+nvae.stateNumber
-            msg = "no viable alternative at character " + getCharErrorDisplay(e.c);
+            msg = "no viable alternative at character " + GetCharErrorDisplay(e.c);
         }
 
         else if (e is EarlyExitException eee) {
             // for development, can add "(decision="+eee.decisionNumber+")"
-            msg = "required (...)+ loop did not match anything at character " + getCharErrorDisplay(e.c);
+            msg = "required (...)+ loop did not match anything at character " + GetCharErrorDisplay(e.c);
         }
 
         else if (e is MismatchedNotSetException mse) {
-            msg = "mismatched character " + getCharErrorDisplay(e.c) + " expecting set " + mse.expecting;
+            msg = "mismatched character " + GetCharErrorDisplay(e.c) + " expecting set " + mse.expecting;
         }
 
         else if (e is MismatchedSetException mse1) {
-            msg = "mismatched character " + getCharErrorDisplay(e.c) + " expecting set " + mse1.expecting;
+            msg = "mismatched character " + GetCharErrorDisplay(e.c) + " expecting set " + mse1.expecting;
         }
 
         else if (e is MismatchedRangeException mre) {
-            msg = "mismatched character " + getCharErrorDisplay(e.c) + " expecting set " +
-                  getCharErrorDisplay(mre.a) + ".." + getCharErrorDisplay(mre.b);
+            msg = "mismatched character " + GetCharErrorDisplay(e.c) + " expecting set " +
+                  GetCharErrorDisplay(mre.a) + ".." + GetCharErrorDisplay(mre.b);
         }
 
         else
@@ -372,7 +372,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         base.TraceOut(ruleName, ruleIndex, inputSymbol);
     }
 
-    public CharStream InputStream => throw new NotImplementedException();
+    public CharStream CharInputStream => throw new NotImplementedException();
 
     public TokenFactory TokenFactory 
     { 

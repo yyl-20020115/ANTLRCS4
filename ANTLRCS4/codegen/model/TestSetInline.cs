@@ -31,7 +31,7 @@ public class TestSetInline : SrcOp
                                           bool useZeroOffset)
     {
         List<Bitset> bitsetList = new();
-        var target = factory.GetGenerator().Target;
+        var target = factory.Generator.Target;
         Bitset current = null;
         foreach (int ttype in set.ToArray())
         {
@@ -50,7 +50,7 @@ public class TestSetInline : SrcOp
                 bitsetList.Add(current);
             }
 
-            current.AddToken(ttype, target.GetTokenTypeAsTargetLabel(factory.GetGrammar(), ttype));
+            current.AddToken(ttype, target.GetTokenTypeAsTargetLabel(factory.Grammar, ttype));
         }
 
         return bitsetList.ToArray();
@@ -67,7 +67,7 @@ public class TestSetInline : SrcOp
             this.shift = shift;
         }
 
-        public void AddToken(int type, String name)
+        public void AddToken(int type, string name)
         {
             tokens.Add(new TokenInfo(type, name));
             calculated |= 1L << (type - shift);

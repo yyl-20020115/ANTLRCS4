@@ -41,8 +41,8 @@ public abstract class Choice : RuleElement
     public List<TokenInfo[]> GetAltLookaheadAsStringLists(IntervalSet[] altLookSets)
     {
         List<TokenInfo[]> altLook = new();
-        var target = factory.GetGenerator().Target;
-        var grammar = factory.GetGrammar();
+        var target = factory.Generator.Target;
+        var grammar = factory.Grammar;
         foreach (var s in altLookSets)
         {
             var list = s.ToIntegerList();
@@ -64,7 +64,7 @@ public abstract class Choice : RuleElement
         if (expr != null)
         {
             var d = new TokenTypeDecl(factory, expr.varName);
-            factory.GetCurrentRuleFunction().AddLocalDecl(d);
+            factory.            CurrentRuleFunction.AddLocalDecl(d);
             var nextType = new CaptureNextTokenType(factory, expr.varName);
             AddPreambleOp(nextType);
         }

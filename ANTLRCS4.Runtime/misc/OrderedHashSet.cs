@@ -80,7 +80,7 @@ public class OrderedHashSet<T> : HashSet<T>
         if (o is OrderedHashSet<T> t)
         {
             //		System.out.print("equals " + this + ", " + o+" = ");
-            bool same = _elements != null && _elements.Equals(t.elements);
+            bool same = _elements != null && _elements.Equals(t.Elements);
             //		Console.Out.WriteLine(same);
             return same;
         }
@@ -95,7 +95,7 @@ public class OrderedHashSet<T> : HashSet<T>
      */
     public List<T> Elements() => _elements;
 
-    public object Clone() => new (this);
+    public object Clone() => new OrderedHashSet<T>(this);
 
     public T[] ToArray() => _elements.ToArray();
 

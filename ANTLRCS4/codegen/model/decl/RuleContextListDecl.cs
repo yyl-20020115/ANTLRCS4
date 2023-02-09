@@ -7,8 +7,5 @@ namespace org.antlr.v4.codegen.model.decl;
 
 public class RuleContextListDecl : RuleContextDecl
 {
-    public RuleContextListDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name, ctxName)
-    {
-        isImplicit = false;
-    }
+    public RuleContextListDecl(OutputModelFactory factory, string name, string ctxName) : base(factory, name, ctxName) => isImplicit = false;
 }

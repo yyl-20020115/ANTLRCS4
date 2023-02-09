@@ -322,7 +322,7 @@ public class BlockSetTransformer : TreeRewriter
                                         {
                                             _last = (GrammarAST)input.LT(1);
                                             wildcard2 = (GrammarAST)input.LT(1);
-                                            matchAny(input); if (state.failed) return retval;
+                                            MatchAny(input); if (state.failed) return retval;
 
                                             if (state.backtracking == 1)
                                                 if (_first_1 == null) _first_1 = wildcard2;
@@ -471,7 +471,7 @@ public class BlockSetTransformer : TreeRewriter
             // org\\antlr\\v4\\parse\\BlockSetTransformer.g:71:2: ({...}? ALT )
             // org\\antlr\\v4\\parse\\BlockSetTransformer.g:71:4: {...}? ALT
             {
-                if (!((inContext("RULE BLOCK"))))
+                if (!((InContext("RULE BLOCK"))))
                 {
                     if (state.backtracking > 0) { state.failed = true; return retval; }
                     throw new FailedPredicateException(input, "setAlt", "inContext(\"RULE BLOCK\")");
@@ -766,7 +766,7 @@ public class BlockSetTransformer : TreeRewriter
                 case 1:
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:97:4: {...}? ^( BLOCK ^(alt= ALT ( elementOptions )? {...}? setElement[inLexer] ) ( ^( ALT ( elementOptions )? setElement[inLexer] ) )+ )
                     {
-                        if (!((inContext("RULE"))))
+                        if (!((InContext("RULE"))))
                         {
                             if (state.backtracking > 0) { state.failed = true; return retval; }
                             throw new FailedPredicateException(input, "blockSet", "inContext(\"RULE\")");
@@ -997,7 +997,7 @@ public class BlockSetTransformer : TreeRewriter
                 case 2:
                     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:100:4: {...}? ^( BLOCK ^( ALT ( elementOptions )? setElement[inLexer] ) ( ^( ALT ( elementOptions )? setElement[inLexer] ) )+ )
                     {
-                        if (!((!inContext("RULE"))))
+                        if (!((!InContext("RULE"))))
                         {
                             if (state.backtracking > 0) { state.failed = true; return retval; }
                             throw new FailedPredicateException(input, "blockSet", "!inContext(\"RULE\")");
@@ -2170,8 +2170,8 @@ public class BlockSetTransformer : TreeRewriter
                     int index10_60 = input.Index;
                     input.Rewind();
                     s = -1;
-                    if (((this.transformer.inContext("RULE")))) { s = 70; }
-                    else if (((!this.transformer.inContext("RULE")))) { s = 71; }
+                    if (((this.transformer.InContext("RULE")))) { s = 70; }
+                    else if (((!this.transformer.InContext("RULE")))) { s = 71; }
 
                     input.Seek(index10_60);
                     if (s >= 0) return s;

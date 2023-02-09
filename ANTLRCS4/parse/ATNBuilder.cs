@@ -255,7 +255,7 @@ public class ATNBuilder : TreeParser
                                         case 1:
                                             // org\\antlr\\v4\\parse\\ATNBuilder.g:89:24: .
                                             {
-                                                matchAny(input);
+                                                MatchAny(input);
                                             }
                                             break;
 
@@ -381,7 +381,7 @@ public class ATNBuilder : TreeParser
                                         case 1:
                                             // org\\antlr\\v4\\parse\\ATNBuilder.g:99:26: .
                                             {
-                                                matchAny(input);
+                                                MatchAny(input);
                                             }
                                             break;
 
@@ -971,7 +971,7 @@ public class ATNBuilder : TreeParser
                     {
                         ACTION13 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element519);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.Action((ActionAST)ACTION13);
@@ -982,7 +982,7 @@ public class ATNBuilder : TreeParser
                     {
                         SEMPRED14 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element536);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.Sempred((PredAST)SEMPRED14);
@@ -1483,7 +1483,7 @@ public class ATNBuilder : TreeParser
                     {
                         Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement766);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                     }
@@ -1493,7 +1493,7 @@ public class ATNBuilder : TreeParser
                     {
                         Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement775);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                     }
@@ -1752,7 +1752,7 @@ public class ATNBuilder : TreeParser
                     {
                         Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom871);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.Wildcard(((GrammarAST)retval.start));
@@ -1976,7 +1976,7 @@ public class ATNBuilder : TreeParser
                                     case 1:
                                         // org\\antlr\\v4\\parse\\ATNBuilder.g:187:48: .
                                         {
-                                            matchAny(input);
+                                            MatchAny(input);
                                         }
                                         break;
 
@@ -2237,7 +2237,7 @@ public class ATNBuilder : TreeParser
                     {
                         Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal1069);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.StringLiteral((TerminalAST)((GrammarAST)retval.start));
@@ -2256,7 +2256,7 @@ public class ATNBuilder : TreeParser
                         Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1098);
                         Match(input, Token.DOWN, null);
                         Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal1100);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.TokenRef((TerminalAST)((GrammarAST)retval.start));
@@ -2267,7 +2267,7 @@ public class ATNBuilder : TreeParser
                     {
                         Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal1114);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         retval.p = factory.TokenRef((TerminalAST)((GrammarAST)retval.start));

@@ -17,10 +17,7 @@ public class TailEpsilonRemover : ATNVisitor
 
     private readonly ATN atn;
 
-    public TailEpsilonRemover(ATN atn)
-    {
-        this.atn = atn;
-    }
+    public TailEpsilonRemover(ATN atn) => this.atn = atn;
 
     public override void VisitState(ATNState p)
     {

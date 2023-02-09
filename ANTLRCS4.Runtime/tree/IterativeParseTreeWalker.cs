@@ -66,7 +66,7 @@ public class IterativeParseTreeWalker : ParseTreeWalker
                 }
 
                 // No parent, so no siblings
-                if (nodeStack.isEmpty())
+                if (nodeStack.IsEmpty)
                 {
                     currentNode = null;
                     currentIndex = 0;

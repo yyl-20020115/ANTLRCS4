@@ -8,7 +8,6 @@ using org.antlr.v4.codegen.model.chunk;
 using org.antlr.v4.codegen.model.decl;
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime.misc;
-using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
 
 namespace org.antlr.v4.codegen.model;
@@ -30,16 +29,16 @@ public class InvokeRule : RuleElement, LabeledOp
         if (ast.atnState != null)
             stateNumber = ast.atnState.stateNumber;
 
-        var gen = factory.getGenerator();
+        var gen = factory.Generator;
         var target = gen.Target;
         var identifier = ast.getText();
-        var r = factory.getGrammar().getRule(identifier);
+        var r = factory.Grammar.getRule(identifier);
         this.name = r.name;
         this.escapedName = gen.Target.EscapeIfNeeded(name);
         ctxName = target.GetRuleFunctionContextStructName(r);
 
         // TODO: move to factory
-        var rf = factory.getCurrentRuleFunction();
+        var rf = factory.CurrentRuleFunction;
         if (labelAST != null)
         {
             RuleContextDecl decl;
@@ -66,7 +65,7 @@ public class InvokeRule : RuleElement, LabeledOp
         }
 
         // If action refs rule as rulename not label, we need to define implicit label
-        if (factory.getCurrentOuterMostAlt().ruleRefsInActions.ContainsKey(identifier))
+        if (factory.CurrentOuterMostAlt.ruleRefsInActions.ContainsKey(identifier))
         {
             var label = gen.Target.GetImplicitRuleLabel(identifier);
             var d = new RuleContextDecl(factory, label, ctxName);
@@ -76,5 +75,5 @@ public class InvokeRule : RuleElement, LabeledOp
     }
 
     //@Override
-    public virtual List<Decl> GetLabels() => labels.Elements();
+    public virtual List<Decl> Labels => labels.Elements();
 }

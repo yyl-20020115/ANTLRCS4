@@ -34,22 +34,19 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory
         this.g = gen.g;
     }
 
-    //@Override
-    //@Override
-    public OutputModelController Controller 
+    public override OutputModelController Controller 
     { 
         get => controller; 
         set => this.controller = value; 
     }
 
-    //@Override
     public override List<SrcOp> RulePostamble(RuleFunction function, Rule r)
     {
         if (r.namedActions.ContainsKey("after") || r.namedActions.ContainsKey("finally"))
         {
             // See OutputModelController.buildLeftRecursiveRuleFunction
             // and Parser.exitRule for other places which set stop.
-            var gen = this.GetGenerator();
+            var gen = this.Generator;
             var codegenTemplates = gen.Templates;
             var setStopTokenAST = codegenTemplates.GetInstanceOf("recRuleSetStopToken");
             var setStopTokenAction = new Action(this, function.ruleCtx, setStopTokenAST);
@@ -65,36 +62,25 @@ public abstract class DefaultOutputModelFactory : BlankOutputModelFactory
     // Convenience methods
 
 
-    //@Override
-    public override Grammar GetGrammar() => g;
+    public override Grammar Grammar => g;
 
-    //@Override
-    public override CodeGenerator GetGenerator() => gen;
+    public override CodeGenerator Generator => gen;
 
-    //@Override
-    public override OutputModelObject GetRoot() => controller.GetRoot();
+    public override OutputModelObject Root => controller.Root;
 
-    //@Override
-    public override RuleFunction GetCurrentRuleFunction() => controller.GetCurrentRuleFunction();
+    public override RuleFunction CurrentRuleFunction => controller.GetCurrentRuleFunction();
 
-    //@Override
-    public override Alternative GetCurrentOuterMostAlt() => controller.GetCurrentOuterMostAlt();
+    public override Alternative CurrentOuterMostAlt => controller.CurrentOuterMostAlt;
 
-    //@Override
-    public override CodeBlock GetCurrentBlock() => controller.CurrentBlock;
+    public override CodeBlock CurrentBlock => controller.CurrentBlock;
 
-    //@Override
-    public override CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock() => controller.CurrentOuterMostAlternativeBlock;
+    public override CodeBlockForOuterMostAlt CurrentOuterMostAlternativeBlock => controller.CurrentOuterMostAlternativeBlock;
 
-    //@Override
-    public override int GetCodeBlockLevel() => controller.codeBlockLevel;
+    public override int CodeBlockLevel => controller.codeBlockLevel;
 
-    //@Override
-    public override int GetTreeLevel() => controller.treeLevel;
+    public override int TreeLevel => controller.treeLevel;
 
-    // MISC
     public static List<SrcOp> List(params SrcOp[] values) => new (values);
-
 
     public static List<SrcOp> List(ICollection<SrcOp> values) => new (values);
 }

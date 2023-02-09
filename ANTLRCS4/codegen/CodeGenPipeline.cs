@@ -24,20 +24,20 @@ public class CodeGenPipeline
         // all templates are generated in memory to report the most complete
         // error information possible, but actually writing output files stops
         // after the first error is reported
-        int errorCount = g.Tools.ErrMgr.getNumErrors();
+        int errorCount = g.Tools.ErrMgr.NumErrors;
 
         if (g.isLexer())
         {
             if (gen.Target.NeedsHeader())
             {
                 var lexer2 = gen.GenerateLexer(true); // Header file if needed.
-                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                if (g.Tools.ErrMgr.NumErrors == errorCount)
                 {
                     WriteRecognizer(lexer2, gen, true);
                 }
             }
             var lexer = gen.GenerateLexer(false);
-            if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+            if (g.Tools.ErrMgr.NumErrors == errorCount)
             {
                 WriteRecognizer(lexer, gen, false);
             }
@@ -47,13 +47,13 @@ public class CodeGenPipeline
             if (gen.Target.NeedsHeader())
             {
                 var parser2 = gen.GenerateParser(true);
-                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                if (g.Tools.ErrMgr.NumErrors == errorCount)
                 {
                     WriteRecognizer(parser2, gen, true);
                 }
             }
             var parser = gen.GenerateParser(false);
-            if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+            if (g.Tools.ErrMgr.NumErrors == errorCount)
             {
                 WriteRecognizer(parser, gen, false);
             }
@@ -63,13 +63,13 @@ public class CodeGenPipeline
                 if (gen.Target.NeedsHeader())
                 {
                     var listener2 = gen.GenerateListener(true);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteListener(listener2, true);
                     }
                 }
                 var listener3 = gen.GenerateListener(false);
-                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                if (g.Tools.ErrMgr.NumErrors == errorCount)
                 {
                     gen.WriteListener(listener3, false);
                 }
@@ -77,7 +77,7 @@ public class CodeGenPipeline
                 if (gen.Target.NeedsHeader())
                 {
                     var baseListener = gen.GenerateBaseListener(true);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteBaseListener(baseListener, true);
                     }
@@ -85,7 +85,7 @@ public class CodeGenPipeline
                 if (gen.Target.WantsBaseListener())
                 {
                     var baseListener = gen.GenerateBaseListener(false);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteBaseListener(baseListener, false);
                     }
@@ -96,13 +96,13 @@ public class CodeGenPipeline
                 if (gen.Target.NeedsHeader())
                 {
                     var visitor2 = gen.GenerateVisitor(true);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteVisitor(visitor2, true);
                     }
                 }
                 var visitor = gen.GenerateVisitor(false);
-                if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                if (g.Tools.ErrMgr.NumErrors == errorCount)
                 {
                     gen.WriteVisitor(visitor, false);
                 }
@@ -110,7 +110,7 @@ public class CodeGenPipeline
                 if (gen.Target.NeedsHeader())
                 {
                     var baseVisitor = gen.GenerateBaseVisitor(true);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteBaseVisitor(baseVisitor, true);
                     }
@@ -118,7 +118,7 @@ public class CodeGenPipeline
                 if (gen.Target.WantsBaseVisitor())
                 {
                     var baseVisitor = gen.GenerateBaseVisitor(false);
-                    if (g.Tools.ErrMgr.getNumErrors() == errorCount)
+                    if (g.Tools.ErrMgr.NumErrors == errorCount)
                     {
                         gen.WriteBaseVisitor(baseVisitor, false);
                     }

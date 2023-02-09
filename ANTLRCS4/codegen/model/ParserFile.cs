@@ -26,10 +26,10 @@ public class ParserFile : OutputFile
 
     public ParserFile(OutputModelFactory factory, string fileName) : base(factory, fileName)
     {
-        var g = factory.GetGrammar();
-        namedActions = BuildNamedActions(factory.GetGrammar());
+        var g = factory.Grammar;
+        namedActions = BuildNamedActions(factory.Grammar);
         genPackage = g.Tools.genPackage;
-        exportMacro = factory.GetGrammar().getOptionString("exportMacro");
+        exportMacro = factory.Grammar.getOptionString("exportMacro");
         // need the below members in the ST for Python, C++
         genListener = g.Tools.gen_listener;
         genVisitor = g.Tools.gen_visitor;

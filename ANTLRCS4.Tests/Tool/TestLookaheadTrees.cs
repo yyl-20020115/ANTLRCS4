@@ -125,7 +125,7 @@ public class TestLookaheadTrees
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
         parser.SetProfile(true);
-        var t = parser.parse(startRuleIndex);
+        var t = parser.Parse(startRuleIndex);
 
         var decisionInfo = parser.GetParseInfo().GetDecisionInfo()[decision];
         var lookaheadEventInfo = decisionInfo.SLL_MaxLookEvent;

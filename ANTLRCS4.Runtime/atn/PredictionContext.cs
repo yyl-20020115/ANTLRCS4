@@ -739,7 +739,7 @@ public abstract class PredictionContext
 
                     var atn = recognizer.ATN;
                     var s = atn.states[(stateNumber)];
-                    var ruleName = recognizer.GetRuleNames()[s.ruleIndex];
+                    var ruleName = recognizer.RuleNames[s.ruleIndex];
                     localBuffer.Append(ruleName);
                 }
                 else if (p.GetReturnState(index) != EMPTY_RETURN_STATE)

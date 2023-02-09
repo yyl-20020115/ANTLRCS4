@@ -14,11 +14,10 @@ public class LL1StarBlockSingleAlt : LL1Loop {
 	public LL1StarBlockSingleAlt(OutputModelFactory factory, GrammarAST starRoot, List<CodeBlockForAlt> alts)
 	: base(factory, starRoot, alts)
     {
-
 		var star = starRoot.atnState as StarLoopEntryState;
 		loopBackStateNumber = star.loopBackState.stateNumber;
 		this.decision = star.decision;
-		var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
+		var altLookSets = factory.Grammar.decisionLOOK[(decision)];
 		//assert altLookSets.length == 2;
 		var enterLook = altLookSets[0];
 		var exitLook = altLookSets[1];

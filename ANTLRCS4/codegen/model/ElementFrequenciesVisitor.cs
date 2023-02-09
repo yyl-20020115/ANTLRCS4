@@ -181,7 +181,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     }
 
     //@Override
-    protected void exitAlternative(AltAST tree)
+    protected void ExitAlternative(AltAST tree)
     {
         frequencies.Push(CombineMax(frequencies.Pop(), frequencies.Pop()));
         minFrequencies.Push(CombineMin(minFrequencies.Pop(), minFrequencies.Pop()));

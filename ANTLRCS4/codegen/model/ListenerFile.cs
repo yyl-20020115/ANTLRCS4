@@ -33,10 +33,10 @@ public class ListenerFile : OutputFile
 
     public ListenerFile(OutputModelFactory factory, string fileName) : base(factory, fileName)
     {
-        var g = factory.GetGrammar();
+        var g = factory.Grammar;
         parserName = g.getRecognizerName();
         grammarName = g.name;
-        namedActions = BuildNamedActions(factory.GetGrammar(), ast => ast.getScope() == null);
+        namedActions = BuildNamedActions(factory.Grammar, ast => ast.getScope() == null);
         foreach (var r in g.rules.Values)
         {
             var labels = r.getAltLabels();

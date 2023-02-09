@@ -216,7 +216,7 @@ public class CharSupport
         return result;
     }
 
-    public static string Capitalize(string s) => char.ToUpper(s[(0)]) + s[1..];
+    public static string Capitalize(string s) => s.Length>0 ? char.ToUpper(s[(0)]) + s[1..] : s;
 
     public static string GetIntervalSetEscapedString(IntervalSet intervalSet)
     {

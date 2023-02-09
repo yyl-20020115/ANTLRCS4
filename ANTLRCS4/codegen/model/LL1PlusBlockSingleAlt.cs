@@ -21,7 +21,7 @@ public class LL1PlusBlockSingleAlt : LL1Loop
         blockStartStateNumber = blkStart.stateNumber;
         var plus = blkAST.atnState as PlusBlockStartState;
         this.decision = plus.loopBackState.decision;
-        var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
+        var altLookSets = factory.Grammar.decisionLOOK[(decision)];
         var loopBackLook = altLookSets[0];
         loopExpr = AddCodeForLoopLookaheadTempVar(loopBackLook);
     }

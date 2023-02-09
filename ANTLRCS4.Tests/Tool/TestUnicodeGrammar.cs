@@ -135,7 +135,7 @@ public class TestUnicodeGrammar
         var lexEngine = grammar.createLexerInterpreter(charStream);
         var tokens = new CommonTokenStream(lexEngine);
         var parser = grammar.createGrammarParserInterpreter(tokens);
-        var parseTree = parser.parse(grammar.rules[("r")].index);
+        var parseTree = parser.Parse(grammar.rules[("r")].index);
         var nodeTextProvider =
                 new InterpreterTreeTextProvider(grammar.getRuleNames());
         var result = Trees.ToStringTree(parseTree, nodeTextProvider);
@@ -155,7 +155,7 @@ public class TestUnicodeGrammar
                 CharStreams.FromString(inputText));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = grammar.createGrammarParserInterpreter(tokens);
-        var parseTree = parser.parse(grammar.rules[(rootRule)].index);
+        var parseTree = parser.Parse(grammar.rules[(rootRule)].index);
         var nodeTextProvider =
                 new InterpreterTreeTextProvider(grammar.getRuleNames());
         return Trees.ToStringTree(parseTree, nodeTextProvider);

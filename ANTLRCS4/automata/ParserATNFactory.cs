@@ -132,7 +132,7 @@ public class ParserATNFactory : ATNFactory
             }
             catch (RecognitionException re)
             {
-                ErrorManager.fatalInternalError("bad grammar AST structure", re);
+                ErrorManager.FatalInternalError("bad grammar AST structure", re);
             }
         }
     }

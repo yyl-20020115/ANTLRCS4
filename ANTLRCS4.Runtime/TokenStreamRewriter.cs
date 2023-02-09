@@ -99,7 +99,7 @@ public class TokenStreamRewriter
         public int instructionIndex;
         /** Token buffer index. */
         public int index;
-        public Object text;
+        public object text;
 
         protected RewriteOperation(TokenStreamRewriter writer, int index)
         {
@@ -603,7 +603,7 @@ public class TokenStreamRewriter
             }
             // look for replaces where iop.index @is in range; error
             var prevReplaces = GetKindOfOps<ReplaceOp>(rewrites, typeof(ReplaceOp), i);
-            foreach (var rop in prevReplaces)
+            foreach (ReplaceOp rop in prevReplaces)
             {
                 if (iop.index == rop.index)
                 {

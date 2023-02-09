@@ -11,7 +11,7 @@ using System.Text;
 namespace org.antlr.v4.runtime.tree;
 public interface TreeTextProvider
 {
-    String GetText(Tree node);
+    string GetText(Tree node);
 }
 /** A set of utility routines useful for all kinds of ANTLR trees. */
 public static class Trees 
@@ -47,7 +47,7 @@ public static class Trees
 	 *  parse trees and extract data appropriately.
 	 */
     public static String toStringTree(Tree t, Parser recog) {
-		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
+		String[] ruleNames = recog != null ? recog.RuleNames : null;
 		List<String> ruleNamesList = ruleNames?.ToList();
 		return toStringTree(t, ruleNamesList);
 	}
@@ -72,7 +72,7 @@ public static class Trees
 	}
 
 	public static String getNodeText(Tree t, Parser recog) {
-		String[] ruleNames = recog != null ? recog.GetRuleNames() : null;
+		String[] ruleNames = recog != null ? recog.RuleNames : null;
 		List<String> ruleNamesList = ruleNames?.ToList();
 		return getNodeText(t, ruleNamesList);
 	}

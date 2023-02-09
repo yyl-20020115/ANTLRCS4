@@ -52,19 +52,19 @@ public class SemanticPipeline {
 		ruleCollector.process(g.ast);
 
 		// DO BASIC / EASY SEMANTIC CHECKS
-		int prevErrors = g.Tools.ErrMgr.getNumErrors();
+		int prevErrors = g.Tools.ErrMgr.NumErrors;
 		BasicSemanticChecks basics = new BasicSemanticChecks(g, ruleCollector);
 		basics.process();
-		if ( g.Tools.ErrMgr.getNumErrors()>prevErrors ) return;
+		if ( g.Tools.ErrMgr.NumErrors>prevErrors ) return;
 
 		// TRANSFORM LEFT-RECURSIVE RULES
-		prevErrors = g.Tools.ErrMgr.getNumErrors();
+		prevErrors = g.Tools.ErrMgr.NumErrors;
 		LeftRecursiveRuleTransformer lrtrans =
 			new LeftRecursiveRuleTransformer(g.ast, ruleCollector.rules.Values, g);
 		lrtrans.TranslateLeftRecursiveRules();
 
 		// don't continue if we got errors during left-recursion elimination
-		if ( g.Tools.ErrMgr.getNumErrors()>prevErrors ) return;
+		if ( g.Tools.ErrMgr.NumErrors>prevErrors ) return;
 
         // STORE RULES IN GRAMMAR
         foreach (Rule r in ruleCollector.rules.Values) {

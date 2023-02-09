@@ -272,7 +272,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			//  using this temp parser.)
 			parser.reset();
 			parser.addDecisionOverride(decision, startIndex, alt);
-			ParserRuleContext t = parser.parse(startRuleIndex);
+			ParserRuleContext t = parser.Parse(startRuleIndex);
 			GrammarInterpreterRuleContext ambigSubTree =
 				(GrammarInterpreterRuleContext) Trees.getRootOfSubtreeEnclosingRegion(t, startIndex, stopIndex);
 			// Use higher of overridden decision tree or tree enclosing all tokens
@@ -334,7 +334,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 			parser.			ErrorHandler = errorHandler;
 			parser.reset();
 			parser.addDecisionOverride(decision, startIndex, alt);
-			ParserRuleContext tt = parser.parse(startRuleIndex);
+			ParserRuleContext tt = parser.Parse(startRuleIndex);
 			int stopTreeAt = stopIndex;
 			if ( errorHandler.firstErrorTokenIndex>=0 ) {
 				stopTreeAt = errorHandler.firstErrorTokenIndex; // cut off rest at first error
@@ -382,8 +382,8 @@ public class GrammarParserInterpreter : ParserInterpreter {
 //			IntegerList serialized = ATNSerializer.getSerialized(originalParser.getATN(), g.getLanguage());
 //			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
 			parser = new ParserInterpreter(originalParser.GrammarFileName,
-										   originalParser.GetVocabulary(),
-										   Arrays.AsList(originalParser.GetRuleNames()),
+										   originalParser.										   Vocabulary,
+										   Arrays.AsList(originalParser.RuleNames),
 					                       originalParser.					                       ATN,
 										   tokens);
 		}
@@ -417,7 +417,7 @@ public class GrammarParserInterpreter : ParserInterpreter {
 				firstErrorTokenIndex = errIndex; // latch
 			}
 //			Console.Error.WriteLine("recover: error at " + errIndex);
-			TokenStream input = recognizer.InputStream;
+			TokenStream input = recognizer.InputStream as TokenStream;
 			if ( input.Index<input.Count-1 ) { // don't consume() eof
 				recognizer.Consume(); // just kill this bad token and let it continue.
 			}

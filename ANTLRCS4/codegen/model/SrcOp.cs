@@ -30,8 +30,8 @@ public abstract class SrcOp : OutputModelObject
     public SrcOp(OutputModelFactory factory, GrammarAST ast) : base(factory, ast)
     {
         if (ast != null) uniqueID = ast.token.TokenIndex;
-        enclosingBlock = factory.GetCurrentBlock();
-        enclosingRuleRunction = factory.GetCurrentRuleFunction();
+        enclosingBlock = factory.CurrentBlock;
+        enclosingRuleRunction = factory.CurrentRuleFunction;
     }
 
     /** Walk upwards in model tree, looking for outer alt's code block */

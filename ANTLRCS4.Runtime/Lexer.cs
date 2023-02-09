@@ -65,7 +65,7 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
     /** The token type for the current token */
     public int _type;
 
-    public readonly IntegerStack _modeStack = new ();
+    public readonly IntegerStack _modeStack = new();
     public int _mode = DEFAULT_MODE;
 
     /** You can set the text for the current token to override what is in
@@ -273,16 +273,13 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
         return _mode;
     }
 
-    //@Override
-    //@Override
     public override TokenFactory TokenFactory { get => _factory; set => this._factory = value; }
 
-    //@Override
     public virtual string SourceName => input.SourceName;
 
-    //@Override
-    public override CharStream InputStream => input;
+    public override IntStream InputStream { get => input; set => this.input = value as CharStream; }
 
+    public CharStream CharInputStream { get => this.input; set => this.input = value; }
     /** By default does not support multiple emits per nextToken invocation
 	 *  for efficiency reasons.  Subclass and override this method, nextToken,
 	 *  and getToken (to push tokens into a list and pull from that list

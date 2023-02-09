@@ -226,7 +226,7 @@ public class SourceGenTriggers : TreeParser
                                     case 1:
                                         // org\\antlr\\v4\\codegen\\SourceGenTriggers.g:62:31: .
                                         {
-                                            matchAny(input);
+                                            MatchAny(input);
                                         }
                                         break;
 
@@ -326,7 +326,7 @@ public class SourceGenTriggers : TreeParser
     {
         AlternativeReturn retval = new();
         retval.start = input.LT(1);
-        bool outerMost = inContext("RULE BLOCK");
+        bool outerMost = InContext("RULE BLOCK");
 
         try
         {
@@ -378,7 +378,7 @@ public class SourceGenTriggers : TreeParser
 
         // set alt if outer ALT only (the only ones with alt field set to Alternative object)
         AltAST altAST = retval.start as AltAST;
-        if (outerMost) controller.SetCurrentOuterMostAlt(altAST.alt);
+        if (outerMost) controller.CurrentOuterMostAlt = altAST.alt;
 
         try
         {
@@ -393,7 +393,7 @@ public class SourceGenTriggers : TreeParser
 
                         List<SrcOp> elems = new();
                         // TODO: shouldn't we pass ((GrammarAST)retval.start) to controller.alternative()?
-                        retval.altCodeBlock = controller.Alternative(controller.GetCurrentOuterMostAlt(), outerMost);
+                        retval.altCodeBlock = controller.Alternative(controller.CurrentOuterMostAlt, outerMost);
                         retval.altCodeBlock.ops = retval.ops = elems;
                         controller.CurrentBlock = retval.altCodeBlock;
 
@@ -486,7 +486,7 @@ public class SourceGenTriggers : TreeParser
                         Match(input, EPSILON, FOLLOW_EPSILON_in_alt217);
                         Match(input, Token.UP, null);
 
-                        retval.altCodeBlock = controller.Epsilon(controller.GetCurrentOuterMostAlt(), outerMost);
+                        retval.altCodeBlock = controller.Epsilon(controller.CurrentOuterMostAlt, outerMost);
                     }
                     break;
 
@@ -1409,7 +1409,7 @@ public class SourceGenTriggers : TreeParser
                     {
                         WILDCARD22 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom594);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         omos = controller.Wildcard(WILDCARD22, label);
@@ -1733,7 +1733,7 @@ public class SourceGenTriggers : TreeParser
                     {
                         STRING_LITERAL29 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal751);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         omos = controller.StringRef(STRING_LITERAL29, label);
@@ -1752,7 +1752,7 @@ public class SourceGenTriggers : TreeParser
                         TOKEN_REF31 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal780);
                         Match(input, Token.DOWN, null);
                         ARG_ACTION32 = (GrammarAST)Match(input, ARG_ACTION, FOLLOW_ARG_ACTION_in_terminal782);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         omos = controller.TokenRef(TOKEN_REF31, label, ARG_ACTION32);
@@ -1763,7 +1763,7 @@ public class SourceGenTriggers : TreeParser
                     {
                         TOKEN_REF33 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal796);
                         Match(input, Token.DOWN, null);
-                        matchAny(input);
+                        MatchAny(input);
                         Match(input, Token.UP, null);
 
                         omos = controller.TokenRef(TOKEN_REF33, label, null);
@@ -2079,89 +2079,89 @@ public class SourceGenTriggers : TreeParser
             this.transition = DFA7_transition;
         }
         //@Override
-        public override string getDescription() => "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
+        public override string Description => "89:1: alt[bool outerMost] returns [CodeBlockForAlt altCodeBlock, List<SrcOp> ops] : ( ^( ALT ( elementOptions )? ( element )+ ) | ^( ALT ( elementOptions )? EPSILON ) );";
     }
 
-    public static readonly BitSet FOLLOW_block_in_dummy61 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_BLOCK_in_block84 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_OPTIONS_in_block88 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_alternative_in_block109 = new BitSet(new long[] { 0x0000000000000008L, 0x0000000000000020L });
-    public static readonly BitSet FOLLOW_alt_in_alternative161 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ALT_in_alt191 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_elementOptions_in_alt193 = new BitSet(new long[] { 0x4942408000100410L, 0x00000000000C60C0L });
-    public static readonly BitSet FOLLOW_element_in_alt198 = new BitSet(new long[] { 0x4942408000100418L, 0x00000000000C60C0L });
-    public static readonly BitSet FOLLOW_ALT_in_alt212 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_elementOptions_in_alt214 = new BitSet(new long[] { 0x0000000000000000L, 0x0000000000000400L });
-    public static readonly BitSet FOLLOW_EPSILON_in_alt217 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_labeledElement_in_element246 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_atom_in_element257 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_subrule_in_element267 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ACTION_in_element282 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_SEMPRED_in_element297 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ACTION_in_element311 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_elementOptions_in_element313 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_SEMPRED_in_element325 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_elementOptions_in_element327 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_labeledElement347 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_labeledElement349 = new BitSet(new long[] { 0x4842008000100000L, 0x00000000000C0000L });
-    public static readonly BitSet FOLLOW_atom_in_labeledElement351 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_PLUS_ASSIGN_in_labeledElement364 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_labeledElement366 = new BitSet(new long[] { 0x4842008000100000L, 0x00000000000C0000L });
-    public static readonly BitSet FOLLOW_atom_in_labeledElement368 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_labeledElement379 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_labeledElement381 = new BitSet(new long[] { 0x0000000000000000L, 0x0000000000000040L });
-    public static readonly BitSet FOLLOW_block_in_labeledElement383 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_PLUS_ASSIGN_in_labeledElement396 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_labeledElement398 = new BitSet(new long[] { 0x0000000000000000L, 0x0000000000000040L });
-    public static readonly BitSet FOLLOW_block_in_labeledElement400 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_OPTIONAL_in_subrule421 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_block_in_subrule425 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_CLOSURE_in_subrule441 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_block_in_subrule445 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_POSITIVE_CLOSURE_in_subrule456 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_block_in_subrule460 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_block_in_subrule476 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_SET_in_blockSet506 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_atom_in_blockSet508 = new BitSet(new long[] { 0x4842008000100008L, 0x00000000000C0000L });
-    public static readonly BitSet FOLLOW_NOT_in_atom538 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_atom_in_atom542 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_range_in_atom552 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_DOT_in_atom567 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_atom569 = new BitSet(new long[] { 0x4800000000000000L });
-    public static readonly BitSet FOLLOW_terminal_in_atom571 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_DOT_in_atom579 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_atom581 = new BitSet(new long[] { 0x0040000000000000L });
-    public static readonly BitSet FOLLOW_ruleref_in_atom583 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_WILDCARD_in_atom594 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_WILDCARD_in_atom613 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_terminal_in_atom632 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ruleref_in_atom649 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_blockSet_in_atom661 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_RULE_REF_in_ruleref685 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ARG_ACTION_in_ruleref687 = new BitSet(new long[] { 0x0000000000000008L, 0x0000000000000200L });
-    public static readonly BitSet FOLLOW_elementOptions_in_ruleref690 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_RANGE_in_range718 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_STRING_LITERAL_in_range722 = new BitSet(new long[] { 0x0800000000000000L });
-    public static readonly BitSet FOLLOW_STRING_LITERAL_in_range726 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal751 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal766 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal780 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ARG_ACTION_in_terminal782 = new BitSet(new ulong[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
-    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal796 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal812 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ELEMENT_OPTIONS_in_elementOptions836 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_elementOption_in_elementOptions838 = new BitSet(new long[] { 0x0000000010000408L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption857 = new BitSet(new long[] { 0x0000000000000002L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption868 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption870 = new BitSet(new long[] { 0x0000000010000000L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption872 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption884 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption886 = new BitSet(new long[] { 0x0800000000000000L });
-    public static readonly BitSet FOLLOW_STRING_LITERAL_in_elementOption888 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption900 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption902 = new BitSet(new long[] { 0x0000000000000010L });
-    public static readonly BitSet FOLLOW_ACTION_in_elementOption904 = new BitSet(new long[] { 0x0000000000000008L });
-    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption916 = new BitSet(new long[] { 0x0000000000000004L });
-    public static readonly BitSet FOLLOW_ID_in_elementOption918 = new BitSet(new long[] { 0x0000000040000000L });
-    public static readonly BitSet FOLLOW_INT_in_elementOption920 = new BitSet(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_block_in_dummy61 = new (new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_BLOCK_in_block84 = new (new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_OPTIONS_in_block88 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_alternative_in_block109 = new(new long[] { 0x0000000000000008L, 0x0000000000000020L });
+    public static readonly BitSet FOLLOW_alt_in_alternative161 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ALT_in_alt191 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_elementOptions_in_alt193 = new(new long[] { 0x4942408000100410L, 0x00000000000C60C0L });
+    public static readonly BitSet FOLLOW_element_in_alt198 = new(new long[] { 0x4942408000100418L, 0x00000000000C60C0L });
+    public static readonly BitSet FOLLOW_ALT_in_alt212 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_elementOptions_in_alt214 = new(new long[] { 0x0000000000000000L, 0x0000000000000400L });
+    public static readonly BitSet FOLLOW_EPSILON_in_alt217 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_labeledElement_in_element246 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_atom_in_element257 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_subrule_in_element267 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ACTION_in_element282 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_SEMPRED_in_element297 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ACTION_in_element311 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_elementOptions_in_element313 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_SEMPRED_in_element325 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_elementOptions_in_element327 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_labeledElement347 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_labeledElement349 = new(new long[] { 0x4842008000100000L, 0x00000000000C0000L });
+    public static readonly BitSet FOLLOW_atom_in_labeledElement351 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_PLUS_ASSIGN_in_labeledElement364 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_labeledElement366 = new(new long[] { 0x4842008000100000L, 0x00000000000C0000L });
+    public static readonly BitSet FOLLOW_atom_in_labeledElement368 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_labeledElement379 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_labeledElement381 = new(new long[] { 0x0000000000000000L, 0x0000000000000040L });
+    public static readonly BitSet FOLLOW_block_in_labeledElement383 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_PLUS_ASSIGN_in_labeledElement396 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_labeledElement398 = new(new long[] { 0x0000000000000000L, 0x0000000000000040L });
+    public static readonly BitSet FOLLOW_block_in_labeledElement400 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_OPTIONAL_in_subrule421 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_block_in_subrule425 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_CLOSURE_in_subrule441 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_block_in_subrule445 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_POSITIVE_CLOSURE_in_subrule456 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_block_in_subrule460 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_block_in_subrule476 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_SET_in_blockSet506 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_atom_in_blockSet508 = new(new long[] { 0x4842008000100008L, 0x00000000000C0000L });
+    public static readonly BitSet FOLLOW_NOT_in_atom538 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_atom_in_atom542 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_range_in_atom552 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_DOT_in_atom567 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_atom569 = new(new long[] { 0x4800000000000000L });
+    public static readonly BitSet FOLLOW_terminal_in_atom571 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_DOT_in_atom579 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_atom581 = new(new long[] { 0x0040000000000000L });
+    public static readonly BitSet FOLLOW_ruleref_in_atom583 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_WILDCARD_in_atom594 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_WILDCARD_in_atom613 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_terminal_in_atom632 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ruleref_in_atom649 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_blockSet_in_atom661 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_RULE_REF_in_ruleref685 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ARG_ACTION_in_ruleref687 = new(new long[] { 0x0000000000000008L, 0x0000000000000200L });
+    public static readonly BitSet FOLLOW_elementOptions_in_ruleref690 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_RANGE_in_range718 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_STRING_LITERAL_in_range722 = new(new long[] { 0x0800000000000000L });
+    public static readonly BitSet FOLLOW_STRING_LITERAL_in_range726 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal751 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_STRING_LITERAL_in_terminal766 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal780 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ARG_ACTION_in_terminal782 = new(new ulong[] { 0xFFFFFFFFFFFFFFF0L, 0x00000000000FFFFFL });
+    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal796 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_TOKEN_REF_in_terminal812 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ELEMENT_OPTIONS_in_elementOptions836 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_elementOption_in_elementOptions838 = new(new long[] { 0x0000000010000408L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption857 = new(new long[] { 0x0000000000000002L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption868 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption870 = new(new long[] { 0x0000000010000000L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption872 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption884 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption886 = new(new long[] { 0x0800000000000000L });
+    public static readonly BitSet FOLLOW_STRING_LITERAL_in_elementOption888 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption900 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption902 = new(new long[] { 0x0000000000000010L });
+    public static readonly BitSet FOLLOW_ACTION_in_elementOption904 = new(new long[] { 0x0000000000000008L });
+    public static readonly BitSet FOLLOW_ASSIGN_in_elementOption916 = new(new long[] { 0x0000000000000004L });
+    public static readonly BitSet FOLLOW_ID_in_elementOption918 = new(new long[] { 0x0000000040000000L });
+    public static readonly BitSet FOLLOW_INT_in_elementOption920 = new(new long[] { 0x0000000000000008L });
 }

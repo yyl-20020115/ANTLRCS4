@@ -27,14 +27,14 @@ public class ToolANTLRParser : ANTLRParser
                                         RecognitionException e)
     {
         var msg = GetParserErrorMessage(this, e);
-        if (paraphrases.Size() > 0)
+        if (paraphrases.Count > 0)
         {
             var paraphrase = paraphrases.Peek();
             msg = msg + " while " + paraphrase;
         }
         //	List stack = getRuleInvocationStack(e, this.getClass().getName());
         //	msg += ", rule stack = "+stack;
-        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
+        tool.ErrMgr.SyntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
     }
 
     public string GetParserErrorMessage(antlr.runtime.Parser parser, RecognitionException e)

@@ -1351,7 +1351,7 @@ public class TestPerformance
         public readonly static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
 
         //@Override
-        public override void SyntaxError(Recognizer<Token, ATNSimulator> recognizer, Object offendingSymbol,
+        public override void SyntaxError(Recognizer recognizer, object offendingSymbol,
                                 int line, int charPositionInLine,
                                 String msg, RecognitionException e)
         {
@@ -1360,13 +1360,14 @@ public class TestPerformance
                 return;
             }
 
-            var sourceName = recognizer.InputStream.SourceName;
-            if (sourceName.Length > 0)
-            {
-                sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
-            }
+            //TODO: recognizer has not input stream
+            //var sourceName = recognizer.InputStream.SourceName;
+            //if (sourceName.Length > 0)
+            //{
+            //    sourceName = $"{sourceName}:{line}:{charPositionInLine}: ";//, sourceName, line, charPositionInLine);
+            //}
 
-            Console.Error.WriteLine(sourceName + "line " + line + ":" + charPositionInLine + " " + msg);
+            //Console.Error.WriteLine(sourceName + "line " + line + ":" + charPositionInLine + " " + msg);
         }
 
     }
@@ -1398,7 +1399,7 @@ public class TestPerformance
 
             // show the rule name along with the decision
             int decision = dfa.decision;
-            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var rule = recognizer.RuleNames[dfa.atnStartState.ruleIndex];
             var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportAmbiguity d={decision} ({rule}): ambigAlts={ambigAlts}, input='{input}'";
             recognizer.NotifyErrorListeners(format);
@@ -1416,7 +1417,7 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var rule = recognizer.RuleNames[dfa.atnStartState.ruleIndex];
             var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var representedAlts = GetConflictingAlts(conflictingAlts, configs);
             var format = $"reportAttemptingFullContext d={decision} ({rule}), input='{input}', viable={representedAlts}";
@@ -1444,7 +1445,7 @@ public class TestPerformance
 
             // show the rule name and viable configs along with the base info
             int decision = dfa.decision;
-            var rule = recognizer.GetRuleNames()[dfa.atnStartState.ruleIndex];
+            var rule = recognizer.RuleNames[dfa.atnStartState.ruleIndex];
             var input = recognizer.TokenStream.GetText(Interval.Of(startIndex, stopIndex));
             var format = $"reportContextSensitivity d={decision} ({rule}), input='{input}', viable={prediction}";
             recognizer.NotifyErrorListeners(

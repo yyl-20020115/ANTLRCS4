@@ -141,7 +141,7 @@ public class ListTokenSource : TokenSource
                 }
 
                 int stop = Math.Max(-1, start - 1);
-                eofToken = (_factory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(this, InputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
+                eofToken = (_factory as TokenFactory<Token>).Create(new Pair<TokenSource, CharStream>(this, CharInputStream), Token.EOF, "EOF", Token.DEFAULT_CHANNEL, start, stop, Line, CharPositionInLine);
             }
 
             return eofToken;
@@ -206,7 +206,7 @@ public class ListTokenSource : TokenSource
 	 * {@inheritDoc}
 	 */
     //@Override
-    public virtual CharStream InputStream
+    public virtual CharStream CharInputStream
     {
         get
         {
@@ -241,7 +241,7 @@ public class ListTokenSource : TokenSource
                 return sourceName;
             }
 
-            CharStream inputStream = InputStream;
+            CharStream inputStream = CharInputStream;
             if (inputStream != null)
             {
                 return inputStream.SourceName;

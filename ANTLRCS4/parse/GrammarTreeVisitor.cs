@@ -195,7 +195,7 @@ public class GrammarTreeVisitor : TreeParser
     public virtual void Visit(GrammarAST t, string ruleName)
     {
         var nodes = new CommonTreeNodeStream(new GrammarASTAdaptor(), t);
-        setTreeNodeStream(nodes);
+        TreeNodeStream = nodes;
         try
         {
             var m = this.GetType().GetMethod(ruleName);
@@ -216,216 +216,217 @@ public class GrammarTreeVisitor : TreeParser
                                    );
                 //e.printStackTrace(System.err);
             }
-            else errMgr.toolError(ErrorType.INTERNAL_ERROR, e);
+            else errMgr.ToolError(ErrorType.INTERNAL_ERROR, e);
         }
     }
 
-    public virtual void discoverGrammar(GrammarRootAST root, GrammarAST ID) { }
-    public virtual void finishPrequels(GrammarAST firstPrequel) { }
-    public virtual void finishGrammar(GrammarRootAST root, GrammarAST ID) { }
+    public virtual void DiscoverGrammar(GrammarRootAST root, GrammarAST ID) { }
+    public virtual void FinishPrequels(GrammarAST firstPrequel) { }
+    public virtual void FinishGrammar(GrammarRootAST root, GrammarAST ID) { }
 
-    public virtual void grammarOption(GrammarAST ID, GrammarAST valueAST) { }
-    public virtual void ruleOption(GrammarAST ID, GrammarAST valueAST) { }
-    public virtual void blockOption(GrammarAST ID, GrammarAST valueAST) { }
-    public virtual void defineToken(GrammarAST ID) { }
-    public virtual void defineChannel(GrammarAST ID) { }
-    public virtual void globalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action) { }
-    public virtual void importGrammar(GrammarAST label, GrammarAST ID) { }
+    public virtual void GrammarOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void RuleOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void BlockOption(GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void DefineToken(GrammarAST ID) { }
+    public virtual void DefineChannel(GrammarAST ID) { }
+    public virtual void GlobalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action) { }
+    public virtual void ImportGrammar(GrammarAST label, GrammarAST ID) { }
 
-    public virtual void modeDef(GrammarAST m, GrammarAST ID) { }
+    public virtual void ModeDef(GrammarAST m, GrammarAST ID) { }
 
-    public virtual void discoverRules(GrammarAST rules) { }
-    public virtual void finishRules(GrammarAST rule) { }
-    public virtual void discoverRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
+    public virtual void DiscoverRules(GrammarAST rules) { }
+    public virtual void FinishRules(GrammarAST rule) { }
+    public virtual void DiscoverRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers,
                              ActionAST arg, ActionAST returns, GrammarAST thrws,
                              GrammarAST options, ActionAST locals,
                              List<GrammarAST> actions,
                              GrammarAST block)
     { }
-    public virtual void finishRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
-    public virtual void discoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
+    public virtual void FinishRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
+    public virtual void DiscoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
                                   GrammarAST block)
     { }
-    public virtual void finishLexerRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
-    public virtual void ruleCatch(GrammarAST arg, ActionAST action) { }
-    public virtual void finallyAction(ActionAST action) { }
-    public virtual void discoverOuterAlt(AltAST alt) { }
-    public virtual void finishOuterAlt(AltAST alt) { }
-    public virtual void discoverAlt(AltAST alt) { }
-    public virtual void finishAlt(AltAST alt) { }
+    public virtual void FinishLexerRule(RuleAST rule, GrammarAST ID, GrammarAST block) { }
+    public virtual void RuleCatch(GrammarAST arg, ActionAST action) { }
+    public virtual void FinallyAction(ActionAST action) { }
+    public virtual void DiscoverOuterAlt(AltAST alt) { }
+    public virtual void FinishOuterAlt(AltAST alt) { }
+    public virtual void DiscoverAlt(AltAST alt) { }
+    public virtual void FinishAlt(AltAST alt) { }
 
-    public virtual void ruleRef(GrammarAST @ref, ActionAST arg) { }
-    public virtual void tokenRef(TerminalAST @ref) { }
-    public virtual void elementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST) { }
-    public virtual void stringRef(TerminalAST @ref) { }
-    public virtual void wildcardRef(GrammarAST @ref) { }
-    public virtual void actionInAlt(ActionAST action) { }
-    public virtual void sempredInAlt(PredAST pred) { }
-    public virtual void label(GrammarAST op, GrammarAST ID, GrammarAST element) { }
-    public virtual void lexerCallCommand(int outerAltNumber, GrammarAST ID, GrammarAST arg) { }
-    public virtual void lexerCommand(int outerAltNumber, GrammarAST ID) { }
+    public virtual void RuleRef(GrammarAST @ref, ActionAST arg) { }
+    public virtual void TokenRef(TerminalAST @ref) { }
+    public virtual void ElementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST) { }
+    public virtual void StringRef(TerminalAST @ref) { }
+    public virtual void WildcardRef(GrammarAST @ref) { }
+    public virtual void ActionInAlt(ActionAST action) { }
+    public virtual void SempredInAlt(PredAST pred) { }
+    public virtual void Label(GrammarAST op, GrammarAST ID, GrammarAST element) { }
+    public virtual void LexerCallCommand(int outerAltNumber, GrammarAST ID, GrammarAST arg) { }
+    public virtual void LexerCommand(int outerAltNumber, GrammarAST ID) { }
 
-    protected virtual void enterGrammarSpec(GrammarAST tree) { }
-    protected virtual void exitGrammarSpec(GrammarAST tree) { }
+    protected virtual void EnterGrammarSpec(GrammarAST tree) { }
+    protected virtual void ExitGrammarSpec(GrammarAST tree) { }
 
-    protected virtual void enterPrequelConstructs(GrammarAST tree) { }
-    protected virtual void exitPrequelConstructs(GrammarAST tree) { }
+    protected virtual void EnterPrequelConstructs(GrammarAST tree) { }
+    protected virtual void ExitPrequelConstructs(GrammarAST tree) { }
 
-    protected virtual void enterPrequelConstruct(GrammarAST tree) { }
-    protected virtual void exitPrequelConstruct(GrammarAST tree) { }
+    protected virtual void EnterPrequelConstruct(GrammarAST tree) { }
+    protected virtual void ExitPrequelConstruct(GrammarAST tree) { }
 
-    protected virtual void enterOptionsSpec(GrammarAST tree) { }
-    protected virtual void exitOptionsSpec(GrammarAST tree) { }
+    protected virtual void EnterOptionsSpec(GrammarAST tree) { }
+    protected virtual void ExitOptionsSpec(GrammarAST tree) { }
 
-    protected virtual void enterOption(GrammarAST tree) { }
-    protected virtual void exitOption(GrammarAST tree) { }
+    protected virtual void EnterOption(GrammarAST tree) { }
+    protected virtual void ExitOption(GrammarAST tree) { }
 
-    protected virtual void enterOptionValue(GrammarAST tree) { }
-    protected virtual void exitOptionValue(GrammarAST tree) { }
+    protected virtual void EnterOptionValue(GrammarAST tree) { }
+    protected virtual void ExitOptionValue(GrammarAST tree) { }
 
-    protected virtual void enterDelegateGrammars(GrammarAST tree) { }
-    protected virtual void exitDelegateGrammars(GrammarAST tree) { }
+    protected virtual void EnterDelegateGrammars(GrammarAST tree) { }
+    protected virtual void ExitDelegateGrammars(GrammarAST tree) { }
 
-    protected virtual void enterDelegateGrammar(GrammarAST tree) { }
-    protected virtual void exitDelegateGrammar(GrammarAST tree) { }
+    protected virtual void EnterDelegateGrammar(GrammarAST tree) { }
+    protected virtual void ExitDelegateGrammar(GrammarAST tree) { }
 
-    protected virtual void enterTokensSpec(GrammarAST tree) { }
-    protected virtual void exitTokensSpec(GrammarAST tree) { }
+    protected virtual void EnterTokensSpec(GrammarAST tree) { }
+    protected virtual void ExitTokensSpec(GrammarAST tree) { }
 
-    protected virtual void enterTokenSpec(GrammarAST tree) { }
-    protected virtual void exitTokenSpec(GrammarAST tree) { }
+    protected virtual void EnterTokenSpec(GrammarAST tree) { }
+    protected virtual void ExitTokenSpec(GrammarAST tree) { }
 
-    protected virtual void enterChannelsSpec(GrammarAST tree) { }
-    protected virtual void exitChannelsSpec(GrammarAST tree) { }
+    protected virtual void EnterChannelsSpec(GrammarAST tree) { }
+    protected virtual void ExitChannelsSpec(GrammarAST tree) { }
 
-    protected virtual void enterChannelSpec(GrammarAST tree) { }
-    protected virtual void exitChannelSpec(GrammarAST tree) { }
+    protected virtual void EnterChannelSpec(GrammarAST tree) { }
+    protected virtual void ExitChannelSpec(GrammarAST tree) { }
 
-    protected virtual void enterAction(GrammarAST tree) { }
-    protected virtual void exitAction(GrammarAST tree) { }
+    protected virtual void EnterAction(GrammarAST tree) { }
+    protected virtual void ExitAction(GrammarAST tree) { }
 
-    protected virtual void enterRules(GrammarAST tree) { }
-    protected virtual void exitRules(GrammarAST tree) { }
+    protected virtual void EnterRules(GrammarAST tree) { }
+    protected virtual void ExitRules(GrammarAST tree) { }
 
-    protected virtual void enterMode(GrammarAST tree) { }
-    protected virtual void exitMode(GrammarAST tree) { }
+    protected virtual void EnterMode(GrammarAST tree) { }
+    protected virtual void ExitMode(GrammarAST tree) { }
 
-    protected virtual void enterLexerRule(GrammarAST tree) { }
-    protected virtual void exitLexerRule(GrammarAST tree) { }
+    protected virtual void EnterLexerRule(GrammarAST tree) { }
+    protected virtual void ExitLexerRule(GrammarAST tree) { }
 
-    protected virtual void enterRule(GrammarAST tree) { }
-    protected virtual void exitRule(GrammarAST tree) { }
+    protected virtual void EnterRule(GrammarAST tree) { }
+    protected virtual void ExitRule(GrammarAST tree) { }
 
-    protected virtual void enterExceptionGroup(GrammarAST tree) { }
-    protected virtual void exitExceptionGroup(GrammarAST tree) { }
+    protected virtual void EnterExceptionGroup(GrammarAST tree) { }
+    protected virtual void ExitExceptionGroup(GrammarAST tree) { }
 
-    protected virtual void enterExceptionHandler(GrammarAST tree) { }
-    protected virtual void exitExceptionHandler(GrammarAST tree) { }
+    protected virtual void EnterExceptionHandler(GrammarAST tree) { }
+    protected virtual void ExitExceptionHandler(GrammarAST tree) { }
 
-    protected virtual void enterFinallyClause(GrammarAST tree) { }
-    protected virtual void exitFinallyClause(GrammarAST tree) { }
+    protected virtual void EnterFinallyClause(GrammarAST tree) { }
+    protected virtual void ExitFinallyClause(GrammarAST tree) { }
 
-    protected virtual void enterLocals(GrammarAST tree) { }
-    protected virtual void exitLocals(GrammarAST tree) { }
+    protected virtual void EnterLocals(GrammarAST tree) { }
+    protected virtual void ExitLocals(GrammarAST tree) { }
 
-    protected virtual void enterRuleReturns(GrammarAST tree) { }
-    protected virtual void exitRuleReturns(GrammarAST tree) { }
+    protected virtual void EnterRuleReturns(GrammarAST tree) { }
+    protected virtual void ExitRuleReturns(GrammarAST tree) { }
 
-    protected virtual void enterThrowsSpec(GrammarAST tree) { }
-    protected virtual void exitThrowsSpec(GrammarAST tree) { }
+    protected virtual void EnterThrowsSpec(GrammarAST tree) { }
+    protected virtual void ExitThrowsSpec(GrammarAST tree) { }
 
-    protected virtual void enterRuleAction(GrammarAST tree) { }
-    protected virtual void exitRuleAction(GrammarAST tree) { }
 
-    protected virtual void enterRuleModifier(GrammarAST tree) { }
-    protected virtual void exitRuleModifier(GrammarAST tree) { }
+    protected virtual void EnterRuleAction(GrammarAST tree) { }
+    protected virtual void ExitRuleAction(GrammarAST tree) { }
 
-    protected virtual void enterLexerRuleBlock(GrammarAST tree) { }
-    protected virtual void exitLexerRuleBlock(GrammarAST tree) { }
+    protected virtual void EnterRuleModifier(GrammarAST tree) { }
+    protected virtual void ExitRuleModifier(GrammarAST tree) { }
 
-    protected virtual void enterRuleBlock(GrammarAST tree) { }
-    protected virtual void exitRuleBlock(GrammarAST tree) { }
+    protected virtual void EnterLexerRuleBlock(GrammarAST tree) { }
+    protected virtual void ExitLexerRuleBlock(GrammarAST tree) { }
 
-    protected virtual void enterLexerOuterAlternative(AltAST tree) { }
-    protected virtual void exitLexerOuterAlternative(AltAST tree) { }
+    protected virtual void EnterRuleBlock(GrammarAST tree) { }
+    protected virtual void ExitRuleBlock(GrammarAST tree) { }
 
-    protected virtual void enterOuterAlternative(AltAST tree) { }
-    protected virtual void exitOuterAlternative(AltAST tree) { }
+    protected virtual void EnterLexerOuterAlternative(AltAST tree) { }
+    protected virtual void ExitLexerOuterAlternative(AltAST tree) { }
 
-    protected virtual void enterLexerAlternative(GrammarAST tree) { }
-    protected virtual void exitLexerAlternative(GrammarAST tree) { }
+    protected virtual void EnterOuterAlternative(AltAST tree) { }
+    protected virtual void ExitOuterAlternative(AltAST tree) { }
 
-    protected virtual void enterLexerElements(GrammarAST tree) { }
-    protected virtual void exitLexerElements(GrammarAST tree) { }
+    protected virtual void EnterLexerAlternative(GrammarAST tree) { }
+    protected virtual void ExitLexerAlternative(GrammarAST tree) { }
 
-    protected virtual void enterLexerElement(GrammarAST tree) { }
-    protected virtual void exitLexerElement(GrammarAST tree) { }
+    protected virtual void EnterLexerElements(GrammarAST tree) { }
+    protected virtual void ExitLexerElements(GrammarAST tree) { }
 
-    protected virtual void enterLexerBlock(GrammarAST tree) { }
-    protected virtual void exitLexerBlock(GrammarAST tree) { }
+    protected virtual void EnterLexerElement(GrammarAST tree) { }
+    protected virtual void ExitLexerElement(GrammarAST tree) { }
 
-    protected virtual void enterLexerAtom(GrammarAST tree) { }
-    protected virtual void exitLexerAtom(GrammarAST tree) { }
+    protected virtual void EnterLexerBlock(GrammarAST tree) { }
+    protected virtual void ExitLexerBlock(GrammarAST tree) { }
 
-    protected virtual void enterActionElement(GrammarAST tree) { }
-    protected virtual void exitActionElement(GrammarAST tree) { }
+    protected virtual void EnterLexerAtom(GrammarAST tree) { }
+    protected virtual void ExitLexerAtom(GrammarAST tree) { }
 
-    protected virtual void enterAlternative(AltAST tree) { }
-    protected virtual void exitAlternative(AltAST tree) { }
+    protected virtual void EnterActionElement(GrammarAST tree) { }
+    protected virtual void ExitActionElement(GrammarAST tree) { }
 
-    protected virtual void enterLexerCommand(GrammarAST tree) { }
-    protected virtual void exitLexerCommand(GrammarAST tree) { }
+    protected virtual void EnterAlternative(AltAST tree) { }
+    protected virtual void ExitAlternative(AltAST tree) { }
 
-    protected virtual void enterLexerCommandExpr(GrammarAST tree) { }
-    protected virtual void exitLexerCommandExpr(GrammarAST tree) { }
+    protected virtual void EnterLexerCommand(GrammarAST tree) { }
+    protected virtual void ExitLexerCommand(GrammarAST tree) { }
 
-    protected virtual void enterElement(GrammarAST tree) { }
-    protected virtual void exitElement(GrammarAST tree) { }
+    protected virtual void EnterLexerCommandExpr(GrammarAST tree) { }
+    protected virtual void ExitLexerCommandExpr(GrammarAST tree) { }
 
-    protected virtual void enterAstOperand(GrammarAST tree) { }
-    protected virtual void exitAstOperand(GrammarAST tree) { }
+    protected virtual void EnterElement(GrammarAST tree) { }
+    protected virtual void ExitElement(GrammarAST tree) { }
 
-    protected virtual void enterLabeledElement(GrammarAST tree) { }
-    protected virtual void exitLabeledElement(GrammarAST tree) { }
+    protected virtual void EnterAstOperand(GrammarAST tree) { }
+    protected virtual void ExitAstOperand(GrammarAST tree) { }
 
-    protected virtual void enterSubrule(GrammarAST tree) { }
-    protected virtual void exitSubrule(GrammarAST tree) { }
+    protected virtual void EnterLabeledElement(GrammarAST tree) { }
+    protected virtual void ExitLabeledElement(GrammarAST tree) { }
 
-    protected virtual void enterLexerSubrule(GrammarAST tree) { }
-    protected virtual void exitLexerSubrule(GrammarAST tree) { }
+    protected virtual void EnterSubrule(GrammarAST tree) { }
+    protected virtual void ExitSubrule(GrammarAST tree) { }
 
-    protected virtual void enterBlockSuffix(GrammarAST tree) { }
-    protected virtual void exitBlockSuffix(GrammarAST tree) { }
+    protected virtual void EnterLexerSubrule(GrammarAST tree) { }
+    protected virtual void ExitLexerSubrule(GrammarAST tree) { }
 
-    protected virtual void enterEbnfSuffix(GrammarAST tree) { }
-    protected virtual void exitEbnfSuffix(GrammarAST tree) { }
+    protected virtual void EnterBlockSuffix(GrammarAST tree) { }
+    protected virtual void ExitBlockSuffix(GrammarAST tree) { }
 
-    protected virtual void enterAtom(GrammarAST tree) { }
-    protected virtual void exitAtom(GrammarAST tree) { }
+    protected virtual void EnterEbnfSuffix(GrammarAST tree) { }
+    protected virtual void ExitEbnfSuffix(GrammarAST tree) { }
 
-    protected virtual void enterBlockSet(GrammarAST tree) { }
-    protected virtual void exitBlockSet(GrammarAST tree) { }
+    protected virtual void EnterAtom(GrammarAST tree) { }
+    protected virtual void ExitAtom(GrammarAST tree) { }
 
-    protected virtual void enterSetElement(GrammarAST tree) { }
-    protected virtual void exitSetElement(GrammarAST tree) { }
+    protected virtual void EnterBlockSet(GrammarAST tree) { }
+    protected virtual void ExitBlockSet(GrammarAST tree) { }
 
-    protected virtual void enterBlock(GrammarAST tree) { }
-    protected virtual void exitBlock(GrammarAST tree) { }
+    protected virtual void EnterSetElement(GrammarAST tree) { }
+    protected virtual void ExitSetElement(GrammarAST tree) { }
 
-    protected virtual void enterRuleref(GrammarAST tree) { }
-    protected virtual void exitRuleref(GrammarAST tree) { }
+    protected virtual void EnterBlock(GrammarAST tree) { }
+    protected virtual void ExitBlock(GrammarAST tree) { }
 
-    protected virtual void enterRange(GrammarAST tree) { }
-    protected virtual void exitRange(GrammarAST tree) { }
+    protected virtual void EnterRuleref(GrammarAST tree) { }
+    protected virtual void ExitRuleref(GrammarAST tree) { }
 
-    protected virtual void enterTerminal(GrammarAST tree) { }
-    protected virtual void exitTerminal(GrammarAST tree) { }
+    protected virtual void EnterRange(GrammarAST tree) { }
+    protected virtual void ExitRange(GrammarAST tree) { }
 
-    protected virtual void enterElementOptions(GrammarAST tree) { }
-    protected virtual void exitElementOptions(GrammarAST tree) { }
+    protected virtual void EnterTerminal(GrammarAST tree) { }
+    protected virtual void ExitTerminal(GrammarAST tree) { }
 
-    protected virtual void enterElementOption(GrammarAST tree) { }
-    protected virtual void exitElementOption(GrammarAST tree) { }
+    protected virtual void EnterElementOptions(GrammarAST tree) { }
+    protected virtual void ExitElementOptions(GrammarAST tree) { }
+
+    protected virtual void EnterElementOption(GrammarAST tree) { }
+    protected virtual void ExitElementOption(GrammarAST tree) { }
 
     //@Override
     public virtual void TraceIn(String ruleName, int ruleIndex)
@@ -457,7 +458,7 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope prequelConstructs3 = null;
 
 
-        enterGrammarSpec(((GrammarAST)retval.start));
+        EnterGrammarSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -468,12 +469,12 @@ public class GrammarTreeVisitor : TreeParser
                 Match(input, Token.DOWN, null);
                 ID1 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_grammarSpec87);
                 grammarName = (ID1 != null ? ID1.getText() : null);
-                discoverGrammar((GrammarRootAST)GRAMMAR2, ID1);
+                DiscoverGrammar((GrammarRootAST)GRAMMAR2, ID1);
                 PushFollow(FOLLOW_prequelConstructs_in_grammarSpec106);
                 prequelConstructs3 = prequelConstructs();
                 state._fsp--;
 
-                finishPrequels((prequelConstructs3 != null ? ((GrammarTreeVisitor.prequelConstructsReturn)prequelConstructs3).firstOne : null));
+                FinishPrequels((prequelConstructs3 != null ? ((GrammarTreeVisitor.PrequelConstructsReturn)prequelConstructs3).firstOne : null));
                 PushFollow(FOLLOW_rules_in_grammarSpec123);
                 rules();
                 state._fsp--;
@@ -507,13 +508,13 @@ public class GrammarTreeVisitor : TreeParser
                     }
                 }
             exit1:
-                finishGrammar((GrammarRootAST)GRAMMAR2, ID1);
+                FinishGrammar((GrammarRootAST)GRAMMAR2, ID1);
                 Match(input, Token.UP, null);
 
             }
 
 
-            exitGrammarSpec(((GrammarAST)retval.start));
+            ExitGrammarSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -530,7 +531,7 @@ public class GrammarTreeVisitor : TreeParser
     // $ANTLR end "grammarSpec"
 
 
-    public class prequelConstructsReturn : TreeRuleReturnScope
+    public class PrequelConstructsReturn : TreeRuleReturnScope
     {
 
         public GrammarAST firstOne = null;
@@ -539,13 +540,13 @@ public class GrammarTreeVisitor : TreeParser
 
     // $ANTLR start "prequelConstructs"
     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:357:1: prequelConstructs returns [GrammarAST firstOne=null] : ( ( prequelConstruct )+ |);
-    public prequelConstructsReturn prequelConstructs()
+    public PrequelConstructsReturn prequelConstructs()
     {
-        prequelConstructsReturn retval = new prequelConstructsReturn();
+        PrequelConstructsReturn retval = new PrequelConstructsReturn();
         retval.start = input.LT(1);
 
 
-        enterPrequelConstructs(((GrammarAST)retval.start));
+        EnterPrequelConstructs(((GrammarAST)retval.start));
 
         try
         {
@@ -617,7 +618,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitPrequelConstructs(((GrammarAST)retval.start));
+            ExitPrequelConstructs(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -647,7 +648,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterPrequelConstructs(((GrammarAST)retval.start));
+        EnterPrequelConstructs(((GrammarAST)retval.start));
 
         try
         {
@@ -735,7 +736,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitPrequelConstructs(((GrammarAST)retval.start));
+            ExitPrequelConstructs(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -765,7 +766,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterOptionsSpec(((GrammarAST)retval.start));
+        EnterOptionsSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -811,7 +812,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitOptionsSpec(((GrammarAST)retval.start));
+            ExitOptionsSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -845,9 +846,9 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope v = null;
 
 
-        enterOption(((GrammarAST)retval.start));
-        bool rule = inContext("RULE ...");
-        bool block = inContext("BLOCK ...");
+        EnterOption(((GrammarAST)retval.start));
+        bool rule = InContext("RULE ...");
+        bool block = InContext("BLOCK ...");
 
         try
         {
@@ -864,14 +865,14 @@ public class GrammarTreeVisitor : TreeParser
                 Match(input, Token.UP, null);
 
 
-                if (block) blockOption(ID4, (v != null ? ((GrammarAST)v.start) : null)); // most specific first
-                else if (rule) ruleOption(ID4, (v != null ? ((GrammarAST)v.start) : null));
-                else grammarOption(ID4, (v != null ? ((GrammarAST)v.start) : null));
+                if (block) BlockOption(ID4, (v != null ? ((GrammarAST)v.start) : null)); // most specific first
+                else if (rule) RuleOption(ID4, (v != null ? ((GrammarAST)v.start) : null));
+                else GrammarOption(ID4, (v != null ? ((GrammarAST)v.start) : null));
 
             }
 
 
-            exitOption(((GrammarAST)retval.start));
+            ExitOption(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -902,7 +903,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterOptionValue(((GrammarAST)retval.start));
+        EnterOptionValue(((GrammarAST)retval.start));
         retval.v = ((GrammarAST)retval.start).token.Text;
 
         try
@@ -923,7 +924,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitOptionValue(((GrammarAST)retval.start));
+            ExitOptionValue(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -953,7 +954,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterDelegateGrammars(((GrammarAST)retval.start));
+        EnterDelegateGrammars(((GrammarAST)retval.start));
 
         try
         {
@@ -999,7 +1000,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitDelegateGrammars(((GrammarAST)retval.start));
+            ExitDelegateGrammars(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1032,7 +1033,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST id = null;
 
 
-        enterDelegateGrammar(((GrammarAST)retval.start));
+        EnterDelegateGrammar(((GrammarAST)retval.start));
 
         try
         {
@@ -1066,20 +1067,20 @@ public class GrammarTreeVisitor : TreeParser
                         id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_delegateGrammar428);
                         Match(input, Token.UP, null);
 
-                        importGrammar(label, id);
+                        ImportGrammar(label, id);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:440:9: id= ID
                     {
                         id = (GrammarAST)Match(input, ID, FOLLOW_ID_in_delegateGrammar443);
-                        importGrammar(null, id);
+                        ImportGrammar(null, id);
                     }
                     break;
 
             }
 
-            exitDelegateGrammar(((GrammarAST)retval.start));
+            ExitDelegateGrammar(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1109,7 +1110,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterTokensSpec(((GrammarAST)retval.start));
+        EnterTokensSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -1155,7 +1156,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitTokensSpec(((GrammarAST)retval.start));
+            ExitTokensSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1187,7 +1188,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ID5 = null;
 
 
-        enterTokenSpec(((GrammarAST)retval.start));
+        EnterTokenSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -1195,11 +1196,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\GrammarTreeVisitor.g:460:4: ID
             {
                 ID5 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_tokenSpec502);
-                defineToken(ID5);
+                DefineToken(ID5);
             }
 
 
-            exitTokenSpec(((GrammarAST)retval.start));
+            ExitTokenSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1229,7 +1230,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterChannelsSpec(((GrammarAST)retval.start));
+        EnterChannelsSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -1275,7 +1276,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitChannelsSpec(((GrammarAST)retval.start));
+            ExitChannelsSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1307,7 +1308,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ID6 = null;
 
 
-        enterChannelSpec(((GrammarAST)retval.start));
+        EnterChannelSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -1315,11 +1316,11 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\g:480:4: ID
             {
                 ID6 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_channelSpec557);
-                defineChannel(ID6);
+                DefineChannel(ID6);
             }
 
 
-            exitChannelSpec(((GrammarAST)retval.start));
+            ExitChannelSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1353,7 +1354,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ACTION7 = null;
 
 
-        enterAction(((GrammarAST)retval.start));
+        EnterAction(((GrammarAST)retval.start));
 
         try
         {
@@ -1388,11 +1389,11 @@ public class GrammarTreeVisitor : TreeParser
                 ACTION7 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_action596);
                 Match(input, Token.UP, null);
 
-                globalNamedAction(sc, name, (ActionAST)ACTION7);
+                GlobalNamedAction(sc, name, (ActionAST)ACTION7);
             }
 
 
-            exitAction(((GrammarAST)retval.start));
+            ExitAction(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1424,7 +1425,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST RULES8 = null;
 
 
-        enterRules(((GrammarAST)retval.start));
+        EnterRules(((GrammarAST)retval.start));
 
         try
         {
@@ -1432,7 +1433,7 @@ public class GrammarTreeVisitor : TreeParser
             // org\\antlr\\v4\\parse\\g:500:7: ^( RULES ( rule | lexerRule )* )
             {
                 RULES8 = (GrammarAST)Match(input, RULES, FOLLOW_RULES_in_rules624);
-                discoverRules(RULES8);
+                DiscoverRules(RULES8);
                 if (input.LA(1) == Token.DOWN)
                 {
                     Match(input, Token.DOWN, null);
@@ -1488,14 +1489,14 @@ public class GrammarTreeVisitor : TreeParser
                         }
                     }
                 exit11:
-                    finishRules(RULES8);
+                    FinishRules(RULES8);
                     Match(input, Token.UP, null);
                 }
 
             }
 
 
-            exitRules(((GrammarAST)retval.start));
+            ExitRules(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1528,7 +1529,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST MODE10 = null;
 
 
-        enterMode(((GrammarAST)retval.start));
+        EnterMode(((GrammarAST)retval.start));
 
         try
         {
@@ -1538,7 +1539,7 @@ public class GrammarTreeVisitor : TreeParser
                 MODE10 = (GrammarAST)Match(input, MODE, FOLLOW_MODE_in_mode662);
                 Match(input, Token.DOWN, null);
                 ID9 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_mode664);
-                currentModeName = (ID9 != null ? ID9.getText() : null); modeDef(MODE10, ID9);
+                currentModeName = (ID9 != null ? ID9.getText() : null); ModeDef(MODE10, ID9);
             // org\\antlr\\v4\\parse\\g:510:64: ( lexerRule )*
             loop12:
                 while (true)
@@ -1573,7 +1574,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitMode(((GrammarAST)retval.start));
+            ExitMode(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1609,7 +1610,7 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope lexerRuleBlock13 = null;
 
 
-        enterLexerRule(((GrammarAST)retval.start));
+        EnterLexerRule(((GrammarAST)retval.start));
         List<GrammarAST> mods = new ();
         currentOuterAltNumber = 0;
 
@@ -1674,13 +1675,13 @@ public class GrammarTreeVisitor : TreeParser
                     }
                 }
             exit14:
-                discoverLexerRule((RuleAST)RULE12, TOKEN_REF11, mods, (opts != null ? ((GrammarAST)opts.start) : null), (GrammarAST)input.LT(1));
+                DiscoverLexerRule((RuleAST)RULE12, TOKEN_REF11, mods, (opts != null ? ((GrammarAST)opts.start) : null), (GrammarAST)input.LT(1));
                 PushFollow(FOLLOW_lexerRuleBlock_in_lexerRule745);
                 lexerRuleBlock13 = lexerRuleBlock();
                 state._fsp--;
 
 
-                finishLexerRule((RuleAST)RULE12, TOKEN_REF11, (lexerRuleBlock13 != null ? ((GrammarAST)lexerRuleBlock13.start) : null));
+                FinishLexerRule((RuleAST)RULE12, TOKEN_REF11, (lexerRuleBlock13 != null ? ((GrammarAST)lexerRuleBlock13.start) : null));
                 currentRuleName = null; currentRuleAST = null;
 
                 Match(input, Token.UP, null);
@@ -1688,7 +1689,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLexerRule(((GrammarAST)retval.start));
+            ExitLexerRule(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1729,7 +1730,7 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope ruleBlock17 = null;
 
 
-        enterRule(((GrammarAST)retval.start));
+        EnterRule(((GrammarAST)retval.start));
         List<GrammarAST> mods = new ();
         List<GrammarAST> actions = new (); // track roots
         currentOuterAltNumber = 0;
@@ -1921,7 +1922,7 @@ public class GrammarTreeVisitor : TreeParser
                     }
                 }
             exit21:
-                discoverRule((RuleAST)RULE15, RULE_REF14, mods, (ActionAST)ARG_ACTION16,
+                DiscoverRule((RuleAST)RULE15, RULE_REF14, mods, (ActionAST)ARG_ACTION16,
                                             (ret != null ? ((GrammarAST)ret.start) : null) != null ? (ActionAST)(ret != null ? ((GrammarAST)ret.start) : null).GetChild(0) : null,
                                             (thr != null ? ((GrammarAST)thr.start) : null), (opts != null ? ((GrammarAST)opts.start) : null),
                                             (loc != null ? ((GrammarAST)loc.start) : null) != null ? (ActionAST)(loc != null ? ((GrammarAST)loc.start) : null).GetChild(0) : null,
@@ -1934,13 +1935,13 @@ public class GrammarTreeVisitor : TreeParser
                 exceptionGroup();
                 state._fsp--;
 
-                finishRule((RuleAST)RULE15, RULE_REF14, (ruleBlock17 != null ? ((GrammarAST)ruleBlock17.start) : null)); currentRuleName = null; currentRuleAST = null;
+                FinishRule((RuleAST)RULE15, RULE_REF14, (ruleBlock17 != null ? ((GrammarAST)ruleBlock17.start) : null)); currentRuleName = null; currentRuleAST = null;
                 Match(input, Token.UP, null);
 
             }
 
 
-            exitRule(((GrammarAST)retval.start));
+            ExitRule(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -1970,7 +1971,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterExceptionGroup(((GrammarAST)retval.start));
+        EnterExceptionGroup(((GrammarAST)retval.start));
 
         try
         {
@@ -2030,7 +2031,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitExceptionGroup(((GrammarAST)retval.start));
+            ExitExceptionGroup(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2063,7 +2064,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ACTION19 = null;
 
 
-        enterExceptionHandler(((GrammarAST)retval.start));
+        EnterExceptionHandler(((GrammarAST)retval.start));
 
         try
         {
@@ -2076,11 +2077,11 @@ public class GrammarTreeVisitor : TreeParser
                 ACTION19 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_exceptionHandler998);
                 Match(input, Token.UP, null);
 
-                ruleCatch(ARG_ACTION18, (ActionAST)ACTION19);
+                RuleCatch(ARG_ACTION18, (ActionAST)ACTION19);
             }
 
 
-            exitExceptionHandler(((GrammarAST)retval.start));
+            ExitExceptionHandler(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2112,7 +2113,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ACTION20 = null;
 
 
-        enterFinallyClause(((GrammarAST)retval.start));
+        EnterFinallyClause(((GrammarAST)retval.start));
 
         try
         {
@@ -2124,11 +2125,11 @@ public class GrammarTreeVisitor : TreeParser
                 ACTION20 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_finallyClause1025);
                 Match(input, Token.UP, null);
 
-                finallyAction((ActionAST)ACTION20);
+                FinallyAction((ActionAST)ACTION20);
             }
 
 
-            exitFinallyClause(((GrammarAST)retval.start));
+            ExitFinallyClause(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2158,7 +2159,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLocals(((GrammarAST)retval.start));
+        EnterLocals(((GrammarAST)retval.start));
 
         try
         {
@@ -2173,7 +2174,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLocals(((GrammarAST)retval.start));
+            ExitLocals(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2203,7 +2204,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterRuleReturns(((GrammarAST)retval.start));
+        EnterRuleReturns(((GrammarAST)retval.start));
 
         try
         {
@@ -2218,7 +2219,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitRuleReturns(((GrammarAST)retval.start));
+            ExitRuleReturns(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2248,7 +2249,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterThrowsSpec(((GrammarAST)retval.start));
+        EnterThrowsSpec(((GrammarAST)retval.start));
 
         try
         {
@@ -2291,7 +2292,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitThrowsSpec(((GrammarAST)retval.start));
+            ExitThrowsSpec(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2321,7 +2322,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterRuleAction(((GrammarAST)retval.start));
+        EnterRuleAction(((GrammarAST)retval.start));
 
         try
         {
@@ -2337,7 +2338,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitRuleAction(((GrammarAST)retval.start));
+            ExitRuleAction(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2367,7 +2368,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterRuleModifier(((GrammarAST)retval.start));
+        EnterRuleModifier(((GrammarAST)retval.start));
 
         try
         {
@@ -2387,7 +2388,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitRuleModifier(((GrammarAST)retval.start));
+            ExitRuleModifier(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2417,7 +2418,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerRuleBlock(((GrammarAST)retval.start));
+        EnterLexerRuleBlock(((GrammarAST)retval.start));
 
         try
         {
@@ -2467,7 +2468,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLexerRuleBlock(((GrammarAST)retval.start));
+            ExitLexerRuleBlock(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2497,7 +2498,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterRuleBlock(((GrammarAST)retval.start));
+        EnterRuleBlock(((GrammarAST)retval.start));
 
         try
         {
@@ -2547,7 +2548,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitRuleBlock(((GrammarAST)retval.start));
+            ExitRuleBlock(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2577,8 +2578,8 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerOuterAlternative((AltAST)((GrammarAST)retval.start));
-        discoverOuterAlt((AltAST)((GrammarAST)retval.start));
+        EnterLexerOuterAlternative((AltAST)((GrammarAST)retval.start));
+        DiscoverOuterAlt((AltAST)((GrammarAST)retval.start));
 
         try
         {
@@ -2592,8 +2593,8 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            finishOuterAlt((AltAST)((GrammarAST)retval.start));
-            exitLexerOuterAlternative((AltAST)((GrammarAST)retval.start));
+            FinishOuterAlt((AltAST)((GrammarAST)retval.start));
+            ExitLexerOuterAlternative((AltAST)((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2623,8 +2624,8 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterOuterAlternative((AltAST)((GrammarAST)retval.start));
-        discoverOuterAlt((AltAST)((GrammarAST)retval.start));
+        EnterOuterAlternative((AltAST)((GrammarAST)retval.start));
+        DiscoverOuterAlt((AltAST)((GrammarAST)retval.start));
 
         try
         {
@@ -2638,8 +2639,8 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            finishOuterAlt((AltAST)((GrammarAST)retval.start));
-            exitOuterAlternative((AltAST)((GrammarAST)retval.start));
+            FinishOuterAlt((AltAST)((GrammarAST)retval.start));
+            ExitOuterAlternative((AltAST)((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2669,7 +2670,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerAlternative(((GrammarAST)retval.start));
+        EnterLexerAlternative(((GrammarAST)retval.start));
 
         try
         {
@@ -2751,7 +2752,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitLexerAlternative(((GrammarAST)retval.start));
+            ExitLexerAlternative(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2781,7 +2782,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerElements(((GrammarAST)retval.start));
+        EnterLexerElements(((GrammarAST)retval.start));
 
         try
         {
@@ -2827,7 +2828,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLexerElements(((GrammarAST)retval.start));
+            ExitLexerElements(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -2862,7 +2863,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST SEMPRED24 = null;
 
 
-        enterLexerElement(((GrammarAST)retval.start));
+        EnterLexerElement(((GrammarAST)retval.start));
 
         try
         {
@@ -2984,14 +2985,14 @@ public class GrammarTreeVisitor : TreeParser
                     // org\\antlr\\v4\\parse\\g:736:6: ACTION
                     {
                         ACTION21 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_lexerElement1468);
-                        actionInAlt((ActionAST)ACTION21);
+                        ActionInAlt((ActionAST)ACTION21);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:737:6: SEMPRED
                     {
                         SEMPRED22 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_lexerElement1482);
-                        sempredInAlt((PredAST)SEMPRED22);
+                        SempredInAlt((PredAST)SEMPRED22);
                     }
                     break;
                 case 5:
@@ -3005,7 +3006,7 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        actionInAlt((ActionAST)ACTION23);
+                        ActionInAlt((ActionAST)ACTION23);
                     }
                     break;
                 case 6:
@@ -3019,7 +3020,7 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        sempredInAlt((PredAST)SEMPRED24);
+                        SempredInAlt((PredAST)SEMPRED24);
                     }
                     break;
                 case 7:
@@ -3031,7 +3032,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitLexerElement(((GrammarAST)retval.start));
+            ExitLexerElement(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3061,7 +3062,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerBlock(((GrammarAST)retval.start));
+        EnterLexerBlock(((GrammarAST)retval.start));
 
         try
         {
@@ -3128,7 +3129,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLexerBlock(((GrammarAST)retval.start));
+            ExitLexerBlock(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3158,7 +3159,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerAtom(((GrammarAST)retval.start));
+        EnterLexerAtom(((GrammarAST)retval.start));
 
         try
         {
@@ -3311,7 +3312,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitLexerAtom(((GrammarAST)retval.start));
+            ExitLexerAtom(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3341,7 +3342,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterActionElement(((GrammarAST)retval.start));
+        EnterActionElement(((GrammarAST)retval.start));
 
         try
         {
@@ -3457,7 +3458,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitActionElement(((GrammarAST)retval.start));
+            ExitActionElement(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3487,8 +3488,8 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterAlternative((AltAST)((GrammarAST)retval.start));
-        discoverAlt((AltAST)((GrammarAST)retval.start));
+        EnterAlternative((AltAST)((GrammarAST)retval.start));
+        DiscoverAlt((AltAST)((GrammarAST)retval.start));
 
         try
         {
@@ -3593,8 +3594,8 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            finishAlt((AltAST)((GrammarAST)retval.start));
-            exitAlternative((AltAST)((GrammarAST)retval.start));
+            FinishAlt((AltAST)((GrammarAST)retval.start));
+            ExitAlternative((AltAST)((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3628,7 +3629,7 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope lexerCommandExpr26 = null;
 
 
-        enterLexerCommand(((GrammarAST)retval.start));
+        EnterLexerCommand(((GrammarAST)retval.start));
 
         try
         {
@@ -3665,20 +3666,20 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        lexerCallCommand(currentOuterAltNumber, ID25, (lexerCommandExpr26 != null ? ((GrammarAST)lexerCommandExpr26.start) : null));
+                        LexerCallCommand(currentOuterAltNumber, ID25, (lexerCommandExpr26 != null ? ((GrammarAST)lexerCommandExpr26.start) : null));
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:805:4: ID
                     {
                         ID27 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_lexerCommand1794);
-                        lexerCommand(currentOuterAltNumber, ID27);
+                        LexerCommand(currentOuterAltNumber, ID27);
                     }
                     break;
 
             }
 
-            exitLexerCommand(((GrammarAST)retval.start));
+            ExitLexerCommand(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3708,7 +3709,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerCommandExpr(((GrammarAST)retval.start));
+        EnterLexerCommandExpr(((GrammarAST)retval.start));
 
         try
         {
@@ -3728,7 +3729,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitLexerCommandExpr(((GrammarAST)retval.start));
+            ExitLexerCommandExpr(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -3763,7 +3764,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST SEMPRED31 = null;
 
 
-        enterElement(((GrammarAST)retval.start));
+        EnterElement(((GrammarAST)retval.start));
 
         try
         {
@@ -3952,14 +3953,14 @@ public class GrammarTreeVisitor : TreeParser
                     // org\\antlr\\v4\\parse\\g:830:6: ACTION
                     {
                         ACTION28 = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_element1868);
-                        actionInAlt((ActionAST)ACTION28);
+                        ActionInAlt((ActionAST)ACTION28);
                     }
                     break;
                 case 5:
                     // org\\antlr\\v4\\parse\\g:831:6: SEMPRED
                     {
                         SEMPRED29 = (GrammarAST)Match(input, SEMPRED, FOLLOW_SEMPRED_in_element1882);
-                        sempredInAlt((PredAST)SEMPRED29);
+                        SempredInAlt((PredAST)SEMPRED29);
                     }
                     break;
                 case 6:
@@ -3973,7 +3974,7 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        actionInAlt((ActionAST)ACTION30);
+                        ActionInAlt((ActionAST)ACTION30);
                     }
                     break;
                 case 7:
@@ -3987,7 +3988,7 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        sempredInAlt((PredAST)SEMPRED31);
+                        SempredInAlt((PredAST)SEMPRED31);
                     }
                     break;
                 case 8:
@@ -4028,7 +4029,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitElement(((GrammarAST)retval.start));
+            ExitElement(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4058,7 +4059,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterAstOperand(((GrammarAST)retval.start));
+        EnterAstOperand(((GrammarAST)retval.start));
 
         try
         {
@@ -4170,7 +4171,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitAstOperand(((GrammarAST)retval.start));
+            ExitAstOperand(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4203,7 +4204,7 @@ public class GrammarTreeVisitor : TreeParser
         TreeRuleReturnScope element33 = null;
 
 
-        enterLabeledElement(((GrammarAST)retval.start));
+        EnterLabeledElement(((GrammarAST)retval.start));
 
         try
         {
@@ -4228,11 +4229,11 @@ public class GrammarTreeVisitor : TreeParser
 
                 Match(input, Token.UP, null);
 
-                label(((GrammarAST)retval.start), ID32, (element33 != null ? ((GrammarAST)element33.start) : null));
+                Label(((GrammarAST)retval.start), ID32, (element33 != null ? ((GrammarAST)element33.start) : null));
             }
 
 
-            exitLabeledElement(((GrammarAST)retval.start));
+            ExitLabeledElement(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4262,7 +4263,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterSubrule(((GrammarAST)retval.start));
+        EnterSubrule(((GrammarAST)retval.start));
 
         try
         {
@@ -4315,7 +4316,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitSubrule(((GrammarAST)retval.start));
+            ExitSubrule(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4345,7 +4346,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterLexerSubrule(((GrammarAST)retval.start));
+        EnterLexerSubrule(((GrammarAST)retval.start));
 
         try
         {
@@ -4398,7 +4399,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitLexerSubrule(((GrammarAST)retval.start));
+            ExitLexerSubrule(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4428,7 +4429,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterBlockSuffix(((GrammarAST)retval.start));
+        EnterBlockSuffix(((GrammarAST)retval.start));
 
         try
         {
@@ -4442,7 +4443,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitBlockSuffix(((GrammarAST)retval.start));
+            ExitBlockSuffix(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4472,7 +4473,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterEbnfSuffix(((GrammarAST)retval.start));
+        EnterEbnfSuffix(((GrammarAST)retval.start));
 
         try
         {
@@ -4492,7 +4493,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitEbnfSuffix(((GrammarAST)retval.start));
+            ExitEbnfSuffix(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4525,7 +4526,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST WILDCARD35 = null;
 
 
-        enterAtom(((GrammarAST)retval.start));
+        EnterAtom(((GrammarAST)retval.start));
 
         try
         {
@@ -4703,14 +4704,14 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        wildcardRef(WILDCARD34);
+                        WildcardRef(WILDCARD34);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:915:7: WILDCARD
                     {
                         WILDCARD35 = (GrammarAST)Match(input, WILDCARD, FOLLOW_WILDCARD_in_atom2201);
-                        wildcardRef(WILDCARD35);
+                        WildcardRef(WILDCARD35);
                     }
                     break;
                 case 5:
@@ -4743,7 +4744,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitAtom(((GrammarAST)retval.start));
+            ExitAtom(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4773,7 +4774,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterBlockSet(((GrammarAST)retval.start));
+        EnterBlockSet(((GrammarAST)retval.start));
 
         try
         {
@@ -4819,7 +4820,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitBlockSet(((GrammarAST)retval.start));
+            ExitBlockSet(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -4856,7 +4857,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST TOKEN_REF39 = null;
 
 
-        enterSetElement(((GrammarAST)retval.start));
+        EnterSetElement(((GrammarAST)retval.start));
 
         try
         {
@@ -4952,7 +4953,7 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        stringRef((TerminalAST)STRING_LITERAL36);
+                        StringRef((TerminalAST)STRING_LITERAL36);
                     }
                     break;
                 case 2:
@@ -4966,21 +4967,21 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        tokenRef((TerminalAST)TOKEN_REF37);
+                        TokenRef((TerminalAST)TOKEN_REF37);
                     }
                     break;
                 case 3:
                     // org\\antlr\\v4\\parse\\g:940:4: STRING_LITERAL
                     {
                         STRING_LITERAL38 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_setElement2312);
-                        stringRef((TerminalAST)STRING_LITERAL38);
+                        StringRef((TerminalAST)STRING_LITERAL38);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:941:4: TOKEN_REF
                     {
                         TOKEN_REF39 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_setElement2337);
-                        tokenRef((TerminalAST)TOKEN_REF39);
+                        TokenRef((TerminalAST)TOKEN_REF39);
                     }
                     break;
                 case 5:
@@ -4993,8 +4994,8 @@ public class GrammarTreeVisitor : TreeParser
                         Match(input, Token.UP, null);
 
 
-                        stringRef((TerminalAST)a);
-                        stringRef((TerminalAST)b);
+                        StringRef((TerminalAST)a);
+                        StringRef((TerminalAST)b);
 
                     }
                     break;
@@ -5007,7 +5008,7 @@ public class GrammarTreeVisitor : TreeParser
 
             }
 
-            exitSetElement(((GrammarAST)retval.start));
+            ExitSetElement(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5037,7 +5038,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterBlock(((GrammarAST)retval.start));
+        EnterBlock(((GrammarAST)retval.start));
 
         try
         {
@@ -5151,7 +5152,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitBlock(((GrammarAST)retval.start));
+            ExitBlock(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5184,7 +5185,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST RULE_REF40 = null;
 
 
-        enterRuleref(((GrammarAST)retval.start));
+        EnterRuleref(((GrammarAST)retval.start));
 
         try
         {
@@ -5238,13 +5239,13 @@ public class GrammarTreeVisitor : TreeParser
                 }
 
 
-                ruleRef(RULE_REF40, (ActionAST)arg);
-                if (arg != null) actionInAlt((ActionAST)arg);
+                RuleRef(RULE_REF40, (ActionAST)arg);
+                if (arg != null) ActionInAlt((ActionAST)arg);
 
             }
 
 
-            exitRuleref(((GrammarAST)retval.start));
+            ExitRuleref(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5274,7 +5275,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterRange(((GrammarAST)retval.start));
+        EnterRange(((GrammarAST)retval.start));
 
         try
         {
@@ -5290,7 +5291,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitRange(((GrammarAST)retval.start));
+            ExitRange(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5325,7 +5326,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST TOKEN_REF44 = null;
 
 
-        enterTerminal(((GrammarAST)retval.start));
+        EnterTerminal(((GrammarAST)retval.start));
 
         try
         {
@@ -5411,14 +5412,14 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        stringRef((TerminalAST)STRING_LITERAL41);
+                        StringRef((TerminalAST)STRING_LITERAL41);
                     }
                     break;
                 case 2:
                     // org\\antlr\\v4\\parse\\g:993:7: STRING_LITERAL
                     {
                         STRING_LITERAL42 = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_terminal2566);
-                        stringRef((TerminalAST)STRING_LITERAL42);
+                        StringRef((TerminalAST)STRING_LITERAL42);
                     }
                     break;
                 case 3:
@@ -5432,20 +5433,20 @@ public class GrammarTreeVisitor : TreeParser
 
                         Match(input, Token.UP, null);
 
-                        tokenRef((TerminalAST)TOKEN_REF43);
+                        TokenRef((TerminalAST)TOKEN_REF43);
                     }
                     break;
                 case 4:
                     // org\\antlr\\v4\\parse\\g:995:7: TOKEN_REF
                     {
                         TOKEN_REF44 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_terminal2593);
-                        tokenRef((TerminalAST)TOKEN_REF44);
+                        TokenRef((TerminalAST)TOKEN_REF44);
                     }
                     break;
 
             }
 
-            exitTerminal(((GrammarAST)retval.start));
+            ExitTerminal(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5475,7 +5476,7 @@ public class GrammarTreeVisitor : TreeParser
         retval.start = input.LT(1);
 
 
-        enterElementOptions(((GrammarAST)retval.start));
+        EnterElementOptions(((GrammarAST)retval.start));
 
         try
         {
@@ -5521,7 +5522,7 @@ public class GrammarTreeVisitor : TreeParser
             }
 
 
-            exitElementOptions(((GrammarAST)retval.start));
+            ExitElementOptions(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)
@@ -5558,7 +5559,7 @@ public class GrammarTreeVisitor : TreeParser
         GrammarAST ID48 = null;
 
 
-        enterElementOption(((GrammarAST)retval.start));
+        EnterElementOption(((GrammarAST)retval.start));
 
         try
         {
@@ -5670,7 +5671,7 @@ public class GrammarTreeVisitor : TreeParser
                     // org\\antlr\\v4\\parse\\g:1015:7: ID
                     {
                         ID45 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2663);
-                        elementOption(t, ID45, null);
+                        ElementOption(t, ID45, null);
                     }
                     break;
                 case 2:
@@ -5682,7 +5683,7 @@ public class GrammarTreeVisitor : TreeParser
                         v = (GrammarAST)Match(input, ID, FOLLOW_ID_in_elementOption2691);
                         Match(input, Token.UP, null);
 
-                        elementOption(t, id, v);
+                        ElementOption(t, id, v);
                     }
                     break;
                 case 3:
@@ -5694,7 +5695,7 @@ public class GrammarTreeVisitor : TreeParser
                         v = (GrammarAST)Match(input, STRING_LITERAL, FOLLOW_STRING_LITERAL_in_elementOption2713);
                         Match(input, Token.UP, null);
 
-                        elementOption(t, ID46, v);
+                        ElementOption(t, ID46, v);
                     }
                     break;
                 case 4:
@@ -5706,7 +5707,7 @@ public class GrammarTreeVisitor : TreeParser
                         v = (GrammarAST)Match(input, ACTION, FOLLOW_ACTION_in_elementOption2733);
                         Match(input, Token.UP, null);
 
-                        elementOption(t, ID47, v);
+                        ElementOption(t, ID47, v);
                     }
                     break;
                 case 5:
@@ -5718,13 +5719,13 @@ public class GrammarTreeVisitor : TreeParser
                         v = (GrammarAST)Match(input, INT, FOLLOW_INT_in_elementOption2755);
                         Match(input, Token.UP, null);
 
-                        elementOption(t, ID48, v);
+                        ElementOption(t, ID48, v);
                     }
                     break;
 
             }
 
-            exitElementOption(((GrammarAST)retval.start));
+            ExitElementOption(((GrammarAST)retval.start));
 
         }
         catch (RecognitionException re)

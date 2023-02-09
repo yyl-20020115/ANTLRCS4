@@ -112,7 +112,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
         if (altAssociativity.TryGetValue(alt, out var r) && r != assoc)
         {
-            tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
+            tool.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
         }
         altAssociativity[alt] = assoc;
 

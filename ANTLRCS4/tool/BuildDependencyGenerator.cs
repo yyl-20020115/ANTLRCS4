@@ -154,10 +154,10 @@ public class BuildDependencyGenerator {
 	}
 
 	public string getOutputFile(String fileName) {
-		string outputDir = tool.getOutputDirectory(g.fileName);
+		string outputDir = tool.GetOutputDirectory(g.fileName);
 		if ( outputDir.Equals(".") ) {
 			// pay attention to -o then
-			outputDir = tool.getOutputDirectory(fileName);
+			outputDir = tool.GetOutputDirectory(fileName);
 		}
 		if ( outputDir.Equals(".") ) {
 			return (fileName);

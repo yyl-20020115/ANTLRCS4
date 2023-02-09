@@ -14,7 +14,8 @@ public interface Recognizer
 {
     string[] TokenNames { get; }
 
-    string[] GetRuleNames();
+    string[] RuleNames { get; }
+
     bool Precpred(RuleContext localctx, int precedence);
     bool Sempred(RuleContext _localctx, int ruleIndex, int actionIndex);
     int State { get; }
@@ -48,7 +49,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
     //@Deprecated
     public abstract string[] TokenNames { get; }
 
-    public abstract string[] GetRuleNames();
+    public abstract string[] RuleNames { get; }
 
     /**
 	 * Get the vocabulary used by the recognizer.
@@ -57,7 +58,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 * vocabulary used by the grammar.
 	 */
     //@SuppressWarnings("deprecation")
-    public virtual Vocabulary GetVocabulary() => VocabularyImpl.FromTokenNames(TokenNames);
+    public virtual Vocabulary Vocabulary => VocabularyImpl.FromTokenNames(TokenNames);
 
     /**
 	 * Get a map from token names to token types.
@@ -66,7 +67,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 */
     public Dictionary<string, int> GetTokenTypeMap()
     {
-        var vocabulary = GetVocabulary();
+        var vocabulary = Vocabulary;
         lock (tokenTypeMapCache)
         {
             if (!tokenTypeMapCache.TryGetValue(vocabulary, out var result))
@@ -103,7 +104,7 @@ public abstract class Recognizer<Symbol, ATNInterpreter> : Recognizer where ATNI
 	 */
     public Dictionary<string, int> GetRuleIndexMap()
     {
-        var ruleNames = GetRuleNames();
+        var ruleNames = RuleNames;
         if (ruleNames == null)
         {
             throw new UnsupportedOperationException("The current recognizer does not provide a list of rule names.");

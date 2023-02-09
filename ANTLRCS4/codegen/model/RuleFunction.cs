@@ -13,8 +13,6 @@ using org.antlr.v4.runtime.atn;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using Attribute = org.antlr.v4.tool.Attribute;
-using RuntimeUtils = org.antlr.v4.runtime.misc.RuntimeUtils;
 
 namespace org.antlr.v4.codegen.model;
 
@@ -22,12 +20,12 @@ namespace org.antlr.v4.codegen.model;
 /** */
 public class RuleFunction : OutputModelObject
 {
-    public readonly String name;
-    public readonly String escapedName;
-    public readonly List<String> modifiers;
-    public String ctxType;
-    public readonly ICollection<String> ruleLabels;
-    public readonly ICollection<String> tokenLabels;
+    public readonly string name;
+    public readonly string escapedName;
+    public readonly List<string> modifiers;
+    public string ctxType;
+    public readonly ICollection<string> ruleLabels;
+    public readonly ICollection<string> tokenLabels;
     public readonly ATNState startState;
     public readonly int index;
     public readonly Rule rule;
@@ -43,9 +41,9 @@ public class RuleFunction : OutputModelObject
     [ModelElement]
     public StructDecl ruleCtx;
     [ModelElement]
-    public Dictionary<String, AltLabelStructDecl> altLabelCtxs;
+    public Dictionary<string, AltLabelStructDecl> altLabelCtxs;
     [ModelElement]
-    public Dictionary<String, Action> namedActions;
+    public Dictionary<string, Action> namedActions;
     [ModelElement]
     public Action finallyAction;
     [ModelElement]
@@ -56,7 +54,7 @@ public class RuleFunction : OutputModelObject
     public RuleFunction(OutputModelFactory factory, Rule r) : base(factory)
     {
         this.name = r.name;
-        this.escapedName = factory.GetGenerator().Target.EscapeIfNeeded(r.name);
+        this.escapedName = factory.Generator.Target.EscapeIfNeeded(r.name);
         this.rule = r;
         modifiers = Utils.NodesToStrings(r.modifiers);
 
@@ -102,7 +100,7 @@ public class RuleFunction : OutputModelObject
             }
         }
 
-        startState = factory.GetGrammar().atn.ruleToStartState[r.index];
+        startState = factory.Grammar.atn.ruleToStartState[r.index];
     }
 
     public void AddContextGetters(OutputModelFactory factory, Rule r)
@@ -141,7 +139,7 @@ public class RuleFunction : OutputModelObject
                     }
 
                     // we know which ctx to put in, so do it directly
-                    foreach (Decl d in decls)
+                    foreach (var d in decls)
                     {
                         altToContext[altNum].AddDecl(d);
                     }
@@ -169,8 +167,8 @@ public class RuleFunction : OutputModelObject
 	 */
     public HashSet<Decl> GetDeclsForAllElements(List<AltAST> altASTs)
     {
-        HashSet<String> needsList = new ();
-        HashSet<String> nonOptional = new ();
+        HashSet<string> needsList = new ();
+        HashSet<string> nonOptional = new ();
         List<GrammarAST> allRefs = new();
         bool firstAlt = true;
         var reftypes = new IntervalSet(ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF, ANTLRParser.STRING_LITERAL);
@@ -217,7 +215,7 @@ public class RuleFunction : OutputModelObject
             if (refLabelName == null)
                 continue;
 
-            List<Decl> d = GetDeclForAltElement(t,
+            var d = GetDeclForAltElement(t,
                                                 refLabelName,
                                                 needsList.Contains(refLabelName),
                                                 !nonOptional.Contains(refLabelName));
@@ -268,9 +266,9 @@ public class RuleFunction : OutputModelObject
         {
             var visitor = new ElementFrequenciesVisitor(new CommonTreeNodeStream(new GrammarASTAdaptor(), ast));
             visitor.outerAlternative();
-            if (visitor.frequencies.Size() != 1)
+            if (visitor.frequencies.Count != 1)
             {
-                factory.GetGrammar().Tools.ErrMgr.toolError(ErrorType.INTERNAL_ERROR);
+                factory.                Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR);
                 return new(new FrequencySet<string>(), new FrequencySet<string>());
             }
 
@@ -278,7 +276,7 @@ public class RuleFunction : OutputModelObject
         }
         catch (RecognitionException ex)
         {
-            factory.GetGrammar().Tools.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, ex);
+            factory.            Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, ex);
             return new(new (), new ());
         }
     }
@@ -288,12 +286,12 @@ public class RuleFunction : OutputModelObject
         List<Decl> decls = new();
         if (t.getType() == ANTLRParser.RULE_REF)
         {
-            var rref = factory.GetGrammar().getRule(t.getText());
-            var ctxName = factory.GetGenerator().Target
+            var rref = factory.Grammar.getRule(t.getText());
+            var ctxName = factory.Generator.Target
                              .GetRuleFunctionContextStructName(rref);
             if (needList)
             {
-                if (factory.GetGenerator().Target.SupportsOverloadedMethods())
+                if (factory.Generator.Target.SupportsOverloadedMethods())
                     decls.Add(new (factory, refLabelName, ctxName));
                 decls.Add(new (factory, refLabelName, ctxName));
             }
@@ -306,7 +304,7 @@ public class RuleFunction : OutputModelObject
         {
             if (needList)
             {
-                if (factory.GetGenerator().Target.SupportsOverloadedMethods())
+                if (factory.Generator.Target.SupportsOverloadedMethods())
                     decls.Add(new (factory, refLabelName));
                 decls.Add(new ContextTokenListIndexedGetterDecl(factory, refLabelName));
             }

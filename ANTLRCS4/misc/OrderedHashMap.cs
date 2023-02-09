@@ -18,14 +18,12 @@ public class OrderedHashMap<K, V> : Dictionary<K, V> where K : notnull
 
     public V GetElement(int i) => this.TryGetValue((elements[(i)]), out var r) ? r : default;
 
-    //@Override
     public V Put(K key, V value)
     {
         elements.Add(key);
         return base[key] = value;
     }
 
-    //@Override
     public void PutAll(Dictionary<K, V> m)
     {
         foreach (var entry in m)
@@ -34,7 +32,6 @@ public class OrderedHashMap<K, V> : Dictionary<K, V> where K : notnull
         }
     }
 
-    //@Override
     public new V Remove(K key)
     {
         if (this.TryGetValue(key, out var v))
@@ -46,7 +43,6 @@ public class OrderedHashMap<K, V> : Dictionary<K, V> where K : notnull
         return default;
     }
 
-    //@Override
     public new void Clear()
     {
         elements.Clear();

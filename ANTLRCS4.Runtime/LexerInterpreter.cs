@@ -78,19 +78,13 @@ public class LexerInterpreter : Lexer
     public override string[] TokenNames => tokenNames;
 
     //@Override
-    public override string[] GetRuleNames()
-    {
-        return ruleNames;
-    }
+    public override string[] RuleNames => ruleNames;
 
-    //@Override
     public override string[] ChannelNames => channelNames;
 
-    //@Override
     public override string[] ModeNames => modeNames;
 
-    //@Override
-    public override Vocabulary GetVocabulary() => vocabulary ?? base.GetVocabulary();
+    public override Vocabulary Vocabulary => vocabulary ?? base.Vocabulary;
 
     public override TokenFactory TokenFactory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 }

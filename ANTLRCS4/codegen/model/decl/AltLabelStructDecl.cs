@@ -16,8 +16,8 @@ public class AltLabelStructDecl : StructDecl
     public readonly int altNum;
     public readonly string parentRule;
     public AltLabelStructDecl(OutputModelFactory factory, Rule r,
-                              int altNum, String label)
-        : base(factory, r, factory.GetGenerator().Target.GetAltLabelContextStructName(label))
+                              int altNum, string label)
+        : base(factory, r, factory.Generator.Target.GetAltLabelContextStructName(label))
     {
         // override name set in base to the label ctx
         this.altNum = altNum;
@@ -29,12 +29,12 @@ public class AltLabelStructDecl : StructDecl
     public new void AddDispatchMethods(Rule rule)
     {
         dispatchMethods = new();
-        if (factory.GetGrammar().Tools.gen_listener)
+        if (factory.Grammar.Tools.gen_listener)
         {
             dispatchMethods.Add(new ListenerDispatchMethod(factory, true));
             dispatchMethods.Add(new ListenerDispatchMethod(factory, false));
         }
-        if (factory.GetGrammar().Tools.gen_visitor)
+        if (factory.Grammar.Tools.gen_visitor)
         {
             dispatchMethods.Add(new VisitorDispatchMethod(factory));
         }

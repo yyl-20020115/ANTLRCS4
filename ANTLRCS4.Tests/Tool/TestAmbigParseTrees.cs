@@ -228,7 +228,7 @@ public class TestAmbigParseTrees
 
         // PARSE
         int ruleIndex = g.rules[(startRule)].index;
-        var parseTree = parser.parse(ruleIndex);
+        var parseTree = parser.Parse(ruleIndex);
         Assert.AreEqual(overallTree, Trees.ToStringTree(parseTree, nodeTextProvider));
         Console.Out.WriteLine();
 
@@ -272,7 +272,7 @@ public class TestAmbigParseTrees
             throw new ArgumentException("rule has no decision: " + startRule);
         }
         parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
-        var t = parser.parse(g.rules[(startRule)].index);
+        var t = parser.Parse(g.rules[(startRule)].index);
         var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
         Assert.AreEqual(expectedParseTree, Trees.ToStringTree(t, nodeTextProvider));
     }

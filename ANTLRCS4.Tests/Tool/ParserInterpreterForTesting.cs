@@ -68,7 +68,7 @@ public class ParserInterpreterForTesting
     public ParserInterpreterForTesting(Grammar g, TokenStream input)
     {
         var antlr = new Tool();
-        antlr.process(g, false);
+        antlr.Process(g, false);
         parser = new DummyParser(g, g.atn, input);
         atnSimulator =
             new (null/*parser*/, g.atn, parser.decisionToDFA,

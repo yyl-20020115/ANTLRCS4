@@ -35,7 +35,7 @@ public class NoViableAltException : RecognitionException
 
     public NoViableAltException(Parser recognizer)
         : this(recognizer,
-             recognizer.             InputStream,
+             recognizer.InputStream as TokenStream,
              recognizer.GetCurrentToken(),
              recognizer.GetCurrentToken(),
              null,

@@ -18,7 +18,7 @@ public class Decl : SrcOp
     public Decl(OutputModelFactory factory, string name, string decl = null) : base(factory)
     {
         this.name = name;
-        this.escapedName = factory.GetGenerator().Target.EscapeIfNeeded(name);
+        this.escapedName = factory.Generator.Target.EscapeIfNeeded(name);
         this.decl = decl;
     }
 

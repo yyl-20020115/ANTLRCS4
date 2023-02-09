@@ -317,7 +317,7 @@ public class Grammar : AttributeResolver
         org.antlr.runtime.ANTLRStringStream @in = new org.antlr.runtime.ANTLRStringStream(grammarText);
         @in.name = fileName;
 
-        this.ast = Tools.parse(fileName, @in);
+        this.ast = Tools.Parse(fileName, @in);
         if (ast == null)
         {
             throw new UnsupportedOperationException();
@@ -342,7 +342,7 @@ public class Grammar : AttributeResolver
             importVocab(tokenVocabSource);
         }
 
-        Tools.process(this, false);
+        Tools.Process(this, false);
     }
 
     protected void initTokenSymbolTables()
@@ -386,7 +386,7 @@ public class Grammar : AttributeResolver
             Grammar g;
             try
             {
-                g = Tools.loadImportedGrammar(this, t);
+                g = Tools.LoadImportedGrammar(this, t);
             }
             catch (IOException ioe)
             {
@@ -572,7 +572,7 @@ public class Grammar : AttributeResolver
     public static Grammar load(String fileName)
     {
         Tool antlr = new Tool();
-        return antlr.loadGrammar(fileName);
+        return antlr.LoadGrammar(fileName);
     }
 
     /** Return list of imported grammars from root down to our parent.

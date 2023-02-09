@@ -27,7 +27,7 @@ public class LL1OptionalBlockSingleAlt : LL1Choice
 
         /** Lookahead for each alt 1..n */
         //		IntervalSet[] altLookSets = LinearApproximator.getLL1LookaheadSets(dfa);
-        var altLookSets = factory.GetGrammar().decisionLOOK[(decision)];
+        var altLookSets = factory.Grammar.decisionLOOK[(decision)];
         altLook = GetAltLookaheadAsStringLists(altLookSets);
         var look = altLookSets[0];
         var followLook = altLookSets[1];

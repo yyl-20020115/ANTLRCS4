@@ -886,7 +886,7 @@ public class TestGraphNodes
         visited[context] = context;
         contextIds[context] = contextIds.Count;
         workList.Add(context);
-        while (workList.Size() > 0)
+        while (workList.Count > 0)
         {
             var current = workList.Pop();
             nodes.Append("  s").Append(contextIds[(current)]).Append('[');

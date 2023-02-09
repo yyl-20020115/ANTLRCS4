@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using Antlr4.StringTemplate;
 using org.antlr.runtime;
 using org.antlr.v4.analysis;
 using org.antlr.v4.automata;
@@ -17,383 +16,426 @@ using org.antlr.v4.runtime.misc;
 using org.antlr.v4.semantics;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
-using System.Reflection;
 using System.Text;
 
 namespace org.antlr.v4;
 
-public class Tool {
-	public static readonly String VERSION;
-	static Tool()
-	{
-		// Assigned in a static{} block to prevent the field from becoming a
-		// compile-time constant
-		VERSION = RuntimeMetaData.VERSION;
-	}
-
-	public static readonly String GRAMMAR_EXTENSION = ".g4";
-	public static readonly String LEGACY_GRAMMAR_EXTENSION = ".g";
-
-	public static readonly List<String> ALL_GRAMMAR_EXTENSIONS =
-		new List<string>() { GRAMMAR_EXTENSION, LEGACY_GRAMMAR_EXTENSION };
-
-	public enum OptionArgType { NONE, STRING } // NONE implies boolean
-	public class Option {
-		public readonly String fieldName;
-        public readonly String name;
-        public readonly OptionArgType argType;
-		public readonly String description;
-
-		public Option(String fieldName, String name, String description)
-		: this(fieldName, name, OptionArgType.NONE, description)
-        {
-		}
-
-		public Option(String fieldName, String name, OptionArgType argType, String description) {
-			this.fieldName = fieldName;
-			this.name = name;
-			this.argType = argType;
-			this.description = description;
-		}
-	}
-
-	// fields set by option manager
-
-	public string inputDirectory; // used by mvn plugin but not set by tool itself.
-	public string outputDirectory;
-	public string libDirectory;
-	public bool generate_ATN_dot = false;
-	public Encoding grammarEncoding = Encoding.Default; // use default locale's encoding
-	public string msgFormat = "antlr";
-	public bool Launch_ST_inspector = false;
-	public bool ST_inspector_wait_for_close = false;
-    public bool force_atn = false;
-    public bool dolog = false;
-	public bool gen_listener = true;
-	public bool gen_visitor = false;
-	public bool gen_dependencies = false;
-	public string genPackage = null;
-	public Dictionary<string, string> grammarOptions = null;
-	public bool warnings_are_errors = false;
-	public bool longMessages = false;
-	public bool exact_output_dir = false;
-
-    public readonly static Option[] optionDefs = {
-		new Option("outputDirectory",             "-o", OptionArgType.STRING, "specify output directory where all output is generated"),
-		new Option("libDirectory",                "-lib", OptionArgType.STRING, "specify location of grammars, tokens files"),
-		new Option("generate_ATN_dot",            "-atn", "generate rule augmented transition network diagrams"),
-		new Option("grammarEncoding",             "-encoding", OptionArgType.STRING, "specify grammar file encoding; e.g., euc-jp"),
-		new Option("msgFormat",                   "-message-format", OptionArgType.STRING, "specify output style for messages in antlr, gnu, vs2005"),
-		new Option("longMessages",                "-long-messages", "show exception details when available for errors and warnings"),
-		new Option("gen_listener",                "-listener", "generate parse tree listener (default)"),
-		new Option("gen_listener",                "-no-listener", "don't generate parse tree listener"),
-		new Option("gen_visitor",                 "-visitor", "generate parse tree visitor"),
-		new Option("gen_visitor",                 "-no-visitor", "don't generate parse tree visitor (default)"),
-		new Option("genPackage",                  "-package", OptionArgType.STRING, "specify a package/namespace for the generated code"),
-		new Option("gen_dependencies",            "-depend", "generate file dependencies"),
-		new Option("",                            "-D<option>=value", "set/override a grammar-level option"),
-		new Option("warnings_are_errors",         "-Werror", "treat warnings as errors"),
-		new Option("launch_ST_inspector",         "-XdbgST", "launch StringTemplate visualizer on generated code"),
-		new Option("ST_inspector_wait_for_close", "-XdbgSTWait", "wait for STViz to close before continuing"),
-		new Option("force_atn",                   "-Xforce-atn", "use the ATN simulator for all predictions"),
-		new Option("log",                         "-Xlog", "dump lots of logging info to antlr-timestamp.log"),
-	    new Option("exact_output_dir",            "-Xexact-output-dir", "all output goes into -o dir regardless of paths/package"),
-	};
-
-	// helper vars for option management
-	protected bool haveOutputDir = false;
-	protected bool return_dont_exit = false;
-
-
-	public readonly String[] args;
-
-	protected List<String> grammarFiles = new ();
-
-	public ErrorManager ErrMgr;
-    public LogManager logMgr = new ();
-
-	List<ANTLRToolListener> listeners = new List<ANTLRToolListener>();// CopyOnWriteArrayList<ANTLRToolListener>();
-
-	/** Track separately so if someone adds a listener, it's the only one
-	 *  instead of it and the default stderr listener.
-	 */
-	DefaultToolListener defaultListener;
-
-	public Tool()
-	{
-		defaultListener = new DefaultToolListener(this);
+public class Tool
+{
+    public static readonly string VERSION = RuntimeMetaData.VERSION;
+    static Tool()
+    {
+        // Assigned in a static{} block to prevent the field from becoming a
+        // compile-time constant
     }
 
-	public static void Main(string[] args) {
-        var antlr = new Tool(args);
-        if ( args.Length == 0 ) { antlr.help(); antlr.exit(0); }
+    public static readonly string GRAMMAR_EXTENSION = ".g4";
+    public static readonly string LEGACY_GRAMMAR_EXTENSION = ".g";
 
-        try {
-            antlr.processGrammarsOnCommandLine();
+    public static readonly List<string> ALL_GRAMMAR_EXTENSIONS =
+        new () { GRAMMAR_EXTENSION, LEGACY_GRAMMAR_EXTENSION };
+
+    public enum OptionArgType :uint { NONE, STRING } // NONE implies boolean
+    public class Option
+    {
+        public readonly string fieldName;
+        public readonly string name;
+        public readonly OptionArgType argType;
+        public readonly string description;
+
+        public Option(string fieldName, string name, string description)
+        : this(fieldName, name, OptionArgType.NONE, description) { }
+
+        public Option(string fieldName, string name, OptionArgType argType, string description)
+        {
+            this.fieldName = fieldName;
+            this.name = name;
+            this.argType = argType;
+            this.description = description;
         }
-        finally {
-            if ( antlr.dolog) {
-                try {
-                    String logname = antlr.logMgr.Save();
-                    Console.WriteLine("wrote "+logname);
+    }
+
+    // fields set by option manager
+
+    public string inputDirectory; // used by mvn plugin but not set by tool itself.
+    public string outputDirectory;
+    public string libDirectory;
+    public bool generate_ATN_dot = false;
+    public Encoding grammarEncoding = Encoding.Default; // use default locale's encoding
+    public string msgFormat = "antlr";
+    public bool Launch_ST_inspector = false;
+    public bool ST_inspector_wait_for_close = false;
+    public bool force_atn = false;
+    public bool dolog = false;
+    public bool gen_listener = true;
+    public bool gen_visitor = false;
+    public bool gen_dependencies = false;
+    public string genPackage = null;
+    public Dictionary<string, string> grammarOptions = null;
+    public bool warnings_are_errors = false;
+    public bool longMessages = false;
+    public bool exact_output_dir = false;
+
+    public readonly static Option[] optionDefs = {
+        new Option("outputDirectory",             "-o", OptionArgType.STRING, "specify output directory where all output is generated"),
+        new Option("libDirectory",                "-lib", OptionArgType.STRING, "specify location of grammars, tokens files"),
+        new Option("generate_ATN_dot",            "-atn", "generate rule augmented transition network diagrams"),
+        new Option("grammarEncoding",             "-encoding", OptionArgType.STRING, "specify grammar file encoding; e.g., euc-jp"),
+        new Option("msgFormat",                   "-message-format", OptionArgType.STRING, "specify output style for messages in antlr, gnu, vs2005"),
+        new Option("longMessages",                "-long-messages", "show exception details when available for errors and warnings"),
+        new Option("gen_listener",                "-listener", "generate parse tree listener (default)"),
+        new Option("gen_listener",                "-no-listener", "don't generate parse tree listener"),
+        new Option("gen_visitor",                 "-visitor", "generate parse tree visitor"),
+        new Option("gen_visitor",                 "-no-visitor", "don't generate parse tree visitor (default)"),
+        new Option("genPackage",                  "-package", OptionArgType.STRING, "specify a package/namespace for the generated code"),
+        new Option("gen_dependencies",            "-depend", "generate file dependencies"),
+        new Option("",                            "-D<option>=value", "set/override a grammar-level option"),
+        new Option("warnings_are_errors",         "-Werror", "treat warnings as errors"),
+        new Option("launch_ST_inspector",         "-XdbgST", "launch StringTemplate visualizer on generated code"),
+        new Option("ST_inspector_wait_for_close", "-XdbgSTWait", "wait for STViz to close before continuing"),
+        new Option("force_atn",                   "-Xforce-atn", "use the ATN simulator for all predictions"),
+        new Option("log",                         "-Xlog", "dump lots of logging info to antlr-timestamp.log"),
+        new Option("exact_output_dir",            "-Xexact-output-dir", "all output goes into -o dir regardless of paths/package"),
+    };
+
+    // helper vars for option management
+    protected bool haveOutputDir = false;
+    protected bool return_dont_exit = false;
+
+
+    public readonly string[] args;
+
+    protected List<string> grammarFiles = new();
+
+    public ErrorManager ErrMgr;
+    public LogManager logMgr = new();
+    readonly List<ANTLRToolListener> listeners = new ();// CopyOnWriteArrayList<ANTLRToolListener>();
+
+    /** Track separately so if someone adds a listener, it's the only one
+	 *  instead of it and the default stderr listener.
+	 */
+    readonly DefaultToolListener defaultListener;
+
+    public Tool()
+    {
+        defaultListener = new DefaultToolListener(this);
+    }
+
+    public static void Main(string[] args)
+    {
+        var antlr = new Tool(args);
+        if (args.Length == 0) { antlr.Help(); antlr.exit(0); }
+
+        try
+        {
+            antlr.ProcessGrammarsOnCommandLine();
+        }
+        finally
+        {
+            if (antlr.dolog)
+            {
+                try
+                {
+                    var logname = antlr.logMgr.Save();
+                    Console.WriteLine("wrote " + logname);
                 }
-                catch (IOException ioe) {
-                    antlr.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, ioe);
+                catch (IOException ioe)
+                {
+                    antlr.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, ioe);
                 }
             }
         }
-		if ( antlr.return_dont_exit ) return;
+        if (antlr.return_dont_exit) return;
 
-		if (antlr.ErrMgr.getNumErrors() > 0) {
-			antlr.exit(1);
-		}
-		antlr.exit(0);
-	}
+        if (antlr.ErrMgr.NumErrors > 0)
+        {
+            antlr.exit(1);
+        }
+        antlr.exit(0);
+    }
 
-	public Tool(params String[] args) {
-		this.args = args;
-		ErrMgr = new ErrorManager(this);
-		// We have to use the default message format until we have
-		// parsed the -message-format command line option.
-		ErrMgr.setFormat("antlr");
-		handleArgs();
-		ErrMgr.setFormat(msgFormat);
-	}
+    public Tool(params String[] args)
+    {
+        this.args = args;
+        ErrMgr = new ErrorManager(this);
+        // We have to use the default message format until we have
+        // parsed the -message-format command line option.
+        ErrMgr.SetFormat("antlr");
+        HandleArgs();
+        ErrMgr.SetFormat(msgFormat);
+    }
 
-	protected void handleArgs() {
-		int i=0;
-		while ( args!=null && i<args.Length ) {
-			String arg = args[i];
-			i++;
-			if ( arg.StartsWith("-D") ) { // -Dlanguage=Java syntax
-				handleOptionSetArg(arg);
-				continue;
-			}
-			if ( arg[(0)] !='-' ) { // file name
-				if ( !grammarFiles.Contains(arg) ) grammarFiles.Add(arg);
-				continue;
-			}
-			var found = false;
-			foreach (Option o in optionDefs) {
-				if ( arg.Equals(o.name) ) {
-					found = true;
-					String argValue = null;
-					if ( o.argType==OptionArgType.STRING ) {
-						argValue = args[i];
-						i++;
-					}
-					// use reflection to set field
-					Type c = this.GetType();
-					try {
-						FieldInfo f = c.GetField(o.fieldName);
-						if ( argValue==null ) {
-							if ( arg.StartsWith("-no-") ) f.SetValue(this, false);
-							else f.SetValue(this, true);
-						}
-						else f.SetValue(this, argValue);
-					}
-					catch (Exception e) {
-						ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "can't access field "+o.fieldName);
-					}
-				}
-			}
-			if ( !found ) {
-				ErrMgr.toolError(ErrorType.INVALID_CMDLINE_ARG, arg);
-			}
-		}
-		if ( outputDirectory!=null ) {
-			if (outputDirectory.EndsWith("/") ||
-				outputDirectory.EndsWith("\\")) {
-				outputDirectory =
-					outputDirectory.Substring(0, outputDirectory.Length - 1);
-			}
-			string outDir = outputDirectory;
-			haveOutputDir = true;
-			if (File.Exists(outDir) && !Directory.Exists(outDir)) {
-				ErrMgr.toolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
-				outputDirectory = ".";
-			}
-		}
-		else {
-			outputDirectory = ".";
-		}
-		if ( libDirectory!=null ) {
-			if (libDirectory.EndsWith("/") ||
-				libDirectory.EndsWith("\\")) {
-				libDirectory = libDirectory.Substring(0, libDirectory.Length - 1);
-			}
-			string outDir = (libDirectory);
-			if (!File.Exists(outDir)) {
-				ErrMgr.toolError(ErrorType.DIR_NOT_FOUND, libDirectory);
-				libDirectory = ".";
-			}
-		}
-		else {
-			libDirectory = ".";
-		}
-		if ( Launch_ST_inspector ) {
+    protected void HandleArgs()
+    {
+        int i = 0;
+        while (args != null && i < args.Length)
+        {
+            var arg = args[i];
+            i++;
+            if (arg.StartsWith("-D"))
+            { // -Dlanguage=Java syntax
+                HandleOptionSetArg(arg);
+                continue;
+            }
+            if (arg[(0)] != '-')
+            { // file name
+                if (!grammarFiles.Contains(arg)) grammarFiles.Add(arg);
+                continue;
+            }
+            var found = false;
+            foreach (var o in optionDefs)
+            {
+                if (arg.Equals(o.name))
+                {
+                    found = true;
+                    string argValue = null;
+                    if (o.argType == OptionArgType.STRING)
+                    {
+                        argValue = args[i];
+                        i++;
+                    }
+                    // use reflection to set field
+                    var c = this.GetType();
+                    try
+                    {
+                        var f = c.GetField(o.fieldName);
+                        if (argValue == null)
+                        {
+                            if (arg.StartsWith("-no-")) f.SetValue(this, false);
+                            else f.SetValue(this, true);
+                        }
+                        else f.SetValue(this, argValue);
+                    }
+                    catch (Exception e)
+                    {
+                        ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, "can't access field " + o.fieldName);
+                    }
+                }
+            }
+            if (!found)
+            {
+                ErrMgr.ToolError(ErrorType.INVALID_CMDLINE_ARG, arg);
+            }
+        }
+        if (outputDirectory != null)
+        {
+            if (outputDirectory.EndsWith("/") ||
+                outputDirectory.EndsWith("\\"))
+            {
+                outputDirectory =
+                    outputDirectory.Substring(0, outputDirectory.Length - 1);
+            }
+            var outDir = outputDirectory;
+            haveOutputDir = true;
+            if (File.Exists(outDir) && !Directory.Exists(outDir))
+            {
+                ErrMgr.ToolError(ErrorType.OUTPUT_DIR_IS_FILE, outputDirectory);
+                outputDirectory = ".";
+            }
+        }
+        else
+        {
+            outputDirectory = ".";
+        }
+        if (libDirectory != null)
+        {
+            if (libDirectory.EndsWith("/") ||
+                libDirectory.EndsWith("\\"))
+            {
+                libDirectory = libDirectory.Substring(0, libDirectory.Length - 1);
+            }
+            var outDir = (libDirectory);
+            if (!File.Exists(outDir))
+            {
+                ErrMgr.ToolError(ErrorType.DIR_NOT_FOUND, libDirectory);
+                libDirectory = ".";
+            }
+        }
+        else
+        {
+            libDirectory = ".";
+        }
+        if (Launch_ST_inspector)
+        {
 
-			//TemplateGroup.trackCreationEvents = true;
-			return_dont_exit = true;
-		}
-	}
+            //TemplateGroup.trackCreationEvents = true;
+            return_dont_exit = true;
+        }
+    }
 
-	protected void handleOptionSetArg(String arg) {
-		int eq = arg.IndexOf('=');
-		if ( eq>0 && arg.Length>3 ) {
-			String option = arg.Substring(2/*"-D".Length*/, eq-2);
-			String value = arg.Substring(eq+1);
-			if ( value.Length==0 ) {
-				ErrMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
-				return;
-			}
-			if ( Grammar.parserOptions.Contains(option) ||
-				 Grammar.lexerOptions.Contains(option) )
-			{
-				if ( grammarOptions==null ) grammarOptions = new ();
-				grammarOptions[option] = value;
-			}
-			else {
-				ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION,
-									null,
-									null,
-									option);
-			}
-		}
-		else {
-			ErrMgr.toolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
-		}
-	}
+    protected void HandleOptionSetArg(string arg)
+    {
+        int eq = arg.IndexOf('=');
+        if (eq > 0 && arg.Length > 3)
+        {
+            var option = arg[2/*"-D".Length*/..eq];
+            var value = arg[(eq + 1)..];
+            if (value.Length == 0)
+            {
+                ErrMgr.ToolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
+                return;
+            }
+            if (Grammar.parserOptions.Contains(option) ||
+                 Grammar.lexerOptions.Contains(option))
+            {
+                if (grammarOptions == null) grammarOptions = new();
+                grammarOptions[option] = value;
+            }
+            else
+            {
+                ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION,
+                                    null,
+                                    null,
+                                    option);
+            }
+        }
+        else
+        {
+            ErrMgr.ToolError(ErrorType.BAD_OPTION_SET_SYNTAX, arg);
+        }
+    }
 
-	public void processGrammarsOnCommandLine() {
-		List<GrammarRootAST> sortedGrammars = sortGrammarByTokenVocab(grammarFiles);
+    public void ProcessGrammarsOnCommandLine()
+    {
+        var sortedGrammars = SortGrammarByTokenVocab(grammarFiles);
 
-		foreach (GrammarRootAST t in sortedGrammars) {
-			 Grammar g = createGrammar(t);
-			g.fileName = t.fileName;
-			if ( gen_dependencies ) {
-				BuildDependencyGenerator dep =
-					new BuildDependencyGenerator(this, g);
-				/*
+        foreach (var t in sortedGrammars)
+        {
+            var g = CreateGrammar(t);
+            g.fileName = t.fileName;
+            if (gen_dependencies)
+            {
+                var dep =
+                    new BuildDependencyGenerator(this, g);
+                /*
 					List outputFiles = dep.getGeneratedFileList();
 					List dependents = dep.getDependenciesFileList();
 					Console.WriteLine("output: "+outputFiles);
 					Console.WriteLine("dependents: "+dependents);
 					 */
-				Console.WriteLine(dep.getDependencies().Render());
+                Console.WriteLine(dep.getDependencies().Render());
 
-			}
-			else if (ErrMgr.getNumErrors() == 0) {
-				process(g, true);
-			}
-		}
-	}
+            }
+            else if (ErrMgr.NumErrors == 0)
+            {
+                Process(g, true);
+            }
+        }
+    }
 
-	/** To process a grammar, we load all of its imported grammars into
+    /** To process a grammar, we load all of its imported grammars into
 		subordinate grammar objects. Then we merge the imported rules
 		into the root grammar. If a root grammar is a combined grammar,
 		we have to extract the implicit lexer. Once all this is done, we
 		process the lexer first, if present, and then the parser grammar
 	 */
-	public void process(Grammar g, bool gencode) {
-		g.loadImportedGrammars();
+    public void Process(Grammar g, bool gencode)
+    {
+        g.loadImportedGrammars();
 
-		GrammarTransformPipeline transform = new GrammarTransformPipeline(g, this);
-		transform.process();
+        var transform = new GrammarTransformPipeline(g, this);
+        transform.process();
 
-		LexerGrammar lexerg;
-		GrammarRootAST lexerAST;
-		if ( g.ast!=null && g.ast.grammarType== ANTLRParser.COMBINED &&
-			 !g.ast.hasErrors )
-		{
-			lexerAST = transform.extractImplicitLexer(g); // alters g.ast
-			if ( lexerAST!=null ) {
-				if (grammarOptions != null) {
-					lexerAST.cmdLineOptions = grammarOptions;
-				}
+        LexerGrammar lexerg;
+        GrammarRootAST lexerAST;
+        if (g.ast != null && g.ast.grammarType == ANTLRParser.COMBINED &&
+             !g.ast.hasErrors)
+        {
+            lexerAST = transform.extractImplicitLexer(g); // alters g.ast
+            if (lexerAST != null)
+            {
+                if (grammarOptions != null)
+                {
+                    lexerAST.cmdLineOptions = grammarOptions;
+                }
 
-				lexerg = new LexerGrammar(this, lexerAST);
-				lexerg.fileName = g.fileName;
-				lexerg.originalGrammar = g;
-				g.implicitLexer = lexerg;
-				lexerg.implicitLexerOwner = g;
-				processNonCombinedGrammar(lexerg, gencode);
-//				Console.WriteLine("lexer tokens="+lexerg.tokenNameToTypeMap);
-//				Console.WriteLine("lexer strings="+lexerg.stringLiteralToTypeMap);
-			}
-		}
-		if ( g.implicitLexer!=null ) g.importVocab(g.implicitLexer);
-//		Console.WriteLine("tokens="+g.tokenNameToTypeMap);
-//		Console.WriteLine("strings="+g.stringLiteralToTypeMap);
-		processNonCombinedGrammar(g, gencode);
-	}
+                lexerg = new LexerGrammar(this, lexerAST)
+                {
+                    fileName = g.fileName,
+                    originalGrammar = g
+                };
+                g.implicitLexer = lexerg;
+                lexerg.implicitLexerOwner = g;
+                ProcessNonCombinedGrammar(lexerg, gencode);
+                //				Console.WriteLine("lexer tokens="+lexerg.tokenNameToTypeMap);
+                //				Console.WriteLine("lexer strings="+lexerg.stringLiteralToTypeMap);
+            }
+        }
+        if (g.implicitLexer != null) g.importVocab(g.implicitLexer);
+        //		Console.WriteLine("tokens="+g.tokenNameToTypeMap);
+        //		Console.WriteLine("strings="+g.stringLiteralToTypeMap);
+        ProcessNonCombinedGrammar(g, gencode);
+    }
 
-	public void processNonCombinedGrammar(Grammar g, bool gencode) {
-		if ( g.ast==null || g.ast.hasErrors ) return;
+    public void ProcessNonCombinedGrammar(Grammar g, bool gencode)
+    {
+        if (g.ast == null || g.ast.hasErrors) return;
 
-		bool ruleFail = checkForRuleIssues(g);
-		if ( ruleFail ) return;
+        bool ruleFail = CheckForRuleIssues(g);
+        if (ruleFail) return;
 
-		int prevErrors = ErrMgr.getNumErrors();
-		// MAKE SURE GRAMMAR IS SEMANTICALLY CORRECT (FILL IN GRAMMAR OBJECT)
-		SemanticPipeline sem = new SemanticPipeline(g);
-		sem.process();
+        int prevErrors = ErrMgr.NumErrors;
+        // MAKE SURE GRAMMAR IS SEMANTICALLY CORRECT (FILL IN GRAMMAR OBJECT)
+        var sem = new SemanticPipeline(g);
+        sem.process();
 
-		if ( ErrMgr.getNumErrors()>prevErrors ) return;
+        if (ErrMgr.NumErrors > prevErrors) return;
 
-		CodeGenerator codeGenerator = CodeGenerator.Create(g);
-		if (codeGenerator == null) {
-			return;
-		}
+        var codeGenerator = CodeGenerator.Create(g);
+        if (codeGenerator == null)
+        {
+            return;
+        }
 
-		// BUILD ATN FROM AST
-		ATNFactory factory;
-		if ( g.isLexer() ) factory = new LexerATNFactory((LexerGrammar)g, codeGenerator);
-		else factory = new ParserATNFactory(g);
-		g.atn = factory.CreateATN();
+        // BUILD ATN FROM AST
+        ATNFactory factory;
+        if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar)g, codeGenerator);
+        else factory = new ParserATNFactory(g);
+        g.atn = factory.CreateATN();
 
-		if ( generate_ATN_dot ) generateATNs(g);
+        if (generate_ATN_dot) GenerateATNs(g);
 
-		if (gencode && g.Tools.getNumErrors()==0 ) {
-			String interpFile = generateInterpreterData(g);
-			using (TextWriter fw = getOutputFileWriter(g, g.name + ".interp")) {
-				fw.Write(interpFile);
-			}
-			//catch (IOException ioe) {
-			//	errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
-			//}
-		}
+        if (gencode && g.Tools.getNumErrors() == 0)
+        {
+            var interpFile = GenerateInterpreterData(g);
+            using var fw = GetOutputFileWriter(g, g.name + ".interp");
+            fw.Write(interpFile);
+            //catch (IOException ioe) {
+            //	errMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
+            //}
+        }
 
-		// PERFORM GRAMMAR ANALYSIS ON ATN: BUILD DECISION DFAs
-		AnalysisPipeline anal = new AnalysisPipeline(g);
-		anal.Process();
+        // PERFORM GRAMMAR ANALYSIS ON ATN: BUILD DECISION DFAs
+        var anal = new AnalysisPipeline(g);
+        anal.Process();
 
-		//if ( generate_DFA_dot ) generateDFAs(g);
+        //if ( generate_DFA_dot ) generateDFAs(g);
 
-		if ( g.Tools.getNumErrors()>prevErrors ) return;
+        if (g.Tools.getNumErrors() > prevErrors) return;
 
-		// GENERATE CODE
-		if ( gencode ) {
-			CodeGenPipeline gen = new CodeGenPipeline(g, codeGenerator);
-			gen.Process();
-		}
-	}
+        // GENERATE CODE
+        if (gencode)
+        {
+            var gen = new CodeGenPipeline(g, codeGenerator);
+            gen.Process();
+        }
+    }
     // check for undefined rules
     class UndefChecker : GrammarTreeVisitor
     {
-		public Tool tool;
+        public Tool tool;
 
         public bool badref = false;
 
-		public Dictionary<String, RuleAST> ruleToAST;
+        public Dictionary<String, RuleAST> ruleToAST;
 
         public UndefChecker(Tool tool, Dictionary<String, RuleAST> ruleToAST)
-		{
-			this.tool = tool;
-			this.ruleToAST = ruleToAST;
-		}
-		// @Override
-        public void tokenRef(TerminalAST @ref)
+        {
+            this.tool = tool;
+            this.ruleToAST = ruleToAST;
+        }
+        // @Override
+        public void TokenRef(TerminalAST @ref)
         {
             if ("EOF".Equals(@ref.getText()))
             {
@@ -401,14 +443,14 @@ public class Tool {
                 return;
             }
 
-            if (tool.gx.isLexer()) ruleRef(@ref, null);
+            if (tool.gx.isLexer()) RuleRef(@ref, null);
         }
 
         //@Override
-        public void ruleRef(GrammarAST @ref, ActionAST arg)
+        public void RuleRef(GrammarAST @ref, ActionAST arg)
         {
-            RuleAST ruleAST = ruleToAST.TryGetValue(@ref.getText(),out var ret)?ret:null;
-            String fileName = @ref.Token.InputStream.SourceName;
+            var ruleAST = ruleToAST.TryGetValue(@ref.getText(), out var ret) ? ret : null;
+            var fileName = @ref.Token.InputStream.SourceName;
             if (char.IsUpper(currentRuleName[(0)]) &&
                 char.IsLower(@ref.getText()[(0)]))
             {
@@ -424,310 +466,354 @@ public class Tool {
             }
         }
         //@Override
-        public ErrorManager getErrorManager() { return this.tool.ErrMgr; }
+        public override ErrorManager ErrorManager => this.tool.ErrMgr;
     }
 
 
-	/**
+    /**
 	 * Important enough to avoid multiple definitions that we do very early,
 	 * right after AST construction. Also check for undefined rules in
 	 * parser/lexer to avoid exceptions later. Return true if we find multiple
 	 * definitions of the same rule or a reference to an undefined rule or
 	 * parser rule ref in lexer rule.
 	 */
-	Grammar gx;
-    public bool checkForRuleIssues( Grammar g) {
-		// check for redefined rules
-		GrammarAST RULES = (GrammarAST)g.ast.GetFirstChildWithType(ANTLRParser.RULES);
-		List<GrammarAST> rules = new (RULES.getAllChildrenWithType(ANTLRParser.RULE));
-        foreach (GrammarAST mode in g.ast.getAllChildrenWithType(ANTLRParser.MODE)) {
-			rules.AddRange(mode.getAllChildrenWithType(ANTLRParser.RULE));
-		}
+    Grammar gx;
+    public bool CheckForRuleIssues(Grammar g)
+    {
+        // check for redefined rules
+        var RULES = (GrammarAST)g.ast.GetFirstChildWithType(ANTLRParser.RULES);
+        List<GrammarAST> rules = new(RULES.getAllChildrenWithType(ANTLRParser.RULE));
+        foreach (var mode in g.ast.getAllChildrenWithType(ANTLRParser.MODE))
+        {
+            rules.AddRange(mode.getAllChildrenWithType(ANTLRParser.RULE));
+        }
 
-		bool redefinition = false;
-		 Dictionary<String, RuleAST> ruleToAST = new ();
-		foreach (GrammarAST r in rules) {
-			RuleAST ruleAST = (RuleAST)r;
-			GrammarAST ID = (GrammarAST)ruleAST.GetChild(0);
-			String ruleName = ID.getText();
-			if (ruleToAST.TryGetValue(ruleName,out var prev)) {
-				GrammarAST prevChild = (GrammarAST)prev.GetChild(0);
-				g.Tools.ErrMgr.GrammarError(ErrorType.RULE_REDEFINITION,
-										   g.fileName,
-										   ID.										   Token,
-										   ruleName,
-										   prevChild.										   Token.										   Line);
-				redefinition = true;
-				continue;
-			}
-			ruleToAST[ruleName]= ruleAST;
-		}
-		gx = g;
-		UndefChecker chk = new UndefChecker(this,ruleToAST);
-		chk.VisitGrammar(g.ast);
+        bool redefinition = false;
+        Dictionary<string, RuleAST> ruleToAST = new();
+        foreach (var r in rules)
+        {
+            RuleAST ruleAST = (RuleAST)r;
+            var ID = (GrammarAST)ruleAST.GetChild(0);
+            var ruleName = ID.getText();
+            if (ruleToAST.TryGetValue(ruleName, out var prev))
+            {
+                var prevChild = (GrammarAST)prev.GetChild(0);
+                g.Tools.ErrMgr.GrammarError(ErrorType.RULE_REDEFINITION,
+                                           g.fileName,
+                                           ID.Token,
+                                           ruleName,
+                                           prevChild.Token.Line);
+                redefinition = true;
+                continue;
+            }
+            ruleToAST[ruleName] = ruleAST;
+        }
+        gx = g;
+        var chk = new UndefChecker(this, ruleToAST);
+        chk.VisitGrammar(g.ast);
 
-		return redefinition || chk.badref;
-	}
+        return redefinition || chk.badref;
+    }
 
-	public List<GrammarRootAST> sortGrammarByTokenVocab(List<String> fileNames) {
-//		Console.WriteLine(fileNames);
-		Graph<String> g = new Graph<String>();
-		List<GrammarRootAST> roots = new ();
-        foreach (String fileName in fileNames) {
-			GrammarAST t = parseGrammar(fileName);
-			if ( t==null || t is GrammarASTErrorNode) continue; // came back as error node
-			if ( ((GrammarRootAST)t).hasErrors ) continue;
-			GrammarRootAST root = (GrammarRootAST)t;
-			roots.Add(root);
-			root.fileName = fileName;
-			String grammarName = root.GetChild(0).Text;
+    public List<GrammarRootAST> SortGrammarByTokenVocab(List<String> fileNames)
+    {
+        //		Console.WriteLine(fileNames);
+        Graph<string> g = new ();
+        List<GrammarRootAST> roots = new();
+        foreach (var fileName in fileNames)
+        {
+            var t = ParseGrammar(fileName);
+            if (t == null || t is GrammarASTErrorNode) continue; // came back as error node
+            if (((GrammarRootAST)t).hasErrors) continue;
+            GrammarRootAST root = (GrammarRootAST)t;
+            roots.Add(root);
+            root.fileName = fileName;
+            var grammarName = root.GetChild(0).Text;
 
-			GrammarAST tokenVocabNode = findOptionValueAST(root, "tokenVocab");
-			// Make grammars depend on any tokenVocab options
-			if ( tokenVocabNode!=null ) {
-				String vocabName = tokenVocabNode.getText();
-				// Strip quote characters if any
-				int len = vocabName.Length;
-				int firstChar = vocabName[(0)];
-				int lastChar = vocabName[len - 1];
-				if (len >= 2 && firstChar == '\'' && lastChar == '\'') {
-					vocabName = vocabName.Substring(1, len-1 - 1);
-				}
-				// If the name Contains a path delimited by forward slashes,
-				// use only the part after the last slash as the name
-				int lastSlash = vocabName.LastIndexOf('/');
-				if (lastSlash >= 0) {
-					vocabName = vocabName.Substring(lastSlash + 1);
-				}
-				g.AddEdge(grammarName, vocabName);
-			}
-			// add cycle to graph so we always process a grammar if no error
-			// even if no dependency
-			g.AddEdge(grammarName, grammarName);
-		}
+            var tokenVocabNode = FindOptionValueAST(root, "tokenVocab");
+            // Make grammars depend on any tokenVocab options
+            if (tokenVocabNode != null)
+            {
+                var vocabName = tokenVocabNode.getText();
+                // Strip quote characters if any
+                int len = vocabName.Length;
+                int firstChar = vocabName[(0)];
+                int lastChar = vocabName[len - 1];
+                if (len >= 2 && firstChar == '\'' && lastChar == '\'')
+                {
+                    vocabName = vocabName.Substring(1, len - 1 - 1);
+                }
+                // If the name Contains a path delimited by forward slashes,
+                // use only the part after the last slash as the name
+                int lastSlash = vocabName.LastIndexOf('/');
+                if (lastSlash >= 0)
+                {
+                    vocabName = vocabName.Substring(lastSlash + 1);
+                }
+                g.AddEdge(grammarName, vocabName);
+            }
+            // add cycle to graph so we always process a grammar if no error
+            // even if no dependency
+            g.AddEdge(grammarName, grammarName);
+        }
 
-		List<String> sortedGrammarNames = g.Sort();
-//		Console.WriteLine("sortedGrammarNames="+sortedGrammarNames);
+        var sortedGrammarNames = g.Sort();
+        //		Console.WriteLine("sortedGrammarNames="+sortedGrammarNames);
 
-		List<GrammarRootAST> sortedRoots = new ();
-		foreach (String grammarName in sortedGrammarNames) {
-			foreach (GrammarRootAST root in roots) {
-				if ( root.getGrammarName().Equals(grammarName) ) {
-					sortedRoots.Add(root);
-					break;
-				}
-			}
-		}
+        List<GrammarRootAST> sortedRoots = new();
+        foreach (var grammarName in sortedGrammarNames)
+        {
+            foreach (var root in roots)
+            {
+                if (root.getGrammarName().Equals(grammarName))
+                {
+                    sortedRoots.Add(root);
+                    break;
+                }
+            }
+        }
 
-		return sortedRoots;
-	}
+        return sortedRoots;
+    }
 
-	/** Manually get option node from tree; return null if no defined. */
-	public static GrammarAST findOptionValueAST(GrammarRootAST root, String option) {
-		GrammarAST options = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.OPTIONS);
-		if ( options!=null && options.ChildCount > 0 ) {
-            foreach (Object o in options.GetChildren()) {
-				GrammarAST c = (GrammarAST)o;
-				if ( c.getType() == ANTLRParser.ASSIGN &&
-					 c.GetChild(0).					 Text.Equals(option) )
-				{
-					return (GrammarAST)c.GetChild(1);
-				}
-			}
-		}
-		return null;
-	}
+    /** Manually get option node from tree; return null if no defined. */
+    public static GrammarAST FindOptionValueAST(GrammarRootAST root, String option)
+    {
+        var options = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.OPTIONS);
+        if (options != null && options.ChildCount > 0)
+        {
+            foreach (var o in options.GetChildren())
+            {
+                var c = (GrammarAST)o;
+                if (c.getType() == ANTLRParser.ASSIGN &&
+                     c.GetChild(0).Text.Equals(option))
+                {
+                    return (GrammarAST)c.GetChild(1);
+                }
+            }
+        }
+        return null;
+    }
 
 
-	/** Given the raw AST of a grammar, create a grammar object
+    /** Given the raw AST of a grammar, create a grammar object
 		associated with the AST. Once we have the grammar object, ensure
 		that all nodes in tree referred to this grammar. Later, we will
 		use it for error handling and generally knowing from where a rule
 		comes from.
 	 */
-	public Grammar createGrammar(GrammarRootAST ast) {
-		 Grammar g;
-		if ( ast.grammarType==ANTLRParser.LEXER ) g = new LexerGrammar(this, ast);
-		else g = new Grammar(this, ast);
+    public Grammar CreateGrammar(GrammarRootAST ast)
+    {
+        var g = ast.grammarType == ANTLRParser.LEXER ? new LexerGrammar(this, ast) : new Grammar(this, ast);
 
-		// ensure each node has pointer to surrounding grammar
-		GrammarTransformPipeline.setGrammarPtr(g, ast);
-		return g;
-	}
+        // ensure each node has pointer to surrounding grammar
+        GrammarTransformPipeline.setGrammarPtr(g, ast);
+        return g;
+    }
 
-	public GrammarRootAST parseGrammar(String fileName) {
-		try {
-			String file = fileName;
-			if (!Path.IsPathFullyQualified(fileName)) {
-				file = Path.Combine(inputDirectory, fileName);
-			}
+    public GrammarRootAST ParseGrammar(String fileName)
+    {
+        try
+        {
+            var file = fileName;
+            if (!Path.IsPathFullyQualified(fileName))
+            {
+                file = Path.Combine(inputDirectory, fileName);
+            }
 
-			ANTLRFileStream @in = new ANTLRFileStream(file, grammarEncoding);
-			GrammarRootAST t = parse(fileName, @in);
-			return t;
-		}
-		catch (IOException ioe) {
-			ErrMgr.toolError(ErrorType.CANNOT_OPEN_FILE, ioe, fileName);
-		}
-		return null;
-	}
+            var @in = new ANTLRFileStream(file, grammarEncoding);
+            var t = Parse(fileName, @in);
+            return t;
+        }
+        catch (IOException ioe)
+        {
+            ErrMgr.ToolError(ErrorType.CANNOT_OPEN_FILE, ioe, fileName);
+        }
+        return null;
+    }
 
-	/** Convenience method to load and process an ANTLR grammar. Useful
+    /** Convenience method to load and process an ANTLR grammar. Useful
 	 *  when creating interpreters.  If you need to access to the lexer
 	 *  grammar created while processing a combined grammar, use
 	 *  getImplicitLexer() on returned grammar.
 	 */
-	public Grammar loadGrammar(String fileName) {
-		GrammarRootAST grammarRootAST = parseGrammar(fileName);
-		 Grammar g = createGrammar(grammarRootAST);
-		g.fileName = fileName;
-		process(g, false);
-		return g;
-	}
+    public Grammar LoadGrammar(String fileName)
+    {
+        var grammarRootAST = ParseGrammar(fileName);
+        var g = CreateGrammar(grammarRootAST);
+        g.fileName = fileName;
+        Process(g, false);
+        return g;
+    }
 
-	private readonly Dictionary<String, Grammar> importedGrammars = new ();
+    private readonly Dictionary<string, Grammar> importedGrammars = new();
 
-	/**
+    /**
 	 * Try current dir then dir of g then lib dir
 	 * @param g
 	 * @param nameNode The node associated with the imported grammar name.
 	 */
-	public Grammar loadImportedGrammar(Grammar g, GrammarAST nameNode){
-		String name = nameNode.getText();
-		if (!importedGrammars.TryGetValue(name,out var imported)) {
-			g.Tools.Log("grammar", "load " + name + " from " + g.fileName);
-			String importedFile = null;
-            foreach (String extension in ALL_GRAMMAR_EXTENSIONS) {
-				importedFile = getImportedGrammarFile(g, name + extension);
-				if (importedFile != null) {
-					break;
-				}
-			}
+    public Grammar LoadImportedGrammar(Grammar g, GrammarAST nameNode)
+    {
+        var name = nameNode.getText();
+        if (!importedGrammars.TryGetValue(name, out var imported))
+        {
+            g.Tools.Log("grammar", "load " + name + " from " + g.fileName);
+            string importedFile = null;
+            foreach (var extension in ALL_GRAMMAR_EXTENSIONS)
+            {
+                importedFile = GetImportedGrammarFile(g, name + extension);
+                if (importedFile != null)
+                {
+                    break;
+                }
+            }
 
-			if ( importedFile==null ) {
-				ErrMgr.GrammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.Token, name);
-				return null;
-			}
+            if (importedFile == null)
+            {
+                ErrMgr.GrammarError(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, g.fileName, nameNode.Token, name);
+                return null;
+            }
 
-			String absolutePath = importedFile;
-			ANTLRFileStream @in = new ANTLRFileStream(absolutePath, grammarEncoding);
-			GrammarRootAST root = parse(g.fileName, @in);
-			if (root == null) {
-				return null;
-			}
+            var absolutePath = importedFile;
+            var @in = new ANTLRFileStream(absolutePath, grammarEncoding);
+            var root = Parse(g.fileName, @in);
+            if (root == null)
+            {
+                return null;
+            }
 
-			imported = createGrammar(root);
-			imported.fileName = absolutePath;
-			importedGrammars[root.getGrammarName()]= imported;
-		}
+            imported = CreateGrammar(root);
+            imported.fileName = absolutePath;
+            importedGrammars[root.getGrammarName()] = imported;
+        }
 
-		return imported;
-	}
+        return imported;
+    }
 
-	public GrammarRootAST parseGrammarFromString(String grammar) {
-		return parse("<string>", new ANTLRStringStream(grammar));
-	}
+    public GrammarRootAST ParseGrammarFromString(string grammar)
+    {
+        return Parse("<string>", new ANTLRStringStream(grammar));
+    }
 
-	public GrammarRootAST parse(String fileName, CharStream @in) {
-		try {
-			GrammarASTAdaptor adaptor = new GrammarASTAdaptor(@in);
-			ToolANTLRLexer lexer = new ToolANTLRLexer(@in, this);
-			CommonTokenStream tokens = new CommonTokenStream(lexer);
-			lexer.tokens = tokens;
-			ToolANTLRParser p = new ToolANTLRParser(tokens, this);
-			p.			TreeAdaptor = adaptor;
-			ParserRuleReturnScope r = p.GrammarSpec();
-			GrammarAST root = (GrammarAST) r.Tree;
-			if (root is GrammarRootAST) {
-				((GrammarRootAST) root).hasErrors = lexer.GetNumberOfSyntaxErrors() > 0 || p.GetNumberOfSyntaxErrors() > 0;
-				//assert ((GrammarRootAST) root).tokenStream == tokens;
-				if (grammarOptions != null) {
-					((GrammarRootAST) root).cmdLineOptions = grammarOptions;
-				}
-				return ((GrammarRootAST) root);
-			}
-			return null;
-		}
-		catch (RecognitionException re) {
-			// TODO: do we gen errors now?
-			ErrorManager.internalError("can't generate this message at moment; antlr recovers");
-		}
-		return null;
-	}
+    public GrammarRootAST Parse(string fileName, CharStream @in)
+    {
+        try
+        {
+            var adaptor = new GrammarASTAdaptor(@in);
+            var lexer = new ToolANTLRLexer(@in, this);
+            var tokens = new CommonTokenStream(lexer);
+            lexer.tokens = tokens;
+            var p = new ToolANTLRParser(tokens, this);
+            p.TreeAdaptor = adaptor;
+            var r = p.GrammarSpec();
+            GrammarAST root = (GrammarAST)r.Tree;
+            if (root is GrammarRootAST aST)
+            {
+                aST.hasErrors = lexer.GetNumberOfSyntaxErrors() > 0 || p.GetNumberOfSyntaxErrors() > 0;
+                //assert ((GrammarRootAST) root).tokenStream == tokens;
+                if (grammarOptions != null)
+                {
+                    aST.cmdLineOptions = grammarOptions;
+                }
+                return aST;
+            }
+            return null;
+        }
+        catch (RecognitionException re)
+        {
+            // TODO: do we gen errors now?
+            ErrorManager.InternalError("can't generate this message at moment; antlr recovers");
+        }
+        return null;
+    }
 
-	public void generateATNs(Grammar g) {
-		DOTGenerator dotGenerator = new DOTGenerator(g);
-		List<Grammar> grammars = new ();
-		grammars.Add(g);
-		List<Grammar> imported = g.getAllImportedGrammars();
-		if ( imported!=null ) grammars.AddRange(imported);
-		foreach (Grammar ig in grammars) {
-			foreach (Rule r in ig.rules.Values) {
-				try {
-					String dot = dotGenerator.getDOT(g.atn.ruleToStartState[r.index], g.isLexer());
-					if (dot != null) {
-						writeDOTFile(g, r, dot);
-					}
-				}
-                catch (IOException ioe) {
-					ErrMgr.toolError(ErrorType.CANNOT_WRITE_FILE, ioe);
-				}
-			}
-		}
-	}
+    public void GenerateATNs(Grammar g)
+    {
+        var dotGenerator = new DOTGenerator(g);
+        List<Grammar> grammars = new();
+        grammars.Add(g);
+        var imported = g.getAllImportedGrammars();
+        if (imported != null) grammars.AddRange(imported);
+        foreach (var ig in grammars)
+        {
+            foreach (var r in ig.rules.Values)
+            {
+                try
+                {
+                    var dot = dotGenerator.getDOT(g.atn.ruleToStartState[r.index], g.isLexer());
+                    if (dot != null)
+                    {
+                        WriteDOTFile(g, r, dot);
+                    }
+                }
+                catch (IOException ioe)
+                {
+                    ErrMgr.ToolError(ErrorType.CANNOT_WRITE_FILE, ioe);
+                }
+            }
+        }
+    }
 
-	public static String generateInterpreterData(Grammar g) {
-		StringBuilder content = new StringBuilder();
+    public static string GenerateInterpreterData(Grammar g)
+    {
+        var content = new StringBuilder();
 
-		content.Append("token literal names:\n");
-		String[] names = g.getTokenLiteralNames();
-        foreach (String name in names) {
-			content.Append(name + "\n");
-		}
-		content.Append("\n");
+        content.Append("token literal names:\n");
+        var names = g.getTokenLiteralNames();
+        foreach (var name in names)
+        {
+            content.Append(name + "\n");
+        }
+        content.Append('\n');
 
-		content.Append("token symbolic names:\n");
-		names = g.getTokenSymbolicNames();
-        foreach (String name in names) {
-			content.Append(name + "\n");
-		}
-		content.Append("\n");
+        content.Append("token symbolic names:\n");
+        names = g.getTokenSymbolicNames();
+        foreach (var name in names)
+        {
+            content.Append(name + "\n");
+        }
+        content.Append('\n');
 
-		content.Append("rule names:\n");
-		names = g.getRuleNames();
-        foreach (String name in names) {
-			content.Append(name + "\n");
-		}
-		content.Append("\n");
+        content.Append("rule names:\n");
+        names = g.getRuleNames();
+        foreach (var name in names)
+        {
+            content.Append(name + "\n");
+        }
+        content.Append('\n');
 
-		if ( g.isLexer() ) {
-			content.Append("channel names:\n");
-			content.Append("DEFAULT_TOKEN_CHANNEL\n");
-			content.Append("HIDDEN\n");
-			foreach (String channel in g.channelValueToNameList) {
-				content.Append(channel + "\n");
-			}
-			content.Append('\n');
+        if (g.isLexer())
+        {
+            content.Append("channel names:\n");
+            content.Append("DEFAULT_TOKEN_CHANNEL\n");
+            content.Append("HIDDEN\n");
+            foreach (var channel in g.channelValueToNameList)
+            {
+                content.Append(channel + "\n");
+            }
+            content.Append('\n');
 
-			content.Append("mode names:\n");
-            foreach (String mode in ((LexerGrammar)g).modes.Keys) {
-				content.Append(mode + "\n");
-			}
-		}
-		content.Append('\n');
+            content.Append("mode names:\n");
+            foreach (var mode in ((LexerGrammar)g).modes.Keys)
+            {
+                content.Append(mode + "\n");
+            }
+        }
+        content.Append('\n');
 
-		IntegerList serializedATN = ATNSerializer.GetSerialized(g.atn);
-		// Uncomment if you'd like to write out histogram info on the numbers of
-		// each integer value:
-		//Utils.writeSerializedATNIntegerHistogram(g.name+"-histo.csv", serializedATN);
+        var serializedATN = ATNSerializer.GetSerialized(g.atn);
+        // Uncomment if you'd like to write out histogram info on the numbers of
+        // each integer value:
+        //Utils.writeSerializedATNIntegerHistogram(g.name+"-histo.csv", serializedATN);
 
-		content.Append("atn:\n");
-		content.Append(serializedATN.ToString());
+        content.Append("atn:\n");
+        content.Append(serializedATN.ToString());
 
-		return content.ToString();
-	}
+        return content.ToString();
+    }
 
-	/** This method is used by all code generators to create new output
+    /** This method is used by all code generators to create new output
 	 *  files. If the outputDir set by -o is not present it will be created.
 	 *  The final filename is sensitive to the output directory and
 	 *  the directory where the grammar file was found.  If -o is /tmp
@@ -744,45 +830,54 @@ public class Tool {
 	 *
 	 *  If outputDirectory==null then write a String.
 	 */
-	public TextWriter getOutputFileWriter(Grammar g, String fileName){
-		if (outputDirectory == null) {
-			return new StringWriter();
-		}
-		// output directory is a function of where the grammar file lives
-		// for subdir/T.g4, you get subdir here.  Well, depends on -o etc...
-		String outputDir = getOutputDirectory(g.fileName);
-		String outputFile = Path.Combine(outputDir, fileName);
+    public TextWriter GetOutputFileWriter(Grammar g, String fileName)
+    {
+        if (outputDirectory == null)
+        {
+            return new StringWriter();
+        }
+        // output directory is a function of where the grammar file lives
+        // for subdir/T.g4, you get subdir here.  Well, depends on -o etc...
+        var outputDir = GetOutputDirectory(g.fileName);
+        var outputFile = Path.Combine(outputDir, fileName);
 
-		if (!File.Exists(outputDir)) {
-			Directory.CreateDirectory(outputDir);
-		}
-		TextWriter osw = null;
-		if ( grammarEncoding!=null ) {
-			osw = new StreamWriter(outputFile,false, grammarEncoding);
-		}
-		else {
-			osw = new StreamWriter(outputFile);
-		}
-		return osw;
-	}
+        if (!File.Exists(outputDir))
+        {
+            Directory.CreateDirectory(outputDir);
+        }
+        TextWriter osw = null;
+        if (grammarEncoding != null)
+        {
+            osw = new StreamWriter(outputFile, false, grammarEncoding);
+        }
+        else
+        {
+            osw = new StreamWriter(outputFile);
+        }
+        return osw;
+    }
 
-	public string getImportedGrammarFile(Grammar g, String fileName) {
-		string importedFile = Path.Combine(inputDirectory, fileName);
-		if ( !File.Exists(importedFile) ) {
-			string gfile = (g.fileName);
-			String parentDir = gfile;
-			importedFile = Path.Combine(parentDir, fileName);
-			if ( !File.Exists(importedFile) ) { // try in lib dir
-				importedFile = Path.Combine(libDirectory, fileName);
-				if ( !File.Exists(importedFile) ) {
-					return null;
-				}
-			}
-		}
-		return importedFile;
-	}
+    public string GetImportedGrammarFile(Grammar g, string fileName)
+    {
+        var importedFile = Path.Combine(inputDirectory, fileName);
+        if (!File.Exists(importedFile))
+        {
+            var gfile = (g.fileName);
+            var parentDir = gfile;
+            importedFile = Path.Combine(parentDir, fileName);
+            if (!File.Exists(importedFile))
+            { // try in lib dir
+                importedFile = Path.Combine(libDirectory, fileName);
+                if (!File.Exists(importedFile))
+                {
+                    return null;
+                }
+            }
+        }
+        return importedFile;
+    }
 
-	/**
+    /**
 	 * Return the location where ANTLR will generate output files for a given
 	 * file. This is a base directory and output files will be relative to
 	 * here in some cases such as when -o option is used and input files are
@@ -790,159 +885,190 @@ public class Tool {
 	 *
 	 * @param fileNameWithPath path to input source
 	 */
-	public string getOutputDirectory(String fileNameWithPath) {
-		if ( exact_output_dir ) {
-			return new_getOutputDirectory(fileNameWithPath);
-		}
+    public string GetOutputDirectory(string fileNameWithPath)
+    {
+        if (exact_output_dir)
+        {
+            return NewGetOutputDirectory(fileNameWithPath);
+        }
 
-		String outputDir;
-		String fileDirectory;
+        string outputDir;
+        string fileDirectory;
 
-		// Some files are given to us without a PATH but should should
-		// still be written to the output directory in the relative path of
-		// the output directory. The file directory is either the set of sub directories
-		// or just or the relative path recorded for the parent grammar. This means
-		// that when we write the tokens files, or the .java files for imported grammars
-		// taht we will write them in the correct place.
-		if ((fileNameWithPath == null) || (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1)) {
-			// No path is included in the file name, so make the file
-			// directory the same as the parent grammar (which might sitll be just ""
-			// but when it is not, we will write the file in the correct place.
-			fileDirectory = ".";
+        // Some files are given to us without a PATH but should should
+        // still be written to the output directory in the relative path of
+        // the output directory. The file directory is either the set of sub directories
+        // or just or the relative path recorded for the parent grammar. This means
+        // that when we write the tokens files, or the .java files for imported grammars
+        // taht we will write them in the correct place.
+        if ((fileNameWithPath == null) || (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1))
+        {
+            // No path is included in the file name, so make the file
+            // directory the same as the parent grammar (which might sitll be just ""
+            // but when it is not, we will write the file in the correct place.
+            fileDirectory = ".";
 
-		}
-		else {
-			fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
-		}
-		if ( haveOutputDir ) {
-			// -o /tmp /var/lib/t.g4 => /tmp/T.java
-			// -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
-			// -o . /usr/lib/t.g4 => ./T.java
-			if (fileDirectory != null &&
-				 
-					fileDirectory.StartsWith("~")) { // isAbsolute doesn't count this :(
-				// somebody set the dir, it takes precendence; write new file there
-				outputDir = (outputDirectory);
-			}
-			else {
-				// -o /tmp subdir/t.g4 => /tmp/subdir/T.java
-				if (fileDirectory != null) {
-					outputDir = Path.Combine(outputDirectory, fileDirectory);
-				}
-				else {
-					outputDir = (outputDirectory);
-				}
-			}
-		}
-		else {
-			// they didn't specify a -o dir so just write to location
-			// where grammar is, absolute or relative, this will only happen
-			// with command line invocation as build tools will always
-			// supply an output directory.
-			outputDir = (fileDirectory);
-		}
-		return outputDir;
-	}
+        }
+        else
+        {
+            fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
+        }
+        if (haveOutputDir)
+        {
+            // -o /tmp /var/lib/t.g4 => /tmp/T.java
+            // -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
+            // -o . /usr/lib/t.g4 => ./T.java
+            if (fileDirectory != null &&
 
-	/** @since 4.7.1 in response to -Xexact-output-dir */
-	public string new_getOutputDirectory(String fileNameWithPath) {
-		string outputDir;
-		String fileDirectory;
+                    fileDirectory.StartsWith("~"))
+            { // isAbsolute doesn't count this :(
+              // somebody set the dir, it takes precendence; write new file there
+                outputDir = (outputDirectory);
+            }
+            else
+            {
+                // -o /tmp subdir/t.g4 => /tmp/subdir/T.java
+                if (fileDirectory != null)
+                {
+                    outputDir = Path.Combine(outputDirectory, fileDirectory);
+                }
+                else
+                {
+                    outputDir = (outputDirectory);
+                }
+            }
+        }
+        else
+        {
+            // they didn't specify a -o dir so just write to location
+            // where grammar is, absolute or relative, this will only happen
+            // with command line invocation as build tools will always
+            // supply an output directory.
+            outputDir = (fileDirectory);
+        }
+        return outputDir;
+    }
 
-		if (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1) {
-			// No path is included in the file name, so make the file
-			// directory the same as the parent grammar (which might still be just ""
-			// but when it is not, we will write the file in the correct place.
-			fileDirectory = ".";
-		}
-		else {
-			fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
-		}
-		if ( haveOutputDir ) {
-			// -o /tmp /var/lib/t.g4 => /tmp/T.java
-			// -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
-			// -o . /usr/lib/t.g4 => ./T.java
-			// -o /tmp subdir/t.g4 => /tmp/T.java
-			outputDir = outputDirectory;
-		}
-		else {
-			// they didn't specify a -o dir so just write to location
-			// where grammar is, absolute or relative, this will only happen
-			// with command line invocation as build tools will always
-			// supply an output directory.
-			outputDir = fileDirectory;
-		}
-		return outputDir;
-	}
+    /** @since 4.7.1 in response to -Xexact-output-dir */
+    public string NewGetOutputDirectory(string fileNameWithPath)
+    {
+        string outputDir;
+        String fileDirectory;
 
-	protected void writeDOTFile(Grammar g, Rule r, String dot){
-		writeDOTFile(g, r.g.name + "." + r.name, dot);
-	}
+        if (fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar) == -1)
+        {
+            // No path is included in the file name, so make the file
+            // directory the same as the parent grammar (which might still be just ""
+            // but when it is not, we will write the file in the correct place.
+            fileDirectory = ".";
+        }
+        else
+        {
+            fileDirectory = fileNameWithPath.Substring(0, fileNameWithPath.LastIndexOf(Path.DirectorySeparatorChar));
+        }
+        if (haveOutputDir)
+        {
+            // -o /tmp /var/lib/t.g4 => /tmp/T.java
+            // -o subdir/output /usr/lib/t.g4 => subdir/output/T.java
+            // -o . /usr/lib/t.g4 => ./T.java
+            // -o /tmp subdir/t.g4 => /tmp/T.java
+            outputDir = outputDirectory;
+        }
+        else
+        {
+            // they didn't specify a -o dir so just write to location
+            // where grammar is, absolute or relative, this will only happen
+            // with command line invocation as build tools will always
+            // supply an output directory.
+            outputDir = fileDirectory;
+        }
+        return outputDir;
+    }
 
-	protected void writeDOTFile(Grammar g, String name, String dot){
-		TextWriter fw = getOutputFileWriter(g, name + ".dot");
-		try {
-			fw.Write(dot);
-		}
-		finally {
-			fw.Close();
-		}
-	}
+    protected void WriteDOTFile(Grammar g, Rule r, string dot)
+    {
+        WriteDOTFile(g, r.g.name + "." + r.name, dot);
+    }
 
-	public void help() {
-		info("ANTLR Parser Generator  Version " + Tool.VERSION);
-        foreach (Option o in optionDefs) {
-			String name = o.name + (o.argType!=OptionArgType.NONE? " ___" : "");
-			String s = $"{name} {o.description}";// String.format(" %-19s %s", name, o.description);
-			info(s);
-		}
-	}
+    protected void WriteDOTFile(Grammar g, string name, string dot)
+    {
+        var fw = GetOutputFileWriter(g, name + ".dot");
+        try
+        {
+            fw.Write(dot);
+        }
+        finally
+        {
+            fw.Close();
+        }
+    }
 
-    public void Log(String component, String msg) { logMgr.Log(component, msg); }
-    public void log(String msg) { Log(null, msg); }
+    public void Help()
+    {
+        info("ANTLR Parser Generator  Version " + Tool.VERSION);
+        foreach (var o in optionDefs)
+        {
+            var name = o.name + (o.argType != OptionArgType.NONE ? " ___" : "");
+            var s = $"{name} {o.description}";// String.format(" %-19s %s", name, o.description);
+            info(s);
+        }
+    }
 
-	public int getNumErrors() { return ErrMgr.getNumErrors(); }
+    public void Log(string component, string msg) => logMgr.Log(component, msg);
+    public void Log(string msg) => Log(null, msg);
 
-	public void addListener(ANTLRToolListener tl) {
-		if ( tl!=null ) listeners.Add(tl);
-	}
-	public void removeListener(ANTLRToolListener tl) { listeners.Remove(tl); }
-	public void removeListeners() { listeners.Clear(); }
-	public List<ANTLRToolListener> getListeners() { return listeners; }
+    public int getNumErrors() => ErrMgr.NumErrors;
 
-	public void info(String msg) {
-		if ( listeners.Count == 0 ) {
-			defaultListener.Info(msg);
-			return;
-		}
+    public void addListener(ANTLRToolListener tl)
+    {
+        if (tl != null) listeners.Add(tl);
+    }
+    public void removeListener(ANTLRToolListener tl) { listeners.Remove(tl); }
+    public void removeListeners() { listeners.Clear(); }
+    public List<ANTLRToolListener> getListeners() { return listeners; }
+
+    public void info(String msg)
+    {
+        if (listeners.Count == 0)
+        {
+            defaultListener.Info(msg);
+            return;
+        }
         foreach (ANTLRToolListener l in listeners) l.Info(msg);
-	}
-	public void error(ANTLRMessage msg) {
-		if ( listeners.Count == 0 ) {
-			defaultListener.Error(msg);
-			return;
-		}
+    }
+    public void error(ANTLRMessage msg)
+    {
+        if (listeners.Count == 0)
+        {
+            defaultListener.Error(msg);
+            return;
+        }
         foreach (ANTLRToolListener l in listeners) l.Error(msg);
-	}
-	public void warning(ANTLRMessage msg) {
-		if ( listeners.Count == 0 ) {
-			defaultListener.Warning(msg);
-		}
-		else {
-			foreach (ANTLRToolListener l in listeners) l.Warning(msg);
-		}
+    }
+    public void warning(ANTLRMessage msg)
+    {
+        if (listeners.Count == 0)
+        {
+            defaultListener.Warning(msg);
+        }
+        else
+        {
+            foreach (ANTLRToolListener l in listeners) l.Warning(msg);
+        }
 
-		if (warnings_are_errors) {
-			ErrMgr.emit(ErrorType.WARNING_TREATED_AS_ERROR, new ANTLRMessage(ErrorType.WARNING_TREATED_AS_ERROR));
-		}
-	}
+        if (warnings_are_errors)
+        {
+            ErrMgr.Emit(ErrorType.WARNING_TREATED_AS_ERROR, new ANTLRMessage(ErrorType.WARNING_TREATED_AS_ERROR));
+        }
+    }
 
-	public void version() {
-		info("ANTLR Parser Generator  Version " + VERSION);
-	}
+    public void version()
+    {
+        info("ANTLR Parser Generator  Version " + VERSION);
+    }
 
-	public void exit(int e) { Environment.Exit(e); }
+    public void exit(int e) { Environment.Exit(e); }
 
-	public void panic() { throw new Error("ANTLR panic"); }
+    public void panic() { throw new Error("ANTLR panic"); }
 
 }

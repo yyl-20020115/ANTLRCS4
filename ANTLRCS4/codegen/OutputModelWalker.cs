@@ -42,14 +42,14 @@ public class OutputModelWalker
         this.templates = templates;
     }
 
-    public Template walk(OutputModelObject omo, bool header)
+    public Template Walk(OutputModelObject omo, bool header)
     {
         // CREATE TEMPLATE FOR THIS OUTPUT OBJECT
         var cl = omo.GetType();
         var templateName = cl.Name;
         if (templateName == null)
         {
-            tool.ErrMgr.toolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
+            tool.ErrMgr.ToolError(ErrorType.NO_MODEL_TO_TEMPLATE_MAPPING, cl.Name);
             return new Template("[" + templateName + " invalid]");
         }
 
@@ -58,12 +58,12 @@ public class OutputModelWalker
         var st = templates.GetInstanceOf(templateName);
         if (st == null)
         {
-            tool.ErrMgr.toolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
+            tool.ErrMgr.ToolError(ErrorType.CODE_GEN_TEMPLATES_INCOMPLETE, templateName);
             return new Template("[" + templateName + " invalid]");
         }
         if (st.impl.FormalArguments == null)
         {
-            tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
+            tool.ErrMgr.ToolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "<none>");
             return st;
         }
 
@@ -89,7 +89,7 @@ public class OutputModelWalker
             var fieldName = fi.Name;
             if (!usedFieldNames.Add(fieldName))
             {
-                tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
+                tool.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, "Model object " + omo.GetType().Name + " has multiple fields named '" + fieldName + "'");
                 continue;
             }
 
@@ -101,7 +101,7 @@ public class OutputModelWalker
                 var o = fi.GetValue(omo);
                 if (o is OutputModelObject nestedOmo)
                 {  // SINGLE MODEL OBJECT?
-                    Template nestedST = walk(nestedOmo, header);
+                    Template nestedST = Walk(nestedOmo, header);
                     //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
                     st.Add(fieldName, nestedST);
                 }
@@ -116,7 +116,7 @@ public class OutputModelWalker
                     foreach (var nomo in nestedOmos)
                     {
                         if (nomo == null) continue;
-                        Template nestedST = walk((OutputModelObject)nomo, header);
+                        Template nestedST = Walk((OutputModelObject)nomo, header);
                         //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
                         st.Add(fieldName, nestedST);
                     }
@@ -128,7 +128,7 @@ public class OutputModelWalker
 
                     while (e.MoveNext())
                     {
-                        var nestedST = walk((OutputModelObject)e.Value, header);
+                        var nestedST = Walk((OutputModelObject)e.Value, header);
                         //Console.Out.WriteLine("set ModelElement "+fieldName+"="+nestedST+" in "+templateName);
                         m[e.Key] = nestedST;
                     }
@@ -137,12 +137,12 @@ public class OutputModelWalker
                 }
                 else if (o != null)
                 {
-                    tool.ErrMgr.toolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: " + fieldName);
+                    tool.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, "not recognized nested model element: " + fieldName);
                 }
             }
             catch (Exception iae)
             {
-                tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
+                tool.ErrMgr.ToolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, fieldName);
             }
         }
         //st.impl.dump();

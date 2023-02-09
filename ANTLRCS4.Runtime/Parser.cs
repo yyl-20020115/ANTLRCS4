@@ -26,7 +26,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         //@Override
         public void EnterEveryRule(ParserRuleContext ctx)
         {
-            Console.Out.WriteLine("enter   " + this.parser.GetRuleNames()[ctx.RuleIndex] +
+            Console.Out.WriteLine("enter   " + this.parser.RuleNames[ctx.RuleIndex] +
                                ", LT(1)=" + this.parser.input.LT(1).Text);
         }
 
@@ -34,7 +34,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         public void VisitTerminal(TerminalNode node)
         {
             Console.Out.WriteLine("consume " + node.getSymbol() + " rule " +
-                               this.parser.GetRuleNames()[this.parser._ctx.RuleIndex]);
+                               this.parser.                               RuleNames[this.parser._ctx.RuleIndex]);
         }
 
         //@Override
@@ -45,14 +45,14 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         //@Override
         public void ExitEveryRule(ParserRuleContext ctx)
         {
-            Console.Out.WriteLine("exit    " + this.parser.GetRuleNames()[ctx.RuleIndex] +
+            Console.Out.WriteLine("exit    " + this.parser.RuleNames[ctx.RuleIndex] +
                                ", LT(1)=" + this.parser.input.LT(1).Text);
         }
     }
 
     public class TrimToSizeListener : ParseTreeListener
     {
-        public static readonly TrimToSizeListener INSTANCE = new TrimToSizeListener();
+        public static readonly TrimToSizeListener INSTANCE = new ();
 
         //@Override
         public void EnterEveryRule(ParserRuleContext ctx) { }
@@ -537,8 +537,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public virtual ANTLRErrorStrategy ErrorHandler { get => _errHandler; set => this._errHandler = value; }
 
-    //@Override
-    public override TokenStream InputStream => TokenStream;
+    public override IntStream InputStream { get => TokenStream; set => TokenStream = value as TokenStream; }
 
     /** Set the token stream and reset the parser. */
     public TokenStream TokenStream
@@ -723,12 +722,12 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 	 * {@link #enterRecursionRule(ParserRuleContext, int, int, int)} instead.
 	 */
     //@Deprecated
-    public void EnterRecursionRule(ParserRuleContext localctx, int ruleIndex)
+    public virtual void EnterRecursionRule(ParserRuleContext localctx, int ruleIndex)
     {
         EnterRecursionRule(localctx, ATN.ruleToStartState[ruleIndex].stateNumber, ruleIndex, 0);
     }
 
-    public void EnterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
+    public virtual void EnterRecursionRule(ParserRuleContext localctx, int state, int ruleIndex, int precedence)
     {
         State = state;
         _precedenceStack.Push(precedence);
@@ -904,7 +903,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public List<string> getRuleInvocationStack(RuleContext p)
     {
-        var ruleNames = GetRuleNames();
+        var ruleNames = RuleNames;
         List<string> stack = new();
         while (p != null)
         {
@@ -926,7 +925,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
             for (int d = 0; d < _interp.decisionToDFA.Length; d++)
             {
                 var dfa = _interp.decisionToDFA[d];
-                s.Add(dfa.ToString(GetVocabulary()));
+                s.Add(dfa.ToString(Vocabulary));
             }
             return s;
         }
@@ -950,7 +949,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
                 {
                     if (seenOne) dumpStream.WriteLine();
                     dumpStream.WriteLine("Decision " + dfa.decision + ":");
-                    dumpStream.Write(dfa.ToString(GetVocabulary()));
+                    dumpStream.Write(dfa.ToString(Vocabulary));
                     seenOne = true;
                 }
             }

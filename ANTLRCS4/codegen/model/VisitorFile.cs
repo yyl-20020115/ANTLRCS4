@@ -10,11 +10,11 @@ namespace org.antlr.v4.codegen.model;
 
 public class VisitorFile : OutputFile
 {
-    public String genPackage; // from -package cmd-line
-    public String accessLevel; // from -DaccessLevel cmd-line
-    public String exportMacro; // from -DexportMacro cmd-line
-    public String grammarName;
-    public String parserName;
+    public string genPackage; // from -package cmd-line
+    public string accessLevel; // from -DaccessLevel cmd-line
+    public string exportMacro; // from -DexportMacro cmd-line
+    public string grammarName;
+    public string parserName;
     /**
 	 * The names of all rule contexts which may need to be visited.
 	 */
@@ -33,7 +33,7 @@ public class VisitorFile : OutputFile
 
     public VisitorFile(OutputModelFactory factory, string fileName) : base(factory, fileName)
     {
-        var g = factory.GetGrammar();
+        var g = factory.Grammar;
         namedActions = BuildNamedActions(g);
         parserName = g.getRecognizerName();
         grammarName = g.name;

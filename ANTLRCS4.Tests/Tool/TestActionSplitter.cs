@@ -47,11 +47,11 @@ public class TestActionSplitter
     {
         List<string> chunks = new();
         var splitter = new ActionSplitter(new ANTLRStringStream(a), new BlankActionSplitterListener());
-        var t = splitter.nextToken();
+        var t = splitter.NextToken();
         while (t.Type != Token.EOF)
         {
             chunks.Add("'" + t.Text + "'<" + t.Type + ">");
-            t = splitter.nextToken();
+            t = splitter.NextToken();
         }
         return chunks;
     }

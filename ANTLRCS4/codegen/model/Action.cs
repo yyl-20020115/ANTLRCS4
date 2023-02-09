@@ -22,22 +22,15 @@ public class Action : RuleElement
 
     public Action(OutputModelFactory factory, ActionAST ast) : base(factory, ast)
     {
-        var rf = factory.GetCurrentRuleFunction();
-        if (ast != null)
-        {
-            chunks = ActionTranslator.TranslateAction(factory, rf, ast.token, ast);
-        }
-        else
-        {
-            chunks = new();
-        }
+        var rf = factory.CurrentRuleFunction;
+        chunks = ast != null ? ActionTranslator.TranslateAction(factory, rf, ast.token, ast) : (new());
         //Console.Out.WriteLine("actions="+chunks);
     }
 
     public Action(OutputModelFactory factory, StructDecl ctx, String action) : base(factory, null)
     {
         var ast = new ActionAST(new CommonToken(ANTLRParser.ACTION, action));
-        var rf = factory.GetCurrentRuleFunction();
+        var rf = factory.CurrentRuleFunction;
         if (rf != null)
         { // we can translate
             ast.resolver = rf.rule;

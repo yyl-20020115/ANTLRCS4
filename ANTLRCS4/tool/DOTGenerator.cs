@@ -79,7 +79,7 @@ public class DOTGenerator {
 		}
 
 		String output = dot.Render();
-		return Utils.sortLinesInString(output);
+		return Utils.SortLinesInString(output);
 	}
 
 	protected String getStateLabel(DFAState s) {

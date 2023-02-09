@@ -218,7 +218,7 @@ public class TestXPath
             var parser = compiledState.InitializeLexerAndParser(input).b;
             var found = XPath.findAll(executedState.parseTree, xpath, parser);
 
-            return new(parser.GetRuleNames(), found);
+            return new(parser.RuleNames, found);
         }
     }
 }

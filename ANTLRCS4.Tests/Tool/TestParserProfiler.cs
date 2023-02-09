@@ -269,7 +269,7 @@ public class TestParserProfiler
             {
                 return parser.GetParseInfo().GetDecisionInfo();
             }
-            var t = parser.parse(r.index);
+            var t = parser.Parse(r.index);
             //			try {
             //				Utils.waitForClose(t.inspect(parser).get());
             //			}

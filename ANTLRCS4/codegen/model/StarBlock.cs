@@ -18,7 +18,7 @@ public class StarBlock : Loop
                      List<CodeBlockForAlt> alts)
         : base(factory, blkOrEbnfRootAST, alts)
     {
-        loopLabel = factory.GetGenerator().Target.GetLoopLabel(blkOrEbnfRootAST);
+        loopLabel = factory.Generator.Target.GetLoopLabel(blkOrEbnfRootAST);
         var star = blkOrEbnfRootAST.atnState as StarLoopEntryState;
         loopBackStateNumber = star.loopBackState.stateNumber;
         decision = star.decision;

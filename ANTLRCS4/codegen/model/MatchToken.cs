@@ -20,8 +20,8 @@ public class MatchToken : RuleElement, LabeledOp
     public MatchToken(OutputModelFactory factory, TerminalAST ast) 
         : base(factory, ast)
     {
-        var g = factory.GetGrammar();
-        var gen = factory.GetGenerator();
+        var g = factory.Grammar;
+        var gen = factory.Generator;
         ttype = g.getTokenType(ast.getText());
         var target = gen.Target;
         name = target.GetTokenTypeAsTargetLabel(g, ttype);
@@ -35,6 +35,5 @@ public class MatchToken : RuleElement, LabeledOp
         escapedName = null;
     }
 
-    //@Override
-    public virtual List<Decl> GetLabels() => labels;
+    public virtual List<Decl> Labels => labels;
 }

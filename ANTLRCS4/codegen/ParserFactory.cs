@@ -21,36 +21,27 @@ public class ParserFactory : DefaultOutputModelFactory
 {
     public ParserFactory(CodeGenerator gen) : base(gen) { }
 
-    //@Override
-    public override ParserFile ParserFile(String fileName) => new ParserFile(this, fileName);
+    public override ParserFile ParserFile(string fileName) => new (this, fileName);
 
-    //@Override
-    public override Parser Parser(ParserFile file) => new Parser(this, file);
+    public override Parser Parser(ParserFile file) => new (this, file);
 
-    //@Override
     public override RuleFunction Rule(Rule r) => r is LeftRecursiveRule rule ? new LeftRecursiveRuleFunction(this, rule) : new RuleFunction(this, r);
 
-    //@Override
     public override CodeBlockForAlt Epsilon(Alternative alt, bool outerMost) => Alternative(alt, outerMost);
 
-    //@Override
     public override CodeBlockForAlt Alternative(Alternative alt, bool outerMost) 
         => outerMost ? new CodeBlockForOuterMostAlt(this, alt) : new CodeBlockForAlt(this);
 
-    //@Override
     public override CodeBlockForAlt FinishAlternative(CodeBlockForAlt blk, List<SrcOp> ops)
     {
         blk.ops = ops;
         return blk;
     }
 
-    //@Override
     public override List<SrcOp> Action(ActionAST ast) => List(new model.Action(this, ast));
 
-    //@Override
     public override List<SrcOp> Sempred(ActionAST ast) => List(new SemPred(this, ast));
 
-    //@Override
     public override List<SrcOp> RuleRef(GrammarAST ID, GrammarAST label, GrammarAST args)
     {
         var invokeOp = new InvokeRule(this, ID, label);
@@ -60,14 +51,13 @@ public class ParserFactory : DefaultOutputModelFactory
         return List(invokeOp, listLabelOp);
     }
 
-    //@Override
     public override List<SrcOp> TokenRef(GrammarAST ID, GrammarAST labelAST, GrammarAST args)
     {
         var matchOp = new MatchToken(this, (TerminalAST)ID);
         if (labelAST != null)
         {
             var label = labelAST.getText();
-            var rf = GetCurrentRuleFunction();
+            var rf = CurrentRuleFunction;
             if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
             {
                 // add Token _X and List<Token> X decls
@@ -99,8 +89,7 @@ public class ParserFactory : DefaultOutputModelFactory
 
     public TokenListDecl GetTokenListLabelDecl(string label) => new (this, gen.Target.GetListLabel(label));
 
-    //@Override
-    public List<SrcOp> Set(GrammarAST setAST, GrammarAST labelAST, bool invert)
+    public override List<SrcOp> Set(GrammarAST setAST, GrammarAST labelAST, bool invert)
     {
         MatchSet matchOp;
         if (invert) matchOp = new MatchNotSet(this, setAST);
@@ -108,7 +97,7 @@ public class ParserFactory : DefaultOutputModelFactory
         if (labelAST != null)
         {
             var label = labelAST.getText();
-            var rf = GetCurrentRuleFunction();
+            var rf = CurrentRuleFunction;
             if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
             {
                 DefineImplicitLabel(setAST, matchOp);
@@ -127,7 +116,6 @@ public class ParserFactory : DefaultOutputModelFactory
         return List(matchOp, listLabelOp);
     }
 
-    //@Override
     public override List<SrcOp> Wildcard(GrammarAST ast, GrammarAST labelAST)
     {
         var wild = new Wildcard(this, ast);
@@ -137,11 +125,11 @@ public class ParserFactory : DefaultOutputModelFactory
             var label = labelAST.getText();
             var d = GetTokenLabelDecl(label);
             wild.labels.Add(d);
-            GetCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), d);
+            CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), d);
             if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
             {
                 var l = GetTokenListLabelDecl(label);
-                GetCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), l);
+                CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), l);
             }
         }
         if (controller.NeedsImplicitLabel(ast, wild)) DefineImplicitLabel(ast, wild);
@@ -149,7 +137,6 @@ public class ParserFactory : DefaultOutputModelFactory
         return List(wild, listLabelOp);
     }
 
-    //@Override
     public override Choice GetChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST labelAST)
     {
         int decision = ((DecisionState)blkAST.atnState).decision;
@@ -168,19 +155,18 @@ public class ParserFactory : DefaultOutputModelFactory
             var label = labelAST.getText();
             var d = GetTokenLabelDecl(label);
             c.label = d;
-            GetCurrentRuleFunction().AddContextDecl(labelAST.getAltLabel(), d);
+            CurrentRuleFunction.AddContextDecl(labelAST.getAltLabel(), d);
             if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
             {
                 var listLabel = gen.Target.GetListLabel(label);
                 var l = new TokenListDecl(this, listLabel);
-                GetCurrentRuleFunction().AddContextDecl(labelAST.getAltLabel(), l);
+                CurrentRuleFunction.AddContextDecl(labelAST.getAltLabel(), l);
             }
         }
 
         return c;
     }
 
-    //@Override
     public override Choice GetEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts)
     {
         if (!g.Tools.force_atn)
@@ -208,13 +194,10 @@ public class ParserFactory : DefaultOutputModelFactory
         return GetComplexEBNFBlock(ebnfRoot, alts);
     }
 
-    //@Override
     public virtual Choice SetLL1ChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) => new LL1AltBlock(this, blkAST, alts);
 
-    //@Override
     public override Choice GetComplexChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts) => new AltBlock(this, blkAST, alts);
 
-    //@Override
     public override Choice GetLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts)
     {
         int ebnf = 0;
@@ -238,7 +221,6 @@ public class ParserFactory : DefaultOutputModelFactory
         return c;
     }
 
-    //@Override
     public override Choice GetComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts)
     {
         int ebnf = 0;
@@ -259,16 +241,14 @@ public class ParserFactory : DefaultOutputModelFactory
         return c;
     }
 
-    //@Override
     public override List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST) => List(new TestSetInline(this, blkAST, look, gen.Target.GetInlineTestSetWordSize()));
 
-    //@Override
     public override bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op)
     {
-        var currentOuterMostAlt = GetCurrentOuterMostAlt();
+        var currentOuterMostAlt = CurrentOuterMostAlt;
         var actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.getText());
         var actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.getText());
-        return op.GetLabels().Count == 0 && (actionRefsAsToken || actionRefsAsRule);
+        return op.Labels.Count == 0 && (actionRefsAsToken || actionRefsAsRule);
     }
 
     // support
@@ -298,9 +278,9 @@ public class ParserFactory : DefaultOutputModelFactory
             d = GetTokenLabelDecl(implLabel);
             ((TokenDecl)d).isImplicit = true;
         }
-        op.GetLabels().Add(d);
+        op.        Labels.Add(d);
         // all labels must be in scope struct in case we exec action out of context
-        GetCurrentRuleFunction().AddContextDecl(ast.getAltLabel(), d);
+        CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), d);
     }
 
     public AddToLabelList GetAddToListOpIfListLabelPresent(LabeledOp op, GrammarAST label)
@@ -311,7 +291,7 @@ public class ParserFactory : DefaultOutputModelFactory
             var target = gen.Target;
             var listLabel = target.GetListLabel(label.getText());
             var listRuntimeName = target.EscapeIfNeeded(listLabel);
-            labelOp = new AddToLabelList(this, listRuntimeName, op.GetLabels()[0]);
+            labelOp = new AddToLabelList(this, listRuntimeName, op.Labels[0]);
         }
         return labelOp;
     }

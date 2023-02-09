@@ -4,8 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System.ComponentModel.DataAnnotations;
-
 namespace org.antlr.v4.misc;
 
 

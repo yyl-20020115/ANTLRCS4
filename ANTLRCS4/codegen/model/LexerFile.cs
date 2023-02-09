@@ -20,10 +20,10 @@ public class LexerFile : OutputFile
     public LexerFile(OutputModelFactory factory, string fileName) 
         : base(factory, fileName)
     {
-        namedActions = BuildNamedActions(factory.GetGrammar());
-        genPackage = factory.GetGrammar().Tools.genPackage;
-        exportMacro = factory.GetGrammar().getOptionString("exportMacro");
-        genListener = factory.GetGrammar().Tools.gen_listener;
-        genVisitor = factory.GetGrammar().Tools.gen_visitor;
+        namedActions = BuildNamedActions(factory.Grammar);
+        genPackage = factory.Grammar.Tools.genPackage;
+        exportMacro = factory.Grammar.getOptionString("exportMacro");
+        genListener = factory.Grammar.Tools.gen_listener;
+        genVisitor = factory.Grammar.Tools.gen_visitor;
     }
 }

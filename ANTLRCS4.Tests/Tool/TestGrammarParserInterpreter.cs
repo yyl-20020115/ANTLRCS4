@@ -107,7 +107,7 @@ public class TestGrammarParserInterpreter
         var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
-        var t = parser.parse(g.rules[(startRule)].index);
+        var t = parser.Parse(g.rules[(startRule)].index);
         var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
         var treeStr = Trees.ToStringTree(t, nodeTextProvider);
         //		Console.Out.WriteLine("parse tree: "+treeStr);

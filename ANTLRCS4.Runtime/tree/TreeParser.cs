@@ -54,55 +54,44 @@ public class TreeParser : BaseRecognizer
     public TreeParser(TreeNodeStream input) : base()
     {
         // highlight that we go to base to set state object
-        setTreeNodeStream(input);
+        TreeNodeStream = input;
     }
 
     public TreeParser(TreeNodeStream input, RecognizerSharedState state)
         : base(state)
     {
         // share the state object with another parser
-        setTreeNodeStream(input);
+        TreeNodeStream = input;
     }
 
-    ////@Override
-    public void reset()
+    public override void Reset()
     {
         base.Reset(); // reset all recognizer state variables
-        if (input != null)
-        {
-            input.Seek(0); // rewind the input
-        }
+        input?.Seek(0); // rewind the input
     }
 
     /** Set the input stream */
-    public void setTreeNodeStream(TreeNodeStream input)
-    {
-        this.input = input;
-    }
+    public TreeNodeStream TreeNodeStream { get => input; set => this.input = value; }
 
-    public TreeNodeStream getTreeNodeStream()
-    {
-        return input;
-    }
-
+    public override string[] TokenNames => base.TokenNames;
     ////@Override
     public override String SourceName => input.SourceName;
-
+    public override string GrammarFileName => base.GrammarFileName;
     ////@Override
-    protected virtual Object getCurrentInputSymbol(IntStream input)
+    protected override object GetCurrentInputSymbol(IntStream input)
     {
         return ((TreeNodeStream)input).LT(1);
     }
 
     //@Override
-    protected Object getMissingSymbol(IntStream input,
+    protected override object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
                                       int expectedTokenType,
                                       BitSet follow)
     {
-        String tokenText =
+        var tokenText =
             "<missing " + TokenNames[expectedTokenType] + ">";
-        TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
+        var adaptor = ((TreeNodeStream)e.InputStream).getTreeAdaptor();
         return adaptor.create(new CommonToken(expectedTokenType, tokenText));
     }
 
@@ -111,7 +100,7 @@ public class TreeParser : BaseRecognizer
      *  corresponding UP node.
      */
     //@Override
-    public void matchAny(IntStream ignore)
+    public void MatchAny(IntStream ignore)
     { // ignore stream, copy of input
         state.errorRecovery = false;
         state.failed = false;
@@ -147,7 +136,7 @@ public class TreeParser : BaseRecognizer
      *  from tree parser errors inline...
      */
     //@Override
-    protected Object recoverFromMismatchedToken(IntStream input,
+    protected object RecoverFromMismatchedToken(IntStream input,
                                                 int ttype,
                                                 BitSet follow)
 
@@ -159,8 +148,7 @@ public class TreeParser : BaseRecognizer
      *  always intended for the programmer because the parser built
      *  the input tree not the user.
      */
-    //@Override
-    public String getErrorHeader(RecognitionException e)
+    public string GetErrorHeader(RecognitionException e)
     {
         return GrammarFileName + ": node from " +
                (e.approximateLineInfo ? "after " : "") + "line " + e.line + ":" + e.charPositionInLine;
@@ -169,8 +157,7 @@ public class TreeParser : BaseRecognizer
     /** Tree parsers parse nodes they usually have a token object as
      *  payload. Set the exception token and do the default behavior.
      */
-    //@Override
-    public String getErrorMessage(RecognitionException e, String[] tokenNames)
+    public string GetErrorMessage(RecognitionException e, string[] tokenNames)
     {
         if (this is TreeParser)
         {
@@ -195,18 +182,18 @@ public class TreeParser : BaseRecognizer
      *  matcher stops matching and returns true when it runs out of context.
      *  There is no way to force the first node to be the root.
      */
-    public bool inContext(String context)
+    public bool InContext(String context)
     {
-        return inContext(input.getTreeAdaptor(), TokenNames, input.LT(1), context);
+        return InContext(input.getTreeAdaptor(), TokenNames, input.LT(1), context);
     }
 
     /** The worker for inContext.  It's static and full of parameters for
      *  testing purposes.
      */
-    public static bool inContext(TreeAdaptor adaptor,
-    String[] tokenNames,
-                                    Object t,
-                                    String context)
+    public static bool InContext(TreeAdaptor adaptor,
+                                    string[] tokenNames,
+                                    object t,
+                                    string context)
     {
         var dotdotMatcher = dotdotPattern.Match(context);
         var doubleEtcMatcher = doubleEtcPattern.Match(context);
@@ -220,7 +207,7 @@ public class TreeParser : BaseRecognizer
         }
         context = context.Replace("\\.\\.\\.", " ... "); // ensure spaces around ...
         context = context.Trim();
-        String[] nodes = context.Split("\\s+");
+        var nodes = context.Split("\\s+");
         int ni = nodes.Length - 1;
         t = adaptor.getParent(t);
         while (ni >= 0 && t != null)
@@ -229,13 +216,13 @@ public class TreeParser : BaseRecognizer
             {
                 // walk upwards until we see nodes[ni-1] then continue walking
                 if (ni == 0) return true; // ... at start is no-op
-                String goal = nodes[ni - 1];
-                Object ancestor = getAncestor(adaptor, tokenNames, t, goal);
+                var goal = nodes[ni - 1];
+                var ancestor = GetAncestor(adaptor, tokenNames, t, goal);
                 if (ancestor == null) return false;
                 t = ancestor;
                 ni--;
             }
-            String name = tokenNames[adaptor.getType(t)];
+            var name = tokenNames[adaptor.getType(t)];
             if (!name.Equals(nodes[ni]))
             {
                 //Console.Error.WriteLine("not matched: "+nodes[ni]+" at "+t);
@@ -251,39 +238,24 @@ public class TreeParser : BaseRecognizer
     }
 
     /** Helper for static inContext */
-    protected static Object getAncestor(TreeAdaptor adaptor, String[] tokenNames, Object t, String goal)
+    protected static object GetAncestor(TreeAdaptor adaptor, string[] tokenNames, object t, string goal)
     {
         while (t != null)
         {
-            String name = tokenNames[adaptor.getType(t)];
+            var name = tokenNames[adaptor.getType(t)];
             if (name.Equals(goal)) return t;
             t = adaptor.getParent(t);
         }
         return null;
     }
 
-    public void traceIn(String ruleName, int ruleIndex)
+    public void TraceIn(String ruleName, int ruleIndex)
     {
         base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
-    public void traceOut(String ruleName, int ruleIndex)
+    public void TraceOut(String ruleName, int ruleIndex)
     {
         base.TraceOut(ruleName, ruleIndex, input.LT(1));
-    }
-    // $ANTLR end "atom"
-
-    // $ANTLR start synpred1_LeftRecursiveRuleWalker
-    public void synpred1LeftRecursiveRuleWalkerFragment()
-    {
-        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:9: ( binary )
-        // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:114:10: binary
-        {
-            PushFollow(FOLLOW_binary_in_synpred1_LeftRecursiveRuleWalker348);
-            Binary();
-            state._fsp--;
-            if (state.failed) return;
-        }
-
     }
 }

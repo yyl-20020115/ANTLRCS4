@@ -45,12 +45,9 @@ public class OutputModelController
     public CodeBlock currentBlock;
     public CodeBlockForOuterMostAlt currentOuterMostAlternativeBlock;
 
-    public OutputModelController(OutputModelFactory factory)
-    {
-        this.@delegate = factory;
-    }
+    public OutputModelController(OutputModelFactory factory) => this.@delegate = factory;
 
-    public void AddExtension(CodeGeneratorExtension ext) { extensions.Add(ext); }
+    public void AddExtension(CodeGeneratorExtension ext) => extensions.Add(ext);
 
     /** Build a file with a parser containing rule functions. Use the
 	 *  controller as factory in SourceGenTriggers so it triggers codegen
@@ -58,13 +55,13 @@ public class OutputModelController
 	 */
     public OutputModelObject BuildParserOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         var file = ParserFile(gen.GetRecognizerFileName(header));
-        SetRoot(file);
+        Root = file;
         file.parser = Parser(file);
 
-        var g = @delegate.GetGrammar();
-        foreach (Rule r in g.rules.Values)
+        var g = @delegate.Grammar;
+        foreach (var r in g.rules.Values)
         {
             BuildRuleFunction(file.parser, r);
         }
@@ -74,12 +71,12 @@ public class OutputModelController
 
     public OutputModelObject BuildLexerOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         var file = LexerFile(gen.GetRecognizerFileName(header));
-        SetRoot(file);
+        Root = file;
         file.lexer = Lexer(file);
 
-        var g = @delegate.GetGrammar();
+        var g = @delegate.Grammar;
         foreach (var r in g.rules.Values)
         {
             BuildLexerRuleActions(file.lexer, r);
@@ -90,29 +87,29 @@ public class OutputModelController
 
     public OutputModelObject BuildListenerOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         return new ListenerFile(@delegate, gen.GetListenerFileName(header));
     }
 
     public OutputModelObject BuildBaseListenerOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         return new BaseListenerFile(@delegate, gen.GetBaseListenerFileName(header));
     }
 
     public OutputModelObject BuildVisitorOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         return new VisitorFile(@delegate, gen.GetVisitorFileName(header));
     }
 
     public OutputModelObject BuildBaseVisitorOutputModel(bool header)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         return new BaseVisitorFile(@delegate, gen.GetBaseVisitorFileName(header));
     }
 
-    public ParserFile ParserFile(String fileName)
+    public ParserFile ParserFile(string fileName)
     {
         var f = @delegate.ParserFile(fileName);
         foreach (CodeGeneratorExtension ext in extensions) f = ext.ParserFile(f);
@@ -126,7 +123,7 @@ public class OutputModelController
         return p;
     }
 
-    public LexerFile LexerFile(String fileName)
+    public LexerFile LexerFile(string fileName)
     {
         return new LexerFile(@delegate, fileName);
     }
@@ -156,7 +153,7 @@ public class OutputModelController
             BuildNormalRuleFunction(r, function);
         }
 
-        var g = GetGrammar();
+        var g = Grammar;
         foreach (var a in r.actions)
         {
             if (a is PredAST)
@@ -179,7 +176,7 @@ public class OutputModelController
         BuildNormalRuleFunction(r, function);
 
         // now inject code to start alts
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         var codegenTemplates = gen.Templates;
 
         // pick out alt(s) for primaries
@@ -201,9 +198,8 @@ public class OutputModelController
         var altForOpAltBlock = opAltStarBlock.alts[(0)];
         List<CodeBlockForAlt> opAltsCode = new();
         var opStuff = altForOpAltBlock.ops[(0)];
-        if (opStuff is AltBlock)
+        if (opStuff is AltBlock opAltBlock)
         {
-            var opAltBlock = (AltBlock)opStuff;
             opAltsCode.AddRange(opAltBlock.alts);
         }
         else
@@ -261,18 +257,18 @@ public class OutputModelController
             }
             else if (altInfo.isListLabel)
             {
-                @delegate.GetGenerator().tool.ErrMgr.toolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "isListLabel");
+                @delegate.                Generator.tool.ErrMgr.ToolError(ErrorType.CODE_TEMPLATE_ARG_ISSUE, templateName, "isListLabel");
             }
-            Action altAction =
+            var altAction =
                 new Action(@delegate, function.altLabelCtxs[(altInfo.altLabel)], altActionST);
-            CodeBlockForAlt alt = opAltsCode[i];
+            var alt = opAltsCode[i];
             alt.InsertOp(0, altAction);
         }
     }
 
     public void BuildNormalRuleFunction(Rule r, RuleFunction function)
     {
-        var gen = @delegate.GetGenerator();
+        var gen = @delegate.Generator;
         // TRIGGER factory functions for rule alts, elements
         var adaptor = new GrammarASTAdaptor(r.ast.token.InputStream);
         var blk = (GrammarAST)r.ast.GetFirstChildWithType(ANTLRParser.BLOCK);
@@ -301,8 +297,8 @@ public class OutputModelController
             return;
         }
 
-        var gen = @delegate.GetGenerator();
-        var g = @delegate.GetGrammar();
+        var gen = @delegate.Generator;
+        var g = @delegate.Grammar;
         var ctxType = gen.Target.GetRuleFunctionContextStructName(r);
         if (!lexer.actionFuncs.TryGetValue(r, out var raf))
         {
@@ -311,9 +307,8 @@ public class OutputModelController
 
         foreach (var a in r.actions)
         {
-            if (a is PredAST)
+            if (a is PredAST p)
             {
-                PredAST p = (PredAST)a;
                 if (lexer.sempredFuncs.TryGetValue(r, out var rsf))
                 {
                     rsf = new RuleSempredFunction(@delegate, r, ctxType);
@@ -336,30 +331,28 @@ public class OutputModelController
 
     public RuleFunction Rule(Rule r)
     {
-        RuleFunction rf = @delegate.Rule(r);
-        foreach (CodeGeneratorExtension ext in extensions) rf = ext.Rule(rf);
+        var rf = @delegate.Rule(r);
+        foreach (var ext in extensions) rf = ext.Rule(rf);
         return rf;
     }
 
     public List<SrcOp> RulePostamble(RuleFunction function, Rule r)
     {
-        List<SrcOp> ops = @delegate.RulePostamble(function, r);
-        foreach (CodeGeneratorExtension ext in extensions) ops = ext.RulePostamble(ops);
+        var ops = @delegate.RulePostamble(function, r);
+        foreach (var ext in extensions) ops = ext.RulePostamble(ops);
         return ops;
     }
 
-    public Grammar GetGrammar() { return @delegate.GetGrammar(); }
-
-    public CodeGenerator GetGenerator() { return @delegate.GetGenerator(); }
-
+    public Grammar Grammar => @delegate.Grammar;
+    public CodeGenerator Generator => @delegate.Generator;
     public CodeBlockForAlt Alternative(Alternative alt, bool outerMost)
     {
-        CodeBlockForAlt blk = @delegate.Alternative(alt, outerMost);
+        var blk = @delegate.Alternative(alt, outerMost);
         if (outerMost)
         {
             currentOuterMostAlternativeBlock = (CodeBlockForOuterMostAlt)blk;
         }
-        foreach (CodeGeneratorExtension ext in extensions) blk = ext.Alternative(blk, outerMost);
+        foreach (var ext in extensions) blk = ext.Alternative(blk, outerMost);
         return blk;
     }
 
@@ -367,24 +360,21 @@ public class OutputModelController
                                              bool outerMost)
     {
         blk = @delegate.FinishAlternative(blk, ops);
-        foreach (CodeGeneratorExtension ext in extensions) blk = ext.FinishAlternative(blk, outerMost);
+        foreach (var ext in extensions) blk = ext.FinishAlternative(blk, outerMost);
         return blk;
     }
 
     public List<SrcOp> RuleRef(GrammarAST ID, GrammarAST label, GrammarAST args)
     {
-        List<SrcOp> ops = @delegate.RuleRef(ID, label, args);
-        foreach (CodeGeneratorExtension ext in extensions)
-        {
-            ops = ext.RuleRef(ops);
-        }
+        var ops = @delegate.RuleRef(ID, label, args);
+        foreach (var ext in extensions) ops = ext.RuleRef(ops);
         return ops;
     }
 
     public List<SrcOp> TokenRef(GrammarAST ID, GrammarAST label, GrammarAST args)
     {
-        List<SrcOp> ops = @delegate.TokenRef(ID, label, args);
-        foreach (CodeGeneratorExtension ext in extensions)
+        var ops = @delegate.TokenRef(ID, label, args);
+        foreach (var ext in extensions)
         {
             ops = ext.TokenRef(ops);
         }
@@ -393,8 +383,8 @@ public class OutputModelController
 
     public List<SrcOp> StringRef(GrammarAST ID, GrammarAST label)
     {
-        List<SrcOp> ops = @delegate.StringRef(ID, label);
-        foreach (CodeGeneratorExtension ext in extensions)
+        var ops = @delegate.StringRef(ID, label);
+        foreach (var ext in extensions)
         {
             ops = ext.StringRef(ops);
         }
@@ -404,8 +394,8 @@ public class OutputModelController
     /** (A|B|C) possibly with ebnfRoot and label */
     public List<SrcOp> Set(GrammarAST setAST, GrammarAST labelAST, bool invert)
     {
-        List<SrcOp> ops = @delegate.Set(setAST, labelAST, invert);
-        foreach (CodeGeneratorExtension ext in extensions)
+        var ops = @delegate.Set(setAST, labelAST, invert);
+        foreach (var ext in extensions)
         {
             ops = ext.Set(ops);
         }
@@ -414,39 +404,36 @@ public class OutputModelController
 
     public CodeBlockForAlt Epsilon(Alternative alt, bool outerMost)
     {
-        CodeBlockForAlt blk = @delegate.Epsilon(alt, outerMost);
-        foreach (CodeGeneratorExtension ext in extensions) blk = ext.Epsilon(blk);
+        var blk = @delegate.Epsilon(alt, outerMost);
+        foreach (var ext in extensions) blk = ext.Epsilon(blk);
         return blk;
     }
 
     public List<SrcOp> Wildcard(GrammarAST ast, GrammarAST labelAST)
     {
-        List<SrcOp> ops = @delegate.Wildcard(ast, labelAST);
-        foreach (CodeGeneratorExtension ext in extensions)
-        {
-            ops = ext.Wildcard(ops);
-        }
+        var ops = @delegate.Wildcard(ast, labelAST);
+        foreach (var ext in extensions) ops = ext.Wildcard(ops);
         return ops;
     }
 
     public List<SrcOp> Action(ActionAST ast)
     {
-        List<SrcOp> ops = @delegate.Action(ast);
-        foreach (CodeGeneratorExtension ext in extensions) ops = ext.Action(ops);
+        var ops = @delegate.Action(ast);
+        foreach (var ext in extensions) ops = ext.Action(ops);
         return ops;
     }
 
     public List<SrcOp> Sempred(ActionAST ast)
     {
-        List<SrcOp> ops = @delegate.Sempred(ast);
-        foreach (CodeGeneratorExtension ext in extensions) ops = ext.Sempred(ops);
+        var ops = @delegate.Sempred(ast);
+        foreach (var ext in extensions) ops = ext.Sempred(ops);
         return ops;
     }
 
     public Choice GetChoiceBlock(BlockAST blkAST, List<CodeBlockForAlt> alts, GrammarAST label)
     {
-        Choice c = @delegate.GetChoiceBlock(blkAST, alts, label);
-        foreach (CodeGeneratorExtension ext in extensions) c = ext.GetChoiceBlock(c);
+        var c = @delegate.GetChoiceBlock(blkAST, alts, label);
+        foreach (var ext in extensions) c = ext.GetChoiceBlock(c);
         return c;
     }
 
@@ -459,33 +446,22 @@ public class OutputModelController
 
     public bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op)
     {
-        bool needs = @delegate.NeedsImplicitLabel(ID, op);
-        foreach (CodeGeneratorExtension ext in extensions) needs |= ext.NeedsImplicitLabel(ID, op);
+        var needs = @delegate.NeedsImplicitLabel(ID, op);
+        foreach (var ext in extensions) needs |= ext.NeedsImplicitLabel(ID, op);
         return needs;
     }
 
-    public OutputModelObject GetRoot() { return root; }
+    public OutputModelObject Root { get => root;
+        set => this.root = value; }
 
-    public void SetRoot(OutputModelObject root) { this.root = root; }
+    public RuleFunction GetCurrentRuleFunction() => currentRule.Count > 0 ? currentRule.Peek() : null;
 
-    public RuleFunction GetCurrentRuleFunction()
-    {
-        if (currentRule.Count > 0) return currentRule.Peek();
-        return null;
-    }
+    public void PushCurrentRule(RuleFunction r) => currentRule.Push(r);
 
-    public void PushCurrentRule(RuleFunction r) { currentRule.Push(r); }
+    public RuleFunction PopCurrentRule() => currentRule.Count > 0 ? currentRule.Pop() : null;
 
-    public RuleFunction PopCurrentRule()
-    {
-        if (currentRule.Count > 0) return currentRule.Pop();
-        return null;
-    }
-
-    public Alternative GetCurrentOuterMostAlt() { return currentOuterMostAlt; }
-
-    public void SetCurrentOuterMostAlt(Alternative currentOuterMostAlt) { this.currentOuterMostAlt = currentOuterMostAlt; }
-
+    public Alternative CurrentOuterMostAlt { get => currentOuterMostAlt;
+        set => this.currentOuterMostAlt = value; }
     public CodeBlock CurrentBlock { get => currentBlock; set => currentBlock = value; }
 
     public CodeBlockForOuterMostAlt CurrentOuterMostAlternativeBlock { get => currentOuterMostAlternativeBlock; set => this.currentOuterMostAlternativeBlock = value; }

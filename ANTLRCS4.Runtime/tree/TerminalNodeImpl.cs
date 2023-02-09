@@ -64,7 +64,7 @@ public class TerminalNodeImpl : TerminalNode {
 		return ToString();
 	}
 
-    Tree Tree.Parent => this.Parent;
+    Tree Tree.Parent { get => this.Parent; set { } }
 
     object Tree.Payload => this.getPayload();
 

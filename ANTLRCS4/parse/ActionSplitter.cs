@@ -33,21 +33,21 @@ public class ActionSplitter : antlr.runtime.Lexer
     public List<Token> GetActionTokens()
     {
         List<Token> chunks = new();
-        Token t = nextToken();
+        Token t = NextToken();
         while (t.Type != Token.EOF)
         {
             chunks.Add(t);
-            t = nextToken();
+            t = NextToken();
         }
         return chunks;
     }
 
-    private bool IsIDStartChar(int c) => c == '_' || char.IsLetter((char)c);
+    private static bool IsIDStartChar(int c) => c == '_' || char.IsLetter((char)c);
 
 
     // delegates
     // delegators
-    public antlr.runtime.Lexer[] GetDelegates() => new antlr.runtime.Lexer[] { };
+    public antlr.runtime.Lexer[] GetDelegates() => Array.Empty<antlr.runtime.Lexer>();
 
     public ActionSplitter() { }
     public ActionSplitter(CharStream input)
@@ -61,7 +61,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     //@Override 
     public override string GrammarFileName => "org\\antlr\\v4\\parse\\ActionSplitter.g";
     //@Override
-    public virtual Token nextToken()
+    public override Token NextToken()
     {
         while (true)
         {
@@ -69,9 +69,11 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 Token eof = new CommonToken(input, Token.EOF,
                                             Token.DEFAULT_CHANNEL,
-                                            input.                                            Index, input.Index);
-                eof.                Line = Line;
-                eof.                CharPositionInLine = CharPositionInLine;
+                                            input.Index, input.Index)
+                {
+                    Line = Line,
+                    CharPositionInLine = CharPositionInLine
+                };
                 return eof;
             }
             state.token = null;
@@ -102,13 +104,13 @@ public class ActionSplitter : antlr.runtime.Lexer
             {
                 // shouldn't happen in backtracking mode, but...
                 ReportError(re);
-                recover(re);
+                Recover(re);
             }
         }
     }
 
     //@Override
-    public void memoize(IntStream input,
+    public override void Memoize(IntStream input,
             int ruleIndex,
             int ruleStartIndex)
     {
@@ -116,7 +118,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     }
 
     //@Override
-    public bool alreadyParsedRule(IntStream input, int ruleIndex)
+    public override bool AlreadyParsedRule(IntStream input, int ruleIndex)
     {
         if (state.backtracking > 1) return base.AlreadyParsedRule(input, ruleIndex);
         return false;
@@ -224,7 +226,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -598,7 +600,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                                 if (state.backtracking == 1) { buf.Append((char)c); }
@@ -626,7 +628,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                                 if (state.backtracking == 1) { buf.Append('\\').Append((char)c); }
@@ -685,7 +687,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    Recover(mse);
                     throw mse;
                 }
             // org\\antlr\\v4\\parse\\ActionSplitter.g:113:31: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
@@ -713,7 +715,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -753,7 +755,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    Recover(mse);
                     throw mse;
                 }
             // org\\antlr\\v4\\parse\\ActionSplitter.g:119:9: (~ ';' )*
@@ -781,7 +783,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -838,7 +840,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
                                     MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -873,11 +875,11 @@ public class ActionSplitter : antlr.runtime.Lexer
         if ((LA10_0 == '/'))
         {
             int LA10_1 = input.LA(2);
-            if ((synpred1_ActionSplitter()))
+            if ((Synpred1ActionSplitter()))
             {
                 alt10 = 1;
             }
-            else if ((synpred2_ActionSplitter()))
+            else if ((Synpred2ActionSplitter()))
             {
                 alt10 = 2;
             }
@@ -891,23 +893,23 @@ public class ActionSplitter : antlr.runtime.Lexer
         else if ((LA10_0 == '$'))
         {
             int LA10_2 = input.LA(2);
-            if ((synpred3_ActionSplitter()))
+            if ((Synpred3ActionSplitter()))
             {
                 alt10 = 3;
             }
-            else if ((synpred4_ActionSplitter()))
+            else if ((Synpred4ActionSplitter()))
             {
                 alt10 = 4;
             }
-            else if ((synpred5_ActionSplitter()))
+            else if ((Synpred5ActionSplitter()))
             {
                 alt10 = 5;
             }
-            else if ((synpred6_ActionSplitter()))
+            else if ((Synpred6ActionSplitter()))
             {
                 alt10 = 6;
             }
-            else if ((synpred7_ActionSplitter()))
+            else if ((Synpred7ActionSplitter()))
             {
                 alt10 = 7;
             }
@@ -923,7 +925,7 @@ public class ActionSplitter : antlr.runtime.Lexer
                 try
                 {
                     input.Consume();
-                    NoViableAltException nvae =
+                    var nvae =
                         new NoViableAltException("", 10, 2, input);
                     throw nvae;
                 }
@@ -942,7 +944,7 @@ public class ActionSplitter : antlr.runtime.Lexer
         else
         {
             if (state.backtracking > 0) { state.failed = true; return; }
-            NoViableAltException nvae =
+            var nvae =
                 new NoViableAltException("", 10, 0, input);
             throw nvae;
         }
@@ -1010,7 +1012,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     }
 
     // $ANTLR start synpred1_ActionSplitter
-    public void synpred1_ActionSplitter_fragment()
+    public void Synpred1ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:41: ( COMMENT )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:41: COMMENT
@@ -1023,7 +1025,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred1_ActionSplitter
 
     // $ANTLR start synpred2_ActionSplitter
-    public void synpred2_ActionSplitter_fragment()
+    public void Synpred2ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:49: ( LINE_COMMENT )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:49: LINE_COMMENT
@@ -1036,7 +1038,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred2_ActionSplitter
 
     // $ANTLR start synpred3_ActionSplitter
-    public void synpred3_ActionSplitter_fragment()
+    public void Synpred3ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:62: ( SET_NONLOCAL_ATTR )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:62: SET_NONLOCAL_ATTR
@@ -1049,7 +1051,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred3_ActionSplitter
 
     // $ANTLR start synpred4_ActionSplitter
-    public void synpred4_ActionSplitter_fragment()
+    public void Synpred4ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:80: ( NONLOCAL_ATTR )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:80: NONLOCAL_ATTR
@@ -1062,7 +1064,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred4_ActionSplitter
 
     // $ANTLR start synpred5_ActionSplitter
-    public void synpred5_ActionSplitter_fragment()
+    public void Synpred5ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:94: ( QUALIFIED_ATTR )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:94: QUALIFIED_ATTR
@@ -1075,7 +1077,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred5_ActionSplitter
 
     // $ANTLR start synpred6_ActionSplitter
-    public void synpred6_ActionSplitter_fragment()
+    public void Synpred6ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:109: ( SET_ATTR )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:109: SET_ATTR
@@ -1088,7 +1090,7 @@ public class ActionSplitter : antlr.runtime.Lexer
     // $ANTLR end synpred6_ActionSplitter
 
     // $ANTLR start synpred7_ActionSplitter
-    public void synpred7_ActionSplitter_fragment()
+    public void Synpred7ActionSplitterFragment()
     {
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:118: ( ATTR )
         // org\\antlr\\v4\\parse\\ActionSplitter.g:1:118: ATTR
@@ -1100,13 +1102,13 @@ public class ActionSplitter : antlr.runtime.Lexer
     }
     // $ANTLR end synpred7_ActionSplitter
 
-    public bool synpred2_ActionSplitter()
+    public bool Synpred2ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred2_ActionSplitter_fragment(); // can never throw exception
+            Synpred2ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1118,13 +1120,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred7_ActionSplitter()
+    public bool Synpred7ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred7_ActionSplitter_fragment(); // can never throw exception
+            Synpred7ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1136,13 +1138,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred1_ActionSplitter()
+    public bool Synpred1ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred1_ActionSplitter_fragment(); // can never throw exception
+            Synpred1ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1154,13 +1156,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred6_ActionSplitter()
+    public bool Synpred6ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred6_ActionSplitter_fragment(); // can never throw exception
+            Synpred6ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1172,13 +1174,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred3_ActionSplitter()
+    public bool Synpred3ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred3_ActionSplitter_fragment(); // can never throw exception
+            Synpred3ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1190,13 +1192,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred4_ActionSplitter()
+    public bool Synpred4ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred4_ActionSplitter_fragment(); // can never throw exception
+            Synpred4ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -1208,13 +1210,13 @@ public class ActionSplitter : antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred5_ActionSplitter()
+    public bool Synpred5ActionSplitter()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred5_ActionSplitter_fragment(); // can never throw exception
+            Synpred5ActionSplitterFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {

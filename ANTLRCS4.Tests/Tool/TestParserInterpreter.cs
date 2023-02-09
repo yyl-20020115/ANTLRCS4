@@ -386,7 +386,7 @@ public class TestParserInterpreter
         var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createParserInterpreter(tokens);
-        var t = parser.parse(g.rules[(startRule)].index);
+        var t = parser.Parse(g.rules[(startRule)].index);
         Assert.AreEqual(expectedParseTree, t.ToStringTree(parser));
         return t;
     }

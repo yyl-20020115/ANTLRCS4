@@ -22,7 +22,7 @@ public class ToolANTLRLexer : ANTLRLexer
     public void DisplayRecognitionError(string[] tokenNames, RecognitionException e)
     {
         var msg = GetErrorMessage(e, tokenNames);
-        tool.ErrMgr.syntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
+        tool.ErrMgr.SyntaxError(ErrorType.SYNTAX_ERROR, SourceName, e.token, e, msg);
     }
 
     //@Override

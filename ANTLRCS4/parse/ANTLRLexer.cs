@@ -129,7 +129,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     public CommonTokenStream tokens; // track stream we push to; need for context info
     public bool isLexerRule = false;
 
-    public void GrammarError(ErrorType etype, Token token, params Object[] args) { }
+    public void GrammarError(ErrorType etype, Token token, params object[] args) { }
 
     /** scan backwards from current point in this.tokens list
      *  looking for the start of the rule or subrule.
@@ -290,7 +290,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                                         {
                                                             if (state.backtracking > 0) { state.failed = true; return; }
                                                             MismatchedSetException mse2 = new MismatchedSetException(null, input);
-                                                            recover(mse2);
+                                                            Recover(mse2);
                                                             throw mse2;
                                                         }
                                                     }
@@ -336,7 +336,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                     try
                                     {
                                         input.Consume();
-                                        NoViableAltException nvae =
+                                        var nvae =
                                             new NoViableAltException("", 3, 1, input);
                                         throw nvae;
                                     }
@@ -522,7 +522,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     try
                     {
                         input.Consume();
-                        NoViableAltException nvae =
+                        var nvae =
                             new NoViableAltException("", 7, 1, input);
                         throw nvae;
                     }
@@ -619,8 +619,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -636,8 +636,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -682,7 +682,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     else if ((LA9_0 == '\"'))
                     {
                         int LA9_3 = input.LA(2);
-                        if ((synpred2_ANTLRLexer()))
+                        if ((Synpred2ANTLRLexer()))
                         {
                             alt9 = 2;
                         }
@@ -695,7 +695,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     else if ((LA9_0 == '\''))
                     {
                         int LA9_4 = input.LA(2);
-                        if ((synpred3_ANTLRLexer()))
+                        if ((Synpred3ANTLRLexer()))
                         {
                             alt9 = 3;
                         }
@@ -744,8 +744,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -909,8 +909,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -1002,8 +1002,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -1064,8 +1064,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -1126,8 +1126,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -1986,8 +1986,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2032,8 +2032,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -2062,8 +2062,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -2097,15 +2097,15 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         if ((LA17_2 == '\''))
                         {
                             int LA17_4 = input.LA(3);
-                            if ((LA17_4 == '\'') && (synpred4_ANTLRLexer()))
+                            if ((LA17_4 == '\'') && (synpred4ANTLRLexer()))
                             {
                                 alt17 = 1;
                             }
-                            else if ((LA17_4 == '\\') && (synpred4_ANTLRLexer()))
+                            else if ((LA17_4 == '\\') && (synpred4ANTLRLexer()))
                             {
                                 alt17 = 1;
                             }
-                            else if (((LA17_4 >= '\u0000' && LA17_4 <= '&') || (LA17_4 >= '(' && LA17_4 <= '[') || (LA17_4 >= ']' && LA17_4 <= '\uFFFF')) && (synpred4_ANTLRLexer()))
+                            else if (((LA17_4 >= '\u0000' && LA17_4 <= '&') || (LA17_4 >= '(' && LA17_4 <= '[') || (LA17_4 >= ']' && LA17_4 <= '\uFFFF')) && (synpred4ANTLRLexer()))
                             {
                                 alt17 = 1;
                             }
@@ -2118,7 +2118,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         else if ((LA17_2 == '\\'))
                         {
                             int LA17_5 = input.LA(3);
-                            if ((synpred4_ANTLRLexer()))
+                            if ((synpred4ANTLRLexer()))
                             {
                                 alt17 = 1;
                             }
@@ -2131,7 +2131,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         else if (((LA17_2 >= '\u0000' && LA17_2 <= '&') || (LA17_2 >= '(' && LA17_2 <= '[') || (LA17_2 >= ']' && LA17_2 <= '\uFFFF')))
                         {
                             int LA17_6 = input.LA(3);
-                            if ((synpred4_ANTLRLexer()))
+                            if ((synpred4ANTLRLexer()))
                             {
                                 alt17 = 1;
                             }
@@ -2168,8 +2168,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2213,15 +2213,15 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         if ((LA18_2 == '\"'))
                         {
                             int LA18_4 = input.LA(3);
-                            if ((LA18_4 == '\"') && (synpred5_ANTLRLexer()))
+                            if ((LA18_4 == '\"') && (Synpred5ANTLRLexer()))
                             {
                                 alt18 = 1;
                             }
-                            else if ((LA18_4 == '\\') && (synpred5_ANTLRLexer()))
+                            else if ((LA18_4 == '\\') && (Synpred5ANTLRLexer()))
                             {
                                 alt18 = 1;
                             }
-                            else if (((LA18_4 >= '\u0000' && LA18_4 <= '!') || (LA18_4 >= '#' && LA18_4 <= '[') || (LA18_4 >= ']' && LA18_4 <= '\uFFFF')) && (synpred5_ANTLRLexer()))
+                            else if (((LA18_4 >= '\u0000' && LA18_4 <= '!') || (LA18_4 >= '#' && LA18_4 <= '[') || (LA18_4 >= ']' && LA18_4 <= '\uFFFF')) && (Synpred5ANTLRLexer()))
                             {
                                 alt18 = 1;
                             }
@@ -2234,7 +2234,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         else if ((LA18_2 == '\\'))
                         {
                             int LA18_5 = input.LA(3);
-                            if ((synpred5_ANTLRLexer()))
+                            if ((Synpred5ANTLRLexer()))
                             {
                                 alt18 = 1;
                             }
@@ -2247,7 +2247,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         else if (((LA18_2 >= '\u0000' && LA18_2 <= '!') || (LA18_2 >= '#' && LA18_2 <= '[') || (LA18_2 >= ']' && LA18_2 <= '\uFFFF')))
                         {
                             int LA18_6 = input.LA(3);
-                            if ((synpred5_ANTLRLexer()))
+                            if ((Synpred5ANTLRLexer()))
                             {
                                 alt18 = 1;
                             }
@@ -2284,8 +2284,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2363,8 +2363,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2373,7 +2373,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         default:
                             if (cnt19 >= 1) goto exit19;// break loop19;
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            EarlyExitException eee = new EarlyExitException(19, input);
+                            var eee = new EarlyExitException(19, input);
                             throw eee;
                     }
                     cnt19++;
@@ -2430,8 +2430,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2440,7 +2440,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         default:
                             if (cnt20 >= 1) goto exit20;// break loop20;
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            EarlyExitException eee = new EarlyExitException(20, input);
+                            var eee = new EarlyExitException(20, input);
                             throw eee;
                     }
                     cnt20++;
@@ -2479,8 +2479,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -2489,7 +2489,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         default:
                             if (cnt21 >= 1) goto exit21;// break loop21;
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            EarlyExitException eee = new EarlyExitException(21, input);
+                            var eee = new EarlyExitException(21, input);
                             throw eee;
                     }
                     cnt21++;
@@ -2585,8 +2585,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                             else
                                             {
                                                 if (state.backtracking > 0) { state.failed = true; return; }
-                                                MismatchedSetException mse = new MismatchedSetException(null, input);
-                                                recover(mse);
+                                                var mse = new MismatchedSetException(null, input);
+                                                Recover(mse);
                                                 throw mse;
                                             }
                                         }
@@ -2668,8 +2668,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -2744,7 +2744,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    NoViableAltException nvae =
+                    var nvae =
                         new NoViableAltException("", 25, 0, input);
                     throw nvae;
                 }
@@ -2818,8 +2818,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                             else
                             {
                                 if (state.backtracking > 0) { state.failed = true; return; }
-                                MismatchedSetException mse = new MismatchedSetException(null, input);
-                                recover(mse);
+                                var mse = new MismatchedSetException(null, input);
+                                Recover(mse);
                                 throw mse;
                             }
                             if (state.backtracking == 0)
@@ -3052,8 +3052,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -3062,7 +3062,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         default:
                             if (cnt30 >= 1) goto exit30;// break loop30;
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            EarlyExitException eee = new EarlyExitException(30, input);
+                            var eee = new EarlyExitException(30, input);
                             throw eee;
                     }
                     cnt30++;
@@ -3126,8 +3126,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                                 else
                                 {
                                     if (state.backtracking > 0) { state.failed = true; return; }
-                                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                                    recover(mse);
+                                    var mse = new MismatchedSetException(null, input);
+                                    Recover(mse);
                                     throw mse;
                                 }
                             }
@@ -3136,7 +3136,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                         default:
                             if (cnt31 >= 1) goto exit31;// break loop31;
                             if (state.backtracking > 0) { state.failed = true; return; }
-                            EarlyExitException eee = new EarlyExitException(31, input);
+                            var eee = new EarlyExitException(31, input);
                             throw eee;
                     }
                     cnt31++;
@@ -3171,8 +3171,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -3201,8 +3201,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -3231,8 +3231,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                 else
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
-                    MismatchedSetException mse = new MismatchedSetException(null, input);
-                    recover(mse);
+                    var mse = new MismatchedSetException(null, input);
+                    Recover(mse);
                     throw mse;
                 }
             }
@@ -3286,7 +3286,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     t.                    Line = state.tokenStartLine;
                     t.                    Text = state.text;
                     t.                    CharPositionInLine = state.tokenStartCharPositionInLine;
-                    String msg = GetTokenErrorDisplay(t) + " came as a complete surprise to me";
+                    var msg = GetTokenErrorDisplay(t) + " came as a complete surprise to me";
                     GrammarError(ErrorType.SYNTAX_ERROR, t, msg);
                     state.syntaxErrors++;
                     Skip();
@@ -3644,7 +3644,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     // $ANTLR end synpred1_ANTLRLexer
 
     // $ANTLR start synpred2_ANTLRLexer
-    public void synpred2_ANTLRLexer_fragment()
+    public void Synpred2ANTLRLexerFragment()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:323:14: ( '\"' )
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:323:15: '\"'
@@ -3656,7 +3656,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     // $ANTLR end synpred2_ANTLRLexer
 
     // $ANTLR start synpred3_ANTLRLexer
-    public void synpred3_ANTLRLexer_fragment()
+    public void Synpred3ANTLRLexerFragment()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:325:14: ( '\\'' )
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:325:15: '\\''
@@ -3668,7 +3668,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     // $ANTLR end synpred3_ANTLRLexer
 
     // $ANTLR start synpred4_ANTLRLexer
-    public void synpred4_ANTLRLexer_fragment()
+    public void Synpred4ANTLRLexerFragment()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:552:10: ( '\\\\' )
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:552:11: '\\\\'
@@ -3680,7 +3680,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     // $ANTLR end synpred4_ANTLRLexer
 
     // $ANTLR start synpred5_ANTLRLexer
-    public void synpred5_ANTLRLexer_fragment()
+    public void Synpred5ANTLRLexerFragment()
     {
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:562:9: ( '\\\\' )
         // org\\antlr\\v4\\parse\\ANTLRLexer.g:562:10: '\\\\'
@@ -3691,7 +3691,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
     }
     // $ANTLR end synpred5_ANTLRLexer
 
-    public bool synpred1_ANTLRLexer()
+    public bool Synpred1ANTLRLexer()
     {
         state.backtracking++;
         int start = input.Mark();
@@ -3709,13 +3709,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred2_ANTLRLexer()
+    public bool Synpred2ANTLRLexer()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred2_ANTLRLexer_fragment(); // can never throw exception
+            Synpred2ANTLRLexerFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -3727,13 +3727,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred5_ANTLRLexer()
+    public bool Synpred5ANTLRLexer()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred5_ANTLRLexer_fragment(); // can never throw exception
+            Synpred5ANTLRLexerFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -3745,13 +3745,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred3_ANTLRLexer()
+    public bool Synpred3ANTLRLexer()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred3_ANTLRLexer_fragment(); // can never throw exception
+            Synpred3ANTLRLexerFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -3763,13 +3763,13 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         state.failed = false;
         return success;
     }
-    public bool synpred4_ANTLRLexer()
+    public bool synpred4ANTLRLexer()
     {
         state.backtracking++;
         int start = input.Mark();
         try
         {
-            synpred4_ANTLRLexer_fragment(); // can never throw exception
+            Synpred4ANTLRLexerFragment(); // can never throw exception
         }
         catch (RecognitionException re)
         {
@@ -3782,10 +3782,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
         return success;
     }
 
-    public virtual CharStream getCharStream()
-    {
-        throw new NotImplementedException();
-    }
+    public virtual CharStream CharStream => throw new NotImplementedException();
 
 
     //static final short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
@@ -3858,13 +3855,8 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             this.special = DFA2_special;
             this.transition = DFA2_transition;
         }
-        //@Override
-        public String getDescription()
-        {
-            return "228:13: ( ( ' $ANTLR' )=> ' $ANTLR' SRC | (~ NLCHARS )* )";
-        }
-        //@Override
-        public int specialStateTransition(int s, IntStream _input)
+        public override string Description => "228:13: ( ( ' $ANTLR' )=> ' $ANTLR' SRC | (~ NLCHARS )* )";
+        public override int SpecialStateTransition(int s, IntStream _input)
         {
             IntStream input = _input;
             int _s = s;
@@ -3876,7 +3868,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     int index2_25 = input.Index;
                     input.Rewind();
                     s = -1;
-                    if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
+                    if ((lexer.Synpred1ANTLRLexer())) { s = 21; }
                     else if ((true)) { s = 2; }
 
                     input.Seek(index2_25);
@@ -3888,7 +3880,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     int index2_24 = input.Index;
                     input.Rewind();
                     s = -1;
-                    if ((lexer.synpred1_ANTLRLexer())) { s = 21; }
+                    if ((lexer.Synpred1ANTLRLexer())) { s = 21; }
                     else if ((true)) { s = 2; }
 
                     input.Seek(index2_24);
@@ -3903,7 +3895,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if ((LA2_13 == '\\')) { s = 14; }
                     else if (((LA2_13 >= '\u0000' && LA2_13 <= '\t') || (LA2_13 >= '\u000B' && LA2_13 <= '\f') || (LA2_13 >= '\u000E' && LA2_13 <= '!') || (LA2_13 >= '#' && LA2_13 <= '[') || (LA2_13 >= ']' && LA2_13 <= '\uFFFF'))) { s = 15; }
                     else if ((LA2_13 == '\"')) { s = 16; }
-                    else if ((LA2_13 == '\n' || LA2_13 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_13 == '\n' || LA2_13 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.Seek(index2_13);
@@ -3919,7 +3911,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     else if ((LA2_18 == '\\')) { s = 14; }
                     else if ((LA2_18 == '\t' || LA2_18 == '\f' || LA2_18 == ' ')) { s = 23; }
                     else if (((LA2_18 >= '\u0000' && LA2_18 <= '\b') || LA2_18 == '\u000B' || (LA2_18 >= '\u000E' && LA2_18 <= '\u001F') || LA2_18 == '!' || (LA2_18 >= '#' && LA2_18 <= '[') || (LA2_18 >= ']' && LA2_18 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_18 == '\n' || LA2_18 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_18 == '\n' || LA2_18 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.Seek(index2_18);
@@ -3934,7 +3926,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if ((LA2_14 == '\"')) { s = 18; }
                     else if ((LA2_14 == '\\')) { s = 19; }
                     else if (((LA2_14 >= '\u0000' && LA2_14 <= '\t') || (LA2_14 >= '\u000B' && LA2_14 <= '\f') || (LA2_14 >= '\u000E' && LA2_14 <= '!') || (LA2_14 >= '#' && LA2_14 <= '[') || (LA2_14 >= ']' && LA2_14 <= '\uFFFF'))) { s = 20; }
-                    else if ((LA2_14 == '\n' || LA2_14 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 21; }
+                    else if ((LA2_14 == '\n' || LA2_14 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 21; }
                     else s = 2;
 
                     input.Seek(index2_14);
@@ -3949,7 +3941,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if ((LA2_15 == '\"')) { s = 16; }
                     else if ((LA2_15 == '\\')) { s = 14; }
                     else if (((LA2_15 >= '\u0000' && LA2_15 <= '\t') || (LA2_15 >= '\u000B' && LA2_15 <= '\f') || (LA2_15 >= '\u000E' && LA2_15 <= '!') || (LA2_15 >= '#' && LA2_15 <= '[') || (LA2_15 >= ']' && LA2_15 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_15 == '\n' || LA2_15 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_15 == '\n' || LA2_15 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.Seek(index2_15);
@@ -3966,7 +3958,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     else if (((LA2_23 >= '0' && LA2_23 <= '9'))) { s = 25; }
                     else if ((LA2_23 == '\t' || LA2_23 == '\f' || LA2_23 == ' ')) { s = 23; }
                     else if (((LA2_23 >= '\u0000' && LA2_23 <= '\b') || LA2_23 == '\u000B' || (LA2_23 >= '\u000E' && LA2_23 <= '\u001F') || LA2_23 == '!' || (LA2_23 >= '#' && LA2_23 <= '/') || (LA2_23 >= ':' && LA2_23 <= '[') || (LA2_23 >= ']' && LA2_23 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_23 == '\n' || LA2_23 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_23 == '\n' || LA2_23 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.Seek(index2_23);
@@ -3981,7 +3973,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if ((LA2_19 == '\"')) { s = 18; }
                     else if ((LA2_19 == '\\')) { s = 19; }
                     else if (((LA2_19 >= '\u0000' && LA2_19 <= '\t') || (LA2_19 >= '\u000B' && LA2_19 <= '\f') || (LA2_19 >= '\u000E' && LA2_19 <= '!') || (LA2_19 >= '#' && LA2_19 <= '[') || (LA2_19 >= ']' && LA2_19 <= '\uFFFF'))) { s = 20; }
-                    else if ((LA2_19 == '\n' || LA2_19 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 21; }
+                    else if ((LA2_19 == '\n' || LA2_19 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 21; }
                     else s = 2;
 
                     input.Seek(index2_19);
@@ -3996,7 +3988,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     if ((LA2_20 == '\"')) { s = 16; }
                     else if ((LA2_20 == '\\')) { s = 14; }
                     else if (((LA2_20 >= '\u0000' && LA2_20 <= '\t') || (LA2_20 >= '\u000B' && LA2_20 <= '\f') || (LA2_20 >= '\u000E' && LA2_20 <= '!') || (LA2_20 >= '#' && LA2_20 <= '[') || (LA2_20 >= ']' && LA2_20 <= '\uFFFF'))) { s = 15; }
-                    else if ((LA2_20 == '\n' || LA2_20 == '\r') && (lexer.synpred1_ANTLRLexer())) { s = 17; }
+                    else if ((LA2_20 == '\n' || LA2_20 == '\r') && (lexer.Synpred1ANTLRLexer())) { s = 17; }
                     else s = 2;
 
                     input.Seek(index2_20);
@@ -4004,9 +3996,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     break;
             }
             if (lexer.state.backtracking > 0) { lexer.state.failed = true; return -1; }
-            NoViableAltException nvae =
-
-                        new NoViableAltException(getDescription(), 2, _s, input);
+            var nvae = new NoViableAltException(Description, 2, _s, input);
             Error(nvae);
             throw nvae;
         }
@@ -4216,12 +4206,9 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
             this.transition = DFA32_transition;
         }
         //@Override
-        public override String getDescription()
-        {
-            return "1:1: Tokens : ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR );";
-        }
+        public override string Description => "1:1: Tokens : ( COMMENT | ARG_OR_CHARSET | ACTION | OPTIONS | TOKENS_SPEC | CHANNELS | IMPORT | FRAGMENT | LEXER | PARSER | GRAMMAR | RETURNS | LOCALS | THROWS | CATCH | FINALLY | MODE | COLON | COLONCOLON | COMMA | SEMI | LPAREN | RPAREN | RARROW | LT | GT | ASSIGN | QUESTION | STAR | PLUS | PLUS_ASSIGN | OR | DOLLAR | DOT | RANGE | AT | POUND | NOT | RBRACE | ID | INT | STRING_LITERAL | WS | UnicodeBOM | ERRCHAR );";
         //@Override
-        public int specialStateTransition(int s, IntStream _input)
+        public override int SpecialStateTransition(int s, IntStream _input)
         {
             IntStream input = _input;
             int _s = s;
@@ -4285,9 +4272,7 @@ public class ANTLRLexer : org.antlr.runtime.Lexer
                     break;
             }
             if (lexer.state.backtracking > 0) { lexer.state.failed = true; return -1; }
-            NoViableAltException nvae =
-
-                        new NoViableAltException(getDescription(), 32, _s, input);
+            var nvae = new NoViableAltException(Description, 32, _s, input);
             Error(nvae);
             throw nvae;
         }

@@ -15,7 +15,7 @@ public class LeftRecursiveRuleFunction : RuleFunction
 {
     public LeftRecursiveRuleFunction(OutputModelFactory factory, LeftRecursiveRule r) : base(factory, r)
     {
-        var gen = factory.GetGenerator();
+        var gen = factory.Generator;
         // Since we delete x=lr, we have to manually add decls for all labels
         // on left-recur refs to proper structs
         foreach (var pair in r.leftRecursiveRuleRefLabels)
@@ -26,7 +26,7 @@ public class LeftRecursiveRuleFunction : RuleFunction
             var rrefAST = (GrammarAST)idAST.getParent().GetChild(1);
             if (rrefAST.getType() == ANTLRParser.RULE_REF)
             {
-                var targetRule = factory.GetGrammar().getRule(rrefAST.getText());
+                var targetRule = factory.Grammar.getRule(rrefAST.getText());
                 var ctxName = gen.Target.GetRuleFunctionContextStructName(targetRule);
                 var d = idAST.getParent().Type == ANTLRParser.ASSIGN
                     ? new RuleContextDecl(factory, label, ctxName)

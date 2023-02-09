@@ -177,7 +177,7 @@ public class DFA
         }
         var nvae =
 
-                new NoViableAltException(GetDescription(),
+                new NoViableAltException(Description,
                                          decisionNumber,
                                          s,
                                          input);
@@ -188,15 +188,12 @@ public class DFA
     /** A hook for debugging interface */
     protected void Error(NoViableAltException nvae) { }
 
-    public int SpecialStateTransition(int s, IntStream input)
+    public virtual int SpecialStateTransition(int s, IntStream input)
     {
         return -1;
     }
 
-    public virtual string GetDescription()
-    {
-        return "n/a";
-    }
+    public virtual string Description => "n/a";
 
     /** Given a String that has a run-length-encoding of some unsigned shorts
      *  like "\1\2\3\9", convert to short[] {2,9,9,9}.  We do this to avoid

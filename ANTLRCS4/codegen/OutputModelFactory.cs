@@ -6,7 +6,6 @@
 
 using org.antlr.v4.codegen.model;
 using org.antlr.v4.codegen.model.decl;
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.misc;
 using org.antlr.v4.tool;
 using org.antlr.v4.tool.ast;
@@ -17,10 +16,9 @@ namespace org.antlr.v4.codegen;
 
 public interface OutputModelFactory
 {
-    Grammar GetGrammar();
+    Grammar Grammar { get; }
 
-    CodeGenerator GetGenerator();
-
+    CodeGenerator Generator { get; }
     OutputModelController Controller { get; set; }
 
     ParserFile ParserFile(string fileName);
@@ -75,18 +73,12 @@ public interface OutputModelFactory
 
     // CONTEXT INFO
 
-    OutputModelObject GetRoot();
+    OutputModelObject Root { get; }
+    RuleFunction CurrentRuleFunction { get; }
+    Alternative CurrentOuterMostAlt { get; }
+    CodeBlock CurrentBlock { get; }
+    CodeBlockForOuterMostAlt CurrentOuterMostAlternativeBlock { get; }
+    int CodeBlockLevel { get; }
 
-    RuleFunction GetCurrentRuleFunction();
-
-    Alternative GetCurrentOuterMostAlt();
-
-    CodeBlock GetCurrentBlock();
-
-    CodeBlockForOuterMostAlt GetCurrentOuterMostAlternativeBlock();
-
-    int GetCodeBlockLevel();
-
-    int GetTreeLevel();
-
+    int TreeLevel { get; }
 }

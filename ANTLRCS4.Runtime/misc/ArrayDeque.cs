@@ -92,7 +92,7 @@ public class ArrayDeque<T> : List<T>, Deque<T>
     public T RemoveLast()
     {
         T last = this[^1];
-        this.RemoveAt(this.Count - 1);
+        this.RemoveAt(this.        Count- 1);
         return last;
     }
 
@@ -109,6 +109,5 @@ public class ArrayDeque<T> : List<T>, Deque<T>
         }
         return false;
     }
-
-    public int Size() => this.Count;
+    public bool IsEmpty => this.Count == 0;
 }
