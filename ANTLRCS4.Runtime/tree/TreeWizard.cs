@@ -48,17 +48,17 @@ namespace org.antlr.runtime.tree;
 public class TreeWizard
 {
     protected TreeAdaptor adaptor;
-    protected Dictionary<String, int> tokenNameToTypeMap;
+    protected Dictionary<string, int> tokenNameToTypeMap;
 
     public interface ContextVisitor
     {
         // TODO: should this be called visit or something else?
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels);
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels);
     }
 
     public abstract class Visitor : ContextVisitor
     {
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels)
         {
             Visit(t);
         }
@@ -124,43 +124,43 @@ public class TreeWizard
         this.adaptor = adaptor;
     }
 
-    public TreeWizard(TreeAdaptor adaptor, Dictionary<String, int> tokenNameToTypeMap)
+    public TreeWizard(TreeAdaptor adaptor, Dictionary<string, int> tokenNameToTypeMap)
     {
         this.adaptor = adaptor;
         this.tokenNameToTypeMap = tokenNameToTypeMap;
     }
 
-    public TreeWizard(TreeAdaptor adaptor, String[] tokenNames)
+    public TreeWizard(TreeAdaptor adaptor, string[] tokenNames)
     {
         this.adaptor = adaptor;
         this.tokenNameToTypeMap = computeTokenTypes(tokenNames);
     }
 
-    public TreeWizard(String[] tokenNames)
+    public TreeWizard(string[] tokenNames)
         : this(new CommonTreeAdaptor(), tokenNames)
     {
     }
 
-    /** Compute a Map&lt;String, Integer&gt; that is an inverted index of
+    /** Compute a Map&lt;string, Integer&gt; that is an inverted index of
      *  tokenNames (which maps int token types to names).
      */
-    public Dictionary<String, int> computeTokenTypes(String[] tokenNames)
+    public Dictionary<string, int> computeTokenTypes(string[] tokenNames)
     {
-        Dictionary<String, int> m = new();
+        Dictionary<string, int> m = new();
         if (tokenNames == null)
         {
             return m;
         }
         for (int ttype = Token.MIN_TOKEN_TYPE; ttype < tokenNames.Length; ttype++)
         {
-            String name = tokenNames[ttype];
+            string name = tokenNames[ttype];
             m.Add(name, ttype);
         }
         return m;
     }
 
     /** Using the map of token names to token types, return the type. */
-    public int getTokenType(String tokenName)
+    public int getTokenType(string tokenName)
     {
         if (tokenNameToTypeMap == null)
         {
@@ -236,7 +236,7 @@ public class TreeWizard
             this.wizard = wizard;
         }
 
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> labels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> labels)
         {
             if (wizard.Parse(t, tpattern, null))
             {
@@ -246,7 +246,7 @@ public class TreeWizard
     }
 
     /** Return a List of subtrees matching pattern. */
-    public List<Object> find(Object t, String pattern)
+    public List<Object> find(Object t, string pattern)
     {
         List<Object> subtrees = new();
         // Create a TreePattern from the pattern
@@ -318,7 +318,7 @@ public class TreeWizard
             this.wizard1 = wizard1;
         }
 
-        public void Visit(Object t, Object parent, int childIndex, Dictionary<String, Object> unusedlabels)
+        public void Visit(Object t, Object parent, int childIndex, Dictionary<string, Object> unusedlabels)
         {
             // the unusedlabels arg is null as visit on token type doesn't set.
             labels.Clear();
@@ -333,7 +333,7 @@ public class TreeWizard
      *  with visit(t, ttype, visitor) so nil-rooted patterns are not allowed.
      *  Patterns with wildcard roots are also not allowed.
      */
-    public void Visit(Object t, String pattern, ContextVisitor visitor)
+    public void Visit(Object t, string pattern, ContextVisitor visitor)
     {
         // Create a TreePattern from the pattern
         TreePatternLexer tokenizer = new TreePatternLexer(pattern);
@@ -363,7 +363,7 @@ public class TreeWizard
      *
      *  TODO: what's a better way to indicate bad pattern? Exceptions are a hassle 
      */
-    public bool Parse(Object t, String pattern, Dictionary<String, Object> labels)
+    public bool Parse(Object t, string pattern, Dictionary<string, Object> labels)
     {
         var tokenizer = new TreePatternLexer(pattern);
         var parser =

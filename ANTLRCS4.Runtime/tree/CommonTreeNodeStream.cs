@@ -138,7 +138,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     public Object getTreeSource() { return root; }
 
     //@Override
-    public String SourceName => getTokenStream().SourceName;
+    public string SourceName => getTokenStream().SourceName;
     //@Override
     public TokenStream getTokenStream() { return tokens; }
 
@@ -243,7 +243,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     //@Override
-    public String toString(Object start, Object stop)
+    public string toString(Object start, Object stop)
     {
         // we'll have to walk from start to stop in tree; we're not keeping
         // a complete node stream buffer
@@ -251,7 +251,7 @@ public class CommonTreeNodeStream : LookaheadStream<Object>, TreeNodeStream, Pos
     }
 
     /** For debugging; destructive: moves tree iterator to end. */
-    public String toTokenTypeString()
+    public string toTokenTypeString()
     {
         Reset();
         StringBuilder buf = new StringBuilder();

@@ -31,10 +31,11 @@ public class TEqualityComparator<T> : AbstractEqualityComparator<T>
 
 /**
  * This default implementation of {@link EqualityComparator} uses object equality
- * for comparisons by calling {@link object#hashCode} and {@link Object#equals}.
+ * for comparisons by calling {@link object#hashCode} and {@link object#equals}.
  *
  * @author Sam Harwell
  */
-public class ObjectEqualityComparator : AbstractEqualityComparator<object> {
-	public static readonly ObjectEqualityComparator INSTANCE = new ();
+public class ObjectEqualityComparator : AbstractEqualityComparator<object>
+{
+    public static readonly ObjectEqualityComparator INSTANCE = new();
 }

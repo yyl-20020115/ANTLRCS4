@@ -14,7 +14,7 @@ namespace org.antlr.v4.tool;
  */
 public class Attribute
 {
-    /** The entire declaration such as "String foo" or "x:int" */
+    /** The entire declaration such as "string foo" or "x:int" */
     public string decl;
 
     /** The type; might be empty such as for Python which has no static typing */

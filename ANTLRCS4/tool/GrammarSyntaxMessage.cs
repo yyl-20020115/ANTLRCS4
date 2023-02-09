@@ -15,7 +15,7 @@ namespace org.antlr.v4.tool;
 public class GrammarSyntaxMessage : ANTLRMessage
 {
     public GrammarSyntaxMessage(ErrorType etype,
-                                String fileName,
+                                string fileName,
                                 Token offendingToken,
                                 RecognitionException antlrException,
                                 params object[] args)

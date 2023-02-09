@@ -18,7 +18,7 @@ public class InterpreterTreeTextProvider : TreeTextProvider
     
     public virtual string GetText(Tree node) {
 		if ( node==null ) return "null";
-		var nodeText = Trees.getNodeText(node, ruleNames);
+		var nodeText = Trees.GetNodeText(node, ruleNames);
 		if ( node is ErrorNode) {
 			return "<error "+nodeText+">";
 		}

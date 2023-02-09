@@ -58,7 +58,7 @@ public interface TokenStream : IntStream
 	 *
 	 * <pre>
 	 * TokenStream stream = ...;
-	 * String text = "";
+	 * string text = "";
 	 * for (int i = interval.a; i &lt;= interval.b; i++) {
 	 *   text += stream.get(i).getText();
 	 * }
@@ -81,7 +81,7 @@ public interface TokenStream : IntStream
 	 *
 	 * <pre>
 	 * TokenStream stream = ...;
-	 * String text = stream.getText(new Interval(0, stream.size()));
+	 * string text = stream.getText(new Interval(0, stream.size()));
 	 * </pre>
 	 *
 	 * @return The text of all tokens in the stream.
@@ -99,7 +99,7 @@ public interface TokenStream : IntStream
 	 *
 	 * <pre>
 	 * TokenStream stream = ...;
-	 * String text = stream.getText(ctx.getSourceInterval());
+	 * string text = stream.getText(ctx.getSourceInterval());
 	 * </pre>
 	 *
 	 * @param ctx The context providing the source interval of tokens to get
@@ -123,7 +123,7 @@ public interface TokenStream : IntStream
 	 *
 	 * <pre>
 	 * TokenStream stream = ...;
-	 * String text = "";
+	 * string text = "";
 	 * for (int i = start.getTokenIndex(); i &lt;= stop.getTokenIndex(); i++) {
 	 *   text += stream.get(i).getText();
 	 * }
@@ -151,7 +151,7 @@ public interface TokenStream : IntStream
 	 *  in it, we must provide a means for two token objects themselves to
 	 *  indicate the start/end location.  Most often this will just delegate
 	 *  to the other toString(int,int).  This is also parallel with
-	 *  the TreeNodeStream.toString(object,Object).
+	 *  the TreeNodeStream.toString(object,object).
 	 */
     public string ToString(Token start, Token stop);
 }

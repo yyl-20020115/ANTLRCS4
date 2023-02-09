@@ -328,7 +328,7 @@ public abstract class BaseRecognizer
     }
 
     /** Override this method to change where error messages go */
-    public static void EmitErrorMessage(String msg)
+    public static void EmitErrorMessage(string msg)
     {
         Console.Error.WriteLine(msg);
     }
@@ -707,7 +707,7 @@ public abstract class BaseRecognizer
         state.following[++state._fsp] = fset;
     }
 
-    /** Return List&lt;String&gt; of the rules in your parser instance
+    /** Return List&lt;string&gt; of the rules in your parser instance
      *  leading up to a call to this method.  You could override if
      *  you want more details such as the file/line info of where
      *  in the parser java code a rule is invoked.
@@ -766,7 +766,7 @@ public abstract class BaseRecognizer
     public bool Failed => state.failed;
     /** Used to print out token names like ID during debugging and
      *  error reporting.  The generated parsers implement a method
-     *  that overrides this to point to their String[] tokenNames.
+     *  that overrides this to point to their string[] tokenNames.
      */
     public virtual string[] TokenNames => null;
 
@@ -778,7 +778,7 @@ public abstract class BaseRecognizer
     public abstract string SourceName { get; }
 
     /** A convenience method for use most often with template rewrites.
-     *  Convert a List&lt;Token&gt; to List&lt;String&gt;
+     *  Convert a List&lt;Token&gt; to List&lt;string&gt;
      */
     public static List<string> ToStrings(List<Token> tokens)
     {

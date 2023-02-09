@@ -155,7 +155,7 @@ public class BuildDependencyGenerator
             foreach (var g in imports)
             {
                 //				File outputDir = tool.getOutputDirectory(g.fileName);
-                //				String fname = groomQualifiedFileName(outputDir.toString(), g.getRecognizerName() + extST.render());
+                //				string fname = groomQualifiedFileName(outputDir.toString(), g.getRecognizerName() + extST.render());
                 //				files.Add(new File(outputDir, fname));
                 files.Add(GetOutputFile(g.fileName));
             }

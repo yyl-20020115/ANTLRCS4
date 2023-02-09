@@ -202,7 +202,7 @@ public class GrammarAST : CommonTree
     }
     //
     //	//@Override
-    //	public String getText() {
+    //	public string getText() {
     //		if ( textOverride!=null ) return textOverride;
     //        if ( token!=null ) {
     //            return token.getText();

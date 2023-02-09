@@ -14,7 +14,7 @@ namespace org.antlr.v4.tool;
 public class GrammarSemanticsMessage : ANTLRMessage
 {
     public GrammarSemanticsMessage(ErrorType etype,
-                                   String fileName,
+                                   string fileName,
                                    Token offendingToken,
                                    params object[] args)
         : base(etype, offendingToken, args)

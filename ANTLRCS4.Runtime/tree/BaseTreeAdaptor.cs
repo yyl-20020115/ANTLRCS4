@@ -68,36 +68,36 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public bool IsNil(Object tree)
+    public bool IsNil(object tree)
     {
         return ((Tree)tree).IsNil;
     }
 
     //@Override
-    public Object DupTree(Object tree)
+    public object DupTree(Object tree)
     {
-        return dupTree(tree, null);
+        return DupTree(tree, null);
     }
 
     /** This is generic in the sense that it will work with any kind of
      *  tree (not just Tree interface).  It invokes the adaptor routines
      *  not the tree node routines to do the construction.  
      */
-    public Object dupTree(Object t, Object parent)
+    public object DupTree(object t, object parent)
     {
         if (t == null)
         {
             return null;
         }
-        Object newTree = DupNode(t);
+        var newTree = DupNode(t);
         // ensure new subtree root has parent/child index set
         SetChildIndex(newTree, GetChildIndex(t)); // same index in new tree
         SetParent(newTree, parent);
         int n = GetChildCount(t);
         for (int i = 0; i < n; i++)
         {
-            Object child = GetChild(t, i);
-            Object newSubTree = dupTree(child, t);
+            var child = GetChild(t, i);
+            var newSubTree = DupTree(child, t);
             AddChild(newTree, newSubTree);
         }
         return newTree;
@@ -111,7 +111,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  ASTs.
      */
     //@Override
-    public void AddChild(Object t, Object child)
+    public void AddChild(object t,object child)
     {
         if (t != null && child != null)
         {
@@ -146,7 +146,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  efficiency.
      */
     //@Override
-    public Object BecomeRoot(Object newRoot, Object oldRoot)
+    public object BecomeRoot(object newRoot, object oldRoot)
     {
         //Console.Out.WriteLine("becomeroot new "+newRoot.toString()+" old "+oldRoot);
         Tree newRootTree = (Tree)newRoot;
@@ -206,7 +206,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     //@Override
     public Object Create(int tokenType, Token fromToken)
     {
-        fromToken = createToken(fromToken);
+        fromToken = CreateToken(fromToken);
         //((ClassicToken)fromToken).setType(tokenType);
         fromToken.        //((ClassicToken)fromToken).setType(tokenType);
         Type = tokenType;
@@ -215,10 +215,10 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public Object Create(int tokenType, Token fromToken, String text)
+    public Object Create(int tokenType, Token fromToken, string text)
     {
         if (fromToken == null) return Create(tokenType, text);
-        fromToken = createToken(fromToken);
+        fromToken = CreateToken(fromToken);
         fromToken.        Type = tokenType;
         fromToken.        Text = text;
         Tree t = (Tree)Create(fromToken);
@@ -226,7 +226,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public Object Create(int tokenType, String text)
+    public Object Create(int tokenType, string text)
     {
         Token fromToken = CreateToken(tokenType, text);
         Tree t = (Tree)Create(fromToken);
@@ -246,13 +246,13 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
     }
 
     //@Override
-    public String GetText(Object t)
+    public string GetText(Object t)
     {
         return ((Tree)t).Text;
     }
 
     //@Override
-    public void SetText(Object t, String text)
+    public void SetText(Object t, string text)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
@@ -308,7 +308,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  If you care what the token payload objects' type is, you should
      *  override this method and any other createToken variant.
      */
-    public abstract Token CreateToken(int tokenType, String text);
+    public abstract Token CreateToken(int tokenType, string text);
 
     /** Tell me how to create a token for use with imaginary token nodes.
      *  For example, there is probably no input symbol associated with imaginary
@@ -324,7 +324,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
      *  If you care what the token payload objects' type is, you should
      *  override this method and any other createToken variant.
      */
-    public abstract Token createToken(Token fromToken);
+    public abstract Token CreateToken(Token fromToken);
 
     public object Create(Token payload)
     {

@@ -76,11 +76,11 @@ public class CharSupport
             }
             else if (c <= 0xFFFF)
             {
-                result = $"\\u{c:X4}";// String.format("\\u%04X", c);
+                result = $"\\u{c:X4}";// string.format("\\u%04X", c);
             }
             else
             {
-                result = $"\\u{c:X6}";// String.format("\\u{%06X}", c);
+                result = $"\\u{c:X6}";// string.format("\\u{%06X}", c);
             }
         }
         return '\'' + result + '\'';

@@ -35,7 +35,7 @@ public class ParserInterpreterForTesting
         public override string GrammarFileName => throw new UnsupportedOperationException("not implemented");
 
         //@Override
-        public string[] RuleNames => g.rules.Keys.ToArray();//.toArray(new String[0]);
+        public string[] RuleNames => g.rules.Keys.ToArray();//.toArray(new string[0]);
 
         public override string[] TokenNames => g.GetTokenNames();
 

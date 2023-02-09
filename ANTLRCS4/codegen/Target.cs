@@ -141,7 +141,7 @@ public abstract class Target
 	 *  with some escaped characters.  For example, if the incoming string has
 	 *  actual newline characters, the output of this method would convert them
 	 *  to the two char sequence \n for Java, C, C++, ...  The new string has
-	 *  double-quotes around it as well.  Example String in memory:
+	 *  double-quotes around it as well.  Example string in memory:
 	 *
 	 *     a"[newlinechar]b'c[carriagereturnchar]d[tab]e\f
 	 *
@@ -196,7 +196,7 @@ public abstract class Target
 	 * Escape the Unicode code point appropriately for this language
 	 * and Append the escaped value to {@code sb}.
 	 * It exists for flexibility and backward compatibility with external targets
-	 * The static method {@link UnicodeEscapes#appendEscapedCodePoint(StringBuilder, int, String)} can be used as well
+	 * The static method {@link UnicodeEscapes#appendEscapedCodePoint(StringBuilder, int, string)} can be used as well
 	 * if default escaping method (Java) is used or language is officially supported
 	 */
     protected virtual void AppendUnicodeEscapedCodePoint(int codePoint, StringBuilder builder)
@@ -356,7 +356,7 @@ public abstract class Target
         }
 
         char c = (char)v;
-        //String escaped = getTargetCharValueEscape().get(c);
+        //string escaped = getTargetCharValueEscape().get(c);
         if (GetTargetCharValueEscape().TryGetValue(c, out var escaped))
         {
             return escaped;

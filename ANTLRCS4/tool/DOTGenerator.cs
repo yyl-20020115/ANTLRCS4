@@ -168,7 +168,7 @@ public class DOTGenerator
         return GetDOT(startState, names, isLexer);
     }
 
-    /** Return a String containing a DOT description that, when displayed,
+    /** Return a string containing a DOT description that, when displayed,
      *  will show the incoming state machine visually.  All nodes reachable
      *  from startState will be included.
      */

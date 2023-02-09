@@ -184,7 +184,7 @@ public class RuleContext : RuleNode
     //@Override
     public virtual string ToStringTree(Parser recog)
     {
-        return Trees.toStringTree(this, recog);
+        return Trees.ToStringTree(this, recog);
     }
 
     /** Print out a whole tree, not just a node, in LISP format
@@ -192,7 +192,7 @@ public class RuleContext : RuleNode
 	 */
     public virtual string ToStringTree(List<String> ruleNames)
     {
-        return Trees.toStringTree(this, ruleNames);
+        return Trees.ToStringTree(this, ruleNames);
     }
 
     //@Override

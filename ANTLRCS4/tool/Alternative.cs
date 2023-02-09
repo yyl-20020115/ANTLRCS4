@@ -70,7 +70,7 @@ public class Alternative : AttributeResolver
 
     /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-    public Attribute ResolveToAttribute(String x, ActionAST node)
+    public Attribute ResolveToAttribute(string x, ActionAST node)
     {
         return rule.ResolveToAttribute(x, node); // reuse that code
     }
@@ -107,7 +107,7 @@ public class Alternative : AttributeResolver
         return null;
     }
 
-    public bool ResolvesToLabel(String x, ActionAST node)
+    public bool ResolvesToLabel(string x, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
@@ -115,7 +115,7 @@ public class Alternative : AttributeResolver
                 anyLabelDef.type == LabelType.RULE_LABEL);
     }
 
-    public bool ResolvesToListLabel(String x, ActionAST node)
+    public bool ResolvesToListLabel(string x, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null &&
@@ -123,7 +123,7 @@ public class Alternative : AttributeResolver
                 anyLabelDef.type == LabelType.TOKEN_LIST_LABEL);
     }
 
-    public LabelElementPair GetAnyLabelDef(String x)
+    public LabelElementPair GetAnyLabelDef(string x)
     {
         if (labelDefs.TryGetValue(x, out var labels)) return labels[0];
         return null;

@@ -32,7 +32,7 @@ public class ProxyErrorListener : ANTLRErrorListener {
 							object offendingSymbol,
 							int line,
 							int charPositionInLine,
-							String msg,
+							string msg,
 							RecognitionException e)
 	{
 		foreach (ANTLRErrorListener listener in delegates) {

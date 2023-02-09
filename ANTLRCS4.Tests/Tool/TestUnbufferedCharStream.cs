@@ -406,7 +406,7 @@ public class TestUnbufferedCharStream
             int len = n;
             if (data[len - 1] == IntStream.EOF)
             {
-                // Don't pass -1 to new String().
+                // Don't pass -1 to new string().
                 return string.Join("", data[p..(len - 1)].Select(d => new Rune(d).ToString())) + "\uffff";
                 //return new string(data,p,len-p-1) + "\uFFFF";
             }

@@ -139,7 +139,7 @@ public class Rule : AttributeResolver
         }
     }
 
-    public Attribute ResolveRetvalOrProperty(String y)
+    public Attribute ResolveRetvalOrProperty(string y)
     {
         if (retvals != null)
         {
@@ -255,7 +255,7 @@ public class Rule : AttributeResolver
 
     /** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
     //@Override
-    public Attribute ResolveToAttribute(String x, String y, ActionAST node)
+    public Attribute ResolveToAttribute(string x, string y, ActionAST node)
     {
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null)
@@ -308,14 +308,14 @@ public class Rule : AttributeResolver
     //@Override
     public bool ResolvesToAttributeDict(string x, ActionAST node) => ResolvesToToken(x, node);
 
-    public Rule ResolveToRule(String x)
+    public Rule ResolveToRule(string x)
     {
         if (x.Equals(this.name)) return this;
         var anyLabelDef = GetAnyLabelDef(x);
         return anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL ? g.GetRule(anyLabelDef.element.Text) : g.GetRule(x);
     }
 
-    public LabelElementPair GetAnyLabelDef(String x)
+    public LabelElementPair GetAnyLabelDef(string x)
     {
         return GetElementLabelDefs().TryGetValue(x, out var labels) ? labels[(0)] : null;
     }

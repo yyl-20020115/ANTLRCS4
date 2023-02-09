@@ -56,7 +56,7 @@ public abstract class CodePointCharStream : CharStream
 	 * Constructs a named {@link CodePointCharStream} which provides access
 	 * to the Unicode code points stored in {@code codePointBuffer}.
 	 */
-    public static CodePointCharStream FromBuffer(CodePointBuffer codePointBuffer, String name)
+    public static CodePointCharStream FromBuffer(CodePointBuffer codePointBuffer, string name)
     {
         // Java lacks generics on primitive types.
         //
@@ -189,7 +189,7 @@ public abstract class CodePointCharStream : CharStream
     {
         private readonly byte[] byteArray;
 
-        public CodePoint8BitCharStream(int position, int remaining, String name, byte[] byteArray, int arrayOffset) : base(position, remaining, name)
+        public CodePoint8BitCharStream(int position, int remaining, string name, byte[] byteArray, int arrayOffset) : base(position, remaining, name)
         {
             ;
             // TODO
@@ -211,7 +211,7 @@ public abstract class CodePointCharStream : CharStream
             // which shares the same code points up to 0xFF.
             var tb = byteArray[startIdx..(startIdx + len)].Select(b => (char)b).ToArray();
 
-            return new String(tb);
+            return new string(tb);
         }
 
         //@Override
@@ -249,7 +249,7 @@ public abstract class CodePointCharStream : CharStream
     {
         private readonly char[] charArray;
 
-        public CodePoint16BitCharStream(int position, int remaining, String name, char[] charArray, int arrayOffset) : base(position, remaining, name)
+        public CodePoint16BitCharStream(int position, int remaining, string name, char[] charArray, int arrayOffset) : base(position, remaining, name)
         {
             ;
             this.charArray = charArray;
@@ -259,7 +259,7 @@ public abstract class CodePointCharStream : CharStream
 
         /** Return the UTF-16 encoded string for the given interval */
         //@Override
-        public String getText(Interval interval)
+        public string getText(Interval interval)
         {
             int startIdx = Math.Min(interval.a, Count);
             int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
@@ -270,7 +270,7 @@ public abstract class CodePointCharStream : CharStream
             //
             // So, it's safe to treat this as if it were
             // UTF-16.
-            return new String(charArray, startIdx, len);
+            return new string(charArray, startIdx, len);
         }
 
         //@Override
@@ -308,7 +308,7 @@ public abstract class CodePointCharStream : CharStream
     {
         private readonly int[] intArray;
 
-        public CodePoint32BitCharStream(int position, int remaining, String name, int[] intArray, int arrayOffset) : base(position, remaining, name)
+        public CodePoint32BitCharStream(int position, int remaining, string name, int[] intArray, int arrayOffset) : base(position, remaining, name)
         {
             ;
             this.intArray = intArray;
@@ -318,12 +318,12 @@ public abstract class CodePointCharStream : CharStream
 
         /** Return the UTF-16 encoded string for the given interval */
         //@Override
-        public String getText(Interval interval)
+        public string getText(Interval interval)
         {
             int startIdx = Math.Min(interval.a, _size);
             int len = Math.Min(interval.b - interval.a + 1, _size - startIdx);
 
-            // Note that we pass the int[] code points to the String constructor --
+            // Note that we pass the int[] code points to the string constructor --
             // this is supported, and the constructor will convert to UTF-16 internally.
             var rs = intArray.Select(i => new Rune(i)).ToArray()[startIdx..(startIdx + len)];
             var builder = new StringBuilder();

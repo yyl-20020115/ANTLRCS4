@@ -68,14 +68,14 @@ Warming up Java compiler....
  Parser.java (29038 char): org.antlr.v4.runtime.ANTLRFileStream@6b8e0782d footprint:
       COUNT       AVG       SUM   DESCRIPTION
           2     29164     58328   [C
-          1        24        24   java.lang.String
+          1        24        24   java.lang.string
           1        32        32   org.antlr.v4.runtime.ANTLRFileStream
           4               58384   (total)
 
  RuleContext.java (7625 char): org.antlr.v4.runtime.ANTLRFileStream@76fb7505d footprint:
       COUNT       AVG       SUM   DESCRIPTION
           2      7756     15512   [C
-          1        24        24   java.lang.String
+          1        24        24   java.lang.string
           1        32        32   org.antlr.v4.runtime.ANTLRFileStream
           4               15568   (total)
 
@@ -107,7 +107,7 @@ Warming up Java compiler....
       COUNT       AVG       SUM   DESCRIPTION
           1        40        40   [C
           1    131088    131088   [I
-          1        24        24   java.lang.String
+          1        24        24   java.lang.string
           1        48        48   java.nio.HeapIntBuffer
           1        32        32   org.antlr.v4.runtime.CodePointCharStream
           5              131232   (total)
@@ -116,7 +116,7 @@ Warming up Java compiler....
       COUNT       AVG       SUM   DESCRIPTION
           1        40        40   [C
           1     32784     32784   [I
-          1        24        24   java.lang.String
+          1        24        24   java.lang.string
           1        48        48   java.nio.HeapIntBuffer
           1        32        32   org.antlr.v4.runtime.CodePointCharStream
           5               32928   (total)
@@ -125,7 +125,7 @@ Warming up Java compiler....
       COUNT       AVG       SUM   DESCRIPTION
           1        40        40   [C
           1     65552     65552   [I
-          1        24        24   java.lang.String
+          1        24        24   java.lang.string
           1        48        48   java.nio.HeapIntBuffer
           1        32        32   org.antlr.v4.runtime.CodePointCharStream
           5               65696   (total)

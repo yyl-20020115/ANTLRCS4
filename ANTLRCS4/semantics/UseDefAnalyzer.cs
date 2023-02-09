@@ -63,7 +63,7 @@ public class UseDefAnalyzer
     /** Find all rules reachable from r directly or indirectly for all r in g */
     public static Dictionary<Rule, HashSet<Rule>> GetRuleDependencies(Grammar g) => GetRuleDependencies(g, g.rules.Values);
 
-    public static Dictionary<Rule, HashSet<Rule>> GetRuleDependencies(LexerGrammar g, String modeName) => GetRuleDependencies(g, g.modes.TryGetValue(modeName, out var r) ? r : new());
+    public static Dictionary<Rule, HashSet<Rule>> GetRuleDependencies(LexerGrammar g, string modeName) => GetRuleDependencies(g, g.modes.TryGetValue(modeName, out var r) ? r : new());
 
     public static Dictionary<Rule, HashSet<Rule>> GetRuleDependencies(Grammar g, ICollection<Rule> rules)
     {

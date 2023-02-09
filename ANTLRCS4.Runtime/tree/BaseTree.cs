@@ -439,5 +439,5 @@ public abstract class BaseTree : Tree
     }
     /** Override to say how a node (not a tree) should look as text */
     //@Override
-    //public abstract String toString();
+    //public abstract string toString();
 }

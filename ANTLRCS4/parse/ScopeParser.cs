@@ -29,7 +29,7 @@ public class ScopeParser
 	 * Given an arg or retval scope definition list like
 	 * <p>
 	 * <code>
-	 * Map&lt;String, String&gt;, int[] j3, char *foo32[3]
+	 * Map&lt;string, string&gt;, int[] j3, char *foo32[3]
 	 * </code>
 	 * <p>
 	 * or
@@ -61,7 +61,7 @@ public class ScopeParser
     }
 
     /**
-	 * For decls like "String foo" or "char *foo32[]" compute the ID
+	 * For decls like "string foo" or "char *foo32[]" compute the ID
 	 * and type declarations.  Also handle "int x=3" and 'T t = new T("foo")'
 	 * but if the separator is ',' you cannot use ',' in the initvalue
 	 * unless you escape use "\," escape.

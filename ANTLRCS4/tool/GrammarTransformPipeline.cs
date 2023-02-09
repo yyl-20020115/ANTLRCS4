@@ -167,14 +167,14 @@ public class GrammarTransformPipeline
 
         // Compute list of rules in root grammar and ensure we have a RULES node
         var RULES = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.RULES);
-        var rootRuleNames = new HashSet<String>();
+        var rootRuleNames = new HashSet<string>();
         // make list of rules we have in root grammar
         var rootRules = RULES.GetNodesWithType(ANTLRParser.RULE);
         foreach (var r in rootRules) rootRuleNames.Add(r.GetChild(0).Text);
 
         // make list of modes we have in root grammar
         var rootModes = root.GetNodesWithType(ANTLRParser.MODE);
-        var rootModeNames = new HashSet<String>();
+        var rootModeNames = new HashSet<string>();
         foreach (var m in rootModes) rootModeNames.Add(m.GetChild(0).Text);
         List<GrammarAST> addedModes = new();
 
@@ -236,7 +236,7 @@ public class GrammarTransformPipeline
             // COPY ACTIONS
             if (imp_actionRoots != null)
             {
-                DoubleKeyMap<String, String, GrammarAST> namedActions =
+                DoubleKeyMap<string, string, GrammarAST> namedActions =
                     new();
 
                 rootGrammar.Tools.Log("grammar", "imported actions: " + imp_actionRoots);

@@ -14,12 +14,12 @@ namespace org.antlr.v4.runtime;
  *
  * <p>
  * You can insert stuff, replace, and delete chunks. Note that the operations
- * are done lazily--only if you convert the buffer to a {@link String} with
+ * are done lazily--only if you convert the buffer to a {@link string} with
  * {@link TokenStream#getText()}. This @is very efficient because you are not
  * moving data around all the time. As the buffer of tokens @is converted to
  * strings, the {@link #getText()} method(s) scan the input token stream and
  * check to see if there @is an operation at the current index. If so, the
- * operation @is done and then normal {@link String} rendering continues on the
+ * operation @is done and then normal {@link string} rendering continues on the
  * buffer. This @is like having multiple Turing machine instruction streams
  * (programs) operating on a single input tape. :)</p>
  *
@@ -191,12 +191,12 @@ public class TokenStreamRewriter
 
     /** You may have multiple, named streams of rewrite operations.
 	 *  I'm calling these things "programs."
-	 *  Maps String (name) &rarr; rewrite (List)
+	 *  Maps string (name) &rarr; rewrite (List)
 	 */
-    protected readonly Dictionary<String, List<RewriteOperation>> programs;
+    protected readonly Dictionary<string, List<RewriteOperation>> programs;
 
-    /** Dictionary String (program name) &rarr; int index */
-    protected readonly Dictionary<String, int> lastRewriteTokenIndexes;
+    /** Dictionary string (program name) &rarr; int index */
+    protected readonly Dictionary<string, int> lastRewriteTokenIndexes;
 
     public TokenStreamRewriter(TokenStream tokens)
     {
@@ -271,12 +271,12 @@ public class TokenStreamRewriter
         InsertBefore(DEFAULT_PROGRAM_NAME, index, text);
     }
 
-    public void InsertBefore(String programName, Token t, object text)
+    public void InsertBefore(string programName, Token t, object text)
     {
         InsertBefore(programName, t.TokenIndex, text);
     }
 
-    public void InsertBefore(String programName, int index, object text)
+    public void InsertBefore(string programName, int index, object text)
     {
         var op = new InsertBeforeOp(this, index, text);
         var rewrites = getProgram(programName);
@@ -349,7 +349,7 @@ public class TokenStreamRewriter
         Replace(programName, from, to, null);
     }
 
-    public void Delete(String programName, Token from, Token to)
+    public void Delete(string programName, Token from, Token to)
     {
         Replace(programName, from, to, null);
     }
@@ -382,7 +382,7 @@ public class TokenStreamRewriter
         return @is;
     }
 
-    private List<RewriteOperation> InitializeProgram(String name)
+    private List<RewriteOperation> InitializeProgram(string name)
     {
         List<RewriteOperation> @is = new(PROGRAM_INIT_SIZE);
         programs[name] = @is;

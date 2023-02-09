@@ -33,7 +33,7 @@ public class RewriteRuleSubtreeStream : RewriteRuleElementStream
 {
 
 
-    public RewriteRuleSubtreeStream(TreeAdaptor adaptor, String elementDescription)
+    public RewriteRuleSubtreeStream(TreeAdaptor adaptor, string elementDescription)
         : base(adaptor, elementDescription)
     {
     }

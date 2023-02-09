@@ -373,7 +373,7 @@ public class TestToolSyntaxErrors
         var expected =
             "error(" + ErrorType.EPSILON_CLOSURE + "): T.g4:2:0: rule s contains a closure with at least one alternative that can match an empty string\n";
 
-        string[] pair = new String[] {
+        string[] pair = new string[] {
             grammar,
             expected
         };

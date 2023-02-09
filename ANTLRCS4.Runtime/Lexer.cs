@@ -354,8 +354,6 @@ public abstract class Lexer : Recognizer<int, LexerATNSimulator>, TokenSource
 	 *  error reporting.  The generated parsers implement a method
 	 *  that overrides this to point to their String[] tokenNames.
 	 */
-    //@Override
-    //@Deprecated
     public override string[] TokenNames => null;
 
     /** Return a list of all Token objects in input char stream.

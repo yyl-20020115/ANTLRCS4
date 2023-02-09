@@ -108,7 +108,7 @@ public class TreePatternParser
     public Object parseNode()
     {
         // "%label:" prefix
-        String label = null;
+        string label = null;
         if (ttype == TreePatternLexer.PERCENT)
         {
             ttype = tokenizer.nextToken();
@@ -144,15 +144,15 @@ public class TreePatternParser
         {
             return null;
         }
-        String tokenName = tokenizer.sval.ToString();
+        string tokenName = tokenizer.sval.ToString();
         ttype = tokenizer.nextToken();
         if (tokenName.Equals("nil"))
         {
             return adaptor.Nil();
         }
-        String text = tokenName;
+        string text = tokenName;
         // check for arg
-        String arg = null;
+        string arg = null;
         if (ttype == TreePatternLexer.ARG)
         {
             arg = tokenizer.sval.ToString();

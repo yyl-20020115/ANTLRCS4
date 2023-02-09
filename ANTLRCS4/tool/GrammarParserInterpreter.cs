@@ -36,9 +36,9 @@ public class GrammarParserInterpreter : ParserInterpreter
     protected int[][] stateToAltsMap;
 
     public GrammarParserInterpreter(Grammar g,
-                                    String grammarFileName,
+                                    string grammarFileName,
                                     Vocabulary vocabulary,
-                                    ICollection<String> ruleNames,
+                                    ICollection<string> ruleNames,
                                     ATN atn,
                                     TokenStream input) : base(grammarFileName, vocabulary, ruleNames, atn, input)
     {

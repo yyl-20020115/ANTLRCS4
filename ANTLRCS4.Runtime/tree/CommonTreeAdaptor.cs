@@ -25,7 +25,6 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.tree;
 using org.antlr.v4.runtime;
 
@@ -62,7 +61,6 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  If you care what the token payload objects' type is, you should
      *  override this method and any other createToken variant.
      */
-    //@Override
     public override Token CreateToken(int tokenType, string text) => new CommonToken(tokenType, text);
 
     /** Tell me how to create a token for use with imaginary token nodes.
@@ -79,16 +77,14 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  If you care what the token payload objects' type is, you should
      *  override this method and any other createToken variant.
      */
-    //@Override
-    public override Token createToken(Token fromToken) => new CommonToken(fromToken);
+    public override Token CreateToken(Token fromToken) => new CommonToken(fromToken);
 
     /** Track start/stop token for subtree root created for a rule.
      *  Only works with Tree nodes.  For rules that match nothing,
      *  seems like this will yield start=i and stop=i-1 in a nil node.
      *  Might be useful info so I'll not force to be i..i.
      */
-    //@Override
-    public void setTokenBoundaries(Object t, Token startToken, Token stopToken)
+    public void SetTokenBoundaries(Object t, Token startToken, Token stopToken)
     {
         if (t == null) return;
         int start = 0;
@@ -114,7 +110,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
     }
 
     //@Override
-    public String getText(Object t)
+    public string getText(Object t)
     {
         if (t == null) return null;
         return ((Tree)t).Text;

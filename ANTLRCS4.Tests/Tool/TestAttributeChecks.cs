@@ -248,7 +248,7 @@ public class TestAttributeChecks
         ToolTestUtils.TestErrors(new string[] { grammar, expected }, false);
     }
 
-    private static void TestActions(string location, string[] pairs, String template)
+    private static void TestActions(string location, string[] pairs, string template)
     {
         for (int i = 0; i < pairs.Length; i += 2)
         {

@@ -44,8 +44,8 @@ public class TreeParser : BaseRecognizer
     public const int UP = Token.UP;
 
     // precompiled regex used by inContext
-    static String dotdot = ".*[^.]\\.\\.[^.].*";
-    static String doubleEtc = ".*\\.\\.\\.\\s+\\.\\.\\..*";
+    static string dotdot = ".*[^.]\\.\\.[^.].*";
+    static string doubleEtc = ".*\\.\\.\\.\\s+\\.\\.\\..*";
     static Regex dotdotPattern = new(dotdot);
     static Regex doubleEtcPattern = new(doubleEtc);
 
@@ -182,7 +182,7 @@ public class TreeParser : BaseRecognizer
      *  matcher stops matching and returns true when it runs out of context.
      *  There is no way to force the first node to be the root.
      */
-    public bool InContext(String context)
+    public bool InContext(string context)
     {
         return InContext(input.getTreeAdaptor(), TokenNames, input.LT(1), context);
     }
@@ -249,12 +249,12 @@ public class TreeParser : BaseRecognizer
         return null;
     }
 
-    public void TraceIn(String ruleName, int ruleIndex)
+    public void TraceIn(string ruleName, int ruleIndex)
     {
         base.TraceIn(ruleName, ruleIndex, input.LT(1));
     }
 
-    public void TraceOut(String ruleName, int ruleIndex)
+    public void TraceOut(string ruleName, int ruleIndex)
     {
         base.TraceOut(ruleName, ruleIndex, input.LT(1));
     }

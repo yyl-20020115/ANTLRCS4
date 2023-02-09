@@ -155,7 +155,7 @@ public class Grammar : AttributeResolver
 	 *  -1 (EOF) to \uFFFE.  For example, 0 could be a binary byte you
 	 *  want to lexer.  Labels of DFA/ATN transitions can be both tokens
 	 *  and characters.  I use negative numbers for bookkeeping labels
-	 *  like EPSILON. Char/String literals and token types overlap in the same
+	 *  like EPSILON. Char/string literals and token types overlap in the same
 	 *  space, however.
 	 */
     int maxTokenType = Token.MIN_USER_TOKEN_TYPE - 1;
@@ -631,7 +631,7 @@ public class Grammar : AttributeResolver
         return null;
     }
 
-    public int GetTokenType(String token)
+    public int GetTokenType(string token)
     {
         if (token[(0)] == '\'')
         {
@@ -689,7 +689,7 @@ public class Grammar : AttributeResolver
             return typeToTokenList[ttype];
         }
 
-        return ttype.ToString();// String.valueOf(ttype);
+        return ttype.ToString();// string.valueOf(ttype);
     }
 
     /**
@@ -759,7 +759,7 @@ public class Grammar : AttributeResolver
 	 */
     public string[] GetRuleNames()
     {
-        var result = new String[rules.Count];
+        var result = new string[rules.Count];
         Array.Fill(result, INVALID_RULE_NAME);
         foreach (var rule in rules.Values)
         {
@@ -1019,14 +1019,14 @@ public class Grammar : AttributeResolver
         }
     }
 
-    public int DefineTokenName(String name)
+    public int DefineTokenName(string name)
     {
         if (!tokenNameToTypeMap.TryGetValue(name,out var prev))
             return DefineTokenName(name, GetNewTokenType());
         return prev;
     }
 
-    public int DefineTokenName(String name, int ttype)
+    public int DefineTokenName(string name, int ttype)
     {
         if (tokenNameToTypeMap.TryGetValue(name,out var prev)) return prev;
         tokenNameToTypeMap[name]= ttype;
@@ -1058,7 +1058,7 @@ public class Grammar : AttributeResolver
         return Token.INVALID_TYPE;
     }
 
-    public int DefineTokenAlias(String name, String lit)
+    public int DefineTokenAlias(string name, string lit)
     {
         int ttype = DefineTokenName(name);
         stringLiteralToTypeMap[lit] = ttype;
@@ -1066,7 +1066,7 @@ public class Grammar : AttributeResolver
         return ttype;
     }
 
-    public void SetTokenForType(int ttype, String text)
+    public void SetTokenForType(int ttype, string text)
     {
         if (ttype == Token.EOF)
         {
@@ -1096,7 +1096,7 @@ public class Grammar : AttributeResolver
 	 * @param name The channel name.
 	 * @return The constant channel value assigned to the channel.
 	 */
-    public int DefineChannelName(String name)
+    public int DefineChannelName(string name)
     {
         return !channelNameToValueMap.TryGetValue(name,out var prev) ? DefineChannelName(name, GetNewChannelNumber()) : prev;
     }
@@ -1111,7 +1111,7 @@ public class Grammar : AttributeResolver
 	 * @param name The channel name.
 	 * @return The constant channel value assigned to the channel.
 	 */
-    public int DefineChannelName(String name, int value)
+    public int DefineChannelName(string name, int value)
     {
         if (channelNameToValueMap.TryGetValue(name,out var prev))
         {
@@ -1134,7 +1134,7 @@ public class Grammar : AttributeResolver
 	 * @param channelValue The constant value for the channel.
 	 * @param name The channel name.
 	 */
-    public void SetChannelNameForValue(int channelValue, String name)
+    public void SetChannelNameForValue(int channelValue, string name)
     {
         if (channelValue >= channelValueToNameList.Count)
         {
@@ -1163,16 +1163,16 @@ public class Grammar : AttributeResolver
     }
 
     //@Override
-    public bool ResolvesToLabel(String x, ActionAST node) { return false; }
+    public bool ResolvesToLabel(string x, ActionAST node) { return false; }
 
     //@Override
-    public bool ResolvesToListLabel(String x, ActionAST node) { return false; }
+    public bool ResolvesToListLabel(string x, ActionAST node) { return false; }
 
     //@Override
-    public bool ResolvesToToken(String x, ActionAST node) { return false; }
+    public bool ResolvesToToken(string x, ActionAST node) { return false; }
 
     //@Override
-    public bool ResolvesToAttributeDict(String x, ActionAST node)
+    public bool ResolvesToAttributeDict(string x, ActionAST node)
     {
         return false;
     }
@@ -1367,7 +1367,7 @@ public class Grammar : AttributeResolver
                 }
                 if (ruleNode is RuleAST)
                 {
-                    String ruleName = ((RuleAST)ruleNode).RuleName;
+                    string ruleName = ((RuleAST)ruleNode).RuleName;
                     Rule r = ast.g.GetRule(ruleName);
                     if (r is LeftRecursiveRule)
                     {
