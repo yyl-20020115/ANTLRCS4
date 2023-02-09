@@ -43,7 +43,7 @@ public interface PositionTrackingStream<T>
 	 * {@code null} if an element containing exact information about the current
 	 * position is not available
 	 */
-    T getKnownPositionElement(bool allowApproximateLocation);
+    T GetKnownPositionElement(bool allowApproximateLocation);
 
     /**
 	 * Determines if the specified {@code element} contains concrete position
@@ -53,6 +53,6 @@ public interface PositionTrackingStream<T>
 	 * @return {@code true} if {@code element} contains concrete position
 	 * information, otherwise {@code false}
 	 */
-    bool hasPositionInformation(T element);
+    bool HasPositionInformation(T element);
 
 }

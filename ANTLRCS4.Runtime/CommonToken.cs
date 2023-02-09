@@ -158,11 +158,11 @@ public class CommonToken : WritableToken /*Serializable*/
         }
     }
 
-    //@Override
-    //@Override
+    
+    
     public virtual int Type { get => type; set => this.type = value; }
 
-    //@Override
+    
     /**
  * Explicitly set the text for this token. If {code text} is not
  * {@code null}, then {@link #getText} will return this value rather than
@@ -172,7 +172,7 @@ public class CommonToken : WritableToken /*Serializable*/
  * should be obtained from the input along with the start and stop indexes
  * of the token.
  */
-    //@Override
+    
     public virtual string Text
     {
         get
@@ -198,35 +198,35 @@ public class CommonToken : WritableToken /*Serializable*/
         set => this.text = value;
     }
 
-    //@Override
-    //@Override
+    
+    
     public virtual int Line { get => line; set => this.line = value; }
 
-    //@Override
-    //@Override
+    
+    
     public virtual int CharPositionInLine { get => charPositionInLine; set => this.charPositionInLine = value; }
 
-    //@Override
-    //@Override
+    
+    
     public virtual int Channel { get => channel; set => this.channel = value; }
 
-    //@Override
+    
     public virtual int StartIndex { get => start; set => this.start = value; }
 
-    //@Override
+    
     public virtual int StopIndex { get => stop; set => this.stop = value; }
 
-    //@Override
-    //@Override
+    
+    
     public virtual int TokenIndex { get => index; set => this.index = value; }
 
-    //@Override
+    
     public virtual TokenSource TokenSource { get => source.a; set => throw new NotImplementedException(); }
 
-    //@Override
+    
     public virtual CharStream InputStream { get => source.b; set => throw new NotImplementedException(); }
 
-    //@Override
+    
     public override string ToString()
     {
         return ToString(null);

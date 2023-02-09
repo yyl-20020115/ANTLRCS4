@@ -125,7 +125,7 @@ public abstract class SemanticContext
         public override bool Eval(Recognizer parser, RuleContext parserCallStack) 
             => parser.Precpred(parserCallStack, precedence);
 
-        public SemanticContext EvalPrecedence(Recognizer parser, RuleContext parserCallStack)
+        public override SemanticContext EvalPrecedence(Recognizer parser, RuleContext parserCallStack)
             => parser.Precpred(parserCallStack, precedence) ? Empty.Instance : (SemanticContext?)null;
 
         public int CompareTo(PrecedencePredicate? o) => precedence - o.precedence;
@@ -141,7 +141,6 @@ public abstract class SemanticContext
             => obj is PrecedencePredicate other && (this == obj
                 || this.precedence == other.precedence);
 
-        //@Override
         // precedence >= _precedenceStack.peek()
         public override string ToString() 
             => "{" + precedence + ">=prec}?";
@@ -194,14 +193,14 @@ public abstract class SemanticContext
             opnds = operands.ToArray();
         }
 
-        //@Override
+        
         public override ICollection<SemanticContext> GetOperands() => opnds.ToList();
 
-        //@Override
+        
         public override bool Equals(object? obj)
             => this == obj || obj is AND other && Enumerable.SequenceEqual(this.opnds, other.opnds);
 
-        //@Override
+        
         public override int GetHashCode() => MurmurHash.GetHashCode(opnds, base.GetHashCode());
 
         /**
@@ -211,7 +210,7 @@ public abstract class SemanticContext
 		 * The evaluation of predicates by this context is short-circuiting, but
 		 * unordered.</p>
 		 */
-        //@Override
+        
         public override bool Eval(Recognizer parser, RuleContext parserCallStack)
         {
             foreach (var opnd in opnds)
@@ -219,8 +218,7 @@ public abstract class SemanticContext
             return true;
         }
 
-        //@Override
-        public SemanticContext EvalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack)
+        public virtual SemanticContext EvalPrecedence(Recognizer<Token, ATNSimulator> parser, RuleContext parserCallStack)
         {
             bool differs = false;
             List<SemanticContext> operands = new();
@@ -260,7 +258,7 @@ public abstract class SemanticContext
             return result;
         }
 
-        //@Override
+        
         public override string ToString() 
             => RuntimeUtils.Join(opnds, "&&");
     }
@@ -292,14 +290,14 @@ public abstract class SemanticContext
             this.opnds = operands.ToArray();
         }
 
-        //@Override
+        
         public override ICollection<SemanticContext> GetOperands() => opnds.ToList();// Arrays.asList(opnds);
 
-        //@Override
+        
         public override bool Equals(object? obj) 
             => this == obj || (obj is OR other && Enumerable.SequenceEqual(this.opnds, other.opnds));
 
-        //@Override
+        
         public override int GetHashCode() 
             => MurmurHash.GetHashCode(opnds, base.GetHashCode());
 
@@ -310,7 +308,7 @@ public abstract class SemanticContext
 		 * The evaluation of predicates by this context is short-circuiting, but
 		 * unordered.</p>
 		 */
-        //@Override
+        
         public override bool Eval(Recognizer parser, RuleContext parserCallStack)
         {
             foreach (var opnd in opnds)
@@ -318,8 +316,7 @@ public abstract class SemanticContext
             return false;
         }
 
-        //@Override
-        public SemanticContext evalPrecedence(Recognizer parser, RuleContext parserCallStack)
+        public override SemanticContext EvalPrecedence(Recognizer parser, RuleContext parserCallStack)
         {
             bool differs = false;
             List<SemanticContext> operands = new();

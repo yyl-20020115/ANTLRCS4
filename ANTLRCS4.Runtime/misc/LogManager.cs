@@ -22,7 +22,6 @@ public class LogManager
             location = null;// new Exception().StackTrace;//.getStackTrace()[0];
         }
 
-        //@Override
         public override string ToString()
         {
             var buffer = new StringBuilder();
@@ -75,7 +74,6 @@ public class LogManager
         return defaultFilename;
     }
 
-    //@Override
     public override string ToString()
     {
         if (records == null) return "";

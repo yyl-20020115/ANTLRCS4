@@ -49,9 +49,9 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
 	 *  but reflection is slow.
 	 */
 
-    public virtual object DupNode(object t) => t == null ? null : ((Tree)t).DupNode();
+    public override object DupNode(object t) => t == null ? null : ((Tree)t).DupNode();
 
-    public virtual object Create(Token payload) => new CommonTree(payload);
+    public override object Create(Token payload) => new CommonTree(payload);
 
     /** Tell me how to create a token for use with imaginary token nodes.
      *  For example, there is probably no input symbol associated with imaginary
@@ -84,7 +84,7 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  seems like this will yield start=i and stop=i-1 in a nil node.
      *  Might be useful info so I'll not force to be i..i.
      */
-    public void SetTokenBoundaries(object t, Token startToken, Token stopToken)
+    public override void SetTokenBoundaries(object t, Token startToken, Token stopToken)
     {
         if (t == null) return;
         int start = 0;
@@ -95,29 +95,25 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
         ((Tree)t).TokenStopIndex = stop;
     }
 
-    //@Override
-    public int getTokenStartIndex(object t)
+    public override int GetTokenStartIndex(object t)
     {
         if (t == null) return -1;
         return ((Tree)t).TokenStartIndex;
     }
 
-    //@Override
-    public int getTokenStopIndex(object t)
+    public override int GetTokenStopIndex(object t)
     {
         if (t == null) return -1;
         return ((Tree)t).TokenStopIndex;
     }
 
-    //@Override
-    public string getText(object t)
+    public override string GetText(object t)
     {
         if (t == null) return null;
         return ((Tree)t).Text;
     }
 
-    //@Override
-    public int getType(object t)
+    public override int GetType(object t)
     {
         if (t == null) return Token.INVALID_TOKEN_TYPE;
         return ((Tree)t).Type;
@@ -127,57 +123,53 @@ public class CommonTreeAdaptor : BaseTreeAdaptor
      *  you are not using CommonTree, then you must
      *  override this in your own adaptor.
      */
-    //@Override
-    public Token getToken(object t)
+    public override Token GetToken(object t)
     {
-        if (t is CommonTree)
+        if (t is CommonTree tree1)
         {
-            return ((CommonTree)t).Token;
+            return tree1.Token;
         }
         return null; // no idea what to do
     }
 
-    public object GetChild(object t, int i)
+    public override object GetChild(object t, int i)
     {
         if (t == null) return null;
         return ((Tree)t).GetChild(i);
     }
 
-    //@Override
-    public int getChildCount(object t)
+    public override int GetChildCount(object t)
     {
         if (t == null) return 0;
         return ((Tree)t).ChildCount;
     }
 
-    //@Override
-    public object getParent(object t)
+    public override object GetParent(object t)
     {
         if (t == null) return null;
         return ((Tree)t).Parent;
     }
 
-    //@Override
-    public void setParent(object t, object parent)
+    public override void SetParent(object t, object parent)
     {
         if (t != null) ((Tree)t).Parent = (Tree)parent;
     }
 
-    //@Override
-    public int getChildIndex(object t)
+    
+    public override int GetChildIndex(object t)
     {
         if (t == null) return 0;
         return ((Tree)t).ChildIndex;
     }
 
-    //@Override
-    public void setChildIndex(object t, int index)
+    
+    public override void SetChildIndex(object t, int index)
     {
         if (t != null) ((Tree)t).ChildIndex = index;
     }
 
-    //@Override
-    public void replaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
+    
+    public override void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         if (parent != null)
         {

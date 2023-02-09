@@ -16,67 +16,74 @@ namespace org.antlr.v4.runtime;
  *
  * @author Sam Harwell
  */
-public class ProxyErrorListener : ANTLRErrorListener {
-	private readonly ICollection<ANTLRErrorListener> delegates;
+public class ProxyErrorListener : ANTLRErrorListener
+{
+    private readonly ICollection<ANTLRErrorListener> delegates;
 
-	public ProxyErrorListener(ICollection<ANTLRErrorListener> delegates) {
-		if (delegates == null) {
-			throw new NullReferenceException("delegates");
-		}
+    public ProxyErrorListener(ICollection<ANTLRErrorListener> delegates)
+    {
+        if (delegates == null)
+        {
+            throw new NullReferenceException("delegates");
+        }
 
-		this.delegates = delegates;
-	}
+        this.delegates = delegates;
+    }
 
-	//@Override
-	public void SyntaxError(Recognizer recognizer,
-							object offendingSymbol,
-							int line,
-							int charPositionInLine,
-							string msg,
-							RecognitionException e)
-	{
-		foreach (ANTLRErrorListener listener in delegates) {
-			listener.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
-		}
-	}
+    
+    public void SyntaxError(Recognizer recognizer,
+                            object offendingSymbol,
+                            int line,
+                            int charPositionInLine,
+                            string msg,
+                            RecognitionException e)
+    {
+        foreach (ANTLRErrorListener listener in delegates)
+        {
+            listener.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
+        }
+    }
 
-	//@Override
-	public void ReportAmbiguity(Parser recognizer,
-								DFA dfa,
-								int startIndex,
-								int stopIndex,
-								bool exact,
-								BitSet ambigAlts,
-								ATNConfigSet configs)
-	{
-		foreach (ANTLRErrorListener listener in delegates) {
-			listener.ReportAmbiguity(recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
-		}
-	}
+    
+    public void ReportAmbiguity(Parser recognizer,
+                                DFA dfa,
+                                int startIndex,
+                                int stopIndex,
+                                bool exact,
+                                BitSet ambigAlts,
+                                ATNConfigSet configs)
+    {
+        foreach (ANTLRErrorListener listener in delegates)
+        {
+            listener.ReportAmbiguity(recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
+        }
+    }
 
-	//@Override
-	public void ReportAttemptingFullContext(Parser recognizer,
-											DFA dfa,
-											int startIndex,
-											int stopIndex,
-											BitSet conflictingAlts,
-											ATNConfigSet configs)
-	{
-		foreach (ANTLRErrorListener listener in delegates) {
-			listener.ReportAttemptingFullContext(recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
-		}
-	}
+    
+    public void ReportAttemptingFullContext(Parser recognizer,
+                                            DFA dfa,
+                                            int startIndex,
+                                            int stopIndex,
+                                            BitSet conflictingAlts,
+                                            ATNConfigSet configs)
+    {
+        foreach (ANTLRErrorListener listener in delegates)
+        {
+            listener.ReportAttemptingFullContext(recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
+        }
+    }
 
-	//@Override
-	public void ReportContextSensitivity(Parser recognizer,
-										 DFA dfa,
-										 int startIndex,
-										 int stopIndex,
-										 int prediction,
-										 ATNConfigSet configs)
-	{
-		foreach (ANTLRErrorListener listener in delegates) {
-			listener.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs);
-		}
-	}
+    
+    public void ReportContextSensitivity(Parser recognizer,
+                                         DFA dfa,
+                                         int startIndex,
+                                         int stopIndex,
+                                         int prediction,
+                                         ATNConfigSet configs)
+    {
+        foreach (ANTLRErrorListener listener in delegates)
+        {
+            listener.ReportContextSensitivity(recognizer, dfa, startIndex, stopIndex, prediction, configs);
+        }
+    }
 }

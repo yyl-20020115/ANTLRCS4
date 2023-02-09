@@ -99,7 +99,7 @@ public class ANTLRStringStream : CharStream
         markDepth = 0;
     }
 
-    //@Override
+    
     public void Consume()
     {
         //System.out.println("prev p="+p+", c="+(char)data[p]);
@@ -120,7 +120,7 @@ public class ANTLRStringStream : CharStream
         }
     }
 
-    //@Override
+    
     public int LA(int i)
     {
         if (i == 0)
@@ -146,7 +146,7 @@ public class ANTLRStringStream : CharStream
         return data[p + i - 1];
     }
 
-    //@Override
+    
     public int LT(int i)
     {
         return LA(i);
@@ -156,13 +156,13 @@ public class ANTLRStringStream : CharStream
      *  last symbol has been read.  The index is the index of char to
      *  be returned from LA(1).
      */
-    //@Override
+    
     public int Index => p;
 
-    //@Override
+    
     public int Count => n;
 
-    //@Override
+    
     public int Mark()
     {
         if (markers == null)
@@ -188,7 +188,7 @@ public class ANTLRStringStream : CharStream
         return markDepth;
     }
 
-    //@Override
+    
     public void Rewind(int m)
     {
         var state = markers[(m)];
@@ -199,13 +199,13 @@ public class ANTLRStringStream : CharStream
         Release(m);
     }
 
-    //@Override
+    
     public void Rewind()
     {
         Rewind(lastMarker);
     }
 
-    //@Override
+    
     public void Release(int marker)
     {
         // unwind any other markers made after m and release m
@@ -217,7 +217,7 @@ public class ANTLRStringStream : CharStream
     /** consume() ahead until p==index; can't just set p=index as we must
      *  update line and charPositionInLine.
      */
-    //@Override
+    
     public void Seek(int index)
     {
         if (index <= p)
@@ -232,27 +232,27 @@ public class ANTLRStringStream : CharStream
         }
     }
 
-    //@Override
+    
     public string Substring(int start, int stop)
     {
         return new string(data, start, stop - start + 1);
     }
 
-    //@Override
+    
     public int Line => line;
 
-    //@Override
+    
     public int CharPositionInLine => charPositionInLine;
 
-    //@Override
+    
     public void SetLine(int line) => this.line = line;
 
-    //@Override
+    
     public void SetCharPositionInLine(int pos) => this.charPositionInLine = pos;
-    //@Override
+    
     public string SourceName => name;
 
-    //@Override
+    
     public override string ToString() => new (data);
 
     public string GetText(Interval interval)

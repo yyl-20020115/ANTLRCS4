@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.v4.runtime;
 using org.antlr.v4.runtime.dfa;
 using org.antlr.v4.runtime.misc;
 using System.Text;
@@ -85,12 +84,12 @@ public class BufferedTokenStream : TokenStream
         }
     }
 
-    //@Override
+    
     public int Index => p;
-    //@Override
+    
     public int Mark() => 0;
 
-    //@Override
+    
     public void Release(int marker)
     {
         // no resources to release
@@ -109,16 +108,16 @@ public class BufferedTokenStream : TokenStream
         Seek(0);
     }
 
-    //@Override
+    
     public void Seek(int index)
     {
         LazyInit();
         p = AdjustSeekIndex(index);
     }
 
-    //@Override
+    
     public int Count => tokens.Count;
-    //@Override
+    
     public void Consume()
     {
         bool skipEofCheck;
@@ -202,7 +201,7 @@ public class BufferedTokenStream : TokenStream
         return n;
     }
 
-    //@Override
+    
     public Token Get(int index)
     {
         if (index < 0 || index >= tokens.Count)
@@ -228,18 +227,17 @@ public class BufferedTokenStream : TokenStream
         return subset;
     }
 
-    //@Override
-    public int LA(int i) { return LT(i).Type; }
+    
+    public virtual int LA(int i) { return LT(i).Type; }
 
-    protected Token LB(int k)
+    protected virtual Token LB(int k)
     {
         if ((p - k) < 0) return null;
         return tokens[(p - k)];
     }
 
 
-    //@Override
-    public Token LT(int k)
+    public virtual Token LT(int k)
     {
         LazyInit();
         if (k == 0) return null;

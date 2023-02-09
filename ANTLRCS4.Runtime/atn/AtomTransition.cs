@@ -16,16 +16,13 @@ public class AtomTransition : Transition
 
     public AtomTransition(ATNState target, int label) : base(target) => this._label = label;
 
-    //@Override
     public override int SerializationType => ATOM;
 
-    //@Override
-
+    
     public override IntervalSet Label => IntervalSet.Of(_label);
-    //@Override
+    
     public override bool Matches(int symbol, int minVocabSymbol, int maxVocabSymbol) 
         => _label == symbol;
 
-    //@Override
     public override string ToString() => this._label.ToString();
 }

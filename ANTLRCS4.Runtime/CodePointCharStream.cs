@@ -95,7 +95,7 @@ public abstract class CodePointCharStream : CharStream
         throw new UnsupportedOperationException("Not reached");
     }
 
-    //@Override
+    
     public void Consume()
     {
         if (_size - position == 0)
@@ -106,31 +106,31 @@ public abstract class CodePointCharStream : CharStream
         position++;
     }
 
-    //@Override
+    
     public int Index => position;
 
-    //@Override
+    
     public int Count => _size;
 
     /** mark/release do nothing; we have entire buffer */
-    //@Override
+    
     public int Mark()
     {
         return -1;
     }
 
-    //@Override
+    
     public void Release(int marker)
     {
     }
 
-    //@Override
+    
     public void Seek(int index)
     {
         position = index;
     }
 
-    //@Override
+    
     public virtual string SourceName
     {
         get
@@ -144,7 +144,7 @@ public abstract class CodePointCharStream : CharStream
         }
     }
 
-    //@Override
+    
     public override string ToString()
     {
         return GetText(Interval.Of(0, _size - 1));
@@ -200,7 +200,7 @@ public abstract class CodePointCharStream : CharStream
         public static readonly Encoding ByteEncoding = Encoding.GetEncoding("ISO_8859_1");
 
         /** Return the UTF-16 encoded string for the given interval */
-        //@Override
+        
         public virtual string GetText(Interval interval)
         {
             int startIdx = Math.Min(interval.a, Count);
@@ -214,7 +214,7 @@ public abstract class CodePointCharStream : CharStream
             return new string(tb);
         }
 
-        //@Override
+        
         public int LA(int i)
         {
             int offset;
@@ -258,7 +258,7 @@ public abstract class CodePointCharStream : CharStream
         }
 
         /** Return the UTF-16 encoded string for the given interval */
-        //@Override
+        
         public string getText(Interval interval)
         {
             int startIdx = Math.Min(interval.a, Count);
@@ -273,7 +273,7 @@ public abstract class CodePointCharStream : CharStream
             return new string(charArray, startIdx, len);
         }
 
-        //@Override
+        
         public int LA(int i)
         {
             int offset;
@@ -317,7 +317,7 @@ public abstract class CodePointCharStream : CharStream
         }
 
         /** Return the UTF-16 encoded string for the given interval */
-        //@Override
+        
         public string getText(Interval interval)
         {
             int startIdx = Math.Min(interval.a, _size);
@@ -334,7 +334,7 @@ public abstract class CodePointCharStream : CharStream
             return builder.ToString();
         }
 
-        //@Override
+        
         public int LA(int i)
         {
             int offset;

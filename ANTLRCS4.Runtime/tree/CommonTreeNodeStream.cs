@@ -119,7 +119,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
     public override object Remove()
     {
         var result = base.Remove();
-        if (p == 0 && hasPositionInformation(prevElement))
+        if (p == 0 && HasPositionInformation(prevElement))
         {
             previousLocationElement = prevElement;
         }
@@ -135,9 +135,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
 
     public object GetTreeSource() => root;
 
-    //@Override
     public string SourceName => TokenStream.SourceName;
-    //@Override
     public TokenStream TokenStream { get => tokens;
         set => this.tokens = value; }
 
@@ -180,11 +178,10 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
      *
      * @see #hasPositionInformation
      */
-    //@Override
-    object PositionTrackingStream<object>.getKnownPositionElement(bool allowApproximateLocation)
+    object GetKnownPositionElement(bool allowApproximateLocation)
     {
         var node = data[p];
-        if (hasPositionInformation(node))
+        if (HasPositionInformation(node))
         {
             return node;
         }
@@ -197,7 +194,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
         for (int index = p - 1; index >= 0; index--)
         {
             node = data[(index)];
-            if (hasPositionInformation(node))
+            if (HasPositionInformation(node))
             {
                 return node;
             }
@@ -206,8 +203,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
         return previousLocationElement;
     }
 
-    //@Override
-    public bool hasPositionInformation(object node)
+    public bool HasPositionInformation(object node)
     {
         Token token = adaptor.GetToken(node);
         if (token == null)
@@ -225,7 +221,6 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
 
     // TREE REWRITE INTERFACE
 
-    //@Override
     public void ReplaceChildren(object parent, int startChildIndex, int stopChildIndex, object t)
     {
         if (parent != null)

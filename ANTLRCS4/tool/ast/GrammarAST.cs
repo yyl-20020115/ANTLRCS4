@@ -238,14 +238,14 @@ public class GrammarAST : CommonTree
             new CommonTreeNodeStream(adaptor, this);
         var buffer = new StringBuilder();
         var o = (GrammarAST)nodes.LT(1);
-        int type = adaptor.getType(o);
+        int type = adaptor.GetType(o);
         while (type != Token.EOF)
         {
             buffer.Append(' ');
             buffer.Append(o.Text);
             nodes.Consume();
             o = (GrammarAST)nodes.LT(1);
-            type = adaptor.getType(o);
+            type = adaptor.GetType(o);
         }
         return buffer.ToString();
     }

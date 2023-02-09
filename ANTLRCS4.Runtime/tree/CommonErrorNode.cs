@@ -94,7 +94,6 @@ public class CommonErrorNode : CommonTree
         }
     }
 
-    //@Override
     public override string ToString()
     {
         if (trappedException is MissingTokenException ) {

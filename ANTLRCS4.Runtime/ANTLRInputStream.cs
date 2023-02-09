@@ -128,8 +128,8 @@ public class ANTLRInputStream : CharStream
         p = 0;
     }
 
-    //@Override
-    public void Consume()
+    
+    public virtual void Consume()
     {
         if (p >= n)
         {
@@ -146,8 +146,8 @@ public class ANTLRInputStream : CharStream
         }
     }
 
-    //@Override
-    public int LA(int i)
+    
+    public virtual int LA(int i)
     {
         if (i == 0)
         {
@@ -181,20 +181,20 @@ public class ANTLRInputStream : CharStream
      *  last symbol has been read.  The index is the index of char to
 	 *  be returned from LA(1).
      */
-    //@Override
+    
     public int Index => p;
 
-    //@Override
+    
     public int Count => n;
 
     /** mark/release do nothing; we have entire buffer */
-    //@Override
+    
     public int Mark()
     {
         return -1;
     }
 
-    //@Override
+    
     public void Release(int marker)
     {
     }
@@ -202,7 +202,7 @@ public class ANTLRInputStream : CharStream
     /** consume() ahead until p==index; can't just set p=index as we must
 	 *  update line and charPositionInLine. If we seek backwards, just set p
 	 */
-    //@Override
+    
     public void Seek(int index)
     {
         if (index <= p)
@@ -218,7 +218,7 @@ public class ANTLRInputStream : CharStream
         }
     }
 
-    //@Override
+    
     public string GetText(Interval interval)
     {
         int start = interval.a;

@@ -66,14 +66,12 @@ public class CommonTokenStream : BufferedTokenStream
         this.channel = channel;
     }
 
-    //@Override
     protected override int AdjustSeekIndex(int i)
     {
         return NextTokenOnChannel(i, channel);
     }
 
-    //@Override
-    protected Token LB(int k)
+    protected override Token LB(int k)
     {
         if (k == 0 || (p - k) < 0) return null;
 
@@ -90,8 +88,7 @@ public class CommonTokenStream : BufferedTokenStream
         return tokens[i];
     }
 
-    //@Override
-    public Token LT(int k)
+    public override Token LT(int k)
     {
         //Console.Out.WriteLine("enter LT("+k+")");
         LazyInit();

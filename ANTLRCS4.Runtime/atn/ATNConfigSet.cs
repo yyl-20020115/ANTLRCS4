@@ -112,7 +112,6 @@ public class ATNConfigSet : HashSet<ATNConfig>
         this.dipsIntoOuterContext = old.dipsIntoOuterContext;
     }
 
-    //@Override
     public bool Add(ATNConfig config)
     {
         return Add(config, null);
@@ -229,14 +228,11 @@ public class ATNConfigSet : HashSet<ATNConfig>
         }
     }
 
-    //@Override
     public bool AddAll(ICollection<ATNConfig> coll)
     {
         foreach (var c in coll) Add(c);
         return false;
     }
-
-    //@Override
     public override bool Equals(object? o)
     {
         if (o == this)
@@ -262,7 +258,6 @@ public class ATNConfigSet : HashSet<ATNConfig>
         return same;
     }
 
-    //@Override
     public override int GetHashCode()
     {
         if (IsReadonly)

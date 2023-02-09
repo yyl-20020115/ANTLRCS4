@@ -74,7 +74,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
     /**
 	 * {@inheritDoc}
 	 */
-    //@Override
+    
     public bool InErrorRecoveryMode(Parser recognizer)
     {
         return errorRecoveryMode;
@@ -98,7 +98,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 *
 	 * <p>The default implementation simply calls {@link #endErrorCondition}.</p>
 	 */
-    //@Override
+    
     public void ReportMatch(Parser recognizer)
     {
         EndErrorCondition(recognizer);
@@ -123,7 +123,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 * the exception</li>
 	 * </ul>
 	 */
-    //@Override
+    
     public void ReportError(Parser recognizer,
                             RecognitionException e)
     {
@@ -161,7 +161,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 * until we find one in the resynchronization set--loosely the set of tokens
 	 * that can follow the current rule.</p>
 	 */
-    //@Override
+    
     public virtual void Recover(Parser recognizer, RecognitionException e)
     {
         //		Console.Out.WriteLine("recover in "+recognizer.getRuleInvocationStack()+
@@ -235,7 +235,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 * some reason speed is suffering for you, you can turn off this
 	 * functionality by simply overriding this method as a blank { }.</p>
 	 */
-    //@Override
+    
     public virtual void Sync(Parser recognizer)
     {
         ATNState s = recognizer.GetInterpreter().atn.states[(recognizer.State)];
@@ -481,7 +481,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
 	 * is in the set of tokens that can follow the {@code ')'} token reference
 	 * in rule {@code atom}. It can assume that you forgot the {@code ')'}.
 	 */
-    //@Override
+    
     public virtual Token RecoverInline(Parser recognizer)
 
     {

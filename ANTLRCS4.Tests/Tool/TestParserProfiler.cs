@@ -262,9 +262,9 @@ public class TestParserProfiler
         {
             lexEngine.Reset();
             parser.Reset();
-            lexEngine.            InputStream = new ANTLRInputStream(s);
+            lexEngine.InputStream = new ANTLRInputStream(s);
             var tokens = new CommonTokenStream(lexEngine);
-            parser.            InputStream = tokens;
+            parser.InputStream = tokens;
             if (!g.rules.TryGetValue(startRule, out var r))
             {
                 return parser.GetParseInfo().GetDecisionInfo();

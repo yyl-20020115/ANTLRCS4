@@ -145,7 +145,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         return a;
     }
 
-    //@Override
+    
     //public HashSet<Dictionary<K,V>.Entry<K, V>> entrySet() {
     //	throw new UnsupportedOperationException();
     //}
@@ -199,10 +199,10 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         n = oldSize;
     }
 
-    //@Override
+    
     public new int Count => n;
 
-    //@Override
+    
     public bool IsEmpty => n == 0;
 
     public new void Clear()

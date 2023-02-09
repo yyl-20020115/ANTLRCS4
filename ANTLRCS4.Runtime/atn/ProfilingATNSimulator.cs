@@ -47,7 +47,6 @@ public class ProfilingATNSimulator : ParserATNSimulator
             decisions[i] = new (i);
     }
 
-    //@Override
     public override int AdaptivePredict(TokenStream input, int decision, ParserRuleContext outerContext)
     {
         try
@@ -92,7 +91,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         }
     }
 
-    //@Override
+    
     protected override DFAState GetExistingTargetState(DFAState previousD, int t)
     {
         // this method is called after each time the input position advances
@@ -115,7 +114,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         return existingTargetState;
     }
 
-    //@Override
+    
     protected override DFAState ComputeTargetState(DFA dfa, DFAState previousD, int t)
     {
         var state = base.ComputeTargetState(dfa, previousD, t);
@@ -123,7 +122,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         return state;
     }
 
-    //@Override
+    
     protected override ATNConfigSet ComputeReachSet(ATNConfigSet closure, int t, bool fullCtx)
     {
         if (fullCtx)
@@ -164,7 +163,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         return reachConfigs;
     }
 
-    //@Override
+    
     protected override bool EvalSemanticContext(SemanticContext pred, ParserRuleContext parserCallStack, int alt, bool fullCtx)
     {
         bool result = base.EvalSemanticContext(pred, parserCallStack, alt, fullCtx);
@@ -180,7 +179,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         return result;
     }
 
-    //@Override
+    
     protected override void ReportAttemptingFullContext(DFA dfa, BitSet conflictingAlts, ATNConfigSet configs, int startIndex, int stopIndex)
     {
         conflictingAltResolvedBySLL = conflictingAlts != null ? conflictingAlts.NextSetBit(0) : configs.GetAlts().NextSetBit(0);
@@ -188,7 +187,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         base.ReportAttemptingFullContext(dfa, conflictingAlts, configs, startIndex, stopIndex);
     }
 
-    //@Override
+    
     protected override void ReportContextSensitivity(DFA dfa, int prediction, ATNConfigSet configs, int startIndex, int stopIndex)
     {
         if (prediction != conflictingAltResolvedBySLL)
@@ -200,7 +199,7 @@ public class ProfilingATNSimulator : ParserATNSimulator
         base.ReportContextSensitivity(dfa, prediction, configs, startIndex, stopIndex);
     }
 
-    //@Override
+    
     protected override void ReportAmbiguity(DFA dfa, DFAState D, int startIndex, int stopIndex, bool exact,
                                    BitSet ambigAlts, ATNConfigSet configs)
     {

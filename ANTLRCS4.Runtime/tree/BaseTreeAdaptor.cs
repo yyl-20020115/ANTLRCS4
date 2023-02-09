@@ -194,7 +194,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return BecomeRoot(Create(newRoot), oldRoot);
     }
 
-    public object Create(int tokenType, Token fromToken)
+    public virtual object Create(int tokenType, Token fromToken)
     {
         fromToken = CreateToken(fromToken);
         //((ClassicToken)fromToken).setType(tokenType);
@@ -204,7 +204,7 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return t;
     }
 
-    public object Create(int tokenType, Token fromToken, string text)
+    public virtual object Create(int tokenType, Token fromToken, string text)
     {
         if (fromToken == null) return Create(tokenType, text);
         fromToken = CreateToken(fromToken);
@@ -214,54 +214,54 @@ public abstract class BaseTreeAdaptor : TreeAdaptor
         return t;
     }
 
-    public object Create(int tokenType, string text)
+    public virtual object Create(int tokenType, string text)
     {
         Token fromToken = CreateToken(tokenType, text);
         Tree t = (Tree)Create(fromToken);
         return t;
     }
 
-    public int GetType(object t)
+    public virtual int GetType(object t)
     {
         return ((Tree)t).Type;
     }
 
-    public void SetType(object t, int type)
+    public virtual void SetType(object t, int type)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
-    public string GetText(object t)
+    public virtual string GetText(object t)
     {
         return ((Tree)t).Text;
     }
 
-    public void SetText(object t, string text)
+    public virtual void SetText(object t, string text)
     {
         throw new NoSuchMethodError("don't know enough about Tree node");
     }
 
-    public object GetChild(object t, int i)
+    public virtual object GetChild(object t, int i)
     {
         return ((Tree)t).GetChild(i);
     }
 
-    public void SetChild(object t, int i, object child)
+    public virtual void SetChild(object t, int i, object child)
     {
         ((Tree)t).SetChild(i, (Tree)child);
     }
 
-    public object DeleteChild(object t, int i)
+    public virtual object DeleteChild(object t, int i)
     {
         return ((Tree)t).DeleteChild(i);
     }
 
-    public int GetChildCount(object t)
+    public virtual int GetChildCount(object t)
     {
         return ((Tree)t).ChildCount;
     }
 
-    public int GetUniqueID(object node)
+    public virtual int GetUniqueID(object node)
     {
         treeToUniqueIDMap ??= new Dictionary<object, int>();
         if (treeToUniqueIDMap.TryGetValue(node, out var prevID))

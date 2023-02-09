@@ -30,7 +30,6 @@ public class ConsoleErrorListener : BaseErrorListener
 	 * line <em>line</em>:<em>charPositionInLine</em> <em>msg</em>
 	 * </pre>
 	 */
-    //@Override
     public override void SyntaxError(Recognizer recognizer,
                             object offendingSymbol,
                             int line,
