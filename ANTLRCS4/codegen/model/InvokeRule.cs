@@ -32,7 +32,7 @@ public class InvokeRule : RuleElement, LabeledOp
         var gen = factory.Generator;
         var target = gen.Target;
         var identifier = ast.getText();
-        var r = factory.Grammar.getRule(identifier);
+        var r = factory.Grammar.GetRule(identifier);
         this.name = r.name;
         this.escapedName = gen.Target.EscapeIfNeeded(name);
         ctxName = target.GetRuleFunctionContextStructName(r);

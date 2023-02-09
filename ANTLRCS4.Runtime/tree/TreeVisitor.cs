@@ -59,7 +59,7 @@ public class TreeVisitor
         bool isNil = adaptor.isNil(t);
         if (action != null && !isNil)
         {
-            t = action.pre(t); // if rewritten, walk children of new t
+            t = action.Pre(t); // if rewritten, walk children of new t
         }
         for (int i = 0; i < adaptor.getChildCount(t); i++)
         {
@@ -71,7 +71,7 @@ public class TreeVisitor
                 adaptor.setChild(t, i, visitResult);
             }
         }
-        if (action != null && !isNil) t = action.post(t);
+        if (action != null && !isNil) t = action.Post(t);
         return t;
     }
 }

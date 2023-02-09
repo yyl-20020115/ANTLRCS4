@@ -400,7 +400,7 @@ public class TestATNInterpreter
         var input = new MockIntTokenStream(types);
         //		Console.Out.WriteLine("input="+input.types);
         var interp = new ParserInterpreterForTesting(g, input);
-        ATNState startState = atn.ruleToStartState[g.getRule("a").index];
+        ATNState startState = atn.ruleToStartState[g.GetRule("a").index];
         if (startState.Transition(0).target is BlockStartState)
         {
             startState = startState.Transition(0).target;
@@ -408,7 +408,7 @@ public class TestATNInterpreter
 
         var dot = new DOTGenerator(g);
         //		Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[g.getRule("a").index]));
-        var r = g.getRule("e");
+        var r = g.GetRule("e");
         //		if ( r!=null ) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
         int result = interp.MatchATN(input, startState);

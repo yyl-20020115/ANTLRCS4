@@ -244,19 +244,19 @@ public class SymbolChecks
             errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
         }
 
-        if (r.args != null && r.args.get(name) != null)
+        if (r.args != null && r.args.Get(name) != null)
         {
             ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_ARG;
             errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
         }
 
-        if (r.retvals != null && r.retvals.get(name) != null)
+        if (r.retvals != null && r.retvals.Get(name) != null)
         {
             ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_RETVAL;
             errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
         }
 
-        if (r.locals != null && r.locals.get(name) != null)
+        if (r.locals != null && r.locals.Get(name) != null)
         {
             ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_LOCAL;
             errMgr.GrammarError(etype, g.fileName, labelID.token, name, r.name);
@@ -307,13 +307,13 @@ public class SymbolChecks
             return;
         }
 
-        var conflictingKeys = attributes.intersection(referenceAttributes);
+        var conflictingKeys = attributes.Intersection(referenceAttributes);
         foreach (var key in conflictingKeys)
         {
             errMgr.GrammarError(
                     errorType,
                     g.fileName,
-                    attributes.get(key).token != null ? attributes.get(key).token : ((GrammarAST)r.ast.GetChild(0)).token,
+                    attributes.Get(key).token != null ? attributes.Get(key).token : ((GrammarAST)r.ast.GetChild(0)).token,
                     key,
                     r.name);
         }
@@ -496,7 +496,7 @@ public class SymbolChecks
         foreach (var @ref in rulerefs)
         {
             var ruleName = @ref.getText();
-            var r = g.getRule(ruleName);
+            var r = g.GetRule(ruleName);
             var arg = (GrammarAST)@ref.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
             if (arg != null && (r == null || r.args == null))
             {
@@ -528,7 +528,7 @@ public class SymbolChecks
             }
             else
             {
-                if (g.getRule(grammar.getText(), rule.getText()) == null)
+                if (g.GetRule(grammar.getText(), rule.getText()) == null)
                 {
                     errMgr.GrammarError(ErrorType.NO_SUCH_RULE_IN_SCOPE,
                             g.fileName, rule.token, grammar.getText(),

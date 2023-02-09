@@ -10,7 +10,7 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 public abstract class GrammarASTWithOptions : GrammarAST {
-    protected Dictionary<String, GrammarAST> options;
+    protected Dictionary<string, GrammarAST> options;
 
 	public GrammarASTWithOptions(GrammarASTWithOptions node):base(node) {
 		this.options = node.options;

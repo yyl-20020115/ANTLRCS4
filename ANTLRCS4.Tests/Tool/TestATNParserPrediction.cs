@@ -450,7 +450,7 @@ public class TestATNParserPrediction
         "ID : [a-z]+ ;\n" +
         "INT : [0-9]+ ;\n" +
         "WS : [ \\r\\t\\n]+ ;");
-        var e = g.getRule("e");
+        var e = g.GetRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
         Assert.AreEqual("[0, 2, 4]", Arrays.ToString(lr.GetPrimaryAlts()));
@@ -469,7 +469,7 @@ public class TestATNParserPrediction
         "ID : [a-z]+ ;\n" +
         "INT : [0-9]+ ;\n" +
         "WS : [ \\r\\t\\n]+ ;");
-        var e = g.getRule("e");
+        var e = g.GetRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
         Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.GetPrimaryAlts()));
@@ -491,7 +491,7 @@ public class TestATNParserPrediction
         "ID : [a-z]+ ;\n" +
         "INT : [0-9]+ ;\n" +
         "WS : [ \\r\\t\\n]+ ;");
-        var e = g.getRule("e");
+        var e = g.GetRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
         Assert.AreEqual("[0, 1, 5]", Arrays.ToString(lr.GetPrimaryAlts()));
@@ -519,15 +519,15 @@ public class TestATNParserPrediction
 
         var dot = new DOTGenerator(g);
 
-        var r = g.getRule("a");
+        var r = g.GetRule("a");
         //		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
-        r = g.getRule("b");
+        r = g.GetRule("b");
         //		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
-        r = g.getRule("e");
+        r = g.GetRule("e");
         //		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
-        r = g.getRule("ifstat");
+        r = g.GetRule("ifstat");
         //		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
-        r = g.getRule("block");
+        r = g.GetRule("block");
         //		if ( r!=null) Console.Out.WriteLine(dot.getDOT(atn.ruleToStartState[r.index]));
 
         // Check ATN prediction

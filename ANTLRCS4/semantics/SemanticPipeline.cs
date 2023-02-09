@@ -72,7 +72,7 @@ public class SemanticPipeline
         // STORE RULES IN GRAMMAR
         foreach (var r in ruleCollector.rules.Values)
         {
-            g.defineRule(r);
+            g.DefineRule(r);
         }
 
         // COLLECT SYMBOLS: RULES, ACTIONS, TERMINALS, ...
@@ -85,7 +85,7 @@ public class SemanticPipeline
 
         foreach (var a in collector.namedActions)
         {
-            g.defineAction(a);
+            g.DefineAction(a);
         }
 
         // LINK (outermost) ALT NODES WITH Alternatives
@@ -133,14 +133,14 @@ public class SemanticPipeline
         foreach (var @ref in collector.rulerefs)
         {
             var ruleName = @ref.getText();
-            var r = g.getRule(ruleName);
+            var r = g.GetRule(ruleName);
             if (r != null) r.isStartRule = false;
         }
     }
 
     void AssignLexerTokenTypes(Grammar g, List<GrammarAST> tokensDefs)
     {
-        var G = g.getOutermostGrammar(); // put in root, even if imported
+        var G = g.GetOutermostGrammar(); // put in root, even if imported
         foreach (var def in tokensDefs)
         {
             // tokens { id (',' id)* } so must check IDs not TOKEN_REF
@@ -286,7 +286,7 @@ public class SemanticPipeline
 	 */
     void AssignChannelTypes(Grammar g, List<GrammarAST> channelDefs)
     {
-        var outermost = g.getOutermostGrammar();
+        var outermost = g.GetOutermostGrammar();
         foreach (var channel in channelDefs)
         {
             String channelName = channel.getText();

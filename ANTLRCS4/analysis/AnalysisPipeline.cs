@@ -57,7 +57,7 @@ public class AnalysisPipeline
         g.decisionLOOK = new(g.atn.NumberOfDecisions() + 1);
         foreach (var state in g.atn.decisionToState)
         {
-            g.Tools.Log("LL1", "\nDECISION " + state.decision + " in rule " + g.getRule(state.ruleIndex).name);
+            g.Tools.Log("LL1", "\nDECISION " + state.decision + " in rule " + g.GetRule(state.ruleIndex).name);
             IntervalSet[] look;
             if (state.nonGreedy)
             { // nongreedy decisions can't be LL(1)

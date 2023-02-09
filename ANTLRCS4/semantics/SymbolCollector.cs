@@ -73,120 +73,98 @@ public class SymbolCollector : GrammarTreeVisitor
                              List<GrammarAST> actions,
                              GrammarAST block)
     {
-        currentRule = g.getRule(ID.getText());
+        currentRule = g.GetRule(ID.getText());
     }
 
     public override void DiscoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
                                   GrammarAST block)
     {
-        currentRule = g.getRule(ID.getText());
+        currentRule = g.GetRule(ID.getText());
     }
 
-    //@Override
-    public void discoverOuterAlt(AltAST alt)
+    public override void DiscoverOuterAlt(AltAST alt)
     {
         currentRule.alt[currentOuterAltNumber].ast = alt;
     }
 
-    //@Override
-    public void actionInAlt(ActionAST action)
+    public override void ActionInAlt(ActionAST action)
     {
         currentRule.DefineActionInAlt(currentOuterAltNumber, action);
         action.resolver = currentRule.alt[currentOuterAltNumber];
     }
 
-    //@Override
-    public void sempredInAlt(PredAST pred)
+    public override void SempredInAlt(PredAST pred)
     {
         currentRule.DefinePredicateInAlt(currentOuterAltNumber, pred);
         pred.resolver = currentRule.alt[currentOuterAltNumber];
     }
 
-    //@Override
-    public void ruleCatch(GrammarAST arg, ActionAST action)
+    public override void RuleCatch(GrammarAST arg, ActionAST action)
     {
-        GrammarAST catchme = (GrammarAST)action.getParent();
+        var catchme = (GrammarAST)action.getParent();
         currentRule.exceptions.Add(catchme);
         action.resolver = currentRule;
     }
 
-    //@Override
-    public void finallyAction(ActionAST action)
+    public override void FinallyAction(ActionAST action)
     {
         currentRule.finallyAction = action;
         action.resolver = currentRule;
     }
 
-    //@Override
-    public void label(GrammarAST op, GrammarAST ID, GrammarAST element)
+    public override void Label(GrammarAST op, GrammarAST ID, GrammarAST element)
     {
-        LabelElementPair lp = new LabelElementPair(g, ID, element, op.getType());
+        var lp = new LabelElementPair(g, ID, element, op.getType());
         currentRule.alt[currentOuterAltNumber].labelDefs.Map(ID.getText(), lp);
     }
 
-    //@Override
-    public void stringRef(TerminalAST @ref)
+    public override void StringRef(TerminalAST @ref)
     {
         terminals.Add(@ref);
         strings.Add(@ref.getText());
-        if (currentRule != null)
-        {
-            currentRule.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
-        }
+        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
     }
 
-    //@Override
-    public void tokenRef(TerminalAST @ref)
+    public override void TokenRef(TerminalAST @ref)
     {
         terminals.Add(@ref);
         tokenIDRefs.Add(@ref);
-        if (currentRule != null)
-        {
-            currentRule.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
-        }
+        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
     }
 
-    //@Override
-    public void ruleRef(GrammarAST @ref, ActionAST arg)
+    public override void RuleRef(GrammarAST @ref, ActionAST arg)
     {
         //		if ( inContext("DOT ...") ) qualifiedRulerefs.add((GrammarAST)@ref.getParent());
         rulerefs.Add(@ref);
-        if (currentRule != null)
-        {
-            currentRule.alt[currentOuterAltNumber].ruleRefs.Map(@ref.getText(), @ref);
-        }
+        currentRule?.alt[currentOuterAltNumber].ruleRefs.Map(@ref.getText(), @ref);
     }
 
-    //@Override
-    public void grammarOption(GrammarAST ID, GrammarAST valueAST)
+    public override void GrammarOption(GrammarAST ID, GrammarAST valueAST)
     {
-        setActionResolver(valueAST);
+        SetActionResolver(valueAST);
     }
 
-    //@Override
-    public void ruleOption(GrammarAST ID, GrammarAST valueAST)
+    public override void RuleOption(GrammarAST ID, GrammarAST valueAST)
     {
-        setActionResolver(valueAST);
+        SetActionResolver(valueAST);
     }
 
-    //@Override
-    public void blockOption(GrammarAST ID, GrammarAST valueAST)
+    public override void BlockOption(GrammarAST ID, GrammarAST valueAST)
     {
-        setActionResolver(valueAST);
+        SetActionResolver(valueAST);
     }
 
-    //@Override
-    public void elementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST)
+    public override void ElementOption(GrammarASTWithOptions t, GrammarAST ID, GrammarAST valueAST)
     {
-        setActionResolver(valueAST);
+        SetActionResolver(valueAST);
     }
 
     /** In case of option id={...}, set resolve in case they use $foo */
-    private void setActionResolver(GrammarAST valueAST)
+    private void SetActionResolver(GrammarAST valueAST)
     {
-        if (valueAST is ActionAST)
+        if (valueAST is ActionAST aST)
         {
-            ((ActionAST)valueAST).resolver = currentRule.alt[currentOuterAltNumber];
+            aST.resolver = currentRule.alt[currentOuterAltNumber];
         }
     }
 }

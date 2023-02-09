@@ -42,7 +42,7 @@ public abstract class Recognizer : OutputModelObject
         var gen = factory.Generator;
         grammarFileName = g.fileName;
         grammarName = g.name;
-        name = g.getRecognizerName();
+        name = g.GetRecognizerName();
         accessLevel = g.getOptionString("accessLevel");
         tokens = new();
         foreach (var entry in g.tokenNameToTypeMap)

@@ -35,7 +35,7 @@ public class VisitorFile : OutputFile
     {
         var g = factory.Grammar;
         namedActions = BuildNamedActions(g);
-        parserName = g.getRecognizerName();
+        parserName = g.GetRecognizerName();
         grammarName = g.name;
         foreach (var r in g.rules.Values)
         {

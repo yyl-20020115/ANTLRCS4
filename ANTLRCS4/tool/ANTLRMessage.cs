@@ -37,11 +37,12 @@ public class ANTLRMessage
     {
     }
 
-    public ANTLRMessage(ErrorType errorType, Token offendingToken, params Object[] args) : this(errorType, null, offendingToken, args)
+    public ANTLRMessage(ErrorType errorType, Token offendingToken, params object[] args) 
+        : this(errorType, null, offendingToken, args)
     {
     }
 
-    public ANTLRMessage(ErrorType errorType, Exception e, Token offendingToken, params Object[] args)
+    public ANTLRMessage(ErrorType errorType, Exception e, Token offendingToken, params object[] args)
     {
         this.errorType = errorType;
         this.e = e;
@@ -88,13 +89,6 @@ public class ANTLRMessage
 
     public Exception Cause => e;
 
-    //@Override
-    public override string ToString() => "Message{" +
-               "errorType=" + ErrorType +
-               ", args=" + string.Join(',', (Args)) +
-               ", e=" + Cause +
-               ", fileName='" + fileName + '\'' +
-               ", line=" + line +
-               ", charPosition=" + charPosition +
-               '}';
+    public override string ToString() 
+        => $"Message{{errorType={ErrorType}, args={string.Join(',', (Args))}, e={Cause}, fileName='{fileName}\', line={line}, charPosition={charPosition}}}";
 }

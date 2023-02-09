@@ -38,11 +38,12 @@ namespace org.antlr.v4.tool;
  *  $s		AttributeDict: s is a global scope
  *  $s::y	Attribute: s is a global scope; y is prop within
  */
-public interface AttributeResolver {
-	public bool ResolvesToListLabel(String x, ActionAST node);
-	public bool ResolvesToLabel(String x, ActionAST node);
-	public bool ResolvesToAttributeDict(String x, ActionAST node);
-	public bool ResolvesToToken(String x, ActionAST node);
-	public Attribute ResolveToAttribute(String x, ActionAST node);
-	public Attribute ResolveToAttribute(String x, String y, ActionAST node);
+public interface AttributeResolver
+{
+    public bool ResolvesToListLabel(string x, ActionAST node);
+    public bool ResolvesToLabel(string x, ActionAST node);
+    public bool ResolvesToAttributeDict(string x, ActionAST node);
+    public bool ResolvesToToken(string x, ActionAST node);
+    public Attribute ResolveToAttribute(string x, ActionAST node);
+    public Attribute ResolveToAttribute(string x, string y, ActionAST node);
 }

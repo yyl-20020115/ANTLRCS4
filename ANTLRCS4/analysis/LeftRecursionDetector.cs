@@ -39,7 +39,7 @@ public class LeftRecursionDetector
             //FASerializer ser = new FASerializer(atn.g, start);
             //System.out.print(":\n"+ser+"\n");
 
-            Check(g.getRule(start.ruleIndex), start, new ());
+            Check(g.GetRule(start.ruleIndex), start, new ());
         }
         //Console.Out.WriteLine("cycles="+listOfRecursiveCycles);
         if (listOfRecursiveCycles.Count > 0)
@@ -73,7 +73,7 @@ public class LeftRecursionDetector
             var t = s.Transition(i);
             if (t is RuleTransition rt)
             {
-                var r = g.getRule(rt.ruleIndex);
+                var r = g.GetRule(rt.ruleIndex);
                 if (rulesVisitedPerRuleCheck.Contains(rt.target))
                 {
                     AddRulesToCycle(enclosingRule, r);

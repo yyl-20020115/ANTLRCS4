@@ -197,7 +197,7 @@ public class CodeGenerator
     {
         var extST = Templates.GetInstanceOf("headerFileExtension");
         if (extST == null) return null;
-        var recognizerName = g.getRecognizerName();
+        var recognizerName = g.GetRecognizerName();
         return recognizerName + extST.Render();
     }
 

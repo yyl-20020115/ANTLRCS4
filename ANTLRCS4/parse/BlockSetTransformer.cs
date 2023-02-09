@@ -616,7 +616,7 @@ public class BlockSetTransformer : TreeRewriter
 
             if (state.backtracking == 1)
             {
-                GrammarTransformPipeline.setGrammarPtr(g, retval.tree);
+                GrammarTransformPipeline.SetGrammarPtr(g, retval.tree);
             }
         }
         catch (RecognitionException re)
@@ -1210,7 +1210,7 @@ public class BlockSetTransformer : TreeRewriter
             }
             if (state.backtracking == 1)
             {
-                GrammarTransformPipeline.setGrammarPtr(g, retval.tree);
+                GrammarTransformPipeline.SetGrammarPtr(g, retval.tree);
             }
         }
         catch (RecognitionException re)
@@ -1513,7 +1513,7 @@ public class BlockSetTransformer : TreeRewriter
 
             if (state.backtracking == 1)
             {
-                GrammarTransformPipeline.setGrammarPtr(g, retval.tree);
+                GrammarTransformPipeline.SetGrammarPtr(g, retval.tree);
             }
         }
         catch (RecognitionException re)

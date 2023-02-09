@@ -111,7 +111,7 @@ public class AttributeChecks : ActionSplitterListener
             var rref = IsolatedRuleRef(x.Text);
             if (rref != null)
             {
-                if (rref.args != null && rref.args.get(y.Text) != null)
+                if (rref.args != null && rref.args.Get(y.Text) != null)
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
                                               g.fileName, y, y.Text, rref.name, expr);
@@ -192,7 +192,7 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void NonLocalAttr(String expr, Token x, Token y)
     {
-        Rule r = g.getRule(x.Text);
+        Rule r = g.GetRule(x.Text);
         if (r == null)
         {
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
@@ -209,7 +209,7 @@ public class AttributeChecks : ActionSplitterListener
     //@Override
     public void SetNonLocalAttr(String expr, Token x, Token y, Token rhs)
     {
-        Rule r = g.getRule(x.Text);
+        Rule r = g.GetRule(x.Text);
         if (r == null)
         {
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
@@ -254,14 +254,14 @@ public class AttributeChecks : ActionSplitterListener
             var anyLabelDef = labels[(0)];
             if (anyLabelDef.type == LabelType.RULE_LABEL)
             {
-                return g.getRule(anyLabelDef.element.getText());
+                return g.GetRule(anyLabelDef.element.getText());
             }
         }
         if (node.resolver is Alternative alternative)
         {
             if (alternative.ruleRefs.ContainsKey(x))
             {
-                return g.getRule(x);
+                return g.GetRule(x);
             }
         }
         return null;

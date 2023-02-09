@@ -13,33 +13,25 @@ namespace org.antlr.v4.tool;
  *  @see GrammarParserInterpreter
  *  @since 4.5.1
  */
-public class GrammarInterpreterRuleContext : InterpreterRuleContext {
-	public int outerAltNum = 1;
+public class GrammarInterpreterRuleContext : InterpreterRuleContext
+{
+    public int outerAltNum = 1;
 
-	public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex)
-	: base(parent, invokingStateNumber, ruleIndex)
+    public GrammarInterpreterRuleContext(ParserRuleContext parent, int invokingStateNumber, int ruleIndex)
+    : base(parent, invokingStateNumber, ruleIndex)
     {
-		
-	}
 
-	/** The predicted outermost alternative for the rule associated
+    }
+
+    /** The predicted outermost alternative for the rule associated
 	 *  with this context object.  If this node left recursive, the true original
 	 *  outermost alternative is returned.
 	 */
-	public int getOuterAltNum() { return outerAltNum; }
-
-	public void setOuterAltNum(int outerAltNum) {
-		this.outerAltNum = outerAltNum;
-	}
-
-	//@Override
-	public int getAltNumber() {
-		// override here and called old functionality; makes it backward compatible vs changing names
-		return getOuterAltNum();
-	}
+    public int OuterAltNum { get => outerAltNum; set => this.outerAltNum = value; }
 
     //@Override
-    public void setAltNumber(int altNumber) {
-		setOuterAltNum(altNumber);
-	}
+    //@Override
+    public override int AltNumber { get =>
+        // override here and called old functionality; makes it backward compatible vs changing names
+        OuterAltNum; set => OuterAltNum = value; }
 }

@@ -85,7 +85,7 @@ public class UseDefAnalyzer
                     calls = new HashSet<Rule>();
                     dependencies[r] = calls;
                 }
-                calls.Add(g.getRule(tref.getText()));
+                calls.Add(g.GetRule(tref.getText()));
             }
         }
 

@@ -117,7 +117,7 @@ public class TestLookaheadTrees
                                    int decision,
                                    string[] expectedTrees)
     {
-        int startRuleIndex = g.getRule(startRuleName).index;
+        int startRuleIndex = g.GetRule(startRuleName).index;
         var nodeTextProvider =
                     new InterpreterTreeTextProvider(g.getRuleNames());
 
@@ -131,7 +131,7 @@ public class TestLookaheadTrees
         var lookaheadEventInfo = decisionInfo.SLL_MaxLookEvent;
 
         var lookaheadParseTrees =
-            GrammarParserInterpreter.getLookaheadParseTrees(g, parser, tokens, startRuleIndex, lookaheadEventInfo.decision,
+            GrammarParserInterpreter.GetLookaheadParseTrees(g, parser, tokens, startRuleIndex, lookaheadEventInfo.decision,
                                                             lookaheadEventInfo.startIndex, lookaheadEventInfo.stopIndex);
 
         Assert.AreEqual(expectedTrees.Length, lookaheadParseTrees.Count);

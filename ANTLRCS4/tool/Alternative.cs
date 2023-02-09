@@ -13,28 +13,29 @@ namespace org.antlr.v4.tool;
 
 
 /** An outermost alternative for a rule.  We don't track inner alternatives. */
-public class Alternative : AttributeResolver {
+public class Alternative : AttributeResolver
+{
     public Rule rule;
 
-	public AltAST ast;
+    public AltAST ast;
 
-	/** What alternative number is this outermost alt? 1..n */
-	public int altNum;
+    /** What alternative number is this outermost alt? 1..n */
+    public int altNum;
 
     // token IDs, string literals in this alt
-    public MultiMap<String, TerminalAST> tokenRefs = new MultiMap<String, TerminalAST>();
+    public MultiMap<String, TerminalAST> tokenRefs = new();
 
-	// does not include labels
-	public MultiMap<String, GrammarAST> tokenRefsInActions = new MultiMap<String, GrammarAST>();
+    // does not include labels
+    public MultiMap<String, GrammarAST> tokenRefsInActions = new();
 
     // all rule refs in this alt
-    public MultiMap<String, GrammarAST> ruleRefs = new MultiMap<String, GrammarAST>();
+    public MultiMap<String, GrammarAST> ruleRefs = new();
 
-	// does not include labels
-	public MultiMap<String, GrammarAST> ruleRefsInActions = new MultiMap<String, GrammarAST>();
+    // does not include labels
+    public MultiMap<String, GrammarAST> ruleRefsInActions = new();
 
     /** A list of all LabelElementPair attached to tokens like id=ID, ids+=ID */
-    public MultiMap<String, LabelElementPair> labelDefs = new MultiMap<String, LabelElementPair>();
+    public MultiMap<String, LabelElementPair> labelDefs = new();
 
     // track all token, rule, label refs in rewrite (right of ->)
     //public List<GrammarAST> rewriteElements = new ArrayList<GrammarAST>();
@@ -46,88 +47,102 @@ public class Alternative : AttributeResolver {
 	 *
 	 *  This tracks per alt
      */
-    public List<ActionAST> actions = new ();
+    public List<ActionAST> actions = new();
 
     public Alternative(Rule r, int altNum) { this.rule = r; this.altNum = altNum; }
 
-	//@Override
-	public bool ResolvesToToken(String x, ActionAST node) {
-		if ( tokenRefs.ContainsKey(x)) return true;
-		LabelElementPair anyLabelDef = getAnyLabelDef(x);
-		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
-		return false;
-	}
+    //@Override
+    public bool ResolvesToToken(String x, ActionAST node)
+    {
+        if (tokenRefs.ContainsKey(x)) return true;
+        var anyLabelDef = getAnyLabelDef(x);
+        if (anyLabelDef != null && anyLabelDef.type == LabelType.TOKEN_LABEL) return true;
+        return false;
+    }
 
     //@Override
-    public bool ResolvesToAttributeDict(String x, ActionAST node) {
-		if ( ResolvesToToken(x, node) ) return true;
-        if ( ruleRefs.ContainsKey(x)) return true; // rule ref in this alt?
-        LabelElementPair anyLabelDef = getAnyLabelDef(x);
-        if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) return true;
-		return false;
-	}
+    public bool ResolvesToAttributeDict(String x, ActionAST node)
+    {
+        if (ResolvesToToken(x, node)) return true;
+        if (ruleRefs.ContainsKey(x)) return true; // rule ref in this alt?
+        var anyLabelDef = getAnyLabelDef(x);
+        if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL) return true;
+        return false;
+    }
 
     /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
     //@Override
-    public Attribute ResolveToAttribute(String x, ActionAST node) {
-		return rule.ResolveToAttribute(x, node); // reuse that code
-	}
+    public Attribute ResolveToAttribute(String x, ActionAST node)
+    {
+        return rule.ResolveToAttribute(x, node); // reuse that code
+    }
 
     /** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
 	 *  attr in that dictionary.  Can't see args on rule refs.
 	 */
     //@Override
-    public Attribute ResolveToAttribute(String x, String y, ActionAST node) {
-        if ( tokenRefs.ContainsKey(x) ) { // token ref in this alt?
-            return rule.GetPredefinedScope(LabelType.TOKEN_LABEL).get(y);
+    public Attribute ResolveToAttribute(String x, String y, ActionAST node)
+    {
+        if (tokenRefs.ContainsKey(x))
+        { // token ref in this alt?
+            return rule.GetPredefinedScope(LabelType.TOKEN_LABEL).Get(y);
         }
-        if ( ruleRefs.ContainsKey(x) ) {  // rule ref in this alt?
-            // look up rule, ask it to resolve y (must be retval or predefined)
-			return rule.g.getRule(x).ResolveRetvalOrProperty(y);
-		}
-		LabelElementPair anyLabelDef = getAnyLabelDef(x);
-		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) {
-			return rule.g.getRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
-		}
-		else if ( anyLabelDef!=null ) {
-			AttributeDict scope = rule.GetPredefinedScope(anyLabelDef.type);
-			if (scope == null) {
-				return null;
-			}
+        if (ruleRefs.ContainsKey(x))
+        {  // rule ref in this alt?
+           // look up rule, ask it to resolve y (must be retval or predefined)
+            return rule.g.GetRule(x).ResolveRetvalOrProperty(y);
+        }
+        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
+        {
+            return rule.g.GetRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
+        }
+        else if (anyLabelDef != null)
+        {
+            AttributeDict scope = rule.GetPredefinedScope(anyLabelDef.type);
+            if (scope == null)
+            {
+                return null;
+            }
 
-			return scope.get(y);
-		}
-		return null;
-	}
-
-    //@Override
-    public bool ResolvesToLabel(String x, ActionAST node) {
-		LabelElementPair anyLabelDef = getAnyLabelDef(x);
-		return anyLabelDef!=null &&
-			   (anyLabelDef.type==LabelType.TOKEN_LABEL ||
-				anyLabelDef.type==LabelType.RULE_LABEL);
-	}
+            return scope.Get(y);
+        }
+        return null;
+    }
 
     //@Override
-    public bool ResolvesToListLabel(String x, ActionAST node) {
-		LabelElementPair anyLabelDef = getAnyLabelDef(x);
-		return anyLabelDef!=null &&
-			   (anyLabelDef.type==LabelType.RULE_LIST_LABEL ||
-				anyLabelDef.type==LabelType.TOKEN_LIST_LABEL);
-	}
+    public bool ResolvesToLabel(String x, ActionAST node)
+    {
+        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        return anyLabelDef != null &&
+               (anyLabelDef.type == LabelType.TOKEN_LABEL ||
+                anyLabelDef.type == LabelType.RULE_LABEL);
+    }
 
-	public LabelElementPair getAnyLabelDef(String x) {
-		if (labelDefs.TryGetValue(x,out var labels)) return labels[0];
-		return null;
-	}
+    //@Override
+    public bool ResolvesToListLabel(String x, ActionAST node)
+    {
+        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        return anyLabelDef != null &&
+               (anyLabelDef.type == LabelType.RULE_LIST_LABEL ||
+                anyLabelDef.type == LabelType.TOKEN_LIST_LABEL);
+    }
 
-	/** x can be ruleref or rule label. */
-	public Rule resolveToRule(String x) {
-        if ( ruleRefs.ContainsKey(x) ) return rule.g.getRule(x);
-		LabelElementPair anyLabelDef = getAnyLabelDef(x);
-		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) {
-            return rule.g.getRule(anyLabelDef.element.getText());
+    public LabelElementPair getAnyLabelDef(String x)
+    {
+        if (labelDefs.TryGetValue(x, out var labels)) return labels[0];
+        return null;
+    }
+
+    /** x can be ruleref or rule label. */
+    public Rule resolveToRule(String x)
+    {
+        if (ruleRefs.ContainsKey(x)) return rule.g.GetRule(x);
+        LabelElementPair anyLabelDef = getAnyLabelDef(x);
+        if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
+        {
+            return rule.g.GetRule(anyLabelDef.element.getText());
         }
         return null;
     }

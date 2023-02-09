@@ -286,7 +286,7 @@ public class RuleFunction : OutputModelObject
         List<Decl> decls = new();
         if (t.getType() == ANTLRParser.RULE_REF)
         {
-            var rref = factory.Grammar.getRule(t.getText());
+            var rref = factory.Grammar.GetRule(t.getText());
             var ctxName = factory.Generator.Target
                              .GetRuleFunctionContextStructName(rref);
             if (needList)

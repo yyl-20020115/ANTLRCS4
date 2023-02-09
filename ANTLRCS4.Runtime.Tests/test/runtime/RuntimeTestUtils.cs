@@ -107,8 +107,8 @@ public abstract class RuntimeTestUtils
 
     public static void CheckRuleATN(Grammar g, string ruleName, string expecting)
     {
-        var r = g.getRule(ruleName);
-        var startState = g.getATN().ruleToStartState[r.index];
+        var r = g.GetRule(ruleName);
+        var startState = g.GetATN().ruleToStartState[r.index];
         var serializer = new ATNPrinter(g, startState);
         var result = serializer.AsString();
 

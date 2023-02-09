@@ -34,7 +34,7 @@ public class ListenerFile : OutputFile
     public ListenerFile(OutputModelFactory factory, string fileName) : base(factory, fileName)
     {
         var g = factory.Grammar;
-        parserName = g.getRecognizerName();
+        parserName = g.GetRecognizerName();
         grammarName = g.name;
         namedActions = BuildNamedActions(factory.Grammar, ast => ast.Scope == null);
         foreach (var r in g.rules.Values)

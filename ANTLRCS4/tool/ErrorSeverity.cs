@@ -12,7 +12,8 @@ namespace org.antlr.v4.tool;
  *
  * @author Jim Idle - Temporal Wave LLC (jimi@temporal-wave.com)
  */
-public enum ErrorSeverity {
+public enum ErrorSeverity : uint
+{
     INFO,//    ("info"),
     WARNING,// ("warning"),
     WARNING_ONE_OFF,// ("warning"),
@@ -21,11 +22,11 @@ public enum ErrorSeverity {
     FATAL,//   ("fatal"),  // TODO: add fatal for which phase? sync with ErrorManager
 }
 public class ErrorSeverityClass
-{ 
+{
     /**
      * The text version of the ENUM value, used for display purposes
      */
-    private readonly String text;
+    private readonly string text;
 
     /**
      * Standard getter method for the text that should be displayed in order to
@@ -33,13 +34,12 @@ public class ErrorSeverityClass
      *
      * @return The human readable string representing the severity level
      */
-    public String getText() { return text; }
-
+    public String Text => text;
     /**
      * Standard constructor to build an instance of the Enum entries
      *
      * @param text The human readable string representing the severity level
      */
-    private ErrorSeverityClass(String text) { this.text = text; }
+    private ErrorSeverityClass(string text) => this.text = text;
 }
 

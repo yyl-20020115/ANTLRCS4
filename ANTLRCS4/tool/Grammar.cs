@@ -94,10 +94,9 @@ public class Grammar : AttributeResolver
 
     public static readonly HashSet<string> doNotCopyOptionsToLexer = new();
 
-    public static readonly Dictionary<string, AttributeDict> grammarAndLabelRefTypeToScope =
-        new();
+    public static readonly Dictionary<string, AttributeDict> grammarAndLabelRefTypeToScope = new();
 
-    public String name;
+    public string name;
     public GrammarRootAST ast;
 
     /** Track token stream used to create this grammar */
@@ -172,19 +171,19 @@ public class Grammar : AttributeResolver
 	 * {@code WHILE="while"=35}, in which case both {@link #tokenNameToTypeMap}
 	 * and this field will have entries both mapped to 35.
 	 */
-    public readonly Dictionary<String, int> stringLiteralToTypeMap = new();
+    public readonly Dictionary<string, int> stringLiteralToTypeMap = new();
 
     /**
 	 * Reverse index for {@link #stringLiteralToTypeMap}. Indexed with raw token
 	 * type. 0 is invalid.
 	 */
-    public readonly List<String> typeToStringLiteralList = new();
+    public readonly List<string> typeToStringLiteralList = new();
 
     /**
 	 * Map a token type to its token name. Indexed with raw token type. 0 is
 	 * invalid.
 	 */
-    public readonly List<String> typeToTokenList = new();
+    public readonly List<string> typeToTokenList = new();
 
     /**
 	 * The maximum channel value which is assigned by this grammar. Values below
@@ -196,7 +195,7 @@ public class Grammar : AttributeResolver
 	 * Map channel like {@code COMMENTS_CHANNEL} to its constant channel value.
 	 * Only user-defined channels are defined in this map.
 	 */
-    public readonly Dictionary<String, int> channelNameToValueMap = new();
+    public readonly Dictionary<string, int> channelNameToValueMap = new();
 
     /**
 	 * Map a constant channel value to its name. Indexed with raw channel value.
@@ -204,14 +203,14 @@ public class Grammar : AttributeResolver
 	 * {@link Token#HIDDEN_CHANNEL} are not stored in this list, so the values
 	 * at the corresponding indexes is {@code null}.
 	 */
-    public readonly List<String> channelValueToNameList = new();
+    public readonly List<string> channelValueToNameList = new();
 
     /** Map a name to an action.
      *  The code generator will use this to fill holes in the output files.
      *  I track the AST node for the action in case I need the line number
      *  for errors.
      */
-    public Dictionary<String, ActionAST> namedActions = new();
+    public Dictionary<string, ActionAST> namedActions = new();
 
     /** Tracks all user lexer actions in all alternatives of all rules.
 	 *  Doesn't track sempreds.  maps tree node to action index (alt number 1..n).
@@ -225,7 +224,7 @@ public class Grammar : AttributeResolver
     /** Map the other direction upon demand */
     public Dictionary<int, PredAST> indexToPredMap;
 
-    public static readonly String AUTO_GENERATED_TOKEN_NAME_PREFIX = "T__";
+    public static readonly string AUTO_GENERATED_TOKEN_NAME_PREFIX = "T__";
 
     public Grammar(Tool tool, GrammarRootAST ast)
     {
@@ -245,47 +244,43 @@ public class Grammar : AttributeResolver
         this.tokenStream = ast.tokenStream;
         this.originalTokenStream = this.tokenStream;
 
-        initTokenSymbolTables();
+        InitTokenSymbolTables();
     }
 
     /** For testing */
-    public Grammar(String grammarText) : this(GRAMMAR_FROM_STRING_NAME, grammarText, null)
+    public Grammar(string grammarText) : this(GRAMMAR_FROM_STRING_NAME, grammarText, null)
     {
     }
 
-    public Grammar(String grammarText, LexerGrammar tokenVocabSource)
+    public Grammar(string grammarText, LexerGrammar tokenVocabSource)
        : this(GRAMMAR_FROM_STRING_NAME, grammarText, tokenVocabSource, null)
     {
     }
 
     /** For testing */
-    public Grammar(String grammarText, ANTLRToolListener listener)
+    public Grammar(string grammarText, ANTLRToolListener listener)
         : this(GRAMMAR_FROM_STRING_NAME, grammarText, listener)
     {
     }
 
     /** For testing; builds trees, does sem anal */
-    public Grammar(String fileName, String grammarText)
+    public Grammar(string fileName, string grammarText)
         : this(fileName, grammarText, null)
     {
 
     }
 
     /** For testing; builds trees, does sem anal */
-    public Grammar(String fileName, String grammarText, ANTLRToolListener listener)
+    public Grammar(string fileName, string grammarText, ANTLRToolListener listener)
         : this(fileName, grammarText, null, listener)
     {
 
     }
     public class ATL : ANTLRToolListener
     {
-        ////@Override
-
-        public void Info(String msg) { }
-        ////@Override
+        public void Info(string msg) { }
 
         public void Error(ANTLRMessage msg) { }
-        ////@Override
 
         public void Warning(ANTLRMessage msg) { }
 
@@ -294,18 +289,13 @@ public class Grammar : AttributeResolver
     public class TVA : TreeVisitorAction
     {
         readonly Grammar thiz;
-        public TVA(Grammar thiz)
-        {
-            this.thiz = thiz;
-        }
+        public TVA(Grammar thiz) => this.thiz = thiz;
 
-        ////@Override
-        public Object pre(Object t) { ((GrammarAST)t).g = thiz; return t; }
-        ////@Override
-        public Object post(Object t) { return t; }
+        public object Pre(object t) { ((GrammarAST)t).g = thiz; return t; }
+        public object Post(object t) { return t; }
     }
     /** For testing; builds trees, does sem anal */
-    public Grammar(String fileName, String grammarText, Grammar tokenVocabSource, ANTLRToolListener listener)
+    public Grammar(string fileName, string grammarText, Grammar tokenVocabSource, ANTLRToolListener listener)
 
     {
         this.text = grammarText;
@@ -314,8 +304,10 @@ public class Grammar : AttributeResolver
         ANTLRToolListener hush = new ATL();
         Tools.addListener(hush); // we want to hush errors/warnings
         this.Tools.addListener(listener);
-        org.antlr.runtime.ANTLRStringStream @in = new org.antlr.runtime.ANTLRStringStream(grammarText);
-        @in.name = fileName;
+        org.antlr.runtime.ANTLRStringStream @in = new(grammarText)
+        {
+            name = fileName
+        };
 
         this.ast = Tools.Parse(fileName, @in);
         if (ast == null)
@@ -332,10 +324,10 @@ public class Grammar : AttributeResolver
         this.originalTokenStream = this.tokenStream;
 
         // ensure each node has pointer to surrounding grammar
-        Grammar thiz = this;
-        TreeVisitor v = new TreeVisitor(new GrammarASTAdaptor());
+        var thiz = this;
+        var v = new TreeVisitor(new GrammarASTAdaptor());
         v.visit(ast, new TVA(thiz));
-        initTokenSymbolTables();
+        InitTokenSymbolTables();
 
         if (tokenVocabSource != null)
         {
@@ -345,7 +337,7 @@ public class Grammar : AttributeResolver
         Tools.Process(this, false);
     }
 
-    protected void initTokenSymbolTables()
+    protected void InitTokenSymbolTables()
     {
         tokenNameToTypeMap.Add("EOF", Token.EOF);
 
@@ -354,22 +346,22 @@ public class Grammar : AttributeResolver
     }
 
 
-    public void loadImportedGrammars()
+    public void LoadImportedGrammars()
     {
-        this.loadImportedGrammars(new());
+        this.LoadImportedGrammars(new());
     }
 
-    private void loadImportedGrammars(HashSet<String> visited)
+    private void LoadImportedGrammars(HashSet<String> visited)
     {
         if (ast == null) return;
-        GrammarAST i = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.IMPORT);
+        var i = (GrammarAST)ast.GetFirstChildWithType(ANTLRParser.IMPORT);
         if (i == null) return;
         visited.Add(this.name);
         importedGrammars = new();
-        foreach (Object c in i.GetChildren())
+        foreach (var c in i.GetChildren())
         {
-            GrammarAST t = (GrammarAST)c;
-            String importedGrammarName = null;
+            var t = (GrammarAST)c;
+            string importedGrammarName = null;
             if (t.getType() == ANTLRParser.ASSIGN)
             {
                 t = (GrammarAST)t.GetChild(1);
@@ -401,24 +393,24 @@ public class Grammar : AttributeResolver
             if (g == null) continue;
             g.parent = this;
             importedGrammars.Add(g);
-            g.loadImportedGrammars(visited); // recursively pursue any imports in this import
+            g.LoadImportedGrammars(visited); // recursively pursue any imports in this import
         }
     }
 
-    public void defineAction(GrammarAST atAST)
+    public void DefineAction(GrammarAST atAST)
     {
         if (atAST.ChildCount == 2)
         {
-            String name = atAST.GetChild(0).Text;
+            var name = atAST.GetChild(0).Text;
             namedActions[name] = (ActionAST)atAST.GetChild(1);
         }
         else
         {
-            String scope = atAST.GetChild(0).Text;
-            String gtype = getTypeString();
+            var scope = atAST.GetChild(0).Text;
+            var gtype = getTypeString();
             if (scope.Equals(gtype) || (scope.Equals("parser") && gtype.Equals("combined")))
             {
-                String name = atAST.GetChild(1).Text;
+                var name = atAST.GetChild(1).Text;
                 namedActions[name] = (ActionAST)atAST.GetChild(2);
             }
         }
@@ -434,7 +426,7 @@ public class Grammar : AttributeResolver
 	 * instance; otherwise, {@code false} if a rule with this name already
 	 * existed in the grammar instance.
 	 */
-    public bool defineRule(Rule r)
+    public bool DefineRule(Rule r)
     {
         if (rules.ContainsKey(r.name))
         {
@@ -462,7 +454,7 @@ public class Grammar : AttributeResolver
 	 * instance; otherwise, {@code false} if the specified rule was not defined
 	 * in the grammar.
 	 */
-    public bool undefineRule(Rule r)
+    public bool UndefineRule(Rule r)
     {
         if (r.index < 0 || r.index >= indexToRule.Count || indexToRule[(r.index)] != r)
         {
@@ -492,7 +484,7 @@ public class Grammar : AttributeResolver
     //		return n;
     //	}
 
-    public Rule getRule(String name)
+    public Rule GetRule(string name)
     {
         if (rules.TryGetValue(name,out var r)) return r;
         return null;
@@ -507,7 +499,7 @@ public class Grammar : AttributeResolver
 		*/
     }
 
-    public ATN getATN()
+    public ATN GetATN()
     {
         if (atn == null)
         {
@@ -517,41 +509,41 @@ public class Grammar : AttributeResolver
         return atn;
     }
 
-    public Rule getRule(int index) { return indexToRule[(index)]; }
+    public Rule GetRule(int index) => indexToRule[(index)];
 
-    public Rule getRule(String grammarName, String ruleName)
+    public Rule GetRule(string grammarName, string ruleName)
     {
         if (grammarName != null)
         { // scope override
-            Grammar g = getImportedGrammar(grammarName);
+            var g = getImportedGrammar(grammarName);
             if (g == null)
             {
                 return null;
             }
             return g.rules.TryGetValue(ruleName,out var r)?r:null;
         }
-        return getRule(ruleName);
+        return GetRule(ruleName);
     }
 
     /** Get list of all imports from all grammars in the delegate subtree of g.
      *  The grammars are in import tree preorder.  Don't include ourselves
      *  in list as we're not a delegate of ourselves.
      */
-    public List<Grammar> getAllImportedGrammars()
+    public List<Grammar> GetAllImportedGrammars()
     {
         if (importedGrammars == null)
         {
             return null;
         }
 
-        Dictionary<String, Grammar> delegates = new();
-        foreach (Grammar d in importedGrammars)
+        Dictionary<string, Grammar> delegates = new();
+        foreach (var d in importedGrammars)
         {
             delegates[d.fileName] = d;
-            List<Grammar> ds = d.getAllImportedGrammars();
+            var ds = d.GetAllImportedGrammars();
             if (ds != null)
             {
-                foreach (Grammar imported in ds)
+                foreach (var imported in ds)
                 {
                     delegates[imported.fileName]= imported;
                 }
@@ -561,30 +553,27 @@ public class Grammar : AttributeResolver
         return new(delegates.Values);
     }
 
-    public List<Grammar> getImportedGrammars() { return importedGrammars; }
+    public List<Grammar> GetImportedGrammars() => importedGrammars;
 
-    public LexerGrammar getImplicitLexer()
-    {
-        return implicitLexer;
-    }
+    public LexerGrammar GetImplicitLexer() => implicitLexer;
 
     /** convenience method for Tool.loadGrammar() */
-    public static Grammar load(String fileName)
+    public static Grammar Load(string fileName)
     {
-        Tool antlr = new Tool();
+        var antlr = new Tool();
         return antlr.LoadGrammar(fileName);
     }
 
     /** Return list of imported grammars from root down to our parent.
      *  Order is [root, ..., this.parent].  (us not included).
      */
-    public List<Grammar> getGrammarAncestors()
+    public List<Grammar> GetGrammarAncestors()
     {
-        Grammar root = getOutermostGrammar();
+        var root = GetOutermostGrammar();
         if (this == root) return null;
         List<Grammar> grammars = new();
         // walk backwards to root, collecting grammars
-        Grammar p = this.parent;
+        var p = this.parent;
         while (p != null)
         {
             grammars.Insert(0, p); // add to head so in order later
@@ -596,32 +585,28 @@ public class Grammar : AttributeResolver
     /** Return the grammar that imported us and our parents. Return this
      *  if we're root.
      */
-    public Grammar getOutermostGrammar()
-    {
-        if (parent == null) return this;
-        return parent.getOutermostGrammar();
-    }
+    public Grammar GetOutermostGrammar() => parent == null ? this : parent.GetOutermostGrammar();
 
     /** Get the name of the generated recognizer; may or may not be same
      *  as grammar name.
      *  Recognizer is TParser and TLexer from T if combined, else
      *  just use T regardless of grammar type.
      */
-    public String getRecognizerName()
+    public string GetRecognizerName()
     {
-        String suffix = "";
-        List<Grammar> grammarsFromRootToMe = getOutermostGrammar().getGrammarAncestors();
-        String qualifiedName = name;
+        var suffix = "";
+        var grammarsFromRootToMe = GetOutermostGrammar().GetGrammarAncestors();
+        var qualifiedName = name;
         if (grammarsFromRootToMe != null)
         {
-            StringBuilder buf = new StringBuilder();
+            var buffer = new StringBuilder();
             foreach (Grammar g in grammarsFromRootToMe)
             {
-                buf.Append(g.name);
-                buf.Append('_');
+                buffer.Append(g.name);
+                buffer.Append('_');
             }
-            buf.Append(name);
-            qualifiedName = buf.ToString();
+            buffer.Append(name);
+            qualifiedName = buffer.ToString();
         }
 
         if (isCombined() || (isLexer() && implicitLexer != null))
@@ -1427,7 +1412,7 @@ public class Grammar : AttributeResolver
                 if (ruleNode is RuleAST)
                 {
                     String ruleName = ((RuleAST)ruleNode).getRuleName();
-                    Rule r = ast.g.getRule(ruleName);
+                    Rule r = ast.g.GetRule(ruleName);
                     if (r is LeftRecursiveRule)
                     {
                         RuleAST originalAST = ((LeftRecursiveRule)r).GetOriginalAST();

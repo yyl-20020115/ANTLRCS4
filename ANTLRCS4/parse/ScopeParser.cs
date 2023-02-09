@@ -54,7 +54,7 @@ public class ScopeParser
             if (decl.a.Trim().Length > 0)
             {
                 tool.Attribute a = ParseAttributeDef(action, decl, g);
-                dict.add(a);
+                dict.Add(a);
             }
         }
         return dict;

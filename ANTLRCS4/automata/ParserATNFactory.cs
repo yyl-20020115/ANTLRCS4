@@ -140,7 +140,7 @@ public class ParserATNFactory : ATNFactory
     //@Override
     public virtual void SetCurrentRuleName(string name)
     {
-        this.currentRule = g.getRule(name);
+        this.currentRule = g.GetRule(name);
     }
 
     //@Override
@@ -154,7 +154,7 @@ public class ParserATNFactory : ATNFactory
     //@Override
     public virtual Handle Rule(GrammarAST ruleAST, String name, Handle blk)
     {
-        var r = g.getRule(name);
+        var r = g.GetRule(name);
         var start = atn.ruleToStartState[r.index];
         Epsilon(start, blk.left);
         var stop = atn.ruleToStopState[r.index];
@@ -252,7 +252,7 @@ public class ParserATNFactory : ATNFactory
 
     public Handle GetRuleRef(GrammarAST node)
     {
-        var r = g.getRule(node.getText());
+        var r = g.GetRule(node.getText());
         if (r == null)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.Token, "Rule " + node.getText() + " undefined");

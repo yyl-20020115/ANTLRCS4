@@ -17,91 +17,97 @@ namespace org.antlr.v4.tool;
  * @since 4.5.1
  *
  */
-public class GrammarParserInterpreter : ParserInterpreter {
-	/** The grammar associated with this interpreter. Unlike the
+public class GrammarParserInterpreter : ParserInterpreter
+{
+    /** The grammar associated with this interpreter. Unlike the
 	 *  {@link ParserInterpreter} from the standard distribution,
 	 *  this can reference Grammar, which is in the tools area not
 	 *  purely runtime.
 	 */
-	protected readonly Grammar g;
+    protected readonly Grammar g;
 
-	protected BitSet decisionStatesThatSetOuterAltNumInContext;
+    protected BitSet decisionStatesThatSetOuterAltNumInContext;
 
-	/** Cache {@link LeftRecursiveRule#getPrimaryAlts()} and
+    /** Cache {@link LeftRecursiveRule#getPrimaryAlts()} and
 	 *  {@link LeftRecursiveRule#getRecursiveOpAlts()} for states in
 	 *  {@link #decisionStatesThatSetOuterAltNumInContext}. It only
 	 *  caches decisions in left-recursive rules.
 	 */
-	protected int[][] stateToAltsMap;
+    protected int[][] stateToAltsMap;
 
-	public GrammarParserInterpreter(Grammar g,
-									String grammarFileName,
-									Vocabulary vocabulary,
-									ICollection<String> ruleNames,
-									ATN atn,
-									TokenStream input): base(grammarFileName, vocabulary, ruleNames, atn, input)
+    public GrammarParserInterpreter(Grammar g,
+                                    String grammarFileName,
+                                    Vocabulary vocabulary,
+                                    ICollection<String> ruleNames,
+                                    ATN atn,
+                                    TokenStream input) : base(grammarFileName, vocabulary, ruleNames, atn, input)
     {
-		this.g = g;
-	}
+        this.g = g;
+    }
 
-	public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input):
+    public GrammarParserInterpreter(Grammar g, ATN atn, TokenStream input) :
         base(g.fileName, g.getVocabulary(),
               Arrays.AsList(g.getRuleNames()),
               atn, // must run ATN through serializer to set some state flags
               input)
     {
-		this.g = g;
-		decisionStatesThatSetOuterAltNumInContext = findOuterMostDecisionStates();
-		stateToAltsMap = new int[g.atn.states.Count][];
-	}
+        this.g = g;
+        decisionStatesThatSetOuterAltNumInContext = FindOuterMostDecisionStates();
+        stateToAltsMap = new int[g.atn.states.Count][];
+    }
 
-	//@Override
-	protected InterpreterRuleContext createInterpreterRuleContext(ParserRuleContext parent,
-																  int invokingStateNumber,
-																  int ruleIndex)
-	{
-		return new GrammarInterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
-	}
+    //@Override
+    protected override InterpreterRuleContext CreateInterpreterRuleContext(ParserRuleContext parent,
+                                                                  int invokingStateNumber,
+                                                                  int ruleIndex)
+    {
+        return new GrammarInterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
+    }
 
-	//@Override
-	public void reset() {
-		base.reset();
-		overrideDecisionRoot = null;
-	}
+    public override void Reset()
+    {
+        base.reset();
+        overrideDecisionRoot = null;
+    }
 
-	/** identify the ATN states where we need to set the outer alt number.
+    /** identify the ATN states where we need to set the outer alt number.
 	 *  For regular rules, that's the block at the target to rule start state.
 	 *  For left-recursive rules, we track the primary block, which looks just
 	 *  like a regular rule's outer block, and the star loop block (always
 	 *  there even if 1 alt).
 	 */
-	public BitSet findOuterMostDecisionStates() {
-		BitSet track = new BitSet(atn.states.Count);
-		int numberOfDecisions = atn.NumberOfDecisions();
-		for (int i = 0; i < numberOfDecisions; i++) {
-			DecisionState decisionState = atn.GetDecisionState(i);
-			RuleStartState startState = atn.ruleToStartState[decisionState.ruleIndex];
-			// Look for StarLoopEntryState that is in any left recursive rule
-			if ( decisionState is StarLoopEntryState) {
-				StarLoopEntryState loopEntry = (StarLoopEntryState)decisionState;
-				if ( loopEntry.isPrecedenceDecision ) {
-					// Recursive alts always result in a (...)* in the transformed
-					// left recursive rule and that always has a BasicBlockStartState
-					// even if just 1 recursive alt exists.
-					ATNState blockStart = loopEntry.Transition(0).target;
-					// track the StarBlockStartState associated with the recursive alternatives
-					track.Set(blockStart.stateNumber);
-				}
-			}
-			else if ( startState.Transition(0).target == decisionState ) {
-				// always track outermost block for any rule if it exists
-				track.Set(decisionState.stateNumber);
-			}
-		}
-		return track;
-	}
+    public BitSet FindOuterMostDecisionStates()
+    {
+        var track = new BitSet(atn.states.Count);
+        int numberOfDecisions = atn.NumberOfDecisions();
+        for (int i = 0; i < numberOfDecisions; i++)
+        {
+            var decisionState = atn.GetDecisionState(i);
+            var startState = atn.ruleToStartState[decisionState.ruleIndex];
+            // Look for StarLoopEntryState that is in any left recursive rule
+            if (decisionState is StarLoopEntryState)
+            {
+                StarLoopEntryState loopEntry = (StarLoopEntryState)decisionState;
+                if (loopEntry.isPrecedenceDecision)
+                {
+                    // Recursive alts always result in a (...)* in the transformed
+                    // left recursive rule and that always has a BasicBlockStartState
+                    // even if just 1 recursive alt exists.
+                    ATNState blockStart = loopEntry.Transition(0).target;
+                    // track the StarBlockStartState associated with the recursive alternatives
+                    track.Set(blockStart.stateNumber);
+                }
+            }
+            else if (startState.Transition(0).target == decisionState)
+            {
+                // always track outermost block for any rule if it exists
+                track.Set(decisionState.stateNumber);
+            }
+        }
+        return track;
+    }
 
-	/** Override this method so that we can record which alternative
+    /** Override this method so that we can record which alternative
 	 *  was taken at each decision point. For non-left recursive rules,
 	 *  it's simple. Set decisionStatesThatSetOuterAltNumInContext
 	 *  indicates which decision states should set the outer alternative number.
@@ -136,45 +142,53 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  We use stateToAltsMap as a cache to avoid expensive calls to
 	 *  getRecursiveOpAlts().
 	 */
-	//@Override
-	protected int visitDecisionState(DecisionState p) {
-		int predictedAlt = base.visitDecisionState(p);
-		if( p.NumberOfTransitions > 1) {
-//			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
-			if( p.decision == this.overrideDecision &&
-				this.input.				Index == this.overrideDecisionInputIndex )
-			{
-				overrideDecisionRoot = (GrammarInterpreterRuleContext)Context;
-			}
-		}
+    //@Override
+    protected override int VisitDecisionState(DecisionState p)
+    {
+        int predictedAlt = base.visitDecisionState(p);
+        if (p.NumberOfTransitions > 1)
+        {
+            //			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
+            if (p.decision == this.overrideDecision &&
+                this.input.Index == this.overrideDecisionInputIndex)
+            {
+                overrideDecisionRoot = (GrammarInterpreterRuleContext)Context;
+            }
+        }
 
-		GrammarInterpreterRuleContext ctx = (GrammarInterpreterRuleContext)_ctx;
-		if ( decisionStatesThatSetOuterAltNumInContext.Get(p.stateNumber) ) {
-			ctx.outerAltNum = predictedAlt;
-			Rule r = g.getRule(p.ruleIndex);
-			if ( atn.ruleToStartState[r.index].isLeftRecursiveRule ) {
-				int[] alts = stateToAltsMap[p.stateNumber];
-				LeftRecursiveRule lr = (LeftRecursiveRule) g.getRule(p.ruleIndex);
-				if (p.StateType == ATNState.BLOCK_START) {
-					if ( alts==null ) {
-						alts = lr.GetPrimaryAlts();
-						stateToAltsMap[p.stateNumber] = alts; // cache it
-					}
-				}
-				else if ( p.StateType == ATNState.STAR_BLOCK_START ) {
-					if ( alts==null ) {
-						alts = lr.GetRecursiveOpAlts();
-						stateToAltsMap[p.stateNumber] = alts; // cache it
-					}
-				}
-				ctx.outerAltNum = alts[predictedAlt];
-			}
-		}
+        var ctx = (GrammarInterpreterRuleContext)_ctx;
+        if (decisionStatesThatSetOuterAltNumInContext.Get(p.stateNumber))
+        {
+            ctx.outerAltNum = predictedAlt;
+            Rule r = g.GetRule(p.ruleIndex);
+            if (atn.ruleToStartState[r.index].isLeftRecursiveRule)
+            {
+                int[] alts = stateToAltsMap[p.stateNumber];
+                LeftRecursiveRule lr = (LeftRecursiveRule)g.GetRule(p.ruleIndex);
+                if (p.StateType == ATNState.BLOCK_START)
+                {
+                    if (alts == null)
+                    {
+                        alts = lr.GetPrimaryAlts();
+                        stateToAltsMap[p.stateNumber] = alts; // cache it
+                    }
+                }
+                else if (p.StateType == ATNState.STAR_BLOCK_START)
+                {
+                    if (alts == null)
+                    {
+                        alts = lr.GetRecursiveOpAlts();
+                        stateToAltsMap[p.stateNumber] = alts; // cache it
+                    }
+                }
+                ctx.outerAltNum = alts[predictedAlt];
+            }
+        }
 
-		return predictedAlt;
-	}
+        return predictedAlt;
+    }
 
-	/** Given an ambiguous parse information, return the list of ambiguous parse trees.
+    /** Given an ambiguous parse information, return the list of ambiguous parse trees.
 	 *  An ambiguity occurs when a specific token sequence can be recognized
 	 *  in more than one way by the grammar. These ambiguities are detected only
 	 *  at decision points.
@@ -246,47 +260,50 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *  @throws RecognitionException Throws upon syntax error while matching
 	 *                               ambig input.
 	 */
-	public static List<ParserRuleContext> getAllPossibleParseTrees(Grammar g,
-	                                                               Parser originalParser,
-	                                                               TokenStream tokens,
-	                                                               int decision,
-	                                                               BitSet alts,
-	                                                               int startIndex,
-	                                                               int stopIndex,
-	                                                               int startRuleIndex)
-		 {
-		List<ParserRuleContext> trees = new ();
-		// Create a new parser interpreter to parse the ambiguous subphrase
-		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
+    public static List<ParserRuleContext> GetAllPossibleParseTrees(Grammar g,
+                                                                   Parser originalParser,
+                                                                   TokenStream tokens,
+                                                                   int decision,
+                                                                   BitSet alts,
+                                                                   int startIndex,
+                                                                   int stopIndex,
+                                                                   int startRuleIndex)
+    {
+        List<ParserRuleContext> trees = new();
+        // Create a new parser interpreter to parse the ambiguous subphrase
+        ParserInterpreter parser = DeriveTempParserInterpreter(g, originalParser, tokens);
 
-		if ( stopIndex>=(tokens.Count-1) ) { // if we are pointing at EOF token
-			// EOF is not in tree, so must be 1 less than last non-EOF token
-			stopIndex = tokens.Count-2;
-		}
+        if (stopIndex >= (tokens.Count - 1))
+        { // if we are pointing at EOF token
+          // EOF is not in tree, so must be 1 less than last non-EOF token
+            stopIndex = tokens.Count - 2;
+        }
 
-		// get ambig trees
-		int alt = alts.NextSetBit(0);
-		while ( alt>=0 ) {
-			// re-parse entire input for all ambiguous alternatives
-			// (don't have to do first as it's been parsed, but do again for simplicity
-			//  using this temp parser.)
-			parser.reset();
-			parser.addDecisionOverride(decision, startIndex, alt);
-			ParserRuleContext t = parser.Parse(startRuleIndex);
-			GrammarInterpreterRuleContext ambigSubTree =
-				(GrammarInterpreterRuleContext) Trees.getRootOfSubtreeEnclosingRegion(t, startIndex, stopIndex);
-			// Use higher of overridden decision tree or tree enclosing all tokens
-			if ( Trees.isAncestorOf(parser.getOverrideDecisionRoot(), ambigSubTree) ) {
-				ambigSubTree = (GrammarInterpreterRuleContext) parser.getOverrideDecisionRoot();
-			}
-			trees.Add(ambigSubTree);
-			alt = alts.NextSetBit(alt+1);
-		}
+        // get ambig trees
+        int alt = alts.NextSetBit(0);
+        while (alt >= 0)
+        {
+            // re-parse entire input for all ambiguous alternatives
+            // (don't have to do first as it's been parsed, but do again for simplicity
+            //  using this temp parser.)
+            parser.reset();
+            parser.addDecisionOverride(decision, startIndex, alt);
+            ParserRuleContext t = parser.Parse(startRuleIndex);
+            GrammarInterpreterRuleContext ambigSubTree =
+                (GrammarInterpreterRuleContext)Trees.getRootOfSubtreeEnclosingRegion(t, startIndex, stopIndex);
+            // Use higher of overridden decision tree or tree enclosing all tokens
+            if (Trees.isAncestorOf(parser.getOverrideDecisionRoot(), ambigSubTree))
+            {
+                ambigSubTree = (GrammarInterpreterRuleContext)parser.getOverrideDecisionRoot();
+            }
+            trees.Add(ambigSubTree);
+            alt = alts.NextSetBit(alt + 1);
+        }
 
-		return trees;
-	}
+        return trees;
+    }
 
-	/** Return a list of parse trees, one for each alternative in a decision
+    /** Return a list of parse trees, one for each alternative in a decision
 	 *  given the same input.
 	 *
 	 *  Very similar to {@link #getAllPossibleParseTrees} except
@@ -312,131 +329,147 @@ public class GrammarParserInterpreter : ParserInterpreter {
 	 *
 	 * @since 4.5.1
 	 */
-	public static List<ParserRuleContext> getLookaheadParseTrees(Grammar g,
-	                                                             ParserInterpreter originalParser,
-	                                                             TokenStream tokens,
-	                                                             int startRuleIndex,
-	                                                             int decision,
-	                                                             int startIndex,
-	                                                             int stopIndex) {
-		List<ParserRuleContext> trees = new ();
-		// Create a new parser interpreter to parse the ambiguous subphrase
-		ParserInterpreter parser = deriveTempParserInterpreter(g, originalParser, tokens);
+    public static List<ParserRuleContext> GetLookaheadParseTrees(Grammar g,
+                                                                 ParserInterpreter originalParser,
+                                                                 TokenStream tokens,
+                                                                 int startRuleIndex,
+                                                                 int decision,
+                                                                 int startIndex,
+                                                                 int stopIndex)
+    {
+        List<ParserRuleContext> trees = new();
+        // Create a new parser interpreter to parse the ambiguous subphrase
+        ParserInterpreter parser = DeriveTempParserInterpreter(g, originalParser, tokens);
 
-		DecisionState decisionState = originalParser.ATN.decisionToState[(decision)];
+        DecisionState decisionState = originalParser.ATN.decisionToState[(decision)];
 
-		for (int alt = 1; alt<=decisionState.GetTransitions().Length; alt++) {
-			// re-parse entire input for all ambiguous alternatives
-			// (don't have to do first as it's been parsed, but do again for simplicity
-			//  using this temp parser.)
-			GrammarParserInterpreter.BailButConsumeErrorStrategy errorHandler =
-				new GrammarParserInterpreter.BailButConsumeErrorStrategy();
-			parser.			ErrorHandler = errorHandler;
-			parser.reset();
-			parser.addDecisionOverride(decision, startIndex, alt);
-			ParserRuleContext tt = parser.Parse(startRuleIndex);
-			int stopTreeAt = stopIndex;
-			if ( errorHandler.firstErrorTokenIndex>=0 ) {
-				stopTreeAt = errorHandler.firstErrorTokenIndex; // cut off rest at first error
-			}
-			Interval overallRange = tt.GetSourceInterval();
-			if ( stopTreeAt>overallRange.b ) {
-				// If we try to look beyond range of tree, stopTreeAt must be EOF
-				// for which there is no EOF ref in grammar. That means tree
-				// will not have node for stopTreeAt; limit to overallRange.b
-				stopTreeAt = overallRange.b;
-			}
-			ParserRuleContext subtree =
-				Trees.getRootOfSubtreeEnclosingRegion(tt,
-				                                      startIndex,
-				                                      stopTreeAt);
-			// Use higher of overridden decision tree or tree enclosing all tokens
-			if ( Trees.isAncestorOf(parser.getOverrideDecisionRoot(), subtree) ) {
-				subtree = parser.getOverrideDecisionRoot();
-			}
-			Trees.stripChildrenOutOfRange(subtree, parser.getOverrideDecisionRoot(), startIndex, stopTreeAt);
-			trees.Add(subtree);
-		}
+        for (int alt = 1; alt <= decisionState.GetTransitions().Length; alt++)
+        {
+            // re-parse entire input for all ambiguous alternatives
+            // (don't have to do first as it's been parsed, but do again for simplicity
+            //  using this temp parser.)
+            GrammarParserInterpreter.BailButConsumeErrorStrategy errorHandler =
+                new GrammarParserInterpreter.BailButConsumeErrorStrategy();
+            parser.ErrorHandler = errorHandler;
+            parser.reset();
+            parser.addDecisionOverride(decision, startIndex, alt);
+            ParserRuleContext tt = parser.Parse(startRuleIndex);
+            int stopTreeAt = stopIndex;
+            if (errorHandler.firstErrorTokenIndex >= 0)
+            {
+                stopTreeAt = errorHandler.firstErrorTokenIndex; // cut off rest at first error
+            }
+            Interval overallRange = tt.GetSourceInterval();
+            if (stopTreeAt > overallRange.b)
+            {
+                // If we try to look beyond range of tree, stopTreeAt must be EOF
+                // for which there is no EOF ref in grammar. That means tree
+                // will not have node for stopTreeAt; limit to overallRange.b
+                stopTreeAt = overallRange.b;
+            }
+            ParserRuleContext subtree =
+                Trees.getRootOfSubtreeEnclosingRegion(tt,
+                                                      startIndex,
+                                                      stopTreeAt);
+            // Use higher of overridden decision tree or tree enclosing all tokens
+            if (Trees.isAncestorOf(parser.getOverrideDecisionRoot(), subtree))
+            {
+                subtree = parser.getOverrideDecisionRoot();
+            }
+            Trees.stripChildrenOutOfRange(subtree, parser.getOverrideDecisionRoot(), startIndex, stopTreeAt);
+            trees.Add(subtree);
+        }
 
-		return trees;
-	}
+        return trees;
+    }
 
-	/** Derive a new parser from an old one that has knowledge of the grammar.
+    /** Derive a new parser from an old one that has knowledge of the grammar.
 	 *  The Grammar object is used to correctly compute outer alternative
 	 *  numbers for parse tree nodes. A parser of the same type is created
 	 *  for subclasses of {@link ParserInterpreter}.
 	 */
-	public static ParserInterpreter deriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens) {
-		ParserInterpreter parser;
-		if (originalParser is ParserInterpreter) {
-			Type c = originalParser.GetType();
-			try {
-				ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(Grammar), typeof(ATN), typeof(TokenStream) });
-				parser = ctor.Invoke(g,new object[] { originalParser.ATN, originalParser.TokenStream }) as ParserInterpreter;
-			}
-			catch (Exception e) {
-				throw new ArgumentException("can't create parser to match incoming "+originalParser.GetType().Name, e);
-			}
-		}
-		else { // must've been a generated parser
-//			IntegerList serialized = ATNSerializer.getSerialized(originalParser.getATN(), g.getLanguage());
-//			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
-			parser = new ParserInterpreter(originalParser.GrammarFileName,
-										   originalParser.										   Vocabulary,
-										   Arrays.AsList(originalParser.RuleNames),
-					                       originalParser.					                       ATN,
-										   tokens);
-		}
+    public static ParserInterpreter DeriveTempParserInterpreter(Grammar g, Parser originalParser, TokenStream tokens)
+    {
+        ParserInterpreter parser;
+        if (originalParser is ParserInterpreter)
+        {
+            Type c = originalParser.GetType();
+            try
+            {
+                ConstructorInfo ctor = c.GetConstructor(new Type[] { typeof(Grammar), typeof(ATN), typeof(TokenStream) });
+                parser = ctor.Invoke(g, new object[] { originalParser.ATN, originalParser.TokenStream }) as ParserInterpreter;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("can't create parser to match incoming " + originalParser.GetType().Name, e);
+            }
+        }
+        else
+        { // must've been a generated parser
+          //			IntegerList serialized = ATNSerializer.getSerialized(originalParser.getATN(), g.getLanguage());
+          //			ATN deserialized = new ATNDeserializer().deserialize(serialized.toArray());
+            parser = new ParserInterpreter(originalParser.GrammarFileName,
+                                           originalParser.Vocabulary,
+                                           Arrays.AsList(originalParser.RuleNames),
+                                           originalParser.ATN,
+                                           tokens);
+        }
 
-		parser.
-		InputStream = tokens;
+        parser.
+        InputStream = tokens;
 
-		// Make sure that we don't get any error messages from using this temporary parser
-		parser.
-		// Make sure that we don't get any error messages from using this temporary parser
-		ErrorHandler = new BailErrorStrategy();
-		parser.RemoveErrorListeners();
-		parser.RemoveParseListeners();
-		parser.GetInterpreter().		PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
-		return parser;
-	}
+        // Make sure that we don't get any error messages from using this temporary parser
+        parser.
+        // Make sure that we don't get any error messages from using this temporary parser
+        ErrorHandler = new BailErrorStrategy();
+        parser.RemoveErrorListeners();
+        parser.RemoveParseListeners();
+        parser.GetInterpreter().PredictionMode = PredictionMode.LL_EXACT_AMBIG_DETECTION;
+        return parser;
+    }
 
-	/** We want to stop and track the first error but we cannot bail out like
+    /** We want to stop and track the first error but we cannot bail out like
 	 *  {@link BailErrorStrategy} as consume() constructs trees. We make sure
 	 *  to create an error node during recovery with this strategy. We
 	 *  consume() 1 token during the "bail out of rule" mechanism in recover()
 	 *  and let it fall out of the rule to finish constructing trees. For
 	 *  recovery in line, we throw InputMismatchException to engage recover().
 	 */
-	public class BailButConsumeErrorStrategy : DefaultErrorStrategy {
-		public int firstErrorTokenIndex = -1;
-		////@Override
-		public void recover(Parser recognizer, RecognitionException e) {
-			int errIndex = recognizer.InputStream.Index;
-			if ( firstErrorTokenIndex == -1 ) {
-				firstErrorTokenIndex = errIndex; // latch
-			}
-//			Console.Error.WriteLine("recover: error at " + errIndex);
-			TokenStream input = recognizer.InputStream as TokenStream;
-			if ( input.Index<input.Count-1 ) { // don't consume() eof
-				recognizer.Consume(); // just kill this bad token and let it continue.
-			}
-		}
+    public class BailButConsumeErrorStrategy : DefaultErrorStrategy
+    {
+        public int firstErrorTokenIndex = -1;
+        ////@Override
+        public void Recover(Parser recognizer, RecognitionException e)
+        {
+            int errIndex = recognizer.InputStream.Index;
+            if (firstErrorTokenIndex == -1)
+            {
+                firstErrorTokenIndex = errIndex; // latch
+            }
+            //			Console.Error.WriteLine("recover: error at " + errIndex);
+            TokenStream input = recognizer.InputStream as TokenStream;
+            if (input.Index < input.Count - 1)
+            { // don't consume() eof
+                recognizer.Consume(); // just kill this bad token and let it continue.
+            }
+        }
 
-		////@Override
-		public Token recoverInline(Parser recognizer) {
-			int errIndex = recognizer.InputStream.Index;
-			if ( firstErrorTokenIndex == -1 ) {
-				firstErrorTokenIndex = errIndex; // latch
-			}
-//			Console.Error.WriteLine("recoverInline: error at " + errIndex);
-			InputMismatchException e = new InputMismatchException(recognizer);
-//			TokenStream input = recognizer.getInputStream(); // seek EOF
-//			input.seek(input.size() - 1);
-			throw e;
-		}
+        ////@Override
+        public Token RecoverInline(Parser recognizer)
+        {
+            int errIndex = recognizer.InputStream.Index;
+            if (firstErrorTokenIndex == -1)
+            {
+                firstErrorTokenIndex = errIndex; // latch
+            }
+            //			Console.Error.WriteLine("recoverInline: error at " + errIndex);
+            InputMismatchException e = new InputMismatchException(recognizer);
+            //			TokenStream input = recognizer.getInputStream(); // seek EOF
+            //			input.seek(input.size() - 1);
+            throw e;
+        }
 
-		////@Override
-		public void sync(Parser recognizer) { } // don't consume anything; let it fail later
-	}
+        ////@Override
+        public override void Sync(Parser recognizer) { } // don't consume anything; let it fail later
+    }
 }

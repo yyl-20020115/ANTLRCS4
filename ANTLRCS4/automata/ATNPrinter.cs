@@ -58,7 +58,7 @@ public class ATNPrinter
                 }
                 else if (t is RuleTransition transition)
                 {
-                    builder.Append('-').Append(g.getRule(transition.ruleIndex).name).Append("->").Append(GetStateString(t.target)).Append('\n');
+                    builder.Append('-').Append(g.GetRule(transition.ruleIndex).name).Append("->").Append(GetStateString(t.target)).Append('\n');
                 }
                 else if (t is ActionTransition a)
                 {
@@ -99,8 +99,8 @@ public class ATNPrinter
             PlusBlockStartState => "PlusBlockStart_" + n,
             BlockStartState => "BlockStart_" + n,
             BlockEndState => "BlockEnd_" + n,
-            RuleStartState => "RuleStart_" + g.getRule(s.ruleIndex).name + "_" + n,
-            RuleStopState => "RuleStop_" + g.getRule(s.ruleIndex).name + "_" + n,
+            RuleStartState => "RuleStart_" + g.GetRule(s.ruleIndex).name + "_" + n,
+            RuleStopState => "RuleStop_" + g.GetRule(s.ruleIndex).name + "_" + n,
             PlusLoopbackState => "PlusLoopBack_" + n,
             StarLoopbackState => "StarLoopBack_" + n,
             StarLoopEntryState => "StarLoopEntry_" + n,

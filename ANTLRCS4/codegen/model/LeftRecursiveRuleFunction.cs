@@ -26,7 +26,7 @@ public class LeftRecursiveRuleFunction : RuleFunction
             var rrefAST = (GrammarAST)idAST.getParent().GetChild(1);
             if (rrefAST.getType() == ANTLRParser.RULE_REF)
             {
-                var targetRule = factory.Grammar.getRule(rrefAST.getText());
+                var targetRule = factory.Grammar.GetRule(rrefAST.getText());
                 var ctxName = gen.Target.GetRuleFunctionContextStructName(targetRule);
                 var d = idAST.getParent().Type == ANTLRParser.ASSIGN
                     ? new RuleContextDecl(factory, label, ctxName)

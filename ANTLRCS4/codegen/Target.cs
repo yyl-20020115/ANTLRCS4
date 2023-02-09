@@ -448,7 +448,7 @@ public abstract class Target
     public virtual string GetElementName(string name)
     {
         if (".".Equals(name)) return "_wild";
-        if (GetCodeGenerator().g.getRule(name) != null) return name;
+        if (GetCodeGenerator().g.GetRule(name) != null) return name;
         int ttype = GetCodeGenerator().g.getTokenType(name);
         if (ttype == Token.INVALID_TYPE) return name;
         return GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
@@ -460,7 +460,7 @@ public abstract class Target
     public virtual string GetRecognizerFileName(bool header)
     {
         var extST = GetTemplates().GetInstanceOf("codeFileExtension");
-        var recognizerName = gen.g.getRecognizerName();
+        var recognizerName = gen.g.GetRecognizerName();
         return recognizerName + extST.Render();
     }
 

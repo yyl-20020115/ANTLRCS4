@@ -265,7 +265,7 @@ public class ParserFactory : DefaultOutputModelFactory
         }
         else if (ast.getType() == ANTLRParser.RULE_REF)
         { // a rule reference?
-            var r = g.getRule(ast.getText());
+            var r = g.GetRule(ast.getText());
             var implLabel = gen.Target.GetImplicitRuleLabel(ast.getText());
             var ctxName =
                 gen.Target.GetRuleFunctionContextStructName(r);

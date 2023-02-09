@@ -33,7 +33,7 @@ public class TestExpectedTokens : JavaRunner
             "RuleStop_a_1-EOF->s9\n";
         RuntimeTestUtils.CheckRuleATN(g, "a", atnText);
 
-        var atn = g.getATN();
+        var atn = g.GetATN();
         var blkStartStateNumber = 5;
         var tokens = atn.GetExpectedTokens(blkStartStateNumber, null);
         Assert.AreEqual("{B, C}", tokens.ToString(g.getTokenNames()));
@@ -58,7 +58,7 @@ public class TestExpectedTokens : JavaRunner
             "RuleStop_a_1-EOF->s8\n";
         RuntimeTestUtils.CheckRuleATN(g, "a", atnText);
 
-        var atn = g.getATN();
+        var atn = g.GetATN();
         var blkStartStateNumber = 4;
         var tokens = atn.GetExpectedTokens(blkStartStateNumber, null);
         Assert.AreEqual("{B, C}", tokens.ToString(g.getTokenNames()));
@@ -89,7 +89,7 @@ public class TestExpectedTokens : JavaRunner
             "RuleStop_b_3->s5\n";
         RuntimeTestUtils.CheckRuleATN(g, "b", atnText);
 
-        var atn = g.getATN();
+        var atn = g.GetATN();
 
         // From the start of 'b' with empty stack, can only see B and EOF
         var blkStartStateNumber = 9;
@@ -139,7 +139,7 @@ public class TestExpectedTokens : JavaRunner
             "StarLoopBack_22->StarLoopEntry_20\n";
         RuntimeTestUtils.CheckRuleATN(g, "expr", atnText);
 
-        var atn = g.getATN();
+        var atn = g.GetATN();
 
         //		DOTGenerator gen = new DOTGenerator(g);
         //		String dot = gen.getDOT(atn.states.get(2), g.getRuleNames(), false);

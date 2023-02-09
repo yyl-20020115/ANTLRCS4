@@ -105,9 +105,9 @@ public class TreeRewriter : TreeParser
         }
 
         //@Override
-        public Object pre(Object t) { return treeRewriter.applyOnce(t, treeRewriter.topdown_fptr); }
+        public Object Pre(Object t) { return treeRewriter.applyOnce(t, treeRewriter.topdown_fptr); }
         //@Override
-        public Object post(Object t) { return treeRewriter.applyRepeatedly(t, treeRewriter.bottomup_ftpr); }
+        public Object Post(Object t) { return treeRewriter.applyRepeatedly(t, treeRewriter.bottomup_ftpr); }
     }
     public class CFPTR1 : fptr
     {

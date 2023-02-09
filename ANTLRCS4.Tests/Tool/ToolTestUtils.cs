@@ -189,9 +189,9 @@ public class ToolTestUtils
             var antlr = new Tool();
             var sem = new SemanticPipeline(gammar);
             sem.Process();
-            if (gammar.getImportedGrammars() != null)
+            if (gammar.GetImportedGrammars() != null)
             { // process imported grammars (if any)
-                foreach (var imp in gammar.getImportedGrammars())
+                foreach (var imp in gammar.GetImportedGrammars())
                 {
                     antlr.ProcessNonCombinedGrammar(imp, false);
                 }

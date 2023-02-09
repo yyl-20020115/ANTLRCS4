@@ -40,7 +40,7 @@ public static class ATNOptimizer
         {
             if (decision.ruleIndex >= 0)
             {
-                var rule = g.getRule(decision.ruleIndex);
+                var rule = g.GetRule(decision.ruleIndex);
                 if (char.IsLower(rule.name[0]))
                 {
                     // parser codegen doesn't currently support SetTransition

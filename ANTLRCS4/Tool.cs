@@ -313,7 +313,7 @@ public class Tool
 					Console.WriteLine("output: "+outputFiles);
 					Console.WriteLine("dependents: "+dependents);
 					 */
-                Console.WriteLine(dep.getDependencies().Render());
+                Console.WriteLine(dep.GetDependencies().Render());
 
             }
             else if (ErrMgr.NumErrors == 0)
@@ -331,17 +331,17 @@ public class Tool
 	 */
     public void Process(Grammar g, bool gencode)
     {
-        g.loadImportedGrammars();
+        g.LoadImportedGrammars();
 
         var transform = new GrammarTransformPipeline(g, this);
-        transform.process();
+        transform.Process();
 
         LexerGrammar lexerg;
         GrammarRootAST lexerAST;
         if (g.ast != null && g.ast.grammarType == ANTLRParser.COMBINED &&
              !g.ast.hasErrors)
         {
-            lexerAST = transform.extractImplicitLexer(g); // alters g.ast
+            lexerAST = transform.ExtractImplicitLexer(g); // alters g.ast
             if (lexerAST != null)
             {
                 if (grammarOptions != null)
@@ -607,7 +607,7 @@ public class Tool
         var g = ast.grammarType == ANTLRParser.LEXER ? new LexerGrammar(this, ast) : new Grammar(this, ast);
 
         // ensure each node has pointer to surrounding grammar
-        GrammarTransformPipeline.setGrammarPtr(g, ast);
+        GrammarTransformPipeline.SetGrammarPtr(g, ast);
         return g;
     }
 
@@ -733,7 +733,7 @@ public class Tool
         var dotGenerator = new DOTGenerator(g);
         List<Grammar> grammars = new();
         grammars.Add(g);
-        var imported = g.getAllImportedGrammars();
+        var imported = g.GetAllImportedGrammars();
         if (imported != null) grammars.AddRange(imported);
         foreach (var ig in grammars)
         {
@@ -741,7 +741,7 @@ public class Tool
             {
                 try
                 {
-                    var dot = dotGenerator.getDOT(g.atn.ruleToStartState[r.index], g.isLexer());
+                    var dot = dotGenerator.GetDOT(g.atn.ruleToStartState[r.index], g.isLexer());
                     if (dot != null)
                     {
                         WriteDOTFile(g, r, dot);

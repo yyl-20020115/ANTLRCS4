@@ -38,7 +38,7 @@ public class LexerGrammar : Grammar
 
     public override bool DefineRule(Rule r)
     {
-        if (!base.defineRule(r))
+        if (!base.DefineRule(r))
         {
             return false;
         }
@@ -51,7 +51,7 @@ public class LexerGrammar : Grammar
     //@Override
     public bool undefineRule(Rule r)
     {
-        if (!base.undefineRule(r))
+        if (!base.UndefineRule(r))
         {
             return false;
         }

@@ -161,7 +161,7 @@ public class ActionTranslator : ActionSplitterListener
             chunks.Add(new ListLabelRef(nodeContext, name, escapedName)); // $ids for ids+=ID etc...
             return;
         }
-        var r = factory.Grammar.getRule(name);
+        var r = factory.Grammar.GetRule(name);
         if (r != null)
         {
             var ruleLabel = GetRuleLabel(name);
@@ -223,7 +223,7 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void NonLocalAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "nonLocalAttr " + x + "::" + y);
-        var r = factory.Grammar.getRule(x.Text);
+        var r = factory.Grammar.GetRule(x.Text);
         var name = y.Text;
         chunks.Add(new NonLocalAttrRef(nodeContext, x.Text, name, target.EscapeIfNeeded(name), r.index));
     }
@@ -232,7 +232,7 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
         gen.g.Tools.Log("action-translator", "setNonLocalAttr " + x + "::" + y + "=" + rhs);
-        var r = factory.Grammar.getRule(x.Text);
+        var r = factory.Grammar.GetRule(x.Text);
         var rhsChunks = TranslateActionChunk(factory, rf, rhs.Text, node);
         var name = y.Text;
         var s = new SetNonLocalAttr(nodeContext, x.Text, name, target.EscapeIfNeeded(name), r.index, rhsChunks);

@@ -13,8 +13,9 @@ namespace org.antlr.v4.tool;
  *  In this way, users of this interface are less sensitive to changes in
  *  the info I need for error messages.
  */
-public interface ANTLRToolListener {
-	public void Info(String msg);
-	public void Error(ANTLRMessage msg);
-	public void Warning(ANTLRMessage msg);
+public interface ANTLRToolListener
+{
+    public void Info(String msg);
+    public void Error(ANTLRMessage msg);
+    public void Warning(ANTLRMessage msg);
 }

@@ -179,7 +179,7 @@ public class TestParserProfiler
             "def f(x,y) { x = 3+4*1*1/5*1*1+1*1+1; y; ; }\n" +
             "def g(x,a,b,c,d,e) { return 1+2*x; }\n" +
             "def h(x) { a=3; x=0+1; return a*x; }\n";
-        var info = InterpAndGetDecisionInfo(g.getImplicitLexer(), g, "prog", input);
+        var info = InterpAndGetDecisionInfo(g.GetImplicitLexer(), g, "prog", input);
         var expecting =
             "[{decision=0, contextSensitivities=1, errors=0, ambiguities=0, SLL_lookahead=3, " +
             "SLL_ATNTransitions=2, SLL_DFATransitions=0, LL_Fallback=1, LL_ATNTransitions=1}]";

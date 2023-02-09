@@ -116,8 +116,8 @@ public class LeftRecursiveRuleTransformer
 
         // Reduce sets in newly created rule tree
         var transform = new GrammarTransformPipeline(g, g.Tools);
-        transform.reduceBlocksToSets(r.ast);
-        transform.expandParameterizedLoops(r.ast);
+        transform.ReduceBlocksToSets(r.ast);
+        transform.ExpandParameterizedLoops(r.ast);
 
         // Rerun semantic checks on the new rule
         var ruleCollector = new RuleCollector(g);
@@ -188,8 +188,8 @@ public class LeftRecursiveRuleTransformer
             var r = p.rule();
             var tree = (RuleAST)r.getTree();
             ruleStart = (Token)r.Start;
-            GrammarTransformPipeline.setGrammarPtr(g, tree);
-            GrammarTransformPipeline.augmentTokensWithOriginalPosition(g, tree);
+            GrammarTransformPipeline.SetGrammarPtr(g, tree);
+            GrammarTransformPipeline.AugmentTokensWithOriginalPosition(g, tree);
             return tree;
         }
         catch (Exception e)

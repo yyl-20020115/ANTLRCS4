@@ -238,7 +238,7 @@ public class TestAmbigParseTrees
         var ambiguityInfo = ambiguities[(0)];
 
         var ambiguousParseTrees =
-            GrammarParserInterpreter.getAllPossibleParseTrees(g,
+            GrammarParserInterpreter.GetAllPossibleParseTrees(g,
                                                               parser,
                                                               tokens,
                                                               decision,
@@ -264,7 +264,7 @@ public class TestAmbigParseTrees
         var lexEngine = lg.createLexerInterpreter(new ANTLRInputStream(input));
         var tokens = new CommonTokenStream(lexEngine);
         var parser = g.createGrammarParserInterpreter(tokens);
-        var ruleStartState = g.atn.ruleToStartState[g.getRule(startRule).index];
+        var ruleStartState = g.atn.ruleToStartState[g.GetRule(startRule).index];
         var tr = ruleStartState.Transition(0);
         var t2 = tr.target;
         if (t2 is not BasicBlockStartState)

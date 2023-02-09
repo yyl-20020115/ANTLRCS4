@@ -22,11 +22,11 @@ public class Rule : AttributeResolver
         new (AttributeDict.DictType.PREDEFINED_RULE);
     static Rule()
     {
-        predefinedRulePropertiesDict.add(new Attribute("parser"));
-        predefinedRulePropertiesDict.add(new Attribute("text"));
-        predefinedRulePropertiesDict.add(new Attribute("start"));
-        predefinedRulePropertiesDict.add(new Attribute("stop"));
-        predefinedRulePropertiesDict.add(new Attribute("ctx"));
+        predefinedRulePropertiesDict.Add(new Attribute("parser"));
+        predefinedRulePropertiesDict.Add(new Attribute("text"));
+        predefinedRulePropertiesDict.Add(new Attribute("start"));
+        predefinedRulePropertiesDict.Add(new Attribute("stop"));
+        predefinedRulePropertiesDict.Add(new Attribute("ctx"));
         // CALLS
         validLexerCommands.Add("mode");
         validLexerCommands.Add("pushMode");
@@ -145,11 +145,11 @@ public class Rule : AttributeResolver
     {
         if (retvals != null)
         {
-            var a = retvals.get(y);
+            var a = retvals.Get(y);
             if (a != null) return a;
         }
         var d = GetPredefinedScope(LabelType.RULE_LABEL);
-        return d.get(y);
+        return d.Get(y);
     }
 
     public HashSet<string> GetTokenRefs()
@@ -247,18 +247,18 @@ public class Rule : AttributeResolver
     {
         if (args != null)
         {
-            Attribute a = args.get(x); if (a != null) return a;
+            Attribute a = args.Get(x); if (a != null) return a;
         }
         if (retvals != null)
         {
-            Attribute a = retvals.get(x); if (a != null) return a;
+            Attribute a = retvals.Get(x); if (a != null) return a;
         }
         if (locals != null)
         {
-            Attribute a = locals.get(x); if (a != null) return a;
+            Attribute a = locals.Get(x); if (a != null) return a;
         }
         var properties = GetPredefinedScope(LabelType.RULE_LABEL);
-        return properties.get(x);
+        return properties.Get(x);
     }
 
     /** $x.y	Attribute: x is surrounding rule, label ref (in any alts) */
@@ -270,7 +270,7 @@ public class Rule : AttributeResolver
         {
             if (anyLabelDef.type == LabelType.RULE_LABEL)
             {
-                return g.getRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
+                return g.GetRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
             }
             else
             {
@@ -280,7 +280,7 @@ public class Rule : AttributeResolver
                     return null;
                 }
 
-                return scope.get(y);
+                return scope.Get(y);
             }
         }
         return null;
@@ -326,9 +326,9 @@ public class Rule : AttributeResolver
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
         {
-            return g.getRule(anyLabelDef.element.getText());
+            return g.GetRule(anyLabelDef.element.getText());
         }
-        return g.getRule(x);
+        return g.GetRule(x);
     }
 
     public LabelElementPair GetAnyLabelDef(String x)

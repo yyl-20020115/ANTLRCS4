@@ -11,30 +11,32 @@ namespace org.antlr.v4.tool.ast;
 
 
 /** Any ALT (which can be child of ALT_REWRITE node) */
-public class AltAST : GrammarASTWithOptions {
-	public Alternative alt;
+public class AltAST : GrammarASTWithOptions
+{
+    public Alternative alt;
 
-	/** If we transformed this alt from a left-recursive one, need info on it */
-	public LeftRecursiveRuleAltInfo leftRecursiveAltInfo;
+    /** If we transformed this alt from a left-recursive one, need info on it */
+    public LeftRecursiveRuleAltInfo leftRecursiveAltInfo;
 
-	/** If someone specified an outermost alternative label with #foo.
+    /** If someone specified an outermost alternative label with #foo.
 	 *  Token type will be ID.
 	 */
-	public GrammarAST altLabel;
+    public GrammarAST altLabel;
 
-	public AltAST(AltAST node) :base(node){
-		this.alt = node.alt;
-		this.altLabel = node.altLabel;
-		this.leftRecursiveAltInfo = node.leftRecursiveAltInfo;
-	}
+    public AltAST(AltAST node) : base(node)
+    {
+        this.alt = node.alt;
+        this.altLabel = node.altLabel;
+        this.leftRecursiveAltInfo = node.leftRecursiveAltInfo;
+    }
 
-	public AltAST(Token t):base(t) {  }
-	public AltAST(int type):base(type) {}
-	public AltAST(int type, Token t):base(type,t) {}
-	public AltAST(int type, Token t, String text):base(type,t,text) {}
+    public AltAST(Token t) : base(t) { }
+    public AltAST(int type) : base(type) { }
+    public AltAST(int type, Token t) : base(type, t) { }
+    public AltAST(int type, Token t, String text) : base(type, t, text) { }
 
-	public override AltAST dupNode() { return new AltAST(this); }
+    public override AltAST dupNode() { return new AltAST(this); }
 
-	//@Override
-	public  Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    //@Override
+    public Object visit(GrammarASTVisitor v) { return v.visit(this); }
 }

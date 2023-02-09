@@ -209,7 +209,7 @@ public class TestTokenTypeAssignment
         int n = 0;
         foreach (var ruleName in parts)
         {
-            Assert.IsNotNull(g.getRule(ruleName), "rule " + ruleName + " expected");
+            Assert.IsNotNull(g.GetRule(ruleName), "rule " + ruleName + " expected");
             n++;
         }
         //Console.Out.WriteLine("rules="+rules);
