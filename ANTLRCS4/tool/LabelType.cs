@@ -7,7 +7,8 @@
 namespace org.antlr.v4.tool;
 
 /** the various kinds of labels. t=type, id=ID, types+=type ids+=ID */
-public enum LabelType {
+public enum LabelType :uint
+{
     RULE_LABEL,
     TOKEN_LABEL,
     RULE_LIST_LABEL,

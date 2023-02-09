@@ -61,7 +61,7 @@ public class RuleFunction : OutputModelObject
         index = r.index;
 
         ruleCtx = new StructDecl(factory, r);
-        altToContext = new AltLabelStructDecl[r.getOriginalNumberOfAlts() + 1];
+        altToContext = new AltLabelStructDecl[r.GetOriginalNumberOfAlts() + 1];
         AddContextGetters(factory, r);
 
         if (r.args != null)
@@ -87,8 +87,8 @@ public class RuleFunction : OutputModelObject
             ruleCtx.AddDecls(r.locals.attributes.Values);
         }
 
-        ruleLabels = r.getElementLabelNames();
-        tokenLabels = r.getTokenRefs();
+        ruleLabels = r.GetElementLabelNames();
+        tokenLabels = r.GetTokenRefs();
         if (r.exceptions != null)
         {
             exceptions = new();
@@ -106,7 +106,7 @@ public class RuleFunction : OutputModelObject
     public void AddContextGetters(OutputModelFactory factory, Rule r)
     {
         // Add ctx labels for elements in alts with no -> label
-        var altsNoLabels = r.getUnlabeledAltASTs();
+        var altsNoLabels = r.GetUnlabeledAltASTs();
         if (altsNoLabels != null)
         {
             var decls = GetDeclsForAllElements(altsNoLabels);
@@ -116,7 +116,7 @@ public class RuleFunction : OutputModelObject
 
         // make structs for -> labeled alts, define ctx labels for elements
         altLabelCtxs = new();
-        var labels = r.getAltLabels();
+        var labels = r.GetAltLabels();
         if (labels != null)
         {
             foreach (var entry in labels)

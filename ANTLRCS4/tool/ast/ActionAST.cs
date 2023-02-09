@@ -10,33 +10,27 @@ namespace org.antlr.v4.tool.ast;
 
 
 
-public class ActionAST : GrammarASTWithOptions , RuleElementAST {
+public class ActionAST : GrammarASTWithOptions, RuleElementAST
+{
     // Alt, rule, grammar space
-	GrammarAST scope = null;
-	public AttributeResolver resolver;
-	public List<Token> chunks; // useful for ANTLR IDE developers
+    GrammarAST scope = null;
+    public AttributeResolver resolver;
+    public List<Token> chunks; // useful for ANTLR IDE developers
 
-	public ActionAST(ActionAST node) :base(node){
-		this.resolver = node.resolver;
-		this.chunks = node.chunks;
-	}
+    public ActionAST(ActionAST node) : base(node)
+    {
+        this.resolver = node.resolver;
+        this.chunks = node.chunks;
+    }
 
-	public ActionAST(Token t):base(t) {  }
-    public ActionAST(int type):base(type) {  }
-    public ActionAST(int type, Token t):base(type,t) {  }
+    public ActionAST(Token t) : base(t) { }
+    public ActionAST(int type) : base(type) { }
+    public ActionAST(int type, Token t) : base(type, t) { }
 
-	public override ActionAST dupNode() { return new ActionAST(this); }
+    public override ActionAST dupNode() { return new ActionAST(this); }
 
-	//@Override
-	public  Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    //@Override
+    public object visit(GrammarASTVisitor v) { return v.visit(this); }
 
-	public void setScope(GrammarAST scope) {
-		this.scope = scope;
-	}
-
-	public GrammarAST getScope() {
-		return scope;
-	}
-
-
+    public GrammarAST Scope { get => scope; set => this.scope = value; }
 }

@@ -16,16 +16,18 @@ namespace org.antlr.v4.tool;
  *  Allow a generic object to be passed in and the string template can deal
  *  with just printing it or pulling a property out of it.
  */
-public class ToolMessage : ANTLRMessage {
-	public ToolMessage(ErrorType errorType):base(errorType) {
-	}
+public class ToolMessage : ANTLRMessage
+{
+    public ToolMessage(ErrorType errorType) : base(errorType)
+    {
+    }
     public ToolMessage(ErrorType errorType, params Object[] args)
-        :base(errorType, null, Token.INVALID_TOKEN, args)
+        : base(errorType, null, Token.INVALID_TOKEN, args)
     {
     }
     public ToolMessage(ErrorType errorType, Exception e, params Object[] args)
-    :base(errorType, e, Token.INVALID_TOKEN, args)
+    : base(errorType, e, Token.INVALID_TOKEN, args)
     {
-        
+
     }
 }

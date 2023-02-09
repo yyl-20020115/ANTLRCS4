@@ -102,7 +102,7 @@ public class LexerATNFactory : ParserATNFactory
             var startState = atn.modeNameToStartState[(modeName)];
             foreach (var r in rules)
             {
-                if (!r.isFragment())
+                if (!r.IsFragment)
                 {
                     var s = atn.ruleToStartState[r.index];
                     Epsilon(startState, s);
@@ -154,7 +154,7 @@ public class LexerATNFactory : ParserATNFactory
 
         // define action AST for this rule as if we had found in grammar
         var ast = new ActionAST(new CommonToken(ANTLRParser.ACTION, _action));
-        currentRule.defineActionInAlt(currentOuterAlt, ast);
+        currentRule.DefineActionInAlt(currentOuterAlt, ast);
         return Action(ast);
     }
 

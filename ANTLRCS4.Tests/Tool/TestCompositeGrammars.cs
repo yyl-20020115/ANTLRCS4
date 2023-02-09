@@ -246,8 +246,8 @@ public class TestCompositeGrammars
         var equeue = Generator.AntlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
         Assert.AreEqual(1, equeue.errors.Count);
         var msg = equeue.errors[0];
-        Assert.AreEqual(ErrorType.MODE_NOT_IN_LEXER, msg.getErrorType());
-        Assert.AreEqual("X", msg.getArgs()[0]);
+        Assert.AreEqual(ErrorType.MODE_NOT_IN_LEXER, msg.ErrorType);
+        Assert.AreEqual("X", msg.Args[0]);
         Assert.AreEqual(3, msg.line);
         Assert.AreEqual(5, msg.charPosition);
         Assert.AreEqual("M.g4", msg.fileName);
@@ -315,8 +315,8 @@ public class TestCompositeGrammars
         FileUtils.WriteFile(tempDirPath, "M.g4", master);
         var equeue = Generator.AntlrOnString(tempDirPath, "Java", "M.g4", false, "-lib", tempDirPath);
         var msg = equeue.errors[(0)];
-        Assert.AreEqual(ErrorType.UNDEFINED_RULE_REF, msg.getErrorType());
-        Assert.AreEqual("c", msg.getArgs()[0]);
+        Assert.AreEqual(ErrorType.UNDEFINED_RULE_REF, msg.ErrorType);
+        Assert.AreEqual("c", msg.Args[0]);
         Assert.AreEqual(2, msg.line);
         Assert.AreEqual(10, msg.charPosition);
         Assert.AreEqual("S.g4", msg.fileName);
@@ -341,7 +341,7 @@ public class TestCompositeGrammars
             "WS : (' '|'\\n') -> skip ;\n";
         FileUtils.WriteFile(tempDirPath, "M.g4", master);
         var equeue = Generator.AntlrOnString(tempDirPath, "Java", "M.g4", false, "-o", outdir);
-        Assert.AreEqual(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, equeue.errors[0].getErrorType());
+        Assert.AreEqual(ErrorType.CANNOT_FIND_IMPORTED_GRAMMAR, equeue.errors[0].ErrorType);
     }
 
     [TestMethod]
@@ -449,7 +449,7 @@ public class TestCompositeGrammars
         /*Grammar g =*/
         var gx = new Grammar(tempDirPath + "/M.g4", master, equeue);
 
-        Assert.AreEqual(ErrorType.SYNTAX_ERROR, equeue.errors[0].getErrorType());
+        Assert.AreEqual(ErrorType.SYNTAX_ERROR, equeue.errors[0].ErrorType);
     }
 
     // Make sure that M can import S that imports T.
@@ -745,14 +745,14 @@ public class TestCompositeGrammars
         for (int i = 0; i < equeue.warnings.Count; i++)
         {
             var m = equeue.warnings[(i)];
-            if (m.getErrorType() == expectedMessage.getErrorType())
+            if (m.ErrorType == expectedMessage.ErrorType)
             {
                 foundMsg = m;
             }
         }
-        Assert.IsNotNull(foundMsg, "no error; " + expectedMessage.getErrorType() + " expected");
+        Assert.IsNotNull(foundMsg, "no error; " + expectedMessage.ErrorType + " expected");
         Assert.IsTrue(foundMsg is GrammarSemanticsMessage, "error is not a GrammarSemanticsMessage");
-        Assert.AreEqual(Arrays.ToString(expectedMessage.getArgs()), Arrays.ToString(foundMsg.getArgs()));
+        Assert.AreEqual(Arrays.ToString(expectedMessage.Args), Arrays.ToString(foundMsg.Args));
         if (equeue.Count != 1)
         {
             Console.Error.WriteLine(equeue);

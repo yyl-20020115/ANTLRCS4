@@ -45,9 +45,9 @@ public class ErrorManager
 
     public Template GetMessageTemplate(ANTLRMessage msg)
     {
-        var messageST = msg.getMessageTemplate(tool.longMessages);
+        var messageST = msg.GetMessageTemplate(tool.longMessages);
         var locationST = GetLocationFormat();
-        var reportST = GetReportFormat(msg.getErrorType().severity);
+        var reportST = GetReportFormat(msg.ErrorType.severity);
         var messageFormatST = GetMessageFormat();
 
         var locationValid = false;
@@ -85,7 +85,7 @@ public class ErrorManager
             locationValid = true;
         }
 
-        messageFormatST.Add("id", msg.getErrorType().code);
+        messageFormatST.Add("id", msg.ErrorType.code);
         messageFormatST.Add("text", messageST);
 
         if (locationValid) reportST.Add("location", locationST);

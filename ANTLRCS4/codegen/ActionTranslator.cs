@@ -98,7 +98,7 @@ public class ActionTranslator : ActionSplitterListener
         {
             rf = rf
         };
-        factory.        Grammar.Tools.Log("action-translator", "translate " + action);
+        factory.Grammar.Tools.Log("action-translator", "translate " + action);
         var altLabel = node.getAltLabel();
         if (rf != null)
         {
@@ -121,7 +121,7 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void Attr(string expr, Token x)
     {
         gen.g.Tools.Log("action-translator", "attr " + x);
-        var a = node.resolver.resolveToAttribute(x.Text, node);
+        var a = node.resolver.ResolveToAttribute(x.Text, node);
         var name = x.Text;
         var escapedName = target.EscapeIfNeeded(name);
         if (a != null)
@@ -144,19 +144,19 @@ public class ActionTranslator : ActionSplitterListener
                     break;
             }
         }
-        if (node.resolver.resolvesToToken(name, node))
+        if (node.resolver.ResolvesToToken(name, node))
         {
             var tokenLabel = GetTokenLabel(name);
             chunks.Add(new TokenRef(nodeContext, tokenLabel, target.EscapeIfNeeded(tokenLabel))); // $label
             return;
         }
-        if (node.resolver.resolvesToLabel(name, node))
+        if (node.resolver.ResolvesToLabel(name, node))
         {
             var tokenLabel = GetTokenLabel(name);
             chunks.Add(new LabelRef(nodeContext, tokenLabel, target.EscapeIfNeeded(tokenLabel))); // $x for x=ID etc...
             return;
         }
-        if (node.resolver.resolvesToListLabel(name, node))
+        if (node.resolver.ResolvesToListLabel(name, node))
         {
             chunks.Add(new ListLabelRef(nodeContext, name, escapedName)); // $ids for ids+=ID etc...
             return;
@@ -173,27 +173,27 @@ public class ActionTranslator : ActionSplitterListener
     public virtual void QualifiedAttr(string expr, Token x, Token y)
     {
         gen.g.Tools.Log("action-translator", "qattr " + x + "." + y);
-        if (node.resolver.resolveToAttribute(x.Text, node) != null)
+        if (node.resolver.ResolveToAttribute(x.Text, node) != null)
         {
             // must be a member access to a predefined attribute like $ctx.foo
             Attr(expr, x);
             chunks.Add(new ActionText(nodeContext, "." + y.Text));
             return;
         }
-        var a = node.resolver.resolveToAttribute(x.Text, y.Text, node);
+        var a = node.resolver.ResolveToAttribute(x.Text, y.Text, node);
         if (a == null)
         {
             // Added in response to https://github.com/antlr/antlr4/issues/1211
             gen.g.Tools.ErrMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
                                            gen.g.fileName, x,
-                                           x.                                           Text,
+                                           x.Text,
                                            "rule");
             return;
         }
         switch (a.dict.type)
         {
-            case AttributeDict.DictType.ARG: 
-                chunks.Add(new ArgRef(nodeContext, y.Text, target.EscapeIfNeeded(y.Text))); 
+            case AttributeDict.DictType.ARG:
+                chunks.Add(new ArgRef(nodeContext, y.Text, target.EscapeIfNeeded(y.Text)));
                 break; // has to be current rule
             case AttributeDict.DictType.RET:
                 chunks.Add(new QRetValueRef(nodeContext, GetRuleLabel(x.Text), y.Text, target.EscapeIfNeeded(y.Text)));
@@ -255,7 +255,7 @@ public class ActionTranslator : ActionSplitterListener
         }
         catch (Exception e)
         {
-            factory.            Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, e);
+            factory.Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, e);
         }
         return null;
     }
@@ -270,14 +270,14 @@ public class ActionTranslator : ActionSplitterListener
         }
         catch (Exception e)
         {
-            factory.            Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, e, prop.Text);
+            factory.Grammar.Tools.ErrMgr.ToolError(ErrorType.INTERNAL_ERROR, e, prop.Text);
         }
         return null;
     }
 
     public virtual string GetTokenLabel(string x)
-        => node.resolver.resolvesToLabel(x, node) ? x : target.GetImplicitTokenLabel(x);
+        => node.resolver.ResolvesToLabel(x, node) ? x : target.GetImplicitTokenLabel(x);
 
-    public virtual string GetRuleLabel(string x) 
-        => node.resolver.resolvesToLabel(x, node) ? x : target.GetImplicitRuleLabel(x);
+    public virtual string GetRuleLabel(string x)
+        => node.resolver.ResolvesToLabel(x, node) ? x : target.GetImplicitRuleLabel(x);
 }

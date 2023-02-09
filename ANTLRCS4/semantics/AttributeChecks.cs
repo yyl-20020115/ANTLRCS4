@@ -36,53 +36,53 @@ public class AttributeChecks : ActionSplitterListener
         this.errMgr = g.Tools.ErrMgr;
     }
 
-    public static void checkAllAttributeExpressions(Grammar g)
+    public static void CheckAllAttributeExpressions(Grammar g)
     {
-        foreach (ActionAST act in g.namedActions.Values)
+        foreach (var act in g.namedActions.Values)
         {
-            AttributeChecks checker = new AttributeChecks(g, null, null, act, act.token);
-            checker.examineAction();
+            var checker = new AttributeChecks(g, null, null, act, act.token);
+            checker.ExamineAction();
         }
 
-        foreach (Rule r in g.rules.Values)
+        foreach (var r in g.rules.Values)
         {
-            foreach (ActionAST a in r.namedActions.Values)
+            foreach (var a in r.namedActions.Values)
             {
-                AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
-                checker.examineAction();
+                var checker = new AttributeChecks(g, r, null, a, a.token);
+                checker.ExamineAction();
             }
             for (int i = 1; i <= r.numberOfAlts; i++)
             {
-                Alternative alt = r.alt[i];
-                foreach (ActionAST a in alt.actions)
+                var alt = r.alt[i];
+                foreach (var a in alt.actions)
                 {
-                    AttributeChecks checker =
+                    var checker =
                         new AttributeChecks(g, r, alt, a, a.token);
-                    checker.examineAction();
+                    checker.ExamineAction();
                 }
             }
-            foreach (GrammarAST e in r.exceptions)
+            foreach (var e in r.exceptions)
             {
-                ActionAST a = (ActionAST)e.GetChild(1);
-                AttributeChecks checker = new AttributeChecks(g, r, null, a, a.token);
-                checker.examineAction();
+                var a = (ActionAST)e.GetChild(1);
+                var checker = new AttributeChecks(g, r, null, a, a.token);
+                checker.ExamineAction();
             }
             if (r.finallyAction != null)
             {
-                AttributeChecks checker =
+                var checker =
                     new AttributeChecks(g, r, null, r.finallyAction, r.finallyAction.token);
-                checker.examineAction();
+                checker.ExamineAction();
             }
         }
     }
 
-    public void examineAction()
+    public void ExamineAction()
     {
         //Console.Out.WriteLine("examine "+actionToken);
-        ANTLRStringStream @in = new ANTLRStringStream(actionToken.Text);
+        var @in = new ANTLRStringStream(actionToken.Text);
         @in.SetLine(actionToken.Line);
         @in.SetCharPositionInLine(actionToken.CharPositionInLine);
-        ActionSplitter splitter = new ActionSplitter(@in, this);
+        var splitter = new ActionSplitter(@in, this);
         // forces eval, triggers listener methods
         node.chunks = splitter.GetActionTokens();
     }
@@ -99,16 +99,16 @@ public class AttributeChecks : ActionSplitterListener
                                 g.fileName, x, x.Text + "." + y.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.Text, node) != null)
+        if (node.resolver.ResolveToAttribute(x.Text, node) != null)
         {
             // must be a member access to a predefined attribute like $ctx.foo
             Attr(expr, x);
             return;
         }
 
-        if (node.resolver.resolveToAttribute(x.Text, y.Text, node) == null)
+        if (node.resolver.ResolveToAttribute(x.Text, y.Text, node) == null)
         {
-            Rule rref = isolatedRuleRef(x.Text);
+            var rref = IsolatedRuleRef(x.Text);
             if (rref != null)
             {
                 if (rref.args != null && rref.args.get(y.Text) != null)
@@ -122,7 +122,7 @@ public class AttributeChecks : ActionSplitterListener
                                               g.fileName, y, y.Text, rref.name, expr);
                 }
             }
-            else if (!node.resolver.resolvesToAttributeDict(x.Text, node))
+            else if (!node.resolver.ResolvesToAttributeDict(x.Text, node))
             {
                 errMgr.GrammarError(ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE,
                                           g.fileName, x, x.Text, expr);
@@ -144,10 +144,10 @@ public class AttributeChecks : ActionSplitterListener
                                 g.fileName, x, x.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.Text, node) == null)
+        if (node.resolver.ResolveToAttribute(x.Text, node) == null)
         {
             ErrorType errorType = ErrorType.UNKNOWN_SIMPLE_ATTRIBUTE;
-            if (node.resolver.resolvesToListLabel(x.Text, node))
+            if (node.resolver.ResolvesToListLabel(x.Text, node))
             {
                 // $ids for ids+=ID etc...
                 errorType = ErrorType.ASSIGNMENT_TO_LIST_LABEL;
@@ -156,7 +156,7 @@ public class AttributeChecks : ActionSplitterListener
             errMgr.GrammarError(errorType,
                                 g.fileName, x, x.Text, expr);
         }
-        new AttributeChecks(g, r, alt, node, rhs).examineAction();
+        new AttributeChecks(g, r, alt, node, rhs).ExamineAction();
     }
 
     //@Override
@@ -168,17 +168,17 @@ public class AttributeChecks : ActionSplitterListener
                                 g.fileName, x, x.Text, expr);
             return;
         }
-        if (node.resolver.resolveToAttribute(x.Text, node) == null)
+        if (node.resolver.ResolveToAttribute(x.Text, node) == null)
         {
-            if (node.resolver.resolvesToToken(x.Text, node))
+            if (node.resolver.ResolvesToToken(x.Text, node))
             {
                 return; // $ID for token ref or label of token
             }
-            if (node.resolver.resolvesToListLabel(x.Text, node))
+            if (node.resolver.ResolvesToListLabel(x.Text, node))
             {
                 return; // $ids for ids+=ID etc...
             }
-            if (isolatedRuleRef(x.Text) != null)
+            if (IsolatedRuleRef(x.Text) != null)
             {
                 errMgr.GrammarError(ErrorType.ISOLATED_RULE_REF,
                                     g.fileName, x, x.Text, expr);
@@ -198,7 +198,7 @@ public class AttributeChecks : ActionSplitterListener
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
                                 g.fileName, x, x.Text, y.Text, expr);
         }
-        else if (r.resolveToAttribute(y.Text, null) == null)
+        else if (r.ResolveToAttribute(y.Text, null) == null)
         {
             errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
                                 g.fileName, y, y.Text, x.Text, expr);
@@ -215,7 +215,7 @@ public class AttributeChecks : ActionSplitterListener
             errMgr.GrammarError(ErrorType.UNDEFINED_RULE_IN_NONLOCAL_REF,
                                 g.fileName, x, x.Text, y.Text, expr);
         }
-        else if (r.resolveToAttribute(y.Text, null) == null)
+        else if (r.ResolveToAttribute(y.Text, null) == null)
         {
             errMgr.GrammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
                                 g.fileName, y, y.Text, x.Text, expr);
@@ -224,18 +224,18 @@ public class AttributeChecks : ActionSplitterListener
     }
 
     //@Override
-    public void Text(String text) { }
+    public void Text(string text) { }
 
     // don't care
-    public void templateInstance(String expr) { }
-    public void indirectTemplateInstance(String expr) { }
-    public void setExprAttribute(String expr) { }
-    public void setSTAttribute(String expr) { }
-    public void templateExpr(String expr) { }
+    public void TemplateInstance(string expr) { }
+    public void IndirectTemplateInstance(string expr) { }
+    public void SetExprAttribute(string expr) { }
+    public void SetSTAttribute(string expr) { }
+    public void TemplateExpr(string expr) { }
 
     // SUPPORT
 
-    public Rule isolatedRuleRef(String x)
+    public Rule IsolatedRuleRef(string x)
     {
         if (node.resolver is Grammar) return null;
 
@@ -243,7 +243,7 @@ public class AttributeChecks : ActionSplitterListener
         List<LabelElementPair> labels = null;
         if (node.resolver is Rule)
         {
-            labels = r.getElementLabelDefs().TryGetValue(x, out var ret) ? ret : new List<LabelElementPair>();
+            labels = r.GetElementLabelDefs().TryGetValue(x, out var ret) ? ret : new List<LabelElementPair>();
         }
         else if (node.resolver is Alternative)
         {
@@ -251,7 +251,7 @@ public class AttributeChecks : ActionSplitterListener
         }
         if (labels != null)
         {  // it's a label ref. is it a rule label?
-            LabelElementPair anyLabelDef = labels[(0)];
+            var anyLabelDef = labels[(0)];
             if (anyLabelDef.type == LabelType.RULE_LABEL)
             {
                 return g.getRule(anyLabelDef.element.getText());

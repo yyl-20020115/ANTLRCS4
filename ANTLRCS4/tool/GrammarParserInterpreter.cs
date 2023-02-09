@@ -157,13 +157,13 @@ public class GrammarParserInterpreter : ParserInterpreter {
 				LeftRecursiveRule lr = (LeftRecursiveRule) g.getRule(p.ruleIndex);
 				if (p.StateType == ATNState.BLOCK_START) {
 					if ( alts==null ) {
-						alts = lr.getPrimaryAlts();
+						alts = lr.GetPrimaryAlts();
 						stateToAltsMap[p.stateNumber] = alts; // cache it
 					}
 				}
 				else if ( p.StateType == ATNState.STAR_BLOCK_START ) {
 					if ( alts==null ) {
-						alts = lr.getRecursiveOpAlts();
+						alts = lr.GetRecursiveOpAlts();
 						stateToAltsMap[p.stateNumber] = alts; // cache it
 					}
 				}

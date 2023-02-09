@@ -73,28 +73,28 @@ public class Grammar : AttributeResolver
         grammarAndLabelRefTypeToScope.Add("combined:TOKEN_LABEL", AttributeDict.predefinedTokenDict);
     }
 
-    public static readonly HashSet<String> lexerOptions = parserOptions;
+    public static readonly HashSet<string> lexerOptions = parserOptions;
 
-    public static readonly HashSet<String> lexerRuleOptions = new();
+    public static readonly HashSet<string> lexerRuleOptions = new();
 
-    public static readonly HashSet<String> parseRuleOptions = new();
+    public static readonly HashSet<string> parseRuleOptions = new();
 
-    public static readonly HashSet<String> parserBlockOptions = new HashSet<String>();
+    public static readonly HashSet<string> parserBlockOptions = new();
 
-    public static readonly HashSet<String> lexerBlockOptions = new HashSet<String>();
+    public static readonly HashSet<string> lexerBlockOptions = new();
 
     /** Legal options for rule refs like id&lt;key=value&gt; */
-    public static readonly HashSet<String> ruleRefOptions = new HashSet<String>();
+    public static readonly HashSet<string> ruleRefOptions = new();
     /** Legal options for terminal refs like ID&lt;assoc=right&gt; */
-    public static readonly HashSet<String> tokenOptions = new HashSet<String>();
+    public static readonly HashSet<string> tokenOptions = new();
 
-    public static readonly HashSet<String> actionOptions = new HashSet<String>();
+    public static readonly HashSet<string> actionOptions = new();
 
-    public static readonly HashSet<String> semPredOptions = new HashSet<String>();
+    public static readonly HashSet<string> semPredOptions = new();
 
-    public static readonly HashSet<String> doNotCopyOptionsToLexer = new HashSet<String>();
+    public static readonly HashSet<string> doNotCopyOptionsToLexer = new();
 
-    public static readonly Dictionary<String, AttributeDict> grammarAndLabelRefTypeToScope =
+    public static readonly Dictionary<string, AttributeDict> grammarAndLabelRefTypeToScope =
         new();
 
     public String name;
@@ -114,8 +114,8 @@ public class Grammar : AttributeResolver
 
     public TokenStream originalTokenStream;
 
-    public String text; // testing only
-    public String fileName;
+    public string text; // testing only
+    public string fileName;
 
     /** Was this parser grammar created from a COMBINED grammar?  If so,
 	 *  this is what we extracted.
@@ -132,7 +132,7 @@ public class Grammar : AttributeResolver
     /** All rules defined in this specific grammar, not imported. Also does
 	 *  not include lexical rules if combined.
 	 */
-    public OrderedHashMap<String, Rule> rules = new OrderedHashMap<String, Rule>();
+    public OrderedHashMap<string, Rule> rules = new();
     public List<Rule> indexToRule = new();
 
     int ruleNumber = 0; // used to get rule indexes (0..n-1)
@@ -1193,29 +1193,29 @@ public class Grammar : AttributeResolver
 
     // no isolated attr at grammar action level
     //@Override
-    public Attribute resolveToAttribute(String x, ActionAST node)
+    public Attribute ResolveToAttribute(String x, ActionAST node)
     {
         return null;
     }
 
     // no $x.y makes sense here
     //@Override
-    public Attribute resolveToAttribute(String x, String y, ActionAST node)
+    public Attribute ResolveToAttribute(String x, String y, ActionAST node)
     {
         return null;
     }
 
     //@Override
-    public bool resolvesToLabel(String x, ActionAST node) { return false; }
+    public bool ResolvesToLabel(String x, ActionAST node) { return false; }
 
     //@Override
-    public bool resolvesToListLabel(String x, ActionAST node) { return false; }
+    public bool ResolvesToListLabel(String x, ActionAST node) { return false; }
 
     //@Override
-    public bool resolvesToToken(String x, ActionAST node) { return false; }
+    public bool ResolvesToToken(String x, ActionAST node) { return false; }
 
     //@Override
-    public bool resolvesToAttributeDict(String x, ActionAST node)
+    public bool ResolvesToAttributeDict(String x, ActionAST node)
     {
         return false;
     }
@@ -1430,7 +1430,7 @@ public class Grammar : AttributeResolver
                     Rule r = ast.g.getRule(ruleName);
                     if (r is LeftRecursiveRule)
                     {
-                        RuleAST originalAST = ((LeftRecursiveRule)r).getOriginalAST();
+                        RuleAST originalAST = ((LeftRecursiveRule)r).GetOriginalAST();
                         tokenRegion = Interval.Of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
                     }
                 }

@@ -12,17 +12,14 @@ namespace org.antlr.v4.semantics;
 
 public class BlankActionSplitterListener : ActionSplitterListener
 {
-    //@Override
     public virtual void QualifiedAttr(string expr, Token x, Token y)
     {
     }
 
-    //@Override
     public virtual void SetAttr(string expr, Token x, Token rhs)
     {
     }
 
-    //@Override
     public virtual void Attr(string expr, Token x)
     {
     }
@@ -31,12 +28,10 @@ public class BlankActionSplitterListener : ActionSplitterListener
     {
     }
 
-    //@Override
     public virtual void NonLocalAttr(string expr, Token x, Token y)
     {
     }
 
-    //@Override
     public virtual void SetNonLocalAttr(string expr, Token x, Token y, Token rhs)
     {
     }
@@ -57,7 +52,6 @@ public class BlankActionSplitterListener : ActionSplitterListener
     {
     }
 
-    //@Override
     public virtual void Text(string text)
     {
     }

@@ -453,8 +453,8 @@ public class TestATNParserPrediction
         var e = g.getRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
-        Assert.AreEqual("[0, 2, 4]", Arrays.ToString(lr.getPrimaryAlts()));
-        Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.getRecursiveOpAlts()));
+        Assert.AreEqual("[0, 2, 4]", Arrays.ToString(lr.GetPrimaryAlts()));
+        Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.GetRecursiveOpAlts()));
     }
 
     [TestMethod]
@@ -472,8 +472,8 @@ public class TestATNParserPrediction
         var e = g.getRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
-        Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.getPrimaryAlts()));
-        Assert.AreEqual("[0, 2]", Arrays.ToString(lr.getRecursiveOpAlts()));
+        Assert.AreEqual("[0, 1, 3]", Arrays.ToString(lr.GetPrimaryAlts()));
+        Assert.AreEqual("[0, 2]", Arrays.ToString(lr.GetRecursiveOpAlts()));
     }
 
     [TestMethod]
@@ -494,8 +494,8 @@ public class TestATNParserPrediction
         var e = g.getRule("e");
         Assert.IsTrue(e is LeftRecursiveRule);
         var lr = (LeftRecursiveRule)e;
-        Assert.AreEqual("[0, 1, 5]", Arrays.ToString(lr.getPrimaryAlts()));
-        Assert.AreEqual("[0, 2, 3, 4]", Arrays.ToString(lr.getRecursiveOpAlts()));
+        Assert.AreEqual("[0, 1, 5]", Arrays.ToString(lr.GetPrimaryAlts()));
+        Assert.AreEqual("[0, 2, 3, 4]", Arrays.ToString(lr.GetRecursiveOpAlts()));
     }
 
     /** first check that the ATN predicts right alt.

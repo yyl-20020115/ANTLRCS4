@@ -632,8 +632,8 @@ public class TestATNConstruction
         }
         Console.Out.WriteLine(errorQueue);
         Assert.AreEqual(1, errorQueue.errors.Count);
-        Assert.AreEqual(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors[0].getErrorType());
-        Assert.AreEqual("[a, A]", Arrays.ToString(errorQueue.errors[0].getArgs()));
+        Assert.AreEqual(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE, errorQueue.errors[0].ErrorType);
+        Assert.AreEqual("[a, A]", Arrays.ToString(errorQueue.errors[0].Args));
         Assert.IsTrue(!threwException);
     }
 

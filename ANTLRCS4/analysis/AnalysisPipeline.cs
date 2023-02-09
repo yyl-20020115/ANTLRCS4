@@ -42,7 +42,7 @@ public class AnalysisPipeline
         // make sure all non-fragment lexer rules must match at least one symbol
         foreach (var rule in g.rules.Values)
         {
-            if (rule.isFragment())
+            if (rule.IsFragment)
                 continue;
 
             var analyzer = new LL1Analyzer(g.atn);

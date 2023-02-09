@@ -12,25 +12,23 @@ namespace org.antlr.v4.tool;
 /** A problem with the syntax of your antlr grammar such as
  *  "The '{' came as a complete surprise to me at this point in your program"
  */
-public class GrammarSyntaxMessage : ANTLRMessage {
-	public GrammarSyntaxMessage(ErrorType etype,
-								String fileName,
-								Token offendingToken,
-								RecognitionException antlrException,
-								params Object[] args)
-		: base(etype, antlrException, offendingToken, args)
+public class GrammarSyntaxMessage : ANTLRMessage
+{
+    public GrammarSyntaxMessage(ErrorType etype,
+                                String fileName,
+                                Token offendingToken,
+                                RecognitionException antlrException,
+                                params Object[] args)
+        : base(etype, antlrException, offendingToken, args)
     {
-		;
-		this.fileName = fileName;
-		this.offendingToken = offendingToken;
-		if ( offendingToken!=null ) {
-			line = offendingToken.Line;
-			charPosition = offendingToken.CharPositionInLine;
-		}
-	}
-
-    //@Override
-    public RecognitionException getCause() {
-        return (RecognitionException)base.getCause();
+        this.fileName = fileName;
+        this.offendingToken = offendingToken;
+        if (offendingToken != null)
+        {
+            line = offendingToken.Line;
+            charPosition = offendingToken.CharPositionInLine;
+        }
     }
+
+    public new RecognitionException Cause => (RecognitionException)base.Cause;
 }

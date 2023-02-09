@@ -377,7 +377,7 @@ public class Tool
         int prevErrors = ErrMgr.NumErrors;
         // MAKE SURE GRAMMAR IS SEMANTICALLY CORRECT (FILL IN GRAMMAR OBJECT)
         var sem = new SemanticPipeline(g);
-        sem.process();
+        sem.Process();
 
         if (ErrMgr.NumErrors > prevErrors) return;
 

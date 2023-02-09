@@ -265,7 +265,7 @@ public class TestActionTranslation
         if (g.ast != null && !g.ast.hasErrors)
         {
             var sem = new SemanticPipeline(g);
-            sem.process();
+            sem.Process();
 
             var factory = new ParserATNFactory(g);
             if (g.isLexer()) factory = new LexerATNFactory((LexerGrammar)g);

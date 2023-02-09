@@ -188,7 +188,7 @@ public class ToolTestUtils
             //			Console.Out.WriteLine(g.ast.toStringTree());
             var antlr = new Tool();
             var sem = new SemanticPipeline(gammar);
-            sem.process();
+            sem.Process();
             if (gammar.getImportedGrammars() != null)
             { // process imported grammars (if any)
                 foreach (var imp in gammar.getImportedGrammars())

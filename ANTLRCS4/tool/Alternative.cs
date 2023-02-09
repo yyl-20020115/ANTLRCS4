@@ -51,7 +51,7 @@ public class Alternative : AttributeResolver {
     public Alternative(Rule r, int altNum) { this.rule = r; this.altNum = altNum; }
 
 	//@Override
-	public bool resolvesToToken(String x, ActionAST node) {
+	public bool ResolvesToToken(String x, ActionAST node) {
 		if ( tokenRefs.ContainsKey(x)) return true;
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.TOKEN_LABEL ) return true;
@@ -59,8 +59,8 @@ public class Alternative : AttributeResolver {
 	}
 
     //@Override
-    public bool resolvesToAttributeDict(String x, ActionAST node) {
-		if ( resolvesToToken(x, node) ) return true;
+    public bool ResolvesToAttributeDict(String x, ActionAST node) {
+		if ( ResolvesToToken(x, node) ) return true;
         if ( ruleRefs.ContainsKey(x)) return true; // rule ref in this alt?
         LabelElementPair anyLabelDef = getAnyLabelDef(x);
         if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) return true;
@@ -70,28 +70,28 @@ public class Alternative : AttributeResolver {
     /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
     //@Override
-    public Attribute resolveToAttribute(String x, ActionAST node) {
-		return rule.resolveToAttribute(x, node); // reuse that code
+    public Attribute ResolveToAttribute(String x, ActionAST node) {
+		return rule.ResolveToAttribute(x, node); // reuse that code
 	}
 
     /** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
 	 *  attr in that dictionary.  Can't see args on rule refs.
 	 */
     //@Override
-    public Attribute resolveToAttribute(String x, String y, ActionAST node) {
+    public Attribute ResolveToAttribute(String x, String y, ActionAST node) {
         if ( tokenRefs.ContainsKey(x) ) { // token ref in this alt?
-            return rule.getPredefinedScope(LabelType.TOKEN_LABEL).get(y);
+            return rule.GetPredefinedScope(LabelType.TOKEN_LABEL).get(y);
         }
         if ( ruleRefs.ContainsKey(x) ) {  // rule ref in this alt?
             // look up rule, ask it to resolve y (must be retval or predefined)
-			return rule.g.getRule(x).resolveRetvalOrProperty(y);
+			return rule.g.getRule(x).ResolveRetvalOrProperty(y);
 		}
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		if ( anyLabelDef!=null && anyLabelDef.type==LabelType.RULE_LABEL ) {
-			return rule.g.getRule(anyLabelDef.element.getText()).resolveRetvalOrProperty(y);
+			return rule.g.getRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
 		}
 		else if ( anyLabelDef!=null ) {
-			AttributeDict scope = rule.getPredefinedScope(anyLabelDef.type);
+			AttributeDict scope = rule.GetPredefinedScope(anyLabelDef.type);
 			if (scope == null) {
 				return null;
 			}
@@ -102,7 +102,7 @@ public class Alternative : AttributeResolver {
 	}
 
     //@Override
-    public bool resolvesToLabel(String x, ActionAST node) {
+    public bool ResolvesToLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.TOKEN_LABEL ||
@@ -110,7 +110,7 @@ public class Alternative : AttributeResolver {
 	}
 
     //@Override
-    public bool resolvesToListLabel(String x, ActionAST node) {
+    public bool ResolvesToListLabel(String x, ActionAST node) {
 		LabelElementPair anyLabelDef = getAnyLabelDef(x);
 		return anyLabelDef!=null &&
 			   (anyLabelDef.type==LabelType.RULE_LIST_LABEL ||

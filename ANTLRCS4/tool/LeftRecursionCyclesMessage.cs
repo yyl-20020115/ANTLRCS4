@@ -9,29 +9,36 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool;
 
 
-public class LeftRecursionCyclesMessage : ANTLRMessage {
-	public LeftRecursionCyclesMessage(String fileName, ICollection<HashSet<Rule>> cycles) 
-	: base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles)
+public class LeftRecursionCyclesMessage : ANTLRMessage
+{
+    public LeftRecursionCyclesMessage(string fileName, ICollection<HashSet<Rule>> cycles)
+    : base(ErrorType.LEFT_RECURSION_CYCLES, getStartTokenOfFirstRule(cycles), cycles)
     {
-		this.fileName = fileName;
-	}
+        this.fileName = fileName;
+    }
 
-	protected static Token getStartTokenOfFirstRule(ICollection<HashSet<Rule>> cycles) {
-	    if (cycles == null) {
-	        return null;
-	    }
+    protected static Token getStartTokenOfFirstRule(ICollection<HashSet<Rule>> cycles)
+    {
+        if (cycles == null)
+        {
+            return null;
+        }
 
-	    foreach (ICollection<Rule> collection in cycles) {
-	        if (collection == null) {
-	            return null;
-	        }
+        foreach (var collection in cycles)
+        {
+            if (collection == null)
+            {
+                return null;
+            }
 
-	        foreach (Rule rule in collection) {
-	            if (rule.ast != null) {
-	                return rule.ast.Token;
-	            }
-	        }
-	    }
-		return null;
-	}
+            foreach (Rule rule in collection)
+            {
+                if (rule.ast != null)
+                {
+                    return rule.ast.Token;
+                }
+            }
+        }
+        return null;
+    }
 }

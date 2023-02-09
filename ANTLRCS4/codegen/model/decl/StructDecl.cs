@@ -48,13 +48,13 @@ public class StructDecl : Decl
     {
         AddDispatchMethods(r);
         derivedFromName = r.name;
-        provideCopyFrom = r.hasAltSpecificContexts();
+        provideCopyFrom = r.HasAltSpecificContexts();
     }
 
     public void AddDispatchMethods(Rule r)
     {
         dispatchMethods = new();
-        if (!r.hasAltSpecificContexts())
+        if (!r.HasAltSpecificContexts())
         {
             // no enter/exit for this ruleContext if rule has labels
             if (factory.Grammar.Tools.gen_listener)

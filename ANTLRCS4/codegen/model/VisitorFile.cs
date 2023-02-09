@@ -39,7 +39,7 @@ public class VisitorFile : OutputFile
         grammarName = g.name;
         foreach (var r in g.rules.Values)
         {
-            var labels = r.getAltLabels();
+            var labels = r.GetAltLabels();
             if (labels != null)
             {
                 foreach (var pair in labels)
@@ -54,7 +54,7 @@ public class VisitorFile : OutputFile
                 visitorNames.Add(r.name);
             }
         }
-        if (g.namedActions.TryGetValue("header", out var ast) && ast.getScope() == null)
+        if (g.namedActions.TryGetValue("header", out var ast) && ast.Scope == null)
             header = new Action(factory, ast);
         genPackage = g.Tools.genPackage;
         accessLevel = g.getOptionString("accessLevel");

@@ -36,10 +36,10 @@ public class ListenerFile : OutputFile
         var g = factory.Grammar;
         parserName = g.getRecognizerName();
         grammarName = g.name;
-        namedActions = BuildNamedActions(factory.Grammar, ast => ast.getScope() == null);
+        namedActions = BuildNamedActions(factory.Grammar, ast => ast.Scope == null);
         foreach (var r in g.rules.Values)
         {
-            var labels = r.getAltLabels();
+            var labels = r.GetAltLabels();
             if (labels != null)
             {
                 foreach (var pair in labels)
