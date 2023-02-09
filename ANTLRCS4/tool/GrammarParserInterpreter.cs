@@ -65,7 +65,7 @@ public class GrammarParserInterpreter : ParserInterpreter
 
     public override void Reset()
     {
-        base.reset();
+        base.Reset();
         overrideDecisionRoot = null;
     }
 
@@ -284,7 +284,7 @@ public class GrammarParserInterpreter : ParserInterpreter
             // re-parse entire input for all ambiguous alternatives
             // (don't have to do first as it's been parsed, but do again for simplicity
             //  using this temp parser.)
-            parser.reset();
+            parser.Reset();
             parser.AddDecisionOverride(decision, startIndex, alt);
             ParserRuleContext t = parser.Parse(startRuleIndex);
             GrammarInterpreterRuleContext ambigSubTree =
@@ -349,7 +349,7 @@ public class GrammarParserInterpreter : ParserInterpreter
             GrammarParserInterpreter.BailButConsumeErrorStrategy errorHandler =
                 new GrammarParserInterpreter.BailButConsumeErrorStrategy();
             parser.ErrorHandler = errorHandler;
-            parser.reset();
+            parser.Reset();
             parser.AddDecisionOverride(decision, startIndex, alt);
             ParserRuleContext tt = parser.Parse(startRuleIndex);
             int stopTreeAt = stopIndex;

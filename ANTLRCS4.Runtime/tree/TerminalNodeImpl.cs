@@ -4,7 +4,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using org.antlr.runtime.tree;
 using org.antlr.v4.runtime.misc;
 
 namespace org.antlr.v4.runtime.tree;
@@ -16,19 +15,16 @@ public class TerminalNodeImpl : TerminalNode
 
     public TerminalNodeImpl(Token symbol) { this.symbol = symbol; }
 
-    //@Override
+    
     public ParseTree GetChild(int i) { return null; }
 
-    //@Override
+    
     public Token GetSymbol() { return symbol; }
 
-    //@Override
     public ParseTree Parent => parent;
 
-    //@Override
     public Token GetPayload() { return symbol; }
 
-    //@Override
     public Interval SourceInterval
     {
         get
@@ -40,7 +36,7 @@ public class TerminalNodeImpl : TerminalNode
         }
     }
 
-    //@Override
+    
     public int ChildCount => 0;
     public T Accept<T>(ParseTreeVisitor<T> visitor)
     {
@@ -59,7 +55,7 @@ public class TerminalNodeImpl : TerminalNode
         return symbol.Text;
     }
 
-    //@Override
+    
     public string ToStringTree()
     {
         return ToString();

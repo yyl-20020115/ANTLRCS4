@@ -23,26 +23,26 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
         {
             this.parser = parser;
         }
-        //@Override
+        
         public void EnterEveryRule(ParserRuleContext ctx)
         {
             Console.Out.WriteLine("enter   " + this.parser.RuleNames[ctx.RuleIndex] +
                                ", LT(1)=" + this.parser.input.LT(1).Text);
         }
 
-        //@Override
+        
         public void VisitTerminal(TerminalNode node)
         {
             Console.Out.WriteLine("consume " + node.GetSymbol() + " rule " +
                                this.parser.                               RuleNames[this.parser._ctx.RuleIndex]);
         }
 
-        //@Override
+        
         public void VisitErrorNode(ErrorNode node)
         {
         }
 
-        //@Override
+        
         public void ExitEveryRule(ParserRuleContext ctx)
         {
             Console.Out.WriteLine("exit    " + this.parser.RuleNames[ctx.RuleIndex] +
@@ -54,16 +54,16 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
     {
         public static readonly TrimToSizeListener INSTANCE = new ();
 
-        //@Override
+        
         public void EnterEveryRule(ParserRuleContext ctx) { }
 
-        //@Override
+        
         public void VisitTerminal(TerminalNode node) { }
 
-        //@Override
+        
         public void VisitErrorNode(ErrorNode node) { }
 
-        //@Override
+        
         public void ExitEveryRule(ParserRuleContext ctx)
         {
             if (ctx.children is List<ParseTree> ch)
@@ -465,9 +465,9 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 	 */
     public int NumberOfSyntaxErrors => _syntaxErrors;
 
-    //@Override
+    
     /** Tell our token source and error strategy about a new way to create tokens. */
-    //@Override
+    
     public override TokenFactory TokenFactory { get => input.TokenSource.TokenFactory; set => input.TokenSource.TokenFactory = value; }
 
     /**
@@ -805,7 +805,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public ParserRuleContext Context { get => _ctx; set => _ctx = value; }
 
-    //@Override
+    
     public bool Precpred(RuleContext localctx, int precedence)
     {
         return precedence >= _precedenceStack.Peek();
@@ -958,7 +958,7 @@ public abstract class Parser : Recognizer<Token, ParserATNSimulator>
 
     public string SourceName => input.SourceName;
 
-    //@Override
+    
     public  ParseInfo GetParseInfo()
     {
         ParserATNSimulator interp = GetInterpreter();

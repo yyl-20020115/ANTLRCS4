@@ -325,7 +325,7 @@ public class GrammarTransformPipeline
                     }
                     else
                     {
-                        destinationAST = m.dupNode();
+                        destinationAST = m.DupNode();
                         destinationAST.AddChild(m.GetChild(0).DupNode() as Tree);
                     }
 

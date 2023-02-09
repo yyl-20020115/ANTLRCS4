@@ -133,19 +133,15 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
 
     public object GetRoot() => root;
 
-    public object GetTreeSource(object root) => root;
+    public object GetTreeSource() => root;
 
     //@Override
-    public string SourceName => GetTokenStream().SourceName;
+    public string SourceName => TokenStream.SourceName;
     //@Override
-    public TokenStream GetTokenStream() { return tokens; }
+    public TokenStream TokenStream { get => tokens;
+        set => this.tokens = value; }
 
-    public void setTokenStream(TokenStream tokens) { this.tokens = tokens; }
-
-    //@Override
-    public TreeAdaptor GetTreeAdaptor() => adaptor;
-
-    public void setTreeAdaptor(TreeAdaptor adaptor) { this.adaptor = adaptor; }
+    public TreeAdaptor TreeAdaptor { get => adaptor; set => this.adaptor = value; }
 
     public object Get(int i)
     {
@@ -157,7 +153,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
     /** Make stream jump to a new location, saving old location.
      *  Switch back with pop().
      */
-    public void push(int index)
+    public void Push(int index)
     {
         if (calls == null)
         {
@@ -170,7 +166,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
     /** Seek back to previous index saved during last {@link #push} call.
      *  Return top of stack (return index).
      */
-    public int pop()
+    public int Pop()
     {
         int ret = calls.Pop();
         Seek(ret);
@@ -185,7 +181,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
      * @see #hasPositionInformation
      */
     //@Override
-    public object getKnownPositionElement(bool allowApproximateLocation)
+    object PositionTrackingStream<object>.getKnownPositionElement(bool allowApproximateLocation)
     {
         var node = data[p];
         if (hasPositionInformation(node))

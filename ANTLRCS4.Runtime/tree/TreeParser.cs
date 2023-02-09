@@ -91,7 +91,7 @@ public class TreeParser : BaseRecognizer
     {
         var tokenText =
             "<missing " + TokenNames[expectedTokenType] + ">";
-        var adaptor = ((TreeNodeStream)e.InputStream).GetTreeAdaptor();
+        var adaptor = ((TreeNodeStream)e.InputStream).TreeAdaptor;
         return adaptor.Create(new CommonToken(expectedTokenType, tokenText));
     }
 
@@ -105,7 +105,7 @@ public class TreeParser : BaseRecognizer
         state.errorRecovery = false;
         state.failed = false;
         var look = input.LT(1);
-        if (input.GetTreeAdaptor().GetChildCount(look) == 0)
+        if (input.TreeAdaptor.GetChildCount(look) == 0)
         {
             input.Consume(); // not subtree, consume 1 node and return
             return;
@@ -113,12 +113,12 @@ public class TreeParser : BaseRecognizer
         // current node is a subtree, skip to corresponding UP.
         // must count nesting level to get right UP
         int level = 0;
-        int tokenType = input.GetTreeAdaptor().GetType(look);
+        int tokenType = input.TreeAdaptor.GetType(look);
         while (tokenType != Token.EOF && !(tokenType == UP && level == 0))
         {
             input.Consume();
             look = input.LT(1);
-            tokenType = input.GetTreeAdaptor().GetType(look);
+            tokenType = input.TreeAdaptor.GetType(look);
             if (tokenType == DOWN)
             {
                 level++;
@@ -161,7 +161,7 @@ public class TreeParser : BaseRecognizer
     {
         if (this is TreeParser)
         {
-            TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).GetTreeAdaptor();
+            TreeAdaptor adaptor = ((TreeNodeStream)e.InputStream).TreeAdaptor;
             e.token = adaptor.GetToken(e.node);
             if (e.token == null)
             { // could be an UP/DOWN node
@@ -184,7 +184,7 @@ public class TreeParser : BaseRecognizer
      */
     public bool InContext(string context)
     {
-        return InContext(input.GetTreeAdaptor(), TokenNames, input.LT(1), context);
+        return InContext(input.TreeAdaptor, TokenNames, input.LT(1), context);
     }
 
     /** The worker for inContext.  It's static and full of parameters for

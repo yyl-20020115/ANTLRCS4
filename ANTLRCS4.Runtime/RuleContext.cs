@@ -101,17 +101,17 @@ public class RuleContext : RuleNode
 
     // satisfy the ParseTree / SyntaxTree interface
 
-    //@Override
+    
     public virtual Interval SourceInterval => Interval.INVALID;
 
-    //@Override
+    
     public virtual RuleContext CurrentRuleContext => this;
-    //@Override
+    
     /** @since 4.7. {@see ParseTree#setParent} comment */
-    //@Override
+    
     public virtual RuleContext Parent { get => parent; set => this.parent = value; }
 
-    //@Override
+    
     public virtual RuleContext Payload => this;
     /** Return the combined text of all child nodes. This method only considers
 	 *  tokens which have been added to the parse tree.
@@ -120,7 +120,7 @@ public class RuleContext : RuleNode
 	 *  added to the parse trees, they will not appear in the output of this
 	 *  method.
 	 */
-    //@Override
+    
     public string Text
     {
         get
@@ -165,23 +165,23 @@ public class RuleContext : RuleNode
         { }
     }
 
-    //@Override
+    
     public virtual ParseTree GetChild(int i)
     {
         return null;
     }
 
-    //@Override
+    
     public int ChildCount => 0;
 
-    //@Override
+    
     public virtual T Accept<T>(ParseTreeVisitor<T> visitor) { return visitor.VisitChildren(this); }
 
     /** Print out a whole tree, not just a node, in LISP format
 	 *  (root child1 .. childN). Print just a node if this is a leaf.
 	 *  We have to know the recognizer so we can get rule names.
 	 */
-    //@Override
+    
     public virtual string ToStringTree(Parser recog)
     {
         return Trees.ToStringTree(this, recog);
@@ -195,7 +195,7 @@ public class RuleContext : RuleNode
         return Trees.ToStringTree(this, ruleNames);
     }
 
-    //@Override
+    
     public virtual string ToStringTree()
     {
         return ToStringTree((List<string>)null);

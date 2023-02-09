@@ -53,8 +53,8 @@ public class TreeRewriter : TreeParser
     public TreeRewriter(TreeNodeStream input, RecognizerSharedState state)
         : base(input, state)
     {
-        originalAdaptor = input.GetTreeAdaptor();
-        originalTokenStream = input.GetTokenStream();
+        originalAdaptor = input.TreeAdaptor;
+        originalTokenStream = input.TokenStream;
     }
 
     public object ApplyOnce(object t, FPtr whichRule)
@@ -65,7 +65,7 @@ public class TreeRewriter : TreeParser
             // share TreeParser object but not parsing-related state
             state = new RecognizerSharedState();
             input = new CommonTreeNodeStream(originalAdaptor, t);
-            ((CommonTreeNodeStream)input).setTokenStream(originalTokenStream);
+            ((CommonTreeNodeStream)input).            TokenStream = originalTokenStream;
             BacktrackingLevel = 1;
             TreeRuleReturnScope r = (TreeRuleReturnScope)whichRule.Rule();
             BacktrackingLevel = 0;

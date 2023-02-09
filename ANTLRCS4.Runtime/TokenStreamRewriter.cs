@@ -172,14 +172,11 @@ public class TokenStreamRewriter
             }
             return lastIndex + 1;
         }
-        public override string ToString()
-        {
-            return text == null
+        public override string ToString() => text == null
                 ? "<DeleteOp@" + writer.tokens.Get(index) +
                         ".." + writer.tokens.Get(lastIndex) + ">"
                 : "<ReplaceOp@" + writer.tokens.Get(index) +
                     ".." + writer.tokens.Get(lastIndex) + ":\"" + text + "\">";
-        }
     }
 
     /** Our source stream */

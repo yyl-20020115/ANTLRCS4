@@ -33,14 +33,14 @@ public class LexerSkipAction : LexerAction
 	 * {@inheritDoc}
 	 * @return This method returns {@link LexerActionType#SKIP}.
 	 */
-    //@Override
+    
     public LexerActionType ActionType => LexerActionType.SKIP;
 
     /**
 	 * {@inheritDoc}
 	 * @return This method returns {@code false}.
 	 */
-    //@Override
+    
     public bool IsPositionDependent => false;
 
     /**
@@ -48,7 +48,7 @@ public class LexerSkipAction : LexerAction
 	 *
 	 * <p>This action is implemented by calling {@link Lexer#skip}.</p>
 	 */
-    //@Override
+    
     public void Execute(Lexer lexer) => lexer.Skip();
 
     public override int GetHashCode()

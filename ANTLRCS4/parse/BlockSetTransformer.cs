@@ -149,7 +149,7 @@ public class BlockSetTransformer : TreeRewriter
     public class topdown_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -157,7 +157,7 @@ public class BlockSetTransformer : TreeRewriter
 
     // $ANTLR start "topdown"
     // org\\antlr\\v4\\parse\\BlockSetTransformer.g:63:1: topdown : ( ^( RULE (id= TOKEN_REF |id= RULE_REF ) ( . )+ ) | setAlt | ebnfBlockSet | blockSet );
-    //@Override
+    
     public BlockSetTransformer.topdown_return topdown()
     {
         BlockSetTransformer.topdown_return retval = new BlockSetTransformer.topdown_return();
@@ -435,7 +435,7 @@ public class BlockSetTransformer : TreeRewriter
     public class setAlt_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -502,7 +502,7 @@ public class BlockSetTransformer : TreeRewriter
     public class ebnfBlockSet_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -628,7 +628,7 @@ public class BlockSetTransformer : TreeRewriter
     public class ebnfSuffix_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -700,7 +700,7 @@ public class BlockSetTransformer : TreeRewriter
     public class blockSet_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1222,7 +1222,7 @@ public class BlockSetTransformer : TreeRewriter
     public class setElement_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1525,7 +1525,7 @@ public class BlockSetTransformer : TreeRewriter
     public class elementOptions_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };
@@ -1640,7 +1640,7 @@ public class BlockSetTransformer : TreeRewriter
     public class elementOption_return : TreeRuleReturnScope
     {
         public GrammarAST tree;
-        //@Override
+        
 
         public GrammarAST getTree() { return tree; }
     };

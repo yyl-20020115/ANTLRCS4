@@ -261,7 +261,7 @@ public class TestParserProfiler
         foreach (var s in input)
         {
             lexEngine.Reset();
-            parser.reset();
+            parser.Reset();
             lexEngine.            InputStream = new ANTLRInputStream(s);
             var tokens = new CommonTokenStream(lexEngine);
             parser.            InputStream = tokens;

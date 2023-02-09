@@ -586,7 +586,7 @@ public abstract class BaseRecognizer
      *  is in the set of tokens that can follow the ')' token
      *  reference in rule atom.  It can assume that you forgot the ')'.
      */
-    protected object RecoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
+    protected virtual object RecoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
     {
         RecognitionException e = null;
         // if next token is what we are looking for then "delete" this token

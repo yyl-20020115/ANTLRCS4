@@ -78,7 +78,7 @@ public class UnbufferedTokenStream : TokenStream
         Fill(1); // prime the pump
     }
 
-    //@Override
+    
     public virtual Token Get(int i)
     { // get absolute index
         int bufferStartIndex = GetBufferStartIndex();
@@ -90,7 +90,7 @@ public class UnbufferedTokenStream : TokenStream
         return tokens[i - bufferStartIndex];
     }
 
-    //@Override
+    
     public virtual Token LT(int i)
     {
         if (i == -1)
@@ -209,7 +209,7 @@ public class UnbufferedTokenStream : TokenStream
 	 * protection against misuse where {@code seek()} is called on a mark or
 	 * {@code release()} is called in the wrong order.</p>
 	 */
-    //@Override
+    
     public virtual int Mark()
     {
         if (numMarkers == 0)
@@ -222,7 +222,7 @@ public class UnbufferedTokenStream : TokenStream
         return mark;
     }
 
-    //@Override
+    
     public virtual void Release(int marker)
     {
         int expectedMark = -numMarkers;
@@ -247,10 +247,10 @@ public class UnbufferedTokenStream : TokenStream
         }
     }
 
-    //@Override
+    
     public virtual int Index => currentTokenIndex;
 
-    //@Override
+    
     public virtual void Seek(int index)
     { // seek to absolute index
         if (index == currentTokenIndex)
@@ -288,14 +288,14 @@ public class UnbufferedTokenStream : TokenStream
         }
     }
 
-    //@Override
+    
     public virtual int Count => throw new UnsupportedOperationException("Unbuffered stream cannot know its size");
 
-    //@Override
+    
     public virtual string SourceName => tokenSource.SourceName;
 
 
-    //@Override
+    
     public virtual string GetText(Interval interval)
     {
         int bufferStartIndex = GetBufferStartIndex();
