@@ -8,18 +8,14 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.v4.tool.ast;
 
-public class SetAST : GrammarAST , RuleElementAST {
+public class SetAST : GrammarAST, RuleElementAST
+{
 
-	public SetAST(SetAST node):base(node) {
-	}
+    public SetAST(SetAST node) : base(node) { }
 
-	public SetAST(int type, Token t, String text):base(type,t,text) {  }
+    public SetAST(int type, Token t, String text) : base(type, t, text) { }
 
-	//@Override
-	public SetAST dupNode() {
-		return new SetAST(this);
-	}
+    public override SetAST DupNode() => new (this);
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

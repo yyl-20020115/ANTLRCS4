@@ -52,7 +52,7 @@ public class GrammarTransformPipeline
     {
         public readonly GrammarTransformPipeline pipeline;
         public TVA(GrammarTransformPipeline pipline) => this.pipeline = pipline;
-        public object Pre(object t) => ((GrammarAST)t).getType() == 3 ? expandParameterizedLoop((GrammarAST)t) : t;
+        public object Pre(object t) => ((GrammarAST)t).Type == 3 ? expandParameterizedLoop((GrammarAST)t) : t;
         public object Post(object t) => t;
     }
     /** Find and replace
@@ -94,38 +94,43 @@ public class GrammarTransformPipeline
     {
         if (tree == null) return;
 
-        var optionsSubTrees = tree.getNodesWithType(ANTLRParser.ELEMENT_OPTIONS);
+        var optionsSubTrees = tree.GetNodesWithType(ANTLRParser.ELEMENT_OPTIONS);
         for (int i = 0; i < optionsSubTrees.Count; i++)
         {
             var t = optionsSubTrees[i];
             var elWithOpt = t.parent;
             if (elWithOpt is GrammarASTWithOptions options1)
             {
-                var options = options1.getOptions();
+                var options = options1.Options;
                 if (options.TryGetValue(LeftRecursiveRuleTransformer.TOKENINDEX_OPTION_NAME, out var on))
                 {
                     var newTok = new GrammarToken(g, elWithOpt.Token);
 
-                    newTok.originalTokenIndex = int.TryParse(on.getText(), out var ox)
+                    newTok.originalTokenIndex = int.TryParse(on.Text, out var ox)
                         ? ox : throw new InvalidOperationException("ox");
 
                     elWithOpt.token = newTok;
 
-                    var originalNode = g.ast.getNodeWithTokenIndex(newTok.TokenIndex);
+                    var originalNode = g.ast.GetNodeWithTokenIndex(newTok.TokenIndex);
                     if (originalNode != null)
                     {
                         // update the AST node start/stop index to match the values
                         // of the corresponding node in the original parse tree.
-                        elWithOpt.setTokenStartIndex(originalNode.getTokenStartIndex());
-                        elWithOpt.setTokenStopIndex(originalNode.getTokenStopIndex());
+                        elWithOpt.                        // update the AST node start/stop index to match the values
+                        // of the corresponding node in the original parse tree.
+                        TokenStartIndex = originalNode.TokenStartIndex;
+                        elWithOpt.                        TokenStopIndex = originalNode.TokenStopIndex;
                     }
                     else
                     {
                         // the original AST node could not be located by index;
                         // make sure to assign valid values for the start/stop
                         // index so toTokenString will not throw exceptions.
-                        elWithOpt.setTokenStartIndex(newTok.TokenIndex);
-                        elWithOpt.setTokenStopIndex(newTok.TokenIndex);
+                        elWithOpt.                        // the original AST node could not be located by index;
+                        // make sure to assign valid values for the start/stop
+                        // index so toTokenString will not throw exceptions.
+                        TokenStartIndex = newTok.TokenIndex;
+                        elWithOpt.                        TokenStopIndex = newTok.TokenIndex;
                     }
                 }
             }
@@ -158,17 +163,17 @@ public class GrammarTransformPipeline
         var channelsRoot = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.CHANNELS);
         var tokensRoot = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.TOKENS_SPEC);
 
-        var actionRoots = root.getNodesWithType(ANTLRParser.AT);
+        var actionRoots = root.GetNodesWithType(ANTLRParser.AT);
 
         // Compute list of rules in root grammar and ensure we have a RULES node
         var RULES = (GrammarAST)root.GetFirstChildWithType(ANTLRParser.RULES);
         var rootRuleNames = new HashSet<String>();
         // make list of rules we have in root grammar
-        var rootRules = RULES.getNodesWithType(ANTLRParser.RULE);
+        var rootRules = RULES.GetNodesWithType(ANTLRParser.RULE);
         foreach (var r in rootRules) rootRuleNames.Add(r.GetChild(0).Text);
 
         // make list of modes we have in root grammar
-        var rootModes = root.getNodesWithType(ANTLRParser.MODE);
+        var rootModes = root.GetNodesWithType(ANTLRParser.MODE);
         var rootModeNames = new HashSet<String>();
         foreach (var m in rootModes) rootModeNames.Add(m.GetChild(0).Text);
         List<GrammarAST> addedModes = new();
@@ -182,7 +187,7 @@ public class GrammarTransformPipeline
                 rootGrammar.Tools.Log("grammar", "imported channels: " + imp_channelRoot.GetChildren());
                 if (channelsRoot == null)
                 {
-                    channelsRoot = imp_channelRoot.dupTree();
+                    channelsRoot = imp_channelRoot.DupTree();
                     channelsRoot.g = rootGrammar;
                     root.InsertChild(1, channelsRoot); // ^(GRAMMAR ID TOKENS...)
                 }
@@ -224,7 +229,7 @@ public class GrammarTransformPipeline
             }
 
             List<GrammarAST> all_actionRoots = new();
-            var imp_actionRoots = imp.ast.getAllChildrenWithType(ANTLRParser.AT);
+            var imp_actionRoots = imp.ast.GetAllChildrenWithType(ANTLRParser.AT);
             if (actionRoots != null) all_actionRoots.AddRange(actionRoots);
             all_actionRoots.AddRange(imp_actionRoots);
 
@@ -242,7 +247,7 @@ public class GrammarTransformPipeline
                     if (at.ChildCount > 2)
                     { // must have a scope
                         scope = (GrammarAST)at.GetChild(0);
-                        scopeName = scope.getText();
+                        scopeName = scope.Text;
                         name = (GrammarAST)at.GetChild(1);
                         action = (GrammarAST)at.GetChild(2);
                     }
@@ -251,23 +256,23 @@ public class GrammarTransformPipeline
                         name = (GrammarAST)at.GetChild(0);
                         action = (GrammarAST)at.GetChild(1);
                     }
-                    var prevAction = namedActions.Get(scopeName, name.getText());
+                    var prevAction = namedActions.Get(scopeName, name.Text);
                     if (prevAction == null)
                     {
-                        namedActions.Put(scopeName, name.getText(), action);
+                        namedActions.Put(scopeName, name.Text, action);
                     }
                     else
                     {
                         if (prevAction.g == at.g)
                         {
                             rootGrammar.Tools.ErrMgr.GrammarError(ErrorType.ACTION_REDEFINITION,
-                                                at.g.fileName, name.token, name.getText());
+                                                at.g.fileName, name.token, name.Text);
                         }
                         else
                         {
-                            var s1 = prevAction.getText();
+                            var s1 = prevAction.Text;
                             s1 = s1[1..^1];
-                            var s2 = action.getText();
+                            var s2 = action.Text;
                             s2 = s2[1..^1];
                             var combinedAction = "{" + s1 + '\n' + s2 + "}";
                             prevAction.token.Text = combinedAction;
@@ -282,10 +287,10 @@ public class GrammarTransformPipeline
                     foreach (var name in namedActions.KeySet(scopeName))
                     {
                         var action = namedActions.Get(scopeName, name);
-                        rootGrammar.Tools.Log("grammar", action.g.name + " " + scopeName + ":" + name + "=" + action.getText());
+                        rootGrammar.Tools.Log("grammar", action.g.name + " " + scopeName + ":" + name + "=" + action.Text);
                         if (action.g != rootGrammar)
                         {
-                            root.InsertChild(1, action.getParent());
+                            root.InsertChild(1, action.Parent);
                         }
                     }
                 }
@@ -298,7 +303,7 @@ public class GrammarTransformPipeline
             // already in the new grammar are ignored for copy. If the mode
             // section being added ends up empty it is not added to the merged
             // grammar.
-            var modes = imp.ast.getNodesWithType(ANTLRParser.MODE);
+            var modes = imp.ast.GetNodesWithType(ANTLRParser.MODE);
             if (modes != null)
             {
                 foreach (var m in modes)
@@ -325,7 +330,7 @@ public class GrammarTransformPipeline
                     }
 
                     int addedRules = 0;
-                    var modeRules = m.getAllChildrenWithType(ANTLRParser.RULE);
+                    var modeRules = m.GetAllChildrenWithType(ANTLRParser.RULE);
                     foreach (var r in modeRules)
                     {
                         rootGrammar.Tools.Log("grammar", "imported rule: " + r.ToStringTree());
@@ -349,7 +354,7 @@ public class GrammarTransformPipeline
 
             // COPY RULES
             // Rules copied in the mode copy phase are not copied again.
-            var rules = imp.ast.getNodesWithType(ANTLRParser.RULE);
+            var rules = imp.ast.GetNodesWithType(ANTLRParser.RULE);
             if (rules != null)
             {
                 foreach (var r in rules)
@@ -373,15 +378,15 @@ public class GrammarTransformPipeline
                 // https://github.com/antlr/antlr4/issues/707
 
                 bool hasNewOption = false;
-                foreach (var option in imp.ast.getOptions())
+                foreach (var option in imp.ast.Options)
                 {
-                    var importOption = imp.ast.getOptionString(option.Key);
+                    var importOption = imp.ast.GetOptionString(option.Key);
                     if (importOption == null)
                     {
                         continue;
                     }
 
-                    var rootOption = rootGrammar.ast.getOptionString(option.Key);
+                    var rootOption = rootGrammar.ast.GetOptionString(option.Key);
                     if (!importOption.Equals(rootOption))
                     {
                         hasNewOption = true;
@@ -447,7 +452,7 @@ public class GrammarTransformPipeline
                 {
                     var optionTree = (GrammarAST)adaptor.dupTree(o);
                     lexerOptionsRoot.AddChild(optionTree);
-                    lexerAST.setOption(optionName, (GrammarAST)optionTree.GetChild(1));
+                    lexerAST.SetOption(optionName, (GrammarAST)optionTree.GetChild(1));
                 }
             }
         }
@@ -456,7 +461,7 @@ public class GrammarTransformPipeline
         List<GrammarAST> actionsWeMoved = new();
         foreach (var e in elements)
         {
-            if (e.getType() == ANTLRParser.AT)
+            if (e.Type == ANTLRParser.AT)
             {
                 lexerAST.AddChild((Tree)adaptor.dupTree(e));
                 if (e.GetChild(0).Text.Equals("lexer"))
@@ -468,7 +473,7 @@ public class GrammarTransformPipeline
 
         foreach (var r in actionsWeMoved)
         {
-            combinedAST.deleteChild(r);
+            combinedAST.DeleteChild(r);
         }
 
         var combinedRulesRoot =
@@ -502,7 +507,7 @@ public class GrammarTransformPipeline
         }
         foreach (GrammarAST r in rulesWeMoved)
         {
-            combinedRulesRoot.deleteChild(r);
+            combinedRulesRoot.DeleteChild(r);
         }
 
         // Will track 'if' from IF : 'if' ; rules to avoid defining new token for 'if'
@@ -523,7 +528,7 @@ public class GrammarTransformPipeline
                 foreach (var pair in litAliases)
                 {
                     var litAST = pair.b;
-                    if (lit.Equals(litAST.getText())) continue;// nextLit;
+                    if (lit.Equals(litAST.Text)) continue;// nextLit;
                 }
             }
             // create for each literal: (RULE <uniquename> (BLOCK (ALT <lit>))

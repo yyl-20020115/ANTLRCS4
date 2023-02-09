@@ -90,9 +90,9 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     public override void SetAltAssoc(AltAST t, int alt)
     {
         ASSOC assoc = ASSOC.Left;
-        if (t.getOptions() != null)
+        if (t.Options != null)
         {
-            var a = t.getOptionString("assoc");
+            var a = t.GetOptionString("assoc");
             if (a != null)
             {
                 if (a.Equals(ASSOC.Right.ToString()))
@@ -105,7 +105,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
                 }
                 else
                 {
-                    tool.ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION_VALUE, t.g.fileName, t.getOptionAST("assoc").Token, "assoc", assoc);
+                    tool.ErrMgr.GrammarError(ErrorType.ILLEGAL_OPTION_VALUE, t.g.fileName, t.GetOptionAST("assoc").Token, "assoc", assoc);
                 }
             }
         }
@@ -122,16 +122,16 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     //@Override
     public override void BinaryAlt(AltAST originalAltTree, int alt)
     {
-        var altTree = (AltAST)originalAltTree.dupTree();
-        var altLabel = altTree.altLabel != null ? altTree.altLabel.getText() : null;
+        var altTree = (AltAST)originalAltTree.DupTree();
+        var altLabel = altTree.altLabel != null ? altTree.altLabel.Text : null;
 
         string label = null;
         bool isListLabel = false;
         var lrlabel = StripLeftRecursion(altTree);
         if (lrlabel != null)
         {
-            label = lrlabel.getText();
-            isListLabel = lrlabel.getParent().Type == PLUS_ASSIGN;
+            label = lrlabel.Text;
+            isListLabel = lrlabel.Parent.Type == PLUS_ASSIGN;
             leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
         }
 
@@ -154,7 +154,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     //@Override
     public virtual void PrefixAlt(AltAST originalAltTree, int alt)
     {
-        var altTree = (AltAST)originalAltTree.dupTree();
+        var altTree = (AltAST)originalAltTree.DupTree();
         StripAltLabel(altTree);
 
         int nextPrec = Precedence(alt);
@@ -162,7 +162,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         altTree = AddPrecedenceArgToRules(altTree, nextPrec);
         var altText = Text(altTree);
         altText = altText.Trim();
-        var altLabel = altTree.altLabel != null ? altTree.altLabel.getText() : null;
+        var altLabel = altTree.altLabel != null ? altTree.altLabel.Text : null;
         var a =
             new LeftRecursiveRuleAltInfo(alt, altText, null, altLabel, false, originalAltTree);
         a.nextPrec = nextPrec;
@@ -173,16 +173,16 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     //@Override
     public override void SuffixAlt(AltAST originalAltTree, int alt)
     {
-        var altTree = (AltAST)originalAltTree.dupTree();
-        var altLabel = altTree.altLabel != null ? altTree.altLabel.getText() : null;
+        var altTree = (AltAST)originalAltTree.DupTree();
+        var altLabel = altTree.altLabel != null ? altTree.altLabel.Text : null;
 
         string label = null;
         var isListLabel = false;
         var lrlabel = StripLeftRecursion(altTree);
         if (lrlabel != null)
         {
-            label = lrlabel.getText();
-            isListLabel = lrlabel.getParent().Type == PLUS_ASSIGN;
+            label = lrlabel.Text;
+            isListLabel = lrlabel.Parent.Type == PLUS_ASSIGN;
             leftRecursiveRuleRefLabels.Add(new Pair<GrammarAST, String>(lrlabel, altLabel));
         }
         StripAltLabel(altTree);
@@ -197,10 +197,10 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     //@Override
     public override void OtherAlt(AltAST originalAltTree, int alt)
     {
-        var altTree = (AltAST)originalAltTree.dupTree();
+        var altTree = (AltAST)originalAltTree.DupTree();
         StripAltLabel(altTree);
         var altText = Text(altTree);
-        var altLabel = altTree.altLabel != null ? altTree.altLabel.getText() : null;
+        var altLabel = altTree.altLabel != null ? altTree.altLabel.Text : null;
         var a =
             new LeftRecursiveRuleAltInfo(alt, altText, null, altLabel, false, originalAltTree);
         // We keep other alts with prefix alts since they are all added to the start of the generated rule, and
@@ -252,15 +252,15 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     {
         if (t == null) return null;
         // get all top-level rule refs from ALT
-        var outerAltRuleRefs = t.getNodesWithTypePreorderDFS(IntervalSet.Of(RULE_REF));
+        var outerAltRuleRefs = t.GetNodesWithTypePreorderDFS(IntervalSet.Of(RULE_REF));
         foreach (var rref in outerAltRuleRefs.Cast<RuleRefAST>())
         {
-            bool recursive = rref.getText().Equals(ruleName);
+            bool recursive = rref.Text.Equals(ruleName);
             bool rightmost = rref == outerAltRuleRefs[(outerAltRuleRefs.Count - 1)];
             if (recursive && rightmost)
             {
                 var dummyValueNode = new GrammarAST(new CommonToken(ANTLRParser.INT, "" + prec));
-                rref.setOption(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME, dummyValueNode);
+                rref.SetOption(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME, dummyValueNode);
             }
         }
         return t;
@@ -304,22 +304,22 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         GrammarAST lrlabel = null;
         var first = (GrammarAST)altAST.GetChild(0);
         int leftRecurRuleIndex = 0;
-        if (first.getType() == ELEMENT_OPTIONS)
+        if (first.Type == ELEMENT_OPTIONS)
         {
             first = (GrammarAST)altAST.GetChild(1);
             leftRecurRuleIndex = 1;
         }
         var rref = first.GetChild(1); // if label=rule
-        if ((first.getType() == RULE_REF && first.getText().Equals(ruleName)) ||
+        if ((first.Type == RULE_REF && first.Text.Equals(ruleName)) ||
              (rref != null && rref.Type == RULE_REF && rref.Text.Equals(ruleName)))
         {
-            if (first.getType() == ASSIGN || first.getType() == PLUS_ASSIGN) lrlabel = (GrammarAST)first.GetChild(0);
+            if (first.Type == ASSIGN || first.Type == PLUS_ASSIGN) lrlabel = (GrammarAST)first.GetChild(0);
             // remove rule ref (first child unless options present)
             altAST.DeleteChild(leftRecurRuleIndex);
             // reset index so it prints properly (sets token range of
             // ALT to start to right of left recur rule we deleted)
             var newFirstChild = (GrammarAST)altAST.GetChild(leftRecurRuleIndex);
-            altAST.setTokenStartIndex(newFirstChild.getTokenStartIndex());
+            altAST.            TokenStartIndex = newFirstChild.TokenStartIndex;
         }
         return lrlabel;
     }
@@ -327,14 +327,14 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     /** Strip last 2 tokens if → label; alter indexes in altAST */
     public void StripAltLabel(GrammarAST altAST)
     {
-        int start = altAST.getTokenStartIndex();
-        int stop = altAST.getTokenStopIndex();
+        int start = altAST.TokenStartIndex;
+        int stop = altAST.TokenStopIndex;
         // find =>
         for (int i = stop; i >= start; i--)
         {
             if (tokenStream.Get(i).Type == POUND)
             {
-                altAST.setTokenStopIndex(i - 1);
+                altAST.                TokenStopIndex = i - 1;
                 return;
             }
         }
@@ -344,8 +344,8 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
     {
         if (t == null) return "";
 
-        int tokenStartIndex = t.getTokenStartIndex();
-        int tokenStopIndex = t.getTokenStopIndex();
+        int tokenStartIndex = t.TokenStartIndex;
+        int tokenStopIndex = t.TokenStopIndex;
 
         // ignore tokens from existing option subtrees like:
         //    (ELEMENT_OPTIONS (= assoc right))
@@ -353,17 +353,17 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
         // element options are added back according to the values in the map
         // returned by getOptions().
         var ignore = new IntervalSet();
-        var optionsSubTrees = t.getNodesWithType(ELEMENT_OPTIONS);
+        var optionsSubTrees = t.GetNodesWithType(ELEMENT_OPTIONS);
         foreach (var sub in optionsSubTrees)
         {
-            ignore.Add(sub.getTokenStartIndex(), sub.getTokenStopIndex());
+            ignore.Add(sub.TokenStartIndex, sub.TokenStopIndex);
         }
 
         // Individual labels appear as RULE_REF or TOKEN_REF tokens in the tree,
         // but do not support the ELEMENT_OPTIONS syntax. Make sure to not try
         // and add the tokenIndex option when writing these tokens.
         var noOptions = new IntervalSet();
-        var labeledSubTrees = t.getNodesWithType(new IntervalSet(ASSIGN, PLUS_ASSIGN));
+        var labeledSubTrees = t.GetNodesWithType(new IntervalSet(ASSIGN, PLUS_ASSIGN));
         foreach (var sub in labeledSubTrees)
         {
             noOptions.Add(sub.GetChild(0).TokenStartIndex);
@@ -385,7 +385,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
             var elementOptions = new StringBuilder();
             if (!noOptions.Contains(i))
             {
-                var node = t.getNodeWithTokenIndex(tok.TokenIndex);
+                var node = t.GetNodeWithTokenIndex(tok.TokenIndex);
                 if (node != null &&
                      (tok.Type == TOKEN_REF ||
                       tok.                      Type == STRING_LITERAL ||
@@ -396,7 +396,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
                 if (node is GrammarASTWithOptions o)
                 {
-                    foreach (var entry in o.getOptions())
+                    foreach (var entry in o.Options)
                     {
                         if (elementOptions.Length > 0)
                         {
@@ -405,7 +405,7 @@ public class LeftRecursiveRuleAnalyzer : LeftRecursiveRuleWalker
 
                         elementOptions.Append(entry.Key);
                         elementOptions.Append('=');
-                        elementOptions.Append(entry.Value.getText());
+                        elementOptions.Append(entry.Value.Text);
                     }
                 }
             }

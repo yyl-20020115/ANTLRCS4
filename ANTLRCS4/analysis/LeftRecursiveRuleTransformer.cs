@@ -62,14 +62,14 @@ public class LeftRecursiveRuleTransformer
         }
 
         // update all refs to recursive rules to have [0] argument
-        foreach (var r in ast.getNodesWithType(ANTLRParser.RULE_REF))
+        foreach (var r in ast.GetNodesWithType(ANTLRParser.RULE_REF))
         {
-            if (r.getParent().Type == ANTLRParser.RULE) continue; // must be rule def
-            if (((GrammarASTWithOptions)r).getOptionString(PRECEDENCE_OPTION_NAME) != null) continue; // already has arg; must be in rewritten rule
-            if (leftRecursiveRuleNames.Contains(r.getText()))
+            if (r.Parent.Type == ANTLRParser.RULE) continue; // must be rule def
+            if (((GrammarASTWithOptions)r).GetOptionString(PRECEDENCE_OPTION_NAME) != null) continue; // already has arg; must be in rewritten rule
+            if (leftRecursiveRuleNames.Contains(r.Text))
             {
                 // found ref to recursive rule not already rewritten with arg
-                ((GrammarASTWithOptions)r).setOption(PRECEDENCE_OPTION_NAME, (GrammarAST)new GrammarASTAdaptor().create(ANTLRParser.INT, "0"));
+                ((GrammarASTWithOptions)r).SetOption(PRECEDENCE_OPTION_NAME, (GrammarAST)new GrammarASTAdaptor().create(ANTLRParser.INT, "0"));
             }
         }
     }
@@ -111,7 +111,7 @@ public class LeftRecursiveRuleTransformer
         ((GrammarAST)t.GetChild(0)).token = ((GrammarAST)prevRuleAST.GetChild(0)).Token;
 
         // update grammar AST and set rule's AST.
-        RULES.SetChild(prevRuleAST.getChildIndex(), t);
+        RULES.SetChild(prevRuleAST.ChildIndex, t);
         r.ast = t;
 
         // Reduce sets in newly created rule tree
@@ -149,7 +149,7 @@ public class LeftRecursiveRuleTransformer
         var arg = (ActionAST)r.ast.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
         if (arg != null)
         {
-            r.args = ScopeParser.ParseTypedArgList(arg, arg.getText(), g);
+            r.args = ScopeParser.ParseTypedArgList(arg, arg.Text, g);
             r.args.type = AttributeDict.DictType.ARG;
             r.args.ast = arg;
             arg.resolver = r.alt[1]; // todo: isn't this Rule or something?
@@ -160,10 +160,10 @@ public class LeftRecursiveRuleTransformer
         foreach (var pair in leftRecursiveRuleWalker.leftRecursiveRuleRefLabels)
         {
             var labelNode = pair.a;
-            var labelOpNode = (GrammarAST)labelNode.getParent();
+            var labelOpNode = (GrammarAST)labelNode.Parent;
             var elementNode = (GrammarAST)labelOpNode.GetChild(1);
-            var lp = new LabelElementPair(g, labelNode, elementNode, labelOpNode.getType());
-            r.alt[1].labelDefs.Map(labelNode.getText(), lp);
+            var lp = new LabelElementPair(g, labelNode, elementNode, labelOpNode.Type);
+            r.alt[1].labelDefs.Map(labelNode.Text, lp);
         }
         // copy to rule from walker
         r.leftRecursiveRuleRefLabels = leftRecursiveRuleWalker.leftRecursiveRuleRefLabels;

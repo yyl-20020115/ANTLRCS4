@@ -82,7 +82,7 @@ public class TokenVocabParser
         }
         catch (FileNotFoundException fnfe)
         {
-            var inTree = g.ast.getOptionAST("tokenVocab");
+            var inTree = g.ast.GetOptionAST("tokenVocab");
             var inTreeValue = inTree.Token.Text;
             if (vocabName.Equals(inTreeValue))
             {

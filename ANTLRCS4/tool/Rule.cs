@@ -181,7 +181,7 @@ public class Rule : AttributeResolver
             {
                 foreach (var p in pairs)
                 {
-                    defs.Map(p.label.getText(), p);
+                    defs.Map(p.label.Text, p);
                 }
             }
         }
@@ -207,10 +207,10 @@ public class Rule : AttributeResolver
             var altLabel = alt[i].ast.altLabel;
             if (altLabel != null)
             {
-                if (!labels.TryGetValue(altLabel.getText(), out var list))
+                if (!labels.TryGetValue(altLabel.Text, out var list))
                 {
                     list = new();
-                    labels.Add(altLabel.getText(), list);
+                    labels.Add(altLabel.Text, list);
                 }
 
                 list.Add(new Pair<int, AltAST>(i, alt[i].ast));
@@ -262,7 +262,7 @@ public class Rule : AttributeResolver
         {
             if (anyLabelDef.type == LabelType.RULE_LABEL)
             {
-                return g.GetRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
+                return g.GetRule(anyLabelDef.element.Text).ResolveRetvalOrProperty(y);
             }
             else
             {
@@ -312,7 +312,7 @@ public class Rule : AttributeResolver
     {
         if (x.Equals(this.name)) return this;
         var anyLabelDef = GetAnyLabelDef(x);
-        return anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL ? g.GetRule(anyLabelDef.element.getText()) : g.GetRule(x);
+        return anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL ? g.GetRule(anyLabelDef.element.Text) : g.GetRule(x);
     }
 
     public LabelElementPair GetAnyLabelDef(String x)
@@ -333,7 +333,7 @@ public class Rule : AttributeResolver
             if (modifiers == null) return false;
             foreach (var a in modifiers)
             {
-                if (a.getText().Equals("fragment")) return true;
+                if (a.Text.Equals("fragment")) return true;
             }
             return false;
         }

@@ -101,7 +101,7 @@ public class ScopeParser
 
         if (action != null)
         {
-            var actionText = action.getText();
+            var actionText = action.Text;
             var lines = new int[actionText.Length];
             var charPositionInLines = new int[actionText.Length];
             for (int i = 0, _line = 0, col = 0; i < actionText.Length; i++, col++)

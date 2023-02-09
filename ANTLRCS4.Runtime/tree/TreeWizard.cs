@@ -81,17 +81,7 @@ public class TreeWizard
             : base(payload)
         {
         }
-        public override String ToString()
-        {
-            if (label != null)
-            {
-                return "%" + label + ":" + base.toString();
-            }
-            else
-            {
-                return base.toString();
-            }
-        }
+        public override string ToString() => label != null ? "%" + label + ":" + base.ToString() : base.ToString();
     }
 
     public class WildcardTreePattern : TreePattern
@@ -272,12 +262,12 @@ public class TreeWizard
         TreePattern tpattern = (TreePattern)parser.pattern();
         // don't allow invalid patterns
         if (tpattern == null ||
-             tpattern.isNil() ||
+             tpattern.             IsNil ||
              tpattern is WildcardTreePattern)
         {
             return null;
         }
-        int rootTokenType = tpattern.getType();
+        int rootTokenType = tpattern.Type;
         visit(t, rootTokenType, new TVB(tpattern, subtrees, this));
         return subtrees;
     }
@@ -358,13 +348,13 @@ public class TreeWizard
         TreePattern tpattern = (TreePattern)parser.pattern();
         // don't allow invalid patterns
         if (tpattern == null ||
-             tpattern.isNil() ||
+             tpattern.             IsNil ||
              tpattern is WildcardTreePattern)
         {
             return;
         }
         Dictionary<String, Object> labels = new(); // reused for each _parse
-        int rootTokenType = tpattern.getType();
+        int rootTokenType = tpattern.Type;
         visit(t, rootTokenType, new TVC(labels, tpattern, visitor, this));
     }
 
@@ -413,9 +403,9 @@ public class TreeWizard
         // check roots (wildcard matches anything)
         if (tpattern is not WildcardTreePattern)
         {
-            if (adaptor.getType(t1) != tpattern.getType()) return false;
+            if (adaptor.getType(t1) != tpattern.Type) return false;
             // if pattern has text, check node text
-            if (tpattern.hasTextArg && !adaptor.getText(t1).Equals(tpattern.getText()))
+            if (tpattern.hasTextArg && !adaptor.getText(t1).Equals(tpattern.Text))
             {
                 return false;
             }

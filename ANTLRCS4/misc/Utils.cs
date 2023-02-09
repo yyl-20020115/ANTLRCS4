@@ -72,7 +72,7 @@ public static class Utils
     {
         if (nodes == null) return null;
         List<string> a = new();
-        foreach (var t in nodes) a.Add(t.getText());
+        foreach (var t in nodes) a.Add(t.Text);
         return a;
     }
 

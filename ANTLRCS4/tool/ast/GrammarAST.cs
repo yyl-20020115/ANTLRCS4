@@ -14,221 +14,247 @@ using System.Text;
 
 namespace org.antlr.v4.tool.ast;
 
-public class GrammarAST : CommonTree {
-	/** For error msgs, nice to know which grammar this AST lives in */
-	// TODO: try to remove
-	public Grammar g;
+public class GrammarAST : CommonTree
+{
+    /** For error msgs, nice to know which grammar this AST lives in */
+    // TODO: try to remove
+    public Grammar g;
 
-	/** If we build an ATN, we make AST node point at left edge of ATN construct */
-	public ATNState atnState;
+    /** If we build an ATN, we make AST node point at left edge of ATN construct */
+    public ATNState atnState;
 
-	public String textOverride;
+    public string textOverride;
 
-    public GrammarAST() {}
-    public GrammarAST(Token t):base(t) { ; }
-    public GrammarAST(GrammarAST node):base(node) {
-		this.g = node.g;
-		this.atnState = node.atnState;
-		this.textOverride = node.textOverride;
-	}
-    public GrammarAST(int type) :base(new CommonToken(type, ANTLRParser.tokenNames[type])){}
-    public GrammarAST(int type, Token t): this(new CommonToken(t))
+    public GrammarAST() { }
+    public GrammarAST(Token t) : base(t) {; }
+    public GrammarAST(GrammarAST node) : base(node)
     {
-		;
-		token.		Type = type;
-	}
-    public GrammarAST(int type, Token t, String text) : this(new CommonToken(t))
+        this.g = node.g;
+        this.atnState = node.atnState;
+        this.textOverride = node.textOverride;
+    }
+    public GrammarAST(int type) : base(new CommonToken(type, ANTLRParser.tokenNames[type])) { }
+    public GrammarAST(int type, Token t) : this(new CommonToken(t))
     {
-		;
-		token.		Type = type;
-		token.		Text = text;
+        token.Type = type;
+    }
+    public GrammarAST(int type, Token t, string text) : this(new CommonToken(t))
+    {
+        token.Type = type;
+        token.Text = text;
     }
 
-	public GrammarAST[] getChildrenAsArray() {
-		return children.Cast<GrammarAST>().ToArray();
-	}
+    public GrammarAST[] GetChildrenAsArray() => children.Cast<GrammarAST>().ToArray();
 
-	public List<GrammarAST> getNodesWithType(int ttype) {
-		return getNodesWithType(IntervalSet.Of(ttype));
-	}
+    public List<GrammarAST> GetNodesWithType(int ttype) => GetNodesWithType(IntervalSet.Of(ttype));
 
-	public List<GrammarAST> getAllChildrenWithType(int type) {
-		List<GrammarAST> nodes = new ();
-		for (int i = 0; children!=null && i < children.Count; i++) {
-			Tree t = (Tree) children[(i)];
-			if ( t.Type==type ) {
-				nodes.Add((GrammarAST)t);
-			}
-		}
-		return nodes;
-	}
+    public List<GrammarAST> GetAllChildrenWithType(int type)
+    {
+        List<GrammarAST> nodes = new();
+        for (int i = 0; children != null && i < children.Count; i++)
+        {
+            Tree t = (Tree)children[(i)];
+            if (t.Type == type)
+            {
+                nodes.Add((GrammarAST)t);
+            }
+        }
+        return nodes;
+    }
 
-	public List<GrammarAST> getNodesWithType(IntervalSet types) {
-		List<GrammarAST> nodes = new();
-		List<GrammarAST> work = new ();
-		work.Add(this);
-		GrammarAST t;
-		while ( work.Count>0 ) {
-			t = work[0];
-			work.RemoveAt(0);
-			if ( types==null || types.Contains(t.getType()) ) nodes.Add(t);
-			if ( t.children!=null ) {
-				work.AddRange(Arrays.AsList(t.getChildrenAsArray()));
-			}
-		}
-		return nodes;
-	}
+    public List<GrammarAST> GetNodesWithType(IntervalSet types)
+    {
+        List<GrammarAST> nodes = new();
+        List<GrammarAST> work = new()
+        {
+            this
+        };
+        GrammarAST t;
+        while (work.Count > 0)
+        {
+            t = work[0];
+            work.RemoveAt(0);
+            if (types == null || types.Contains(t.Type)) nodes.Add(t);
+            if (t.children != null)
+            {
+                work.AddRange(Arrays.AsList(t.GetChildrenAsArray()));
+            }
+        }
+        return nodes;
+    }
 
-	public List<GrammarAST> getNodesWithTypePreorderDFS(IntervalSet types) {
-		List<GrammarAST> nodes = new ();
-		getNodesWithTypePreorderDFS_(nodes, types);
-		return nodes;
-	}
+    public List<GrammarAST> GetNodesWithTypePreorderDFS(IntervalSet types) => GetNodesWithTypePreorderDFS(new(), types);
 
-	public void getNodesWithTypePreorderDFS_(List<GrammarAST> nodes, IntervalSet types) {
-		if ( types.Contains(this.getType()) ) nodes.Add(this);
-		// walk all children of root.
-		for (int i= 0; i < ChildCount; i++) {
-			GrammarAST child = (GrammarAST)GetChild(i);
-			child.getNodesWithTypePreorderDFS_(nodes, types);
-		}
-	}
+    public List<GrammarAST> GetNodesWithTypePreorderDFS(List<GrammarAST> nodes, IntervalSet types)
+    {
+        if (types.Contains(this.Type)) nodes.Add(this);
+        // walk all children of root.
+        for (int i = 0; i < ChildCount; i++)
+        {
+            var child = (GrammarAST)GetChild(i);
+            child.GetNodesWithTypePreorderDFS(nodes, types);
+        }
+        return nodes;
+    }
 
-	public GrammarAST getNodeWithTokenIndex(int index) {
-		if ( this.Token!=null && this.Token.TokenIndex==index ) {
-			return this;
-		}
-		// walk all children of root.
-		for (int i= 0; i < ChildCount; i++) {
-			GrammarAST child = (GrammarAST)GetChild(i);
-			GrammarAST result = child.getNodeWithTokenIndex(index);
-			if ( result!=null ) {
-				return result;
-			}
-		}
-		return null;
-	}
-
-	public AltAST getOutermostAltNode() {
-		if ( this is AltAST && parent.parent is RuleAST ) {
-			return (AltAST)this;
-		}
-		if ( parent!=null ) return ((GrammarAST)parent).getOutermostAltNode();
-		return null;
-	}
-
-	/** Walk ancestors of this node until we find ALT with
-	 *  alt!=null or leftRecursiveAltInfo!=null. Then grab label if any.
-	 *  If not a rule element, just returns null.
-	 */
-	public String getAltLabel() {
-		List<Tree> ancestors = this.GetAncestors();
-		if ( ancestors==null ) return null;
-		for (int i=ancestors.Count-1; i>=0; i--) {
-			GrammarAST p = (GrammarAST)ancestors[i];
-			if ( p.getType()== ANTLRParser.ALT ) {
-				AltAST a = (AltAST)p;
-				if ( a.altLabel!=null ) return a.altLabel.getText();
-				if ( a.leftRecursiveAltInfo!=null ) {
-					return a.leftRecursiveAltInfo.altLabel;
-				}
-			}
-		}
-		return null;
-	}
-
-	public bool deleteChild(Tree t) {
-		for (int i=0; i<children.Count; i++) {
-			Object c = children[(i)];
-			if ( c == t ) {
-				DeleteChild(t.ChildIndex);
-				return true;
-			}
-		}
-		return false;
-	}
-
-    // TODO: move to basetree when i settle on how runtime works
-    // TODO: don't include this node!!
-	// TODO: reuse other method
-    public CommonTree getFirstDescendantWithType(int type) {
-        if ( getType()==type ) return this;
-        if ( children==null ) return null;
-        foreach (Object c in children) {
-            GrammarAST t = (GrammarAST)c;
-            if ( t.getType()==type ) return t;
-            CommonTree d = t.getFirstDescendantWithType(type);
-            if ( d!=null ) return d;
+    public GrammarAST GetNodeWithTokenIndex(int index)
+    {
+        if (this.Token != null && this.Token.TokenIndex == index)
+        {
+            return this;
+        }
+        // walk all children of root.
+        for (int i = 0; i < ChildCount; i++)
+        {
+            var child = (GrammarAST)GetChild(i);
+            var result = child.GetNodeWithTokenIndex(index);
+            if (result != null)
+            {
+                return result;
+            }
         }
         return null;
     }
 
-	// TODO: don't include this node!!
-	public CommonTree getFirstDescendantWithType(BitSet types) {
-		if ( types.Member(getType()) ) return this;
-		if ( children==null ) return null;
-		foreach (Object c in children) {
-			GrammarAST t = (GrammarAST)c;
-			if ( types.Member(t.getType()) ) return t;
-			CommonTree d = t.getFirstDescendantWithType(types);
-			if ( d!=null ) return d;
-		}
-		return null;
-	}
+    public AltAST GetOutermostAltNode()
+    {
+        if (this is AltAST aST && parent.parent is RuleAST)
+        {
+            return aST;
+        }
+        if (parent != null) return ((GrammarAST)parent).GetOutermostAltNode();
+        return null;
+    }
 
-	public void setType(int type) {
-		token.		Type = type;
-	}
-//
-//	//@Override
-//	public String getText() {
-//		if ( textOverride!=null ) return textOverride;
-//        if ( token!=null ) {
-//            return token.getText();
-//        }
-//        return "";
-//	}
+    /** Walk ancestors of this node until we find ALT with
+	 *  alt!=null or leftRecursiveAltInfo!=null. Then grab label if any.
+	 *  If not a rule element, just returns null.
+	 */
+    public string GetAltLabel()
+    {
+        var ancestors = this.GetAncestors();
+        if (ancestors == null) return null;
+        for (int i = ancestors.Count - 1; i >= 0; i--)
+        {
+            var p = (GrammarAST)ancestors[i];
+            if (p.Type == ANTLRParser.ALT)
+            {
+                var a = (AltAST)p;
+                if (a.altLabel != null) return a.altLabel.Text;
+                if (a.leftRecursiveAltInfo != null)
+                {
+                    return a.leftRecursiveAltInfo.altLabel;
+                }
+            }
+        }
+        return null;
+    }
 
-	public void setText(String text) {
-//		textOverride = text; // don't alt tokens as others might see
-		token.//		textOverride = text; // don't alt tokens as others might see
-		Text = text; // we delete surrounding tree, so ok to alter
-	}
+    public bool DeleteChild(Tree t)
+    {
+        for (int i = 0; i < children.Count; i++)
+        {
+            Object c = children[(i)];
+            if (c == t)
+            {
+                DeleteChild(t.ChildIndex);
+                return true;
+            }
+        }
+        return false;
+    }
 
-//	//@Override
-//	public bool equals(Object obj) {
-//		return base.Equals(obj);
-//	}
+    // TODO: move to basetree when i settle on how runtime works
+    // TODO: don't include this node!!
+    // TODO: reuse other method
+    public CommonTree GetFirstDescendantWithType(int type)
+    {
+        if (Type == type) return this;
+        if (children == null) return null;
+        foreach (var c in children)
+        {
+            var t = (GrammarAST)c;
+            if (t.Type == type) return t;
+            var d = t.GetFirstDescendantWithType(type);
+            if (d != null) return d;
+        }
+        return null;
+    }
 
-	//@Override
-    public GrammarAST dupNode() {
+    // TODO: don't include this node!!
+    public CommonTree GetFirstDescendantWithType(BitSet types)
+    {
+        if (types.Member(Type)) return this;
+        if (children == null) return null;
+        foreach (var c in children)
+        {
+            var t = (GrammarAST)c;
+            if (types.Member(t.Type)) return t;
+            var d = t.GetFirstDescendantWithType(types);
+            if (d != null) return d;
+        }
+        return null;
+    }
+
+    public void SetType(int type)
+    {
+        token.Type = type;
+    }
+    //
+    //	//@Override
+    //	public String getText() {
+    //		if ( textOverride!=null ) return textOverride;
+    //        if ( token!=null ) {
+    //            return token.getText();
+    //        }
+    //        return "";
+    //	}
+
+    public void SetText(String text)
+    {
+        //		textOverride = text; // don't alt tokens as others might see
+        token.//		textOverride = text; // don't alt tokens as others might see
+        Text = text; // we delete surrounding tree, so ok to alter
+    }
+
+    //	//@Override
+    //	public bool equals(Object obj) {
+    //		return base.Equals(obj);
+    //	}
+
+    //@Override
+    public GrammarAST dupNode()
+    {
         return new GrammarAST(this);
     }
 
-	public GrammarAST dupTree() {
-		GrammarAST t = this;
-		CharStream input = this.token.InputStream;
-		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(input);
-		return (GrammarAST)adaptor.dupTree(t);
-	}
+    public GrammarAST DupTree()
+    {
+        var t = this;
+        var input = this.token.InputStream;
+        var adaptor = new GrammarASTAdaptor(input);
+        return (GrammarAST)adaptor.dupTree(t);
+    }
 
-	public String toTokenString() {
-		CharStream input = this.token.InputStream;
-		GrammarASTAdaptor adaptor = new GrammarASTAdaptor(input);
-		CommonTreeNodeStream nodes =
-			new CommonTreeNodeStream(adaptor, this);
-		StringBuilder buf = new StringBuilder();
-		GrammarAST o = (GrammarAST)nodes.LT(1);
-		int type = adaptor.getType(o);
-		while ( type!=Token.EOF ) {
-			buf.Append(" ");
-			buf.Append(o.getText());
-			nodes.Consume();
-			o = (GrammarAST)nodes.LT(1);
-			type = adaptor.getType(o);
-		}
-		return buf.ToString();
-	}
+    public string ToTokenString()
+    {
+        var input = this.token.InputStream;
+        var adaptor = new GrammarASTAdaptor(input);
+        var nodes =
+            new CommonTreeNodeStream(adaptor, this);
+        var buffer = new StringBuilder();
+        var o = (GrammarAST)nodes.LT(1);
+        int type = adaptor.getType(o);
+        while (type != Token.EOF)
+        {
+            buffer.Append(' ');
+            buffer.Append(o.Text);
+            nodes.Consume();
+            o = (GrammarAST)nodes.LT(1);
+            type = adaptor.getType(o);
+        }
+        return buffer.ToString();
+    }
 
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public virtual object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

@@ -254,7 +254,7 @@ public class AttributeChecks : ActionSplitterListener
             var anyLabelDef = labels[(0)];
             if (anyLabelDef.type == LabelType.RULE_LABEL)
             {
-                return g.GetRule(anyLabelDef.element.getText());
+                return g.GetRule(anyLabelDef.element.Text);
             }
         }
         if (node.resolver is Alternative alternative)

@@ -50,7 +50,7 @@ public class SymbolCollector : GrammarTreeVisitor
     public override void GlobalNamedAction(GrammarAST scope, GrammarAST ID, ActionAST action)
     {
         action.Scope = scope;
-        namedActions.Add((GrammarAST)ID.getParent());
+        namedActions.Add((GrammarAST)ID.Parent);
         action.resolver = g;
     }
 
@@ -73,13 +73,13 @@ public class SymbolCollector : GrammarTreeVisitor
                              List<GrammarAST> actions,
                              GrammarAST block)
     {
-        currentRule = g.GetRule(ID.getText());
+        currentRule = g.GetRule(ID.Text);
     }
 
     public override void DiscoverLexerRule(RuleAST rule, GrammarAST ID, List<GrammarAST> modifiers, GrammarAST options,
                                   GrammarAST block)
     {
-        currentRule = g.GetRule(ID.getText());
+        currentRule = g.GetRule(ID.Text);
     }
 
     public override void DiscoverOuterAlt(AltAST alt)
@@ -101,7 +101,7 @@ public class SymbolCollector : GrammarTreeVisitor
 
     public override void RuleCatch(GrammarAST arg, ActionAST action)
     {
-        var catchme = (GrammarAST)action.getParent();
+        var catchme = (GrammarAST)action.Parent;
         currentRule.exceptions.Add(catchme);
         action.resolver = currentRule;
     }
@@ -114,29 +114,29 @@ public class SymbolCollector : GrammarTreeVisitor
 
     public override void Label(GrammarAST op, GrammarAST ID, GrammarAST element)
     {
-        var lp = new LabelElementPair(g, ID, element, op.getType());
-        currentRule.alt[currentOuterAltNumber].labelDefs.Map(ID.getText(), lp);
+        var lp = new LabelElementPair(g, ID, element, op.Type);
+        currentRule.alt[currentOuterAltNumber].labelDefs.Map(ID.Text, lp);
     }
 
     public override void StringRef(TerminalAST @ref)
     {
         terminals.Add(@ref);
-        strings.Add(@ref.getText());
-        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
+        strings.Add(@ref.Text);
+        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.Text, @ref);
     }
 
     public override void TokenRef(TerminalAST @ref)
     {
         terminals.Add(@ref);
         tokenIDRefs.Add(@ref);
-        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.getText(), @ref);
+        currentRule?.alt[currentOuterAltNumber].tokenRefs.Map(@ref.Text, @ref);
     }
 
     public override void RuleRef(GrammarAST @ref, ActionAST arg)
     {
         //		if ( inContext("DOT ...") ) qualifiedRulerefs.add((GrammarAST)@ref.getParent());
         rulerefs.Add(@ref);
-        currentRule?.alt[currentOuterAltNumber].ruleRefs.Map(@ref.getText(), @ref);
+        currentRule?.alt[currentOuterAltNumber].ruleRefs.Map(@ref.Text, @ref);
     }
 
     public override void GrammarOption(GrammarAST ID, GrammarAST valueAST)

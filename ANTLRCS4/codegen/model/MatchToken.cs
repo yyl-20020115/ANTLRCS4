@@ -22,7 +22,7 @@ public class MatchToken : RuleElement, LabeledOp
     {
         var g = factory.Grammar;
         var gen = factory.Generator;
-        ttype = g.getTokenType(ast.getText());
+        ttype = g.getTokenType(ast.Text);
         var target = gen.Target;
         name = target.GetTokenTypeAsTargetLabel(g, ttype);
         escapedName = target.EscapeIfNeeded(name);

@@ -9,63 +9,71 @@ using org.antlr.v4.runtime;
 
 namespace org.antlr.v4.tool.ast;
 
-public abstract class GrammarASTWithOptions : GrammarAST {
+public abstract class GrammarASTWithOptions : GrammarAST
+{
     protected Dictionary<string, GrammarAST> options;
 
-	public GrammarASTWithOptions(GrammarASTWithOptions node):base(node) {
-		this.options = node.options;
-	}
+    public GrammarASTWithOptions(GrammarASTWithOptions node) : base(node)
+    {
+        this.options = node.options;
+    }
 
-	public GrammarASTWithOptions(Token t):base(t) {  }
-    public GrammarASTWithOptions(int type):base(type) {  }
-    public GrammarASTWithOptions(int type, Token t):base(type,t) {  }
-    public GrammarASTWithOptions(int type, Token t, String text):base(type,t,text) {  }
+    public GrammarASTWithOptions(Token t) : base(t) { }
+    public GrammarASTWithOptions(int type) : base(type) { }
+    public GrammarASTWithOptions(int type, Token t) : base(type, t) { }
+    public GrammarASTWithOptions(int type, Token t, string text) : base(type, t, text) { }
 
-    public void setOption(String key, GrammarAST node) {
-        if ( options==null ) options = new ();
+    public void SetOption(string key, GrammarAST node)
+    {
+        options ??= new();
         options[key] = node;
     }
 
-	public String getOptionString(String key) {
-		GrammarAST value = getOptionAST(key);
-		if ( value == null ) return null;
-		if ( value is ActionAST ) {
-			return value.getText();
-		}
-		else {
-			String v = value.getText();
-			if ( v.StartsWith("'") || v.StartsWith("\"") ) {
-				v = CharSupport.GetStringFromGrammarStringLiteral(v);
-				if (v == null) {
-					g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.Token, value.getText());
-					v = "";
-				}
-			}
-			return v;
-		}
-	}
-
-	/** Gets AST node holding value for option key; ignores default options
-	 *  and command-line forced options.
-	 */
-    public GrammarAST getOptionAST(String key) {
-        if ( options==null ) return null;
-        return options.TryGetValue(key,out var r)?r:null;
+    public virtual string GetOptionString(string key)
+    {
+        var value = GetOptionAST(key);
+        if (value == null) return null;
+        if (value is ActionAST)
+        {
+            return value.Text;
+        }
+        else
+        {
+            var v = value.Text;
+            if (v.StartsWith("'") || v.StartsWith("\""))
+            {
+                v = CharSupport.GetStringFromGrammarStringLiteral(v);
+                if (v == null)
+                {
+                    g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_ESCAPE_SEQUENCE, g.fileName, value.Token, value.Text);
+                    v = "";
+                }
+            }
+            return v;
+        }
     }
 
-	public int getNumberOfOptions() {
-		return options==null ? 0 : options.Count;
-	}
+    /** Gets AST node holding value for option key; ignores default options
+	 *  and command-line forced options.
+	 */
+    public GrammarAST GetOptionAST(string key) => options == null ? null : options.TryGetValue(key, out var r) ? r : null;
 
-	//@Override
-	public abstract GrammarASTWithOptions dupNode();
+    public int NumberOfOptions => options == null ? 0 : options.Count;
+
+    //@Override
+    public abstract GrammarASTWithOptions DupNode();
 
 
-	public Dictionary<String, GrammarAST> getOptions() {
-		if (options == null) {
-			return new();// Collections.emptyMap();
-		}
+    public Dictionary<string, GrammarAST> Options
+    {
+        get
+        {
+            if (options == null)
+            {
+                return new();// Collections.emptyMap();
+            }
 
-		return options;
-	}
+            return options;
+        }
+    }
 }

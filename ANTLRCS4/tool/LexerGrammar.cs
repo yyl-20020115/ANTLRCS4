@@ -43,7 +43,7 @@ public class LexerGrammar : Grammar
             return false;
         }
 
-        if (modes == null) modes = new MultiMap<String, Rule>();
+        modes ??= new MultiMap<String, Rule>();
         modes.Map(r.mode, r);
         return true;
     }

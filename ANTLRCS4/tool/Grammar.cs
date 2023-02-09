@@ -362,14 +362,14 @@ public class Grammar : AttributeResolver
         {
             var t = (GrammarAST)c;
             string importedGrammarName = null;
-            if (t.getType() == ANTLRParser.ASSIGN)
+            if (t.Type == ANTLRParser.ASSIGN)
             {
                 t = (GrammarAST)t.GetChild(1);
-                importedGrammarName = t.getText();
+                importedGrammarName = t.Text;
             }
-            else if (t.getType() == ANTLRParser.ID)
+            else if (t.Type == ANTLRParser.ID)
             {
-                importedGrammarName = t.getText();
+                importedGrammarName = t.Text;
             }
             if (visited.Contains(importedGrammarName))
             { // ignore circular refs
@@ -930,7 +930,7 @@ public class Grammar : AttributeResolver
             indexToPredMap = getIndexToPredicateMap();
         }
         ActionAST? actionAST = indexToPredMap.TryGetValue(pred.predIndex,out var r)?r:null;
-        return actionAST?.getText();
+        return actionAST?.Text;
     }
 
     /** What is the max char value possible for this grammar's target?  Use
@@ -1269,7 +1269,7 @@ public class Grammar : AttributeResolver
         return getOptionString("language");
     }
 
-    public String getOptionString(String key) { return ast.getOptionString(key); }
+    public String getOptionString(String key) { return ast.GetOptionString(key); }
 
     /** Given ^(TOKEN_REF ^(OPTIONS ^(ELEMENT_OPTIONS (= assoc right))))
 	 *  set option assoc=right in TOKEN_REF.
@@ -1282,13 +1282,13 @@ public class Grammar : AttributeResolver
         foreach (Object o in options.GetChildren())
         {
             GrammarAST c = (GrammarAST)o;
-            if (c.getType() == ANTLRParser.ASSIGN)
+            if (c.Type == ANTLRParser.ASSIGN)
             {
-                t.setOption(c.GetChild(0).Text, (GrammarAST)c.GetChild(1));
+                t.SetOption(c.GetChild(0).Text, (GrammarAST)c.GetChild(1));
             }
             else
             {
-                t.setOption(c.getText(), null); // no arg such as ID<VarNodeType>
+                t.SetOption(c.Text, null); // no arg such as ID<VarNodeType>
             }
         }
     }
@@ -1312,7 +1312,7 @@ public class Grammar : AttributeResolver
         List<Pair<GrammarAST, GrammarAST>> lexerRuleToStringLiteral =
             new();
 
-        List<GrammarAST> ruleNodes = ast.getNodesWithType(ANTLRParser.RULE);
+        List<GrammarAST> ruleNodes = ast.GetNodesWithType(ANTLRParser.RULE);
         if (ruleNodes == null || ruleNodes.Count == 0) return null;
 
         foreach (GrammarAST r in ruleNodes)
@@ -1366,7 +1366,7 @@ public class Grammar : AttributeResolver
 
         public void stringRef(TerminalAST @ref)
         {
-            g.strings.Add(@ref.getText());
+            g.strings.Add(@ref.Text);
         }
         //@Override
 
@@ -1391,15 +1391,15 @@ public class Grammar : AttributeResolver
         Dictionary<int, Interval> stateToGrammarRegionMap = new();
         if (ast == null) return stateToGrammarRegionMap;
 
-        List<GrammarAST> nodes = ast.getNodesWithType(grammarTokenTypes);
+        List<GrammarAST> nodes = ast.GetNodesWithType(grammarTokenTypes);
         foreach (GrammarAST n in nodes)
         {
             if (n.atnState != null)
             {
-                Interval tokenRegion = Interval.Of(n.getTokenStartIndex(), n.getTokenStopIndex());
+                Interval tokenRegion = Interval.Of(n.TokenStartIndex, n.TokenStopIndex);
                 Tree ruleNode = null;
                 // RULEs, BLOCKs of transformed recursive rules point to original token interval
-                switch (n.getType())
+                switch (n.Type)
                 {
                     case ANTLRParser.RULE:
                         ruleNode = n;
@@ -1411,12 +1411,12 @@ public class Grammar : AttributeResolver
                 }
                 if (ruleNode is RuleAST)
                 {
-                    String ruleName = ((RuleAST)ruleNode).getRuleName();
+                    String ruleName = ((RuleAST)ruleNode).RuleName;
                     Rule r = ast.g.GetRule(ruleName);
                     if (r is LeftRecursiveRule)
                     {
                         RuleAST originalAST = ((LeftRecursiveRule)r).OriginalAST;
-                        tokenRegion = Interval.Of(originalAST.getTokenStartIndex(), originalAST.getTokenStopIndex());
+                        tokenRegion = Interval.Of(originalAST.TokenStartIndex, originalAST.TokenStopIndex);
                     }
                 }
                 stateToGrammarRegionMap[n.atnState.stateNumber]= tokenRegion;

@@ -146,21 +146,21 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     public void TokenRef(TerminalAST @ref)
     {
-        frequencies.Peek().Add(@ref.getText());
-        minFrequencies.Peek().Add(@ref.getText());
+        frequencies.Peek().Add(@ref.Text);
+        minFrequencies.Peek().Add(@ref.Text);
     }
 
     //@Override
     public void RuleRef(GrammarAST @ref, ActionAST arg)
     {
-        frequencies.Peek().Add(@ref.getText());
-        minFrequencies.Peek().Add(@ref.getText());
+        frequencies.Peek().Add(@ref.Text);
+        minFrequencies.Peek().Add(@ref.Text);
     }
 
     //@Override
     public void StringRef(TerminalAST @ref)
     {
-        var tokenName = @ref.g.getTokenName(@ref.getText());
+        var tokenName = @ref.g.getTokenName(@ref.Text);
 
         if (tokenName != null && !tokenName.StartsWith("T__"))
         {
@@ -233,7 +233,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     protected void ExitSubrule(GrammarAST tree)
     {
-        if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
+        if (tree.Type == CLOSURE || tree.Type == POSITIVE_CLOSURE)
         {
             foreach (var entry in frequencies.Peek())
             {
@@ -241,7 +241,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
             }
         }
 
-        if (tree.getType() == CLOSURE || tree.getType() == OPTIONAL)
+        if (tree.Type == CLOSURE || tree.Type == OPTIONAL)
         {
             // Everything inside a closure is optional, so the minimum
             // number of occurrences for all elements is 0.
@@ -284,7 +284,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
     //@Override
     protected void ExitLexerSubrule(GrammarAST tree)
     {
-        if (tree.getType() == CLOSURE || tree.getType() == POSITIVE_CLOSURE)
+        if (tree.Type == CLOSURE || tree.Type == POSITIVE_CLOSURE)
         {
             foreach (var entry in frequencies.Peek())
             {
@@ -292,7 +292,7 @@ public class ElementFrequenciesVisitor : GrammarTreeVisitor
             }
         }
 
-        if (tree.getType() == CLOSURE)
+        if (tree.Type == CLOSURE)
         {
             // Everything inside a closure is optional, so the minimum
             // number of occurrences for all elements is 0.

@@ -44,19 +44,19 @@ public class RuleCollector : GrammarTreeVisitor
     {
         int numAlts = block.ChildCount;
         Rule r;
-        if (LeftRecursiveRuleAnalyzer.HasImmediateRecursiveRuleRefs(rule, ID.getText()))
+        if (LeftRecursiveRuleAnalyzer.HasImmediateRecursiveRuleRefs(rule, ID.Text))
         {
-            r = new LeftRecursiveRule(g, ID.getText(), rule);
+            r = new LeftRecursiveRule(g, ID.Text, rule);
         }
         else
         {
-            r = new Rule(g, ID.getText(), rule, numAlts);
+            r = new Rule(g, ID.Text, rule, numAlts);
         }
         rules.Put(r.name, r);
 
         if (arg != null)
         {
-            r.args = ScopeParser.ParseTypedArgList(arg, arg.getText(), g);
+            r.args = ScopeParser.ParseTypedArgList(arg, arg.Text, g);
             r.args.type = AttributeDict.DictType.ARG;
             r.args.ast = arg;
             arg.resolver = r.alt[currentOuterAltNumber];
@@ -64,14 +64,14 @@ public class RuleCollector : GrammarTreeVisitor
 
         if (returns != null)
         {
-            r.retvals = ScopeParser.ParseTypedArgList(returns, returns.getText(), g);
+            r.retvals = ScopeParser.ParseTypedArgList(returns, returns.Text, g);
             r.retvals.type = AttributeDict.DictType.RET;
             r.retvals.ast = returns;
         }
 
         if (locals != null)
         {
-            r.locals = ScopeParser.ParseTypedArgList(locals, locals.getText(), g);
+            r.locals = ScopeParser.ParseTypedArgList(locals, locals.Text, g);
             r.locals.type = AttributeDict.DictType.LOCAL;
             r.locals.ast = locals;
         }
@@ -90,7 +90,7 @@ public class RuleCollector : GrammarTreeVisitor
         if (alt.altLabel != null)
         {
             ruleToAltLabels.Map(currentRuleName, alt.altLabel);
-            var altLabel = alt.altLabel.getText();
+            var altLabel = alt.altLabel.Text;
             altLabelToRuleName[Utils.Capitalize(altLabel)] = currentRuleName;
             altLabelToRuleName[misc.Utils.Decapitalize(altLabel)] = currentRuleName;
         }
@@ -123,17 +123,17 @@ public class RuleCollector : GrammarTreeVisitor
         }
 
         int numAlts = block.ChildCount;
-        var r = new Rule(g, ID.getText(), rule, numAlts, currentModeName, currentCaseInsensitive);
+        var r = new Rule(g, ID.Text, rule, numAlts, currentModeName, currentCaseInsensitive);
         if (modifiers.Count > 0) r.modifiers = modifiers;
         rules.Put(r.name, r);
     }
 
     private static bool? GetCaseInsensitiveValue(GrammarAST optionID, GrammarAST valueAST)
     {
-        var optionName = optionID.getText();
+        var optionName = optionID.Text;
         if (optionName.Equals(Grammar.caseInsensitiveOptionName))
         {
-            var valueText = valueAST.getText();
+            var valueText = valueAST.Text;
             if (valueText.Equals("true") || valueText.Equals("false"))
             {
                 return bool.TryParse(valueText, out var ret1) && ret1;

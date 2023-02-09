@@ -9,25 +9,17 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 
-public class PlusBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
-	private readonly bool _greedy;
+public class PlusBlockAST : GrammarAST, RuleElementAST, QuantifierAST
+{
+    private readonly bool greedy;
 
-	public PlusBlockAST(PlusBlockAST node):base(node) {
-		_greedy = node._greedy;
-	}
+    public PlusBlockAST(PlusBlockAST node) : base(node) => greedy = node.greedy;
 
-	public PlusBlockAST(int type, Token t, Token nongreedy) :base(type,t){
-		_greedy = nongreedy == null;
-	}
+    public PlusBlockAST(int type, Token t, Token nongreedy) : base(type, t) => greedy = nongreedy == null;
 
-	//@Override
-	public bool isGreedy() {
-		return _greedy;
-	}
-	
-    //@Override
-    public PlusBlockAST dupNode() { return new PlusBlockAST(this); }
+    public bool IsGreedy => greedy;
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override PlusBlockAST DupNode() => new (this);
+
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

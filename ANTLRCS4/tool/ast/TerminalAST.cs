@@ -9,18 +9,16 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 
-public class TerminalAST : GrammarASTWithOptions , RuleElementAST {
+public class TerminalAST : GrammarASTWithOptions, RuleElementAST
+{
 
-	public TerminalAST(TerminalAST node):base(node) {
-	}
+    public TerminalAST(TerminalAST node) : base(node) { }
 
-	public TerminalAST(Token t):base(t) {  }
-    public TerminalAST(int type):base(type) {}
-    public TerminalAST(int type, Token t) : base(type, t) {}
+    public TerminalAST(Token t) : base(t) { }
+    public TerminalAST(int type) : base(type) { }
+    public TerminalAST(int type, Token t) : base(type, t) { }
 
-	//@Override
-	public override TerminalAST dupNode() { return new TerminalAST(this); }
+    public override TerminalAST DupNode() => new (this);
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

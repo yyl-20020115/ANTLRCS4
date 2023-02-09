@@ -174,7 +174,7 @@ public class RuleFunction : OutputModelObject
         var reftypes = new IntervalSet(ANTLRParser.RULE_REF, ANTLRParser.TOKEN_REF, ANTLRParser.STRING_LITERAL);
         foreach (var ast in altASTs)
         {
-            var refs = GetRuleTokens(ast.getNodesWithType(reftypes));
+            var refs = GetRuleTokens(ast.GetNodesWithType(reftypes));
             allRefs.AddRange(refs);
             var minAndAltFreq = getElementFrequenciesForAlt(ast);
             var minFreq = minAndAltFreq.a;
@@ -254,8 +254,8 @@ public class RuleFunction : OutputModelObject
 
     private string GetName(GrammarAST token)
     {
-        var tokenText = token.getText();
-        var tokenName = token.getType() != ANTLRParser.STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
+        var tokenText = token.Text;
+        var tokenName = token.Type != ANTLRParser.STRING_LITERAL ? tokenText : token.g.getTokenName(tokenText);
         return tokenName == null || tokenName.StartsWith("T__") ? null : tokenName; // Do not include tokens with auto generated names
     }
 
@@ -284,9 +284,9 @@ public class RuleFunction : OutputModelObject
     public List<Decl> GetDeclForAltElement(GrammarAST t, String refLabelName, bool needList, bool optional)
     {
         List<Decl> decls = new();
-        if (t.getType() == ANTLRParser.RULE_REF)
+        if (t.Type == ANTLRParser.RULE_REF)
         {
-            var rref = factory.Grammar.GetRule(t.getText());
+            var rref = factory.Grammar.GetRule(t.Text);
             var ctxName = factory.Generator.Target
                              .GetRuleFunctionContextStructName(rref);
             if (needList)

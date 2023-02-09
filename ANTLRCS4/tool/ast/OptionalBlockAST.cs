@@ -7,30 +7,24 @@
 using org.antlr.v4.runtime;
 using org.antlr.v4.tool.ast;
 
-public class OptionalBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
-	private readonly bool _greedy;
+public class OptionalBlockAST : GrammarAST, RuleElementAST, QuantifierAST
+{
+    private readonly bool _greedy;
 
-	public OptionalBlockAST(OptionalBlockAST node): base(node)
+    public OptionalBlockAST(OptionalBlockAST node) : base(node)
     {
-		
-		_greedy = node._greedy;
-	}
+        _greedy = node._greedy;
+    }
 
-	public OptionalBlockAST(int type, Token t, Token nongreedy): base(type, t)
+    public OptionalBlockAST(int type, Token t, Token nongreedy) : base(type, t)
     {
-		
-		_greedy = nongreedy == null;
-	}
+        _greedy = nongreedy == null;
+    }
 
-	//@Override
-	public bool isGreedy() {
-		return _greedy;
-	}
+    public bool IsGreedy => _greedy;
 
-	//@Override
-	public OptionalBlockAST dupNode() { return new OptionalBlockAST(this); }
+    public override OptionalBlockAST DupNode() => new (this);
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 
 }

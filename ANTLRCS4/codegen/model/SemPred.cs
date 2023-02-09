@@ -39,9 +39,9 @@ public class SemPred : Action
         //	&& ast.atnState.getNumberOfTransitions() == 1
         //	&& ast.atnState.transition(0) is AbstractPredicateTransition;
 
-        var failNode = ast.getOptionAST("fail");
+        var failNode = ast.GetOptionAST("fail");
         var gen = factory.Generator;
-        predicate = ast.getText();
+        predicate = ast.Text;
         if (predicate.StartsWith("{") && predicate.EndsWith("}?"))
         {
             predicate = predicate[1..^2];
@@ -60,7 +60,7 @@ public class SemPred : Action
         else
         {
             msg = gen.Target.GetTargetStringLiteralFromANTLRStringLiteral(gen,
-                                                                          failNode.getText(),
+                                                                          failNode.                                                                          Text,
                                                                           true,
                                                                           true);
         }

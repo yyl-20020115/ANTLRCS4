@@ -52,7 +52,7 @@ public class TestTokenPositionOptions
                 new IntervalSet(ANTLRParser.TOKEN_REF,
                 ANTLRParser.STRING_LITERAL,
                 ANTLRParser.RULE_REF);
-        var nodes = g.ast.getNodesWithTypePreorderDFS(types);
+        var nodes = g.ast.GetNodesWithTypePreorderDFS(types);
         List<Token> tokens = new();
         foreach (var node in nodes)
         {
@@ -99,7 +99,7 @@ public class TestTokenPositionOptions
                 new IntervalSet(ANTLRParser.TOKEN_REF,
                 ANTLRParser.STRING_LITERAL,
                 ANTLRParser.RULE_REF);
-        var nodes = g.ast.getNodesWithTypePreorderDFS(types);
+        var nodes = g.ast.GetNodesWithTypePreorderDFS(types);
         List<Token> tokens = new();
         foreach (var node in nodes)
         {
@@ -147,7 +147,7 @@ public class TestTokenPositionOptions
                 new IntervalSet(ANTLRParser.TOKEN_REF,
                 ANTLRParser.STRING_LITERAL,
                 ANTLRParser.RULE_REF);
-        var nodes = g.ast.getNodesWithTypePreorderDFS(types);
+        var nodes = g.ast.GetNodesWithTypePreorderDFS(types);
         List<Token> tokens = new();
         foreach (var node in nodes)
         {

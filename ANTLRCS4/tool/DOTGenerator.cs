@@ -446,10 +446,10 @@ public class DOTGenerator
         return label;
     }
 
-    protected static String GetStateLabel(ATNState s)
+    protected static string GetStateLabel(ATNState s)
     {
         if (s == null) return "null";
-        String stateLabel = "";
+        string stateLabel = "";
 
         if (s is BlockStartState)
         {

@@ -70,7 +70,6 @@ public class Alternative : AttributeResolver
 
     /**  $x		Attribute: rule arguments, return values, predefined rule prop.
 	 */
-    //@Override
     public Attribute ResolveToAttribute(String x, ActionAST node)
     {
         return rule.ResolveToAttribute(x, node); // reuse that code
@@ -79,7 +78,6 @@ public class Alternative : AttributeResolver
     /** $x.y, x can be surrounding rule, token/rule/label ref. y is visible
 	 *  attr in that dictionary.  Can't see args on rule refs.
 	 */
-    //@Override
     public Attribute ResolveToAttribute(String x, String y, ActionAST node)
     {
         if (tokenRefs.ContainsKey(x))
@@ -94,7 +92,7 @@ public class Alternative : AttributeResolver
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
         {
-            return rule.g.GetRule(anyLabelDef.element.getText()).ResolveRetvalOrProperty(y);
+            return rule.g.GetRule(anyLabelDef.element.Text).ResolveRetvalOrProperty(y);
         }
         else if (anyLabelDef != null)
         {
@@ -138,7 +136,7 @@ public class Alternative : AttributeResolver
         var anyLabelDef = GetAnyLabelDef(x);
         if (anyLabelDef != null && anyLabelDef.type == LabelType.RULE_LABEL)
         {
-            return rule.g.GetRule(anyLabelDef.element.getText());
+            return rule.g.GetRule(anyLabelDef.element.Text);
         }
         return null;
     }

@@ -544,10 +544,10 @@ public abstract class Target
 
     public virtual bool GrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
     {
-        switch (idNode.getParent().Type)
+        switch (idNode.Parent.Type)
         {
             case ANTLRParser.ASSIGN:
-                switch (idNode.getParent().Parent.Type)
+                switch (idNode.Parent.Parent.Type)
                 {
                     case ANTLRParser.ELEMENT_OPTIONS:
                     case ANTLRParser.OPTIONS:
@@ -564,7 +564,7 @@ public abstract class Target
                 return false;
 
             case ANTLRParser.LEXER_ACTION_CALL:
-                if (idNode.getChildIndex() == 0)
+                if (idNode.ChildIndex == 0)
                 {
                     // first child is the command name which is part of the ANTLR language
                     return false;
@@ -577,12 +577,12 @@ public abstract class Target
                 break;
         }
 
-        return GetReservedWords().Contains(idNode.getText());
+        return GetReservedWords().Contains(idNode.Text);
     }
 
     //@Deprecated
     protected virtual bool VisibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
-        => GetReservedWords().Contains(idNode.getText());
+        => GetReservedWords().Contains(idNode.Text);
 
     public virtual bool TemplatesExist() => LoadTemplatesHelper(false) != null;
     public class STE : ITemplateErrorListener

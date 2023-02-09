@@ -114,9 +114,9 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     {
         if (firstPrequel == null) return;
         var parent = (GrammarAST)firstPrequel.parent;
-        var options = parent.getAllChildrenWithType(OPTIONS);
-        var imports = parent.getAllChildrenWithType(IMPORT);
-        var tokens = parent.getAllChildrenWithType(TOKENS_SPEC);
+        var options = parent.GetAllChildrenWithType(OPTIONS);
+        var imports = parent.GetAllChildrenWithType(IMPORT);
+        var tokens = parent.GetAllChildrenWithType(TOKENS_SPEC);
         CheckNumPrequels(options, imports, tokens);
     }
 
@@ -185,7 +185,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         {
             foreach (GrammarAST tree in modifiers)
             {
-                if (tree.getType() == ANTLRParser.FRAGMENT)
+                if (tree.Type == ANTLRParser.FRAGMENT)
                 {
                     inFragmentRule = true;
                 }
@@ -254,7 +254,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     //@Override
     public override void FinishRule(RuleAST rule, GrammarAST ID, GrammarAST block)
     {
-        if (rule.isLexerRule()) return;
+        if (rule.IsLexerRule) return;
         var blk = (BlockAST)rule.GetFirstChildWithType(BLOCK);
         int nalts = blk.ChildCount;
         var idAST = (GrammarAST)rule.GetChild(0);
@@ -263,7 +263,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
             AltAST altAST = (AltAST)blk.GetChild(i);
             if (altAST.altLabel != null)
             {
-                String altLabel = altAST.altLabel.getText();
+                String altLabel = altAST.altLabel.Text;
                 // first check that label doesn't conflict with a rule
                 // label X or x can't be rule x.
                 if (ruleCollector.rules.TryGetValue(Utils.Decapitalize(altLabel), out var r))
@@ -275,22 +275,22 @@ public class BasicSemanticChecks : GrammarTreeVisitor
                 }
                 // Now verify that label X or x doesn't conflict with label
                 // in another rule. altLabelToRuleName has both X and x mapped.
-                if (ruleCollector.altLabelToRuleName.TryGetValue(altLabel, out var prevRuleForLabel) && !prevRuleForLabel.Equals(rule.getRuleName()))
+                if (ruleCollector.altLabelToRuleName.TryGetValue(altLabel, out var prevRuleForLabel) && !prevRuleForLabel.Equals(rule.RuleName))
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.ALT_LABEL_REDEF,
                                                g.fileName, altAST.altLabel.token,
                                                altLabel,
-                                               rule.getRuleName(),
+                                               rule.                                               RuleName,
                                                prevRuleForLabel);
                 }
             }
         }
         int numAltLabels = 0;
-        if (ruleCollector.ruleToAltLabels.TryGetValue(rule.getRuleName(), out var altLabels)) numAltLabels = altLabels.Count;
+        if (ruleCollector.ruleToAltLabels.TryGetValue(rule.RuleName, out var altLabels)) numAltLabels = altLabels.Count;
         if (numAltLabels > 0 && nalts != numAltLabels)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.RULE_WITH_TOO_FEW_ALT_LABELS,
-                                       g.fileName, idAST.token, rule.getRuleName());
+                                       g.fileName, idAST.token, rule.RuleName);
         }
     }
 
@@ -321,10 +321,10 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     {
         if (rulesNode.ChildCount == 0)
         {
-            var root = (GrammarAST)rulesNode.getParent();
+            var root = (GrammarAST)rulesNode.Parent;
             var IDNode = (GrammarAST)root.GetChild(0);
             g.Tools.ErrMgr.GrammarError(ErrorType.NO_RULES, g.fileName,
-                    null, IDNode.getText(), g);
+                    null, IDNode.Text, g);
         }
     }
 
@@ -437,7 +437,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     {
         var alt = tree.parent;
         var blk = alt.parent;
-        var outerMostAlt = blk.parent.getType() == RULE;
+        var outerMostAlt = blk.parent.Type == RULE;
         var rule = tree.GetAncestor(RULE);
         var fileName = tree.Token.InputStream.SourceName;
         if (!outerMostAlt || blk.ChildCount > 1)
@@ -453,7 +453,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
 
     public override void Label(GrammarAST op, GrammarAST ID, GrammarAST element)
     {
-        switch (element.getType())
+        switch (element.Type)
         {
             // token atoms
             case TOKEN_REF:
@@ -469,14 +469,14 @@ public class BasicSemanticChecks : GrammarTreeVisitor
 
             default:
                 String fileName = ID.token.InputStream.SourceName;
-                g.Tools.ErrMgr.GrammarError(ErrorType.LABEL_BLOCK_NOT_A_SET, fileName, ID.token, ID.getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.LABEL_BLOCK_NOT_A_SET, fileName, ID.token, ID.Text);
                 break;
         }
     }
 
     protected override void EnterTerminal(GrammarAST tree)
     {
-        var text = tree.getText();
+        var text = tree.Text;
         if (text.Equals("''"))
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, tree.token, "''");
@@ -487,7 +487,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
     void CheckOptions(GrammarAST parent, Token optionID, GrammarAST valueAST)
     {
         HashSet<string> optionsToCheck = null;
-        int parentType = parent.getType();
+        int parentType = parent.Type;
         switch (parentType)
         {
             case ANTLRParser.BLOCK:
@@ -518,7 +518,7 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         var optionName = optionID.Text;
         if (optionName.Equals(Grammar.caseInsensitiveOptionName))
         {
-            var valueText = valueAST.getText();
+            var valueText = valueAST.Text;
             if (valueText.Equals("true") || valueText.Equals("false"))
             {
                 var currentValue = bool.TryParse(valueText, out var ret1) && ret1;
@@ -548,9 +548,9 @@ public class BasicSemanticChecks : GrammarTreeVisitor
                                 GrammarAST ID,
                                 GrammarAST valueAST)
     {
-        if (checkAssocElementOption && ID != null && "assoc".Equals(ID.getText()))
+        if (checkAssocElementOption && ID != null && "assoc".Equals(ID.Text))
         {
-            if (elem.getType() != ANTLRParser.ALT)
+            if (elem.Type != ANTLRParser.ALT)
             {
                 var optionID = ID.token;
                 var fileName = optionID.InputStream.SourceName;
@@ -569,11 +569,11 @@ public class BasicSemanticChecks : GrammarTreeVisitor
         {
             return CheckTokenOptions(aST, ID, valueAST);
         }
-        if (elem.getType() == ANTLRParser.ACTION)
+        if (elem.Type == ANTLRParser.ACTION)
         {
             return false;
         }
-        if (elem.getType() == ANTLRParser.SEMPRED)
+        if (elem.Type == ANTLRParser.SEMPRED)
         {
             var optionID = ID.token;
             var fileName = optionID.InputStream.SourceName;

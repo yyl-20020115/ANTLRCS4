@@ -20,7 +20,7 @@ public class ThrowRecognitionException : SrcOp
     public ThrowRecognitionException(OutputModelFactory factory, GrammarAST ast, IntervalSet expecting) : base(factory, ast)
     {
         //this.decision = ((BlockStartState)ast.ATNState).decision;
-        grammarLine = ast.getLine();
+        grammarLine = ast.Line;
         grammarLine = ast.CharPositionInLine;
         grammarFile = factory.Grammar.fileName;
         //this.expecting = factory.createExpectingBitSet(ast, decision, expecting, "error");

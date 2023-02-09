@@ -9,76 +9,67 @@ using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool.ast;
 
-public class GrammarRootAST : GrammarASTWithOptions {
-	public static readonly Dictionary<String, String> defaultOptions = new ();
-	static GrammarRootAST(){
-		defaultOptions.Add("language","Java");
-	}
-
-    public int grammarType; // LEXER, PARSER, GRAMMAR (combined)
-	public bool hasErrors;
-	/** Track stream used to create this tree */
-
-	public readonly TokenStream tokenStream;
-	public Dictionary<String, String> cmdLineOptions; // -DsuperClass=T on command line
-	public String fileName;
-
-	public GrammarRootAST(GrammarRootAST node): base(node)
+public class GrammarRootAST : GrammarASTWithOptions
+{
+    public static readonly Dictionary<String, String> defaultOptions = new();
+    static GrammarRootAST()
     {
-		this.grammarType = node.grammarType;
-		this.hasErrors = node.hasErrors;
-		this.tokenStream = node.tokenStream;
-	}
-
-	public GrammarRootAST(Token t, TokenStream tokenStream): base(t)
-    {
-		if (tokenStream == null) {
-			throw new NullReferenceException("tokenStream");
-		}
-
-		this.tokenStream = tokenStream;
-	}
-
-	public GrammarRootAST(int type, Token t, TokenStream tokenStream): base(type, t)
-    {
-		;
-		if (tokenStream == null) {
-			throw new NullReferenceException("tokenStream");
-		}
-
-		this.tokenStream = tokenStream;
-	}
-
-	public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) : base(type, t, text)
-    {
-		if (tokenStream == null) {
-			throw new NullReferenceException("tokenStream");
-		}
-
-		this.tokenStream = tokenStream;
+        defaultOptions.Add("language", "Java");
     }
 
-	public String getGrammarName() {
-		Tree t = GetChild(0);
-		if ( t!=null ) return t.Text;
-		return null;
-	}
+    public int grammarType; // LEXER, PARSER, GRAMMAR (combined)
+    public bool hasErrors;
+    /** Track stream used to create this tree */
 
-	//@Override
-	public String getOptionString(String key) {
-		if ( cmdLineOptions!=null && cmdLineOptions.TryGetValue(key,out var v) ) {
-			return v;
-		}
-		String value = base.getOptionString(key);
-		if ( value==null && defaultOptions.TryGetValue(key, out var v2)) {
-			value = v2;
-		}
-		return value;
-	}
+    public readonly TokenStream tokenStream;
+    public Dictionary<string, string> cmdLineOptions; // -DsuperClass=T on command line
+    public string fileName;
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public GrammarRootAST(GrammarRootAST node) : base(node)
+    {
+        this.grammarType = node.grammarType;
+        this.hasErrors = node.hasErrors;
+        this.tokenStream = node.tokenStream;
+    }
+
+    public GrammarRootAST(Token t, TokenStream tokenStream) : base(t)
+    {
+        this.tokenStream = tokenStream ?? throw new NullReferenceException("tokenStream");
+    }
+
+    public GrammarRootAST(int type, Token t, TokenStream tokenStream) : base(type, t)
+    {
+        this.tokenStream = tokenStream ?? throw new NullReferenceException("tokenStream");
+    }
+
+    public GrammarRootAST(int type, Token t, String text, TokenStream tokenStream) : base(type, t, text)
+    {
+        this.tokenStream = tokenStream ?? throw new NullReferenceException("tokenStream");
+    }
+
+    public string GetGrammarName()
+    {
+        Tree t = GetChild(0);
+        if (t != null) return t.Text;
+        return null;
+    }
 
     //@Override
-    public override GrammarRootAST dupNode() { return new GrammarRootAST(this); }
+    public override string GetOptionString(string key)
+    {
+        if (cmdLineOptions != null && cmdLineOptions.TryGetValue(key, out var v))
+        {
+            return v;
+        }
+        var value = base.GetOptionString(key);
+        if (value == null && defaultOptions.TryGetValue(key, out var v2))
+        {
+            value = v2;
+        }
+        return value;
+    }
+
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
+
+    public override GrammarRootAST DupNode() => new GrammarRootAST(this);
 }

@@ -42,7 +42,7 @@ namespace org.antlr.runtime.tree;
 public abstract class BaseTree : Tree
 {
 
-    protected List<Tree> children;
+    protected List<Tree> children = new();
 
     public BaseTree()
     {
@@ -56,38 +56,23 @@ public abstract class BaseTree : Tree
     {
     }
 
-    //@Override
-    public Tree GetChild(int i)
-    {
-        if (children == null || i >= children.Count)
-        {
-            return null;
-        }
-        return (Tree)children[(i)];
-    }
+    public Tree GetChild(int i) => children == null || i >= children.Count ? null : children[i];
 
     /** Get the children internal List; note that if you directly mess with
      *  the list, do so at your own risk.
      */
-    public List<Tree> GetChildren()
-    {
-        return children;
-    }
+    public List<Tree> GetChildren() => children;
 
     public Tree GetFirstChildWithType(int type)
     {
         for (int i = 0; children != null && i < children.Count; i++)
         {
-            Tree t = children[i];
-            if (t.Type == type)
-            {
-                return t;
-            }
+            var t = children[i];
+            if (t.Type == type) return t;
         }
         return null;
     }
 
-    //@Override
     public int ChildCount => children == null ? 0 : children.Count;
 
     /** Add t as child of this node.
@@ -96,8 +81,7 @@ public abstract class BaseTree : Tree
      *  and child isNil then this routine moves children to t via
      *  t.children = child.children; i.e., without copying the array.
      */
-    //@Override
-    public void AddChild(Tree t)
+    public virtual void AddChild(Tree t)
     {
         //Console.Out.WriteLine("add child "+t.toStringTree()+" "+this.toStringTree());
         //Console.Out.WriteLine("existing children: "+children);
@@ -105,7 +89,7 @@ public abstract class BaseTree : Tree
         {
             return; // do nothing upon addChild(null)
         }
-        BaseTree childTree = (BaseTree)t;
+        var childTree = (BaseTree)t;
         if (childTree.IsNil)
         { // t is an empty node possibly with children
             if (this.children != null && this.children == childTree.children)
@@ -120,12 +104,12 @@ public abstract class BaseTree : Tree
                     int n = childTree.children.Count;
                     for (int i = 0; i < n; i++)
                     {
-                        Tree c = (Tree)childTree.children[(i)];
+                        var c = childTree.children[(i)];
                         this.children.Add(c);
                         // handle double-link stuff for each child of nil root
                         c.                        // handle double-link stuff for each child of nil root
                         Parent = this;
-                        c.                        ChildIndex = children.Count - 1;
+                        c.ChildIndex = children.Count - 1;
                     }
                 }
                 else
@@ -148,17 +132,16 @@ public abstract class BaseTree : Tree
     }
 
     /** Add all elements of kids list as children of this node */
-    public void AddChildren(List<Tree> kids)
+    public virtual void AddChildren(List<Tree> kids)
     {
         for (int i = 0; i < kids.Count; i++)
         {
-            Tree t = kids[(i)];
+            var t = kids[(i)];
             AddChild(t);
         }
     }
 
-    //@Override
-    public void SetChild(int i, Tree t)
+    public virtual void SetChild(int i, Tree t)
     {
         if (t == null)
         {
@@ -169,16 +152,16 @@ public abstract class BaseTree : Tree
             throw new ArgumentException("Can't set single child to a list");
         }
         children ??= CreateChildrenList().Cast<Tree>().ToList();
-        children[i]=t;
-        t.        Parent = this;
-        t.        ChildIndex = i;
+        children[i] = t;
+        t.Parent = this;
+        t.ChildIndex = i;
     }
 
     /** Insert child t at child position i (0..n-1) by shifting children
         i+1..n-1 to the right one position. Set parent / indexes properly
         but does NOT collapse nil-rooted t's that come in here like addChild.
      */
-    public void InsertChild(int i, Tree t)
+    public virtual void InsertChild(int i, Tree t)
     {
         if (i < 0 || i > ChildCount)
         {
@@ -193,8 +176,7 @@ public abstract class BaseTree : Tree
         this.FreshenParentAndChildIndexes(i);
     }
 
-    //@Override
-    public Object DeleteChild(int i)
+    public virtual object DeleteChild(int i)
     {
         if (children == null)
         {
@@ -212,8 +194,7 @@ public abstract class BaseTree : Tree
      *  For huge child lists, inserting children can force walking rest of
      *  children to set their childindex; could be slow.
      */
-    //@Override
-    public void ReplaceChildren(int startChildIndex, int stopChildIndex, Object t)
+    public virtual void ReplaceChildren(int startChildIndex, int stopChildIndex, Object t)
     {
         /*
         Console.Out.WriteLine("replaceChildren "+startChildIndex+", "+stopChildIndex+
@@ -226,7 +207,7 @@ public abstract class BaseTree : Tree
         }
         int replacingHowMany = stopChildIndex - startChildIndex + 1;
         int replacingWithHowMany;
-        BaseTree newTree = (BaseTree)t;
+        var newTree = (BaseTree)t;
         List<Tree> newChildren;
         // normalize to a list of children to add: newChildren
         if (newTree.IsNil)
@@ -235,7 +216,7 @@ public abstract class BaseTree : Tree
         }
         else
         {
-            newChildren = new (1);
+            newChildren = new(1);
             newChildren.Add(newTree);
         }
         replacingWithHowMany = newChildren.Count;
@@ -250,7 +231,7 @@ public abstract class BaseTree : Tree
                 BaseTree child = (BaseTree)newChildren[j];
                 children[i] = child;
                 child.SetParent(this);
-                child.                ChildIndex = i;
+                child.ChildIndex = i;
                 j++;
             }
         }
@@ -259,7 +240,7 @@ public abstract class BaseTree : Tree
           // set children and then delete extra
             for (int j = 0; j < numNewChildren; j++)
             {
-                children[startChildIndex + j]= newChildren[(j)];
+                children[startChildIndex + j] = newChildren[(j)];
             }
             int indexToDelete = startChildIndex + numNewChildren;
             for (int c = indexToDelete; c <= stopChildIndex; c++)
@@ -274,7 +255,7 @@ public abstract class BaseTree : Tree
           // fill in as many children as we can (replacingHowMany) w/o moving data
             for (int j = 0; j < replacingHowMany; j++)
             {
-                children[(startChildIndex + j)]=newChildren[(j)];
+                children[(startChildIndex + j)] = newChildren[(j)];
             }
             int numToInsert = replacingWithHowMany - replacingHowMany;
             for (int j = replacingHowMany; j < replacingWithHowMany; j++)
@@ -287,29 +268,27 @@ public abstract class BaseTree : Tree
     }
 
     /** Override in a subclass to change the impl of children list */
-    protected List<object> CreateChildrenList()
+    protected virtual List<object> CreateChildrenList()
     {
-        return new ();
+        return new();
     }
 
-    //@Override
-    public bool IsNil => false;
+    public virtual bool IsNil => false;
 
     /** Set the parent and child index values for all child of t */
-    //@Override
-    public void FreshenParentAndChildIndexes()
+    public virtual void FreshenParentAndChildIndexes()
     {
         FreshenParentAndChildIndexes(0);
     }
 
-    public void FreshenParentAndChildIndexes(int offset)
+    public virtual void FreshenParentAndChildIndexes(int offset)
     {
         int n = ChildCount;
         for (int c = offset; c < n; c++)
         {
             Tree child = GetChild(c);
-            child.            ChildIndex = c;
-            child.            Parent = this;
+            child.ChildIndex = c;
+            child.Parent = this;
         }
     }
 
@@ -324,7 +303,7 @@ public abstract class BaseTree : Tree
         for (int c = offset; c < n; c++)
         {
             BaseTree child = (BaseTree)GetChild(c);
-            child.            ChildIndex = c;
+            child.ChildIndex = c;
             child.SetParent(this);
             child.FreshenParentAndChildIndexesDeeply();
         }
@@ -341,9 +320,9 @@ public abstract class BaseTree : Tree
         {
             throw new IllegalStateException("parents don't match; expected " + parent + " found " + this.Parent);
         }
-        if (i != this.GetChildIndex())
+        if (i != this.ChildIndex)
         {
-            throw new IllegalStateException("child indexes don't match; expected " + i + " found " + this.GetChildIndex());
+            throw new IllegalStateException("child indexes don't match; expected " + i + " found " + this.ChildIndex);
         }
         int n = this.ChildCount;
         for (int c = 0; c < n; c++)
@@ -353,17 +332,9 @@ public abstract class BaseTree : Tree
         }
     }
 
-    /** BaseTree doesn't track child indexes. */
-    //@Override
-    public int GetChildIndex()
-    {
-        return 0;
-    }
 
     /** BaseTree doesn't track parent pointers. */
-    //@Override
-    //@Override
-    public Tree Parent
+    public virtual Tree Parent
     {
         get => null;
         set
@@ -373,7 +344,7 @@ public abstract class BaseTree : Tree
 
     /** Walk upwards looking for ancestor with this token type. */
     //@Override
-    public bool HasAncestor(int ttype) { return GetAncestor(ttype) != null; }
+    public bool HasAncestor(int ttype) => GetAncestor(ttype) != null;
 
     /** Walk upwards and get first ancestor with this token type. */
     //@Override
@@ -392,11 +363,10 @@ public abstract class BaseTree : Tree
     /** Return a list of all ancestors of this node.  The first node of
      *  list is the root and the last is the parent of this node.
      */
-    //@Override
-    public List<Tree> GetAncestors()
+    public virtual List<Tree> GetAncestors()
     {
         if (Parent == null) return null;
-        List<Tree> ancestors = new ();
+        List<Tree> ancestors = new();
         Tree t = this;
         t = t.Parent;
         while (t != null)
@@ -408,34 +378,33 @@ public abstract class BaseTree : Tree
     }
 
     /** Print out a whole tree not just a node */
-    //@Override
-    public string ToStringTree()
+    public virtual string ToStringTree()
     {
-        if (children == null || children.Count==0)
+        if (children == null || children.Count == 0)
         {
             return this.ToString();
         }
-        StringBuilder buf = new StringBuilder();
+        var buffer = new StringBuilder();
         if (!IsNil)
         {
-            buf.Append("(");
-            buf.Append(this.ToString());
-            buf.Append(' ');
+            buffer.Append('(');
+            buffer.Append(this.ToString());
+            buffer.Append(' ');
         }
         for (int i = 0; children != null && i < children.Count; i++)
         {
-            Tree t = (Tree)children[(i)];
+            var t = children[(i)];
             if (i > 0)
             {
-                buf.Append(' ');
+                buffer.Append(' ');
             }
-            buf.Append(t.ToStringTree());
+            buffer.Append(t.ToStringTree());
         }
         if (!IsNil)
         {
-            buf.Append(")");
+            buffer.Append(")");
         }
-        return buf.ToString();
+        return buffer.ToString();
     }
 
     //@Override
@@ -444,24 +413,27 @@ public abstract class BaseTree : Tree
     //@Override
     public virtual int CharPositionInLine => 0;
 
-    public object Payload => throw new NotImplementedException();
+    public virtual object Payload => throw new NotImplementedException();
 
-    public int Type => throw new NotImplementedException();
+    public virtual int Type => throw new NotImplementedException();
 
-    public string Text => throw new NotImplementedException();
+    public virtual string Text => throw new NotImplementedException();
 
-    public void SetParent(BaseTree baseTree)
+    public virtual void SetParent(BaseTree baseTree)
     {
         throw new NotImplementedException();
     }
 
-    public int TokenStartIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public int TokenStopIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public int ChildIndex {
-        get => throw new NotImplementedException(); 
-        set => throw new NotImplementedException(); }
+    public virtual int TokenStartIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public virtual int TokenStopIndex { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    /** BaseTree doesn't track child indexes. */
+    public virtual int ChildIndex
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
 
-    public object DupNode()
+    public virtual object DupNode()
     {
         throw new NotImplementedException();
     }

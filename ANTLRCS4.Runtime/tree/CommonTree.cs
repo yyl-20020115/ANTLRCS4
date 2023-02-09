@@ -68,103 +68,38 @@ public class CommonTree : BaseTree
 
     public Token Token => token;
 
-    //@Override
-    public Tree dupNode()
+    public override Tree DupNode() => new CommonTree(this);
+
+    public override bool IsNil => token == null;
+
+    public override int Type => token == null ? Token.INVALID_TYPE : token.Type;
+
+    public override string Text => token?.Text;
+
+    public override int Line => token == null || token.Line == 0 ? ChildCount > 0 ? GetChild(0).Line : 0 : token.Line;
+
+    public override int CharPositionInLine => token == null || token.CharPositionInLine == -1
+                ? ChildCount > 0 ? GetChild(0).CharPositionInLine : 0
+                : token.CharPositionInLine;
+    public override int TokenStartIndex
     {
-        return new CommonTree(this);
+        get => startIndex == -1 && token != null ? token.TokenIndex : startIndex;
+
+        set => startIndex = value;
     }
 
-    //@Override
-    public bool isNil()
+    public override int TokenStopIndex
     {
-        return token == null;
-    }
+        get => stopIndex == -1 && token != null ? token.TokenIndex : stopIndex;
 
-    //@Override
-    public int getType()
-    {
-        if (token == null)
-        {
-            return Token.INVALID_TYPE;
-        }
-        return token.Type;
-    }
-
-    //@Override
-    public String getText()
-    {
-        if (token == null)
-        {
-            return null;
-        }
-        return token.Text;
-    }
-    //@Override
-    public int getLine()
-    {
-        if (token == null || token.Line == 0)
-        {
-            if (ChildCount > 0)
-            {
-                return GetChild(0).Line;
-            }
-            return 0;
-        }
-        return token.Line;
-    }
-    //@Override
-    public override int CharPositionInLine
-    {
-        get
-        {
-            if (token == null || token.CharPositionInLine == -1)
-            {
-                if (ChildCount > 0)
-                {
-                    return GetChild(0).CharPositionInLine;
-                }
-                return 0;
-            }
-            return token.CharPositionInLine;
-        }
-    }
-
-    //@Override
-    public int getTokenStartIndex()
-    {
-        if (startIndex == -1 && token != null)
-        {
-            return token.TokenIndex;
-        }
-        return startIndex;
-    }
-
-    //@Override
-    public void setTokenStartIndex(int index)
-    {
-        startIndex = index;
-    }
-    //@Override
-    public int getTokenStopIndex()
-    {
-        if (stopIndex == -1 && token != null)
-        {
-            return token.TokenIndex;
-        }
-        return stopIndex;
-    }
-
-    //@Override
-    public void setTokenStopIndex(int index)
-    {
-        stopIndex = index;
+        set => stopIndex = value;
     }
 
     /** For every node in this subtree, make sure it's start/stop token's
      *  are set.  Walk depth first, visit bottom up.  Only updates nodes
      *  with at least one token index &lt; 0.
      */
-    public void setUnknownTokenBoundaries()
+    public void SetUnknownTokenBoundaries()
     {
         if (children == null)
         {
@@ -176,57 +111,21 @@ public class CommonTree : BaseTree
         }
         for (int i = 0; i < children.Count; i++)
         {
-            ((CommonTree)children[(i)]).setUnknownTokenBoundaries();
+            ((CommonTree)children[(i)]).SetUnknownTokenBoundaries();
         }
         if (startIndex >= 0 && stopIndex >= 0) return; // already set
         if (children.Count > 0)
         {
-            CommonTree firstChild = (CommonTree)children[0];
-            CommonTree lastChild = (CommonTree)children[(children.Count - 1)];
-            startIndex = firstChild.getTokenStartIndex();
-            stopIndex = lastChild.getTokenStopIndex();
+            var firstChild = (CommonTree)children[0];
+            var lastChild = (CommonTree)children[^1];
+            startIndex = firstChild.TokenStartIndex;
+            stopIndex = lastChild.TokenStopIndex;
         }
     }
 
-    //@Override
-    public int getChildIndex()
-    {
-        return childIndex;
-    }
+    public override int ChildIndex { get => childIndex; set => this.childIndex = value; }
 
-    //@Override
-    public Tree getParent()
-    {
-        return parent;
-    }
+    public override Tree Parent { get => parent; set => this.parent = (CommonTree)value; }
 
-    //@Override
-    public void setParent(Tree t)
-    {
-        this.parent = (CommonTree)t;
-    }
-
-    //@Override
-    public void setChildIndex(int index)
-    {
-        this.childIndex = index;
-    }
-
-    //@Override
-    public String toString()
-    {
-        if (isNil())
-        {
-            return "nil";
-        }
-        if (getType() == Token.INVALID_TYPE)
-        {
-            return "<errornode>";
-        }
-        if (token == null)
-        {
-            return null;
-        }
-        return token.Text;
-    }
+    public override string ToString() => IsNil ? "nil" : Type == Token.INVALID_TYPE ? "<errornode>" : token?.Text;
 }

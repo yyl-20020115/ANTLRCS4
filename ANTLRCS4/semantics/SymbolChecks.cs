@@ -41,7 +41,7 @@ public class SymbolChecks
 
         foreach (var tokenId in collector.tokenIDRefs)
         {
-            tokenIDs.Add(tokenId.getText());
+            tokenIDs.Add(tokenId.Text);
         }
     }
 
@@ -70,11 +70,11 @@ public class SymbolChecks
             nameNode = (GrammarAST)ampersandAST.GetChild(0);
             if (ampersandAST.ChildCount == 2)
             {
-                name = nameNode.getText();
+                name = nameNode.Text;
             }
             else
             {
-                scope = nameNode.getText();
+                scope = nameNode.Text;
                 name = ampersandAST.GetChild(1).Text;
             }
             if (!actionScopeToActionNames.TryGetValue(scope, out var scopeActions))
@@ -151,7 +151,7 @@ public class SymbolChecks
         foreach (var p in pairs)
         {
             CheckForLabelConflict(r, p.label);
-            var name = p.label.getText();
+            var name = p.label.Text;
             if (!labelNameSpace.TryGetValue(name, out var prev))
             {
                 labelNameSpace[name] = p;
@@ -173,7 +173,7 @@ public class SymbolChecks
         {
             if (altAST.altLabel != null)
             {
-                return altAST.altLabel.toString();
+                return altAST.altLabel.ToString();
             }
             else if (altAST.leftRecursiveAltInfo != null)
             {
@@ -207,10 +207,10 @@ public class SymbolChecks
                     ErrorType.LABEL_TYPE_CONFLICT,
                     g.fileName,
                     token,
-                    labelPair.label.getText(),
+                    labelPair.label.                    Text,
                     labelPair.type + "!=" + prevLabelPair.type);
         }
-        if (!prevLabelPair.element.getText().Equals(labelPair.element.getText()) &&
+        if (!prevLabelPair.element.Text.Equals(labelPair.element.Text) &&
             (prevLabelPair.type.Equals(LabelType.RULE_LABEL) || prevLabelPair.type.Equals(LabelType.RULE_LIST_LABEL)) &&
             (labelPair.type.Equals(LabelType.RULE_LABEL) || labelPair.type.Equals(LabelType.RULE_LIST_LABEL)))
         {
@@ -224,14 +224,14 @@ public class SymbolChecks
                     ErrorType.LABEL_TYPE_CONFLICT,
                     g.fileName,
                     token,
-                    labelPair.label.getText() + labelOp + labelPair.element.getText(),
-                    prevLabelPair.label.getText() + prevLabelOp + prevLabelPair.element.getText());
+                    labelPair.label.                    Text + labelOp + labelPair.element.Text,
+                    prevLabelPair.label.                    Text + prevLabelOp + prevLabelPair.element.Text);
         }
     }
 
     public void CheckForLabelConflict(Rule r, GrammarAST labelID)
     {
-        var name = labelID.getText();
+        var name = labelID.Text;
         if (nameToRuleMap.ContainsKey(name))
         {
             ErrorType etype = ErrorType.LABEL_CONFLICTS_WITH_RULE;
@@ -495,7 +495,7 @@ public class SymbolChecks
         if (rulerefs == null) return;
         foreach (var @ref in rulerefs)
         {
-            var ruleName = @ref.getText();
+            var ruleName = @ref.Text;
             var r = g.GetRule(ruleName);
             var arg = (GrammarAST)@ref.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
             if (arg != null && (r == null || r.args == null))
@@ -518,21 +518,21 @@ public class SymbolChecks
         {
             var grammar = (GrammarAST)dot.GetChild(0);
             var rule = (GrammarAST)dot.GetChild(1);
-            g.Tools.Log("semantics", grammar.getText() + "." + rule.getText());
-            var @delegate = g.getImportedGrammar(grammar.getText());
+            g.Tools.Log("semantics", grammar.Text + "." + rule.Text);
+            var @delegate = g.getImportedGrammar(grammar.Text);
             if (@delegate == null)
             {
                 errMgr.GrammarError(ErrorType.NO_SUCH_GRAMMAR_SCOPE,
-                        g.fileName, grammar.token, grammar.getText(),
-                        rule.getText());
+                        g.fileName, grammar.token, grammar.Text,
+                        rule.                        Text);
             }
             else
             {
-                if (g.GetRule(grammar.getText(), rule.getText()) == null)
+                if (g.GetRule(grammar.Text, rule.Text) == null)
                 {
                     errMgr.GrammarError(ErrorType.NO_SUCH_RULE_IN_SCOPE,
-                            g.fileName, rule.token, grammar.getText(),
-                            rule.getText());
+                            g.fileName, rule.token, grammar.Text,
+                            rule.                            Text);
                 }
             }
         }

@@ -6,45 +6,54 @@
 
 using org.antlr.v4.parse;
 using org.antlr.v4.runtime;
-using org.antlr.v4.runtime.tree;
 
 namespace org.antlr.v4.tool.ast;
 
-public class RuleAST : GrammarASTWithOptions {
-	public RuleAST(RuleAST node) :base(node)
+public class RuleAST : GrammarASTWithOptions
+{
+    public RuleAST(RuleAST node) : base(node) { }
+
+    public RuleAST(Token t) : base(t) { }
+    public RuleAST(int type) : base(type) { }
+
+    public bool IsLexerRule
     {
-		;
-	}
+        get
+        {
+            var name = RuleName;
+            return name != null && Grammar.isTokenName(name);
+        }
+    }
 
-	public RuleAST(Token t) :base(t){ ; }
-    public RuleAST(int type) :base(type){ ; }
+    public string RuleName
+    {
+        get
+        {
+            var nameNode = (GrammarAST)GetChild(0);
+            if (nameNode != null) return nameNode.Text;
+            return null;
+        }
+    }
 
-	public bool isLexerRule() {
-		String name = getRuleName();
-		return name!=null && Grammar.isTokenName(name);
-	}
+    public override RuleAST DupNode() => new (this);
 
-	public String getRuleName() {
-		GrammarAST nameNode = (GrammarAST)GetChild(0);
-		if ( nameNode!=null ) return nameNode.getText();
-		return null;
-	}
+    public ActionAST LexerAction
+    {
+        get
+        {
+            var blk = GetFirstChildWithType(ANTLRParser.BLOCK);
+            if (blk.ChildCount == 1)
+            {
+                var onlyAlt = blk.GetChild(0);
+                var lastChild = onlyAlt.GetChild(onlyAlt.ChildCount - 1);
+                if (lastChild.Type == ANTLRParser.ACTION)
+                {
+                    return (ActionAST)lastChild;
+                }
+            }
+            return null;
+        }
+    }
 
-	//@Override
-	public override RuleAST dupNode() { return new RuleAST(this); }
-
-	public ActionAST getLexerAction() {
-		Tree blk = GetFirstChildWithType(ANTLRParser.BLOCK);
-		if ( blk.ChildCount==1 ) {
-			Tree onlyAlt = blk.GetChild(0);
-			Tree lastChild = onlyAlt.GetChild(onlyAlt.ChildCount-1);
-			if ( lastChild.Type==ANTLRParser.ACTION ) {
-				return (ActionAST)lastChild;
-			}
-		}
-		return null;
-	}
-
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

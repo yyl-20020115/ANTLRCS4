@@ -71,7 +71,7 @@ public class UseDefAnalyzer
 
         foreach (var r in rules)
         {
-            var tokenRefs = r.ast.getNodesWithType(ANTLRParser.TOKEN_REF);
+            var tokenRefs = r.ast.GetNodesWithType(ANTLRParser.TOKEN_REF);
             foreach (var tref in tokenRefs)
             {
                 if (!dependencies.TryGetValue(r, out var calls))
@@ -79,7 +79,7 @@ public class UseDefAnalyzer
                     calls = new HashSet<Rule>();
                     dependencies[r] = calls;
                 }
-                calls.Add(g.GetRule(tref.getText()));
+                calls.Add(g.GetRule(tref.Text));
             }
         }
 

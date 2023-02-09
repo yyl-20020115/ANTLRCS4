@@ -22,7 +22,7 @@ public class Loop : Choice
                 List<CodeBlockForAlt> alts)
         : base(factory, blkOrEbnfRootAST, alts)
     {
-        var nongreedy = (blkOrEbnfRootAST is QuantifierAST ast) && !ast.isGreedy();
+        var nongreedy = (blkOrEbnfRootAST is QuantifierAST ast) && !ast.IsGreedy;
         exitAlt = nongreedy ? 1 : alts.Count + 1;
     }
 

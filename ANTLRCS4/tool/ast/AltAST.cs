@@ -33,10 +33,10 @@ public class AltAST : GrammarASTWithOptions
     public AltAST(Token t) : base(t) { }
     public AltAST(int type) : base(type) { }
     public AltAST(int type, Token t) : base(type, t) { }
-    public AltAST(int type, Token t, String text) : base(type, t, text) { }
+    public AltAST(int type, Token t, string text) : base(type, t, text) { }
 
-    public override AltAST dupNode() { return new AltAST(this); }
+    public override AltAST DupNode() => new (this);
 
     //@Override
-    public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

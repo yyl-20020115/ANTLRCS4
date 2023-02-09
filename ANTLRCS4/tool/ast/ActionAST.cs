@@ -27,10 +27,9 @@ public class ActionAST : GrammarASTWithOptions, RuleElementAST
     public ActionAST(int type) : base(type) { }
     public ActionAST(int type, Token t) : base(type, t) { }
 
-    public override ActionAST dupNode() { return new ActionAST(this); }
+    public override ActionAST DupNode() => new (this);
 
-    //@Override
-    public object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 
     public GrammarAST Scope { get => scope; set => this.scope = value; }
 }

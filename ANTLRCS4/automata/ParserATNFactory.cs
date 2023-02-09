@@ -173,7 +173,7 @@ public class ParserATNFactory : ATNFactory
     {
         var left = NewState(node);
         var right = NewState(node);
-        int ttype = g.getTokenType(node.getText());
+        int ttype = g.getTokenType(node.Text);
         left.AddTransition(new AtomTransition(right, ttype));
         node.atnState = left;
         return new Handle(left, right);
@@ -192,7 +192,7 @@ public class ParserATNFactory : ATNFactory
         var set = new IntervalSet();
         foreach (var t in terminals)
         {
-            int ttype = g.getTokenType(t.getText());
+            int ttype = g.getTokenType(t.Text);
             set.Add(ttype);
         }
         if (invert)
@@ -221,7 +221,7 @@ public class ParserATNFactory : ATNFactory
     }
 
     protected int GetTokenType(GrammarAST atom) 
-        => g.isLexer() ? CharSupport.GetCharValueFromGrammarCharLiteral(atom.getText()) : g.getTokenType(atom.getText());
+        => g.isLexer() ? CharSupport.GetCharValueFromGrammarCharLiteral(atom.Text) : g.getTokenType(atom.Text);
 
     /** For a non-lexer, just build a simple token reference atom. */
 
@@ -252,19 +252,19 @@ public class ParserATNFactory : ATNFactory
 
     public Handle GetRuleRef(GrammarAST node)
     {
-        var r = g.GetRule(node.getText());
+        var r = g.GetRule(node.Text);
         if (r == null)
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.Token, "Rule " + node.getText() + " undefined");
+            g.Tools.ErrMgr.GrammarError(ErrorType.INTERNAL_ERROR, g.fileName, node.Token, "Rule " + node.Text + " undefined");
             return null;
         }
         var start = atn.ruleToStartState[r.index];
         var left = NewState(node);
         var right = NewState(node);
         int precedence = 0;
-        if (((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
+        if (((GrammarASTWithOptions)node).GetOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
         {
-            if (int.TryParse(((GrammarASTWithOptions)node).getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME)
+            if (int.TryParse(((GrammarASTWithOptions)node).GetOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME)
                 , out var pre))
             {
                 precedence = pre;
@@ -314,9 +314,9 @@ public class ParserATNFactory : ATNFactory
         var right = NewState(pred);
 
         AbstractPredicateTransition p;
-        if (pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
+        if (pred.GetOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME) != null)
         {
-            if (int.TryParse(pred.getOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME), out var pre))
+            if (int.TryParse(pred.GetOptionString(LeftRecursiveRuleTransformer.PRECEDENCE_OPTION_NAME), out var pre))
             {
                 int precedence = pre;
 
@@ -407,7 +407,7 @@ public class ParserATNFactory : ATNFactory
             if (alts.Count > 1) atn.DefineDecisionState(start);
             return MakeBlock(start, blkAST, alts);
         }
-        switch (ebnfRoot.getType())
+        switch (ebnfRoot.Type)
         {
             case ANTLRParser.OPTIONAL:
                 var start = NewState<BasicBlockStartState>(typeof(BasicBlockStartState), blkAST);
@@ -531,7 +531,7 @@ public class ParserATNFactory : ATNFactory
         var blkEnd = blk.right;
         preventEpsilonOptionalBlocks.Add(new (currentRule, blkStart, blkEnd));
 
-        bool greedy = ((QuantifierAST)optAST).isGreedy();
+        bool greedy = ((QuantifierAST)optAST).IsGreedy;
         blkStart.nonGreedy = !greedy;
         Epsilon(blkStart, blk.right, !greedy);
 
@@ -560,7 +560,7 @@ public class ParserATNFactory : ATNFactory
         preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
         var loop = NewState<PlusLoopbackState>(plusAST);
-        loop.nonGreedy = !((QuantifierAST)plusAST).isGreedy();
+        loop.nonGreedy = !((QuantifierAST)plusAST).IsGreedy;
         atn.DefineDecisionState(loop);
         var end = NewState<LoopEndState>(plusAST);
         blkStart.loopBackState = loop;
@@ -570,7 +570,7 @@ public class ParserATNFactory : ATNFactory
         Epsilon(blkEnd, loop);      // blk can see loop back
 
         var blkAST = (BlockAST)plusAST.GetChild(0);
-        if (((QuantifierAST)plusAST).isGreedy())
+        if (((QuantifierAST)plusAST).IsGreedy)
         {
             if (ExpectNonGreedy(blkAST))
             {
@@ -614,7 +614,7 @@ public class ParserATNFactory : ATNFactory
         preventEpsilonClosureBlocks.Add(new Triple<Rule, ATNState, ATNState>(currentRule, blkStart, blkEnd));
 
         var entry = NewState<StarLoopEntryState>(starAST);
-        entry.nonGreedy = !((QuantifierAST)starAST).isGreedy();
+        entry.nonGreedy = !((QuantifierAST)starAST).IsGreedy;
         atn.DefineDecisionState(entry);
         LoopEndState end = NewState<LoopEndState>(starAST);
         StarLoopbackState loop = NewState<StarLoopbackState>(starAST);
@@ -622,7 +622,7 @@ public class ParserATNFactory : ATNFactory
         end.loopBackState = loop;
 
         var blkAST = (BlockAST)starAST.GetChild(0);
-        if (((QuantifierAST)starAST).isGreedy())
+        if (((QuantifierAST)starAST).IsGreedy)
         {
             if (ExpectNonGreedy(blkAST))
             {

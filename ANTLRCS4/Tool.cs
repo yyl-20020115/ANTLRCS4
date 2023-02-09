@@ -437,7 +437,7 @@ public class Tool
         // @Override
         public void TokenRef(TerminalAST @ref)
         {
-            if ("EOF".Equals(@ref.getText()))
+            if ("EOF".Equals(@ref.Text))
             {
                 // this is a special predefined reference
                 return;
@@ -449,20 +449,20 @@ public class Tool
         //@Override
         public void RuleRef(GrammarAST @ref, ActionAST arg)
         {
-            var ruleAST = ruleToAST.TryGetValue(@ref.getText(), out var ret) ? ret : null;
+            var ruleAST = ruleToAST.TryGetValue(@ref.Text, out var ret) ? ret : null;
             var fileName = @ref.Token.InputStream.SourceName;
             if (char.IsUpper(currentRuleName[(0)]) &&
-                char.IsLower(@ref.getText()[(0)]))
+                char.IsLower(@ref.Text[(0)]))
             {
                 badref = true;
                 this.tool.ErrMgr.GrammarError(ErrorType.PARSER_RULE_REF_IN_LEXER_RULE,
-                                    fileName, @ref.Token, @ref.getText(), currentRuleName);
+                                    fileName, @ref.Token, @ref.Text, currentRuleName);
             }
             else if (ruleAST == null)
             {
                 badref = true;
                 this.tool.ErrMgr.GrammarError(ErrorType.UNDEFINED_RULE_REF,
-                                    fileName, @ref.token, @ref.getText());
+                                    fileName, @ref.token, @ref.Text);
             }
         }
         //@Override
@@ -482,10 +482,10 @@ public class Tool
     {
         // check for redefined rules
         var RULES = (GrammarAST)g.ast.GetFirstChildWithType(ANTLRParser.RULES);
-        List<GrammarAST> rules = new(RULES.getAllChildrenWithType(ANTLRParser.RULE));
-        foreach (var mode in g.ast.getAllChildrenWithType(ANTLRParser.MODE))
+        List<GrammarAST> rules = new(RULES.GetAllChildrenWithType(ANTLRParser.RULE));
+        foreach (var mode in g.ast.GetAllChildrenWithType(ANTLRParser.MODE))
         {
-            rules.AddRange(mode.getAllChildrenWithType(ANTLRParser.RULE));
+            rules.AddRange(mode.GetAllChildrenWithType(ANTLRParser.RULE));
         }
 
         bool redefinition = false;
@@ -494,7 +494,7 @@ public class Tool
         {
             RuleAST ruleAST = (RuleAST)r;
             var ID = (GrammarAST)ruleAST.GetChild(0);
-            var ruleName = ID.getText();
+            var ruleName = ID.Text;
             if (ruleToAST.TryGetValue(ruleName, out var prev))
             {
                 var prevChild = (GrammarAST)prev.GetChild(0);
@@ -534,7 +534,7 @@ public class Tool
             // Make grammars depend on any tokenVocab options
             if (tokenVocabNode != null)
             {
-                var vocabName = tokenVocabNode.getText();
+                var vocabName = tokenVocabNode.Text;
                 // Strip quote characters if any
                 int len = vocabName.Length;
                 int firstChar = vocabName[(0)];
@@ -565,7 +565,7 @@ public class Tool
         {
             foreach (var root in roots)
             {
-                if (root.getGrammarName().Equals(grammarName))
+                if (root.GetGrammarName().Equals(grammarName))
                 {
                     sortedRoots.Add(root);
                     break;
@@ -585,7 +585,7 @@ public class Tool
             foreach (var o in options.GetChildren())
             {
                 var c = (GrammarAST)o;
-                if (c.getType() == ANTLRParser.ASSIGN &&
+                if (c.Type == ANTLRParser.ASSIGN &&
                      c.GetChild(0).Text.Equals(option))
                 {
                     return (GrammarAST)c.GetChild(1);
@@ -655,7 +655,7 @@ public class Tool
 	 */
     public Grammar LoadImportedGrammar(Grammar g, GrammarAST nameNode)
     {
-        var name = nameNode.getText();
+        var name = nameNode.Text;
         if (!importedGrammars.TryGetValue(name, out var imported))
         {
             g.Tools.Log("grammar", "load " + name + " from " + g.fileName);
@@ -685,7 +685,7 @@ public class Tool
 
             imported = CreateGrammar(root);
             imported.fileName = absolutePath;
-            importedGrammars[root.getGrammarName()] = imported;
+            importedGrammars[root.GetGrammarName()] = imported;
         }
 
         return imported;

@@ -468,7 +468,7 @@ public class GrammarTreeVisitor : TreeParser
                 GRAMMAR2 = (GrammarAST)Match(input, GRAMMAR, FOLLOW_GRAMMAR_in_grammarSpec85);
                 Match(input, Token.DOWN, null);
                 ID1 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_grammarSpec87);
-                grammarName = (ID1 != null ? ID1.getText() : null);
+                grammarName = (ID1 != null ? ID1.Text : null);
                 DiscoverGrammar((GrammarRootAST)GRAMMAR2, ID1);
                 PushFollow(FOLLOW_prequelConstructs_in_grammarSpec106);
                 prequelConstructs3 = prequelConstructs();
@@ -1539,7 +1539,7 @@ public class GrammarTreeVisitor : TreeParser
                 MODE10 = (GrammarAST)Match(input, MODE, FOLLOW_MODE_in_mode662);
                 Match(input, Token.DOWN, null);
                 ID9 = (GrammarAST)Match(input, ID, FOLLOW_ID_in_mode664);
-                currentModeName = (ID9 != null ? ID9.getText() : null); ModeDef(MODE10, ID9);
+                currentModeName = (ID9 != null ? ID9.Text : null); ModeDef(MODE10, ID9);
             // org\\antlr\\v4\\parse\\g:510:64: ( lexerRule )*
             loop12:
                 while (true)
@@ -1622,7 +1622,7 @@ public class GrammarTreeVisitor : TreeParser
                 RULE12 = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_lexerRule694);
                 Match(input, Token.DOWN, null);
                 TOKEN_REF11 = (GrammarAST)Match(input, TOKEN_REF, FOLLOW_TOKEN_REF_in_lexerRule696);
-                currentRuleName = (TOKEN_REF11 != null ? TOKEN_REF11.getText() : null); currentRuleAST = RULE12;
+                currentRuleName = (TOKEN_REF11 != null ? TOKEN_REF11.Text : null); currentRuleAST = RULE12;
                 // org\\antlr\\v4\\parse\\g:524:4: ( ^( RULEMODIFIERS m= FRAGMENT ) )?
                 int alt13 = 2;
                 int LA13_0 = input.LA(1);
@@ -1743,7 +1743,7 @@ public class GrammarTreeVisitor : TreeParser
                 RULE15 = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_rule790);
                 Match(input, Token.DOWN, null);
                 RULE_REF14 = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_rule792);
-                currentRuleName = (RULE_REF14 != null ? RULE_REF14.getText() : null); currentRuleAST = RULE15;
+                currentRuleName = (RULE_REF14 != null ? RULE_REF14.Text : null); currentRuleAST = RULE15;
                 // org\\antlr\\v4\\parse\\g:546:4: ( ^( RULEMODIFIERS (m= ruleModifier )+ ) )?
                 int alt16 = 2;
                 int LA16_0 = input.LA(1);
@@ -5504,7 +5504,7 @@ public class GrammarTreeVisitor : TreeParser
                                 // org\\antlr\\v4\\parse\\g:1005:25: elementOption[(GrammarASTWithOptions)$start.getParent()]
                                 {
                                     PushFollow(FOLLOW_elementOption_in_elementOptions2632);
-                                    elementOption((GrammarASTWithOptions)((GrammarAST)retval.start).getParent());
+                                    elementOption((GrammarASTWithOptions)((GrammarAST)retval.start).Parent);
                                     state._fsp--;
 
                                 }

@@ -316,7 +316,7 @@ public class OutputModelController
                 }
                 rsf.actions[g.sempreds[(p)]] = new Action(@delegate, p);
             }
-            else if (a.getType() == ANTLRParser.ACTION)
+            else if (a.Type == ANTLRParser.ACTION)
             {
                 raf.actions[g.lexerActions[(a)]] = new Action(@delegate, a);
             }

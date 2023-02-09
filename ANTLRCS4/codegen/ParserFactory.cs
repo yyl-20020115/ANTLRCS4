@@ -56,20 +56,20 @@ public class ParserFactory : DefaultOutputModelFactory
         var matchOp = new MatchToken(this, (TerminalAST)ID);
         if (labelAST != null)
         {
-            var label = labelAST.getText();
+            var label = labelAST.Text;
             var rf = CurrentRuleFunction;
-            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            if (labelAST.parent.Type == ANTLRParser.PLUS_ASSIGN)
             {
                 // add Token _X and List<Token> X decls
                 DefineImplicitLabel(ID, matchOp); // adds _X
                 var l = GetTokenListLabelDecl(label);
-                rf.AddContextDecl(ID.getAltLabel(), l);
+                rf.AddContextDecl(ID.GetAltLabel(), l);
             }
             else
             {
                 var d = GetTokenLabelDecl(label);
                 matchOp.labels.Add(d);
-                rf.AddContextDecl(ID.getAltLabel(), d);
+                rf.AddContextDecl(ID.GetAltLabel(), d);
             }
 
             //			Decl d = getTokenLabelDecl(label);
@@ -96,19 +96,19 @@ public class ParserFactory : DefaultOutputModelFactory
         else matchOp = new MatchSet(this, setAST);
         if (labelAST != null)
         {
-            var label = labelAST.getText();
+            var label = labelAST.Text;
             var rf = CurrentRuleFunction;
-            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            if (labelAST.parent.Type == ANTLRParser.PLUS_ASSIGN)
             {
                 DefineImplicitLabel(setAST, matchOp);
                 var l = GetTokenListLabelDecl(label);
-                rf.AddContextDecl(setAST.getAltLabel(), l);
+                rf.AddContextDecl(setAST.GetAltLabel(), l);
             }
             else
             {
                 var d = GetTokenLabelDecl(label);
                 matchOp.labels.Add(d);
-                rf.AddContextDecl(setAST.getAltLabel(), d);
+                rf.AddContextDecl(setAST.GetAltLabel(), d);
             }
         }
         if (controller.NeedsImplicitLabel(setAST, matchOp)) DefineImplicitLabel(setAST, matchOp);
@@ -122,14 +122,14 @@ public class ParserFactory : DefaultOutputModelFactory
         // TODO: dup with tokenRef
         if (labelAST != null)
         {
-            var label = labelAST.getText();
+            var label = labelAST.Text;
             var d = GetTokenLabelDecl(label);
             wild.labels.Add(d);
-            CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), d);
-            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            CurrentRuleFunction.AddContextDecl(ast.GetAltLabel(), d);
+            if (labelAST.parent.Type == ANTLRParser.PLUS_ASSIGN)
             {
                 var l = GetTokenListLabelDecl(label);
-                CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), l);
+                CurrentRuleFunction.AddContextDecl(ast.GetAltLabel(), l);
             }
         }
         if (controller.NeedsImplicitLabel(ast, wild)) DefineImplicitLabel(ast, wild);
@@ -152,15 +152,15 @@ public class ParserFactory : DefaultOutputModelFactory
 
         if (labelAST != null)
         { // for x=(...), define x or x_list
-            var label = labelAST.getText();
+            var label = labelAST.Text;
             var d = GetTokenLabelDecl(label);
             c.label = d;
-            CurrentRuleFunction.AddContextDecl(labelAST.getAltLabel(), d);
-            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            CurrentRuleFunction.AddContextDecl(labelAST.GetAltLabel(), d);
+            if (labelAST.parent.Type == ANTLRParser.PLUS_ASSIGN)
             {
                 var listLabel = gen.Target.GetListLabel(label);
                 var l = new TokenListDecl(this, listLabel);
-                CurrentRuleFunction.AddContextDecl(labelAST.getAltLabel(), l);
+                CurrentRuleFunction.AddContextDecl(labelAST.GetAltLabel(), l);
             }
         }
 
@@ -172,11 +172,11 @@ public class ParserFactory : DefaultOutputModelFactory
         if (!g.Tools.force_atn)
         {
             int decision;
-            if (ebnfRoot.getType() == ANTLRParser.POSITIVE_CLOSURE)
+            if (ebnfRoot.Type == ANTLRParser.POSITIVE_CLOSURE)
             {
                 decision = ((PlusLoopbackState)ebnfRoot.atnState).decision;
             }
-            else if (ebnfRoot.getType() == ANTLRParser.CLOSURE)
+            else if (ebnfRoot.Type == ANTLRParser.CLOSURE)
             {
                 decision = ((StarLoopEntryState)ebnfRoot.atnState).decision;
             }
@@ -201,7 +201,7 @@ public class ParserFactory : DefaultOutputModelFactory
     public override Choice GetLL1EBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts)
     {
         int ebnf = 0;
-        if (ebnfRoot != null) ebnf = ebnfRoot.getType();
+        if (ebnfRoot != null) ebnf = ebnfRoot.Type;
         Choice c = null;
         switch (ebnf)
         {
@@ -224,7 +224,7 @@ public class ParserFactory : DefaultOutputModelFactory
     public override Choice GetComplexEBNFBlock(GrammarAST ebnfRoot, List<CodeBlockForAlt> alts)
     {
         int ebnf = 0;
-        if (ebnfRoot != null) ebnf = ebnfRoot.getType();
+        if (ebnfRoot != null) ebnf = ebnfRoot.Type;
         Choice c = null;
         switch (ebnf)
         {
@@ -246,8 +246,8 @@ public class ParserFactory : DefaultOutputModelFactory
     public override bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op)
     {
         var currentOuterMostAlt = CurrentOuterMostAlt;
-        var actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.getText());
-        var actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.getText());
+        var actionRefsAsToken = currentOuterMostAlt.tokenRefsInActions.ContainsKey(ID.Text);
+        var actionRefsAsRule = currentOuterMostAlt.ruleRefsInActions.ContainsKey(ID.Text);
         return op.Labels.Count == 0 && (actionRefsAsToken || actionRefsAsRule);
     }
 
@@ -256,17 +256,17 @@ public class ParserFactory : DefaultOutputModelFactory
     public void DefineImplicitLabel(GrammarAST ast, LabeledOp op)
     {
         Decl d;
-        if (ast.getType() == ANTLRParser.SET || ast.getType() == ANTLRParser.WILDCARD)
+        if (ast.Type == ANTLRParser.SET || ast.Type == ANTLRParser.WILDCARD)
         {
             var implLabel =
                 gen.Target.GetImplicitSetLabel((ast.token.TokenIndex.ToString()));
             d = GetTokenLabelDecl(implLabel);
             ((TokenDecl)d).isImplicit = true;
         }
-        else if (ast.getType() == ANTLRParser.RULE_REF)
+        else if (ast.Type == ANTLRParser.RULE_REF)
         { // a rule reference?
-            var r = g.GetRule(ast.getText());
-            var implLabel = gen.Target.GetImplicitRuleLabel(ast.getText());
+            var r = g.GetRule(ast.Text);
+            var implLabel = gen.Target.GetImplicitRuleLabel(ast.Text);
             var ctxName =
                 gen.Target.GetRuleFunctionContextStructName(r);
             d = new RuleContextDecl(this, implLabel, ctxName);
@@ -274,22 +274,22 @@ public class ParserFactory : DefaultOutputModelFactory
         }
         else
         {
-            var implLabel = gen.Target.GetImplicitTokenLabel(ast.getText());
+            var implLabel = gen.Target.GetImplicitTokenLabel(ast.Text);
             d = GetTokenLabelDecl(implLabel);
             ((TokenDecl)d).isImplicit = true;
         }
         op.        Labels.Add(d);
         // all labels must be in scope struct in case we exec action out of context
-        CurrentRuleFunction.AddContextDecl(ast.getAltLabel(), d);
+        CurrentRuleFunction.AddContextDecl(ast.GetAltLabel(), d);
     }
 
     public AddToLabelList GetAddToListOpIfListLabelPresent(LabeledOp op, GrammarAST label)
     {
         AddToLabelList labelOp = null;
-        if (label != null && label.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+        if (label != null && label.parent.Type == ANTLRParser.PLUS_ASSIGN)
         {
             var target = gen.Target;
-            var listLabel = target.GetListLabel(label.getText());
+            var listLabel = target.GetListLabel(label.Text);
             var listRuntimeName = target.EscapeIfNeeded(listLabel);
             labelOp = new AddToLabelList(this, listRuntimeName, op.Labels[0]);
         }

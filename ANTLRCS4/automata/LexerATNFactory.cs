@@ -201,11 +201,11 @@ public class LexerATNFactory : ParserATNFactory
 
         // fall back to standard action generation for the command
         var cmdST = codegenTemplates.GetInstanceOf("Lexer" +
-                CharSupport.Capitalize(ID.getText()) +
+                CharSupport.Capitalize(ID.Text) +
                 "Command");
         if (cmdST == null)
         {
-            g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LEXER_COMMAND, g.fileName, ID.token, ID.getText());
+            g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LEXER_COMMAND, g.fileName, ID.token, ID.Text);
             return Epsilon(ID);
         }
 
@@ -215,13 +215,13 @@ public class LexerATNFactory : ParserATNFactory
         if (callCommand != containsArg)
         {
             var errorType = callCommand ? ErrorType.UNWANTED_LEXER_COMMAND_ARGUMENT : ErrorType.MISSING_LEXER_COMMAND_ARGUMENT;
-            g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ID.token, ID.getText());
+            g.Tools.ErrMgr.GrammarError(errorType, g.fileName, ID.token, ID.Text);
             return Epsilon(ID);
         }
 
         if (callCommand)
         {
-            cmdST.Add("arg", arg.getText());
+            cmdST.Add("arg", arg.Text);
             cmdST.Add("grammar", arg.g);
         }
 
@@ -233,8 +233,8 @@ public class LexerATNFactory : ParserATNFactory
     {
         var left = NewState(a);
         var right = NewState(b);
-        int t1 = CharSupport.GetCharValueFromGrammarCharLiteral(a.getText());
-        int t2 = CharSupport.GetCharValueFromGrammarCharLiteral(b.getText());
+        int t1 = CharSupport.GetCharValueFromGrammarCharLiteral(a.Text);
+        int t2 = CharSupport.GetCharValueFromGrammarCharLiteral(b.Text);
         if (CheckRange(a, b, t1, t2))
         {
             left.AddTransition(CreateTransition(right, t1, t2, a));
@@ -252,7 +252,7 @@ public class LexerATNFactory : ParserATNFactory
         var set = new IntervalSet();
         foreach (var t in alts)
         {
-            if (t.getType() == ANTLRParser.RANGE)
+            if (t.Type == ANTLRParser.RANGE)
             {
                 int a = CharSupport.GetCharValueFromGrammarCharLiteral(t.GetChild(0).Text);
                 int b = CharSupport.GetCharValueFromGrammarCharLiteral(t.GetChild(1).Text);
@@ -261,13 +261,13 @@ public class LexerATNFactory : ParserATNFactory
                     CheckRangeAndAddToSet(associatedAST, t, set, a, b, currentRule.caseInsensitive, null);
                 }
             }
-            else if (t.getType() == ANTLRParser.LEXER_CHAR_SET)
+            else if (t.Type == ANTLRParser.LEXER_CHAR_SET)
             {
                 set.AddAll(GetSetFromCharSetLiteral(t));
             }
-            else if (t.getType() == ANTLRParser.STRING_LITERAL)
+            else if (t.Type == ANTLRParser.STRING_LITERAL)
             {
-                int c = CharSupport.GetCharValueFromGrammarCharLiteral(t.getText());
+                int c = CharSupport.GetCharValueFromGrammarCharLiteral(t.Text);
                 if (c != -1)
                 {
                     CheckCharAndAddToSet(associatedAST, set, c);
@@ -275,13 +275,13 @@ public class LexerATNFactory : ParserATNFactory
                 else
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                                               g.fileName, t.Token, t.getText());
+                                               g.fileName, t.Token, t.Text);
                 }
             }
-            else if (t.getType() == ANTLRParser.TOKEN_REF)
+            else if (t.Type == ANTLRParser.TOKEN_REF)
             {
                 g.Tools.ErrMgr.GrammarError(ErrorType.UNSUPPORTED_REFERENCE_IN_LEXER_SET,
-                                           g.fileName, t.Token, t.getText());
+                                           g.fileName, t.Token, t.Text);
             }
         }
         if (invert)
@@ -314,20 +314,20 @@ public class LexerATNFactory : ParserATNFactory
         {
             result = false;
             g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                    g.fileName, leftNode.Token, leftNode.getText());
+                    g.fileName, leftNode.Token, leftNode.Text);
         }
         if (rightValue == -1)
         {
             result = false;
             g.Tools.ErrMgr.GrammarError(ErrorType.INVALID_LITERAL_IN_LEXER_SET,
-                    g.fileName, rightNode.Token, rightNode.getText());
+                    g.fileName, rightNode.Token, rightNode.Text);
         }
         if (!result) return false;
 
         if (rightValue < leftValue)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED,
-                    g.fileName, leftNode.parent.Token, leftNode.getText() + ".." + rightNode.getText());
+                    g.fileName, leftNode.parent.Token, leftNode.Text + ".." + rightNode.Text);
             return false;
         }
         return true;
@@ -343,7 +343,7 @@ public class LexerATNFactory : ParserATNFactory
     //@Override
     public override Handle StringLiteral(TerminalAST stringLiteralAST)
     {
-        var chars = stringLiteralAST.getText();
+        var chars = stringLiteralAST.Text;
         var left = NewState(stringLiteralAST);
         ATNState right;
         var s = CharSupport.GetStringFromGrammarStringLiteral(chars);
@@ -438,7 +438,7 @@ public class LexerATNFactory : ParserATNFactory
 
     public IntervalSet GetSetFromCharSetLiteral(GrammarAST charSetAST)
     {
-        var chars = charSetAST.getText()[1..^1];
+        var chars = charSetAST.Text[1..^1];
         var set = new IntervalSet();
         var state = CharSetParseState.NONE;
 
@@ -478,7 +478,7 @@ public class LexerATNFactory : ParserATNFactory
                 if (state.mode == CharSetParseState.Mode.PREV_PROPERTY)
                 {
                     g.Tools.ErrMgr.GrammarError(ErrorType.UNICODE_PROPERTY_NOT_ALLOWED_IN_RANGE,
-                            g.fileName, charSetAST.Token, charSetAST.getText());
+                            g.fileName, charSetAST.Token, charSetAST.Text);
                     state = CharSetParseState.ERROR;
                 }
                 else
@@ -547,7 +547,7 @@ public class LexerATNFactory : ParserATNFactory
         if (state.inRange)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.UNICODE_PROPERTY_NOT_ALLOWED_IN_RANGE,
-                           g.fileName, charSetAST.Token, charSetAST.getText());
+                           g.fileName, charSetAST.Token, charSetAST.Text);
             return CharSetParseState.ERROR;
         }
         else
@@ -619,7 +619,7 @@ public class LexerATNFactory : ParserATNFactory
                         string setText;
                         if (rootAst.GetChildren() == null)
                         {
-                            setText = rootAst.getText();
+                            setText = rootAst.Text;
                         }
                         else
                         {
@@ -634,7 +634,7 @@ public class LexerATNFactory : ParserATNFactory
                                 }
                                 else
                                 {
-                                    sb.Append((child as GrammarAST).getText());
+                                    sb.Append((child as GrammarAST).Text);
                                 }
                                 sb.Append(" | ");
                             }
@@ -682,7 +682,7 @@ public class LexerATNFactory : ParserATNFactory
     public override Handle TokenRef(TerminalAST node)
     {
         // Ref to EOF in lexer yields char transition on -1
-        if (node.getText().Equals("EOF"))
+        if (node.Text.Equals("EOF"))
         {
             var left = NewState(node);
             var right = NewState(node);
@@ -694,7 +694,7 @@ public class LexerATNFactory : ParserATNFactory
 
     private LexerAction CreateLexerAction(GrammarAST ID, GrammarAST arg)
     {
-        var command = ID.getText();
+        var command = ID.Text;
         CheckCommands(command, ID.Token);
 
         if ("skip".Equals(command) && arg == null)
@@ -711,7 +711,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else if ("mode".Equals(command) && arg != null)
         {
-            var modeName = arg.getText();
+            var modeName = arg.Text;
             int? mode = GetModeConstantValue(modeName, arg.Token);
             if (mode == null)
             {
@@ -722,7 +722,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else if ("pushMode".Equals(command) && arg != null)
         {
-            var modeName = arg.getText();
+            var modeName = arg.Text;
             int? mode = GetModeConstantValue(modeName, arg.Token);
             if (mode == null)
             {
@@ -733,7 +733,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else if ("type".Equals(command) && arg != null)
         {
-            var typeName = arg.getText();
+            var typeName = arg.Text;
             int? type = GetTokenConstantValue(typeName, arg.Token);
             if (type == null)
             {
@@ -744,7 +744,7 @@ public class LexerATNFactory : ParserATNFactory
         }
         else if ("channel".Equals(command) && arg != null)
         {
-            var channelName = arg.getText();
+            var channelName = arg.Text;
             int? channel = GetChannelConstantValue(channelName, arg.Token);
             if (channel == null)
             {

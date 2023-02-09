@@ -10,22 +10,17 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 /** A node representing erroneous token range in token stream */
-public class GrammarASTErrorNode : GrammarAST {
-    CommonErrorNode @delegate;
+public class GrammarASTErrorNode : GrammarAST
+{
+    readonly CommonErrorNode dnode;
     public GrammarASTErrorNode(TokenStream input, Token start, Token stop,
                                RecognitionException e)
     {
-        @delegate = new CommonErrorNode(input,start,stop,e);
+        dnode = new CommonErrorNode(input, start, stop, e);
     }
 
-    //@Override
-    public bool isNil() { return @delegate.IsNil; }
-
-    //@Override
-    public int getType() { return @delegate.Type; }
-
-    //@Override
-    public String getText() { return @delegate.Text; }
-    //@Override
-    public String toString() { return @delegate.toString(); }
+    public override bool IsNil => dnode.IsNil;
+    public override int Type => dnode.Type;
+    public override string Text => dnode.Text; 
+    public override string ToString() => dnode.ToString();
 }

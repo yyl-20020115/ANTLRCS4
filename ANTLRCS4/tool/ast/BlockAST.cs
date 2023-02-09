@@ -18,18 +18,14 @@ public class BlockAST : GrammarASTWithOptions, RuleElementAST
     public static readonly Dictionary<String, String> defaultLexerBlockOptions =
             new();
 
-    public BlockAST(BlockAST node) : base(node)
-    {
-    }
+    public BlockAST(BlockAST node) : base(node) { }
 
     public BlockAST(Token t) : base(t) { }
     public BlockAST(int type) : base(type) { }
     public BlockAST(int type, Token t) : base(type, t) { }
-    public BlockAST(int type, Token t, String text) : base(type, t, text) { }
+    public BlockAST(int type, Token t, string text) : base(type, t, text) { }
 
-    //@Override
-    public override BlockAST dupNode() { return new BlockAST(this); }
+    public override BlockAST DupNode() => new (this);
 
-    //@Override
-    public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

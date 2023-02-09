@@ -175,7 +175,7 @@ public class LeftRecursiveRuleWalker : TreeParser
                 r = (GrammarAST)Match(input, RULE, FOLLOW_RULE_in_rec_rule72); if (state.failed) return isLeftRec;
                 Match(input, runtime.Token.DOWN, null); if (state.failed) return isLeftRec;
                 id = (GrammarAST)Match(input, RULE_REF, FOLLOW_RULE_REF_in_rec_rule76); if (state.failed) return isLeftRec;
-                if (state.backtracking == 0) { ruleName = id.getText(); }
+                if (state.backtracking == 0) { ruleName = id.Text; }
                 // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:70:4: ( ruleModifier )?
                 int alt1 = 2;
                 int LA1_0 = input.LA(1);
@@ -1162,7 +1162,7 @@ public class LeftRecursiveRuleWalker : TreeParser
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:151:16: ({...}? RULE_REF )
             // org\\antlr\\v4\\parse\\LeftRecursiveRuleWalker.g:151:18: {...}? RULE_REF
             {
-                if (!((((CommonTree)input.LT(1)).getText().Equals(ruleName))))
+                if (!((((CommonTree)input.LT(1)).Text.Equals(ruleName))))
                 {
                     if (state.backtracking > 0) { state.failed = true; return; }
                     throw new FailedPredicateException(input, "recurseNoLabel", "((CommonTree)input.LT(1)).getText().equals(ruleName)");

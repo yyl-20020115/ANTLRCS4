@@ -31,7 +31,7 @@ public class InvokeRule : RuleElement, LabeledOp
 
         var gen = factory.Generator;
         var target = gen.Target;
-        var identifier = ast.getText();
+        var identifier = ast.Text;
         var r = factory.Grammar.GetRule(identifier);
         this.name = r.name;
         this.escapedName = gen.Target.EscapeIfNeeded(name);
@@ -43,8 +43,8 @@ public class InvokeRule : RuleElement, LabeledOp
         {
             RuleContextDecl decl;
             // for x=r, define <rule-context-type> x and list_x
-            var label = labelAST.getText();
-            if (labelAST.parent.getType() == ANTLRParser.PLUS_ASSIGN)
+            var label = labelAST.Text;
+            if (labelAST.parent.Type == ANTLRParser.PLUS_ASSIGN)
             {
                 factory.DefineImplicitLabel(ast, this);
                 var listLabel = gen.Target.GetListLabel(label);
@@ -55,7 +55,7 @@ public class InvokeRule : RuleElement, LabeledOp
                 decl = new RuleContextDecl(factory, label, ctxName);
                 labels.Add(decl);
             }
-            rf.AddContextDecl(ast.getAltLabel(), decl);
+            rf.AddContextDecl(ast.GetAltLabel(), decl);
         }
 
         var arg = (ActionAST)ast.GetFirstChildWithType(ANTLRParser.ARG_ACTION);
@@ -70,7 +70,7 @@ public class InvokeRule : RuleElement, LabeledOp
             var label = gen.Target.GetImplicitRuleLabel(identifier);
             var d = new RuleContextDecl(factory, label, ctxName);
             labels.Add(d);
-            rf.AddContextDecl(ast.getAltLabel(), d);
+            rf.AddContextDecl(ast.GetAltLabel(), d);
         }
     }
 

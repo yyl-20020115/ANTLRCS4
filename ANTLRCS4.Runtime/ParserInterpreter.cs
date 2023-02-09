@@ -142,7 +142,7 @@ public class ParserInterpreter : Parser
     {
         var startRuleStartState = atn.ruleToStartState[startRuleIndex];
 
-        rootContext = createInterpreterRuleContext(null, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
+        rootContext = CreateInterpreterRuleContext(null, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
         if (startRuleStartState.isLeftRecursiveRule)
         {
             EnterRecursionRule(rootContext, startRuleStartState.stateNumber, startRuleIndex, 0);
@@ -175,20 +175,20 @@ public class ParserInterpreter : Parser
                         }
                     }
 
-                    visitRuleStopState(p);
+                    VisitRuleStopState(p);
                     break;
 
                 default:
                     try
                     {
-                        visitState(p);
+                        VisitState(p);
                     }
                     catch (RecognitionException e)
                     {
                         State = atn.ruleToStopState[p.ruleIndex].stateNumber;
                         Context.exception = e;
                         ErrorHandler.ReportError(this, e);
-                        recover(e);
+                        Recover(e);
                     }
 
                     break;
@@ -204,18 +204,18 @@ public class ParserInterpreter : Parser
         base.EnterRecursionRule(localctx, state, ruleIndex, precedence);
     }
 
-    protected ATNState GetATNState()
+    protected virtual ATNState GetATNState()
     {
         return atn.states[(State)];
     }
 
-    protected void visitState(ATNState p)
+    protected virtual void VisitState(ATNState p)
     {
         //		Console.Out.WriteLine("visitState "+p.stateNumber);
         int predictedAlt = 1;
-        if (p is DecisionState)
+        if (p is DecisionState state1)
         {
-            predictedAlt = visitDecisionState((DecisionState)p);
+            predictedAlt = VisitDecisionState(state1);
         }
 
         Transition transition = p.Transition(predictedAlt - 1);
@@ -229,7 +229,7 @@ public class ParserInterpreter : Parser
                     // We are at the start of a left recursive rule's (...)* loop
                     // and we're not taking the exit branch of loop.
                     InterpreterRuleContext localctx =
-                        createInterpreterRuleContext(_parentContextStack.Peek().a,
+                        CreateInterpreterRuleContext(_parentContextStack.Peek().a,
                                                      _parentContextStack.Peek().b,
                                                      _ctx.                                                     RuleIndex);
                     PushNewRecursionContext(localctx,
@@ -247,7 +247,7 @@ public class ParserInterpreter : Parser
             case Transition.NOT_SET:
                 if (!transition.Matches(input.LA(1), Token.MIN_USER_TOKEN_TYPE, 65535))
                 {
-                    recoverInline();
+                    RecoverInline();
                 }
                 MatchWildcard();
                 break;
@@ -259,7 +259,7 @@ public class ParserInterpreter : Parser
             case Transition.RULE:
                 RuleStartState ruleStartState = (RuleStartState)transition.target;
                 int ruleIndex = ruleStartState.ruleIndex;
-                InterpreterRuleContext newctx = createInterpreterRuleContext(_ctx, p.stateNumber, ruleIndex);
+                InterpreterRuleContext newctx = CreateInterpreterRuleContext(_ctx, p.stateNumber, ruleIndex);
                 if (ruleStartState.isLeftRecursiveRule)
                 {
                     EnterRecursionRule(newctx, ruleStartState.stateNumber, ruleIndex, ((RuleTransition)transition).precedence);
@@ -302,7 +302,7 @@ public class ParserInterpreter : Parser
 	 *  a decision state (instance of DecisionState). It gives an opportunity
 	 *  for subclasses to track interesting things.
 	 */
-    protected int visitDecisionState(DecisionState p)
+    protected virtual int VisitDecisionState(DecisionState p)
     {
         int predictedAlt = 1;
         if (p.NumberOfTransitions > 1)
@@ -326,7 +326,7 @@ public class ParserInterpreter : Parser
     /** Provide simple "factory" for InterpreterRuleContext's.
 	 *  @since 4.5.1
 	 */
-    protected InterpreterRuleContext createInterpreterRuleContext(
+    protected virtual InterpreterRuleContext CreateInterpreterRuleContext(
         ParserRuleContext parent,
         int invokingStateNumber,
         int ruleIndex)
@@ -334,9 +334,9 @@ public class ParserInterpreter : Parser
         return new InterpreterRuleContext(parent, invokingStateNumber, ruleIndex);
     }
 
-    protected void visitRuleStopState(ATNState p)
+    protected virtual void VisitRuleStopState(ATNState p)
     {
-        RuleStartState ruleStartState = atn.ruleToStartState[p.ruleIndex];
+        var ruleStartState = atn.ruleToStartState[p.ruleIndex];
         if (ruleStartState.isLeftRecursiveRule)
         {
             Pair<ParserRuleContext, int> parentContext = _parentContextStack.Pop();
@@ -392,14 +392,14 @@ public class ParserInterpreter : Parser
 	 *
 	 *  @since 4.5.1
 	 */
-    public void addDecisionOverride(int decision, int tokenIndex, int forcedAlt)
+    public void AddDecisionOverride(int decision, int tokenIndex, int forcedAlt)
     {
         overrideDecision = decision;
         overrideDecisionInputIndex = tokenIndex;
         overrideDecisionAlt = forcedAlt;
     }
 
-    public InterpreterRuleContext getOverrideDecisionRoot()
+    public InterpreterRuleContext GetOverrideDecisionRoot()
     {
         return overrideDecisionRoot;
     }
@@ -408,7 +408,7 @@ public class ParserInterpreter : Parser
 	 *  to recover, add an error node. Otherwise, nothing is seen in the parse
 	 *  tree.
 	 */
-    protected void recover(RecognitionException e)
+    protected void Recover(RecognitionException e)
     {
         int i = input.Index;
         ErrorHandler.Recover(this, e);
@@ -446,7 +446,7 @@ public class ParserInterpreter : Parser
         }
     }
 
-    protected Token recoverInline()
+    protected Token RecoverInline()
     {
         return _errHandler.RecoverInline(this);
     }

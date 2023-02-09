@@ -99,7 +99,7 @@ public class ActionTranslator : ActionSplitterListener
             rf = rf
         };
         factory.Grammar.Tools.Log("action-translator", "translate " + action);
-        var altLabel = node.getAltLabel();
+        var altLabel = node.GetAltLabel();
         if (rf != null)
         {
             translator.nodeContext = rf.ruleCtx;

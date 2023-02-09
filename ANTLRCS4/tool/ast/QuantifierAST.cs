@@ -10,8 +10,7 @@ namespace org.antlr.v4.tool.ast;
  *
  * @author Sam Harwell
  */
-public interface QuantifierAST {
-
-	bool isGreedy();
-
+public interface QuantifierAST
+{
+    bool IsGreedy { get; }
 }

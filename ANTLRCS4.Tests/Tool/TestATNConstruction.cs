@@ -449,9 +449,9 @@ public class TestATNConstruction
             "RuleStop_a_3->s5\n";
         RuntimeTestUtils.CheckRuleATN(g, "a", expecting);
         // Get all AST -> ATNState relationships. Make sure loopback is covered when no loop entry decision
-        var ruleNodes = g.ast.getNodesWithType(ANTLRParser.RULE);
+        var ruleNodes = g.ast.GetNodesWithType(ANTLRParser.RULE);
         var a = (RuleAST)ruleNodes[(1)];
-        var nodesInRule = a.getNodesWithType(null);
+        var nodesInRule = a.GetNodesWithType(null);
         Dictionary<GrammarAST, ATNState> covered = new();
         foreach (var node in nodesInRule)
         {

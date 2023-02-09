@@ -145,7 +145,7 @@ public class GrammarParserInterpreter : ParserInterpreter
     //@Override
     protected override int VisitDecisionState(DecisionState p)
     {
-        int predictedAlt = base.visitDecisionState(p);
+        int predictedAlt = base.VisitDecisionState(p);
         if (p.NumberOfTransitions > 1)
         {
             //			Console.Out.WriteLine("decision "+p.decision+": "+predictedAlt);
@@ -287,14 +287,14 @@ public class GrammarParserInterpreter : ParserInterpreter
             // (don't have to do first as it's been parsed, but do again for simplicity
             //  using this temp parser.)
             parser.reset();
-            parser.addDecisionOverride(decision, startIndex, alt);
+            parser.AddDecisionOverride(decision, startIndex, alt);
             ParserRuleContext t = parser.Parse(startRuleIndex);
             GrammarInterpreterRuleContext ambigSubTree =
                 (GrammarInterpreterRuleContext)Trees.getRootOfSubtreeEnclosingRegion(t, startIndex, stopIndex);
             // Use higher of overridden decision tree or tree enclosing all tokens
-            if (Trees.isAncestorOf(parser.getOverrideDecisionRoot(), ambigSubTree))
+            if (Trees.isAncestorOf(parser.GetOverrideDecisionRoot(), ambigSubTree))
             {
-                ambigSubTree = (GrammarInterpreterRuleContext)parser.getOverrideDecisionRoot();
+                ambigSubTree = (GrammarInterpreterRuleContext)parser.GetOverrideDecisionRoot();
             }
             trees.Add(ambigSubTree);
             alt = alts.NextSetBit(alt + 1);
@@ -352,7 +352,7 @@ public class GrammarParserInterpreter : ParserInterpreter
                 new GrammarParserInterpreter.BailButConsumeErrorStrategy();
             parser.ErrorHandler = errorHandler;
             parser.reset();
-            parser.addDecisionOverride(decision, startIndex, alt);
+            parser.AddDecisionOverride(decision, startIndex, alt);
             ParserRuleContext tt = parser.Parse(startRuleIndex);
             int stopTreeAt = stopIndex;
             if (errorHandler.firstErrorTokenIndex >= 0)
@@ -372,11 +372,11 @@ public class GrammarParserInterpreter : ParserInterpreter
                                                       startIndex,
                                                       stopTreeAt);
             // Use higher of overridden decision tree or tree enclosing all tokens
-            if (Trees.isAncestorOf(parser.getOverrideDecisionRoot(), subtree))
+            if (Trees.isAncestorOf(parser.GetOverrideDecisionRoot(), subtree))
             {
-                subtree = parser.getOverrideDecisionRoot();
+                subtree = parser.GetOverrideDecisionRoot();
             }
-            Trees.stripChildrenOutOfRange(subtree, parser.getOverrideDecisionRoot(), startIndex, stopTreeAt);
+            Trees.stripChildrenOutOfRange(subtree, parser.GetOverrideDecisionRoot(), startIndex, stopTreeAt);
             trees.Add(subtree);
         }
 

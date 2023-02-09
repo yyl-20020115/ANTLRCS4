@@ -271,7 +271,7 @@ public class TestAmbigParseTrees
         {
             throw new ArgumentException("rule has no decision: " + startRule);
         }
-        parser.addDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
+        parser.AddDecisionOverride(((DecisionState)t2).decision, 0, startAlt);
         var t = parser.Parse(g.rules[(startRule)].index);
         var nodeTextProvider = new InterpreterTreeTextProvider(g.getRuleNames());
         Assert.AreEqual(expectedParseTree, Trees.ToStringTree(t, nodeTextProvider));

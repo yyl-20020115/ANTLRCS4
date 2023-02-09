@@ -9,27 +9,17 @@ using org.antlr.v4.runtime;
 namespace org.antlr.v4.tool.ast;
 
 
-public class StarBlockAST : GrammarAST , RuleElementAST, QuantifierAST {
-	private readonly bool _greedy;
+public class StarBlockAST : GrammarAST, RuleElementAST, QuantifierAST
+{
+    private readonly bool greedy;
 
-	public StarBlockAST(StarBlockAST node) : base(node)
-    {
-		_greedy = node._greedy;
-	}
+    public StarBlockAST(StarBlockAST node) : base(node) => greedy = node.greedy;
 
-	public StarBlockAST(int type, Token t, Token nongreedy): base(type, t)
-    {
-		_greedy = nongreedy == null;
-	}
+    public StarBlockAST(int type, Token t, Token nongreedy) : base(type, t) => greedy = nongreedy == null;
 
-	//@Override
-	public bool isGreedy() {
-		return _greedy;
-	}
+    public bool IsGreedy => greedy;
 
-    //@Override
-    public StarBlockAST dupNode() { return new StarBlockAST(this); }
+    public override StarBlockAST DupNode() => new (this);
 
-	//@Override
-	public Object visit(GrammarASTVisitor v) { return v.visit(this); }
+    public override object Visit(GrammarASTVisitor v) => v.Visit(this);
 }

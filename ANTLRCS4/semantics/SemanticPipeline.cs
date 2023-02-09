@@ -132,7 +132,7 @@ public class SemanticPipeline
     {
         foreach (var @ref in collector.rulerefs)
         {
-            var ruleName = @ref.getText();
+            var ruleName = @ref.Text;
             var r = g.GetRule(ruleName);
             if (r != null) r.isStartRule = false;
         }
@@ -144,9 +144,9 @@ public class SemanticPipeline
         foreach (var def in tokensDefs)
         {
             // tokens { id (',' id)* } so must check IDs not TOKEN_REF
-            if (Grammar.isTokenName(def.getText()))
+            if (Grammar.isTokenName(def.Text))
             {
-                G.defineTokenName(def.getText());
+                G.defineTokenName(def.Text);
             }
         }
 
@@ -171,14 +171,14 @@ public class SemanticPipeline
             {
                 var nameAST = pair.a;
                 var litAST = pair.b;
-                if (!G.stringLiteralToTypeMap.ContainsKey(litAST.getText()))
+                if (!G.stringLiteralToTypeMap.ContainsKey(litAST.Text))
                 {
-                    G.defineTokenAlias(nameAST.getText(), litAST.getText());
+                    G.defineTokenAlias(nameAST.Text, litAST.Text);
                 }
                 else
                 {
                     // oops two literal defs in two rules (within or across modes).
-                    conflictingLiterals.Add(litAST.getText());
+                    conflictingLiterals.Add(litAST.Text);
                 }
             }
             foreach (var lit in conflictingLiterals)
@@ -205,7 +205,7 @@ public class SemanticPipeline
             return false;
         }
 
-        var altActionAst = (GrammarAST)ast.getFirstDescendantWithType(ANTLRParser.LEXER_ALT_ACTION);
+        var altActionAst = (GrammarAST)ast.GetFirstDescendantWithType(ANTLRParser.LEXER_ALT_ACTION);
         if (altActionAst == null)
         {
             // the rule isn't followed by any commands
@@ -216,14 +216,14 @@ public class SemanticPipeline
         for (int i = 1; i < altActionAst.ChildCount; i++)
         {
             var node = (GrammarAST)altActionAst.GetChild(i);
-            if (node.getType() == ANTLRParser.LEXER_ACTION_CALL)
+            if (node.Type == ANTLRParser.LEXER_ACTION_CALL)
             {
                 if ("type".Equals(node.GetChild(0).Text))
                 {
                     return true;
                 }
             }
-            else if ("more".Equals(node.getText()))
+            else if ("more".Equals(node.Text))
             {
                 return true;
             }
@@ -240,36 +240,36 @@ public class SemanticPipeline
         // create token types for tokens { A, B, C } ALIASES
         foreach (var alias in tokensDefs)
         {
-            if (g.getTokenType(alias.getText()) != Token.INVALID_TYPE)
+            if (g.getTokenType(alias.Text) != Token.INVALID_TYPE)
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.TOKEN_NAME_REASSIGNMENT, g.fileName, alias.token, alias.Text);
             }
 
-            g.defineTokenName(alias.getText());
+            g.defineTokenName(alias.Text);
         }
 
         // DEFINE TOKEN TYPES FOR TOKEN REFS LIKE ID, INT
         foreach (var idAST in tokenIDs)
         {
-            if (g.getTokenType(idAST.getText()) == Token.INVALID_TYPE)
+            if (g.getTokenType(idAST.Text) == Token.INVALID_TYPE)
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_TOKEN_DEFINITION, g.fileName, idAST.token, idAST.Text);
             }
 
-            g.defineTokenName(idAST.getText());
+            g.defineTokenName(idAST.Text);
         }
 
         // VERIFY TOKEN TYPES FOR STRING LITERAL REFS LIKE 'while', ';'
         foreach (var termAST in terminals)
         {
-            if (termAST.getType() != ANTLRParser.STRING_LITERAL)
+            if (termAST.Type != ANTLRParser.STRING_LITERAL)
             {
                 continue;
             }
 
-            if (g.getTokenType(termAST.getText()) == Token.INVALID_TYPE)
+            if (g.getTokenType(termAST.Text) == Token.INVALID_TYPE)
             {
-                g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_STRING_DEFINITION, g.fileName, termAST.token, termAST.getText());
+                g.Tools.ErrMgr.GrammarError(ErrorType.IMPLICIT_STRING_DEFINITION, g.fileName, termAST.token, termAST.Text);
             }
         }
 
@@ -289,7 +289,7 @@ public class SemanticPipeline
         var outermost = g.GetOutermostGrammar();
         foreach (var channel in channelDefs)
         {
-            String channelName = channel.getText();
+            String channelName = channel.Text;
 
             // Channel names can't alias tokens or modes, because constant
             // values are also assigned to them and the ->channel(NAME) lexer
@@ -316,7 +316,7 @@ public class SemanticPipeline
                 }
             }
 
-            outermost.defineChannelName(channel.getText());
+            outermost.defineChannelName(channel.Text);
         }
     }
 }
