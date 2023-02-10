@@ -71,11 +71,8 @@ public class XPath
     public class XPathLexerWithoutRecovery : XPathLexer
     {
         public XPathLexerWithoutRecovery(ANTLRInputStream stream)
-            : base(stream)
-        {
-
-        }
-        public void Recover(LexerNoViableAltException e) { throw e; }
+            : base(stream) { }
+        public override void Recover(LexerNoViableAltException e) { throw e; }
 
     }
 
@@ -111,7 +108,7 @@ public class XPath
         List<XPathElement> elements = new();
         int n = tokens.Count;
         int i = 0;
-    loop:
+    //loop:
         while (i < n)
         {
             var el = tokens[(i)];
@@ -200,7 +197,7 @@ public class XPath
     }
 
 
-    public static ICollection<ParseTree> findAll(ParseTree tree, string xpath, Parser parser)
+    public static ICollection<ParseTree> FindAll(ParseTree tree, string xpath, Parser parser)
     {
         var p = new XPath(parser, xpath);
         return p.Evaluate(tree);

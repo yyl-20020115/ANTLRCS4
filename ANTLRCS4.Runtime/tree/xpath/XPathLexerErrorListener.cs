@@ -11,6 +11,5 @@ public class XPathLexerErrorListener : BaseErrorListener
 {
     public override void SyntaxError(Recognizer recognizer, object offendingSymbol,
                             int line, int charPositionInLine, string msg,
-                            RecognitionException e)
-    { }
+                            RecognitionException e) { }
 }

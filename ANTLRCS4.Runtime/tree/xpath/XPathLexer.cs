@@ -114,7 +114,7 @@ public class XPathLexer : Lexer
                 case CharStream.EOF:
                     return new CommonToken(EOF, "<EOF>");
                 default:
-                    if (isNameStartChar(input.LA(1)))
+                    if (IsNameStartChar(input.LA(1)))
                     {
                         var id = MatchID();
                         if (char.IsUpper(id[0])) t = new CommonToken(TOKEN_REF, id);
@@ -148,13 +148,13 @@ public class XPathLexer : Lexer
         input.Consume();
     }
 
-    public int CharPositionInLine => charPositionInLine;
+    public override int CharPositionInLine => charPositionInLine;
 
     public string MatchID()
     {
         int start = input.Index;
         Consume(); // drop start char
-        while (isNameChar(input.LA(1)))
+        while (IsNameChar(input.LA(1)))
         {
             Consume();
         }
@@ -173,7 +173,7 @@ public class XPathLexer : Lexer
         return input.GetText(Interval.Of(start, input.Index - 1));
     }
 
-    public bool isNameChar(int c) { return char.IsLetterOrDigit((char)c); }
+    public static bool IsNameChar(int c) { return char.IsLetterOrDigit((char)c); }
 
-    public bool isNameStartChar(int c) { return c == '_' || char.IsLetter((char)c); }
+    public static bool IsNameStartChar(int c) { return c == '_' || char.IsLetter((char)c); }
 }

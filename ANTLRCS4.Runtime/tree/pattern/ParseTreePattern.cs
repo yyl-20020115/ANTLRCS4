@@ -90,7 +90,7 @@ public class ParseTreePattern
 
     public List<ParseTreeMatch> FindAll(ParseTree tree, string xpath)
     {
-        var subtrees = XPath.findAll(tree, xpath, matcher.Parser);
+        var subtrees = XPath.FindAll(tree, xpath, matcher.Parser);
         List<ParseTreeMatch> matches = new();
         foreach (ParseTree t in subtrees)
         {

@@ -22,9 +22,5 @@ public abstract class XPathElement
 	 */
     public abstract ICollection<ParseTree> Evaluate(ParseTree t);
 
-    public override string ToString()
-    {
-        var inv = invert ? "!" : "";
-        return GetType().Name + "[" + inv + nodeName + "]";
-    }
+    public override string ToString() => $"{GetType().Name}[{(string?)(invert ? "!" : "")}{nodeName}]";
 }
