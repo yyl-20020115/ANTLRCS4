@@ -43,7 +43,7 @@ public class LL1Analyzer
                   look[alt], lookBusy, new BitSet(), seeThruPreds, false);
             // Wipe out lookahead for this alternative if we found nothing
             // or we had a predicate when we !seeThruPreds
-            if (look[alt].Size == 0 || look[alt].Contains(HIT_PRED))
+            if (look[alt].Count == 0 || look[alt].Contains(HIT_PRED))
                 look[alt] = null;
         }
         return look;

@@ -86,7 +86,7 @@ public class AnalysisPipeline
         foreach (var look in altLook)
         {
             if (look == null) return false; // lookahead must've computation failed
-            if (!look.And(combined).IsNil)
+            if (!look.And(combined).IsEmpty)
             {
                 collision = true;
                 break;

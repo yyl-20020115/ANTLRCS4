@@ -63,7 +63,7 @@ public abstract class PredictionContext
         }
 
         // If we have a parent, convert it to a PredictionContext graph
-        var parent = EmptyPredictionContext.Instance;
+        PredictionContext parent = EmptyPredictionContext.Instance;
         parent = FromRuleContext(atn, outerContext.parent);
 
         var state = atn.states[(outerContext.invokingState)];
@@ -761,10 +761,7 @@ public abstract class PredictionContext
             localBuffer.Append(']');
             result.Add(localBuffer.ToString());
 
-            if (last)
-            {
-                break;
-            }
+            if (last) break;
         }
 
         return result.ToArray();

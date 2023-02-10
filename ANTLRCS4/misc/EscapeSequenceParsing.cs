@@ -145,7 +145,7 @@ public abstract class EscapeSequenceParsing
             }
             var propertyName = s[(openBraceOffset + 1)..closeBraceOffset];
             var propertyIntervalSet = UnicodeData.getPropertyCodePoints(propertyName);
-            if (propertyIntervalSet == null || propertyIntervalSet.IsNil)
+            if (propertyIntervalSet == null || propertyIntervalSet.IsEmpty)
             {
                 return Invalid(startOff, closeBraceOffset);
             }

@@ -70,7 +70,7 @@ public class BufferedTokenStream : TokenStream
         this.tokenSource = tokenSource ?? throw new NullReferenceException("tokenSource cannot be null");
     }
 
-    //@Override
+    
     /** Reset this token stream by setting its token source. */
     public TokenSource TokenSource
     {
@@ -479,14 +479,14 @@ public class BufferedTokenStream : TokenStream
         return hidden;
     }
 
-    //@Override
+    
     public string SourceName => tokenSource.SourceName;
     /** Get the text of all tokens in this buffer. */
 
-    //@Override
+    
     public string Text => GetText(Interval.Of(0, Count - 1));
 
-    //@Override
+    
     public string GetText(Interval interval)
     {
         int start = interval.a;
@@ -506,14 +506,14 @@ public class BufferedTokenStream : TokenStream
     }
 
 
-    //@Override
+    
     public string GetText(RuleContext ctx)
     {
         return GetText(ctx.SourceInterval);
     }
 
 
-    //@Override
+    
     public string GetText(Token start, Token stop)
     {
         return start != null && stop != null ? GetText(Interval.Of(start.TokenIndex, stop.TokenIndex)) : "";

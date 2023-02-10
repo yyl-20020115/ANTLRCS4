@@ -7,7 +7,6 @@ namespace org.antlr.v4.runtime.misc;
 public class AtomicReference<T>
     where T : class
 {
-#pragma warning disable 0420 // 'fieldname': a reference to a volatile field will not be treated as volatile
     private volatile T _value;
 
     public AtomicReference(T value = default) => _value = value;

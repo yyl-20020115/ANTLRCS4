@@ -27,7 +27,7 @@ public class RuleTagToken : Token
 	 */
     private readonly string label;
 
-    /**
+	/**
 	 * Constructs a new instance of {@link RuleTagToken} with the specified rule
 	 * name and bypass token type and no label.
 	 *
@@ -37,9 +37,7 @@ public class RuleTagToken : Token
 	 * @exception IllegalArgumentException if {@code ruleName} is {@code null}
 	 * or empty.
 	 */
-    public RuleTagToken(string ruleName, int bypassTokenType) : this(ruleName, bypassTokenType, null)
-    {
-    }
+	public RuleTagToken(string ruleName, int bypassTokenType) : this(ruleName, bypassTokenType, null) { }
 
     /**
 	 * Constructs a new instance of {@link RuleTagToken} with the specified rule

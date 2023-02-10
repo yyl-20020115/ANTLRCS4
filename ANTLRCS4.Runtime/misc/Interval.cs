@@ -107,5 +107,5 @@ public class Interval
         return diff;
     }
 
-    public override string ToString() => a + ".." + b;
+    public override string ToString() => $"{a}..{b}";
 }

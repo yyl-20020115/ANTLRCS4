@@ -6,6 +6,7 @@
 
 namespace org.antlr.v4.runtime.misc;
 
-public interface Predicate<T> {
-	bool Test(T t);
+public interface Predicate<T>
+{
+    bool Test(T t);
 }

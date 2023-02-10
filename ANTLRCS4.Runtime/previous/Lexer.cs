@@ -39,30 +39,19 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     /** Where is the lexer drawing characters from? */
     protected CharStream input;
 
-    public Lexer()
-    {
-    }
+    public Lexer() { }
 
-    public Lexer(CharStream input)
-    {
-        this.input = input;
-    }
+    public Lexer(CharStream input) => this.input = input;
 
     public Lexer(CharStream input, RecognizerSharedState state)
-        : base(state)
-    {
-        this.input = input;
-    }
+        : base(state) => this.input = input;
 
     public override void Reset()
     {
         base.Reset(); // reset all recognizer state variables
                       // wack Lexer state variables
         input?.Seek(0); // rewind the input
-        if (state == null)
-        {
-            return; // no shared state work to do
-        }
+        if (state == null) return; // no shared state work to do
         state.token = null;
         state.type = Token.INVALID_TOKEN_TYPE;
         state.channel = Token.DEFAULT_CHANNEL;
@@ -127,9 +116,11 @@ public abstract class Lexer : BaseRecognizer, TokenSource
     {
         var eof = new CommonToken(input, Token.EOF,
                                     Token.DEFAULT_CHANNEL,
-                                    input.                                    Index, input.Index);
-        eof.        Line = Line;
-        eof.        CharPositionInLine = CharPositionInLine;
+                                    input.Index, input.Index)
+        {
+            Line = Line,
+            CharPositionInLine = CharPositionInLine
+        };
         return eof;
     }
 
@@ -155,10 +146,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
         this.input = input;
     }
 
-    public CharStream GetCharStream()
-    {
-        return this.input;
-    }
+    public CharStream GetCharStream() => this.input;
     public override string SourceName => input.SourceName;
 
     /** Currently does not support multiple emits per nextToken invocation
@@ -166,10 +154,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      *  nextToken (to push tokens into a list and pull from that list rather
      *  than a single variable as this implementation does).
      */
-    public void Emit(Token token)
-    {
-        state.token = token;
-    }
+    public void Emit(Token token) => state.token = token;
 
     /** The standard method called to automatically emit a token at the
      *  outermost lexical rule.  The token object should point into the
@@ -182,17 +167,18 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      */
     public Token Emit()
     {
-        var t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1);
-        t.        Line = state.tokenStartLine;
-        t.        Text = state.text;
-        t.        CharPositionInLine = state.tokenStartCharPositionInLine;
+        var t = new CommonToken(input, state.type, state.channel, state.tokenStartCharIndex, CharIndex - 1)
+        {
+            Line = state.tokenStartLine,
+            Text = state.text,
+            CharPositionInLine = state.tokenStartCharPositionInLine
+        };
         Emit(t);
         return t;
     }
 
     public void Match(string s)
     {
-
         int i = 0;
         while (i < s.Length)
         {
@@ -213,11 +199,7 @@ public abstract class Lexer : BaseRecognizer, TokenSource
             state.failed = false;
         }
     }
-
-    public void MatchAny()
-    {
-        input.Consume();
-    }
+    public void MatchAny() => input.Consume();
 
     public void Match(int c)
     {
@@ -272,21 +254,19 @@ public abstract class Lexer : BaseRecognizer, TokenSource
      */
     public void SetText(string text) => state.text = text;
 
-    public override void ReportError(RecognitionException e)
-    {
+    public override void ReportError(RecognitionException e) =>
         /** TODO: not thought about recovery in lexer yet.
-         *
-        // if we've already reported an error and have not matched a token
-        // yet successfully, don't report any errors.
-        if ( errorRecovery ) {
+            *
+            // if we've already reported an error and have not matched a token
+            // yet successfully, don't report any errors.
+            if ( errorRecovery ) {
             //System.err.print("[SPURIOUS] ");
             return;
-        }
-        errorRecovery = true;
-         */
+            }
+            errorRecovery = true;
+            */
 
         DisplayRecognitionError(this.TokenNames, e);
-    }
 
     public override string GetErrorMessage(RecognitionException e, string[] tokenNames)
     {
@@ -329,22 +309,14 @@ public abstract class Lexer : BaseRecognizer, TokenSource
 
     public string GetCharErrorDisplay(int c)
     {
-        string s = ((char)c).ToString();
-        switch (c)
+        var s = c switch
         {
-            case Token.EOF:
-                s = "<EOF>";
-                break;
-            case '\n':
-                s = "\\n";
-                break;
-            case '\t':
-                s = "\\t";
-                break;
-            case '\r':
-                s = "\\r";
-                break;
-        }
+            Token.EOF => "<EOF>",
+            '\n' => "\\n",
+            '\t' => "\\t",
+            '\r' => "\\r",
+            _ => ((char)c).ToString(),
+        };
         return "'" + s + "'";
     }
 

@@ -48,7 +48,7 @@ public class FastQueue<T>
     protected int p = 0;
     protected int _range = -1; // how deep have we gone?	
 
-    public virtual void Reset() { Clear(); }
+    public virtual void Reset() => Clear();
     public virtual void Clear() { p = 0; data.Clear(); }
 
     /** Get and remove first element in queue */

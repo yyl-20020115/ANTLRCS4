@@ -3,7 +3,8 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using StringBuilder = System.Text.StringBuilder;
+using System.Text;
+
 namespace org.antlr.v4.runtime.misc;
 
 public static class Arrays

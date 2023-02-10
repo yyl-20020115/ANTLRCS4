@@ -19,7 +19,7 @@ public class Triple<A, B, C>
         this.c = c;
     }
 
-    public override bool Equals(object? obj) 
+    public override bool Equals(object? obj)
         => obj == this || (obj is Triple<A, B, C> other && ObjectEqualityComparator.INSTANCE.Equals(a, other.a)
                             && ObjectEqualityComparator.INSTANCE.Equals(b, other.b)
                             && ObjectEqualityComparator.INSTANCE.Equals(c, other.c));

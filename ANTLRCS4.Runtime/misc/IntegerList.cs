@@ -21,11 +21,9 @@ public class IntegerList
 
 
     private int[] _data = EMPTY_DATA;
-    private int _size = 0;
+    private int count = 0;
 
-    public IntegerList()
-    {
-    }
+    public IntegerList() { }
 
     public IntegerList(int capacity)
     {
@@ -40,7 +38,7 @@ public class IntegerList
     public IntegerList(IntegerList list)
     {
         _data = (int[])list._data.Clone();
-        _size = list._size;
+        count = list.count;
     }
 
     public IntegerList(ICollection<int> list) : this(list.Count)
@@ -51,42 +49,42 @@ public class IntegerList
 
     public void Add(int value)
     {
-        if (_data.Length == _size)
-            EnsureCapacity(_size + 1);
+        if (_data.Length == count)
+            EnsureCapacity(count + 1);
 
-        _data[_size] = value;
-        _size++;
+        _data[count] = value;
+        count++;
     }
 
     public void AddAll(int[] array)
     {
-        EnsureCapacity(_size + array.Length);
-        Array.Copy(array, 0, _data, _size, array.Length);
-        _size += array.Length;
+        EnsureCapacity(count + array.Length);
+        Array.Copy(array, 0, _data, count, array.Length);
+        count += array.Length;
     }
 
     public void AddAll(IntegerList list)
     {
-        EnsureCapacity(_size + list._size);
-        Array.Copy(list._data, 0, _data, _size, list._size);
-        _size += list._size;
+        EnsureCapacity(count + list.count);
+        Array.Copy(list._data, 0, _data, count, list.count);
+        count += list.count;
     }
 
     public void AddAll(ICollection<int> list)
     {
-        EnsureCapacity(_size + list.Count);
+        EnsureCapacity(count + list.Count);
         int current = 0;
         foreach (int x in list)
         {
-            _data[_size + current] = x;
+            _data[count + current] = x;
             current++;
         }
-        _size += list.Count;
+        count += list.Count;
     }
 
     public int Get(int index)
     {
-        if (index < 0 || index >= _size)
+        if (index < 0 || index >= count)
             throw new IndexOutOfRangeException(nameof(index));
 
         return _data[index];
@@ -94,7 +92,7 @@ public class IntegerList
 
     public bool Contains(int value)
     {
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < count; i++)
             if (_data[i] == value)
                 return true;
 
@@ -103,7 +101,7 @@ public class IntegerList
 
     public int Set(int index, int value)
     {
-        if (index < 0 || index >= _size)
+        if (index < 0 || index >= count)
             throw new IndexOutOfRangeException(nameof(index));
 
         int previous = _data[index];
@@ -114,54 +112,50 @@ public class IntegerList
     public int RemoveAt(int index)
     {
         int value = Get(index);
-        Array.Copy(_data, index + 1, _data, index, _size - index - 1);
-        _data[_size - 1] = 0;
-        _size--;
+        Array.Copy(_data, index + 1, _data, index, count - index - 1);
+        _data[count - 1] = 0;
+        count--;
         return value;
     }
 
     public void RemoveRange(int fromIndex, int toIndex)
     {
-        if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size)
-        {
+        if (fromIndex < 0 || toIndex < 0 || fromIndex > count || toIndex > count)
             throw new IndexOutOfRangeException(nameof(fromIndex));
-        }
         if (fromIndex > toIndex)
-        {
             throw new ArgumentException(nameof(fromIndex));
-        }
 
-        Array.Copy(_data, toIndex, _data, fromIndex, _size - toIndex);
-        Array.Fill(_data, 0, _size - (toIndex - fromIndex), _size);
+        Array.Copy(_data, toIndex, _data, fromIndex, count - toIndex);
+        Array.Fill(_data, 0, count - (toIndex - fromIndex), count);
         //Arrays.fill(_data, _size - (toIndex - fromIndex), _size, 0);
-        _size -= (toIndex - fromIndex);
+        count -= (toIndex - fromIndex);
     }
 
-    public bool IsEmpty => _size == 0;
+    public bool IsEmpty => count == 0;
 
-    public int Size => _size;
+    public int Count => count;
 
     public void TrimToSize()
     {
-        if (_data.Length == _size) return;
-        _data = Arrays.CopyOf(_data, _size);
+        if (_data.Length == count) return;
+        _data = Arrays.CopyOf(_data, count);
     }
 
     public void Clear()
     {
-        Array.Fill(_data, _size, 0, 0);
-        _size = 0;
+        Array.Fill(_data, count, 0, 0);
+        count = 0;
     }
 
     public int[] ToArray()
     {
-        if (_size == 0) return EMPTY_DATA;
-        return Arrays.CopyOf(_data, _size);
+        if (count == 0) return EMPTY_DATA;
+        return Arrays.CopyOf(_data, count);
     }
 
     public void Sort()
     {
-        Array.Sort(_data, 0, _size);
+        Array.Sort(_data, 0, count);
     }
 
     /**
@@ -194,12 +188,12 @@ public class IntegerList
             return false;
         }
 
-        if (_size != other._size)
+        if (count != other.count)
         {
             return false;
         }
 
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < count; i++)
         {
             if (_data[i] != other._data[i])
             {
@@ -222,7 +216,7 @@ public class IntegerList
     public override int GetHashCode()
     {
         int hashCode = 1;
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < count; i++)
         {
             hashCode = 31 * hashCode + _data[i];
         }
@@ -235,11 +229,11 @@ public class IntegerList
 	 */
     public override string ToString() => string.Join(',', ToArray());
 
-    public int BinarySearch(int key) => Array.BinarySearch(_data, 0, _size, key);
+    public int BinarySearch(int key) => Array.BinarySearch(_data, 0, count, key);
 
     public int BinarySearch(int fromIndex, int toIndex, int key)
     {
-        if (fromIndex < 0 || toIndex < 0 || fromIndex > _size || toIndex > _size)
+        if (fromIndex < 0 || toIndex < 0 || fromIndex > count || toIndex > count)
         {
             throw new IndexOutOfRangeException();
         }
@@ -258,15 +252,7 @@ public class IntegerList
             throw new OutOfMemoryException();
         }
 
-        int newLength;
-        if (_data.Length == 0)
-        {
-            newLength = INITIAL_SIZE;
-        }
-        else
-        {
-            newLength = _data.Length;
-        }
+        int newLength = _data.Length == 0 ? INITIAL_SIZE : _data.Length;
 
         while (newLength < capacity)
         {
@@ -296,10 +282,10 @@ public class IntegerList
     {
         // Optimize for the common case (all data values are
         // < 0xFFFF) to avoid an extra scan
-        char[] resultArray = new char[_size];
+        char[] resultArray = new char[count];
         int resultIdx = 0;
         bool calculatedPreciseResultSize = false;
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < count; i++)
         {
             int codePoint = _data[i];
             // Calculate the precise result size if we encounter
@@ -334,7 +320,7 @@ public class IntegerList
     private int CharArraySize()
     {
         int result = 0;
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < count; i++)
             result += new Rune(_data[i]).Utf16SequenceLength;
         return result;
     }

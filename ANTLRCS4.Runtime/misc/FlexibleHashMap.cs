@@ -12,13 +12,13 @@ namespace org.antlr.v4.runtime.misc;
 /** A limited map (many unsupported operations) that lets me use
  *  varying hashCode/equals.
  */
-public class FlexibleHashMap<K, V> : Dictionary<K, V>
+public class FlexibleHashMap<K, V> : Dictionary<K, V> where K:notnull
 {
     public static readonly int INITAL_CAPACITY = 16; // must be power of 2
     public static readonly int INITAL_BUCKET_CAPACITY = 8;
     public static readonly double LOAD_FACTOR = 0.75;
 
-    public class Entry<K, V>
+    public class Entry<K, V> where K:notnull
     {
         public readonly K key;
         public V value;
@@ -35,9 +35,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
 
     /** How many elements in set */
     protected int n = 0;
-
     protected int currentPrime = 1; // jump by 4 primes each expand or whatever
-
     /** when to expand */
     protected int threshold;
     protected readonly int initialCapacity;
@@ -47,7 +45,8 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
     {
     }
 
-    public FlexibleHashMap(AbstractEqualityComparator<K> comparator) : this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
+    public FlexibleHashMap(AbstractEqualityComparator<K> comparator) 
+        : this(comparator, INITAL_CAPACITY, INITAL_BUCKET_CAPACITY)
     {
     }
 
@@ -60,7 +59,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         this.buckets = CreateEntryListArray<K, V>(initialBucketCapacity);
     }
 
-    private static LinkedList<Entry<K, V>>[] CreateEntryListArray<K, V>(int length)
+    private static LinkedList<Entry<K, V>>[] CreateEntryListArray<K, V>(int length) where K:notnull
     {
         LinkedList<Entry<K, V>>[] result = new LinkedList<Entry<K, V>>[length];
         return result;
@@ -131,24 +130,17 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         throw new UnsupportedOperationException();
     }
 
-    public ICollection<V> Values()
+    public ICollection<V> ValueCopies()
     {
         List<V> a = new(Count);
-        foreach (LinkedList<Entry<K, V>> bucket in buckets)
+        foreach (var bucket in buckets)
         {
             if (bucket == null) continue;
-            foreach (Entry<K, V> e in bucket)
-            {
+            foreach (var e in bucket)
                 a.Add(e.value);
-            }
         }
         return a;
     }
-
-    
-    //public HashSet<Dictionary<K,V>.Entry<K, V>> entrySet() {
-    //	throw new UnsupportedOperationException();
-    //}
 
     public bool ContainsKey(object key) => Get(key) != null;
 
@@ -157,10 +149,10 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
     public override int GetHashCode()
     {
         int hash = MurmurHash.Initialize();
-        foreach (LinkedList<Entry<K, V>> bucket in buckets)
+        foreach (var bucket in buckets)
         {
             if (bucket == null) continue;
-            foreach (Entry<K, V> e in bucket)
+            foreach (var e in bucket)
             {
                 if (e == null) break;
                 hash = MurmurHash.Update(hash, comparator.GetHashCode(e.key));
@@ -178,19 +170,19 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
 
     protected void Expand()
     {
-        LinkedList<Entry<K, V>>[] old = buckets;
+        var old = buckets;
         currentPrime += 4;
         int newCapacity = buckets.Length * 2;
-        LinkedList<Entry<K, V>>[] newTable = CreateEntryListArray<K, V>(newCapacity);
+        var newTable = CreateEntryListArray<K, V>(newCapacity);
         buckets = newTable;
         threshold = (int)(newCapacity * LOAD_FACTOR);
         //		Console.WriteLine("new size="+newCapacity+", thres="+threshold);
         // rehash all existing entries
         int oldSize = Count;
-        foreach (LinkedList<Entry<K, V>> bucket in old)
+        foreach (var bucket in old)
         {
             if (bucket == null) continue;
-            foreach (Entry<K, V> e in bucket)
+            foreach (var e in bucket)
             {
                 if (e == null) break;
                 Put(e.key, e.value);
@@ -219,10 +211,10 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
         var buffer = new StringBuilder();
         buffer.Append('{');
         bool first = true;
-        foreach (LinkedList<Entry<K, V>> bucket in buckets)
+        foreach (var bucket in buckets)
         {
             if (bucket == null) continue;
-            foreach (Entry<K, V> e in bucket)
+            foreach (var e in bucket)
             {
                 if (e == null) break;
                 if (first) first = false;
@@ -237,7 +229,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
     public string ToTableString()
     {
         var buffer = new StringBuilder();
-        foreach (LinkedList<Entry<K, V>> bucket in buckets)
+        foreach (var bucket in buckets)
         {
             if (bucket == null)
             {
@@ -246,7 +238,7 @@ public class FlexibleHashMap<K, V> : Dictionary<K, V>
             }
             buffer.Append('[');
             bool first = true;
-            foreach (Entry<K, V> e in bucket)
+            foreach (var e in bucket)
             {
                 if (first) first = false;
                 else buffer.Append(" ");

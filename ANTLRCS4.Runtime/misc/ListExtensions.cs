@@ -2,7 +2,6 @@
  * Use of this file is governed by the BSD 3-clause license that
  * can be found in the LICENSE.txt file in the project root.
  */
-using System.Collections.Generic;
 namespace org.antlr.v4.runtime.misc;
 
 public static class ListExtensions

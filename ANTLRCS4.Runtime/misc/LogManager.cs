@@ -48,19 +48,13 @@ public class LogManager
             component = component,
             msg = msg
         };
-        if (records == null)
-        {
-            records = new();
-        }
+        records ??= new();
         records.Add(r);
     }
 
-    public void Log(string msg) { Log(null, msg); }
+    public void Log(string msg) => Log(null, msg);
 
-    public void Save(string filename)
-    {
-        File.WriteAllText(filename, ToString());
-    }
+    public void Save(string filename) => File.WriteAllText(filename, ToString());
 
     public string Save()
     {

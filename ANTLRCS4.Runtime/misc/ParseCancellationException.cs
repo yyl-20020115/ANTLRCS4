@@ -14,20 +14,24 @@ namespace org.antlr.v4.runtime.misc;
  *
  * @author Sam Harwell
  */
-public class ParseCancellationException : CancellationException {
+public class ParseCancellationException : CancellationException
+{
+    public ParseCancellationException()
+    {
+    }
 
-	public ParseCancellationException() {
-	}
+    public ParseCancellationException(string message) : base(message)
+    {
+    }
 
-	public ParseCancellationException(string message):base(message) {
-	}
+    public ParseCancellationException(Exception cause) : base(cause.Message, cause)
+    {
+        //initCause(cause);
+    }
 
-	public ParseCancellationException(Exception cause):base(cause.Message,cause) {
-		//initCause(cause);
-	}
-
-	public ParseCancellationException(string message, Exception cause) :base(message,cause){
-		//initCause(cause);
-	}
+    public ParseCancellationException(string message, Exception cause) : base(message, cause)
+    {
+        //initCause(cause);
+    }
 
 }

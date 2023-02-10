@@ -114,7 +114,7 @@ public class DOTGenerator
                 altList.AddAll(alts);
                 altList.Sort();
                 var configurations = s.configs;
-                for (int altIndex = 0; altIndex < altList.Size; altIndex++)
+                for (int altIndex = 0; altIndex < altList.Count; altIndex++)
                 {
                     int alt = altList.Get(altIndex);
                     if (altIndex > 0)

@@ -10,9 +10,9 @@ namespace org.antlr.v4.runtime.misc;
  *  This nested hash table saves creating a single key each time we access
  *  map; avoids mem creation.
  */
-public class DoubleKeyMap<Key1, Key2, Value>
+public class DoubleKeyMap<Key1, Key2, Value> where Key1:notnull where Key2:notnull
 {
-    Dictionary<Key1, Dictionary<Key2, Value>> data = new();
+    readonly Dictionary<Key1, Dictionary<Key2, Value>> data = new();
 
     public Value Put(Key1 k1, Key2 k2, Value v)
     {

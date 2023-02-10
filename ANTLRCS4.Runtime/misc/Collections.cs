@@ -3,7 +3,6 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 namespace org.antlr.v4.runtime.misc;
 

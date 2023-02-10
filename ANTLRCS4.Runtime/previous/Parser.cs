@@ -58,10 +58,7 @@ public class Parser : BaseRecognizer
         input?.Seek(0); // rewind the input
     }
 
-    protected override object GetCurrentInputSymbol(IntStream input)
-    {
-        return ((TokenStream)input).LT(1);
-    }
+    protected override object GetCurrentInputSymbol(IntStream input) => ((TokenStream)input).LT(1);
 
     protected override object GetMissingSymbol(IntStream input,
                                       RecognitionException e,
@@ -80,7 +77,7 @@ public class Parser : BaseRecognizer
         t.line = current.Line;
         t.charPositionInLine = current.CharPositionInLine;
         t.channel = DEFAULT_TOKEN_CHANNEL;
-        t.        InputStream = current.InputStream;
+        t.InputStream = current.InputStream;
         return t;
     }
 
@@ -92,20 +89,11 @@ public class Parser : BaseRecognizer
         this.input = input;
     }
 
-    public TokenStream GetTokenStream()
-    {
-        return input;
-    }
+    public TokenStream GetTokenStream() => input;
 
     public override string SourceName => input.SourceName;
 
-    public void TraceIn(string ruleName, int ruleIndex)
-    {
-        base.TraceIn(ruleName, ruleIndex, input.LT(1));
-    }
+    public void TraceIn(string ruleName, int ruleIndex) => base.TraceIn(ruleName, ruleIndex, input.LT(1));
 
-    public void TraceOut(string ruleName, int ruleIndex)
-    {
-        base.TraceOut(ruleName, ruleIndex, input.LT(1));
-    }
+    public void TraceOut(string ruleName, int ruleIndex) => base.TraceOut(ruleName, ruleIndex, input.LT(1));
 }

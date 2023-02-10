@@ -154,26 +154,14 @@ public static class RuntimeUtils
         return buffer.ToString();
     }
 
-    public static void WriteFile(string fileName, string content)
-    {
-        WriteFile(fileName, content, null);
-    }
+    public static void WriteFile(string fileName, string content) => WriteFile(fileName, content, null);
 
-    public static void WriteFile(string fileName, string content, string encoding)
-    {
-        File.WriteAllText(fileName, content, Encoding.GetEncoding(encoding));
-    }
+    public static void WriteFile(string fileName, string content, string encoding) => File.WriteAllText(fileName, content, Encoding.GetEncoding(encoding));
 
-    public static char[] ReadFile(string fileName)
-    {
-        return ReadFile(fileName, Encoding.Default);
-    }
+    public static char[] ReadFile(string fileName) => ReadFile(fileName, Encoding.Default);
 
 
-    public static char[] ReadFile(string fileName, Encoding encoding)
-    {
-        return File.ReadAllText(fileName, encoding).ToArray();
-    }
+    public static char[] ReadFile(string fileName, Encoding encoding) => File.ReadAllText(fileName, encoding).ToArray();
 
     /** Convert array of strings to string&rarr;index map. Useful for
 	 *  converting rulenames to name&rarr;ruleindex map.
@@ -232,16 +220,10 @@ public static class RuntimeUtils
     }
 
     /** @since 4.6 */
-    public static string Spaces(int n)
-    {
-        return Sequence(n, " ");
-    }
+    public static string Spaces(int n) => Sequence(n, " ");
 
     /** @since 4.6 */
-    public static string NewLines(int n)
-    {
-        return Sequence(n, "\n");
-    }
+    public static string NewLines(int n) => Sequence(n, "\n");
 
     /** @since 4.6 */
     public static string Sequence(int n, string s)

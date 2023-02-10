@@ -96,7 +96,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
     /** Pull elements from tree iterator.  Track tree level 0..max_level.
      *  If nil rooted tree, don't give initial nil and DOWN nor final UP.
      */
-    public override object nextElement()
+    public override object NextElement()
     {
         var t = it.Next();
         //Console.Out.WriteLine("pulled "+adaptor.getType(t));

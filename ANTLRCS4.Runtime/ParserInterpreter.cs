@@ -412,7 +412,7 @@ public class ParserInterpreter : Parser
                 InputMismatchException ime = (InputMismatchException)e;
                 Token tok = e.OffendingToken;
                 int expectedTokenType = Token.INVALID_TYPE;
-                if (!ime.GetExpectedTokens().IsNil)
+                if (!ime.GetExpectedTokens().IsEmpty)
                 {
                     expectedTokenType = ime.GetExpectedTokens().GetMinElement(); // get any element
                 }

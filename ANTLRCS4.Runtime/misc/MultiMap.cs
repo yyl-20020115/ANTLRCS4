@@ -6,23 +6,28 @@
 
 namespace org.antlr.v4.runtime.misc;
 
-public class MultiMap<K, V> : Dictionary<K, List<V>> where K :notnull
+public class MultiMap<K, V> : Dictionary<K, List<V>> where K : notnull
 {
-	public void Map(K key, V value) {
-		if (!this.TryGetValue(key, out var elementsForKey)) {
-			elementsForKey = new ();
-			base.Add(key, elementsForKey);
-		}
-		elementsForKey.Add(value);
-	}
+    public void Map(K key, V value)
+    {
+        if (!this.TryGetValue(key, out var elementsForKey))
+        {
+            elementsForKey = new();
+            base.Add(key, elementsForKey);
+        }
+        elementsForKey.Add(value);
+    }
 
-	public List<Pair<K,V>> GetPairs() {
-		List<Pair<K,V>> pairs = new ();
-		foreach (K key in this.Keys) {
-			foreach (V value in this[key]) {
-				pairs.Add(new Pair<K,V>(key, value));
-			}
-		}
-		return pairs;
-	}
+    public List<Pair<K, V>> GetPairs()
+    {
+        List<Pair<K, V>> pairs = new();
+        foreach (K key in this.Keys)
+        {
+            foreach (V value in this[key])
+            {
+                pairs.Add(new (key, value));
+            }
+        }
+        return pairs;
+    }
 }

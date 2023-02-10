@@ -10,31 +10,20 @@ using System.Linq;
 
 public class SequenceEqualityComparer<T> : EqualityComparer<IEnumerable<T>>
 {
-    private static readonly SequenceEqualityComparer<T> _default = new SequenceEqualityComparer<T>();
+    private static readonly SequenceEqualityComparer<T> comparer = new ();
 
-    private readonly IEqualityComparer<T> _elementEqualityComparer = EqualityComparer<T>.Default;
+    private readonly IEqualityComparer<T> elementEqualityComparer = EqualityComparer<T>.Default;
 
     public SequenceEqualityComparer()
-        : this(null)
-    {
-    }
+        : this(null) { }
 
-    public SequenceEqualityComparer(IEqualityComparer<T> elementComparer)
-    {
-        _elementEqualityComparer = elementComparer ?? EqualityComparer<T>.Default;
-    }
+    public SequenceEqualityComparer(IEqualityComparer<T> elementComparer) 
+        => elementEqualityComparer = elementComparer ?? EqualityComparer<T>.Default;
 
-    public new static SequenceEqualityComparer<T> Default => _default;
+    public new static SequenceEqualityComparer<T> Default => comparer;
 
-    public override bool Equals(IEnumerable<T> x, IEnumerable<T> y)
-    {
-        if (x == y)
-            return true;
-        if (x == null || y == null)
-            return false;
-
-        return x.SequenceEqual(y, _elementEqualityComparer);
-    }
+    public override bool Equals(IEnumerable<T> x, IEnumerable<T> y) 
+        => x == y || (x != null && y != null && x.SequenceEqual(y, elementEqualityComparer));
 
     public override int GetHashCode(IEnumerable<T> obj)
     {
@@ -43,7 +32,7 @@ public class SequenceEqualityComparer<T> : EqualityComparer<IEnumerable<T>>
 
         int hashCode = 1;
         foreach (T element in obj)
-            hashCode = 31 * hashCode + _elementEqualityComparer.GetHashCode(element);
+            hashCode = 31 * hashCode + elementEqualityComparer.GetHashCode(element);
 
         return hashCode;
     }

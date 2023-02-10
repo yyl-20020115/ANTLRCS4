@@ -12,7 +12,6 @@ namespace org.antlr.v4.runtime.misc;
 // A class to read plain text interpreter data produced by ANTLR.
 public class InterpreterDataReader
 {
-
     public class InterpreterData
     {
         public ATN atn;
@@ -47,29 +46,31 @@ public class InterpreterDataReader
 	 */
     public static InterpreterData ParseFile(string fileName)
     {
-        var result = new InterpreterData();
-        result.ruleNames = new();
+        var result = new InterpreterData
+        {
+            ruleNames = new()
+        };
 
-        using (var br = new StreamReader(fileName))
+        using (var reader = new StreamReader(fileName))
         {
             string line;
             List<string> literalNames = new();
             List<string> symbolicNames = new();
 
-            line = br.ReadLine();
+            line = reader.ReadLine();
             if (!line.Equals("token literal names:"))
                 throw new RuntimeException("Unexpected data entry");
-            while ((line = br.ReadLine()) != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 if (line.Length == 0)
                     break;
                 literalNames.Add(line.Equals("null") ? "" : line);
             }
 
-            line = br.ReadLine();
+            line = reader.ReadLine();
             if (!line.Equals("token symbolic names:"))
                 throw new RuntimeException("Unexpected data entry");
-            while ((line = br.ReadLine()) != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 if (line.Length == 0)
                     break;
@@ -78,32 +79,32 @@ public class InterpreterDataReader
 
             result.vocabulary = new VocabularyImpl(literalNames.ToArray(), symbolicNames.ToArray());
 
-            line = br.ReadLine();
+            line = reader.ReadLine();
             if (!line.Equals("rule names:"))
                 throw new RuntimeException("Unexpected data entry");
-            while ((line = br.ReadLine()) != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 if (line.Length == 0)
                     break;
                 result.ruleNames.Add(line);
             }
 
-            line = br.ReadLine();
+            line = reader.ReadLine();
             if (line.Equals("channel names:"))
             { // Additional lexer data.
                 result.channels = new();
-                while ((line = br.ReadLine()) != null)
+                while ((line = reader.ReadLine()) != null)
                 {
                     if (line.Length == 0)
                         break;
                     result.channels.Add(line);
                 }
 
-                line = br.ReadLine();
+                line = reader.ReadLine();
                 if (!line.Equals("mode names:"))
                     throw new RuntimeException("Unexpected data entry");
                 result.modes = new();
-                while ((line = br.ReadLine()) != null)
+                while ((line = reader.ReadLine()) != null)
                 {
                     if (line.Length == 0)
                         break;
@@ -111,10 +112,10 @@ public class InterpreterDataReader
                 }
             }
 
-            line = br.ReadLine();
+            line = reader.ReadLine();
             if (!line.Equals("atn:"))
                 throw new RuntimeException("Unexpected data entry");
-            line = br.ReadLine();
+            line = reader.ReadLine();
             var elements = line[1..^1].Split(",");
             var serializedATN = new int[elements.Length];
 

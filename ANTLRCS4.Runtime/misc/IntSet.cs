@@ -111,7 +111,7 @@ public interface IntSet
 	 * @return the total number of elements represented by the current set,
 	 * regardless of the manner in which the elements are stored.
 	 */
-    int Size { get; }
+    int Count { get; }
 
     /**
 	 * Returns {@code true} if this set contains no elements.
@@ -119,7 +119,7 @@ public interface IntSet
 	 * @return {@code true} if the current set contains no elements; otherwise,
 	 * {@code false}.
 	 */
-    bool IsNil { get; }
+    bool IsEmpty { get; }
 
     /**
 	 * {@inheritDoc}

@@ -16,26 +16,20 @@ namespace org.antlr.v4.runtime.misc;
 public class OrderedHashSet<T> : HashSet<T>
 {
     /** Track the elements as they are added to the set */
-    protected List<T> _elements = new();
+    protected List<T> elements = new();
 
-    public OrderedHashSet()
-    {
-
-    }
+    public OrderedHashSet() { }
     public OrderedHashSet(OrderedHashSet<T> other)
-        : base(other)
-    {
-        this._elements.AddRange(other._elements);
-    }
-    public T Get(int i) => _elements[i];
+        : base(other) => this.elements.AddRange(other.elements);
+    public T Get(int i) => elements[i];
 
     /** Replace an existing value with a new value; updates the element
      *  list and the hash table, but not the key as that has not changed.
      */
     public T Set(int i, T value)
     {
-        T oldElement = _elements[i];
-        _elements[i] = value;//.set(i,value); // update list
+        var oldElement = elements[i];
+        elements[i] = value;//.set(i,value); // update list
         base.Remove(oldElement); // now update the set: remove/add
         base.Add(value);
         return oldElement;
@@ -43,8 +37,8 @@ public class OrderedHashSet<T> : HashSet<T>
 
     public bool Remove(int i)
     {
-        var o = _elements[i];
-        _elements.RemoveAt(i);
+        var o = elements[i];
+        elements.RemoveAt(i);
         return base.Remove(o);
     }
 
@@ -54,10 +48,10 @@ public class OrderedHashSet<T> : HashSet<T>
      */
     public new bool Add(T value)
     {
-        bool result = base.Add(value);
+        var result = base.Add(value);
         if (result)
         {  // only track if new element not in set
-            _elements.Add(value);
+            elements.Add(value);
         }
         return result;
     }
@@ -69,18 +63,18 @@ public class OrderedHashSet<T> : HashSet<T>
 
     public new void Clear()
     {
-        _elements.Clear();
+        elements.Clear();
         base.Clear();
     }
 
-    public override int GetHashCode() => _elements.GetHashCode();
+    public override int GetHashCode() => elements.GetHashCode();
 
     public override bool Equals(object? o)
     {
         if (o is OrderedHashSet<T> t)
         {
             //		System.out.print("equals " + this + ", " + o+" = ");
-            bool same = _elements != null && _elements.Equals(t.Elements);
+            bool same = elements != null && elements.Equals(t.Elements);
             //		Console.Out.WriteLine(same);
             return same;
         }
@@ -88,16 +82,16 @@ public class OrderedHashSet<T> : HashSet<T>
 
     }
 
-    public new IEnumerator<T> GetEnumerator() => _elements.GetEnumerator();
+    public new IEnumerator<T> GetEnumerator() => elements.GetEnumerator();
 
     /** Return the List holding list of table elements.  Note that you are
      *  NOT getting a copy so don't write to the list.
      */
-    public List<T> Elements() => _elements;
+    public List<T> Elements() => elements;
 
     public object Clone() => new OrderedHashSet<T>(this);
 
-    public T[] ToArray() => _elements.ToArray();
+    public T[] ToArray() => elements.ToArray();
 
-    public override string ToString() => _elements.ToString();
+    public override string ToString() => Arrays.ToString(elements.ToArray());
 }

@@ -269,15 +269,15 @@ public class ATNSerializer
 
     private void AddPrecedenceStates()
     {
-        data.Add(_precedenceStates.Size);
-        for (int i = 0; i < _precedenceStates.Size; i++)
+        data.Add(_precedenceStates.Count);
+        for (int i = 0; i < _precedenceStates.Count; i++)
             data.Add(_precedenceStates.Get(i));
     }
 
     private void AddNonGreedyStates()
     {
-        data.Add(nonGreedyStates.Size);
-        for (int i = 0; i < nonGreedyStates.Size; i++)
+        data.Add(nonGreedyStates.Count);
+        for (int i = 0; i < nonGreedyStates.Count; i++)
             data.Add(nonGreedyStates.Get(i));
     }
 

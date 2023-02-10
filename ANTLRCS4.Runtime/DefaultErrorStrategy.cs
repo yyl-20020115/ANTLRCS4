@@ -616,7 +616,7 @@ public class DefaultErrorStrategy : ANTLRErrorStrategy
         var currentSymbol = recognizer.GetCurrentToken();
         var expecting = GetExpectedTokens(recognizer);
         int expectedTokenType = Token.INVALID_TYPE;
-        if (!expecting.IsNil)
+        if (!expecting.IsEmpty)
         {
             expectedTokenType = expecting.GetMinElement(); // get any element
         }

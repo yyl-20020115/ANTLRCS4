@@ -47,10 +47,7 @@ public class IntArray
     public int[] data = new int[INITIAL_SIZE];
     protected int p = -1;
 
-    public IntArray()
-    {
-
-    }
+    public IntArray() { }
     public void Add(int v)
     {
         EnsureCapacity(p + 1);
@@ -70,10 +67,7 @@ public class IntArray
     }
 
     /** This only tracks elements added via push/add. */
-    public int Size()
-    {
-        return p;
-    }
+    public int Count => p;
 
     public void Clear()
     {

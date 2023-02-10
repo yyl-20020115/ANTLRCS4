@@ -130,7 +130,7 @@ public static class ATNOptimizer
                 Transition newTransition;
                 if (matchSet.GetIntervals().Count == 1)
                 {
-                    if (matchSet.Size == 1)
+                    if (matchSet.Count == 1)
                     {
                         newTransition = CodePointTransitions.CreateWithCodePoint(blockEndState, matchSet.GetMinElement());
                     }

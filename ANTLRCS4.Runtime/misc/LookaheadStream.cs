@@ -73,7 +73,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
      *
      * @see #isEOF
      */
-    public abstract T nextElement();
+    public abstract T NextElement();
 
     public abstract bool IsEOF(T o);
 
@@ -97,7 +97,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     }
 
     /** Make sure we have at least one element to remove, even if EOF */
-    public void Consume()
+    public virtual void Consume()
     {
         SyncAhead(1);
         Remove();
@@ -119,20 +119,18 @@ public abstract class LookaheadStream<T> : FastQueue<T>
     {
         for (int i = 1; i <= n; i++)
         {
-            T o = nextElement();
+            T o = NextElement();
             if (IsEOF(o)) eof = o;
             data.Add(o);
         }
     }
 
     /** Size of entire stream is unknown; we only know buffer size from FastQueue. */
-    public override int Count => throw new UnsupportedOperationException("streams are of unknown size");
+    public override int Count 
+        => throw new UnsupportedOperationException("streams are of unknown size");
     public T LT(int k)
     {
-        if (k == 0)
-        {
-            return default;
-        }
+        if (k == 0) return default;
         if (k < 0) return LB(-k);
         //System.out.print("LT(p="+p+","+k+")=");
         SyncAhead(k);
@@ -222,7 +220,7 @@ public abstract class LookaheadStream<T> : FastQueue<T>
         {
             throw new UnsupportedOperationException("can't look more than one token before the beginning of this stream's buffer");
         }
-
+        
         throw new UnsupportedOperationException("can't look past the end of this stream's buffer using LB(int)");
     }
 }

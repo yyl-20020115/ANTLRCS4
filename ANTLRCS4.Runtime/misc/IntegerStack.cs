@@ -12,22 +12,16 @@ namespace org.antlr.v4.runtime.misc;
 public class IntegerStack : IntegerList
 {
 
-    public IntegerStack()
-    {
-    }
+    public IntegerStack() { }
 
-    public IntegerStack(int capacity) : base(capacity)
-    {
-    }
+    public IntegerStack(int capacity) : base(capacity) { }
 
-    public IntegerStack(IntegerStack list) : base(list)
-    {
-    }
+    public IntegerStack(IntegerStack list) : base(list) { }
 
     public void Push(int value) => Add(value);
 
-    public int Pop() => RemoveAt(Size - 1);
+    public int Pop() => RemoveAt(Count - 1);
 
-    public int Peek() => Get(Size - 1);
+    public int Peek() => Get(Count - 1);
 
 }

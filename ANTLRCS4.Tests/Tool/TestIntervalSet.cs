@@ -425,7 +425,7 @@ public class TestIntervalSet
         s.Add(50, 55);
         s.Add(5, 19);
         var expecting = "32";
-        var result = (s.Size.ToString());
+        var result = (s.Count.ToString());
         Assert.AreEqual(expecting, result);
     }
 

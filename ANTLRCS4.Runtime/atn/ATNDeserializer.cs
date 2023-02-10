@@ -595,8 +595,8 @@ public class ATNDeserializer
 	 */
     public static IntegerList EncodeIntsWith16BitWords(IntegerList data)
     {
-        var data16 = new IntegerList((int)(data.Size * 1.5));
-        for (int i = 0; i < data.Size; i++)
+        var data16 = new IntegerList((int)(data.Count * 1.5));
+        for (int i = 0; i < data.Count; i++)
         {
             int v = data.Get(i);
             if (v == -1)

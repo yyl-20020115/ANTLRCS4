@@ -213,7 +213,7 @@ public class IntervalSet : IntSet
     
     public IntervalSet Complement(IntSet vocabulary)
     {
-        if (vocabulary == null || vocabulary.IsNil)
+        if (vocabulary == null || vocabulary.IsEmpty)
         {
             return null; // nothing in common with null set
         }
@@ -235,7 +235,7 @@ public class IntervalSet : IntSet
     
     public IntervalSet Subtract(IntSet a)
     {
-        if (a == null || a.IsNil)
+        if (a == null || a.IsEmpty)
         {
             return new IntervalSet(this);
         }
@@ -258,13 +258,13 @@ public class IntervalSet : IntSet
 
     public static IntervalSet Subtract(IntervalSet left, IntervalSet right)
     {
-        if (left == null || left.IsNil)
+        if (left == null || left.IsEmpty)
         {
             return new IntervalSet();
         }
 
         var result = new IntervalSet(left);
-        if (right == null || right.IsNil)
+        if (right == null || right.IsEmpty)
         {
             // right set has no elements; just return the copy of the current set
             return result;
@@ -472,7 +472,7 @@ public class IntervalSet : IntSet
 
     /** {@inheritDoc} */
     
-    public bool IsNil => intervals == null || intervals.Count == 0;
+    public bool IsEmpty => intervals == null || intervals.Count == 0;
 
     /**
 	 * Returns the maximum value contained in the set if not isNil().
@@ -482,7 +482,7 @@ public class IntervalSet : IntSet
 	 */
     public int GetMaxElement()
     {
-        if (IsNil)
+        if (IsEmpty)
         {
             throw new RuntimeException("set is empty");
         }
@@ -498,7 +498,7 @@ public class IntervalSet : IntSet
 	 */
     public int GetMinElement()
     {
-        if (IsNil)
+        if (IsEmpty)
         {
             throw new RuntimeException("set is empty");
         }
@@ -551,7 +551,7 @@ public class IntervalSet : IntSet
         {
             return "{}";
         }
-        if (this.Size > 1)
+        if (this.Count > 1)
         {
             buffer.Append("{");
         }
@@ -579,7 +579,7 @@ public class IntervalSet : IntSet
             }
 
         }
-        if (this.Size > 1)
+        if (this.Count > 1)
         {
             buffer.Append('}');
         }
@@ -602,7 +602,7 @@ public class IntervalSet : IntSet
         {
             return "{}";
         }
-        if (this.Size > 1)
+        if (this.Count > 1)
         {
             buffer.Append('{');
         }
@@ -629,7 +629,7 @@ public class IntervalSet : IntSet
                 }
             }
         }
-        if (this.Size > 1)
+        if (this.Count > 1)
         {
             buffer.Append('}');
         }
@@ -663,7 +663,7 @@ public class IntervalSet : IntSet
     }
 
     
-    public int Size
+    public int Count
     {
         get
         {
@@ -685,7 +685,7 @@ public class IntervalSet : IntSet
 
     public IntegerList ToIntegerList()
     {
-        var values = new IntegerList(Size);
+        var values = new IntegerList(Count);
         int n = intervals.Count;
         for (int i = 0; i < n; i++)
         {

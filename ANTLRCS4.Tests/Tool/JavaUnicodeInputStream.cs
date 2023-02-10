@@ -62,7 +62,7 @@ public class JavaUnicodeInputStream : CharStream
         // make sure the next character has been processed
         this.LA(1);
 
-        if (escapeListIndex >= escapeIndexes.Size || escapeIndexes.Get(escapeListIndex) != Index)
+        if (escapeListIndex >= escapeIndexes.Count || escapeIndexes.Get(escapeListIndex) != Index)
         {
             source.Consume();
             slashCount++;
@@ -112,7 +112,7 @@ public class JavaUnicodeInputStream : CharStream
         else
         {
             int desiredIndex = Index + i - 1;
-            for (int j = escapeListIndex; j < escapeIndexes.Size; j++)
+            for (int j = escapeListIndex; j < escapeIndexes.Count; j++)
             {
                 if (escapeIndexes.Get(j) == desiredIndex)
                 {

@@ -548,12 +548,12 @@ public static class PredictionModeTools
             var alts = configToAlts.Get(c);
             if (alts == null)
             {
-                alts = new BitSet();
+                alts = new ();
                 configToAlts.Put(c, alts);
             }
             alts.Set(c.alt);
         }
-        return configToAlts.Values();
+        return configToAlts.ValueCopies();
     }
 
     /**

@@ -9,10 +9,7 @@ using System.Collections.Generic;
 public static class DictionaryExtensions
 {
     public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
-        where TValue : class
-    {
-        return dictionary.TryGetValue(key, out var value) ? value : null;
-    }
+        where TValue : class => dictionary.TryGetValue(key, out var value) ? value : null;
 
     public static TValue Put<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         where TValue : class

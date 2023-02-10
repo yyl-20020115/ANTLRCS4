@@ -1361,7 +1361,7 @@ public class ParserATNSimulator : ATNSimulator
             if (c.OuterContextDepth > 0 || (c.state is RuleStopState && c.context.HasEmptyPath))
                 alts.Add(c.alt);
         }
-        if (alts.Size == 0) return ATN.INVALID_ALT_NUMBER;
+        if (alts.Count == 0) return ATN.INVALID_ALT_NUMBER;
         return alts.GetMinElement();
     }
 

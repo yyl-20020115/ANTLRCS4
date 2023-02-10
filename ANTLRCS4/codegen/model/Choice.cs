@@ -46,7 +46,7 @@ public abstract class Choice : RuleElement
         foreach (var s in altLookSets)
         {
             var list = s.ToIntegerList();
-            var info = new TokenInfo[list.Size];
+            var info = new TokenInfo[list.Count];
             for (int i = 0; i < info.Length; i++)
             {
                 info[i] = new TokenInfo(list.Get(i), target.GetTokenTypeAsTargetLabel(grammar, list.Get(i)));

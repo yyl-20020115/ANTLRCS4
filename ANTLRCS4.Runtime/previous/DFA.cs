@@ -176,7 +176,6 @@ public class DFA
             return;
         }
         var nvae =
-
                 new NoViableAltException(Description,
                                          decisionNumber,
                                          s,
@@ -188,10 +187,7 @@ public class DFA
     /** A hook for debugging interface */
     protected void Error(NoViableAltException nvae) { }
 
-    public virtual int SpecialStateTransition(int s, IntStream input)
-    {
-        return -1;
-    }
+    public virtual int SpecialStateTransition(int s, IntStream input) => -1;
 
     public virtual string Description => "n/a";
 
@@ -246,10 +242,4 @@ public class DFA
         }
         return data;
     }
-
-    /*
-	public int specialTransition(int state, int symbol) {
-		return 0;
-	}
-	*/
 }

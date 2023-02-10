@@ -487,7 +487,7 @@ public class LexerATNFactory : ParserATNFactory
         // Whether or not we were in a range, we'll add the last code point found to the set.
         ApplyPrevState(charSetAST, set, state);
 
-        if (set.IsNil)
+        if (set.IsEmpty)
         {
             g.Tools.ErrMgr.GrammarError(ErrorType.EMPTY_STRINGS_AND_SETS_NOT_ALLOWED, g.fileName, charSetAST.Token, "[]");
         }

@@ -76,7 +76,7 @@ public class ArrayDeque<T> : List<T>, Deque<T>
 
     public bool RemoveFirstOccurrence(object o)
     {
-        if(o is T t)
+        if (o is T t)
         {
             var i = this.IndexOf(t);
             if (i >= 0)
@@ -92,13 +92,13 @@ public class ArrayDeque<T> : List<T>, Deque<T>
     public T RemoveLast()
     {
         T last = this[^1];
-        this.RemoveAt(this.        Count- 1);
+        this.RemoveAt(this.Count - 1);
         return last;
     }
 
     public bool RemoveLastOccurrence(object o)
     {
-        if(o is T t)
+        if (o is T t)
         {
             int i = this.LastIndexOf(t);
             if (i >= 0)

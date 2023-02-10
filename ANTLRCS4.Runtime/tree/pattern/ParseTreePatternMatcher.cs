@@ -70,16 +70,12 @@ public class ParseTreePatternMatcher
 {
     public class CannotInvokeStartRule : RuntimeException
     {
-        public CannotInvokeStartRule(Exception e) : base(e.Message, e)
-        {
-        }
+        public CannotInvokeStartRule(Exception e) : base(e.Message, e) { }
     }
 
     // Fixes https://github.com/antlr/antlr4/issues/413
     // "Tree pattern compilation doesn't check for a complete parse"
-    public class StartRuleDoesNotConsumeFullPattern : RuntimeException
-    {
-    }
+    public class StartRuleDoesNotConsumeFullPattern : RuntimeException { }
 
     /**
 	 * This is the backing field for {@link #getLexer()}.
@@ -90,7 +86,6 @@ public class ParseTreePatternMatcher
 	 * This is the backing field for {@link #getParser()}.
 	 */
     private readonly Parser parser;
-
     protected string start = "<";
     protected string stop = ">";
     protected string escape = "\\"; // e.g., \< and \> must escape BOTH!
@@ -188,15 +183,15 @@ public class ParseTreePatternMatcher
         var tokens = new CommonTokenStream(tokenSrc);
 
         var parserInterp = new ParserInterpreter(parser.GrammarFileName,
-                                                               parser.                                                               Vocabulary,
-                                                               parser.                                                               RuleNames,
+                                                               parser.Vocabulary,
+                                                               parser.RuleNames,
                                                                parser.GetATNWithBypassAlts(),
                                                                tokens);
 
         ParseTree tree = null;
         try
         {
-            parserInterp.            ErrorHandler = new BailErrorStrategy();
+            parserInterp.ErrorHandler = new BailErrorStrategy();
             tree = parserInterp.Parse(patternRuleIndex);
             //			Console.Out.WriteLine("pattern tree = "+tree.toStringTree(parserInterp));
         }
@@ -288,10 +283,7 @@ public class ParseTreePatternMatcher
                 else
                 {
                     // x and y
-                    if (mismatchedNode == null)
-                    {
-                        mismatchedNode = t1;
-                    }
+                    mismatchedNode ??= t1;
                 }
             }
             else
@@ -347,7 +339,7 @@ public class ParseTreePatternMatcher
             int n = r1.ChildCount;
             for (int i = 0; i < n; i++)
             {
-                ParseTree childMatch = MatchImpl(r1.GetChild(i), patternTree.GetChild(i), labels);
+                var childMatch = MatchImpl(r1.GetChild(i), patternTree.GetChild(i), labels);
                 if (childMatch != null)
                 {
                     return childMatch;
@@ -366,9 +358,8 @@ public class ParseTreePatternMatcher
     {
         if (t is RuleNode r)
         {
-            if (r.ChildCount == 1 && r.GetChild(0) is TerminalNode)
+            if (r.ChildCount == 1 && r.GetChild(0) is TerminalNode c)
             {
-                TerminalNode c = (TerminalNode)r.GetChild(0);
                 if (c.GetSymbol() is RuleTagToken)
                 {
                     //					Console.Out.WriteLine("rule tag subtree "+t.toStringTree(parser));
@@ -420,7 +411,7 @@ public class ParseTreePatternMatcher
             {
                 var textChunk = (TextChunk)chunk;
                 var @in = new ANTLRInputStream(textChunk.Text);
-                lexer.                InputStream = @in;
+                lexer.InputStream = @in;
                 Token t = lexer.NextToken();
                 while (t.Type != Token.EOF)
                 {
