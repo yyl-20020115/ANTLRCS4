@@ -75,7 +75,7 @@ public class TypeScriptTarget : Target
     {
     }
 
-    public override HashSet<String> ReservedWords => reservedWords;
+    public override HashSet<string> ReservedWords => reservedWords;
 
     public override int InlineTestSetWordSize => 32;
 

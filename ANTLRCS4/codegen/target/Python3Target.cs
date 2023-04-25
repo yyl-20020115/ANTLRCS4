@@ -60,9 +60,9 @@ public class Python3Target : Target
     {
     }
 
-    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
+    public override Dictionary<char, string> TargetCharValueEscape => targetCharValueEscape;
 
-    public override HashSet<String> ReservedWords => reservedWords;
+    public override HashSet<string> ReservedWords => reservedWords;
 
     public override bool WantsBaseListener => false;
 

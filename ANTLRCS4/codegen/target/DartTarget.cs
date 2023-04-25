@@ -42,7 +42,7 @@ public class DartTarget : Target
 
     public override Dictionary<char, string> TargetCharValueEscape => targetCharValueEscape;
 
-    public override string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
+    public override string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, string literal, bool addQuotes,
                                                                bool escapeSpecial) => base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).Replace("$", "\\$");
 
     public override HashSet<string> ReservedWords => reservedWords;
