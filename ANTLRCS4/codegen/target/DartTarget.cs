@@ -6,60 +6,63 @@
 
 namespace org.antlr.v4.codegen.target;
 
-public class DartTarget : Target {
-	protected static final Map<Character, String> targetCharValueEscape;
-	static {
-		HashMap<Character, String> map = new HashMap<>(defaultCharValueEscape);
-		addEscapedChar(map, '$');
-		targetCharValueEscape = map;
-	}
+public class DartTarget : Target
+{
+    protected static readonly Dictionary<char, String> targetCharValueEscape;
+    static DartTarget()
+    {
+        var map = new Dictionary<char, String>(defaultCharValueEscape);
+        AddEscapedChar(map, '$');
+        targetCharValueEscape = map;
+    }
 
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
-		"abstract", "dynamic", "implements", "show",
-		"as", "else", "import", "static",
-		"assert", "enum", "in", "super",
-		"async", "export", "interface", "switch",
-		"await", "extends", "is", "sync",
-		"break", "external", "library", "this",
-		"case", "factory", "mixin", "throw",
-		"catch", "false", "new", "true",
-		"class", "final", "null", "try",
-		"const", "finally", "on", "typedef",
-		"continue", "for", "operator", "var",
-		"covariant", "Function", "part", "void",
-		"default", "get", "rethrow", "while",
-		"deferred", "hide", "return", "with",
-		"do", "if", "set", "yield",
+    protected static readonly HashSet<String> reservedWords = new() {
+        "abstract", "dynamic", "implements", "show",
+        "as", "else", "import", "static",
+        "assert", "enum", "in", "super",
+        "async", "export", "interface", "switch",
+        "await", "extends", "is", "sync",
+        "break", "external", "library", "this",
+        "case", "factory", "mixin", "throw",
+        "catch", "false", "new", "true",
+        "class", "final", "null", "try",
+        "const", "finally", "on", "typedef",
+        "continue", "for", "operator", "var",
+        "covariant", "Function", "part", "void",
+        "default", "get", "rethrow", "while",
+        "deferred", "hide", "return", "with",
+        "do", "if", "set", "yield",
 
-		"rule", "parserRule"
-	));
+        "rule", "parserRule"
+    };
 
-	public DartTarget(CodeGenerator gen) {
-		super(gen);
-	}
+    public DartTarget(CodeGenerator gen) : base(gen)
+    {
+    }
 
-	@Override
-	public Map<Character, String> getTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
+    public override Dictionary<char, String> GetTargetCharValueEscape()
+    {
+        return targetCharValueEscape;
+    }
 
-	@Override
-	public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, boolean addQuotes,
-															   boolean escapeSpecial) {
-		return super.getTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).replace("$", "\\$");
-	}
+    public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
+                                                               bool escapeSpecial)
+    {
+        return base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).Replace("$", "\\$");
+    }
 
-	public Set<String> getReservedWords() {
-		return reservedWords;
-	}
+    public override HashSet<String> GetReservedWords()
+    {
+        return reservedWords;
+    }
 
-	@Override
-	public boolean isATNSerializedAsInts() {
-		return true;
-	}
+    public override bool IsATNSerializedAsInts()
+    {
+        return true;
+    }
 
-	@Override
-	protected String escapeChar(int v) {
-		return String.format("\\u{%X}", v);
-	}
+    protected override String EscapeChar(int v)
+    {
+        return $"\\u{v:X}";
+    }
 }

@@ -91,47 +91,42 @@ public class CSharpTarget : Target {
 	protected static readonly Dictionary<char, String> targetCharValueEscape;
 	static CSharpTarget() {
 		// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#string-escape-sequences
-		HashMap<Character, String> map = new HashMap<>();
-		addEscapedChar(map, '\'');
-		addEscapedChar(map, '\"');
-		addEscapedChar(map, '\\');
-		addEscapedChar(map, '\0', '0');
-		addEscapedChar(map, (char)0x0007, 'a');
-		addEscapedChar(map, (char)0x0008, 'b');
-		addEscapedChar(map, '\f', 'f');
-		addEscapedChar(map, '\n', 'n');
-		addEscapedChar(map, '\r', 'r');
-		addEscapedChar(map, '\t', 't');
-		addEscapedChar(map, (char)0x000B, 'v');
+		var map = new Dictionary<char, String>();
+		AddEscapedChar(map, '\'');
+		AddEscapedChar(map, '\"');
+		AddEscapedChar(map, '\\');
+		AddEscapedChar(map, '\0', '0');
+		AddEscapedChar(map, (char)0x0007, 'a');
+		AddEscapedChar(map, (char)0x0008, 'b');
+		AddEscapedChar(map, '\f', 'f');
+		AddEscapedChar(map, '\n', 'n');
+		AddEscapedChar(map, '\r', 'r');
+		AddEscapedChar(map, '\t', 't');
+		AddEscapedChar(map, (char)0x000B, 'v');
 		targetCharValueEscape = map;
 	}
 
-	public CSharpTarget(CodeGenerator gen) {
-		super(gen);
+	public CSharpTarget(CodeGenerator gen) :base(gen){
 	}
 
-	@Override
-	public Map<Character, String> getTargetCharValueEscape() {
+	public override Dictionary<char, String> GetTargetCharValueEscape() {
 		return targetCharValueEscape;
 	}
 
-	@Override
-	protected Set<String> getReservedWords() {
+	
+	public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	@Override
-	protected String escapeWord(String word) {
+	protected override String EscapeWord(String word) {
 		return "@" + word;
 	}
 
-	@Override
-	public boolean isATNSerializedAsInts() {
+	public override bool IsATNSerializedAsInts() {
 		return true;
 	}
 
-	@Override
-	protected String escapeChar(int v) {
-		return String.format("\\x%X", v);
+	protected override String EscapeChar(int v) {
+		return $"\\x{v:X}";// String.format("\\x%X", v);
 	}
 }

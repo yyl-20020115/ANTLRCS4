@@ -18,15 +18,6 @@
 
   <ItemGroup>
     <Compile Remove="codegen\model\dbg.cs" />
-    <Compile Remove="codegen\target\CSharpTarget.cs" />
-    <Compile Remove="codegen\target\DartTarget.cs" />
-    <Compile Remove="codegen\target\GoTarget.cs" />
-    <Compile Remove="codegen\target\JavaScriptTarget.cs" />
-    <Compile Remove="codegen\target\PHPTarget.cs" />
-    <Compile Remove="codegen\target\Python2Target.cs" />
-    <Compile Remove="codegen\target\Python3Target.cs" />
-    <Compile Remove="codegen\target\SwiftTarget.cs" />
-    <Compile Remove="codegen\target\TypeScriptTarget.cs" />
     <Compile Remove="unicode\UnicodeDataTemplateController.cs" />
   </ItemGroup>
 

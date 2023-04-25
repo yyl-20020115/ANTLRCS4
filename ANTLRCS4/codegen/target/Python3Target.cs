@@ -7,7 +7,7 @@
 namespace org.antlr.v4.codegen.target;
 
 public class Python3Target : Target {
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
+	protected static readonly HashSet<String> reservedWords = new() {
 		"abs", "all", "and", "any", "apply", "as", "assert",
 		"bin", "bool", "break", "buffer", "bytearray",
 		"callable", "chr", "class", "classmethod", "coerce", "compile", "complex", "continue",
@@ -35,51 +35,45 @@ public class Python3Target : Target {
 
 		// misc
 		"rule", "parserRule"
-	));
+	};
 
-	protected static final Map<Character, String> targetCharValueEscape;
-	static {
+	protected static readonly Dictionary<char, String> targetCharValueEscape;
+	static Python3Target() {
 		// https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
-		HashMap<Character, String> map = new HashMap<>();
-		addEscapedChar(map, '\\');
-		addEscapedChar(map, '\'');
-		addEscapedChar(map, '\"');
-		addEscapedChar(map, (char)0x0007, 'a');
-		addEscapedChar(map, (char)0x0008, 'b');
-		addEscapedChar(map, '\f', 'f');
-		addEscapedChar(map, '\n', 'n');
-		addEscapedChar(map, '\r', 'r');
-		addEscapedChar(map, '\t', 't');
-		addEscapedChar(map, (char)0x000B, 'v');
+		var map = new Dictionary<char, String>();
+		AddEscapedChar(map, '\\');
+        AddEscapedChar(map, '\'');
+        AddEscapedChar(map, '\"');
+        AddEscapedChar(map, (char)0x0007, 'a');
+        AddEscapedChar(map, (char)0x0008, 'b');
+        AddEscapedChar(map, '\f', 'f');
+        AddEscapedChar(map, '\n', 'n');
+        AddEscapedChar(map, '\r', 'r');
+        AddEscapedChar(map, '\t', 't');
+        AddEscapedChar(map, (char)0x000B, 'v');
 		targetCharValueEscape = map;
 	}
 
-	public Python3Target(CodeGenerator gen) {
-		super(gen);
+	public Python3Target(CodeGenerator gen) :base(gen){
 	}
 
-	@Override
-	public Map<Character, String> getTargetCharValueEscape() {
+	public override Dictionary<char, String> GetTargetCharValueEscape() {
 		return targetCharValueEscape;
 	}
 
-	@Override
-	protected Set<String> getReservedWords() {
+	public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	@Override
-	public boolean wantsBaseListener() {
+	public override bool WantsBaseListener() {
 		return false;
 	}
 
-	@Override
-	public boolean wantsBaseVisitor() {
+	public override bool WantsBaseVisitor() {
 		return false;
 	}
 
-	@Override
-	public boolean supportsOverloadedMethods() {
+	public override bool SupportsOverloadedMethods() {
 		return false;
 	}
 }

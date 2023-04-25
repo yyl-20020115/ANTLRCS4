@@ -4,10 +4,15 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
+using org.antlr.v4.parse;
+using org.antlr.v4.tool;
+using System.Diagnostics;
+
 namespace org.antlr.v4.codegen.target;
 
 public class GoTarget : Target {
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
+	protected static readonly HashSet<String> reservedWords = new() { 
 		// keywords
 		"break", "default", "func", "interface", "select",
 		"case", "defer", "go", "map", "struct",
@@ -32,70 +37,74 @@ public class GoTarget : Target {
 
 		// misc
 		"rule", "parserRule", "action"
-	));
+	};
 
-	private static final boolean DO_GOFMT = !Boolean.parseBoolean(System.getenv("ANTLR_GO_DISABLE_GOFMT"))
-			&& !Boolean.parseBoolean(System.getProperty("antlr.go.disable-gofmt"));
+	private static readonly bool DO_GOFMT = !(bool.TryParse(
+		Environment.GetEnvironmentVariable("ANTLR_GO_DISABLE_GOFMT"), out var do_gofmt)
+		|| do_gofmt) && !(bool.TryParse(Environment.GetEnvironmentVariable("antlr.go.disable-gofmt\""), out var disable_gofmt) ||
+		!disable_gofmt);
 
-	public GoTarget(CodeGenerator gen) {
-		super(gen);
+	public GoTarget(CodeGenerator gen):base(gen) {
 	}
 
-	@Override
-	protected Set<String> getReservedWords() {
+	public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	@Override
-	protected void genFile(Grammar g, ST outputFileST, String fileName) {
-		super.genFile(g, outputFileST, fileName);
-		if (DO_GOFMT && !fileName.startsWith(".") /* criterion taken from gofmt */ && fileName.endsWith(".go")) {
-			gofmt(new File(getCodeGenerator().tool.getOutputDirectory(g.fileName), fileName));
+	public override void GenFile(Grammar g, Template outputFileST, String fileName) {
+		base.GenFile(g, outputFileST, fileName);
+		if (DO_GOFMT && !fileName.StartsWith(".") /* criterion taken from gofmt */ && fileName.EndsWith(".go")) {
+			gofmt(Path.Combine(GetCodeGenerator().tool.GetOutputDirectory(g.fileName), fileName));
 		}
 	}
 
-	private void gofmt(File fileName) {
+	private void gofmt(string fileName) {
 		// Optimistically run gofmt. If this fails, it doesn't matter at this point. Wait for termination though,
 		// because "gofmt -w" uses ioutil.WriteFile internally, which means it literally writes in-place with O_TRUNC.
 		// That could result in a race. (Why oh why doesn't it do tmpfile + rename?)
 		try {
 			// TODO: need something like: String goExecutable = locateGo();
-			ProcessBuilder gofmtBuilder = new ProcessBuilder("gofmt", "-w", "-s", fileName.getPath());
-			gofmtBuilder.redirectErrorStream(true);
-			Process gofmt = gofmtBuilder.start();
-			InputStream stdout = gofmt.getInputStream();
-			// TODO(wjkohnen): simplify to `while (stdout.Read() > 1) {}`
-			byte[] buf = new byte[1 << 10];
-			for (int l = 0; l > -1; l = stdout.read(buf)) {
-				// There should not be any output that exceeds the implicit output buffer. In normal ops there should be
-				// zero output. In case there is output, blocking and therefore killing the process is acceptable. This
-				// drains the buffer anyway to play it safe.
+			Process p = Process.Start("gofmt", "-w -s " + fileName);
+			p.ErrorDataReceived += (sender, e) =>
+			{
 
-				// dirty debug (change -w above to -d):
-				// System.err.write(buf, 0, l);
+			};
+			if (p.Start())
+			{
+				p.WaitForExit();
 			}
-			gofmt.waitFor();
+			//// TODO(wjkohnen): simplify to `while (stdout.Read() > 1) {}`
+			//byte[] buf = new byte[1 << 10];
+			//for (int l = 0; l > -1; l = stdout.read(buf)) {
+			//	// There should not be any output that exceeds the implicit output buffer. In normal ops there should be
+			//	// zero output. In case there is output, blocking and therefore killing the process is acceptable. This
+			//	// drains the buffer anyway to play it safe.
+
+			//	// dirty debug (change -w above to -d):
+			//	// System.err.write(buf, 0, l);
+			//}
 		} catch (IOException e) {
 			// Probably gofmt not in $PATH, in any case ignore.
-		} catch (InterruptedException forward) {
-			Thread.currentThread().interrupt();
 		}
+		//catch (InterruptedException forward) {
+		//	Thread.currentThread().interrupt();
+		//}
 	}
 
-	public String getRecognizerFileName(boolean header) {
-		CodeGenerator gen = getCodeGenerator();
+	public override String GetRecognizerFileName(bool header) {
+		CodeGenerator gen = GetCodeGenerator();
 		Grammar g = gen.g;
-		assert g!=null;
+		//assert g!=null;
 		String name;
-		switch ( g.getType()) {
+		switch ( g.Type) {
 			case ANTLRParser.PARSER:
-				name = g.name.endsWith("Parser") ? g.name.substring(0, g.name.length()-6) : g.name;
-				return name.toLowerCase()+"_parser.go";
+                name = g.name.EndsWith("Parser") ? g.name[0..(g.name.Length - 6)] : g.name;
+				return name.ToLower()+"_parser.go";
 			case ANTLRParser.LEXER:
-				name = g.name.endsWith("Lexer") ? g.name.substring(0, g.name.length()-5) : g.name; // trim off "lexer"
-				return name.toLowerCase()+"_lexer.go";
+				name = g.name.EndsWith("Lexer") ? g.name[0..(g.name.Length - 5)] : g.name; // trim off "lexer"
+				return name.ToLower()+"_lexer.go";
 			case ANTLRParser.COMBINED:
-				return g.name.toLowerCase()+"_parser.go";
+				return g.name.ToLower()+"_parser.go";
 			default :
 				return "INVALID_FILE_NAME";
 		}
@@ -104,40 +113,40 @@ public class GoTarget : Target {
 	/** A given grammar T, return the listener name such as
 	 *  TListener.java, if we're using the Java target.
  	 */
-	public String getListenerFileName(boolean header) {
-		CodeGenerator gen = getCodeGenerator();
+	public override String GetListenerFileName(bool header) {
+		CodeGenerator gen = GetCodeGenerator();
 		Grammar g = gen.g;
-		assert g.name != null;
-		return g.name.toLowerCase()+"_listener.go";
+		//assert g.name != null;
+		return g.name.ToLower()+"_listener.go";
 	}
 
 	/** A given grammar T, return the visitor name such as
 	 *  TVisitor.java, if we're using the Java target.
  	 */
-	public String getVisitorFileName(boolean header) {
-		CodeGenerator gen = getCodeGenerator();
+	public override String GetVisitorFileName(bool header) {
+		CodeGenerator gen = GetCodeGenerator();
 		Grammar g = gen.g;
-		assert g.name != null;
-		return g.name.toLowerCase()+"_visitor.go";
+		//assert g.name != null;
+		return g.name.ToLower()+"_visitor.go";
 	}
 
 	/** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-	public String getBaseListenerFileName(boolean header) {
-		CodeGenerator gen = getCodeGenerator();
+	public override String GetBaseListenerFileName(bool header) {
+		CodeGenerator gen = GetCodeGenerator();
 		Grammar g = gen.g;
-		assert g.name != null;
-		return g.name.toLowerCase()+"_base_listener.go";
+		//assert g.name != null;
+		return g.name.ToLower()+"_base_listener.go";
 	}
 
 	/** A given grammar T, return a blank listener implementation
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
-	public String getBaseVisitorFileName(boolean header) {
-		CodeGenerator gen = getCodeGenerator();
+	public override String GetBaseVisitorFileName(bool header) {
+		CodeGenerator gen = GetCodeGenerator();
 		Grammar g = gen.g;
-		assert g.name != null;
-		return g.name.toLowerCase()+"_base_visitor.go";
+		//assert g.name != null;
+		return g.name.ToLower()+"_base_visitor.go";
 	}
 }

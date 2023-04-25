@@ -7,7 +7,7 @@
 namespace org.antlr.v4.codegen.target;
 
 public class PHPTarget : Target {
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
+	protected static readonly HashSet<String> reservedWords = new() {
 		"abstract", "and", "array", "as",
 		"break",
 		"callable", "case", "catch", "class", "clone", "const", "continue",
@@ -34,58 +34,52 @@ public class PHPTarget : Target {
 
 		// misc
 		"rule", "parserRule"
-	));
+	};
 
-	protected static final Map<Character, String> targetCharValueEscape;
-	static {
+	protected static readonly Dictionary<char, String> targetCharValueEscape;
+	static PHPTarget(){
 		// https://www.php.net/manual/en/language.types.string.php
-		HashMap<Character, String> map = new HashMap<>();
-		addEscapedChar(map, '\n', 'n');
-		addEscapedChar(map, '\r', 'r');
-		addEscapedChar(map, '\t', 't');
-		addEscapedChar(map, (char)0x000B, 'v');
-		addEscapedChar(map, (char)0x001B, 'e');
-		addEscapedChar(map, '\f', 'f');
-		addEscapedChar(map, '\\');
-		addEscapedChar(map, '$');
-		addEscapedChar(map, '\"');
+		var map = new Dictionary<char, String>();
+		AddEscapedChar(map, '\n', 'n');
+		AddEscapedChar(map, '\r', 'r');
+		AddEscapedChar(map, '\t', 't');
+		AddEscapedChar(map, (char)0x000B, 'v');
+		AddEscapedChar(map, (char)0x001B, 'e');
+		AddEscapedChar(map, '\f', 'f');
+		AddEscapedChar(map, '\\');
+		AddEscapedChar(map, '$');
+		AddEscapedChar(map, '\"');
 		targetCharValueEscape = map;
 	}
 
-	public PHPTarget(CodeGenerator gen) {
-		super(gen);
+	public PHPTarget(CodeGenerator gen):base(gen) {
 	}
 
-	@Override
-	public Map<Character, String> getTargetCharValueEscape() {
+	
+	public override Dictionary<char, String> GetTargetCharValueEscape() {
 		return targetCharValueEscape;
 	}
 
-	@Override
-	protected Set<String> getReservedWords() {
+	public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	@Override
-	public boolean supportsOverloadedMethods() {
+	public override bool SupportsOverloadedMethods() {
 		return false;
 	}
 
-	@Override
-	public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, boolean addQuotes,
-															   boolean escapeSpecial) {
-		String targetStringLiteral = super.getTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial);
-		targetStringLiteral = targetStringLiteral.replace("$", "\\$");
+	public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
+															   bool escapeSpecial) {
+		String targetStringLiteral = base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial);
+		targetStringLiteral = targetStringLiteral.Replace("$", "\\$");
 		return targetStringLiteral;
 	}
 
-	@Override
-	public boolean isATNSerializedAsInts() {
+	public override bool IsATNSerializedAsInts() {
 		return true;
 	}
 
-	@Override
-	protected String escapeChar(int v) {
-		return String.format("\\u{%X}", v);
+	protected override String EscapeChar(int v) {
+		return $"\\u{v:X}";
 	}
 }
