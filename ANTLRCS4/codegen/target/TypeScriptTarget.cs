@@ -8,7 +8,7 @@ public class TypeScriptTarget : Target
 {
 
     /* source: https://github.com/microsoft/TypeScript/blob/fad889283e710ee947e8412e173d2c050107a3c1/src/compiler/scanner.ts */
-    protected static readonly HashSet<String> reservedWords = new() {
+    protected static readonly HashSet<string> reservedWords = new() {
             "any",
             "as",
             "boolean",

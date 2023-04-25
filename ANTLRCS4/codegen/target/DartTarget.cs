@@ -8,10 +8,10 @@ namespace org.antlr.v4.codegen.target;
 
 public class DartTarget : Target
 {
-    protected static readonly Dictionary<char, String> targetCharValueEscape;
+    protected static readonly Dictionary<char, string> targetCharValueEscape;
     static DartTarget()
     {
-        var map = new Dictionary<char, String>(defaultCharValueEscape);
+        var map = new Dictionary<char, string>(defaultCharValueEscape);
         AddEscapedChar(map, '$');
         targetCharValueEscape = map;
     }
@@ -40,20 +40,15 @@ public class DartTarget : Target
     {
     }
 
-    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
+    public override Dictionary<char, string> TargetCharValueEscape => targetCharValueEscape;
 
-    public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
-                                                               bool escapeSpecial)
-    {
-        return base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).Replace("$", "\\$");
-    }
+    public override string GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
+                                                               bool escapeSpecial) => base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).Replace("$", "\\$");
 
-    public override HashSet<String> ReservedWords => reservedWords;
+    public override HashSet<string> ReservedWords => reservedWords;
 
     public override bool IsATNSerializedAsInts => true;
 
-    protected override String EscapeChar(int v)
-    {
-        return $"\\u{v:X}";
-    }
+    protected override string EscapeChar(int v)
+    => $"\\u{v:X}";
 }

@@ -8,29 +8,31 @@ using Antlr4.StringTemplate;
 
 namespace org.antlr.v4.codegen.target;
 
-public class JavaTarget : Target {
-	/**
+public class JavaTarget : Target
+{
+    /**
 	 * The Java target can cache the code generation templates.
 	 */
-	private static readonly ThreadLocal<TemplateGroup> targetTemplates = new ();
+    private static readonly ThreadLocal<TemplateGroup> targetTemplates = new();
 
-	protected static readonly HashSet<String> reservedWords = new() {
-		"abstract", "assert", "boolean", "break", "byte", "case", "catch",
-		"char", "class", "const", "continue", "default", "do", "double", "else",
-		"enum", "extends", "false", "final", "finally", "float", "for", "goto",
-		"if", "implements", "import", "instanceof", "int", "interface",
-		"long", "native", "new", "null", "package", "private", "protected",
-		"public", "return", "short", "static", "strictfp", "super", "switch",
-		"synchronized", "this", "throw", "throws", "transient", "true", "try",
-		"void", "volatile", "while",
+    protected static readonly HashSet<string> reservedWords = new() {
+        "abstract", "assert", "boolean", "break", "byte", "case", "catch",
+        "char", "class", "const", "continue", "default", "do", "double", "else",
+        "enum", "extends", "false", "final", "finally", "float", "for", "goto",
+        "if", "implements", "import", "instanceof", "int", "interface",
+        "long", "native", "new", "null", "package", "private", "protected",
+        "public", "return", "short", "static", "strictfp", "super", "switch",
+        "synchronized", "this", "throw", "throws", "transient", "true", "try",
+        "void", "volatile", "while",
 
 		// misc
 		"rule", "parserRule"
-	};
+    };
 
-	public JavaTarget(CodeGenerator gen):base(gen) {
-		
-	}
+    public JavaTarget(CodeGenerator gen) : base(gen)
+    {
+
+    }
 
     public override HashSet<String> ReservedWords => reservedWords;
 

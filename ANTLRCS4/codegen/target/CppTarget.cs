@@ -59,18 +59,13 @@ public class CppTarget : Target
 
     public override bool NeedsHeader => true;
 
-    protected override bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
-		if (codePoint == '?') {
-			// in addition to the default escaped code points, also escape ? to prevent trigraphs
-			// ideally, we would escape ? with \?, but escaping as unicode \u003F works as well
-			return true;
-		}
-		else {
-			return base.ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint);
-		}
-	}
+    protected override bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) => codePoint switch
+    {
+        '?' => true,
+        _ => base.ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint)
+    };
 
-	public override String GetRecognizerFileName(bool header) {
+    public override String GetRecognizerFileName(bool header) {
 		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String recognizerName = gen.g.GetRecognizerName();
 		return recognizerName+extST.Render();

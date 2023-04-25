@@ -6,121 +6,121 @@
 namespace org.antlr.v4.codegen.target;
 
 
-public class CSharpTarget : Target {
-	protected static readonly HashSet<String> reservedWords = new() {
-		"abstract",
-		"as",
-		"base",
-		"bool",
-		"break",
-		"byte",
-		"case",
-		"catch",
-		"char",
-		"checked",
-		"class",
-		"const",
-		"continue",
-		"decimal",
-		"default",
-		"delegate",
-		"do",
-		"double",
-		"else",
-		"enum",
-		"event",
-		"explicit",
-		"extern",
-		"false",
-		"finally",
-		"fixed",
-		"float",
-		"for",
-		"foreach",
-		"goto",
-		"if",
-		"implicit",
-		"in",
-		"int",
-		"interface",
-		"internal",
-		"is",
-		"lock",
-		"long",
-		"namespace",
-		"new",
-		"null",
-		"object",
-		"operator",
-		"out",
-		"override",
-		"params",
-		"private",
-		"protected",
-		"public",
-		"readonly",
-		"ref",
-		"return",
-		"sbyte",
-		"sealed",
-		"short",
-		"sizeof",
-		"stackalloc",
-		"static",
-		"string",
-		"struct",
-		"switch",
-		"this",
-		"throw",
-		"true",
-		"try",
-		"typeof",
-		"uint",
-		"ulong",
-		"unchecked",
-		"unsafe",
-		"ushort",
-		"using",
-		"virtual",
-		"values",
-		"void",
-		"volatile",
-		"while"
-	};
+public class CSharpTarget : Target
+{
+    protected static readonly HashSet<string> reservedWords = new() {
+        "abstract",
+        "as",
+        "base",
+        "bool",
+        "break",
+        "byte",
+        "case",
+        "catch",
+        "char",
+        "checked",
+        "class",
+        "const",
+        "continue",
+        "decimal",
+        "default",
+        "delegate",
+        "do",
+        "double",
+        "else",
+        "enum",
+        "event",
+        "explicit",
+        "extern",
+        "false",
+        "finally",
+        "fixed",
+        "float",
+        "for",
+        "foreach",
+        "goto",
+        "if",
+        "implicit",
+        "in",
+        "int",
+        "interface",
+        "internal",
+        "is",
+        "lock",
+        "long",
+        "namespace",
+        "new",
+        "null",
+        "object",
+        "operator",
+        "out",
+        "override",
+        "params",
+        "private",
+        "protected",
+        "public",
+        "readonly",
+        "ref",
+        "return",
+        "sbyte",
+        "sealed",
+        "short",
+        "sizeof",
+        "stackalloc",
+        "static",
+        "string",
+        "struct",
+        "switch",
+        "this",
+        "throw",
+        "true",
+        "try",
+        "typeof",
+        "uint",
+        "ulong",
+        "unchecked",
+        "unsafe",
+        "ushort",
+        "using",
+        "virtual",
+        "values",
+        "void",
+        "volatile",
+        "while"
+    };
 
-	protected static readonly Dictionary<char, String> targetCharValueEscape;
-	static CSharpTarget() {
-		// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#string-escape-sequences
-		var map = new Dictionary<char, String>();
-		AddEscapedChar(map, '\'');
-		AddEscapedChar(map, '\"');
-		AddEscapedChar(map, '\\');
-		AddEscapedChar(map, '\0', '0');
-		AddEscapedChar(map, (char)0x0007, 'a');
-		AddEscapedChar(map, (char)0x0008, 'b');
-		AddEscapedChar(map, '\f', 'f');
-		AddEscapedChar(map, '\n', 'n');
-		AddEscapedChar(map, '\r', 'r');
-		AddEscapedChar(map, '\t', 't');
-		AddEscapedChar(map, (char)0x000B, 'v');
-		targetCharValueEscape = map;
-	}
+    protected static readonly Dictionary<char, string> targetCharValueEscape;
+    static CSharpTarget()
+    {
+        // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#string-escape-sequences
+        var map = new Dictionary<char, string>();
+        AddEscapedChar(map, '\'');
+        AddEscapedChar(map, '\"');
+        AddEscapedChar(map, '\\');
+        AddEscapedChar(map, '\0', '0');
+        AddEscapedChar(map, (char)0x0007, 'a');
+        AddEscapedChar(map, (char)0x0008, 'b');
+        AddEscapedChar(map, '\f', 'f');
+        AddEscapedChar(map, '\n', 'n');
+        AddEscapedChar(map, '\r', 'r');
+        AddEscapedChar(map, '\t', 't');
+        AddEscapedChar(map, (char)0x000B, 'v');
+        targetCharValueEscape = map;
+    }
 
-	public CSharpTarget(CodeGenerator gen) :base(gen){
-	}
+    public CSharpTarget(CodeGenerator gen) : base(gen)
+    {
+    }
 
-    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
+    public override Dictionary<char, string> TargetCharValueEscape
+        => targetCharValueEscape;
 
 
-    public override HashSet<String> ReservedWords => reservedWords;
+    public override HashSet<string> ReservedWords => reservedWords;
 
-    protected override String EscapeWord(String word) {
-		return "@" + word;
-	}
+    protected override string EscapeWord(string word) => "@" + word;
 
     public override bool IsATNSerializedAsInts => true;
 
-    protected override String EscapeChar(int v) {
-		return $"\\x{v:X}";// String.format("\\x%X", v);
-	}
+    protected override string EscapeChar(int v) => $"\\x{v:X}";// String.format("\\x%X", v);
 }
