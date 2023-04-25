@@ -178,7 +178,7 @@ public class CommonTreeNodeStream : LookaheadStream<object>, TreeNodeStream, Pos
      *
      * @see #hasPositionInformation
      */
-    object GetKnownPositionElement(bool allowApproximateLocation)
+    public object GetKnownPositionElement(bool allowApproximateLocation)
     {
         var node = data[p];
         if (HasPositionInformation(node))

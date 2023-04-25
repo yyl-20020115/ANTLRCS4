@@ -190,7 +190,7 @@ public class SemanticPipeline
                     G.stringLiteralToTypeMap.Remove(lit);
                     if (value > 0 && value < G.typeToStringLiteralList.Count && lit.Equals(G.typeToStringLiteralList[(value)]))
                     {
-                        G.typeToStringLiteralList.Set(value, null);
+                        G.typeToStringLiteralList[value] = null;
                     }
                 }
             }
