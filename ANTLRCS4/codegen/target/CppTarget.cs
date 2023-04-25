@@ -6,23 +6,24 @@
 
 namespace org.antlr.v4.codegen.target;
 
-public class CppTarget : Target {
+public class CppTarget : Target
+{
 	protected static readonly Dictionary<char, string> targetCharValueEscape;
 	static CppTarget(){
         // https://stackoverflow.com/a/10220539/1046374
         Dictionary<char, string> map = new ();
-		addEscapedChar(map, (char)0x0007, 'a');
-		addEscapedChar(map, (char)0x0008, 'b');
-		addEscapedChar(map, '\t', 't');
-		addEscapedChar(map, '\n', 'n');
-		addEscapedChar(map, (char)0x000B, 'v');
-		addEscapedChar(map, '\f', 'f');
-		addEscapedChar(map, '\r', 'r');
-		addEscapedChar(map, (char)0x001B, 'e');
-		addEscapedChar(map, '\"');
-		addEscapedChar(map, '\'');
-		addEscapedChar(map, '?');
-		addEscapedChar(map, '\\');
+		AddEscapedChar(map, (char)0x0007, 'a');
+		AddEscapedChar(map, (char)0x0008, 'b');
+		AddEscapedChar(map, '\t', 't');
+		AddEscapedChar(map, '\n', 'n');
+		AddEscapedChar(map, (char)0x000B, 'v');
+		AddEscapedChar(map, '\f', 'f');
+		AddEscapedChar(map, '\r', 'r');
+		AddEscapedChar(map, (char)0x001B, 'e');
+		AddEscapedChar(map, '\"');
+		AddEscapedChar(map, '\'');
+		AddEscapedChar(map, '?');
+		AddEscapedChar(map, '\\');
 		targetCharValueEscape = map;
 	}
 
@@ -50,66 +51,61 @@ public class CppTarget : Target {
 		
 	}
 
-	@Override
-	public Map<Character, String> getTargetCharValueEscape() {
+	
+	public override Dictionary<char, string> GetTargetCharValueEscape() {
 		return targetCharValueEscape;
 	}
 
-	@Override
-	protected Set<String> getReservedWords() {
+	
+	public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	public boolean needsHeader() { return true; }
+	public override bool NeedsHeader() { return true; }
 
-    @Override
-	protected boolean shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
+    
+	protected override bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
 		if (codePoint == '?') {
 			// in addition to the default escaped code points, also escape ? to prevent trigraphs
 			// ideally, we would escape ? with \?, but escaping as unicode \u003F works as well
 			return true;
 		}
 		else {
-			return super.shouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint);
+			return base.ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(codePoint);
 		}
 	}
 
-	@Override
-	public String getRecognizerFileName(boolean header) {
-		ST extST = getTemplates().getInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
-		String recognizerName = gen.g.getRecognizerName();
-		return recognizerName+extST.render();
+	public override String GetRecognizerFileName(bool header) {
+		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		String recognizerName = gen.g.GetRecognizerName();
+		return recognizerName+extST.Render();
 	}
 
-	@Override
-	public String getListenerFileName(boolean header) {
-		assert gen.g.name != null;
-		ST extST = getTemplates().getInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+	public override String GetListenerFileName(bool header) {
+		//assert gen.g.name != null;
+		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "Listener";
-		return listenerName+extST.render();
+		return listenerName+extST.Render();
 	}
 
-	@Override
-	public String getVisitorFileName(boolean header) {
-		assert gen.g.name != null;
-		ST extST = getTemplates().getInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+	public override String GetVisitorFileName(bool header) {
+		//assert gen.g.name != null;
+		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "Visitor";
-		return listenerName+extST.render();
+		return listenerName+extST.Render();
 	}
 
-	@Override
-	public String getBaseListenerFileName(boolean header) {
-		assert gen.g.name != null;
-		ST extST = getTemplates().getInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+	public override String GetBaseListenerFileName(bool header) {
+		//assert gen.g.name != null;
+		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "BaseListener";
-		return listenerName+extST.render();
+		return listenerName+extST.Render();
 	}
 
-	@Override
-	public String getBaseVisitorFileName(boolean header) {
-		assert gen.g.name != null;
-		ST extST = getTemplates().getInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+	public override String GetBaseVisitorFileName(bool header) {
+		//assert gen.g.name != null;
+		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "BaseVisitor";
-		return listenerName+extST.render();
+		return listenerName+extST.Render();
 	}
 }

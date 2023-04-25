@@ -97,7 +97,7 @@ public abstract class Target
         }
     }
 
-    protected abstract HashSet<string> GetReservedWords();
+    public abstract HashSet<string> GetReservedWords();
 
     public virtual string EscapeIfNeeded(string identifier) => GetReservedWords().Contains(identifier) ? EscapeWord(identifier) : identifier;
 

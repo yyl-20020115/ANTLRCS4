@@ -7,7 +7,7 @@ namespace org.antlr.v4.codegen.target;
 
 
 public class CSharpTarget : Target {
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
+	protected static readonly HashSet<String> reservedWords = new() {
 		"abstract",
 		"as",
 		"base",
@@ -86,10 +86,10 @@ public class CSharpTarget : Target {
 		"void",
 		"volatile",
 		"while"
-	));
+	};
 
-	protected static final Map<Character, String> targetCharValueEscape;
-	static {
+	protected static readonly Dictionary<char, String> targetCharValueEscape;
+	static CSharpTarget() {
 		// https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#string-escape-sequences
 		HashMap<Character, String> map = new HashMap<>();
 		addEscapedChar(map, '\'');

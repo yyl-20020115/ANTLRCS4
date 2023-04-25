@@ -4,15 +4,17 @@
  * can be found in the LICENSE.txt file in the project root.
  */
 
+using Antlr4.StringTemplate;
+
 namespace org.antlr.v4.codegen.target;
 
 public class JavaTarget : Target {
 	/**
 	 * The Java target can cache the code generation templates.
 	 */
-	private static final ThreadLocal<STGroup> targetTemplates = new ThreadLocal<STGroup>();
+	private static readonly ThreadLocal<TemplateGroup> targetTemplates = new ();
 
-	protected static final HashSet<String> reservedWords = new HashSet<>(Arrays.asList(
+	protected static readonly HashSet<String> reservedWords = new() {
 		"abstract", "assert", "boolean", "break", "byte", "case", "catch",
 		"char", "class", "const", "continue", "default", "do", "double", "else",
 		"enum", "extends", "false", "final", "finally", "float", "for", "goto",
@@ -24,26 +26,24 @@ public class JavaTarget : Target {
 
 		// misc
 		"rule", "parserRule"
-	));
+	};
 
-	public JavaTarget(CodeGenerator gen) {
-		super(gen);
+	public JavaTarget(CodeGenerator gen):base(gen) {
+		
 	}
 
-	@Override
-    public Set<String> getReservedWords() {
+    public override HashSet<String> GetReservedWords() {
 		return reservedWords;
 	}
 
-	@Override
-	public int getSerializedATNSegmentLimit() {
+	public override int GetSerializedATNSegmentLimit() {
 		// 65535 is the class file format byte limit for a UTF-8 encoded string literal
 		// 3 is the maximum number of bytes it takes to encode a value in the range 0-0xFFFF
 		return 65535 / 3;
 	}
 
-	@Override
-	public boolean isATNSerializedAsInts() {
+
+	public override bool IsATNSerializedAsInts() {
 		return false;
 	}
 }
