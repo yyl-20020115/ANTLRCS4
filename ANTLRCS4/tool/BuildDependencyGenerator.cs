@@ -76,7 +76,7 @@ public class BuildDependencyGenerator
         List<string> files = new();
 
         // Add generated recognizer; e.g., TParser.java
-        if (generator.Target.NeedsHeader())
+        if (generator.Target.NeedsHeader)
         {
             files.Add(GetOutputFile(generator.GetRecognizerFileName(true)));
         }
@@ -116,14 +116,14 @@ public class BuildDependencyGenerator
         if (g.Tools.gen_listener)
         {
             // Add generated listener; e.g., TListener.java
-            if (generator.Target.NeedsHeader())
+            if (generator.Target.NeedsHeader)
             {
                 files.Add(GetOutputFile(generator.GetListenerFileName(true)));
             }
             files.Add(GetOutputFile(generator.GetListenerFileName(false)));
 
             // Add generated base listener; e.g., TBaseListener.java
-            if (generator.Target.NeedsHeader())
+            if (generator.Target.NeedsHeader)
             {
                 files.Add(GetOutputFile(generator.GetBaseListenerFileName(true)));
             }
@@ -133,14 +133,14 @@ public class BuildDependencyGenerator
         if (g.Tools.gen_visitor)
         {
             // Add generated visitor; e.g., TVisitor.java
-            if (generator.Target.NeedsHeader())
+            if (generator.Target.NeedsHeader)
             {
                 files.Add(GetOutputFile(generator.GetVisitorFileName(true)));
             }
             files.Add(GetOutputFile(generator.GetVisitorFileName(false)));
 
             // Add generated base visitor; e.g., TBaseVisitor.java
-            if (generator.Target.NeedsHeader())
+            if (generator.Target.NeedsHeader)
             {
                 files.Add(GetOutputFile(generator.GetBaseVisitorFileName(true)));
             }

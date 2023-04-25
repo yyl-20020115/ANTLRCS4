@@ -51,20 +51,15 @@ public class CppTarget : Target
 		
 	}
 
-	
-	public override Dictionary<char, string> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
 
-	
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override Dictionary<char, string> TargetCharValueEscape => targetCharValueEscape;
 
-	public override bool NeedsHeader() { return true; }
 
-    
-	protected override bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
+    public override HashSet<String> ReservedWords => reservedWords;
+
+    public override bool NeedsHeader => true;
+
+    protected override bool ShouldUseUnicodeEscapeForCodePointInDoubleQuotedString(int codePoint) {
 		if (codePoint == '?') {
 			// in addition to the default escaped code points, also escape ? to prevent trigraphs
 			// ideally, we would escape ? with \?, but escaping as unicode \u003F works as well
@@ -76,35 +71,35 @@ public class CppTarget : Target
 	}
 
 	public override String GetRecognizerFileName(bool header) {
-		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String recognizerName = gen.g.GetRecognizerName();
 		return recognizerName+extST.Render();
 	}
 
 	public override String GetListenerFileName(bool header) {
 		//assert gen.g.name != null;
-		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "Listener";
 		return listenerName+extST.Render();
 	}
 
 	public override String GetVisitorFileName(bool header) {
 		//assert gen.g.name != null;
-		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "Visitor";
 		return listenerName+extST.Render();
 	}
 
 	public override String GetBaseListenerFileName(bool header) {
 		//assert gen.g.name != null;
-		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "BaseListener";
 		return listenerName+extST.Render();
 	}
 
 	public override String GetBaseVisitorFileName(bool header) {
 		//assert gen.g.name != null;
-		var extST = GetTemplates().GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
+		var extST = Templates.GetInstanceOf(header ? "headerFileExtension" : "codeFileExtension");
 		String listenerName = gen.g.name + "BaseVisitor";
 		return listenerName+extST.Render();
 	}

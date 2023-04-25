@@ -55,31 +55,23 @@ public class PHPTarget : Target {
 	public PHPTarget(CodeGenerator gen):base(gen) {
 	}
 
-	
-	public override Dictionary<char, String> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
 
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
-	public override bool SupportsOverloadedMethods() {
-		return false;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
+    public override bool SupportsOverloadedMethods => false;
+
+    public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
 															   bool escapeSpecial) {
 		String targetStringLiteral = base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial);
 		targetStringLiteral = targetStringLiteral.Replace("$", "\\$");
 		return targetStringLiteral;
 	}
 
-	public override bool IsATNSerializedAsInts() {
-		return true;
-	}
+    public override bool IsATNSerializedAsInts => true;
 
-	protected override String EscapeChar(int v) {
+    protected override String EscapeChar(int v) {
 		return $"\\u{v:X}";
 	}
 }

@@ -41,15 +41,11 @@ public class SwiftTarget : Target {
     public SwiftTarget(CodeGenerator gen) :base(gen){
     }
 
-	public override Dictionary<char, String> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	protected override String EscapeWord(String word) {
+    protected override String EscapeWord(String word) {
 		return "`" + word + "`";
 	}
 
@@ -57,13 +53,11 @@ public class SwiftTarget : Target {
         base.GenFile(g,outputFileST,fileName);
     }
 
-	
-	public override bool IsATNSerializedAsInts() {
-		return true;
-	}
 
-	
-	protected override String EscapeChar(int v) {
+    public override bool IsATNSerializedAsInts => true;
+
+
+    protected override String EscapeChar(int v) {
 		return $"\\u{v:X}";// String.format("\\u{%X}", v);
 	}
 }

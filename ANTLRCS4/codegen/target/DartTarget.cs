@@ -40,10 +40,7 @@ public class DartTarget : Target
     {
     }
 
-    public override Dictionary<char, String> GetTargetCharValueEscape()
-    {
-        return targetCharValueEscape;
-    }
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
     public override String GetTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal, bool addQuotes,
                                                                bool escapeSpecial)
@@ -51,15 +48,9 @@ public class DartTarget : Target
         return base.GetTargetStringLiteralFromANTLRStringLiteral(generator, literal, addQuotes, escapeSpecial).Replace("$", "\\$");
     }
 
-    public override HashSet<String> GetReservedWords()
-    {
-        return reservedWords;
-    }
+    public override HashSet<String> ReservedWords => reservedWords;
 
-    public override bool IsATNSerializedAsInts()
-    {
-        return true;
-    }
+    public override bool IsATNSerializedAsInts => true;
 
     protected override String EscapeChar(int v)
     {

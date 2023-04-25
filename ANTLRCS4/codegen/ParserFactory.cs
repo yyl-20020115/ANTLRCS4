@@ -241,7 +241,7 @@ public class ParserFactory : DefaultOutputModelFactory
         return c;
     }
 
-    public override List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST) => List(new TestSetInline(this, blkAST, look, gen.Target.GetInlineTestSetWordSize()));
+    public override List<SrcOp> GetLL1Test(IntervalSet look, GrammarAST blkAST) => List(new TestSetInline(this, blkAST, look, gen.Target.InlineTestSetWordSize));
 
     public override bool NeedsImplicitLabel(GrammarAST ID, LabeledOp op)
     {

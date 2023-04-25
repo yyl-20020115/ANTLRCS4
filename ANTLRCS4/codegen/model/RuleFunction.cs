@@ -291,7 +291,7 @@ public class RuleFunction : OutputModelObject
                              .GetRuleFunctionContextStructName(rref);
             if (needList)
             {
-                if (factory.Generator.Target.SupportsOverloadedMethods())
+                if (factory.Generator.Target.SupportsOverloadedMethods)
                     decls.Add(new (factory, refLabelName, ctxName));
                 decls.Add(new (factory, refLabelName, ctxName));
             }
@@ -304,7 +304,7 @@ public class RuleFunction : OutputModelObject
         {
             if (needList)
             {
-                if (factory.Generator.Target.SupportsOverloadedMethods())
+                if (factory.Generator.Target.SupportsOverloadedMethods)
                     decls.Add(new (factory, refLabelName));
                 decls.Add(new ContextTokenListIndexedGetterDecl(factory, refLabelName));
             }

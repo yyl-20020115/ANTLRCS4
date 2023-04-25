@@ -61,7 +61,7 @@ public class CodeGenerator
 
     public Target Target => target;
 
-    public TemplateGroup Templates => target.GetTemplates();
+    public TemplateGroup Templates => target.Templates;
 
     // CREATE TEMPLATES BY WALKING MODEL
 

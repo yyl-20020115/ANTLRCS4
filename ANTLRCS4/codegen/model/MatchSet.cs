@@ -21,7 +21,7 @@ public class MatchSet : MatchToken
         : base(factory, ast)
     {
         var st = ast.atnState.Transition(0) as SetTransition;
-        int wordSize = factory.Generator.Target.GetInlineTestSetWordSize();
+        int wordSize = factory.Generator.Target.InlineTestSetWordSize;
         expr = new TestSetInline(factory, null, st.label, wordSize);
         var d = new TokenTypeDecl(factory, expr.varName);
         factory.        CurrentRuleFunction.AddLocalDecl(d);

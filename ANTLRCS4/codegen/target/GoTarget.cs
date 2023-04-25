@@ -47,14 +47,12 @@ public class GoTarget : Target {
 	public GoTarget(CodeGenerator gen):base(gen) {
 	}
 
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	public override void GenFile(Grammar g, Template outputFileST, String fileName) {
+    public override void GenFile(Grammar g, Template outputFileST, String fileName) {
 		base.GenFile(g, outputFileST, fileName);
 		if (DO_GOFMT && !fileName.StartsWith(".") /* criterion taken from gofmt */ && fileName.EndsWith(".go")) {
-			gofmt(Path.Combine(GetCodeGenerator().tool.GetOutputDirectory(g.fileName), fileName));
+			gofmt(Path.Combine(CodeGenerator.tool.GetOutputDirectory(g.fileName), fileName));
 		}
 	}
 
@@ -92,7 +90,7 @@ public class GoTarget : Target {
 	}
 
 	public override String GetRecognizerFileName(bool header) {
-		CodeGenerator gen = GetCodeGenerator();
+		CodeGenerator gen = CodeGenerator;
 		Grammar g = gen.g;
 		//assert g!=null;
 		String name;
@@ -114,7 +112,7 @@ public class GoTarget : Target {
 	 *  TListener.java, if we're using the Java target.
  	 */
 	public override String GetListenerFileName(bool header) {
-		CodeGenerator gen = GetCodeGenerator();
+		CodeGenerator gen = CodeGenerator;
 		Grammar g = gen.g;
 		//assert g.name != null;
 		return g.name.ToLower()+"_listener.go";
@@ -124,7 +122,7 @@ public class GoTarget : Target {
 	 *  TVisitor.java, if we're using the Java target.
  	 */
 	public override String GetVisitorFileName(bool header) {
-		CodeGenerator gen = GetCodeGenerator();
+		CodeGenerator gen = CodeGenerator;
 		Grammar g = gen.g;
 		//assert g.name != null;
 		return g.name.ToLower()+"_visitor.go";
@@ -134,7 +132,7 @@ public class GoTarget : Target {
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
 	public override String GetBaseListenerFileName(bool header) {
-		CodeGenerator gen = GetCodeGenerator();
+		CodeGenerator gen = CodeGenerator;
 		Grammar g = gen.g;
 		//assert g.name != null;
 		return g.name.ToLower()+"_base_listener.go";
@@ -144,7 +142,7 @@ public class GoTarget : Target {
 	 *  such as TBaseListener.java, if we're using the Java target.
  	 */
 	public override String GetBaseVisitorFileName(bool header) {
-		CodeGenerator gen = GetCodeGenerator();
+		CodeGenerator gen = CodeGenerator;
 		Grammar g = gen.g;
 		//assert g.name != null;
 		return g.name.ToLower()+"_base_visitor.go";

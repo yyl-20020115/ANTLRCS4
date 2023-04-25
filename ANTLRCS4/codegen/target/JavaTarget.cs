@@ -32,18 +32,13 @@ public class JavaTarget : Target {
 		
 	}
 
-    public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	public override int GetSerializedATNSegmentLimit() {
-		// 65535 is the class file format byte limit for a UTF-8 encoded string literal
-		// 3 is the maximum number of bytes it takes to encode a value in the range 0-0xFFFF
-		return 65535 / 3;
-	}
+    public override int SerializedATNSegmentLimit =>
+        // 65535 is the class file format byte limit for a UTF-8 encoded string literal
+        // 3 is the maximum number of bytes it takes to encode a value in the range 0-0xFFFF
+        65535 / 3;
 
 
-	public override bool IsATNSerializedAsInts() {
-		return false;
-	}
+    public override bool IsATNSerializedAsInts => false;
 }

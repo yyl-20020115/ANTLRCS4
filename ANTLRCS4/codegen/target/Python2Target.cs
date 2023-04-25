@@ -58,25 +58,15 @@ public class Python2Target : Target {
 	public Python2Target(CodeGenerator gen):base(gen) {
 	}
 
-	
-	public override Dictionary<char, String> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
 
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
-	public override bool WantsBaseListener() {
-		return false;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	public override bool WantsBaseVisitor() {
-		return false;
-	}
+    public override bool WantsBaseListener => false;
 
-	public override bool SupportsOverloadedMethods() {
-		return false;
-	}
+    public override bool WantsBaseVisitor => false;
+
+    public override bool SupportsOverloadedMethods => false;
 }
 

@@ -38,10 +38,7 @@ public abstract class Target
         defaultCharValueEscape = map;
     }
 
-    protected Target(CodeGenerator gen)
-    {
-        this.gen = gen;
-    }
+    protected Target(CodeGenerator gen) => this.gen = gen;
 
     /** For pure strings of Unicode char, how can we display
 	 *  it in the target language as a literal. Useful for dumping
@@ -50,7 +47,7 @@ public abstract class Target
 	 *  that the target language can hold them as a string.
 	 *  Each target can have a different set in memory at same time.
 	 */
-    public virtual Dictionary<char, string> GetTargetCharValueEscape() => defaultCharValueEscape;
+    public virtual Dictionary<char, string> TargetCharValueEscape => defaultCharValueEscape;
 
     protected static void AddEscapedChar(Dictionary<char, string> map, char key)
     {
@@ -62,9 +59,9 @@ public abstract class Target
         map[key] = ("\\" + representation);
     }
 
-    public virtual string GetLanguage() => gen.language;
+    public virtual string Language => gen.language;
 
-    public virtual CodeGenerator GetCodeGenerator() => gen;
+    public virtual CodeGenerator CodeGenerator => gen;
 
     /** ANTLR tool should check output templates / target are compatible with tool code generation.
 	 *  For now, a simple string match used on x.y of x.y.z scheme. We use a method to avoid mismatches
@@ -74,39 +71,39 @@ public abstract class Target
 	 *
 	 * @since 4.3
 	 */
-    public virtual string GetVersion() => Tool.VERSION;
+    public virtual string Version => Tool.VERSION;
 
-    public TemplateGroup GetTemplates()
+    public TemplateGroup Templates
     {
-        lock (this)
+        get
         {
-            var language = GetLanguage();
-            if (!languageTemplates.TryGetValue(language, out var templates))
+            lock (this)
             {
-                var version = GetVersion();
-                if (version == null ||
-                        !RuntimeMetaData.GetMajorMinorVersion(version).Equals(RuntimeMetaData.GetMajorMinorVersion(Tool.VERSION)))
+                var language = Language;
+                if (!languageTemplates.TryGetValue(language, out var templates))
                 {
-                    gen.tool.ErrMgr.ToolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+                    var version = Version;
+                    if (version == null ||
+                            !RuntimeMetaData.GetMajorMinorVersion(version).Equals(RuntimeMetaData.GetMajorMinorVersion(Tool.VERSION)))
+                    {
+                        gen.tool.ErrMgr.ToolError(tool.ErrorType.INCOMPATIBLE_TOOL_AND_TEMPLATES, version, Tool.VERSION, language);
+                    }
+                    templates = LoadTemplates();
+                    languageTemplates.Add(language, templates);
                 }
-                templates = LoadTemplates();
-                languageTemplates.Add(language, templates);
-            }
 
-            return templates;
+                return templates;
+            }
         }
     }
 
-    public abstract HashSet<string> GetReservedWords();
+    public abstract HashSet<string> ReservedWords { get; }
 
-    public virtual string EscapeIfNeeded(string identifier) => GetReservedWords().Contains(identifier) ? EscapeWord(identifier) : identifier;
+    public virtual string EscapeIfNeeded(string identifier) => ReservedWords.Contains(identifier) ? EscapeWord(identifier) : identifier;
 
     protected virtual string EscapeWord(string word) => word + "_";
 
-    public virtual void GenFile(Grammar g, Template outputFileST, string fileName)
-    {
-        GetCodeGenerator().Write(outputFileST, fileName);
-    }
+    public virtual void GenFile(Grammar g, Template outputFileST, string fileName) => CodeGenerator.Write(outputFileST, fileName);
 
     /** Get a meaningful name for a token type useful during code generation.
 	 *  Literals without associated names are converted to the string equivalent
@@ -167,7 +164,7 @@ public abstract class Target
         {
             int c = char.ConvertToUtf32(s, i); // s.codePointAt(i);
             var escaped = c <= char.MaxValue ?
-                (GetTargetCharValueEscape().TryGetValue((char)c, out var v) ? v : null) : null;
+                (TargetCharValueEscape.TryGetValue((char)c, out var v) ? v : null) : null;
             if (c != '\'' && escaped != null)
             { // don't escape single quotes in strings for java
                 buffer.Append(escaped);
@@ -201,7 +198,7 @@ public abstract class Target
 	 */
     protected virtual void AppendUnicodeEscapedCodePoint(int codePoint, StringBuilder builder)
     {
-        UnicodeEscapes.AppendEscapedCodePoint(builder, codePoint, GetLanguage());
+        UnicodeEscapes.AppendEscapedCodePoint(builder, codePoint, Language);
     }
 
     public virtual string GetTargetStringLiteralFromString(string s)
@@ -350,14 +347,14 @@ public abstract class Target
             throw new ArgumentException($"Cannot encode the specified value: {v}");
         }
 
-        if (IsATNSerializedAsInts())
+        if (IsATNSerializedAsInts)
         {
             return v.ToString();// Integer.ToString(v);
         }
 
         char c = (char)v;
         //string escaped = getTargetCharValueEscape().get(c);
-        if (GetTargetCharValueEscape().TryGetValue(c, out var escaped))
+        if (TargetCharValueEscape.TryGetValue(c, out var escaped))
         {
             return escaped;
         }
@@ -386,17 +383,17 @@ public abstract class Target
 
     public virtual string GetListLabel(string label)
     {
-        var st = GetTemplates().GetInstanceOf("ListLabelName");
+        var st = Templates.GetInstanceOf("ListLabelName");
         st.Add("label", label);
         return st.Render();
     }
 
     public virtual string GetRuleFunctionContextStructName(Rule r) => r.g.IsLexer
-            ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
-            : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+            ? Templates.GetInstanceOf("LexerRuleContext").Render()
+            : Utils.Capitalize(r.name) + Templates.GetInstanceOf("RuleContextNameSuffix").Render();
 
     public virtual string GetAltLabelContextStructName(string label)
-        => Utils.Capitalize(label) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+        => Utils.Capitalize(label) + Templates.GetInstanceOf("RuleContextNameSuffix").Render();
 
     /** If we know which actual function, we can provide the actual ctx type.
 	 *  This will contain implicit labels etc...  From outside, though, we
@@ -407,18 +404,18 @@ public abstract class Target
     {
         var r = function.rule;
         return r.g.IsLexer
-            ? GetTemplates().GetInstanceOf("LexerRuleContext").Render()
-            : Utils.Capitalize(r.name) + GetTemplates().GetInstanceOf("RuleContextNameSuffix").Render();
+            ? Templates.GetInstanceOf("LexerRuleContext").Render()
+            : Utils.Capitalize(r.name) + Templates.GetInstanceOf("RuleContextNameSuffix").Render();
     }
 
     // should be same for all refs to same token like ctx.ID within single rule function
     // for literals like 'while', we gen _s<ttype>
     public virtual string GetImplicitTokenLabel(string tokenName)
     {
-        var st = GetTemplates().GetInstanceOf("ImplicitTokenLabel");
-        int ttype = GetCodeGenerator().g.GetTokenType(tokenName);
+        var st = Templates.GetInstanceOf("ImplicitTokenLabel");
+        int ttype = CodeGenerator.g.GetTokenType(tokenName);
         if (tokenName.StartsWith("'")) return "s" + ttype;
-        var text = GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
+        var text = GetTokenTypeAsTargetLabel(CodeGenerator.g, ttype);
         st.Add("tokenName", text);
         return st.Render();
     }
@@ -426,21 +423,21 @@ public abstract class Target
     // x=(A|B)
     public virtual string GetImplicitSetLabel(string id)
     {
-        var st = GetTemplates().GetInstanceOf("ImplicitSetLabel");
+        var st = Templates.GetInstanceOf("ImplicitSetLabel");
         st.Add("id", id);
         return st.Render();
     }
 
     public virtual string GetImplicitRuleLabel(string ruleName)
     {
-        var st = GetTemplates().GetInstanceOf("ImplicitRuleLabel");
+        var st = Templates.GetInstanceOf("ImplicitRuleLabel");
         st.Add("ruleName", ruleName);
         return st.Render();
     }
 
     public virtual string GetElementListName(string name)
     {
-        var st = GetTemplates().GetInstanceOf("ElementListName");
+        var st = Templates.GetInstanceOf("ElementListName");
         st.Add("elemName", GetElementName(name));
         return st.Render();
     }
@@ -448,10 +445,10 @@ public abstract class Target
     public virtual string GetElementName(string name)
     {
         if (".".Equals(name)) return "_wild";
-        if (GetCodeGenerator().g.GetRule(name) != null) return name;
-        int ttype = GetCodeGenerator().g.GetTokenType(name);
+        if (CodeGenerator.g.GetRule(name) != null) return name;
+        int ttype = CodeGenerator.g.GetTokenType(name);
         if (ttype == Token.INVALID_TYPE) return name;
-        return GetTokenTypeAsTargetLabel(GetCodeGenerator().g, ttype);
+        return GetTokenTypeAsTargetLabel(CodeGenerator.g, ttype);
     }
 
     /** Generate TParser.java and TLexer.java from T.g4 if combined, else
@@ -459,7 +456,7 @@ public abstract class Target
 	 */
     public virtual string GetRecognizerFileName(bool header)
     {
-        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var extST = Templates.GetInstanceOf("codeFileExtension");
         var recognizerName = gen.g.GetRecognizerName();
         return recognizerName + extST.Render();
     }
@@ -470,7 +467,7 @@ public abstract class Target
     public virtual string GetListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var extST = Templates.GetInstanceOf("codeFileExtension");
         var listenerName = gen.g.name + "Listener";
         return listenerName + extST.Render();
     }
@@ -481,7 +478,7 @@ public abstract class Target
     public virtual string GetVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var extST = Templates.GetInstanceOf("codeFileExtension");
         var listenerName = gen.g.name + "Visitor";
         return listenerName + extST.Render();
     }
@@ -492,7 +489,7 @@ public abstract class Target
     public virtual string GetBaseListenerFileName(bool header)
     {
         //assert gen.g.name != null;
-        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var extST = Templates.GetInstanceOf("codeFileExtension");
         var listenerName = gen.g.name + "BaseListener";
         return listenerName + extST.Render();
     }
@@ -503,7 +500,7 @@ public abstract class Target
     public virtual string GetBaseVisitorFileName(bool header)
     {
         //assert gen.g.name != null;
-        var extST = GetTemplates().GetInstanceOf("codeFileExtension");
+        var extST = Templates.GetInstanceOf("codeFileExtension");
         var listenerName = gen.g.name + "BaseVisitor";
         return listenerName + extST.Render();
     }
@@ -532,7 +529,7 @@ public abstract class Target
 	 *
 	 * @return the serialized ATN segment limit
 	 */
-    public virtual int GetSerializedATNSegmentLimit() => int.MaxValue;
+    public virtual int SerializedATNSegmentLimit => int.MaxValue;
 
     /** How many bits should be used to do inline token type tests? Java assumes
 	 *  a 64-bit word for bitsets.  Must be a valid wordsize for your target like
@@ -540,7 +537,7 @@ public abstract class Target
 	 *
 	 *  @since 4.5
 	 */
-    public virtual int GetInlineTestSetWordSize() => 64;
+    public virtual int InlineTestSetWordSize => 64;
 
     public virtual bool GrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
     {
@@ -577,14 +574,14 @@ public abstract class Target
                 break;
         }
 
-        return GetReservedWords().Contains(idNode.Text);
+        return ReservedWords.Contains(idNode.Text);
     }
 
     //@Deprecated
     protected virtual bool VisibleGrammarSymbolCausesIssueInGeneratedCode(GrammarAST idNode)
-        => GetReservedWords().Contains(idNode.Text);
+        => ReservedWords.Contains(idNode.Text);
 
-    public virtual bool TemplatesExist() => LoadTemplatesHelper(false) != null;
+    public virtual bool TemplatesExist => LoadTemplatesHelper(false) != null;
     public class STE : ITemplateErrorListener
     {
         public readonly Target target;
@@ -598,7 +595,7 @@ public abstract class Target
 
         public void InternalError(TemplateMessage msg) => ReportError(msg);
 
-        private void ReportError(TemplateMessage msg) => target.GetCodeGenerator().tool.ErrMgr.ToolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
+        private void ReportError(TemplateMessage msg) => target.CodeGenerator.tool.ErrMgr.ToolError(tool.ErrorType.STRING_TEMPLATE_WARNING, msg.Cause, msg.ToString());
 
     }
     protected TemplateGroup LoadTemplates()
@@ -614,7 +611,7 @@ public abstract class Target
 
     private TemplateGroup LoadTemplatesHelper(bool reportErrorIfFail)
     {
-        var language = GetLanguage();
+        var language = Language;
         var groupFileName = CodeGenerator.TEMPLATE_ROOT + "/" + language + "/" + language + TemplateGroup.GroupFileExtension;
         try
         {
@@ -624,7 +621,7 @@ public abstract class Target
         {
             if (reportErrorIfFail)
             {
-                gen.tool.ErrMgr.ToolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, GetLanguage());
+                gen.tool.ErrMgr.ToolError(tool.ErrorType.MISSING_CODE_GEN_TEMPLATES, iae, Language);
             }
             return null;
         }
@@ -633,20 +630,20 @@ public abstract class Target
     /**
 	 * @since 4.3
 	 */
-    public virtual bool WantsBaseListener() => true;
+    public virtual bool WantsBaseListener => true;
 
     /**
 	 * @since 4.3
 	 */
-    public virtual bool WantsBaseVisitor() => true;
+    public virtual bool WantsBaseVisitor => true;
 
     /**
 	 * @since 4.3
 	 */
-    public virtual bool SupportsOverloadedMethods() => true;
+    public virtual bool SupportsOverloadedMethods => true;
 
-    public virtual bool IsATNSerializedAsInts() => true;
+    public virtual bool IsATNSerializedAsInts => true;
 
     /** @since 4.6 */
-    public virtual bool NeedsHeader() => false;  // Override in targets that need header files.
+    public virtual bool NeedsHeader => false;  // Override in targets that need header files.
 }

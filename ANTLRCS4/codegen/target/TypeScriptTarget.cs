@@ -75,34 +75,16 @@ public class TypeScriptTarget : Target
     {
     }
 
-    public override HashSet<String> GetReservedWords()
-    {
-        return reservedWords;
-    }
+    public override HashSet<String> ReservedWords => reservedWords;
 
-    public override int GetInlineTestSetWordSize()
-    {
-        return 32;
-    }
+    public override int InlineTestSetWordSize => 32;
 
-    public override bool WantsBaseListener()
-    {
-        return false;
-    }
+    public override bool WantsBaseListener => false;
 
-    public override bool WantsBaseVisitor()
-    {
-        return false;
-    }
+    public override bool WantsBaseVisitor => false;
 
-    public override bool SupportsOverloadedMethods()
-    {
-        return true;
-    }
+    public override bool SupportsOverloadedMethods => true;
 
-    public override bool IsATNSerializedAsInts()
-    {
-        return true;
-    }
+    public override bool IsATNSerializedAsInts => true;
 
 }

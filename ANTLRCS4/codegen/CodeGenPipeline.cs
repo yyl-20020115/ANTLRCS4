@@ -28,7 +28,7 @@ public class CodeGenPipeline
 
         if (g.IsLexer)
         {
-            if (gen.Target.NeedsHeader())
+            if (gen.Target.NeedsHeader)
             {
                 var lexer2 = gen.GenerateLexer(true); // Header file if needed.
                 if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -44,7 +44,7 @@ public class CodeGenPipeline
         }
         else
         {
-            if (gen.Target.NeedsHeader())
+            if (gen.Target.NeedsHeader)
             {
                 var parser2 = gen.GenerateParser(true);
                 if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -60,7 +60,7 @@ public class CodeGenPipeline
 
             if (g.Tools.gen_listener)
             {
-                if (gen.Target.NeedsHeader())
+                if (gen.Target.NeedsHeader)
                 {
                     var listener2 = gen.GenerateListener(true);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -74,7 +74,7 @@ public class CodeGenPipeline
                     gen.WriteListener(listener3, false);
                 }
 
-                if (gen.Target.NeedsHeader())
+                if (gen.Target.NeedsHeader)
                 {
                     var baseListener = gen.GenerateBaseListener(true);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -82,7 +82,7 @@ public class CodeGenPipeline
                         gen.WriteBaseListener(baseListener, true);
                     }
                 }
-                if (gen.Target.WantsBaseListener())
+                if (gen.Target.WantsBaseListener)
                 {
                     var baseListener = gen.GenerateBaseListener(false);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -93,7 +93,7 @@ public class CodeGenPipeline
             }
             if (g.Tools.gen_visitor)
             {
-                if (gen.Target.NeedsHeader())
+                if (gen.Target.NeedsHeader)
                 {
                     var visitor2 = gen.GenerateVisitor(true);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -107,7 +107,7 @@ public class CodeGenPipeline
                     gen.WriteVisitor(visitor, false);
                 }
 
-                if (gen.Target.NeedsHeader())
+                if (gen.Target.NeedsHeader)
                 {
                     var baseVisitor = gen.GenerateBaseVisitor(true);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)
@@ -115,7 +115,7 @@ public class CodeGenPipeline
                         gen.WriteBaseVisitor(baseVisitor, true);
                     }
                 }
-                if (gen.Target.WantsBaseVisitor())
+                if (gen.Target.WantsBaseVisitor)
                 {
                     var baseVisitor = gen.GenerateBaseVisitor(false);
                     if (g.Tools.ErrMgr.NumErrors == errorCount)

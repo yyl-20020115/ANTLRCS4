@@ -57,23 +57,13 @@ public class Python3Target : Target {
 	public Python3Target(CodeGenerator gen) :base(gen){
 	}
 
-	public override Dictionary<char, String> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
+    public override HashSet<String> ReservedWords => reservedWords;
 
-	public override bool WantsBaseListener() {
-		return false;
-	}
+    public override bool WantsBaseListener => false;
 
-	public override bool WantsBaseVisitor() {
-		return false;
-	}
+    public override bool WantsBaseVisitor => false;
 
-	public override bool SupportsOverloadedMethods() {
-		return false;
-	}
+    public override bool SupportsOverloadedMethods => false;
 }

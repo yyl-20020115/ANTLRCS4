@@ -109,24 +109,18 @@ public class CSharpTarget : Target {
 	public CSharpTarget(CodeGenerator gen) :base(gen){
 	}
 
-	public override Dictionary<char, String> GetTargetCharValueEscape() {
-		return targetCharValueEscape;
-	}
+    public override Dictionary<char, String> TargetCharValueEscape => targetCharValueEscape;
 
-	
-	public override HashSet<String> GetReservedWords() {
-		return reservedWords;
-	}
 
-	protected override String EscapeWord(String word) {
+    public override HashSet<String> ReservedWords => reservedWords;
+
+    protected override String EscapeWord(String word) {
 		return "@" + word;
 	}
 
-	public override bool IsATNSerializedAsInts() {
-		return true;
-	}
+    public override bool IsATNSerializedAsInts => true;
 
-	protected override String EscapeChar(int v) {
+    protected override String EscapeChar(int v) {
 		return $"\\x{v:X}";// String.format("\\x%X", v);
 	}
 }
